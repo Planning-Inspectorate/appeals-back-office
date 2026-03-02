@@ -9,9 +9,20 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-case-officer/search-case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F2%2Flpa-questionnaire%2F2"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
@@ -247,9 +258,9 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                             <dd                             class="govuk-summary-list__value">1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/neighbouring-sites/add/lpa"
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/lpa"
                                             data-cy="add-neighbouring-site-lpa">Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA) (5. Site access)</span></a>
                                         </li>
                                     </ul>
@@ -372,9 +383,20 @@ exports[`LPA Questionnaire review GET / should render the CAS planning LPA Quest
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/assign-case-officer/search-case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F3%2Flpa-questionnaire%2F1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
@@ -605,9 +627,9 @@ exports[`LPA Questionnaire review GET / should render the CAS planning LPA Quest
                             <dd                             class="govuk-summary-list__value">1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/lpa-questionnaire/1/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/lpa-questionnaire/1/neighbouring-sites/add/lpa"
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/add/lpa"
                                             data-cy="add-neighbouring-site-lpa">Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA) (5. Site access)</span></a>
                                         </li>
                                     </ul>
@@ -695,9 +717,20 @@ exports[`LPA Questionnaire review GET / should render the Cas Advert LPA Questio
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/4/assign-case-officer/search-case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/4/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F4%2Flpa-questionnaire%2F1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
@@ -992,9 +1025,9 @@ exports[`LPA Questionnaire review GET / should render the Cas Advert LPA Questio
                             <dd                             class="govuk-summary-list__value">1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/4/lpa-questionnaire/1/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/4/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/4/lpa-questionnaire/1/neighbouring-sites/add/lpa"
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/4/neighbouring-sites/add/lpa"
                                             data-cy="add-neighbouring-site-lpa">Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA) (5. Site access)</span></a>
                                         </li>
                                     </ul>
@@ -1100,12 +1133,26 @@ exports[`LPA Questionnaire review GET / should render the Householder LPA Questi
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-case-officer/search-case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Flpa-questionnaire%2F2"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
+                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
+                    </dd>
                 </div>
             </dl>
         </div>
@@ -1338,9 +1385,9 @@ exports[`LPA Questionnaire review GET / should render the Householder LPA Questi
                             <dd                             class="govuk-summary-list__value">1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/neighbouring-sites/add/lpa"
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/lpa"
                                             data-cy="add-neighbouring-site-lpa">Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA) (5. Site access)</span></a>
                                         </li>
                                     </ul>
@@ -1428,9 +1475,20 @@ exports[`LPA Questionnaire review GET / should render the Ldc LPA Questionnaire 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/6/assign-case-officer/search-case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/6/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F5%2Flpa-questionnaire%2F1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
@@ -1576,9 +1634,9 @@ exports[`LPA Questionnaire review GET / should render the Ldc LPA Questionnaire 
                             <dd                             class="govuk-summary-list__value">1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (3. Site access)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/6/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (3. Site access)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/neighbouring-sites/add/lpa"
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/6/neighbouring-sites/add/lpa"
                                             data-cy="add-neighbouring-site-lpa">Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA) (3. Site access)</span></a>
                                         </li>
                                     </ul>
@@ -1677,9 +1735,20 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-case-officer/search-case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F2%2Flpa-questionnaire%2F1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
@@ -2076,9 +2145,9 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                             <dd                             class="govuk-summary-list__value">1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (6. Site access)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (6. Site access)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/neighbouring-sites/add/lpa"
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/lpa"
                                             data-cy="add-neighbouring-site-lpa">Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA) (6. Site access)</span></a>
                                         </li>
                                     </ul>
@@ -2184,9 +2253,20 @@ exports[`LPA Questionnaire review GET / should render the advert LPA Questionnai
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/assign-case-officer/search-case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F5%2Flpa-questionnaire%2F1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
@@ -2487,9 +2567,9 @@ exports[`LPA Questionnaire review GET / should render the advert LPA Questionnai
                             <dd                             class="govuk-summary-list__value">1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/5/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/neighbouring-sites/add/lpa"
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/5/neighbouring-sites/add/lpa"
                                             data-cy="add-neighbouring-site-lpa">Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA) (5. Site access)</span></a>
                                         </li>
                                     </ul>
@@ -2649,9 +2729,20 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-case-officer/search-case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Flpa-questionnaire%2F2"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
@@ -2889,9 +2980,9 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                             <dd                             class="govuk-summary-list__value">1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/neighbouring-sites/add/lpa"
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/lpa"
                                             data-cy="add-neighbouring-site-lpa">Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA) (5. Site access)</span></a>
                                         </li>
                                     </ul>
@@ -2994,9 +3085,20 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-case-officer/search-case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Flpa-questionnaire%2F2"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
@@ -3234,9 +3336,9 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                             <dd                             class="govuk-summary-list__value">1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/neighbouring-sites/add/lpa"
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/lpa"
                                             data-cy="add-neighbouring-site-lpa">Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA) (5. Site access)</span></a>
                                         </li>
                                     </ul>
@@ -6150,12 +6252,26 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-case-officer/search-case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Flpa-questionnaire%2F2"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
+                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
+                    </dd>
                 </div>
             </dl>
         </div>
@@ -6388,9 +6504,9 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                             <dd                             class="govuk-summary-list__value">1 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</dd>
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage">Manage<span class="govuk-visually-hidden"> Neighbouring sites (L P A) (5. Site access)</span></a>
                                         </li>
-                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/neighbouring-sites/add/lpa"
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/lpa"
                                             data-cy="add-neighbouring-site-lpa">Add<span class="govuk-visually-hidden"> Neighbouring sites (LPA) (5. Site access)</span></a>
                                         </li>
                                     </ul>
