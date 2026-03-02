@@ -470,6 +470,7 @@ interface SingleLPAQuestionnaireResponse {
 	floorSpaceCreatedByBreachInSquareMetres?: number | null;
 	appealUnderActSection?: string | null;
 	lpaConsiderAppealInvalid?: boolean;
+	lpaAppealInvalidReasons?: string | null;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -509,6 +510,7 @@ interface UpdateLPAQuestionnaireRequest {
 	didAppellantSubmitCompletePhotosAndPlans?: boolean;
 	appealUnderActSection?: string | null;
 	lpaConsiderAppealInvalid?: boolean;
+	lpaAppealInvalidReasons?: string | null;
 
 	// Enforcement
 	noticeRelatesToBuildingEngineeringMiningOther?: boolean | null;
