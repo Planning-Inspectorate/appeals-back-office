@@ -328,7 +328,11 @@ export const postCheckDetails = async (request, response) => {
 		const sessionValues = /** @type {Record<string, any>} */ (
 			getSessionValuesForAppeal(request, 'cancelAppeal', currentAppeal.appealId)
 		);
-		const invalidReasonIds = /** @type {string[]} */ (sessionValues.invalidReason);
+		/** @type {string | string[]} */
+		const invalidReasonResponse = sessionValues.invalidReason;
+		const invalidReasonIds = Array.isArray(invalidReasonResponse)
+			? invalidReasonResponse
+			: [invalidReasonResponse];
 
 		const invalidReasons = invalidReasonIds.map((reason) => {
 			const reasonText = sessionValues[`invalidReason-${reason}`];
