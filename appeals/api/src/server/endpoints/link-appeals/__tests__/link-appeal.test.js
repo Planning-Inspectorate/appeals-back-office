@@ -28,8 +28,7 @@ jest.unstable_mockModule('#notify/notify-send.js', () => ({
 const { request } = await import('#server/app-test.js');
 const { eventClient } = await import('#infrastructure/event-client.js');
 const { householdAppeal, linkedAppeals } = await import('#tests/appeals/mocks.js');
-const { documentCreated, documentVersionCreated, savedFolder } =
-	await import('#tests/documents/mocks.js');
+const { documentVersionCreated, savedFolder } = await import('#tests/documents/mocks.js');
 const { horizonGetCaseSuccessResponse } = await import('#tests/horizon/mocks.js');
 const { linkedAppealLegacyRequest, linkedAppealRequest } =
 	await import('#tests/linked-appeals/mocks.js');
@@ -169,8 +168,18 @@ describe('appeal linked appeals routes', () => {
 					databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
 					// @ts-ignore
 					databaseConnector.folder.findMany.mockResolvedValue([mockSavedFolderWithValidDates]);
-					databaseConnector.document.create.mockReturnValue(documentCreated);
-					databaseConnector.documentVersion.create.mockResolvedValue(documentVersionCreated);
+					databaseConnector.document.createMany.mockResolvedValue({ count: 1 });
+					databaseConnector.document.updateMany.mockResolvedValue({ count: 1 });
+					databaseConnector.documentVersion.createMany.mockResolvedValue({ count: 1 });
+					databaseConnector.documentVersion.findMany.mockResolvedValue([
+						{
+							...documentVersionCreated,
+							documentGuid: 'mock-uuid',
+							fileName: 'mydoc.pdf',
+							redactionStatus: { key: undefined }
+						}
+					]);
+					databaseConnector.documentVersionAvScan.findMany.mockResolvedValue([]);
 
 					got.post.mockReturnValueOnce({
 						json: jest
@@ -210,37 +219,41 @@ describe('appeal linked appeals routes', () => {
 						EventType.Create
 					);
 
-					expect(databaseConnector.document.create).toHaveBeenCalledWith({
-						data: {
-							caseId: 1,
-							folderId: 23,
-							guid: 'mock-uuid',
-							name: 'mydoc-4567654.pdf'
-						}
+					expect(databaseConnector.document.createMany).toHaveBeenCalledWith({
+						data: [
+							{
+								caseId: 1,
+								folderId: 23,
+								guid: 'mock-uuid',
+								name: 'mydoc-4567654.pdf'
+							}
+						]
 					});
 
-					expect(databaseConnector.documentVersion.create).toHaveBeenCalledWith({
-						data: {
-							blobStorageContainer: 'document-service-uploads',
-							blobStoragePath: 'appeal/1345264/mock-uuid/v1/mydoc-4567654.pdf',
-							dateReceived: expect.any(Date),
-							documentGuid: 'mock-uuid',
-							documentType: 'appellantCostApplication',
-							documentURI:
-								'https://127.0.0.1:10000/document-service-uploads/appeal/1345264/mock-uuid/v1/mydoc-4567654.pdf',
-							draft: false,
-							fileName: 'mydoc.pdf',
-							isLateEntry: false,
-							lastModified: expect.any(Date),
-							mime: 'application/pdf',
-							originalFilename: 'mydoc-4567654.pdf',
-							published: false,
-							redactionStatusId: 1,
-							size: 14699,
-							stage: 'costs',
-							version: 1,
-							virusCheckStatus: 'affected'
-						}
+					expect(databaseConnector.documentVersion.createMany).toHaveBeenCalledWith({
+						data: [
+							{
+								blobStorageContainer: 'document-service-uploads',
+								blobStoragePath: 'appeal/1345264/mock-uuid/v1/mydoc-4567654.pdf',
+								dateReceived: expect.any(Date),
+								documentGuid: 'mock-uuid',
+								documentType: 'appellantCostApplication',
+								documentURI:
+									'https://127.0.0.1:10000/document-service-uploads/appeal/1345264/mock-uuid/v1/mydoc-4567654.pdf',
+								draft: false,
+								fileName: 'mydoc-4567654.pdf',
+								isLateEntry: false,
+								lastModified: expect.any(Date),
+								mime: 'application/pdf',
+								originalFilename: 'mydoc-4567654.pdf',
+								published: false,
+								redactionStatusId: 1,
+								size: 14699,
+								stage: 'costs',
+								version: 1,
+								virusCheckStatus: 'not_scanned'
+							}
+						]
 					});
 
 					expect(mockNotifySend).toHaveBeenCalledTimes(2);
