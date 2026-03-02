@@ -439,5 +439,34 @@ describe('cancel invalid', () => {
 			expect(response.status).toBe(302);
 			expect(response.headers.location).toBe(`${baseUrl}/${mockAppealId}`);
 		});
+
+		it('should not error when only one invalid reason is selected', async () => {
+			let appellantCasesRequestBody;
+			const mockAppellantCasesEndpoint = nock('http://test/')
+				.patch(`/appeals/${mockAppealId}/appellant-cases/0`, (body) => {
+					appellantCasesRequestBody = body;
+					return true;
+				})
+				.reply(200);
+
+			await request.post(`${baseUrl}/${mockAppealId}/cancel/invalid/reason`).send({
+				invalidReason: '1'
+			});
+			await request.post(`${baseUrl}/${mockAppealId}/cancel/invalid/other-live-appeals`).send({
+				otherLiveAppeals: 'yes'
+			});
+			const response = await request.post(
+				`${baseUrl}/${mockAppealId}/cancel/invalid/check-details`
+			);
+			expect(mockAppellantCasesEndpoint.isDone()).toBe(true);
+			expect(appellantCasesRequestBody).toEqual({
+				validationOutcome: 'invalid',
+				invalidReasons: [{ id: 1 }],
+				otherLiveAppeals: 'yes',
+				enforcementNoticeInvalid: 'no'
+			});
+			expect(response.status).toBe(302);
+			expect(response.headers.location).toBe(`${baseUrl}/${mockAppealId}`);
+		});
 	});
 });
