@@ -10,6 +10,7 @@ import {
 	dayMonthYearHourMinuteToISOString,
 	getExampleDateHint
 } from '#lib/dates.js';
+import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
 import { initialiseAndMapData } from '#lib/mappers/data/appellant-case/mapper.js';
 import {
 	createNotificationBanner,
@@ -20,6 +21,7 @@ import {
 	sortNotificationBanners,
 	userHasPermission
 } from '#lib/mappers/index.js';
+import { generateCaseSummary } from '#lib/mappers/utils/generate-case-summary.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { objectContainsAllValues } from '#lib/object-utilities.js';
@@ -76,6 +78,18 @@ export async function appellantCasePage(
 	errorMessage = undefined,
 	request
 ) {
+	const baseAppealRoute = `/appeals-service/appeal-details/${appealDetails.appealId}`;
+
+	const mappedAppealDetails = await initialiseAndMapAppealData(
+		appealDetails,
+		baseAppealRoute,
+		session,
+		request,
+		false
+	);
+
+	const appellantCaseSummary = generateCaseSummary(mappedAppealDetails);
+
 	const mappedAppellantCaseData = initialiseAndMapData(
 		appellantCaseData,
 		appealDetails,
@@ -83,32 +97,6 @@ export async function appellantCasePage(
 		session,
 		request
 	);
-
-	/**
-	 * @type {PageComponent}
-	 */
-	const appellantCaseSummary = {
-		type: 'summary-list',
-		wrapperHtml: {
-			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds">',
-			closing: '</div></div>'
-		},
-		parameters: {
-			classes: 'govuk-summary-list--no-border',
-			rows: [
-				...(mappedAppellantCaseData.siteAddress.display.summaryListItem
-					? [
-							{
-								...mappedAppellantCaseData.siteAddress.display.summaryListItem,
-								key: {
-									text: 'Site address'
-								}
-							}
-						]
-					: [])
-			]
-		}
-	};
 
 	const userHasUpdateCase = userHasPermission(permissionNames.updateCase, session);
 	const appealTypeSpecificComponents = generateCaseTypeSpecificComponents(
