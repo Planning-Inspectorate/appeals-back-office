@@ -346,7 +346,10 @@ export const updateAppellantCaseValidationOutcome = async (
 				const { appellantCase, enforcementNoticeAppealOutcome } = updatedAppeal;
 				if (
 					appellantCase?.appellantCaseEnforcementMissingDocumentsSelected?.length ||
-					appellantCase?.appellantCaseEnforcementGroundsMismatchSelected?.length
+					appellantCase?.appellantCaseEnforcementGroundsMismatchSelected?.length ||
+					appellantCase?.appellantCaseIncompleteReasonsSelected?.find(
+						(reason) => reason.appellantCaseIncompleteReason?.name === 'Other'
+					)
 				) {
 					reasonsToFormat.push('Missing information');
 				}
@@ -394,8 +397,7 @@ export const updateAppellantCaseValidationOutcome = async (
 									)
 								: [],
 							local_planning_authority: updatedAppeal?.lpa?.name || '',
-							other_info:
-								incompleteReasons?.find((reason) => reason.id === 10)?.['text']?.[0] || '',
+							other_info: incompleteReasons?.find((reason) => reason.id === 10)?.['text'] || [],
 							team_email_address: teamEmail,
 							due_date: formatDate(new Date(incompleteAppealDueDate), false),
 							appeal_grounds:

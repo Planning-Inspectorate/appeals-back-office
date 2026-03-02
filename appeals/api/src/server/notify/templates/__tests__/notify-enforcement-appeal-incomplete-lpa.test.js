@@ -18,7 +18,7 @@ describe('enforcement-appeal-incomplete-lpa.md', () => {
 				fee_due_date: '14 August 2035',
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
 				missing_documents: ['Enforcement notice: reason 1', 'Planning obligation: reason 2'],
-				other_info: 'reason 3',
+				other_info: ['reason 3'],
 				appeal_grounds: ['a', 'b']
 			}
 		};
@@ -86,7 +86,7 @@ describe('enforcement-appeal-incomplete-lpa.md', () => {
 				fee_due_date: '14 August 2035',
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
 				missing_documents: ['Enforcement notice: reason 1', 'Planning obligation: reason 2'],
-				other_info: 'reason 3',
+				other_info: ['reason 3'],
 				appeal_grounds: ['a']
 			}
 		};
@@ -154,7 +154,7 @@ describe('enforcement-appeal-incomplete-lpa.md', () => {
 				fee_due_date: '14 August 2035',
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
 				missing_documents: [],
-				other_info: '',
+				other_info: [],
 				appeal_grounds: ['a', 'b']
 			}
 		};
@@ -213,7 +213,7 @@ describe('enforcement-appeal-incomplete-lpa.md', () => {
 				fee_due_date: '14 August 2035',
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
 				missing_documents: [],
-				other_info: '',
+				other_info: [],
 				appeal_grounds: ['a']
 			}
 		};
@@ -272,7 +272,7 @@ describe('enforcement-appeal-incomplete-lpa.md', () => {
 				fee_due_date: '',
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
 				missing_documents: ['Enforcement notice: reason 1', 'Planning obligation: reason 2'],
-				other_info: '',
+				other_info: [],
 				appeal_grounds: ['a', 'b']
 			}
 		};
@@ -292,6 +292,64 @@ describe('enforcement-appeal-incomplete-lpa.md', () => {
 			'',
 			'- Enforcement notice: reason 1',
 			'- Planning obligation: reason 2',
+			'',
+			'# What happens next',
+			'',
+			'The appellant needs to send the missing information to us by 14 July 2035.',
+			'',
+			'Planning Inspectorate'
+		].join('\n');
+
+		await notifySend(notifySendData);
+
+		expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalledWith(
+			{
+				id: 'mock-appeal-generic-id'
+			},
+			'test@136s7.com',
+			{
+				content: expectedContent,
+				subject: 'Missing information: 134526'
+			}
+		);
+	});
+
+	test('should call notify sendEmail with a list of other info', async () => {
+		const notifySendData = {
+			doNotMockNotifySend: true,
+			templateName: 'enforcement-appeal-incomplete-lpa',
+			notifyClient: {
+				sendEmail: jest.fn()
+			},
+			recipientEmail: 'test@136s7.com',
+			personalisation: {
+				appeal_reference_number: '134526',
+				enforcement_reference: 'ENF/1234/1234/1234',
+				site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+				due_date: '14 July 2035',
+				fee_due_date: '',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+				missing_documents: [],
+				other_info: ['info 1', 'info 2'],
+				appeal_grounds: []
+			}
+		};
+
+		const expectedContent = [
+			'We have asked the appellant to submit missing information.',
+			'',
+			'# Appeal details',
+			'',
+			'^Appeal reference number: 134526',
+			'Address: 96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+			'Enforcement notice reference: ENF/1234/1234/1234',
+			'',
+			'# Missing information',
+			'',
+			'## Other',
+			'',
+			'- info 1',
+			'- info 2',
 			'',
 			'# What happens next',
 			'',
