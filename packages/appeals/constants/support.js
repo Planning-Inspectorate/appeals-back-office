@@ -334,6 +334,8 @@ export const AUDIT_TRAIL_LPAQ_APPEAL_UNDER_ACT_SECTION_UPDATED =
 	"'What type of lawful development certificate is the appeal about?' updated to {replacement0}";
 export const AUDIT_TRAIL_LPAQ_LPA_CONSIDER_APPEAL_INVALID_UPDATED =
 	"'Do you consider the appeal invalid?' updated to {replacement0}";
+export const AUDIT_TRAIL_LPAQ_LPA_APPEAL_INVALID_REASONS_UPDATED =
+	"'Do you consider the appeal invalid?' reasons updated to {replacement0}";
 export const AUDIT_TRAIL_REP_MANUALLY_ADDED = '{replacement0} added in {replacement1}';
 export const AUDIT_TRAIL_REP_MANUALLY_ADDED_AND_SHARED =
 	'{replacement0} added in {replacement1} and shared';
