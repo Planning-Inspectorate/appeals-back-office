@@ -665,12 +665,18 @@ describe('decision routes', () => {
 
 			// @ts-ignore
 			databaseConnector.folder.findMany.mockResolvedValue([savedFolder]);
-			databaseConnector.document.create = jest.fn().mockImplementation(() => {
-				return documentCreated;
-			});
-			databaseConnector.documentVersion.create = jest
-				.fn()
-				.mockResolvedValue(documentVersionCreated);
+			databaseConnector.document.createMany.mockResolvedValue({ count: 1 });
+			databaseConnector.document.updateMany.mockResolvedValue({ count: 1 });
+			databaseConnector.documentVersion.createMany.mockResolvedValue({ count: 1 });
+			databaseConnector.documentVersion.findMany.mockResolvedValue([
+				{
+					...documentVersionCreated,
+					documentGuid: 'mock-uuid',
+					fileName: 'mydoc-1345264.pdf',
+					redactionStatus: { key: undefined }
+				}
+			]);
+			databaseConnector.documentVersionAvScan.findMany.mockResolvedValue([]);
 
 			const response = await request
 				.post(`/appeals/${appeal.id}/decision`)
@@ -694,37 +700,41 @@ describe('decision routes', () => {
 				})
 				.set('azureAdUserId', azureAdUserId);
 
-			expect(databaseConnector.document.create).toHaveBeenCalledWith({
-				data: {
-					caseId: childAppeal.childId,
-					folderId: 23,
-					guid: 'mock-uuid',
-					name: 'mydoc-1345264.pdf'
-				}
+			expect(databaseConnector.document.createMany).toHaveBeenCalledWith({
+				data: [
+					{
+						caseId: childAppeal.childId,
+						folderId: 23,
+						guid: 'mock-uuid',
+						name: 'mydoc-1345264.pdf'
+					}
+				]
 			});
 
-			expect(databaseConnector.documentVersion.create).toHaveBeenCalledWith({
-				data: {
-					blobStorageContainer: 'document-service-uploads',
-					blobStoragePath: 'appeal/CHILD123/mock-uuid/v1/mydoc-1345264.pdf',
-					dateReceived: expect.any(Date),
-					documentGuid: 'mock-uuid',
-					documentType: 'appellantCostApplication',
-					documentURI:
-						'https://127.0.0.1:10000/document-service-uploads/appeal/CHILD123/mock-uuid/v1/mydoc-1345264.pdf',
-					draft: false,
-					fileName: 'mydoc-1345264.pdf',
-					isLateEntry: false,
-					lastModified: expect.any(Date),
-					mime: 'application/pdf',
-					originalFilename: 'mydoc-1345264.pdf',
-					published: false,
-					redactionStatusId: 1,
-					size: 14699,
-					stage: 'appeal-decision',
-					version: 1,
-					virusCheckStatus: 'affected'
-				}
+			expect(databaseConnector.documentVersion.createMany).toHaveBeenCalledWith({
+				data: [
+					{
+						blobStorageContainer: 'document-service-uploads',
+						blobStoragePath: 'appeal/CHILD123/mock-uuid/v1/mydoc-1345264.pdf',
+						dateReceived: expect.any(Date),
+						documentGuid: 'mock-uuid',
+						documentType: 'appellantCostApplication',
+						documentURI:
+							'https://127.0.0.1:10000/document-service-uploads/appeal/CHILD123/mock-uuid/v1/mydoc-1345264.pdf',
+						draft: false,
+						fileName: 'mydoc-1345264.pdf',
+						isLateEntry: false,
+						lastModified: expect.any(Date),
+						mime: 'application/pdf',
+						originalFilename: 'mydoc-1345264.pdf',
+						published: false,
+						redactionStatusId: 1,
+						size: 14699,
+						stage: 'appeal-decision',
+						version: 1,
+						virusCheckStatus: 'not_scanned'
+					}
+				]
 			});
 
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
