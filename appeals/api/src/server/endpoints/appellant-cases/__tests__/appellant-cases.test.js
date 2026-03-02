@@ -2147,7 +2147,7 @@ describe('appellant cases routes', () => {
 					due_date: '14 July 2099',
 					fee_due_date: '14 Aug 2035',
 					missing_documents: ['Grounds of appeal supporting documents: Missing doc'],
-					other_info: 'Other reason',
+					other_info: ['Other reason'],
 					appeal_grounds: ['a', 'b'],
 					grounds_and_facts: []
 				};
@@ -2280,7 +2280,7 @@ describe('appellant cases routes', () => {
 					due_date: '14 July 2099',
 					fee_due_date: '',
 					missing_documents: [],
-					other_info: '',
+					other_info: [],
 					appeal_grounds: [],
 					grounds_and_facts: ['Ground (a): Grounds mismatch']
 				};
