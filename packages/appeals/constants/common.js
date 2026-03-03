@@ -36,7 +36,10 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	LDC_HEARING: 'featureFlagLdcHearing',
 	LDC_INQUIRY: 'featureFlagLdcInquiry',
 	ELB_HEARING: 'featureFlagElbHearing',
-	ELB_INQUIRY: 'featureFlagElbInquiry'
+	ELB_INQUIRY: 'featureFlagElbInquiry',
+	ENFORCEMENT_HEARING_LINKED: 'featureFlagEnforcementHearingLinked',
+	ENFORCEMENT_INQUIRY_LINKED: 'featureFlagEnforcementInquiryLinked',
+	ENFORCEMENT_CHANGE_PROCEDURE_LINKED: 'featureFlagEnforcementChangeProcedureLinked'
 });
 
 export const APPEAL_TYPE = Object.freeze({

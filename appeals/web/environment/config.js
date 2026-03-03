@@ -100,7 +100,10 @@ export function loadConfig() {
 		FEATURE_FLAG_LDC_HEARING,
 		FEATURE_FLAG_LDC_INQUIRY,
 		FEATURE_FLAG_ELB_HEARING,
-		FEATURE_FLAG_ELB_INQUIRY
+		FEATURE_FLAG_ELB_INQUIRY,
+		FEATURE_FLAG_ENFORCEMENT_HEARING_LINKED,
+		FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED,
+		FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED
 	} = environment;
 
 	const config = {
@@ -188,7 +191,11 @@ export function loadConfig() {
 			featureFlagLdcHearing: FEATURE_FLAG_LDC_HEARING === 'true',
 			featureFlagLdcInquiry: FEATURE_FLAG_LDC_INQUIRY === 'true',
 			featureFlagElbHearing: FEATURE_FLAG_ELB_HEARING === 'true',
-			featureFlagElbInquiry: FEATURE_FLAG_ELB_INQUIRY === 'true'
+			featureFlagElbInquiry: FEATURE_FLAG_ELB_INQUIRY === 'true',
+			featureFlagEnforcementHearingLinked: FEATURE_FLAG_ENFORCEMENT_HEARING_LINKED === 'true',
+			featureFlagEnforcementInquiryLinked: FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED === 'true',
+			featureFlagEnforcementChangeProcedureLinked:
+				FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED === 'true'
 		},
 		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
 		pdfServiceHost: PDF_SERVICE_HOST
