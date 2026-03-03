@@ -1,6 +1,7 @@
 # Azure DevOps pipeline: writes a deployment record to Confluence Cloud
 #
-# Required pipeline variables (set in Azure DevOps > Pipelines > Variables):
+# Required variables in Azure DevOps variable groups named `cd_<environment>`
+# (for example: `cd_dev`, `cd_test`, `cd_prod`):
 # - CONFLUENCE_BASE_URL   e.g. https://your-domain.atlassian.net/wiki
 # - CONFLUENCE_PAGE_ID    numeric content id for page "Production Deployments"
 # - CONFLUENCE_EMAIL      Atlassian account email used for API auth
@@ -15,8 +16,15 @@ pr: none
 
 parameters:
   - name: environment
+    displayName: Environment
     type: string
-    default: prod
+    default: dev
+    values:
+      - dev
+      - test
+      - staging
+      - training
+      - prod
   - name: service
     type: string
     default: my-service
@@ -26,6 +34,9 @@ parameters:
   - name: changeTicket
     type: string
     default: ''
+
+variables:
+  - group: cd_${{ parameters.environment }}
 
 pool:
   vmImage: ubuntu-latest
