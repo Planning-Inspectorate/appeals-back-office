@@ -31,9 +31,9 @@ exports[`has-alleged-breach-area GET /change should render the hasAllegedBreachA
                                     <div class="govuk-radios__conditional" id="conditional-area-of-alleged-breach-in-square-metres-radio-2">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label" for="area-of-alleged-breach-details">Area of the alleged breach, in square metres</label>
-                                            <textarea class="govuk-textarea"
+                                            <input class="govuk-input govuk-input--width-10"
                                             id="area-of-alleged-breach-details" name="areaOfAllegedBreachInSquareMetres"
-                                            rows="3">25</textarea>
+                                            type="number" value=25>
                                         </div>
                                     </div>
                                 </div>

@@ -1,7 +1,7 @@
 import { kebabCase } from 'lodash-es';
 
 /**
- * @typedef {'textarea'} ConditionalTypes
+ * @typedef {'textarea' | 'input'} ConditionalTypes
  */
 
 /**
@@ -31,8 +31,8 @@ function addFieldsetLegendText(component, legendText, isPageHeading = false, leg
  */
 export function conditionalFormatter(id, name, hint, details, type = 'textarea') {
 	let conditionalInputHtml = {
-		textarea: `<textarea class="govuk-textarea" id="${id}" name="${name}" rows="3">${details}</textarea>`
-		//TODO: Conditionals => add any new types here
+		textarea: `<textarea class="govuk-textarea" id="${id}" name="${name}" rows="3">${details}</textarea>`,
+		input: `<input class="govuk-input govuk-input--width-10" id="${id}" name="${name}" type="number" value=${details}>`
 	};
 	return {
 		html: `<div class="govuk-form-group">
