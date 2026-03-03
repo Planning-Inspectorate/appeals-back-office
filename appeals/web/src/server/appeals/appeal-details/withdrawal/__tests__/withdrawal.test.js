@@ -4,6 +4,7 @@ import {
 	appealDataAdvert,
 	appealDataCasAdvert,
 	appealDataCasPlanning,
+	appealDataEnforcementNotice,
 	appealDataFullPlanning,
 	appealDataLdc,
 	appealDataListedBuilding,
@@ -13,6 +14,7 @@ import {
 	withdrawalRequestData
 } from '#testing/appeals/appeals.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
 import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
@@ -29,8 +31,16 @@ const withdrawalRequestViewPath = '/view';
 const mockAppealId = '1';
 
 describe('withdrawal', () => {
-	beforeEach(installMockApi);
-	afterEach(teardown);
+	beforeEach(() => {
+		installMockApi();
+		jest
+			.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
+			.setSystemTime(new Date('2026-02-01T12:00:00.000Z'));
+	});
+	afterEach(() => {
+		teardown();
+		jest.useRealTimers();
+	});
 
 	describe('GET /new', () => {
 		it('should render the withdrawal request upload page with a file upload component', async () => {
@@ -98,12 +108,13 @@ describe('withdrawal', () => {
 			['cas planning', appealDataCasPlanning, FEEDBACK_FORM_LINKS.CAS_PLANNING],
 			['cas advert', appealDataCasAdvert, FEEDBACK_FORM_LINKS.CAS_ADVERTS],
 			['full advert', appealDataAdvert, FEEDBACK_FORM_LINKS.FULL_ADVERTS],
-			['ldc', appealDataLdc, FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE]
+			['ldc', appealDataLdc, FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE],
+			['enforcement notice', appealDataEnforcementNotice, FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE]
 		])('for %s appeal', (_, appealData, expectedAppealFeedbackLink) => {
 			beforeEach(async () => {
 				nock.cleanAll();
-				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
-				nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				nock('http://test/').get(`/appeals/1?include=all`).reply(200, appealData).persist();
+				nock('http://test/').get(`/appeals/${appealData.appealId}/case-team-email`).reply(200, {
 					id: 1,
 					email: 'caseofficers@planninginspectorate.gov.uk',
 					name: 'standard email'
@@ -146,16 +157,32 @@ describe('withdrawal', () => {
 				expect(generateNotifyPreview).toHaveBeenCalledWith(
 					expect.anything(),
 					'appeal-withdrawn-appellant.content.md',
-					expect.objectContaining({
-						feedback_link: expectedAppealFeedbackLink
-					})
+					{
+						feedback_link: expectedAppealFeedbackLink,
+						appeal_reference_number: appealData.appealReference,
+						enforcement_reference: appealData.enforcementNotice?.appellantCase?.reference || '',
+						event_set: true,
+						event_type: 'site visit',
+						lpa_reference: appealData.planningApplicationReference,
+						site_address: expect.any(String),
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						withdrawal_date: '1 February 2026'
+					}
 				);
 				expect(generateNotifyPreview).toHaveBeenCalledWith(
 					expect.anything(),
 					'appeal-withdrawn-lpa.content.md',
-					expect.objectContaining({
-						feedback_link: FEEDBACK_FORM_LINKS.LPA
-					})
+					{
+						feedback_link: FEEDBACK_FORM_LINKS.LPA,
+						appeal_reference_number: appealData.appealReference,
+						enforcement_reference: appealData.enforcementNotice?.appellantCase?.reference || '',
+						event_set: true,
+						event_type: 'site visit',
+						lpa_reference: appealData.planningApplicationReference,
+						site_address: expect.any(String),
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						withdrawal_date: '1 February 2026'
+					}
 				);
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });

@@ -473,7 +473,8 @@ export const appealData = {
 				addressLine2: 'Maidstone',
 				addressCounty: 'Kent',
 				postCode: 'MD21 5XY'
-			}
+			},
+			reference: 'Reference'
 		}
 	}
 };

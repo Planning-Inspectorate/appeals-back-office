@@ -209,7 +209,8 @@ export const renderCheckYourAnswers = async (request, response) => {
 		withdrawal_date: formatDate(new Date(), false),
 		event_set: !!getEventType(currentAppeal),
 		event_type: getEventType(currentAppeal),
-		team_email_address: assignedTeamEmail
+		team_email_address: assignedTeamEmail,
+		enforcement_reference: currentAppeal.enforcementNotice?.appellantCase?.reference || ''
 	};
 	const appealWithdrawnAppellantTemplateName = 'appeal-withdrawn-appellant.content.md';
 	const appealWithdrawnAppellantTemplate = await generateNotifyPreview(
