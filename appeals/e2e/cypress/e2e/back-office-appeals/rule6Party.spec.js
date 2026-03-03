@@ -9,6 +9,7 @@ import { DocumentationSectionPage } from '../../page_objects/caseDetails/documen
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.js';
 import { ContactDetailsPage } from '../../page_objects/contactDetailsPage.js';
+import { CyaPoePage } from '../../page_objects/CYApage/POE/cyaPoePage';
 import { CYASection } from '../../page_objects/cyaSection.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { FileUploaderSection } from '../../page_objects/fileUploadSection.js';
@@ -30,6 +31,7 @@ const fileUploaderSection = new FileUploaderSection();
 const redactionStatusPage = new RedactionStatusPage();
 const dateTimeSection = new DateTimeSection();
 const caseHistoryPage = new CaseHistoryPage();
+const cyaPoePage = new CyaPoePage();
 
 const rule6Details = {
 	partyName: 'TestRuleSixParty',
@@ -481,7 +483,7 @@ it('add a rule 6 POE', () => {
 	);
 });
 
-it('should mark rule 6 POE complete', () => {
+it.only('should mark rule 6 POE complete', () => {
 	setupCaseForRule6StatementReview();
 	cy.simulateStatementsDeadlineElapsed(caseObj);
 	cy.shareCommentsAndStatementsViaApi(caseObj);
@@ -499,6 +501,24 @@ it('should mark rule 6 POE complete', () => {
 		documentationSectionPage.navigateToAddProofOfEvidenceReview('rule-6-proof-of-evidence');
 		caseDetailsPage.selectRadioButtonByValue('Complete');
 		caseDetailsPage.clickButtonByText('Continue');
+		cyaPoePage.checkPageContent(caseObj.reference, rule6Party.serviceUser.organisationName);
+
+		// change procedure
+		caseDetailsPage.clickChangeLinkByLabel('Proof of evidence and witnesses');
+		caseDetailsPage.clickBackLink();
+		caseDetailsPage.clickChangeLinkByLabel('Review decision');
+		caseDetailsPage.selectRadioButtonByValue('Mark as incomplete');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.chooseCheckboxByText('Supporting documents missing');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickChangeLinkByLabel('Review decision');
+		caseDetailsPage.selectRadioButtonByValue('Complete');
+		caseDetailsPage.clickButtonByText('Continue');
+		cyaSection.verifyAnswerUpdated({
+			field: 'Review decisions',
+			value: 'Accept proof of evidence and witnesses'
+		});
+
 		caseDetailsPage.clickButtonByText(
 			`${rule6Party.serviceUser.organisationName} proof of evidence and witnesses`
 		);
