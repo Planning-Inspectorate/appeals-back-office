@@ -1,13 +1,15 @@
 // @ts-nocheck
+import { enforcementNoticeAppeal } from '#tests/appeals/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { jest } from '@jest/globals';
 import {
 	AUDIT_TRAIL_APPEAL_LINK_UNLINKED,
 	AUDIT_TRAIL_APPEAL_LINK_UPDATED_AS_LEAD,
+	AUDIT_TRAIL_PROGRESSED_TO_STATUS,
 	LINK_APPEALS_CHANGE_LEAD_OPERATION,
 	LINK_APPEALS_UNLINK_OPERATION
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STAGE } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_STAGE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 jest.resetModules();
 
@@ -42,17 +44,29 @@ const { default: got } = await import('got');
 
 const mockAppealA = {
 	id: 456,
-	reference: '456123'
+	reference: '456123',
+	appellantCase: {
+		id: 100,
+		appellantCaseValidationOutcome: { id: 1, name: 'Valid' }
+	}
 };
 
 const mockAppealB = {
 	id: 789,
-	reference: '789456'
+	reference: '789456',
+	appellantCase: {
+		id: 101,
+		appellantCaseValidationOutcome: { id: 1, name: 'Valid' }
+	}
 };
 
 const mockAppealC = {
 	id: 123,
-	reference: '123456'
+	reference: '123456',
+	appellantCase: {
+		id: 102,
+		appellantCaseValidationOutcome: { id: 1, name: 'Valid' }
+	}
 };
 
 const mockSavedFolderWithValidDates = {
@@ -426,7 +440,7 @@ describe('appeal linked appeals routes', () => {
 							childAppeals: [
 								{
 									type: CASE_RELATIONSHIP_LINKED,
-									child: { ...mockAppealC, appellantCase: {} }
+									child: mockAppealC
 								}
 							]
 						});
@@ -444,30 +458,31 @@ describe('appeal linked appeals routes', () => {
 					});
 
 					test('returns 200 when the appeal is a parent and appealRefToReplaceLead is a child of this parent', async () => {
+						const testAppeal = structuredClone(enforcementNoticeAppeal);
+						testAppeal.appealStatus = [{ valid: true, status: APPEAL_CASE_STATUS.VALIDATION }];
+						testAppeal.childAppeals = [
+							{
+								type: CASE_RELATIONSHIP_LINKED,
+								childId: mockAppealA.id,
+								childRef: mockAppealA.reference,
+								child: mockAppealA
+							},
+							{
+								type: CASE_RELATIONSHIP_LINKED,
+								childId: mockAppealB.id,
+								childRef: mockAppealB.reference,
+								child: mockAppealB
+							}
+						];
+						testAppeal.appellantCase.appellantCaseValidationOutcome = { id: 1, name: 'Valid' };
 						databaseConnector.folder.findMany.mockResolvedValue([]);
 						databaseConnector.appealRelationship.deleteMany.mockResolvedValue({});
 						databaseConnector.appealRelationship.create.mockResolvedValue({});
 						// @ts-ignore
-						databaseConnector.appeal.findUnique.mockResolvedValue({
-							...householdAppeal,
-							childAppeals: [
-								{
-									type: CASE_RELATIONSHIP_LINKED,
-									childId: mockAppealA.id,
-									childRef: mockAppealA.reference,
-									child: { ...mockAppealA, appellantCase: {} }
-								},
-								{
-									type: CASE_RELATIONSHIP_LINKED,
-									childId: mockAppealB.id,
-									childRef: mockAppealB.reference,
-									child: { ...mockAppealB, appellantCase: {} }
-								}
-							]
-						});
+						databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
 
 						const response = await request
-							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
+							.post(`/appeals/${testAppeal.id}/update-linked-appeals`)
 							.send({
 								operation: LINK_APPEALS_CHANGE_LEAD_OPERATION,
 								appealRefToReplaceLead: mockAppealA.reference
@@ -481,15 +496,15 @@ describe('appeal linked appeals routes', () => {
 						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledTimes(1);
 						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledWith({
 							where: {
-								parentId: householdAppeal.id
+								parentId: testAppeal.id
 							}
 						});
 
 						expect(databaseConnector.appealRelationship.create).toHaveBeenCalledTimes(2);
 						expect(databaseConnector.appealRelationship.create).toHaveBeenCalledWith({
 							data: {
-								childId: householdAppeal.id,
-								childRef: householdAppeal.reference,
+								childId: testAppeal.id,
+								childRef: testAppeal.reference,
 								parentId: mockAppealA.id,
 								parentRef: mockAppealA.reference,
 								type: CASE_RELATIONSHIP_LINKED
@@ -505,14 +520,24 @@ describe('appeal linked appeals routes', () => {
 							}
 						});
 
+						expect(databaseConnector.appellantCase.update).toHaveBeenCalledTimes(1);
+						expect(databaseConnector.appellantCase.update).toHaveBeenNthCalledWith(1, {
+							where: {
+								id: testAppeal.appellantCase.id
+							},
+							data: {
+								appellantCaseValidationOutcomeId: null
+							}
+						});
+
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledTimes(3);
-						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(householdAppeal.id);
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(testAppeal.id);
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(mockAppealA.id);
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(mockAppealB.id);
 
 						expect(mockCreateAuditTrail).toHaveBeenCalledWith(
 							expect.objectContaining({
-								appealId: householdAppeal.id,
+								appealId: testAppeal.id,
 								details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UPDATED_AS_LEAD, [
 									mockAppealA.reference
 								])
@@ -548,7 +573,7 @@ describe('appeal linked appeals routes', () => {
 							parentAppeals: [
 								{
 									type: CASE_RELATIONSHIP_LINKED,
-									parent: { ...mockAppealA, appellantCase: {} }
+									parent: mockAppealA
 								}
 							]
 						});
@@ -593,23 +618,24 @@ describe('appeal linked appeals routes', () => {
 					});
 
 					test('returns 200 and creates audit trails when the appeal is a child and appealRefToReplaceLead is not set', async () => {
+						const testAppeal = structuredClone(enforcementNoticeAppeal);
+						testAppeal.appealStatus = [{ valid: true, status: APPEAL_CASE_STATUS.VALIDATION }];
+						testAppeal.parentAppeals = [
+							{
+								type: CASE_RELATIONSHIP_LINKED,
+								parentId: mockAppealA.id,
+								parentRef: mockAppealA.reference,
+								parent: mockAppealA
+							}
+						];
+						testAppeal.appellantCase.appellantCaseValidationOutcome = { id: 1, name: 'Valid' };
 						databaseConnector.folder.findMany.mockResolvedValue([]);
 						databaseConnector.appealRelationship.deleteMany.mockResolvedValue({});
 						// @ts-ignore
-						databaseConnector.appeal.findUnique.mockResolvedValue({
-							...householdAppeal,
-							parentAppeals: [
-								{
-									type: CASE_RELATIONSHIP_LINKED,
-									parentId: mockAppealA.id,
-									parentRef: mockAppealA.reference,
-									parent: { ...mockAppealA, appellantCase: {} }
-								}
-							]
-						});
+						databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
 
 						const response = await request
-							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
+							.post(`/appeals/${testAppeal.id}/update-linked-appeals`)
 							.send({ operation: LINK_APPEALS_UNLINK_OPERATION })
 							.set('azureAdUserId', azureAdUserId);
 
@@ -620,20 +646,30 @@ describe('appeal linked appeals routes', () => {
 						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledTimes(1);
 						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledWith({
 							where: {
-								childId: householdAppeal.id
+								childId: testAppeal.id
+							}
+						});
+
+						expect(databaseConnector.appellantCase.update).toHaveBeenCalledTimes(1);
+						expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+							where: {
+								id: testAppeal.appellantCase.id
+							},
+							data: {
+								appellantCaseValidationOutcomeId: null
 							}
 						});
 
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledTimes(2);
 
-						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(householdAppeal.id);
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(testAppeal.id);
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(mockAppealA.id);
 
-						expect(mockCreateAuditTrail).toHaveBeenCalledTimes(2);
+						expect(mockCreateAuditTrail).toHaveBeenCalledTimes(3);
 						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
 							1,
 							expect.objectContaining({
-								appealId: householdAppeal.id,
+								appealId: testAppeal.id,
 								details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UNLINKED, [
 									mockAppealA.reference
 								])
@@ -644,7 +680,16 @@ describe('appeal linked appeals routes', () => {
 							expect.objectContaining({
 								appealId: mockAppealA.id,
 								details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UNLINKED, [
-									householdAppeal.reference
+									testAppeal.reference
+								])
+							})
+						);
+						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
+							3,
+							expect.objectContaining({
+								appealId: testAppeal.id,
+								details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [
+									APPEAL_CASE_STATUS.READY_TO_START
 								])
 							})
 						);
@@ -654,30 +699,31 @@ describe('appeal linked appeals routes', () => {
 					});
 
 					test('returns 200 when the appeal is a parent and appealRefToReplaceLead is a child of this parent', async () => {
+						const testAppeal = structuredClone(enforcementNoticeAppeal);
+						testAppeal.appealStatus = [{ valid: true, status: APPEAL_CASE_STATUS.VALIDATION }];
+						testAppeal.childAppeals = [
+							{
+								type: CASE_RELATIONSHIP_LINKED,
+								childId: mockAppealA.id,
+								childRef: mockAppealA.reference,
+								child: mockAppealA
+							},
+							{
+								type: CASE_RELATIONSHIP_LINKED,
+								childId: mockAppealB.id,
+								childRef: mockAppealB.reference,
+								child: mockAppealB
+							}
+						];
+						testAppeal.appellantCase.appellantCaseValidationOutcome = { id: 1, name: 'Valid' };
 						databaseConnector.folder.findMany.mockResolvedValue([]);
 						databaseConnector.appealRelationship.deleteMany.mockResolvedValue({});
 						databaseConnector.appealRelationship.create.mockResolvedValue({});
 						// @ts-ignore
-						databaseConnector.appeal.findUnique.mockResolvedValue({
-							...householdAppeal,
-							childAppeals: [
-								{
-									type: CASE_RELATIONSHIP_LINKED,
-									childId: mockAppealA.id,
-									childRef: mockAppealA.reference,
-									child: { ...mockAppealA, appellantCase: {} }
-								},
-								{
-									type: CASE_RELATIONSHIP_LINKED,
-									childId: mockAppealB.id,
-									childRef: mockAppealB.reference,
-									child: { ...mockAppealB, appellantCase: {} }
-								}
-							]
-						});
+						databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
 
 						const response = await request
-							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
+							.post(`/appeals/${testAppeal.id}/update-linked-appeals`)
 							.send({
 								operation: LINK_APPEALS_UNLINK_OPERATION,
 								appealRefToReplaceLead: mockAppealA.reference
@@ -691,15 +737,15 @@ describe('appeal linked appeals routes', () => {
 						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledTimes(2);
 						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledWith({
 							where: {
-								childId: householdAppeal.id
+								childId: testAppeal.id
 							}
 						});
 
 						expect(databaseConnector.appealRelationship.create).toHaveBeenCalledTimes(2);
 						expect(databaseConnector.appealRelationship.create).toHaveBeenNthCalledWith(1, {
 							data: {
-								childId: householdAppeal.id,
-								childRef: householdAppeal.reference,
+								childId: testAppeal.id,
+								childRef: testAppeal.reference,
 								parentId: mockAppealA.id,
 								parentRef: mockAppealA.reference,
 								type: CASE_RELATIONSHIP_LINKED
@@ -715,36 +761,72 @@ describe('appeal linked appeals routes', () => {
 							}
 						});
 
+						expect(databaseConnector.appellantCase.update).toHaveBeenCalledTimes(1);
+						expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+							where: {
+								id: testAppeal.appellantCase.id
+							},
+							data: {
+								appellantCaseValidationOutcomeId: null
+							}
+						});
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledTimes(3);
-						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(householdAppeal.id);
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(testAppeal.id);
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(mockAppealA.id);
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(mockAppealB.id);
 
-						expect(mockCreateAuditTrail).toHaveBeenCalledTimes(3);
+						expect(mockCreateAuditTrail).toHaveBeenCalledTimes(6);
 						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
 							1,
 							expect.objectContaining({
-								appealId: householdAppeal.id,
+								appealId: testAppeal.id,
 								details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UNLINKED, [
-									householdAppeal.reference
+									testAppeal.reference
 								])
 							})
 						);
 						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
 							2,
 							expect.objectContaining({
-								appealId: householdAppeal.id,
+								appealId: testAppeal.id,
 								details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UNLINKED, [
-									householdAppeal.reference
+									testAppeal.reference
 								])
 							})
 						);
 						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
 							3,
 							expect.objectContaining({
-								appealId: householdAppeal.id,
+								appealId: testAppeal.id,
 								details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UPDATED_AS_LEAD, [
 									mockAppealA.reference
+								])
+							})
+						);
+						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
+							4,
+							expect.objectContaining({
+								appealId: testAppeal.id,
+								details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [
+									APPEAL_CASE_STATUS.READY_TO_START
+								])
+							})
+						);
+						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
+							5,
+							expect.objectContaining({
+								appealId: mockAppealA.id,
+								details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [
+									APPEAL_CASE_STATUS.READY_TO_START
+								])
+							})
+						);
+						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
+							6,
+							expect.objectContaining({
+								appealId: mockAppealB.id,
+								details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [
+									APPEAL_CASE_STATUS.READY_TO_START
 								])
 							})
 						);

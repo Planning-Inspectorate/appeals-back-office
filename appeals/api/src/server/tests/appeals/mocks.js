@@ -759,6 +759,7 @@ export const listedBuildingAppealLPAQuestionnaireIncomplete = {
 
 export const enforcementNoticeAppeal = {
 	...fullPlanningAppeal,
+	id: 35,
 	appellantCase: {
 		...fullPlanningAppeal.appellantCase,
 		enforcementNotice: true,
