@@ -408,6 +408,13 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (
 
 	// appeal incomplete
 	if (session?.webAppellantCaseReviewOutcome.reasons) {
+		incompleteReasonOptions.sort((a, b) => {
+			// identify id 10 'other' and send to back of item list
+			if (a.id === 10) return 1;
+			if (b.id === 10) return -1;
+			return +a.id - +b.id;
+		});
+
 		summaryListComponent.parameters.rows.push({
 			key: {
 				text: `Why is the appeal ${validationOutcome}?`
@@ -463,6 +470,41 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (
 		});
 	}
 
+	// Grounds and facts mismatch
+	if (session?.webAppellantCaseReviewOutcome.groundsFacts) {
+		const htmlList = mapReasonsToReasonsListHtml(
+			groundsAndFactsMismatch,
+			session?.webAppellantCaseReviewOutcome.groundsFacts,
+			session?.webAppellantCaseReviewOutcome.groundsFactsText
+		);
+		const html = htmlList.replace(/([a-z]):/g, 'Ground ($1):');
+
+		summaryListComponent.parameters.rows.push({
+			key: {
+				text: 'Grounds and facts do not match'
+			},
+			value: {
+				html: nunjucksEnvironments.render('appeals/components/page-component.njk', {
+					component: {
+						type: 'show-more',
+						parameters: {
+							html
+						}
+					}
+				})
+			},
+			actions: {
+				items: [
+					{
+						text: 'Change',
+						href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/grounds-facts-check`,
+						visuallyHiddenText: 'Grounds and facts mismatch reasons'
+					}
+				]
+			}
+		});
+	}
+
 	// ground (a) fee receipt due date
 	if (session?.webAppellantCaseReviewOutcome.feeReceiptDueDate) {
 		const { day, month, year } = session.webAppellantCaseReviewOutcome.feeReceiptDueDate;
@@ -493,41 +535,6 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (
 						text: 'Change',
 						href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/date`,
 						visuallyHiddenText: 'Appeal due date'
-					}
-				]
-			}
-		});
-	}
-
-	// Grounds and facts mismatch
-	if (session?.webAppellantCaseReviewOutcome.groundsFacts) {
-		const htmlList = mapReasonsToReasonsListHtml(
-			groundsAndFactsMismatch,
-			session?.webAppellantCaseReviewOutcome.groundsFacts,
-			session?.webAppellantCaseReviewOutcome.groundsFactsText
-		);
-		const html = htmlList.replace(/([a-z]):/g, 'Ground ($1):');
-
-		summaryListComponent.parameters.rows.push({
-			key: {
-				text: 'Grounds and facts do not match'
-			},
-			value: {
-				html: nunjucksEnvironments.render('appeals/components/page-component.njk', {
-					component: {
-						type: 'show-more',
-						parameters: {
-							html
-						}
-					}
-				})
-			},
-			actions: {
-				items: [
-					{
-						text: 'Change',
-						href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/grounds-facts-check`,
-						visuallyHiddenText: 'Grounds and facts mismatch reasons'
 					}
 				]
 			}
