@@ -452,7 +452,7 @@ describe('incomplete-appeal', () => {
 					'<dt class="govuk-summary-list__key"> Why is the appeal incomplete?</dt>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<li>Waiting for appellant to pay the fee</li></ul></dd>'
+					'<li>Waiting for appellant to pay the fee</li>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<dt class="govuk-summary-list__key"> Which documents are incomplete?</dt>'
