@@ -4,10 +4,19 @@ import {
 	addDocumentsToAppeal,
 	getFoldersForAppeal
 } from '#endpoints/documents/documents.service.js';
+import appealRepository from '#repositories/appeal.repository.js';
+import appellantCaseRepository from '#repositories/appellant-case.repository.js';
+import transitionState from '#state/transition-state.js';
 import { copyBlobs } from '#utils/blob-copy.js';
+import { currentStatus } from '#utils/current-status.js';
 import { databaseConnector } from '#utils/database-connector.js';
-import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STAGE } from '@planning-inspectorate/data-model';
+import { getChildAppeals } from '#utils/link-appeals.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import {
+	CASE_RELATIONSHIP_LINKED,
+	VALIDATION_OUTCOME_COMPLETE
+} from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_STAGE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { omit } from 'lodash-es';
 import rhea from 'rhea';
 
@@ -221,4 +230,126 @@ export const duplicateFiles = async (sourceAppeal, destinationAppeal, stage, opt
 		destinationAppealRef: destinationAppeal.reference,
 		stage
 	};
+};
+
+/**
+ *
+ * @param {number | undefined} leadAppealId
+ * @param {number | undefined} unlinkedAppealId
+ * @param {number | undefined} previousLeadAppealId
+ * @param {string} azureAdUserId
+ */
+export const updateAppealStatusIfRequired = async (
+	leadAppealId,
+	unlinkedAppealId,
+	previousLeadAppealId,
+	azureAdUserId
+) => {
+	const leadAppeal = leadAppealId ? await appealRepository.getAppealById(leadAppealId) : null;
+
+	if (!leadAppeal) {
+		throw new Error('Lead appeal not found');
+	}
+
+	const unlinkedAppeal = unlinkedAppealId
+		? await appealRepository.getAppealById(unlinkedAppealId)
+		: null;
+
+	const { appellantCaseValidationOutcome: leadAppealAppellantCaseOutcome } =
+		leadAppeal?.appellantCase || {};
+	const { appellantCaseValidationOutcome: unlinkedAppealAppellantCaseOutcome } =
+		unlinkedAppeal?.appellantCase || {};
+
+	const isEnforcementNotice = leadAppeal?.appealType?.type === APPEAL_TYPE.ENFORCEMENT_NOTICE;
+
+	switch (currentStatus(leadAppeal)) {
+		case APPEAL_CASE_STATUS.VALIDATION:
+			{
+				if (unlinkedAppealId && unlinkedAppealAppellantCaseOutcome) {
+					if (isEnforcementNotice) {
+						// reset enforcement child validation so it can be validated as an unlinked appeal correctly
+						if (unlinkedAppeal?.appellantCase?.id) {
+							await appellantCaseRepository.updateAppellantCaseById(
+								/** @type {number} */ unlinkedAppeal?.appellantCase?.id,
+								{
+									appellantCaseValidationOutcomeId: null
+								}
+							);
+						}
+					} else {
+						// The unlinked appeal has been validated correctly and can roll forward to the next status
+						await transitionState(
+							unlinkedAppealId,
+							azureAdUserId,
+							unlinkedAppealAppellantCaseOutcome.name
+						);
+					}
+				}
+				if (leadAppealAppellantCaseOutcome) {
+					if (isEnforcementNotice) {
+						// reset enforcement lead validation if lead changed so it can be validated as a lead appeal correctly
+						if (
+							![leadAppealId, unlinkedAppealId].includes(previousLeadAppealId) &&
+							leadAppeal?.appellantCase?.id
+						) {
+							return appellantCaseRepository.updateAppellantCaseById(
+								/** @type {number} */ leadAppeal?.appellantCase?.id,
+								{
+									appellantCaseValidationOutcomeId: null
+								}
+							);
+						}
+					}
+					// transition all the linked appeals if they have all been validated
+					const linkedAppeals = [leadAppeal, ...getChildAppeals(leadAppeal)];
+					const shouldTransition = linkedAppeals.every((linkedAppeal) => {
+						const { appellantCaseValidationOutcome } = linkedAppeal?.appellantCase || {};
+						return !!appellantCaseValidationOutcome;
+					});
+					if (shouldTransition) {
+						await Promise.all(
+							linkedAppeals.map(async (linkedAppeal) => {
+								const { appellantCaseValidationOutcome } = linkedAppeal?.appellantCase || {};
+								if (linkedAppeal?.id && appellantCaseValidationOutcome?.name) {
+									await transitionState(
+										linkedAppeal.id,
+										azureAdUserId,
+										appellantCaseValidationOutcome.name
+									);
+								}
+							})
+						);
+					}
+				}
+			}
+			break;
+
+		case APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE: {
+			// transition all the linked appeals if they have had all had their questionnaires completed
+			const linkedAppeals = [leadAppeal, ...getChildAppeals(leadAppeal)];
+			const shouldTransition = linkedAppeals.every((linkedAppeal) => {
+				const { lpaQuestionnaireValidationOutcome } = linkedAppeal?.lpaQuestionnaire || {};
+				return !!lpaQuestionnaireValidationOutcome;
+			});
+			if (shouldTransition) {
+				await Promise.all(
+					linkedAppeals.map(async (linkedAppeal) => {
+						const { lpaQuestionnaireValidationOutcome } = linkedAppeal?.lpaQuestionnaire || {};
+						if (
+							linkedAppeal?.id &&
+							lpaQuestionnaireValidationOutcome?.name === VALIDATION_OUTCOME_COMPLETE
+						) {
+							await transitionState(
+								linkedAppeal.id,
+								azureAdUserId,
+								// @ts-ignore
+								lpaQuestionnaireValidationOutcome.name
+							);
+						}
+					})
+				);
+			}
+			break;
+		}
+	}
 };

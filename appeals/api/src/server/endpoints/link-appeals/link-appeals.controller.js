@@ -38,7 +38,8 @@ import {
 	duplicateAllFiles,
 	duplicateFiles,
 	replaceLeadAppeal,
-	unlinkChildAppeal
+	unlinkChildAppeal,
+	updateAppealStatusIfRequired
 } from './link-appeals.service.js';
 
 /** @typedef {import('express').Request} Request */
@@ -543,6 +544,7 @@ export const updateLinkedAppeals = async (req, res) => {
 			// need to broadcast all the appeals in the originally linked group
 			appealsToBroadcast = [currentLead.id, ...childAppeals.map((appeal) => appeal.id)];
 		}
+
 		if (appealsToBroadcast) {
 			await Promise.allSettled(
 				appealsToBroadcast
@@ -550,6 +552,13 @@ export const updateLinkedAppeals = async (req, res) => {
 					.map((appealId) => broadcasters.broadcastAppeal(appealId))
 			);
 		}
+
+		await updateAppealStatusIfRequired(
+			appealToReplaceLead?.id || currentLead?.id,
+			appealToUnlink?.id,
+			currentLead?.id,
+			azureAdUserId
+		);
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).send({ errors: { body: ERROR_UNLINKING_APPEALS } });

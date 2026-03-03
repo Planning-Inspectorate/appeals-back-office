@@ -4,6 +4,7 @@ import {
 	allLpaQuestionnaireOutcomesAreComplete,
 	isAwaitingLinkedAppeal
 } from '#utils/is-awaiting-linked-appeal.js';
+import { VALIDATION_OUTCOME_COMPLETE } from '@pins/appeals/constants/support.js';
 
 describe('isAwaitingLinkedAppeal', () => {
 	let appeal;
@@ -82,12 +83,16 @@ describe('isAwaitingLinkedAppeal', () => {
 					{
 						currentStatus: 'statements',
 						completedStateList: ['validation', 'lpa_questionnaire'],
-						lpaQuestionnaire: { lpaQuestionnaireValidationOutcome: { name: 'complete' } }
+						lpaQuestionnaire: {
+							lpaQuestionnaireValidationOutcome: { name: VALIDATION_OUTCOME_COMPLETE }
+						}
 					},
 					{
 						currentStatus: 'lpa_questionnaire',
 						completedStateList: ['validation'],
-						lpaQuestionnaire: { lpaQuestionnaireValidationOutcome: { name: 'complete' } }
+						lpaQuestionnaire: {
+							lpaQuestionnaireValidationOutcome: { name: VALIDATION_OUTCOME_COMPLETE }
+						}
 					}
 				])
 			).toBe(false);
@@ -105,11 +110,15 @@ describe('allLpaQuestionnaireOutcomesAreComplete', () => {
 			allLpaQuestionnaireOutcomesAreComplete([
 				{
 					id: 1,
-					lpaQuestionnaire: { lpaQuestionnaireValidationOutcome: { name: 'complete' } }
+					lpaQuestionnaire: {
+						lpaQuestionnaireValidationOutcome: { name: VALIDATION_OUTCOME_COMPLETE }
+					}
 				},
 				{
 					id: 2,
-					lpaQuestionnaire: { lpaQuestionnaireValidationOutcome: { name: 'complete' } }
+					lpaQuestionnaire: {
+						lpaQuestionnaireValidationOutcome: { name: VALIDATION_OUTCOME_COMPLETE }
+					}
 				}
 			])
 		).toBe(true);
@@ -123,7 +132,9 @@ describe('allLpaQuestionnaireOutcomesAreComplete', () => {
 				},
 				{
 					id: 2,
-					lpaQuestionnaire: { lpaQuestionnaireValidationOutcome: { name: 'complete' } }
+					lpaQuestionnaire: {
+						lpaQuestionnaireValidationOutcome: { name: VALIDATION_OUTCOME_COMPLETE }
+					}
 				}
 			])
 		).toBe(false);
@@ -136,14 +147,18 @@ describe('allLpaQuestionnaireOutcomesAreComplete', () => {
 			},
 			{
 				id: 2,
-				lpaQuestionnaire: { lpaQuestionnaireValidationOutcome: { name: 'complete' } }
+				lpaQuestionnaire: {
+					lpaQuestionnaireValidationOutcome: { name: VALIDATION_OUTCOME_COMPLETE }
+				}
 			}
 		];
-		expect(allLpaQuestionnaireOutcomesAreComplete(linkedAppeals, 1, { name: 'complete' })).toBe(
-			true
-		);
+		expect(
+			allLpaQuestionnaireOutcomesAreComplete(linkedAppeals, 1, {
+				name: VALIDATION_OUTCOME_COMPLETE
+			})
+		).toBe(true);
 		expect(linkedAppeals[0].lpaQuestionnaire.lpaQuestionnaireValidationOutcome.name).toBe(
-			'complete'
+			VALIDATION_OUTCOME_COMPLETE
 		);
 	});
 });

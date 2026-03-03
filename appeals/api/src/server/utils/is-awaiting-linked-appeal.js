@@ -1,4 +1,5 @@
 import { currentStatus } from '#utils/current-status.js';
+import { VALIDATION_OUTCOME_COMPLETE } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { isArray } from 'lodash-es';
 
@@ -63,7 +64,8 @@ export const allLpaQuestionnaireOutcomesAreComplete = (
 			appeal.lpaQuestionnaire.lpaQuestionnaireValidationOutcome = validationOutcome;
 		}
 		return (
-			appeal.lpaQuestionnaire?.lpaQuestionnaireValidationOutcome?.name?.toLowerCase() === 'complete'
+			appeal.lpaQuestionnaire?.lpaQuestionnaireValidationOutcome?.name ===
+			VALIDATION_OUTCOME_COMPLETE
 		);
 	});
 };
