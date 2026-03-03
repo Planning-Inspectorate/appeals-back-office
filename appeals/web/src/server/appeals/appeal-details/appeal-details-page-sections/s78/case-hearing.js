@@ -8,7 +8,7 @@ import { startOfDay } from 'date-fns';
  * @param {{appeal: MappedInstructions}} mappedData
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
  * @param {import('express-session').Session} session
- * @returns {PageComponent[]|undefined}
+ * @returns {PageComponent|undefined}
  */
 export const getCaseHearing = (mappedData, appealDetails, session) => {
 	if (
@@ -61,18 +61,16 @@ export const getCaseHearing = (mappedData, appealDetails, session) => {
 					'Not set up'
 				);
 
-	return [
-		wrapComponents(
-			[
-				...(cancelHearingComponent ? [cancelHearingComponent] : []),
-				...(hearingComponent ? [hearingComponent] : []),
-				hearingEstimatesHeading,
-				...(hearingEstimatesComponent ? [hearingEstimatesComponent] : [])
-			],
-			{
-				opening: '<h2 class="govuk-heading-l">Hearing</h2><div id="case-details-hearing-section">',
-				closing: '</div>'
-			}
-		)
-	];
+	return wrapComponents(
+		[
+			...(cancelHearingComponent ? [cancelHearingComponent] : []),
+			...(hearingComponent ? [hearingComponent] : []),
+			hearingEstimatesHeading,
+			...(hearingEstimatesComponent ? [hearingEstimatesComponent] : [])
+		],
+		{
+			opening: '<h2 class="govuk-heading-l">Hearing</h2><div id="case-details-hearing-section">',
+			closing: '</div>'
+		}
+	);
 };

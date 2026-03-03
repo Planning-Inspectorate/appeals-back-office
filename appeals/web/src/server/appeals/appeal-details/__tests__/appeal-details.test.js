@@ -5603,6 +5603,29 @@ describe('appeal-details', () => {
 				);
 			});
 
+			it('should not render the Hearing accordion for enforcement notice child cases with a procedureType of "Hearing"', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=all`)
+					.reply(200, {
+						...appealDataEnforcementNotice,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+						hearing: null,
+						isChildAppeal: true,
+						isParentAppeal: false
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).not.toContain('<div id="case-details-hearing-section">');
+				expect(unprettifiedHTML).not.toContain('Hearing</h2>');
+			});
+
 			it('should render empty states for Hearing accordion when hearing is not set up and user is read only', async () => {
 				nock('http://test/')
 					.get(`/appeals/${appealId}?include=all`)
@@ -6457,6 +6480,28 @@ describe('appeal-details', () => {
 				expect(unprettifiedInquirySectionHtml).toContain(
 					`href="/appeals-service/appeal-details/${appealId}/inquiry/estimates/add">Add inquiry estimates</a>`
 				);
+			});
+
+			it('should not render the Inquiry accordion for enforcement notice child cases with a procedureType of "Inquiry"', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=all`)
+					.reply(200, {
+						...appealDataEnforcementNotice,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+						isChildAppeal: true,
+						isParentAppeal: false
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).not.toContain('<div id="case-details-inquiry-section">');
+				expect(unprettifiedHTML).not.toContain('Inquiry</h2>');
 			});
 
 			it('should render the inquiry details summary list when inquiry is present with address', async () => {
