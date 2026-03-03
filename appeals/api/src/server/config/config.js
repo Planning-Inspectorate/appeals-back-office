@@ -98,7 +98,16 @@ const { value, error } = schema.validate({
 		featureFlagLDC: environment.FEATURE_FLAG_LDC && environment.FEATURE_FLAG_LDC === 'true',
 		featureFlagAppellantStatement:
 			environment.FEATURE_FLAG_APPELLANT_STATEMENT &&
-			environment.FEATURE_FLAG_APPELLANT_STATEMENT === 'true'
+			environment.FEATURE_FLAG_APPELLANT_STATEMENT === 'true',
+		featureFlagEnforcementHearingLinked:
+			environment.FEATURE_FLAG_ENFORCEMENT_HEARING_LINKED &&
+			environment.FEATURE_FLAG_ENFORCEMENT_HEARING_LINKED === 'true',
+		featureFlagEnforcementInquiryLinked:
+			environment.FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED &&
+			environment.FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED === 'true',
+		featureFlagEnforcementChangeProcedureLinked:
+			environment.FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED &&
+			environment.FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED === 'true'
 	},
 	serviceBusEnabled: environment.SERVICE_BUS_ENABLED && environment.SERVICE_BUS_ENABLED === 'true',
 	enableTestEndpoints:
