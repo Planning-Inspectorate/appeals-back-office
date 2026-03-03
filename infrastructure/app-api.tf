@@ -88,6 +88,7 @@ module "app_api" {
     FEATURE_FLAG_RULE_6_STATEMENT        = var.apps_config.featureFlags.featureFlagRule6Statement
     FEATURE_FLAG_EXPEDITED_APPEALS       = var.apps_config.featureFlags.featureFlagExpeditedAppeals
     FEATURE_FLAG_LDC                     = var.apps_config.featureFlags.featureFlagLDC
+    FEATURE_FLAG_APPELLANT_STATEMENT     = var.apps_config.featureFlags.featureFlagAppellantStatement
 
 
 
