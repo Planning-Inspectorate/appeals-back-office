@@ -14,7 +14,7 @@ import {
 	ENFORCEMENT_APPEAL_INVALID_GROUND_A_BARRED,
 	ENFORCEMENT_APPEAL_INVALID_LEGAL_INTEREST
 } from '@pins/appeals/constants/support.js';
-import { isAnyEnforcementAppealType } from '../appellant-case/appellant-case.controller.js';
+import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters } from '../appellant-case/appellant-case.mapper.js';
 import * as appellantCaseService from '../appellant-case/appellant-case.service.js';
 import * as outcomeIncompleteService from '../appellant-case/outcome-incomplete/outcome-incomplete.service.js';

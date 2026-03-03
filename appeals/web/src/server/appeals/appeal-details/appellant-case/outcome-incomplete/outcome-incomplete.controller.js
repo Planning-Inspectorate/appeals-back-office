@@ -7,6 +7,7 @@ import logger from '#lib/logger.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { getNotValidReasonsTextFromRequestBody } from '#lib/validation-outcome-reasons-formatter.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { isAfter, parseISO } from 'date-fns';
 import * as appellantCaseService from '../../appellant-case/appellant-case.service.js';
 import {
@@ -64,10 +65,13 @@ const renderIncompleteReason = async (request, response) => {
 	const { webAppellantCaseReviewOutcome } = request.session;
 
 	if (incompleteReasonOptions) {
-		const filteredReasons =
-			appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE
-				? incompleteReasonOptions.filter((reason) => reason.id > 9 && reason.id !== 11)
-				: incompleteReasonOptions.filter((reason) => reason.id <= 10 || reason.id === 11);
+		let filteredReasons = isAnyEnforcementAppealType(appealType)
+			? incompleteReasonOptions.filter((reason) => reason.id > 9 && reason.id !== 11)
+			: incompleteReasonOptions.filter((reason) => reason.id <= 10 || reason.id === 11);
+		if (appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING) {
+			filteredReasons = filteredReasons.filter((reason) => reason.id !== 14);
+		}
+
 		const mappedIncompleteReasonOptions =
 			mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters(
 				'incomplete',
@@ -141,7 +145,7 @@ const renderUpdateDueDate = async (request, response) => {
 	}
 
 	let backLinkUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/incomplete/`;
-	if (currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+	if (isAnyEnforcementAppealType(currentAppeal.appealType)) {
 		if (
 			request.session.webAppellantCaseReviewOutcome?.missingDocuments &&
 			request.session.webAppellantCaseReviewOutcome?.feeReceiptDueDate
@@ -195,7 +199,7 @@ export const postIncompleteReason = async (request, response) => {
 			reasonsText: getNotValidReasonsTextFromRequestBody(request.body, 'incompleteReason')
 		};
 
-		if (appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+		if (isAnyEnforcementAppealType(appealType)) {
 			const redirectMap = {
 				10: 'date',
 				12: 'missing-documents',
@@ -275,7 +279,7 @@ export const postUpdateDueDate = async (request, response) => {
 			year: updatedDueDateYear
 		};
 
-		if (appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+		if (isAnyEnforcementAppealType(appealType)) {
 			return response.redirect(
 				`/appeals-service/appeal-details/${appealId}/appellant-case/incomplete/check-details-and-mark-enforcement-as-incomplete`
 			);

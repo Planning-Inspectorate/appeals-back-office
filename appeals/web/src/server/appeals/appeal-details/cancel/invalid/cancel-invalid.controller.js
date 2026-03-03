@@ -1,4 +1,3 @@
-import { isAnyEnforcementAppealType } from '#appeals/appeal-details/appellant-case/appellant-case.controller.js';
 import * as appellantCaseService from '#appeals/appeal-details/appellant-case/appellant-case.service.js';
 import {
 	buildRejectionReasons,
@@ -23,6 +22,7 @@ import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { isDefined } from '#lib/ts-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
 import { APPEAL_TYPE, FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
+import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { format } from 'date-fns';
 import { invalidReasonPage, otherLiveAppealsPage } from './cancel-invalid.mapper.js';
 

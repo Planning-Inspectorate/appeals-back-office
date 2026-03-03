@@ -4,7 +4,7 @@ import { getExampleDateHint } from '#lib/dates.js';
 import { enhanceCheckboxOptionWithAddAnotherReasonConditionalHtml } from '#lib/enhance-html.js';
 import { dateInput } from '#lib/mappers/index.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 
 /**
  *
@@ -72,7 +72,7 @@ export const mapIncompleteReasonPage = (
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Why is the appeal incomplete?`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealId}/appellant-case${appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ? '/incomplete/enforcement-notice' : ''}`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealId}/appellant-case${isAnyEnforcementAppealType(appealType) ? '/incomplete/enforcement-notice' : ''}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
 			{
