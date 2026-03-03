@@ -263,5 +263,36 @@ extends:
                   appResourceGroup: $(resourceGroup)
                   appStagingSlotName: staging
                   appTargetSlotName: production
+          - task: ShellScript@2
+            inputs:
+              scriptPath: 'bin/check-deploy-run-e2e.sh'
+              env:
+                ALLOWED_ENVIRONMENTS: $(ALLOWED-ENVIRONMENTS)
+                TARGET_ENVIRONMENT: $(ENVIRONMENT)
+                ENABLED: $(ENABLED)
+            displayName: 'Check run e2e tests'
+          - script: |
+               echo "Running Cypress specs: $(E2E-TEST-FLAG)"
+               npx cypress run --env grepTags="$(E2E-TEST-FLAG)"
+            workingDirectory: $(System.DefaultWorkingDirectory)/appeals/e2e
+            env:
+              TZ: 'Europe/London'
+              BASE_URL: $(APPEALS_BASE_URL)
+              CASE_TEAM_EMAIL: $(CASE_TEAM_APPEALS_EMAIL)
+              CASE_ADMIN_EMAIL: $(CASE_ADMIN_APPEALS_EMAIL)
+              INSPECTOR_EMAIL: $(INSPECTOR_APPEALS_EMAIL)
+              VALIDATION_OFFICER_EMAIL: $(VALIDATION_OFFICER_EMAIL)
+              USER_PASSWORD: $(USER_PASSWORD)
+              HAPPY_PATH_EMAIL: $(HAPPY_PATH_EMAIL)
+            displayName: "Run Cypress Tests"
+            condition: eq(variables['runE2E'], 'true')
+          - task: PublishBuildArtifacts@1
+            condition: failed()
+            inputs:
+              pathToPublish: 'appeals/e2e/cypress/screenshots'
+              artifactName: 'FailedTests'
+              displayName: "Publish Failed Tests Artifacts"
     globalVariables:
       - template: azure-pipelines-variables.yml@self
+      - group: cd_e2e-deploy
+      - group: e2e-$(ENVIRONMENT)
