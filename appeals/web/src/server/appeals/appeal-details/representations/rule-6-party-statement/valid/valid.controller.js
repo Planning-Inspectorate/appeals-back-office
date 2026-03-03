@@ -1,6 +1,6 @@
 import * as api from '#lib/api/allocation-details.api.js';
 import { ensureArray } from '#lib/array-utilities.js';
-import { applyEditsForAppeal, clearEditsForAppeal } from '#lib/edit-utilities.js';
+import { applyEdits, applyEditsForAppeal, clearEditsForAppeal } from '#lib/edit-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
 import { acceptRepresentation } from '../../representations.service.js';
@@ -46,7 +46,6 @@ export function postAllocationCheck(request, response) {
 		errors,
 		params: { appealId, rule6PartyId },
 		body,
-		currentAppeal,
 		session
 	} = request;
 
@@ -54,18 +53,13 @@ export function postAllocationCheck(request, response) {
 		return renderAllocationCheck(request, response);
 	}
 
-	const sessionKey = request.query.editEntrypoint
-		? 'acceptRule6PartyStatement/edit'
-		: 'acceptRule6PartyStatement';
+	const sessionKey = 'acceptRule6PartyStatement';
 
-	if (
-		session[sessionKey]?.[currentAppeal.appealId] &&
-		body.allocationLevelAndSpecialisms === 'no'
-	) {
-		delete session[sessionKey][currentAppeal.appealId].allocationLevel;
-		delete session[sessionKey][currentAppeal.appealId].allocationSpecialisms;
+	applyEdits(request, 'acceptRule6PartyStatement');
 
-		applyEditsForAppeal(request, 'acceptRule6PartyStatement', currentAppeal.appealId);
+	if (session[sessionKey]?.allocationLevel && body.allocationLevelAndSpecialisms === 'no') {
+		delete session[sessionKey].allocationLevel;
+		delete session[sessionKey].allocationSpecialisms;
 	}
 
 	return response.redirect(

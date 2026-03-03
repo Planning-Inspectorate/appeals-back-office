@@ -1,5 +1,6 @@
 import * as api from '#lib/api/allocation-details.api.js';
 import { ensureArray } from '#lib/array-utilities.js';
+import { applyEdits } from '#lib/edit-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
@@ -142,12 +143,22 @@ export function renderAllocationCheck(request, response) {
 export function postAllocationCheck(request, response) {
 	const {
 		errors,
+		session,
 		params: { appealId, rule6PartyId },
 		body
 	} = request;
 
 	if (errors) {
 		return renderAllocationCheck(request, response);
+	}
+
+	applyEdits(request, 'redactRule6PartyStatement');
+
+	const sessionKey = 'redactRule6PartyStatement';
+
+	if (session[sessionKey]?.allocationLevel && body.allocationLevelAndSpecialisms === 'no') {
+		delete session[sessionKey].allocationLevel;
+		delete session[sessionKey].allocationSpecialisms;
 	}
 
 	return response.redirect(
@@ -204,6 +215,8 @@ export function postAllocationLevel(request, response) {
 		return renderAllocationLevel(request, response);
 	}
 
+	applyEdits(request, 'redactRule6PartyStatement');
+
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/redact/allocation-specialisms`
 	);
@@ -250,6 +263,8 @@ export function postAllocationSpecialisms(request, response) {
 	if (errors) {
 		return renderAllocationSpecialisms(request, response);
 	}
+
+	applyEdits(request, 'redactRule6PartyStatement');
 
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/redact/confirm`
