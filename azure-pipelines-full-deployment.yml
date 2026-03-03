@@ -75,18 +75,8 @@ stages:
               REQUESTED_FOR="$(Build.RequestedFor)"
               REQUESTED_FOR_EMAIL="$(Build.RequestedForEmail)"
 
-              # Compact JSON-like parameters + useful run metadata
-              PARAMS_COMPACT="$(jq -cn \
-                --arg environment '${{ parameters.environment }}' \
-                --arg service '${{ parameters.service }}' \
-                --arg version '${{ parameters.version }}' \
-                --arg changeTicket '${{ parameters.changeTicket }}' \
-                --arg buildId "$BUILD_ID" \
-                --arg reason "$REASON" \
-                --arg requestedFor "$REQUESTED_FOR" \
-                --arg requestedForEmail "$REQUESTED_FOR_EMAIL" \
-                --arg definition "$DEFINITION_NAME" \
-                '{parameters:{environment:$environment,service:$service,version:$version,changeTicket:$changeTicket},system:{buildId:$buildId,reason:$reason,requestedFor:$requestedFor,requestedForEmail:$requestedForEmail,definition:$definition}}')"
+              # Compact parameters string (quote-free for cleaner Confluence rendering)
+              PARAMS_COMPACT="environment=${{ parameters.environment }}; service=${{ parameters.service }}; version=${{ parameters.version }}; changeTicket=${{ parameters.changeTicket }}; buildId=${BUILD_ID}; reason=${REASON}; requestedFor=${REQUESTED_FOR}; requestedForEmail=${REQUESTED_FOR_EMAIL}; definition=${DEFINITION_NAME}"
 
               xml_escape() {
                 local s="$1"
