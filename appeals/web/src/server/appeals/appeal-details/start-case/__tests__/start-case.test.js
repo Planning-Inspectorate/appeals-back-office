@@ -736,7 +736,7 @@ describe('start-case', () => {
 
 			it.each([
 				['enforcement', APPEAL_TYPE.ENFORCEMENT_NOTICE],
-				['enforcement listed building', APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING] // Add this back
+				['enforcement listed building', APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING]
 			])(
 				'should redirect to check and confirm page when appeal type is %s and hearing and inquiry are not enabled',
 				async (_, appealType) => {

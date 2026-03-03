@@ -8,7 +8,7 @@ import { startOfDay } from 'date-fns';
  * @param {{appeal: MappedInstructions}} mappedData
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
  * @param {import('express-session').Session} session
- * @returns {PageComponent[]|undefined}
+ * @returns {PageComponent|undefined}
  */
 export const getCaseInquiry = (mappedData, appealDetails, session) => {
 	if (
@@ -63,18 +63,16 @@ export const getCaseInquiry = (mappedData, appealDetails, session) => {
 					'Not set up'
 				);
 
-	return [
-		wrapComponents(
-			[
-				...(cancelInquiryComponent ? [cancelInquiryComponent] : []),
-				...(inquiryComponent ? [inquiryComponent] : []),
-				inquiryEstimatesHeading,
-				...(inquiryEstimatesComponent ? [inquiryEstimatesComponent] : [])
-			],
-			{
-				opening: '<h2 class="govuk-heading-l">Inquiry</h2><div id="case-details-inquiry-section">',
-				closing: '</div>'
-			}
-		)
-	];
+	return wrapComponents(
+		[
+			...(cancelInquiryComponent ? [cancelInquiryComponent] : []),
+			...(inquiryComponent ? [inquiryComponent] : []),
+			inquiryEstimatesHeading,
+			...(inquiryEstimatesComponent ? [inquiryEstimatesComponent] : [])
+		],
+		{
+			opening: '<h2 class="govuk-heading-l">Inquiry</h2><div id="case-details-inquiry-section">',
+			closing: '</div>'
+		}
+	);
 };
