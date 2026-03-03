@@ -51,6 +51,45 @@ describe('alleged-breach-creates-floor-space', () => {
 			);
 		});
 
+		it('should redirect back to the change page if no answer is given', async () => {
+			const invalidData = {};
+			nock('http://test/')
+				.get(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
+				.reply(200, lpaQuestionnaireData);
+
+			const response = await request
+				.post(`${lpaQuestionnaireUrl}/alleged-breach-creates-floor-space/change`)
+				.send(invalidData);
+
+			expect(response.statusCode).toBe(200);
+			const elementInnerHtml = parseHtml(response.text).innerHTML;
+
+			expect(elementInnerHtml).toMatchSnapshot();
+			expect(elementInnerHtml).toContain(
+				'Select yes if the alleged breach creates any floor space</a>'
+			);
+		});
+
+		it('should redirect back to the change page if invalid floor space value is provided', async () => {
+			const invalidData = {
+				floorSpaceCreatedByBreachInSquareMetresRadio: 'yes',
+				floorSpaceCreatedByBreachInSquareMetres: 'sa'
+			};
+			nock('http://test/')
+				.get(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
+				.reply(200, lpaQuestionnaireData);
+
+			const response = await request
+				.post(`${lpaQuestionnaireUrl}/alleged-breach-creates-floor-space/change`)
+				.send(invalidData);
+
+			expect(response.statusCode).toBe(200);
+			const elementInnerHtml = parseHtml(response.text).innerHTML;
+
+			expect(elementInnerHtml).toMatchSnapshot();
+			expect(elementInnerHtml).toContain('Floor space must be a number or decimal</a>');
+		});
+
 		it('should re-direct to LPA questionnaire if "no"', async () => {
 			const validData = {
 				floorSpaceCreatedByBreachInSquareMetresRadio: 'no'

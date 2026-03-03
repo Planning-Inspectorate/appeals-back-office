@@ -50,20 +50,20 @@ const renderChangeFloorSpaceCreatedByBreachInSquareMetres = async (request, resp
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postChangeFloorSpaceCreatedByBreachInSquareMetres = async (request, response) => {
+	const {
+		params: { appealId, lpaQuestionnaireId },
+		apiClient,
+		errors
+	} = request;
+
+	if (errors) {
+		return renderChangeFloorSpaceCreatedByBreachInSquareMetres(request, response);
+	}
+
 	request.session.floorSpaceCreatedByBreachInSquareMetres = {
 		radio: request.body['floorSpaceCreatedByBreachInSquareMetresRadio'],
 		details: request.body['floorSpaceCreatedByBreachInSquareMetres']
 	};
-
-	if (request.errors) {
-		return renderChangeFloorSpaceCreatedByBreachInSquareMetres(request, response);
-	}
-
-	const {
-		params: { appealId, lpaQuestionnaireId },
-		apiClient
-	} = request;
-
 	if (!areIdParamsValid(appealId, lpaQuestionnaireId)) {
 		return response.status(400).render('app/400.njk');
 	}

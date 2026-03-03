@@ -41,7 +41,8 @@ export const changeAreaOfAllegedBreachInSquareMetresPage = (
 					id: 'area-of-alleged-breach-details',
 					name: 'areaOfAllegedBreachInSquareMetres',
 					hint: 'Area of the alleged breach, in square metres',
-					details: currentDetailsValue
+					details: currentDetailsValue,
+					type: 'input'
 				}
 			})
 		]
