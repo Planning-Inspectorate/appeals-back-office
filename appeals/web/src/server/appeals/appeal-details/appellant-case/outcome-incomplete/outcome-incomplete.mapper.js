@@ -259,7 +259,7 @@ export const groundsFactsCheckPage = (appealReference, appealGrounds, backLinkUr
 		const groundsError = errors?.[`${groundsName}-1`];
 		return {
 			value: grounds.id,
-			text: grounds.name,
+			text: `Ground (${grounds.name})`,
 			checked: grounds.selected || !!grounds.text,
 			conditional: grounds.hasText
 				? {

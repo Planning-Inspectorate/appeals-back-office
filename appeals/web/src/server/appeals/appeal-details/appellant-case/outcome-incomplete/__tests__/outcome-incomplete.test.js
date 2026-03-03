@@ -946,12 +946,12 @@ describe('incomplete-appeal', () => {
 				const textContent = element.textContent.replace(/\s+/g, ' ').trim();
 				const enforcementGrounds = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
 				enforcementGrounds.forEach((ground) =>
-					expect(textContent).toContain(`${ground} Enter a reason`)
+					expect(textContent).toContain(`Ground (${ground}) Enter a reason`)
 				);
 
 				const extraELBGrounds = ['h', 'i', 'j', 'k'];
 				extraELBGrounds.forEach((ground) =>
-					expect(textContent).not.toContain(`${ground} Enter a reason`)
+					expect(textContent).not.toContain(`Ground (${ground}) Enter a reason`)
 				);
 
 				expect(element.innerHTML).toContain('Continue</button>');
