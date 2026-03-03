@@ -11,6 +11,7 @@ import {
 	casPlanningAppealAppellantCaseIncomplete,
 	casPlanningAppealAppellantCaseInvalid,
 	casPlanningAppealAppellantCaseValid,
+	enforcementListedAppealAppellantCaseIncomplete,
 	enforcementNoticeAppeal,
 	enforcementNoticeAppealAppellantCaseIncomplete,
 	enforcementNoticeAppealAppellantCaseInvalid,
@@ -2299,6 +2300,98 @@ describe('appellant cases routes', () => {
 					recipientEmail: enforcementNoticeAppealAppellantCaseIncomplete.lpa.email,
 					templateName: 'enforcement-appeal-incomplete-lpa'
 				});
+				expect(response.status).toEqual(200);
+			});
+			test('updates the appellant case for incomplete enforcement notice appeal with invalid enforcement listed building', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...enforcementListedAppealAppellantCaseIncomplete,
+					caseExtensionDate: '2035-07-14T00:00:00.000Z'
+				});
+				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+					appellantCaseValidationOutcomes[0]
+				);
+				databaseConnector.appellantCaseEnforcementInvalidReasonsSelected.deleteMany.mockResolvedValue(
+					true
+				);
+				databaseConnector.appellantCaseEnforcementInvalidReasonsSelected.createMany.mockResolvedValue(
+					true
+				);
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const body = {
+					validationOutcome: 'incomplete',
+					enforcementInvalidReasons: [
+						{ id: 1, text: ['has some text'] },
+						{ id: 2, text: ['has some other text'] },
+						{ id: 8, text: ['This is the other field'] }
+					],
+					enforcementNoticeInvalid: 'yes',
+					otherInformation: 'Enforcement other information'
+				};
+				const { appellantCase, id } = enforcementListedAppealAppellantCaseIncomplete;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { id: appellantCase.id },
+					data: {
+						appellantCaseValidationOutcomeId: 1
+					}
+				});
+				expect(
+					databaseConnector.appellantCaseEnforcementInvalidReasonText.deleteMany
+				).toHaveBeenCalled();
+				expect(
+					databaseConnector.appellantCaseEnforcementInvalidReasonText.createMany
+				).toHaveBeenCalledWith({
+					data: [
+						{
+							appellantCaseId: appellantCase.id,
+							appellantCaseEnforcementInvalidReasonId: 1,
+							text: 'has some text'
+						},
+						{
+							appellantCaseId: appellantCase.id,
+							appellantCaseEnforcementInvalidReasonId: 2,
+							text: 'has some other text'
+						},
+						{
+							appellantCaseId: appellantCase.id,
+							appellantCaseEnforcementInvalidReasonId: 8,
+							text: 'This is the other field'
+						}
+					]
+				});
+				expect(databaseConnector.enforcementNoticeAppealOutcome.upsert).toHaveBeenCalledWith({
+					create: expect.any(Object),
+					update: {
+						appeal: { connect: { id } },
+						otherInformation: 'Enforcement other information',
+						otherLiveAppeals: null,
+						enforcementNoticeInvalid: 'yes',
+						groundAFeeReceiptDueDate: null
+					},
+					where: { appealId: id }
+				});
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+					data: {
+						appealId: id,
+						details: 'Case updated',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(0);
+
 				expect(response.status).toEqual(200);
 			});
 		});

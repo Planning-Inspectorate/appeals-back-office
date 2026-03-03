@@ -845,6 +845,43 @@ export const enforcementNoticeAppealAppellantCaseIncomplete = {
 	id: 4
 };
 
+export const enforcementListedAppealAppellantCaseIncomplete = {
+	...enforcementNoticeAppeal,
+	appellantCase: {
+		...enforcementNoticeAppeal.appellantCase,
+		...incompleteAppellantCaseOutcome,
+		appellantCaseEnforcementInvalidReasonsSelected: [
+			{
+				appellantCaseEnforcementInvalidReason: {
+					id: 3,
+					name: 'There is a mistake in the wording',
+					hasText: true
+				},
+				appellantCaseEnforcementInvalidReasonText: [
+					{
+						id: 6,
+						text: 'this is a short reason',
+						appellantCaseEnforcementInvalidReasonId: 3
+					}
+				]
+			}
+		],
+		appellantCaseEnforcementMissingDocumentsSelected: [{ id: 12 }],
+		groundAFeeReceiptDueDate: new Date()
+	},
+	enforcementNoticeAppealOutcome: {
+		enforcementNoticeInvalid: 'no',
+		groundAFeeReceiptDueDate: new Date()
+	},
+	id: 4,
+	appealType: {
+		id: 2,
+		key: APPEAL_CASE_TYPE.F,
+		type: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.ENFORCEMENT_LISTED_BUILDING
+	}
+};
+
 export const linkedAppeals = [
 	{
 		parentId: householdAppeal.id,

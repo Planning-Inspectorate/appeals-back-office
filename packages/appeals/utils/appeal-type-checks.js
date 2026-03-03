@@ -1,4 +1,5 @@
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+import { APPEAL_TYPE } from '../constants/common.js';
 
 /**
  * @typedef {typeof APPEAL_CASE_TYPE['D'] | typeof APPEAL_CASE_TYPE['W']} BaseAppealType
@@ -40,3 +41,12 @@ export const isExpeditedAppealType = (appealType) => {
  */
 export const isEnforcementCaseType = (caseType) =>
 	caseType === APPEAL_CASE_TYPE.C || caseType === APPEAL_CASE_TYPE.F;
+
+/**
+ *
+ * @param {string|undefined} appealType
+ * @returns {boolean}
+ */
+export const isAnyEnforcementAppealType = (appealType) =>
+	appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ||
+	appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING;
