@@ -1618,7 +1618,7 @@ export async function seedTestData(databaseConnector) {
 					enforcementEffectiveDate: new Date(),
 					contactPlanningInspectorateDate: getPastDate({ days: 10 }),
 					enforcementReference: 'Reference',
-					interestInLand: 'Land owner',
+					interestInLand: 'owner',
 					writtenOrVerbalPermission: 'Yes',
 					descriptionOfAllegedBreach: 'Description'
 				}

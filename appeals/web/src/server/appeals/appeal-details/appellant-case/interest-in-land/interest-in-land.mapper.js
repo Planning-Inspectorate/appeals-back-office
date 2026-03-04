@@ -4,7 +4,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { INTEREST_IN_LAND } from '#lib/constants.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { toSentenceCase } from '#lib/string-utilities.js';
+import { camelCaseToWords, capitalizeFirstLetter } from '#lib/string-utilities.js';
 
 /**
  * @param {Appeal} appealData
@@ -40,7 +40,7 @@ export const manageInterestInLandPage = (appealData, errors) => {
 					items: [
 						...INTEREST_IN_LAND.map((interestInLandOption) => ({
 							value: interestInLandOption,
-							text: toSentenceCase(interestInLandOption),
+							text: capitalizeFirstLetter(camelCaseToWords(interestInLandOption).toLowerCase()),
 							checked: interestInLandOption === interestInLand
 						})),
 						{

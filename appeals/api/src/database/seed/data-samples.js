@@ -586,7 +586,7 @@ export const appellantCaseList = {
 		enforcementEffectiveDate: new Date(),
 		contactPlanningInspectorateDate: sub(new Date(), { days: 10 }),
 		enforcementReference: 'enf/Ref',
-		interestInLand: 'Land owner',
+		interestInLand: 'owner',
 		descriptionOfAllegedBreach: 'Breach description'
 	}
 };
