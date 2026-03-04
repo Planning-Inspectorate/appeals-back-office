@@ -1,5 +1,6 @@
 import { appealData } from '#testing/appeals/appeals.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -59,6 +60,34 @@ describe('GET /change-appeal-procedure-type/hearing/change-event-date-known', ()
 		expect(unprettifiedHtml).toContain('No</label>');
 
 		expect(unprettifiedHtml).toContain('Continue</button>');
+	});
+
+	it('should render the change event date known page for hearing for enforcement notice', async () => {
+		nock('http://test/')
+			.get('/appeals/1?include=all')
+			.reply(200, {
+				...appealDataWithoutStartDate,
+				appealStatus: 'lpa_questionnaire',
+				appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
+				procedureType: 'hearing',
+				documentationSummary: {
+					lpaQuestionnaire: {
+						status: 'not received'
+					}
+				}
+			});
+
+		nock('http://test/')
+			.get('/appeals/1/appellant-cases/0')
+			.reply(200, { planningObligation: { hasObligation: false } });
+
+		const response = await request.get(
+			`/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-event-date-known`
+		);
+
+		expect(response.statusCode).toBe(200);
+		const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+		expect(unprettifiedHtml).toContain('Do you know the date and time of the hearing?</h1>');
 	});
 
 	it('should render and not delete existing session data if procedure type is not changed', async () => {

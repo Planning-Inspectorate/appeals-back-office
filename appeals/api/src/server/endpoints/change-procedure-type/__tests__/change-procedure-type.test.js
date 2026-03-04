@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { request } from '#server/app-test.js';
 import {
+	enforcementNoticeAppeal as enforcementNoticeAppealData,
 	fullPlanningAppeal as fullPlanningAppealData,
 	listedBuildingAppeal as listedBuildingAppealData
 } from '#tests/appeals/mocks.js';
@@ -1079,6 +1080,233 @@ describe('Change appeal procedure type route', () => {
 					id: 3
 				});
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+			});
+		});
+
+		describe('EN parity', () => {
+			const enforcementWrittenPayload = {
+				existingAppealProcedure: 'hearing',
+				appealProcedure: 'written',
+				lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',
+				ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
+				lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
+				finalCommentsDueDate: '2025-12-15T00:00:00.000Z'
+			};
+
+			const enforcementHearingPayload = {
+				existingAppealProcedure: 'written',
+				appealProcedure: 'hearing',
+				lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',
+				ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
+				lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
+				statementOfCommonGroundDueDate: '2025-12-05T00:00:00.000Z',
+				eventDate: '2025-12-20T00:00:00.000Z'
+			};
+
+			const enforcementInquiryPayload = {
+				existingAppealProcedure: 'written',
+				appealProcedure: 'inquiry',
+				eventDate: '2025-12-20T00:00:00.000Z',
+				estimationDays: 6,
+				lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',
+				ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
+				lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
+				proofOfEvidenceAndWitnessesDueDate: '2025-12-15T00:00:00.000Z',
+				caseManagementConferenceDueDate: '2025-12-15T00:00:00.000Z',
+				statementOfCommonGroundDueDate: '2025-12-05T00:00:00.000Z'
+			};
+
+			test('returns 201 and updates the appeal for EN when changing from hearing to written', async () => {
+				const enforcementNoticeAppeal = JSON.parse(JSON.stringify(enforcementNoticeAppealData));
+				databaseConnector.appeal.findUnique.mockResolvedValue(enforcementNoticeAppeal);
+
+				const response = await request
+					.post(`/appeals/${enforcementNoticeAppeal.id}/procedure-type-change-request`)
+					.send(enforcementWrittenPayload)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+				expect(mockTx.hearing.deleteMany).toHaveBeenCalledWith({
+					where: { appealId: enforcementNoticeAppeal.id }
+				});
+				expect(mockTx.appeal.update).toHaveBeenCalledWith({
+					where: { id: enforcementNoticeAppeal.id },
+					data: { procedureTypeId: 1 }
+				});
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+			});
+
+			test('returns 201 and updates the appeal for EN when changing from inquiry to written', async () => {
+				const enforcementNoticeAppeal = JSON.parse(JSON.stringify(enforcementNoticeAppealData));
+				databaseConnector.appeal.findUnique.mockResolvedValue(enforcementNoticeAppeal);
+
+				const response = await request
+					.post(`/appeals/${enforcementNoticeAppeal.id}/procedure-type-change-request`)
+					.send({
+						...enforcementWrittenPayload,
+						existingAppealProcedure: 'inquiry'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+				expect(mockTx.inquiry.deleteMany).toHaveBeenCalledWith({
+					where: { appealId: enforcementNoticeAppeal.id }
+				});
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(3, 'inquiry', 'Delete', {
+					id: 3
+				});
+				expect(mockTx.appeal.update).toHaveBeenCalledWith({
+					where: { id: enforcementNoticeAppeal.id },
+					data: { procedureTypeId: 1 }
+				});
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+			});
+
+			test('returns 201 and updates the appeal for EN when changing from written to hearing', async () => {
+				const enforcementNoticeAppeal = JSON.parse(JSON.stringify(enforcementNoticeAppealData));
+				databaseConnector.appeal.findUnique.mockResolvedValue(enforcementNoticeAppeal);
+				mockTx.hearing.findFirst.mockResolvedValue(null);
+
+				const response = await request
+					.post(`/appeals/${enforcementNoticeAppeal.id}/procedure-type-change-request`)
+					.send(enforcementHearingPayload)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+				expect(mockTx.hearing.create).toHaveBeenCalledWith({
+					data: {
+						appealId: enforcementNoticeAppeal.id,
+						hearingStartTime: '2025-12-20T00:00:00.000Z'
+					}
+				});
+				expect(mockTx.appeal.update).toHaveBeenCalledWith({
+					where: { id: enforcementNoticeAppeal.id },
+					data: { procedureTypeId: 1 }
+				});
+			});
+
+			test('returns 201 and updates the appeal for EN when changing from written to inquiry', async () => {
+				const enforcementNoticeAppeal = JSON.parse(JSON.stringify(enforcementNoticeAppealData));
+				databaseConnector.appeal.findUnique.mockResolvedValue(enforcementNoticeAppeal);
+				mockTx.inquiry.findFirst.mockResolvedValue(null);
+
+				const response = await request
+					.post(`/appeals/${enforcementNoticeAppeal.id}/procedure-type-change-request`)
+					.send(enforcementInquiryPayload)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+				expect(mockTx.inquiry.create).toHaveBeenCalledWith({
+					data: expect.objectContaining({
+						appealId: enforcementNoticeAppeal.id,
+						inquiryStartTime: '2025-12-20T00:00:00.000Z',
+						estimatedDays: 6
+					})
+				});
+				expect(mockTx.appeal.update).toHaveBeenCalledWith({
+					where: { id: enforcementNoticeAppeal.id },
+					data: { procedureTypeId: 1 }
+				});
+			});
+
+			test('returns 201 and notifies for EN when changing from inquiry to hearing', async () => {
+				const enforcementNoticeAppeal = JSON.parse(JSON.stringify(enforcementNoticeAppealData));
+				databaseConnector.appeal.findUnique.mockResolvedValue(enforcementNoticeAppeal);
+
+				const response = await request
+					.post(`/appeals/${enforcementNoticeAppeal.id}/procedure-type-change-request`)
+					.send({
+						...enforcementHearingPayload,
+						existingAppealProcedure: 'inquiry'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+				expect(mockTx.inquiry.deleteMany).toHaveBeenCalledWith({
+					where: { appealId: enforcementNoticeAppeal.id }
+				});
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'hearing', 'Create');
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(3, 'inquiry', 'Delete', {
+					id: 3
+				});
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+			});
+
+			test('returns 201 and notifies for EN when changing from hearing to inquiry', async () => {
+				const enforcementNoticeAppeal = JSON.parse(JSON.stringify(enforcementNoticeAppealData));
+				databaseConnector.appeal.findUnique.mockResolvedValue(enforcementNoticeAppeal);
+				mockTx.inquiry.findFirst.mockResolvedValue(null);
+
+				const response = await request
+					.post(`/appeals/${enforcementNoticeAppeal.id}/procedure-type-change-request`)
+					.send({
+						...enforcementInquiryPayload,
+						existingAppealProcedure: 'hearing',
+						address: {
+							addressLine1: '96 The Avenue',
+							addressLine2: 'Leftfield',
+							county: 'Kent',
+							postcode: 'MD21 5XY',
+							town: 'Maidstone',
+							country: 'United Kingdom'
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+				expect(mockTx.hearing.deleteMany).toHaveBeenCalledWith({
+					where: { appealId: enforcementNoticeAppeal.id }
+				});
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'inquiry', 'Create');
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(3, 'hearing', 'Delete', {
+					id: 3
+				});
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+			});
+
+			test('returns 201 and does not notify for EN when changing from hearing to hearing', async () => {
+				const enforcementNoticeAppeal = JSON.parse(JSON.stringify(enforcementNoticeAppealData));
+				databaseConnector.appeal.findUnique.mockResolvedValue(enforcementNoticeAppeal);
+
+				const response = await request
+					.post(`/appeals/${enforcementNoticeAppeal.id}/procedure-type-change-request`)
+					.send({
+						existingAppealProcedure: 'hearing',
+						appealProcedure: 'hearing',
+						lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',
+						ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
+						lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
+						statementOfCommonGroundDueDate: '2025-12-05T00:00:00.000Z'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+				expect(mockNotifySend).not.toHaveBeenCalled();
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'hearing', 'Update');
+			});
+
+			test('returns 201 and does not notify for EN when changing from inquiry to inquiry', async () => {
+				const enforcementNoticeAppeal = JSON.parse(JSON.stringify(enforcementNoticeAppealData));
+				databaseConnector.appeal.findUnique.mockResolvedValue(enforcementNoticeAppeal);
+
+				const response = await request
+					.post(`/appeals/${enforcementNoticeAppeal.id}/procedure-type-change-request`)
+					.send({
+						existingAppealProcedure: 'inquiry',
+						appealProcedure: 'inquiry',
+						eventDate: '2025-12-20T00:00:00.000Z',
+						lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',
+						ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
+						lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
+						statementOfCommonGroundDueDate: '2025-12-05T00:00:00.000Z',
+						proofOfEvidenceAndWitnessesDueDate: '2025-12-15T00:00:00.000Z',
+						caseManagementConferenceDueDate: '2025-12-15T00:00:00.000Z'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+				expect(mockNotifySend).not.toHaveBeenCalled();
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'inquiry', 'Update');
 			});
 		});
 	});
