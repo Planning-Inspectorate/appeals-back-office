@@ -272,7 +272,7 @@ export const createRepresentation = async (
  * @param {Appeal} appeal
  * @param {string} proofOfEvidenceType
  * @param {string[]} attachments
- * @param {number} representedId
+ * @param {number} [representedId]
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
  * */
 export const createRepresentationProofOfEvidence = async (

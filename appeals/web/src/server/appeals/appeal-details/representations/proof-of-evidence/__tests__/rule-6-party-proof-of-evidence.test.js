@@ -1,7 +1,8 @@
 import {
 	appealDataFullPlanning,
 	documentRedactionStatuses,
-	fileUploadInfo
+	fileUploadInfo,
+	proofOfEvidenceForReview
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
@@ -59,11 +60,23 @@ describe('rule 6 party proof of evidence - add document', () => {
 			.reply(200, documentRedactionStatuses)
 			.persist();
 
-		nock('http://test/').post('/appeals/2/documents').reply(200, {}).persist();
-
 		nock('http://test/')
 			.get('/appeals/2/reps?type=rule_6_party_proofs_evidence')
-			.reply(200, { items: [], itemCount: 0 })
+			.reply(200, {
+				...proofOfEvidenceForReview,
+				items: [
+					{
+						...proofOfEvidenceForReview.items[0],
+						id: 1,
+						represented: {
+							...proofOfEvidenceForReview.items[0].represented,
+							id: 100
+						},
+						representedId: 100,
+						representationType: 'rule_6_party_proofs_evidence'
+					}
+				]
+			})
 			.persist();
 	});
 
@@ -88,6 +101,7 @@ describe('rule 6 party proof of evidence - add document', () => {
 
 	describe('POST /add-representation', () => {
 		it('should redirect to the redaction status page after document upload', async () => {
+			nock('http://test/').post('/appeals/2/documents').reply(200, {});
 			const response = await request.post(flowBaseUrl).send({
 				'upload-info': fileUploadInfo
 			});
@@ -182,6 +196,89 @@ describe('rule 6 party proof of evidence - add document', () => {
 
 	describe('POST /add-representation/check-your-answers', () => {
 		it('should call the API to add document and redirect to rule 6 party managed documents page', async () => {
+			nock.cleanAll();
+
+			nock('http://test/')
+				.get('/appeals/2?include=all')
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId: 2,
+					procedureType: 'inquiry',
+					appealStatus: 'statements',
+					appealRule6Parties: [
+						{
+							id: 1,
+							serviceUserId: 100,
+							partyName: 'Test Rule 6 Party',
+							serviceUser: {
+								organisationName: 'Test Rule 6 Party'
+							}
+						}
+					],
+					rule6PartyId: 1
+				})
+				.persist();
+
+			nock('http://test/')
+				.get('/appeals/2/document-folders')
+				.query(true)
+				.reply(200, [
+					{ folderId: 1234, path: 'representation/representationAttachments', caseId: 2 }
+				])
+				.persist();
+
+			nock('http://test/')
+				.get('/appeals/2/document-folders/1234')
+				.query(true)
+				.reply(200, {
+					folderId: 1234,
+					caseId: 2,
+					path: 'representation/representationAttachments',
+					documents: []
+				})
+				.persist();
+
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses)
+				.persist();
+
+			nock('http://test/')
+				.get('/appeals/2/reps?type=rule_6_party_proofs_evidence')
+				.reply(200, {
+					...proofOfEvidenceForReview,
+					items: [
+						{
+							...proofOfEvidenceForReview.items[0],
+							id: 1,
+							represented: {
+								...proofOfEvidenceForReview.items[0].represented,
+								id: 100
+							},
+							representedId: 100,
+							representationType: 'rule_6_party_proofs_evidence'
+						}
+					]
+				})
+				.persist();
+
+			const fileInfo = JSON.parse(fileUploadInfo)[0];
+
+			const mockedPostDocumentEndpoint = nock('http://test/')
+				.post('/appeals/2/documents')
+				.reply(200, {
+					documents: [
+						{
+							GUID: fileInfo.GUID,
+							name: fileInfo.name
+						}
+					]
+				});
+
+			const mockedPatchRepresentationEndpoint = nock('http://test/')
+				.patch('/appeals/2/reps/1/attachments')
+				.reply(200, {});
+
 			await request.post(flowBaseUrl).send({ 'upload-info': fileUploadInfo });
 			await request
 				.post(`${flowBaseUrl}/redaction-status`)
@@ -190,54 +287,34 @@ describe('rule 6 party proof of evidence - add document', () => {
 				.post(`${flowBaseUrl}/date-submitted`)
 				.send({ 'date-day': '15', 'date-month': '12', 'date-year': '2024' });
 
-			const mockedPostRepresentationEndpoint = nock('http://test/')
-				.post('/appeals/2/reps/rule_6_party_proofs_evidence')
-				.reply(200, {
-					attachments: ['1']
-				});
-
 			const response = await request.post(`${flowBaseUrl}/check-your-answers`).send({});
 
-			expect(mockedPostRepresentationEndpoint.isDone()).toBe(true);
+			expect(mockedPostDocumentEndpoint.isDone()).toBe(true);
+			expect(mockedPatchRepresentationEndpoint.isDone()).toBe(true);
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
 				`Found. Redirecting to /appeals-service/appeal-details/2/proof-of-evidence/rule-6-party/1/manage-documents/1234`
 			);
+		});
+	});
 
-			nock('http://test/')
-				.get('/appeals/2/reps?type=rule_6_party_proofs_evidence')
-				.reply(200, {
-					itemCount: 1,
-					items: [
-						{
-							id: 1,
-							status: 'valid',
-							representationType: 'rule_6_party_proofs_evidence',
-							represented: { id: 100 },
-							attachments: [
-								{
-									id: 1,
-									documentGuid: '1'
-								}
-							]
-						}
-					]
-				})
-				.persist();
+	describe('GET /appeals-service/appeal-details/2/proof-of-evidence/rule-6-party/1', () => {
+		it('should render the review screen', async () => {
+			const response = await request.get(`${baseUrl}/2/proof-of-evidence/rule-6-party/1`);
 
-			const responseFromRedirect = await request.get(
-				'/appeals-service/appeal-details/2/proof-of-evidence/rule-6-party/1/manage-documents/1234'
-			);
+			expect(response.statusCode).toBe(200);
 
-			const notificationBannerHtml = parseHtml(responseFromRedirect.text, {
-				rootElement: '.govuk-notification-banner--success',
-				skipPrettyPrint: true
+			const unprettifiedHTML = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: 'body'
 			}).innerHTML;
 
-			expect(notificationBannerHtml).toContain('Success</h3>');
-			expect(notificationBannerHtml).toContain(
-				'Test Rule 6 Party proof of evidence and witnesses added</p>'
+			expect(unprettifiedHTML).toContain(
+				'Review Test Rule 6 Party proof of evidence and witnesses</h1>'
 			);
+			expect(unprettifiedHTML).toContain('Review decision</legend>');
+			expect(unprettifiedHTML).toContain('Complete</label>');
+			expect(unprettifiedHTML).toContain('Mark as incomplete</label>');
 		});
 	});
 });

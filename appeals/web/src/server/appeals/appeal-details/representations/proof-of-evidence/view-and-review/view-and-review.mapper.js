@@ -98,10 +98,11 @@ export function formatProofOfEvidenceTypeText(
 	capitaliseFirstLetter = false,
 	orgName
 ) {
-	if (proofOfEvidenceType.toLowerCase() === 'lpa') {
+	const type = proofOfEvidenceType?.toLowerCase();
+	if (type === 'lpa') {
 		return 'LPA';
 	}
-	if (proofOfEvidenceType.toLowerCase() === 'rule-6-party') {
+	if (type === 'rule-6-party') {
 		return orgName || 'Rule 6 party';
 	}
 	return `${capitaliseFirstLetter ? 'A' : 'a'}ppellant`;
