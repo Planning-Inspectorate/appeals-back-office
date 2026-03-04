@@ -5,7 +5,6 @@ import { mapAppealDecision } from './submappers/appeal-decision.mapper.js';
 import { mapAppealReference } from './submappers/appeal-reference.mapper.js';
 import { mapAppealStatus } from './submappers/appeal-status.mapper.js';
 import { mapAppealType } from './submappers/appeal-type.mapper.js';
-import { mapAppealWithdrawal } from './submappers/appeal-withdrawal.mapper.js';
 import { mapAppellantCase } from './submappers/appellant-case.mapper.js';
 import { mapAppellantHealthAndSafety } from './submappers/appellant-health-and-safety.mapper.js';
 import { mapAppellant } from './submappers/appellant.mapper.js';
@@ -87,7 +86,6 @@ export const submaps = {
 	inspectorCorrespondence: mapInspectorCorrespondence,
 	mainPartyCorrespondence: mapMainPartyCorrespondence,
 	caseHistory: mapCaseHistory,
-	appealWithdrawal: mapAppealWithdrawal,
 	appellantCase: mapAppellantCase,
 	lpaQuestionnaire: mapLpaQuestionnaire,
 	appealDecision: mapAppealDecision,
