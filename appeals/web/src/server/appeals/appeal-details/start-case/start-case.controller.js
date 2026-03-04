@@ -8,6 +8,7 @@ import {
 	getSessionValuesForAppeal
 } from '#lib/edit-utilities.js';
 import logger from '#lib/logger.js';
+import isLinkedAppeal from '#lib/mappers/utils/is-linked-appeal.js';
 import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import {
@@ -180,9 +181,11 @@ export const getSelectProcedure = async (request, response) => {
 		session
 	} = request;
 
+	const isLinked = isLinkedAppeal(request.currentAppeal);
+
 	const hearingOrInquiryEnabled =
-		getEnabledHearingAppealTypes().includes(appealType) ||
-		getEnabledInquiryAppealTypes().includes(appealType);
+		getEnabledHearingAppealTypes(isLinked).includes(appealType) ||
+		getEnabledInquiryAppealTypes(isLinked).includes(appealType);
 
 	const isEnforcementType = [
 		APPEAL_TYPE.ENFORCEMENT_NOTICE,
@@ -216,6 +219,7 @@ const renderSelectProcedure = async (request, response) => {
 	} = request;
 
 	const sessionValues = getSessionValuesForAppeal(request, 'startCaseAppealProcedure', appealId);
+	const isLinked = isLinkedAppeal(request.currentAppeal);
 
 	const backUrl = getBackLinkUrl(
 		request,
@@ -226,6 +230,7 @@ const renderSelectProcedure = async (request, response) => {
 	const mappedPageContent = selectProcedurePage(
 		appealReference,
 		appealType,
+		isLinked,
 		backUrl,
 		{ appealProcedure: sessionValues?.appealProcedure },
 		errors ? errors['appealProcedure']?.msg : undefined
