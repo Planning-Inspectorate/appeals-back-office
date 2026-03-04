@@ -32,7 +32,7 @@ router.patch(
 		#swagger.responses[500] = {}
 	 */
 	patchAppealValidator,
-	asyncHandler(checkAppealExistsByIdAndAddPartialToRequest(['appealGrounds'])),
+	asyncHandler(checkAppealExistsByIdAndAddPartialToRequest(['appealGrounds', 'appealType'])),
 	asyncHandler(controller.updateGroundsForAppealByAppealId)
 );
 
