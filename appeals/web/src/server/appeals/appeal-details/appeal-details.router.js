@@ -2,7 +2,6 @@ import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { validateCaseNoteTextArea } from '#appeals/appeal-details/appeals-details.validator.js';
 import { postCaseNote } from '#appeals/appeal-details/case-notes/case-notes.controller.js';
 import changeAppealProcedureTypeRouter from '#appeals/appeal-details/change-procedure-type/change-procedure-type.router.js';
-import config from '#environment/config.js';
 import { permissionNames } from '#environment/permissions.js';
 import { clearSessionData } from '#lib/middleware/clear-session-data.js';
 import { saveBackUrl } from '#lib/middleware/save-back-url.js';
@@ -49,7 +48,6 @@ import startDateRouter from './start-case/start-case.router.js';
 import timetableRouter from './timetable/timetable.router.js';
 import updateCaseTeamRouter from './update-case-team/update-case-team.router.js';
 import updateDecisionLetterRouter from './update-decision-letter/update-decision-letter.router.js';
-import withdrawalRouterOld from './withdrawal-old/withdrawal.router.js';
 import withdrawalRouter from './withdrawal/withdrawal.router.js';
 
 const router = createRouter();
@@ -185,7 +183,7 @@ router.use(
 	'/:appealId/withdrawal',
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
-	config.featureFlags.featureFlagCancelCase ? withdrawalRouter : withdrawalRouterOld
+	withdrawalRouter
 );
 
 router.use(
