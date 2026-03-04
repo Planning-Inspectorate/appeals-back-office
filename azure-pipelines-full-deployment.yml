@@ -1,7 +1,5 @@
-# Combined manual pipeline with explicit environment stages shown in "Stages to run":
-# Dev -> Test -> Staging / Training -> Prod
-#
-# Use the built-in Azure "Pipeline version" selector for branch/tag/commit.
+# Combined manual pipeline with explicit environment stages in "Stages to run".
+# Branch/tag/commit is selected via Azure DevOps "Pipeline version" UI.
 
 trigger: none
 pr: none
@@ -50,6 +48,30 @@ parameters:
     type: boolean
     default: false
 
+  - name: environmentStages
+    type: object
+    default:
+      - name: Dev
+        envLower: dev
+        variableGroup: cd_dev
+        dependsOn: ''
+      - name: Test
+        envLower: test
+        variableGroup: cd_test
+        dependsOn: Dev
+      - name: Staging
+        envLower: staging
+        variableGroup: cd_staging
+        dependsOn: Test
+      - name: Training
+        envLower: training
+        variableGroup: cd_training
+        dependsOn: Test
+      - name: Prod
+        envLower: prod
+        variableGroup: cd_prod
+        dependsOn: Training
+
 resources:
   repositories:
     - repository: templates
@@ -83,517 +105,468 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
-  - stage: Dev
-    displayName: Dev
-    variables:
-      - template: variables/environments/dev.yml@templates
-      - group: cd_dev
-      - group: pipeline_secrets
-      - name: TARGET_ENV
-        value: dev
-      - name: TARGET_ENV_NAME
-        value: Dev
-    jobs: &environmentJobs
-      - job: ValidateInputs
-        displayName: Validate input combinations
-        steps:
-          - bash: |
-              set -euo pipefail
-
-              if [[ "${{ parameters.terraformApply }}" == "true" && "${{ parameters.terraformPlan }}" == "false" ]]; then
-                echo "ERROR: terraformApply=true requires terraformPlan=true"
-                exit 1
-              fi
-
-              if [[ "${{ parameters.purgeAndRecreate }}" == "true" && "${{ parameters.seedData }}" == "false" ]]; then
-                echo "ERROR: purgeAndRecreate=true requires seedData=true"
-                exit 1
-              fi
-
-              echo "##vso[task.setvariable variable=runStartUtc;isOutput=true]$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
-            name: preflight
-            displayName: Preflight validation
-
-      - job: Terraform
-        displayName: Terraform plan/apply
-        dependsOn: ValidateInputs
-        condition: and(succeeded(), or(eq('${{ parameters.terraformPlan }}', 'true'), eq('${{ parameters.terraformApply }}', 'true')))
-        steps:
-          - checkout: self
-          - task: AzureCLI@2
-            displayName: Terraform init/plan/apply
-            inputs:
-              azureSubscription: '$(terraformServiceConnectionPrefix) $(TARGET_ENV_NAME)'
-              scriptType: bash
-              scriptLocation: inlineScript
-              inlineScript: |
-                set -euo pipefail
-
-                TF_DIR='$(terraformWorkingDirectory)'
-                TFVARS_FILE='$(terraformEnvironmentVarFilePath)/$(TARGET_ENV).tfvars'
-                BACKEND_CONTAINER='$(terraformContainerPrefix)$(TARGET_ENV)'
-                BACKEND_KEY='appeals-back-office-$(TARGET_ENV).tfstate'
-
-                terraform -chdir="$TF_DIR" init \
-                  -backend-config="storage_account_name=$(terraformStorageAccountName)" \
-                  -backend-config="resource_group_name=$(terraformResourceGroupName)" \
-                  -backend-config="container_name=${BACKEND_CONTAINER}" \
-                  -backend-config="key=${BACKEND_KEY}"
-
-                if [[ '${{ parameters.terraformPlan }}' == 'true' ]]; then
-                  terraform -chdir="$TF_DIR" plan -var-file="$TFVARS_FILE" -out=tfplan
-                fi
-
-                if [[ '${{ parameters.terraformApply }}' == 'true' ]]; then
-                  terraform -chdir="$TF_DIR" apply -auto-approve tfplan
-                fi
-
-      - job: Deploy
-        displayName: Deploy workloads
-        dependsOn:
-          - ValidateInputs
-          - Terraform
-        condition: and(succeeded('ValidateInputs'), in(dependencies.Terraform.result, 'Succeeded', 'Skipped'))
-        steps:
-          - checkout: self
-
-          - ${{ if eq(parameters.runDbMigration, true) }}:
-            - template: steps/node_script.yml@templates
-              parameters:
-                script: npm ci
-                nodeVersion: 22
-            - bash: |
-                set -euo pipefail
-                if [[ "$TARGET_ENV" == "training" ]]; then
-                  echo "##vso[task.setvariable variable=kvName;]pins-kv-appeals-bo-train"
-                elif [[ "$TARGET_ENV" == "staging" ]]; then
-                  echo "##vso[task.setvariable variable=kvName;]pins-kv-appeals-bo-stage"
-                else
-                  echo "##vso[task.setvariable variable=kvName;]pins-kv-appeals-bo-$TARGET_ENV"
-                fi
-              displayName: Set KV name for migration
-              env:
-                TARGET_ENV: $(TARGET_ENV)
-            - template: steps/azure_get_secrets.yml@templates
-              parameters:
-                keyVaultName: $(kvName)
-                secrets:
-                  - name: appeals-bo-sql-admin-connection-string
-                    variable: appeals-bo-sql-admin-connection-string
-            - template: steps/node_script.yml@templates
-              parameters:
-                nodeVersion: 22
-                environmentVariables:
-                  DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
-                script: npm run db:migrate:prod
-                workingDirectory: $(Build.Repository.LocalPath)/appeals/api
-
-          - ${{ if eq(parameters.deployAppealsApi, true) }}:
-            - template: steps/azure_web_app_deploy_slot.yml@templates
-              parameters:
-                appName: pins-app-appeals-bo-api-$(TARGET_ENV)
-                appResourceGroup: $(resourceGroup)
-                azurecrName: $(azurecrName)
-                repository: back-office/back-office-appeals-api
-                ${{ if eq(parameters.deployToSlot, true) }}:
-                  slot: staging
-                ${{ else }}:
-                  slot: default
-
-          - ${{ if eq(parameters.deployAppealsWeb, true) }}:
-            - template: steps/azure_web_app_deploy_slot.yml@templates
-              parameters:
-                appName: pins-app-appeals-bo-web-$(TARGET_ENV)
-                appResourceGroup: $(resourceGroup)
-                azurecrName: $(azurecrName)
-                repository: back-office/appeals-web
-                ${{ if eq(parameters.deployToSlot, true) }}:
-                  slot: staging
-                ${{ else }}:
-                  slot: default
-
-          - ${{ if eq(parameters.deployAppealsPdf, true) }}:
-            - template: steps/azure_web_app_deploy_slot.yml@templates
-              parameters:
-                appName: pins-app-appeals-bo-pdf-$(TARGET_ENV)
-                appResourceGroup: $(resourceGroup)
-                azurecrName: $(azurecrName)
-                repository: back-office/back-office-appeals-pdf
-                ${{ if eq(parameters.deployToSlot, true) }}:
-                  slot: staging
-                ${{ else }}:
-                  slot: default
-
-          - ${{ if eq(parameters.deployFunctions, true) }}:
-            - download: build
-              artifact: function-appeals-casedata-import
-              displayName: Download function-appeals-casedata-import
-            - template: steps/function_app_deploy.yml@templates
-              parameters:
-                appName: pins-func-appeals-bo-casedata-import-$(TARGET_ENV)
-                resourceGroup: $(resourceGroup)
-                workingDirectory: $(Pipeline.Workspace)/build/function-appeals-casedata-import
-
-            - download: build
-              artifact: function-appeals-refdata-import
-              displayName: Download function-appeals-refdata-import
-            - template: steps/function_app_deploy.yml@templates
-              parameters:
-                appName: pins-func-appeals-bo-refdata-import-$(TARGET_ENV)
-                resourceGroup: $(resourceGroup)
-                workingDirectory: $(Pipeline.Workspace)/build/function-appeals-refdata-import
-
-            - download: build
-              artifact: function-appeals-document-processing
-              displayName: Download function-appeals-document-processing
-            - template: steps/function_app_deploy.yml@templates
-              parameters:
-                appName: pins-func-appeals-bo-doc-processing-$(TARGET_ENV)
-                resourceGroup: $(resourceGroup)
-                workingDirectory: $(Pipeline.Workspace)/build/function-appeals-document-processing
-
-            - download: build
-              artifact: function-appeals-scheduled-jobs
-              displayName: Download function-appeals-scheduled-jobs
-            - template: steps/function_app_deploy.yml@templates
-              parameters:
-                appName: pins-func-appeals-bo-scheduled-jobs-$(TARGET_ENV)
-                resourceGroup: $(resourceGroup)
-                workingDirectory: $(Pipeline.Workspace)/build/function-appeals-scheduled-jobs
-
-      - job: Seed
-        displayName: Seed data
-        dependsOn: Deploy
-        condition: and(succeeded(), eq('${{ parameters.seedData }}', 'true'))
-        steps:
-          - checkout: self
-          - template: steps/node_script.yml@templates
-            parameters:
-              script: npm ci
-              nodeVersion: 22
-
-          - bash: |
-              set -euo pipefail
-              if [[ "$TARGET_ENV" == "training" ]]; then
-                echo "##vso[task.setvariable variable=kvName;]pins-kv-appeals-bo-train"
-              elif [[ "$TARGET_ENV" == "staging" ]]; then
-                echo "##vso[task.setvariable variable=kvName;]pins-kv-appeals-bo-stage"
-              else
-                echo "##vso[task.setvariable variable=kvName;]pins-kv-appeals-bo-$TARGET_ENV"
-              fi
-            displayName: Set KV name for seed
-            env:
-              TARGET_ENV: $(TARGET_ENV)
-
-          - template: steps/azure_get_secrets.yml@templates
-            parameters:
-              keyVaultName: $(kvName)
-              secrets:
-                - name: appeals-bo-sql-admin-connection-string
-                  variable: appeals-bo-sql-admin-connection-string
-
-          - template: steps/node_script.yml@templates
-            parameters:
-              condition: and(ne('$(TARGET_ENV_NAME)', 'Prod'), ne('$(TARGET_ENV_NAME)', 'Training'), eq('${{ parameters.purgeAndRecreate }}', 'false'))
-              environmentVariables:
-                DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
-              script: npm run db:seed:no-purge
-              workingDirectory: $(Build.Repository.LocalPath)/appeals/api
-
-          - template: steps/node_script.yml@templates
-            parameters:
-              condition: and(ne('$(TARGET_ENV_NAME)', 'Prod'), ne('$(TARGET_ENV_NAME)', 'Training'), eq('${{ parameters.purgeAndRecreate }}', 'true'))
-              environmentVariables:
-                DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
-              script: npm run db:seed
-              workingDirectory: $(Build.Repository.LocalPath)/appeals/api
-
-          - template: steps/node_script.yml@templates
-            parameters:
-              condition: eq('$(TARGET_ENV_NAME)', 'Training')
-              environmentVariables:
-                DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
-              script: npm run db:seed:training
-              workingDirectory: $(Build.Repository.LocalPath)/appeals/api
-
-          - template: steps/node_script.yml@templates
-            parameters:
-              condition: eq('$(TARGET_ENV_NAME)', 'Prod')
-              environmentVariables:
-                DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
-              script: npm run db:seed:prod
-              workingDirectory: $(Build.Repository.LocalPath)/appeals/api
-
-      - job: LogDeployment
-        displayName: Log deployment in Confluence
-        dependsOn:
-          - ValidateInputs
-          - Deploy
-          - Seed
-        condition: and(succeeded('Deploy'), in(dependencies.Seed.result, 'Succeeded', 'Skipped'))
+  - ${{ each env in parameters.environmentStages }}:
+      - stage: ${{ env.name }}
+        displayName: ${{ env.name }}
+        ${{ if ne(env.dependsOn, '') }}:
+          dependsOn: ${{ env.dependsOn }}
         variables:
-          RUN_START_UTC: $[ dependencies.ValidateInputs.outputs['preflight.runStartUtc'] ]
-        steps:
-          - bash: |
-              set -euo pipefail
-              set +x
+          - template: variables/environments/${{ env.envLower }}.yml@templates
+          - group: ${{ env.variableGroup }}
+          - group: pipeline_secrets
+          - name: TARGET_ENV
+            value: ${{ env.envLower }}
+          - name: TARGET_ENV_NAME
+            value: ${{ env.name }}
+        jobs:
+          - job: ValidateInputs
+            displayName: Validate input combinations
+            steps:
+              - bash: |
+                  set -euo pipefail
 
-              : "${CONFLUENCE_BASE_URL:?CONFLUENCE_BASE_URL is required}"
-              : "${CONFLUENCE_PAGE_ID:?CONFLUENCE_PAGE_ID is required}"
-              : "${CONFLUENCE_EMAIL:?CONFLUENCE_EMAIL is required}"
-              : "${CONFLUENCE_API_TOKEN:?CONFLUENCE_API_TOKEN is required}"
+                  if [[ "${{ parameters.terraformApply }}" == "true" && "${{ parameters.terraformPlan }}" == "false" ]]; then
+                    echo "ERROR: terraformApply=true requires terraformPlan=true"
+                    exit 1
+                  fi
 
-              HEADING_TEXT="Deployment Records"
-              EXPECTED_TITLE="Production Deployments"
+                  if [[ "${{ parameters.purgeAndRecreate }}" == "true" && "${{ parameters.seedData }}" == "false" ]]; then
+                    echo "ERROR: purgeAndRecreate=true requires seedData=true"
+                    exit 1
+                  fi
 
-              START_TIME_UTC="${RUN_START_UTC:-$(date -u +"%Y-%m-%dT%H:%M:%SZ")}"
-              BUILD_NUMBER="$(Build.BuildNumber)"
-              SOURCE_BRANCH="$(Build.SourceBranch)"
-              COMMIT_SHA="$(Build.SourceVersion)"
-              BUILD_ID="$(Build.BuildId)"
-              DEFINITION_NAME="$(Build.DefinitionName)"
-              REASON="$(Build.Reason)"
-              REQUESTED_FOR="$(Build.RequestedFor)"
+                  echo "##vso[task.setvariable variable=runStartUtc;isOutput=true]$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+                name: preflight
+                displayName: Preflight validation
 
-              PARAMS_COMPACT="environment=$(TARGET_ENV_NAME); terraformPlan=${{ parameters.terraformPlan }}; terraformApply=${{ parameters.terraformApply }}; deployAppealsApi=${{ parameters.deployAppealsApi }}; deployAppealsWeb=${{ parameters.deployAppealsWeb }}; deployAppealsPdf=${{ parameters.deployAppealsPdf }}; deployFunctions=${{ parameters.deployFunctions }}; runDbMigration=${{ parameters.runDbMigration }}; deployToSlot=${{ parameters.deployToSlot }}; seedData=${{ parameters.seedData }}; purgeAndRecreate=${{ parameters.purgeAndRecreate }}; buildId=${BUILD_ID}; reason=${REASON}; requestedFor=${REQUESTED_FOR}; definition=${DEFINITION_NAME}"
+          - job: Terraform
+            displayName: Terraform plan/apply
+            dependsOn: ValidateInputs
+            condition: and(succeeded(), or(eq('${{ parameters.terraformPlan }}', 'true'), eq('${{ parameters.terraformApply }}', 'true')))
+            steps:
+              - checkout: self
+              - task: AzureCLI@2
+                displayName: Terraform init/plan/apply
+                inputs:
+                  azureSubscription: '$(terraformServiceConnectionPrefix) $(TARGET_ENV_NAME)'
+                  scriptType: bash
+                  scriptLocation: inlineScript
+                  inlineScript: |
+                    set -euo pipefail
 
-              xml_escape() {
-                local s="$1"
-                s=${s//&/&amp;}
-                s=${s//</&lt;}
-                s=${s//>/&gt;}
-                s=${s//\"/&quot;}
-                s=${s//\'/&apos;}
-                printf '%s' "$s"
-              }
+                    TF_DIR='$(terraformWorkingDirectory)'
+                    TFVARS_FILE='$(terraformEnvironmentVarFilePath)/$(TARGET_ENV).tfvars'
+                    BACKEND_CONTAINER='$(terraformContainerPrefix)$(TARGET_ENV)'
+                    BACKEND_KEY='appeals-back-office-$(TARGET_ENV).tfstate'
 
-              START_TIME_ESC="$(xml_escape "$START_TIME_UTC")"
-              BUILD_ESC="$(xml_escape "$BUILD_NUMBER")"
-              BRANCH_ESC="$(xml_escape "$SOURCE_BRANCH")"
-              COMMIT_ESC="$(xml_escape "$COMMIT_SHA")"
-              PARAMS_ESC="$(xml_escape "$PARAMS_COMPACT")"
+                    terraform -chdir="$TF_DIR" init \
+                      -backend-config="storage_account_name=$(terraformStorageAccountName)" \
+                      -backend-config="resource_group_name=$(terraformResourceGroupName)" \
+                      -backend-config="container_name=${BACKEND_CONTAINER}" \
+                      -backend-config="key=${BACKEND_KEY}"
 
-              NEW_ROW="<tr><td>${START_TIME_ESC}</td><td>${BUILD_ESC}</td><td>${BRANCH_ESC}</td><td>${COMMIT_ESC}</td><td>${PARAMS_ESC}</td></tr>"
+                    if [[ '${{ parameters.terraformPlan }}' == 'true' ]]; then
+                      terraform -chdir="$TF_DIR" plan -var-file="$TFVARS_FILE" -out=tfplan
+                    fi
 
-              AUTH_B64="$(printf '%s' "${CONFLUENCE_EMAIL}:${CONFLUENCE_API_TOKEN}" | base64 | tr -d '\n')"
-              API_BASE="${CONFLUENCE_BASE_URL%/}/rest/api/content/${CONFLUENCE_PAGE_ID}"
-              GET_URL="${API_BASE}?expand=body.storage,version,title"
+                    if [[ '${{ parameters.terraformApply }}' == 'true' ]]; then
+                      terraform -chdir="$TF_DIR" apply -auto-approve tfplan
+                    fi
 
-              api_call() {
-                local method="$1"
-                local url="$2"
-                local data_file="${3:-}"
-                local out_file="$4"
-                local http_code
+          - job: Deploy
+            displayName: Deploy workloads
+            dependsOn:
+              - ValidateInputs
+              - Terraform
+            condition: and(succeeded('ValidateInputs'), in(dependencies.Terraform.result, 'Succeeded', 'Skipped'))
+            steps:
+              - checkout: self
 
-                if [[ -n "$data_file" ]]; then
-                  http_code="$(curl -sS -X "$method" \
-                    -H "Authorization: Basic ${AUTH_B64}" \
-                    -H "Accept: application/json" \
-                    -H "Content-Type: application/json" \
-                    --data "@${data_file}" \
-                    "$url" -o "$out_file" -w "%{http_code}")"
-                else
-                  http_code="$(curl -sS -X "$method" \
-                    -H "Authorization: Basic ${AUTH_B64}" \
-                    -H "Accept: application/json" \
-                    "$url" -o "$out_file" -w "%{http_code}")"
-                fi
+              - ${{ if eq(parameters.runDbMigration, true) }}:
+                - template: steps/node_script.yml@templates
+                  parameters:
+                    script: npm ci
+                    nodeVersion: 22
+                - bash: |
+                    set -euo pipefail
+                    if [[ "$TARGET_ENV" == "training" ]]; then
+                      echo "##vso[task.setvariable variable=kvName;]pins-kv-appeals-bo-train"
+                    elif [[ "$TARGET_ENV" == "staging" ]]; then
+                      echo "##vso[task.setvariable variable=kvName;]pins-kv-appeals-bo-stage"
+                    else
+                      echo "##vso[task.setvariable variable=kvName;]pins-kv-appeals-bo-$TARGET_ENV"
+                    fi
+                  displayName: Set KV name for migration
+                  env:
+                    TARGET_ENV: $(TARGET_ENV)
+                - template: steps/azure_get_secrets.yml@templates
+                  parameters:
+                    keyVaultName: $(kvName)
+                    secrets:
+                      - name: appeals-bo-sql-admin-connection-string
+                        variable: appeals-bo-sql-admin-connection-string
+                - template: steps/node_script.yml@templates
+                  parameters:
+                    nodeVersion: 22
+                    environmentVariables:
+                      DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
+                    script: npm run db:migrate:prod
+                    workingDirectory: $(Build.Repository.LocalPath)/appeals/api
 
-                if [[ ! "$http_code" =~ ^2[0-9][0-9]$ ]]; then
-                  echo "ERROR: ${method} ${url} failed with HTTP ${http_code}" >&2
-                  sed 's/[[:cntrl:]]//g' "$out_file" | head -c 4000 >&2 || true
-                  echo >&2
-                  exit 1
-                fi
-              }
+              - ${{ if eq(parameters.deployAppealsApi, true) }}:
+                - template: steps/azure_web_app_deploy_slot.yml@templates
+                  parameters:
+                    appName: pins-app-appeals-bo-api-$(TARGET_ENV)
+                    appResourceGroup: $(resourceGroup)
+                    azurecrName: $(azurecrName)
+                    repository: back-office/back-office-appeals-api
+                    ${{ if eq(parameters.deployToSlot, true) }}:
+                      slot: staging
+                    ${{ else }}:
+                      slot: default
 
-              api_call "GET" "$GET_URL" "" "page.json"
+              - ${{ if eq(parameters.deployAppealsWeb, true) }}:
+                - template: steps/azure_web_app_deploy_slot.yml@templates
+                  parameters:
+                    appName: pins-app-appeals-bo-web-$(TARGET_ENV)
+                    appResourceGroup: $(resourceGroup)
+                    azurecrName: $(azurecrName)
+                    repository: back-office/appeals-web
+                    ${{ if eq(parameters.deployToSlot, true) }}:
+                      slot: staging
+                    ${{ else }}:
+                      slot: default
 
-              PAGE_TITLE="$(jq -r '.title' page.json)"
-              PAGE_TYPE="$(jq -r '.type' page.json)"
-              CUR_VERSION="$(jq -r '.version.number' page.json)"
-              BODY_STORAGE="$(jq -r '.body.storage.value' page.json)"
+              - ${{ if eq(parameters.deployAppealsPdf, true) }}:
+                - template: steps/azure_web_app_deploy_slot.yml@templates
+                  parameters:
+                    appName: pins-app-appeals-bo-pdf-$(TARGET_ENV)
+                    appResourceGroup: $(resourceGroup)
+                    azurecrName: $(azurecrName)
+                    repository: back-office/back-office-appeals-pdf
+                    ${{ if eq(parameters.deployToSlot, true) }}:
+                      slot: staging
+                    ${{ else }}:
+                      slot: default
 
-              if [[ "$PAGE_TITLE" != "$EXPECTED_TITLE" ]]; then
-                echo "ERROR: Confluence page title mismatch. Expected '$EXPECTED_TITLE', got '$PAGE_TITLE'." >&2
-                exit 1
-              fi
+              - ${{ if eq(parameters.deployFunctions, true) }}:
+                - download: build
+                  artifact: function-appeals-casedata-import
+                  displayName: Download function-appeals-casedata-import
+                - template: steps/function_app_deploy.yml@templates
+                  parameters:
+                    appName: pins-func-appeals-bo-casedata-import-$(TARGET_ENV)
+                    resourceGroup: $(resourceGroup)
+                    workingDirectory: $(Pipeline.Workspace)/build/function-appeals-casedata-import
 
-              printf '%s' "$BODY_STORAGE" > body-original.xml
+                - download: build
+                  artifact: function-appeals-refdata-import
+                  displayName: Download function-appeals-refdata-import
+                - template: steps/function_app_deploy.yml@templates
+                  parameters:
+                    appName: pins-func-appeals-bo-refdata-import-$(TARGET_ENV)
+                    resourceGroup: $(resourceGroup)
+                    workingDirectory: $(Pipeline.Workspace)/build/function-appeals-refdata-import
 
-              cat > update_confluence_body.pl <<'PERL'
-              use strict;
-              use warnings;
+                - download: build
+                  artifact: function-appeals-document-processing
+                  displayName: Download function-appeals-document-processing
+                - template: steps/function_app_deploy.yml@templates
+                  parameters:
+                    appName: pins-func-appeals-bo-doc-processing-$(TARGET_ENV)
+                    resourceGroup: $(resourceGroup)
+                    workingDirectory: $(Pipeline.Workspace)/build/function-appeals-document-processing
 
-              my ($file, $heading, $new_row) = @ARGV;
-              die "usage: $0 <file> <heading> <new_row>" unless defined $new_row;
+                - download: build
+                  artifact: function-appeals-scheduled-jobs
+                  displayName: Download function-appeals-scheduled-jobs
+                - template: steps/function_app_deploy.yml@templates
+                  parameters:
+                    appName: pins-func-appeals-bo-scheduled-jobs-$(TARGET_ENV)
+                    resourceGroup: $(resourceGroup)
+                    workingDirectory: $(Pipeline.Workspace)/build/function-appeals-scheduled-jobs
 
-              local $/;
-              open my $fh, '<', $file or die "open($file): $!";
-              my $content = <$fh>;
-              close $fh;
+          - job: Seed
+            displayName: Seed data
+            dependsOn: Deploy
+            condition: and(succeeded(), eq('${{ parameters.seedData }}', 'true'))
+            steps:
+              - checkout: self
+              - template: steps/node_script.yml@templates
+                parameters:
+                  script: npm ci
+                  nodeVersion: 22
 
-              my $header_row = '<tr><th>Start Time (UTC)</th><th>Build</th><th>Branch</th><th>Commit</th><th>Parameters</th></tr>';
+              - bash: |
+                  set -euo pipefail
+                  if [[ "$TARGET_ENV" == "training" ]]; then
+                    echo "##vso[task.setvariable variable=kvName;]pins-kv-appeals-bo-train"
+                  elif [[ "$TARGET_ENV" == "staging" ]]; then
+                    echo "##vso[task.setvariable variable=kvName;]pins-kv-appeals-bo-stage"
+                  else
+                    echo "##vso[task.setvariable variable=kvName;]pins-kv-appeals-bo-$TARGET_ENV"
+                  fi
+                displayName: Set KV name for seed
+                env:
+                  TARGET_ENV: $(TARGET_ENV)
 
-              sub decode_heading_text {
-                my ($t) = @_;
-                $t =~ s/<[^>]+>//g;
-                $t =~ s/&nbsp;/ /gi;
-                $t =~ s/&amp;/&/gi;
-                $t =~ s/&lt;/</gi;
-                $t =~ s/&gt;/>/gi;
-                $t =~ s/&quot;/"/gi;
-                $t =~ s/&apos;/'/gi;
-                $t =~ s/^\s+|\s+$//g;
-                return $t;
-              }
+              - template: steps/azure_get_secrets.yml@templates
+                parameters:
+                  keyVaultName: $(kvName)
+                  secrets:
+                    - name: appeals-bo-sql-admin-connection-string
+                      variable: appeals-bo-sql-admin-connection-string
 
-              sub insert_row_in_table {
-                my ($table, $row) = @_;
+              - template: steps/node_script.yml@templates
+                parameters:
+                  condition: and(ne('$(TARGET_ENV_NAME)', 'Prod'), ne('$(TARGET_ENV_NAME)', 'Training'), eq('${{ parameters.purgeAndRecreate }}', 'false'))
+                  environmentVariables:
+                    DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
+                  script: npm run db:seed:no-purge
+                  workingDirectory: $(Build.Repository.LocalPath)/appeals/api
 
-                if ($table =~ m{<tbody\b[^>]*>.*?</tbody>}is) {
-                  $table =~ s{(<tbody\b[^>]*>\s*)(.*?)(\s*</tbody>)}{
-                    my ($open, $inner, $close) = ($1, $2, $3);
-                    if ($inner =~ m{(<tr\b[^>]*>.*?</tr>)}is) {
-                      my $first_tr = $1;
-                      my $first_end = $+[0];
-                      my $rest = substr($inner, $first_end);
-                      $open . $first_tr . "\n" . $row . $rest . $close;
-                    } else {
-                      $open . $row . $inner . $close;
-                    }
-                  }ise;
-                  return $table;
-                }
+              - template: steps/node_script.yml@templates
+                parameters:
+                  condition: and(ne('$(TARGET_ENV_NAME)', 'Prod'), ne('$(TARGET_ENV_NAME)', 'Training'), eq('${{ parameters.purgeAndRecreate }}', 'true'))
+                  environmentVariables:
+                    DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
+                  script: npm run db:seed
+                  workingDirectory: $(Build.Repository.LocalPath)/appeals/api
 
-                if ($table =~ m{^(\s*<table\b[^>]*>)(.*?)(</table>\s*)$}is) {
-                  my ($open_table, $inner, $close_table) = ($1, $2, $3);
-                  my $new_inner;
-                  if ($inner =~ m{(<tr\b[^>]*>.*?</tr>)}is) {
-                    my $first_tr = $1;
-                    my $first_end = $+[0];
-                    my $rest = substr($inner, $first_end);
-                    $new_inner = $first_tr . "\n" . $row . $rest;
-                  } else {
-                    $new_inner = $header_row . "\n" . $row;
+              - template: steps/node_script.yml@templates
+                parameters:
+                  condition: eq('$(TARGET_ENV_NAME)', 'Training')
+                  environmentVariables:
+                    DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
+                  script: npm run db:seed:training
+                  workingDirectory: $(Build.Repository.LocalPath)/appeals/api
+
+              - template: steps/node_script.yml@templates
+                parameters:
+                  condition: eq('$(TARGET_ENV_NAME)', 'Prod')
+                  environmentVariables:
+                    DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
+                  script: npm run db:seed:prod
+                  workingDirectory: $(Build.Repository.LocalPath)/appeals/api
+
+          - job: LogDeployment
+            displayName: Log deployment in Confluence
+            dependsOn:
+              - ValidateInputs
+              - Deploy
+              - Seed
+            condition: and(succeeded('Deploy'), in(dependencies.Seed.result, 'Succeeded', 'Skipped'))
+            variables:
+              RUN_START_UTC: $[ dependencies.ValidateInputs.outputs['preflight.runStartUtc'] ]
+            steps:
+              - bash: |
+                  set -euo pipefail
+                  set +x
+
+                  : "${CONFLUENCE_BASE_URL:?CONFLUENCE_BASE_URL is required}"
+                  : "${CONFLUENCE_PAGE_ID:?CONFLUENCE_PAGE_ID is required}"
+                  : "${CONFLUENCE_EMAIL:?CONFLUENCE_EMAIL is required}"
+                  : "${CONFLUENCE_API_TOKEN:?CONFLUENCE_API_TOKEN is required}"
+
+                  HEADING_TEXT="Deployment Records"
+                  EXPECTED_TITLE="Production Deployments"
+
+                  START_TIME_UTC="${RUN_START_UTC:-$(date -u +"%Y-%m-%dT%H:%M:%SZ")}"
+                  BUILD_NUMBER="$(Build.BuildNumber)"
+                  SOURCE_BRANCH="$(Build.SourceBranch)"
+                  COMMIT_SHA="$(Build.SourceVersion)"
+                  BUILD_ID="$(Build.BuildId)"
+                  DEFINITION_NAME="$(Build.DefinitionName)"
+                  REASON="$(Build.Reason)"
+                  REQUESTED_FOR="$(Build.RequestedFor)"
+
+                  PARAMS_COMPACT="environment=$(TARGET_ENV_NAME); terraformPlan=${{ parameters.terraformPlan }}; terraformApply=${{ parameters.terraformApply }}; deployAppealsApi=${{ parameters.deployAppealsApi }}; deployAppealsWeb=${{ parameters.deployAppealsWeb }}; deployAppealsPdf=${{ parameters.deployAppealsPdf }}; deployFunctions=${{ parameters.deployFunctions }}; runDbMigration=${{ parameters.runDbMigration }}; deployToSlot=${{ parameters.deployToSlot }}; seedData=${{ parameters.seedData }}; purgeAndRecreate=${{ parameters.purgeAndRecreate }}; buildId=${BUILD_ID}; reason=${REASON}; requestedFor=${REQUESTED_FOR}; definition=${DEFINITION_NAME}"
+
+                  xml_escape() {
+                    local s="$1"
+                    s=${s//&/&amp;}
+                    s=${s//</&lt;}
+                    s=${s//>/&gt;}
+                    s=${s//\"/&quot;}
+                    s=${s//\'/&apos;}
+                    printf '%s' "$s"
                   }
-                  return $open_table . "<tbody>" . $new_inner . "</tbody>" . $close_table;
-                }
 
-                return $table;
-              }
+                  START_TIME_ESC="$(xml_escape "$START_TIME_UTC")"
+                  BUILD_ESC="$(xml_escape "$BUILD_NUMBER")"
+                  BRANCH_ESC="$(xml_escape "$SOURCE_BRANCH")"
+                  COMMIT_ESC="$(xml_escape "$COMMIT_SHA")"
+                  PARAMS_ESC="$(xml_escape "$PARAMS_COMPACT")"
 
-              my $default_table = "<table><tbody>$header_row$new_row</tbody></table>";
-              my $found_heading = 0;
-              my $heading_end_pos;
+                  NEW_ROW="<tr><td>${START_TIME_ESC}</td><td>${BUILD_ESC}</td><td>${BRANCH_ESC}</td><td>${COMMIT_ESC}</td><td>${PARAMS_ESC}</td></tr>"
 
-              while ($content =~ m{<h([1-6])\b[^>]*>(.*?)</h\1>}sig) {
-                my $text = decode_heading_text($2);
-                if ($text eq $heading) {
-                  $found_heading = 1;
-                  $heading_end_pos = $+[0];
-                  last;
-                }
-              }
+                  AUTH_B64="$(printf '%s' "${CONFLUENCE_EMAIL}:${CONFLUENCE_API_TOKEN}" | base64 | tr -d '\n')"
+                  API_BASE="${CONFLUENCE_BASE_URL%/}/rest/api/content/${CONFLUENCE_PAGE_ID}"
+                  GET_URL="${API_BASE}?expand=body.storage,version,title"
 
-              if (!$found_heading) {
-                $content .= "\n<h2>$heading</h2>\n$default_table\n";
-              } else {
-                my $after = substr($content, $heading_end_pos);
-                if ($after =~ m{^(\s*)(<table\b.*?</table>)}is) {
-                  my $ws = $1;
-                  my $table = $2;
-                  my $table_start = $heading_end_pos + length($ws);
-                  my $updated_table = insert_row_in_table($table, $new_row);
-                  substr($content, $table_start, length($table), $updated_table);
-                } else {
-                  my $insertion = "\n$default_table\n";
-                  substr($content, $heading_end_pos, 0, $insertion);
-                }
-              }
+                  api_call() {
+                    local method="$1"
+                    local url="$2"
+                    local data_file="${3:-}"
+                    local out_file="$4"
+                    local http_code
 
-              open my $out, '>', $file or die "write($file): $!";
-              print {$out} $content;
-              close $out;
-              PERL
+                    if [[ -n "$data_file" ]]; then
+                      http_code="$(curl -sS -X "$method" \
+                        -H "Authorization: Basic ${AUTH_B64}" \
+                        -H "Accept: application/json" \
+                        -H "Content-Type: application/json" \
+                        --data "@${data_file}" \
+                        "$url" -o "$out_file" -w "%{http_code}")"
+                    else
+                      http_code="$(curl -sS -X "$method" \
+                        -H "Authorization: Basic ${AUTH_B64}" \
+                        -H "Accept: application/json" \
+                        "$url" -o "$out_file" -w "%{http_code}")"
+                    fi
 
-              perl update_confluence_body.pl body-original.xml "$HEADING_TEXT" "$NEW_ROW"
+                    if [[ ! "$http_code" =~ ^2[0-9][0-9]$ ]]; then
+                      echo "ERROR: ${method} ${url} failed with HTTP ${http_code}" >&2
+                      sed 's/[[:cntrl:]]//g' "$out_file" | head -c 4000 >&2 || true
+                      echo >&2
+                      exit 1
+                    fi
+                  }
 
-              UPDATED_BODY="$(cat body-original.xml)"
-              NEXT_VERSION=$((CUR_VERSION + 1))
+                  api_call "GET" "$GET_URL" "" "page.json"
 
-              jq -n \
-                --arg id "$CONFLUENCE_PAGE_ID" \
-                --arg type "$PAGE_TYPE" \
-                --arg title "$PAGE_TITLE" \
-                --arg body "$UPDATED_BODY" \
-                --argjson version "$NEXT_VERSION" \
-                '{
-                  id: $id,
-                  type: $type,
-                  title: $title,
-                  version: { number: $version },
-                  body: { storage: { value: $body, representation: "storage" } }
-                }' > update-payload.json
+                  PAGE_TITLE="$(jq -r '.title' page.json)"
+                  PAGE_TYPE="$(jq -r '.type' page.json)"
+                  CUR_VERSION="$(jq -r '.version.number' page.json)"
+                  BODY_STORAGE="$(jq -r '.body.storage.value' page.json)"
 
-              api_call "PUT" "$API_BASE" "update-payload.json" "put-response.json"
-              echo "Confluence deployment record inserted at top of Deployment Records table for $(TARGET_ENV_NAME)."
-            displayName: Update Confluence Deployment Records
-            env:
-              CONFLUENCE_BASE_URL: $(CONFLUENCE_BASE_URL)
-              CONFLUENCE_PAGE_ID: $(CONFLUENCE_PAGE_ID)
-              CONFLUENCE_EMAIL: $(CONFLUENCE_EMAIL)
-              CONFLUENCE_API_TOKEN: $(CONFLUENCE_API_TOKEN)
+                  if [[ "$PAGE_TITLE" != "$EXPECTED_TITLE" ]]; then
+                    echo "ERROR: Confluence page title mismatch. Expected '$EXPECTED_TITLE', got '$PAGE_TITLE'." >&2
+                    exit 1
+                  fi
 
-  - stage: Test
-    displayName: Test
-    dependsOn: Dev
-    variables:
-      - template: variables/environments/test.yml@templates
-      - group: cd_test
-      - group: pipeline_secrets
-      - name: TARGET_ENV
-        value: test
-      - name: TARGET_ENV_NAME
-        value: Test
-    jobs: *environmentJobs
+                  printf '%s' "$BODY_STORAGE" > body-original.xml
 
-  - stage: Staging
-    displayName: Staging
-    dependsOn: Test
-    variables:
-      - template: variables/environments/staging.yml@templates
-      - group: cd_staging
-      - group: pipeline_secrets
-      - name: TARGET_ENV
-        value: staging
-      - name: TARGET_ENV_NAME
-        value: Staging
-    jobs: *environmentJobs
+                  cat > update_confluence_body.pl <<'PERL'
+                  use strict;
+                  use warnings;
 
-  - stage: Training
-    displayName: Training
-    dependsOn: Test
-    variables:
-      - template: variables/environments/training.yml@templates
-      - group: cd_training
-      - group: pipeline_secrets
-      - name: TARGET_ENV
-        value: training
-      - name: TARGET_ENV_NAME
-        value: Training
-    jobs: *environmentJobs
+                  my ($file, $heading, $new_row) = @ARGV;
+                  die "usage: $0 <file> <heading> <new_row>" unless defined $new_row;
 
-  - stage: Prod
-    displayName: Prod
-    dependsOn: Training
-    variables:
-      - template: variables/environments/prod.yml@templates
-      - group: cd_prod
-      - group: pipeline_secrets
-      - name: TARGET_ENV
-        value: prod
-      - name: TARGET_ENV_NAME
-        value: Prod
-    jobs: *environmentJobs
+                  local $/;
+                  open my $fh, '<', $file or die "open($file): $!";
+                  my $content = <$fh>;
+                  close $fh;
+
+                  my $header_row = '<tr><th>Start Time (UTC)</th><th>Build</th><th>Branch</th><th>Commit</th><th>Parameters</th></tr>';
+
+                  sub decode_heading_text {
+                    my ($t) = @_;
+                    $t =~ s/<[^>]+>//g;
+                    $t =~ s/&nbsp;/ /gi;
+                    $t =~ s/&amp;/&/gi;
+                    $t =~ s/&lt;/</gi;
+                    $t =~ s/&gt;/>/gi;
+                    $t =~ s/&quot;/"/gi;
+                    $t =~ s/&apos;/'/gi;
+                    $t =~ s/^\s+|\s+$//g;
+                    return $t;
+                  }
+
+                  sub insert_row_in_table {
+                    my ($table, $row) = @_;
+
+                    if ($table =~ m{<tbody\b[^>]*>.*?</tbody>}is) {
+                      $table =~ s{(<tbody\b[^>]*>\s*)(.*?)(\s*</tbody>)}{
+                        my ($open, $inner, $close) = ($1, $2, $3);
+                        if ($inner =~ m{(<tr\b[^>]*>.*?</tr>)}is) {
+                          my $first_tr = $1;
+                          my $first_end = $+[0];
+                          my $rest = substr($inner, $first_end);
+                          $open . $first_tr . "\n" . $row . $rest . $close;
+                        } else {
+                          $open . $row . $inner . $close;
+                        }
+                      }ise;
+                      return $table;
+                    }
+
+                    if ($table =~ m{^(\s*<table\b[^>]*>)(.*?)(</table>\s*)$}is) {
+                      my ($open_table, $inner, $close_table) = ($1, $2, $3);
+                      my $new_inner;
+                      if ($inner =~ m{(<tr\b[^>]*>.*?</tr>)}is) {
+                        my $first_tr = $1;
+                        my $first_end = $+[0];
+                        my $rest = substr($inner, $first_end);
+                        $new_inner = $first_tr . "\n" . $row . $rest;
+                      } else {
+                        $new_inner = $header_row . "\n" . $row;
+                      }
+                      return $open_table . "<tbody>" . $new_inner . "</tbody>" . $close_table;
+                    }
+
+                    return $table;
+                  }
+
+                  my $default_table = "<table><tbody>$header_row$new_row</tbody></table>";
+                  my $found_heading = 0;
+                  my $heading_end_pos;
+
+                  while ($content =~ m{<h([1-6])\b[^>]*>(.*?)</h\1>}sig) {
+                    my $text = decode_heading_text($2);
+                    if ($text eq $heading) {
+                      $found_heading = 1;
+                      $heading_end_pos = $+[0];
+                      last;
+                    }
+                  }
+
+                  if (!$found_heading) {
+                    $content .= "\n<h2>$heading</h2>\n$default_table\n";
+                  } else {
+                    my $after = substr($content, $heading_end_pos);
+                    if ($after =~ m{^(\s*)(<table\b.*?</table>)}is) {
+                      my $ws = $1;
+                      my $table = $2;
+                      my $table_start = $heading_end_pos + length($ws);
+                      my $updated_table = insert_row_in_table($table, $new_row);
+                      substr($content, $table_start, length($table), $updated_table);
+                    } else {
+                      my $insertion = "\n$default_table\n";
+                      substr($content, $heading_end_pos, 0, $insertion);
+                    }
+                  }
+
+                  open my $out, '>', $file or die "write($file): $!";
+                  print {$out} $content;
+                  close $out;
+                  PERL
+
+                  perl update_confluence_body.pl body-original.xml "$HEADING_TEXT" "$NEW_ROW"
+
+                  UPDATED_BODY="$(cat body-original.xml)"
+                  NEXT_VERSION=$((CUR_VERSION + 1))
+
+                  jq -n \
+                    --arg id "$CONFLUENCE_PAGE_ID" \
+                    --arg type "$PAGE_TYPE" \
+                    --arg title "$PAGE_TITLE" \
+                    --arg body "$UPDATED_BODY" \
+                    --argjson version "$NEXT_VERSION" \
+                    '{
+                      id: $id,
+                      type: $type,
+                      title: $title,
+                      version: { number: $version },
+                      body: { storage: { value: $body, representation: "storage" } }
+                    }' > update-payload.json
+
+                  api_call "PUT" "$API_BASE" "update-payload.json" "put-response.json"
+                  echo "Confluence deployment record inserted at top of Deployment Records table for $(TARGET_ENV_NAME)."
+                displayName: Update Confluence Deployment Records
+                env:
+                  CONFLUENCE_BASE_URL: $(CONFLUENCE_BASE_URL)
+                  CONFLUENCE_PAGE_ID: $(CONFLUENCE_PAGE_ID)
+                  CONFLUENCE_EMAIL: $(CONFLUENCE_EMAIL)
+                  CONFLUENCE_API_TOKEN: $(CONFLUENCE_API_TOKEN)
