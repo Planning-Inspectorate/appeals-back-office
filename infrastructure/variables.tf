@@ -51,6 +51,7 @@ variable "apps_config" {
       featureFlagPdfDownload              = bool
       featureFlagNetResidence             = bool
       featureFlagNetResidenceS20          = bool
+      featureFlagCancelCase               = bool
       featureFlagChangeProcedureType      = bool
       featureFlagHearingPostMvp           = bool
       featureFlagAutoAssignTeam           = bool
