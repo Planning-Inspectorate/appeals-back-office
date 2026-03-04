@@ -1878,6 +1878,54 @@ describe('appeal timetables routes', () => {
 				}
 			);
 
+			describe('when changing the start date for inquiry appeals', () => {
+				test.each([
+					[
+						'and using the existing procedure type on the appeal',
+						{ startDate: '2024-06-05T22:59:00.000Z' }
+					],
+					[
+						'and passing inquiry as the procedure type in the request body',
+						{ startDate: '2024-06-05T22:59:00.000Z', procedureType: 'inquiry' }
+					]
+				])('uses inquiry start-date-change templates %s', async (_, requestBody) => {
+					const restartedInquiryAppeal = {
+						...fullPlanningAppeal,
+						caseStartedDate: '2024-06-01T22:59:00.000Z',
+						procedureType: { key: 'inquiry' }
+					};
+
+					databaseConnector.appeal.findUnique.mockResolvedValue(restartedInquiryAppeal);
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
+
+					const response = await request
+						.post(`/appeals/${restartedInquiryAppeal.id}/appeal-timetables/`)
+						.send(requestBody)
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(response.status).toEqual(201);
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
+					expect(mockNotifySend).toHaveBeenNthCalledWith(
+						1,
+						expect.objectContaining({
+							templateName: 'appeal-start-date-change-inquiry',
+							recipientEmail: restartedInquiryAppeal.appellant.email
+						})
+					);
+					expect(mockNotifySend).toHaveBeenNthCalledWith(
+						2,
+						expect.objectContaining({
+							templateName: 'appeal-start-date-change-inquiry',
+							recipientEmail: restartedInquiryAppeal.lpa.email
+						})
+					);
+				});
+			});
+
 			describe('for an enforcement notice appeal', () => {
 				const appeal = {
 					...enforcementNoticeAppeal,

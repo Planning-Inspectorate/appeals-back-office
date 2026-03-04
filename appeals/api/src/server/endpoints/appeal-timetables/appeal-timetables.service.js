@@ -106,7 +106,11 @@ const getStartCaseNotifyParams = async (
 	inquiry
 ) => {
 	const hearingSuffix = hearingStartTime ? '-hearing' : '';
-	const inquirySuffix = inquiry && inquiry.inquiryStartTime ? 'inquiry' : '';
+	const inquirySuffix =
+		appeal.procedureType?.key === APPEAL_CASE_PROCEDURE.INQUIRY ||
+		(inquiry && inquiry.inquiryStartTime)
+			? 'inquiry'
+			: '';
 
 	const { type = '', key: appealTypeKey = APPEAL_CASE_TYPE.D } = appeal.appealType || {};
 	const appealType = trimAppealType(type);
