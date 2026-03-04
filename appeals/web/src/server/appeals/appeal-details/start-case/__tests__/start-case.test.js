@@ -762,6 +762,66 @@ describe('start-case', () => {
 					);
 				}
 			);
+
+			it('should show all radio button labels for enforcement linked appeals when hearing and inquiry are enabled', async () => {
+				// @ts-ignore
+				getEnabledHearingAppealTypes.mockImplementation((linked) =>
+					linked ? [] : [APPEAL_TYPE.ENFORCEMENT_NOTICE]
+				);
+				// @ts-ignore
+				getEnabledInquiryAppealTypes.mockImplementation((linked) =>
+					linked ? [] : [APPEAL_TYPE.ENFORCEMENT_NOTICE]
+				);
+
+				nock('http://test/')
+					.get('/appeals/1?include=all')
+					.reply(200, {
+						...appealDataWithoutStartDate,
+						appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
+						isParentAppeal: true,
+						isChildAppeal: false
+					});
+
+				const response = await request.get(
+					'/appeals-service/appeal-details/1/start-case/select-procedure'
+				);
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1/start-case/select-procedure/check-and-confirm'
+				);
+			});
+
+			it('should redirect to check and confirm page when appeal type is enforcement, linked and hearing and inquiry are not enabled', async () => {
+				// @ts-ignore
+				getEnabledHearingAppealTypes.mockImplementation((linked) =>
+					linked ? [APPEAL_TYPE.ENFORCEMENT_NOTICE] : []
+				);
+				// @ts-ignore
+				getEnabledInquiryAppealTypes.mockImplementation((linked) =>
+					linked ? [APPEAL_TYPE.ENFORCEMENT_NOTICE] : []
+				);
+
+				nock('http://test/')
+					.get('/appeals/1?include=all')
+					.reply(200, {
+						...appealDataWithoutStartDate,
+						appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
+						isParentAppeal: true,
+						isChildAppeal: false
+					});
+
+				const response = await request.get(
+					'/appeals-service/appeal-details/1/start-case/select-procedure'
+				);
+
+				expect(response.statusCode).toBe(200);
+				const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="hearing"');
+				expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="inquiry"');
+				expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="written"');
+			});
 		});
 	});
 

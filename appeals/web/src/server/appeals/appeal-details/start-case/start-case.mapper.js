@@ -94,6 +94,7 @@ export function changeDatePage(appealId, appealReference, today) {
 /**
  * @param {string} appealReference
  * @param {string} appealType
+ * @param {boolean} isLinkedAppeal
  * @param {string} backLinkUrl
  * @param {{appealProcedure: string}} [storedSessionData]
  * @param {string|undefined} errorMessage
@@ -102,6 +103,7 @@ export function changeDatePage(appealId, appealReference, today) {
 export function selectProcedurePage(
 	appealReference,
 	appealType,
+	isLinkedAppeal,
 	backLinkUrl,
 	storedSessionData,
 	errorMessage = undefined
@@ -119,11 +121,11 @@ export function selectProcedurePage(
 		},
 		{
 			case: APPEAL_CASE_PROCEDURE.HEARING,
-			appeals: getEnabledHearingAppealTypes()
+			appeals: getEnabledHearingAppealTypes(isLinkedAppeal)
 		},
 		{
 			case: APPEAL_CASE_PROCEDURE.INQUIRY,
-			appeals: getEnabledInquiryAppealTypes()
+			appeals: getEnabledInquiryAppealTypes(isLinkedAppeal)
 		}
 	];
 

@@ -18,7 +18,7 @@ jest.unstable_mockModule('#lib/api/notify-preview.api.js', () => ({
 
 const mockGetEnabledHearingAppealTypes = jest
 	.fn()
-	.mockImplementation(() => getEnabledHearingAppealTypes());
+	.mockImplementation((linked) => getEnabledHearingAppealTypes(linked));
 
 jest.unstable_mockModule('#common/hearing-appeal-types.js', () => ({
 	getEnabledHearingAppealTypes: mockGetEnabledHearingAppealTypes
@@ -26,7 +26,7 @@ jest.unstable_mockModule('#common/hearing-appeal-types.js', () => ({
 
 const mockGetEnabledInquiryAppealTypes = jest
 	.fn()
-	.mockImplementation(() => getEnabledInquiryAppealTypes());
+	.mockImplementation((linked) => getEnabledInquiryAppealTypes(linked));
 
 jest.unstable_mockModule('#common/inquiry-appeal-types.js', () => ({
 	getEnabledInquiryAppealTypes: mockGetEnabledInquiryAppealTypes
