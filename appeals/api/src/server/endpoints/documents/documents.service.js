@@ -171,6 +171,10 @@ export const getFoldersForStage = (path) => {
 				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_E_SUPPORTING}`,
 				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_F_SUPPORTING}`,
 				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING}`,
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_H_SUPPORTING}`,
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_I_SUPPORTING}`,
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_J_SUPPORTING}`,
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_K_SUPPORTING}`,
 				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT}`
 			];
 			break;
@@ -267,6 +271,12 @@ export const addDocumentsToAppeal = async (upload, appeal, skipBlobValidation = 
 	const documentsCreated = documentsToSendToDatabase?.length
 		? await addDocumentAndVersion(appeal, documentsToSendToDatabase, skipBlobValidation)
 		: [];
+
+	for (const document of documentsCreated) {
+		if (document?.documentGuid) {
+			await broadcasters.broadcastDocument(document.documentGuid, 1, EventType.Create);
+		}
+	}
 
 	const documentsToAddToAuditTrail = mapDocumentsForAuditTrail(documentsCreated).filter(
 		(d) => d !== null
