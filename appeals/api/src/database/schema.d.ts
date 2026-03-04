@@ -234,6 +234,7 @@ export interface AppealRelationship extends schema.AppealRelationship {}
 export interface PersonalList extends schema.PersonalList {}
 
 export interface Ground extends schema.Ground {
+	appealType: string;
 	groundRef: string;
 	groundDescription: string;
 }

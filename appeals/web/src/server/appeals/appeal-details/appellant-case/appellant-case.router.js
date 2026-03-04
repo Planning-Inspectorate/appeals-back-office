@@ -281,14 +281,14 @@ router.use(
 
 router.use(
 	'/grounds-for-appeal',
-	validateAppealWithInclude(['appellantCase', 'appealGrounds']),
+	validateAppealWithInclude(['appellantCase', 'appealGrounds', 'appealType']),
 	assertUserHasPermission(permissionNames.updateCase),
 	groundsForAppealRouter
 );
 
 router.use(
 	'/facts-for-ground',
-	validateAppealWithInclude(['appellantCase', 'appealGrounds']),
+	validateAppealWithInclude(['appellantCase', 'appealGrounds', 'appealType']),
 	assertUserHasPermission(permissionNames.updateCase),
 	factsForGroundRouter
 );

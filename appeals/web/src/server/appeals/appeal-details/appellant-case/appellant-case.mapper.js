@@ -947,6 +947,14 @@ export function getPageHeadingTextOverrideForFolder(folder) {
 			return 'Ground (f) supporting documents';
 		case APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING:
 			return 'Ground (g) supporting documents';
+		case APPEAL_DOCUMENT_TYPE.GROUND_H_SUPPORTING:
+			return 'Ground (h) supporting documents';
+		case APPEAL_DOCUMENT_TYPE.GROUND_I_SUPPORTING:
+			return 'Ground (i) supporting documents';
+		case APPEAL_DOCUMENT_TYPE.GROUND_J_SUPPORTING:
+			return 'Ground (j) supporting documents';
+		case APPEAL_DOCUMENT_TYPE.GROUND_K_SUPPORTING:
+			return 'Ground (k) supporting documents';
 		case APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT:
 			return 'Ground (a) fee receipt';
 		default:
@@ -1006,6 +1014,14 @@ export function getPageHeadingTextOverrideForAddDocuments(folder, appealType) {
 			return 'Upload your ground (f) supporting documents';
 		case APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING:
 			return 'Upload your ground (g) supporting documents';
+		case APPEAL_DOCUMENT_TYPE.GROUND_H_SUPPORTING:
+			return 'Upload your ground (h) supporting documents';
+		case APPEAL_DOCUMENT_TYPE.GROUND_I_SUPPORTING:
+			return 'Upload your ground (i) supporting documents';
+		case APPEAL_DOCUMENT_TYPE.GROUND_J_SUPPORTING:
+			return 'Upload your ground (j) supporting documents';
+		case APPEAL_DOCUMENT_TYPE.GROUND_K_SUPPORTING:
+			return 'Upload your ground (k) supporting documents';
 		case APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT:
 			return 'Upload your ground (a) fee receipt';
 		default:
@@ -1057,6 +1073,14 @@ export function getDocumentNameFromFolder(folderPath) {
 			return 'ground (f) supporting documents';
 		case APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING:
 			return 'ground (g) supporting documents';
+		case APPEAL_DOCUMENT_TYPE.GROUND_H_SUPPORTING:
+			return 'ground (h) supporting documents';
+		case APPEAL_DOCUMENT_TYPE.GROUND_I_SUPPORTING:
+			return 'ground (i) supporting documents';
+		case APPEAL_DOCUMENT_TYPE.GROUND_J_SUPPORTING:
+			return 'ground (j) supporting documents';
+		case APPEAL_DOCUMENT_TYPE.GROUND_K_SUPPORTING:
+			return 'ground (k) supporting documents';
 		case APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT:
 			return 'ground (a) fee receipt';
 	}
