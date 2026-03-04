@@ -24,27 +24,35 @@ const updateGroundsForAppealByAppealId = async (req, res) => {
 
 	let response;
 
-	const allGrounds = await getAllGrounds();
+	const filteredGroundsByAppealType = (await getAllGrounds()).filter(
+		(ground) => ground.appealType === appeal.appealType?.type
+	);
 
-	const currentGroundsForAppeal =
-		appeal?.appealGrounds?.map(({ ground }) => ground?.groundRef) || [];
+	const currentGroundsForAppeal = appeal?.appealGrounds?.map(({ ground }) => ground?.id) || [];
 
-	const changes = allGrounds
+	const newlySelectedGrounds = new Set(groundsForAppeal.map(Number));
+	const currentGrounds = new Set(currentGroundsForAppeal);
+
+	const changes = filteredGroundsByAppealType
 		.map(({ groundRef, id: groundId }) => {
-			if (groundsForAppeal.includes(groundRef) && !currentGroundsForAppeal.includes(groundRef)) {
+			const isSelectedNow = newlySelectedGrounds.has(groundId);
+			const wasSelectedBefore = currentGrounds.has(groundId);
+
+			if (isSelectedNow && !wasSelectedBefore) {
 				return { groundRef, groundId, appealId, isDeleted: false };
-			} else if (
-				!groundsForAppeal.includes(groundRef) &&
-				currentGroundsForAppeal.includes(groundRef)
-			) {
+			}
+
+			if (!isSelectedNow && wasSelectedBefore) {
 				return { groundRef, groundId, appealId, isDeleted: true };
 			}
+
 			return null;
 		})
-		.filter((change) => change !== null);
+		.filter(Boolean);
 
 	try {
 		response = await Promise.all(
+			// @ts-ignore
 			changes.map(({ groundRef, groundId, appealId, isDeleted }) =>
 				updateAppealGround(azureAdUserId, { groundRef, groundId, appealId, isDeleted })
 			)

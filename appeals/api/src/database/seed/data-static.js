@@ -599,39 +599,105 @@ export const specialisms = [
 /**
  * An array of grounds for appeal.
  *
- * @type {Pick<Ground, 'groundRef' | 'groundDescription'>[]}
+ * @type {Pick<Ground, 'appealType' | 'groundRef' | 'groundDescription'>[]}
  */
 export const groundsForAppeal = [
 	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
 		groundRef: 'a',
 		groundDescription:
 			'The local planning authority (LPA) should grant planning permission for all (or part) of the development described in the alleged breach.'
 	},
 	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
 		groundRef: 'b',
 		groundDescription: 'The alleged breach did not happen.'
 	},
 	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
 		groundRef: 'c',
 		groundDescription:
 			'You do not need planning permission (for example, it is a permitted development or you already have planning permission).'
 	},
 	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
 		groundRef: 'd',
 		groundDescription: 'It is too late for the LPA to take enforcement action.'
 	},
 	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
 		groundRef: 'e',
 		groundDescription:
 			'The LPA did not serve the notice properly to everyone with an interest in the land.'
 	},
 	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
 		groundRef: 'f',
 		groundDescription: 'A simpler step (or steps) would achieve the same result.'
 	},
 	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
 		groundRef: 'g',
 		groundDescription: 'The time to comply with the notice is too short.'
+	},
+	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		groundRef: 'a',
+		groundDescription: 'The building is not of special architectural or historic interest.'
+	},
+	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		groundRef: 'b',
+		groundDescription: 'The alleged breach did not happen.'
+	},
+	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		groundRef: 'c',
+		groundDescription:
+			"You do not need listed building consent (for example, the works do not affect the building's character or they are for a part of the building that is not listed)."
+	},
+	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		groundRef: 'd',
+		groundDescription:
+			'The work was urgently necessary. To appeal this ground, you must have: completed the work straight away for safety, health or to preserve the building, not been able to preserve or make the building safe with repair or temporary support, only completed the minimum work to deal with the immediate risk'
+	},
+	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		groundRef: 'e',
+		groundDescription:
+			'Listed building consent should be granted (or conditions changed) for the work.'
+	},
+	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		groundRef: 'f',
+		groundDescription:
+			'The local planning authority did not serve the notice properly to everyone with an interest in the land.'
+	},
+	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		groundRef: 'g',
+		groundDescription: 'A simpler step (or steps) would achieve the same result.'
+	},
+	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		groundRef: 'h',
+		groundDescription: 'The time to comply with the notice is too short.'
+	},
+	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		groundRef: 'i',
+		groundDescription: 'The required steps will not restore the building’s character.'
+	},
+	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		groundRef: 'j',
+		groundDescription: 'A simpler step (or steps) would reduce the harm caused.'
+	},
+	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		groundRef: 'k',
+		groundDescription: 'A simpler step (or steps) would meet listed building consent conditions.'
 	}
 ];
 
@@ -1006,7 +1072,9 @@ export async function seedStaticData(databaseConnector) {
 	for (const ground of groundsForAppeal) {
 		await databaseConnector.ground.upsert({
 			create: ground,
-			where: { groundRef: ground.groundRef },
+			where: {
+				appealType_groundRef: { groundRef: ground.groundRef, appealType: ground.appealType }
+			},
 			update: ground
 		});
 	}

@@ -1157,9 +1157,12 @@ model AppealRule6Party {
 /// Ground model
 model Ground {
   id                Int            @id @default(autoincrement())
-  groundRef         String         @unique
+  appealType        String
+  groundRef         String
   groundDescription String
   appealGround      AppealGround[]
+
+  @@unique([appealType, groundRef])
 }
 
 /// EnforcementNoticeAppealOutcome model
