@@ -15,7 +15,8 @@ const appealDataWithoutStartDate = {
 const originalFeatureFlags = { ...config.featureFlags };
 const appealTypes = [
 	{ name: 'S78', appealType: APPEAL_TYPE.S78 },
-	{ name: 'S20', appealType: APPEAL_TYPE.PLANNED_LISTED_BUILDING }
+	{ name: 'S20', appealType: APPEAL_TYPE.PLANNED_LISTED_BUILDING },
+	{ name: 'EN', appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE }
 ];
 
 describe('Change procedure type', () => {
@@ -24,7 +25,10 @@ describe('Change procedure type', () => {
 			featureFlagS78Written: true,
 			featureFlagS78Inquiry: true,
 			featureFlagS20Hearing: true,
-			featureFlagS20Inquiry: true
+			featureFlagS20Inquiry: true,
+			featureFlagEnforcementNotice: true,
+			featureFlagEnforcementNoticeHearing: true,
+			featureFlagEnforcementNoticeInquiry: true
 		});
 	});
 
@@ -193,6 +197,93 @@ describe('Change procedure type', () => {
 		);
 	});
 
+	it('should show inquiry for enforcement notice when enforcement inquiry is enabled even if S78 inquiry is disabled', async () => {
+		Object.assign(config.featureFlags, {
+			featureFlagS78Inquiry: false,
+			featureFlagEnforcementNotice: true,
+			featureFlagEnforcementNoticeInquiry: true
+		});
+
+		nock('http://test/')
+			.get('/appeals/1?include=all')
+			.reply(200, {
+				...appealDataWithoutStartDate,
+				appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE
+			});
+
+		const response = await request.get(
+			'/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type'
+		);
+
+		expect(response.statusCode).toBe(200);
+		const unprettifiedElement = parseHtml(response.text, {
+			rootElement: 'body',
+			skipPrettyPrint: true
+		});
+
+		expect(unprettifiedElement.innerHTML).toContain(
+			'name="appealProcedure" type="radio" value="inquiry">'
+		);
+	});
+
+	it('should hide hearing option for enforcement notice when enforcement hearing flag is disabled', async () => {
+		Object.assign(config.featureFlags, {
+			featureFlagEnforcementNotice: true,
+			featureFlagEnforcementNoticeHearing: false,
+			featureFlagEnforcementNoticeInquiry: true
+		});
+
+		nock('http://test/')
+			.get('/appeals/1?include=all')
+			.reply(200, {
+				...appealDataWithoutStartDate,
+				appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE
+			});
+
+		const response = await request.get(
+			'/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type'
+		);
+
+		expect(response.statusCode).toBe(200);
+		const unprettifiedElement = parseHtml(response.text, {
+			rootElement: 'body',
+			skipPrettyPrint: true
+		});
+
+		expect(unprettifiedElement.innerHTML).not.toContain(
+			'name="appealProcedure" type="radio" value="hearing">'
+		);
+	});
+
+	it('should hide inquiry option for enforcement notice when enforcement inquiry flag is disabled', async () => {
+		Object.assign(config.featureFlags, {
+			featureFlagEnforcementNotice: true,
+			featureFlagEnforcementNoticeHearing: true,
+			featureFlagEnforcementNoticeInquiry: false
+		});
+
+		nock('http://test/')
+			.get('/appeals/1?include=all')
+			.reply(200, {
+				...appealDataWithoutStartDate,
+				appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE
+			});
+
+		const response = await request.get(
+			'/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type'
+		);
+
+		expect(response.statusCode).toBe(200);
+		const unprettifiedElement = parseHtml(response.text, {
+			rootElement: 'body',
+			skipPrettyPrint: true
+		});
+
+		expect(unprettifiedElement.innerHTML).not.toContain(
+			'name="appealProcedure" type="radio" value="inquiry">'
+		);
+	});
+
 	describe.each(appealTypes)(
 		'POST /change-appeal-procedure-type/change-selected-procedure-type Written to Written - $name',
 		({ appealType }) => {
@@ -289,6 +380,57 @@ describe('Change procedure type', () => {
 
 				expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 				expect(unprettifiedErrorSummaryHtml).toContain('Select the appeal procedure</a>');
+			});
+
+			it('should redirect to hearing date-known page if changing from written to hearing', async () => {
+				nock('http://test/')
+					.get('/appeals/1?include=all')
+					.reply(200, {
+						...appealDataWithoutStartDate,
+						appealType,
+						procedureType: 'written'
+					});
+
+				const response = await request
+					.post(
+						'/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type'
+					)
+					.send({
+						appealProcedure: 'hearing'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/change-event-date-known'
+				);
+			});
+		}
+	);
+
+	describe.each(appealTypes)(
+		'POST /change-appeal-procedure-type/change-selected-procedure-type Written to Inquiry - $name',
+		({ appealType }) => {
+			it('should redirect to inquiry date page if changing from written to inquiry', async () => {
+				nock('http://test/')
+					.get('/appeals/1?include=all')
+					.reply(200, {
+						...appealDataWithoutStartDate,
+						appealType,
+						procedureType: 'written'
+					});
+
+				const response = await request
+					.post(
+						'/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type'
+					)
+					.send({
+						appealProcedure: 'inquiry'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/date'
+				);
 			});
 		}
 	);
