@@ -5,9 +5,10 @@ import { addDocumentAudit } from '#endpoints/documents/documents.service.js';
 import { commandMappers } from '#mappers/integration/commands/index.js';
 import { serviceUserIdStartRange } from '#mappers/integration/map-service-user-entity.js';
 import { notifySend } from '#notify/notify-send.js';
-import { getLinkedAppealsById } from '#repositories/appeal.repository.js';
+import appealRepository, { getLinkedAppealsById } from '#repositories/appeal.repository.js';
 import { getAssignedTeam } from '#repositories/team.repository.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
+import { formatName } from '#utils/format-name.js';
 import { linkAppeals } from '#utils/link-appeals.js';
 import { markAwaitingTransfer } from '#utils/mark-for-transfer.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
@@ -158,10 +159,12 @@ const importNamedIndividuals = async ({ parentAppeal, casedata, documents, users
 			return data;
 		}) || [];
 
+	const childAppeals = [];
 	for (const individual of namedIndividuals) {
 		const childAppeal = await importIndividualAppeal(individual);
 		if (isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_LINKED)) {
 			await linkAppeals(AUDIT_TRAIL_LPA_UUID, parentAppeal, childAppeal);
+			childAppeals.push(childAppeal);
 		} else {
 			await markAwaitingTransfer(
 				childAppeal.id,
@@ -170,6 +173,7 @@ const importNamedIndividuals = async ({ parentAppeal, casedata, documents, users
 			);
 		}
 	}
+	return childAppeals;
 };
 
 /**
@@ -181,8 +185,8 @@ export const importAppeal = async (req, res) => {
 	const { casedata, documents, users } = req.body || {};
 	const data = { casedata, documents, users };
 
-	const parentAppeal = await importIndividualAppeal(data);
-	const { id, reference, assignedTeamId, appealTypeId } = await parentAppeal;
+	const parentResult = await importIndividualAppeal(data);
+	const { id, reference, assignedTeamId, appealTypeId } = await parentResult;
 
 	if (
 		isEnforcementCaseType(casedata?.caseType) &&
@@ -192,12 +196,50 @@ export const importAppeal = async (req, res) => {
 		if (!isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_LINKED)) {
 			await markAwaitingTransfer(id, appealTypeId, AUDIT_TRIAL_APPELLANT_UUID);
 		}
-		await importNamedIndividuals({
+		const childResults = await importNamedIndividuals({
 			// @ts-ignore
-			parentAppeal,
+			parentAppeal: parentResult,
 			casedata,
 			documents,
 			users
+		});
+
+		const [parentAppeal, ...childAppeals] = await Promise.all(
+			[parentResult, ...childResults].map(async (caseData) => {
+				return appealRepository.getAppealById(caseData.id);
+			})
+		);
+
+		const {
+			agent,
+			appellant,
+			reference: parentReference,
+			address: parentAddress
+		} = parentAppeal || {};
+
+		await notifySend({
+			templateName: 'link-appeal-additional-appellants',
+			// @ts-ignore
+			notifyClient: req.notifyClient,
+			recipientEmail: agent?.email ?? appellant?.email ?? '',
+			personalisation: {
+				appeal_reference_number: parentReference ?? '',
+				site_address: parentAddress ? formatAddressSingleLine(parentAddress) : '',
+				enforcement_reference: casedata?.enforcementReference ?? '',
+				lead_appeal_reference_number: parentReference ?? '',
+				// @ts-ignore
+				full_name_lead_appellant: formatName(appellant),
+				child_appeal_reference_number:
+					childAppeals.length === 1
+						? (childAppeals[0]?.reference ?? '')
+						: childAppeals.map((child) => child?.reference ?? ''),
+				full_name_additional_appellant:
+					childAppeals.length === 1
+						? // @ts-ignore
+							formatName(childAppeals[0])
+						: // @ts-ignore
+							childAppeals.map((child) => formatName(child.appellant))
+			}
 		});
 	}
 
