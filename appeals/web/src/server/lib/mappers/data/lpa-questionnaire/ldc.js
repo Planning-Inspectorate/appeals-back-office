@@ -3,7 +3,6 @@ import { submaps as hasSubmaps } from './has.js';
 import { mapAppealUnderActSection } from './submappers/map-appeal-under-act-section.js';
 import { mapCommunityInfrastructureLevy } from './submappers/map-community-infrastructure-levy.js';
 import { mapEnforcementNotice } from './submappers/map-enforcement-notice.js';
-import { mapHasCommunityInfrastructureLevy } from './submappers/map-has-community-infrastructure-levy.js';
 import { mapInfrastructureLevyAdoptedDate } from './submappers/map-infrastructure-levy-adopted-date.js';
 import { mapInfrastructureLevyExpectedDate } from './submappers/map-infrastructure-levy-expected-date.js';
 import { mapIsAppealInvalid } from './submappers/map-is-appeal-invalid.js';
@@ -28,7 +27,6 @@ export const submaps = {
 	lpaConsiderAppealInvalid: mapIsAppealInvalid,
 
 	//Section 2
-	hasCommunityInfrastructureLevy: mapHasCommunityInfrastructureLevy,
 	communityInfrastructureLevy: mapCommunityInfrastructureLevy,
 	isInfrastructureLevyFormallyAdopted: mapIsInfrastructureLevyFormallyAdopted,
 	infrastructureLevyAdoptedDate: mapInfrastructureLevyAdoptedDate,

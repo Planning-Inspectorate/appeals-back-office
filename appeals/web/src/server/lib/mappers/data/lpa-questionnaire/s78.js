@@ -15,7 +15,6 @@ import { mapEiaScopingOpinion } from './submappers/map-eia-scoping-opinion.js';
 import { mapEiaScreeningDirection } from './submappers/map-eia-screening-direction.js';
 import { mapEiaScreeningOpinion } from './submappers/map-eia-screening-opinion.js';
 import { mapEiaSensitiveAreaDetails } from './submappers/map-eia-sensitive-area-details.js';
-import { mapHasCommunityInfrastructureLevy } from './submappers/map-has-community-infrastructure-levy.js';
 import { mapHasProtectedSpecies } from './submappers/map-has-protected-species.js';
 import { mapInfrastructureLevyAdoptedDate } from './submappers/map-infrastructure-levy-adopted-date.js';
 import { mapInfrastructureLevyExpectedDate } from './submappers/map-infrastructure-levy-expected-date.js';
@@ -45,7 +44,6 @@ export const submaps = {
 	hasProtectedSpecies: mapHasProtectedSpecies,
 	isGypsyOrTravellerSite: mapIsGypsyOrTravellerSite,
 	isAonbNationalLandscape: mapIsAonbNationalLandscape,
-	hasCommunityInfrastructureLevy: mapHasCommunityInfrastructureLevy,
 	isInfrastructureLevyFormallyAdopted: mapIsInfrastructureLevyFormallyAdopted,
 	infrastructureLevyAdoptedDate: mapInfrastructureLevyAdoptedDate,
 	infrastructureLevyExpectedDate: mapInfrastructureLevyExpectedDate,

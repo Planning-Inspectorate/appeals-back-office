@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { submaps as enforcementListedSubmaps } from '../enforcement-listed.js';
-import { submaps as enforcementSubmaps } from '../enforcement.js';
+import { submaps as enforcementSubmaps } from '../enforcement-notice.js';
 import { submaps as s78Submaps } from '../s78.js';
 
 describe('Enforcement vs Enforcement Listed Building (ELB) Submap Architecture', () => {
