@@ -135,6 +135,13 @@ describe('mapStatusDependentNotifications', () => {
 			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
+			bannerKey: 'updateAppellantStatement',
+			requiredAction: 'updateAppellantStatement',
+			expectedContainedHtml:
+				'<p class="govuk-notification-banner__heading">Appellant statement incomplete</p>',
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
 			bannerKey: 'addResidencesNetChange',
 			requiredAction: 'addResidencesNetChangeS78',
 			expectedContainedHtml: `<a class="govuk-link" data-cy="add-residences-net-change" href="/appeals-service/appeal-details/${mockAppealData.appealId}/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}">Add number of residential units</a>`,
