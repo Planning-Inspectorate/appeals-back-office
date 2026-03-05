@@ -507,7 +507,10 @@ describe('decision routes', () => {
 						lpa_reference: appeal.applicationReference,
 						site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 						front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`,
-						feedback_link: expectedFeedbackLink
+						feedback_link: expectedFeedbackLink,
+						...(appeal.appellantCase.enforcementReference && {
+							enforcement_reference: appeal.appellantCase.enforcementReference
+						})
 					},
 					recipientEmail: appeal.agent.email
 				});
@@ -520,7 +523,10 @@ describe('decision routes', () => {
 						lpa_reference: appeal.applicationReference,
 						site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 						front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`,
-						feedback_link: FEEDBACK_FORM_LINKS.LPA
+						feedback_link: FEEDBACK_FORM_LINKS.LPA,
+						...(appeal.appellantCase.enforcementReference && {
+							enforcement_reference: appeal.appellantCase.enforcementReference
+						})
 					},
 					templateName: 'appellant-costs-decision-lpa',
 					recipientEmail: appeal.lpa.email

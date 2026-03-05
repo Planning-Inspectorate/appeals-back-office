@@ -10,6 +10,7 @@ import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js
 import { isOutcomeComplete, isOutcomeIncomplete } from '#utils/check-validation-outcome.js';
 import { isCurrentStatus } from '#utils/current-status.js';
 import { getFormattedReasons } from '#utils/email-formatter.js';
+import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import { allLpaQuestionnaireOutcomesAreComplete } from '#utils/is-awaiting-linked-appeal.js';
 import { isLinkedAppeal, isParentAppeal } from '#utils/is-linked-appeal.js';
 import { getChildAppeals } from '#utils/link-appeals.js';
@@ -61,7 +62,7 @@ const updateLPAQuestionnaireValidationOutcome = async (
 ) => {
 	let timetable = undefined;
 
-	const { id: appealId, applicationReference: lpaReference, enforcementReference } = appeal;
+	const { id: appealId, applicationReference: lpaReference } = appeal;
 	const { lpaQuestionnaireDueDate, incompleteReasons } = data;
 
 	if (!isCurrentStatus(appeal, APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE)) {
@@ -169,13 +170,15 @@ const updateLPAQuestionnaireValidationOutcome = async (
 				updatedLpaQuestionnaire?.lpaQuestionnaireIncompleteReasonsSelected ?? []
 			);
 
+			const enforcementReference = await getEnforcementReference(appeal);
 			const personalisation = {
 				appeal_reference_number: appeal.reference,
 				lpa_reference: lpaReference || '',
 				site_address: siteAddress,
 				due_date: formatDate(new Date(lpaQuestionnaireDueDate), false),
 				reasons: incompleteReasonsList,
-				team_email_address: await getTeamEmailFromAppealId(appeal.id)
+				team_email_address: await getTeamEmailFromAppealId(appeal.id),
+				...(enforcementReference && { enforcement_reference: enforcementReference })
 			};
 
 			if (enforcementReference) {
@@ -202,12 +205,16 @@ const updateLPAQuestionnaireValidationOutcome = async (
  * @param {string} siteAddress
  * @param {string} azureAdUserId
  * */
-function sendLpaqCompleteEmailToLPA(notifyClient, appeal, siteAddress, azureAdUserId) {
+async function sendLpaqCompleteEmailToLPA(notifyClient, appeal, siteAddress, azureAdUserId) {
+	const enforcementReference = await getEnforcementReference(appeal);
 	const email = appeal.lpa?.email;
 	return sendLpaqCompleteEmail(
 		notifyClient,
 		appeal,
-		{ site_address: siteAddress },
+		{
+			site_address: siteAddress,
+			...(enforcementReference && { enforcement_reference: enforcementReference })
+		},
 		'lpaq-complete-lpa',
 		email,
 		azureAdUserId
@@ -220,7 +227,7 @@ function sendLpaqCompleteEmailToLPA(notifyClient, appeal, siteAddress, azureAdUs
  * @param {string} siteAddress
  * @param {string} azureAdUserId
  * */
-function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress, azureAdUserId) {
+async function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress, azureAdUserId) {
 	const email = appeal.appellant?.email ?? appeal.agent?.email;
 	const whatHappensNext =
 		'We will send you another email when the local planning authority submits their statement ' +
@@ -243,6 +250,8 @@ function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress, azu
 			);
 		case APPEAL_TYPE.S78:
 		case APPEAL_TYPE.ENFORCEMENT_NOTICE: {
+			const enforcementReference = await getEnforcementReference(appeal);
+
 			if (String(appeal.procedureType) === APPEAL_CASE_PROCEDURE.HEARING) {
 				const hearingStartTime = appeal.hearing?.hearingStartTime;
 				const hearingDate = hearingStartTime ? formatDate(hearingStartTime, false) : undefined;
@@ -252,7 +261,8 @@ function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress, azu
 					{
 						...s78Fields,
 						hearing_date: hearingDate,
-						what_happens_next: 'We will contact you if we need any more information.'
+						what_happens_next: 'We will contact you if we need any more information.',
+						...(enforcementReference && { enforcement_reference: enforcementReference })
 					},
 					s78Template,
 					email,
@@ -261,7 +271,17 @@ function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress, azu
 			}
 
 			const s78EmailPromises = [
-				sendLpaqCompleteEmail(notifyClient, appeal, s78Fields, s78Template, email, azureAdUserId)
+				sendLpaqCompleteEmail(
+					notifyClient,
+					appeal,
+					{
+						...s78Fields,
+						...(enforcementReference && { enforcement_reference: enforcementReference })
+					},
+					s78Template,
+					email,
+					azureAdUserId
+				)
 			];
 
 			if (appeal.appealRule6Parties && appeal.appealRule6Parties.length > 0) {
@@ -271,7 +291,10 @@ function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress, azu
 							sendLpaqCompleteEmail(
 								notifyClient,
 								appeal,
-								s78Fields,
+								{
+									...s78Fields,
+									...(enforcementReference && { enforcement_reference: enforcementReference })
+								},
 								s78Template,
 								party.serviceUser.email,
 								azureAdUserId

@@ -317,7 +317,8 @@ describe('lpa questionnaires routes', () => {
 							site_address: `${enforcementNoticeAppeal.address.addressLine1}, ${enforcementNoticeAppeal.address.addressLine2}, ${enforcementNoticeAppeal.address.addressTown}, ${enforcementNoticeAppeal.address.addressCounty}, ${enforcementNoticeAppeal.address.postcode}, ${fullPlanningAppeal.address.addressCountry}`,
 							what_happens_next:
 								'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.',
-							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+							enforcement_reference: enforcementNoticeAppeal.appellantCase.enforcementReference
 						}
 					}
 				],
@@ -338,7 +339,8 @@ describe('lpa questionnaires routes', () => {
 							site_address: `${enforcementNoticeAppeal.address.addressLine1}, ${enforcementNoticeAppeal.address.addressLine2}, ${enforcementNoticeAppeal.address.addressTown}, ${enforcementNoticeAppeal.address.addressCounty}, ${enforcementNoticeAppeal.address.postcode}, ${fullPlanningAppeal.address.addressCountry}`,
 							what_happens_next:
 								'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.',
-							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+							enforcement_reference: enforcementNoticeAppeal.appellantCase.enforcementReference
 						}
 					}
 				],
@@ -448,7 +450,10 @@ describe('lpa questionnaires routes', () => {
 							lpa_reference: test.appeal.applicationReference,
 							appeal_reference_number: test.appeal.reference,
 							site_address: `${test.appeal.address.addressLine1}, ${test.appeal.address.addressLine2}, ${test.appeal.address.addressTown}, ${test.appeal.address.addressCounty}, ${test.appeal.address.postcode}, ${test.appeal.address.addressCountry}`,
-							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+							...(test.personalisation.enforcement_reference && {
+								enforcement_reference: test.personalisation.enforcement_reference
+							})
 						},
 						recipientEmail: test.appeal.lpa.email,
 						templateName: 'lpaq-complete-lpa'

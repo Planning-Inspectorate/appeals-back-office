@@ -436,7 +436,10 @@ export const postSiteVisitMissedCya = async (request, response) => {
 		appeal_reference_number: appealDetails.appealReference,
 		site_address: appealSiteToAddressString(appealDetails.appealSite),
 		lpa_reference: appealDetails.planningApplicationReference,
-		team_email_address: assignedTeamEmail
+		team_email_address: assignedTeamEmail,
+		...(appealDetails.enforcementNotice?.appellantCase?.reference && {
+			enforcement_reference: appealDetails.enforcementNotice?.appellantCase?.reference
+		})
 	};
 	const templateName = 'site-visit-cancelled.content.md';
 	const template = await generateNotifyPreview(request.apiClient, templateName, personalisation);
