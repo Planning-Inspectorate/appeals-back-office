@@ -308,12 +308,14 @@ export const publishCostsDecision = async (
 	await updatePersonalList(appeal.id);
 
 	if (!skipNotifies) {
+		const enforcementReference = await getEnforcementReference(appeal);
 		const personalisation = {
 			appeal_reference_number: appeal.reference,
 			site_address: siteAddress,
 			lpa_reference: appeal.applicationReference || '',
 			front_office_url: environment.FRONT_OFFICE_URL || '',
-			feedback_link: getFeedbackLinkFromAppealTypeKey(appeal?.appealType?.key || '')
+			feedback_link: getFeedbackLinkFromAppealTypeKey(appeal?.appealType?.key || ''),
+			...(enforcementReference && { enforcement_reference: enforcementReference })
 		};
 		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 		const lpaEmail = appeal.lpa?.email || '';
