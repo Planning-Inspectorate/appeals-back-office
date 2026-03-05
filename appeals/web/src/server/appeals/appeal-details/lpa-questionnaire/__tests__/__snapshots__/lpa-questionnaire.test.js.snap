@@ -1877,12 +1877,6 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                                     data-cy="change-eia-environmental-impact-schedule">Change<span class="govuk-visually-hidden"> What is the development category? (2. Environmental impact assessment)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row lpa-eia-column-two-threshold"><dt class="govuk-summary-list__key"> Does the development meet or exceed the threshold or criteria in column 2?</dt>
-                            <dd                             class="govuk-summary-list__value">Not answered</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/environmental-impact-assessment/column-two-threshold/change"
-                                    data-cy="change-eia-column-two-threshold">Change<span class="govuk-visually-hidden"> Does the development meet or exceed the threshold or criteria in column 2? (2. Environmental impact assessment)</span></a>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row lpa-eia-requires-environmental-statement"><dt class="govuk-summary-list__key"> Did your screening opinion say the development needed an environmental statement?</dt>
                             <dd                             class="govuk-summary-list__value">Not answered</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/environmental-impact-assessment/requires-environmental-statement/change"
@@ -1907,19 +1901,6 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Scoping opinion documents</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-eia-scoping-opinion">Add<span class="govuk-visually-hidden"> Scoping opinion documents (2. Environmental impact assessment)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row lpa-eia-development-description"><dt class="govuk-summary-list__key"> Description of development</dt>
-                            <dd                             class="govuk-summary-list__value">No Data</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/eia-development-description/change"
-                                    data-cy="change-eia-development-description">Change<span class="govuk-visually-hidden"> Description of development (2. Environmental impact assessment)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row lpa-eia-sensitive-area-details"><dt class="govuk-summary-list__key"> Is the development in, partly in, or likely to affect a sensitive area?</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No</span>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/environmental-impact-assessment/sensitive-area-details/change"
-                                    data-cy="change-eia-sensitive-area-details">Change<span class="govuk-visually-hidden"> Is the development in, partly in, or likely to affect a sensitive area? (2. Environmental impact assessment)</span></a>
                                 </dd>
                         </div>
                     </dl>
