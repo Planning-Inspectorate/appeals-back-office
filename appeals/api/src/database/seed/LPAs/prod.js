@@ -18,7 +18,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'N5090',
 		name: 'Barnet',
 		email: 'planning.appeals@barnet.gov.uk',
-		teamId: 10 // West4
+		teamId: 9 // West3
 	},
 	{
 		lpaCode: 'H1705',
@@ -47,7 +47,8 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'K0425',
 		name: 'Buckinghamshire Council - Wycombe Area',
-		email: 'planning.wyc@buckinghamshire.gov.uk'
+		email: 'planning.wyc@buckinghamshire.gov.uk',
+		teamId: 7 // West1
 	},
 	{
 		lpaCode: 'X3405',
@@ -83,13 +84,13 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'D1265',
 		name: 'Dorset',
 		email: 'Appeals@dorsetcouncil.gov.uk',
-		teamId: 9 // West3
+		teamId: 10 // West4
 	},
 	{
 		lpaCode: 'C4615',
 		name: 'Dudley Metropolitan Borough Council',
 		email: 'development.control@dudley.gov.uk',
-		teamId: 9 // West3
+		teamId: 8 // West2
 	},
 	{
 		lpaCode: 'U1105',
@@ -154,7 +155,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'E5330',
 		name: 'Greenwich',
 		email: 'planning-enforcement@royalgreenwich.gov.uk',
-		teamId: 10 // West4
+		teamId: 9 // West3
 	},
 	{
 		lpaCode: 'N1730',
@@ -1360,7 +1361,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'T0355',
 		name: 'Royal Borough of Windsor and Maidenhead',
 		email: 'planning.appeals@rbwm.gov.uk',
-		teamId: 10 //west4
+		teamId: 7 //West1
 	},
 	{
 		lpaCode: 'G4620',
