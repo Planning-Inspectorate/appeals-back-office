@@ -60,14 +60,91 @@ parameters:
     default: false
 
 variables:
-  - group: cd_${{ lower(parameters.environment) }}
+  - ${{ if eq(parameters.environment, 'Dev') }}:
+      - group: cd_dev
+  - ${{ if eq(parameters.environment, 'Test') }}:
+      - group: cd_test
+  - ${{ if eq(parameters.environment, 'Staging') }}:
+      - group: cd_staging
+  - ${{ if eq(parameters.environment, 'Training') }}:
+      - group: cd_training
+  - ${{ if eq(parameters.environment, 'Prod') }}:
+      - group: cd_prod
 
 pool:
   vmImage: ubuntu-latest
 
 jobs:
+  - job: InfraPlan
+    displayName: Infrastructure Plan
+    condition: eq('${{ parameters.terraformPlan }}', 'true')
+    steps:
+      - bash: |
+          set -euo pipefail
+          echo "Placeholder: Terraform plan would run for environment '${{ parameters.environment }}'."
+          echo "Result: success (placeholder)."
+        displayName: Placeholder infra plan
+
+  - job: InfraApply
+    displayName: Infrastructure Apply
+    dependsOn: InfraPlan
+    condition: and(succeeded(), eq('${{ parameters.terraformApply }}', 'true'), eq('${{ parameters.terraformPlan }}', 'true'))
+    steps:
+      - bash: |
+          set -euo pipefail
+          echo "Placeholder: Terraform apply would run for environment '${{ parameters.environment }}'."
+          echo "Result: success (placeholder)."
+        displayName: Placeholder infra apply
+
+  - job: Deploy
+    displayName: Application Deployment
+    dependsOn:
+      - InfraPlan
+      - InfraApply
+    condition: |
+      and(
+        in(dependencies.InfraPlan.result, 'Succeeded', 'Skipped'),
+        in(dependencies.InfraApply.result, 'Succeeded', 'Skipped'),
+        or(
+          eq('${{ parameters.deployAppealsApi }}', 'true'),
+          eq('${{ parameters.deployAppealsWeb }}', 'true'),
+          eq('${{ parameters.deployAppealsPdf }}', 'true'),
+          eq('${{ parameters.deployFunctions }}', 'true'),
+          eq('${{ parameters.runDbMigration }}', 'true')
+        )
+      )
+    steps:
+      - bash: |
+          set -euo pipefail
+          echo "Placeholder: Deployment would run for '${{ parameters.environment }}'."
+          echo "deployAppealsApi=${{ parameters.deployAppealsApi }}"
+          echo "deployAppealsWeb=${{ parameters.deployAppealsWeb }}"
+          echo "deployAppealsPdf=${{ parameters.deployAppealsPdf }}"
+          echo "deployFunctions=${{ parameters.deployFunctions }}"
+          echo "runDbMigration=${{ parameters.runDbMigration }}"
+          echo "deployToSlot=${{ parameters.deployToSlot }}"
+          echo "Result: success (placeholder)."
+        displayName: Placeholder deployment
+
+  - job: Seed
+    displayName: Seed Data
+    dependsOn: Deploy
+    condition: and(in(dependencies.Deploy.result, 'Succeeded', 'Skipped'), eq('${{ parameters.seedData }}', 'true'))
+    steps:
+      - bash: |
+          set -euo pipefail
+          echo "Placeholder: Seed would run for '${{ parameters.environment }}'."
+          echo "purgeAndRecreate=${{ parameters.purgeAndRecreate }}"
+          echo "Result: success (placeholder)."
+        displayName: Placeholder seed
+
   - job: LogDeployment
     displayName: Log deployment in Confluence
+    dependsOn:
+      - InfraPlan
+      - InfraApply
+      - Deploy
+      - Seed
     condition: always()
     steps:
       - template: azure-pipelines-log-to-confluence.yml

@@ -52,7 +52,32 @@ steps:
         RUN_STATUS="${AGENT_JOBSTATUS:-Succeeded}"
       fi
 
-      PARAMS_COMPACT="environment=${{ parameters.environment }}; status=${RUN_STATUS}; terraformPlan=${{ parameters.terraformPlan }}; terraformApply=${{ parameters.terraformApply }}; deployAppealsApi=${{ parameters.deployAppealsApi }}; deployAppealsWeb=${{ parameters.deployAppealsWeb }}; deployAppealsPdf=${{ parameters.deployAppealsPdf }}; deployFunctions=${{ parameters.deployFunctions }}; runDbMigration=${{ parameters.runDbMigration }}; deployToSlot=${{ parameters.deployToSlot }}; seedData=${{ parameters.seedData }}; purgeAndRecreate=${{ parameters.purgeAndRecreate }}; buildId=${BUILD_ID}; reason=${REASON}; definition=${DEFINITION_NAME}"
+      RUN_STATUS_LOWER="$(printf '%s' "$RUN_STATUS" | tr '[:upper:]' '[:lower:]')"
+      STATUS_TEXT="Success"
+
+      if [[ "$RUN_STATUS_LOWER" == "canceled" || "$RUN_STATUS_LOWER" == "cancelled" ]]; then
+        CANCELLED_BY="unknown"
+        if [[ -n "${SYSTEM_ACCESSTOKEN:-}" && -n "${SYSTEM_COLLECTIONURI:-}" && -n "${SYSTEM_TEAMPROJECT:-}" && -n "${BUILD_BUILDID:-}" ]]; then
+          BUILD_API_URL="${SYSTEM_COLLECTIONURI}${SYSTEM_TEAMPROJECT}/_apis/build/builds/${BUILD_BUILDID}?api-version=7.1"
+          HTTP_CODE="$(curl -sS \
+            -H "Authorization: Bearer ${SYSTEM_ACCESSTOKEN}" \
+            -H "Accept: application/json" \
+            "$BUILD_API_URL" \
+            -o build-status.json \
+            -w "%{http_code}" || true)"
+          if [[ "$HTTP_CODE" =~ ^2[0-9][0-9]$ ]]; then
+            CANCELLED_BY_FROM_API="$(jq -r '.lastChangedBy.displayName // empty' build-status.json)"
+            if [[ -n "$CANCELLED_BY_FROM_API" ]]; then
+              CANCELLED_BY="$CANCELLED_BY_FROM_API"
+            fi
+          fi
+        fi
+        STATUS_TEXT="Cancelled by ${CANCELLED_BY}"
+      elif [[ "$RUN_STATUS_LOWER" != "succeeded" && "$RUN_STATUS_LOWER" != "success" ]]; then
+        STATUS_TEXT="Failed"
+      fi
+
+      PARAMS_COMPACT="environment=${{ parameters.environment }}; terraformPlan=${{ parameters.terraformPlan }}; terraformApply=${{ parameters.terraformApply }}; deployAppealsApi=${{ parameters.deployAppealsApi }}; deployAppealsWeb=${{ parameters.deployAppealsWeb }}; deployAppealsPdf=${{ parameters.deployAppealsPdf }}; deployFunctions=${{ parameters.deployFunctions }}; runDbMigration=${{ parameters.runDbMigration }}; deployToSlot=${{ parameters.deployToSlot }}; seedData=${{ parameters.seedData }}; purgeAndRecreate=${{ parameters.purgeAndRecreate }}; buildId=${BUILD_ID}; reason=${REASON}; definition=${DEFINITION_NAME}"
 
       xml_escape() {
         local s="$1"
@@ -65,13 +90,14 @@ steps:
       }
 
       START_TIME_ESC="$(xml_escape "$START_TIME_UTC")"
+      STATUS_ESC="$(xml_escape "$STATUS_TEXT")"
       BUILD_ESC="$(xml_escape "$BUILD_NUMBER")"
       BRANCH_ESC="$(xml_escape "$SOURCE_BRANCH")"
       COMMIT_ESC="$(xml_escape "$COMMIT_SHA")"
       REQUESTED_FOR_ESC="$(xml_escape "$REQUESTED_FOR")"
       PARAMS_ESC="$(xml_escape "$PARAMS_COMPACT")"
 
-      NEW_ROW="<tr><td>${START_TIME_ESC}</td><td>${BUILD_ESC}</td><td>${BRANCH_ESC}</td><td>${COMMIT_ESC}</td><td>${REQUESTED_FOR_ESC}</td><td>${PARAMS_ESC}</td></tr>"
+      NEW_ROW="<tr><td>${START_TIME_ESC}</td><td>${REQUESTED_FOR_ESC}</td><td>${STATUS_ESC}</td><td>${BUILD_ESC}</td><td>${BRANCH_ESC}</td><td>${COMMIT_ESC}</td><td style=\"width:30%;\">${PARAMS_ESC}</td></tr>"
 
       AUTH_B64="$(printf '%s' "${CONFLUENCE_EMAIL}:${CONFLUENCE_API_TOKEN}" | base64 | tr -d '\n')"
       API_BASE="${CONFLUENCE_BASE_URL%/}/rest/api/content/${CONFLUENCE_PAGE_ID}"
@@ -132,7 +158,7 @@ steps:
       my $content = <$fh>;
       close $fh;
 
-      my $header_row = '<tr><th>Start Time (UTC)</th><th>Build</th><th>Branch</th><th>Commit</th><th>Requested For</th><th>Parameters</th></tr>';
+      my $header_row = '<tr><th style="width:10%;">Start Time (UTC)</th><th style="width:10%;">Requested For</th><th style="width:10%;">Status</th><th style="width:10%;">Build</th><th style="width:10%;">Branch</th><th style="width:10%;">Commit</th><th style="width:30%;">Parameters</th></tr>';
 
       sub decode_heading_text {
         my ($t) = @_;
@@ -244,3 +270,7 @@ steps:
       CONFLUENCE_PAGE_ID: $(CONFLUENCE_PAGE_ID)
       CONFLUENCE_EMAIL: $(CONFLUENCE_EMAIL)
       CONFLUENCE_API_TOKEN: $(CONFLUENCE_API_TOKEN)
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+      SYSTEM_COLLECTIONURI: $(System.CollectionUri)
+      SYSTEM_TEAMPROJECT: $(System.TeamProject)
+      BUILD_BUILDID: $(Build.BuildId)
