@@ -101,7 +101,9 @@ stages:
           - bash: |
               set -euo pipefail
               if [[ "${{ parameters.terraformApply }}" == "true" && "${{ parameters.terraformPlan }}" == "true" ]]; then
-                echo "Terraform apply would run for environment '${{ parameters.environment }}'."
+                echo "Terraform apply test failure for environment '${{ parameters.environment }}'."
+                echo "Intentionally failing Terraform Apply to test Confluence failure logging."
+                exit 1
               elif [[ "${{ parameters.terraformApply }}" == "true" && "${{ parameters.terraformPlan }}" != "true" ]]; then
                 echo "Terraform apply requested but terraformPlan=false, so apply is skipped."
               else
