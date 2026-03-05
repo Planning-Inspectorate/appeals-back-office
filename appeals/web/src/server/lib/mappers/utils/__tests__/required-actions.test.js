@@ -1190,6 +1190,29 @@ describe('required actions', () => {
 					);
 				});
 
+				it('should return "updateAppellantStatement" if appellant statement is incomplete', () => {
+					expect(
+						getRequiredActionsForAppeal(
+							{
+								...appealDataWithStatementsStatus,
+								appealTimetable: {
+									...appealDataWithStatementsStatus.appealTimetable,
+									ipCommentsDueDate: futureDate,
+									lpaStatementDueDate: futureDate
+								},
+								documentationSummary: {
+									...appealDataWithStatementsStatus.documentationSummary,
+									appellantStatement: {
+										status: 'received',
+										representationStatus: 'incomplete'
+									}
+								}
+							},
+							'detail'
+						)
+					).toEqual(expect.arrayContaining(['updateAppellantStatement']));
+				});
+
 				it('should not return appellant statement actions for unsupported appeal types', () => {
 					expect(
 						getRequiredActionsForAppeal(
