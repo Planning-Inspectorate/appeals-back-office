@@ -49,7 +49,23 @@ steps:
       RUN_STATUS="${{ parameters.runStatus }}"
 
       if [[ -z "$RUN_STATUS" ]]; then
-        RUN_STATUS="${AGENT_JOBSTATUS:-Succeeded}"
+        RUN_STATUS="Succeeded"
+        if [[ -n "${SYSTEM_ACCESSTOKEN:-}" && -n "${SYSTEM_COLLECTIONURI:-}" && -n "${SYSTEM_TEAMPROJECT:-}" && -n "${BUILD_BUILDID:-}" ]]; then
+          TIMELINE_API_URL="${SYSTEM_COLLECTIONURI}${SYSTEM_TEAMPROJECT}/_apis/build/builds/${BUILD_BUILDID}/timeline?api-version=7.1"
+          HTTP_CODE_TIMELINE="$(curl -sS \
+            -H "Authorization: Bearer ${SYSTEM_ACCESSTOKEN}" \
+            -H "Accept: application/json" \
+            "$TIMELINE_API_URL" \
+            -o build-timeline.json \
+            -w "%{http_code}" || true)"
+          if [[ "$HTTP_CODE_TIMELINE" =~ ^2[0-9][0-9]$ ]]; then
+            if jq -e '.records[]? | select(.type == "Stage" and .result == "failed")' build-timeline.json >/dev/null 2>&1; then
+              RUN_STATUS="Failed"
+            elif jq -e '.records[]? | select(.type == "Stage" and (.result == "canceled" or .result == "cancelled"))' build-timeline.json >/dev/null 2>&1; then
+              RUN_STATUS="Canceled"
+            fi
+          fi
+        fi
       fi
 
       RUN_STATUS_LOWER="$(printf '%s' "$RUN_STATUS" | tr '[:upper:]' '[:lower:]')"
