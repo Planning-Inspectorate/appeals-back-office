@@ -46,6 +46,7 @@ export const lpaTeamAssignments = {
 	G4620: 7, // Sandwell Metropolitan Borough Council
 	H5960: 7, // London Borough of Wandsworth
 	J1725: 7, // Gosport
+	K0425: 7, // Buckingham Council - Wycombe Area
 	K1128: 7, // South Hams District Council
 	L1765: 7, // Winchester City Council
 	M1710: 7, // East Hampshire District Council
@@ -56,6 +57,7 @@ export const lpaTeamAssignments = {
 	Q1770: 7, // Hampshire County Council
 	Q3115: 7, // South Oxfordshire District Council
 	R0335: 7, // Bracknell Forest Borough Council
+	T0355: 7, // Royal Borough of Windsor and Maidenhead
 	U1105: 7, // East Devon District Council
 	U3100: 7, // Oxfordshire County Council
 	V1260: 7, // Bournemouth, Christchurch and Poole
@@ -70,6 +72,7 @@ export const lpaTeamAssignments = {
 	B3438: 8, // Staffordshire Moorlands District Council
 	C1625: 8, // Stroud District Council
 	C3430: 8, // South Staffordshire District Council
+	C4615: 8, // Dudley Metropolitan Borough Council
 	D0840: 8, // Cornwall Council
 	D3450: 8, // Staffordshire County Council
 	E3335: 8, // Somerset Council
@@ -96,14 +99,14 @@ export const lpaTeamAssignments = {
 	B3410: 9, // East Staffordshire Borough Council
 	C1760: 9, // Test Valley Borough Council
 	C3105: 9, // Cherwell District Council
-	C4615: 9, // Dudley Metropolitan Borough Council
-	D1265: 9, // Dorset
 	D1835: 9, // Worcester City Council
 	D4635: 9, // Wolverhampton City Council
+	E5330: 9, // Greenwich
 	G3110: 9, // Oxford City Council
 	H1705: 9, // Basingstoke and Deane Borough Council
 	H1840: 9, // Wychavon District Council
 	L3245: 9, // Shropshire Council
+	N5090: 9, // Barnet
 	P1805: 9, // Bromsgrove District Council
 	P3420: 9, // Newcastle-under-Lyme Borough Council
 	Q1825: 9, // Redditch Borough Council
@@ -123,10 +126,10 @@ export const lpaTeamAssignments = {
 	A1720: 10, // Fareham Borough Council
 	B5480: 10, // Havering
 	D0121: 10, // North Somerset Council
+	D1265: 10, // Dorset
 	D1780: 10, // Southampton City Council
 	D3125: 10, // West Oxfordshire District Council
 	E1855: 10, // Worcestershire County Council
-	E5330: 10, // Greenwich
 	F0114: 10, // Bath and North East Somerset Council
 	F1610: 10, // Cotswold District Council
 	G5180: 11, // Bromley
@@ -135,10 +138,8 @@ export const lpaTeamAssignments = {
 	J1860: 10, // Malvern Hills District Council
 	J9497: 10, // Dartmoor National Park Authority
 	L5810: 10, // Richmond
-	N5090: 10, // Barnet
 	P4605: 10, // Birmingham City Council
 	R1845: 10, // Wyre Forest District Council
-	T0355: 10, // Royal Borough of Windsor and Maidenhead
 	T3725: 10, // Warwick District Council
 	U3935: 10, // Swindon Borough Council
 	W1715: 10, // Eastleigh Borough Council
