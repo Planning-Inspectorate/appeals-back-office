@@ -27,6 +27,7 @@ describe('environmental-impact-assessment', () => {
 						.get('/appeals/1/lpa-questionnaires/2')
 						.reply(200, {
 							...lpaQuestionnaireDataNotValidated,
+							eiaEnvironmentalImpactSchedule: 'schedule-2',
 							eiaColumnTwoThreshold: testCase.value
 						});
 
@@ -102,6 +103,7 @@ describe('environmental-impact-assessment', () => {
 						.get('/appeals/1/lpa-questionnaires/2')
 						.reply(200, {
 							...lpaQuestionnaireDataNotValidated,
+							eiaEnvironmentalImpactSchedule: 'schedule-2',
 							eiaSensitiveAreaDetails: testCase.value
 						});
 
@@ -132,6 +134,7 @@ describe('environmental-impact-assessment', () => {
 					.get('/appeals/1/lpa-questionnaires/2')
 					.reply(200, {
 						...lpaQuestionnaireDataNotValidated,
+						eiaEnvironmentalImpactSchedule: 'schedule-2',
 						eiaSensitiveAreaDetails: 'a'.repeat(301)
 					});
 

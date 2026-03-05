@@ -13,6 +13,12 @@ export const generateSharedS78S20LpaQuestionnaireComponents = (
 	/** @type {PageComponent[]} */
 	const pageComponents = [];
 
+	const scheduleItem =
+		mappedLPAQData.lpaq?.eiaEnvironmentalImpactSchedule?.display?.summaryListItem;
+	const scheduleText = scheduleItem?.value?.text || scheduleItem?.value?.html || '';
+
+	const isSchedule2 = scheduleText.toLowerCase().includes('schedule 2');
+
 	pageComponents.push({
 		/** @type {'summary-list'} */
 		type: 'summary-list',
@@ -28,14 +34,20 @@ export const generateSharedS78S20LpaQuestionnaireComponents = (
 			},
 			rows: [
 				mappedLPAQData.lpaq?.eiaEnvironmentalImpactSchedule?.display.summaryListItem,
-				mappedLPAQData.lpaq?.eiaColumnTwoThreshold?.display.summaryListItem,
+				isSchedule2
+					? mappedLPAQData.lpaq?.eiaColumnTwoThreshold?.display.summaryListItem
+					: undefined,
 				mappedLPAQData.lpaq?.eiaRequiresEnvironmentalStatement?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaEnvironmentalStatement?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaScreeningOpinion?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaScreeningDirection?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaScopingOpinion?.display.summaryListItem,
-				mappedLPAQData.lpaq?.eiaDevelopmentDescription?.display.summaryListItem,
-				mappedLPAQData.lpaq?.eiaSensitiveAreaDetails?.display.summaryListItem
+				isSchedule2
+					? mappedLPAQData.lpaq?.eiaDevelopmentDescription?.display.summaryListItem
+					: undefined,
+				isSchedule2
+					? mappedLPAQData.lpaq?.eiaSensitiveAreaDetails?.display.summaryListItem
+					: undefined
 			].filter(isDefined)
 		}
 	});
