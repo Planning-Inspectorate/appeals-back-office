@@ -58,6 +58,20 @@ parameters:
     displayName: Purge and recreate
     type: boolean
     default: false
+  - name: failStage
+    displayName: Force fail stage
+    type: string
+    default: None
+    values:
+      - None
+      - TerraformPlan
+      - TerraformApply
+      - DeployAppealsAPI
+      - DeployAppealsWeb
+      - DeployAppealsPDF
+      - DeployAppealsFunctions
+      - RunDBMigration
+      - SeedData
 
 variables:
   - ${{ if eq(parameters.environment, 'Dev') }}:
@@ -70,6 +84,8 @@ variables:
       - group: cd_training
   - ${{ if eq(parameters.environment, 'Prod') }}:
       - group: cd_prod
+  - name: FAIL_STAGE
+    value: ${{ parameters.failStage }}
 
 pool:
   vmImage: ubuntu-latest
@@ -83,6 +99,10 @@ stages:
         steps:
           - bash: |
               set -euo pipefail
+              if [[ "${FAIL_STAGE}" == "TerraformPlan" ]]; then
+                echo "Intentional failure: TerraformPlan selected in failStage."
+                exit 1
+              fi
               if [[ "${{ parameters.terraformPlan }}" == "true" ]]; then
                 echo "Terraform plan would run for environment '${{ parameters.environment }}'."
               else
@@ -100,10 +120,12 @@ stages:
         steps:
           - bash: |
               set -euo pipefail
-              if [[ "${{ parameters.terraformApply }}" == "true" && "${{ parameters.terraformPlan }}" == "true" ]]; then
-                echo "Terraform apply test failure for environment '${{ parameters.environment }}'."
-                echo "Intentionally failing Terraform Apply to test Confluence failure logging."
+              if [[ "${FAIL_STAGE}" == "TerraformApply" ]]; then
+                echo "Intentional failure: TerraformApply selected in failStage."
                 exit 1
+              fi
+              if [[ "${{ parameters.terraformApply }}" == "true" && "${{ parameters.terraformPlan }}" == "true" ]]; then
+                echo "Terraform apply would run for environment '${{ parameters.environment }}'."
               elif [[ "${{ parameters.terraformApply }}" == "true" && "${{ parameters.terraformPlan }}" != "true" ]]; then
                 echo "Terraform apply requested but terraformPlan=false, so apply is skipped."
               else
@@ -121,6 +143,10 @@ stages:
         steps:
           - bash: |
               set -euo pipefail
+              if [[ "${FAIL_STAGE}" == "DeployAppealsAPI" ]]; then
+                echo "Intentional failure: DeployAppealsAPI selected in failStage."
+                exit 1
+              fi
               if [[ "${{ parameters.deployAppealsApi }}" == "true" ]]; then
                 echo "Deploy Appeals API would run for '${{ parameters.environment }}'."
               else
@@ -138,6 +164,10 @@ stages:
         steps:
           - bash: |
               set -euo pipefail
+              if [[ "${FAIL_STAGE}" == "DeployAppealsWeb" ]]; then
+                echo "Intentional failure: DeployAppealsWeb selected in failStage."
+                exit 1
+              fi
               if [[ "${{ parameters.deployAppealsWeb }}" == "true" ]]; then
                 echo "Deploy Appeals Web would run for '${{ parameters.environment }}'."
               else
@@ -155,6 +185,10 @@ stages:
         steps:
           - bash: |
               set -euo pipefail
+              if [[ "${FAIL_STAGE}" == "DeployAppealsPDF" ]]; then
+                echo "Intentional failure: DeployAppealsPDF selected in failStage."
+                exit 1
+              fi
               if [[ "${{ parameters.deployAppealsPdf }}" == "true" ]]; then
                 echo "Deploy Appeals PDF would run for '${{ parameters.environment }}'."
               else
@@ -172,6 +206,10 @@ stages:
         steps:
           - bash: |
               set -euo pipefail
+              if [[ "${FAIL_STAGE}" == "DeployAppealsFunctions" ]]; then
+                echo "Intentional failure: DeployAppealsFunctions selected in failStage."
+                exit 1
+              fi
               if [[ "${{ parameters.deployFunctions }}" == "true" ]]; then
                 echo "Deploy Appeals Functions would run for '${{ parameters.environment }}'."
               else
@@ -193,6 +231,10 @@ stages:
         steps:
           - bash: |
               set -euo pipefail
+              if [[ "${FAIL_STAGE}" == "RunDBMigration" ]]; then
+                echo "Intentional failure: RunDBMigration selected in failStage."
+                exit 1
+              fi
               if [[ "${{ parameters.runDbMigration }}" == "true" ]]; then
                 echo "DB migration would run for '${{ parameters.environment }}'."
               else
@@ -210,6 +252,10 @@ stages:
         steps:
           - bash: |
               set -euo pipefail
+              if [[ "${FAIL_STAGE}" == "SeedData" ]]; then
+                echo "Intentional failure: SeedData selected in failStage."
+                exit 1
+              fi
               if [[ "${{ parameters.seedData }}" == "true" ]]; then
                 echo "Seed data would run for '${{ parameters.environment }}'."
                 echo "purgeAndRecreate=${{ parameters.purgeAndRecreate }}"
