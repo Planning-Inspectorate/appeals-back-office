@@ -4801,6 +4801,33 @@ export const appealDataToGetRequiredActions = {
 			}
 		}
 	},
+	updateAppellantStatement: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealType: 'Enforcement notice appeal',
+		appealTimetable: {
+			ipCommentsDueDate: futureDate,
+			lpaStatementDueDate: futureDate
+		},
+		documentationSummary: {
+			ipComments: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED,
+				counts: {
+					awaiting_review: 0,
+					valid: 0,
+					published: 0
+				}
+			},
+			lpaStatement: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.VALID
+			},
+			appellantStatement: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+			}
+		}
+	},
 	awaitingRule6PartyStatement: {
 		...baseAppealDataToGetRequiredActions,
 		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
