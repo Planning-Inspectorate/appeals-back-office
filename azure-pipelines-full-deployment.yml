@@ -74,89 +74,166 @@ variables:
 pool:
   vmImage: ubuntu-latest
 
-jobs:
-  - job: InfraPlan
-    displayName: Infrastructure Plan
-    condition: eq('${{ parameters.terraformPlan }}', 'true')
-    steps:
-      - bash: |
-          set -euo pipefail
-          echo "Placeholder: Terraform plan would run for environment '${{ parameters.environment }}'."
-          echo "Result: success (placeholder)."
-        displayName: Placeholder infra plan
-
-  - job: InfraApply
-    displayName: Infrastructure Apply
-    dependsOn: InfraPlan
-    condition: and(succeeded(), eq('${{ parameters.terraformApply }}', 'true'), eq('${{ parameters.terraformPlan }}', 'true'))
-    steps:
-      - bash: |
-          set -euo pipefail
-          echo "Placeholder: Terraform apply would run for environment '${{ parameters.environment }}'."
-          echo "Result: success (placeholder)."
-        displayName: Placeholder infra apply
-
-  - job: Deploy
-    displayName: Application Deployment
-    dependsOn:
-      - InfraPlan
-      - InfraApply
-    condition: |
-      and(
-        in(dependencies.InfraPlan.result, 'Succeeded', 'Skipped'),
-        in(dependencies.InfraApply.result, 'Succeeded', 'Skipped'),
-        or(
-          eq('${{ parameters.deployAppealsApi }}', 'true'),
-          eq('${{ parameters.deployAppealsWeb }}', 'true'),
-          eq('${{ parameters.deployAppealsPdf }}', 'true'),
-          eq('${{ parameters.deployFunctions }}', 'true'),
-          eq('${{ parameters.runDbMigration }}', 'true')
-        )
-      )
-    steps:
-      - bash: |
-          set -euo pipefail
-          echo "Placeholder: Deployment would run for '${{ parameters.environment }}'."
-          echo "deployAppealsApi=${{ parameters.deployAppealsApi }}"
-          echo "deployAppealsWeb=${{ parameters.deployAppealsWeb }}"
-          echo "deployAppealsPdf=${{ parameters.deployAppealsPdf }}"
-          echo "deployFunctions=${{ parameters.deployFunctions }}"
-          echo "runDbMigration=${{ parameters.runDbMigration }}"
-          echo "deployToSlot=${{ parameters.deployToSlot }}"
-          echo "Result: success (placeholder)."
-        displayName: Placeholder deployment
-
-  - job: Seed
-    displayName: Seed Data
-    dependsOn: Deploy
-    condition: and(in(dependencies.Deploy.result, 'Succeeded', 'Skipped'), eq('${{ parameters.seedData }}', 'true'))
-    steps:
-      - bash: |
-          set -euo pipefail
-          echo "Placeholder: Seed would run for '${{ parameters.environment }}'."
-          echo "purgeAndRecreate=${{ parameters.purgeAndRecreate }}"
-          echo "Result: success (placeholder)."
-        displayName: Placeholder seed
-
-  - job: LogDeployment
-    displayName: Log deployment in Confluence
-    dependsOn:
-      - InfraPlan
-      - InfraApply
-      - Deploy
-      - Seed
+stages:
+  - stage: TerraformPlan
+    displayName: Terraform Plan
     condition: always()
-    steps:
-      - template: azure-pipelines-log-to-confluence.yml
-        parameters:
-          environment: ${{ parameters.environment }}
-          terraformPlan: ${{ parameters.terraformPlan }}
-          terraformApply: ${{ parameters.terraformApply }}
-          deployAppealsApi: ${{ parameters.deployAppealsApi }}
-          deployAppealsWeb: ${{ parameters.deployAppealsWeb }}
-          deployAppealsPdf: ${{ parameters.deployAppealsPdf }}
-          deployFunctions: ${{ parameters.deployFunctions }}
-          runDbMigration: ${{ parameters.runDbMigration }}
-          deployToSlot: ${{ parameters.deployToSlot }}
-          seedData: ${{ parameters.seedData }}
-          purgeAndRecreate: ${{ parameters.purgeAndRecreate }}
+    jobs:
+      - job: TerraformPlan
+        steps:
+          - bash: |
+              set -euo pipefail
+              if [[ "${{ parameters.terraformPlan }}" == "true" ]]; then
+                echo "Terraform plan would run for environment '${{ parameters.environment }}'."
+              else
+                echo "Terraform plan skipped (terraformPlan=false)."
+              fi
+              echo "Result: success (placeholder)."
+            displayName: Placeholder terraform plan
+
+  - stage: TerraformApply
+    displayName: Terraform Apply
+    dependsOn: TerraformPlan
+    condition: always()
+    jobs:
+      - job: TerraformApply
+        steps:
+          - bash: |
+              set -euo pipefail
+              if [[ "${{ parameters.terraformApply }}" == "true" && "${{ parameters.terraformPlan }}" == "true" ]]; then
+                echo "Terraform apply would run for environment '${{ parameters.environment }}'."
+              elif [[ "${{ parameters.terraformApply }}" == "true" && "${{ parameters.terraformPlan }}" != "true" ]]; then
+                echo "Terraform apply requested but terraformPlan=false, so apply is skipped."
+              else
+                echo "Terraform apply skipped (terraformApply=false)."
+              fi
+              echo "Result: success (placeholder)."
+            displayName: Placeholder terraform apply
+
+  - stage: DeployAppealsAPI
+    displayName: Deploy Appeals API
+    dependsOn: TerraformApply
+    condition: always()
+    jobs:
+      - job: DeployAppealsAPI
+        steps:
+          - bash: |
+              set -euo pipefail
+              if [[ "${{ parameters.deployAppealsApi }}" == "true" ]]; then
+                echo "Deploy Appeals API would run for '${{ parameters.environment }}'."
+              else
+                echo "Deploy Appeals API skipped (deployAppealsApi=false)."
+              fi
+              echo "Result: success (placeholder)."
+            displayName: Placeholder deploy API
+
+  - stage: DeployAppealsWeb
+    displayName: Deploy Appeals Web
+    dependsOn: TerraformApply
+    condition: always()
+    jobs:
+      - job: DeployAppealsWeb
+        steps:
+          - bash: |
+              set -euo pipefail
+              if [[ "${{ parameters.deployAppealsWeb }}" == "true" ]]; then
+                echo "Deploy Appeals Web would run for '${{ parameters.environment }}'."
+              else
+                echo "Deploy Appeals Web skipped (deployAppealsWeb=false)."
+              fi
+              echo "Result: success (placeholder)."
+            displayName: Placeholder deploy web
+
+  - stage: DeployAppealsPDF
+    displayName: Deploy Appeals PDF
+    dependsOn: TerraformApply
+    condition: always()
+    jobs:
+      - job: DeployAppealsPDF
+        steps:
+          - bash: |
+              set -euo pipefail
+              if [[ "${{ parameters.deployAppealsPdf }}" == "true" ]]; then
+                echo "Deploy Appeals PDF would run for '${{ parameters.environment }}'."
+              else
+                echo "Deploy Appeals PDF skipped (deployAppealsPdf=false)."
+              fi
+              echo "Result: success (placeholder)."
+            displayName: Placeholder deploy PDF
+
+  - stage: DeployAppealsFunctions
+    displayName: Deploy Appeals Functions
+    dependsOn: TerraformApply
+    condition: always()
+    jobs:
+      - job: DeployAppealsFunctions
+        steps:
+          - bash: |
+              set -euo pipefail
+              if [[ "${{ parameters.deployFunctions }}" == "true" ]]; then
+                echo "Deploy Appeals Functions would run for '${{ parameters.environment }}'."
+              else
+                echo "Deploy Appeals Functions skipped (deployFunctions=false)."
+              fi
+              echo "Result: success (placeholder)."
+            displayName: Placeholder deploy functions
+
+  - stage: RunDBMigration
+    displayName: Run DB Migration
+    dependsOn:
+      - DeployAppealsAPI
+      - DeployAppealsWeb
+      - DeployAppealsPDF
+      - DeployAppealsFunctions
+    condition: always()
+    jobs:
+      - job: RunDBMigration
+        steps:
+          - bash: |
+              set -euo pipefail
+              if [[ "${{ parameters.runDbMigration }}" == "true" ]]; then
+                echo "DB migration would run for '${{ parameters.environment }}'."
+              else
+                echo "DB migration skipped (runDbMigration=false)."
+              fi
+              echo "Result: success (placeholder)."
+            displayName: Placeholder DB migration
+
+  - stage: SeedData
+    displayName: Seed Data
+    dependsOn: RunDBMigration
+    condition: always()
+    jobs:
+      - job: SeedData
+        steps:
+          - bash: |
+              set -euo pipefail
+              if [[ "${{ parameters.seedData }}" == "true" ]]; then
+                echo "Seed data would run for '${{ parameters.environment }}'."
+                echo "purgeAndRecreate=${{ parameters.purgeAndRecreate }}"
+              else
+                echo "Seed data skipped (seedData=false)."
+              fi
+              echo "Result: success (placeholder)."
+            displayName: Placeholder seed data
+
+  - stage: LogToConfluence
+    displayName: Log To Confluence
+    dependsOn: SeedData
+    condition: always()
+    jobs:
+      - job: LogDeployment
+        steps:
+          - template: azure-pipelines-log-to-confluence.yml
+            parameters:
+              environment: ${{ parameters.environment }}
+              terraformPlan: ${{ parameters.terraformPlan }}
+              terraformApply: ${{ parameters.terraformApply }}
+              deployAppealsApi: ${{ parameters.deployAppealsApi }}
+              deployAppealsWeb: ${{ parameters.deployAppealsWeb }}
+              deployAppealsPdf: ${{ parameters.deployAppealsPdf }}
+              deployFunctions: ${{ parameters.deployFunctions }}
+              runDbMigration: ${{ parameters.runDbMigration }}
+              deployToSlot: ${{ parameters.deployToSlot }}
+              seedData: ${{ parameters.seedData }}
+              purgeAndRecreate: ${{ parameters.purgeAndRecreate }}
