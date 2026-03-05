@@ -1,7 +1,7 @@
 import config from '#config/config.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import {
-	addDocument,
+	addDocumentsBulk,
 	addDocumentVersion,
 	addDocumentVersionAudit,
 	deleteDocumentVersion
@@ -22,7 +22,6 @@ import {
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_VIRUS_CHECK_STATUS
 } from '@planning-inspectorate/data-model';
-import { PromisePool } from '@supercharge/promise-pool/dist/promise-pool.js';
 import { formatFolder } from './documents.formatter.js';
 import { mapDocumentsForAuditTrail, mapDocumentsForDatabase } from './documents.mapper.js';
 
@@ -284,50 +283,45 @@ export const addDocumentsToAppeal = async (upload, appeal, skipBlobValidation = 
  * @returns {Promise<(DocumentVersion | null)[]>}
  */
 const addDocumentAndVersion = async (appeal, documents, allowErrors = false) => {
-	const { results } = await PromisePool.withConcurrency(5)
-		.for(documents)
-		.handleError((error, document) => {
-			logger.error(`Error while upserting document name "${document.name}" to database: ${error}`);
-			if (!allowErrors) {
-				throw error;
+	const bulkDocuments = documents.map((document) => ({
+		guid: document.GUID,
+		originalFilename: document.name,
+		fileName: document.name,
+		caseId: appeal.id,
+		folderId: Number(document.folderId),
+		mime: document.mime,
+		documentType: document.documentType,
+		stage: document.stage,
+		size: document.documentSize,
+		blobStorageContainer: document.blobStorageContainer,
+		blobStoragePath: document.blobStoragePath,
+		documentURI: document.documentURI,
+		dateReceived: document.dateReceived,
+		virusCheckStatus: document.virusCheckStatus,
+		redactionStatusId: document.redactionStatusId,
+		isLateEntry: isLateEntry(document.stage, appeal)
+	}));
+
+	if (!allowErrors) {
+		const documentsCreated = await addDocumentsBulk(bulkDocuments);
+		logger.info(`Added ${documentsCreated.length} documents to database`);
+		return documentsCreated;
+	}
+
+	/** @type {(DocumentVersion | null)[]} */
+	const results = [];
+	for (const bulkDocument of bulkDocuments) {
+		try {
+			const [documentCreated] = await addDocumentsBulk([bulkDocument]);
+			if (documentCreated) {
+				results.push(documentCreated);
 			}
-		})
-		.process(async (d) => {
-			const document = await addDocument(
-				{
-					GUID: d.GUID,
-					originalFilename: d.name,
-					mime: d.mime,
-					documentType: d.documentType,
-					stage: d.stage,
-					size: d.documentSize,
-					version: 1,
-					blobStorageContainer: d.blobStorageContainer,
-					blobStoragePath: d.blobStoragePath,
-					documentURI: d.documentURI,
-					dateReceived: d.dateReceived,
-					virusCheckStatus: d.virusCheckStatus,
-					redactionStatusId: d.redactionStatusId,
-					isLateEntry: await isLateEntry(d.stage, appeal)
-				},
-				{
-					caseId: appeal.id,
-					reference: appeal.reference,
-					folderId: Number(d.folderId),
-					blobStorageHost: d.blobStorageHost
-				}
+		} catch (error) {
+			logger.error(
+				`Error while upserting document name "${bulkDocument.originalFilename}" to database: ${error}`
 			);
-
-			if (!document) {
-				logger.error(`Error adding document named: ${d.name}`);
-				throw new Error(
-					`Error adding document named: ${d.name} in folder ${d.folderId} for appeal ${d.caseId}`
-				);
-			}
-			logger.info(`Added document with guid: ${document.documentGuid}`);
-
-			return document;
-		});
+		}
+	}
 
 	logger.info(`Added ${results.length} documents to database`);
 
