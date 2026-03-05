@@ -130,6 +130,10 @@ describe('/appeals/case-submission', () => {
 		});
 	});
 	describe('POST successful appeal gets ingested', () => {
+		beforeEach(() => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue({});
+		});
 		test.each([
 			['HAS', appealIngestionInput, validAppellantCase, { id: 1 }],
 			['CAS_PLANNING', appealIngestionInputCasPlanning, validAppellantCaseCasPlanning, { id: 1 }],
@@ -1314,6 +1318,11 @@ describe('/appeals/representation-submission', () => {
 	});
 });
 
+/**
+ *
+ * @param {*} appealIngestionInput
+ * @returns {{id: number, reference: string, assignedTeamId: number}}
+ */
 const createIntegrationMocks = (/** @type {*} */ appealIngestionInput) => {
 	const appealCreatedResult = {
 		id: 100,
@@ -1337,7 +1346,10 @@ const createIntegrationMocks = (/** @type {*} */ appealIngestionInput) => {
 	databaseConnector.appeal.findUnique.mockResolvedValue({
 		...appealCreatedResult,
 		appealType: appealIngestionInput.appealType?.connect,
-		appealStatus: [{ status: 'ready_to_start', valid: true }]
+		appealStatus: [{ status: 'ready_to_start', valid: true }],
+		agent: { email: 'test@email.com', firstName: 'Test', lastName: 'Agent' },
+		appellant: { email: 'test@email.com', firstName: 'Test', lastName: 'Agent' },
+		address: { addressLine1: '123 Test Street', postcode: 'TE1 1ST' }
 	});
 	// @ts-ignore
 	databaseConnector.document.createMany.mockResolvedValue([
