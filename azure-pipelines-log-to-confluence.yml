@@ -1,0 +1,246 @@
+parameters:
+  - name: environment
+    type: string
+  - name: terraformPlan
+    type: boolean
+  - name: terraformApply
+    type: boolean
+  - name: deployAppealsApi
+    type: boolean
+  - name: deployAppealsWeb
+    type: boolean
+  - name: deployAppealsPdf
+    type: boolean
+  - name: deployFunctions
+    type: boolean
+  - name: runDbMigration
+    type: boolean
+  - name: deployToSlot
+    type: boolean
+  - name: seedData
+    type: boolean
+  - name: purgeAndRecreate
+    type: boolean
+  - name: runStatus
+    type: string
+    default: ''
+
+steps:
+  - bash: |
+      set -euo pipefail
+      set +x
+
+      : "${CONFLUENCE_BASE_URL:?CONFLUENCE_BASE_URL is required}"
+      : "${CONFLUENCE_PAGE_ID:?CONFLUENCE_PAGE_ID is required}"
+      : "${CONFLUENCE_EMAIL:?CONFLUENCE_EMAIL is required}"
+      : "${CONFLUENCE_API_TOKEN:?CONFLUENCE_API_TOKEN is required}"
+
+      HEADING_TEXT="Deployment Records"
+      EXPECTED_TITLE="Production Deployments"
+
+      START_TIME_UTC="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+      BUILD_NUMBER="$(Build.BuildNumber)"
+      SOURCE_BRANCH="$(Build.SourceBranch)"
+      COMMIT_SHA="$(Build.SourceVersion)"
+      BUILD_ID="$(Build.BuildId)"
+      DEFINITION_NAME="$(Build.DefinitionName)"
+      REASON="$(Build.Reason)"
+      REQUESTED_FOR="$(Build.RequestedFor)"
+      RUN_STATUS="${{ parameters.runStatus }}"
+
+      if [[ -z "$RUN_STATUS" ]]; then
+        RUN_STATUS="${AGENT_JOBSTATUS:-Succeeded}"
+      fi
+
+      PARAMS_COMPACT="environment=${{ parameters.environment }}; status=${RUN_STATUS}; terraformPlan=${{ parameters.terraformPlan }}; terraformApply=${{ parameters.terraformApply }}; deployAppealsApi=${{ parameters.deployAppealsApi }}; deployAppealsWeb=${{ parameters.deployAppealsWeb }}; deployAppealsPdf=${{ parameters.deployAppealsPdf }}; deployFunctions=${{ parameters.deployFunctions }}; runDbMigration=${{ parameters.runDbMigration }}; deployToSlot=${{ parameters.deployToSlot }}; seedData=${{ parameters.seedData }}; purgeAndRecreate=${{ parameters.purgeAndRecreate }}; buildId=${BUILD_ID}; reason=${REASON}; definition=${DEFINITION_NAME}"
+
+      xml_escape() {
+        local s="$1"
+        s=${s//&/&amp;}
+        s=${s//</&lt;}
+        s=${s//>/&gt;}
+        s=${s//\"/&quot;}
+        s=${s//\'/&apos;}
+        printf '%s' "$s"
+      }
+
+      START_TIME_ESC="$(xml_escape "$START_TIME_UTC")"
+      BUILD_ESC="$(xml_escape "$BUILD_NUMBER")"
+      BRANCH_ESC="$(xml_escape "$SOURCE_BRANCH")"
+      COMMIT_ESC="$(xml_escape "$COMMIT_SHA")"
+      REQUESTED_FOR_ESC="$(xml_escape "$REQUESTED_FOR")"
+      PARAMS_ESC="$(xml_escape "$PARAMS_COMPACT")"
+
+      NEW_ROW="<tr><td>${START_TIME_ESC}</td><td>${BUILD_ESC}</td><td>${BRANCH_ESC}</td><td>${COMMIT_ESC}</td><td>${REQUESTED_FOR_ESC}</td><td>${PARAMS_ESC}</td></tr>"
+
+      AUTH_B64="$(printf '%s' "${CONFLUENCE_EMAIL}:${CONFLUENCE_API_TOKEN}" | base64 | tr -d '\n')"
+      API_BASE="${CONFLUENCE_BASE_URL%/}/rest/api/content/${CONFLUENCE_PAGE_ID}"
+      GET_URL="${API_BASE}?expand=body.storage,version,title"
+
+      api_call() {
+        local method="$1"
+        local url="$2"
+        local data_file="${3:-}"
+        local out_file="$4"
+        local http_code
+
+        if [[ -n "$data_file" ]]; then
+          http_code="$(curl -sS -X "$method" \
+            -H "Authorization: Basic ${AUTH_B64}" \
+            -H "Accept: application/json" \
+            -H "Content-Type: application/json" \
+            --data "@${data_file}" \
+            "$url" -o "$out_file" -w "%{http_code}")"
+        else
+          http_code="$(curl -sS -X "$method" \
+            -H "Authorization: Basic ${AUTH_B64}" \
+            -H "Accept: application/json" \
+            "$url" -o "$out_file" -w "%{http_code}")"
+        fi
+
+        if [[ ! "$http_code" =~ ^2[0-9][0-9]$ ]]; then
+          echo "ERROR: ${method} ${url} failed with HTTP ${http_code}" >&2
+          sed 's/[[:cntrl:]]//g' "$out_file" | head -c 4000 >&2 || true
+          echo >&2
+          exit 1
+        fi
+      }
+
+      api_call "GET" "$GET_URL" "" "page.json"
+
+      PAGE_TITLE="$(jq -r '.title' page.json)"
+      PAGE_TYPE="$(jq -r '.type' page.json)"
+      CUR_VERSION="$(jq -r '.version.number' page.json)"
+      BODY_STORAGE="$(jq -r '.body.storage.value' page.json)"
+
+      if [[ "$PAGE_TITLE" != "$EXPECTED_TITLE" ]]; then
+        echo "ERROR: Confluence page title mismatch. Expected '$EXPECTED_TITLE', got '$PAGE_TITLE'." >&2
+        exit 1
+      fi
+
+      printf '%s' "$BODY_STORAGE" > body-original.xml
+
+      cat > update_confluence_body.pl <<'PERL'
+      use strict;
+      use warnings;
+
+      my ($file, $heading, $new_row) = @ARGV;
+      die "usage: $0 <file> <heading> <new_row>" unless defined $new_row;
+
+      local $/;
+      open my $fh, '<', $file or die "open($file): $!";
+      my $content = <$fh>;
+      close $fh;
+
+      my $header_row = '<tr><th>Start Time (UTC)</th><th>Build</th><th>Branch</th><th>Commit</th><th>Requested For</th><th>Parameters</th></tr>';
+
+      sub decode_heading_text {
+        my ($t) = @_;
+        $t =~ s/<[^>]+>//g;
+        $t =~ s/&nbsp;/ /gi;
+        $t =~ s/&amp;/&/gi;
+        $t =~ s/&lt;/</gi;
+        $t =~ s/&gt;/>/gi;
+        $t =~ s/&quot;/"/gi;
+        $t =~ s/&apos;/'/gi;
+        $t =~ s/^\s+|\s+$//g;
+        return $t;
+      }
+
+      sub insert_row_in_table {
+        my ($table, $row) = @_;
+
+        if ($table =~ m{<tbody\b[^>]*>.*?</tbody>}is) {
+          $table =~ s{(<tbody\b[^>]*>\s*)(.*?)(\s*</tbody>)}{
+            my ($open, $inner, $close) = ($1, $2, $3);
+            if ($inner =~ m{(<tr\b[^>]*>.*?</tr>)}is) {
+              my $first_tr = $1;
+              my $first_end = $+[0];
+              my $rest = substr($inner, $first_end);
+              $open . $first_tr . "\n" . $row . $rest . $close;
+            } else {
+              $open . $row . $inner . $close;
+            }
+          }ise;
+          return $table;
+        }
+
+        if ($table =~ m{^(\s*<table\b[^>]*>)(.*?)(</table>\s*)$}is) {
+          my ($open_table, $inner, $close_table) = ($1, $2, $3);
+          my $new_inner;
+          if ($inner =~ m{(<tr\b[^>]*>.*?</tr>)}is) {
+            my $first_tr = $1;
+            my $first_end = $+[0];
+            my $rest = substr($inner, $first_end);
+            $new_inner = $first_tr . "\n" . $row . $rest;
+          } else {
+            $new_inner = $header_row . "\n" . $row;
+          }
+          return $open_table . "<tbody>" . $new_inner . "</tbody>" . $close_table;
+        }
+
+        return $table;
+      }
+
+      my $default_table = "<table><tbody>$header_row$new_row</tbody></table>";
+      my $found_heading = 0;
+      my $heading_end_pos;
+
+      while ($content =~ m{<h([1-6])\b[^>]*>(.*?)</h\1>}sig) {
+        my $text = decode_heading_text($2);
+        if ($text eq $heading) {
+          $found_heading = 1;
+          $heading_end_pos = $+[0];
+          last;
+        }
+      }
+
+      if (!$found_heading) {
+        $content .= "\n<h2>$heading</h2>\n$default_table\n";
+      } else {
+        my $after = substr($content, $heading_end_pos);
+        if ($after =~ m{^(\s*)(<table\b.*?</table>)}is) {
+          my $ws = $1;
+          my $table = $2;
+          my $table_start = $heading_end_pos + length($ws);
+          my $updated_table = insert_row_in_table($table, $new_row);
+          substr($content, $table_start, length($table), $updated_table);
+        } else {
+          my $insertion = "\n$default_table\n";
+          substr($content, $heading_end_pos, 0, $insertion);
+        }
+      }
+
+      open my $out, '>', $file or die "write($file): $!";
+      print {$out} $content;
+      close $out;
+      PERL
+
+      perl update_confluence_body.pl body-original.xml "$HEADING_TEXT" "$NEW_ROW"
+
+      UPDATED_BODY="$(cat body-original.xml)"
+      NEXT_VERSION=$((CUR_VERSION + 1))
+
+      jq -n \
+        --arg id "$CONFLUENCE_PAGE_ID" \
+        --arg type "$PAGE_TYPE" \
+        --arg title "$PAGE_TITLE" \
+        --arg body "$UPDATED_BODY" \
+        --argjson version "$NEXT_VERSION" \
+        '{
+          id: $id,
+          type: $type,
+          title: $title,
+          version: { number: $version },
+          body: { storage: { value: $body, representation: "storage" } }
+        }' > update-payload.json
+
+      api_call "PUT" "$API_BASE" "update-payload.json" "put-response.json"
+      echo "Confluence deployment record inserted for ${{ parameters.environment }}."
+    displayName: Update Confluence Deployment Records
+    condition: always()
+    env:
+      CONFLUENCE_BASE_URL: $(CONFLUENCE_BASE_URL)
+      CONFLUENCE_PAGE_ID: $(CONFLUENCE_PAGE_ID)
+      CONFLUENCE_EMAIL: $(CONFLUENCE_EMAIL)
+      CONFLUENCE_API_TOKEN: $(CONFLUENCE_API_TOKEN)
