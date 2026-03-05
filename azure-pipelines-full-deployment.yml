@@ -1,5 +1,5 @@
-# Combined manual pipeline with explicit environment stages in "Stages to run".
-# Branch/tag/commit is selected via Azure DevOps "Pipeline version" UI.
+# Minimal manual pipeline for validating Confluence deployment logging output.
+# Includes only run parameters + environment stages + Confluence write step.
 
 trigger: none
 pr: none
@@ -52,54 +52,20 @@ parameters:
     type: object
     default:
       - name: Dev
-        envLower: dev
         variableGroup: cd_dev
         dependsOn: ''
       - name: Test
-        envLower: test
         variableGroup: cd_test
         dependsOn: Dev
       - name: Staging
-        envLower: staging
         variableGroup: cd_staging
         dependsOn: Test
       - name: Training
-        envLower: training
         variableGroup: cd_training
         dependsOn: Test
       - name: Prod
-        envLower: prod
         variableGroup: cd_prod
         dependsOn: Training
-
-resources:
-  repositories:
-    - repository: templates
-      type: github
-      endpoint: Planning-Inspectorate
-      name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.24.2
-  pipelines:
-    - pipeline: terraform-ci
-      source: Infrastructure PR
-      trigger: none
-    - pipeline: build
-      source: Build
-      trigger: none
-
-variables:
-  - name: terraformServiceConnectionPrefix
-    value: Azure DevOps Pipelines - Appeals Back Office - Infrastructure
-  - name: terraformStorageAccountName
-    value: pinssttfstateuksappealbo
-  - name: terraformResourceGroupName
-    value: pins-rg-shared-terraform-uks
-  - name: terraformContainerPrefix
-    value: terraform-state-appeals-back-office-
-  - name: terraformWorkingDirectory
-    value: $(Build.Repository.LocalPath)/infrastructure
-  - name: terraformEnvironmentVarFilePath
-    value: $(Build.Repository.LocalPath)/infrastructure/environments
 
 pool:
   vmImage: ubuntu-latest
@@ -111,253 +77,12 @@ stages:
         ${{ if ne(env.dependsOn, '') }}:
           dependsOn: ${{ env.dependsOn }}
         variables:
-          - template: variables/environments/${{ env.envLower }}.yml@templates
           - group: ${{ env.variableGroup }}
-          - group: pipeline_secrets
-          - name: TARGET_ENV
-            value: ${{ env.envLower }}
           - name: TARGET_ENV_NAME
             value: ${{ env.name }}
         jobs:
-          - job: ValidateInputs
-            displayName: Validate input combinations
-            steps:
-              - bash: |
-                  set -euo pipefail
-
-                  if [[ "${{ parameters.terraformApply }}" == "true" && "${{ parameters.terraformPlan }}" == "false" ]]; then
-                    echo "ERROR: terraformApply=true requires terraformPlan=true"
-                    exit 1
-                  fi
-
-                  if [[ "${{ parameters.purgeAndRecreate }}" == "true" && "${{ parameters.seedData }}" == "false" ]]; then
-                    echo "ERROR: purgeAndRecreate=true requires seedData=true"
-                    exit 1
-                  fi
-
-                  echo "##vso[task.setvariable variable=runStartUtc;isOutput=true]$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
-                name: preflight
-                displayName: Preflight validation
-
-          - job: Terraform
-            displayName: Terraform plan/apply
-            dependsOn: ValidateInputs
-            condition: and(succeeded(), or(eq('${{ parameters.terraformPlan }}', 'true'), eq('${{ parameters.terraformApply }}', 'true')))
-            steps:
-              - checkout: self
-              - task: AzureCLI@2
-                displayName: Terraform init/plan/apply
-                inputs:
-                  azureSubscription: '$(terraformServiceConnectionPrefix) $(TARGET_ENV_NAME)'
-                  scriptType: bash
-                  scriptLocation: inlineScript
-                  inlineScript: |
-                    set -euo pipefail
-
-                    TF_DIR='$(terraformWorkingDirectory)'
-                    TFVARS_FILE='$(terraformEnvironmentVarFilePath)/$(TARGET_ENV).tfvars'
-                    BACKEND_CONTAINER='$(terraformContainerPrefix)$(TARGET_ENV)'
-                    BACKEND_KEY='appeals-back-office-$(TARGET_ENV).tfstate'
-
-                    terraform -chdir="$TF_DIR" init \
-                      -backend-config="storage_account_name=$(terraformStorageAccountName)" \
-                      -backend-config="resource_group_name=$(terraformResourceGroupName)" \
-                      -backend-config="container_name=${BACKEND_CONTAINER}" \
-                      -backend-config="key=${BACKEND_KEY}"
-
-                    if [[ '${{ parameters.terraformPlan }}' == 'true' ]]; then
-                      terraform -chdir="$TF_DIR" plan -var-file="$TFVARS_FILE" -out=tfplan
-                    fi
-
-                    if [[ '${{ parameters.terraformApply }}' == 'true' ]]; then
-                      terraform -chdir="$TF_DIR" apply -auto-approve tfplan
-                    fi
-
-          - job: Deploy
-            displayName: Deploy workloads
-            dependsOn:
-              - ValidateInputs
-              - Terraform
-            condition: and(succeeded('ValidateInputs'), in(dependencies.Terraform.result, 'Succeeded', 'Skipped'))
-            steps:
-              - checkout: self
-
-              - ${{ if eq(parameters.runDbMigration, true) }}:
-                - template: steps/node_script.yml@templates
-                  parameters:
-                    script: npm ci
-                    nodeVersion: 22
-                - bash: |
-                    set -euo pipefail
-                    if [[ "$TARGET_ENV" == "training" ]]; then
-                      echo "##vso[task.setvariable variable=kvName;]pins-kv-appeals-bo-train"
-                    elif [[ "$TARGET_ENV" == "staging" ]]; then
-                      echo "##vso[task.setvariable variable=kvName;]pins-kv-appeals-bo-stage"
-                    else
-                      echo "##vso[task.setvariable variable=kvName;]pins-kv-appeals-bo-$TARGET_ENV"
-                    fi
-                  displayName: Set KV name for migration
-                  env:
-                    TARGET_ENV: $(TARGET_ENV)
-                - template: steps/azure_get_secrets.yml@templates
-                  parameters:
-                    keyVaultName: $(kvName)
-                    secrets:
-                      - name: appeals-bo-sql-admin-connection-string
-                        variable: appeals-bo-sql-admin-connection-string
-                - template: steps/node_script.yml@templates
-                  parameters:
-                    nodeVersion: 22
-                    environmentVariables:
-                      DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
-                    script: npm run db:migrate:prod
-                    workingDirectory: $(Build.Repository.LocalPath)/appeals/api
-
-              - ${{ if eq(parameters.deployAppealsApi, true) }}:
-                - template: steps/azure_web_app_deploy_slot.yml@templates
-                  parameters:
-                    appName: pins-app-appeals-bo-api-$(TARGET_ENV)
-                    appResourceGroup: $(resourceGroup)
-                    azurecrName: $(azurecrName)
-                    repository: back-office/back-office-appeals-api
-                    ${{ if eq(parameters.deployToSlot, true) }}:
-                      slot: staging
-                    ${{ else }}:
-                      slot: default
-
-              - ${{ if eq(parameters.deployAppealsWeb, true) }}:
-                - template: steps/azure_web_app_deploy_slot.yml@templates
-                  parameters:
-                    appName: pins-app-appeals-bo-web-$(TARGET_ENV)
-                    appResourceGroup: $(resourceGroup)
-                    azurecrName: $(azurecrName)
-                    repository: back-office/appeals-web
-                    ${{ if eq(parameters.deployToSlot, true) }}:
-                      slot: staging
-                    ${{ else }}:
-                      slot: default
-
-              - ${{ if eq(parameters.deployAppealsPdf, true) }}:
-                - template: steps/azure_web_app_deploy_slot.yml@templates
-                  parameters:
-                    appName: pins-app-appeals-bo-pdf-$(TARGET_ENV)
-                    appResourceGroup: $(resourceGroup)
-                    azurecrName: $(azurecrName)
-                    repository: back-office/back-office-appeals-pdf
-                    ${{ if eq(parameters.deployToSlot, true) }}:
-                      slot: staging
-                    ${{ else }}:
-                      slot: default
-
-              - ${{ if eq(parameters.deployFunctions, true) }}:
-                - download: build
-                  artifact: function-appeals-casedata-import
-                  displayName: Download function-appeals-casedata-import
-                - template: steps/function_app_deploy.yml@templates
-                  parameters:
-                    appName: pins-func-appeals-bo-casedata-import-$(TARGET_ENV)
-                    resourceGroup: $(resourceGroup)
-                    workingDirectory: $(Pipeline.Workspace)/build/function-appeals-casedata-import
-
-                - download: build
-                  artifact: function-appeals-refdata-import
-                  displayName: Download function-appeals-refdata-import
-                - template: steps/function_app_deploy.yml@templates
-                  parameters:
-                    appName: pins-func-appeals-bo-refdata-import-$(TARGET_ENV)
-                    resourceGroup: $(resourceGroup)
-                    workingDirectory: $(Pipeline.Workspace)/build/function-appeals-refdata-import
-
-                - download: build
-                  artifact: function-appeals-document-processing
-                  displayName: Download function-appeals-document-processing
-                - template: steps/function_app_deploy.yml@templates
-                  parameters:
-                    appName: pins-func-appeals-bo-doc-processing-$(TARGET_ENV)
-                    resourceGroup: $(resourceGroup)
-                    workingDirectory: $(Pipeline.Workspace)/build/function-appeals-document-processing
-
-                - download: build
-                  artifact: function-appeals-scheduled-jobs
-                  displayName: Download function-appeals-scheduled-jobs
-                - template: steps/function_app_deploy.yml@templates
-                  parameters:
-                    appName: pins-func-appeals-bo-scheduled-jobs-$(TARGET_ENV)
-                    resourceGroup: $(resourceGroup)
-                    workingDirectory: $(Pipeline.Workspace)/build/function-appeals-scheduled-jobs
-
-          - job: Seed
-            displayName: Seed data
-            dependsOn: Deploy
-            condition: and(succeeded(), eq('${{ parameters.seedData }}', 'true'))
-            steps:
-              - checkout: self
-              - template: steps/node_script.yml@templates
-                parameters:
-                  script: npm ci
-                  nodeVersion: 22
-
-              - bash: |
-                  set -euo pipefail
-                  if [[ "$TARGET_ENV" == "training" ]]; then
-                    echo "##vso[task.setvariable variable=kvName;]pins-kv-appeals-bo-train"
-                  elif [[ "$TARGET_ENV" == "staging" ]]; then
-                    echo "##vso[task.setvariable variable=kvName;]pins-kv-appeals-bo-stage"
-                  else
-                    echo "##vso[task.setvariable variable=kvName;]pins-kv-appeals-bo-$TARGET_ENV"
-                  fi
-                displayName: Set KV name for seed
-                env:
-                  TARGET_ENV: $(TARGET_ENV)
-
-              - template: steps/azure_get_secrets.yml@templates
-                parameters:
-                  keyVaultName: $(kvName)
-                  secrets:
-                    - name: appeals-bo-sql-admin-connection-string
-                      variable: appeals-bo-sql-admin-connection-string
-
-              - template: steps/node_script.yml@templates
-                parameters:
-                  condition: and(ne('$(TARGET_ENV_NAME)', 'Prod'), ne('$(TARGET_ENV_NAME)', 'Training'), eq('${{ parameters.purgeAndRecreate }}', 'false'))
-                  environmentVariables:
-                    DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
-                  script: npm run db:seed:no-purge
-                  workingDirectory: $(Build.Repository.LocalPath)/appeals/api
-
-              - template: steps/node_script.yml@templates
-                parameters:
-                  condition: and(ne('$(TARGET_ENV_NAME)', 'Prod'), ne('$(TARGET_ENV_NAME)', 'Training'), eq('${{ parameters.purgeAndRecreate }}', 'true'))
-                  environmentVariables:
-                    DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
-                  script: npm run db:seed
-                  workingDirectory: $(Build.Repository.LocalPath)/appeals/api
-
-              - template: steps/node_script.yml@templates
-                parameters:
-                  condition: eq('$(TARGET_ENV_NAME)', 'Training')
-                  environmentVariables:
-                    DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
-                  script: npm run db:seed:training
-                  workingDirectory: $(Build.Repository.LocalPath)/appeals/api
-
-              - template: steps/node_script.yml@templates
-                parameters:
-                  condition: eq('$(TARGET_ENV_NAME)', 'Prod')
-                  environmentVariables:
-                    DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
-                  script: npm run db:seed:prod
-                  workingDirectory: $(Build.Repository.LocalPath)/appeals/api
-
           - job: LogDeployment
             displayName: Log deployment in Confluence
-            dependsOn:
-              - ValidateInputs
-              - Deploy
-              - Seed
-            condition: and(succeeded('Deploy'), in(dependencies.Seed.result, 'Succeeded', 'Skipped'))
-            variables:
-              RUN_START_UTC: $[ dependencies.ValidateInputs.outputs['preflight.runStartUtc'] ]
             steps:
               - bash: |
                   set -euo pipefail
@@ -371,7 +96,7 @@ stages:
                   HEADING_TEXT="Deployment Records"
                   EXPECTED_TITLE="Production Deployments"
 
-                  START_TIME_UTC="${RUN_START_UTC:-$(date -u +"%Y-%m-%dT%H:%M:%SZ")}"
+                  START_TIME_UTC="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
                   BUILD_NUMBER="$(Build.BuildNumber)"
                   SOURCE_BRANCH="$(Build.SourceBranch)"
                   COMMIT_SHA="$(Build.SourceVersion)"
@@ -563,7 +288,7 @@ stages:
                     }' > update-payload.json
 
                   api_call "PUT" "$API_BASE" "update-payload.json" "put-response.json"
-                  echo "Confluence deployment record inserted at top of Deployment Records table for $(TARGET_ENV_NAME)."
+                  echo "Confluence deployment record inserted for $(TARGET_ENV_NAME)."
                 displayName: Update Confluence Deployment Records
                 env:
                   CONFLUENCE_BASE_URL: $(CONFLUENCE_BASE_URL)
