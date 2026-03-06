@@ -236,10 +236,15 @@ describe('neighbouring-site-access', () => {
 				);
 			});
 
-			it('should call LPA questionnaires PATCH endpoint and redirect to the LPA questionnaire page if "no" was selected', async () => {
+			it('should call LPA questionnaires PATCH endpoint and redirect to the LPA questionnaire page if "no" was selected and there are no lpa neighbouring sites', async () => {
+				nock.cleanAll();
 				const mockLPAQPatchEndpoint = nock('http://test/')
 					.patch(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
 					.reply(200, {});
+
+				nock('http://test/')
+					.get('/appeals/1?include=neighbouringSites')
+					.reply(200, { ...appealDataFullPlanning, neighbouringSites: [] });
 
 				const response = await request
 					.post(
@@ -257,10 +262,15 @@ describe('neighbouring-site-access', () => {
 				);
 			});
 
-			it('should call LPA questionnaires PATCH endpoint and redirect to the LPA questionnaire page if "yes" was selected, and the text entered in the details textarea is between 1 and 1000 characters in length', async () => {
+			it('should call LPA questionnaires PATCH endpoint and redirect to the add neighbouring site page if "yes" was selected and there are no lpa neighbouring sites', async () => {
+				nock.cleanAll();
 				const mockLPAQPatchEndpoint = nock('http://test/')
 					.patch(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
 					.reply(200, {});
+
+				nock('http://test/')
+					.get('/appeals/1?include=neighbouringSites')
+					.reply(200, { ...appealDataFullPlanning, neighbouringSites: [] });
 
 				const response = await request
 					.post(
@@ -268,7 +278,58 @@ describe('neighbouring-site-access', () => {
 					)
 					.send({
 						neighbouringSiteAccessRadio: 'yes',
-						neighbouringSiteAccess: 'a'.repeat(1000)
+						neighbouringSiteAccess: 'need to get access'
+					});
+
+				expect(mockLPAQPatchEndpoint.isDone()).toBe(true);
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					`Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/${appealDataFullPlanning.lpaQuestionnaireId}/neighbouring-sites/add/lpa?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Flpa-questionnaire%2F1%2Fneighbouring-site-access%2Fchange`
+				);
+			});
+			it('should call LPA questionnaires PATCH endpoint and redirect to the remove neighbouring site page if "no" was selected and there are lpa neighbouring sites', async () => {
+				nock.cleanAll();
+				const mockLPAQPatchEndpoint = nock('http://test/')
+					.patch(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
+					.reply(200, {});
+
+				nock('http://test/')
+					.get('/appeals/1?include=neighbouringSites')
+					.reply(200, appealDataFullPlanning);
+
+				const response = await request
+					.post(
+						`${baseUrl}/1/lpa-questionnaire/${appealDataFullPlanning.lpaQuestionnaireId}/neighbouring-site-access/change`
+					)
+					.send({
+						neighbouringSiteAccessRadio: 'no',
+						neighbouringSiteAccess: ''
+					});
+
+				expect(mockLPAQPatchEndpoint.isDone()).toBe(true);
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					`Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/${appealDataFullPlanning.lpaQuestionnaireId}/neighbouring-sites/remove/site/1?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Flpa-questionnaire%2F1%2Fneighbouring-site-access%2Fchange`
+				);
+			});
+
+			it('should call LPA questionnaires PATCH endpoint and redirect to the LPA questionnaire page if "yes" was selected and there is lpa neighbouring sites', async () => {
+				nock.cleanAll();
+				const mockLPAQPatchEndpoint = nock('http://test/')
+					.patch(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
+					.reply(200, {});
+
+				nock('http://test/')
+					.get('/appeals/1?include=neighbouringSites')
+					.reply(200, appealDataFullPlanning);
+
+				const response = await request
+					.post(
+						`${baseUrl}/1/lpa-questionnaire/${appealDataFullPlanning.lpaQuestionnaireId}/neighbouring-site-access/change`
+					)
+					.send({
+						neighbouringSiteAccessRadio: 'yes',
+						neighbouringSiteAccess: 'need to get access'
 					});
 
 				expect(mockLPAQPatchEndpoint.isDone()).toBe(true);

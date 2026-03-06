@@ -131,7 +131,7 @@ router.use('/:appealId/audit', validateAppeal, auditRouter);
 
 router.use(
 	'/:appealId/neighbouring-sites',
-	validateAppeal,
+	validateAppealWithInclude(['neighbouringSites']),
 	assertUserHasPermission(permissionNames.updateCase),
 	neighbouringSitesRouter
 );
