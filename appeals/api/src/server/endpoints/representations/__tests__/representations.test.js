@@ -1425,285 +1425,84 @@ describe('/appeals/:id/reps', () => {
 		});
 	});
 
-	describe('POST representation/comments auto-publish', () => {
-		test('200 and auto-publishes for comment rep_type when appeal has PASSED statements state', async () => {
-			databaseConnector.appeal.findUnique.mockResolvedValue({
-				...householdAppeal,
-				appealStatus: [{ valid: false, status: 'statements' }]
+	describe('POST representation/:repType auto-publish', () => {
+		const repTypesToTest = ['appellant_statement', 'lpa_statement', 'comment'];
+		repTypesToTest.forEach((repType) => {
+			describe(`Common logic for ${repType}`, () => {
+				/** @type {RepTestScenario[]} */
+				const scenarios = [
+					{
+						description:
+							'auto-publishes when appeal has PASSED statements and is in final_comments state',
+						appealStatus: [
+							{ valid: true, status: 'final_comments' },
+							{ valid: false, status: 'statements' }
+						],
+						expectedStatus: 'published',
+						shouldAutoPublish: true
+					},
+					{
+						description: 'does not auto-publish when appeal is NOT yet in statements state',
+						appealStatus: [{ valid: true, status: 'lpa_questionnaire' }],
+						expectedStatus: 'awaiting_review',
+						shouldAutoPublish: false
+					},
+					{
+						description: 'does not auto-publish when appeal is CURRENTLY in statements state',
+						appealStatus: [{ valid: true, status: 'statements' }],
+						expectedStatus: 'awaiting_review',
+						shouldAutoPublish: false
+					}
+				];
+
+				test.each(scenarios)(
+					`POST /reps/${repType} - 201 and $description`,
+					async ({ appealStatus, expectedStatus, shouldAutoPublish }) => {
+						// Arrange
+						databaseConnector.appeal.findUnique.mockResolvedValue({
+							...householdAppeal,
+							appealStatus
+						});
+						databaseConnector.representation.create.mockResolvedValue({
+							id: 1,
+							status: expectedStatus
+						});
+
+						// Act
+						const response = await request
+							.post(`/appeals/1/reps/${repType}`)
+							.send({
+								redactionStatus: 'unredacted',
+								attachments: [],
+								// Set source based on repType if your API requires it
+								source: repType === 'lpa_statement' ? 'lpa' : 'appellant',
+								representationText: 'test statement'
+							})
+							.set('azureAdUserId', '732652365');
+
+						// Assert
+						expect(response.status).toEqual(201);
+
+						const dbCall = databaseConnector.representation.create;
+						const publishedMatcher = expect.objectContaining({
+							data: expect.objectContaining({ status: 'published' })
+						});
+
+						if (shouldAutoPublish) {
+							// eslint-disable-next-line jest/no-conditional-expect
+							expect(dbCall).toHaveBeenCalledWith(publishedMatcher);
+						} else {
+							// eslint-disable-next-line jest/no-conditional-expect
+							expect(dbCall).not.toHaveBeenCalledWith(publishedMatcher);
+						}
+
+						expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
+							expect.anything(),
+							'Create'
+						);
+					}
+				);
 			});
-			databaseConnector.representation.create.mockResolvedValue({
-				id: 1,
-				status: 'published'
-			});
-
-			const response = await request
-				.post('/appeals/1/reps/comment')
-				.send({
-					ipDetails: { firstName: 'test', lastName: 'test', email: 'test@example.com' },
-					ipAddress: { postCode: '', addressLine1: '' },
-					redactionStatus: 'unredacted',
-					attachments: []
-				})
-				.set('azureAdUserId', '732652365');
-
-			expect(response.status).toEqual(201);
-			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
-				expect.objectContaining({
-					data: expect.objectContaining({
-						status: 'published'
-					})
-				})
-			);
-			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
-				expect.anything(),
-				'Create'
-			);
-		});
-
-		test('200 and does not auto-publish for comment rep_type when appeal is NOT in statements state', async () => {
-			databaseConnector.appeal.findUnique.mockResolvedValue({
-				...householdAppeal,
-				appealStatus: [{ valid: true, status: 'lpa_questionnaire' }]
-			});
-			databaseConnector.representation.create.mockResolvedValue({
-				id: 1,
-				status: 'awaiting_review'
-			});
-
-			const response = await request
-				.post('/appeals/1/reps/comment')
-				.send({
-					ipDetails: { firstName: 'test', lastName: 'test', email: 'test@example.com' },
-					ipAddress: { postCode: '', addressLine1: '' },
-					redactionStatus: 'unredacted',
-					attachments: []
-				})
-				.set('azureAdUserId', '732652365');
-
-			expect(response.status).toEqual(201);
-			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
-				expect.objectContaining({
-					data: expect.not.objectContaining({
-						status: 'published'
-					})
-				})
-			);
-			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
-				expect.anything(),
-				'Create'
-			);
-		});
-
-		test('200 and does not auto-publish for comment rep_type when appeal is CURRENTLY in statements state', async () => {
-			databaseConnector.appeal.findUnique.mockResolvedValue({
-				...householdAppeal,
-				appealStatus: [{ valid: true, status: 'statements' }]
-			});
-			databaseConnector.representation.create.mockResolvedValue({
-				id: 1,
-				status: 'awaiting_review'
-			});
-
-			const response = await request
-				.post('/appeals/1/reps/comment')
-				.send({
-					ipDetails: { firstName: 'test', lastName: 'test', email: 'test@example.com' },
-					ipAddress: { postCode: '', addressLine1: '' },
-					redactionStatus: 'unredacted',
-					attachments: []
-				})
-				.set('azureAdUserId', '732652365');
-
-			expect(response.status).toEqual(201);
-			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
-				expect.objectContaining({
-					data: expect.not.objectContaining({
-						status: 'published'
-					})
-				})
-			);
-			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
-				expect.anything(),
-				'Create'
-			);
-		});
-
-		test('200 and auto-publishes for comment rep_type when appeal is in final_comments state', async () => {
-			databaseConnector.appeal.findUnique.mockResolvedValue({
-				...householdAppeal,
-				appealStatus: [
-					{ valid: true, status: 'final_comments' },
-					{ valid: false, status: 'statements' }
-				]
-			});
-			databaseConnector.representation.create.mockResolvedValue({
-				id: 1,
-				status: 'published'
-			});
-
-			const response = await request
-				.post('/appeals/1/reps/comment')
-				.send({
-					ipDetails: { firstName: 'test', lastName: 'test', email: 'test@example.com' },
-					ipAddress: { postCode: '', addressLine1: '' },
-					redactionStatus: 'unredacted',
-					attachments: []
-				})
-				.set('azureAdUserId', '732652365');
-
-			expect(response.status).toEqual(201);
-			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
-				expect.objectContaining({
-					data: expect.objectContaining({
-						status: 'published'
-					})
-				})
-			);
-			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
-				expect.anything(),
-				'Create'
-			);
-		});
-
-		test('200 and auto-publishes for lpa_statement rep_type when appeal has PASSED statements state', async () => {
-			databaseConnector.appeal.findUnique.mockResolvedValue({
-				...householdAppeal,
-				appealStatus: [{ valid: false, status: 'statements' }]
-			});
-			databaseConnector.representation.create.mockResolvedValue({
-				id: 1,
-				status: 'published'
-			});
-
-			const response = await request
-				.post('/appeals/1/reps/lpa_statement')
-				.send({
-					redactionStatus: 'unredacted',
-					attachments: [],
-					lpaCode: 'LPA',
-					source: 'lpa',
-					representationText: 'added as document'
-				})
-				.set('azureAdUserId', '732652365');
-
-			expect(response.status).toEqual(201);
-			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
-				expect.objectContaining({
-					data: expect.objectContaining({
-						status: 'published'
-					})
-				})
-			);
-			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
-				expect.anything(),
-				'Create'
-			);
-		});
-
-		test('200 and does not auto-publish for lpa_statement rep_type when appeal is NOT yet passed statements state', async () => {
-			databaseConnector.appeal.findUnique.mockResolvedValue({
-				...householdAppeal,
-				appealStatus: [{ valid: true, status: 'lpa_questionnaire' }]
-			});
-			databaseConnector.representation.create.mockResolvedValue({
-				id: 1,
-				status: 'awaiting_review'
-			});
-
-			const response = await request
-				.post('/appeals/1/reps/lpa_statement')
-				.send({
-					redactionStatus: 'unredacted',
-					attachments: [],
-					lpaCode: 'LPA',
-					source: 'lpa',
-					representationText: 'added as document'
-				})
-				.set('azureAdUserId', '732652365');
-
-			expect(response.status).toEqual(201);
-			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
-				expect.objectContaining({
-					data: expect.not.objectContaining({
-						status: 'published'
-					})
-				})
-			);
-			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
-				expect.anything(),
-				'Create'
-			);
-		});
-
-		test('200 and does not auto-publish for lpa_statement rep_type when appeal is CURRENTLY in statements state', async () => {
-			databaseConnector.appeal.findUnique.mockResolvedValue({
-				...householdAppeal,
-				appealStatus: [{ valid: true, status: 'statements' }]
-			});
-			databaseConnector.representation.create.mockResolvedValue({
-				id: 1,
-				status: 'awaiting_review'
-			});
-
-			const response = await request
-				.post('/appeals/1/reps/lpa_statement')
-				.send({
-					ipDetails: { firstName: 'test', lastName: 'test', email: 'test@example.com' },
-					ipAddress: { postCode: '', addressLine1: '' },
-					redactionStatus: 'unredacted',
-					attachments: []
-				})
-				.set('azureAdUserId', '732652365');
-
-			expect(response.status).toEqual(201);
-			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
-				expect.not.objectContaining({
-					data: expect.objectContaining({
-						status: 'published'
-					})
-				})
-			);
-			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
-				expect.anything(),
-				'Create'
-			);
-		});
-
-		test('200 and auto-publishes for lpa_statement rep_type when appeal is in final_comments state', async () => {
-			databaseConnector.appeal.findUnique.mockResolvedValue({
-				...householdAppeal,
-				appealStatus: [
-					{ valid: true, status: 'final_comments' },
-					{ valid: false, status: 'statements' }
-				]
-			});
-			databaseConnector.representation.create.mockResolvedValue({
-				id: 1,
-				status: 'published'
-			});
-
-			const response = await request
-				.post('/appeals/1/reps/lpa_statement')
-				.send({
-					ipDetails: { firstName: 'test', lastName: 'test', email: 'test@example.com' },
-					ipAddress: { postCode: '', addressLine1: '' },
-					redactionStatus: 'unredacted',
-					attachments: []
-				})
-				.set('azureAdUserId', '732652365');
-
-			expect(response.status).toEqual(201);
-			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
-				expect.objectContaining({
-					data: expect.objectContaining({
-						status: 'published'
-					})
-				})
-			);
-			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
-				expect.anything(),
-				'Create'
-			);
 		});
 
 		test('200 and auto-publishes for lpa_final_comment rep_type when appeal has PASSED final_comments state', async () => {
