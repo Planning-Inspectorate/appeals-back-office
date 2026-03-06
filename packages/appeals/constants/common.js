@@ -103,6 +103,18 @@ export const APPEAL_REPRESENTATION_TYPE = Object.freeze({
 	RULE_6_PARTY_PROOFS_EVIDENCE: 'rule_6_party_proofs_evidence'
 });
 
+export const APPEAL_REPRESENTATION_TYPES_PATHS = Object.freeze({
+	LPA_STATEMENT: 'lpa-statement',
+	APPELLANT_STATEMENT: 'appellant-statement',
+	RULE_6_PARTY_STATEMENT: 'rule-6-party-statement',
+	COMMENT: 'comment',
+	LPA_FINAL_COMMENTS: 'lpa-final-comments',
+	APPELLANT_FINAL_COMMENTS: 'appellant-final-comments',
+	LPA_PROOFS_EVIDENCE: 'lpa-proofs-evidence',
+	APPELLANT_PROOFS_EVIDENCE: 'appellant-proofs-evidence',
+	RULE_6_PARTY_PROOFS_EVIDENCE: 'rule-6-party-proofs-evidence'
+});
+
 export const APPEAL_PROOF_OF_EVIDENCE_STATUS = Object.freeze({
 	AWAITING: 'awaiting',
 	RECEIVED: 'received',
