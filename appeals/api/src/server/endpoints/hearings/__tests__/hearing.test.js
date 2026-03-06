@@ -225,6 +225,7 @@ describe('hearing routes', () => {
 					lpa_reference: '48269/APP/2021/1482',
 					hearing_date: '1 January 2999',
 					hearing_time: '12:00pm',
+					hearing_expected_days: '',
 					hearing_address:
 						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -235,7 +236,7 @@ describe('hearing routes', () => {
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
-					personalisation,
+					personalisation: { ...personalisation, is_lpa: false },
 					recipientEmail: fullPlanningAppeal.appellant.email,
 					templateName: 'hearing-updated'
 				});
@@ -243,7 +244,7 @@ describe('hearing routes', () => {
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
-					personalisation,
+					personalisation: { ...personalisation, is_lpa: true },
 					recipientEmail: fullPlanningAppeal.lpa.email,
 					templateName: 'hearing-updated'
 				});
@@ -345,6 +346,7 @@ describe('hearing routes', () => {
 					lpa_reference: '48269/APP/2021/1482',
 					hearing_date: '2 January 2999',
 					hearing_time: '12:00pm',
+					hearing_expected_days: '',
 					hearing_address:
 						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -355,7 +357,7 @@ describe('hearing routes', () => {
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
-					personalisation,
+					personalisation: { ...personalisation, is_lpa: false },
 					recipientEmail: fullPlanningAppeal.appellant.email,
 					templateName: 'hearing-updated'
 				});
@@ -363,7 +365,56 @@ describe('hearing routes', () => {
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
-					personalisation,
+					personalisation: { ...personalisation, is_lpa: true },
+					recipientEmail: fullPlanningAppeal.lpa.email,
+					templateName: 'hearing-updated'
+				});
+
+				expect(response.status).toEqual(201);
+			});
+
+			test('updates a single hearing and sends notifications when no venue address is set', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				databaseConnector.hearing.findUnique.mockResolvedValue({
+					...hearing,
+					addressId: null,
+					address: null
+				});
+				databaseConnector.hearing.update.mockResolvedValue({
+					...hearing,
+					hearingStartTime: new Date('2999-01-03T12:00:00.000Z'),
+					addressId: null,
+					address: null
+				});
+
+				const response = await request
+					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
+					.send({ hearingStartTime: '2999-01-03T12:00:00.000Z' })
+					.set('azureAdUserId', azureAdUserId);
+
+				const personalisation = {
+					appeal_reference_number: '1345264',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					lpa_reference: '48269/APP/2021/1482',
+					hearing_date: '3 January 2999',
+					hearing_time: '12:00pm',
+					hearing_expected_days: '',
+					hearing_address: '',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+				};
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: { ...personalisation, is_lpa: false },
+					recipientEmail: fullPlanningAppeal.appellant.email,
+					templateName: 'hearing-updated'
+				});
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: { ...personalisation, is_lpa: true },
 					recipientEmail: fullPlanningAppeal.lpa.email,
 					templateName: 'hearing-updated'
 				});
@@ -1136,6 +1187,7 @@ describe('hearing routes', () => {
 					lpa_reference: '48269/APP/2021/1482',
 					hearing_date: '1 January 2999',
 					hearing_time: '1:00pm',
+					hearing_expected_days: '',
 					hearing_address:
 						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -1146,7 +1198,7 @@ describe('hearing routes', () => {
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
-					personalisation,
+					personalisation: { ...personalisation, is_lpa: false },
 					recipientEmail: fullPlanningAppeal.appellant.email,
 					templateName: 'hearing-set-up'
 				});
@@ -1154,7 +1206,7 @@ describe('hearing routes', () => {
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
-					personalisation,
+					personalisation: { ...personalisation, is_lpa: true },
 					recipientEmail: fullPlanningAppeal.lpa.email,
 					templateName: 'hearing-set-up'
 				});
@@ -1191,7 +1243,32 @@ describe('hearing routes', () => {
 					}
 				});
 
-				expect(mockNotifySend).not.toHaveBeenCalled();
+				const personalisation = {
+					appeal_reference_number: '1345264',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					lpa_reference: '48269/APP/2021/1482',
+					hearing_date: '1 January 2999',
+					hearing_time: '12:00pm',
+					hearing_expected_days: '',
+					hearing_address: '',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+				};
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: { ...personalisation, is_lpa: false },
+					recipientEmail: fullPlanningAppeal.appellant.email,
+					templateName: 'hearing-set-up'
+				});
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: { ...personalisation, is_lpa: true },
+					recipientEmail: fullPlanningAppeal.lpa.email,
+					templateName: 'hearing-set-up'
+				});
 
 				expect(response.status).toEqual(201);
 			});
