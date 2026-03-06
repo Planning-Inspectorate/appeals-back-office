@@ -230,6 +230,15 @@ describe('emulate-notify.test', () => {
 		expect(subjectText).toBe(expectedSubjectText);
 	});
 
+	describe('test strong', () => {
+		test('should handle bold text', () => {
+			const input = 'This is **bold** text and this is also __bold__ text.';
+			const expected =
+				'<div class="pins-notify-preview-border"> This is <strong>bold</strong> text and this is also <strong>bold</strong> text.<br> </div>';
+			expect(generateNotifyPreview(input)).toBe(expected);
+		});
+	});
+
 	describe('processLinks', () => {
 		test('should correctly process a single markdown link into an HTML anchor tag', () => {
 			const input = 'This is a test with a [link text](https://example.com/path).';
