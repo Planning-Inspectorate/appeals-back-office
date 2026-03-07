@@ -62,7 +62,8 @@ const patchAppellantCaseValidator = composeMiddleware(
 			if (
 				isOutcomeIncomplete(value) &&
 				!req.body.incompleteReasons &&
-				!req.body.enforcementInvalidReasons
+				!req.body.enforcementInvalidReasons &&
+				!req.body.enforcementGroundsMismatchFacts
 			) {
 				throw new Error(ERROR_VALID_VALIDATION_OUTCOME_REASONS_REQUIRED);
 			}
