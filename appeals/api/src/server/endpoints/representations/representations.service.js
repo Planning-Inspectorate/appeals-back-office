@@ -217,9 +217,7 @@ export const createRepresentation = async (
 		representationType: input.representationType,
 		source: input.source,
 		dateCreated: input.dateCreated,
-		status: shouldAutoPublish
-			? APPEAL_REPRESENTATION_STATUS.PUBLISHED
-			: APPEAL_REPRESENTATION_STATUS.VALID,
+		status: shouldAutoPublish ? APPEAL_REPRESENTATION_STATUS.PUBLISHED : input.status,
 		lpaCode: input.lpaCode,
 		originalRepresentation: input.representationText
 	});
