@@ -730,12 +730,12 @@ export const notificationBannerDefinitions = {
 	},
 	appellantStatementAddedSuccess: {
 		type: 'success',
-		pages: ['appellantStatement'],
+		pages: ['appellantStatement', 'manageFolder'],
 		text: 'Appellant statement added'
 	},
 	appellantStatementDocumentAddedSuccess: {
 		type: 'success',
-		pages: ['appellantStatement'],
+		pages: ['appellantStatement', 'manageFolder'],
 		text: 'Supporting document added'
 	},
 	appellantStatementIncomplete: {
