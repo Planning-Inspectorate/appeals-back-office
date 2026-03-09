@@ -182,6 +182,9 @@ export const createRepresentation = async (
 	input
 ) => {
 	let representedId;
+	let status = shouldAutoPublish
+		? APPEAL_REPRESENTATION_STATUS.PUBLISHED
+		: APPEAL_REPRESENTATION_STATUS.VALID;
 	if (input.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT) {
 		const { ipDetails, ipAddress } = input;
 		const address =
@@ -202,6 +205,7 @@ export const createRepresentation = async (
 			addressId: address ? address.id : undefined
 		});
 		representedId = represented.id;
+		if (!shouldAutoPublish) status = APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW;
 	} else if (input.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT) {
 		representedId = input.representedId;
 	} else if (
@@ -217,7 +221,7 @@ export const createRepresentation = async (
 		representationType: input.representationType,
 		source: input.source,
 		dateCreated: input.dateCreated,
-		status: shouldAutoPublish ? APPEAL_REPRESENTATION_STATUS.PUBLISHED : input.status,
+		status,
 		lpaCode: input.lpaCode,
 		originalRepresentation: input.representationText
 	});
