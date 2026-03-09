@@ -1428,7 +1428,7 @@ describe('/appeals/:id/reps', () => {
 	describe('POST representation/:repType auto-publish', () => {
 		const repTypesToTest = ['appellant_statement', 'lpa_statement', 'comment'];
 		repTypesToTest.forEach((repType) => {
-			describe(`Common logic for ${repType}`, () => {
+			describe(`Auto publish logic for ${repType}`, () => {
 				/** @type {RepTestScenario[]} */
 				const scenarios = [
 					{
@@ -1458,7 +1458,6 @@ describe('/appeals/:id/reps', () => {
 				test.each(scenarios)(
 					`POST /reps/${repType} - 201 and $description`,
 					async ({ appealStatus, expectedStatus, shouldAutoPublish }) => {
-						// Arrange
 						databaseConnector.appeal.findUnique.mockResolvedValue({
 							...householdAppeal,
 							appealStatus
@@ -1468,19 +1467,16 @@ describe('/appeals/:id/reps', () => {
 							status: expectedStatus
 						});
 
-						// Act
 						const response = await request
 							.post(`/appeals/1/reps/${repType}`)
 							.send({
 								redactionStatus: 'unredacted',
 								attachments: [],
-								// Set source based on repType if your API requires it
 								source: repType === 'lpa_statement' ? 'lpa' : 'appellant',
 								representationText: 'test statement'
 							})
 							.set('azureAdUserId', '732652365');
 
-						// Assert
 						expect(response.status).toEqual(201);
 
 						const dbCall = databaseConnector.representation.create;
@@ -1757,6 +1753,58 @@ describe('/appeals/:id/reps', () => {
 			expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledWith(
 				expect.anything(),
 				'Create'
+			);
+		});
+
+		test('201 and sets status to awaiting_review for comment rep_type when appeal is in statements state', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				appealStatus: [{ valid: true, status: 'statements' }]
+			});
+
+			const response = await request
+				.post('/appeals/1/reps/comment')
+				.send({
+					redactionStatus: 'unredacted',
+					attachments: [],
+					source: 'citizen',
+					representationText: 'test statement'
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({
+						status: 'awaiting_review'
+					})
+				})
+			);
+		});
+
+		test('201 and sets status to valid for lpa_statement rep_type when appeal is in statements state', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				appealStatus: [{ valid: true, status: 'statements' }]
+			});
+
+			const response = await request
+				.post('/appeals/1/reps/lpa_statement')
+				.send({
+					redactionStatus: 'unredacted',
+					attachments: [],
+					source: 'citizen',
+					representationText: 'test statement'
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({
+						status: 'valid'
+					})
+				})
 			);
 		});
 	});

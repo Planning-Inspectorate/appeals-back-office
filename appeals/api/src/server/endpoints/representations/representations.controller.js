@@ -251,10 +251,7 @@ export const createRepresentation = () => async (req, res) => {
 	const azureAdUserId = req.get('azureAdUserId');
 
 	const shouldAutoPublish = shouldAutoPublishRep(req.appeal, representationType);
-
-	const updatePayload = shouldAutoPublish
-		? { ...req.body, status: APPEAL_REPRESENTATION_STATUS.PUBLISHED }
-		: req.body;
+	const updatePayload = req.body;
 
 	if (
 		[
