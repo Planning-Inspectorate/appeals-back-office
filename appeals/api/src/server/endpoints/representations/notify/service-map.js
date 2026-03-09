@@ -72,6 +72,6 @@ export const serviceMap = [
 	{
 		status: APPEAL_REPRESENTATION_STATUS.INCOMPLETE,
 		type: APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT,
-		service: service.lpaStatementIncomplete
+		service: service.appellantStatementIncomplete
 	}
 ];
