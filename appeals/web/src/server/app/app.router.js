@@ -6,6 +6,7 @@ import { installAuthMock } from '#testing/app/mocks/auth.js';
 import { APPEAL_START_RANGE } from '@pins/appeals/constants/common.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
+import accessibilityStatementRouter from '../appeals/accessibility-statement/accessibility-statement.router.js';
 import appealsRouter from '../appeals/appeals.router.js';
 import { addApiClientToRequest } from '../lib/middleware/add-apiclient-to-request.js';
 import {
@@ -39,6 +40,8 @@ router.use(authRouter);
 router.route('/').head(handleHeadHealthCheck); // used by Front Door health check
 router.route('/unauthenticated').get(viewUnauthenticatedError);
 router.route('/health').get(handleHeathCheck);
+
+router.use('/accessibility-statement', accessibilityStatementRouter);
 
 // Authenticated routes
 

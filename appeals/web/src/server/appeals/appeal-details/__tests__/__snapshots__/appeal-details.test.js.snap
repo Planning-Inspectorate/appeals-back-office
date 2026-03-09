@@ -8567,10 +8567,19 @@ exports[`appeal-details should not render a back button 1`] = `
                 </div>
             </main>
         </div>
-        <footer class="govuk-footer" role="contentinfo">
-            <div class="govuk-width-container ">
-                <div class="govuk-footer__meta">
-                    <div class="govuk-footer__meta-item govuk-footer__meta-item"></div>
+        <footer class="pins-footer" role="contentinfo">
+            <div class="pins-footer-row">
+                <div class="pins-footer-container govuk-width-container">
+                    <div class="pins-footer__meta">
+                        <div>
+                            <ul class="pins-footer__inline-list">
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div><span class="pins-footer__copyright">© Planning Inspectorate</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </footer>
