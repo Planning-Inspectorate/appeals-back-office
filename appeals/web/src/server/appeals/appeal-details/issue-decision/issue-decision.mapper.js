@@ -131,11 +131,14 @@ export function issueDecisionPage(
 	} = APPEAL_CASE_DECISION_OUTCOME;
 
 	const decisionTypes =
-		appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE
+		appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ||
+		appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
 			? [
 					NOTICE_UPHELD,
 					NOTICE_VARIED_AND_UPHELD,
-					PLANNING_PERMISSION_GRANTED,
+					(appealDetails.appealType = APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
+						? 'Listed building consent granted'
+						: PLANNING_PERMISSION_GRANTED),
 					QUASHED_ON_LEGAL_GROUNDS,
 					SPLIT_DECISION,
 					INVALID
