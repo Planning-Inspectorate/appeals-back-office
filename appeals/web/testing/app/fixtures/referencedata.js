@@ -476,6 +476,14 @@ export const appealData = {
 			},
 			reference: 'Reference'
 		}
+	},
+	cancellation: {
+		cancellationFolder: {
+			caseId: '1',
+			documents: [],
+			folderId: 123,
+			path: 'cancellation/lpaEnforcementNoticeWithdrawal'
+		}
 	}
 };
 

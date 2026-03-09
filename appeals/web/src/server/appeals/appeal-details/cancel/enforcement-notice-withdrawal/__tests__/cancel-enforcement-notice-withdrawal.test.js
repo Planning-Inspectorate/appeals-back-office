@@ -1,0 +1,139 @@
+import { appealDataEnforcementNotice, fileUploadInfo } from '#testing/appeals/appeals.js';
+import { createTestEnvironment } from '#testing/index.js';
+import { parseHtml } from '@pins/platform';
+import nock from 'nock';
+import supertest from 'supertest';
+
+const { app, installMockApi, teardown } = createTestEnvironment();
+const request = supertest(app);
+const baseUrl = '/appeals-service/appeal-details';
+const mockAppealId = appealDataEnforcementNotice.appealId;
+
+describe('cancel enforcement notice withdrawal', () => {
+	beforeEach(installMockApi);
+	afterEach(teardown);
+
+	describe('GET /cancel/enforcement-notice-withdrawal', () => {
+		beforeEach(async () => {
+			nock('http://test/')
+				.get(`/appeals/${mockAppealId}?include=all`)
+				.reply(200, appealDataEnforcementNotice)
+				.persist();
+			nock('http://test/')
+				.get(
+					`/appeals/${mockAppealId}/document-folders?path=cancellation/lpaEnforcementNoticeWithdrawal`
+				)
+				.reply(200, [
+					{
+						folderId: 123,
+						path: 'cancellation/lpaEnforcementNoticeWithdrawal'
+					}
+				])
+				.persist();
+		});
+
+		it('should render a document upload page', async () => {
+			const response = await request.get(
+				`${baseUrl}/${mockAppealId}/cancel/enforcement-notice-withdrawal`
+			);
+			expect(response.statusCode).toBe(200);
+
+			const pageHtml = parseHtml(response.text);
+			expect(pageHtml.innerHTML).toMatchSnapshot();
+			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe(
+				'LPA enforcement notice withdrawal'
+			);
+			expect(pageHtml.querySelector('h2')?.innerHTML.trim()).toBe(
+				'Upload enforcement notice withdrawal'
+			);
+		});
+
+		it('should have a back button that links to the cancel reasons page', async () => {
+			const response = await request.get(
+				`${baseUrl}/${mockAppealId}/cancel/enforcement-notice-withdrawal`
+			);
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+			expect(pageHtml.querySelector('.govuk-back-link')?.getAttribute('href')?.trim()).toBe(
+				`${baseUrl}/${mockAppealId}/cancel`
+			);
+		});
+
+		it('should have a back button to the CYA page if editing', async () => {
+			const url = `${baseUrl}/${mockAppealId}/cancel/enforcement-notice-withdrawal`;
+			const queryString = `?editEntrypoint=${encodeURIComponent(url)}`;
+			const response = await request.get(`${url}${queryString}`);
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+			expect(pageHtml.querySelector('.govuk-back-link')?.getAttribute('href')?.trim()).toBe(
+				`${url}/check-details`
+			);
+		});
+	});
+
+	describe('POST /cancel/enforcement-notice-withdrawal', () => {
+		beforeEach(async () => {
+			nock('http://test/')
+				.get(`/appeals/${mockAppealId}?include=all`)
+				.reply(200, appealDataEnforcementNotice)
+				.persist();
+			nock('http://test/')
+				.get(
+					`/appeals/${mockAppealId}/document-folders?path=cancellation/lpaEnforcementNoticeWithdrawal`
+				)
+				.reply(200, [
+					{
+						folderId: 123,
+						path: 'cancellation/lpaEnforcementNoticeWithdrawal'
+					}
+				])
+				.persist();
+			nock('http://test/').get('/appeals/document-redaction-statuses').reply(200, []).persist();
+		});
+
+		it('should render a 500 error page if upload-info is not present in the request body', async () => {
+			const response = await request
+				.post(`${baseUrl}/${mockAppealId}/cancel/enforcement-notice-withdrawal`)
+				.send({});
+
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
+		});
+
+		it('should render a 500 error page if request body upload-info is in an incorrect format', async () => {
+			const response = await request
+				.post(`${baseUrl}/${mockAppealId}/cancel/enforcement-notice-withdrawal`)
+				.send({
+					'upload-info': ''
+				});
+
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
+		});
+
+		it('should redirect to the CYA page if upload-info is present in the request body and in the correct format', async () => {
+			const response = await request
+				.post(`${baseUrl}/${mockAppealId}/cancel/enforcement-notice-withdrawal`)
+				.send({
+					'upload-info': fileUploadInfo
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				`Found. Redirecting to /appeals-service/appeal-details/${mockAppealId}/cancel/enforcement-notice-withdrawal/check-details`
+			);
+		});
+	});
+});

@@ -235,6 +235,9 @@ export const getFoldersForStage = (path) => {
 				`${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
 			];
 			break;
+		case 'cancellation': // TODO: use the enum
+			folders = [`cancellation/${APPEAL_DOCUMENT_TYPE.LPA_ENFORCEMENT_NOTICE_WITHDRAWAL}`];
+			break;
 		default:
 			folders = [`${APPEAL_CASE_STAGE.INTERNAL}/${APPEAL_DOCUMENT_TYPE.UNCATEGORISED}`];
 	}

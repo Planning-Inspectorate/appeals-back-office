@@ -417,7 +417,13 @@ export const spec = {
 				}
 			},
 			stateList: [],
-			completedStateList: ['awaiting_event']
+			completedStateList: ['awaiting_event'],
+			cancellation: {
+				cancellationFolder: {
+					folderId: 2125,
+					documents: []
+				}
+			}
 		},
 		SingleAppellantCaseResponse: {
 			agriculturalHolding: {
