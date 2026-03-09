@@ -1,6 +1,6 @@
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { mapNotificationBannersFromSession, radiosInput } from '#lib/mappers/index.js';
+import { mapNotificationBannersFromSession, radiosInput, textInput } from '#lib/mappers/index.js';
 import { nameToString } from '#lib/person-name-formatter.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { LINK_APPEALS_UNLINK_OPERATION } from '@pins/appeals/constants/support.js';
@@ -166,17 +166,56 @@ export function changeLeadAppealPage(appealData, leadAppeal, operation, errors) 
  * @param {Appeal} appealData
  * @param {Appeal} leadAppeal
  * @param {string} operation
+ * @param {import("@pins/express").ValidationErrors} [errors]
  * @returns {PageContent}
  */
-export function confirmChangeLeadAppealPage(appealData, leadAppeal, operation) {
+export function changeLeadAppealEmailPage(appealData, leadAppeal, operation, errors) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
-	const titleAndHeading = `Check details and ${operationText(operation)}`;
+	const { firstName = '', lastName = '' } = leadAppeal?.appellant ?? {};
+	const titleAndHeading = `Enter the email address for appellant ${nameToString({ firstName, lastName })}`;
 
 	const changePath =
 		operation === LINK_APPEALS_UNLINK_OPERATION ? 'unlink-lead-appeal' : 'change-lead-appeal';
 
 	const backLinkUrl = `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/${
 		appealData.linkedAppeals.length > 1 ? changePath : 'manage'
+	}`;
+
+	return {
+		title: titleAndHeading,
+		backLinkUrl,
+		preHeading: `Appeal ${shortAppealReference} (lead) - ${operationText(operation)}`,
+		pageComponents: [
+			textInput({
+				name: 'email',
+				id: 'email',
+				label: titleAndHeading,
+				isPageHeading: true,
+				value: errors?.email.value ?? leadAppeal?.appellant?.email ?? '',
+				errorMessage: errors?.email.msg ?? null
+			})
+		],
+		// @ts-ignore
+		errorMessage: errors?.email.msg ?? null
+	};
+}
+
+/**
+ *
+ * @param {Appeal} appealData
+ * @param {Appeal} leadAppeal
+ * @param {string} operation
+ * @returns {PageContent}
+ */
+export function confirmChangeLeadAppealPage(appealData, leadAppeal, operation) {
+	const shortAppealReference = appealShortReference(appealData.appealReference);
+	const titleAndHeading = `Check details and ${operationText(operation)}`;
+
+	const changeEmailPath =
+		operation === LINK_APPEALS_UNLINK_OPERATION ? 'unlink-new-lead-email' : 'change-new-lead-email';
+
+	const backLinkUrl = `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/${
+		appealData.linkedAppeals.length > 1 ? changeEmailPath : 'manage'
 	}`;
 
 	/** @type {PageComponent} */
@@ -190,7 +229,7 @@ export function confirmChangeLeadAppealPage(appealData, leadAppeal, operation) {
 					},
 					value: {
 						// @ts-ignore
-						html: `<span>${appealShortReference(leadAppeal.appealReference)}</span></br><span>${nameToString(leadAppeal.appellant)}</span></br><span>${leadAppeal.address?.addressLine1}</span></br><span>${leadAppeal.appealType}</span>`
+						html: `<span>${appealShortReference(leadAppeal.appealReference)}</span></br><span>${nameToString(leadAppeal.appellant)}</span></br><span>${leadAppeal.address?.addressLine1}</span></br><span>${leadAppeal.appellant.email}</span></br><span>${leadAppeal.appealType}</span>`
 					},
 					actions: {
 						items: [

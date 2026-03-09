@@ -1,3 +1,4 @@
+import { createEmailInputValidator } from '#lib/validators/email-input.validator.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 
@@ -8,3 +9,5 @@ export const validateUnlinkAppeal = createValidator(
 export const validateLeadAppeal = createValidator(
 	body('leadAppeal').trim().notEmpty().withMessage('Select new lead appeal')
 );
+
+export const validateLeadEmail = createValidator(createEmailInputValidator());

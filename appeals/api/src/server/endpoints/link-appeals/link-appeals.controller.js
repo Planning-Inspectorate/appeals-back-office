@@ -398,7 +398,7 @@ const auditUnlinkingAppeal = async (
  */
 export const updateLinkedAppeals = async (req, res) => {
 	const { appeal } = req;
-	const { appealRefToReplaceLead, operation } = req.body;
+	const { appealRefToReplaceLead, appealEmailToReplaceLead, operation } = req.body;
 	const azureAdUserId = req.get('azureAdUserId') || '';
 
 	if (!operation) {
@@ -470,7 +470,7 @@ export const updateLinkedAppeals = async (req, res) => {
 					// @ts-ignore
 					duplicateAllFiles(currentLead, appealToReplaceLead, options),
 					// @ts-ignore
-					replaceLeadAppeal(currentLead, appealToReplaceLead)
+					replaceLeadAppeal(currentLead, appealToReplaceLead, appealEmailToReplaceLead)
 				]);
 				break;
 			}
@@ -498,7 +498,7 @@ export const updateLinkedAppeals = async (req, res) => {
 						// @ts-ignore
 						duplicateAllFiles(appealToUnlink, appealToReplaceLead, options),
 						// @ts-ignore
-						replaceLeadAppeal(appealToUnlink, appealToReplaceLead)
+						replaceLeadAppeal(appealToUnlink, appealToReplaceLead, appealEmailToReplaceLead)
 					]);
 				}
 				await Promise.allSettled([

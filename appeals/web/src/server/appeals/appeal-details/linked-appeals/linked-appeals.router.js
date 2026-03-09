@@ -10,7 +10,7 @@ import {
 	checkAppealIsLinked,
 	initialiseLinkedAppealsSession
 } from './linked-appeals.middleware.js';
-import { validateLeadAppeal } from './linked-appeals.validators.js';
+import { validateLeadAppeal, validateLeadEmail } from './linked-appeals.validators.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -41,6 +41,22 @@ router
 	.post(
 		validateLeadAppeal,
 		asyncHandler(controller.postChangeLeadAppeal(LINK_APPEALS_CHANGE_LEAD_OPERATION))
+	);
+
+router
+	.route('/unlink-new-lead-email')
+	.get(asyncHandler(controller.renderChangeLeadEmail(LINK_APPEALS_UNLINK_OPERATION)))
+	.post(
+		validateLeadEmail,
+		asyncHandler(controller.postChangeLeadEmail(LINK_APPEALS_UNLINK_OPERATION))
+	);
+
+router
+	.route('/change-new-lead-email')
+	.get(asyncHandler(controller.renderChangeLeadEmail(LINK_APPEALS_CHANGE_LEAD_OPERATION)))
+	.post(
+		validateLeadEmail,
+		asyncHandler(controller.postChangeLeadEmail(LINK_APPEALS_CHANGE_LEAD_OPERATION))
 	);
 
 router

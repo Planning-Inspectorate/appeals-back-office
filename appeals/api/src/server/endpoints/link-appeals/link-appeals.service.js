@@ -4,8 +4,10 @@ import {
 	addDocumentsToAppeal,
 	getFoldersForAppeal
 } from '#endpoints/documents/documents.service.js';
+import { updateServiceUser } from '#endpoints/service-user/service-user.service.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
+import serviceUserRepository from '#repositories/service-user.repository.js';
 import transitionState from '#state/transition-state.js';
 import { copyBlobs } from '#utils/blob-copy.js';
 import { currentStatus } from '#utils/current-status.js';
@@ -79,9 +81,14 @@ export const checkAppealsStatusBeforeLPAQ = (appeal, linkedAppeal, isCurrentAppe
  *
  * @param {Appeal} currentLead
  * @param {Appeal} appealToReplaceLead
+ * @param {string | undefined} [appealEmailToReplaceLead]
  * @returns {Promise<*>}
  */
-export const replaceLeadAppeal = async (currentLead, appealToReplaceLead) => {
+export const replaceLeadAppeal = async (
+	currentLead,
+	appealToReplaceLead,
+	appealEmailToReplaceLead
+) => {
 	const { childAppeals } = currentLead;
 	const relationships =
 		childAppeals
@@ -111,18 +118,36 @@ export const replaceLeadAppeal = async (currentLead, appealToReplaceLead) => {
 				});
 			})
 		);
-
-		// The current lead is now the child of the new lead. If it has no agent, it needs to be the agent of the new lead.
-		if (!currentLead.agent) {
-			// eslint-disable-next-line no-unused-vars
-			const data = omit(appealToReplaceLead.agent, 'id', 'addressId', 'address');
-			const { id: agentId } = await tx.serviceUser.create({ data });
-			await tx.appeal.update({
-				where: { id: currentLead.id },
-				data: { agentId }
-			});
-		}
 	});
+
+	// The current lead is now the child of the new lead. If it has no agent, it needs to be the agent of the new lead.
+	if (!currentLead.agent) {
+		await databaseConnector.$transaction(async (tx) => {
+			if (appealEmailToReplaceLead) {
+				// remove the agent from the new lead as the appellant of the new lead will now be the agent of all the child leads
+				if (appealToReplaceLead.agent) {
+					await tx.appeal.update({
+						where: { id: appealToReplaceLead.id },
+						data: { agentId: null }
+					});
+					await tx.serviceUser.delete({
+						where: { id: appealToReplaceLead.agent.id }
+					});
+				}
+				// update the appellant email address
+				const data = {
+					...omit(appealToReplaceLead.appellant, 'id', 'addressId', 'address'),
+					email: appealEmailToReplaceLead
+				};
+				if (appealToReplaceLead.appellant?.id) {
+					await databaseConnector.serviceUser.update({
+						where: { id: appealToReplaceLead.appellant.id },
+						data
+					});
+				}
+			}
+		});
+	}
 };
 
 /**
@@ -254,6 +279,29 @@ export const updateAppealStatusIfRequired = async (
 	const unlinkedAppeal = unlinkedAppealId
 		? await appealRepository.getAppealById(unlinkedAppealId)
 		: null;
+
+	// Update child appeals' agents with lead appeal's appellant data
+	if (previousLeadAppealId && previousLeadAppealId !== leadAppealId) {
+		const childAppeals = await getChildAppeals(leadAppeal);
+		const data = omit(leadAppeal.appellant, 'id', 'addressId', 'address');
+		await Promise.allSettled(
+			childAppeals.map(async (childAppeal) => {
+				if (childAppeal.agent) {
+					await updateServiceUser(
+						azureAdUserId,
+						childAppeal?.agent?.id,
+						'agent',
+						childAppeal,
+						// @ts-ignore
+						data
+					);
+				} else {
+					const { id: agentId } = await serviceUserRepository.createServiceUser(data);
+					await appealRepository.updateAppealById(Number(childAppeal.id), { agent: agentId });
+				}
+			})
+		);
+	}
 
 	const { appellantCaseValidationOutcome: leadAppealAppellantCaseOutcome } =
 		leadAppeal?.appellantCase || {};
