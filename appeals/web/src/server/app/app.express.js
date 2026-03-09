@@ -19,6 +19,8 @@ import session from './config/session.js';
 
 // Create a new Express app.
 const app = express();
+const REQUEST_BODY_LIMIT = '10mb';
+const URL_ENCODED_PARAMETER_LIMIT = 50000;
 
 app.use(installRequestLocalsMiddleware());
 
@@ -44,8 +46,14 @@ app.use((request, response, next) => {
 });
 
 // Parse incoming request bodies in a middleware before your handlers, available under the req.body property.
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(
+	bodyParser.urlencoded({
+		extended: true,
+		limit: REQUEST_BODY_LIMIT,
+		parameterLimit: URL_ENCODED_PARAMETER_LIMIT
+	})
+);
+app.use(bodyParser.json({ limit: REQUEST_BODY_LIMIT }));
 
 // Parse Cookie header and populate req.cookies with an object keyed by the cookie names.
 app.use(cookieParser());

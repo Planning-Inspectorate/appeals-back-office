@@ -85,7 +85,9 @@ export const appealsApiClient = {
 
 			if (!response.ok) {
 				const errorBody = await response.text();
-				throw new Error(`HTTP error calling: ${url} with status: ${response.status}`, errorBody);
+				throw new Error(
+					`HTTP error calling: ${url} with status: ${response.status}. Response body: ${errorBody}`
+				);
 			}
 
 			const responseBody = await response.json();
@@ -96,7 +98,7 @@ export const appealsApiClient = {
 			return responseBody.reference;
 		} catch (error) {
 			cy.writeLog(`Error submitting LPAQ for ${reference}:`, error);
-			return false;
+			throw error;
 		}
 	},
 	async appellantStatementSubmission(reference) {
@@ -829,7 +831,7 @@ export const appealsApiClient = {
 				caseOfficerId: caseOfficer
 			});
 
-			return await response.json();
+			return responseBody;
 		} catch (error) {
 			cy.writeLog(`Error assigning case officer for appeal ${appealId}:`, error);
 			return false;

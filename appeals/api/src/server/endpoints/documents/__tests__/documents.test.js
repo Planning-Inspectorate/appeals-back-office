@@ -183,39 +183,27 @@ describe('/appeals/:appealId/documents', () => {
 				id: 1,
 				azureAdUserId
 			});
-			databaseConnector.document.create = jest.fn().mockResolvedValue(documentCreated);
-			databaseConnector.documentVersion.create = jest
-				.fn()
-				.mockResolvedValue(documentVersionCreated);
-
 			databaseConnector.$transaction = jest.fn().mockImplementation((callback) =>
 				callback({
 					document: {
-						create: jest.fn().mockResolvedValue([
-							{ ...documentCreated, guid: '987e66e0-1db4-404b-8213-8082919159e9' },
-							{ ...documentCreated, guid: '8b107895-b8c9-467f-aad0-c09daafeaaad' }
-						]),
-						update: jest.fn().mockResolvedValue([
-							{ ...documentUpdated, guid: '987e66e0-1db4-404b-8213-8082919159e9' },
-							{ ...documentUpdated, guid: '8b107895-b8c9-467f-aad0-c09daafeaaad' }
-						])
+						createMany: jest.fn().mockResolvedValue({ count: 2 }),
+						updateMany: jest.fn().mockResolvedValue({ count: 2 })
 					},
 					documentVersion: {
-						create: jest.fn().mockResolvedValue([
-							{ ...documentVersionCreated, guid: '987e66e0-1db4-404b-8213-8082919159e9' },
-							{ ...documentVersionCreated, guid: '8b107895-b8c9-467f-aad0-c09daafeaaad' }
-						]),
-						upsert: jest.fn().mockResolvedValue([
-							{ ...documentVersionCreated, guid: '987e66e0-1db4-404b-8213-8082919159e9' },
-							{ ...documentVersionCreated, guid: '8b107895-b8c9-467f-aad0-c09daafeaaad' }
-						]),
-						findFirst: jest.fn().mockResolvedValue([
-							{ ...documentVersionRetrieved, guid: '987e66e0-1db4-404b-8213-8082919159e9' },
-							{ ...documentVersionRetrieved, guid: '8b107895-b8c9-467f-aad0-c09daafeaaad' }
+						createMany: jest.fn().mockResolvedValue({ count: 2 }),
+						findMany: jest.fn().mockResolvedValue([
+							{
+								...documentVersionRetrieved,
+								documentGuid: '987e66e0-1db4-404b-8213-8082919159e9'
+							},
+							{
+								...documentVersionRetrieved,
+								documentGuid: '8b107895-b8c9-467f-aad0-c09daafeaaad'
+							}
 						])
 					},
 					documentVersionAvScan: {
-						findUnique: jest.fn().mockResolvedValue({})
+						findMany: jest.fn().mockResolvedValue([])
 					}
 				})
 			);
@@ -229,8 +217,8 @@ describe('/appeals/:appealId/documents', () => {
 				})
 				.set('azureAdUserId', azureAdUserId);
 
-			expect(databaseConnector.$transaction).toHaveBeenCalledTimes(2);
-			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(3);
+			expect(databaseConnector.$transaction).toHaveBeenCalledTimes(1);
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
 			expect(response.status).toEqual(201);
 		});
 	});
@@ -323,36 +311,46 @@ describe('appeals documents', () => {
 		});
 
 		test('post single document', async () => {
+			const addDocumentsRequestWithGuid = {
+				...addDocumentsRequest,
+				documents: addDocumentsRequest.documents.map((document) => ({
+					...document,
+					GUID: blobInfo.GUID
+				}))
+			};
+
 			const mappedReq = mappers.mapDocumentsForDatabase(
 				householdAppeal.id,
-				addDocumentsRequest.blobStorageHost,
-				addDocumentsRequest.blobStorageContainer,
-				addDocumentsRequest.documents
+				addDocumentsRequestWithGuid.blobStorageHost,
+				addDocumentsRequestWithGuid.blobStorageContainer,
+				addDocumentsRequestWithGuid.documents
 			);
 			mappedReq.forEach((m) => {
-				expect(m.blobStorageHost).toEqual(addDocumentsRequest.blobStorageHost);
-				expect(m.blobStorageContainer).toEqual(addDocumentsRequest.blobStorageContainer);
+				expect(m.blobStorageHost).toEqual(addDocumentsRequestWithGuid.blobStorageHost);
+				expect(m.blobStorageContainer).toEqual(addDocumentsRequestWithGuid.blobStorageContainer);
 			});
 
 			const prismaMock = {
 				document: {
-					create: jest.fn().mockResolvedValue(documentCreated),
-					update: jest.fn().mockResolvedValue(documentUpdated)
+					createMany: jest.fn().mockResolvedValue({ count: 1 }),
+					updateMany: jest.fn().mockResolvedValue({ count: 1 })
 				},
 				documentVersion: {
-					create: jest.fn().mockResolvedValue(documentVersionCreated),
-					upsert: jest.fn().mockResolvedValue(documentVersionCreated),
-					findFirst: jest.fn().mockResolvedValue(documentVersionRetrieved)
+					createMany: jest.fn().mockResolvedValue({ count: 1 }),
+					findMany: jest.fn().mockResolvedValue([documentVersionRetrieved])
 				},
 				documentVersionAvScan: {
-					findUnique: jest.fn().mockResolvedValue({})
+					findMany: jest.fn().mockResolvedValue([])
 				}
 			};
 
 			databaseConnector.$transaction = jest
 				.fn()
 				.mockImplementation((callback) => callback(prismaMock));
-			const response = await service.addDocumentsToAppeal(addDocumentsRequest, householdAppeal);
+			const response = await service.addDocumentsToAppeal(
+				addDocumentsRequestWithGuid,
+				householdAppeal
+			);
 			expect(response).toEqual({
 				documents: [
 					{
@@ -363,6 +361,57 @@ describe('appeals documents', () => {
 					}
 				]
 			});
+		});
+
+		test('post large document payload uses chunked bulk creates', async () => {
+			jest.clearAllMocks();
+			const numberOfDocuments = 800;
+			const largeAddDocumentsRequest = {
+				...addDocumentsRequest,
+				documents: Array.from({ length: numberOfDocuments }, (_, index) => ({
+					...addDocumentsRequest.documents[0],
+					GUID: `bulk-upload-guid-${index + 1}`,
+					documentName: `bulk-upload-document-${index + 1}.pdf`,
+					fileRowId: `bulk-file-row-${index + 1}`
+				}))
+			};
+
+			const documentCreateMany = jest.fn().mockResolvedValue({ count: 100 });
+			const documentVersionCreateMany = jest.fn().mockResolvedValue({ count: 100 });
+
+			const prismaMock = {
+				document: {
+					createMany: documentCreateMany,
+					updateMany: jest.fn().mockResolvedValue({ count: 100 })
+				},
+				documentVersion: {
+					createMany: documentVersionCreateMany,
+					findMany: jest.fn().mockImplementation(({ where }) =>
+						where.documentGuid.in.map((guid) => ({
+							documentGuid: guid,
+							fileName: `bulk-${guid}.pdf`,
+							version: 1
+						}))
+					)
+				},
+				documentVersionAvScan: {
+					findMany: jest.fn().mockResolvedValue([])
+				}
+			};
+
+			databaseConnector.$transaction = jest
+				.fn()
+				.mockImplementation((callback) => callback(prismaMock));
+
+			const response = await service.addDocumentsToAppeal(
+				largeAddDocumentsRequest,
+				householdAppeal
+			);
+
+			expect(response.documents).toHaveLength(numberOfDocuments);
+			expect(documentCreateMany).toHaveBeenCalledTimes(8);
+			expect(documentVersionCreateMany).toHaveBeenCalledTimes(8);
+			expect(global.mockBroadcasters.broadcastDocument).not.toHaveBeenCalled();
 		});
 
 		test('post new document version', async () => {
