@@ -31,7 +31,7 @@ const cookiesFileExists = (userId) => {
 
 	const fileStats = fs.statSync(fileName);
 	const { ctimeMs } = fileStats;
-	const maxAge = 5; // in minutes
+	const maxAge = 90; // in minutes
 	const ageInMinutes = (Date.now() - ctimeMs) / (1000 * 60);
 	const isValid = ageInMinutes < maxAge;
 	return isValid;
