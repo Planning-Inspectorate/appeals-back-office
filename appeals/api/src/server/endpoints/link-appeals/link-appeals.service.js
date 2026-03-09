@@ -112,15 +112,26 @@ export const replaceLeadAppeal = async (currentLead, appealToReplaceLead) => {
 			})
 		);
 
-		// The current lead is now the child of the new lead. If it has no agent, it needs to be the agent of the new lead.
+		// The current lead is now the child of the new lead. If it has no agent, it and the remaining children need the appellant of the new lead to be their agent.
 		if (!currentLead.agent) {
 			// eslint-disable-next-line no-unused-vars
-			const data = omit(appealToReplaceLead.agent, 'id', 'addressId', 'address');
+			const data = omit(appealToReplaceLead.appellant, 'id', 'addressId', 'address');
 			const { id: agentId } = await tx.serviceUser.create({ data });
 			await tx.appeal.update({
 				where: { id: currentLead.id },
 				data: { agentId }
 			});
+			if (childAppeals?.length) {
+				const agentIdsToUpdate = childAppeals
+					.filter((childAppeal) => childAppeal.childRef !== appealToReplaceLead.reference)
+					.map((childAppeal) => childAppeal?.child?.agentId);
+				await Promise.allSettled(
+					agentIdsToUpdate.map((agentId) => {
+						if (!agentId) return;
+						return tx.serviceUser.update({ data, where: { id: agentId } });
+					})
+				);
+			}
 		}
 	});
 };
