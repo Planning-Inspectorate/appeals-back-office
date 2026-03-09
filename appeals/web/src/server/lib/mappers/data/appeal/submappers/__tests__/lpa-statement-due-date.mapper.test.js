@@ -61,3 +61,63 @@ describe.each([
 		});
 	});
 });
+
+describe.each([
+	['Enforcement notice', APPEAL_TYPE.ENFORCEMENT_NOTICE],
+	['Enforcement listed building', APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING],
+	['Lawful development certificate', APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE]
+])('lpa-statement-due-date.mapper - %s', (_, appealType) => {
+	let data;
+	beforeEach(() => {
+		data = {
+			currentRoute: '/test',
+			appealDetails: {
+				validAt: '2025-01-01',
+				appealTimetable: { lpaStatementDueDate: '2025-01-10' }
+			},
+			userHasUpdateCasePermission: true
+		};
+	});
+
+	it('should not display LPA Statement due date', () => {
+		const mappedData = mapLpaStatementDueDate(data);
+		expect(mappedData).toEqual({
+			display: {},
+			id: 'lpa-statement-due-date'
+		});
+	});
+
+	it('should display LPA Statement due date with new Change action link', () => {
+		data.appealDetails.startedAt = '2025-01-01';
+		data.appealDetails.procedureType = 'written';
+		data.appealDetails.appealType = appealType;
+
+		const mappedData = mapLpaStatementDueDate(data);
+		expect(mappedData).toEqual({
+			display: {
+				summaryListItem: {
+					actions: {
+						items: [
+							{
+								attributes: {
+									'data-cy': 'change-lpa-statement-due-date'
+								},
+								href: '/test/timetable/edit',
+								text: 'Change',
+								visuallyHiddenText: 'Statements due'
+							}
+						]
+					},
+					classes: 'appeal-lpa-statement-due-date',
+					key: {
+						text: 'Statements due'
+					},
+					value: {
+						text: '10 January 2025'
+					}
+				}
+			},
+			id: 'lpa-statement-due-date'
+		});
+	});
+});
