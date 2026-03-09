@@ -1,3 +1,5 @@
+{% from 'macros/create-grounds-list.md' import create_grounds_list %}
+
 We have received an enforcement appeal.
 
 {% if other_appeals_grounds_group.length -%}
@@ -6,29 +8,14 @@ We have received an enforcement appeal.
 The appeal will continue on the following grounds:
 {%- endif %}
 
-{% if appeal_grounds.length -%}
-{% if appeal_grounds.length > 1 -%}
-{%- for ground in appeal_grounds -%}
-- Ground ({{ ground }})
-{% endfor %}
-{%- else -%}
-Ground ({{ appeal_grounds[0] }})
-{% endif %}
-{% endif -%}
-
+{{ create_grounds_list(appeal_grounds) }}
 {% if other_appeals_grounds_group.length -%}
 {% if other_appeals_grounds_group.length > 1 -%}
 {% for appeal_with_grounds in other_appeals_grounds_group -%}
+{% if appeal_with_grounds.grounds.length -%}
 {{ appeal_with_grounds.reference }} will continue on the following grounds:
 
-{% if appeal_with_grounds.grounds.length -%}
-{% if appeal_with_grounds.grounds.length > 1 -%}
-{%- for ground in appeal_with_grounds.grounds -%}
-- Ground ({{ ground }})
-{% endfor %}
-{%- else -%}
-Ground ({{ appeal_with_grounds.grounds[0] }})
-{% endif %}
+{{ create_grounds_list(appeal_with_grounds.grounds) }}
 {% endif -%}
 {% endfor -%}
 {% endif -%}

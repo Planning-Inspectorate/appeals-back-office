@@ -1,3 +1,5 @@
+{% from 'macros/create-grounds-list.md' import create_grounds_list %}
+
 We have reviewed your appeal and supporting documents.
 
 Your appeal started on {{start_date}}. The timetable for the appeal begins from this date.
@@ -6,25 +8,37 @@ Your appeal procedure is {{procedure_type}}.
 
 {% include 'parts/appeal-details.md' %}
 
-{% if appeal_grounds.length -%}
+{% if other_appeals_grounds_group.length -%}
 # Grounds of appeal
 
-{% if appeal_grounds.length > 1 -%}
-{%- for ground in appeal_grounds -%}
-- Ground ({{ ground }})
-{% endfor %}
-{%- else -%}
-Ground ({{ appeal_grounds[0] }})
-{% endif %}
+{{ appeal_reference_number }} will continue on the following grounds:
+{%- elseif appeal_grounds.length -%}
+# Grounds of appeal
+
+The appeal will continue on the following grounds:
+{%- endif %}
+
+{{ create_grounds_list(appeal_grounds) }}
+{% if other_appeals_grounds_group.length -%}
+{% if other_appeals_grounds_group.length > 1 -%}
+{% for appeal_with_grounds in other_appeals_grounds_group -%}
+{% if appeal_with_grounds.grounds.length -%}
+{{ appeal_with_grounds.reference }} will continue on the following grounds:
+
+{{ create_grounds_list(appeal_with_grounds.grounds) }}
 {% endif -%}
+{% endfor -%}
+{% endif -%}
+{% endif -%}
+
 # Timetable
 
 {%- if child_appeals.length === 1 %}
 
-The timetable is the same for the child appeal {{child_appeals[0]}}.
+The timetable is the same for the linked appeal {{child_appeals[0]}}.
 {%- elseif child_appeals.length > 1 %}
 
-The timetable is the same for the following child appeals:
+The timetable is the same for the following linked appeals:
 {%- for child_appeal in child_appeals %}
 - {{ child_appeal }}
 {%- endfor %}
