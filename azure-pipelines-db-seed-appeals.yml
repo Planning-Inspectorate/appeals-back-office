@@ -71,6 +71,7 @@ jobs:
             - template: steps/node_script.yml@templates
               parameters:
                 condition: and(ne('${{ parameters.environment }}', 'Prod'), ne('${{ parameters.environment }}', 'Training'), eq('${{ parameters.purge }}', 'false'))
+                nodeVersion: 22
                 environmentVariables:
                   DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
                 script: npm run db:seed:no-purge
@@ -78,6 +79,7 @@ jobs:
             - template: steps/node_script.yml@templates
               parameters:
                 condition: and(ne('${{ parameters.environment }}', 'Prod'), ne('${{ parameters.environment }}', 'Training'), eq('${{ parameters.purge }}', 'true'))
+                nodeVersion: 22
                 environmentVariables:
                   DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
                 script: npm run db:seed
@@ -85,6 +87,7 @@ jobs:
             - template: steps/node_script.yml@templates
               parameters:
                 condition: eq('${{ parameters.environment }}', 'Training')
+                nodeVersion: 22
                 environmentVariables:
                   DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
                 script: npm run db:seed:training
@@ -92,6 +95,7 @@ jobs:
             - template: steps/node_script.yml@templates
               parameters:
                 condition: eq('${{ parameters.environment }}', 'Prod')
+                nodeVersion: 22
                 environmentVariables:
                   DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
                 script: npm run db:seed:prod
