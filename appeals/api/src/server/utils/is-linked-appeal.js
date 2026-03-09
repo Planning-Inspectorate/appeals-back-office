@@ -47,7 +47,7 @@ export const isParentAppeal = (appeal) => {
 	return (
 		isLinkedAppealsActive(appeal) &&
 		// @ts-ignore
-		appeal.childAppeals?.some((linkedAppeal) => linkedAppeal.type === CASE_RELATIONSHIP_LINKED)
+		appeal?.childAppeals?.some((linkedAppeal) => linkedAppeal.type === CASE_RELATIONSHIP_LINKED)
 	);
 };
 
