@@ -13,7 +13,7 @@ exports[`alleged-breach-creates-floor-space GET /change should render the allege
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Does the alleged breach create any floor space?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
@@ -77,7 +77,7 @@ exports[`alleged-breach-creates-floor-space POST /change should redirect back to
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Does the alleged breach create any floor space?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
@@ -141,7 +141,7 @@ exports[`alleged-breach-creates-floor-space POST /change should redirect back to
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Does the alleged breach create any floor space?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
