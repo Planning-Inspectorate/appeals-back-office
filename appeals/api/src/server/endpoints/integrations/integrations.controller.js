@@ -487,7 +487,10 @@ export const importRepresentation = async (req, res) => {
 			req.appeal,
 			req.notifyClient,
 			azureAdUserId,
-			'appellant-statement-received'
+			'appellant-statement-received',
+			true,
+			false,
+			false
 		);
 	}
 
