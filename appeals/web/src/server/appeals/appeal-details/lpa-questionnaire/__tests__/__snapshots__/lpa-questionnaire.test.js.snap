@@ -4218,7 +4218,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/environment-service-t
                             statement or issue an environmental screening in your email.</p>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Does the environmental services team need to review the case?</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Does the environmental services team need to review the case?</legend>
                                 <div                                 class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="eia-screening-required" name="eiaScreeningRequired"
@@ -8576,7 +8576,7 @@ exports[`LPA Questionnaire review POST /lpa-questionnaire/1/environment-service-
                             statement or issue an environmental screening in your email.</p>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Does the environmental services team need to review the case?</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Does the environmental services team need to review the case?</legend>
                                 <div                                 class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="eia-screening-required" name="eiaScreeningRequired"

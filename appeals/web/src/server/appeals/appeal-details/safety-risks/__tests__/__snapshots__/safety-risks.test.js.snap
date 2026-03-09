@@ -13,7 +13,7 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Are there any potential safety risks?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
@@ -61,7 +61,7 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Are there any potential safety risks?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
@@ -109,7 +109,7 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Are there any health and safety issues on the appeal site?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
@@ -156,7 +156,7 @@ exports[`safety-risks GET /change/:source should render changeSafetyRisksAccess 
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Are there any health and safety issues on the appeal site?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
@@ -218,7 +218,7 @@ exports[`safety-risks POST /change/:source should re-render changeSafetyRisksAcc
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Are there any potential safety risks?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
@@ -280,7 +280,7 @@ exports[`safety-risks POST /change/:source should re-render changeSafetyRisksAcc
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Are there any potential safety risks?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">

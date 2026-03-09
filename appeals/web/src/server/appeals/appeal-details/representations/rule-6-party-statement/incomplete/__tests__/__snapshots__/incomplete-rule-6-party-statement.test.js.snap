@@ -71,7 +71,7 @@ exports[`rule 6 party statement - incomplete GET /incomplete/date should render 
                     <form method="post" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" aria-describedby="set-new-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Do you want to allow the rule 6 party to resubmit their statement?</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Do you want to allow the rule 6 party to resubmit their statement?</legend>
                                 <div                                 id="set-new-date-hint" class="govuk-hint">We will update the statement due date to 1 January 2023.</div>
                         <div class="govuk-radios"
                         data-module="govuk-radios">
