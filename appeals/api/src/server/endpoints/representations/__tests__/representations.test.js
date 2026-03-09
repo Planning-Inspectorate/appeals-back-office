@@ -744,6 +744,8 @@ describe('/appeals/:id/reps', () => {
 					})
 					.set('azureAdUserId', '732652365');
 
+				const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+
 				expect(response.status).toEqual(200);
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
@@ -752,7 +754,7 @@ describe('/appeals/:id/reps', () => {
 					azureAdUserId: expect.anything(),
 					notifyClient: expect.anything(),
 					personalisation: expectedEmailPayload,
-					recipientEmail: appeal.lpa.email,
+					recipientEmail: recipientEmail,
 					templateName: 'lpa-statement-incomplete'
 				});
 			}

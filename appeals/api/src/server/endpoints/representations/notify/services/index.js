@@ -170,6 +170,42 @@ export const lpaStatementIncomplete = async ({
 };
 
 /** @type {Service} */
+export const appellantStatementIncomplete = async ({
+	notifyClient,
+	appeal,
+	representation,
+	allowResubmit,
+	azureAdUserId
+}) => {
+	const siteAddress = formatSiteAddress(appeal);
+	const reasons = formatReasons(representation);
+	const { lpaStatementDueDate = null } = appeal.appealTimetable || {};
+	const extendedDeadline = await formatExtendedDeadline(allowResubmit, lpaStatementDueDate, 3);
+
+	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+	if (!recipientEmail) {
+		throw new Error(`no recipient email address found for Appeal: ${appeal.reference}`);
+	}
+
+	const enforcementReference = await getEnforcementReference(appeal);
+	await notifySend({
+		azureAdUserId,
+		templateName: 'lpa-statement-incomplete',
+		notifyClient,
+		recipientEmail,
+		personalisation: {
+			appeal_reference_number: appeal.reference,
+			lpa_reference: appeal.applicationReference || '',
+			...(enforcementReference && { enforcement_reference: enforcementReference }),
+			site_address: siteAddress,
+			deadline_date: extendedDeadline,
+			reasons,
+			team_email_address: await getTeamEmailFromAppealId(appeal.id)
+		}
+	});
+};
+
+/** @type {Service} */
 export const lpaProofOfEvidenceIncomplete = async ({
 	notifyClient,
 	appeal,
