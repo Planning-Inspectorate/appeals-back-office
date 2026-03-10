@@ -36,7 +36,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.24.2
+      ref: refs/tags/release/3.25.2
 
 extends:
   template: stages/wrapper_ci.yml@templates
@@ -196,7 +196,7 @@ extends:
               folderName: 'casedata-import'
 
           # package Appeals BO refdata function
-          - template: azure-pipelines-package-function.yml@self
+          - template: azure-pipelines-package-function.yml@selfoak
             parameters:
               root: 'appeals'
               folderName: 'refdata-import'
