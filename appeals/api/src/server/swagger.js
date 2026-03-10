@@ -767,6 +767,18 @@ export const spec = {
 			applicationMadeUnderActSection: 'existing-development'
 		},
 		UpdateAppellantCaseResponse: {},
+		EnforcementValidNotifyPreviewRequest: {
+			groundABarred: true,
+			otherInformation: 'some other information'
+		},
+		EnforcementValidNotifyPreviewResponse: {
+			appellant: {
+				renderedHtml: 'Rendered HTML for appellant preview'
+			},
+			lpa: {
+				renderedHtml: 'Rendered HTML for LPA preview'
+			}
+		},
 		UpdateLPAQuestionnaireRequest: {
 			designatedSites: [1, 2, 3],
 			doesAffectAListedBuilding: true,
