@@ -37,7 +37,7 @@ export function canDisplayAction(appeal) {
 	}
 	switch (appeal.appealStatus) {
 		case APPEAL_CASE_STATUS.VALIDATION:
-			return true;
+			return appeal.appealType !== APPEAL_TYPE.ENFORCEMENT_NOTICE;
 		case APPEAL_CASE_STATUS.AWAITING_TRANSFER:
 			return true;
 		case APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE:

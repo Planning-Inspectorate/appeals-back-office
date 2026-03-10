@@ -2753,17 +2753,6 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
             </div>
         </div>
     </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <form action="" method="POST" novalidate>
-                <div class="govuk-form-group">
-                    <input class="govuk-input" id="review-outcome" name="reviewOutcome" type="hidden"
-                    value="continue">
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
-            </form>
-        </div>
-    </div>
 </main>"
 `;
 

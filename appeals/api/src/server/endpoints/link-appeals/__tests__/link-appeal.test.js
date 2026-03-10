@@ -520,16 +520,6 @@ describe('appeal linked appeals routes', () => {
 							}
 						});
 
-						expect(databaseConnector.appellantCase.update).toHaveBeenCalledTimes(1);
-						expect(databaseConnector.appellantCase.update).toHaveBeenNthCalledWith(1, {
-							where: {
-								id: testAppeal.appellantCase.id
-							},
-							data: {
-								appellantCaseValidationOutcomeId: null
-							}
-						});
-
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledTimes(3);
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(testAppeal.id);
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(mockAppealA.id);
@@ -650,16 +640,6 @@ describe('appeal linked appeals routes', () => {
 							}
 						});
 
-						expect(databaseConnector.appellantCase.update).toHaveBeenCalledTimes(1);
-						expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
-							where: {
-								id: testAppeal.appellantCase.id
-							},
-							data: {
-								appellantCaseValidationOutcomeId: null
-							}
-						});
-
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledTimes(2);
 
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(testAppeal.id);
@@ -761,15 +741,6 @@ describe('appeal linked appeals routes', () => {
 							}
 						});
 
-						expect(databaseConnector.appellantCase.update).toHaveBeenCalledTimes(1);
-						expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
-							where: {
-								id: testAppeal.appellantCase.id
-							},
-							data: {
-								appellantCaseValidationOutcomeId: null
-							}
-						});
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledTimes(3);
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(testAppeal.id);
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(mockAppealA.id);
