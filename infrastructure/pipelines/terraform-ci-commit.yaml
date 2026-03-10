@@ -12,7 +12,7 @@ resources:
   repositories:
     - repository: templates
       type: github
-      endpoint: Planning-Inspectorate
+      endpoint: Planning-Inspectorate 
       name: Planning-Inspectorate/common-pipeline-templates
       ref: refs/tags/release/3.25.2
 
