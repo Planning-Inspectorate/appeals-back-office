@@ -143,21 +143,7 @@ export async function appellantCasePage(
 		appealDetails.documentationSummary?.appellantCase?.status?.toLowerCase() !== 'valid' &&
 		userHasPermission(permissionNames.setStageOutcome, session)
 	) {
-		if (appellantCaseData.isEnforcementChild) {
-			if (
-				appealDetails.documentationSummary?.appellantCase?.status?.toLowerCase() !== 'incomplete'
-			) {
-				reviewOutcomeComponents.push({
-					type: 'input',
-					parameters: {
-						type: 'hidden',
-						id: 'review-outcome',
-						name: 'reviewOutcome',
-						value: 'continue'
-					}
-				});
-			}
-		} else {
+		if (!appellantCaseData.isEnforcementChild) {
 			if (session.webAppellantCaseReviewOutcome?.validationOutcome) {
 				reviewOutcomeRadiosInputInstruction.properties.items =
 					// @ts-ignore
