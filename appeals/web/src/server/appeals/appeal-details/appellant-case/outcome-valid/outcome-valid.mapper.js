@@ -1,5 +1,6 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate, dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
+import { detailsComponent } from '#lib/mappers/components/page-components/details.js';
 import { dateInput, simpleHtmlComponent, yesNoInput } from '#lib/mappers/index.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
@@ -227,10 +228,11 @@ export function updateEnforcementValidDatePage(
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
+ * @param {{appellant: string, lpa: string}} [emailPreviews]
  * @returns {PageContent}
  * @description
  */
-export function checkAndConfirmEnforcementPage(request) {
+export function checkAndConfirmEnforcementPage(request, emailPreviews) {
 	const {
 		currentAppeal,
 		session: {
@@ -245,6 +247,19 @@ export function checkAndConfirmEnforcementPage(request) {
 		}
 	} = request;
 	const baseUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case`;
+
+	const emailPreviewComponents = emailPreviews
+		? [
+				detailsComponent({
+					summaryText: `Preview email to appellant`,
+					html: emailPreviews.appellant
+				}),
+				detailsComponent({
+					summaryText: `Preview email to LPA`,
+					html: emailPreviews.lpa
+				})
+			]
+		: [];
 
 	/** @type {PageComponent} */
 	const summaryListComponent = {
@@ -345,25 +360,22 @@ export function checkAndConfirmEnforcementPage(request) {
 		}
 	};
 
-	/**@type {PageComponent[]} */
-	const pageComponents = [summaryListComponent];
-
-	pageComponents.push(
-		simpleHtmlComponent(
-			'p',
-			{
-				class: 'govuk-body'
-			},
-			'We will mark the appeal as valid and send an email to the relevant parties.'
-		)
-	);
-
 	return {
 		title: 'Check details and mark appeal as valid',
 		backLinkUrl: `${baseUrl}/valid/enforcement/date`,
 		preHeading: `Appeal ${appealShortReference(currentAppeal.appealReference)}`,
 		heading: 'Check details and mark appeal as valid',
 		submitButtonText: 'Mark appeal as valid',
-		pageComponents
+		pageComponents: [
+			summaryListComponent,
+			simpleHtmlComponent(
+				'p',
+				{
+					class: 'govuk-body'
+				},
+				'We will mark the appeal as valid and send an email to the relevant parties.'
+			),
+			...emailPreviewComponents
+		]
 	};
 }

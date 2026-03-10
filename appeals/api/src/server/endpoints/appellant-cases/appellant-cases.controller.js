@@ -4,11 +4,17 @@ import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.j
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { contextEnum } from '#mappers/context-enum.js';
 import logger from '#utils/logger.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
-import { ERROR_FAILED_TO_SAVE_DATA, ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 import {
+	ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL,
+	ERROR_FAILED_TO_SAVE_DATA,
+	ERROR_NOT_FOUND
+} from '@pins/appeals/constants/support.js';
+import {
+	getEnforcementValidNotifyPreviews,
 	putContactAddress,
 	renderAuditTrailDetail,
 	updateAppellantCaseData,
@@ -291,8 +297,44 @@ const updateAppellantCaseContactAddress = async (req, res) => {
 	}
 };
 
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response|undefined>}
+ */
+const enforcementValidNotifyPreview = async (req, res) => {
+	const { body, appeal } = req;
+
+	const siteAddress = appeal.address
+		? formatAddressSingleLine(appeal.address)
+		: 'Address not available';
+
+	try {
+		const result = await getEnforcementValidNotifyPreviews(
+			appeal,
+			siteAddress,
+			body.groundABarred,
+			body.otherInformation
+		);
+
+		return res.status(200).send(result);
+	} catch (/** @type {any} */ error) {
+		logger.error(
+			`Could not generate enforcement valid notify previews for case ${appeal.reference}: ${error}`
+		);
+		return res.status(500).send({
+			errors: {
+				body: stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
+					error?.message || 'Unknown error'
+				])
+			}
+		});
+	}
+};
+
 export {
 	createAppellantCaseContactAddress,
+	enforcementValidNotifyPreview,
 	getAppellantCaseById,
 	updateAppellantCaseById,
 	updateAppellantCaseContactAddress

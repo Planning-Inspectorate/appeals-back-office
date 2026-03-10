@@ -17,7 +17,8 @@ import {
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import { notifySend } from '#notify/notify-send.js';
+import { generateNotifyPreview } from '#notify/emulate-notify.js';
+import { notifySend, renderTemplate } from '#notify/notify-send.js';
 import addressRepository from '#repositories/address.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
@@ -56,9 +57,12 @@ import {
 } from '@pins/appeals/utils/appeal-type-checks.js';
 import formatDate, { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
+import { loadEnvironment } from '@pins/platform';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { add } from 'date-fns';
 import transitionState from '../../state/transition-state.js';
+
+const environment = loadEnvironment(process.env.NODE_ENV);
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
@@ -847,6 +851,72 @@ export const putContactAddress = async (params) => {
 				throw new Error(ERROR_NOT_FOUND);
 			}
 		}
+		throw error;
+	}
+};
+
+/**
+ * @param {Appeal} appeal
+ * @param {string} siteAddress
+ * @param {boolean} [groundABarred]
+ * @param {string} [otherInformation]
+ * @returns {Promise<{appellant?: string, lpa?: string}>}
+ */
+export const getEnforcementValidNotifyPreviews = async (
+	appeal,
+	siteAddress,
+	groundABarred,
+	otherInformation
+) => {
+	try {
+		const { id: appealId } = appeal;
+
+		const teamEmail = await getTeamEmailFromAppealId(appealId);
+
+		const childEnforcementWithGrounds = await getChildEnforcementsWithGrounds(appeal);
+
+		const { agent, appellant } = appeal || {};
+
+		const appealType = appeal.appealType?.type || '';
+
+		const personalisation = {
+			appeal_reference_number: appeal.reference,
+			lpa_reference: appeal.applicationReference || '',
+			site_address: siteAddress,
+			team_email_address: teamEmail,
+			local_planning_authority: appeal.lpa?.name || '',
+			appeal_type: trimAppealType(appealType),
+			enforcement_reference: appeal.appellantCase?.enforcementReference || '',
+			appeal_grounds:
+				appeal.appealGrounds?.map((ground) => ground.ground?.groundRef || '').sort() || [],
+			other_appeals_grounds_group: childEnforcementWithGrounds,
+			ground_a_barred: groundABarred || false,
+			other_info: otherInformation || ''
+		};
+
+		const appellantTemplateName = 'appeal-confirmed-enforcement-appellant.content.md';
+		const lpaTemplateName = 'appeal-confirmed-enforcement-lpa.content.md';
+
+		const appellantTemplate = appellant
+			? renderTemplate(appellantTemplateName, {
+					...personalisation,
+					feedback_link: getFeedbackLinkFromAppealTypeKey(appeal?.appealType?.key)
+				})
+			: '';
+
+		const lpaTemplate = renderTemplate(lpaTemplateName, {
+			...personalisation,
+			agent_contact_details: agent ? formatContactDetails(agent) : '',
+			appellant_contact_details: appellant ? formatContactDetails(appellant) : '',
+			front_office_url: environment.FRONT_OFFICE_URL || ''
+		});
+
+		return {
+			...(appellant && { appellant: generateNotifyPreview(appellantTemplate) }),
+			...{ lpa: generateNotifyPreview(lpaTemplate) }
+		};
+	} catch (/** @type {any} */ error) {
+		logger.error(`Error generating notify previews for appeal ID ${appeal.id}: ${error}`);
 		throw error;
 	}
 };
