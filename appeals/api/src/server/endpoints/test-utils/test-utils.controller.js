@@ -324,8 +324,10 @@ export const simulateReviewLPAQ = async (req, res) => {
 		where: { reference: appealReference },
 		include: {
 			appealStatus: true,
+			appealType: true,
 			lpa: true,
 			appellant: true,
+			agent: true,
 			lpaQuestionnaire: {
 				include: {
 					listedBuildingDetails: {
@@ -351,7 +353,11 @@ export const simulateReviewLPAQ = async (req, res) => {
 					},
 					lpaQuestionnaireValidationOutcome: true
 				}
-			}
+			},
+			parentAppeals: true,
+			childAppeals: true,
+			address: true,
+			appealRule6Parties: true
 		}
 	});
 
