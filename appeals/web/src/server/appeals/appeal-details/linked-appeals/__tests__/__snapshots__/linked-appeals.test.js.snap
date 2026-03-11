@@ -381,14 +381,14 @@ exports[`linked-appeals GET /linked-appeals/change-lead-appeal should render the
                                         <input class="govuk-radios__input" id="lead-appeal" name="leadAppeal"
                                         type="radio" value="2" aria-describedby="lead-appeal-item-hint" data-cy="725284">
                                         <label class="govuk-label govuk-radios__label" for="lead-appeal">725284</label>
-                                        <div id="lead-appeal-item-hint" class="govuk-hint govuk-radios__hint"><span>10 Sunny Lane</span><span>Householder</span>
+                                        <div id="lead-appeal-item-hint" class="govuk-hint govuk-radios__hint"><span>John Smith</span><span>10 Sunny Lane</span><span>Householder</span>
                                         </div>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="lead-appeal-2" name="leadAppeal"
                                         type="radio" value="3" aria-describedby="lead-appeal-2-item-hint" data-cy="76215416">
                                         <label class="govuk-label govuk-radios__label" for="lead-appeal-2">76215416</label>
-                                        <div id="lead-appeal-2-item-hint" class="govuk-hint govuk-radios__hint"><span>12 Evening Road</span><span>Unknown</span>
+                                        <div id="lead-appeal-2-item-hint" class="govuk-hint govuk-radios__hint"><span>Bill Jones</span><span>12 Evening Road</span><span>Unknown</span>
                                         </div>
                                     </div>
                                 </div>
@@ -415,7 +415,7 @@ exports[`linked-appeals GET /linked-appeals/confirm-change-lead-appeal should re
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which is the new lead appeal?</dt>
-                    <dd                     class="govuk-summary-list__value"><span>725284</span><span>10 Sunny Lane</span><span>Householder</span>
+                    <dd                     class="govuk-summary-list__value"><span>725284</span><span>John Smith</span><span>10 Sunny Lane</span><span>Householder</span>
                         </dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/change-lead-appeal">Change<span class="govuk-visually-hidden"> lead appeal</span></a>
                         </dd>
@@ -444,7 +444,7 @@ exports[`linked-appeals GET /linked-appeals/confirm-unlink-lead-appeal should re
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which is the new lead appeal?</dt>
-                    <dd                     class="govuk-summary-list__value"><span>725284</span><span>10 Sunny Lane</span><span>Householder</span>
+                    <dd                     class="govuk-summary-list__value"><span>725284</span><span>John Smith</span><span>10 Sunny Lane</span><span>Householder</span>
                         </dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/unlink-lead-appeal">Change<span class="govuk-visually-hidden"> lead appeal</span></a>
                         </dd>
@@ -481,21 +481,21 @@ exports[`linked-appeals GET /linked-appeals/manage should render the manage link
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Appeal 3 5 1 0 6 2"
                     data-cy="APP/Q9999/D/21/351062">351062</a> (lead)
-                    <br>Householder</td>
+                    <br><span>Roger Simmons</span>Householder</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"><a class="govuk-link" data-cy="unlink-appeal-APP/Q9999/D/21/351062" href="unlink-lead-appeal">Unlink<span class="govuk-visually-hidden"> appeal 3 5 1 0 6 2</span></a>
                 </td>
             </tr>
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/2" aria-label="Appeal 7 2 5 2 8 4"
                     data-cy="APP/Q9999/D/21/725284">725284</a>
-                    <br>Householder</td>
+                    <br><span>John Smith</span>Householder</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"><a class="govuk-link" data-cy="unlink-appeal-APP/Q9999/D/21/351062" href="unlink-appeal/2">Unlink<span class="govuk-visually-hidden"> appeal 7 2 5 2 8 4</span></a>
                 </td>
             </tr>
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/3" aria-label="Appeal 7 6 2 1 5 4 1 6"
                     data-cy="76215416">76215416</a>
-                    <br>Unknown</td>
+                    <br><span>Bill Jones</span>Unknown</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"><a class="govuk-link" data-cy="unlink-appeal-APP/Q9999/D/21/351062" href="unlink-appeal/3">Unlink<span class="govuk-visually-hidden"> appeal 7 6 2 1 5 4 1 6</span></a>
                 </td>
             </tr>
@@ -547,14 +547,14 @@ exports[`linked-appeals GET /linked-appeals/unlink-lead-appeal should render the
                                         <input class="govuk-radios__input" id="lead-appeal" name="leadAppeal"
                                         type="radio" value="2" aria-describedby="lead-appeal-item-hint" data-cy="725284">
                                         <label class="govuk-label govuk-radios__label" for="lead-appeal">725284</label>
-                                        <div id="lead-appeal-item-hint" class="govuk-hint govuk-radios__hint"><span>10 Sunny Lane</span><span>Householder</span>
+                                        <div id="lead-appeal-item-hint" class="govuk-hint govuk-radios__hint"><span>John Smith</span><span>10 Sunny Lane</span><span>Householder</span>
                                         </div>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="lead-appeal-2" name="leadAppeal"
                                         type="radio" value="3" aria-describedby="lead-appeal-2-item-hint" data-cy="76215416">
                                         <label class="govuk-label govuk-radios__label" for="lead-appeal-2">76215416</label>
-                                        <div id="lead-appeal-2-item-hint" class="govuk-hint govuk-radios__hint"><span>12 Evening Road</span><span>Unknown</span>
+                                        <div id="lead-appeal-2-item-hint" class="govuk-hint govuk-radios__hint"><span>Bill Jones</span><span>12 Evening Road</span><span>Unknown</span>
                                         </div>
                                     </div>
                                 </div>

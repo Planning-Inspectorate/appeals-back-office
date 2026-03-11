@@ -36,6 +36,7 @@ const leadAppealDataWithLinkedAppeals = {
 			isParentAppeal: false,
 			linkingDate: new Date('2024-02-09T09:41:13.611Z'),
 			appealType: 'Householder',
+			appellant: { firstName: 'John', lastName: 'Smith' },
 			address: { addressLine1: '10 Sunny Lane' },
 			relationshipId: 1
 		},
@@ -45,6 +46,7 @@ const leadAppealDataWithLinkedAppeals = {
 			isParentAppeal: false,
 			linkingDate: new Date('2024-02-09T09:41:13.611Z'),
 			appealType: 'Unknown',
+			appellant: { firstName: 'Bill', lastName: 'Jones' },
 			address: { addressLine1: '12 Evening Road' },
 			relationshipId: 1,
 			externalSource: true,
@@ -1004,7 +1006,7 @@ describe('linked-appeals', () => {
 			expect(element.innerHTML).toContain(`Appeal 351062 (lead) - unlink lead appeal</span>`);
 			expect(element.innerHTML).toContain(`Which is the new lead appeal?</dt>`);
 			expect(element.innerHTML).toContain(
-				`<span>725284</span><span>10 Sunny Lane</span><span>Householder</span>`
+				`<span>725284</span><span>John Smith</span><span>10 Sunny Lane</span><span>Householder</span>`
 			);
 			expect(element.innerHTML).toContain('Unlink lead appeal</button>');
 		});
@@ -1122,7 +1124,7 @@ describe('linked-appeals', () => {
 			expect(element.innerHTML).toContain(`Appeal 351062 (lead) - update lead appeal</span>`);
 			expect(element.innerHTML).toContain(`Which is the new lead appeal?</dt>`);
 			expect(element.innerHTML).toContain(
-				`<span>725284</span><span>10 Sunny Lane</span><span>Householder</span>`
+				`<span>725284</span><span>John Smith</span><span>10 Sunny Lane</span><span>Householder</span>`
 			);
 			expect(element.innerHTML).toContain('Update lead appeal</button>');
 		});

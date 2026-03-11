@@ -1,6 +1,7 @@
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { mapNotificationBannersFromSession, radiosInput } from '#lib/mappers/index.js';
+import { nameToString } from '#lib/person-name-formatter.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { LINK_APPEALS_UNLINK_OPERATION } from '@pins/appeals/constants/support.js';
 
@@ -37,7 +38,7 @@ export function manageLinkedAppealsPage(appealData, session) {
 					linkedAppeal?.appealId
 				}" aria-label="Appeal ${numberToAccessibleDigitLabel(
 					childAppealRef
-				)}" data-cy="${linkedAppeal?.appealReference}">${childAppealRef}</a>${linkedAppeal.isParentAppeal ? ' (lead)' : ''}<br>${linkedAppeal.appealType}`
+				)}" data-cy="${linkedAppeal?.appealReference}">${childAppealRef}</a>${linkedAppeal.isParentAppeal ? ' (lead)' : ''}<br><span>${nameToString(linkedAppeal.appellant)}</span></br>${linkedAppeal.appealType}`
 			},
 			{
 				html: (() => {
@@ -143,7 +144,7 @@ export function changeLeadAppealPage(appealData, leadAppeal, operation, errors) 
 			value: appeal.appealId,
 			text: appealShortReference(appeal.appealReference),
 			hint: {
-				html: `<span>${appeal.address.addressLine1}</span></br><span>${appeal.appealType}</span>`
+				html: `<span>${nameToString(appeal.appellant)}</span></br><span>${appeal.address.addressLine1}</span></br><span>${appeal.appealType}</span>`
 			}
 		})),
 		errorMessage: errors?.leadAppeal.msg ?? null
@@ -189,7 +190,7 @@ export function confirmChangeLeadAppealPage(appealData, leadAppeal, operation) {
 					},
 					value: {
 						// @ts-ignore
-						html: `<span>${appealShortReference(leadAppeal.appealReference)}</span></br><span>${leadAppeal.address?.addressLine1}</span></br><span>${leadAppeal.appealType}</span>`
+						html: `<span>${appealShortReference(leadAppeal.appealReference)}</span></br><span>${nameToString(leadAppeal.appellant)}</span></br><span>${leadAppeal.address?.addressLine1}</span></br><span>${leadAppeal.appealType}</span>`
 					},
 					actions: {
 						items: [
