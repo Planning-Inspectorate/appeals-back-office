@@ -60,6 +60,10 @@ describe('All cases search', () => {
 		verify(errorMessage);
 	});
 
+	it('check Part 1 filter', () => {
+		listCasesPage.filterByAppealProcedure('Part 1');
+	});
+
 	const setupTestCase = () => {
 		cy.createCase({ siteAddressPostcode: postcode }).then((ref) => {
 			caseObj = ref;
