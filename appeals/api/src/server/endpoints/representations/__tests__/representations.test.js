@@ -1312,6 +1312,65 @@ describe('/appeals/:id/reps', () => {
 			expect(response.status).toEqual(201);
 		});
 
+		test('200 when appellant_statement representation is created, representedId is set from the appeal', async () => {
+			const appealWithIDs = {
+				...householdAppeal,
+				agentId: 10,
+				appellantId: 20
+			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(appealWithIDs);
+			databaseConnector.user.upsert.mockResolvedValue({ id: 123 });
+
+			const response = await request
+				.post('/appeals/1/reps/appellant_statement')
+				.send({
+					redactionStatus: 'unredacted',
+					attachments: [],
+					source: 'citizen'
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({
+						representedId: 10,
+						status: APPEAL_REPRESENTATION_STATUS.VALID
+					})
+				})
+			);
+		});
+
+		test('201 when comment representation is created, status is awaiting_review when shouldAutoPublish is false', async () => {
+			const appealNotInStatements = {
+				...householdAppeal,
+				id: 1,
+				appealStatus: [{ status: 'statements', valid: true }]
+			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(appealNotInStatements);
+			databaseConnector.serviceUser.create.mockResolvedValue({ id: 100 });
+			databaseConnector.representation.create.mockResolvedValue({ id: 1 });
+
+			const response = await request
+				.post('/appeals/1/reps/comment')
+				.send({
+					ipDetails: { firstName: 'test', lastName: 'test', email: 'test@example.com' },
+					ipAddress: { postCode: 'abc 123', addressLine1: 'line 1' },
+					redactionStatus: 'unredacted',
+					attachments: []
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({
+						status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+					})
+				})
+			);
+		});
+
 		test('200 when lpa final comment representation with attachment is successfully created', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 			const mockDocument = {

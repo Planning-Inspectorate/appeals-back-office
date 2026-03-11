@@ -206,7 +206,10 @@ export const createRepresentation = async (
 		});
 		representedId = represented.id;
 		if (!shouldAutoPublish) status = APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW;
-	} else if (input.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT) {
+	} else if (
+		input.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT ||
+		input.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT
+	) {
 		representedId = input.representedId;
 	} else if (
 		input.representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT ||
