@@ -48,7 +48,10 @@ import {
 	APPEAL_DEVELOPMENT_TYPES,
 	PLANNING_OBLIGATION_STATUSES
 } from '@pins/appeals/constants/appellant-cases.constants.js';
-import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import {
+	isAnyEnforcementAppealType,
+	isEnforcementCaseType
+} from '@pins/appeals/utils/appeal-type-checks.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
@@ -262,8 +265,7 @@ export const updateAppellantCaseValidationOutcome = async (
 			if (!recipientEmail) {
 				throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 			}
-			const isEnforcement = appeal.appealType.key === APPEAL_CASE_TYPE.C;
-
+			const isEnforcement = isEnforcementCaseType(appeal.appealType.key);
 			const childEnforcementWithGrounds = await getChildEnforcementsWithGrounds(appeal);
 
 			const personalisation = {
