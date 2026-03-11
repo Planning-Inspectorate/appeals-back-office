@@ -69,7 +69,7 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         },
         {
           "key": "Is the advertisement in position?",
-          "text": "No",
+          "text": "Yes",
         },
         {
           "key": "Is the appeal site in a green belt?",
@@ -281,7 +281,7 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         },
         {
           "key": "Is the advertisement in position?",
-          "text": "No",
+          "text": "Yes",
         },
         {
           "key": "Is the appeal site in a green belt?",
