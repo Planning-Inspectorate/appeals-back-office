@@ -9,4 +9,6 @@ router
 	.get(asyncHandler(controller.getDocumentUpload))
 	.post(asyncHandler(controller.postDocumentUpload));
 
+router.route('/check-details').get(asyncHandler(controller.getCheckDetails));
+
 export default router;

@@ -54,6 +54,64 @@ exports[`cancel enforcement notice withdrawal GET /cancel/enforcement-notice-wit
 </main>"
 `;
 
+exports[`cancel enforcement notice withdrawal GET /cancel/enforcement-notice-withdrawal/check-details should render the check your answers page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and withdraw enforcement notice</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Why are you cancelling the appeal?</dt>
+                    <dd                     class="govuk-summary-list__value">LPA has withdrawn the enforcement notice</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/cancel?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F5623%2Fcancel"
+                            data-cy="change-cancellation-reason">Change<span class="govuk-visually-hidden"> cancellation reason</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA enforcement notice withdrawal</dt>
+                    <dd                     class="govuk-summary-list__value"><a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt"
+                        target="_blank">test-document.txt</a>
+                        </dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/cancel/enforcement-notice-withdrawal?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F5623%2Fcancel%2Fenforcement-notice-withdrawal"
+                            data-cy="change-enforcement-notice-withdrawal-documents">Change<span class="govuk-visually-hidden"> LPA enforcement notice withdrawal documents</span></a>
+                        </dd>
+                </div>
+            </dl>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <details class="govuk-details">
+                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
+                        </summary>
+                        <div class="govuk-details__text"></div>
+                    </details>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <details class="govuk-details">
+                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to LPA</span>
+                        </summary>
+                        <div class="govuk-details__text"></div>
+                    </details>
+                </div>
+            </div>
+            <p id="enforcement-notice-withdrawal-hint" class="govuk-body govuk-!-margin-bottom-6">We will withdraw the enforcement notice and send an email to the relevant
+                parties.</p>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button"
+                        id="withdraw-enforcement-notice">Withdraw enforcement notice</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`cancel enforcement notice withdrawal POST /cancel/enforcement-notice-withdrawal should render a 500 error page if request body upload-info is in an incorrect format 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">

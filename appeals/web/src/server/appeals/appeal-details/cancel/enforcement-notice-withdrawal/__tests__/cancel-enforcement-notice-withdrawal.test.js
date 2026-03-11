@@ -136,4 +136,70 @@ describe('cancel enforcement notice withdrawal', () => {
 			);
 		});
 	});
+
+	describe('GET /cancel/enforcement-notice-withdrawal/check-details', () => {
+		beforeEach(async () => {
+			nock('http://test/')
+				.get(`/appeals/${mockAppealId}?include=all`)
+				.reply(200, appealDataEnforcementNotice)
+				.persist();
+			nock('http://test/')
+				.get(
+					`/appeals/${mockAppealId}/document-folders?path=cancellation/lpaEnforcementNoticeWithdrawal`
+				)
+				.reply(200, [
+					{
+						folderId: 123,
+						path: 'cancellation/lpaEnforcementNoticeWithdrawal'
+					}
+				])
+				.persist();
+			nock('http://test/').get('/appeals/document-redaction-statuses').reply(200, []).persist();
+		});
+
+		it('should render the check your answers page', async () => {
+			await request.post(`${baseUrl}/${mockAppealId}/cancel/enforcement-notice-withdrawal`).send({
+				'upload-info': fileUploadInfo
+			});
+			const response = await request.get(
+				`${baseUrl}/${mockAppealId}/cancel/enforcement-notice-withdrawal/check-details`
+			);
+
+			expect(response.statusCode).toBe(200);
+			const pageHtml = parseHtml(response.text);
+			expect(pageHtml.innerHTML).toMatchSnapshot();
+
+			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedHtml.querySelector('h1')?.innerHTML.trim()).toBe(
+				'Check details and withdraw enforcement notice'
+			);
+			const summaryListRows = unprettifiedHtml.querySelectorAll('.govuk-summary-list__row');
+			expect(summaryListRows).toHaveLength(2);
+			expect(summaryListRows[0].querySelector('.govuk-summary-list__key')?.innerHTML.trim()).toBe(
+				'Why are you cancelling the appeal?'
+			);
+			expect(summaryListRows[0].querySelector('.govuk-summary-list__value')?.innerHTML.trim()).toBe(
+				'LPA has withdrawn the enforcement notice'
+			);
+			expect(summaryListRows[1].querySelector('.govuk-summary-list__key')?.innerHTML.trim()).toBe(
+				'LPA enforcement notice withdrawal'
+			);
+			expect(
+				summaryListRows[1]
+					.querySelector('.govuk-summary-list__value a')
+					?.getAttribute('href')
+					?.trim()
+			).toBe('/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt');
+			expect(
+				summaryListRows[1].querySelector('.govuk-summary-list__value a')?.innerHTML.trim()
+			).toBe('test-document.txt');
+			expect(
+				unprettifiedHtml.querySelector('#enforcement-notice-withdrawal-hint')?.innerHTML.trim()
+			).toBe('We will withdraw the enforcement notice and send an email to the relevant parties.');
+			expect(unprettifiedHtml.querySelector('button')?.innerHTML.trim()).toBe(
+				'Withdraw enforcement notice'
+			);
+		});
+	});
 });
