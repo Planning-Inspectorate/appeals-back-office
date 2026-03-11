@@ -31,7 +31,7 @@ export function siteDetailsSection(templateData) {
 		siteAccessRequired,
 		healthAndSafety,
 		highwayLand,
-		advertisementInPosition,
+		advertInPosition,
 		landownerPermission
 	} = templateData;
 
@@ -51,7 +51,7 @@ export function siteDetailsSection(templateData) {
 						},
 						{
 							key: 'Is the advertisement in position?',
-							text: formatYesNo(Boolean(advertisementInPosition))
+							text: formatYesNo(Boolean(advertInPosition))
 						}
 					]
 				: []),
