@@ -32,13 +32,14 @@ import {
 	documentFileVersionsInfoVirusFound,
 	documentFolderInfo,
 	documentRedactionStatuses,
+	enforcementAppealAppellantCaseDataIncompleteOutcome,
 	fileUploadInfo,
 	text300Characters,
 	text301Characters
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
-import { parseHtml } from '@pins/platform';
+import { parseHtml, parseHtmlSelectAll } from '@pins/platform';
 import {
 	APPEAL_CASE_STAGE,
 	APPEAL_CASE_STATUS,
@@ -1556,6 +1557,116 @@ describe('appellant-case', () => {
 				expect(secondBannerHtml).toContain(
 					'<h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Appeal is incomplete</h3>'
 				);
+			});
+
+			it('should render an "Appeal is incomplete" banner where the enforcement notice appeal is incomplete with "Missing information"', async () => {
+				nock.cleanAll();
+				nock('http://test/')
+					.get('/appeals/5623?include=all')
+					.reply(200, appealDataEnforcementNotice);
+				nock('http://test/')
+					.get('/appeals/5623/appellant-cases/0')
+					.reply(200, enforcementAppealAppellantCaseDataIncompleteOutcome);
+
+				const response = await request.get(`${baseUrl}/5623${appellantCasePagePath}`);
+
+				const notificationBannerHTML = parseHtml(response.text, {
+					rootElement: '.govuk-notification-banner'
+				}).innerHTML;
+
+				expect(notificationBannerHTML).toMatchSnapshot();
+
+				const unprettifiedNotificationBannerHTML = parseHtml(response.text, {
+					rootElement: '.govuk-notification-banner',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedNotificationBannerHTML).toContain('Appeal is incomplete</h3>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Due date</dt>');
+				expect(unprettifiedNotificationBannerHTML).toContain('2 October 2024</dd>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Incomplete reasons</dt>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Enforcement notice invalid</dd>');
+			});
+
+			it('should render an "Appeal is incomplete" banner where the enforcement notice appeal is incomplete with "Ground (a) fee receipt due"', async () => {
+				nock.cleanAll();
+				nock('http://test/')
+					.get('/appeals/5623?include=all')
+					.reply(200, {
+						...appealDataEnforcementNotice,
+						documentationSummary: {
+							appellantCase: {
+								dueDate: null
+							}
+						}
+					});
+				nock('http://test/')
+					.get('/appeals/5623/appellant-cases/0')
+					.reply(200, {
+						...enforcementAppealAppellantCaseDataIncompleteOutcome,
+						enforcementNotice: {
+							enforcementNoticeInvalid: 'no',
+							groundAFeeDueDate: '2024-01-02'
+						}
+					});
+
+				const response = await request.get(`${baseUrl}/5623${appellantCasePagePath}`);
+
+				const notificationBannerHTML = parseHtml(response.text, {
+					rootElement: '.govuk-notification-banner'
+				}).innerHTML;
+
+				expect(notificationBannerHTML).toMatchSnapshot();
+
+				const unprettifiedNotificationBannerHTML = parseHtml(response.text, {
+					rootElement: '.govuk-notification-banner',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedNotificationBannerHTML).toContain('Appeal is incomplete</h3>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Due date</dt>');
+				expect(unprettifiedNotificationBannerHTML).toContain('2 January 2024</dd>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Incomplete reasons</dt>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Ground (a) fee receipt due</dd>');
+			});
+
+			it('should render both "Appeal is incomplete" banners where the enforcement notice appeal is incomplete with "Missing information" and "Ground (a) fee receipt due"', async () => {
+				nock.cleanAll();
+				nock('http://test/')
+					.get('/appeals/5623?include=all')
+					.reply(200, appealDataEnforcementNotice);
+				nock('http://test/')
+					.get('/appeals/5623/appellant-cases/0')
+					.reply(200, {
+						...enforcementAppealAppellantCaseDataIncompleteOutcome,
+						enforcementNotice: {
+							enforcementNoticeInvalid: 'no',
+							groundAFeeDueDate: '2024-01-02'
+						}
+					});
+
+				const response = await request.get(`${baseUrl}/5623${appellantCasePagePath}`);
+				const notificationBannerHTML = parseHtmlSelectAll(response.text, {
+					rootElement: '.govuk-notification-banner'
+				}).innerHTML;
+
+				expect(notificationBannerHTML).toMatchSnapshot();
+
+				const unprettifiedNotificationBannerHTML = parseHtmlSelectAll(response.text, {
+					rootElement: '.govuk-notification-banner',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedNotificationBannerHTML).toContain('Appeal is incomplete</h3>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Due date</dt>');
+				expect(unprettifiedNotificationBannerHTML).toContain('2 October 2024</dd>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Incomplete reasons</dt>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Missing information</dd>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Appeal is incomplete</h3>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Due date</dt>');
+				expect(unprettifiedNotificationBannerHTML).toContain('2 January 2024</dd>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Incomplete reasons</dt>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Ground (a) fee receipt due</dd>');
 			});
 
 			describe('Document added success banners', () => {
