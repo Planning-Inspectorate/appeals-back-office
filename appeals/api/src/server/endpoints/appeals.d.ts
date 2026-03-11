@@ -169,6 +169,7 @@ interface SingleAppellantCaseResponse {
 	appealId: number;
 	appealReference: string;
 	appealSite: AppealSite;
+	appealType: string;
 	appellantCaseId: number;
 	applicant: {
 		firstName: string | null;
@@ -201,6 +202,8 @@ interface SingleAppellantCaseResponse {
 		descriptionOfAllegedBreach: string | null;
 		applicationDevelopmentAllOrPart: string | null;
 		appealDecisionDate: string | null;
+		enforcementNoticeInvalid: string | null;
+		groundAFeeDueDate: string | null;
 	};
 	isEnforcementChild?: boolean | null;
 	isEnforcementParent?: boolean | null;
