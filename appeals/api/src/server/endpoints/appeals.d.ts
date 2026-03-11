@@ -1,3 +1,4 @@
+import { ServiceUser } from '#server/openapi-types';
 import { Address, ContactAddress } from '@pins/appeals';
 import { Schema } from 'index';
 import { AppealGround, Ground } from '../../database/schema';
@@ -565,6 +566,8 @@ interface LinkedAppeal {
 	isParentAppeal: boolean;
 	linkingDate: Date;
 	address: AppealSite;
+	appellant: ServiceUser;
+	agent: ServiceUser | null;
 	appealType?: string | null;
 	relationshipId: number;
 	externalSource: boolean;

@@ -104,6 +104,8 @@ const mapLinkedAppeal = (relationship, isParentAppeal) => {
 		reference: appealReference,
 		appealType,
 		address,
+		appellant,
+		agent,
 		inspectorDecision
 	} = (isParentAppeal ? parent : child) || {};
 
@@ -119,6 +121,8 @@ const mapLinkedAppeal = (relationship, isParentAppeal) => {
 		relationshipId,
 		// @ts-ignore
 		address,
+		appellant,
+		agent,
 		externalSource: externalSource === true,
 		linkingDate: linkingDate.toISOString(),
 		appealType: appealType?.type,
