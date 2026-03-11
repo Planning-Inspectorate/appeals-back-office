@@ -3,6 +3,7 @@ import {
 	advertisementAppeal,
 	advertisementAppealAppellantCaseIncomplete,
 	advertisementAppealAppellantCaseInvalid,
+	appealEnforcementListed,
 	casAdvertAppeal,
 	casAdvertAppealAppellantCaseIncomplete,
 	casAdvertAppealAppellantCaseInvalid,
@@ -1272,6 +1273,99 @@ describe('appellant cases routes', () => {
 						agent_contact_details: 'John Smith, test@136s7.com, 09876 543 210'
 					},
 					recipientEmail: enforcementNoticeAppeal.lpa.email,
+					templateName: 'appeal-confirmed-enforcement-lpa'
+				});
+			});
+
+			test('updates appellant case and sends notify emails for valid enforcement listed building appeal', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...appealEnforcementListed,
+					appealGrounds: [
+						{
+							groundId: 1,
+							appealId: 1,
+							ground: {
+								groundRef: 'a',
+								groundDescription: 'Ground A'
+							}
+						},
+						{
+							groundId: 2,
+							appealId: 1,
+							ground: {
+								groundRef: 'b',
+								groundDescription: 'Ground B'
+							}
+						}
+					]
+				});
+				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+					appellantCaseValidationOutcomes[2]
+				);
+				databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+				databaseConnector.documentVersion.update.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ id: 1, key: 'no_redaction_required' }
+				]);
+				databaseConnector.document.findUnique.mockResolvedValue(null);
+
+				const patchBody = {
+					validationOutcome: 'valid',
+					otherInformation: 'Accio horcrux'
+				};
+				const { appellantCase, id } = appealEnforcementListed;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(patchBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { id: appellantCase.id },
+					data: { appellantCaseValidationOutcomeId: 3 }
+				});
+
+				expect(response.status).toEqual(200);
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: {
+						appeal_reference_number: appealEnforcementListed.reference,
+						lpa_reference: appealEnforcementListed.applicationReference,
+						site_address: `${appealEnforcementListed.address.addressLine1}, ${appealEnforcementListed.address.addressLine2}, ${appealEnforcementListed.address.addressTown}, ${appealEnforcementListed.address.addressCounty}, ${appealEnforcementListed.address.postcode}, ${appealEnforcementListed.address.addressCountry}`,
+						feedback_link: FEEDBACK_FORM_LINKS.ALL,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						local_planning_authority: appealEnforcementListed.lpa.name,
+						appeal_type: 'Enforcement listed building and conservation area',
+						enforcement_reference: appealEnforcementListed.appellantCase.enforcementReference,
+						appeal_grounds: ['a', 'b'],
+						ground_a_barred: false,
+						other_appeals_grounds_group: [],
+						other_info: 'Accio horcrux'
+					},
+					recipientEmail: appealEnforcementListed.agent.email,
+					templateName: 'appeal-confirmed-enforcement-appellant'
+				});
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: {
+						appeal_reference_number: appealEnforcementListed.reference,
+						lpa_reference: appealEnforcementListed.applicationReference,
+						site_address: `${appealEnforcementListed.address.addressLine1}, ${appealEnforcementListed.address.addressLine2}, ${appealEnforcementListed.address.addressTown}, ${appealEnforcementListed.address.addressCounty}, ${appealEnforcementListed.address.postcode}, ${appealEnforcementListed.address.addressCountry}`,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						local_planning_authority: appealEnforcementListed.lpa.name,
+						appeal_type: 'Enforcement listed building and conservation area',
+						enforcement_reference: appealEnforcementListed.appellantCase.enforcementReference,
+						appeal_grounds: ['a', 'b'],
+						ground_a_barred: false,
+						other_appeals_grounds_group: [],
+						other_info: 'Accio horcrux',
+						appellant_contact_details: 'Bob Ross, test8@example.com',
+						agent_contact_details: 'Fiona Burgess, test6@example.com'
+					},
+					recipientEmail: appealEnforcementListed.lpa.email,
 					templateName: 'appeal-confirmed-enforcement-lpa'
 				});
 			});
