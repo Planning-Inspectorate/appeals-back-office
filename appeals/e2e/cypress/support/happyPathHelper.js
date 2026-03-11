@@ -68,6 +68,8 @@ export const happyPathHelper = {
 			return happyPathHelper.startS78HearingCase(caseObj, procedureType);
 		} else if (procedureType === 'inquiry') {
 			return happyPathHelper.startS78InquiryCase(caseObj, procedureType);
+		} else if (procedureType === 'part 1') {
+			return happyPathHelper.startS78Part1Case(caseObj, procedureType);
 		}
 		happyPathHelper.viewCaseDetails(caseObj);
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
@@ -112,6 +114,13 @@ export const happyPathHelper = {
 		//caseDetailsPage.clickButtonByText('Continue');
 		//caseDetailsPage.selectRadioButtonByValue('Yes');
 		//caseDetailsPage.clickButtonByText('Continue');
+	},
+	startS78Part1Case(caseObj, procedureType) {
+		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
+		caseDetailsPage.clickReadyToStartCase();
+		caseDetailsPage.selectRadioButtonByValue(procedureType);
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Start case');
 	},
 	reviewLPaStatement(caseObj) {
 		happyPathHelper.reviewS78Lpaq(caseObj);

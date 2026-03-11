@@ -5,7 +5,8 @@ export class ProcedureTypePage extends CaseDetailsPage {
 		...this.elements, // Inherit parent elements
 		written: () => cy.get('#appeal-procedure'),
 		hearing: () => cy.get('#appeal-procedure-2'),
-		inquiry: () => cy.get('#appeal-procedure-3')
+		inquiry: () => cy.get('#appeal-procedure-3'),
+		'part 1': () => cy.get('#appeal-procedure-4')
 	};
 
 	procedureTypeMappings = {
@@ -23,6 +24,11 @@ export class ProcedureTypePage extends CaseDetailsPage {
 			element: this.procedureTypeElements.inquiry,
 			displayName: 'Inquiry',
 			value: 'inquiry'
+		},
+		'part 1': {
+			element: this.procedureTypeElements['part 1'],
+			displayName: 'Part 1',
+			value: 'part 1'
 		}
 	};
 
