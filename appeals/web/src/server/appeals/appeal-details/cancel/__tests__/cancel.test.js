@@ -91,6 +91,38 @@ describe('cancel', () => {
 			);
 			expect(element.querySelector('button')?.innerHTML.trim()).toBe('Continue');
 		});
+
+		it('should have a back link to the appeal details page', async () => {
+			const response = await request.get(`${baseUrl}/${mockAppealId}${cancelPath}`);
+			const element = parseHtml(response.text, { rootElement: 'body' });
+			expect(element.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+				`${baseUrl}/${mockAppealId}`
+			);
+		});
+
+		it('should have a back link to the CYA page if editing and invalid selected', async () => {
+			await request.post(`${baseUrl}/${mockAppealId}${cancelPath}`).send({
+				cancelReasonRadio: 'invalid'
+			});
+			const queryString = `?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F${mockAppealId}${cancelPath}`;
+			const response = await request.get(`${baseUrl}/${mockAppealId}${cancelPath}${queryString}`);
+			const element = parseHtml(response.text, { rootElement: 'body' });
+			expect(element.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+				`${baseUrl}/${mockAppealId}/cancel/invalid/check-details`
+			);
+		});
+
+		it('should have a back link to the CYA page if editing and enforcement-notice-withdrawn selected', async () => {
+			await request.post(`${baseUrl}/${mockAppealId}${cancelPath}`).send({
+				cancelReasonRadio: 'enforcement-notice-withdrawn'
+			});
+			const queryString = `?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F${mockAppealId}${cancelPath}`;
+			const response = await request.get(`${baseUrl}/${mockAppealId}${cancelPath}${queryString}`);
+			const element = parseHtml(response.text, { rootElement: 'body' });
+			expect(element.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+				`${baseUrl}/${mockAppealId}/cancel/enforcement-notice-withdrawal/check-details`
+			);
+		});
 	});
 
 	describe('POST /new', () => {

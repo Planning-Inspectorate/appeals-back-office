@@ -5,6 +5,7 @@ import {
 	renderDocumentUpload
 } from '../../../appeal-documents/appeal-documents.controller.js';
 import { getAttachmentsFolder } from '../../../appeal-documents/appeal.documents.service.js';
+import { enforcementNoticeWithdrawalCheckDetailsPage } from './enforcement-notice-withdrawal-mapper.js';
 
 const getBackLinkUrl = backLinkGenerator('cancelAppeal');
 
@@ -78,4 +79,37 @@ export const postDocumentUpload = async (request, response) => {
 		response,
 		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/cancel/enforcement-notice-withdrawal/check-details`
 	});
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getCheckDetails = async (request, response) => {
+	const { currentAppeal, params, session } = request;
+	const { appealId } = params;
+
+	const cancelUrl = `/appeals-service/appeal-details/${appealId}/cancel`;
+	const backLinkUrl = getBackLinkUrl(
+		request,
+		cancelUrl,
+		`${cancelUrl}/enforcement-notice-withdrawal/check-details`
+	);
+
+	try {
+		const folderPath = `${APPEAL_CASE_STAGE.CANCELLATION}/${APPEAL_DOCUMENT_TYPE.LPA_ENFORCEMENT_NOTICE_WITHDRAWAL}`;
+		request.currentFolder = await getAttachmentsFolder(request.apiClient, appealId, folderPath);
+	} catch {
+		return response.status(404).render('app/404.njk');
+	}
+
+	const pageContent = enforcementNoticeWithdrawalCheckDetailsPage(
+		currentAppeal,
+		session.fileUploadInfo?.files,
+		'', // TODO: Add appellant notify preview
+		'', // TODO: Add lpa notify preview
+		backLinkUrl
+	);
+
+	return response.render('patterns/check-and-confirm-page.pattern.njk', { pageContent });
 };
