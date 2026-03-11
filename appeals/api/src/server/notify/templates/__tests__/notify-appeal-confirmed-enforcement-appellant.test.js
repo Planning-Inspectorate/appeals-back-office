@@ -321,7 +321,8 @@ describe('appeal-confirmed-enforcement-appellant.md', () => {
 				ground_a_barred: true,
 				other_appeals_grounds_group: [
 					{ reference: '100001', grounds: ['b'] },
-					{ reference: '100002', grounds: ['c', 'd'] }
+					{ reference: '100002', grounds: ['c', 'd'] },
+					{ reference: '100003', grounds: [] }
 				],
 				other_info: 'No'
 			}

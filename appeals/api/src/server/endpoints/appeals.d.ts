@@ -85,6 +85,7 @@ interface SingleAppealDetailsResponse {
 		crossTeam?: FolderInfo | null;
 		inspector?: FolderInfo | null;
 		mainParty?: FolderInfo | null;
+		enforcementNoticeWithdrawal?: FolderInfo | null;
 	};
 	documentationSummary: DocumentationSummary;
 	healthAndSafety: {
@@ -143,6 +144,9 @@ interface SingleAppealDetailsResponse {
 	enforcementNotice?: {
 		appealOutcome?: EnforcementNoticeAppealOutcome;
 		appellantCase: EnforcementNoticeAppellantCase;
+	};
+	cancellation?: {
+		cancellationFolder?: FolderInfo | null;
 	};
 }
 

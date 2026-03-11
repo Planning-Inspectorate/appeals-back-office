@@ -31,7 +31,11 @@ import { formatContactDetails } from '#utils/format-contact-details.js';
 import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
 import { allAppellantCaseOutcomesAreComplete } from '#utils/is-awaiting-linked-appeal.js';
 import { isChildAppeal, isLinkedAppeal, isParentAppeal } from '#utils/is-linked-appeal.js';
-import { getChildAppeals, getLeadAppeal } from '#utils/link-appeals.js';
+import {
+	getChildAppeals,
+	getChildEnforcementsWithGrounds,
+	getLeadAppeal
+} from '#utils/link-appeals.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
@@ -259,29 +263,8 @@ export const updateAppellantCaseValidationOutcome = async (
 				throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 			}
 			const isEnforcement = appeal.appealType.key === APPEAL_CASE_TYPE.C;
-			let childEnforcementWithGrounds = [];
 
-			if (isEnforcement) {
-				for (const childAppeal of getChildAppeals(appeal)) {
-					if (childAppeal.appealType?.key === APPEAL_CASE_TYPE.C) {
-						const childWithInfo = await appealRepository.getAppealById(
-							Number(childAppeal.id),
-							true,
-							['appealGrounds']
-						);
-						childEnforcementWithGrounds.push({
-							reference: childAppeal.reference,
-							grounds:
-								childWithInfo?.appealGrounds
-									?.map((ground) => ground.ground?.groundRef || '')
-									.sort() || []
-						});
-					}
-				}
-				childEnforcementWithGrounds?.sort(
-					(a, b) => parseInt(a.reference ?? '0') - parseInt(b.reference ?? '0')
-				);
-			}
+			const childEnforcementWithGrounds = await getChildEnforcementsWithGrounds(appeal);
 
 			const personalisation = {
 				appeal_reference_number: appeal.reference,

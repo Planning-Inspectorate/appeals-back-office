@@ -9,6 +9,7 @@ import appealTimetableRepository from '#repositories/appeal-timetable.repository
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
 import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
+import { getChildEnforcementsWithGrounds } from '#utils/link-appeals.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { trimAppealType } from '#utils/string-utils.js';
@@ -137,6 +138,7 @@ const getStartCaseNotifyParams = async (
 	const lpaEmail = appeal.lpa?.email || '';
 
 	const teamEmail = await getTeamEmailFromAppealId(appeal.id);
+	const childEnforcementsWithGrounds = await getChildEnforcementsWithGrounds(appeal);
 
 	// Note that those properties not used within the specified template will be ignored
 	const commonEmailVariables = {
@@ -199,6 +201,7 @@ const getStartCaseNotifyParams = async (
 		}),
 		...(appeal.appealType?.key === APPEAL_CASE_TYPE.C && {
 			appeal_grounds: appeal.appealGrounds?.map((ground) => ground.ground?.groundRef).sort() || [],
+			other_appeals_grounds_group: childEnforcementsWithGrounds,
 			enforcement_reference: appeal.appellantCase?.enforcementReference
 		})
 	};
