@@ -952,7 +952,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'Q3060',
 		name: 'Nottingham City Council',
-		email: 'planningappeals@nottinghamcity.gov.uk',
+		email: 'Planning.registration@nottinghamcity.gov.uk',
 		teamId: 17 // North3
 	},
 	{
