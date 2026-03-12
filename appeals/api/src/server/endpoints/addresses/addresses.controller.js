@@ -1,6 +1,8 @@
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import addressRepository from '#repositories/address.repository.js';
+import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
+import { getChildAppeals } from '#utils/link-appeals.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
@@ -34,6 +36,7 @@ const updateAddressById = async (req, res) => {
 		body: { addressLine1, addressLine2, country, county, postcode, town },
 		params: { appealId, addressId }
 	} = req;
+	const currentAppeal = req.appeal;
 
 	const updateAddress = {
 		addressLine1,
@@ -47,6 +50,17 @@ const updateAddressById = async (req, res) => {
 	let updatedAddress;
 	try {
 		updatedAddress = await addressRepository.updateAddressById(Number(addressId), updateAddress);
+		if (isLinkedAppealsActive(currentAppeal)) {
+			const linkedChildAppeals = getChildAppeals(currentAppeal);
+			Promise.all(
+				linkedChildAppeals.map(async (appeal) => {
+					await addressRepository.updateAddressById(Number(appeal.addressId), updateAddress);
+					if (appeal.id) {
+						await broadcasters.broadcastAppeal(appeal.id);
+					}
+				})
+			);
+		}
 
 		await broadcasters.broadcastAppeal(parseInt(appealId));
 	} catch (error) {

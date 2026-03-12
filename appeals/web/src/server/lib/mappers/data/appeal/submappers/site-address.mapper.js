@@ -1,5 +1,6 @@
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
+import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 
 /** @type {import('../mapper.js').SubMapper} */
@@ -12,6 +13,6 @@ export const mapSiteAddress = ({ appealDetails, userHasUpdateCasePermission, req
 			request,
 			`/appeals-service/appeal-details/${appealDetails.appealId}/site-address/change/${appealDetails.appealSite.addressId}`
 		),
-		editable: userHasUpdateCasePermission,
+		editable: userHasUpdateCasePermission && !isChildAppeal(appealDetails),
 		classes: 'appeal-site-address'
 	});
