@@ -25,6 +25,7 @@ import {
 	CASE_RELATIONSHIP_LINKED,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
+import { isEnforcementCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 import {
 	calculateTimetable,
 	recalculateDateIfNotBusinessDay,
@@ -199,7 +200,7 @@ const getStartCaseNotifyParams = async (
 			inquiry_address: inquiry.inquiryAddress,
 			inquiry_expected_days: inquiry.inquiryEstimationDays
 		}),
-		...(appeal.appealType?.key === APPEAL_CASE_TYPE.C && {
+		...(isEnforcementCaseType(appeal.appealType?.key) && {
 			appeal_grounds: appeal.appealGrounds?.map((ground) => ground.ground?.groundRef).sort() || [],
 			other_appeals_grounds_group: childEnforcementsWithGrounds,
 			enforcement_reference: appeal.appellantCase?.enforcementReference
@@ -224,7 +225,7 @@ const getStartCaseNotifyParams = async (
 						procedureType === APPEAL_CASE_PROCEDURE.WRITTEN ||
 						procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 ||
 						procedureType === undefined,
-					...(appeal.appealType?.key === APPEAL_CASE_TYPE.C &&
+					...(isEnforcementCaseType(appeal.appealType?.key) &&
 						appeal.appellantCase?.planningObligation && {
 							planning_obligation_deadline: formatDate(
 								new Date(timetable.planningObligationDueDate || ''),
