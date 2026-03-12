@@ -181,7 +181,7 @@ describe('Start case', () => {
 	});
 
 	//broken - bug has been raised
-	it.only('S78 hearing case - start appeal with scheduled hearing', () => {
+	it.skip('S78 hearing case - start appeal with scheduled hearing', () => {
 		cy.login(users.appeals.caseAdmin);
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;

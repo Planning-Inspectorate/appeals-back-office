@@ -65,8 +65,8 @@ jobs:
 
       - script: |
           echo "Running Cypress specs: $(SPEC)"
-          npx cypress run --spec "$(SPEC)"
-        workingDirectory: $(System.DefaultWorkingDirectory)/appeals/e2e
+          npx cypress run --spec "cypress/e2e/back-office-appeals/$(SPEC)"
+        workingDirectory: $(System.DefaultWorkingDirectory)/appeals/e2e        
         env:
           TZ: 'Europe/London'
           BASE_URL: $(APPEALS_BASE_URL)

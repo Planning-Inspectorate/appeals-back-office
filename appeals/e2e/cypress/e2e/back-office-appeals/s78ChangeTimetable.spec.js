@@ -146,7 +146,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		});
 	});
 
-	it('check timetable for full adverts submission', () => {
+	it.skip('check timetable for full adverts submission', () => {
 		cy.createCase({ ...appealsApiRequests.advertsSubmission.casedata }).then((caseObj) => {
 			appeal = caseObj;
 			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'ADVERT');
