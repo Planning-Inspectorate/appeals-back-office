@@ -186,6 +186,7 @@ export const getFullAppealBaseTimetableKey = (appealType) => {
 		case APPEAL_CASE_TYPE.X:
 			return APPEAL_CASE_TYPE.H;
 		case APPEAL_CASE_TYPE.C:
+		case APPEAL_CASE_TYPE.F:
 			return APPEAL_CASE_TYPE.C;
 		default:
 			return APPEAL_CASE_TYPE.W;
