@@ -107,7 +107,7 @@ stages:
 
           - bash: |
               set -euo pipefail
-              if [[ "${{ parameters.terraformPlan }}" != "true" ]]; then
+              if [[ ! "${{ parameters.terraformPlan }}" =~ ^[Tt]rue$ ]]; then
                 echo "Terraform plan skipped (terraformPlan=false)."
                 exit 0
               fi
@@ -150,9 +150,9 @@ stages:
                 echo "Intentional failure: TerraformApply selected in failStage."
                 exit 1
               fi
-              if [[ "${{ parameters.terraformApply }}" == "true" && "${{ parameters.terraformPlan }}" == "true" ]]; then
+              if [[ "${{ parameters.terraformApply }}" =~ ^[Tt]rue$ && "${{ parameters.terraformPlan }}" =~ ^[Tt]rue$ ]]; then
                 echo "Terraform apply would run for environment '${{ parameters.environment }}'."
-              elif [[ "${{ parameters.terraformApply }}" == "true" && "${{ parameters.terraformPlan }}" != "true" ]]; then
+              elif [[ "${{ parameters.terraformApply }}" =~ ^[Tt]rue$ && ! "${{ parameters.terraformPlan }}" =~ ^[Tt]rue$ ]]; then
                 echo "Terraform apply requested but terraformPlan=false, so apply is skipped."
               else
                 echo "Terraform apply skipped (terraformApply=false)."
@@ -173,7 +173,7 @@ stages:
                 echo "Intentional failure: DeployAppealsAPI selected in failStage."
                 exit 1
               fi
-              if [[ "${{ parameters.deployAppealsApi }}" == "true" ]]; then
+              if [[ "${{ parameters.deployAppealsApi }}" =~ ^[Tt]rue$ ]]; then
                 echo "Deploy Appeals API would run for '${{ parameters.environment }}'."
               else
                 echo "Deploy Appeals API skipped (deployAppealsApi=false)."
@@ -194,7 +194,7 @@ stages:
                 echo "Intentional failure: DeployAppealsWeb selected in failStage."
                 exit 1
               fi
-              if [[ "${{ parameters.deployAppealsWeb }}" == "true" ]]; then
+              if [[ "${{ parameters.deployAppealsWeb }}" =~ ^[Tt]rue$ ]]; then
                 echo "Deploy Appeals Web would run for '${{ parameters.environment }}'."
               else
                 echo "Deploy Appeals Web skipped (deployAppealsWeb=false)."
@@ -215,7 +215,7 @@ stages:
                 echo "Intentional failure: DeployAppealsPDF selected in failStage."
                 exit 1
               fi
-              if [[ "${{ parameters.deployAppealsPdf }}" == "true" ]]; then
+              if [[ "${{ parameters.deployAppealsPdf }}" =~ ^[Tt]rue$ ]]; then
                 echo "Deploy Appeals PDF would run for '${{ parameters.environment }}'."
               else
                 echo "Deploy Appeals PDF skipped (deployAppealsPdf=false)."
@@ -236,7 +236,7 @@ stages:
                 echo "Intentional failure: DeployAppealsFunctions selected in failStage."
                 exit 1
               fi
-              if [[ "${{ parameters.deployFunctions }}" == "true" ]]; then
+              if [[ "${{ parameters.deployFunctions }}" =~ ^[Tt]rue$ ]]; then
                 echo "Deploy Appeals Functions would run for '${{ parameters.environment }}'."
               else
                 echo "Deploy Appeals Functions skipped (deployFunctions=false)."
@@ -261,7 +261,7 @@ stages:
                 echo "Intentional failure: RunDBMigration selected in failStage."
                 exit 1
               fi
-              if [[ "${{ parameters.runDbMigration }}" == "true" ]]; then
+              if [[ "${{ parameters.runDbMigration }}" =~ ^[Tt]rue$ ]]; then
                 echo "DB migration would run for '${{ parameters.environment }}'."
               else
                 echo "DB migration skipped (runDbMigration=false)."
@@ -282,7 +282,7 @@ stages:
                 echo "Intentional failure: SeedData selected in failStage."
                 exit 1
               fi
-              if [[ "${{ parameters.seedData }}" == "true" ]]; then
+              if [[ "${{ parameters.seedData }}" =~ ^[Tt]rue$ ]]; then
                 echo "Seed data would run for '${{ parameters.environment }}'."
                 echo "purgeAndRecreate=${{ parameters.purgeAndRecreate }}"
               else
