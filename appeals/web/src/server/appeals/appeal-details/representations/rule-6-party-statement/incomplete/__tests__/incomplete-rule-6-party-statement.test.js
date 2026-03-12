@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
 	appealDataFullPlanning,
 	representationRejectionReasons
@@ -88,6 +89,38 @@ describe('rule 6 party statement - incomplete', () => {
 
 			expect(unprettifiedHTML).toContain('Why is the statement incomplete?</h1>');
 		});
+
+		it('should render a back link to the URL specified in the backUrl query parameter', async () => {
+			const response = await request.get(
+				`${baseUrl}/2/rule-6-party-statement/1/incomplete/reasons?backUrl=/some-other-page`
+			);
+
+			expect(response.statusCode).toBe(200);
+			const unprettifiedHTML = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: 'body'
+			}).innerHTML;
+
+			expect(unprettifiedHTML).toContain(
+				`href="/appeals-service/appeal-details/2/some-other-page" class="govuk-back-link">Back</a>`
+			);
+		});
+
+		it('should render a back link to the confirm page if change=true query parameter is present', async () => {
+			const response = await request.get(
+				`${baseUrl}/2/rule-6-party-statement/1/incomplete/reasons?change=true`
+			);
+
+			expect(response.statusCode).toBe(200);
+			const unprettifiedHTML = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: 'body'
+			}).innerHTML;
+
+			expect(unprettifiedHTML).toContain(
+				`href="/appeals-service/appeal-details/2/rule-6-party-statement/1/incomplete/confirm" class="govuk-back-link">Back</a>`
+			);
+		});
 	});
 
 	describe('POST /incomplete/reasons', () => {
@@ -130,6 +163,38 @@ describe('rule 6 party statement - incomplete', () => {
 			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
 		});
+
+		it('should render a back link to the URL specified in the backUrl query parameter', async () => {
+			const response = await request.get(
+				`${baseUrl}/2/rule-6-party-statement/1/incomplete/date?backUrl=/some-other-page`
+			);
+
+			expect(response.statusCode).toBe(200);
+			const unprettifiedHTML = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: 'body'
+			}).innerHTML;
+
+			expect(unprettifiedHTML).toContain(
+				`href="/appeals-service/appeal-details/2/some-other-page" class="govuk-back-link">Back</a>`
+			);
+		});
+
+		it('should render a back link to the confirm page if change=true query parameter is present', async () => {
+			const response = await request.get(
+				`${baseUrl}/2/rule-6-party-statement/1/incomplete/date?change=true`
+			);
+
+			expect(response.statusCode).toBe(200);
+			const unprettifiedHTML = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: 'body'
+			}).innerHTML;
+
+			expect(unprettifiedHTML).toContain(
+				`href="/appeals-service/appeal-details/2/rule-6-party-statement/1/incomplete/confirm" class="govuk-back-link">Back</a>`
+			);
+		});
 	});
 
 	describe('POST /incomplete/date', () => {
@@ -171,6 +236,33 @@ describe('rule 6 party statement - incomplete', () => {
 
 			expect(unprettifiedHTML).toContain('Check details and confirm statement is incomplete</h1>');
 			expect(unprettifiedHTML).toContain('Received after deadline');
+		});
+
+		it('should render a back link to the URL specified in the backUrl query parameter', async () => {
+			const agent = supertest.agent(app);
+
+			await agent.post(`${baseUrl}/2/rule-6-party-statement/1/incomplete/reasons`).send({
+				rejectionReason: '1',
+				'rejectionReason-1': 'Test reason'
+			});
+
+			await agent
+				.post(`${baseUrl}/2/rule-6-party-statement/1/incomplete/date`)
+				.send({ setNewDate: 'no' });
+
+			const response = await agent.get(
+				`${baseUrl}/2/rule-6-party-statement/1/incomplete/confirm?backUrl=/some-other-page`
+			);
+
+			expect(response.statusCode).toBe(200);
+			const unprettifiedHTML = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: 'body'
+			}).innerHTML;
+
+			expect(unprettifiedHTML).toContain(
+				`href="/appeals-service/appeal-details/2/some-other-page" class="govuk-back-link">Back</a>`
+			);
 		});
 	});
 

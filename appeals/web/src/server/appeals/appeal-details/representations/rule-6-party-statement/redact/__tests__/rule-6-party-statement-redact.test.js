@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
 	allocationDetailsData,
 	appealDataFullPlanning,
@@ -6,9 +7,16 @@ import {
 	lpaStatementPublished
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
+
+jest.unstable_mockModule('../../../../../../lib/edit-utilities.js', () => ({
+	isAtEditEntrypoint: jest.fn(),
+	applyEditsForAppeal: jest.fn(),
+	clearEditsForAppeal: jest.fn()
+}));
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -222,6 +230,32 @@ describe('rule 6 party statement redact', () => {
 				`href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/redact" class="govuk-back-link">Back</a>`
 			);
 		});
+
+		it('should render a back link to the URL specified in the backUrl query parameter', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, {
+					...appealDataWithRule6Party,
+					allocationDetails: null,
+					appealId,
+					appealStatus: 'statements'
+				});
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/rule-6-party-statement/${rule6PartyId}/redact/allocation-check?backUrl=/some-other-page`
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedHtml = parseHtml(response.text, {
+				rootElement: 'body',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedHtml).toContain(
+				`href="/appeals-service/appeal-details/2/some-other-page" class="govuk-back-link">Back</a>`
+			);
+		});
 	});
 
 	describe('GET /allocation-level', () => {
@@ -369,6 +403,32 @@ describe('rule 6 party statement redact', () => {
 				`href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/redact/allocation-check" class="govuk-back-link">Back</a>`
 			);
 		});
+
+		it('should render a back link to the redact confirm page if change=true query parameter is present', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, {
+					...appealDataWithRule6Party,
+					allocationDetails: null,
+					appealId,
+					appealStatus: 'statements'
+				});
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/rule-6-party-statement/${rule6PartyId}/redact/allocation-level?change=true`
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedHtml = parseHtml(response.text, {
+				rootElement: 'body',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedHtml).toContain(
+				`href="/appeals-service/appeal-details/2/rule-6-party-statement/99/redact/confirm" class="govuk-back-link">Back</a>`
+			);
+		});
 	});
 
 	describe('GET /allocation-specialisms', () => {
@@ -462,7 +522,7 @@ describe('rule 6 party statement redact', () => {
 				`href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/add-document?backUrl=/rule-6-party-statement/${rule6PartyId}/redact/confirm"`
 			);
 			expect(innerHTML).toContain(
-				`href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}"`
+				`href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}%2Frule-6-party-statement%2F${rule6PartyId}%2Fredact%2Fconfirm"`
 			);
 			expect(innerHTML).toContain(
 				`href="/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/redact/allocation-check?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F${appealId}%2Frule-6-party-statement%2F${rule6PartyId}%2Fredact%2Fallocation-check"`
