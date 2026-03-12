@@ -1,5 +1,6 @@
 import {
 	appealData,
+	appealDataEnforcementListedBuilding,
 	appealDataEnforcementNotice,
 	appellantCaseInvalidReasonsRealIds
 } from '#testing/appeals/appeals.js';
@@ -395,6 +396,68 @@ describe('cancel invalid', () => {
 			expect(element.querySelector('#lpa-preview .govuk-details__text')?.innerHTML.trim()).toBe(
 				'LPA preview HTML'
 			);
+		});
+
+		it('should render the check details page with the correct notify previews for Enforcement Listed Building', async () => {
+			const elbAppealId = appealDataEnforcementListedBuilding.appealId;
+			let appellantPreviewRequestBody, lpaPreviewRequestBody;
+
+			const mockAppellantPreview = nock('http://test/')
+				.post('/appeals/notify-preview/enforcement-appeal-invalid-appellant.content.md', (body) => {
+					appellantPreviewRequestBody = body;
+					return true;
+				})
+				.reply(200, { renderedHtml: 'ELB Appellant preview HTML' });
+
+			const mockLpaPreview = nock('http://test/')
+				.post('/appeals/notify-preview/enforcement-appeal-invalid-lpa.content.md', (body) => {
+					lpaPreviewRequestBody = body;
+					return true;
+				})
+				.reply(200, { renderedHtml: 'ELB LPA preview HTML' });
+
+			nock('http://test/')
+				.get(`/appeals/${elbAppealId}?include=all`)
+				.reply(200, {
+					...appealDataEnforcementListedBuilding,
+					enforcementNotice: {
+						appealOutcome: { groundABarred: true },
+						appellantCase: { reference: 'ELB-Ref', effectiveDate: '2026-01-01' }
+					}
+				})
+				.persist();
+
+			nock('http://test/')
+				.get(`/appeals/${elbAppealId}/case-team-email`)
+				.reply(200, {
+					id: 1,
+					email: 'caseofficers@planninginspectorate.gov.uk',
+					name: 'Test Team'
+				})
+				.persist();
+
+			await request.post(`${baseUrl}/${elbAppealId}/cancel/invalid/reason`).send({
+				invalidReason: ['1']
+			});
+			await request.post(`${baseUrl}/${elbAppealId}/cancel/invalid/other-live-appeals`).send({
+				otherLiveAppeals: 'no'
+			});
+
+			const response = await request.get(`${baseUrl}/${elbAppealId}/cancel/invalid/check-details`);
+			const element = parseHtml(response.text);
+
+			expect(mockAppellantPreview.isDone()).toBe(true);
+			expect(mockLpaPreview.isDone()).toBe(true);
+
+			expect(
+				element.querySelector('#appellant-preview .govuk-details__text')?.innerHTML.trim()
+			).toBe('ELB Appellant preview HTML');
+			expect(element.querySelector('#lpa-preview .govuk-details__text')?.innerHTML.trim()).toBe(
+				'ELB LPA preview HTML'
+			);
+
+			expect(appellantPreviewRequestBody).toBeDefined();
+			expect(lpaPreviewRequestBody).toBeDefined();
 		});
 	});
 
