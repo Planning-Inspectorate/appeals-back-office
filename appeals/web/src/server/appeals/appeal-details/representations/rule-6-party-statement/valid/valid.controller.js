@@ -9,6 +9,7 @@ import {
 	allocationLevelPage,
 	allocationSpecialismsPage
 } from '../allocation/allocation.mapper.js';
+import { getRule6BackLinkUrl, getRule6ConfirmBackLinkUrl } from '../back-link-utilities.js';
 import { confirmPage } from './valid.mapper.js';
 
 /**
@@ -31,7 +32,11 @@ export function renderAllocationCheck(request, response) {
 		errors,
 		pageContent: {
 			...pageContent,
-			backLinkUrl: preserveQueryString(request, pageContent.backLinkUrl || '')
+			backLinkUrl: getRule6BackLinkUrl(
+				request,
+				pageContent.backLinkUrl || '',
+				`/appeals-service/appeal-details/${currentAppeal.appealId}/rule-6-party-statement/${rule6PartyId}/valid/confirm`
+			)
 		}
 	});
 }
@@ -98,7 +103,11 @@ export async function renderAllocationLevel(request, response) {
 		errors,
 		pageContent: {
 			...pageContent,
-			backLinkUrl: preserveQueryString(request, pageContent.backLinkUrl || '')
+			backLinkUrl: getRule6BackLinkUrl(
+				request,
+				pageContent.backLinkUrl || '',
+				`/appeals-service/appeal-details/${currentAppeal.appealId}/rule-6-party-statement/${rule6PartyId}/valid/confirm`
+			)
 		}
 	});
 }
@@ -148,7 +157,11 @@ export async function renderAllocationSpecialisms(request, response) {
 		errors,
 		pageContent: {
 			...pageContent,
-			backLinkUrl: preserveQueryString(request, pageContent.backLinkUrl || '')
+			backLinkUrl: getRule6BackLinkUrl(
+				request,
+				pageContent.backLinkUrl || '',
+				`/appeals-service/appeal-details/${currentAppeal.appealId}/rule-6-party-statement/${rule6PartyId}/valid/confirm`
+			)
 		}
 	});
 }
@@ -204,7 +217,7 @@ export async function renderConfirm(request, response) {
 		errors,
 		pageContent: {
 			...pageContent,
-			backLinkUrl: preserveQueryString(request, pageContent.backLinkUrl || '')
+			backLinkUrl: getRule6ConfirmBackLinkUrl(request, pageContent.backLinkUrl || '')
 		}
 	});
 }
