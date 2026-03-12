@@ -81,6 +81,42 @@ describe('grounds', () => {
 				`Found. Redirecting to /appeals-service/appeal-details/${appealData.appealId}/appellant-case/incomplete/date`
 			);
 		});
+		it(`should redirect to the date page when a single ELB specific grounds are selected`, async () => {
+			nock('http://test/')
+				.get(`/appeals/appellant-case-enforcement-grounds-mismatch-facts`)
+				.reply(200, mockGrounds);
+
+			const response = await request
+				.post(`${baseUrl}/${appealData.appealId}/appellant-case/incomplete/grounds-facts-check`)
+				.send({
+					groundsFacts: '10',
+					'groundsFacts-10': 'reason for ground j'
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				`Found. Redirecting to /appeals-service/appeal-details/${appealData.appealId}/appellant-case/incomplete/date`
+			);
+		});
+
+		it(`should redirect to the date page when a nultiple ELB specific grounds are selected`, async () => {
+			nock('http://test/')
+				.get(`/appeals/appellant-case-enforcement-grounds-mismatch-facts`)
+				.reply(200, mockGrounds);
+
+			const response = await request
+				.post(`${baseUrl}/${appealData.appealId}/appellant-case/incomplete/grounds-facts-check`)
+				.send({
+					groundsFacts: ['10', '11'],
+					'groundsFacts-10': 'reason for ground j',
+					'groundsFacts-11': 'reason for ground k'
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				`Found. Redirecting to /appeals-service/appeal-details/${appealData.appealId}/appellant-case/incomplete/date`
+			);
+		});
 		it('should return validation errors if no reasons are provided', async () => {
 			nock('http://test/')
 				.get(`/appeals/appellant-case-enforcement-grounds-mismatch-facts`)

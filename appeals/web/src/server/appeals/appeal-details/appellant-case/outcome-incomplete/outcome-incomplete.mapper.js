@@ -542,7 +542,7 @@ export function mapGroundsAndFactsListHtml(groundsAndFacts) {
 		return '';
 	}
 	const items = groundsAndFacts.map(
-		(/** @type {{ name: any; text: any; }} */ ground) => `Ground ${ground.name}: ${ground.text}`
+		(/** @type {{ name: any; text: any; }} */ ground) => `Ground (${ground.name}): ${ground.text}`
 	);
 	return rejectionReasonHtml(items);
 }
