@@ -103,13 +103,39 @@ stages:
                 echo "Intentional failure: TerraformPlan selected in failStage."
                 exit 1
               fi
-              if [[ "${{ parameters.terraformPlan }}" == "true" ]]; then
-                echo "Terraform plan would run for environment '${{ parameters.environment }}'."
-              else
+            displayName: Validate terraform plan stage
+
+          - bash: |
+              set -euo pipefail
+              if [[ "${{ parameters.terraformPlan }}" != "true" ]]; then
                 echo "Terraform plan skipped (terraformPlan=false)."
+                exit 0
               fi
-              echo "Result: success (placeholder)."
-            displayName: Placeholder terraform plan
+
+              ENV_LOWER="$(echo '${{ parameters.environment }}' | tr '[:upper:]' '[:lower:]')"
+              TFVARS_PATH="infrastructure/environments/${ENV_LOWER}.tfvars"
+
+              if [[ ! -f "${TFVARS_PATH}" ]]; then
+                echo "ERROR: tfvars file not found: ${TFVARS_PATH}"
+                exit 1
+              fi
+
+              if ! command -v terraform >/dev/null 2>&1; then
+                echo "ERROR: terraform is not installed on this agent."
+                exit 1
+              fi
+
+              echo "Running terraform plan for ${ENV_LOWER} using ${TFVARS_PATH}"
+              terraform -chdir=infrastructure init -input=false -reconfigure \
+                -backend-config="storage_account_name=pinssttfstateuksappealbo" \
+                -backend-config="resource_group_name=pins-rg-shared-terraform-uks" \
+                -backend-config="container_name=terraform-state-appeals-back-office-${ENV_LOWER}" \
+                -backend-config="key=terraform.tfstate"
+
+              terraform -chdir=infrastructure plan -input=false -lock-timeout=5m \
+                -var-file="environments/${ENV_LOWER}.tfvars" \
+                -out="tfplan-${ENV_LOWER}"
+            displayName: Run terraform plan
 
   - stage: TerraformApply
     displayName: Terraform Apply
