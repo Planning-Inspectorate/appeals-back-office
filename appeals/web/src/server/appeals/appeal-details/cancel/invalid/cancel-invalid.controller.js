@@ -207,7 +207,8 @@ export const getCheckDetails = async (request, response) => {
 	// Note: this route is only enabled for enforcement appeals at the time of writing,
 	// so the standard template is untested.
 	const templateNames =
-		currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE
+		currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ||
+		currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
 			? {
 					appellant: 'enforcement-appeal-invalid-appellant.content.md',
 					lpa: 'enforcement-appeal-invalid-lpa.content.md'
