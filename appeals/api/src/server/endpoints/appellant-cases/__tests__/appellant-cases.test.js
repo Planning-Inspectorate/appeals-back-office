@@ -2414,6 +2414,9 @@ describe('appellant cases routes', () => {
 					id: 1,
 					azureAdUserId
 				});
+				databaseConnector.appellantCaseEnforcementGroundsMismatchFacts.findMany.mockResolvedValue(
+					appellantCaseEnforcementGroundsMismatchFacts
+				);
 
 				const body = {
 					validationOutcome: 'incomplete',
@@ -2423,8 +2426,11 @@ describe('appellant cases routes', () => {
 						{ id: 8, text: ['This is the other field'] }
 					],
 					enforcementNoticeInvalid: 'yes',
-					otherInformation: 'Enforcement other information'
+					otherInformation: 'Enforcement other information',
+					appealDueDate: '2099-07-14T00:00:00.000Z',
+					enforcementGroundsMismatchFacts: [{ id: 1, text: ['Grounds mismatch'] }]
 				};
+
 				const { appellantCase, id } = enforcementListedAppealAppellantCaseIncomplete;
 				const response = await request
 					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
@@ -2484,7 +2490,52 @@ describe('appellant cases routes', () => {
 					}
 				});
 
-				expect(mockNotifySend).toHaveBeenCalledTimes(0);
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+					data: {
+						appealId: id,
+						details: 'Appeal marked as incomplete:\n<ul><li>Missing information</li></ul>',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+					data: {
+						appealId: id,
+						details: 'Case updated',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+
+				const personalisation = {
+					appeal_reference_number: '1345264',
+					enforcement_reference: 'Reference',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					local_planning_authority: 'Maidstone Borough Council',
+					due_date: '14 July 2099',
+					fee_due_date: '',
+					missing_documents: [],
+					other_info: [],
+					appeal_grounds: [],
+					grounds_and_facts: ['Ground (a): Grounds mismatch']
+				};
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation,
+					recipientEmail: enforcementListedAppealAppellantCaseIncomplete.agent.email,
+					templateName: 'enforcement-appeal-incomplete-appellant'
+				});
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation,
+					recipientEmail: enforcementListedAppealAppellantCaseIncomplete.lpa.email,
+					templateName: 'enforcement-appeal-incomplete-lpa'
+				});
 
 				expect(response.status).toEqual(200);
 			});
