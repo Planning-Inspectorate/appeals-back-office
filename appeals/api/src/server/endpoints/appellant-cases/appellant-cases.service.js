@@ -343,10 +343,7 @@ export const updateAppellantCaseValidationOutcome = async (
 					details
 				});
 
-				if (
-					incompleteAppealDueDate &&
-					updatedAppeal.appealType?.type === APPEAL_TYPE.ENFORCEMENT_NOTICE
-				) {
+				if (incompleteAppealDueDate) {
 					const missingDocumentOptions = await commonRepository.getLookupList(
 						'appellantCaseEnforcementMissingDocument'
 					);
