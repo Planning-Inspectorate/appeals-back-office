@@ -43,6 +43,32 @@ describe('site-address', () => {
 				`href="/appeals-service/appeal-details/${appealId}/appellant-case`
 			);
 		});
+
+		it('should redirect to backLinkUrl when appeal is a child appeal - appellant case route', async () => {
+			const childAppealData = {
+				...appealData,
+				isChildAppeal: true
+			};
+
+			nock.cleanAll();
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.query((actualQueryObject) => {
+					return Object.prototype.hasOwnProperty.call(actualQueryObject, 'include');
+				})
+				.reply(200, childAppealData)
+				.persist();
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/appellant-case/site-address/change/1`
+			);
+
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toBe(
+				`/appeals-service/appeal-details/${appealId}/appellant-case`
+			);
+		});
 	});
 
 	describe('GET /appeal-details/:appealId/site-address/change/:siteId', () => {
@@ -62,6 +88,28 @@ describe('site-address', () => {
 			const backLinkHtml = parseHtml(response.text, { rootElement: '.govuk-back-link' }).innerHTML;
 
 			expect(backLinkHtml).toContain(`href="/appeals-service/appeal-details/${appealId}"`);
+		});
+
+		it('should redirect to backLinkUrl when appeal is a child appeal - appeal details route', async () => {
+			const childAppealData = {
+				...appealData,
+				isChildAppeal: true
+			};
+
+			nock.cleanAll();
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.query((actualQueryObject) => {
+					return Object.prototype.hasOwnProperty.call(actualQueryObject, 'include');
+				})
+				.reply(200, childAppealData)
+				.persist();
+
+			const response = await request.get(`${baseUrl}/${appealId}/site-address/change/1`);
+
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toBe(`/appeals-service/appeal-details/${appealId}`);
 		});
 	});
 

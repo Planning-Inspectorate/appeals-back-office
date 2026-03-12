@@ -1,4 +1,5 @@
 import logger from '#lib/logger.js';
+import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 import { HTTPError } from 'got';
@@ -21,6 +22,15 @@ const renderChangeSiteAddress = async (request, response) => {
 	const { errors, currentAppeal } = request;
 
 	const backLinkUrl = request.originalUrl.split('/').slice(0, -3).join('/');
+
+	if (isChildAppeal(currentAppeal)) {
+		if (!isInternalUrl(backLinkUrl, request)) {
+			return response.status(400).render('errorPageTemplate', {
+				message: 'Invalid redirection attempt detected.'
+			});
+		}
+		return response.redirect(backLinkUrl);
+	}
 
 	const mappedPageContents = changeSiteAddressPage(
 		currentAppeal,

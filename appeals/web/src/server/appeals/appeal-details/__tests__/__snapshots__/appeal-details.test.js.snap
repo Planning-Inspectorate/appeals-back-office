@@ -848,9 +848,6 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
-                    </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
@@ -1477,9 +1474,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
-                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
-                    </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
