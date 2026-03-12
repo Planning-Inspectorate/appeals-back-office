@@ -136,9 +136,9 @@ export function issueDecisionPage(
 			? [
 					NOTICE_UPHELD,
 					NOTICE_VARIED_AND_UPHELD,
-					(appealDetails.appealType = APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
+					appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
 						? 'Listed building consent granted'
-						: PLANNING_PERMISSION_GRANTED),
+						: PLANNING_PERMISSION_GRANTED,
 					QUASHED_ON_LEGAL_GROUNDS,
 					SPLIT_DECISION,
 					INVALID

@@ -11,6 +11,7 @@ import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
 
 import { jest } from '@jest/globals';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_DECISION_OUTCOME } from '@planning-inspectorate/data-model';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -101,12 +102,98 @@ describe('issue-decision', () => {
 			});
 		});
 
+		describe('Enforcement notice appeals', () => {
+			let enforcementAppeal;
+			beforeEach(() => {
+				appealData.appealType = APPEAL_TYPE.ENFORCEMENT_NOTICE;
+				enforcementAppeal = structuredClone(appealData);
+				enforcementAppeal.appealId = '5';
+				nock('http://test/').get('/appeals/5?include=all').reply(200, enforcementAppeal).persist();
+			});
+
+			it(`should render the enforcement notice appeal 'decision' page with the expected content`, async () => {
+				const response = await request.get(`${baseUrl}/5${issueDecisionPath}${decisionPath}`);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Appeal 351062 - issue decision</span>');
+
+				expect(unprettifiedElement.innerHTML).toContain('Decision</h1>');
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision" name="decision" type="radio" value="notice_upheld">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-2" name="decision" type="radio" value="notice_varied_and_upheld">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="planning_permission_granted">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-4" name="decision" type="radio" value="quashed_on_legal_grounds">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-5" name="decision" type="radio" value="split_decision">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-6" name="decision" type="radio" value="invalid">'
+				);
+			});
+		});
+
+		describe('Enforcement listed building', () => {
+			let enforcementListedBuildingAppeal;
+			beforeEach(() => {
+				appealData.appealType = APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING;
+				enforcementListedBuildingAppeal = structuredClone(appealData);
+				enforcementListedBuildingAppeal.appealId = '5';
+				nock('http://test/')
+					.get('/appeals/5?include=all')
+					.reply(200, enforcementListedBuildingAppeal)
+					.persist();
+			});
+
+			it(`should render the enforcement notice appeal 'decision' page with the expected content`, async () => {
+				const response = await request.get(`${baseUrl}/5${issueDecisionPath}${decisionPath}`);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Appeal 351062 - issue decision</span>');
+
+				expect(unprettifiedElement.innerHTML).toContain('Decision</h1>');
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision" name="decision" type="radio" value="notice_upheld">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-2" name="decision" type="radio" value="notice_varied_and_upheld">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="Listed building consent granted">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-4" name="decision" type="radio" value="quashed_on_legal_grounds">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-5" name="decision" type="radio" value="split_decision">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-6" name="decision" type="radio" value="invalid">'
+				);
+			});
+		});
+
 		describe('Linked appeals', () => {
 			let linkedAppealData;
 
 			beforeEach(() => {
 				linkedAppealData = structuredClone(appealData);
 				linkedAppealData.appealId = 3;
+				linkedAppealData.appealType = APPEAL_TYPE.SECTION_78;
 				linkedAppealData.isParentAppeal = true;
 				linkedAppealData.linkedAppeals = [{ appealId: 4, appealReference: '351066' }];
 				nock('http://test/').get('/appeals/3?include=all').reply(200, linkedAppealData).persist();
