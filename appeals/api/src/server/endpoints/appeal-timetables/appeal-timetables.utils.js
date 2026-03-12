@@ -8,7 +8,6 @@ import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 export const appealTypeMap = (appealType) => {
 	switch (appealType) {
 		case APPEAL_CASE_TYPE.W:
-			return '-s78-';
 		case APPEAL_CASE_TYPE.Y:
 			return '-s78-';
 		case APPEAL_CASE_TYPE.H:
@@ -16,6 +15,7 @@ export const appealTypeMap = (appealType) => {
 		case APPEAL_CASE_TYPE.X:
 			return '-ldc-';
 		case APPEAL_CASE_TYPE.C:
+		case APPEAL_CASE_TYPE.F:
 			return '-enforcement-';
 		default:
 			return '-';

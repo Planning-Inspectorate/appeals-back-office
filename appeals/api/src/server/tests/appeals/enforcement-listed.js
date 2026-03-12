@@ -33,7 +33,11 @@ export default {
 		addressTown: 'Woodton',
 		addressCountry: 'UK'
 	},
-	procedureType: null,
+	procedureType: {
+		id: 3,
+		name: 'Written',
+		key: 'written'
+	},
 	parentAppeals: [],
 	childAppeals: [],
 	otherAppeals: [],
