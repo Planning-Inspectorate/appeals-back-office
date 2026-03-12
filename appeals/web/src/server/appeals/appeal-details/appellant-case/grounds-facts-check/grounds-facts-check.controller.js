@@ -130,8 +130,8 @@ export const postGroundsFactsCheck = async (request, response) => {
  * @returns {Object}
  */
 const extractGroundsMismatchFacts = (request, groundsMismatchFactsList) => {
-	if (request.body?.groundsFacts.length === 1) {
-		const ground = request.body?.groundsFacts[0];
+	if (request.body?.groundsFacts && !Array.isArray(request.body.groundsFacts)) {
+		const ground = request.body?.groundsFacts;
 		const groundName = groundsMismatchFactsList.find(
 			(/** @type {{ id: string; }} */ item) => item.id.toString() === ground
 		)?.name;
