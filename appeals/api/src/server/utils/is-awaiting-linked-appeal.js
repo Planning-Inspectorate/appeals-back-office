@@ -1,4 +1,5 @@
 import { currentStatus } from '#utils/current-status.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { VALIDATION_OUTCOME_COMPLETE } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { isArray } from 'lodash-es';
@@ -65,7 +66,7 @@ export const allLpaQuestionnaireOutcomesAreComplete = (
 		}
 		return (
 			appeal.lpaQuestionnaire?.lpaQuestionnaireValidationOutcome?.name ===
-			VALIDATION_OUTCOME_COMPLETE
+				VALIDATION_OUTCOME_COMPLETE || appeal.appealType?.type === APPEAL_TYPE.ENFORCEMENT_NOTICE
 		);
 	});
 };
@@ -99,7 +100,10 @@ export const allAppellantCaseOutcomesAreComplete = (
 		const {
 			id: appellantCaseValidationOutcomeId = appeal.appellantCase?.appellantCaseValidationOutcomeId
 		} = appeal.appellantCase?.appellantCaseValidationOutcome || {};
-		return !!appellantCaseValidationOutcomeId;
+		return (
+			!!appellantCaseValidationOutcomeId ||
+			appeal.appealType?.type === APPEAL_TYPE.ENFORCEMENT_NOTICE
+		);
 	});
 };
 

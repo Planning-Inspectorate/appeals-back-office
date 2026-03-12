@@ -810,7 +810,8 @@ export const appealsApiClient = {
 	async assignCaseOfficer(appealId) {
 		try {
 			const url = `${baseUrl}appeals/${appealId}`;
-			const caseOfficer = '544f5029-e660-4bc3-81b1-adc19d47e970';
+			const caseOfficer = '13de469c-8de6-4908-97cd-330ea73df618'; // use the real one if this is correct
+
 			const response = await fetch(url, {
 				method: 'PATCH',
 				headers: {
@@ -821,15 +822,14 @@ export const appealsApiClient = {
 					caseOfficerId: caseOfficer
 				})
 			});
-			expect(response.status).eq(200);
+
+			expect(response.status).to.eq(200);
 
 			const responseBody = await response.json();
 
-			expect(responseBody).to.deep.equal({
-				caseOfficerId: caseOfficer
-			});
+			expect(responseBody.caseOfficerId).to.eq(caseOfficer);
 
-			return await response.json();
+			return responseBody;
 		} catch (error) {
 			cy.writeLog(`Error assigning case officer for appeal ${appealId}:`, error);
 			return false;

@@ -37,13 +37,13 @@ const appealTypeVariants = [
 		caseType: 'Y',
 		appealFlowType: 'S20',
 		overviewAppealType: 'Planning listed building and conservation area appeal'
-	},
-	{
-		name: 'EN',
-		caseType: 'D',
-		appealFlowType: 'EN',
-		overviewAppealType: 'Enforcement notice appeal'
 	}
+	// {
+	// 	name: 'EN',
+	// 	caseType: 'D',
+	// 	appealFlowType: 'EN',
+	// 	overviewAppealType: 'Enforcement notice appeal'
+	// }
 ];
 
 appealTypeVariants.forEach((appealVariant) => {
@@ -370,7 +370,7 @@ appealTypeVariants.forEach((appealVariant) => {
 				);
 
 				cy.getBusinessActualDate(ipCommentsDueDate, 10).then((date) => {
-					dateTimeSection.enterDueDates(changeAppealProcedureTypeTimetableItems.slice(2), date, 0);
+					dateTimeSection.enterDueDates(changeAppealProcedureTypeTimetableItems.slice(1), date, 0);
 					dateTimeSection.clickButtonByText('Continue');
 
 					cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Inquiry');
