@@ -154,7 +154,7 @@ export const updateAppellantCaseValidationOutcome = async (
 
 	const teamEmail = await getTeamEmailFromAppealId(appealId);
 	const incompleteAppealDueDate =
-		appealDueDate ?? (enforcementNoticeInvalid ? add(new Date(), { days: 7 }) : undefined);
+		appealDueDate ?? (enforcementNoticeInvalid === 'yes' ? add(new Date(), { days: 7 }) : null);
 
 	const validationOutcomeData = {
 		appealId,
@@ -331,7 +331,7 @@ export const updateAppellantCaseValidationOutcome = async (
 				}
 
 				if (enforcementNoticeAppealOutcome.groundAFeeReceiptDueDate) {
-					reasonsToFormat.push('Ground (a) fee receipt due date');
+					reasonsToFormat.push('Ground (a) fee receipt due');
 				}
 				const details = `${
 					stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, ['Appeal']) + '\n'

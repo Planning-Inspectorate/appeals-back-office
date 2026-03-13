@@ -176,7 +176,7 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 					// @ts-ignore
 					(appealDetails.enforcementNoticeInvalid === 'yes' ||
 						// @ts-ignore
-						appealDetails.enforcementNotice?.appealOutcome?.enforcementNoticeInvalid === 'yes')
+						appealDetails.enforcementNotice?.appealOutcome?.enforcementNoticeInvalid)
 				) {
 					const banner =
 						appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING

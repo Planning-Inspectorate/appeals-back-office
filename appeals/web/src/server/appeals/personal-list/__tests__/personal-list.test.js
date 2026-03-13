@@ -634,6 +634,13 @@ describe('personal-list', () => {
 				expectedHtml: {
 					caseOfficer: `Enforcement notice invalid<br><a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case?backUrl=%2Fappeals-service%2Fpersonal-list">Update case</a>`
 				}
+			},
+			{
+				name: 'Enforcement notice appeal incomplete',
+				requiredAction: 'enforcementNoticeAppealIncomplete',
+				expectedHtml: {
+					caseOfficer: `Enforcement notice invalid<br><a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-case?backUrl=%2Fappeals-service%2Fpersonal-list">Update case</a>`
+				}
 			}
 		];
 
