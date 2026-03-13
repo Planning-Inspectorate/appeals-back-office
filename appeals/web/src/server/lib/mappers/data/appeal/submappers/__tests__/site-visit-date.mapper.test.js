@@ -16,8 +16,10 @@ const data = {
 
 describe('site-visit-date.mapper', () => {
 	it('should display Site Visit date with Change action link', () => {
-		data.appealDetails.startedAt = '2025-01-01';
-		const mappedData = mapSiteVisitDate(data);
+		const mappedData = mapSiteVisitDate({
+			...data,
+			request: { originalUrl: data.currentRoute }
+		});
 		expect(mappedData).toEqual({
 			display: {
 				summaryListItem: {
@@ -27,7 +29,7 @@ describe('site-visit-date.mapper', () => {
 								attributes: {
 									'data-cy': 'change-site-visit-date'
 								},
-								href: '/appeals-service/appeal-details/1/site-visit/visit-booked',
+								href: '/appeals-service/appeal-details/1/site-visit-v2/schedule/schedule-visit-date?backUrl=%2Ftest',
 								text: 'Change',
 								visuallyHiddenText: 'Date'
 							}

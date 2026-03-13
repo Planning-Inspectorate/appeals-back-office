@@ -220,7 +220,8 @@ describe('mapStatusDependentNotifications', () => {
 			const result = mapStatusDependentNotifications(
 				appealDataToGetRequiredActions[testCase.requiredAction],
 				{
-					originalUrl: `/appeals-service/appeal-details/${mockAppealData.appealId}`
+					originalUrl: `/appeals-service/appeal-details/${mockAppealData.appealId}`,
+					session: {}
 				}
 			);
 

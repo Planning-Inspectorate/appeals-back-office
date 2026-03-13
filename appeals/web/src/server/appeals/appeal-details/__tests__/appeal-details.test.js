@@ -1475,7 +1475,7 @@ describe('appeal-details', () => {
 					expect(notificationBannerElementHTML).toContain('Important</h3>');
 					expect(notificationBannerElementHTML).toContain('Site visit ready to set up</p>');
 					expect(notificationBannerElementHTML).toContain(
-						`href="/appeals-service/appeal-details/${appealId}/site-visit/schedule-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}"`
+						`href="/appeals-service/appeal-details/${appealId}/site-visit-v2/schedule-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}"`
 					);
 					expect(notificationBannerElementHTML).toContain('data-cy="set-up-site-visit-banner"');
 					expect(notificationBannerElementHTML).toContain('Set up site visit</a>');

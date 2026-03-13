@@ -22,7 +22,6 @@ const ALLOWED_MISSED_SITE_VISIT_VALUE = ['lpa', 'inspector', 'appellant'];
  */
 const validateSiteVisitType = (isRequired = false) => {
 	const validator = body('visitType');
-
 	if (!isRequired) {
 		validator.optional();
 	}
@@ -55,15 +54,15 @@ const validateWhoMissedSiteVisit = (isRequired = false) => {
 };
 
 const validateSiteVisitRequiredDateTimeFields = param('appealId').custom((value, { req }) => {
-	const { visitDate, visitEndTime, visitStartTime, visitType } = req.body;
+	const { visitDate, visitEndTime, visitStartTime, visitType, dateTimeKnown } = req.body;
 
-	if (visitType === SITE_VISIT_TYPE_ACCESS_REQUIRED) {
+	if (visitType === SITE_VISIT_TYPE_ACCESS_REQUIRED && dateTimeKnown === 'yes') {
 		if (visitDate || visitStartTime || visitEndTime) {
 			if (!visitDate || !visitStartTime || !visitEndTime) {
 				throw new Error(ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCESS_REQUIRED);
 			}
 		}
-	} else if (visitType === SITE_VISIT_TYPE_ACCOMPANIED) {
+	} else if (visitType === SITE_VISIT_TYPE_ACCOMPANIED && dateTimeKnown === 'yes') {
 		if (visitDate || visitStartTime) {
 			if (!visitDate || !visitStartTime) {
 				throw new Error(ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCOMPANIED);
@@ -84,10 +83,59 @@ const postSiteVisitValidator = composeMiddleware(
 	validateIdParameter('appealId'),
 	validateSiteVisitRequiredDateTimeFields,
 	validateSiteVisitType(true),
-	validateDateParameter({ parameterName: 'visitDate' }),
-	validateDateParameter({ parameterName: 'visitStartTime' }),
-	validateDateParameter({ parameterName: 'visitEndTime' }),
-	validateTimeRangeParameters('visitStartTime', 'visitEndTime'),
+	body('visitDate')
+		.if(body('dateTimeKnown').equals('yes'))
+		.custom((value, { req }) => {
+			if (req.body.visitDate) {
+				return validateDateParameter({ parameterName: 'visitDate', isRequired: false })(
+					req,
+					{},
+					() => {}
+				);
+			}
+			return true;
+		}),
+	body('visitStartTime')
+		.if(
+			body('dateTimeKnown').equals('yes') &&
+				body('visitType').not().equals(SITE_VISIT_TYPE_UNACCOMPANIED)
+		)
+		.custom((value, { req }) => {
+			if (req.body.visitStartTime) {
+				return validateDateParameter({ parameterName: 'visitStartTime', isRequired: false })(
+					req,
+					{},
+					() => {}
+				);
+			}
+			return true;
+		}),
+	body('visitEndTime')
+		.if(
+			body('dateTimeKnown').equals('yes') &&
+				body('visitType').not().equals(SITE_VISIT_TYPE_UNACCOMPANIED)
+		)
+		.custom((value, { req }) => {
+			if (req.body.visitEndTime) {
+				return validateDateParameter({ parameterName: 'visitEndTime', isRequired: false })(
+					req,
+					{},
+					() => {}
+				);
+			}
+			return true;
+		}),
+	body(['visitStartTime', 'visitEndTime'])
+		.if(
+			body('dateTimeKnown').equals('yes') &&
+				body('visitType').not().equals(SITE_VISIT_TYPE_UNACCOMPANIED)
+		)
+		.custom((value, { req }) => {
+			if (req.body.visitStartTime && req.body.visitEndTime) {
+				return validateTimeRangeParameters('visitStartTime', 'visitEndTime')(req, {}, () => {});
+			}
+			return true;
+		}),
 	validationErrorHandler
 );
 
@@ -103,7 +151,7 @@ const patchSiteVisitValidator = composeMiddleware(
 	validateIdParameter('siteVisitId'),
 	validateSiteVisitRequiredDateTimeFields,
 	validateSiteVisitType(),
-	validateDateParameter({ parameterName: 'visitDate' }),
+	validateDateParameter({ parameterName: 'visitDate', isRequired: false }),
 	body('visitStartTime')
 		.if(body('visitType').not().equals(SITE_VISIT_TYPE_UNACCOMPANIED))
 		.custom((value, { req }) => {

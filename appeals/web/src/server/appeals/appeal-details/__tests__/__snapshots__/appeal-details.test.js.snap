@@ -1187,19 +1187,19 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
                 <dd class="govuk-summary-list__value">9 October 2023</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                     data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
             </div>
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
                 <dd class="govuk-summary-list__value">9:38am</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                     data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
                 </dd>
             </div>
             <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
                 <dd class="govuk-summary-list__value">Accompanied</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/schedule-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                     data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
                 </dd>
             </div>
@@ -1250,7 +1250,7 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
                     <li>9:38am - 10:00am</li>
                 </ul>
             </dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                 data-cy="change-schedule-visit">Change<span class="govuk-visually-hidden"> Site visit</span></a>
             </dd>
         </div>
@@ -1810,19 +1810,19 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
                 <dd class="govuk-summary-list__value">9 October 2023</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                     data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
             </div>
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
                 <dd class="govuk-summary-list__value">9:38am</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                     data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
                 </dd>
             </div>
             <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
                 <dd class="govuk-summary-list__value">Accompanied</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/schedule-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                     data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
                 </dd>
             </div>
@@ -1873,7 +1873,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
                     <li>9:38am - 10:00am</li>
                 </ul>
             </dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                 data-cy="change-schedule-visit">Change<span class="govuk-visually-hidden"> Site visit</span></a>
             </dd>
         </div>
@@ -2214,19 +2214,19 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
                 <dd class="govuk-summary-list__value">9 October 2023</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                     data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
             </div>
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
                 <dd class="govuk-summary-list__value">9:38am</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                     data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
                 </dd>
             </div>
             <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
                 <dd class="govuk-summary-list__value">Accompanied</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/schedule-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                     data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
                 </dd>
             </div>
@@ -2280,7 +2280,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
                     <li>9:38am - 10:00am</li>
                 </ul>
             </dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                 data-cy="change-schedule-visit">Change<span class="govuk-visually-hidden"> Site visit</span></a>
             </dd>
         </div>
@@ -2624,19 +2624,19 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
                 <dd class="govuk-summary-list__value">9 October 2023</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                     data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
             </div>
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
                 <dd class="govuk-summary-list__value">9:38am</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                     data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
                 </dd>
             </div>
             <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
                 <dd class="govuk-summary-list__value">Accompanied</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/schedule-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                     data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
                 </dd>
             </div>
@@ -2690,7 +2690,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
                     <li>9:38am - 10:00am</li>
                 </ul>
             </dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                 data-cy="change-schedule-visit">Change<span class="govuk-visually-hidden"> Site visit</span></a>
             </dd>
         </div>
@@ -3035,19 +3035,19 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
                 <dd class="govuk-summary-list__value">9 October 2023</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                     data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
             </div>
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
                 <dd class="govuk-summary-list__value">9:38am</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                     data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
                 </dd>
             </div>
             <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
                 <dd class="govuk-summary-list__value">Accompanied</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/schedule-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                     data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
                 </dd>
             </div>
@@ -3098,7 +3098,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
                     <li>9:38am - 10:00am</li>
                 </ul>
             </dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                 data-cy="change-schedule-visit">Change<span class="govuk-visually-hidden"> Site visit</span></a>
             </dd>
         </div>
@@ -3443,19 +3443,19 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
                 <dd class="govuk-summary-list__value">9 October 2023</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                     data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
             </div>
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
                 <dd class="govuk-summary-list__value">9:38am</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                     data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
                 </dd>
             </div>
             <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
                 <dd class="govuk-summary-list__value">Accompanied</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/schedule-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                     data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
                 </dd>
             </div>
@@ -3506,7 +3506,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
                     <li>9:38am - 10:00am</li>
                 </ul>
             </dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                 data-cy="change-schedule-visit">Change<span class="govuk-visually-hidden"> Site visit</span></a>
             </dd>
         </div>
@@ -3865,19 +3865,19 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
                 <dd class="govuk-summary-list__value">9 October 2023</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-visit/visit-booked"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-visit-v2/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                     data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
             </div>
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
                 <dd class="govuk-summary-list__value">9:38am</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-visit/visit-booked"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-visit-v2/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                     data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
                 </dd>
             </div>
             <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
                 <dd class="govuk-summary-list__value">Accompanied</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-visit-v2/schedule-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                     data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
                 </dd>
             </div>
@@ -3928,7 +3928,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                     <li>9:38am - 10:00am</li>
                 </ul>
             </dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-visit/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-visit-v2/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
                 data-cy="change-schedule-visit">Change<span class="govuk-visually-hidden"> Site visit</span></a>
             </dd>
         </div>
@@ -4277,7 +4277,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                     <li>9:38am - 10:00am</li>
                 </ul>
             </dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                 data-cy="change-schedule-visit">Change<span class="govuk-visually-hidden"> Site visit</span></a>
             </dd>
         </div>
@@ -4622,19 +4622,19 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
                 <dd class="govuk-summary-list__value">9 October 2023</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit-v2/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
                     data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
             </div>
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
                 <dd class="govuk-summary-list__value">9:38am</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit-v2/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
                     data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
                 </dd>
             </div>
             <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
                 <dd class="govuk-summary-list__value">Accompanied</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit-v2/schedule-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
                     data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
                 </dd>
             </div>
@@ -4685,7 +4685,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                     <li>9:38am - 10:00am</li>
                 </ul>
             </dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit-v2/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
                 data-cy="change-schedule-visit">Change<span class="govuk-visually-hidden"> Site visit</span></a>
             </dd>
         </div>
@@ -4993,7 +4993,7 @@ data-index="0">
     <div class="govuk-notification-banner__content">
         <p class="govuk-notification-banner__heading">Site visit ready to set up</p>
         <p><a class="govuk-notification-banner__link" data-cy="set-up-site-visit-banner"
-            href="/appeals-service/appeal-details/2/site-visit/schedule-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F2">Set up site visit</a>
+            href="/appeals-service/appeal-details/2/site-visit-v2/schedule-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F2">Set up site visit</a>
         </p>
     </div>
 </div>"
@@ -5143,19 +5143,19 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
                 <dd class="govuk-summary-list__value">9 October 2023</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
                     data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
             </div>
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
                 <dd class="govuk-summary-list__value">9:38am</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit-v2/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
                     data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
                 </dd>
             </div>
             <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
                 <dd class="govuk-summary-list__value">Accompanied</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit-v2/schedule-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
                     data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
                 </dd>
             </div>
@@ -5206,7 +5206,7 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
                     <li>9:38am - 10:00am</li>
                 </ul>
             </dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit-v2/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
                 data-cy="change-schedule-visit">Change<span class="govuk-visually-hidden"> Site visit</span></a>
             </dd>
         </div>
@@ -6170,7 +6170,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                     <li>9:38am - 10:00am</li>
                 </ul>
             </dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit-v2/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
                 data-cy="change-schedule-visit">Change<span class="govuk-visually-hidden"> Site visit</span></a>
             </dd>
         </div>
@@ -6526,7 +6526,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                     <li>9:38am - 10:00am</li>
                 </ul>
             </dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit-v2/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
                 data-cy="change-schedule-visit">Change<span class="govuk-visually-hidden"> Site visit</span></a>
             </dd>
         </div>
@@ -6876,7 +6876,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                     <li>9:38am - 10:00am</li>
                 </ul>
             </dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit-v2/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
                 data-cy="change-schedule-visit">Change<span class="govuk-visually-hidden"> Site visit</span></a>
             </dd>
         </div>
@@ -7237,7 +7237,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                     <li>9:38am - 10:00am</li>
                 </ul>
             </dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit-v2/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
                 data-cy="change-schedule-visit">Change<span class="govuk-visually-hidden"> Site visit</span></a>
             </dd>
         </div>
@@ -7586,7 +7586,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                     <li>9:38am - 10:00am</li>
                 </ul>
             </dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit-v2/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
                 data-cy="change-schedule-visit">Change<span class="govuk-visually-hidden"> Site visit</span></a>
             </dd>
         </div>
@@ -8363,7 +8363,7 @@ exports[`appeal-details should not render a back button 1`] = `
                                 <li>9:38am - 10:00am</li>
                             </ul>
                         </dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit-v2/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
                             data-cy="change-schedule-visit">Change<span class="govuk-visually-hidden"> Site visit</span></a>
                         </dd>
                     </div>

@@ -37,7 +37,7 @@ export const mapSiteVisitTimetable = ({ appealDetails, currentRoute, session, re
 		value: { html: value },
 		link: addBackLinkQueryToUrl(
 			request,
-			`${currentRoute}/site-visit/${hasVisit ? 'manage' : 'schedule'}-visit`
+			`${currentRoute}/site-visit-v2/${hasVisit ? 'manage' : 'schedule'}-visit`
 		),
 		actionText: hasVisit ? 'Change' : 'Arrange',
 		editable:

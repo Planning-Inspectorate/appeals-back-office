@@ -370,7 +370,7 @@ describe('personal-list', () => {
 				name: 'Set up site visit',
 				requiredAction: 'arrangeSiteVisit',
 				expectedHtml: {
-					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/site-visit/schedule-visit?backUrl=%2Fappeals-service%2Fpersonal-list">Set up site visit<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/site-visit-v2/schedule-visit?backUrl=%2Fappeals-service%2Fpersonal-list">Set up site visit<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				}
 			},
 			{
