@@ -2,9 +2,9 @@ import { buildRows } from '../../../build-rows.js';
 import { rowKeys } from './row-keys.js';
 import { rowBuilders } from './rows.js';
 
-export function appealProcessSection(templateData) {
+export function uploadDocumentsSection(templateData) {
 	return {
-		heading: 'Appeal process',
+		heading: 'Upload documents',
 		items: buildRows(templateData, rowBuilders, rowKeys)
 	};
 }
