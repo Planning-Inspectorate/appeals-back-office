@@ -1998,6 +1998,96 @@ describe('appellant cases routes', () => {
 				expect(response.status).toEqual(200);
 			});
 
+			test('updates the appellant case for invalid Enforcement Listed Building appeal', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...appealEnforcementListed,
+					appealType: {
+						key: 'F',
+						type: 'Enforcement listed building and conservation area appeal'
+					},
+					linkedAppealId: null,
+					appealRelationship: [],
+					agent: { email: 'agent@example.com' },
+					appellant: { email: 'appellant@example.com' },
+					lpa: { email: 'lpa@example.com', name: 'Test LPA' },
+					address: {
+						addressLine1: '1 Test Street',
+						addressTown: 'Test Town',
+						addressCounty: 'Test County',
+						postcode: 'TE5 7ER',
+						addressCountry: 'UK'
+					},
+					appellantCase: {
+						...appealEnforcementListed.appellantCase,
+						enforcementReference: 'ENF-123',
+						appellantCaseInvalidReasonsSelected: [
+							{
+								appellantCaseInvalidReason: { name: 'Appeal has not been submitted on time' },
+								appellantCaseInvalidReasonText: []
+							}
+						],
+						appellantCaseValidationOutcome: { name: 'Invalid' }
+					}
+				});
+				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+					appellantCaseValidationOutcomes[1]
+				);
+				databaseConnector.appellantCaseInvalidReason.findMany.mockResolvedValue(
+					appellantCaseInvalidReasons
+				);
+				databaseConnector.appellantCaseInvalidReasonsSelected.deleteMany.mockResolvedValue(true);
+				databaseConnector.appellantCaseInvalidReasonsSelected.createMany.mockResolvedValue(true);
+				databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
+
+				const body = {
+					invalidReasons: [{ id: 1, text: [] }],
+					validationOutcome: 'Invalid',
+					otherLiveAppeals: 'no',
+					enforcementNoticeInvalid: 'no'
+				};
+				const { appellantCase, id } = appealEnforcementListed;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { id: appellantCase.id },
+					data: { appellantCaseValidationOutcomeId: 2 }
+				});
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				const personalisation = {
+					appeal_reference_number: appealEnforcementListed.reference,
+					enforcement_reference: 'ENF-123',
+					site_address: `1 Test Street, Test Town, Test County, TE5 7ER, UK`,
+					reasons: ['Appeal has not been submitted on time'],
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					ground_a_barred: false,
+					other_live_appeals: false,
+					effective_date: expect.any(String)
+				};
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId,
+					notifyClient: expect.anything(),
+					templateName: 'enforcement-appeal-invalid-appellant',
+					recipientEmail: 'agent@example.com',
+					personalisation
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId,
+					notifyClient: expect.anything(),
+					templateName: 'enforcement-appeal-invalid-lpa',
+					recipientEmail: 'lpa@example.com',
+					personalisation
+				});
+
+				expect(response.status).toEqual(200);
+			});
+
 			test('updates the appellant case for incomplete enforcement notice appeal with invalid enforcement notice', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...enforcementNoticeAppealAppellantCaseInvalid,
