@@ -151,7 +151,9 @@ export const mapAppellantCaseIn = (command) => {
 			enforcementReference: casedata.enforcementReference,
 			interestInLand: casedata.interestInLand,
 			descriptionOfAllegedBreach: casedata.descriptionOfAllegedBreach,
-			contactAddress: { create: contactAddress }
+			contactAddress: { create: contactAddress },
+			planningObligation: command.casedata.planningObligation,
+			statusPlanningObligation: command.casedata.statusPlanningObligation
 		})
 	};
 
