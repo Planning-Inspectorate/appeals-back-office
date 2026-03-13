@@ -498,16 +498,16 @@ const updateAppealById = (
 			...(hasValueOrIsNull(agent) && { agentId: agent }),
 			...(hasValueOrIsNull(procedureTypeId) && { procedureTypeId }),
 			caseUpdatedDate: new Date(),
-			...(hearingStartTime && {
+			...((hearingStartTime || hearingEstimatedDays) && {
 				hearing: {
 					upsert: {
 						create: {
-							hearingStartTime,
-							...(hearingEstimatedDays && { estimatedDays: hearingEstimatedDays })
+							...(hearingStartTime && { hearingStartTime }),
+							...(hearingEstimatedDays && { estimatedDays: Number(hearingEstimatedDays) })
 						},
 						update: {
-							hearingStartTime,
-							...(hearingEstimatedDays && { estimatedDays: hearingEstimatedDays })
+							...(hearingStartTime && { hearingStartTime }),
+							...(hearingEstimatedDays && { estimatedDays: Number(hearingEstimatedDays) })
 						},
 						where: { appealId: id }
 					}
