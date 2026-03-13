@@ -525,18 +525,6 @@ export const importRepresentation = async (req, res) => {
 		);
 	}
 
-	if (repType === 'appellant_statement') {
-		await sendRepresentationReceivedNotifications(
-			req.appeal,
-			req.notifyClient,
-			azureAdUserId,
-			'appellant-statement-received',
-			true,
-			false,
-			false
-		);
-	}
-
 	return res.status(201).send(rep);
 };
 
