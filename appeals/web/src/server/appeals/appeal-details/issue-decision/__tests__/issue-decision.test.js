@@ -13,7 +13,6 @@ import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
 
 import { jest } from '@jest/globals';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_DECISION_OUTCOME } from '@planning-inspectorate/data-model';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -132,7 +131,6 @@ describe('issue-decision', () => {
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="planning_permission_granted">'
 				);
-				expect(unprettifiedElement.innerHTML).not.toContain('Listed building consent granted');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<input class="govuk-radios__input" id="decision-4" name="decision" type="radio" value="quashed_on_legal_grounds">'
 				);
@@ -142,6 +140,8 @@ describe('issue-decision', () => {
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<input class="govuk-radios__input" id="decision-6" name="decision" type="radio" value="invalid">'
 				);
+				expect(unprettifiedElement.innerHTML).not.toContain('Listed building consent granted');
+				expect(unprettifiedElement.innerHTML).toContain('Planning permission granted');
 			});
 		});
 
@@ -173,7 +173,6 @@ describe('issue-decision', () => {
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="planning_permission_granted">'
 				);
-				expect(unprettifiedElement.innerHTML).not.toContain('Planning permission granted');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<input class="govuk-radios__input" id="decision-4" name="decision" type="radio" value="quashed_on_legal_grounds">'
 				);
@@ -183,6 +182,8 @@ describe('issue-decision', () => {
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<input class="govuk-radios__input" id="decision-6" name="decision" type="radio" value="invalid">'
 				);
+				expect(unprettifiedElement.innerHTML).not.toContain('Planning permission granted');
+				expect(unprettifiedElement.innerHTML).toContain('Listed building consent granted');
 			});
 		});
 
@@ -192,7 +193,6 @@ describe('issue-decision', () => {
 			beforeEach(() => {
 				linkedAppealData = structuredClone(appealData);
 				linkedAppealData.appealId = 3;
-				linkedAppealData.appealType = APPEAL_TYPE.SECTION_78;
 				linkedAppealData.isParentAppeal = true;
 				linkedAppealData.linkedAppeals = [{ appealId: 4, appealReference: '351066' }];
 				nock('http://test/').get('/appeals/3?include=all').reply(200, linkedAppealData).persist();
