@@ -107,6 +107,26 @@ stages:
 
           - bash: |
               set -euo pipefail
+              if command -v terraform >/dev/null 2>&1; then
+                echo "Terraform already installed: $(terraform version | head -n 1)"
+                exit 0
+              fi
+
+              echo "Terraform not found. Installing..."
+              sudo apt-get update
+              sudo apt-get install -y wget unzip
+
+              TERRAFORM_VERSION="1.9.8"
+              wget -q "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
+              unzip -o "terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
+              sudo mv terraform /usr/local/bin/terraform
+              rm -f "terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
+
+              echo "Installed: $(terraform version | head -n 1)"
+            displayName: Install terraform (if missing)
+
+          - bash: |
+              set -euo pipefail
               if [[ ! "${{ parameters.terraformPlan }}" =~ ^[Tt]rue$ ]]; then
                 echo "Terraform plan skipped (terraformPlan=false)."
                 exit 0
@@ -117,11 +137,6 @@ stages:
 
               if [[ ! -f "${TFVARS_PATH}" ]]; then
                 echo "ERROR: tfvars file not found: ${TFVARS_PATH}"
-                exit 1
-              fi
-
-              if ! command -v terraform >/dev/null 2>&1; then
-                echo "ERROR: terraform is not installed on this agent."
                 exit 1
               fi
 
