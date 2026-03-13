@@ -3,6 +3,7 @@
 
 import { users } from '../../fixtures/users';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
+import { happyPathHelper } from '../../support/happyPathHelper';
 import { tag } from '../../support/tag';
 import { urlPaths } from '../../support/urlPaths';
 
@@ -58,6 +59,20 @@ describe('All cases search', () => {
 		const searchTerm = '99999999999'.repeat(5).substring(0, 51);
 		listCasesPage.nationalListSearch(searchTerm);
 		verify(errorMessage);
+	});
+
+	it('check Part 1 filter', () => {
+		cy.createCase({ caseType: 'W' }).then((caseObj) => {
+			appeal = caseObj;
+			cy.assignCaseOfficerViaApi(caseObj);
+			happyPathHelper.viewCaseDetails(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCaseWithProcedureType(caseObj, 'Part 1');
+			const testData = { rowIndex: 0, cellIndex: 0, textToMatch: caseObj.reference, strict: true };
+			cy.visit(urlPaths.appealsList);
+			listCasesPage.filterByAppealProcedure('Part 1');
+			listCasesPage.verifyTableCellText(testData);
+		});
 	});
 
 	const setupTestCase = () => {
