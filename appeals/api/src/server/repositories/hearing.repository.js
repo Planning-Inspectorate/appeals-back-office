@@ -29,9 +29,9 @@ const getHearingById = async (id) => {
 /**
  * @param {{
  *  appealId: number;
- * 	hearingStartTime: Date | string;
- * 	hearingEndTime?: Date | string;
- *  estimatedDays?: string | number;
+ * 	hearingStartTime: Date | string | null;
+ * 	hearingEndTime?: Date | string | null;
+ *  estimatedDays?: string | number | null;
  *  address?: Omit<Address, 'id'>
  * }} data
  * @returns
@@ -71,9 +71,9 @@ const createHearingById = (data) => {
  * @param {number} id
  * @param {{
  *  appealId: number;
- * 	hearingStartTime: Date | string;
- * 	hearingEndTime?: Date | string;
- *  estimatedDays?: string | number;
+ * 	hearingStartTime: Date | string | null;
+ * 	hearingEndTime?: Date | string | null;
+ *  estimatedDays?: string | number | null;
  *  address?: Omit<Address, 'id'> | null
  *  addressId?: number
  * }} data
