@@ -3,7 +3,7 @@ import {
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from '@planning-inspectorate/data-model';
 import { formatDate } from '../../../lib/nunjucks-filters/format-date.js';
-import { formatSentenceCase } from '../../../lib/nunjucks-filters/index.js';
+import { formatSentenceCase, formatYesNo } from '../../../lib/nunjucks-filters/index.js';
 
 /**
  * @param {string | null | undefined } typeOfPlanningApplication
@@ -44,7 +44,8 @@ export function beforeYouStartSection(templateData) {
 		planningApplicationReference,
 		applicationDecision,
 		applicationDecisionDate,
-		typeOfPlanningApplication
+		typeOfPlanningApplication,
+		appellantCostsAppliedFor
 	} = templateData;
 
 	return {
@@ -69,11 +70,11 @@ export function beforeYouStartSection(templateData) {
 						: 'What’s the date on the decision letter from the local planning authority?',
 				text: applicationDecisionDate ? formatDate(applicationDecisionDate) : 'No data'
 			},
-			// Being removed from BYS in BO
-			// {
-			// 	key: 'Are you claiming costs as part of your appeal?',
-			// 	text: formatYesNo(appellantCostsAppliedFor)
-			// },
+			// Currently still in BYS in BO - should check if this is still required
+			{
+				key: 'Are you claiming costs as part of your appeal?',
+				text: formatYesNo(appellantCostsAppliedFor)
+			},
 			{ key: 'What is the application reference number?', text: planningApplicationReference }
 		]
 	};
