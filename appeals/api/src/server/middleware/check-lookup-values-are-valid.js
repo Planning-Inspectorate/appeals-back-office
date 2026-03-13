@@ -1,4 +1,5 @@
 import commonRepository from '#repositories/common.repository.js';
+import logger from '#utils/logger.js';
 import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('express').NextFunction} NextFunction */
@@ -42,6 +43,7 @@ const checkLookupValuesAreValid = (fieldName, databaseTable) => async (req, res,
 		);
 
 		if (!hasValidValues) {
+			logger.error(`Invalid lookup values for ${fieldName}: ${valuesToCheck}`);
 			return res.status(404).send({ errors: { [fieldName]: ERROR_NOT_FOUND } });
 		}
 	}

@@ -1793,6 +1793,11 @@ export const appellantCaseInvalidReasonsRealIds = [
 		id: 7,
 		name: 'Ground (a) barred',
 		hasText: false
+	},
+	{
+		id: 8,
+		name: 'LPA has withdrawn the enforcement notice',
+		hasText: false
 	}
 ];
 
