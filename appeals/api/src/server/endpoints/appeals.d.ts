@@ -620,8 +620,8 @@ interface HearingEstimate {
 
 interface Hearing {
 	hearingId: number;
-	hearingStartTime: string;
-	hearingEndTime?: string;
+	hearingStartTime: string | null;
+	hearingEndTime?: string | null;
 	estimatedDays?: number;
 	addressId?: number;
 	address: Schema.Address;
@@ -1089,8 +1089,8 @@ type UpdateDocumentAvCheckRequest = {
 
 type CreateHearing = {
 	appealId: number;
-	hearingStartTime: Date | string;
-	hearingEndTime: Date | string | undefined;
+	hearingStartTime: Date | string | null;
+	hearingEndTime: Date | string | undefined | null;
 	estimatedDays: string | undefined;
 	address: Omit<Schema.Address, 'id'> | undefined;
 };
@@ -1125,8 +1125,8 @@ type UpdateInquiry = {
 type UpdateHearing = {
 	appealId: number;
 	hearingId: number;
-	hearingStartTime: Date | string;
-	hearingEndTime: Date | string | undefined;
+	hearingStartTime: Date | string | null;
+	hearingEndTime: Date | string | undefined | null;
 	estimatedDays: number | undefined;
 	addressId?: number;
 	address?: Omit<Schema.Address, 'id'> | null;
@@ -1140,7 +1140,7 @@ type CancelHearing = {
 type HearingResponse = {
 	appealId: number;
 	hearingId: number;
-	hearingStartTime: Date;
+	hearingStartTime: Date | null;
 	hearingEndTime: Date | null;
 	address: Schema.Address | null;
 	addressId: number | null;
