@@ -48,7 +48,7 @@ const checkHearingExists = async (req, res, next) => {
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} templateName
  * @param {Appeal} appeal
- * @param {string | Date} hearingStartTime
+ * @param {string | Date | null} hearingStartTime
  * @param {string} estimatedDays
  * @param {Omit<import('@pins/appeals.api').Schema.Address, 'id'> | null} address
  * @param {string} azureAdUserId
@@ -64,12 +64,16 @@ const sendHearingDetailsNotifications = async (
 	azureAdUserId
 ) => {
 	const personalisation = {
-		hearing_date: dateISOStringToDisplayDate(
-			typeof hearingStartTime === 'string' ? hearingStartTime : hearingStartTime.toISOString()
-		),
-		hearing_time: formatTime12h(
-			typeof hearingStartTime === 'string' ? new Date(hearingStartTime) : hearingStartTime
-		),
+		hearing_date: hearingStartTime
+			? dateISOStringToDisplayDate(
+					typeof hearingStartTime === 'string' ? hearingStartTime : hearingStartTime.toISOString()
+				)
+			: 'Not set',
+		hearing_time: hearingStartTime
+			? formatTime12h(
+					typeof hearingStartTime === 'string' ? new Date(hearingStartTime) : hearingStartTime
+				)
+			: 'Not set',
 		hearing_expected_days: estimatedDays ?? '',
 		hearing_address: address ? formatAddressSingleLine({ ...address, id: 0 }) : ''
 	};
