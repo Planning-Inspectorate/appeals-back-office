@@ -1,6 +1,8 @@
 // @ts-nocheck
 import {
 	appealData,
+	appealDataEnforcementListedBuilding,
+	appealDataEnforcementNotice,
 	documentFileInfo,
 	documentFileVersionInfo,
 	documentRedactionStatuses,
@@ -103,16 +105,15 @@ describe('issue-decision', () => {
 		});
 
 		describe('Enforcement notice appeals', () => {
-			let enforcementAppeal;
 			beforeEach(() => {
-				appealData.appealType = APPEAL_TYPE.ENFORCEMENT_NOTICE;
-				enforcementAppeal = structuredClone(appealData);
-				enforcementAppeal.appealId = '5';
-				nock('http://test/').get('/appeals/5?include=all').reply(200, enforcementAppeal).persist();
+				nock('http://test/')
+					.get('/appeals/5623?include=all')
+					.reply(200, appealDataEnforcementNotice)
+					.persist();
 			});
 
 			it(`should render the enforcement notice appeal 'decision' page with the expected content`, async () => {
-				const response = await request.get(`${baseUrl}/5${issueDecisionPath}${decisionPath}`);
+				const response = await request.get(`${baseUrl}/5623${issueDecisionPath}${decisionPath}`);
 				const element = parseHtml(response.text);
 
 				expect(element.innerHTML).toMatchSnapshot();
@@ -131,6 +132,9 @@ describe('issue-decision', () => {
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="planning_permission_granted">'
 				);
+				expect(unprettifiedElement.innerHTML).not.toContain(
+					'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="Listed building consent granted">'
+				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<input class="govuk-radios__input" id="decision-4" name="decision" type="radio" value="quashed_on_legal_grounds">'
 				);
@@ -144,19 +148,15 @@ describe('issue-decision', () => {
 		});
 
 		describe('Enforcement listed building', () => {
-			let enforcementListedBuildingAppeal;
 			beforeEach(() => {
-				appealData.appealType = APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING;
-				enforcementListedBuildingAppeal = structuredClone(appealData);
-				enforcementListedBuildingAppeal.appealId = '5';
 				nock('http://test/')
-					.get('/appeals/5?include=all')
-					.reply(200, enforcementListedBuildingAppeal)
+					.get('/appeals/5624?include=all')
+					.reply(200, appealDataEnforcementListedBuilding)
 					.persist();
 			});
 
 			it(`should render the enforcement listed building appeal 'decision' page with the expected content`, async () => {
-				const response = await request.get(`${baseUrl}/5${issueDecisionPath}${decisionPath}`);
+				const response = await request.get(`${baseUrl}/5624${issueDecisionPath}${decisionPath}`);
 				const element = parseHtml(response.text);
 
 				expect(element.innerHTML).toMatchSnapshot();
@@ -174,6 +174,9 @@ describe('issue-decision', () => {
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="Listed building consent granted">'
+				);
+				expect(unprettifiedElement.innerHTML).not.toContain(
+					'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="planning_permission_granted">'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<input class="govuk-radios__input" id="decision-4" name="decision" type="radio" value="quashed_on_legal_grounds">'
