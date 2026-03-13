@@ -298,6 +298,23 @@ describe('rule 6 party proof of evidence - add document', () => {
 		});
 	});
 
+	describe('GET /add-document', () => {
+		it('should render the document upload page with the expected content', async () => {
+			const response = await request.get(
+				`${baseUrl}/2/proof-of-evidence/rule-6-party/1/add-document`
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedHTML = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: 'body'
+			}).innerHTML;
+
+			expect(unprettifiedHTML).toContain('Upload new proof of evidence and witnesses document');
+		});
+	});
+
 	describe('GET /appeals-service/appeal-details/2/proof-of-evidence/rule-6-party/1', () => {
 		it('should render the review screen', async () => {
 			const response = await request.get(`${baseUrl}/2/proof-of-evidence/rule-6-party/1`);
