@@ -155,7 +155,7 @@ describe('issue-decision', () => {
 					.persist();
 			});
 
-			it(`should render the enforcement notice appeal 'decision' page with the expected content`, async () => {
+			it(`should render the enforcement listed building appeal 'decision' page with the expected content`, async () => {
 				const response = await request.get(`${baseUrl}/5${issueDecisionPath}${decisionPath}`);
 				const element = parseHtml(response.text);
 
