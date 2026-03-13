@@ -13,7 +13,7 @@ exports[`extra-conditions GET /change should render the change new conditions pa
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Are there any new conditions?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
@@ -75,7 +75,7 @@ exports[`extra-conditions POST /change should re-render the change new condition
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Are there any new conditions?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
@@ -137,7 +137,7 @@ exports[`extra-conditions should re-render the change new conditions page with a
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Are there any new conditions?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
