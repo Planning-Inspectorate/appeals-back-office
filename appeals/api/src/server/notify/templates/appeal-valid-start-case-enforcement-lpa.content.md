@@ -19,7 +19,6 @@ The appeal will continue on the following grounds:
 
 {{ create_grounds_list(appeal_grounds) }}
 {% if other_appeals_grounds_group.length -%}
-{% if other_appeals_grounds_group.length > 1 -%}
 {% for appeal_with_grounds in other_appeals_grounds_group -%}
 {% if appeal_with_grounds.grounds.length -%}
 {{ appeal_with_grounds.reference }} will continue on the following grounds:
@@ -27,7 +26,6 @@ The appeal will continue on the following grounds:
 {{ create_grounds_list(appeal_with_grounds.grounds) }}
 {% endif -%}
 {% endfor -%}
-{% endif -%}
 {% endif -%}
 
 # Timetable
