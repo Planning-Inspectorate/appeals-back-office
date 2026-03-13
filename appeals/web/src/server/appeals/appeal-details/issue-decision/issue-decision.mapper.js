@@ -136,9 +136,7 @@ export function issueDecisionPage(
 			? [
 					NOTICE_UPHELD,
 					NOTICE_VARIED_AND_UPHELD,
-					appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
-						? 'Listed building consent granted'
-						: PLANNING_PERMISSION_GRANTED,
+					PLANNING_PERMISSION_GRANTED,
 					QUASHED_ON_LEGAL_GROUNDS,
 					SPLIT_DECISION,
 					INVALID
@@ -150,6 +148,11 @@ export function issueDecisionPage(
 		text: toSentenceCase(decisionType),
 		checked: inspectorDecision?.outcome === decisionType
 	}));
+
+	if (appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING) {
+		items.filter((item) => item.value === 'planning_permission_granted')[0].text =
+			'Listed building consent granted';
+	}
 
 	if (
 		!isLinkedAppeal(appealDetails) &&

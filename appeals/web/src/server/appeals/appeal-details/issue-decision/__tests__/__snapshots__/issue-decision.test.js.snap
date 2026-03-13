@@ -133,7 +133,7 @@ exports[`issue-decision GET /decision Enforcement listed building should render 
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="decision-3" name="decision" type="radio"
-                                        value="Listed building consent granted">
+                                        value="planning_permission_granted">
                                         <label class="govuk-label govuk-radios__label" for="decision-3">Listed building consent granted</label>
                                     </div>
                                     <div class="govuk-radios__item">
