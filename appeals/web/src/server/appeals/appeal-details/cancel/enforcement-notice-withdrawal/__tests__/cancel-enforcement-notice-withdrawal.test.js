@@ -201,5 +201,117 @@ describe('cancel enforcement notice withdrawal', () => {
 				'Withdraw enforcement notice'
 			);
 		});
+
+		it('should have a back button that links to the document upload page', async () => {
+			const response = await request.get(
+				`${baseUrl}/${mockAppealId}/cancel/enforcement-notice-withdrawal/check-details`
+			);
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+			expect(pageHtml.querySelector('.govuk-back-link')?.getAttribute('href')?.trim()).toBe(
+				`${baseUrl}/${mockAppealId}/cancel/enforcement-notice-withdrawal`
+			);
+		});
+	});
+
+	describe('POST /cancel/enforcement-notice-withdrawal/check-details', () => {
+		beforeEach(async () => {
+			nock('http://test/')
+				.get(`/appeals/${mockAppealId}?include=all`)
+				.reply(200, appealDataEnforcementNotice)
+				.persist();
+			nock('http://test/')
+				.get(
+					`/appeals/${mockAppealId}/document-folders?path=cancellation/lpaEnforcementNoticeWithdrawal`
+				)
+				.reply(200, [
+					{
+						folderId: 123,
+						path: 'cancellation/lpaEnforcementNoticeWithdrawal'
+					}
+				])
+				.persist();
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, [
+					{
+						id: 1,
+						key: 'redacted',
+						name: 'Redacted'
+					},
+					{
+						id: 2,
+						key: 'unredacted',
+						name: 'Unredacted'
+					},
+					{
+						id: 3,
+						key: 'no_redaction_required',
+						name: 'No redaction required'
+					}
+				])
+				.persist();
+		});
+
+		it('should save the documents and mark the appeal as invalid', async () => {
+			const mockAddDocument = nock('http://test/')
+				.post(`/appeals/${mockAppealId}/documents`)
+				.reply(200, {
+					documentId: '123'
+				});
+			const mockSetReviewOutcome = nock('http://test/')
+				.patch(
+					`/appeals/${mockAppealId}/appellant-cases/${appealDataEnforcementNotice.appellantCaseId}`,
+					{
+						validationOutcome: 'invalid',
+						invalidReasons: [{ id: 8 }],
+						enforcementNoticeInvalid: 'no'
+					}
+				)
+				.reply(200);
+			await request.post(`${baseUrl}/${mockAppealId}/cancel/enforcement-notice-withdrawal`).send({
+				'upload-info': fileUploadInfo
+			});
+			const response = await request.post(
+				`${baseUrl}/${mockAppealId}/cancel/enforcement-notice-withdrawal/check-details`
+			);
+			expect(response.statusCode).toBe(302);
+			expect(response.header.location).toBe(`/appeals-service/appeal-details/${mockAppealId}`);
+			expect(mockAddDocument.isDone()).toBe(true);
+			expect(mockSetReviewOutcome.isDone()).toBe(true);
+		});
+
+		it('should redirect to error page if the document request fails', async () => {
+			nock('http://test/').post(`/appeals/${mockAppealId}/documents`).reply(500);
+			await request.post(`${baseUrl}/${mockAppealId}/cancel/enforcement-notice-withdrawal`).send({
+				'upload-info': fileUploadInfo
+			});
+			const response = await request.post(
+				`${baseUrl}/${mockAppealId}/cancel/enforcement-notice-withdrawal/check-details`
+			);
+			expect(response.statusCode).toBe(302);
+			expect(response.header.location).toContain('/appeals-service/error');
+		});
+
+		it('should render 500 if the review outcome request fails', async () => {
+			nock('http://test/')
+				.post(`/appeals/${mockAppealId}/documents`)
+				.reply(200, { documentId: '123' });
+			nock('http://test/')
+				.patch(
+					`/appeals/${mockAppealId}/appellant-cases/${appealDataEnforcementNotice.appellantCaseId}`
+				)
+				.reply(500);
+			await request.post(`${baseUrl}/${mockAppealId}/cancel/enforcement-notice-withdrawal`).send({
+				'upload-info': fileUploadInfo
+			});
+			const response = await request.post(
+				`${baseUrl}/${mockAppealId}/cancel/enforcement-notice-withdrawal/check-details`
+			);
+			expect(response.statusCode).toBe(500);
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
+		});
 	});
 });
