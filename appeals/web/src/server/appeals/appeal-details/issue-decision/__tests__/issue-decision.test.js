@@ -132,9 +132,7 @@ describe('issue-decision', () => {
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="planning_permission_granted">'
 				);
-				expect(unprettifiedElement.innerHTML).not.toContain(
-					'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="Listed building consent granted">'
-				);
+				expect(unprettifiedElement.innerHTML).not.toContain('Listed building consent granted');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<input class="govuk-radios__input" id="decision-4" name="decision" type="radio" value="quashed_on_legal_grounds">'
 				);
@@ -173,11 +171,9 @@ describe('issue-decision', () => {
 					'<input class="govuk-radios__input" id="decision-2" name="decision" type="radio" value="notice_varied_and_upheld">'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="Listed building consent granted">'
-				);
-				expect(unprettifiedElement.innerHTML).not.toContain(
 					'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="planning_permission_granted">'
 				);
+				expect(unprettifiedElement.innerHTML).not.toContain('Planning permission granted');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<input class="govuk-radios__input" id="decision-4" name="decision" type="radio" value="quashed_on_legal_grounds">'
 				);
