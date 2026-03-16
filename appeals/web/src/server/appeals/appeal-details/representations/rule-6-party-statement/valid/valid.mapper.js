@@ -121,7 +121,7 @@ export const confirmPage = (
 							items: [
 								{
 									text: 'Change',
-									href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}`,
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/rule-6-party-statement/${rule6PartyId}?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealDetails.appealId}%2Frule-6-party-statement%2F${rule6PartyId}%2Fvalid%2Fconfirm`,
 									visuallyHiddenText: 'review decision'
 								}
 							]

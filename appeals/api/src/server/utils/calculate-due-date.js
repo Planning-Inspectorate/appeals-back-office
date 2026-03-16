@@ -66,6 +66,23 @@ export const calculateDueDate = async (appeal, costsDecision) => {
 				days: approxStageCompletion.STATE_TARGET_ASSIGN_CASE_OFFICER
 			});
 		case APPEAL_CASE_STATUS.VALIDATION:
+			if (appeal.appealType?.type === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+				const groundAFeeReceiptDueDate =
+					// @ts-ignore
+					appeal.enforcementNoticeAppealOutcome?.groundAFeeReceiptDueDate;
+				const { caseExtensionDate, caseCreatedDate } = appeal;
+
+				if (groundAFeeReceiptDueDate && caseExtensionDate) {
+					const earliestDate = Math.min(
+						new Date(groundAFeeReceiptDueDate).getTime(),
+						new Date(caseExtensionDate).getTime()
+					);
+					return new Date(earliestDate);
+				}
+
+				const fallbackDate = groundAFeeReceiptDueDate || caseExtensionDate || caseCreatedDate;
+				return new Date(fallbackDate);
+			}
 			return new Date(appeal.caseExtensionDate ? appeal.caseExtensionDate : appeal.caseCreatedDate);
 		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION: {
 			if (appeal.siteVisit) {

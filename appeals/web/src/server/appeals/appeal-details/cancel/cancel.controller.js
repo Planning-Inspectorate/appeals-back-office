@@ -24,13 +24,20 @@ const renderCancelAppealPage = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	const getBackLinkUrl = backLinkGenerator('cancelAppeal');
-	const backLinkUrl = getBackLinkUrl(
-		request,
-		null,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/cancel/invalid/check-details`
-	);
 	const values = getSessionValuesForAppeal(request, 'cancelAppeal', currentAppeal.appealId);
+
+	const path = (() => {
+		switch (values.cancelReasonRadio) {
+			case CANCEL_REASON.ENFORCEMENT_NOTICE_WITHDRAWN:
+				return 'enforcement-notice-withdrawal';
+			case CANCEL_REASON.INVALID:
+				return 'invalid';
+		}
+	})();
+	const cyaUrl = path
+		? `/appeals-service/appeal-details/${currentAppeal.appealId}/cancel/${path}/check-details`
+		: '';
+	const backLinkUrl = backLinkGenerator('cancelAppeal')(request, null, cyaUrl);
 
 	const appealId = currentAppeal.appealId;
 	const mappedPageContent = mapCancelAppealPage(

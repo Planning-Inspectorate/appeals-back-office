@@ -17,6 +17,7 @@ import {
 	preserveQueryString
 } from '#lib/url-utilities.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { recalculateDateIfNotBusinessDay } from '@pins/appeals/utils/business-days.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import {
@@ -187,17 +188,8 @@ export const getSelectProcedure = async (request, response) => {
 		getEnabledHearingAppealTypes(isLinked).includes(appealType) ||
 		getEnabledInquiryAppealTypes(isLinked).includes(appealType);
 
-	const isEnforcementType = [
-		APPEAL_TYPE.ENFORCEMENT_NOTICE,
-		APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
-	].includes(appealType);
-
 	// enforcement should redirect to check your answers if hearing or inquiry is not enabled, as there is only one procedure option available
-	if (
-		isEnforcementType &&
-		featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE) &&
-		!hearingOrInquiryEnabled
-	) {
+	if (isAnyEnforcementAppealType(appealType) && !hearingOrInquiryEnabled) {
 		session.startCaseAppealProcedure = {
 			[appealId]: { appealProcedure: APPEAL_CASE_PROCEDURE.WRITTEN }
 		};
@@ -341,9 +333,7 @@ const renderConfirmProcedure = async (request, response) => {
 
 	clearEditsForAppeal(request, 'startCaseAppealProcedure', appealId);
 
-	const showEmailPreviews =
-		appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ||
-		appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING;
+	const showEmailPreviews = isAnyEnforcementAppealType(appealType);
 
 	/** @type {{appellant: string, lpa: string} | undefined} */
 	let emailPreviews;

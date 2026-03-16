@@ -131,7 +131,8 @@ export function issueDecisionPage(
 	} = APPEAL_CASE_DECISION_OUTCOME;
 
 	const decisionTypes =
-		appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE
+		appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ||
+		appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
 			? [
 					NOTICE_UPHELD,
 					NOTICE_VARIED_AND_UPHELD,
@@ -147,6 +148,11 @@ export function issueDecisionPage(
 		text: toSentenceCase(decisionType),
 		checked: inspectorDecision?.outcome === decisionType
 	}));
+
+	if (appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING) {
+		items.filter((item) => item.value === 'planning_permission_granted')[0].text =
+			'Listed building consent granted';
+	}
 
 	if (
 		!isLinkedAppeal(appealDetails) &&

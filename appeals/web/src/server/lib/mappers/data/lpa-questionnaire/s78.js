@@ -1,3 +1,4 @@
+import { mapLpaNeighbouringSitesLpaqAdapter } from '../appeal/submappers/lpa-neighbouring-sites.mapper.js';
 import { submaps as hasSubmaps } from './has.js';
 import { mapAffectsScheduledMonument } from './submappers/map-affects-scheduled-monument.js';
 import { mapChangedListedBuildingDetails } from './submappers/map-changed-listed-building-details.js';
@@ -56,6 +57,7 @@ export const submaps = {
 	eiaSensitiveAreaDetails: mapEiaSensitiveAreaDetails,
 	consultedBodiesDetails: mapEiaConsultedBodiesDetails,
 	reasonForNeighbourVisits: mapReasonForNeighbourVisits,
+	lpaNeighbouringSites: mapLpaNeighbouringSitesLpaqAdapter,
 	inNearOrLikelyToAffectDesignatedSites: mapInNearOrLikelyToAffectDesignatedSites,
 	changedListedBuildingDetails: mapChangedListedBuildingDetails
 };

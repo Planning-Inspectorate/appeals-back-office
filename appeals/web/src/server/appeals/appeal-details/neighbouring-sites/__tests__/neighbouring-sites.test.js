@@ -126,7 +126,7 @@ describe('neighbouring-sites', () => {
 					}
 				});
 			nock('http://test/')
-				.get(`/appeals/${appealData.appealId}?include=all`)
+				.get(`/appeals/${appealData.appealId}?include=neighbouringSites`)
 				.reply(200, appealData)
 				.persist();
 			await request.post(`${baseUrl}/1/neighbouring-sites/add/back-office`).send({
@@ -165,7 +165,7 @@ describe('neighbouring-sites', () => {
 					}
 				});
 			nock('http://test/')
-				.get(`/appeals/${appealData.appealId}?include=all`)
+				.get(`/appeals/${appealData.appealId}?include=neighbouringSites,lpaQuestionnaire`)
 				.reply(200, appealData)
 				.persist();
 			await request
@@ -325,7 +325,7 @@ describe('neighbouring-sites', () => {
 			];
 
 			nock('http://test/')
-				.get(`/appeals/3?include=all`)
+				.get(`/appeals/3?include=neighbouringSites`)
 				.reply(200, appealDataWithOneNeighbouringSite)
 				.persist();
 
@@ -645,7 +645,7 @@ describe('neighbouring-sites', () => {
 				siteId: 1
 			});
 			nock('http://test/')
-				.get(`/appeals/${appealData.appealId}?include=all`)
+				.get(`/appeals/${appealData.appealId}?include=neighbouringSites`)
 				.reply(200, appealData)
 				.persist();
 

@@ -406,7 +406,7 @@ describe('Setup hearing and add hearing estimates', () => {
 			hearingSectionPage.setUpHearing(newHearingDate, date.getHours(), date.getMinutes());
 			estimatedDaysSection.selectEstimatedDaysOption('No');
 			caseDetailsPage.clickButtonByText('Continue');
-
+			caseDetailsPage.clickButtonByText('Continue');
 			// Update Address and Date
 			const updatedAddress = {
 				...originalAddress,

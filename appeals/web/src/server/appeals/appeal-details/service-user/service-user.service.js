@@ -8,7 +8,7 @@
  * @returns {Promise<{}>}
  */
 export const assignServiceUser = (apiClient, appealId, userType, data) =>
-	apiClient.patch(`appeals/${appealId}`, {
+	apiClient.patch(`appeals/${appealId}?include=childAppeals`, {
 		json: {
 			[userType]: {
 				firstName: data.firstName,

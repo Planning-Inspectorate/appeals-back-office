@@ -12,7 +12,13 @@ import { mapS78AppellantCase } from '../s78/map-appellant-case.js';
  */
 export const mapEnforcementAppellantCase = (data) => {
 	const {
-		appeal: { appellantCase, parentAppeals = [], childAppeals = [], appealType }
+		appeal: {
+			appellantCase,
+			parentAppeals = [],
+			childAppeals = [],
+			appealType,
+			enforcementNoticeAppealOutcome
+		}
 	} = data;
 
 	const sharedS78Mappers = mapS78AppellantCase(data);
@@ -64,7 +70,9 @@ export const mapEnforcementAppellantCase = (data) => {
 			applicationDecisionAppealed: appellantCase?.applicationDecisionAppealed ?? null,
 			appealDecisionDate: hasEnforcementData
 				? appellantCase?.appealDecisionDate?.toISOString()
-				: null
+				: null,
+			enforcementNoticeInvalid: enforcementNoticeAppealOutcome?.enforcementNoticeInvalid,
+			groundAFeeDueDate: enforcementNoticeAppealOutcome?.groundAFeeReceiptDueDate
 		}
 	};
 };

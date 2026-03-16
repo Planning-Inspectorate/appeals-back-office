@@ -53,7 +53,8 @@ router.get(
 		'procedureType',
 		'parentAppeals',
 		'childAppeals',
-		'appealGrounds'
+		'appealGrounds',
+		'enforcementNoticeAppealOutcome'
 	]),
 	checkAppellantCaseExists,
 	asyncHandler(getAppellantCaseById)

@@ -1,4 +1,5 @@
 import logger from '#lib/logger.js';
+import isLinkedAppeal from '#lib/mappers/utils/is-linked-appeal.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 import { HTTPError } from 'got';
@@ -21,12 +22,13 @@ export const getChangeServiceUser = async (request, response) => {
 const renderChangeServiceUser = async (request, response) => {
 	const {
 		errors,
-		params: { userType, action }
+		params: { userType, action },
+		currentAppeal
 	} = request;
 
 	const backLinkUrl = request.originalUrl.split('/').slice(0, -3).join('/');
 	const removeLinkUrl =
-		userType === 'agent' && action === 'change'
+		!isLinkedAppeal(currentAppeal) && userType === 'agent' && action === 'change'
 			? request.originalUrl.replace('/change/', '/remove/')
 			: '';
 

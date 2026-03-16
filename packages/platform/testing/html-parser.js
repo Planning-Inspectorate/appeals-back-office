@@ -24,3 +24,27 @@ export const parseHtml = (
 
 	return /** @type {*} */ (htmlParser).parse(parsedHtml, options);
 };
+
+/**
+ * Parses HTML and returns all instances root element.
+ *
+ * @param {string} html
+ * @param {Partial<import('node-html-parser').Options> & { rootElement?: string; skipPrettyPrint?: boolean }} [options={}]
+ * @returns {HTMLElement}
+ */
+export const parseHtmlSelectAll = (
+	html,
+	{ rootElement = 'main', skipPrettyPrint = false, ...options } = {}
+) => {
+	let parsedHtml = /** @type {*} */ (htmlParser)
+		.parse(html)
+		.removeWhitespace()
+		.querySelectorAll(rootElement)
+		.toString();
+
+	if (!skipPrettyPrint) {
+		parsedHtml = prettyPrint(parsedHtml);
+	}
+
+	return /** @type {*} */ (htmlParser).parse(parsedHtml, options);
+};

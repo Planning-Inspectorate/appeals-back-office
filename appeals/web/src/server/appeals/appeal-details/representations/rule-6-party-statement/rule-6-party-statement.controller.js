@@ -1,4 +1,4 @@
-import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { getBackLinkUrlFromQuery, preserveQueryString } from '#lib/url-utilities.js';
 import { APPEAL_REPRESENTATION_STATUS, COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import {
 	reviewRule6PartyStatementPage,
@@ -75,20 +75,36 @@ export const postReviewRule6PartyStatement = async (request, response) => {
 			) {
 				session.acceptRule6PartyStatement[currentAppeal.appealId].forcedAllocation = true;
 				return response.redirect(
-					`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-level`
+					preserveQueryString(
+						request,
+						`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-level`,
+						{ exclude: ['backUrl'] }
+					)
 				);
 			}
 			delete session.acceptRule6PartyStatement[currentAppeal.appealId].forcedAllocation;
 			return response.redirect(
-				`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-check`
+				preserveQueryString(
+					request,
+					`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-check`,
+					{ exclude: ['backUrl'] }
+				)
 			);
 		case COMMENT_STATUS.INCOMPLETE:
 			return response.redirect(
-				`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/incomplete/reasons`
+				preserveQueryString(
+					request,
+					`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/incomplete/reasons`,
+					{ exclude: ['backUrl'] }
+				)
 			);
 		case COMMENT_STATUS.VALID_REQUIRES_REDACTION:
 			return response.redirect(
-				`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/redact`
+				preserveQueryString(
+					request,
+					`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/redact`,
+					{ exclude: ['backUrl'] }
+				)
 			);
 		default:
 			return response.status(404).render('app/404.njk');

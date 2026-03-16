@@ -866,12 +866,10 @@ export const enforcementListedAppealAppellantCaseIncomplete = {
 				]
 			}
 		],
-		appellantCaseEnforcementMissingDocumentsSelected: [{ id: 12 }],
-		groundAFeeReceiptDueDate: new Date()
+		appellantCaseEnforcementMissingDocumentsSelected: [{ id: 12 }]
 	},
 	enforcementNoticeAppealOutcome: {
-		enforcementNoticeInvalid: 'no',
-		groundAFeeReceiptDueDate: new Date()
+		enforcementNoticeInvalid: 'no'
 	},
 	id: 4,
 	appealType: {

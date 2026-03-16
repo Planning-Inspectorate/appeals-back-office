@@ -1273,6 +1273,46 @@ data-index="0">
 </div>"
 `;
 
+exports[`appellant-case GET /appellant-case notification banners should render an "Appeal is incomplete" banner where the enforcement notice appeal is incomplete with "Ground (a) fee receipt due" 1`] = `
+"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
+data-index="0">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Appeal is incomplete</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-4">
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Due date</dt>
+                <dd class="govuk-summary-list__value">2 January 2024</dd>
+            </div>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Incomplete reasons</dt>
+                <dd class="govuk-summary-list__value">Ground (a) fee receipt due</dd>
+            </div>
+        </dl>
+    </div>
+</div>"
+`;
+
+exports[`appellant-case GET /appellant-case notification banners should render an "Appeal is incomplete" banner where the enforcement notice appeal is incomplete with "Missing information" 1`] = `
+"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
+data-index="0">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Appeal is incomplete</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-4">
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Due date</dt>
+                <dd class="govuk-summary-list__value">2 October 2024</dd>
+            </div>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Incomplete reasons</dt>
+                <dd class="govuk-summary-list__value">Enforcement notice invalid</dd>
+            </div>
+        </dl>
+    </div>
+</div>"
+`;
+
 exports[`appellant-case GET /appellant-case notification banners should render an "Appeal is incomplete" notification banner with the expected content when the appellant case has been reviewed with an outcome of "incomplete" 1`] = `
 "<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
 aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
@@ -1351,6 +1391,43 @@ data-index="0">
     </div>
     <div class="govuk-notification-banner__content">
         <p class="govuk-notification-banner__heading">Other tenants of agricultural holding updated</p>
+    </div>
+</div>"
+`;
+
+exports[`appellant-case GET /appellant-case notification banners should render both "Appeal is incomplete" banners where the enforcement notice appeal is incomplete with "Missing information" and "Ground (a) fee receipt due" 1`] = `
+"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
+data-index="0">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Appeal is incomplete</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-4">
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Due date</dt>
+                <dd class="govuk-summary-list__value">2 October 2024</dd>
+            </div>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Incomplete reasons</dt>
+                <dd class="govuk-summary-list__value">Missing information</dd>
+            </div>
+        </dl>
+    </div>
+</div>,
+<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
+data-index="1">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Appeal is incomplete</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-4">
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Due date</dt>
+                <dd class="govuk-summary-list__value">2 January 2024</dd>
+            </div>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Incomplete reasons</dt>
+                <dd class="govuk-summary-list__value">Ground (a) fee receipt due</dd>
+            </div>
+        </dl>
     </div>
 </div>"
 `;
@@ -2751,17 +2828,6 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                     </dl>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <form action="" method="POST" novalidate>
-                <div class="govuk-form-group">
-                    <input class="govuk-input" id="review-outcome" name="reviewOutcome" type="hidden"
-                    value="continue">
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
-            </form>
         </div>
     </div>
 </main>"

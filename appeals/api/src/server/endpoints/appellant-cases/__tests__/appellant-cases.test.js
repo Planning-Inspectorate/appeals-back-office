@@ -3,6 +3,7 @@ import {
 	advertisementAppeal,
 	advertisementAppealAppellantCaseIncomplete,
 	advertisementAppealAppellantCaseInvalid,
+	appealEnforcementListed,
 	casAdvertAppeal,
 	casAdvertAppealAppellantCaseIncomplete,
 	casAdvertAppealAppellantCaseInvalid,
@@ -1276,6 +1277,99 @@ describe('appellant cases routes', () => {
 				});
 			});
 
+			test('updates appellant case and sends notify emails for valid enforcement listed building appeal', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...appealEnforcementListed,
+					appealGrounds: [
+						{
+							groundId: 1,
+							appealId: 1,
+							ground: {
+								groundRef: 'a',
+								groundDescription: 'Ground A'
+							}
+						},
+						{
+							groundId: 2,
+							appealId: 1,
+							ground: {
+								groundRef: 'b',
+								groundDescription: 'Ground B'
+							}
+						}
+					]
+				});
+				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+					appellantCaseValidationOutcomes[2]
+				);
+				databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+				databaseConnector.documentVersion.update.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ id: 1, key: 'no_redaction_required' }
+				]);
+				databaseConnector.document.findUnique.mockResolvedValue(null);
+
+				const patchBody = {
+					validationOutcome: 'valid',
+					otherInformation: 'Accio horcrux'
+				};
+				const { appellantCase, id } = appealEnforcementListed;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(patchBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { id: appellantCase.id },
+					data: { appellantCaseValidationOutcomeId: 3 }
+				});
+
+				expect(response.status).toEqual(200);
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: {
+						appeal_reference_number: appealEnforcementListed.reference,
+						lpa_reference: appealEnforcementListed.applicationReference,
+						site_address: `${appealEnforcementListed.address.addressLine1}, ${appealEnforcementListed.address.addressLine2}, ${appealEnforcementListed.address.addressTown}, ${appealEnforcementListed.address.addressCounty}, ${appealEnforcementListed.address.postcode}, ${appealEnforcementListed.address.addressCountry}`,
+						feedback_link: FEEDBACK_FORM_LINKS.ALL,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						local_planning_authority: appealEnforcementListed.lpa.name,
+						appeal_type: 'Enforcement listed building and conservation area',
+						enforcement_reference: appealEnforcementListed.appellantCase.enforcementReference,
+						appeal_grounds: ['a', 'b'],
+						ground_a_barred: false,
+						other_appeals_grounds_group: [],
+						other_info: 'Accio horcrux'
+					},
+					recipientEmail: appealEnforcementListed.agent.email,
+					templateName: 'appeal-confirmed-enforcement-appellant'
+				});
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: {
+						appeal_reference_number: appealEnforcementListed.reference,
+						lpa_reference: appealEnforcementListed.applicationReference,
+						site_address: `${appealEnforcementListed.address.addressLine1}, ${appealEnforcementListed.address.addressLine2}, ${appealEnforcementListed.address.addressTown}, ${appealEnforcementListed.address.addressCounty}, ${appealEnforcementListed.address.postcode}, ${appealEnforcementListed.address.addressCountry}`,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						local_planning_authority: appealEnforcementListed.lpa.name,
+						appeal_type: 'Enforcement listed building and conservation area',
+						enforcement_reference: appealEnforcementListed.appellantCase.enforcementReference,
+						appeal_grounds: ['a', 'b'],
+						ground_a_barred: false,
+						other_appeals_grounds_group: [],
+						other_info: 'Accio horcrux',
+						appellant_contact_details: 'Bob Ross, test8@example.com',
+						agent_contact_details: 'Fiona Burgess, test6@example.com'
+					},
+					recipientEmail: appealEnforcementListed.lpa.email,
+					templateName: 'appeal-confirmed-enforcement-lpa'
+				});
+			});
+
 			test('updates appellant case site area and procedure preferences', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				databaseConnector.user.upsert.mockResolvedValue({
@@ -1904,6 +1998,96 @@ describe('appellant cases routes', () => {
 				expect(response.status).toEqual(200);
 			});
 
+			test('updates the appellant case for invalid Enforcement Listed Building appeal', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...appealEnforcementListed,
+					appealType: {
+						key: 'F',
+						type: 'Enforcement listed building and conservation area appeal'
+					},
+					linkedAppealId: null,
+					appealRelationship: [],
+					agent: { email: 'agent@example.com' },
+					appellant: { email: 'appellant@example.com' },
+					lpa: { email: 'lpa@example.com', name: 'Test LPA' },
+					address: {
+						addressLine1: '1 Test Street',
+						addressTown: 'Test Town',
+						addressCounty: 'Test County',
+						postcode: 'TE5 7ER',
+						addressCountry: 'UK'
+					},
+					appellantCase: {
+						...appealEnforcementListed.appellantCase,
+						enforcementReference: 'ENF-123',
+						appellantCaseInvalidReasonsSelected: [
+							{
+								appellantCaseInvalidReason: { name: 'Appeal has not been submitted on time' },
+								appellantCaseInvalidReasonText: []
+							}
+						],
+						appellantCaseValidationOutcome: { name: 'Invalid' }
+					}
+				});
+				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+					appellantCaseValidationOutcomes[1]
+				);
+				databaseConnector.appellantCaseInvalidReason.findMany.mockResolvedValue(
+					appellantCaseInvalidReasons
+				);
+				databaseConnector.appellantCaseInvalidReasonsSelected.deleteMany.mockResolvedValue(true);
+				databaseConnector.appellantCaseInvalidReasonsSelected.createMany.mockResolvedValue(true);
+				databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
+
+				const body = {
+					invalidReasons: [{ id: 1, text: [] }],
+					validationOutcome: 'Invalid',
+					otherLiveAppeals: 'no',
+					enforcementNoticeInvalid: 'no'
+				};
+				const { appellantCase, id } = appealEnforcementListed;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { id: appellantCase.id },
+					data: { appellantCaseValidationOutcomeId: 2 }
+				});
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				const personalisation = {
+					appeal_reference_number: appealEnforcementListed.reference,
+					enforcement_reference: 'ENF-123',
+					site_address: `1 Test Street, Test Town, Test County, TE5 7ER, UK`,
+					reasons: ['Appeal has not been submitted on time'],
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					ground_a_barred: false,
+					other_live_appeals: false,
+					effective_date: expect.any(String)
+				};
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId,
+					notifyClient: expect.anything(),
+					templateName: 'enforcement-appeal-invalid-appellant',
+					recipientEmail: 'agent@example.com',
+					personalisation
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId,
+					notifyClient: expect.anything(),
+					templateName: 'enforcement-appeal-invalid-lpa',
+					recipientEmail: 'lpa@example.com',
+					personalisation
+				});
+
+				expect(response.status).toEqual(200);
+			});
+
 			test('updates the appellant case for incomplete enforcement notice appeal with invalid enforcement notice', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...enforcementNoticeAppealAppellantCaseInvalid,
@@ -2125,7 +2309,7 @@ describe('appellant cases routes', () => {
 					data: {
 						appealId: id,
 						details:
-							'Appeal marked as incomplete:\n<ul><li>Missing information</li><li>Ground (a) fee receipt due date</li></ul>',
+							'Appeal marked as incomplete:\n<ul><li>Missing information</li><li>Ground (a) fee receipt due</li></ul>',
 						loggedAt: expect.any(Date),
 						userId: 1
 					}
@@ -2320,6 +2504,9 @@ describe('appellant cases routes', () => {
 					id: 1,
 					azureAdUserId
 				});
+				databaseConnector.appellantCaseEnforcementGroundsMismatchFacts.findMany.mockResolvedValue(
+					appellantCaseEnforcementGroundsMismatchFacts
+				);
 
 				const body = {
 					validationOutcome: 'incomplete',
@@ -2329,8 +2516,11 @@ describe('appellant cases routes', () => {
 						{ id: 8, text: ['This is the other field'] }
 					],
 					enforcementNoticeInvalid: 'yes',
-					otherInformation: 'Enforcement other information'
+					otherInformation: 'Enforcement other information',
+					appealDueDate: '2099-07-14T00:00:00.000Z',
+					enforcementGroundsMismatchFacts: [{ id: 1, text: ['Grounds mismatch'] }]
 				};
+
 				const { appellantCase, id } = enforcementListedAppealAppellantCaseIncomplete;
 				const response = await request
 					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
@@ -2390,7 +2580,52 @@ describe('appellant cases routes', () => {
 					}
 				});
 
-				expect(mockNotifySend).toHaveBeenCalledTimes(0);
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+					data: {
+						appealId: id,
+						details: 'Appeal marked as incomplete:\n<ul><li>Missing information</li></ul>',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+					data: {
+						appealId: id,
+						details: 'Case updated',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+
+				const personalisation = {
+					appeal_reference_number: '1345264',
+					enforcement_reference: 'Reference',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					local_planning_authority: 'Maidstone Borough Council',
+					due_date: '14 July 2099',
+					fee_due_date: '',
+					missing_documents: [],
+					other_info: [],
+					appeal_grounds: [],
+					grounds_and_facts: ['Ground (a): Grounds mismatch']
+				};
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation,
+					recipientEmail: enforcementListedAppealAppellantCaseIncomplete.agent.email,
+					templateName: 'enforcement-appeal-incomplete-appellant'
+				});
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation,
+					recipientEmail: enforcementListedAppealAppellantCaseIncomplete.lpa.email,
+					templateName: 'enforcement-appeal-incomplete-lpa'
+				});
 
 				expect(response.status).toEqual(200);
 			});

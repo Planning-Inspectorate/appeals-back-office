@@ -5,7 +5,6 @@ import {
 	getFoldersForAppeal
 } from '#endpoints/documents/documents.service.js';
 import appealRepository from '#repositories/appeal.repository.js';
-import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import transitionState from '#state/transition-state.js';
 import { copyBlobs } from '#utils/blob-copy.js';
 import { currentStatus } from '#utils/current-status.js';
@@ -266,17 +265,7 @@ export const updateAppealStatusIfRequired = async (
 		case APPEAL_CASE_STATUS.VALIDATION:
 			{
 				if (unlinkedAppealId && unlinkedAppealAppellantCaseOutcome) {
-					if (isEnforcementNotice) {
-						// reset enforcement child validation so it can be validated as an unlinked appeal correctly
-						if (unlinkedAppeal?.appellantCase?.id) {
-							await appellantCaseRepository.updateAppellantCaseById(
-								/** @type {number} */ unlinkedAppeal?.appellantCase?.id,
-								{
-									appellantCaseValidationOutcomeId: null
-								}
-							);
-						}
-					} else {
+					if (!isEnforcementNotice) {
 						// The unlinked appeal has been validated correctly and can roll forward to the next status
 						await transitionState(
 							unlinkedAppealId,
@@ -286,20 +275,6 @@ export const updateAppealStatusIfRequired = async (
 					}
 				}
 				if (leadAppealAppellantCaseOutcome) {
-					if (isEnforcementNotice) {
-						// reset enforcement lead validation if lead changed so it can be validated as a lead appeal correctly
-						if (
-							![leadAppealId, unlinkedAppealId].includes(previousLeadAppealId) &&
-							leadAppeal?.appellantCase?.id
-						) {
-							return appellantCaseRepository.updateAppellantCaseById(
-								/** @type {number} */ leadAppeal?.appellantCase?.id,
-								{
-									appellantCaseValidationOutcomeId: null
-								}
-							);
-						}
-					}
 					// transition all the linked appeals if they have all been validated
 					const linkedAppeals = [leadAppeal, ...getChildAppeals(leadAppeal)];
 					const shouldTransition = linkedAppeals.every((linkedAppeal) => {

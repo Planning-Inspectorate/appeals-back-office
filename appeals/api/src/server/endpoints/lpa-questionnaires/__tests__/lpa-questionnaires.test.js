@@ -328,8 +328,8 @@ describe('lpa questionnaires routes', () => {
 						appeal: {
 							...enforcementNoticeAppeal,
 							childAppeals: [
-								{ type: 'linked', childId: 98 },
-								{ type: 'linked', childId: 99 }
+								{ type: 'linked', childId: 98, parentId: 35 },
+								{ type: 'linked', childId: 99, parentId: 35 }
 							]
 						},
 						templateName: 'lpaq-complete-appellant',
@@ -414,8 +414,8 @@ describe('lpa questionnaires routes', () => {
 						});
 					// @ts-ignore
 					databaseConnector.appealRelationship.findMany.mockResolvedValue([
-						{ child: { id: 98 } },
-						{ child: { id: 99 } }
+						{ child: { id: 98 }, parent: { id: 35 } },
+						{ child: { id: 99 }, parent: { id: 35 } }
 					]);
 					// @ts-ignore
 					databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(

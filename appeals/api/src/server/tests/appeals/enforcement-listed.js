@@ -29,11 +29,15 @@ export default {
 		addressLine1: 'FOR TRAINERS ONLY',
 		addressLine2: '1 Grove Cottage',
 		postcode: 'NR35 2ND',
-		addressCounty: null,
+		addressCounty: 'London',
 		addressTown: 'Woodton',
-		addressCountry: null
+		addressCountry: 'UK'
 	},
-	procedureType: null,
+	procedureType: {
+		id: 3,
+		name: 'Written',
+		key: 'written'
+	},
 	parentAppeals: [],
 	childAppeals: [],
 	otherAppeals: [],
@@ -74,7 +78,8 @@ export default {
 		appellantCaseValidationOutcome: {
 			id: 1,
 			name: 'Valid'
-		}
+		},
+		enforcementReference: 'Reference'
 	},
 	appellant: {
 		id: 1,
