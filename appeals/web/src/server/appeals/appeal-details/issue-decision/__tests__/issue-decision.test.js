@@ -1,6 +1,8 @@
 // @ts-nocheck
 import {
 	appealData,
+	appealDataEnforcementListedBuilding,
+	appealDataEnforcementNotice,
 	documentFileInfo,
 	documentFileVersionInfo,
 	documentRedactionStatuses,
@@ -98,6 +100,90 @@ describe('issue-decision', () => {
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<input class="govuk-radios__input" id="decision-4" name="decision" type="radio" value="invalid">'
 				);
+			});
+		});
+
+		describe('Enforcement notice appeals', () => {
+			beforeEach(() => {
+				nock('http://test/')
+					.get('/appeals/5623?include=all')
+					.reply(200, appealDataEnforcementNotice)
+					.persist();
+			});
+
+			it(`should render the enforcement notice appeal 'decision' page with the expected content`, async () => {
+				const response = await request.get(`${baseUrl}/5623${issueDecisionPath}${decisionPath}`);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Appeal 351062 - issue decision</span>');
+
+				expect(unprettifiedElement.innerHTML).toContain('Decision</h1>');
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision" name="decision" type="radio" value="notice_upheld">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-2" name="decision" type="radio" value="notice_varied_and_upheld">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="planning_permission_granted">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-4" name="decision" type="radio" value="quashed_on_legal_grounds">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-5" name="decision" type="radio" value="split_decision">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-6" name="decision" type="radio" value="invalid">'
+				);
+				expect(unprettifiedElement.innerHTML).not.toContain('Listed building consent granted');
+				expect(unprettifiedElement.innerHTML).toContain('Planning permission granted');
+			});
+		});
+
+		describe('Enforcement listed building', () => {
+			beforeEach(() => {
+				nock('http://test/')
+					.get('/appeals/5624?include=all')
+					.reply(200, appealDataEnforcementListedBuilding)
+					.persist();
+			});
+
+			it(`should render the enforcement listed building appeal 'decision' page with the expected content`, async () => {
+				const response = await request.get(`${baseUrl}/5624${issueDecisionPath}${decisionPath}`);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Appeal 351062 - issue decision</span>');
+
+				expect(unprettifiedElement.innerHTML).toContain('Decision</h1>');
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision" name="decision" type="radio" value="notice_upheld">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-2" name="decision" type="radio" value="notice_varied_and_upheld">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="planning_permission_granted">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-4" name="decision" type="radio" value="quashed_on_legal_grounds">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-5" name="decision" type="radio" value="split_decision">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-6" name="decision" type="radio" value="invalid">'
+				);
+				expect(unprettifiedElement.innerHTML).not.toContain('Planning permission granted');
+				expect(unprettifiedElement.innerHTML).toContain('Listed building consent granted');
 			});
 		});
 

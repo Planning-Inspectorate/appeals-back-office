@@ -75,7 +75,7 @@ export function yesNoInput({
 	id,
 	value,
 	legendText,
-	legendTextSize = 'l',
+	legendTextSize = 'm',
 	legendIsPageHeading = false,
 	yesConditional,
 	noConditional,

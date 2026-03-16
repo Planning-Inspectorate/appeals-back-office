@@ -13,7 +13,7 @@ exports[`trunk-road GET /change should render the change trunk road page 1`] = `
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Is the appeal site within 67 metres of a trunk road?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
@@ -75,7 +75,7 @@ exports[`trunk-road POST /change should re-render the change trunk road page wit
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Is the appeal site within 67 metres of a trunk road?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
@@ -137,7 +137,7 @@ exports[`trunk-road should re-render the change trunk road page with an error wh
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Is the appeal site within 67 metres of a trunk road?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
