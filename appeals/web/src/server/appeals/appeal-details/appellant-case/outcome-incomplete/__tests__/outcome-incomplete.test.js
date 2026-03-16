@@ -333,7 +333,8 @@ describe('incomplete-appeal', () => {
 					.reply(200, missingDocumentOptions);
 				nock('http://test/')
 					.get('/appeals/appellant-case-incomplete-reasons')
-					.reply(200, appellantCaseIncompleteReasons);
+					.reply(200, appellantCaseIncompleteReasons)
+					.persist();
 				nock('http://test/')
 					.get('/appeals/appellant-case-enforcement-grounds-mismatch-facts')
 					.reply(200, enforcementGroundsMismatchFacts);

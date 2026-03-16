@@ -45,6 +45,13 @@ const renderIncompleteReason = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
+	if (
+		request.session.webAppellantCaseReviewOutcome &&
+		request.session.webAppellantCaseReviewOutcome.appealId !== appealId
+	) {
+		delete request.session.webAppellantCaseReviewOutcome;
+	}
+
 	const [appellantCaseResponse, incompleteReasonOptions] = await Promise.all([
 		appellantCaseService
 			.getAppellantCaseFromAppealId(request.apiClient, appealId, appellantCaseId)
@@ -201,13 +208,57 @@ export const postIncompleteReason = async (request, response) => {
 		};
 
 		if (isAnyEnforcementAppealType(appealType)) {
-			const redirectMap = {
-				10: 'date',
-				12: 'missing-documents',
-				13: 'grounds-facts-check',
-				14: 'receipt-due-date'
+			const incompleteReasons =
+				await appellantCaseService.getAppellantCaseNotValidReasonOptionsForOutcome(
+					request.apiClient,
+					'incomplete'
+				);
+			const getIncompleteReasonIdByName = (/** @type {string} */ name) =>
+				incompleteReasons.find((item) => item.name === name)?.id?.toString();
+			const ID_OTHER = getIncompleteReasonIdByName('Other');
+			const ID_MISSING_DOCS = getIncompleteReasonIdByName('Missing documents');
+			const ID_GROUNDS_MISMATCH = getIncompleteReasonIdByName('Grounds and facts do not match');
+			const ID_WAITING_FOR_FEE = getIncompleteReasonIdByName(
+				'Waiting for appellant to pay the fee'
+			);
+
+			if (!ID_OTHER || !ID_MISSING_DOCS || !ID_GROUNDS_MISMATCH || !ID_WAITING_FOR_FEE) {
+				logger.error('Something went wrong when fetching incomplete reasons');
+				return response.status(500).render('app/500.njk');
+			}
+
+			const selectedIds = Array.isArray(request.body.incompleteReason)
+				? request.body.incompleteReason
+				: [request.body.incompleteReason];
+			const {
+				enforcementGroundsMismatchText,
+				enforcementNoticeInvalid,
+				feeReceiptDueDate,
+				missingDocuments,
+				missingDocumentsText,
+				updatedDueDate
+			} = request.session.webAppellantCaseReviewOutcome || {};
+
+			/** @type {import('../appellant-case.types.js').AppellantCaseSessionValidationOutcome} */
+			request.session.webAppellantCaseReviewOutcome = {
+				...request.session.webAppellantCaseReviewOutcome,
+				// Manage session to only keep fields related to selected incomplete reasons
+				enforcementNoticeInvalid,
+				...(selectedIds.includes(ID_MISSING_DOCS) && { missingDocuments, missingDocumentsText }),
+				...(selectedIds.includes(ID_GROUNDS_MISMATCH) && { enforcementGroundsMismatchText }),
+				...([ID_OTHER, ID_MISSING_DOCS, ID_GROUNDS_MISMATCH].some((id) =>
+					selectedIds.includes(id)
+				) && { updatedDueDate }),
+				...(selectedIds.includes(ID_WAITING_FOR_FEE) && { feeReceiptDueDate })
 			};
-			const redirectPriority = ['12', '13', '14', '10'];
+
+			const redirectMap = {
+				[ID_OTHER]: 'date',
+				[ID_MISSING_DOCS]: 'missing-documents',
+				[ID_GROUNDS_MISMATCH]: 'grounds-facts-check',
+				[ID_WAITING_FOR_FEE]: 'receipt-due-date'
+			};
+			const redirectPriority = [ID_MISSING_DOCS, ID_GROUNDS_MISMATCH, ID_WAITING_FOR_FEE, ID_OTHER];
 			const redirectId = redirectPriority.find((id) => request.body.incompleteReason.includes(id));
 
 			if (!redirectId) {
@@ -215,9 +266,7 @@ export const postIncompleteReason = async (request, response) => {
 				return response.status(500).render('app/500.njk');
 			}
 
-			// @ts-ignore
 			const redirectRoute = redirectMap[redirectId];
-
 			return response.redirect(
 				`/appeals-service/appeal-details/${appealId}/appellant-case/incomplete/${redirectRoute}`
 			);
