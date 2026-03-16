@@ -75,7 +75,7 @@ describe('All cases search', () => {
 		});
 	});
 
-	it.only('should not show case under Part 1 filter if case type is Y', () => {
+	it('should not show case under Part 1 filter if case type is Y', () => {
 		cy.createCase({ caseType: 'Y' }).then((caseObj) => {
 			appeal = caseObj;
 			cy.visit(urlPaths.appealsList);
