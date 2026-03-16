@@ -81,7 +81,7 @@ exports[`change hearing GET /hearing/change/address should match the snapshot 1`
                     <div class="pins-footer__meta">
                         <div>
                             <ul class="pins-footer__inline-list">
-                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/hearing/change/address">Accessibility</a>
                                 </li>
                             </ul>
                         </div>
@@ -185,7 +185,7 @@ exports[`change hearing GET /hearing/change/address-details should match the sna
                     <div class="pins-footer__meta">
                         <div>
                             <ul class="pins-footer__inline-list">
-                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/hearing/change/address-details">Accessibility</a>
                                 </li>
                             </ul>
                         </div>
@@ -291,7 +291,7 @@ exports[`change hearing GET /hearing/change/check-details when all pages have be
                     <div class="pins-footer__meta">
                         <div>
                             <ul class="pins-footer__inline-list">
-                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/hearing/change/check-details?backUrl=%2Fappeals-service%2Fappeal-details%2F2">Accessibility</a>
                                 </li>
                             </ul>
                         </div>
@@ -566,7 +566,7 @@ exports[`change hearing GET /hearing/change/date should match the snapshot 1`] =
                     <div class="pins-footer__meta">
                         <div>
                             <ul class="pins-footer__inline-list">
-                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/hearing/change/date">Accessibility</a>
                                 </li>
                             </ul>
                         </div>

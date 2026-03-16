@@ -1,10 +1,11 @@
 // @ts-nocheck
-import { householdAppeal } from '#tests/appeals/mocks.js';
+import { enforcementNoticeAppeal, householdAppeal } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { jest } from '@jest/globals';
 import {
 	AUDIT_TRAIL_ADDRESS_UPDATED,
+	CASE_RELATIONSHIP_LINKED,
 	ERROR_CANNOT_BE_EMPTY_STRING,
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_MAX_LENGTH_CHARACTERS,
@@ -161,6 +162,67 @@ describe('addresses routes', () => {
 					}
 				});
 				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(householdAppeal.id);
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual(dataToSave);
+			});
+
+			test('updates an address for enforcement child appeals as well as the lead', async () => {
+				// @ts-ignore
+				const childAppeals = [
+					{
+						childId: 100,
+						type: CASE_RELATIONSHIP_LINKED,
+						child: {
+							id: 100,
+							addressId: 101
+						}
+					}
+				];
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...enforcementNoticeAppeal,
+					childAppeals
+				});
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+				// @ts-ignore
+				databaseConnector.address.update.mockResolvedValue(enforcementNoticeAppeal.address);
+
+				const response = await request
+					.patch(
+						`/appeals/${enforcementNoticeAppeal.id}/addresses/${enforcementNoticeAppeal.address.id}`
+					)
+					.send(patchBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.address.update).toHaveBeenCalledWith({
+					data: dataToSave,
+					where: {
+						id: enforcementNoticeAppeal.address.id
+					}
+				});
+
+				expect(databaseConnector.address.update).toHaveBeenCalledWith({
+					data: dataToSave,
+					where: {
+						id: childAppeals[0].child.addressId
+					}
+				});
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: enforcementNoticeAppeal.id,
+						details: stringTokenReplacement(AUDIT_TRAIL_ADDRESS_UPDATED, [
+							formatAddressMultiline(enforcementNoticeAppeal.address)
+						]),
+						loggedAt: expect.any(Date),
+						userId: enforcementNoticeAppeal.caseOfficer.id
+					}
+				});
+				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(enforcementNoticeAppeal.id);
+				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(childAppeals[0].child.id);
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual(dataToSave);
 			});
