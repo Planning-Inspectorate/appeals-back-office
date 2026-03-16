@@ -5,8 +5,11 @@ import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 
 const baseUrl = '/appeals-service/error';
-const { app, installMockApi, teardown } = createTestEnvironment();
+const { app, teardown } = createTestEnvironment();
 const request = supertest(app);
+
+beforeAll(teardown);
+afterEach(teardown);
 
 describe('error page', () => {
 	it('should render the error page if the error type is "fileTypesDoNotMatch"', async () => {
@@ -39,7 +42,7 @@ describe('404 Not Found', () => {
 	/** @type {any} */
 	let element;
 
-	beforeAll(async () => {
+	beforeEach(async () => {
 		response = await request.get('/url-that-does-not-exist');
 		element = parseHtml(response.text);
 	});
@@ -83,14 +86,11 @@ describe('500 Internal Server Error', () => {
 	/** @type {any} */
 	let element;
 
-	beforeAll(async () => {
-		installMockApi();
-		nock('http://test/').get('/appeals/1').reply(500, 'Internal API Error');
+	beforeEach(async () => {
+		nock('http://test/').get('/appeals/1?include=all').reply(500, 'Internal API Error');
 
 		response = await request.get('/appeals-service/appeal-details/1');
 		element = parseHtml(response.text);
-
-		teardown();
 	});
 
 	it('should return a 500 status code', () => {
