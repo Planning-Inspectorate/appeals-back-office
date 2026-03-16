@@ -1,6 +1,6 @@
 export default {
 	setupFiles: ['<rootDir>/setup-tests.js'],
-	testTimeout: 50000,
+	testTimeout: 10000,
 	transform: {
 		// NEVER transform node_modules except the uuid ESM build
 		'^.+\\.[jt]sx?$': 'babel-jest',
@@ -16,6 +16,7 @@ export default {
 	moduleNameMapper: {
 		'^uuid$': 'uuid'
 	},
+	reporters: ['default', 'jest-slow-test-reporter'],
 	coverageThreshold: {
 		global: {
 			branches: 50,

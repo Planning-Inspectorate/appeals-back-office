@@ -20,6 +20,17 @@ const appealDataWithoutStartDate = {
 
 describe('start-case', () => {
 	afterEach(teardown);
+	beforeEach(() => {
+		nock('https://www.gov.uk')
+			.get(`/bank-holidays.json`)
+			.reply(200, {
+				'england-and-wales': {
+					division: 'england-and-wales',
+					events: [{ title: 'New Year’s Day', date: '2019-01-01', notes: '', bunting: true }]
+				}
+			})
+			.persist();
+	});
 
 	describe('GET /start-case/add', () => {
 		it('should render the start case page with the expected content if the appeal type is Householder', async () => {

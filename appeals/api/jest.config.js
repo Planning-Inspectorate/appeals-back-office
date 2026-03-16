@@ -3,6 +3,7 @@ export default {
 	moduleNameMapper: { '^uuid$': 'uuid' },
 	globalSetup: './global-setup.js',
 	setupFilesAfterEnv: ['<rootDir>/setup-tests.js'],
+	reporters: ['default', 'jest-slow-test-reporter'],
 	coverageThreshold: {
 		global: {
 			branches: 50,
