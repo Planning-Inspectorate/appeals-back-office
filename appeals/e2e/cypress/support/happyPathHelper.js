@@ -72,6 +72,12 @@ export const happyPathHelper = {
 		happyPathHelper.viewCaseDetails(caseObj);
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
 		caseDetailsPage.clickReadyToStartCase();
+		if (procedureType.toLowerCase() === 'part 1') {
+			caseDetailsPage.basePageElements
+				.radioButton()
+				.contains('Part 1', { matchCase: false })
+				.should('be.visible');
+		}
 		caseDetailsPage.selectRadioButtonByValue(procedureType);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Start case');
