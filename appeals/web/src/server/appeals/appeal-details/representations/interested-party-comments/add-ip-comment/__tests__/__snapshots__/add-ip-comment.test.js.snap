@@ -80,7 +80,7 @@ exports[`add-ip-comment GET /add/check-address should match the snapshot 1`] = `
                     <div class="pins-footer__meta">
                         <div>
                             <ul class="pins-footer__inline-list">
-                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/interested-party-comments/add/check-address">Accessibility</a>
                                 </li>
                             </ul>
                         </div>
@@ -185,7 +185,7 @@ exports[`add-ip-comment GET /add/ip-address should match the snapshot 1`] = `
                     <div class="pins-footer__meta">
                         <div>
                             <ul class="pins-footer__inline-list">
-                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/interested-party-comments/add/ip-address">Accessibility</a>
                                 </li>
                             </ul>
                         </div>
@@ -278,7 +278,7 @@ exports[`add-ip-comment GET /add/ip-details should match the snapshot 1`] = `
                     <div class="pins-footer__meta">
                         <div>
                             <ul class="pins-footer__inline-list">
-                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/interested-party-comments/add/ip-details?backUrl=/test/back/url">Accessibility</a>
                                 </li>
                             </ul>
                         </div>
@@ -387,7 +387,7 @@ exports[`add-ip-comment GET /add/upload should match the snapshot 1`] = `
                     <div class="pins-footer__meta">
                         <div>
                             <ul class="pins-footer__inline-list">
-                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/interested-party-comments/add/upload">Accessibility</a>
                                 </li>
                             </ul>
                         </div>
@@ -496,7 +496,7 @@ exports[`add-ip-comment GET /check-your-answers should match the snapshot 1`] = 
                     <div class="pins-footer__meta">
                         <div>
                             <ul class="pins-footer__inline-list">
-                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/interested-party-comments/add/check-your-answers">Accessibility</a>
                                 </li>
                             </ul>
                         </div>
@@ -604,7 +604,7 @@ exports[`add-ip-comment GET /date-submitted should match the snapshot 1`] = `
                     <div class="pins-footer__meta">
                         <div>
                             <ul class="pins-footer__inline-list">
-                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/interested-party-comments/add/date-submitted">Accessibility</a>
                                 </li>
                             </ul>
                         </div>
@@ -703,7 +703,7 @@ exports[`add-ip-comment GET /redaction-status should match the snapshot 1`] = `
                     <div class="pins-footer__meta">
                         <div>
                             <ul class="pins-footer__inline-list">
-                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/interested-party-comments/add/redaction-status">Accessibility</a>
                                 </li>
                             </ul>
                         </div>

@@ -73,7 +73,7 @@ exports[`add rule 6 party GET /rule-6-parties/add/check-details should match the
                     <div class="pins-footer__meta">
                         <div>
                             <ul class="pins-footer__inline-list">
-                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/rule-6-parties/add/check-details">Accessibility</a>
                                 </li>
                             </ul>
                         </div>
@@ -151,7 +151,7 @@ exports[`add rule 6 party GET /rule-6-parties/add/email should match the snapsho
                     <div class="pins-footer__meta">
                         <div>
                             <ul class="pins-footer__inline-list">
-                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/rule-6-parties/add/email">Accessibility</a>
                                 </li>
                             </ul>
                         </div>
@@ -230,7 +230,7 @@ exports[`add rule 6 party GET /rule-6-parties/add/name should match the snapshot
                     <div class="pins-footer__meta">
                         <div>
                             <ul class="pins-footer__inline-list">
-                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/rule-6-parties/add/name">Accessibility</a>
                                 </li>
                             </ul>
                         </div>

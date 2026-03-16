@@ -8573,7 +8573,7 @@ exports[`appeal-details should not render a back button 1`] = `
                     <div class="pins-footer__meta">
                         <div>
                             <ul class="pins-footer__inline-list">
-                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2">Accessibility</a>
                                 </li>
                             </ul>
                         </div>

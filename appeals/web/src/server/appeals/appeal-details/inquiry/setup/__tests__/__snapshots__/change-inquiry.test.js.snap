@@ -81,7 +81,7 @@ exports[`change inquiry GET /inquiry/change/address should match the snapshot 1`
                     <div class="pins-footer__meta">
                         <div>
                             <ul class="pins-footer__inline-list">
-                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/inquiry/change/address">Accessibility</a>
                                 </li>
                             </ul>
                         </div>
@@ -185,7 +185,7 @@ exports[`change inquiry GET /inquiry/change/address-details should match the sna
                     <div class="pins-footer__meta">
                         <div>
                             <ul class="pins-footer__inline-list">
-                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/inquiry/change/address-details">Accessibility</a>
                                 </li>
                             </ul>
                         </div>
@@ -314,7 +314,7 @@ exports[`change inquiry GET /inquiry/change/check-details when all pages have be
                     <div class="pins-footer__meta">
                         <div>
                             <ul class="pins-footer__inline-list">
-                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/inquiry/change/check-details">Accessibility</a>
                                 </li>
                             </ul>
                         </div>
@@ -656,7 +656,7 @@ exports[`change inquiry GET /inquiry/change/date should match the snapshot 1`] =
                     <div class="pins-footer__meta">
                         <div>
                             <ul class="pins-footer__inline-list">
-                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/inquiry/change/date">Accessibility</a>
                                 </li>
                             </ul>
                         </div>
