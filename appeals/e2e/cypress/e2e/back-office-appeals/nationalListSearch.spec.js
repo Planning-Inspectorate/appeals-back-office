@@ -65,8 +65,8 @@ describe('All cases search', () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;
 			cy.assignCaseOfficerViaApi(caseObj);
+			cy.validateAppeal(caseObj);
 			happyPathHelper.viewCaseDetails(caseObj);
-			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startCaseWithProcedureType(caseObj, 'Part 1');
 			const testData = { rowIndex: 0, cellIndex: 0, textToMatch: caseObj.reference, strict: true };
 			cy.visit(urlPaths.appealsList);
