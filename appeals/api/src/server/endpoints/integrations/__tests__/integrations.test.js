@@ -160,7 +160,7 @@ describe('/appeals/case-submission', () => {
 			]
 		])(
 			'POST valid %s appellant case payload and create appeal',
-			async (_, appealIngestionInput, validAppellantCase, expectedTeamQueryParam) => {
+			async (appealType, appealIngestionInput, validAppellantCase, expectedTeamQueryParam) => {
 				const result = createIntegrationMocks(appealIngestionInput);
 				const payload = validAppellantCase;
 				const response = await request.post('/appeals/case-submission').send(payload);
@@ -190,6 +190,8 @@ describe('/appeals/case-submission', () => {
 						where: expectedTeamQueryParam
 					})
 				);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(appealType === 'ENFORCEMENT_NOTICE' ? 1 : 0);
 
 				expect(databaseConnector.document.createMany).toHaveBeenCalled();
 				expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();

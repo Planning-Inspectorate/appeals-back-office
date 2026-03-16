@@ -237,7 +237,7 @@ export const importAppeal = async (req, res) => {
 					: childAppeals.map((child) => child?.reference ?? ''),
 				full_name_additional_appellant: oneAdditionalAppellant
 					? // @ts-ignore
-						formatName(childAppeals[0])
+						formatName(childAppeals[0].appellant)
 					: // @ts-ignore
 						childAppeals.map((child) => formatName(child.appellant))
 			}
