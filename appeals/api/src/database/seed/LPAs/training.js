@@ -1528,7 +1528,7 @@ export const localPlanningDepartmentList = [
 	},
 	{
 		lpaCode: 'A1530',
-		name: 'Colchester Borough Council',
+		name: 'Colchester City Council',
 		email: 'planning.services@example.gov.uk',
 		teamId: 11 // East1
 	},
