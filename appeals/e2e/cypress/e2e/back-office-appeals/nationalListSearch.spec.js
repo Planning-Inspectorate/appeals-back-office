@@ -61,7 +61,7 @@ describe('All cases search', () => {
 		verify(errorMessage);
 	});
 
-	it('check Part 1 filter', () => {
+	it('check Part 1 filter visible', () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;
 			cy.assignCaseOfficerViaApi(caseObj);
@@ -72,6 +72,15 @@ describe('All cases search', () => {
 			cy.visit(urlPaths.appealsList);
 			listCasesPage.filterByAppealProcedure('Part 1');
 			listCasesPage.verifyTableCellText(testData);
+		});
+	});
+
+	it.only('should not show case under Part 1 filter if case type is Y', () => {
+		cy.createCase({ caseType: 'Y' }).then((caseObj) => {
+			appeal = caseObj;
+			cy.visit(urlPaths.appealsList);
+			listCasesPage.filterByAppealProcedure('Part 1');
+			cy.contains(caseObj.reference).should('not.exist');
 		});
 	});
 
