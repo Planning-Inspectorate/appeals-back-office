@@ -551,7 +551,7 @@ describe('change estimates', () => {
 
 		it('should show 500 page if error is thrown', async () => {
 			nock('http://test/')
-				.post(`/appeals/${appealId}/inquiry-estimates`)
+				.patch(`/appeals/${appealId}/inquiry-estimates`)
 				.reply(500, { error: 'Internal Server Error' });
 
 			// set session data with post request to previous page
