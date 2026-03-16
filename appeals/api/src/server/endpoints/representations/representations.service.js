@@ -46,12 +46,17 @@ import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorat
 /** @typedef {Awaited<ReturnType<getRepresentation>>} DBRepresentation */
 
 /**
- * @param {number} appealId
+ * @param {number[]} appealIds
  * @param {number} pageNumber
  * @param {number} pageSize
  * @param {{ representationType?: string[], status?: string }} [options]
  * */
-export const getRepresentations = async (appealId, pageNumber = 1, pageSize = 30, options = {}) => {
+export const getRepresentations = async (
+	appealIds,
+	pageNumber = 1,
+	pageSize = 30,
+	options = {}
+) => {
 	if (
 		options.representationType &&
 		!options.representationType.every((t) => Object.values(APPEAL_REPRESENTATION_TYPE).includes(t))
@@ -63,7 +68,7 @@ export const getRepresentations = async (appealId, pageNumber = 1, pageSize = 30
 	}
 
 	return await representationRepository.getRepresentations(
-		appealId,
+		appealIds,
 		options,
 		pageNumber - 1,
 		pageSize
@@ -71,11 +76,11 @@ export const getRepresentations = async (appealId, pageNumber = 1, pageSize = 30
 };
 
 /**
- * @param {number} appealId
+ * @param {number[]} appealIds
  * @param {{ status?: string }} [options]
  * */
-export const getRepresentationCounts = async (appealId, options = {}) => {
-	return await representationRepository.getRepresentationCounts(appealId, options);
+export const getRepresentationCounts = async (appealIds, options = {}) => {
+	return await representationRepository.getRepresentationCounts(appealIds, options);
 };
 
 /**
@@ -432,7 +437,7 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient) {
 	}
 
 	const result = await representationRepository.updateRepresentations(
-		appeal.id,
+		[appeal.id],
 		{
 			OR: [
 				{
@@ -591,7 +596,7 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
 	}
 
 	const result = await representationRepository.updateRepresentations(
-		appeal.id,
+		[appeal.id],
 		{
 			representationType: APPEAL_REPRESENTATION_TYPE.FINAL_COMMENT,
 			status: APPEAL_REPRESENTATION_STATUS.VALID
@@ -659,7 +664,7 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 	}
 
 	const result = await representationRepository.updateRepresentations(
-		appeal.id,
+		[appeal.id],
 		{
 			representationType: {
 				in: representationTypes

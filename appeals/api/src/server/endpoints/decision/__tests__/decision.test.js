@@ -1496,5 +1496,44 @@ describe('decision routes', () => {
 				}
 			});
 		});
+
+		test('handles child appeals correctly', async () => {
+			const appealWithMissingEmails = {
+				...householdAppeal,
+				agent: null,
+				appellant: null,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						valid: true
+					}
+				]
+			};
+
+			const childAppeals = [{ childId: 111 }, { childId: 222 }];
+
+			databaseConnector.appeal.findUnique.mockResolvedValue(appealWithMissingEmails);
+			databaseConnector.representation.count.mockResolvedValue(0);
+			databaseConnector.representation.findMany.mockResolvedValue([]);
+			databaseConnector.appealRelationship.findMany.mockResolvedValue(childAppeals);
+
+			const correctionNotice = 'Test correction notice';
+			const decisionDate = new Date('2023-11-10');
+
+			await sendNewDecisionLetter(
+				appealWithMissingEmails,
+				correctionNotice,
+				azureAdUserId,
+				mockNotifyClient,
+				decisionDate
+			);
+
+			expect(databaseConnector.representation.count).toHaveBeenCalledWith({
+				where: {
+					appealId: { in: [appealWithMissingEmails.id, ...childAppeals.map((a) => a.childId)] },
+					representationType: { in: ['comment'] }
+				}
+			});
+		});
 	});
 });

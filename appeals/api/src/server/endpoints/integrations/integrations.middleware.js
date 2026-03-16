@@ -140,7 +140,9 @@ export const validateRepresentation = async (req, res, next) => {
 		});
 	}
 
-	const useLeadAppealIfLinked = isLinkedAppealsActive();
+	// Use lead appeal if linked and the representation type is not an ip comment
+	const useLeadAppealIfLinked =
+		isLinkedAppealsActive() && body?.representationType !== APPEAL_REPRESENTATION_TYPE.COMMENT;
 	const referenceData = await loadReferenceData(body?.caseReference, useLeadAppealIfLinked);
 	if (!referenceData?.appeal) {
 		pino.error(

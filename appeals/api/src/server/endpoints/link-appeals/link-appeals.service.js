@@ -1,10 +1,17 @@
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {import('@pins/appeals/index.js').MappedDocument} MappedDocument */
+/** @typedef {import('@pins/appeals.api').Schema.Document} Document */
+/** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 
 import {
 	addDocumentsToAppeal,
 	getFoldersForAppeal
 } from '#endpoints/documents/documents.service.js';
+import addressRepository from '#repositories/address.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
+import { getDocumentsInFolder } from '#repositories/document.repository.js';
+import representationRepository from '#repositories/representation.repository.js';
+import serviceUserRepository from '#repositories/service-user.repository.js';
 import transitionState from '#state/transition-state.js';
 import { copyBlobs } from '#utils/blob-copy.js';
 import { currentStatus } from '#utils/current-status.js';
@@ -15,7 +22,7 @@ import {
 	CASE_RELATIONSHIP_LINKED,
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STAGE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { omit } from 'lodash-es';
 import rhea from 'rhea';
 
@@ -134,6 +141,114 @@ export const unlinkChildAppeal = async (appeal) => {
 };
 
 /**
+ * Moves representations from the source appeal to the destination appeal.
+ * @param {Appeal | {id: number, reference: string}} sourceAppeal
+ * @param {Appeal | {id: number, reference: string}} destinationAppeal
+ * @returns {Promise<*>}
+ */
+export const moveRepresentations = async (sourceAppeal, destinationAppeal) => {
+	return representationRepository.updateRepresentations(
+		[Number(sourceAppeal.id)],
+		{},
+		{
+			appealId: destinationAppeal.id
+		}
+	);
+};
+
+/**
+ * Copies representations from the source appeal to the destination appeal.
+ * @param {Appeal | {id: number, reference: string}} sourceAppeal
+ * @param {Appeal | {id: number, reference: string}} destinationAppeal
+ * @returns {Promise<*>}
+ */
+export const copyRepresentations = async (sourceAppeal, destinationAppeal) => {
+	const { comments: representations } = await representationRepository.getRepresentations([
+		Number(sourceAppeal.id)
+	]);
+	const stage = 'representation';
+	const sourceFolders = await getFoldersForAppeal(sourceAppeal.id, stage);
+	const destinationFolders = await getFoldersForAppeal(destinationAppeal.id, stage);
+	if (sourceFolders.length === 0 || destinationFolders.length === 0) {
+		return;
+	}
+	const documents = await getDocumentsInFolder({ folderId: sourceFolders[0].id });
+	const attachmentsByRepresentedId = {};
+	const copiedRepresentations = await Promise.all(
+		representations.map(async (representation) => {
+			const copyList = representation.attachments.map((attachment) => {
+				const document = documents.find((doc) => {
+					return doc.guid === attachment.documentGuid;
+				});
+				return buildFileCopyDetails(
+					// @ts-ignore
+					document,
+					destinationAppeal,
+					destinationFolders[0].id,
+					sourceAppeal
+				);
+			});
+			const copyBlobList = copyList.map(({ sourceBlobName, destinationBlobName }) => ({
+				sourceBlobName,
+				destinationBlobName
+			}));
+			await Promise.allSettled([
+				copyBlobs(copyBlobList),
+				addDocumentsToAppeal(
+					{
+						// @ts-ignore
+						documents: copyList.map((copyDetails) => copyDetails.destinationDocument)
+					},
+					destinationAppeal,
+					true
+				)
+			]);
+			const address =
+				representation?.represented?.address &&
+				// @ts-ignore
+				(await addressRepository.createAddress(omit(representation.represented.address, 'id')));
+			const represented =
+				representation?.represented &&
+				(await serviceUserRepository.createServiceUser({
+					...omit(representation.represented, 'id', 'address'),
+					addressId: address?.id ?? null
+				}));
+			const attachments = copyList.map(({ destinationGuid, version }) => ({
+				documentGuid: destinationGuid,
+				version
+			}));
+			if (represented?.id) {
+				// @ts-ignore
+				attachmentsByRepresentedId[represented.id] = attachments;
+			}
+			return {
+				appealId: destinationAppeal.id,
+				representedId: represented?.id ?? null,
+				representationType: representation?.representationType ?? null,
+				source: representation.source ?? null,
+				dateCreated: representation.dateCreated ?? null,
+				status: representation.status ?? null,
+				lpaCode: representation.lpa?.lpaCode ?? null,
+				originalRepresentation: representation.originalRepresentation ?? null
+			};
+		})
+	);
+	// @ts-ignore
+	await representationRepository.createRepresentations(copiedRepresentations);
+	const { comments: representationsInDestinationAppeal } =
+		await representationRepository.getRepresentations([Number(destinationAppeal.id)]);
+	await Promise.allSettled(
+		representationsInDestinationAppeal.map(async (representation) => {
+			if (!representation.represented?.id) return;
+			// @ts-ignore
+			const attachments = attachmentsByRepresentedId[representation.represented.id];
+			if (attachments)
+				await representationRepository.addAttachments(representation.id, attachments);
+		})
+	);
+};
+
+/**
  * Duplicates the files from the source appeal to the destination appeal for all stages.
  * @param {Appeal} sourceAppeal
  * @param {Appeal} destinationAppeal
@@ -141,20 +256,71 @@ export const unlinkChildAppeal = async (appeal) => {
  * @returns {Promise<*>}
  */
 export const duplicateAllFiles = async (sourceAppeal, destinationAppeal, options) => {
-	return Promise.allSettled(
-		Object.values(APPEAL_CASE_STAGE).map((stage) =>
-			duplicateFiles(sourceAppeal, destinationAppeal, stage, options)
-		)
-	);
+	return duplicateFiles(sourceAppeal, destinationAppeal, null, options);
+};
+
+/**
+ *
+ * @param {Document} sourceDocument
+ * @param {Appeal | {id: number, reference: string}} destinationAppeal
+ * @param {number} destinationFolderId
+ * @param {Appeal | {id: number, reference: string}} sourceAppeal
+ * @param {string[]} [existingDocuments]
+ * @param {string | null} [stage]
+ * @returns {{sourceBlobName: string, destinationBlobName: string, destinationDocument: Partial<Document>, sourceGuid: string, destinationGuid: string, version: number}}
+ */
+export const buildFileCopyDetails = (
+	sourceDocument,
+	destinationAppeal,
+	destinationFolderId,
+	sourceAppeal,
+	existingDocuments = [],
+	stage = null
+) => {
+	const destinationGuid = generate_uuid();
+	const fileExtension = '.' + sourceDocument.name.split('.').pop();
+	const sourceBlobName = sourceDocument.latestDocumentVersion?.blobStoragePath ?? '';
+	const documentName = sourceBlobName.split('/').pop() ?? '';
+	const destinationFileName = existingDocuments.includes(documentName)
+		? documentName.replace(fileExtension, `-${sourceAppeal.reference}${fileExtension}`)
+		: documentName;
+
+	const destinationBlobName = `appeal/${destinationAppeal.reference}/${destinationGuid}/v1/${destinationFileName}`;
+
+	/** @type {MappedDocument} */
+	const destinationDocument = {
+		GUID: destinationGuid,
+		caseId: destinationAppeal.id,
+		documentName: destinationFileName,
+		folderId: destinationFolderId,
+		mimeType: sourceDocument.latestDocumentVersion?.mime ?? '',
+		documentType: sourceDocument.latestDocumentVersion?.documentType ?? '',
+		documentSize: Number(sourceDocument.latestDocumentVersion?.size),
+		stage: sourceDocument.latestDocumentVersion?.stage ?? stage ?? '',
+		blobStoragePath: destinationBlobName,
+		virusCheckStatus: sourceDocument.latestDocumentVersion?.virusCheckStatus,
+		redactionStatusId: Number(sourceDocument.latestDocumentVersion?.redactionStatusId),
+		// @ts-ignore
+		receivedDate: sourceDocument.latestDocumentVersion?.dateReceived ?? ''
+	};
+
+	return {
+		sourceBlobName,
+		destinationBlobName,
+		destinationDocument,
+		sourceGuid: sourceDocument.guid,
+		destinationGuid,
+		version: sourceDocument.latestDocumentVersion?.version ?? 1
+	};
 };
 
 /**
  * Duplicates the files from the source appeal to the destination appeal for a particular stage.
- * @param {Appeal} sourceAppeal
- * @param {Appeal} destinationAppeal
- * @param {string} stage
+ * @param {Appeal | {id: number, reference: string}} sourceAppeal
+ * @param {Appeal | {id: number, reference: string}} destinationAppeal
+ * @param {string | null} stage
  * @param {{omitFolders?: string[]}} [options]
- * @returns {Promise<{sourceAppealRef: string, destinationAppealRef: string, stage: string}>}
+ * @returns {Promise<{sourceAppealRef: string, destinationAppealRef: string, stage: string | null}>}
  */
 export const duplicateFiles = async (sourceAppeal, destinationAppeal, stage, options) => {
 	const { omitFolders = [] } = options || {};
@@ -174,38 +340,14 @@ export const duplicateFiles = async (sourceAppeal, destinationAppeal, stage, opt
 					return !document.isDeleted && document.latestDocumentVersion?.blobStoragePath;
 				})
 				.map((sourceDocument) => {
-					const destinationGuid = generate_uuid();
-					const fileExtension = '.' + sourceDocument.name.split('.').pop();
-					const destinationFileName = existingDocuments.includes(sourceDocument.name)
-						? sourceDocument.name.replace(
-								fileExtension,
-								`-${sourceAppeal.reference}${fileExtension}`
-							)
-						: sourceDocument.name;
-
-					const sourceBlobName = sourceDocument.latestDocumentVersion?.blobStoragePath;
-					const destinationBlobName = `appeal/${destinationAppeal.reference}/${destinationGuid}/v1/${destinationFileName}`;
-
-					const destinationDocument = {
-						GUID: destinationGuid,
-						caseId: destinationAppeal.id,
-						documentName: destinationFileName,
-						folderId: destinationFolderId,
-						mimeType: sourceDocument.latestDocumentVersion?.mime,
-						documentType: sourceDocument.latestDocumentVersion?.documentType,
-						documentSize: sourceDocument.latestDocumentVersion?.size,
-						stage,
-						blobStoragePath: destinationBlobName,
-						virusCheckStatus: sourceDocument.latestDocumentVersion?.virusCheckStatus,
-						redactionStatusId: sourceDocument.latestDocumentVersion?.redactionStatusId,
-						receivedDate: sourceDocument.latestDocumentVersion?.dateReceived
-					};
-
-					return {
-						sourceBlobName,
-						destinationBlobName,
-						destinationDocument
-					};
+					return buildFileCopyDetails(
+						sourceDocument,
+						destinationAppeal,
+						Number(destinationFolderId),
+						sourceAppeal,
+						existingDocuments,
+						stage
+					);
 				});
 		})
 		.flat();
