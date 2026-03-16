@@ -1,4 +1,4 @@
-{% macro globalFooter() %}
+{% macro globalFooter(currentUrl) %}
     <footer class="pins-footer" role="contentinfo">
         <div class="pins-footer-row">
             <div class="pins-footer-container govuk-width-container">
@@ -6,7 +6,7 @@
                     <div>
                         <ul class="pins-footer__inline-list">
                             <li class="pins-footer__inline-list-item">
-                                <a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <a class="pins-footer__link" href="/accessibility-statement?returnUrl={{ currentUrl }}">Accessibility</a>
                             </li>
                         </ul>
                     </div>

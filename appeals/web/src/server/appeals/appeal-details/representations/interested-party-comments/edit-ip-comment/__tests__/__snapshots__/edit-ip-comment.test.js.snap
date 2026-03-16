@@ -70,7 +70,7 @@ exports[`edit-ip-comment GET /edit/check/address should match the snapshot 1`] =
                     <div class="pins-footer__meta">
                         <div>
                             <ul class="pins-footer__inline-list">
-                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/interested-party-comments/5/edit/check/address">Accessibility</a>
                                 </li>
                             </ul>
                         </div>
@@ -175,7 +175,7 @@ exports[`edit-ip-comment GET address (review=false) should match the snapshot 1`
                     <div class="pins-footer__meta">
                         <div>
                             <ul class="pins-footer__inline-list">
-                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/interested-party-comments/5/edit/address?review=false&amp;editAddress=false">Accessibility</a>
                                 </li>
                             </ul>
                         </div>
@@ -280,7 +280,7 @@ exports[`edit-ip-comment GET address (review=false) should match the snapshot 2`
                     <div class="pins-footer__meta">
                         <div>
                             <ul class="pins-footer__inline-list">
-                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/interested-party-comments/5/edit/address?review=false&amp;editAddress=true">Accessibility</a>
                                 </li>
                             </ul>
                         </div>
@@ -385,7 +385,7 @@ exports[`edit-ip-comment GET address (review=true) should match the snapshot 1`]
                     <div class="pins-footer__meta">
                         <div>
                             <ul class="pins-footer__inline-list">
-                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/interested-party-comments/5/edit/address?review=true&amp;editAddress=false">Accessibility</a>
                                 </li>
                             </ul>
                         </div>
@@ -490,7 +490,7 @@ exports[`edit-ip-comment GET address (review=true) should match the snapshot 2`]
                     <div class="pins-footer__meta">
                         <div>
                             <ul class="pins-footer__inline-list">
-                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement">Accessibility</a>
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/interested-party-comments/5/edit/address?review=true&amp;editAddress=true">Accessibility</a>
                                 </li>
                             </ul>
                         </div>

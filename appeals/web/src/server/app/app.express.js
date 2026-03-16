@@ -105,6 +105,12 @@ app.set('view engine', 'njk');
 // Serve static files (fonts, images, generated CSS and JS, etc)
 app.use(serveStatic('src/server/static', { maxAge: config.cacheControl.maxAge }));
 
+// Make current url global for all nunjucks templates
+app.use((request, response, next) => {
+	response.locals.currentUrl = request.originalUrl;
+	next();
+});
+
 // Mount all routes on / path.
 // All the other subpaths will be defined in the `routes.js` file.
 app.use('/', appRouter);
