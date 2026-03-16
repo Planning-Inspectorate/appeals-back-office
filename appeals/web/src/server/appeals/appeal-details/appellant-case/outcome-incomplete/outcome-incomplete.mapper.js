@@ -326,6 +326,7 @@ export const checkDetailsAndMarkEnforcementAsIncomplete = (
 			]
 		}
 	};
+
 	if (formatedEnforcementNoticeReasons) {
 		summaryListComponent.parameters.rows.push({
 			key: { text: 'Why is the enforcement notice invalid?' },
@@ -408,31 +409,6 @@ export const checkDetailsAndMarkEnforcementAsIncomplete = (
 		});
 	}
 
-	// appeal due date
-	if (session?.webAppellantCaseReviewOutcome.updatedDueDate) {
-		const dueDate = session.webAppellantCaseReviewOutcome.updatedDueDate;
-		summaryListComponent.parameters.rows.push({
-			key: { text: 'Appeal due date' },
-			value: {
-				text: dateISOStringToDisplayDate(
-					dayMonthYearHourMinuteToISOString({
-						day: dueDate.day,
-						month: dueDate.month,
-						year: dueDate.year
-					})
-				)
-			},
-			actions: {
-				items: [
-					{
-						text: 'Change',
-						href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/date`,
-						visuallyHiddenText: 'Appeal due date'
-					}
-				]
-			}
-		});
-	}
 	// ground and facts
 	if (session?.webAppellantCaseReviewOutcome.enforcementGroundsMismatchText) {
 		summaryListComponent.parameters.rows.push({
@@ -481,6 +457,33 @@ export const checkDetailsAndMarkEnforcementAsIncomplete = (
 			}
 		});
 	}
+
+	// appeal due date
+	if (session?.webAppellantCaseReviewOutcome.updatedDueDate) {
+		const dueDate = session.webAppellantCaseReviewOutcome.updatedDueDate;
+		summaryListComponent.parameters.rows.push({
+			key: { text: 'Appeal due date' },
+			value: {
+				text: dateISOStringToDisplayDate(
+					dayMonthYearHourMinuteToISOString({
+						day: dueDate.day,
+						month: dueDate.month,
+						year: dueDate.year
+					})
+				)
+			},
+			actions: {
+				items: [
+					{
+						text: 'Change',
+						href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/date`,
+						visuallyHiddenText: 'Appeal due date'
+					}
+				]
+			}
+		});
+	}
+
 	// other information
 	if (otherInformationDetails) {
 		summaryListComponent.parameters.rows.push({
@@ -511,11 +514,14 @@ export const checkDetailsAndMarkEnforcementAsIncomplete = (
 	}
 
 	const title = 'Check details and mark appeal as incomplete';
-	const helperText = `<p class="govuk-body">We will mark the appeal as ${validationOutcome} and send an email to the relevant parties.</p>`; // TO DO CHECK THIS ON OTHER FLOW TOO
+	const helperText = `<p class="govuk-body">We will mark the appeal as ${validationOutcome} and send an email to the relevant parties.</p>`;
+	const backLinkUrl = session?.webAppellantCaseReviewOutcome.updatedDueDate
+		? `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/date`
+		: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/incomplete/receipt-due-date`;
 
 	return {
 		title,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/enforcement-other-information`,
+		backLinkUrl,
 		preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 		heading: title,
 		pageComponents: [
