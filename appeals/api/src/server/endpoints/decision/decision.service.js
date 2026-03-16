@@ -408,7 +408,12 @@ export const sendNewDecisionLetter = async (
 	notifyClient,
 	decisionDate
 ) => {
-	const representations = await getRepresentations(appeal.id, 1, 1000, {
+	const childAppeals = await appealRepository.getLinkedAppealsById(appeal.id);
+	const appealIds = [
+		Number(appeal.id),
+		...childAppeals.map((childAppeal) => Number(childAppeal?.childId))
+	];
+	const representations = await getRepresentations(appealIds, 1, 1000, {
 		representationType: ['comment']
 	});
 

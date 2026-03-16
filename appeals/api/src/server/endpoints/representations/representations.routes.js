@@ -38,7 +38,7 @@ router.get(
 	#swagger.responses[404] = {}
  */
 	getRepresentationRouteValidator,
-	checkAppealExistsByIdAndAddPartialToRequest([]),
+	checkAppealExistsByIdAndAddPartialToRequest(['childAppeals']),
 	asyncHandler(controller.getRepresentationCounts)
 );
 
@@ -81,7 +81,7 @@ router.get(
 	#swagger.responses[404] = {}
  */
 	getRepresentationRouteValidator,
-	checkAppealExistsByIdAndAddPartialToRequest([]),
+	checkAppealExistsByIdAndAddPartialToRequest(['childAppeals']),
 	asyncHandler(controller.getRepresentations)
 );
 
@@ -292,7 +292,7 @@ router.post(
 		}
 		#swagger.responses[400] = {}
  	*/
-	checkAppealExistsByIdAndAddPartialToRequest(['appealStatus', 'lpa']),
+	checkAppealExistsByIdAndAddPartialToRequest(['appealStatus', 'lpa', 'childAppeals']),
 	createRepresentationValidator,
 	asyncHandler(controller.createRepresentation())
 );

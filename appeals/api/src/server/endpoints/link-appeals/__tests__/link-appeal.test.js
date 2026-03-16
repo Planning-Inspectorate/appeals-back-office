@@ -9,7 +9,7 @@ import {
 	LINK_APPEALS_CHANGE_LEAD_OPERATION,
 	LINK_APPEALS_UNLINK_OPERATION
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STAGE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 jest.resetModules();
 
@@ -502,9 +502,7 @@ describe('appeal linked appeals routes', () => {
 							})
 							.set('azureAdUserId', azureAdUserId);
 
-						expect(databaseConnector.folder.findMany).toHaveBeenCalledTimes(
-							Object.values(APPEAL_CASE_STAGE).length * 2
-						);
+						expect(databaseConnector.folder.findMany).toHaveBeenCalledTimes(2);
 
 						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledTimes(1);
 						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledWith({
@@ -641,10 +639,7 @@ describe('appeal linked appeals routes', () => {
 							.post(`/appeals/${testAppeal.id}/update-linked-appeals`)
 							.send({ operation: LINK_APPEALS_UNLINK_OPERATION })
 							.set('azureAdUserId', azureAdUserId);
-
-						expect(databaseConnector.folder.findMany).toHaveBeenCalledTimes(
-							Object.values(APPEAL_CASE_STAGE).length * 2
-						);
+						expect(databaseConnector.folder.findMany).toHaveBeenCalledTimes(4);
 
 						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledTimes(1);
 						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledWith({
@@ -655,8 +650,8 @@ describe('appeal linked appeals routes', () => {
 
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledTimes(2);
 
-						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(testAppeal.id);
-						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(mockAppealA.id);
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenNthCalledWith(1, mockAppealA.id);
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenNthCalledWith(2, testAppeal.id);
 
 						expect(mockCreateAuditTrail).toHaveBeenCalledTimes(3);
 						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
@@ -723,9 +718,7 @@ describe('appeal linked appeals routes', () => {
 							})
 							.set('azureAdUserId', azureAdUserId);
 
-						expect(databaseConnector.folder.findMany).toHaveBeenCalledTimes(
-							Object.values(APPEAL_CASE_STAGE).length * 2
-						);
+						expect(databaseConnector.folder.findMany).toHaveBeenCalledTimes(4);
 
 						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledTimes(2);
 						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledWith({

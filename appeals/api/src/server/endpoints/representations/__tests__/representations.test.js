@@ -90,6 +90,28 @@ describe('/appeals/:id/reps', () => {
 				}
 			});
 		});
+
+		test('200 when there are child appeals', async () => {
+			const childAppeals = [{ childId: 111 }, { childId: 222 }];
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...enforcementNoticeAppeal,
+				childAppeals
+			});
+
+			const response = await request
+				.get(`/appeals/${enforcementNoticeAppeal.id}/reps?type=comment&status=valid`)
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(200);
+
+			expect(databaseConnector.representation.count).toHaveBeenCalledWith({
+				where: {
+					appealId: { in: [enforcementNoticeAppeal.id, ...childAppeals.map((a) => a.childId)] },
+					representationType: { in: ['comment'] },
+					status: 'valid'
+				}
+			});
+		});
 	});
 
 	describe('PATCH representations', () => {
@@ -2460,7 +2482,7 @@ describe('/appeals/:id/reps', () => {
 									}
 								})
 							]),
-							appealId: mockS78Appeal.id
+							appealId: { in: [mockS78Appeal.id] }
 						})
 					})
 				);

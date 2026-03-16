@@ -35,8 +35,10 @@ import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/
 import {
 	canLinkAppeals,
 	checkAppealsStatusBeforeLPAQ,
+	copyRepresentations,
 	duplicateAllFiles,
 	duplicateFiles,
+	moveRepresentations,
 	replaceLeadAppeal,
 	unlinkChildAppeal,
 	updateAppealStatusIfRequired
@@ -468,6 +470,8 @@ export const updateLinkedAppeals = async (req, res) => {
 			case LINK_APPEALS_CHANGE_LEAD_OPERATION: {
 				await Promise.allSettled([
 					// @ts-ignore
+					moveRepresentations(currentLead.id, appealToReplaceLead.id),
+					// @ts-ignore
 					duplicateAllFiles(currentLead, appealToReplaceLead, options),
 					// @ts-ignore
 					replaceLeadAppeal(currentLead, appealToReplaceLead)
@@ -483,9 +487,12 @@ export const updateLinkedAppeals = async (req, res) => {
 						: appeal;
 
 				if (isChildAppeal(appealToUnlink)) {
-					// @ts-ignore
-					await duplicateAllFiles(currentLead, appealToUnlink, options);
-
+					await Promise.allSettled([
+						// @ts-ignore
+						copyRepresentations(currentLead, appealToUnlink),
+						// @ts-ignore
+						duplicateAllFiles(currentLead, appealToUnlink, options)
+					]);
 					// only need to broadcast to the child and lead involved in the unlink action
 					appealsToBroadcast = [currentLead?.id, appealToUnlink?.id];
 				} else {
@@ -495,6 +502,8 @@ export const updateLinkedAppeals = async (req, res) => {
 							.send('Appeal to replace lead is required for unlinking a parent appeal');
 					}
 					await Promise.allSettled([
+						// @ts-ignore
+						copyRepresentations(appealToUnlink, appealToReplaceLead),
 						// @ts-ignore
 						duplicateAllFiles(appealToUnlink, appealToReplaceLead, options),
 						// @ts-ignore
@@ -549,6 +558,7 @@ export const updateLinkedAppeals = async (req, res) => {
 			await Promise.allSettled(
 				appealsToBroadcast
 					.filter((id) => id !== undefined)
+					// @ts-ignore
 					.map((appealId) => broadcasters.broadcastAppeal(appealId))
 			);
 		}

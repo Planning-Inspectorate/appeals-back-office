@@ -54,7 +54,10 @@ export const getRepresentations = async (req, res) => {
 		: undefined;
 
 	const { itemCount, comments } = await representationService.getRepresentations(
-		appeal.id,
+		[
+			Number(appeal.id),
+			...(appeal?.childAppeals?.map((childAppeal) => Number(childAppeal.childId)) || [])
+		],
 		pageNumber,
 		pageSize,
 		{
@@ -83,9 +86,15 @@ export const getRepresentationCounts = async (req, res) => {
 	const { status } = query;
 
 	try {
-		const counts = await representationService.getRepresentationCounts(appeal.id, {
-			status: status ? String(status) : undefined
-		});
+		const counts = await representationService.getRepresentationCounts(
+			[
+				Number(appeal.id),
+				...(appeal?.childAppeals?.map((childAppeal) => Number(childAppeal.childId)) || [])
+			],
+			{
+				status: status ? String(status) : undefined
+			}
+		);
 
 		return res.send({
 			...counts
@@ -286,7 +295,7 @@ export const createRepresentation = () => async (req, res) => {
 			APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
 		].includes(representationType)
 	) {
-		const fullRep = await representationService.getRepresentation(rep.id);
+		const fullRep = await representationService.getRepresentation(Number(rep.id));
 		const partyName = fullRep?.represented?.organisationName;
 		const trail =
 			representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT
