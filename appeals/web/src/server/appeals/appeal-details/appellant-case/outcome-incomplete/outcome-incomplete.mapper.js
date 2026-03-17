@@ -8,6 +8,7 @@ import {
 	getExampleDateHint
 } from '#lib/dates.js';
 import { enhanceCheckboxOptionWithAddAnotherReasonConditionalHtml } from '#lib/enhance-html.js';
+import { detailsComponent } from '#lib/mappers/components/page-components/details.js';
 import { dateInput } from '#lib/mappers/index.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
@@ -249,6 +250,7 @@ export function updateFeeReceiptDueDatePage(
  * @param {import('../appellant-case.service.js').ReasonOption[]} incompleteReasonOptions
  * @param {import('../appellant-case.service.js').ReasonOption[]} missingDocuments
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {{appellant: string, lpa: string}} [emailPreviews]
  * @returns {PageContent}
  */
 export const checkDetailsAndMarkEnforcementAsIncomplete = (
@@ -256,7 +258,8 @@ export const checkDetailsAndMarkEnforcementAsIncomplete = (
 	enforcementInvalidReasonOptions,
 	incompleteReasonOptions,
 	missingDocuments,
-	session
+	session,
+	emailPreviews
 ) => {
 	const {
 		enforcementNoticeInvalid,
@@ -519,6 +522,19 @@ export const checkDetailsAndMarkEnforcementAsIncomplete = (
 		? `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/date`
 		: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/incomplete/receipt-due-date`;
 
+	const emailPreviewComponents = emailPreviews
+		? [
+				detailsComponent({
+					summaryText: `Preview email to appellant`,
+					html: emailPreviews.appellant
+				}),
+				detailsComponent({
+					summaryText: `Preview email to LPA`,
+					html: emailPreviews.lpa
+				})
+			]
+		: [];
+
 	return {
 		title,
 		backLinkUrl,
@@ -531,7 +547,8 @@ export const checkDetailsAndMarkEnforcementAsIncomplete = (
 				parameters: {
 					html: helperText
 				}
-			}
+			},
+			...emailPreviewComponents
 		],
 		submitButtonProperties: {
 			text: `Mark appeal as ${validationOutcome}`,

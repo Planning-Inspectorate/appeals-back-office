@@ -1,6 +1,10 @@
+import { getTeamFromAppealId } from '#appeals/appeal-details/update-case-team/update-case-team.service.js';
+import { addressToString } from '#lib/address-formatter.js';
+import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import {
 	calculateIncompleteDueDate,
 	dateISOStringToDayMonthYearHourMinute,
+	dateISOStringToDisplayDate,
 	getTodaysISOString
 } from '#lib/dates.js';
 import logger from '#lib/logger.js';
@@ -585,25 +589,26 @@ export const getCheckDetailsAndMarkEnforcementAsIncomplete = async (request, res
  */
 const renderCheckDetailsAndMarkEnforcementAsIncomplete = async (request, response) => {
 	try {
-		if (!objectContainsAllKeys(request.session, 'webAppellantCaseReviewOutcome')) {
+		const { apiClient, currentAppeal, session } = request;
+
+		if (!objectContainsAllKeys(session, 'webAppellantCaseReviewOutcome')) {
 			return response.status(500).render('app/500.njk');
 		}
 
-		const outcome = request.session?.webAppellantCaseReviewOutcome;
+		const outcome = session?.webAppellantCaseReviewOutcome;
 		const isIncomplete = outcome?.validationOutcome === 'incomplete';
 
 		const tasks = {
-			enforcementOptions: appellantCaseService.getAppellantCaseEnforcementInvalidReasonOptions(
-				request.apiClient
-			),
+			enforcementOptions:
+				appellantCaseService.getAppellantCaseEnforcementInvalidReasonOptions(apiClient),
 			incompleteOptions: isIncomplete
 				? appellantCaseService.getAppellantCaseNotValidReasonOptionsForOutcome(
-						request.apiClient,
+						apiClient,
 						'incomplete'
 					)
 				: Promise.resolve([]),
 			missingDocs: isIncomplete
-				? outcomeIncompleteService.getAppellantCaseEnforcementMissingDocuments(request.apiClient)
+				? outcomeIncompleteService.getAppellantCaseEnforcementMissingDocuments(apiClient)
 				: Promise.resolve([])
 		};
 
@@ -614,12 +619,59 @@ const renderCheckDetailsAndMarkEnforcementAsIncomplete = async (request, respons
 			throw new Error('error retrieving invalid enforcement reason options');
 		}
 
+		if (
+			outcome.enforcementNoticeInvalid === 'yes' &&
+			currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE
+		) {
+			const { email: assignedTeamEmail } = await getTeamFromAppealId(
+				apiClient,
+				currentAppeal.appealId
+			);
+			const personalisation = {
+				appeal_reference_number: currentAppeal.appealReference,
+				lpa_reference: currentAppeal.planningApplicationReference,
+				site_address: addressToString(currentAppeal.appealSite),
+				team_email_address: assignedTeamEmail,
+				enforcement_reference: currentAppeal.enforcementNotice?.appellantCase?.reference || '',
+				due_date:
+					dateISOStringToDisplayDate(
+						currentAppeal.enforcementNotice?.appellantCase?.groundAFeeDueDate
+					) || '',
+				issue_date:
+					dateISOStringToDisplayDate(currentAppeal.enforcementNotice?.appellantCase?.issueDate) ||
+					''
+			};
+			const appellantTemplate = await generateNotifyPreview(
+				apiClient,
+				'enforcement-notice-incomplete-appellant.content.md',
+				personalisation
+			);
+			const lpaTemplate = await generateNotifyPreview(
+				apiClient,
+				'enforcement-notice-incomplete-lpa.content.md',
+				personalisation
+			);
+
+			const mappedPageContent = checkDetailsAndMarkEnforcementAsIncomplete(
+				currentAppeal,
+				enforcementInvalidReasonOptions,
+				incompleteReasonOptions,
+				missingDocuments,
+				session,
+				{ appellant: appellantTemplate.renderedHtml, lpa: lpaTemplate.renderedHtml }
+			);
+
+			return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
+				pageContent: mappedPageContent
+			});
+		}
+
 		const mappedPageContent = checkDetailsAndMarkEnforcementAsIncomplete(
-			request.currentAppeal,
+			currentAppeal,
 			enforcementInvalidReasonOptions,
 			incompleteReasonOptions,
 			missingDocuments,
-			request.session
+			session
 		);
 
 		return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
