@@ -438,6 +438,10 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			const appellantProofOfEvidenceReceived =
 				appealDetails.documentationSummary?.appellantProofOfEvidence?.status ===
 				APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED;
+			const lpaProofOfEvidenceAwaitingReview =
+				lpaProofOfEvidenceReceived && !lpaProofOfEvidenceDone;
+			const appellantProofOfEvidenceAwaitingReview =
+				appellantProofOfEvidenceReceived && !appellantProofOfEvidenceDone;
 
 			const rule6PoEEnabled = config.featureFlags.featureFlagRule6PoE;
 
@@ -459,8 +463,15 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				actions.push('reviewLpaProofOfEvidence');
 			}
 
+			const hasPendingProofReviews =
+				lpaProofOfEvidenceAwaitingReview ||
+				appellantProofOfEvidenceAwaitingReview ||
+				(rule6PoEEnabled && rule6ProofOfEvidenceAwaitingReview);
+
 			if (proofOfEvidenceDueDatePassed) {
-				actions.push('progressToInquiry');
+				if (!hasPendingProofReviews) {
+					actions.push('progressToInquiry');
+				}
 			} else if (!lpaProofOfEvidenceReceived && !appellantProofOfEvidenceReceived) {
 				actions.push('awaitingProofOfEvidenceAndWitnesses');
 			} else if (!lpaProofOfEvidenceReceived) {
