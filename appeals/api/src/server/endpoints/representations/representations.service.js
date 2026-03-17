@@ -237,11 +237,11 @@ export const createRepresentation = async (
 		await representationRepository.addAttachments(representation.id, mappedDocuments);
 
 		for (const document of mappedDocuments) {
-			if (document?.documentGuid && document?.version > 1) {
+			if (document?.documentGuid) {
 				await broadcasters.broadcastDocument(
 					document.documentGuid,
 					document.version,
-					EventType.Update
+					document.version > 1 ? EventType.Update : EventType.Create
 				);
 			}
 		}
@@ -348,11 +348,11 @@ export const updateAttachments = async (repId, attachments) => {
 	);
 
 	for (const document of mappedDocuments) {
-		if (document?.documentGuid && document?.version > 1) {
+		if (document?.documentGuid) {
 			await broadcasters.broadcastDocument(
 				document.documentGuid,
 				document.version,
-				EventType.Update
+				document.version > 1 ? EventType.Update : EventType.Create
 			);
 		}
 	}
