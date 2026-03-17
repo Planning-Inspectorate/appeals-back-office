@@ -1202,7 +1202,7 @@ describe('/appeals/representation-submission', () => {
 					expect(response.status).toEqual(201);
 				});
 
-				test('valid rep payload: Rule 6 party proof of evidence sends notifications to all parties with correct links', async () => {
+				test('valid rep payload: Rule 6 party proof of evidence does not send notifications', async () => {
 					const validRepresentation = {
 						...validRepresentationRule6PartyProofsEvidence,
 						serviceUserId: (200000000 + 729).toString()
@@ -1271,49 +1271,7 @@ describe('/appeals/representation-submission', () => {
 						.send(validRepresentation);
 
 					expect(response.status).toEqual(201);
-					expect(global.mockNotifySend).toHaveBeenCalledTimes(3);
-
-					expect(global.mockNotifySend).toHaveBeenNthCalledWith(1, {
-						azureAdUserId: expect.any(String),
-						notifyClient: expect.any(Object),
-						templateName: 'rule-6-party-proof-of-evidence-received',
-						recipientEmail: 'agent@example.com',
-						personalisation: {
-							appeal_reference_number: validRepresentationRule6PartyStatement.caseReference,
-							site_address: '123 Test Street, TE1 1ST',
-							lpa_reference: 'LPA/2024/001',
-							statement_url: expect.stringMatching(/\/appeals\/\d+/),
-							inquiry_date: '15 March 2025'
-						}
-					});
-
-					expect(global.mockNotifySend).toHaveBeenNthCalledWith(2, {
-						azureAdUserId: expect.any(String),
-						notifyClient: expect.any(Object),
-						templateName: 'rule-6-party-proof-of-evidence-received',
-						recipientEmail: 'lpa@example.com',
-						personalisation: {
-							appeal_reference_number: validRepresentationRule6PartyStatement.caseReference,
-							site_address: '123 Test Street, TE1 1ST',
-							lpa_reference: 'LPA/2024/001',
-							statement_url: expect.stringMatching(/\/manage-appeals\/\d+/),
-							inquiry_date: '15 March 2025'
-						}
-					});
-
-					expect(global.mockNotifySend).toHaveBeenNthCalledWith(3, {
-						azureAdUserId: expect.any(String),
-						notifyClient: expect.any(Object),
-						templateName: 'rule-6-party-proof-of-evidence-received',
-						recipientEmail: 'rule6party@example.com',
-						personalisation: {
-							appeal_reference_number: validRepresentationRule6PartyStatement.caseReference,
-							site_address: '123 Test Street, TE1 1ST',
-							lpa_reference: 'LPA/2024/001',
-							statement_url: expect.stringMatching(/\/rule-6\/\d+/),
-							inquiry_date: '15 March 2025'
-						}
-					});
+					expect(global.mockNotifySend).not.toHaveBeenCalled();
 				});
 			}
 		);

@@ -275,15 +275,6 @@ export const createRepresentation = () => async (req, res) => {
 		}
 	);
 
-	if (representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE) {
-		await sendRepresentationReceivedNotifications(
-			req.appeal,
-			req.notifyClient,
-			azureAdUserId || AUDIT_TRIAL_RULE_6_PARTY_ID,
-			'rule-6-party-proof-of-evidence-received'
-		);
-	}
-
 	if (
 		[
 			APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT,
