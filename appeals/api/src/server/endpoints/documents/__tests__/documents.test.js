@@ -363,7 +363,7 @@ describe('appeals documents', () => {
 			});
 		});
 
-		test('post large document payload uses chunked bulk creates', async () => {
+		test('post large document payload uses chunked bulk creates and broadcasts all documents', async () => {
 			jest.clearAllMocks();
 			const numberOfDocuments = 800;
 			const largeAddDocumentsRequest = {
@@ -411,7 +411,19 @@ describe('appeals documents', () => {
 			expect(response.documents).toHaveLength(numberOfDocuments);
 			expect(documentCreateMany).toHaveBeenCalledTimes(8);
 			expect(documentVersionCreateMany).toHaveBeenCalledTimes(8);
-			expect(global.mockBroadcasters.broadcastDocument).not.toHaveBeenCalled();
+			expect(global.mockBroadcasters.broadcastDocument).toHaveBeenCalledTimes(numberOfDocuments);
+			expect(global.mockBroadcasters.broadcastDocument).toHaveBeenNthCalledWith(
+				1,
+				'bulk-upload-guid-1',
+				1,
+				'Create'
+			);
+			expect(global.mockBroadcasters.broadcastDocument).toHaveBeenNthCalledWith(
+				numberOfDocuments,
+				`bulk-upload-guid-${numberOfDocuments}`,
+				1,
+				'Create'
+			);
 		});
 
 		test('post new document version', async () => {
