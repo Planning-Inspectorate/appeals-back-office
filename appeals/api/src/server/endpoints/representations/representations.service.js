@@ -728,19 +728,16 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 		const inquiryExpectedDays = appeal.inquiry?.estimatedDays
 			? appeal.inquiry?.estimatedDays.toString()
 			: 'Not available';
-		const whatHappensNext = appeal.inquiry
-			? `You need to attend the inquiry on ${inquiryDate}.`
-			: 'We will contact you by email when we set up the inquiry';
 
 		const allParties = [];
 		allParties.push({
-			name: 'local planning authority',
+			name: 'the local planning authority',
 			id: 'lpa',
 			email: appeal.lpa?.email,
 			isValid: isLpaValid
 		});
 		allParties.push({
-			name: 'appellant',
+			name: 'the appellant',
 			id: 'appellant',
 			email: appeal.agent?.email || appeal.appellant?.email,
 			isValid: isAppellantValid
@@ -757,56 +754,18 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 		}
 
 		const submittedParties = allParties.filter((p) => p.isValid);
-		const missingParties = allParties.filter((p) => !p.isValid);
 		const recipients = allParties.filter((p) => p.email);
 
-		for (const recipient of recipients) {
-			let templateName;
-			let partiesToNotifyAbout;
-			let subjectLine;
-			let templateWhatHappensNext;
-			const othersSubmitted = submittedParties.filter((p) => p.id !== recipient.id);
-			const othersMissing = missingParties.filter((p) => p.id !== recipient.id);
-
-			const isRecipientSubmitted = recipient.isValid;
-
-			if (isRecipientSubmitted) {
-				if (othersMissing.length > 0) {
-					templateName = 'not-received-proof-of-evidence-and-witnesses';
-					partiesToNotifyAbout = othersMissing;
-				} else {
-					templateName = 'proof-of-evidence-and-witnesses-shared';
-					partiesToNotifyAbout = othersSubmitted;
-				}
-			} else {
-				if (othersSubmitted.length > 0) {
-					templateName = 'proof-of-evidence-and-witnesses-shared';
-					partiesToNotifyAbout = othersSubmitted;
-				} else {
-					templateName = 'not-received-proof-of-evidence-and-witnesses';
-					partiesToNotifyAbout = othersMissing;
-				}
-			}
-
-			if (templateName === 'proof-of-evidence-and-witnesses-shared') {
-				subjectLine = partiesToNotifyAbout.map((p) => p.name);
-				templateWhatHappensNext =
+		if (submittedParties.length > 0) {
+			for (const recipient of recipients) {
+				const templateWhatHappensNext =
 					recipient.id === 'lpa' ? 'manage-appeals' : recipient.isRule6 ? 'rule-6' : 'appeals';
-			} else {
-				const formatter = new Intl.ListFormat('en', { style: 'long', type: 'disjunction' });
-				templateWhatHappensNext = whatHappensNext;
-				const namesList = formatter.format(
-					partiesToNotifyAbout.map((p) => p.name).filter((n) => typeof n === 'string')
-				);
-				subjectLine = `We did not receive any proof of evidence and witnesses from the ${namesList}`;
-			}
 
-			if (partiesToNotifyAbout.length > 0) {
 				await notifyPublished({
 					appeal,
 					notifyClient,
 					isInquiryProcedure: true,
-					templateName,
+					templateName: 'proof-of-evidence-and-witnesses-shared',
 					recipientEmail: recipient.email,
 					whatHappensNext: templateWhatHappensNext,
 					azureAdUserId,
@@ -816,7 +775,7 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 					inquiryTime,
 					inquiryExpectedDays,
 					inquiryAddress,
-					inquirySubjectLine: subjectLine
+					inquirySubjectLine: submittedParties.map((p) => p.name)
 				});
 			}
 		}
