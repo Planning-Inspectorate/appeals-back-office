@@ -1093,8 +1093,8 @@ describe('appeal timetables routes', () => {
 				[
 					'lcdAppeal',
 					ldcAppeal,
-					'appeal-valid-start-case-advertisement-appellant',
-					'appeal-valid-start-case-advertisement-lpa',
+					'appeal-valid-start-case-ldc-appellant',
+					'appeal-valid-start-case-ldc-lpa',
 					{
 						lpaQuestionnaireDueDate: '2024-06-19T22:59:00.000Z',
 						lpaStatementDueDate: '2024-07-17T22:59:00.000Z',
@@ -1337,10 +1337,10 @@ describe('appeal timetables routes', () => {
 						statementOfCommonGroundDueDate: '2024-07-10T22:59:00.000Z'
 					},
 					{},
-					'appeal-valid-start-case-advertisement-appellant',
-					'appeal-valid-start-case-advertisement-lpa',
-					'appeal-valid-start-case-advertisement-appellant-hearing',
-					'appeal-valid-start-case-advertisement-lpa-hearing'
+					'appeal-valid-start-case-ldc-appellant',
+					'appeal-valid-start-case-ldc-lpa',
+					'appeal-valid-start-case-ldc-appellant-hearing',
+					'appeal-valid-start-case-ldc-lpa-hearing'
 				]
 			])(
 				'for a %s appeal',
