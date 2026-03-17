@@ -1,9 +1,11 @@
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
+import { ProcedureTypePage } from '../../page_objects/procedureTypePage';
 import { happyPathHelper } from '../../support/happyPathHelper';
 import { tag } from '../../support/tag';
 
 const caseDetailsPage = new CaseDetailsPage();
+const procedureTypePage = new ProcedureTypePage();
 
 describe('part1 appeal', () => {
 	let cases = [];
@@ -45,6 +47,7 @@ describe('part1 appeal', () => {
 		setupTestCase('S20', 'Y').then(() => {
 			happyPathHelper.viewCaseDetails(caseObj);
 			caseDetailsPage.clickReadyToStartCase();
+			procedureTypePage.verifyNoProcedureTypeSelected();
 			caseDetailsPage.basePageElements
 				.radioButton()
 				.contains('Part 1', { matchCase: false })

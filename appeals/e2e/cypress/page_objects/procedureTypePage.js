@@ -9,6 +9,11 @@ export class ProcedureTypePage extends CaseDetailsPage {
 	};
 
 	procedureTypeMappings = {
+		part1: {
+			element: () => cy.get('#appeal-procedure'),
+			displayName: 'Part 1',
+			value: 'writtenPart1'
+		},
 		written: {
 			element: this.procedureTypeElements.written,
 			displayName: 'Written representations',
@@ -61,5 +66,14 @@ export class ProcedureTypePage extends CaseDetailsPage {
 
 	verifyHeader(procedureTypeCaption) {
 		this.elements.getAppealRefCaseDetails().should('contain.text', procedureTypeCaption);
+	}
+
+	verifyNoProcedureTypeSelected(part1 = true) {
+		if (part1) {
+			this.procedureTypeMappings.part1.element().should('not.be.checked');
+		}
+		this.procedureTypeMappings.written.element().should('not.be.checked');
+		this.procedureTypeMappings.hearing.element().should('not.be.checked');
+		this.procedureTypeMappings.inquiry.element().should('not.be.checked');
 	}
 }
