@@ -3,19 +3,19 @@ import { formatDocumentData, formatSentenceCase } from '../../../../lib/nunjucks
 export const rowBuilders = {
 	originalApplicationForm: (data) => ({
 		key: 'Application form',
-		html: formatDocumentData(data.originalApplicationForm)
+		html: formatDocumentData(data.documents.originalApplicationForm)
 	}),
 	changedDescription: (data) => ({
 		key: 'Agreement to change the description of development',
-		html: formatDocumentData(data.changedDescription)
+		html: formatDocumentData(data.documents.changedDescription)
 	}),
 	applicationDecisionLetter: (data) => ({
 		key: 'Decision letter from the local planning authority',
-		html: formatDocumentData(data.applicationDecisionLetter)
+		html: formatDocumentData(data.documents.applicationDecisionLetter)
 	}),
 	appellantStatement: (data) => ({
 		key: 'Appeal statement',
-		html: formatDocumentData(data.appellantStatement)
+		html: formatDocumentData(data.documents.appellantStatement)
 	}),
 	planningObligationStatus: (data) => ({
 		key: 'What is the status of your planning obligation?',
@@ -23,34 +23,34 @@ export const rowBuilders = {
 	}),
 	planningObligation: (data) => ({
 		key: 'Planning obligation',
-		html: formatDocumentData(data.planningObligationDocuments)
+		html: formatDocumentData(data.documents.planningObligationDocuments)
 	}),
 	statementCommonGround: (data) => ({
 		key: 'Draft statement of common ground',
-		html: formatDocumentData(data.statementCommonGround)
+		html: formatDocumentData(data.documents.statementCommonGround)
 	}),
 	ownershipCertificate: (data) => ({
 		key: 'Separate ownership certificate and agricultural land declaration',
-		html: formatDocumentData(data.ownershipCertificate)
+		html: formatDocumentData(data.documents.ownershipCertificate)
 	}),
 	appellantApplicationFolder: (data) => ({
 		key: 'Application for an award of appeal costs',
-		html: formatDocumentData(data.appellantApplicationFolder)
+		html: formatDocumentData(data.documents.appellantApplicationFolder)
 	}),
 	designAccessStatement: (data) => ({
 		key: 'Design and access statement',
-		html: formatDocumentData(data.designAccessStatement)
+		html: formatDocumentData(data.documents.designAccessStatement)
 	}),
 	plansDrawings: (data) => ({
 		key: 'Plans, drawings and list of plans',
-		html: formatDocumentData(data.plansDrawings)
+		html: formatDocumentData(data.documents.plansDrawings)
 	}),
 	newPlansDrawings: (data) => ({
 		key: 'New plans or drawings',
-		html: formatDocumentData(data.newPlansDrawings)
+		html: formatDocumentData(data.documents.newPlansDrawings)
 	}),
 	otherNewDocuments: (data) => ({
 		key: 'Other new supporting documents',
-		html: formatDocumentData(data.otherNewDocuments)
+		html: formatDocumentData(data.documents.otherNewDocuments)
 	})
 };
