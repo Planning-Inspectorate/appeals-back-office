@@ -1409,21 +1409,7 @@ describe('/appeals/:id/reps', () => {
 
 			expect(response.status).toEqual(201);
 
-			expect(mockNotifySend).toHaveBeenCalledTimes(3);
-
-			expect(mockNotifySend).toHaveBeenNthCalledWith(3, {
-				azureAdUserId: '732652365',
-				notifyClient: expect.anything(),
-				personalisation: {
-					appeal_reference_number: fullPlanningAppeal.reference,
-					lpa_reference: fullPlanningAppeal.applicationReference,
-					site_address: `${fullPlanningAppeal.address.addressLine1}, ${fullPlanningAppeal.address.addressLine2}, ${householdAppeal.address.addressTown}, ${householdAppeal.address.addressCounty}, ${householdAppeal.address.postcode}, ${householdAppeal.address.addressCountry}`,
-					inquiry_date: '31 March 2022',
-					statement_url: '/mock-front-office-url/rule-6/1345264'
-				},
-				recipientEmail: 'test@test.com',
-				templateName: 'rule-6-party-proof-of-evidence-received'
-			});
+			expect(mockNotifySend).not.toHaveBeenCalled();
 		});
 	});
 

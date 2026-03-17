@@ -1635,6 +1635,59 @@ describe('appeal timetables routes', () => {
 						});
 					});
 
+					test(`start an appeal timetable with a hearing procedure type, a decimal duration and no hearing start time`, async () => {
+						databaseConnector.appeal.findUnique.mockResolvedValue({
+							...appeal
+						});
+						databaseConnector.user.upsert.mockResolvedValue({
+							id: 1,
+							azureAdUserId
+						});
+
+						const timetable = mapValues(expectedTimetableDto, (date) => new Date(date));
+
+						databaseConnector.appealTimetable.upsert.mockResolvedValue({
+							...timetable,
+							appeal: { ...appeal }
+						});
+
+						const { id } = appeal;
+						const response = await request
+							.post(`/appeals/${id}/appeal-timetables`)
+							.send({
+								hearingEstimatedDays: 3.5
+							})
+							.set('azureAdUserId', azureAdUserId);
+
+						expect(response.status).toEqual(201);
+
+						expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+							where: { id },
+							data: {
+								caseStartedDate: '2024-06-04T23:00:00.000Z',
+								caseUpdatedDate: new Date('2024-06-05T22:50:00.000Z'),
+								hearing: {
+									upsert: {
+										create: {
+											estimatedDays: 3.5
+										},
+										update: {
+											estimatedDays: 3.5
+										},
+										where: {
+											appealId: id
+										}
+									}
+								},
+								procedureTypeId: 1
+							},
+							include: {
+								appealStatus: true,
+								appealType: true
+							}
+						});
+					});
+
 					test(`restart an appeal timetable with a hearing procedure type`, async () => {
 						databaseConnector.appeal.findUnique.mockResolvedValue({
 							...appeal,
