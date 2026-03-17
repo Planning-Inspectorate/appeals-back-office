@@ -1813,7 +1813,7 @@ describe('required actions', () => {
 				expect(result).toContain('reviewAppellantProofOfEvidence');
 			});
 
-			it('should return "progressToInquiry" if LPA proof of evidence is not received and proof of evidence and due date has passed', () => {
+			it('should not return "progressToInquiry" if LPA proof of evidence is not received but appellant proof is still awaiting review', () => {
 				expect(
 					getRequiredActionsForAppeal(
 						{
@@ -1844,10 +1844,10 @@ describe('required actions', () => {
 						},
 						'detail'
 					)
-				).toEqual(['reviewAppellantProofOfEvidence', 'progressToInquiry']);
+				).toEqual(['reviewAppellantProofOfEvidence']);
 			});
 
-			it('should return "progressToInquiry" if appellant proof of evidence is not received and proof of evidence dure date has passed', () => {
+			it('should not return "progressToInquiry" if appellant proof of evidence is not received but LPA proof is still awaiting review', () => {
 				expect(
 					getRequiredActionsForAppeal(
 						{
@@ -1878,7 +1878,7 @@ describe('required actions', () => {
 						},
 						'detail'
 					)
-				).toEqual(['reviewLpaProofOfEvidence', 'progressToInquiry']);
+				).toEqual(['reviewLpaProofOfEvidence']);
 			});
 
 			it('should return "progressToInquiry" if both appellant and LPA proof of evidence is not received and proof of evidence dure date has passed', () => {
@@ -1913,6 +1913,42 @@ describe('required actions', () => {
 						'detail'
 					)
 				).toContain('progressToInquiry');
+			});
+
+			it('should not return "progressToInquiry" if proof of evidence due date has passed but LPA proof is still awaiting review', () => {
+				const result = getRequiredActionsForAppeal(
+					{
+						...appealDataWithStatementsStatus,
+						appealTimetable: {
+							...appealDataWithStatementsStatus.appealTimetable,
+							proofOfEvidenceAndWitnessesDueDate: pastDate
+						},
+						documentationSummary: {
+							...appealDataWithStatementsStatus.documentationSummary,
+							lpaProofOfEvidence: {
+								status: 'received',
+								representationStatus: 'awaiting_review',
+								counts: {
+									awaiting_review: 1,
+									valid: 0,
+									published: 0
+								}
+							},
+							appellantProofOfEvidence: {
+								status: 'not_received',
+								counts: {
+									awaiting_review: 1,
+									valid: 0,
+									published: 0
+								}
+							}
+						}
+					},
+					'detail'
+				);
+
+				expect(result).toContain('reviewLpaProofOfEvidence');
+				expect(result).not.toContain('progressToInquiry');
 			});
 
 			it('should include "awaitingRule6PartyProofOfEvidence" if Rule 6 proof of evidence is not submitted', () => {
