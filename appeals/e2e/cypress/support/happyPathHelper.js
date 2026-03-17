@@ -5,6 +5,7 @@ import { Page } from '../page_objects/basePage.js';
 import { CaseDetailsPage } from '../page_objects/caseDetailsPage.js';
 import { DateTimeSection } from '../page_objects/dateTimeSection';
 import { ListCasesPage } from '../page_objects/listCasesPage';
+import { ProcedureTypePage } from '../page_objects/procedureTypePage';
 import { FileUploader } from '../page_objects/shared.js';
 import { FLOWS, STATUSES } from './flows';
 import { urlPaths } from './urlPaths.js';
@@ -14,6 +15,7 @@ const caseDetailsPage = new CaseDetailsPage();
 const dateTimeSection = new DateTimeSection();
 const listCasesPage = new ListCasesPage();
 const fileUploader = new FileUploader();
+const procedureTypePage = new ProcedureTypePage();
 
 let sampleFiles = fileUploader.sampleFiles;
 let pdf = sampleFiles.pdf;
@@ -72,6 +74,7 @@ export const happyPathHelper = {
 		happyPathHelper.viewCaseDetails(caseObj);
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
 		caseDetailsPage.clickReadyToStartCase();
+		procedureTypePage.verifyNoProcedureTypeSelected();
 		caseDetailsPage.selectRadioButtonByValue(procedureType);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Start case');
