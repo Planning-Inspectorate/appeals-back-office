@@ -118,7 +118,10 @@ const importIndividualAppeal = async (data) => {
 
 	await Promise.all(
 		documentVersions.map(async (document) => {
-			await writeDocumentAuditTrail(id, document, AUDIT_TRIAL_APPELLANT_UUID);
+			await Promise.all([
+				broadcasters.broadcastDocument(document.documentGuid, 1, EventType.Create),
+				writeDocumentAuditTrail(id, document, AUDIT_TRIAL_APPELLANT_UUID)
+			]);
 		})
 	);
 
@@ -287,7 +290,10 @@ export const importIndividualLpaqSubmission = async (
 
 	await Promise.all(
 		documentVersions.map(async (document) => {
-			await writeDocumentAuditTrail(id, document, AUDIT_TRAIL_LPA_UUID);
+			await Promise.all([
+				broadcasters.broadcastDocument(document.documentGuid, 1, EventType.Create),
+				writeDocumentAuditTrail(id, document, AUDIT_TRAIL_LPA_UUID)
+			]);
 		})
 	);
 
@@ -506,6 +512,12 @@ export const importRepresentation = async (req, res) => {
 		broadcasters.broadcastRepresentation(repId, EventType.Create),
 		integrationService.importDocuments(attachments, documentVersions)
 	]);
+
+	await Promise.all(
+		documentVersions.map(async (document) => {
+			await broadcasters.broadcastDocument(document.documentGuid, 1, EventType.Create);
+		})
+	);
 
 	if (repType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT) {
 		await sendRepresentationReceivedNotifications(

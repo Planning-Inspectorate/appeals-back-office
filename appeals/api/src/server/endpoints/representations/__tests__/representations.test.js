@@ -1287,6 +1287,11 @@ describe('/appeals/:id/reps', () => {
 				.set('azureAdUserId', '732652365');
 
 			expect(response.status).toEqual(201);
+			expect(mockBroadcasters.broadcastDocument).toHaveBeenCalledWith(
+				'39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+				1,
+				'Create'
+			);
 		});
 
 		test('200 when lpa statement representation with attachment is successfully created', async () => {
@@ -1310,6 +1315,11 @@ describe('/appeals/:id/reps', () => {
 				.set('azureAdUserId', '732652365');
 
 			expect(response.status).toEqual(201);
+			expect(mockBroadcasters.broadcastDocument).toHaveBeenCalledWith(
+				'39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+				1,
+				'Create'
+			);
 		});
 
 		test('200 when lpa final comment representation with attachment is successfully created', async () => {
@@ -1333,6 +1343,11 @@ describe('/appeals/:id/reps', () => {
 				.set('azureAdUserId', '732652365');
 
 			expect(response.status).toEqual(201);
+			expect(mockBroadcasters.broadcastDocument).toHaveBeenCalledWith(
+				'39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+				1,
+				'Create'
+			);
 		});
 
 		test('200 when appellant final comments representation with attachment is successfully created', async () => {
@@ -1355,6 +1370,11 @@ describe('/appeals/:id/reps', () => {
 				.set('azureAdUserId', '732652365');
 
 			expect(response.status).toEqual(201);
+			expect(mockBroadcasters.broadcastDocument).toHaveBeenCalledWith(
+				'39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+				1,
+				'Create'
+			);
 		});
 
 		test('201 when rule_6_party_statement representation with attachment is successfully created', async () => {
@@ -1377,6 +1397,11 @@ describe('/appeals/:id/reps', () => {
 				.set('azureAdUserId', '732652365');
 
 			expect(response.status).toEqual(201);
+			expect(mockBroadcasters.broadcastDocument).toHaveBeenCalledWith(
+				'39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+				1,
+				'Create'
+			);
 		});
 
 		test('201 when rule_6_party_proofs_evidence representation with attachment is successfully created', async () => {
@@ -1408,6 +1433,11 @@ describe('/appeals/:id/reps', () => {
 				.set('azureAdUserId', '732652365');
 
 			expect(response.status).toEqual(201);
+			expect(mockBroadcasters.broadcastDocument).toHaveBeenCalledWith(
+				'39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+				1,
+				'Create'
+			);
 
 			expect(mockNotifySend).not.toHaveBeenCalled();
 		});
@@ -2039,6 +2069,12 @@ describe('/appeals/:id/reps', () => {
 					}
 				}
 			});
+
+			expect(mockBroadcasters.broadcastDocument).toHaveBeenCalledWith(
+				'39ad6cd8-60ab-43f0-a995-4854db8f12c6',
+				1,
+				'Create'
+			);
 		});
 
 		test('200 with new version updated', async () => {
