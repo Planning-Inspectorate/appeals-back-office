@@ -1,11 +1,23 @@
+import * as appellantCaseService from '#appeals/appeal-details/appellant-case/appellant-case.service.js';
+import logger from '#lib/logger.js';
 import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
+import { objectContainsAllKeys } from '#lib/object-utilities.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import {
 	postDocumentUpload as postDocumentUploadToApi,
+	postUploadDocumentsCheckAndConfirm,
 	renderDocumentUpload
 } from '../../../appeal-documents/appeal-documents.controller.js';
-import { getAttachmentsFolder } from '../../../appeal-documents/appeal.documents.service.js';
+import { addDocumentDetailsFormDataToFileUploadInfo } from '../../../appeal-documents/appeal-documents.mapper.js';
+import {
+	getAttachmentsFolder,
+	getDocumentRedactionStatuses
+} from '../../../appeal-documents/appeal.documents.service.js';
 import { enforcementNoticeWithdrawalCheckDetailsPage } from './enforcement-notice-withdrawal-mapper.js';
+
+const UNREDACTED_REDACTION_STATUS_ID = '2';
+const LPA_ENFORCEMENT_NOTICE_WITHDRAWAL_INVALID_REASON_ID = 8;
 
 const getBackLinkUrl = backLinkGenerator('cancelAppeal');
 
@@ -92,7 +104,7 @@ export const getCheckDetails = async (request, response) => {
 	const cancelUrl = `/appeals-service/appeal-details/${appealId}/cancel`;
 	const backLinkUrl = getBackLinkUrl(
 		request,
-		cancelUrl,
+		`${cancelUrl}/enforcement-notice-withdrawal`,
 		`${cancelUrl}/enforcement-notice-withdrawal/check-details`
 	);
 
@@ -112,4 +124,70 @@ export const getCheckDetails = async (request, response) => {
 	);
 
 	return response.render('patterns/check-and-confirm-page.pattern.njk', { pageContent });
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postCheckDetails = async (request, response) => {
+	try {
+		const { currentAppeal, apiClient, params } = request;
+		const { appealId } = params;
+
+		if (!objectContainsAllKeys(request.session, ['fileUploadInfo'])) {
+			return response.status(500).render('app/500.njk');
+		}
+
+		request.currentFolder = {
+			folderId: currentAppeal.withdrawal?.withdrawalFolder?.folderId,
+			path: `${APPEAL_CASE_STAGE.CANCELLATION}/${APPEAL_DOCUMENT_TYPE.LPA_ENFORCEMENT_NOTICE_WITHDRAWAL}`
+		};
+
+		const { documentId } = request.session.fileUploadInfo;
+
+		const redactionStatuses = await getDocumentRedactionStatuses(apiClient);
+
+		addDocumentDetailsFormDataToFileUploadInfo(
+			{
+				items: [
+					{
+						documentId,
+						receivedDate: { date: new Date().toISOString() },
+						redactionStatus: UNREDACTED_REDACTION_STATUS_ID
+					}
+				]
+			},
+			request.session.fileUploadInfo.files,
+			redactionStatuses
+		);
+
+		await postUploadDocumentsCheckAndConfirm({ request, response });
+		if (response.headersSent) return;
+
+		/** @type {import('#appeals/appeal-details/appellant-case/appellant-case.types.js').AppellantCaseValidationOutcomeRequest} */
+		const reviewOutcome = {
+			validationOutcome: 'invalid',
+			invalidReasons: [{ id: LPA_ENFORCEMENT_NOTICE_WITHDRAWAL_INVALID_REASON_ID }],
+			enforcementNoticeInvalid: 'no'
+		};
+
+		await appellantCaseService.setReviewOutcomeForAppellantCase(
+			request.apiClient,
+			appealId,
+			currentAppeal.appellantCaseId,
+			reviewOutcome
+		);
+
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'issuedDecisionInvalid',
+			appealId: currentAppeal.appealId
+		});
+
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+	} catch (error) {
+		logger.error(error);
+		return response.status(500).render('app/500.njk');
+	}
 };

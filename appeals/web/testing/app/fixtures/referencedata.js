@@ -1311,6 +1311,25 @@ export const appellantCaseDataIncompleteOutcome = {
 	}
 };
 
+export const enforcementAppealAppellantCaseDataIncompleteOutcome = {
+	...appellantCaseDataIncompleteOutcome,
+	appealId: 5623,
+	appealType: 'Enforcement notice appeal',
+	documentationSummary: {
+		appellantCase: {
+			dueDate: '2024-10-02'
+		}
+	},
+	enforcementNotice: {
+		enforcementNoticeInvalid: 'yes',
+		groundAFeeDueDate: undefined
+	},
+	validation: {
+		outcome: 'Incomplete',
+		incompleteReasons: []
+	}
+};
+
 export const appellantCaseDataValidOutcome = {
 	...appellantCaseDataNotValidated,
 	validation: {
@@ -1773,6 +1792,11 @@ export const appellantCaseInvalidReasonsRealIds = [
 	{
 		id: 7,
 		name: 'Ground (a) barred',
+		hasText: false
+	},
+	{
+		id: 8,
+		name: 'LPA has withdrawn the enforcement notice',
 		hasText: false
 	}
 ];

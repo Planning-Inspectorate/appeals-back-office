@@ -1,7 +1,28 @@
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+import nock from 'nock';
 import { calculateTimetable, getFullAppealBaseTimetableKey } from '../business-days.js';
 
 describe('business-days', () => {
+	beforeEach(() => {
+		nock.cleanAll();
+		nock('https://www.gov.uk')
+			.get('/bank-holidays.json')
+			.reply(200, {
+				'england-and-wales': {
+					division: 'england-and-wales',
+					events: [
+						{ title: 'Good Friday', date: '2024-03-29', notes: '', bunting: true },
+						{ title: 'Easter Monday', date: '2024-04-01', notes: '', bunting: true },
+						{ title: 'Spring bank holiday', date: '2024-05-27', notes: '', bunting: true }
+					]
+				}
+			})
+			.persist();
+	});
+
+	afterEach(() => {
+		nock.cleanAll();
+	});
 	describe('calculateTimetable', () => {
 		const tests = [
 			{

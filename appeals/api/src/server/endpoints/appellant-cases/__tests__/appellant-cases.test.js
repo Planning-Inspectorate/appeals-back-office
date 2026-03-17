@@ -2309,7 +2309,7 @@ describe('appellant cases routes', () => {
 					data: {
 						appealId: id,
 						details:
-							'Appeal marked as incomplete:\n<ul><li>Missing information</li><li>Ground (a) fee receipt due date</li></ul>',
+							'Appeal marked as incomplete:\n<ul><li>Missing information</li><li>Ground (a) fee receipt due</li></ul>',
 						loggedAt: expect.any(Date),
 						userId: 1
 					}

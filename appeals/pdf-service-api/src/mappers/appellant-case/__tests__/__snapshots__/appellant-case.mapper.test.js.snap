@@ -34,6 +34,10 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
           "text": "11 October 2025",
         },
         {
+          "key": "Are you claiming costs as part of your appeal?",
+          "text": "Not answered",
+        },
+        {
           "key": "What is the application reference number?",
           "text": "18317/APP/3/601280",
         },
@@ -60,10 +64,6 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
           "key": "What is the address of the appeal site?",
         },
         {
-          "key": "What is the area of the appeal site?",
-          "text": "30.9 m²",
-        },
-        {
           "key": "Is the appeal site on highway land?",
           "text": "Yes",
         },
@@ -81,15 +81,15 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         },
         {
           "key": "Does the appellant know who owns the land involved in the appeal?",
-          "text": "Some",
+          "text": "No data",
         },
         {
           "html": "No",
           "key": "Will an inspector need to access your land or property?",
         },
         {
-          "html": "No",
           "key": "Do you have the landowner's permission?",
+          "text": "No",
         },
         {
           "html": "No",
@@ -117,8 +117,8 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
           "key": "Are there other appeals linked to your development?",
         },
         {
-          "key": "Development type",
-          "text": "Not provided",
+          "html": "No documents",
+          "key": "Decision letter from the local planning authority",
         },
       ],
     },
@@ -152,31 +152,7 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         },
         {
           "html": "No documents",
-          "key": "Agreement to change the description of development",
-        },
-        {
-          "html": "No documents",
-          "key": "Decision letter from the local planning authority",
-        },
-        {
-          "html": "No documents",
-          "key": "Appellant statement",
-        },
-        {
-          "key": "What is the status of your planning obligation?",
-          "text": "Not answered",
-        },
-        {
-          "html": "No documents",
-          "key": "Planning obligation",
-        },
-        {
-          "html": "No documents",
-          "key": "Draft statement of common ground",
-        },
-        {
-          "html": "No documents",
-          "key": "Separate ownership certificate and agricultural land declaration",
+          "key": "Appeal statement",
         },
         {
           "html": "No documents",
@@ -184,19 +160,7 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         },
         {
           "html": "No documents",
-          "key": "Design and access statement",
-        },
-        {
-          "html": "No documents",
           "key": "Plans, drawings and list of plans",
-        },
-        {
-          "html": "No documents",
-          "key": "New plans or drawings",
-        },
-        {
-          "html": "No documents",
-          "key": "Other new supporting documents",
         },
       ],
     },
@@ -246,6 +210,10 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
           "text": "11 October 2025",
         },
         {
+          "key": "Are you claiming costs as part of your appeal?",
+          "text": "Not answered",
+        },
+        {
           "key": "What is the application reference number?",
           "text": "66185/APP/3/536099",
         },
@@ -272,10 +240,6 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
           "key": "What is the address of the appeal site?",
         },
         {
-          "key": "What is the area of the appeal site?",
-          "text": "30.9 m²",
-        },
-        {
           "key": "Is the appeal site on highway land?",
           "text": "Yes",
         },
@@ -293,15 +257,15 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         },
         {
           "key": "Does the appellant know who owns the land involved in the appeal?",
-          "text": "Some",
+          "text": "No data",
         },
         {
           "html": "No",
           "key": "Will an inspector need to access your land or property?",
         },
         {
-          "html": "Yes",
           "key": "Do you have the landowner's permission?",
+          "text": "Yes",
         },
         {
           "html": "No",
@@ -329,8 +293,8 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
           "key": "Are there other appeals linked to your development?",
         },
         {
-          "key": "Development type",
-          "text": "Not provided",
+          "html": "No documents",
+          "key": "Decision letter from the local planning authority",
         },
       ],
     },
@@ -344,31 +308,7 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         },
         {
           "html": "No documents",
-          "key": "Agreement to change the description of development",
-        },
-        {
-          "html": "No documents",
-          "key": "Decision letter from the local planning authority",
-        },
-        {
-          "html": "No documents",
-          "key": "Appellant statement",
-        },
-        {
-          "key": "What is the status of your planning obligation?",
-          "text": "Not answered",
-        },
-        {
-          "html": "No documents",
-          "key": "Planning obligation",
-        },
-        {
-          "html": "No documents",
-          "key": "Draft statement of common ground",
-        },
-        {
-          "html": "No documents",
-          "key": "Separate ownership certificate and agricultural land declaration",
+          "key": "Appeal statement",
         },
         {
           "html": "No documents",
@@ -376,19 +316,7 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         },
         {
           "html": "No documents",
-          "key": "Design and access statement",
-        },
-        {
-          "html": "No documents",
           "key": "Plans, drawings and list of plans",
-        },
-        {
-          "html": "No documents",
-          "key": "New plans or drawings",
-        },
-        {
-          "html": "No documents",
-          "key": "Other new supporting documents",
         },
       ],
     },
@@ -439,6 +367,10 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
           "text": "3 June 2025",
         },
         {
+          "key": "Are you claiming costs as part of your appeal?",
+          "text": "Not answered",
+        },
+        {
           "key": "What is the application reference number?",
           "text": "44377/APP/3/218453",
         },
@@ -478,7 +410,7 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         },
         {
           "key": "Does the appellant know who owns the land involved in the appeal?",
-          "text": "Some",
+          "text": "No data",
         },
         {
           "html": "No",
@@ -525,11 +457,7 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         },
         {
           "html": "No documents",
-          "key": "Appellant statement",
-        },
-        {
-          "html": "No documents",
-          "key": "Draft statement of common ground",
+          "key": "Appeal statement",
         },
         {
           "html": "No documents",
@@ -583,6 +511,10 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
           "text": "17 January 2026",
         },
         {
+          "key": "Are you claiming costs as part of your appeal?",
+          "text": "Not answered",
+        },
+        {
           "key": "What is the application reference number?",
           "text": "65950/APP/3/3690",
         },
@@ -609,20 +541,8 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
           "key": "What is the address of the appeal site?",
         },
         {
-          "key": "What is the area of the appeal site?",
-          "text": "30.9 m²",
-        },
-        {
           "key": "Is the appeal site in a green belt?",
           "text": "No",
-        },
-        {
-          "key": "Does the appellant own all of the land involved in the appeal?",
-          "text": "No",
-        },
-        {
-          "key": "Does the appellant know who owns the land involved in the appeal?",
-          "text": "Some",
         },
         {
           "html": "No",
@@ -654,12 +574,12 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
           "text": "Lorem ipsum",
         },
         {
-          "html": "No",
-          "key": "Are there other appeals linked to your development?",
+          "key": "Agreement to change the description of the advertisement",
+          "text": "No documents",
         },
         {
-          "key": "Development type",
-          "text": "Not provided",
+          "html": "No",
+          "key": "Are there other appeals linked to your development?",
         },
       ],
     },
@@ -693,15 +613,15 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         },
         {
           "html": "No documents",
-          "key": "Agreement to change the description of development",
+          "key": "Appeal statement",
         },
         {
           "html": "No documents",
-          "key": "Decision letter from the local planning authority",
+          "key": "Application for an award of appeal costs",
         },
         {
           "html": "No documents",
-          "key": "Appellant statement",
+          "key": "Plans, drawings and list of plans",
         },
         {
           "key": "What is the status of your planning obligation?",
@@ -717,23 +637,11 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         },
         {
           "html": "No documents",
-          "key": "Separate ownership certificate and agricultural land declaration",
-        },
-        {
-          "html": "No documents",
-          "key": "Application for an award of appeal costs",
-        },
-        {
-          "html": "No documents",
-          "key": "Design and access statement",
-        },
-        {
-          "html": "No documents",
-          "key": "Plans, drawings and list of plans",
-        },
-        {
-          "html": "No documents",
           "key": "New plans or drawings",
+        },
+        {
+          "html": "No documents",
+          "key": "Decision letter from the local planning authority",
         },
         {
           "html": "No documents",
@@ -788,6 +696,10 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
           "text": "3 June 2025",
         },
         {
+          "key": "Are you claiming costs as part of your appeal?",
+          "text": "Not answered",
+        },
+        {
           "key": "What is the application reference number?",
           "text": "44377/APP/3/218453",
         },
@@ -827,7 +739,7 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         },
         {
           "key": "Does the appellant know who owns the land involved in the appeal?",
-          "text": "Some",
+          "text": "No data",
         },
         {
           "html": "No",
@@ -898,7 +810,7 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         },
         {
           "html": "No documents",
-          "key": "Appellant statement",
+          "key": "Appeal statement",
         },
         {
           "key": "What is the status of your planning obligation?",
@@ -985,6 +897,10 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
           "text": "3 June 2025",
         },
         {
+          "key": "Are you claiming costs as part of your appeal?",
+          "text": "Not answered",
+        },
+        {
           "key": "What is the application reference number?",
           "text": "44377/APP/3/218453",
         },
@@ -1024,7 +940,7 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         },
         {
           "key": "Does the appellant know who owns the land involved in the appeal?",
-          "text": "Some",
+          "text": "No data",
         },
         {
           "key": "Is the appeal site part of an agricultural holding?",
@@ -1107,7 +1023,7 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         },
         {
           "html": "No documents",
-          "key": "Appellant statement",
+          "key": "Appeal statement",
         },
         {
           "key": "What is the status of your planning obligation?",

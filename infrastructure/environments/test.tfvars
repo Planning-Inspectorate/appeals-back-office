@@ -135,7 +135,7 @@ horizon_infra_config = {
 
 monitoring_config = {
   web_app_insights_web_test_enabled = false
-  log_daily_cap                     = 0.2
+  log_daily_cap                     = 0.5
 }
 
 service_bus_config = {
