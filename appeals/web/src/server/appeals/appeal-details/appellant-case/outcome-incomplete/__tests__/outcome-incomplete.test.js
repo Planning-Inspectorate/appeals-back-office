@@ -362,6 +362,21 @@ describe('incomplete-appeal', () => {
 						otherInformationDetails: 'Enforcement other information'
 					});
 
+				// preview nocks
+				nock('http://test/')
+					.get(`/appeals/${appealDataEnforcementNotice.appealId}/case-team-email`)
+					.reply(200, {
+						id: 1,
+						email: 'caseofficers@planninginspectorate.gov.uk',
+						name: 'standard email'
+					});
+				const mockAppellantPreview = nock('http://test/')
+					.post(`/appeals/notify-preview/enforcement-notice-incomplete-appellant.content.md`)
+					.reply(200, { renderedHtml: '' });
+				const mockLpaPreview = nock('http://test/')
+					.post(`/appeals/notify-preview/enforcement-notice-incomplete-lpa.content.md`)
+					.reply(200, { renderedHtml: '' });
+
 				const response = await request.get(
 					`${baseUrl}/appellant-case/incomplete/check-details-and-mark-enforcement-as-incomplete`
 				);
@@ -384,6 +399,19 @@ describe('incomplete-appeal', () => {
 					'>Yes: Enforcement other information</div></dd>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Mark appeal as incomplete</button>');
+
+				expect(mockAppellantPreview.isDone()).toBe(true);
+				expect(mockLpaPreview.isDone()).toBe(true);
+				expect(
+					element
+						.querySelector('[data-cy="preview-email-to-appellant"] .govuk-details__summary-text')
+						?.innerHTML.trim()
+				).toBe('Preview email to appellant');
+				expect(
+					element
+						.querySelector('[data-cy="preview-email-to-lpa"] .govuk-details__summary-text')
+						?.innerHTML.trim()
+				).toBe('Preview email to LPA');
 			});
 
 			it('should render the check details page where the enforcement notice is not valid', async () => {

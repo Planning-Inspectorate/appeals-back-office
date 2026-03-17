@@ -444,6 +444,15 @@ export const updateAppellantCaseValidationOutcome = async (
 							team_email_address: teamEmail,
 							due_date: formatDate(new Date(updatedDueDate), false)
 						};
+						if (recipientEmail) {
+							await notifySend({
+								azureAdUserId,
+								templateName: 'enforcement-notice-incomplete-appellant',
+								notifyClient,
+								recipientEmail,
+								personalisation
+							});
+						}
 						if (updatedAppeal.lpa?.email) {
 							await notifySend({
 								azureAdUserId,
