@@ -260,7 +260,12 @@ export const createRepresentation = () => async (req, res) => {
 		].includes(representationType)
 	) {
 		updatePayload.lpaCode = req.appeal.lpa?.lpaCode;
-	} else if ([APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT].includes(representationType)) {
+	} else if (
+		[
+			APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT,
+			APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT
+		].includes(representationType)
+	) {
 		updatePayload.representedId = req.appeal.agentId || req.appeal.appellantId;
 	}
 
