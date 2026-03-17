@@ -227,24 +227,7 @@ export const createRepresentation = async (
 	});
 
 	if (input.attachments.length > 0) {
-		const documents = await documentRepository.getDocumentsByIds(input.attachments);
-
-		const mappedDocuments = documents.map((d) => ({
-			documentGuid: d.guid,
-			version: d.latestDocumentVersion?.version ?? 1
-		}));
-
-		await representationRepository.addAttachments(representation.id, mappedDocuments);
-
-		for (const document of mappedDocuments) {
-			if (document?.documentGuid) {
-				await broadcasters.broadcastDocument(
-					document.documentGuid,
-					document.version,
-					document.version > 1 ? EventType.Update : EventType.Create
-				);
-			}
-		}
+		await addAttachmentsAndBroadcast(representation.id, input.attachments);
 	}
 
 	await broadcasters.broadcastRepresentation(representation.id, EventType.Create);
@@ -394,6 +377,29 @@ export async function updateRepresentation(repId, payload) {
 	}
 
 	return updatedRep;
+}
+
+/**
+ * @param {number} representationId
+ * @param {string[]} attachmentIds
+ * @returns {Promise<void>}
+ */
+async function addAttachmentsAndBroadcast(representationId, attachmentIds) {
+	const documents = await documentRepository.getDocumentsByIds(attachmentIds);
+	const mappedDocuments = documents.map((d) => ({
+		documentGuid: d.guid,
+		version: d.latestDocumentVersion?.version ?? 1
+	}));
+	await representationRepository.addAttachments(representationId, mappedDocuments);
+	for (const document of mappedDocuments) {
+		if (document?.documentGuid) {
+			await broadcasters.broadcastDocument(
+				document.documentGuid,
+				document.version,
+				document.version > 1 ? EventType.Update : EventType.Create
+			);
+		}
+	}
 }
 
 /** @typedef {Awaited<ReturnType<updateRepresentation>>} UpdatedDBRepresentation */

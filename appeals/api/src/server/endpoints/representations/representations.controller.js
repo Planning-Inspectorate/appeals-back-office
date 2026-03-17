@@ -260,7 +260,12 @@ export const createRepresentation = () => async (req, res) => {
 		].includes(representationType)
 	) {
 		updatePayload.lpaCode = req.appeal.lpa?.lpaCode;
-	} else if ([APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT].includes(representationType)) {
+	} else if (
+		[
+			APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT,
+			APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT
+		].includes(representationType)
+	) {
 		updatePayload.representedId = req.appeal.agentId || req.appeal.appellantId;
 	}
 
@@ -306,12 +311,6 @@ export const createRepresentation = () => async (req, res) => {
 			false,
 			false
 		);
-
-		await createAuditTrail({
-			appealId: parseInt(appealId),
-			azureAdUserId,
-			details: CONSTANTS.AUDIT_TRAIL_REP_APPELLANT_STATEMENT_ADDED
-		});
 	}
 
 	return res.status(201).send(rep);
