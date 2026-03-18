@@ -2,9 +2,10 @@
 import { appealDetailsInclude, buildAppealInclude } from '../appeal.repository.js';
 
 describe('buildAppealInclude', () => {
-	it('returns full appealDetailsInclude when selectedKeys is empty and includeDetails = true', () => {
-		const result = buildAppealInclude([], true);
-		expect(result).toBe(appealDetailsInclude);
+	it('throws error when selectedKeys is empty and selectAppealTypeKey is not provided', () => {
+		expect(() => buildAppealInclude([], true)).toThrow(
+			'Must provide at least one selectedKeys or selectAppealTypeKey'
+		);
 	});
 
 	it('returns null when selectedKeys is empty and includeDetails = false', () => {

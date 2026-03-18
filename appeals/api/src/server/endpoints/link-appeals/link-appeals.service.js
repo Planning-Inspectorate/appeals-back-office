@@ -244,14 +244,20 @@ export const updateAppealStatusIfRequired = async (
 	previousLeadAppealId,
 	azureAdUserId
 ) => {
-	const leadAppeal = leadAppealId ? await appealRepository.getAppealById(leadAppealId) : null;
+	// TODO: performance
+	// is returning all data, return only needed data
+	const leadAppeal = leadAppealId
+		? await appealRepository.deprecatedGetAppealById(leadAppealId)
+		: null;
 
 	if (!leadAppeal) {
 		throw new Error('Lead appeal not found');
 	}
 
+	// TODO: performance
+	// is returning all data, return only needed data
 	const unlinkedAppeal = unlinkedAppealId
-		? await appealRepository.getAppealById(unlinkedAppealId)
+		? await appealRepository.deprecatedGetAppealById(unlinkedAppealId)
 		: null;
 
 	const { appellantCaseValidationOutcome: leadAppealAppellantCaseOutcome } =

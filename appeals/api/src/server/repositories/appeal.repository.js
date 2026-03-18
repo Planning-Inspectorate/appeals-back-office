@@ -380,8 +380,7 @@ export const buildAppealInclude = (
 	}
 
 	if (!selectedKeys.length && !selectAppealTypeKey) {
-		// Return everything if no keys are selected
-		return appealDetailsInclude;
+		throw new Error('Must provide at least one selectedKeys or selectAppealTypeKey');
 	}
 
 	/** @type {Partial<import('#db-client/models.ts').AppealInclude>} */
@@ -428,6 +427,24 @@ const getAppealById = async (id, includeDetails = true, selectedKeys = [], selec
 };
 
 /**
+ * @deprecated too inefficient do not use, use getAppealById with specific includes only
+ * @description DO NOT USE. Gets an appeal and all it's related entities
+ * @param {number} id
+ * @returns {Promise<Appeal|undefined>}
+ */
+const deprecatedGetAppealById = async (id) => {
+	const appeal = await databaseConnector.appeal.findUnique({
+		where: {
+			id
+		},
+		include: appealDetailsInclude
+	});
+	if (appeal) {
+		return appeal;
+	}
+};
+
+/**
  * @param {number} id
  * @returns {Promise<AppealType|undefined>}
  */
@@ -446,11 +463,11 @@ const getAppealTypeById = async (id) => {
 };
 
 /**
- *
+ * @deprecated too inefficient, use getAppealById with specific includes only
  * @param {string} appealReference
  * @returns {Promise<Appeal|undefined|null>}
  */
-const getAppealByAppealReference = async (appealReference) => {
+const deprecatedGetAppealByAppealReference = async (appealReference) => {
 	const appeal = await databaseConnector.appeal.findUnique({
 		where: {
 			reference: appealReference
@@ -939,8 +956,9 @@ export default {
 	getLinkedAppeals,
 	getLinkedAppealsById,
 	getAppealById,
+	deprecatedGetAppealById,
 	getAppealTypeById,
-	getAppealByAppealReference,
+	deprecatedGetAppealByAppealReference,
 	getAppealIdList,
 	updateAppealById,
 	setAppealDecision,
