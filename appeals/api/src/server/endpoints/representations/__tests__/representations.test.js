@@ -191,7 +191,8 @@ describe('/appeals/:id/reps', () => {
 			['HAS', householdAppeal],
 			['S78', fullPlanningAppeal],
 			['S20', listedBuildingAppeal],
-			['lcd', ldcAppeal]
+			['lcd', ldcAppeal],
+			['elb', appealEnforcementListed]
 		])(
 			'200 when lpa final comment representation status is successfully updated with rejection for %s appeal',
 			async (_, appeal) => {
@@ -246,6 +247,9 @@ describe('/appeals/:id/reps', () => {
 				const expectedEmailPayload = {
 					lpa_reference: appeal.applicationReference,
 					appeal_reference_number: appeal.reference,
+					...(appeal.appellantCase?.enforcementReference && {
+						enforcement_reference: appeal.appellantCase.enforcementReference
+					}),
 					reasons: ['Invalid submission', 'Other: Provided documents were incomplete'],
 					site_address: expectedSiteAddress,
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -284,7 +288,8 @@ describe('/appeals/:id/reps', () => {
 			['Advert', advertisementAppeal],
 			['S78', fullPlanningAppeal],
 			['S20', listedBuildingAppeal],
-			['lcd', ldcAppeal]
+			['lcd', ldcAppeal],
+			['elb', appealEnforcementListed]
 		])(
 			'200 when appellant final comment representation status is successfully updated with rejection for %s appeal',
 			async (_, appeal) => {
@@ -339,6 +344,9 @@ describe('/appeals/:id/reps', () => {
 				const expectedEmailPayload = {
 					lpa_reference: appeal.applicationReference,
 					appeal_reference_number: appeal.reference,
+					...(appeal.appellantCase?.enforcementReference && {
+						enforcement_reference: appeal.appellantCase.enforcementReference
+					}),
 					reasons: ['Invalid submission', 'Other: Provided documents were incomplete'],
 					site_address: expectedSiteAddress,
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -4578,6 +4586,90 @@ describe('/appeals/:id/reps', () => {
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: mockLdcAppeal.lpa.email,
+					templateName: 'final-comments-done-lpa'
+				});
+			});
+
+			test('send notify lpa and appellant final comments ELB', async () => {
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => mockEnforcementListedAppeal.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedEmailPayload = {
+					...emailPayload,
+					lpa_reference: mockEnforcementListedAppeal.applicationReference,
+					enforcement_reference: 'Reference',
+					has_ip_comments: false,
+					has_statement: false,
+					is_hearing_procedure: false,
+					is_inquiry_procedure: false,
+					has_rule_6_parties: false,
+					has_rule_6_statement: false,
+					appeal_reference_number: mockEnforcementListedAppeal.reference,
+					final_comments_deadline: '',
+					site_address: expectedSiteAddress,
+					statement_url: '',
+					user_type: ''
+				};
+
+				mockEnforcementListedAppeal.appealStatus = [{ status: 'final_comments', valid: true }];
+
+				mockEnforcementListedAppeal.appealTimetable = {
+					...mockEnforcementListedAppeal.appealTimetable,
+					finalCommentsDueDate: new Date('2023-01-01T00:00:00.000Z')
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(mockEnforcementListedAppeal);
+				databaseConnector.appealStatus.create.mockResolvedValue({});
+				databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+				databaseConnector.representation.findMany.mockResolvedValue([
+					{ representationType: 'appellant_final_comment' },
+					{ representationType: 'lpa_final_comment' }
+				]);
+				databaseConnector.representation.updateMany.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+				]);
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+				const response = await request
+					.post('/appeals/1/reps/publish')
+					.query({ type: 'final_comments' })
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						what_happens_next: '',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+					},
+					recipientEmail: mockEnforcementListedAppeal.agent.email,
+					templateName: 'final-comments-done-appellant'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						what_happens_next: '',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+					},
+					recipientEmail: mockEnforcementListedAppeal.lpa.email,
 					templateName: 'final-comments-done-lpa'
 				});
 			});
