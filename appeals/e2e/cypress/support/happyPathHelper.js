@@ -65,7 +65,7 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Confirm');
 	},
 
-	startCaseWithProcedureType(caseObj, procedureType) {
+	startCaseWithProcedureType(caseObj, procedureType, linkedCase = false) {
 		if (procedureType === 'hearing') {
 			return happyPathHelper.startS78HearingCase(caseObj, procedureType);
 		} else if (procedureType === 'inquiry') {
@@ -76,7 +76,7 @@ export const happyPathHelper = {
 		happyPathHelper.viewCaseDetails(caseObj);
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
 		caseDetailsPage.clickReadyToStartCase();
-		procedureTypePage.verifyNoProcedureTypeSelected();
+		procedureTypePage.verifyNoProcedureTypeSelected(false, true);
 		caseDetailsPage.selectRadioButtonByValue(procedureType);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Start case');
