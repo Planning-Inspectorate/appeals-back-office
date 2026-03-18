@@ -1755,6 +1755,11 @@ export const appellantCaseInvalidReasons = [
 		id: 26,
 		name: 'Ground (a) barred',
 		hasText: false
+	},
+	{
+		id: 27,
+		name: 'Did not pay the ground (a) fee',
+		hasText: false
 	}
 ];
 
@@ -1797,6 +1802,11 @@ export const appellantCaseInvalidReasonsRealIds = [
 	{
 		id: 8,
 		name: 'LPA has withdrawn the enforcement notice',
+		hasText: false
+	},
+	{
+		id: 9,
+		name: 'Did not pay the ground (a) fee',
 		hasText: false
 	}
 ];

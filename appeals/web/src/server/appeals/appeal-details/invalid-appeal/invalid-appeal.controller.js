@@ -13,6 +13,7 @@ import { APPEAL_TYPE, FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common
 import {
 	CHANGE_APPEAL_TYPE_INVALID_REASON,
 	ENFORCEMENT_APPEAL_INVALID_GROUND_A_BARRED,
+	ENFORCEMENT_APPEAL_INVALID_GROUND_A_FEE_NOT_PAID,
 	ENFORCEMENT_APPEAL_INVALID_LEGAL_INTEREST
 } from '@pins/appeals/constants/support.js';
 import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
@@ -84,7 +85,10 @@ const renderInvalidReason = async (request, response) => {
 
 	// @ts-ignore
 	const filteredReasonOptions = invalidReasonOptions.reduce((acc, reason) => {
-		if (reason.name === CHANGE_APPEAL_TYPE_INVALID_REASON) {
+		if (
+			reason.name === CHANGE_APPEAL_TYPE_INVALID_REASON ||
+			reason.name === ENFORCEMENT_APPEAL_INVALID_GROUND_A_FEE_NOT_PAID
+		) {
 			return acc;
 		}
 
