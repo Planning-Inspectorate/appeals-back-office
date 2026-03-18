@@ -257,7 +257,6 @@ const clientActions = (container) => {
 		if (!fileList) {
 			return;
 		}
-
 		stagedFiles.errors.length = 0;
 
 		if (allowSingleFileOnly() && (fileList.length > 1 || stagedFiles.files?.length)) {
@@ -391,6 +390,10 @@ const clientActions = (container) => {
 			(filenamesInFolderString && JSON.parse(filenamesInFolderString)) || null;
 		const filenamesInFolder = Array.isArray(filenamesInFolderArray) ? filenamesInFolderArray : [];
 		const filenamesInStagedFiles = stagedFiles.files.map((stagedFile) => stagedFile.name);
+
+		if (selectedFile.size <= 0) {
+			return { message: 'EMPTY_FILE' };
+		}
 
 		if (selectedFile.name.length > maximumAllowedFileNameLength) {
 			return { message: 'NAME_SINGLE_FILE' };
