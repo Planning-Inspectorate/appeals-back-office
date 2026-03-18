@@ -303,7 +303,19 @@ export const advertisementAppeal = {
 };
 
 export const appealEnforcementListed = {
-	...enforcementListed
+	...enforcementListed,
+	siteVisit: {
+		id: 1,
+		appealId: 1,
+		visitDate: new Date('2022-03-31T01:00:00.000Z'),
+		visitEndTime: new Date('2022-03-31T03:00:00.000Z'),
+		visitStartTime: new Date('2022-03-31T01:00:00.000Z'),
+		siteVisitType: {
+			id: 1,
+			name: 'Access required',
+			key: 'site_visit_access_required'
+		}
+	}
 };
 
 export const advertisementAppealAppellantCaseIncomplete = {

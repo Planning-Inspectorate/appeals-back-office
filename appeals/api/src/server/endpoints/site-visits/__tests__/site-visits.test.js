@@ -22,6 +22,7 @@ import { formatAddressSingleLine } from '../../addresses/addresses.formatter.js'
 
 import {
 	advertisementAppeal as advertisementAppealData,
+	appealEnforcementListed,
 	appealS78,
 	casAdvertAppeal as casAdvertAppealData,
 	casPlanningAppeal as casPlanningAppealData,
@@ -397,7 +398,8 @@ describe('site visit routes', () => {
 				['casAdvertAppeal', casAdvertAppealData],
 				['fullPlanningAppeal', fullPlanningAppealData],
 				['listedBuildingAppeal', listedBuildingAppealData],
-				['ldcAppeal', ldcAppeal]
+				['ldcAppeal', ldcAppeal],
+				['elbAppeal', appealEnforcementListed]
 			])('create site visit for appeal type %s', (_, appeal) => {
 				test('creates an Unaccompanied site visit and sends notify email to appellant/agent', async () => {
 					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
@@ -436,6 +438,9 @@ describe('site visit routes', () => {
 						personalisation: {
 							appeal_reference_number: appeal.reference,
 							lpa_reference: appeal.applicationReference,
+							...(appeal.appellantCase?.enforcementReference && {
+								enforcement_reference: appeal.appellantCase.enforcementReference
+							}),
 							inspector_name: '',
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_time: formatTime(siteVisit.visitStartTime),
@@ -486,6 +491,9 @@ describe('site visit routes', () => {
 							appeal_reference_number: appeal.reference,
 							end_time: '12:00',
 							lpa_reference: appeal.applicationReference,
+							...(appeal.appellantCase?.enforcementReference && {
+								enforcement_reference: appeal.appellantCase.enforcementReference
+							}),
 							inspector_name: '',
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_time: '11:00',
@@ -503,6 +511,9 @@ describe('site visit routes', () => {
 							appeal_reference_number: appeal.reference,
 							end_time: '12:00',
 							lpa_reference: appeal.applicationReference,
+							...(appeal.appellantCase?.enforcementReference && {
+								enforcement_reference: appeal.appellantCase.enforcementReference
+							}),
 							inspector_name: '',
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_time: '11:00',
@@ -555,6 +566,9 @@ describe('site visit routes', () => {
 							appeal_reference_number: appeal.reference,
 							end_time: '13:00',
 							lpa_reference: appeal.applicationReference,
+							...(appeal.appellantCase?.enforcementReference && {
+								enforcement_reference: appeal.appellantCase.enforcementReference
+							}),
 							inspector_name: inspectorName,
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							start_time: '12:00',
@@ -1598,7 +1612,8 @@ describe('site visit routes', () => {
 				['casAdvertAppeal', casAdvertAppealData],
 				['fullPlanningAppeal', fullPlanningAppealData],
 				['listedBuildingAppeal', listedBuildingAppealData],
-				['ldcAppeal', ldcAppeal]
+				['ldcAppeal', ldcAppeal],
+				['elbAppeal', appealEnforcementListed]
 			])('site visit updates for appeal type: %s', (_, appeal) => {
 				test('updates a site visit from Unaccompanied to Access Required with visit-type change, sends notify emails', async () => {
 					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
@@ -1667,6 +1682,9 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
+							...(appeal.appellantCase?.enforcementReference && {
+								enforcement_reference: appeal.appellantCase.enforcementReference
+							}),
 							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
@@ -1740,6 +1758,9 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
+							...(appeal.appellantCase?.enforcementReference && {
+								enforcement_reference: appeal.appellantCase.enforcementReference
+							}),
 							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
@@ -1757,6 +1778,9 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
+							...(appeal.appellantCase?.enforcementReference && {
+								enforcement_reference: appeal.appellantCase.enforcementReference
+							}),
 							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
@@ -1831,6 +1855,9 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: inspectorName,
 							lpa_reference: appeal.applicationReference,
+							...(appeal.appellantCase?.enforcementReference && {
+								enforcement_reference: appeal.appellantCase.enforcementReference
+							}),
 							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
@@ -1904,6 +1931,9 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
+							...(appeal.appellantCase?.enforcementReference && {
+								enforcement_reference: appeal.appellantCase.enforcementReference
+							}),
 							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
@@ -1921,6 +1951,9 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
+							...(appeal.appellantCase?.enforcementReference && {
+								enforcement_reference: appeal.appellantCase.enforcementReference
+							}),
 							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
@@ -1994,6 +2027,9 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
+							...(appeal.appellantCase?.enforcementReference && {
+								enforcement_reference: appeal.appellantCase.enforcementReference
+							}),
 							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
@@ -2011,6 +2047,9 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
+							...(appeal.appellantCase?.enforcementReference && {
+								enforcement_reference: appeal.appellantCase.enforcementReference
+							}),
 							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
@@ -2084,6 +2123,9 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
+							...(appeal.appellantCase?.enforcementReference && {
+								enforcement_reference: appeal.appellantCase.enforcementReference
+							}),
 							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
@@ -2101,6 +2143,9 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
+							...(appeal.appellantCase?.enforcementReference && {
+								enforcement_reference: appeal.appellantCase.enforcementReference
+							}),
 							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
@@ -2175,6 +2220,9 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: inspectorName,
 							lpa_reference: appeal.applicationReference,
+							...(appeal.appellantCase?.enforcementReference && {
+								enforcement_reference: appeal.appellantCase.enforcementReference
+							}),
 							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
@@ -2192,6 +2240,9 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: inspectorName,
 							lpa_reference: appeal.applicationReference,
+							...(appeal.appellantCase?.enforcementReference && {
+								enforcement_reference: appeal.appellantCase.enforcementReference
+							}),
 							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
@@ -2265,6 +2316,9 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
+							...(appeal.appellantCase?.enforcementReference && {
+								enforcement_reference: appeal.appellantCase.enforcementReference
+							}),
 							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
@@ -2282,6 +2336,9 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
+							...(appeal.appellantCase?.enforcementReference && {
+								enforcement_reference: appeal.appellantCase.enforcementReference
+							}),
 							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
@@ -2355,6 +2412,9 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
+							...(appeal.appellantCase?.enforcementReference && {
+								enforcement_reference: appeal.appellantCase.enforcementReference
+							}),
 							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
@@ -2429,6 +2489,9 @@ describe('site visit routes', () => {
 							end_time: formatTime(siteVisit.visitEndTime),
 							inspector_name: '',
 							lpa_reference: appeal.applicationReference,
+							...(appeal.appellantCase?.enforcementReference && {
+								enforcement_reference: appeal.appellantCase.enforcementReference
+							}),
 							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate),
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
