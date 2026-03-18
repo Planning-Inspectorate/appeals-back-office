@@ -8226,6 +8226,81 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/cancel/enforcement-notice-withdrawn": {
+			"post": {
+				"tags": ["Cancel Appeal"],
+				"description": "Cancels an appeal because the LPA has withdrawn the enforcement notice",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "dryRun",
+						"in": "query",
+						"description": "If true, does not update the appeal and only returns the notify previews.",
+						"required": false,
+						"example": true,
+						"schema": {
+							"type": "boolean"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Returns the notify previews if this is a dry run",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CancelEnforcementNoticeWithdrawalResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/CancelEnforcementNoticeWithdrawalResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Cancel enforcement notice withdrawal request",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CancelEnforcementNoticeWithdrawalRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/CancelEnforcementNoticeWithdrawalRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/appellant-case-enforcement-invalid-reasons": {
 			"get": {
 				"tags": ["Appellant Case Enforcement Invalid Reasons"],
@@ -11568,6 +11643,32 @@
 				},
 				"xml": {
 					"name": "StartCaseNotifyPreviewResponse"
+				}
+			},
+			"CancelEnforcementNoticeWithdrawalResponse": {
+				"type": "object",
+				"properties": {
+					"appellant": {
+						"type": "object",
+						"properties": {
+							"renderedHtml": {
+								"type": "string",
+								"example": "Rendered HTML for appellant preview"
+							}
+						}
+					},
+					"lpa": {
+						"type": "object",
+						"properties": {
+							"renderedHtml": {
+								"type": "string",
+								"example": "Rendered HTML for LPA preview"
+							}
+						}
+					}
+				},
+				"xml": {
+					"name": "CancelEnforcementNoticeWithdrawalResponse"
 				}
 			},
 			"SingleLPAQuestionnaireResponse": {

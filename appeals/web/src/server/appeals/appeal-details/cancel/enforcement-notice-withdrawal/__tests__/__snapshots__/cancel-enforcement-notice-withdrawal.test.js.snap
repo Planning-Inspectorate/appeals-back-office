@@ -81,19 +81,19 @@ exports[`cancel enforcement notice withdrawal GET /cancel/enforcement-notice-wit
             </dl>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
-                    <details class="govuk-details">
+                    <details class="govuk-details" data-cy="preview-email-to-appellant">
                         <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
                         </summary>
-                        <div class="govuk-details__text"></div>
+                        <div class="govuk-details__text">Appellant email preview</div>
                     </details>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
-                    <details class="govuk-details">
+                    <details class="govuk-details" data-cy="preview-email-to-lpa">
                         <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to LPA</span>
                         </summary>
-                        <div class="govuk-details__text"></div>
+                        <div class="govuk-details__text">LPA email preview</div>
                     </details>
                 </div>
             </div>

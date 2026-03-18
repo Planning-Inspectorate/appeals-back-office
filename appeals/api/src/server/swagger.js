@@ -593,6 +593,14 @@ export const spec = {
 				renderedHtml: 'Rendered HTML for LPA preview'
 			}
 		},
+		CancelEnforcementNoticeWithdrawalResponse: {
+			appellant: {
+				renderedHtml: 'Rendered HTML for appellant preview'
+			},
+			lpa: {
+				renderedHtml: 'Rendered HTML for LPA preview'
+			}
+		},
 		SingleLPAQuestionnaireResponse: {
 			affectsListedBuildingDetails: [
 				{

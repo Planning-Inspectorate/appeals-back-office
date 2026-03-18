@@ -1,4 +1,3 @@
-import * as appellantCaseService from '#appeals/appeal-details/appellant-case/appellant-case.service.js';
 import logger from '#lib/logger.js';
 import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
@@ -14,10 +13,10 @@ import {
 	getAttachmentsFolder,
 	getDocumentRedactionStatuses
 } from '../../../appeal-documents/appeal.documents.service.js';
+import { cancelAppealEnforcementNoticeWithdrawn } from '../cancel.service.js';
 import { enforcementNoticeWithdrawalCheckDetailsPage } from './enforcement-notice-withdrawal-mapper.js';
 
 const UNREDACTED_REDACTION_STATUS_ID = '2';
-const LPA_ENFORCEMENT_NOTICE_WITHDRAWAL_INVALID_REASON_ID = 8;
 
 const getBackLinkUrl = backLinkGenerator('cancelAppeal');
 
@@ -115,11 +114,26 @@ export const getCheckDetails = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
+	let appellantPreview = '';
+	let lpaPreview = '';
+	try {
+		const notifyPreviews = await cancelAppealEnforcementNoticeWithdrawn(
+			request.apiClient,
+			appealId,
+			true
+		);
+		appellantPreview = notifyPreviews.appellant;
+		lpaPreview = notifyPreviews.lpa;
+	} catch (error) {
+		logger.error('Error generating notify previews', { error });
+		return response.status(500).render('app/500.njk');
+	}
+
 	const pageContent = enforcementNoticeWithdrawalCheckDetailsPage(
 		currentAppeal,
 		session.fileUploadInfo?.files,
-		'', // TODO: Add appellant notify preview
-		'', // TODO: Add lpa notify preview
+		appellantPreview,
+		lpaPreview,
 		backLinkUrl
 	);
 
@@ -165,19 +179,7 @@ export const postCheckDetails = async (request, response) => {
 		await postUploadDocumentsCheckAndConfirm({ request, response });
 		if (response.headersSent) return;
 
-		/** @type {import('#appeals/appeal-details/appellant-case/appellant-case.types.js').AppellantCaseValidationOutcomeRequest} */
-		const reviewOutcome = {
-			validationOutcome: 'invalid',
-			invalidReasons: [{ id: LPA_ENFORCEMENT_NOTICE_WITHDRAWAL_INVALID_REASON_ID }],
-			enforcementNoticeInvalid: 'no'
-		};
-
-		await appellantCaseService.setReviewOutcomeForAppellantCase(
-			request.apiClient,
-			appealId,
-			currentAppeal.appellantCaseId,
-			reviewOutcome
-		);
+		await cancelAppealEnforcementNoticeWithdrawn(request.apiClient, appealId);
 
 		addNotificationBannerToSession({
 			session: request.session,
