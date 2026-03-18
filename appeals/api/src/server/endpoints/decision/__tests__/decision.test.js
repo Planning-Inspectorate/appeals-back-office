@@ -1,6 +1,7 @@
 // @ts-nocheck
 import {
 	advertisementAppeal,
+	appealEnforcementListed,
 	casAdvertAppeal,
 	casPlanningAppeal,
 	enforcementNoticeAppeal,
@@ -288,6 +289,23 @@ describe('decision routes', () => {
 				FEEDBACK_FORM_LINKS.FULL_ADVERTS,
 				'Advertisement',
 				'invalid'
+			],
+			[
+				'appealEnforcementListed',
+				'allowed',
+				'',
+				appealEnforcementListed,
+				FEEDBACK_FORM_LINKS.ALL,
+				'Enforcement listed building and conservation area'
+			],
+			[
+				'appealEnforcementListed',
+				'invalid',
+				'Because it is.',
+				appealEnforcementListed,
+				FEEDBACK_FORM_LINKS.ALL,
+				'Enforcement listed building and conservation area',
+				'invalid'
 			]
 		])(
 			'returns 200 when all good, appeal type: %s, outcome: %s, reason: %s',
@@ -365,10 +383,10 @@ describe('decision routes', () => {
 				} else {
 					personalisation.child_appeals = [];
 					personalisation.decision_date = formatDate(utcDate, false);
-					personalisation.front_office_url = `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`;
+					personalisation.front_office_url = `https://appeal-planning-decision.service.gov.uk/appeals/1345264`;
 				}
 
-				if (appealType === 'enforcementNoticeAppeal') {
+				if (appealType === 'enforcementNoticeAppeal' || appealType === 'appealEnforcementListed') {
 					personalisation.enforcement_reference = enforcementReference;
 				}
 
@@ -391,7 +409,7 @@ describe('decision routes', () => {
 					personalisation: {
 						...personalisation,
 						feedback_link:
-							appealType === 'enforcementNoticeAppeal'
+							appealType === 'enforcementNoticeAppeal' || appealType === 'appealEnforcementListed'
 								? FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE
 								: FEEDBACK_FORM_LINKS.LPA
 					},
@@ -459,10 +477,11 @@ describe('decision routes', () => {
 			['listedBuildingAppeal', listedBuildingAppeal, FEEDBACK_FORM_LINKS.S20],
 			['enforcementNoticeAppeal', enforcementNoticeAppeal, FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE],
 			['advertisementAppeal', advertisementAppeal, FEEDBACK_FORM_LINKS.FULL_ADVERTS],
-			['ldcAppeal', ldcAppeal, FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE]
+			['ldcAppeal', ldcAppeal, FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE],
+			['appealEnforcementListed', appealEnforcementListed, FEEDBACK_FORM_LINKS.ALL]
 		])(
 			'returns 200 when only issuing appellant costs decisions (%s)',
-			async (_, appeal, expectedFeedbackLink) => {
+			async (appealType, appeal, expectedFeedbackLink) => {
 				const correctAppealState = {
 					...appeal,
 					appealStatus: [
@@ -506,7 +525,7 @@ describe('decision routes', () => {
 						appeal_reference_number: appeal.reference,
 						lpa_reference: appeal.applicationReference,
 						site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
-						front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`,
+						front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/1345264`,
 						feedback_link: expectedFeedbackLink,
 						...(appeal.appellantCase.enforcementReference && {
 							enforcement_reference: appeal.appellantCase.enforcementReference
@@ -522,7 +541,7 @@ describe('decision routes', () => {
 						appeal_reference_number: appeal.reference,
 						lpa_reference: appeal.applicationReference,
 						site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
-						front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`,
+						front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/1345264`,
 						feedback_link: FEEDBACK_FORM_LINKS.LPA,
 						...(appeal.appellantCase.enforcementReference && {
 							enforcement_reference: appeal.appellantCase.enforcementReference

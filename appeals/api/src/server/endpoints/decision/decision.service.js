@@ -145,7 +145,7 @@ export const publishDecision = async (
 			})
 		};
 
-		if (appealTypeKey === APPEAL_CASE_TYPE.C) {
+		if (appealTypeKey === APPEAL_CASE_TYPE.C || appealTypeKey === APPEAL_CASE_TYPE.F) {
 			const appellantCase = await appellantCaseRepository.getAppellantCaseByAppealId(appeal.id);
 			// @ts-ignore
 			personalisation.enforcement_reference = appellantCase?.enforcementReference;
@@ -175,7 +175,7 @@ export const publishDecision = async (
 		}
 
 		const feedbackLinkForLPA =
-			appealTypeKey === APPEAL_CASE_TYPE.C
+			appealTypeKey === APPEAL_CASE_TYPE.C || appealTypeKey === APPEAL_CASE_TYPE.F
 				? FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE
 				: FEEDBACK_FORM_LINKS.LPA;
 
