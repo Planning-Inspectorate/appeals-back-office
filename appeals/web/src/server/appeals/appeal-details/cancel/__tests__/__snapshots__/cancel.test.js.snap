@@ -175,6 +175,52 @@ exports[`cancel GET /new should render the default options for an enforcement no
 </main>"
 `;
 
+exports[`cancel Get /check-details should render the check details screen 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and cancel appeal</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Why are you cancelling the appeal?</dt>
+                    <dd                     class="govuk-summary-list__value">Did not pay the ground (a) fee</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/cancel?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F5623%2Fcancel">Change <span class="govuk-visually-hidden">Why are you cancelling the appeal?</span></a>
+                        </dd>
+                </div>
+            </dl>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <details id="appellant-preview" class="govuk-details">
+                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
+                        </summary>
+                        <div class="govuk-details__text"></div>
+                    </details>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <details id="lpa-preview" class="govuk-details">
+                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to LPA</span>
+                        </summary>
+                        <div class="govuk-details__text"></div>
+                    </details>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Cancel appeal</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`cancel POST /new should render a 500 error page if cancelReasonRadio is present in the request body but not set to a valid value 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">

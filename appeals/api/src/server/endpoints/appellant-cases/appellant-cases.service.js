@@ -49,11 +49,12 @@ import {
 	APPEAL_DEVELOPMENT_TYPES,
 	PLANNING_OBLIGATION_STATUSES
 } from '@pins/appeals/constants/appellant-cases.constants.js';
+import { ENFORCEMENT_APPEAL_INVALID_GROUND_A_FEE_NOT_PAID } from '@pins/appeals/constants/support.js';
 import {
 	isAnyEnforcementAppealType,
 	isEnforcementCaseType
 } from '@pins/appeals/utils/appeal-type-checks.js';
-import formatDate from '@pins/appeals/utils/date-formatter.js';
+import formatDate, { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { add } from 'date-fns';
@@ -495,41 +496,74 @@ export const updateAppellantCaseValidationOutcome = async (
 
 			if (!isChildAnyEnfType) {
 				const applicantEmail = appeal.agent?.email || appeal.appellant?.email;
+				if (!applicantEmail) {
+					throw new Error(ERROR_NO_RECIPIENT_EMAIL);
+				}
 
 				if (!enforcementNoticeInvalid) {
-					if (!applicantEmail) {
-						throw new Error(ERROR_NO_RECIPIENT_EMAIL);
-					}
-
-					const personalisation = {
-						appeal_reference_number: appeal.reference,
-						lpa_reference: appeal.applicationReference,
-						site_address: siteAddress,
-						reasons: invalidReasonsList,
-						team_email_address: teamEmail
-					};
-					await notifySend({
-						azureAdUserId,
-						templateName: 'appeal-invalid',
-						notifyClient,
-						recipientEmail: applicantEmail,
-						personalisation: {
-							...personalisation,
-							feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key)
-						}
-					});
-
-					if (updatedAppeal.lpa?.email) {
+					if (invalidReasonsList.includes(ENFORCEMENT_APPEAL_INVALID_GROUND_A_FEE_NOT_PAID)) {
+						// Cancel enforcement notice appeal flow, did not pay the ground (a) fee
+						const personalisation = {
+							appeal_reference_number: appeal.reference,
+							lpa_reference: appeal.applicationReference,
+							site_address: siteAddress,
+							team_email_address: teamEmail,
+							enforcement_reference: updatedAppellantCase?.enforcementReference || '',
+							due_date:
+								dateISOStringToDisplayDate(
+									updatedAppeal?.enforcementNoticeAppealOutcome?.groundAFeeReceiptDueDate
+								) || '',
+							issue_date:
+								dateISOStringToDisplayDate(updatedAppellantCase?.enforcementIssueDate) || ''
+						};
 						await notifySend({
 							azureAdUserId,
-							templateName: 'appeal-invalid-lpa',
+							templateName: 'enforcement-cancel-appeal-no-fee-appellant',
 							notifyClient,
-							recipientEmail: updatedAppeal.lpa.email,
+							recipientEmail: applicantEmail,
+							personalisation
+						});
+
+						if (updatedAppeal.lpa?.email) {
+							await notifySend({
+								azureAdUserId,
+								templateName: 'enforcement-cancel-appeal-no-fee-lpa',
+								notifyClient,
+								recipientEmail: updatedAppeal.lpa.email,
+								personalisation
+							});
+						}
+					} else {
+						const personalisation = {
+							appeal_reference_number: appeal.reference,
+							lpa_reference: appeal.applicationReference,
+							site_address: siteAddress,
+							reasons: invalidReasonsList,
+							team_email_address: teamEmail
+						};
+						await notifySend({
+							azureAdUserId,
+							templateName: 'appeal-invalid',
+							notifyClient,
+							recipientEmail: applicantEmail,
 							personalisation: {
 								...personalisation,
-								feedback_link: FEEDBACK_FORM_LINKS.LPA
+								feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key)
 							}
 						});
+
+						if (updatedAppeal.lpa?.email) {
+							await notifySend({
+								azureAdUserId,
+								templateName: 'appeal-invalid-lpa',
+								notifyClient,
+								recipientEmail: updatedAppeal.lpa.email,
+								personalisation: {
+									...personalisation,
+									feedback_link: FEEDBACK_FORM_LINKS.LPA
+								}
+							});
+						}
 					}
 				} else if (enforcementNoticeInvalid === 'yes') {
 					const personalisation = {
@@ -556,13 +590,8 @@ export const updateAppellantCaseValidationOutcome = async (
 							personalisation
 						});
 					}
-				} else if (enforcementNoticeInvalid === 'no' && isAnyEnfType) {
-					if (!applicantEmail) {
-						throw new Error(ERROR_NO_RECIPIENT_EMAIL);
-					}
-
+				} else if (enforcementNoticeInvalid === 'no') {
 					const GROUND_A_BARRED_REASON_ID = 7;
-
 					const personalisation = {
 						appeal_reference_number: appeal.reference,
 						enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',

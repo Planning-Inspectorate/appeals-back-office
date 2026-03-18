@@ -2108,6 +2108,103 @@ describe('appellant cases routes', () => {
 				expect(response.status).toEqual(200);
 			});
 
+			test('updates the appellant case for invalid enforcement appeal with ground (a) fee not paid', async () => {
+				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+					appellantCaseValidationOutcomes[1]
+				);
+				databaseConnector.appellantCaseInvalidReason.findMany.mockResolvedValue([
+					{
+						id: 9,
+						name: '',
+						hasText: false
+					}
+				]);
+				databaseConnector.appellantCaseInvalidReasonsSelected.deleteMany.mockResolvedValue(true);
+				databaseConnector.appellantCaseInvalidReasonsSelected.createMany.mockResolvedValue(true);
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...enforcementNoticeAppealAppellantCaseInvalid,
+					enforcementNoticeAppealOutcome: {
+						groundAFeeReceiptDueDate: '2026-03-01'
+					},
+					appellantCase: {
+						...enforcementNoticeAppealAppellantCaseInvalid.appellantCase,
+						enforcementIssueDate: '2026-01-01',
+						appellantCaseInvalidReasonsSelected: [
+							{
+								appellantCaseInvalidReason: {
+									name: 'Did not pay the ground (a) fee'
+								},
+								appellantCaseInvalidReasonText: []
+							}
+						]
+					}
+				});
+				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+					appellantCaseValidationOutcomes[1]
+				);
+				databaseConnector.appellantCaseInvalidReasonText.deleteMany.mockResolvedValue(true);
+				databaseConnector.appellantCaseInvalidReasonText.createMany.mockResolvedValue(true);
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const body = {
+					validationOutcome: 'invalid',
+					invalidReasons: [{ id: 9, text: ['Did not pay the ground (a) fee'] }]
+				};
+				const { appellantCase } = enforcementNoticeAppealAppellantCaseInvalid;
+				const response = await request
+					.patch(`/appeals/35/appellant-cases/${appellantCase.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalled();
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { id: appellantCase.id },
+					data: {
+						appellantCaseValidationOutcomeId: 2
+					}
+				});
+				expect(databaseConnector.appellantCaseInvalidReasonText.deleteMany).toHaveBeenCalled();
+				expect(databaseConnector.appellantCaseInvalidReasonText.createMany).toHaveBeenCalledWith({
+					data: [
+						{
+							appellantCaseId: appellantCase.id,
+							appellantCaseInvalidReasonId: 9,
+							text: 'Did not pay the ground (a) fee'
+						}
+					]
+				});
+
+				const personalisation = {
+					appeal_reference_number: '1345264',
+					enforcement_reference: 'Reference',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					due_date: '1 March 2026',
+					issue_date: '1 January 2026',
+					lpa_reference: '48269/APP/2021/1482'
+				};
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation,
+					recipientEmail: enforcementNoticeAppeal.agent.email,
+					templateName: 'enforcement-cancel-appeal-no-fee-appellant'
+				});
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation,
+					recipientEmail: enforcementNoticeAppeal.lpa.email,
+					templateName: 'enforcement-cancel-appeal-no-fee-lpa'
+				});
+			});
+
 			test('updates the appellant case for invalid Enforcement Listed Building appeal', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...appealEnforcementListed,

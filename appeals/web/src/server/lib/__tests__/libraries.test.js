@@ -534,6 +534,11 @@ describe('Libraries', () => {
 						value: '26',
 						text: 'Ground (a) barred',
 						checked: false
+					},
+					{
+						checked: false,
+						text: 'Did not pay the ground (a) fee',
+						value: '27'
 					}
 				];
 
@@ -585,6 +590,11 @@ describe('Libraries', () => {
 						value: '26',
 						text: 'Ground (a) barred',
 						checked: false
+					},
+					{
+						value: '27',
+						text: 'Did not pay the ground (a) fee',
+						checked: false
 					}
 				];
 
@@ -621,6 +631,11 @@ describe('Libraries', () => {
 						value: '26',
 						text: 'Ground (a) barred',
 						checked: false
+					},
+					{
+						value: '27',
+						text: 'Did not pay the ground (a) fee',
+						checked: false
 					}
 				];
 
@@ -656,6 +671,11 @@ describe('Libraries', () => {
 					{
 						value: '26',
 						text: 'Ground (a) barred',
+						checked: false
+					},
+					{
+						value: '27',
+						text: 'Did not pay the ground (a) fee',
 						checked: false
 					}
 				];
@@ -731,6 +751,11 @@ describe('Libraries', () => {
 						value: '26',
 						text: 'Ground (a) barred',
 						checked: false
+					},
+					{
+						value: '27',
+						text: 'Did not pay the ground (a) fee',
+						checked: false
 					}
 				];
 
@@ -796,6 +821,11 @@ describe('Libraries', () => {
 						value: '26',
 						text: 'Ground (a) barred',
 						checked: false
+					},
+					{
+						value: '27',
+						text: 'Did not pay the ground (a) fee',
+						checked: false
 					}
 				];
 
@@ -856,6 +886,11 @@ describe('Libraries', () => {
 					{
 						value: '26',
 						text: 'Ground (a) barred',
+						checked: false
+					},
+					{
+						value: '27',
+						text: 'Did not pay the ground (a) fee',
 						checked: false
 					}
 				];
@@ -934,6 +969,11 @@ describe('Libraries', () => {
 					{
 						value: '26',
 						text: 'Ground (a) barred',
+						checked: false
+					},
+					{
+						value: '27',
+						text: 'Did not pay the ground (a) fee',
 						checked: false
 					}
 				];
@@ -1016,6 +1056,11 @@ describe('Libraries', () => {
 					{
 						value: '26',
 						text: 'Ground (a) barred',
+						checked: false
+					},
+					{
+						value: '27',
+						text: 'Did not pay the ground (a) fee',
 						checked: false
 					}
 				];

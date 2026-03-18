@@ -20,4 +20,9 @@ router
 router.use('/enforcement-notice-withdrawal', enforcementNoticeWithdrawalRouter);
 router.use('/invalid', invalidRouter);
 
+router
+	.route('/check-details')
+	.get(asyncHandler(controller.getCheckYourAnswers))
+	.post(asyncHandler(controller.postCheckYourAnswers));
+
 export default router;

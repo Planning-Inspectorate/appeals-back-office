@@ -382,6 +382,11 @@ export const appellantCaseInvalidReasons = [
 		id: 8,
 		name: 'LPA has withdrawn the enforcement notice',
 		hasText: false
+	},
+	{
+		id: 9,
+		name: 'Did not pay the ground (a) fee',
+		hasText: false
 	}
 ];
 
