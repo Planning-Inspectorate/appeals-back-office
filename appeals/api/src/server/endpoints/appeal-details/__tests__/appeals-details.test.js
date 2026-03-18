@@ -687,6 +687,7 @@ describe('Appeal detail routes', () => {
 						userId: 10
 					}
 				});
+				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledTimes(1);
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					inspectorId,
@@ -741,6 +742,7 @@ describe('Appeal detail routes', () => {
 						userId: 10
 					}
 				});
+				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledTimes(1);
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					inspectorId: null,
@@ -790,6 +792,7 @@ describe('Appeal detail routes', () => {
 						userId: 10
 					}
 				});
+				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledTimes(1);
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					padsInspectorId,
@@ -835,6 +838,7 @@ describe('Appeal detail routes', () => {
 				expect(mockNotifySend).not.toHaveBeenCalled();
 
 				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(1);
+				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledTimes(1);
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					inspectorId: null,
@@ -937,6 +941,7 @@ describe('Appeal detail routes', () => {
 						userId: leadAppeal.caseOfficer.id
 					}
 				});
+				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledTimes(3);
 
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
@@ -1037,6 +1042,7 @@ describe('Appeal detail routes', () => {
 						userId: leadAppeal.caseOfficer.id
 					}
 				});
+				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledTimes(3);
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					caseOfficerId: leadAppeal.caseOfficer.azureAdUserId
@@ -1132,6 +1138,7 @@ describe('Appeal detail routes', () => {
 						userId: 10
 					}
 				});
+				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledTimes(3);
 
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
