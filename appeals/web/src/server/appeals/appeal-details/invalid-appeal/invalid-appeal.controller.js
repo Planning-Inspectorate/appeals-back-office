@@ -4,6 +4,7 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { getFeedbackLinkFromAppealTypeName } from '#lib/feedback-form-link.js';
 import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
+import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
@@ -44,6 +45,7 @@ import {
  */
 const renderInvalidReason = async (request, response) => {
 	const { errors, body, currentAppeal } = request;
+	const { appealId } = currentAppeal;
 
 	if (
 		!currentAppeal ||
@@ -128,15 +130,22 @@ const renderInvalidReason = async (request, response) => {
 			errors
 		);
 
-		const sourceIsAppellantCase = request.baseUrl.includes('appellant-case');
+		const backLinkUrl = (() => {
+			const savedBackUrl = getSavedBackUrl(request, 'invalidAppeal');
+			if (savedBackUrl) {
+				return savedBackUrl;
+			} else if (isAnyEnforcementAppealType(currentAppeal.appealType)) {
+				return `/appeals-service/appeal-details/${appealId}/appellant-case/invalid/enforcement-notice`;
+			}
+			return `/appeals-service/appeal-details/${appealId}/appellant-case`;
+		})();
 
 		const pageContent = mapInvalidReasonPage(
-			currentAppeal.appealId,
 			currentAppeal.appealReference,
 			mappedInvalidReasonOptions,
 			currentAppeal.appealType,
-			errors ? errors['invalidReason']?.msg : undefined,
-			sourceIsAppellantCase
+			backLinkUrl,
+			errors ? errors['invalidReason']?.msg : undefined
 		);
 
 		return response.status(200).render('patterns/display-page.pattern.njk', {

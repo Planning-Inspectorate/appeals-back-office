@@ -1,5 +1,6 @@
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { permissionNames } from '#environment/permissions.js';
+import { saveBackUrl } from '#lib/middleware/save-back-url.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import { postCheckAndConfirm } from '../appellant-case/appellant-case.controller.js';
@@ -18,7 +19,7 @@ const router = createRouter({ mergeParams: true });
 
 router
 	.route(['/', '/new'])
-	.get(controller.getInvalidReason)
+	.get(saveBackUrl('invalidAppeal'), controller.getInvalidReason)
 	.post(
 		validators.validateInvalidReason,
 		validators.validateInvalidReasonTextItems,

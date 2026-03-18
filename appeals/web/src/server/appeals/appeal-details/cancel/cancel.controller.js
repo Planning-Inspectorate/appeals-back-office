@@ -1,7 +1,7 @@
 import featureFlags from '#common/feature-flags.js';
 import { getSessionValuesForAppeal } from '#lib/edit-utilities.js';
 import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
-import { preserveQueryString } from '#lib/url-utilities.js';
+import { addBackLinkQueryToUrl, preserveQueryString } from '#lib/url-utilities.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { mapCancelAppealPage } from './cancel.mapper.js';
 
@@ -79,7 +79,9 @@ export const postCancelAppeal = async (request, response) => {
 
 	switch (cancelReason) {
 		case CANCEL_REASON.INVALID:
-			return response.redirect(preserveQueryString(request, invalidFlowEntrypoint));
+			return response.redirect(
+				addBackLinkQueryToUrl(request, preserveQueryString(request, invalidFlowEntrypoint))
+			);
 		case CANCEL_REASON.WITHDRAWAL:
 			return response.redirect(preserveQueryString(request, `${baseUrl}/withdrawal/new`));
 		case CANCEL_REASON.ENFORCEMENT_NOTICE_WITHDRAWN:
