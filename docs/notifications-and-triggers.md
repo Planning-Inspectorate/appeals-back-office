@@ -24,6 +24,14 @@ The following notifications are sent from the back-office using these [Notify Te
 - **Notify Template:** [appeal-withdrawn-lpa](../appeals/api/src/server/notify/templates/appeal-withdrawn-lpa.content.md)
 - **Trigger:** Click "Start" in the Appeal withdrawal row within the case management section and confirm.
 
+## Cancellation
+
+### Enforcement notice withdrawn
+
+- **Appeal type:** enforcement types
+- **Notify Template:** [appeal-cancelled-enforcement-notice-withdrawn](../appeals/api/src/server/notify/templates/appeal-cancelled-enforcement-notice-withdrawn.content.md)
+- **Trigger:** Cancel appeal and select "LPA has withdrawn the enforcement notice" and confirm.
+
 ## Validation
 
 ### Appeal incomplete

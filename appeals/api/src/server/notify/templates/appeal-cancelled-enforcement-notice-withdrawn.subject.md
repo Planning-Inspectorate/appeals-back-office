@@ -1,0 +1,1 @@
+Enforcement notice withdrawn: {{appeal_reference_number}}

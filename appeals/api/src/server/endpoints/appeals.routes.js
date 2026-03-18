@@ -21,6 +21,7 @@ import { appellantCaseValidationOutcomesRoutes } from './appellant-case-validati
 import { appellantCasesRoutes } from './appellant-cases/appellant-cases.routes.js';
 import { auditTrailsRoutes } from './audit-trails/audit-trails.routes.js';
 import { businessDaysRoutes } from './business-days/business-days.routes.js';
+import { cancelRoutes } from './cancel/cancel.routes.js';
 import { caseNotesRoutes } from './case-notes/case-notes.routes.js';
 import { caseTeamRouter } from './case-team/case-team.routes.js';
 import { changeAppealTypeRoutes } from './change-appeal-type/change-appeal-type.routes.js';
@@ -133,4 +134,7 @@ router.use(appealStatusRoutes);
 router.use(changeProcedureTypeRoutes);
 
 router.use(appealRule6PartiesRoutes);
+
+router.use(cancelRoutes);
+
 export { router as appealsRoutes };

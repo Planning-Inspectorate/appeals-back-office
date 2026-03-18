@@ -61,10 +61,12 @@ import transitionState from '../../state/transition-state.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {UpdateAppellantCaseValidationOutcomeParams['validationOutcome']} ValidationOutcome */
 /** @typedef {import('@pins/appeals.api').Api.AppellantCaseUpdateRequest} AppellantCaseUpdateRequest */
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
 /** @typedef {import('express').NextFunction} NextFunction */
+/** @typedef {import('#repositories/appellant-case.repository.js').UpdateAppellantCaseValidationOutcome} UpdateAppellantCaseValidationOutcome */
 
 /**
  * @param {Request} req
@@ -126,6 +128,61 @@ const getEnforcementInvalidReasonsParams = (enforcementInvalidReasons) => {
 };
 
 /**
+ * @param {{ appeal: UpdateAppellantCaseValidationOutcomeParams['appeal'], validationOutcome: ValidationOutcome, validationOutcomeData: UpdateAppellantCaseValidationOutcome, azureAdUserId: string }} param0
+ */
+export const transitionAppealStatesAfterValidationOutcomeUpdate = async ({
+	appeal,
+	validationOutcome,
+	validationOutcomeData,
+	azureAdUserId
+}) => {
+	const { id: appealId } = appeal;
+	const leadAppeal = getLeadAppeal(appeal);
+
+	if (!isOutcomeIncomplete(validationOutcome.name)) {
+		if (!isLinkedAppeal(appeal)) {
+			await transitionState(appealId, azureAdUserId, validationOutcome.name);
+		} else {
+			// @ts-ignore
+			const linkedAppeals = await buildListOfLinkedAppeals(appeal);
+			if (appeal.appealType?.type === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+				// Update the child outcome to match the lead outcome and transition all linked enforcements as child enforcements do not validate their appellant case
+				for (const linkedAppeal of linkedAppeals) {
+					const { appealId, id: appellantCaseId } = linkedAppeal.appellantCase || {};
+					await appellantCaseRepository.updateAppellantCaseValidationOutcome({
+						...validationOutcomeData,
+						appealId,
+						// @ts-ignore
+						appellantCaseId,
+						validationOutcomeId: validationOutcome.id
+					});
+					await transitionState(linkedAppeal.id, azureAdUserId, validationOutcome.name);
+				}
+			} else {
+				if (allAppellantCaseOutcomesAreComplete(linkedAppeals, appealId, validationOutcome)) {
+					// @ts-ignore
+					for (const linkedAppeal of linkedAppeals) {
+						const outcome =
+							linkedAppeal.id === leadAppeal?.id
+								? validationOutcome
+								: linkedAppeal?.appellantCase?.appellantCaseValidationOutcome;
+						// @ts-ignore
+						if (currentStatus(linkedAppeal) === APPEAL_CASE_STATUS.VALIDATION) {
+							await transitionState(
+								linkedAppeal.id,
+								azureAdUserId,
+								// @ts-ignore
+								outcome?.name
+							);
+						}
+					}
+				}
+			}
+		}
+	}
+};
+
+/**
  * @param {UpdateAppellantCaseValidationOutcomeParams} param0
  * @param { import('#endpoints/appeals.js').NotifyClient } notifyClient
  */
@@ -180,54 +237,18 @@ export const updateAppellantCaseValidationOutcome = async (
 			...(otherInformation && { otherInformation })
 		})
 	};
-	const leadAppeal = getLeadAppeal(appeal);
 
 	await appellantCaseRepository.updateAppellantCaseValidationOutcome({
 		...validationOutcomeData,
 		validationOutcomeId: validationOutcome.id
 	});
 
-	if (!isOutcomeIncomplete(validationOutcome.name)) {
-		if (!isLinkedAppeal(appeal)) {
-			await transitionState(appealId, azureAdUserId, validationOutcome.name);
-		} else {
-			// @ts-ignore
-			const linkedAppeals = await buildListOfLinkedAppeals(appeal);
-			if (appeal.appealType?.type === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
-				// Update the child outcome to match the lead outcome and transition all linked enforcements as child enforcements do not validate their appellant case
-				for (const linkedAppeal of linkedAppeals) {
-					const { appealId, id: appellantCaseId } = linkedAppeal.appellantCase || {};
-					await appellantCaseRepository.updateAppellantCaseValidationOutcome({
-						...validationOutcomeData,
-						appealId,
-						// @ts-ignore
-						appellantCaseId,
-						validationOutcomeId: validationOutcome.id
-					});
-					await transitionState(linkedAppeal.id, azureAdUserId, validationOutcome.name);
-				}
-			} else {
-				if (allAppellantCaseOutcomesAreComplete(linkedAppeals, appealId, validationOutcome)) {
-					// @ts-ignore
-					for (const linkedAppeal of linkedAppeals) {
-						const outcome =
-							linkedAppeal.id === leadAppeal?.id
-								? validationOutcome
-								: linkedAppeal?.appellantCase?.appellantCaseValidationOutcome;
-						// @ts-ignore
-						if (currentStatus(linkedAppeal) === APPEAL_CASE_STATUS.VALIDATION) {
-							await transitionState(
-								linkedAppeal.id,
-								azureAdUserId,
-								// @ts-ignore
-								outcome?.name
-							);
-						}
-					}
-				}
-			}
-		}
-	}
+	await transitionAppealStatesAfterValidationOutcomeUpdate({
+		appeal,
+		validationOutcome,
+		validationOutcomeData,
+		azureAdUserId
+	});
 
 	const updatedAppeal = await appealRepository.getAppealById(Number(appealId));
 

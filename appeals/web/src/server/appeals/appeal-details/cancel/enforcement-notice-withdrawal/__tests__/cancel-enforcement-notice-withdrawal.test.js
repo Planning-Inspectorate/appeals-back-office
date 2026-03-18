@@ -155,6 +155,12 @@ describe('cancel enforcement notice withdrawal', () => {
 				])
 				.persist();
 			nock('http://test/').get('/appeals/document-redaction-statuses').reply(200, []).persist();
+			nock('http://test/')
+				.post(`/appeals/${mockAppealId}/cancel/enforcement-notice-withdrawn?dryRun=true`)
+				.reply(200, {
+					appellant: 'Appellant email preview',
+					lpa: 'LPA email preview'
+				});
 		});
 
 		it('should render the check your answers page', async () => {
@@ -194,6 +200,14 @@ describe('cancel enforcement notice withdrawal', () => {
 			expect(
 				summaryListRows[1].querySelector('.govuk-summary-list__value a')?.innerHTML.trim()
 			).toBe('test-document.txt');
+			expect(
+				unprettifiedHtml
+					.querySelector('[data-cy="preview-email-to-appellant"] div')
+					?.innerHTML.trim()
+			).toBe('Appellant email preview');
+			expect(
+				unprettifiedHtml.querySelector('[data-cy="preview-email-to-lpa"] div')?.innerHTML.trim()
+			).toBe('LPA email preview');
 			expect(
 				unprettifiedHtml.querySelector('#enforcement-notice-withdrawal-hint')?.innerHTML.trim()
 			).toBe('We will withdraw the enforcement notice and send an email to the relevant parties.');
@@ -258,15 +272,8 @@ describe('cancel enforcement notice withdrawal', () => {
 				.reply(200, {
 					documentId: '123'
 				});
-			const mockSetReviewOutcome = nock('http://test/')
-				.patch(
-					`/appeals/${mockAppealId}/appellant-cases/${appealDataEnforcementNotice.appellantCaseId}`,
-					{
-						validationOutcome: 'invalid',
-						invalidReasons: [{ id: 8 }],
-						enforcementNoticeInvalid: 'no'
-					}
-				)
+			const mockCancelEnforcementNoticeWithdrawn = nock('http://test/')
+				.post(`/appeals/${mockAppealId}/cancel/enforcement-notice-withdrawn`)
 				.reply(200);
 			await request.post(`${baseUrl}/${mockAppealId}/cancel/enforcement-notice-withdrawal`).send({
 				'upload-info': fileUploadInfo
@@ -277,7 +284,7 @@ describe('cancel enforcement notice withdrawal', () => {
 			expect(response.statusCode).toBe(302);
 			expect(response.header.location).toBe(`/appeals-service/appeal-details/${mockAppealId}`);
 			expect(mockAddDocument.isDone()).toBe(true);
-			expect(mockSetReviewOutcome.isDone()).toBe(true);
+			expect(mockCancelEnforcementNoticeWithdrawn.isDone()).toBe(true);
 		});
 
 		it('should redirect to error page if the document request fails', async () => {
@@ -292,14 +299,12 @@ describe('cancel enforcement notice withdrawal', () => {
 			expect(response.header.location).toContain('/appeals-service/error');
 		});
 
-		it('should render 500 if the review outcome request fails', async () => {
+		it('should render 500 if the cancel/enforcement-notice-withdrawn request fails', async () => {
 			nock('http://test/')
 				.post(`/appeals/${mockAppealId}/documents`)
 				.reply(200, { documentId: '123' });
 			nock('http://test/')
-				.patch(
-					`/appeals/${mockAppealId}/appellant-cases/${appealDataEnforcementNotice.appellantCaseId}`
-				)
+				.post(`/appeals/${mockAppealId}/cancel/enforcement-notice-withdrawn`)
 				.reply(500);
 			await request.post(`${baseUrl}/${mockAppealId}/cancel/enforcement-notice-withdrawal`).send({
 				'upload-info': fileUploadInfo

@@ -1,6 +1,7 @@
 import { mapUncommittedDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { editLink } from '#lib/edit-utilities.js';
+import { detailsComponent } from '#lib/mappers/components/page-components/details.js';
 import { simpleHtmlComponent } from '#lib/mappers/components/page-components/html.js';
 import { listOrOnlyItem } from '#lib/mappers/components/page-components/list-or-only-item.js';
 
@@ -75,25 +76,6 @@ export const enforcementNoticeWithdrawalCheckDetailsPage = (
 		}
 	};
 
-	/**
-	 * @param {string} summaryText
-	 * @param {string} html
-	 * @returns {PageComponent}
-	 */
-	const notifyPreviewComponent = (summaryText, html) => {
-		return {
-			type: 'details',
-			wrapperHtml: {
-				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-				closing: '</div></div>'
-			},
-			parameters: {
-				summaryText,
-				html
-			}
-		};
-	};
-
 	const hintTextComponent = simpleHtmlComponent(
 		'p',
 		{
@@ -110,8 +92,8 @@ export const enforcementNoticeWithdrawalCheckDetailsPage = (
 		heading: 'Check details and withdraw enforcement notice',
 		pageComponents: [
 			summaryListComponent,
-			notifyPreviewComponent('Preview email to appellant', appellantNotifyPreview),
-			notifyPreviewComponent('Preview email to LPA', lpaNotifyPreview),
+			detailsComponent({ summaryText: 'Preview email to appellant', html: appellantNotifyPreview }),
+			detailsComponent({ summaryText: 'Preview email to LPA', html: lpaNotifyPreview }),
 			hintTextComponent
 		],
 		submitButtonProperties: {
