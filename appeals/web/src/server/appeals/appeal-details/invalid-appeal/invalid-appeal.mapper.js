@@ -54,31 +54,24 @@ export function decisionInvalidConfirmationPage(appealId, appealReference) {
 }
 
 /**
- * @param {string} appealId
  * @param {string} appealReference
  * @param {import('#appeals/appeals.types.js').CheckboxItemParameter[]} mappedInvalidReasonOptions
  * @param {string} appealType
+ * @param {string} backLinkUrl
  * @param {string | undefined} errorMessage
- * @param {boolean} sourceIsAppellantCase
  * @returns {PageContent}
  */
 export const mapInvalidReasonPage = (
-	appealId,
 	appealReference,
 	mappedInvalidReasonOptions,
 	appealType,
-	errorMessage = undefined,
-	sourceIsAppellantCase
+	backLinkUrl,
+	errorMessage = undefined
 ) => {
 	const shortAppealReference = appealShortReference(appealReference);
 	const isEnforcementNotice =
 		appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ||
 		appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING;
-	const backLinkUrl = isEnforcementNotice
-		? `/appeals-service/appeal-details/${appealId}/appellant-case/invalid/enforcement-notice`
-		: `/appeals-service/appeal-details/${appealId}/${
-				sourceIsAppellantCase ? 'appellant-case' : 'cancel'
-			}`;
 
 	/** @type {PageContent} */
 	const pageContent = {

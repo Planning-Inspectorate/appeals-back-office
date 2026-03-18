@@ -140,8 +140,8 @@ describe('cancel', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/invalid/new'
+			expect(response.headers.location).toBe(
+				'/appeals-service/appeal-details/1/invalid/new?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fcancel'
 			);
 		});
 
