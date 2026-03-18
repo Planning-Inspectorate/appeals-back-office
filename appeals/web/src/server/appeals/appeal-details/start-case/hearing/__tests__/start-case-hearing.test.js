@@ -503,6 +503,23 @@ describe('start case hearing flow', () => {
 			expect(response.headers.location).toBe(`${baseUrl}/1/start-case/hearing/confirm`);
 		});
 
+		it('should return 400 when yes is selected and a non-half-day decimal value is entered', async () => {
+			const response = await request
+				.post(`${baseUrl}/1/start-case/hearing/estimation`)
+				.send({ hearingEstimationYesNo: 'yes', hearingEstimationDays: '3.2' });
+			expect(response.statusCode).toBe(400);
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain(
+				'Number of days must be a whole or half number, like 3 or 3.5'
+			);
+		});
+
 		it('should return 400 when hearingEstimationYesNo is missing', async () => {
 			const response = await request.post(`${baseUrl}/1/start-case/hearing/estimation`).send({});
 			expect(response.statusCode).toBe(400);

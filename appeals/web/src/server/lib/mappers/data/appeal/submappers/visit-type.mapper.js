@@ -9,12 +9,7 @@ export const mapVisitType = ({ appealDetails, currentRoute, session, request }) 
 		id: 'set-visit-type',
 		text: config.featureFlags.featureFlagCancelSiteVisit ? 'Type' : 'Visit type',
 		value: appealDetails.siteVisit?.visitType || '',
-		link: addBackLinkQueryToUrl(
-			request,
-			`${currentRoute}/site-visit/${
-				appealDetails.siteVisit?.visitType ? 'visit-booked' : 'schedule-visit'
-			}`
-		),
+		link: addBackLinkQueryToUrl(request, `${currentRoute}/site-visit/schedule-visit`),
 		editable: userHasPermission(permissionNames.setEvents, session),
 		classes: 'appeal-visit-type'
 	});

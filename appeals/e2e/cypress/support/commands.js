@@ -155,7 +155,8 @@ Cypress.Commands.add('createCase', (customValues) => {
 
 Cypress.Commands.add('addLpaqSubmissionToCase', (caseObj) => {
 	return cy.wrap(null).then(async () => {
-		await appealsApiClient.lpqaSubmission(caseObj.reference);
+		const lpaqReference = await appealsApiClient.lpqaSubmission(caseObj.reference);
+		expect(lpaqReference, 'LPAQ submission reference').to.equal(caseObj.reference);
 		cy.log('Added LPA submission to case ref ' + caseObj.reference);
 		cy.reload();
 	});
@@ -507,7 +508,10 @@ Cypress.Commands.add('deleteEstimateViaApi', (procedureType, caseObj) => {
 
 Cypress.Commands.add('assignCaseOfficerViaApi', (caseObj) => {
 	return cy.wrap(null).then(async () => {
-		return await appealsApiClient.assignCaseOfficer(caseObj.id);
+		const result = await appealsApiClient.assignCaseOfficer(caseObj.id);
+		expect(result, 'assign case officer response').to.not.equal(false);
+		expect(result).to.have.property('caseOfficerId');
+		return result;
 	});
 });
 

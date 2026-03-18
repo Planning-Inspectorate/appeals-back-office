@@ -206,7 +206,10 @@ export const createRepresentation = async (
 		});
 		representedId = represented.id;
 		if (!shouldAutoPublish) status = APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW;
-	} else if (input.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT) {
+	} else if (
+		input.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT ||
+		input.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT
+	) {
 		representedId = input.representedId;
 	} else if (
 		input.representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT ||
@@ -237,11 +240,11 @@ export const createRepresentation = async (
 		await representationRepository.addAttachments(representation.id, mappedDocuments);
 
 		for (const document of mappedDocuments) {
-			if (document?.documentGuid && document?.version > 1) {
+			if (document?.documentGuid) {
 				await broadcasters.broadcastDocument(
 					document.documentGuid,
 					document.version,
-					EventType.Update
+					document.version > 1 ? EventType.Update : EventType.Create
 				);
 			}
 		}
@@ -348,11 +351,11 @@ export const updateAttachments = async (repId, attachments) => {
 	);
 
 	for (const document of mappedDocuments) {
-		if (document?.documentGuid && document?.version > 1) {
+		if (document?.documentGuid) {
 			await broadcasters.broadcastDocument(
 				document.documentGuid,
 				document.version,
-				EventType.Update
+				document.version > 1 ? EventType.Update : EventType.Create
 			);
 		}
 	}

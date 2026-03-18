@@ -80,7 +80,6 @@ const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 const siteVisitPath = '/site-visit';
-const visitScheduledPath = '/visit-scheduled';
 
 describe('site-visit', () => {
 	beforeEach(() => {
@@ -119,22 +118,8 @@ describe('site-visit', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="visit-type" type="radio" value="accompanied"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('name="visit-date-day" type="text"');
-			expect(unprettifiedElement.innerHTML).toContain('name="visit-date-month" type="text"');
-			expect(unprettifiedElement.innerHTML).toContain('name="visit-date-year" type="text"');
-			expect(unprettifiedElement.innerHTML).toContain('Select time</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Optional for unaccompanied visits</p>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Use the 24-hour clock. For example 16:30</p>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('name="visit-start-time-hour" type="text"');
-			expect(unprettifiedElement.innerHTML).toContain('name="visit-start-time-minute" type="text"');
-			expect(unprettifiedElement.innerHTML).toContain('name="visit-end-time-hour" type="text"');
-			expect(unprettifiedElement.innerHTML).toContain('name="visit-end-time-minute" type="text"');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Confirming will inform the relevant parties of the site visit </div>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
+
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 	});
 
@@ -173,26 +158,25 @@ describe('site-visit', () => {
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
 			expect(errorSummaryHtml).toContain('Select visit type</a>');
-			expect(errorSummaryHtml).toContain('Enter the site visit date');
-			expect(errorSummaryHtml).toContain('Enter the start time</a>');
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit date day is invalid', async () => {
-			let response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'unaccompanied',
-				'visit-date-day': '0',
-				'visit-date-month': '1',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '30'
-			});
-
+			let response = await request
+				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
+				.send({
+					'visit-type': 'unaccompanied',
+					'visit-date-day': '0',
+					'visit-date-month': '1',
+					'visit-date-year': '3000',
+					'visit-start-time-hour': '10',
+					'visit-start-time-minute': '00',
+					'visit-end-time-hour': '11',
+					'visit-end-time-minute': '30'
+				});
 			let element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Schedule site visit</h1>');
+			expect(element.innerHTML).toContain('Date and time</h1>');
 
 			let errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -202,21 +186,23 @@ describe('site-visit', () => {
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
 			expect(errorSummaryHtml).toContain('Site visit date day must be between 1 and 31</a>');
 
-			response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'unaccompanied',
-				'visit-date-day': '32',
-				'visit-date-month': '1',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '30'
-			});
+			response = await request
+				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
+				.send({
+					'visit-type': 'unaccompanied',
+					'visit-date-day': '32',
+					'visit-date-month': '1',
+					'visit-date-year': '3000',
+					'visit-start-time-hour': '10',
+					'visit-start-time-minute': '00',
+					'visit-end-time-hour': '11',
+					'visit-end-time-minute': '30'
+				});
 
 			element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Schedule site visit</h1>');
+			expect(element.innerHTML).toContain('Date and time</h1>');
 
 			errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -228,21 +214,23 @@ describe('site-visit', () => {
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit date month is invalid', async () => {
-			let response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'unaccompanied',
-				'visit-date-day': '1',
-				'visit-date-month': '0',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '30'
-			});
+			let response = await request
+				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
+				.send({
+					'visit-type': 'unaccompanied',
+					'visit-date-day': '1',
+					'visit-date-month': '0',
+					'visit-date-year': '3000',
+					'visit-start-time-hour': '10',
+					'visit-start-time-minute': '00',
+					'visit-end-time-hour': '11',
+					'visit-end-time-minute': '30'
+				});
 
 			let element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Schedule site visit</h1>');
+			expect(element.innerHTML).toContain('Date and time</h1>');
 
 			let errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -252,21 +240,23 @@ describe('site-visit', () => {
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
 			expect(errorSummaryHtml).toContain('Site visit date month must be between 1 and 12</a>');
 
-			response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'unaccompanied',
-				'visit-date-day': '1',
-				'visit-date-month': '13',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '30'
-			});
+			response = await request
+				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
+				.send({
+					'visit-type': 'unaccompanied',
+					'visit-date-day': '1',
+					'visit-date-month': '13',
+					'visit-date-year': '3000',
+					'visit-start-time-hour': '10',
+					'visit-start-time-minute': '00',
+					'visit-end-time-hour': '11',
+					'visit-end-time-minute': '30'
+				});
 
 			element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Schedule site visit</h1>');
+			expect(element.innerHTML).toContain('Date and time</h1>');
 
 			errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -278,21 +268,23 @@ describe('site-visit', () => {
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit date year is invalid', async () => {
-			let response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'unaccompanied',
-				'visit-date-day': '1',
-				'visit-date-month': '1',
-				'visit-date-year': '202',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '30'
-			});
+			let response = await request
+				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
+				.send({
+					'visit-type': 'unaccompanied',
+					'visit-date-day': '1',
+					'visit-date-month': '1',
+					'visit-date-year': '202',
+					'visit-start-time-hour': '10',
+					'visit-start-time-minute': '00',
+					'visit-end-time-hour': '11',
+					'visit-end-time-minute': '30'
+				});
 
 			let element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Schedule site visit</h1>');
+			expect(element.innerHTML).toContain('Date and time</h1>');
 
 			let errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -302,21 +294,23 @@ describe('site-visit', () => {
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
 			expect(errorSummaryHtml).toContain('Site visit date year must be 4 digits</a>');
 
-			response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'unaccompanied',
-				'visit-date-day': '1',
-				'visit-date-month': '1',
-				'visit-date-year': '30003',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '30'
-			});
+			response = await request
+				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
+				.send({
+					'visit-type': 'unaccompanied',
+					'visit-date-day': '1',
+					'visit-date-month': '1',
+					'visit-date-year': '30003',
+					'visit-start-time-hour': '10',
+					'visit-start-time-minute': '00',
+					'visit-end-time-hour': '11',
+					'visit-end-time-minute': '30'
+				});
 
 			element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Schedule site visit</h1>');
+			expect(element.innerHTML).toContain('Date and time</h1>');
 
 			errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -328,21 +322,23 @@ describe('site-visit', () => {
 		});
 
 		it('should re-render the schedule visit page with the expected error message if an invalid visit date was provided', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'unaccompanied',
-				'visit-date-day': '29',
-				'visit-date-month': '2',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '30'
-			});
+			const response = await request
+				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
+				.send({
+					'visit-type': 'unaccompanied',
+					'visit-date-day': '29',
+					'visit-date-month': '2',
+					'visit-date-year': '3000',
+					'visit-start-time-hour': '10',
+					'visit-start-time-minute': '00',
+					'visit-end-time-hour': '11',
+					'visit-end-time-minute': '30'
+				});
 
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Schedule site visit</h1>');
+			expect(element.innerHTML).toContain('Date and time</h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -353,42 +349,24 @@ describe('site-visit', () => {
 			expect(errorSummaryHtml).toContain('Site visit date must be a real date</a>');
 		});
 
-		it('should re-direct to the appeal-details page when site visit date is in the past and other data is valid', async () => {
-			const monthVariants = ['2', 'February', 'Feb'];
-			for (const month of monthVariants) {
-				nock('http://test/').post('/appeals/1/site-visits').reply(200, siteVisitData);
-				const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-					'visit-type': 'unaccompanied',
-					'visit-date-day': '29',
-					'visit-date-month': month,
-					'visit-date-year': '2000',
-					'visit-start-time-hour': '10',
+		it('should re-render the schedule visit page with the expected error message if visit start time hour is invalid', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
+				.send({
+					'visit-type': 'accompanied',
+					'visit-date-day': '1',
+					'visit-date-month': '1',
+					'visit-date-year': '3000',
+					'visit-start-time-hour': '24',
 					'visit-start-time-minute': '00',
 					'visit-end-time-hour': '11',
 					'visit-end-time-minute': '30'
 				});
 
-				expect(response.statusCode).toBe(302);
-				expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
-			}
-		});
-
-		it('should re-render the schedule visit page with the expected error message if visit start time hour is invalid', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'accompanied',
-				'visit-date-day': '1',
-				'visit-date-month': '1',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '24',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '30'
-			});
-
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Schedule site visit</h1>');
+			expect(element.innerHTML).toContain('Date and time</h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -400,21 +378,23 @@ describe('site-visit', () => {
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit start time minute is invalid', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'accompanied',
-				'visit-date-day': '1',
-				'visit-date-month': '1',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '60',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '30'
-			});
+			const response = await request
+				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
+				.send({
+					'visit-type': 'accompanied',
+					'visit-date-day': '1',
+					'visit-date-month': '1',
+					'visit-date-year': '3000',
+					'visit-start-time-hour': '10',
+					'visit-start-time-minute': '60',
+					'visit-end-time-hour': '11',
+					'visit-end-time-minute': '30'
+				});
 
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Schedule site visit</h1>');
+			expect(element.innerHTML).toContain('Date and time</h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -426,21 +406,23 @@ describe('site-visit', () => {
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit end time hour is invalid', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'accessRequired',
-				'visit-date-day': '1',
-				'visit-date-month': '1',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '24',
-				'visit-end-time-minute': '30'
-			});
+			const response = await request
+				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
+				.send({
+					'visit-type': 'accessRequired',
+					'visit-date-day': '1',
+					'visit-date-month': '1',
+					'visit-date-year': '3000',
+					'visit-start-time-hour': '10',
+					'visit-start-time-minute': '00',
+					'visit-end-time-hour': '24',
+					'visit-end-time-minute': '30'
+				});
 
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Schedule site visit</h1>');
+			expect(element.innerHTML).toContain('Date and time</h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -452,21 +434,23 @@ describe('site-visit', () => {
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit end time minute is invalid', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'accessRequired',
-				'visit-date-day': '1',
-				'visit-date-month': '1',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '60'
-			});
+			const response = await request
+				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
+				.send({
+					'visit-type': 'accessRequired',
+					'visit-date-day': '1',
+					'visit-date-month': '1',
+					'visit-date-year': '3000',
+					'visit-start-time-hour': '10',
+					'visit-start-time-minute': '00',
+					'visit-end-time-hour': '11',
+					'visit-end-time-minute': '60'
+				});
 
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Schedule site visit</h1>');
+			expect(element.innerHTML).toContain('Date and time</h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -478,21 +462,23 @@ describe('site-visit', () => {
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit start time is not before end time', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'accessRequired',
-				'visit-date-day': '1',
-				'visit-date-month': '1',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '10',
-				'visit-end-time-minute': '00'
-			});
+			const response = await request
+				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
+				.send({
+					'visit-type': 'accessRequired',
+					'visit-date-day': '1',
+					'visit-date-month': '1',
+					'visit-date-year': '3000',
+					'visit-start-time-hour': '10',
+					'visit-start-time-minute': '00',
+					'visit-end-time-hour': '10',
+					'visit-end-time-minute': '00'
+				});
 
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Schedule site visit</h1>');
+			expect(element.innerHTML).toContain('Date and time</h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -504,53 +490,59 @@ describe('site-visit', () => {
 		});
 
 		it('should redirect to the site appeal details page if all required fields are populated and valid', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'accessRequired',
-				'visit-date-day': '1',
-				'visit-date-month': '1',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '30'
-			});
+			const response = await request
+				.post(`${baseUrl}/1${siteVisitPath}/schedule/check-details`)
+				.send({
+					'visit-type': 'accessRequired',
+					'visit-date-day': '1',
+					'visit-date-month': '1',
+					'visit-date-year': '3000',
+					'visit-start-time-hour': '10',
+					'visit-start-time-minute': '00',
+					'visit-end-time-hour': '11',
+					'visit-end-time-minute': '30'
+				});
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 
 		it('should redirect to the appeals details page if visit type is unaccompanied and start and end times are not populated but all other required fields are populated and valid', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'unaccompanied',
-				'visit-date-day': '1',
-				'visit-date-month': '1',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '',
-				'visit-start-time-minute': '',
-				'visit-end-time-hour': '',
-				'visit-end-time-minute': ''
-			});
+			const response = await request
+				.post(`${baseUrl}/1${siteVisitPath}/schedule/check-details`)
+				.send({
+					'visit-type': 'unaccompanied',
+					'visit-date-day': '1',
+					'visit-date-month': '1',
+					'visit-date-year': '3000',
+					'visit-start-time-hour': '',
+					'visit-start-time-minute': '',
+					'visit-end-time-hour': '',
+					'visit-end-time-minute': ''
+				});
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit type is accompanied and start time is not populated', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'accompanied',
-				'visit-date-day': '1',
-				'visit-date-month': '1',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '',
-				'visit-start-time-minute': '',
-				'visit-end-time-hour': '',
-				'visit-end-time-minute': ''
-			});
+			const response = await request
+				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
+				.send({
+					'visit-type': 'accompanied',
+					'visit-date-day': '1',
+					'visit-date-month': '1',
+					'visit-date-year': '3000',
+					'visit-start-time-hour': '',
+					'visit-start-time-minute': '',
+					'visit-end-time-hour': '',
+					'visit-end-time-minute': ''
+				});
 
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Schedule site visit</h1>');
+			expect(element.innerHTML).toContain('Date and time</h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -562,37 +554,41 @@ describe('site-visit', () => {
 		});
 
 		it('should redirect to the appeal details page if visit type is accompanied and end time is not populated but all other required fields are populated and valid', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'accompanied',
-				'visit-date-day': '1',
-				'visit-date-month': '1',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '11',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '',
-				'visit-end-time-minute': ''
-			});
+			const response = await request
+				.post(`${baseUrl}/1${siteVisitPath}/schedule/check-details`)
+				.send({
+					'visit-type': 'accompanied',
+					'visit-date-day': '1',
+					'visit-date-month': '1',
+					'visit-date-year': '3000',
+					'visit-start-time-hour': '11',
+					'visit-start-time-minute': '00',
+					'visit-end-time-hour': '',
+					'visit-end-time-minute': ''
+				});
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit type is accessRequired and start time is not populated but all other required fields are populated and valid', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'accompanied',
-				'visit-date-day': '1',
-				'visit-date-month': '1',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '',
-				'visit-start-time-minute': '',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '30'
-			});
+			const response = await request
+				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
+				.send({
+					'visit-type': 'accompanied',
+					'visit-date-day': '1',
+					'visit-date-month': '1',
+					'visit-date-year': '3000',
+					'visit-start-time-hour': '',
+					'visit-start-time-minute': '',
+					'visit-end-time-hour': '11',
+					'visit-end-time-minute': '30'
+				});
 
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Schedule site visit</h1>');
+			expect(element.innerHTML).toContain('Date and time</h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -604,21 +600,23 @@ describe('site-visit', () => {
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit type is accessRequired and end time is not populated but all other required fields are populated and valid', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'accessRequired',
-				'visit-date-day': '1',
-				'visit-date-month': '1',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '11',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '',
-				'visit-end-time-minute': ''
-			});
+			const response = await request
+				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
+				.send({
+					'visit-type': 'accessRequired',
+					'visit-date-day': '1',
+					'visit-date-month': '1',
+					'visit-date-year': '3000',
+					'visit-start-time-hour': '11',
+					'visit-start-time-minute': '00',
+					'visit-end-time-hour': '',
+					'visit-end-time-minute': ''
+				});
 
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Schedule site visit</h1>');
+			expect(element.innerHTML).toContain('Date and time</h1>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -647,7 +645,7 @@ describe('site-visit', () => {
 			usersService.getUserById = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
 
 			const response = await request
-				.post(`${baseUrl}/${appealId}${siteVisitPath}/schedule-visit`)
+				.post(`${baseUrl}/${appealId}${siteVisitPath}/schedule/check-details`)
 				.send({
 					'visit-type': 'accessRequired',
 					'visit-date-day': '1',
@@ -663,515 +661,6 @@ describe('site-visit', () => {
 			expect(response.text).toBe(
 				`Found. Redirecting to /appeals-service/appeal-details/${appealId}`
 			);
-		});
-	});
-
-	describe('GET /site-visit/manage-visit', () => {
-		it('should render the manage visit page', async () => {
-			const response = await request.get(`${baseUrl}/1${siteVisitPath}/manage-visit`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Manage site visit</h1>');
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('Site information</span>');
-			expect(unprettifiedElement.innerHTML).toContain('Site address</dt>');
-			expect(unprettifiedElement.innerHTML).toContain('Potential safety risks (LPA answer)</dt>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Potential safety risks (appellant answer)</dt>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Address of the neighbour’s land or property</dt>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Interested party and neighbour addresses</dt>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="visit-type" type="radio" value="unaccompanied"'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="visit-type" type="radio" value="accessRequired"'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="visit-type" type="radio" value="accompanied"'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Select date</legend>');
-			expect(unprettifiedElement.innerHTML).toContain('For example, 27 3 2023</div>');
-			expect(unprettifiedElement.innerHTML).toContain('name="visit-date-day" type="text"');
-			expect(unprettifiedElement.innerHTML).toContain('name="visit-date-month" type="text"');
-			expect(unprettifiedElement.innerHTML).toContain('name="visit-date-year" type="text"');
-			expect(unprettifiedElement.innerHTML).toContain('Select time</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Optional for unaccompanied visits</p>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Use the 24-hour clock. For example 16:30</p>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('name="visit-start-time-hour" type="text"');
-			expect(unprettifiedElement.innerHTML).toContain('name="visit-start-time-minute" type="text"');
-			expect(unprettifiedElement.innerHTML).toContain('name="visit-end-time-hour" type="text"');
-			expect(unprettifiedElement.innerHTML).toContain('name="visit-end-time-minute" type="text"');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Confirming will inform the relevant parties of the site visit </div>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
-		});
-	});
-
-	describe('POST /site-visit/manage-visit', () => {
-		beforeEach(() => {
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
-			nock('http://test/').get('/appeals/1/site-visits/0').reply(200, siteVisitData);
-			nock('http://test/').post('/appeals/1/site-visits').reply(200, siteVisitData);
-			nock('http://test/').post('/appeals/1/site-visits/0').reply(200, siteVisitData);
-		});
-
-		afterEach(() => {
-			nock.cleanAll();
-		});
-
-		it('should re-render the manage visit page with the expected error messages if required fields are not populated', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
-				'visit-date-day': '',
-				'visit-date-month': '',
-				'visit-date-year': '',
-				'visit-start-time-hour': '',
-				'visit-start-time-minute': '',
-				'visit-end-time-hour': '',
-				'visit-end-time-minute': ''
-			});
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Manage site visit</h1>');
-
-			const errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Select visit type</a>');
-			expect(errorSummaryHtml).toContain('Enter the site visit date</a>');
-			expect(errorSummaryHtml).toContain('Enter the start time</a>');
-		});
-
-		it('should re-render the manage visit page with the expected error message if visit date day is invalid', async () => {
-			let response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
-				'visit-type': 'unaccompanied',
-				'visit-date-day': '0',
-				'visit-date-month': '1',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '30'
-			});
-
-			let element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Manage site visit</h1>');
-
-			let errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Site visit date day must be between 1 and 31</a>');
-
-			response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
-				'visit-type': 'unaccompanied',
-				'visit-date-day': '32',
-				'visit-date-month': '1',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '30'
-			});
-
-			element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Manage site visit</h1>');
-
-			errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Site visit date day must be between 1 and 31</a>');
-		});
-
-		it('should re-render the manage visit page with the expected error message if visit date month is invalid', async () => {
-			let response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
-				'visit-type': 'unaccompanied',
-				'visit-date-day': '1',
-				'visit-date-month': '0',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '30'
-			});
-
-			let element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Manage site visit</h1>');
-
-			let errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Site visit date month must be between 1 and 12</a>');
-
-			response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
-				'visit-type': 'unaccompanied',
-				'visit-date-day': '1',
-				'visit-date-month': '13',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '30'
-			});
-
-			element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Manage site visit</h1>');
-
-			errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Site visit date month must be between 1 and 12</a>');
-		});
-
-		it('should re-render the manage visit page with the expected error message if visit date year is invalid', async () => {
-			let response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
-				'visit-type': 'unaccompanied',
-				'visit-date-day': '1',
-				'visit-date-month': '1',
-				'visit-date-year': '202',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '30'
-			});
-
-			let element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Manage site visit</h1>');
-
-			let errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Site visit date year must be 4 digits</a>');
-
-			response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
-				'visit-type': 'unaccompanied',
-				'visit-date-day': '1',
-				'visit-date-month': '1',
-				'visit-date-year': '30003',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '30'
-			});
-
-			element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Manage site visit</h1>');
-
-			errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Site visit date year must be 4 digits</a>');
-		});
-
-		it('should re-render the manage visit page with the expected error message if an invalid visit date was provided', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
-				'visit-type': 'unaccompanied',
-				'visit-date-day': '29',
-				'visit-date-month': '2',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '30'
-			});
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Manage site visit</h1>');
-
-			const errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Site visit date must be a real date</a>');
-		});
-
-		it('should redirect to the appead details page when the site visit date is in the past', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
-				'visit-type': 'unaccompanied',
-				'visit-date-day': '29',
-				'visit-date-month': '2',
-				'visit-date-year': '2000',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '30'
-			});
-
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
-		});
-
-		it('should re-render the manage visit page with the expected error message if visit start time hour is invalid', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
-				'visit-type': 'accompanied',
-				'visit-date-day': '1',
-				'visit-date-month': '1',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '24',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '30'
-			});
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Manage site visit</h1>');
-
-			const errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Start time hour must be 23 or less</a>');
-		});
-
-		it('should re-render the manage visit page with the expected error message if visit start time minute is invalid', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
-				'visit-type': 'accompanied',
-				'visit-date-day': '1',
-				'visit-date-month': '1',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '60',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '30'
-			});
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Manage site visit</h1>');
-
-			const errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Start time minute must be 59 or less</a>');
-		});
-
-		it('should re-render the manage visit page with the expected error message if visit end time hour is invalid', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
-				'visit-type': 'accessRequired',
-				'visit-date-day': '1',
-				'visit-date-month': '1',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '24',
-				'visit-end-time-minute': '30'
-			});
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Manage site visit</h1>');
-
-			const errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('End time hour must be 23 or less</a>');
-		});
-
-		it('should re-render the manage visit page with the expected error message if visit end time minute is invalid', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
-				'visit-type': 'accessRequired',
-				'visit-date-day': '1',
-				'visit-date-month': '1',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '60'
-			});
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Manage site visit</h1>');
-
-			const errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('End time minute must be 59 or less</a>');
-		});
-
-		it('should re-render the manage visit page with the expected error message if visit start time is not before end time', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
-				'visit-type': 'accessRequired',
-				'visit-date-day': '1',
-				'visit-date-month': '1',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '10',
-				'visit-end-time-minute': '00'
-			});
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Manage site visit</h1>');
-
-			const errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Start time must be before end time</a>');
-		});
-
-		it('should redirect to the appeal details page if all required fields are populated and valid', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
-				'visit-type': 'accessRequired',
-				'visit-date-day': '1',
-				'visit-date-month': '1',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '30'
-			});
-
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
-		});
-
-		it('should redirect to the appeal details page if visit type is unaccompanied and start and end times are not populated but all other required fields are populated and valid', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
-				'visit-type': 'unaccompanied',
-				'visit-date-day': '1',
-				'visit-date-month': '1',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '',
-				'visit-start-time-minute': '',
-				'visit-end-time-hour': '',
-				'visit-end-time-minute': ''
-			});
-
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
-		});
-	});
-
-	describe('GET /site-visit/visit-scheduled/:confirmationPageTypeToRender', () => {
-		beforeEach(() => {
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
-			nock('http://test/').get('/appeals/1/site-visits/0').reply(200, siteVisitData);
-		});
-
-		afterEach(() => {
-			nock.cleanAll();
-		});
-
-		it('should render the new visit scheduled confirmation page', async () => {
-			const response = await request.get(`${baseUrl}/1${siteVisitPath}${visitScheduledPath}/new`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Site visit scheduled</h1>');
-			expect(element.innerHTML).toContain(
-				'The relevant parties have been informed. The case timetable has been updated.</p>'
-			);
-			expect(element.innerHTML).toContain('Go back to case details</a>');
-		});
-
-		it('should render the visit changed confirmation page with no updates to the site visit', async () => {
-			const response = await request.get(
-				`${baseUrl}/1${siteVisitPath}${visitScheduledPath}/unchanged`
-			);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('No changes made</h1>');
-			expect(element.innerHTML).toContain('No emails have been sent.</p>');
-			expect(element.innerHTML).toContain('Go back to case details</a>');
-		});
-
-		it('should render the visit changed confirmation page with updated visit type', async () => {
-			const response = await request.get(
-				`${baseUrl}/1${siteVisitPath}${visitScheduledPath}/visit-type`
-			);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Site visit type changed</h1>');
-			expect(element.innerHTML).toContain(
-				'The relevant parties have been informed. The case timetable has been updated.</p>'
-			);
-			expect(element.innerHTML).toContain('Go back to case details</a>');
-		});
-
-		it('should render the visit changed confirmation page with updated date and time', async () => {
-			const response = await request.get(
-				`${baseUrl}/1${siteVisitPath}${visitScheduledPath}/date-time`
-			);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Site visit rescheduled</h1>');
-			expect(element.innerHTML).toContain(
-				'The relevant parties have been informed. The case timetable has been updated.</p>'
-			);
-			expect(element.innerHTML).toContain('Go back to case details</a>');
 		});
 	});
 
@@ -1201,24 +690,25 @@ describe('site-visit', () => {
 					siteVisitChangeType: 'date-time'
 				});
 
-			let response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
-				'visit-type': 'unaccompanied',
-				'visit-date-day': '1',
-				'visit-date-month': '1',
-				'visit-date-year': '3000',
-				'visit-start-time-hour': '',
-				'visit-start-time-minute': '',
-				'visit-end-time-hour': '',
-				'visit-end-time-minute': ''
-			});
+			let response = await request
+				.post(`${baseUrl}/1${siteVisitPath}/schedule/check-details`)
+				.send({
+					'visit-type': 'unaccompanied',
+					'visit-date-day': '1',
+					'visit-date-month': '1',
+					'visit-date-year': '3000',
+					'visit-start-time-hour': '',
+					'visit-start-time-minute': '',
+					'visit-end-time-hour': '',
+					'visit-end-time-minute': ''
+				});
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 	});
-
 	describe('GET /site-visit/delete', () => {
-		it('should render the manage visit page and show LPA preview if siteVisitType is "Accompanied"', async () => {
+		it('should render the manage visit page', async () => {
 			nock('http://test/')
 				.post(`/appeals/notify-preview/site-visit-cancelled.content.md`)
 				.reply(200, template);
@@ -1227,8 +717,6 @@ describe('site-visit', () => {
 				email: 'caseofficers@planninginspectorate.gov.uk',
 				name: 'standard email'
 			});
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
-
 			const response = await request.get(`${baseUrl}/1${siteVisitPath}/delete`);
 			const element = parseHtml(response.text);
 
@@ -1241,38 +729,7 @@ describe('site-visit', () => {
 				'href="/appeals-service/appeal-details/1">Keep site visit</a>'
 			);
 		});
-
-		it('should render the manage visit page and but not show LPA preview if siteVisitType is  "\'Unaccompanied\'"', async () => {
-			nock.cleanAll();
-
-			const unaccompaniedData = {
-				...appealData,
-				siteVisit: { ...appealData.siteVisit, visitType: 'Unaccompanied' }
-			};
-
-			nock('http://test/')
-				.post(`/appeals/notify-preview/site-visit-cancelled.content.md`)
-				.reply(200, template);
-			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
-				id: 1,
-				email: 'caseofficers@planninginspectorate.gov.uk',
-				name: 'standard email'
-			});
-			nock('http://test/').get('/appeals/1?include=all').reply(200, unaccompaniedData);
-
-			const response = await request.get(`${baseUrl}/1${siteVisitPath}/delete`);
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Confirm that you want to cancel the site visit</h1>');
-			expect(element.innerHTML).toContain('Cancel site visit</button>');
-
-			expect(element.innerHTML).not.toContain('Preview email to appellant</span>');
-			expect(element.innerHTML).not.toContain('Preview email to LPA</span>');
-		});
 	});
-
 	describe('POST /site-visit/delete', () => {
 		afterEach(() => {
 			nock.cleanAll();

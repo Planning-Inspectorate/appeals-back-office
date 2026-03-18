@@ -1,11 +1,10 @@
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { permissionNames } from '#environment/permissions.js';
-import { extractAndProcessDateErrors } from '#lib/validators/date-input.validator.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
+import scheduleRouter from './schedule/schedule.router.js';
 import * as controller from './site-visit.controller.js';
 import * as validators from './site-visit.validators.js';
-import { siteVisitDateField } from './site-visits.constants.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -13,41 +12,15 @@ router
 	.route('/schedule-visit')
 	.get(
 		assertUserHasPermission(permissionNames.setEvents),
-		asyncHandler(controller.getScheduleSiteVisit)
+		asyncHandler(controller.getTypeOfSiteVisit)
 	)
 	.post(
 		assertUserHasPermission(permissionNames.setEvents),
 		validators.validateSiteVisitType,
-		validators.validateVisitDateFields,
-		validators.validateVisitDateValid,
-		validators.validateVisitStartTime,
-		validators.validateVisitEndTime,
-		validators.validateVisitStartTimeBeforeEndTime,
-		extractAndProcessDateErrors({
-			fieldNamePrefix: siteVisitDateField
-		}),
-		asyncHandler(controller.postScheduleSiteVisit)
+		asyncHandler(controller.postTypeOfSiteVisit)
 	);
 
-router
-	.route('/manage-visit')
-	.get(
-		assertUserHasPermission(permissionNames.setEvents),
-		asyncHandler(controller.getManageSiteVisit)
-	)
-	.post(
-		assertUserHasPermission(permissionNames.setEvents),
-		validators.validateSiteVisitType,
-		validators.validateVisitDateFields,
-		validators.validateVisitDateValid,
-		validators.validateVisitStartTime,
-		validators.validateVisitEndTime,
-		validators.validateVisitStartTimeBeforeEndTime,
-		extractAndProcessDateErrors({
-			fieldNamePrefix: siteVisitDateField
-		}),
-		asyncHandler(controller.postManageSiteVisit)
-	);
+router.use('/schedule', assertUserHasPermission(permissionNames.updateCase), scheduleRouter);
 
 router
 	.route('/delete')
@@ -59,15 +32,6 @@ router
 		assertUserHasPermission(permissionNames.setEvents),
 		asyncHandler(controller.postCancelSiteVisit)
 	);
-
-router
-	.route('/visit-scheduled/:confirmationPageTypeToRender')
-	.get(
-		assertUserHasPermission(permissionNames.setEvents),
-		asyncHandler(controller.getSiteVisitScheduled)
-	);
-
-router.route('/visit-booked').get(asyncHandler(controller.getSiteVisitBooked));
 
 router
 	.route('/missed')

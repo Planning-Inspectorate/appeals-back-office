@@ -27,7 +27,7 @@ export const rowBuilders = {
 	}),
 	changedDescription: (data) => ({
 		key: 'Agreement to change the description of the advertisement',
-		text: formatDocumentData(data.changedDescription)
+		text: formatDocumentData(data.documents.changedDescription)
 	}),
 	otherAppealsList: (data) => ({
 		key: 'Are there other appeals linked to your development?',
@@ -39,6 +39,6 @@ export const rowBuilders = {
 	}),
 	applicationDecisionLetter: (data) => ({
 		key: 'Decision letter from the local planning authority',
-		html: formatDocumentData(data.applicationDecisionLetter)
+		html: formatDocumentData(data.documents.applicationDecisionLetter)
 	})
 };

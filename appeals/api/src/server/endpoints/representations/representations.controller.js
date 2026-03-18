@@ -260,7 +260,12 @@ export const createRepresentation = () => async (req, res) => {
 		].includes(representationType)
 	) {
 		updatePayload.lpaCode = req.appeal.lpa?.lpaCode;
-	} else if ([APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT].includes(representationType)) {
+	} else if (
+		[
+			APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT,
+			APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT
+		].includes(representationType)
+	) {
 		updatePayload.representedId = req.appeal.agentId || req.appeal.appellantId;
 	}
 
@@ -274,15 +279,6 @@ export const createRepresentation = () => async (req, res) => {
 			...updatePayload
 		}
 	);
-
-	if (representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE) {
-		await sendRepresentationReceivedNotifications(
-			req.appeal,
-			req.notifyClient,
-			azureAdUserId || AUDIT_TRIAL_RULE_6_PARTY_ID,
-			'rule-6-party-proof-of-evidence-received'
-		);
-	}
 
 	if (
 		[
