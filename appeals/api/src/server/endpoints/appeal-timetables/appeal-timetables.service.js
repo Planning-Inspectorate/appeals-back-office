@@ -641,6 +641,12 @@ const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient, az
 		? formatAddressSingleLine(appeal.address)
 		: 'Address not available';
 
+	/** @param {string | undefined} isoDate */
+	const optionalDate = (isoDate) => {
+		if (!isoDate) return '';
+		return formatDate(new Date(isoDate), false) || '';
+	};
+
 	const personalisation = {
 		appeal_reference_number: appeal.reference,
 		lpa_reference: appeal.applicationReference || '',
@@ -677,12 +683,39 @@ const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient, az
 			),
 			false
 		),
+		// @ts-ignore
+		statement_of_common_ground_due_date: optionalDate(
+			// @ts-ignore
+			processedBody['statementOfCommonGroundDueDate'] ||
+				appeal.appealTimetable?.statementOfCommonGroundDueDate
+		),
+		// @ts-ignore
+		proof_of_evidence_and_witnesses_due_date: optionalDate(
+			// @ts-ignore
+			processedBody['proofOfEvidenceAndWitnessesDueDate'] ||
+				appeal.appealTimetable?.proofOfEvidenceAndWitnessesDueDate
+		),
+		// @ts-ignore
+		planning_obligation_due_date: optionalDate(
+			// @ts-ignore
+			processedBody['planningObligationDueDate'] ||
+				appeal.appealTimetable?.planningObligationDueDate
+		),
+		// @ts-ignore
+		case_management_conference_due_date: optionalDate(
+			// @ts-ignore
+			processedBody['caseManagementConferenceDueDate'] ||
+				appeal.appealTimetable?.caseManagementConferenceDueDate
+		),
 		team_email_address: await getTeamEmailFromAppealId(appeal.id)
 	};
 
 	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 	const lpaEmail = appeal.lpa?.email || '';
-	const templateName = getTimetableUpdatedTemplateName(appeal.appealType?.key);
+	const templateName = getTimetableUpdatedTemplateName(
+		appeal.appealType?.key,
+		appeal.procedureType?.key
+	);
 
 	if (recipientEmail) {
 		await notifySend({
@@ -733,19 +766,24 @@ const shouldSendNotify = (appealTypeShorthand, procedureType) => {
 		appealTypeShorthand === APPEAL_CASE_TYPE.X ||
 		(appealTypeShorthand === APPEAL_CASE_TYPE.W &&
 			(procedureType === APPEAL_CASE_PROCEDURE.WRITTEN ||
-				procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1)) ||
+				procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 ||
+				procedureType === APPEAL_CASE_PROCEDURE.INQUIRY ||
+				procedureType === APPEAL_CASE_PROCEDURE.HEARING)) ||
 		(appealTypeShorthand === APPEAL_CASE_TYPE.Y &&
 			(procedureType === APPEAL_CASE_PROCEDURE.WRITTEN ||
-				procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1)) ||
+				procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 ||
+				procedureType === APPEAL_CASE_PROCEDURE.INQUIRY ||
+				procedureType === APPEAL_CASE_PROCEDURE.HEARING)) ||
 		procedureType === undefined
 	);
 };
 
 /**
  * @param {import('@planning-inspectorate/data-model').APPEAL_CASE_TYPE | string | undefined} appealTypeKey
+ * @param {string | undefined} procedureType
  * @returns {string}
  */
-const getTimetableUpdatedTemplateName = (appealTypeKey) => {
+const getTimetableUpdatedTemplateName = (appealTypeKey, procedureType) => {
 	switch (appealTypeKey) {
 		case APPEAL_CASE_TYPE.H:
 		case APPEAL_CASE_TYPE.X:
@@ -757,6 +795,12 @@ const getTimetableUpdatedTemplateName = (appealTypeKey) => {
 			return 'has-appeal-timetable-updated';
 
 		default:
+			if (procedureType === APPEAL_CASE_PROCEDURE.INQUIRY) {
+				return 'appeal-timetable-updated-inquiry';
+			}
+			if (procedureType === APPEAL_CASE_PROCEDURE.HEARING) {
+				return 'appeal-timetable-updated-hearing';
+			}
 			return 'appeal-timetable-updated';
 	}
 };

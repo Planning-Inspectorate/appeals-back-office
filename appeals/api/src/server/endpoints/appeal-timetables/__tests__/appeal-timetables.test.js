@@ -14,6 +14,8 @@ import {
 	casAdvertAppealWithTimetable,
 	casPlanningAppealWithTimetable,
 	fullPlanningAppealWithTimetable,
+	fullPlanningHearingAppealWithTimetable,
+	fullPlanningInquiryAppealWithTimetable,
 	houseAppealWithTimetable,
 	ldcAppealWithTimetable,
 	listedBuildingAppealWithTimetable
@@ -137,6 +139,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.any(Object),
 						personalisation: {
 							appeal_reference_number: appealWithTimetable.reference,
+							case_management_conference_due_date: '',
 							final_comments_due_date: dateISOStringToDisplayDate(
 								responseBody?.finalCommentsDueDate
 							),
@@ -146,7 +149,10 @@ describe('appeal timetables routes', () => {
 							),
 							lpa_reference: appealWithTimetable.applicationReference,
 							lpa_statement_due_date: dateISOStringToDisplayDate(responseBody?.lpaStatementDueDate),
+							planning_obligation_due_date: '',
+							proof_of_evidence_and_witnesses_due_date: '',
 							site_address: `${appealWithTimetable.address.addressLine1}, ${appealWithTimetable.address.addressLine2}, ${appealWithTimetable.address.addressTown}, ${appealWithTimetable.address.addressCounty}, ${appealWithTimetable.address.postcode}, ${appealWithTimetable.address.addressCountry}`,
+							statement_of_common_ground_due_date: '',
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appealWithTimetable.agent.email,
@@ -158,6 +164,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.any(Object),
 						personalisation: {
 							appeal_reference_number: appealWithTimetable.reference,
+							case_management_conference_due_date: '',
 							final_comments_due_date: dateISOStringToDisplayDate(
 								responseBody?.finalCommentsDueDate
 							),
@@ -167,7 +174,10 @@ describe('appeal timetables routes', () => {
 							),
 							lpa_reference: appealWithTimetable.applicationReference,
 							lpa_statement_due_date: dateISOStringToDisplayDate(responseBody?.lpaStatementDueDate),
+							planning_obligation_due_date: '',
+							proof_of_evidence_and_witnesses_due_date: '',
 							site_address: `${appealWithTimetable.address.addressLine1}, ${appealWithTimetable.address.addressLine2}, ${appealWithTimetable.address.addressTown}, ${appealWithTimetable.address.addressCounty}, ${appealWithTimetable.address.postcode}, ${appealWithTimetable.address.addressCountry}`,
+							statement_of_common_ground_due_date: '',
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appealWithTimetable.lpa.email,
@@ -193,6 +203,20 @@ describe('appeal timetables routes', () => {
 					householdAppealRequestBody,
 					householdAppealResponseBody,
 					'advertisement-appeal-timetable-updated'
+				],
+				[
+					'full planning inquiry',
+					fullPlanningInquiryAppealWithTimetable,
+					fullPlanningAppealRequestBody,
+					fullPlanningAppealResponseBody,
+					'appeal-timetable-updated-inquiry'
+				],
+				[
+					'full planning hearing',
+					fullPlanningHearingAppealWithTimetable,
+					fullPlanningAppealRequestBody,
+					fullPlanningAppealResponseBody,
+					'appeal-timetable-updated-hearing'
 				]
 			])(
 				'updates a %s appeal timetable and sends notify',
@@ -223,6 +247,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.any(Object),
 						personalisation: {
 							appeal_reference_number: appealWithTimetable.reference,
+							case_management_conference_due_date: '',
 							final_comments_due_date: dateISOStringToDisplayDate(
 								responseBody?.finalCommentsDueDate
 							),
@@ -232,7 +257,10 @@ describe('appeal timetables routes', () => {
 							),
 							lpa_reference: appealWithTimetable.applicationReference,
 							lpa_statement_due_date: dateISOStringToDisplayDate(responseBody?.lpaStatementDueDate),
+							planning_obligation_due_date: '',
+							proof_of_evidence_and_witnesses_due_date: '',
 							site_address: `${appealWithTimetable.address.addressLine1}, ${appealWithTimetable.address.addressLine2}, ${appealWithTimetable.address.addressTown}, ${appealWithTimetable.address.addressCounty}, ${appealWithTimetable.address.postcode}, ${appealWithTimetable.address.addressCountry}`,
+							statement_of_common_ground_due_date: '',
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appealWithTimetable.agent.email,
@@ -244,6 +272,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.any(Object),
 						personalisation: {
 							appeal_reference_number: appealWithTimetable.reference,
+							case_management_conference_due_date: '',
 							final_comments_due_date: dateISOStringToDisplayDate(
 								responseBody?.finalCommentsDueDate
 							),
@@ -253,7 +282,10 @@ describe('appeal timetables routes', () => {
 							),
 							lpa_reference: appealWithTimetable.applicationReference,
 							lpa_statement_due_date: dateISOStringToDisplayDate(responseBody?.lpaStatementDueDate),
+							planning_obligation_due_date: '',
+							proof_of_evidence_and_witnesses_due_date: '',
 							site_address: `${appealWithTimetable.address.addressLine1}, ${appealWithTimetable.address.addressLine2}, ${appealWithTimetable.address.addressTown}, ${appealWithTimetable.address.addressCounty}, ${appealWithTimetable.address.postcode}, ${appealWithTimetable.address.addressCountry}`,
+							statement_of_common_ground_due_date: '',
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appealWithTimetable.lpa.email,
