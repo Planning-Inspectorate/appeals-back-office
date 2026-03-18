@@ -86,8 +86,16 @@ const getDocumentsValidator = composeMiddleware(
 	body('blobStorageContainer').isString().withMessage(ERROR_MUST_BE_STRING),
 	body('documents')
 		.isArray()
-		.custom((value) => value[0])
-		.withMessage(ERROR_MUST_CONTAIN_AT_LEAST_1_VALUE),
+		.custom((documents) => {
+			if (!documents || documents.length === 0) {
+				return false;
+			}
+			return documents.every(
+				(/** @type {{ documentSize: number; }} */ doc) =>
+					typeof doc.documentSize === 'number' && doc.documentSize > 0
+			);
+		})
+		.withMessage(ERROR_MUST_CONTAIN_AT_LEAST_1_VALUE + ' and all documents must have size > 0'),
 	validationErrorHandler
 );
 

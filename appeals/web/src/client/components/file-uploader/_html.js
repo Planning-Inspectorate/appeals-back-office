@@ -38,7 +38,8 @@ export const errorMessage = (type, replaceValue, additionalValues = {}) => {
 		NAME_SINGLE_FILE: `{REPLACE_VALUE} could not be added because the file name is too long or contains special characters. Rename the file and try again.`,
 		DUPLICATE_NAME_SINGLE_FILE: `"{REPLACE_VALUE}" could not be added because a file with this name already exists. Files cannot have duplicate names.`,
 		DIFFERENT_FILE_EXTENSION: `The {fileTitle} must be a {fileExtension}`,
-		SINGLE_FILE_ONLY: `You can only upload 1 file`
+		SINGLE_FILE_ONLY: `You can only upload 1 file`,
+		EMPTY_FILE: `You cannot upload an empty file`
 	};
 
 	let message = index[type];
