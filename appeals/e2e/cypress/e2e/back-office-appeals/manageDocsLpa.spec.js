@@ -20,6 +20,8 @@ const fileUploaderSection = new FileUploaderSection();
 const reviewEvidenceSection = new ReviewEvidenceSection();
 const evidenceReasonsSection = new EvidenceReasonsSection();
 const documentationSectionPage = new DocumentationSectionPage();
+const BULK_UPLOAD_COUNT = 800;
+const REPRESENTATIONS_ROW_ID = 'representations-from-other-parties';
 
 describe('Manage docs on lpa case', () => {
 	beforeEach(() => {
@@ -31,6 +33,43 @@ describe('Manage docs on lpa case', () => {
 	afterEach(() => {
 		cy.deleteAppeals(appeal);
 	});
+
+	const uploadGeneratedBulkFiles = (prefix, count = BULK_UPLOAD_COUNT) => {
+		const files = Cypress._.times(count, (index) => {
+			const fileNumber = index + 1;
+			return {
+				contents: Cypress.Buffer.from(`bulk-upload-${prefix}-${fileNumber}`),
+				fileName: `${prefix}-${fileNumber}.doc`,
+				mimeType: 'application/msword',
+				lastModified: Date.now()
+			};
+		});
+
+		cy.getByData('upload-file-button').click().selectFile(files, {
+			action: 'drag-drop',
+			force: true
+		});
+	};
+
+	const verifyBulkUploadCanContinue = (prefix) => {
+		caseDetailsPage.elements.rowAddLink(REPRESENTATIONS_ROW_ID).click();
+		caseDetailsPage.validateSectionHeader(
+			'Upload the representations from members of the public or other parties'
+		);
+
+		uploadGeneratedBulkFiles(prefix);
+		cy.get('.pins-file-upload__files-rows > li', { timeout: 120000 }).should(
+			'have.length',
+			BULK_UPLOAD_COUNT
+		);
+
+		cy.intercept('POST', '**/lpa-questionnaire/**/add-documents/**').as('postAddDocuments');
+		caseDetailsPage.clickButtonByText('Continue');
+
+		cy.wait('@postAddDocuments').its('response.statusCode').should('eq', 302);
+		cy.url().should('include', '/add-document-details/');
+		cy.contains(/Sorry.*problem/i).should('not.exist');
+	};
 
 	const setupInquiry = (caseObj, inquiryDate) => {
 		// require case to be started as inquiry to access appellant POE evidence e.g.
@@ -57,6 +96,28 @@ describe('Manage docs on lpa case', () => {
 			caseDetailsPage.checkFileNameRemoved(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.checkErrorMessageDisplays('Select the file');
+		});
+	});
+
+	it('allows uploading 800 representations for HAS and continue without service error', () => {
+		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
+			caseDetailsPage.clickReviewLpaq();
+
+			verifyBulkUploadCanContinue('bulk-has-representations');
+		});
+	});
+
+	it('allows uploading 800 representations for S78 and continue without service error', () => {
+		cy.createCase({ caseType: 'W' }).then((caseObj) => {
+			appeal = caseObj;
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'S78');
+			caseDetailsPage.clickReviewLpaq();
+
+			verifyBulkUploadCanContinue('bulk-s78-representations');
 		});
 	});
 
