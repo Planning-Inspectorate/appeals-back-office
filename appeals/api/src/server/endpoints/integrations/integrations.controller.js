@@ -1,7 +1,7 @@
-import config from '#config/config.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { addDocumentAudit } from '#endpoints/documents/documents.service.js';
+import { notifyRepresentationReceived } from '#endpoints/representations/representations.service.js';
 import { commandMappers } from '#mappers/integration/commands/index.js';
 import { serviceUserIdStartRange } from '#mappers/integration/map-service-user-entity.js';
 import { notifySend } from '#notify/notify-send.js';
@@ -28,7 +28,6 @@ import {
 	AUDIT_TRIAL_RULE_6_PARTY_ID
 } from '@pins/appeals/constants/support.js';
 import { isEnforcementCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
-import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
 import {
 	APPEAL_APPELLANT_PROCEDURE_PREFERENCE,
@@ -338,86 +337,6 @@ export const importLpaqSubmission = async (req, res) => {
 };
 
 /**
- * @param {Appeal} appeal
- * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
- * @param {string} azureAdUserId
- * @param {string} templateName
- * @param {boolean} sendToAppellant
- * @param {boolean} sendToLPA
- * @param {boolean} sendToRule6Parties
- * @returns {Promise<void>}
- */
-export const sendRepresentationReceivedNotifications = async (
-	appeal,
-	notifyClient,
-	azureAdUserId,
-	templateName,
-	sendToAppellant = true,
-	sendToLPA = true,
-	sendToRule6Parties = true
-) => {
-	const basePersonalisation = {
-		appeal_reference_number: appeal.reference,
-		site_address: appeal.address
-			? formatAddressSingleLine(appeal.address)
-			: 'Address not available',
-		lpa_reference: appeal.applicationReference || '',
-		inquiry_date: appeal.inquiry?.inquiryStartTime
-			? formatDate(new Date(appeal.inquiry.inquiryStartTime), false)
-			: 'Not yet scheduled'
-	};
-
-	const recipients = [];
-
-	if (sendToAppellant) {
-		recipients.push({
-			email: appeal.agent?.email || appeal.appellant?.email,
-			path: `appeals/${appeal.reference}`,
-			role: 'appellant'
-		});
-	}
-
-	if (sendToLPA) {
-		recipients.push({
-			email: appeal.lpa?.email,
-			path: `manage-appeals/${appeal.reference}`,
-			role: 'LPA'
-		});
-	}
-
-	if (sendToRule6Parties) {
-		recipients.push(
-			...(appeal.appealRule6Parties || []).map((party) => ({
-				email: party.serviceUser?.email,
-				path: `rule-6/${appeal.reference}`,
-				role: 'Rule 6 party'
-			}))
-		);
-	}
-
-	await Promise.all(
-		recipients
-			.filter((r) => r.email)
-			.map(async ({ email, path, role }) => {
-				try {
-					await notifySend({
-						azureAdUserId,
-						templateName: templateName,
-						notifyClient,
-						recipientEmail: email,
-						personalisation: {
-							...basePersonalisation,
-							statement_url: `${config.frontOffice.url}/${path}`
-						}
-					});
-				} catch (error) {
-					console.error(`Failed to send ${templateName} to ${role}: ${email}`, error);
-				}
-			})
-	);
-};
-
-/**
  * @param {{body: AppealRepresentationSubmission, appeal: Appeal, notifyClient: import('#endpoints/appeals.js').NotifyClient}} req
  * @param {Response} res
  * @returns {Promise<Response>}
@@ -520,7 +439,7 @@ export const importRepresentation = async (req, res) => {
 	);
 
 	if (repType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT) {
-		await sendRepresentationReceivedNotifications(
+		await notifyRepresentationReceived(
 			req.appeal,
 			req.notifyClient,
 			azureAdUserId,
