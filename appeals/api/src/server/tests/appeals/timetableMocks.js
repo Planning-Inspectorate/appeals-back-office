@@ -82,6 +82,42 @@ const fullPlanningAppealWithTimetable = {
 	}
 };
 
+const fullPlanningInquiryAppealWithTimetable = {
+	...fullPlanningAppeal,
+	procedureType: {
+		id: 2,
+		key: 'inquiry',
+		name: 'Inquiry'
+	},
+	caseStartedDate: new Date(2022, 4, 22),
+	caseValidationDate: new Date(2022, 4, 20),
+	caseValidDate: new Date(2022, 4, 20),
+	appealTimetable: {
+		appealId: 2,
+		id: 101,
+		lpaQuestionnaireDueDate: new Date('2023-05-16T01:00:00.000Z'),
+		lpaStatementDueDate: null
+	}
+};
+
+const fullPlanningHearingAppealWithTimetable = {
+	...fullPlanningAppeal,
+	procedureType: {
+		id: 3,
+		key: 'hearing',
+		name: 'Hearing'
+	},
+	caseStartedDate: new Date(2022, 4, 22),
+	caseValidationDate: new Date(2022, 4, 20),
+	caseValidDate: new Date(2022, 4, 20),
+	appealTimetable: {
+		appealId: 2,
+		id: 101,
+		lpaQuestionnaireDueDate: new Date('2023-05-16T01:00:00.000Z'),
+		lpaStatementDueDate: null
+	}
+};
+
 const listedBuildingAppealWithTimetable = {
 	...listedBuildingAppeal,
 	caseStartedDate: new Date(2022, 4, 22),
@@ -100,6 +136,8 @@ export {
 	casAdvertAppealWithTimetable,
 	casPlanningAppealWithTimetable,
 	fullPlanningAppealWithTimetable,
+	fullPlanningHearingAppealWithTimetable,
+	fullPlanningInquiryAppealWithTimetable,
 	houseAppealWithTimetable,
 	ldcAppealWithTimetable,
 	listedBuildingAppealWithTimetable

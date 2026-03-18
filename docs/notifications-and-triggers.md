@@ -76,6 +76,41 @@ The following notifications are sent from the back-office using these [Notify Te
 - **Notify Template:** [appeal-valid-start-case-lpa](../appeals/api/src/server/notify/templates/appeal-valid-start-case-lpa.content.md)
 - **Trigger:** Start a householder case, select an appeal procedure, and confirm.
 
+## Timetable updated
+
+### Timetable updated - s78/s20 written procedure
+
+- **Appeal type:** s78, s20
+- **Procedure:** Written
+- **Notify Template:** [appeal-timetable-updated](../appeals/api/src/server/notify/templates/appeal-timetable-updated.content.md)
+- **Trigger:** Update timetable dates from the timetable section of the appeal. Sent to appellant/agent and LPA.
+
+### Timetable updated - s78/s20 inquiry
+
+- **Appeal type:** s78, s20
+- **Procedure:** Inquiry
+- **Notify Template:** [appeal-timetable-updated-inquiry](../appeals/api/src/server/notify/templates/appeal-timetable-updated-inquiry.content.md)
+- **Trigger:** Update timetable dates from the timetable section of the appeal. Sent to appellant/agent, LPA, and any Rule 6 parties.
+
+### Timetable updated - s78/s20 hearing
+
+- **Appeal type:** s78, s20
+- **Procedure:** Hearing
+- **Notify Template:** [appeal-timetable-updated-hearing](../appeals/api/src/server/notify/templates/appeal-timetable-updated-hearing.content.md)
+- **Trigger:** Update timetable dates from the timetable section of the appeal. Sent to appellant/agent and LPA.
+
+### Timetable updated - householder/CAS
+
+- **Appeal type:** householder, CAS planning, CAS advert
+- **Notify Template:** [has-appeal-timetable-updated](../appeals/api/src/server/notify/templates/has-appeal-timetable-updated.content.md)
+- **Trigger:** Update timetable dates from the timetable section of the appeal. Sent to appellant/agent and LPA.
+
+### Timetable updated - full advert
+
+- **Appeal type:** full advert
+- **Notify Template:** [advertisement-appeal-timetable-updated](../appeals/api/src/server/notify/templates/advertisement-appeal-timetable-updated.content.md)
+- **Trigger:** Update timetable dates from the timetable section of the appeal. Sent to appellant/agent and LPA.
+
 ## LPA questionnaire
 
 ### Appeal start date change appellant
