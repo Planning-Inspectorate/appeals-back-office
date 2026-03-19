@@ -458,6 +458,16 @@ describe('cancel invalid', () => {
 
 			expect(appellantPreviewRequestBody).toBeDefined();
 			expect(lpaPreviewRequestBody).toBeDefined();
+
+			expect(appellantPreviewRequestBody).toMatchObject({
+				ground_a_barred: false,
+				feedback_link: FEEDBACK_FORM_LINKS.ALL
+			});
+
+			expect(lpaPreviewRequestBody).toMatchObject({
+				ground_a_barred: false,
+				feedback_link: FEEDBACK_FORM_LINKS.LPA
+			});
 		});
 	});
 

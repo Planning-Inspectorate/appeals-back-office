@@ -201,7 +201,10 @@ export const getCheckDetails = async (request, response) => {
 			? format(new Date(enforcementNotice?.appellantCase?.effectiveDate), 'dd MMMM yyyy')
 			: '',
 		other_live_appeals: sessionValues?.otherLiveAppeals === 'yes' ? 'yes' : '',
-		ground_a_barred: enforcementNotice?.appealOutcome?.groundABarred || ''
+		ground_a_barred:
+			currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
+				? false
+				: enforcementNotice?.appealOutcome?.groundABarred || ''
 	};
 
 	// Note: this route is only enabled for enforcement appeals at the time of writing,
