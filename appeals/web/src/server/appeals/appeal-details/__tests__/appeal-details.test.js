@@ -4229,6 +4229,41 @@ describe('appeal-details', () => {
 						'/appeals-service/appeal-details/2/appellant-statement?backUrl=%2Fappeals-service%2Fappeal-details%2F2'
 					);
 				});
+
+				it('should not render appellant statement row or add link before case start date', async () => {
+					const appealId = 2;
+					const appeal = {
+						...appealDataEnforcementNotice,
+						appealId,
+						startedAt: null,
+						appealStatus: APPEAL_CASE_STATUS.READY_TO_START,
+						documentationSummary: {
+							appellantStatement: {
+								status: 'received',
+								receivedAt: '2025-01-01T00:00:00.000Z',
+								representationStatus: 'awaiting_review'
+							}
+						}
+					};
+
+					nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appeal);
+					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+					nock('http://test/')
+						.get(
+							`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence`
+						)
+						.reply(200, {
+							itemCount: 0
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+					expect(unprettifiedHTML).not.toContain('Appellant statement');
+					expect(unprettifiedHTML).not.toContain('data-cy="add-appellant-statement"');
+				});
 			});
 
 			describe('Final comments', () => {
