@@ -48,7 +48,7 @@ export async function buildListOfLinkedAppeals(parentAppeal) {
 		? linkedChildAppeals.map(({ child }) => child)
 		: [];
 
-	linkedAppeals.push(linkedChildAppeals[0]?.parent ?? parentAppeal);
+	linkedAppeals.push({ ...linkedChildAppeals[0]?.parent, ...parentAppeal });
 
 	// As the function appealRepository.getAppealsByIds does not return the parentAppeals array property (list of child appeal, parent appeal relationships), we need to add this to each linked appeal.
 	// As the parentAppeal contains the array of childAppeals (list of child appeal, parent appeal relationships), it's possible to add the parentAppeals property with the correct entry taken from the parentAppeal's childAppeals list.
