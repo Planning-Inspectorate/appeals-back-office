@@ -233,7 +233,7 @@ export function redactConfirmPage(appealDetails, appellantStatement, specialismD
 													items: [
 														{
 															text: 'Change',
-															href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-statement/valid/allocation-check`,
+															href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-statement/redact/allocation-check`,
 															visuallyHiddenText: 'allocation level and specialisms'
 														}
 													]
@@ -249,7 +249,7 @@ export function redactConfirmPage(appealDetails, appellantStatement, specialismD
 													items: [
 														{
 															text: 'Change',
-															href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-statement/valid/allocation-level`,
+															href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-statement/redact/allocation-level`,
 															visuallyHiddenText: 'allocation level'
 														}
 													]
@@ -269,7 +269,7 @@ export function redactConfirmPage(appealDetails, appellantStatement, specialismD
 													items: [
 														{
 															text: 'Change',
-															href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-statement/valid/allocation-specialisms`,
+															href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-statement/redact/allocation-specialisms`,
 															visuallyHiddenText: 'allocation specialisms'
 														}
 													]
