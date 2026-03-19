@@ -473,7 +473,9 @@ describe('cancel enforcement notice withdrawal (Enforcement listed building)', (
 				.persist();
 			nock('http://test/').get('/appeals/document-redaction-statuses').reply(200, []).persist();
 			nock('http://test/')
-				.post(`/appeals/${mockAppealListedBuildingId}/cancel/enforcement-notice-withdrawn?dryRun=true`)
+				.post(
+					`/appeals/${mockAppealListedBuildingId}/cancel/enforcement-notice-withdrawn?dryRun=true`
+				)
 				.reply(200, {
 					appellant: 'Appellant email preview',
 					lpa: 'LPA email preview'
