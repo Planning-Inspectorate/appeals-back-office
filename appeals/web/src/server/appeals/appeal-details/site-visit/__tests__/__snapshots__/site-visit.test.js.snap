@@ -1012,7 +1012,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-end-time-hour">End time hour must be 23 or less</a>
+                            <li><a href="#visit-start-time-hour">Start time hour must be 23 or less</a>
                             </li>
                         </ul>
                     </div>
@@ -1061,27 +1061,30 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                 </div>
                             </fieldset>
                         </div>
-                        <fieldset class="govuk-fieldset">
-                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Start time</legend>
-                            <div id="hearing-date-hint" class="govuk-hint">For example, 9:00 or 13:15</div>
-                            <div class="govuk-date-input">
-                                <div class="govuk-date-input__item govuk-!-margin-right-1">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="visit-start-time-hour">Hour</label>
-                                        <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                                        name="visit-start-time-hour" type="text" value="09">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Time (optional)</legend>
+                                <div id="hearing-date-hint" class="govuk-hint">For example, 9:00 or 13:15</div>
+                                <p id="time-error" class="govuk-error-message">Start time hour must be 23 or less</p>
+                                <div class="govuk-date-input">
+                                    <div class="govuk-date-input__item govuk-!-margin-right-1">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="visit-start-time-hour">Hour</label>
+                                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
+                                            name="visit-start-time-hour" type="text" value="09">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item govuk-!-font-size-19 govuk-!-padding-0 govuk-!-margin-right-1">:</div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="visit-start-time-minute">Minute</label>
+                                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
+                                            name="visit-start-time-minute" type="text" value="38">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="govuk-date-input__item govuk-!-font-size-19 govuk-!-padding-0 govuk-!-margin-right-1">:</div>
-                                <div class="govuk-date-input__item">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="visit-start-time-minute">Minute</label>
-                                        <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                                        name="visit-start-time-minute" type="text" value="38">
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
+                            </fieldset>
+                        </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
                     </form>
@@ -1171,6 +1174,30 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                 </div>
                             </div>
                         </fieldset>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">End time (optional)</legend>
+                                <div id="hearing-date-hint" class="govuk-hint">For example, 9:00 or 13:15</div>
+                                <p id="time-error" class="govuk-error-message">End time minute must be 59 or less</p>
+                                <div class="govuk-date-input">
+                                    <div class="govuk-date-input__item govuk-!-margin-right-1">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="visit-end-time-hour">Hour</label>
+                                            <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
+                                            name="visit-end-time-hour" type="text" value="10">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item govuk-!-font-size-19 govuk-!-padding-0 govuk-!-margin-right-1">:</div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="visit-end-time-minute">Minute</label>
+                                            <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
+                                            name="visit-end-time-minute" type="text" value="00">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
                     </form>
@@ -1447,95 +1474,6 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                 </div>
                             </fieldset>
                         </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`site-visit POST /site-visit/schedule-visit should re-render the schedule visit page with the expected error message if visit type is accessRequired and end time is not populated but all other required fields are populated and valid 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-end-time-hour">Enter the end time</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - set up site visit</span>
-            <h1             class="govuk-heading-l">Date and time</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">
-                                    <div class="govuk-hint">For example, 31 3 2025</div>
-                                </div>
-                                <div class="govuk-date-input" id="visit-date">
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="visit-date-day" name="visit-date-day" type="text" value="9" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="visit-date-month" name="visit-date-month" type="text" value="10" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
-                                            id="visit-date-year" name="visit-date-year" type="text" value="2023" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <fieldset class="govuk-fieldset">
-                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Start time</legend>
-                            <div id="hearing-date-hint" class="govuk-hint">For example, 9:00 or 13:15</div>
-                            <div class="govuk-date-input">
-                                <div class="govuk-date-input__item govuk-!-margin-right-1">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="visit-start-time-hour">Hour</label>
-                                        <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                                        name="visit-start-time-hour" type="text" value="09">
-                                    </div>
-                                </div>
-                                <div class="govuk-date-input__item govuk-!-font-size-19 govuk-!-padding-0 govuk-!-margin-right-1">:</div>
-                                <div class="govuk-date-input__item">
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="visit-start-time-minute">Minute</label>
-                                        <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                                        name="visit-start-time-minute" type="text" value="38">
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
                     </form>
