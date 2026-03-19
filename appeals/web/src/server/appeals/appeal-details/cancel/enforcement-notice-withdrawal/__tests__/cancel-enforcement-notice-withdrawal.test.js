@@ -472,6 +472,12 @@ describe('cancel enforcement notice withdrawal (Enforcement listed building)', (
 				])
 				.persist();
 			nock('http://test/').get('/appeals/document-redaction-statuses').reply(200, []).persist();
+			nock('http://test/')
+				.post(`/appeals/${mockAppealListedBuildingId}/cancel/enforcement-notice-withdrawn?dryRun=true`)
+				.reply(200, {
+					appellant: 'Appellant email preview',
+					lpa: 'LPA email preview'
+				});
 		});
 
 		it('should render the check your answers page', async () => {
@@ -577,15 +583,8 @@ describe('cancel enforcement notice withdrawal (Enforcement listed building)', (
 				.reply(200, {
 					documentId: '123'
 				});
-			const mockSetReviewOutcome = nock('http://test/')
-				.patch(
-					`/appeals/${mockAppealListedBuildingId}/appellant-cases/${appealDataEnforcementNotice.appellantCaseId}`,
-					{
-						validationOutcome: 'invalid',
-						invalidReasons: [{ id: 8 }],
-						enforcementNoticeInvalid: 'no'
-					}
-				)
+			const mockCancelEnforcementNoticeWithdrawn = nock('http://test/')
+				.post(`/appeals/${mockAppealListedBuildingId}/cancel/enforcement-notice-withdrawn`)
 				.reply(200);
 			await request
 				.post(`${baseUrl}/${mockAppealListedBuildingId}/cancel/enforcement-notice-withdrawal`)
@@ -600,7 +599,7 @@ describe('cancel enforcement notice withdrawal (Enforcement listed building)', (
 				`/appeals-service/appeal-details/${mockAppealListedBuildingId}`
 			);
 			expect(mockAddDocument.isDone()).toBe(true);
-			expect(mockSetReviewOutcome.isDone()).toBe(true);
+			expect(mockCancelEnforcementNoticeWithdrawn.isDone()).toBe(true);
 		});
 
 		it('should redirect to error page if the document request fails', async () => {
