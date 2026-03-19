@@ -214,6 +214,23 @@ describe('appellant-statements', () => {
 				'name="status" type="radio" value="incomplete">'
 			);
 		});
+
+		it('should render a back link to case details after submission even when backUrl points to add-document CYA', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}/reps?type=appellant_statement`)
+				.reply(200, {
+					...getAppealRepsResponse,
+					itemCount: 1,
+					items: [appellantStatementAwaitingReview]
+				});
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/appellant-statement?backUrl=/appeals-service/appeal-details/${appealId}/appellant-statement/add-document/check-your-answers`
+			);
+
+			expect(response.statusCode).toBe(200);
+			expect(response.text).toContain(`href="/appeals-service/appeal-details/${appealId}"`);
+		});
 	});
 
 	describe('POST /', () => {
