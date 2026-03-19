@@ -421,6 +421,20 @@ export const sendNewDecisionLetter = async (
 	const uniqueEmails = [...new Set(relevantEmails)].filter(Boolean);
 
 	const enforcementReference = await getEnforcementReference(appeal);
+
+	let formattedDecisionDate = formatDate(new Date(decisionDate), false);
+	if (!formattedDecisionDate) {
+		const appealWithDecision = await appealRepository.getAppealById(appeal.id, true, [
+			'inspectorDecision'
+		]);
+		if (appealWithDecision?.inspectorDecision?.caseDecisionOutcomeDate) {
+			formattedDecisionDate = formatDate(
+				new Date(appealWithDecision.inspectorDecision.caseDecisionOutcomeDate),
+				false
+			);
+		}
+	}
+
 	const personalisation = {
 		appeal_reference_number: appeal.reference,
 		lpa_reference: appeal.applicationReference || '',
@@ -429,7 +443,7 @@ export const sendNewDecisionLetter = async (
 			? formatAddressSingleLine(appeal.address)
 			: 'Address not available',
 		correction_notice_reason: correctionNotice,
-		decision_date: formatDate(new Date(decisionDate), false),
+		decision_date: formattedDecisionDate,
 		front_office_url: environment.FRONT_OFFICE_URL || '',
 		team_email_address: await getTeamEmailFromAppealId(appeal.id),
 		feedback_link: getFeedbackLinkFromAppealTypeKey(appeal?.appealType?.key || '')

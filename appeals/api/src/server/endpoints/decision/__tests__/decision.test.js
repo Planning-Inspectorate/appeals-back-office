@@ -1410,6 +1410,45 @@ describe('decision routes', () => {
 			expect(recipients.filter((e) => e === 'dup@test.com')).toHaveLength(1);
 		});
 
+		test('falls back to inspectorDecision date when decisionDate is missing', async () => {
+			const caseDecisionOutcomeDate = new Date('2024-06-15');
+			const correctAppealState = {
+				...householdAppeal,
+				inspectorDecision: {
+					caseDecisionOutcomeDate
+				},
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						valid: true
+					}
+				]
+			};
+
+			databaseConnector.representation.count.mockResolvedValue(0);
+			databaseConnector.appeal.findUnique.mockResolvedValue(correctAppealState);
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			databaseConnector.representation.findMany.mockResolvedValue([]);
+
+			const correctionNotice = 'Test correction notice';
+
+			await sendNewDecisionLetter(
+				correctAppealState,
+				correctionNotice,
+				azureAdUserId,
+				mockNotifyClient,
+				undefined
+			);
+
+			expect(mockNotifySend).toHaveBeenCalledWith(
+				expect.objectContaining({
+					personalisation: expect.objectContaining({
+						decision_date: formatDate(caseDecisionOutcomeDate, false)
+					})
+				})
+			);
+		});
+
 		test('handles missing emails correctly', async () => {
 			const appealWithMissingEmails = {
 				...householdAppeal,
