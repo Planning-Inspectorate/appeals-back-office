@@ -11,7 +11,11 @@ import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.
  */
 export function mapCancelAppealPage(appealData, backLinkUrl, errorMessage, values) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
-	const showEnforcementOptions =
+	const showEnforcmentNoticeWithdrawn =
+		(appealData.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ||
+			appealData.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING) &&
+		featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_CANCEL);
+	const showGroundAFee =
 		appealData.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
 		featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_CANCEL);
 
@@ -39,17 +43,16 @@ export function mapCancelAppealPage(appealData, backLinkUrl, errorMessage, value
 							value: 'invalid',
 							text: 'Appeal invalid'
 						},
-						...(showEnforcementOptions
+						...(showEnforcmentNoticeWithdrawn
 							? [
 									{
 										value: 'enforcement-notice-withdrawn',
 										text: 'LPA has withdrawn the enforcement notice'
-									},
-									{
-										value: 'did-not-pay',
-										text: 'Did not pay the ground (a) fee'
 									}
 								]
+							: []),
+						...(showGroundAFee
+							? [{ value: 'did-not-pay', text: 'Did not pay the ground (a) fee' }]
 							: []),
 						{
 							value: 'withdrawal',

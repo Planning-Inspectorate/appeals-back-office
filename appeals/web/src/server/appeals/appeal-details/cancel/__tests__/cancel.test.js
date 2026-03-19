@@ -1,5 +1,9 @@
 import featureFlags from '#common/feature-flags.js';
-import { appealData, appealDataEnforcementNotice } from '#testing/appeals/appeals.js';
+import {
+	appealData,
+	appealDataEnforcementListedBuilding,
+	appealDataEnforcementNotice
+} from '#testing/appeals/appeals.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
@@ -122,6 +126,36 @@ describe('cancel', () => {
 			expect(element.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
 				`${baseUrl}/${mockAppealId}/cancel/enforcement-notice-withdrawal/check-details`
 			);
+		});
+	});
+
+	describe('GET (Enforcement listed building) /new', () => {
+		it('should render the correct options for an ELB enforcement notice appeal', async () => {
+			featureFlags.isFeatureActive = () => true;
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, { ...appealDataEnforcementListedBuilding });
+
+			const response = await request.get(`${baseUrl}/${mockAppealId}${cancelPath}`);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			expect(element.querySelector('h1')?.innerHTML.trim()).toBe(
+				'Why are you cancelling the appeal?'
+			);
+			expect(element.querySelectorAll('[name="cancelReasonRadio"]').length).toBe(3);
+			expect(element.querySelector('label[for="cancel-reason-radio"]')?.innerHTML.trim()).toBe(
+				'Appeal invalid'
+			);
+			expect(element.querySelector('label[for="cancel-reason-radio-2"]')?.innerHTML.trim()).toBe(
+				'LPA has withdrawn the enforcement notice'
+			);
+			expect(element.innerHTML).not.toContain('Did not pay the ground (a) fee');
+			expect(element.querySelector('label[for="cancel-reason-radio-3"]')?.innerHTML.trim()).toBe(
+				'Request to withdraw appeal'
+			);
+			expect(element.querySelector('button')?.innerHTML.trim()).toBe('Continue');
 		});
 	});
 
