@@ -396,7 +396,7 @@ export const notificationBannerDefinitions = {
 	lpaStatementIncomplete: {
 		type: 'success',
 		pages: ['appealDetails'],
-		text: 'Statement incomplete'
+		text: 'LPA statement incomplete'
 	},
 	shareCommentsAndLpaStatement: {
 		type: 'important',
@@ -745,7 +745,7 @@ export const notificationBannerDefinitions = {
 	appellantStatementIncomplete: {
 		type: 'success',
 		pages: ['appealDetails'],
-		text: 'Statement incomplete'
+		text: 'Appellant statement incomplete'
 	},
 	rule6PartyProofOfEvidenceAddedSuccess: {
 		type: 'success',
