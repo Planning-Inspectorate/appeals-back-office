@@ -65,6 +65,37 @@ describe('rule 6 party statement - add document', () => {
 
 	afterEach(teardown);
 
+	describe('GET /', () => {
+		it('should pre-select "Statement incomplete" when representation status is incomplete and no session status exists', async () => {
+			repsResponse = {
+				itemCount: 1,
+				items: [
+					{
+						id: 3670,
+						status: 'incomplete',
+						author: 'Test Rule 6 Party',
+						represented: {
+							id: 100
+						},
+						originalRepresentation: 'Statement text',
+						attachments: []
+					}
+				]
+			};
+
+			const response = await request.get(
+				`${baseUrl}/2/rule-6-party-statement/1?backUrl=/appeals-service/appeal-details/2/share`
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="status" type="radio" value="incomplete" checked>'
+			);
+		});
+	});
+
 	describe('GET /add-document', () => {
 		it('should render the document upload page with the expected content', async () => {
 			const response = await request.get(`${baseUrl}/2/rule-6-party-statement/1/add-document`);
