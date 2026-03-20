@@ -25,3 +25,18 @@ Some of these settings cannot be publicly disclosed, and need to be retrieved th
 ## Files stored in a local emulator
 
 Direct communication with a shared Azure blob storage is not possible, for security reasons. However it is possible to run a [blob storage emulator](blob-emulator.md) locally, to enable file upload and download functionality.
+
+## Docker compose
+
+To use docker compose there are some differences to be aware of as docker compose communicates internally with the service name not localhost
+
+- Create + trust a cert
+- ensure pem files are in the root of web
+- update env vars as per above
+- `make initial-setup`
+- create container, set cors, trust cert in azure storage explorer
+- generate sas url
+- - In web .env use localhost
+- - In api .env use pins_azurite
+- stop containers
+- `make serve`
