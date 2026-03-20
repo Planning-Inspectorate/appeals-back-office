@@ -226,6 +226,60 @@ describe('buildNotificationBanners', () => {
 			}
 		]);
 	});
+
+	it('should return a notification banner for appellantStatementIncomplete', () => {
+		session.notificationBanners = {
+			[appealId]: [
+				{
+					key: 'appellantStatementIncomplete'
+				}
+			]
+		};
+
+		const result = mapNotificationBannersFromSession(session, 'appealDetails', appealId);
+
+		expect(result).toEqual([
+			{
+				type: 'notification-banner',
+				parameters: {
+					titleText: 'Success',
+					titleHeadingLevel: 3,
+					type: 'success',
+					text: 'Appellant statement incomplete',
+					attributes: {
+						'data-index': 0
+					}
+				}
+			}
+		]);
+	});
+
+	it('should return a notification banner for lpaStatementIncomplete', () => {
+		session.notificationBanners = {
+			[appealId]: [
+				{
+					key: 'lpaStatementIncomplete'
+				}
+			]
+		};
+
+		const result = mapNotificationBannersFromSession(session, 'appealDetails', appealId);
+
+		expect(result).toEqual([
+			{
+				type: 'notification-banner',
+				parameters: {
+					titleText: 'Success',
+					titleHeadingLevel: 3,
+					type: 'success',
+					text: 'LPA statement incomplete',
+					attributes: {
+						'data-index': 0
+					}
+				}
+			}
+		]);
+	});
 });
 
 describe('sortNotificationBanners', () => {
