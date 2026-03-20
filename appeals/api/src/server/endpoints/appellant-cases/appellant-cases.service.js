@@ -630,7 +630,10 @@ export const updateAppellantCaseValidationOutcome = async (
 							templateName: 'enforcement-appeal-invalid-lpa',
 							notifyClient,
 							recipientEmail: updatedAppeal.lpa.email,
-							personalisation
+							personalisation: {
+								...personalisation,
+								feedback_link: FEEDBACK_FORM_LINKS.LPA
+							}
 						});
 					}
 				}

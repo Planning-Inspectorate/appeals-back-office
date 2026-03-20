@@ -18,7 +18,8 @@ describe('enforcement-appeal-invalid-lpa.content.md', () => {
 				ground_a_barred: true,
 				other_live_appeals: true,
 				effective_date: '1 January 2026',
-				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+				feedback_link: '/mock-feedback-link'
 			}
 		};
 
@@ -44,6 +45,10 @@ describe('enforcement-appeal-invalid-lpa.content.md', () => {
 			'# What happens next',
 			'The appeal is now closed.',
 			'The enforcement notice will not take effect unless we dismiss the other appeal or someone withdraws it.',
+			'',
+			'# Feedback',
+			'',
+			'This is a new service. Help us improve it and [give your feedback (opens in new tab)](/mock-feedback-link).',
 			'',
 			'Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
@@ -77,7 +82,8 @@ describe('enforcement-appeal-invalid-lpa.content.md', () => {
 				ground_a_barred: true,
 				other_live_appeals: false,
 				effective_date: '15 February 2026',
-				team_email_address: 'enforcement@planninginspectorate.gov.uk'
+				team_email_address: 'enforcement@planninginspectorate.gov.uk',
+				feedback_link: '/mock-feedback-link'
 			}
 		};
 
@@ -103,6 +109,10 @@ describe('enforcement-appeal-invalid-lpa.content.md', () => {
 			'# What happens next',
 			'The appeal is now closed.',
 			'The compliance period for the enforcement notice starts from 15 February 2026.',
+			'',
+			'# Feedback',
+			'',
+			'This is a new service. Help us improve it and [give your feedback (opens in new tab)](/mock-feedback-link).',
 			'',
 			'Planning Inspectorate',
 			'enforcement@planninginspectorate.gov.uk'
@@ -136,7 +146,8 @@ describe('enforcement-appeal-invalid-lpa.content.md', () => {
 				ground_a_barred: false,
 				other_live_appeals: true,
 				effective_date: '20 March 2026',
-				team_email_address: 'appeals@planninginspectorate.gov.uk'
+				team_email_address: 'appeals@planninginspectorate.gov.uk',
+				feedback_link: '/mock-feedback-link'
 			}
 		};
 
@@ -155,6 +166,10 @@ describe('enforcement-appeal-invalid-lpa.content.md', () => {
 			'# What happens next',
 			'The appeal is now closed.',
 			'The enforcement notice will not take effect unless we dismiss the other appeal or someone withdraws it.',
+			'',
+			'# Feedback',
+			'',
+			'This is a new service. Help us improve it and [give your feedback (opens in new tab)](/mock-feedback-link).',
 			'',
 			'Planning Inspectorate',
 			'appeals@planninginspectorate.gov.uk'
@@ -188,7 +203,8 @@ describe('enforcement-appeal-invalid-lpa.content.md', () => {
 				ground_a_barred: false,
 				other_live_appeals: false,
 				effective_date: '5 April 2026',
-				team_email_address: 'support@planninginspectorate.gov.uk'
+				team_email_address: 'support@planninginspectorate.gov.uk',
+				feedback_link: '/mock-feedback-link'
 			}
 		};
 
@@ -207,6 +223,10 @@ describe('enforcement-appeal-invalid-lpa.content.md', () => {
 			'# What happens next',
 			'The appeal is now closed.',
 			'The compliance period for the enforcement notice starts from 5 April 2026.',
+			'',
+			'# Feedback',
+			'',
+			'This is a new service. Help us improve it and [give your feedback (opens in new tab)](/mock-feedback-link).',
 			'',
 			'Planning Inspectorate',
 			'support@planninginspectorate.gov.uk'
@@ -240,7 +260,8 @@ describe('enforcement-appeal-invalid-lpa.content.md', () => {
 				ground_a_barred: false,
 				other_live_appeals: false,
 				effective_date: '5 April 2026',
-				team_email_address: 'support@planninginspectorate.gov.uk'
+				team_email_address: 'support@planninginspectorate.gov.uk',
+				feedback_link: '/mock-feedback-link'
 			}
 		};
 
@@ -260,6 +281,10 @@ describe('enforcement-appeal-invalid-lpa.content.md', () => {
 			'# What happens next',
 			'The appeal is now closed.',
 			'The compliance period for the enforcement notice starts from 5 April 2026.',
+			'',
+			'# Feedback',
+			'',
+			'This is a new service. Help us improve it and [give your feedback (opens in new tab)](/mock-feedback-link).',
 			'',
 			'Planning Inspectorate',
 			'support@planninginspectorate.gov.uk'
