@@ -99,7 +99,7 @@ describe('Progress Advertisment Appeal to Decision', () => {
 			// Display all expected case detail sections for written cases
 			caseDetailsPage.verifyCaseDetailsSection(expectedSections);
 
-			happyPathHelper.reviewLpaq(caseObj);
+			happyPathHelper.reviewS78Lpaq(caseObj);
 			caseDetailsPage.checkStatusOfCase('Statements', 0);
 
 			happyPathHelper.addThirdPartyComment(caseObj, true);
