@@ -604,10 +604,16 @@ const updateAppealTimetable = async (
  * @param {Appeal} appeal
  * @param {string} startDate
  * @param {string} procedureType
+ * @param {Date|null} [inquiryDate]
  */
-const calculateAppealTimetable = async (appeal, startDate, procedureType) => {
+const calculateAppealTimetable = async (appeal, startDate, procedureType, inquiryDate = null) => {
 	const startedAt = await recalculateDateIfNotBusinessDay(startDate);
-	const timetable = await calculateTimetable(appeal.appealType?.key, startedAt, procedureType);
+	const timetable = await calculateTimetable(
+		appeal.appealType?.key,
+		startedAt,
+		procedureType,
+		inquiryDate
+	);
 
 	return mapValues(
 		{
