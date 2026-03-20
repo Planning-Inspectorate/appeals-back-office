@@ -14,6 +14,7 @@ module "app_web" {
   # service plan
   app_service_plan_id                  = azurerm_service_plan.apps.id
   app_service_plan_resource_group_name = azurerm_resource_group.primary.name
+  worker_count                         = var.apps_config.web.worker_count
 
   # container
   container_registry_name = var.tooling_config.container_registry_name
