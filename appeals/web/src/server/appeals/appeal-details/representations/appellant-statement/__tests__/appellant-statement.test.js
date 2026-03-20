@@ -169,7 +169,33 @@ describe('appellant-statements', () => {
 				'name="status" type="radio" value="valid_requires_redaction">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="status" type="radio" value="incomplete">'
+				'name="status" type="radio" value="incomplete" checked>'
+			);
+		});
+
+		it('should pre-select "Statement incomplete" when representation status is incomplete and no session status exists', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}/reps?type=appellant_statement`)
+				.reply(200, {
+					...getAppealRepsResponse,
+					itemCount: 1,
+					items: [
+						{
+							...appellantStatementAwaitingReview,
+							status: 'incomplete'
+						}
+					]
+				});
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/appellant-statement?backUrl=/appeals-service/appeal-details/${appealId}/share`
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="status" type="radio" value="incomplete" checked>'
 			);
 		});
 

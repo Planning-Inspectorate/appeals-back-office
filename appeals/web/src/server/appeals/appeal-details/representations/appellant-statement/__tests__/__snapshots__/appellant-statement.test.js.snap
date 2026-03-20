@@ -177,7 +177,7 @@ exports[`appellant-statements GET / should render the review Appellant statement
                             </div>
                             <div class="govuk-radios__item">
                                 <input class="govuk-radios__input" id="status-3" name="status" type="radio"
-                                value="incomplete">
+                                value="incomplete" checked>
                                 <label class="govuk-label govuk-radios__label" for="status-3">Statement incomplete</label>
                             </div>
                         </div>
