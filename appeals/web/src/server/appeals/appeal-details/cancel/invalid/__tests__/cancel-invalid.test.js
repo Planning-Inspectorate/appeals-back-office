@@ -461,7 +461,7 @@ describe('cancel invalid', () => {
 
 			expect(appellantPreviewRequestBody).toMatchObject({
 				ground_a_barred: false,
-				feedback_link: FEEDBACK_FORM_LINKS.ALL
+				feedback_link: FEEDBACK_FORM_LINKS.ENFORCEMENT_LISTED_BUILDING
 			});
 
 			expect(lpaPreviewRequestBody).toMatchObject({

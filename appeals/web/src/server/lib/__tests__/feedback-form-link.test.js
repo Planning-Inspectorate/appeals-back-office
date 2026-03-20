@@ -42,6 +42,12 @@ describe('getFeedbackLinkFromAppealTypeName', () => {
 		);
 	});
 
+	test('Enforcement Listed Building', () => {
+		expect(getFeedbackLinkFromAppealTypeName(APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING)).toBe(
+			FEEDBACK_FORM_LINKS.ENFORCEMENT_LISTED_BUILDING
+		);
+	});
+
 	test('Lawful Development Certificate', () => {
 		expect(getFeedbackLinkFromAppealTypeName(APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE)).toBe(
 			FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE

@@ -295,7 +295,7 @@ describe('decision routes', () => {
 				'allowed',
 				'',
 				appealEnforcementListed,
-				FEEDBACK_FORM_LINKS.ALL,
+				FEEDBACK_FORM_LINKS.ENFORCEMENT_LISTED_BUILDING,
 				'Enforcement listed building and conservation area'
 			],
 			[
@@ -303,7 +303,7 @@ describe('decision routes', () => {
 				'invalid',
 				'Because it is.',
 				appealEnforcementListed,
-				FEEDBACK_FORM_LINKS.ALL,
+				FEEDBACK_FORM_LINKS.ENFORCEMENT_LISTED_BUILDING,
 				'Enforcement listed building and conservation area',
 				'invalid'
 			]
@@ -478,7 +478,11 @@ describe('decision routes', () => {
 			['enforcementNoticeAppeal', enforcementNoticeAppeal, FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE],
 			['advertisementAppeal', advertisementAppeal, FEEDBACK_FORM_LINKS.FULL_ADVERTS],
 			['ldcAppeal', ldcAppeal, FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE],
-			['appealEnforcementListed', appealEnforcementListed, FEEDBACK_FORM_LINKS.ALL]
+			[
+				'appealEnforcementListed',
+				appealEnforcementListed,
+				FEEDBACK_FORM_LINKS.ENFORCEMENT_LISTED_BUILDING
+			]
 		])(
 			'returns 200 when only issuing appellant costs decisions (%s)',
 			async (appealType, appeal, expectedFeedbackLink) => {
