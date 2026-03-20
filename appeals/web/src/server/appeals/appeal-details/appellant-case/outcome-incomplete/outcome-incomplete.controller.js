@@ -248,12 +248,19 @@ export const postIncompleteReason = async (request, response) => {
 				...request.session.webAppellantCaseReviewOutcome,
 				// Manage session to only keep fields related to selected incomplete reasons
 				enforcementNoticeInvalid,
-				...(selectedIds.includes(ID_MISSING_DOCS) && { missingDocuments, missingDocumentsText }),
-				...(selectedIds.includes(ID_GROUNDS_MISMATCH) && { enforcementGroundsMismatchText }),
-				...([ID_OTHER, ID_MISSING_DOCS, ID_GROUNDS_MISMATCH].some((id) =>
+				missingDocuments: selectedIds.includes(ID_MISSING_DOCS) ? missingDocuments : undefined,
+				missingDocumentsText: selectedIds.includes(ID_MISSING_DOCS)
+					? missingDocumentsText
+					: undefined,
+				enforcementGroundsMismatchText: selectedIds.includes(ID_GROUNDS_MISMATCH)
+					? enforcementGroundsMismatchText
+					: undefined,
+				updatedDueDate: [ID_OTHER, ID_MISSING_DOCS, ID_GROUNDS_MISMATCH].some((id) =>
 					selectedIds.includes(id)
-				) && { updatedDueDate }),
-				...(selectedIds.includes(ID_WAITING_FOR_FEE) && { feeReceiptDueDate })
+				)
+					? updatedDueDate
+					: undefined,
+				feeReceiptDueDate: selectedIds.includes(ID_WAITING_FOR_FEE) ? feeReceiptDueDate : undefined
 			};
 
 			const redirectMap = {
