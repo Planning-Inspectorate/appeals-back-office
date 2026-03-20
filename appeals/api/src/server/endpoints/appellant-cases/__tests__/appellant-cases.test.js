@@ -1989,7 +1989,10 @@ describe('appellant cases routes', () => {
 					notifyClient: expect.anything(),
 					templateName: 'enforcement-appeal-invalid-lpa',
 					recipientEmail: enforcementNoticeAppeal.lpa.email,
-					personalisation
+					personalisation: {
+						...personalisation,
+						feedback_link: FEEDBACK_FORM_LINKS.LPA
+					}
 				});
 
 				expect(response.status).toEqual(200);
@@ -2289,7 +2292,10 @@ describe('appellant cases routes', () => {
 					notifyClient: expect.anything(),
 					templateName: 'enforcement-appeal-invalid-lpa',
 					recipientEmail: 'lpa@example.com',
-					personalisation
+					personalisation: {
+						...personalisation,
+						feedback_link: FEEDBACK_FORM_LINKS.LPA
+					}
 				});
 
 				expect(response.status).toEqual(200);

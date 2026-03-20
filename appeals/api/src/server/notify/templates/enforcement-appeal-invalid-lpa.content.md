@@ -36,5 +36,9 @@ The enforcement notice will not take effect unless we dismiss the other appeal o
 The compliance period for the enforcement notice starts from {{effective_date}}.
 {%- endif %}
 
+# Feedback
+
+This is a new service. Help us improve it and [give your feedback (opens in new tab)]({{feedback_link}}).
+
 Planning Inspectorate
 {{team_email_address}}
