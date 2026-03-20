@@ -1,5 +1,19 @@
 apps_config = {
-  app_service_plan_sku       = "P1v3"
+  app_service_plan = {
+    sku                      = "P1v3"
+    per_site_scaling_enabled = true
+    worker_count             = 2
+    zone_balancing_enabled   = false
+  }
+  api = {
+    worker_count = 2
+  }
+  pdf = {
+    worker_count = 1
+  }
+  web = {
+    worker_count = 1
+  }
   functions_node_version     = 22
   functions_service_plan_sku = "P1v3"
   node_environment           = "production"
