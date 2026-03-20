@@ -27,6 +27,7 @@ import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import {
 	AUDIT_TRAIL_REP_MANUALLY_ADDED,
 	AUDIT_TRAIL_REP_MANUALLY_ADDED_AND_SHARED,
+	AUDIT_TRIAL_APPELLANT_UUID,
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
@@ -167,20 +168,16 @@ export const getRepStatusAuditLogDetails = (
  **/
 
 /**
- * @param {number} appealId
- * @param {string} azureAdUserId
+ * @param {import('express').Request} req
  * @param {boolean} shouldAutoPublish
- * @param {string} appealStatus
  * @param {CreateRepresentationInput} input
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
  **/
-export const createRepresentation = async (
-	appealId,
-	azureAdUserId,
-	shouldAutoPublish,
-	appealStatus,
-	input
-) => {
+export const createRepresentation = async (req, shouldAutoPublish, input) => {
+	const appealId = parseInt(req.params.appealId);
+	const azureAdUserId = String(req.get('azureAdUserId'));
+	const appealStatus = req.appeal.appealStatus.find((item) => item.valid === true)?.status ?? '';
+
 	let representedId;
 	let status = shouldAutoPublish
 		? APPEAL_REPRESENTATION_STATUS.PUBLISHED
@@ -230,24 +227,7 @@ export const createRepresentation = async (
 	});
 
 	if (input.attachments.length > 0) {
-		const documents = await documentRepository.getDocumentsByIds(input.attachments);
-
-		const mappedDocuments = documents.map((d) => ({
-			documentGuid: d.guid,
-			version: d.latestDocumentVersion?.version ?? 1
-		}));
-
-		await representationRepository.addAttachments(representation.id, mappedDocuments);
-
-		for (const document of mappedDocuments) {
-			if (document?.documentGuid) {
-				await broadcasters.broadcastDocument(
-					document.documentGuid,
-					document.version,
-					document.version > 1 ? EventType.Update : EventType.Create
-				);
-			}
-		}
+		await addAttachmentsAndBroadcast(representation.id, input.attachments);
 	}
 
 	await broadcasters.broadcastRepresentation(representation.id, EventType.Create);
@@ -269,6 +249,18 @@ export const createRepresentation = async (
 			formattedAppealStatus
 		])
 	});
+
+	if (input.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT) {
+		await notifyRepresentationReceived(
+			req.appeal,
+			req.notifyClient,
+			azureAdUserId || AUDIT_TRIAL_APPELLANT_UUID,
+			'appellant-statement-received',
+			true,
+			false,
+			false
+		);
+	}
 
 	return representation;
 };
@@ -397,6 +389,29 @@ export async function updateRepresentation(repId, payload) {
 	}
 
 	return updatedRep;
+}
+
+/**
+ * @param {number} representationId
+ * @param {string[]} attachmentIds
+ * @returns {Promise<void>}
+ */
+async function addAttachmentsAndBroadcast(representationId, attachmentIds) {
+	const documents = await documentRepository.getDocumentsByIds(attachmentIds);
+	const mappedDocuments = documents.map((d) => ({
+		documentGuid: d.guid,
+		version: d.latestDocumentVersion?.version ?? 1
+	}));
+	await representationRepository.addAttachments(representationId, mappedDocuments);
+	for (const document of mappedDocuments) {
+		if (document?.documentGuid) {
+			await broadcasters.broadcastDocument(
+				document.documentGuid,
+				document.version,
+				document.version > 1 ? EventType.Update : EventType.Create
+			);
+		}
+	}
 }
 
 /** @typedef {Awaited<ReturnType<updateRepresentation>>} UpdatedDBRepresentation */
@@ -997,6 +1012,86 @@ function notifyNoFinalComments(appeal, notifyClient, azureAdUserId, userTypeNoCo
 		userTypeNoCommentSubmitted
 	});
 }
+
+/**
+ * @param {Appeal} appeal
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {string} azureAdUserId
+ * @param {string} templateName
+ * @param {boolean} sendToAppellant
+ * @param {boolean} sendToLPA
+ * @param {boolean} sendToRule6Parties
+ * @returns {Promise<void>}
+ */
+export const notifyRepresentationReceived = async (
+	appeal,
+	notifyClient,
+	azureAdUserId,
+	templateName,
+	sendToAppellant = true,
+	sendToLPA = true,
+	sendToRule6Parties = true
+) => {
+	const basePersonalisation = {
+		appeal_reference_number: appeal.reference,
+		site_address: appeal.address
+			? formatAddressSingleLine(appeal.address)
+			: 'Address not available',
+		lpa_reference: appeal.applicationReference || '',
+		inquiry_date: appeal.inquiry?.inquiryStartTime
+			? formatDate(new Date(appeal.inquiry.inquiryStartTime), false)
+			: 'Not yet scheduled'
+	};
+
+	const recipients = [];
+
+	if (sendToAppellant) {
+		recipients.push({
+			email: appeal.agent?.email || appeal.appellant?.email,
+			path: `appeals/${appeal.reference}`,
+			role: 'appellant'
+		});
+	}
+
+	if (sendToLPA) {
+		recipients.push({
+			email: appeal.lpa?.email,
+			path: `manage-appeals/${appeal.reference}`,
+			role: 'LPA'
+		});
+	}
+
+	if (sendToRule6Parties) {
+		recipients.push(
+			...(appeal.appealRule6Parties || []).map((party) => ({
+				email: party.serviceUser?.email,
+				path: `rule-6/${appeal.reference}`,
+				role: 'Rule 6 party'
+			}))
+		);
+	}
+
+	await Promise.all(
+		recipients
+			.filter((r) => r.email)
+			.map(async ({ email, path, role }) => {
+				try {
+					await notifySend({
+						azureAdUserId,
+						templateName: templateName,
+						notifyClient,
+						recipientEmail: email,
+						personalisation: {
+							...basePersonalisation,
+							statement_url: `${config.frontOffice.url}/${path}`
+						}
+					});
+				} catch (error) {
+					logger.error(`Failed to send ${templateName} to ${role}: ${email}`, error);
+				}
+			})
+	);
+};
 
 /**
  * @param {string} type

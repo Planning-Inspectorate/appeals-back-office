@@ -1,7 +1,6 @@
 import { Prisma } from '#db-client/client.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import { sendRepresentationReceivedNotifications } from '#endpoints/integrations/integrations.controller.js';
 import representationRepository from '#repositories/representation.repository.js';
 import { isStatePassed } from '#state/transition-state.js';
 import BackOfficeAppError from '#utils/app-error.js';
@@ -14,7 +13,6 @@ import {
 } from '@pins/appeals/constants/common.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import {
-	AUDIT_TRIAL_APPELLANT_UUID,
 	AUDIT_TRIAL_RULE_6_PARTY_ID,
 	DEFAULT_PAGE_NUMBER,
 	DEFAULT_PAGE_SIZE,
@@ -269,16 +267,10 @@ export const createRepresentation = () => async (req, res) => {
 		updatePayload.representedId = req.appeal.agentId || req.appeal.appellantId;
 	}
 
-	const rep = await representationService.createRepresentation(
-		parseInt(appealId),
-		String(req.get('azureAdUserId')),
-		shouldAutoPublish,
-		req.appeal.appealStatus.find((item) => item.valid === true)?.status ?? '',
-		{
-			representationType,
-			...updatePayload
-		}
-	);
+	const rep = await representationService.createRepresentation(req, shouldAutoPublish, {
+		representationType,
+		...updatePayload
+	});
 
 	if (
 		[
@@ -299,24 +291,6 @@ export const createRepresentation = () => async (req, res) => {
 				details: stringTokenReplacement(trail, [partyName])
 			});
 		}
-	}
-
-	if (representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT) {
-		await sendRepresentationReceivedNotifications(
-			req.appeal,
-			req.notifyClient,
-			azureAdUserId || AUDIT_TRIAL_APPELLANT_UUID,
-			'appellant-statement-received',
-			true,
-			false,
-			false
-		);
-
-		await createAuditTrail({
-			appealId: parseInt(appealId),
-			azureAdUserId,
-			details: CONSTANTS.AUDIT_TRAIL_REP_APPELLANT_STATEMENT_ADDED
-		});
 	}
 
 	return res.status(201).send(rep);

@@ -292,7 +292,7 @@ router.post(
 		}
 		#swagger.responses[400] = {}
  	*/
-	checkAppealExistsByIdAndAddPartialToRequest(['appealStatus', 'lpa']),
+	checkAppealExistsByIdAndAddPartialToRequest(['appealStatus', 'lpa', 'appellant', 'agent']),
 	createRepresentationValidator,
 	asyncHandler(controller.createRepresentation())
 );
