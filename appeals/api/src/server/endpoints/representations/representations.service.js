@@ -468,6 +468,9 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient) {
 		false
 	);
 
+	const hasAppellantStatement = result.some(
+		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT
+	);
 	const hasLpaStatement = result.some(
 		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
 	);
@@ -514,32 +517,33 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient) {
 
 		let lpaTemplate = 'received-statement-and-ip-comments-lpa';
 		let appellantTemplate = 'received-statement-and-ip-comments-appellant';
-		let rule6Template = 'received-statement-and-ip-comments-appellant';
+		let rule6Template = 'received-statement-and-ip-comments-rule-6-party';
 
-		if (isInquiryProcedure && !hasLpaStatement && !hasIpComments && !hasRule6Statement) {
-			lpaTemplate = 'not-received-statement-and-ip-comments';
-			appellantTemplate = 'not-received-statement-and-ip-comments';
-			rule6Template = 'not-received-statement-and-ip-comments';
-		} else if (isInquiryProcedure && !hasLpaStatement && hasRule6Statement) {
-			lpaTemplate = 'rule-6-statement-received';
-			appellantTemplate = 'rule-6-statement-received';
-			rule6Template = 'received-only-rule-6-statement-rule-6-party';
-		}
+		const submissions = {
+			appellant: hasAppellantStatement,
+			lpa: hasLpaStatement,
+			rule6: hasRule6Statement,
+			ipComments: hasIpComments,
+			hasRule6Parties
+		};
 
 		const contacts = [
 			{
+				recipientType: 'lpa',
 				email: appeal.lpa?.email,
 				template: lpaTemplate,
 				whatHappensNextTemplate: whatHappensNextLpa,
 				url: lpaPath
 			},
 			{
+				recipientType: 'appellant',
 				email: appeal.agent?.email || appeal.appellant?.email,
 				template: appellantTemplate,
 				whatHappensNextTemplate: whatHappensNextAppellant,
 				url: appellantPath
 			},
 			...(appeal.appealRule6Parties?.map((rule6Party) => ({
+				recipientType: 'rule6',
 				email: rule6Party.serviceUser?.email,
 				template: rule6Template,
 				whatHappensNextTemplate: whatHappensNextAppellant,
@@ -548,13 +552,15 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient) {
 		];
 
 		contacts.forEach(async (contact) => {
+			const otherSubmissions = buildOtherSubmissions(
+				/** @type {'appellant' | 'lpa' | 'rule6'} */ (contact.recipientType),
+				submissions
+			);
+
 			await notifyPublished({
 				appeal,
 				notifyClient,
-				hasLpaStatement,
-				hasIpComments,
-				hasRule6Parties,
-				hasRule6Statement,
+				...otherSubmissions,
 				isHearingProcedure,
 				isInquiryProcedure,
 				statementUrl: contact.url,
@@ -838,10 +844,14 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
  * @property {string | null} [recipientEmail]
  * @property {string} [finalCommentsDueDate]
  * @property {string} [whatHappensNext]
+ * @property {boolean} [hasAppellantStatement]
  * @property {boolean} [hasLpaStatement]
  * @property {boolean} [hasIpComments]
  * @property {boolean} [hasRule6Parties]
  * @property {boolean} [hasRule6Statement]
+ * @property {boolean} [allOthersSubmitted]
+ * @property {boolean} [nothingSubmitted]
+ * @property {boolean} [anyOthersSubmitted]
  * @property {boolean} [isHearingProcedure]
  * @property {boolean} [isInquiryProcedure]
  * @property {string} [statementUrl]
@@ -867,10 +877,14 @@ async function notifyPublished({
 	recipientEmail,
 	finalCommentsDueDate = '',
 	whatHappensNext = '',
+	hasAppellantStatement = false,
 	hasLpaStatement = false,
+	hasRule6Statement = false,
 	hasIpComments = false,
 	hasRule6Parties = false,
-	hasRule6Statement = false,
+	allOthersSubmitted = false,
+	nothingSubmitted = false,
+	anyOthersSubmitted = false,
 	isHearingProcedure = false,
 	isInquiryProcedure = false,
 	statementUrl = '',
@@ -915,9 +929,13 @@ async function notifyPublished({
 			final_comments_deadline: finalCommentsDueDate,
 			what_happens_next: whatHappensNext,
 			has_ip_comments: hasIpComments,
+			has_appellant_statement: hasAppellantStatement,
 			has_statement: hasLpaStatement,
 			has_rule_6_parties: hasRule6Parties,
 			has_rule_6_statement: hasRule6Statement,
+			all_others_submitted: allOthersSubmitted,
+			nothing_submitted: nothingSubmitted,
+			anyOthersSubmitted: anyOthersSubmitted,
 			is_hearing_procedure: isHearingProcedure,
 			is_inquiry_procedure: isInquiryProcedure,
 			statement_url: statementUrl,
@@ -996,6 +1014,57 @@ function notifyNoFinalComments(appeal, notifyClient, azureAdUserId, userTypeNoCo
 		azureAdUserId,
 		userTypeNoCommentSubmitted
 	});
+}
+
+/**
+ * @param {'appellant' | 'lpa' | 'rule6'} recipientType
+ * @param {{ appellant: boolean, lpa: boolean, rule6: boolean, ipComments: boolean, hasRule6Parties: boolean }} submissions
+ * @returns {Object}
+ */
+export function buildOtherSubmissions(recipientType, submissions) {
+	if (recipientType === 'appellant') {
+		return {
+			hasLpaStatement: submissions.lpa,
+			hasRule6Statement: submissions.rule6,
+			hasIpComments: submissions.ipComments,
+			hasRule6Parties: submissions.hasRule6Parties,
+			allOthersSubmitted: submissions.lpa && submissions.rule6 && submissions.ipComments,
+			nothingSubmitted: !submissions.lpa && !submissions.rule6 && !submissions.ipComments,
+			anyOthersSubmitted: submissions.lpa || submissions.rule6 || submissions.ipComments
+		};
+	}
+
+	if (recipientType === 'lpa') {
+		return {
+			hasAppellantStatement: submissions.appellant,
+			hasRule6Statement: submissions.rule6,
+			hasIpComments: submissions.ipComments,
+			hasRule6Parties: submissions.hasRule6Parties,
+			allOthersSubmitted: submissions.appellant && submissions.rule6 && submissions.ipComments,
+			nothingSubmitted: !submissions.appellant && !submissions.rule6 && !submissions.ipComments,
+			anyOthersSubmitted: submissions.appellant || submissions.rule6 || submissions.ipComments
+		};
+	}
+
+	// todo: handle having more than 1 rule 6 party
+	if (recipientType === 'rule6') {
+		return {
+			hasAppellantStatement: submissions.appellant,
+			hasLpaStatement: submissions.lpa,
+			hasIpComments: submissions.ipComments,
+			hasRule6Parties: submissions.hasRule6Parties,
+			allOthersSubmitted: submissions.appellant && submissions.lpa && submissions.ipComments,
+			nothingSubmitted: !submissions.appellant && !submissions.lpa && !submissions.ipComments,
+			anyOthersSubmitted: submissions.appellant || submissions.lpa || submissions.ipComments
+		};
+	}
+
+	// fallback
+	return {
+		allOthersSubmitted: false,
+		nothingSubmitted: false,
+		anyOthersSubmitted: false
+	};
 }
 
 /**
