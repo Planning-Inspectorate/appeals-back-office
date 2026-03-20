@@ -27,6 +27,9 @@ export function getFeedbackLinkFromAppealTypeName(appealName) {
 		case APPEAL_TYPE.ENFORCEMENT_NOTICE: // Enforcement notice
 			return FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE;
 
+		case APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING: // Enforcement listed building
+			return FEEDBACK_FORM_LINKS.ENFORCEMENT_LISTED_BUILDING;
+
 		case APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE: // Lawful development certificate
 			return FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE;
 

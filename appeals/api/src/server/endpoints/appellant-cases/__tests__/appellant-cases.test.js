@@ -1444,7 +1444,7 @@ describe('appellant cases routes', () => {
 						appeal_reference_number: appealEnforcementListed.reference,
 						lpa_reference: appealEnforcementListed.applicationReference,
 						site_address: `${appealEnforcementListed.address.addressLine1}, ${appealEnforcementListed.address.addressLine2}, ${appealEnforcementListed.address.addressTown}, ${appealEnforcementListed.address.addressCounty}, ${appealEnforcementListed.address.postcode}, ${appealEnforcementListed.address.addressCountry}`,
-						feedback_link: FEEDBACK_FORM_LINKS.ALL,
+						feedback_link: FEEDBACK_FORM_LINKS.ENFORCEMENT_LISTED_BUILDING,
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
 						local_planning_authority: appealEnforcementListed.lpa.name,
 						appeal_type: 'Enforcement listed building and conservation area',
