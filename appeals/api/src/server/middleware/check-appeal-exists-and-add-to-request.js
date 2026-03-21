@@ -17,7 +17,9 @@ export const checkAppealExistsByCaseReferenceAndAddToRequest = async (req, res, 
 		params: { caseReference }
 	} = req;
 
-	const appeal = await appealRepository.getAppealByAppealReference(caseReference);
+	// TODO: performance
+	// is returning all data, return only needed data
+	const appeal = await appealRepository.deprecatedGetAppealByAppealReference(caseReference);
 
 	if (!appeal || !isAppealTypeEnabled(appeal.appealType?.key || '')) {
 		return res.status(404).send({ errors: { caseReference: ERROR_NOT_FOUND } });

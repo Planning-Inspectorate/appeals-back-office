@@ -147,9 +147,11 @@ const updateAppealTimetableById = async (req, res) => {
 			await Promise.all(
 				// @ts-ignore
 				appeal.childAppeals.map(async (childAppeal) => {
+					// TODO: performance
+					// is returning all data in a loop, return only needed data
 					const child =
 						childAppeal.child ||
-						(await appealRepository.getAppealById(Number(childAppeal.childId)));
+						(await appealRepository.deprecatedGetAppealById(Number(childAppeal.childId)));
 					if (child) {
 						return updateAppealTimetable(child, body, notifyClient, azureAdUserId, true);
 					}

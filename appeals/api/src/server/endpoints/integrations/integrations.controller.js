@@ -209,7 +209,9 @@ export const importAppeal = async (req, res) => {
 
 		const [parentAppeal, ...childAppeals] = await Promise.all(
 			[parentResult, ...childResults].map(async (caseData) => {
-				return appealRepository.getAppealById(caseData.id);
+				// TODO: performance
+				// is returning all data in a loop, return only needed data
+				return appealRepository.deprecatedGetAppealById(caseData.id);
 			})
 		);
 
