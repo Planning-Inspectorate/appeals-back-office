@@ -39,3 +39,21 @@ export const addAppellantCaseToLocals = async (req) => {
 		req.currentAppeal.appellantCaseId
 	);
 };
+
+/**
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @param {string} procedureType
+ * @param {string} inquiryDate
+ * @returns {Promise<any>}
+ */
+export async function calculateAppealTimetable(apiClient, appealId, procedureType, inquiryDate) {
+	return await apiClient
+		.get(`appeals/${appealId}/appeal-timetables/calculate`, {
+			searchParams: {
+				procedureType,
+				inquiryDate
+			}
+		})
+		.json();
+}
