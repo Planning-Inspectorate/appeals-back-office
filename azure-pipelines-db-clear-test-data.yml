@@ -81,6 +81,7 @@ jobs:
                   DRY_RUN_ONLY: ${{parameters.dryRunOnly}}
                   MAX_EXPECTED_CASES_TO_DELETE: ${{parameters.maxExpectedCasesToDelete}}
                 script: npm run db:seed:clear-test-data
+                nodeVersion: 22
                 workingDirectory: $(Build.Repository.LocalPath)/appeals/api
     workspace:
       clean: all
