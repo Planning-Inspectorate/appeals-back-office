@@ -174,7 +174,10 @@ export const FEEDBACK_FORM_LINKS = Object.freeze({
 	ENFORCEMENT_NOTICE:
 		'https://forms.cloud.microsoft/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQVRSQlBKOUJVR05TOE1URElSSUVZUjVDMS4u&route=shorturl',
 
-	LAWFUL_DEVELOPMENT_CERTIFICATE: 'https://forms.cloud.microsoft/e/J5EwyG3e0e'
+	LAWFUL_DEVELOPMENT_CERTIFICATE: 'https://forms.cloud.microsoft/e/J5EwyG3e0e',
+
+	ENFORCEMENT_LISTED_BUILDING:
+		'https://forms.cloud.microsoft/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UNDJFTjBCRTlFV1pYVjVWRkhKQVBYTVRKUC4u&route=shorturl'
 });
 
 export const REPRESENTATION_ADDED_AS_DOCUMENT = 'Added as a document';
