@@ -74,12 +74,16 @@ export class ProcedureTypePage extends CaseDetailsPage {
 		this.elements.getAppealRefCaseDetails().should('contain.text', procedureTypeCaption);
 	}
 
-	verifyNoProcedureTypeSelected(part1 = true) {
+	verifyNoProcedureTypeSelected(part1 = true, linkedCase = false) {
 		if (part1) {
 			this.procedureTypeMappings.part1.element().should('not.be.checked');
 		}
+
 		this.procedureTypeMappings.written.element().should('not.be.checked');
-		this.procedureTypeMappings.hearing.element().should('not.be.checked');
-		this.procedureTypeMappings.inquiry.element().should('not.be.checked');
+
+		if (!linkedCase) {
+			this.procedureTypeMappings.hearing.element().should('not.be.checked');
+			this.procedureTypeMappings.inquiry.element().should('not.be.checked');
+		}
 	}
 }
