@@ -107,3 +107,31 @@ exports[`representations GET /share should contain link to interested-party-comm
     </div>
 </main>"
 `;
+
+exports[`representations GET /share should contain correct content for enforcement listed building appeals 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and share statements</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">We’ll share the <a href="/appeals-service/appeal-details/1/interested-party-comments?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare#valid"
+                class="govuk-link">1 interested party comment</a> with the relevant party.</p>
+            <div             class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                <strong                 class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Do not confirm until
+                    you have reviewed all of the supporting documents and redacted any sensitive
+                    information.</strong>
+        </div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <form method="post" novalidate="novalidate">
+                    <button type="submit" class="govuk-button" data-module="govuk-button">Share statements</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>"
+`;

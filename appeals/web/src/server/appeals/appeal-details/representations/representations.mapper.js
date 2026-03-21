@@ -2,7 +2,11 @@ import config from '#environment/config.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { ensureArray } from '#lib/array-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
-import { APPEAL_REPRESENTATION_STATUS, COMMENT_STATUS } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_REPRESENTATION_STATUS,
+	APPEAL_TYPE,
+	COMMENT_STATUS
+} from '@pins/appeals/constants/common.js';
 import isAppellantStatementAppealType from '@pins/appeals/utils/is-appellant-statement-appeal-type.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
@@ -235,18 +239,30 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 				};
 
 	let heading;
+	let confirm;
 	const hearingIsSetUp = Boolean(appeal.hearing?.hearingStartTime && appeal.hearing?.address);
 
 	if (appeal.procedureType === 'Hearing' && hearingIsSetUp) {
 		heading = 'Progress to awaiting hearing';
+		confirm = 'Progress case';
 	} else if (appeal.procedureType === 'Hearing') {
 		heading = 'Progress to hearing ready to set up';
+		confirm = 'Progress case';
 	} else if (appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY) {
 		heading = 'Progress to proof of evidence and witnesses';
+		confirm = 'Progress to proof of evidence and witnesses';
+	} else if (
+		valueTexts.length > 0 &&
+		appeal.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
+	) {
+		heading = 'Check details and share statements';
+		confirm = 'Share statements';
 	} else if (valueTexts.length > 0) {
 		heading = 'Share IP comments and statements';
+		confirm = 'Confirm';
 	} else {
 		heading = 'Progress to final comments';
+		confirm = 'Progress case';
 	}
 
 	return {
@@ -256,12 +272,7 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 		heading,
 		pageComponents: [textComponent, warningComponent],
 		submitButtonProperties: {
-			text:
-				valueTexts.length > 0
-					? 'Confirm'
-					: appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY
-						? 'Progress to proof of evidence and witnesses'
-						: 'Progress case'
+			text: confirm
 		}
 	};
 }
