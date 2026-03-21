@@ -9,7 +9,22 @@ variable "alerts_enabled" {
 variable "apps_config" {
   description = "Config for the apps"
   type = object({
-    app_service_plan_sku              = string
+    app_service_plan = object({
+      sku                      = string
+      per_site_scaling_enabled = bool
+      worker_count             = number
+      zone_balancing_enabled   = bool
+    })
+    api = object({
+      worker_count = number
+    })
+    pdf = object({
+      worker_count = number
+    })
+    web = object({
+      worker_count = number
+    })
+
     functions_node_version            = number
     functions_service_plan_sku        = string
     node_environment                  = string
