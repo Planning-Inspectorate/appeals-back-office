@@ -4,7 +4,6 @@ import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import {
 	calculateIncompleteDueDate,
 	dateISOStringToDayMonthYearHourMinute,
-	dateISOStringToDisplayDate,
 	getTodaysISOString
 } from '#lib/dates.js';
 import logger from '#lib/logger.js';
@@ -13,7 +12,8 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getNotValidReasonsTextFromRequestBody } from '#lib/validation-outcome-reasons-formatter.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
-import { isAfter, parseISO } from 'date-fns';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
+import { add, isAfter, parseISO } from 'date-fns';
 import * as appellantCaseService from '../../appellant-case/appellant-case.service.js';
 import {
 	mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters,
@@ -583,6 +583,20 @@ export const getCheckDetailsAndMarkEnforcementAsIncomplete = async (request, res
 };
 
 /**
+ * @param {{ reasonSelected: number, reasonText?: string[] | undefined }[] | undefined} invalidReasons
+ * @returns {Record<string, string> | undefined}
+ */
+const mapEnforcementIncompleteInvalidReasonsForNotifyPreview = (invalidReasons) => {
+	return invalidReasons?.reduce(
+		(acc, reason) => ({
+			...acc,
+			[`reason_${reason.reasonSelected}`]: reason.reasonText || ''
+		}),
+		{}
+	);
+};
+
+/**
  *
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
@@ -633,13 +647,11 @@ const renderCheckDetailsAndMarkEnforcementAsIncomplete = async (request, respons
 				site_address: addressToString(currentAppeal.appealSite),
 				team_email_address: assignedTeamEmail,
 				enforcement_reference: currentAppeal.enforcementNotice?.appellantCase?.reference || '',
-				due_date:
-					dateISOStringToDisplayDate(
-						currentAppeal.enforcementNotice?.appellantCase?.groundAFeeDueDate
-					) || '',
-				issue_date:
-					dateISOStringToDisplayDate(currentAppeal.enforcementNotice?.appellantCase?.issueDate) ||
-					''
+				...mapEnforcementIncompleteInvalidReasonsForNotifyPreview(
+					session.webAppellantCaseReviewOutcome?.enforcementNoticeReason
+				),
+				other_info: session.webAppellantCaseReviewOutcome?.otherInformationDetails || '',
+				due_date: formatDate(new Date(add(new Date(), { days: 7 })), false)
 			};
 			const appellantTemplate = await generateNotifyPreview(
 				apiClient,
