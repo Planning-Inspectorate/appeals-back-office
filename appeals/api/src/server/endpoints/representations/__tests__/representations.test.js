@@ -4980,7 +4980,7 @@ describe('/appeals/:id/reps', () => {
 
 				expect(response.status).toEqual(200);
 
-				expect(mockNotifySend).not.toHaveBeenCalled();
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 			});
 
 			test('send notify lpa and appellant proof of evidence S78 with no inquiry address', async () => {
@@ -4991,6 +4991,46 @@ describe('/appeals/:id/reps', () => {
 						inquiryStartTime: '2025-12-13 14:00',
 						estimatedDays: 8
 					}
+				};
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => mockS78Appeal.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedinquiryAddress = mockS78Appeal.inquiry.address
+					? [
+							'addressLine1',
+							'addressLine2',
+							'addressTown',
+							'addressCounty',
+							'postcode',
+							'addressCountry'
+						]
+							.map((key) => mockS78Appeal.inquiry.address[key])
+							.filter((value) => value)
+							.join(', ')
+					: '';
+
+				const expectedEmailPayload = {
+					lpa_reference: mockS78Appeal.applicationReference,
+					has_ip_comments: false,
+					has_statement: false,
+					is_hearing_procedure: false,
+					is_inquiry_procedure: false,
+					has_rule_6_parties: false,
+					has_rule_6_statement: false,
+					appeal_reference_number: mockS78Appeal.reference,
+					final_comments_deadline: '',
+					site_address: expectedSiteAddress,
+					statement_url: '',
+					user_type: ''
 				};
 
 				databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
@@ -5013,7 +5053,50 @@ describe('/appeals/:id/reps', () => {
 
 				expect(response.status).toEqual(200);
 
-				expect(mockNotifySend).not.toHaveBeenCalled();
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						what_happens_next: 'manage-appeals',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						inquiry_address: expectedinquiryAddress,
+						inquiry_date: '13 December 2025',
+						inquiry_detail_warning_text:
+							'The details of the inquiry are subject to change. We will contact you by email if we make any changes.',
+						inquiry_expected_days: '8',
+						inquiry_time: '2:00pm',
+						inquiry_witnesses_text:
+							'Your witnesses should be available for the duration of the inquiry.',
+						inquiry_subject_line: 'Proof of evidence and witnesses not received',
+						is_inquiry_procedure: true
+					},
+					recipientEmail: appealS78.lpa.email,
+					templateName: 'not-received-proof-of-evidence-and-witnesses'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						what_happens_next: 'appeals',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						inquiry_address: expectedinquiryAddress,
+						inquiry_date: '13 December 2025',
+						inquiry_detail_warning_text:
+							'The details of the inquiry are subject to change. We will contact you by email if we make any changes.',
+						inquiry_expected_days: '8',
+						inquiry_time: '2:00pm',
+						is_inquiry_procedure: true,
+						inquiry_witnesses_text:
+							'Your witnesses should be available for the duration of the inquiry.',
+						inquiry_subject_line: 'Proof of evidence and witnesses not received'
+					},
+					recipientEmail: appealS78.appellant.email,
+					templateName: 'not-received-proof-of-evidence-and-witnesses'
+				});
 			});
 
 			test('send notify to lpa and when appellant proof of evidence is not provided but LPA is completed', async () => {

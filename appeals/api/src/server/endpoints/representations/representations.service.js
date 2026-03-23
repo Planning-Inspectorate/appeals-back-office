@@ -764,7 +764,17 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 		const submittedParties = allParties.filter((p) => p.isValid);
 		const recipients = allParties.filter((p) => p.email);
 
-		if (submittedParties.length > 0) {
+		if (recipients.length > 0) {
+			const templateName =
+				submittedParties.length > 0
+					? 'proof-of-evidence-and-witnesses-shared'
+					: 'not-received-proof-of-evidence-and-witnesses';
+
+			const inquirySubjectLine =
+				submittedParties.length > 0
+					? submittedParties.map((p) => p.name)
+					: 'Proof of evidence and witnesses not received';
+
 			for (const recipient of recipients) {
 				const templateWhatHappensNext =
 					recipient.id === 'lpa' ? 'manage-appeals' : recipient.isRule6 ? 'rule-6' : 'appeals';
@@ -773,7 +783,7 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 					appeal,
 					notifyClient,
 					isInquiryProcedure: true,
-					templateName: 'proof-of-evidence-and-witnesses-shared',
+					templateName,
 					recipientEmail: recipient.email,
 					whatHappensNext: templateWhatHappensNext,
 					azureAdUserId,
@@ -783,7 +793,7 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 					inquiryTime,
 					inquiryExpectedDays,
 					inquiryAddress,
-					inquirySubjectLine: submittedParties.map((p) => p.name)
+					inquirySubjectLine
 				});
 			}
 		}
