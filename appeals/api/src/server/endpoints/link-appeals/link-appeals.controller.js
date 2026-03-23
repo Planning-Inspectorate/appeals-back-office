@@ -20,7 +20,6 @@ import { logger } from '@azure/identity';
 import {
 	AUDIT_TRAIL_APPEAL_LINK_ADDED,
 	AUDIT_TRAIL_APPEAL_LINK_UNLINKED,
-	AUDIT_TRAIL_APPEAL_LINK_UNLINKED_ALL,
 	AUDIT_TRAIL_APPEAL_LINK_UPDATED_AS_LEAD,
 	AUDIT_TRAIL_APPEAL_RELATION_ADDED,
 	AUDIT_TRAIL_APPEAL_RELATION_REMOVED,
@@ -368,32 +367,6 @@ export const unlinkAppeal = async (req, res) => {
 };
 
 /**
- *
- * @param {string} azureAdUserId
- * @param {number} appealId
- * @param {string} unlinkedAppealRef
- * @param {boolean} [allUnlinked]
- * @returns {Promise<void>}
- */
-const auditUnlinkingAppeal = async (
-	azureAdUserId,
-	appealId,
-	unlinkedAppealRef = '',
-	allUnlinked = false
-) => {
-	const details = stringTokenReplacement(
-		allUnlinked ? AUDIT_TRAIL_APPEAL_LINK_UNLINKED_ALL : AUDIT_TRAIL_APPEAL_LINK_UNLINKED,
-		[unlinkedAppealRef]
-	);
-
-	await createAuditTrail({
-		appealId,
-		details,
-		azureAdUserId
-	});
-};
-
-/**
  * @param {Request} req
  * @param {Response} res
  * @returns {Promise<Response>}
@@ -437,10 +410,7 @@ export const updateLinkedAppeals = async (req, res) => {
 	}
 
 	try {
-		const currentLead = getLeadAppeal(appeal);
-
 		const childAppeals = getChildAppeals(appeal);
-
 		const appealToReplaceLead =
 			appealRefToReplaceLead &&
 			childAppeals.find((childAppeal) => {
@@ -449,6 +419,18 @@ export const updateLinkedAppeals = async (req, res) => {
 
 		if (appealRefToReplaceLead && !appealToReplaceLead) {
 			return res.status(400).send('Appeal to replace lead is not a child of the lead');
+		}
+
+		const currentLead = getLeadAppeal(appeal);
+
+		if (!currentLead) {
+			return res.status(400).send('Failed to find current lead appeal');
+		}
+
+		const appealsToAudit = [currentLead?.id, ...childAppeals.map((appeal) => appeal.id)];
+		// Make sure the current appeal is in the list of appeals to audit
+		if (!appealsToAudit.includes(appeal.id)) {
+			appealsToAudit.push(appeal.id);
 		}
 
 		const omitFolders = [
@@ -517,20 +499,19 @@ export const updateLinkedAppeals = async (req, res) => {
 					updatePersonalList(appealToUnlink.id)
 				]);
 
-				if (currentLead?.id && appealToUnlink?.id) {
-					const allUnlinked = childAppeals.length === 1;
+				if (currentLead?.id && appealToUnlink?.reference) {
+					const unlinkDetails = stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UNLINKED, [
+						appealToUnlink.reference
+					]);
 
-					await auditUnlinkingAppeal(
-						azureAdUserId,
-						appealToUnlink.id,
-						currentLead.reference,
-						allUnlinked
-					);
-					await auditUnlinkingAppeal(
-						azureAdUserId,
-						currentLead.id,
-						appealToUnlink.reference,
-						allUnlinked
+					await Promise.allSettled(
+						appealsToAudit.map(async (appealId) => {
+							await createAuditTrail({
+								appealId: Number(appealId),
+								details: unlinkDetails,
+								azureAdUserId
+							});
+						})
 					);
 				}
 
@@ -541,17 +522,25 @@ export const updateLinkedAppeals = async (req, res) => {
 		// Refresh the personal list for the lead
 		await updatePersonalList(appealToReplaceLead?.id || currentLead?.id);
 
+		console.log(
+			`* * * * * ${appealsToAudit.length} appeals to audit: ${appealsToAudit.join(', ')}`
+		);
+
 		if (currentLead?.id && appealToReplaceLead?.reference) {
-			await createAuditTrail({
-				appealId: currentLead.id,
-				details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UPDATED_AS_LEAD, [
-					appealToReplaceLead.reference
-				]),
-				azureAdUserId
-			});
+			await Promise.allSettled(
+				appealsToAudit.map((appealId) =>
+					createAuditTrail({
+						appealId: Number(appealId),
+						details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UPDATED_AS_LEAD, [
+							appealToReplaceLead.reference
+						]),
+						azureAdUserId
+					})
+				)
+			);
 
 			// need to broadcast all the appeals in the originally linked group
-			appealsToBroadcast = [currentLead.id, ...childAppeals.map((appeal) => appeal.id)];
+			appealsToBroadcast = appealsToAudit;
 		}
 
 		if (appealsToBroadcast) {
