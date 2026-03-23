@@ -11,7 +11,10 @@ export async function getEnforcementReference(appeal) {
 	if (appeal.appellantCase?.enforcementReference) {
 		return appeal.appellantCase.enforcementReference;
 	}
-	if (appeal.appealType?.key === APPEAL_CASE_TYPE.C) {
+	if (
+		appeal.appealType?.key === APPEAL_CASE_TYPE.C ||
+		appeal.appealType?.key === APPEAL_CASE_TYPE.F
+	) {
 		const appellantCase = await appellantCaseRepository.getAppellantCaseByAppealId(appeal.id);
 		return appellantCase?.enforcementReference || undefined;
 	}
