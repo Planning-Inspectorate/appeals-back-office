@@ -522,10 +522,6 @@ export const updateLinkedAppeals = async (req, res) => {
 		// Refresh the personal list for the lead
 		await updatePersonalList(appealToReplaceLead?.id || currentLead?.id);
 
-		console.log(
-			`* * * * * ${appealsToAudit.length} appeals to audit: ${appealsToAudit.join(', ')}`
-		);
-
 		if (currentLead?.id && appealToReplaceLead?.reference) {
 			await Promise.allSettled(
 				appealsToAudit.map((appealId) =>
