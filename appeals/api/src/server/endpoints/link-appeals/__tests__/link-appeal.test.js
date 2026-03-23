@@ -14,6 +14,7 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 jest.resetModules();
 
 const mockCreateAuditTrail = jest.fn().mockResolvedValue(undefined);
+
 const mockNotifySend = jest.fn().mockResolvedValue(true);
 
 jest.unstable_mockModule('#endpoints/audit-trails/audit-trails.service.js', () => ({
@@ -657,16 +658,16 @@ describe('appeal linked appeals routes', () => {
 						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
 							1,
 							expect.objectContaining({
-								appealId: testAppeal.id,
+								appealId: mockAppealA.id,
 								details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UNLINKED, [
-									mockAppealA.reference
+									testAppeal.reference
 								])
 							})
 						);
 						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
 							2,
 							expect.objectContaining({
-								appealId: mockAppealA.id,
+								appealId: testAppeal.id,
 								details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UNLINKED, [
 									testAppeal.reference
 								])
@@ -752,7 +753,7 @@ describe('appeal linked appeals routes', () => {
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(mockAppealA.id);
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(mockAppealB.id);
 
-						expect(mockCreateAuditTrail).toHaveBeenCalledTimes(6);
+						expect(mockCreateAuditTrail).toHaveBeenCalledTimes(9);
 						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
 							1,
 							expect.objectContaining({
@@ -765,7 +766,7 @@ describe('appeal linked appeals routes', () => {
 						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
 							2,
 							expect.objectContaining({
-								appealId: testAppeal.id,
+								appealId: mockAppealA.id,
 								details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UNLINKED, [
 									testAppeal.reference
 								])
@@ -774,6 +775,15 @@ describe('appeal linked appeals routes', () => {
 						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
 							3,
 							expect.objectContaining({
+								appealId: mockAppealB.id,
+								details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UNLINKED, [
+									testAppeal.reference
+								])
+							})
+						);
+						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
+							4,
+							expect.objectContaining({
 								appealId: testAppeal.id,
 								details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UPDATED_AS_LEAD, [
 									mockAppealA.reference
@@ -781,7 +791,25 @@ describe('appeal linked appeals routes', () => {
 							})
 						);
 						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
-							4,
+							5,
+							expect.objectContaining({
+								appealId: mockAppealA.id,
+								details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UPDATED_AS_LEAD, [
+									mockAppealA.reference
+								])
+							})
+						);
+						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
+							6,
+							expect.objectContaining({
+								appealId: mockAppealB.id,
+								details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UPDATED_AS_LEAD, [
+									mockAppealA.reference
+								])
+							})
+						);
+						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
+							7,
 							expect.objectContaining({
 								appealId: testAppeal.id,
 								details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [
@@ -790,7 +818,7 @@ describe('appeal linked appeals routes', () => {
 							})
 						);
 						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
-							5,
+							8,
 							expect.objectContaining({
 								appealId: mockAppealA.id,
 								details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [
@@ -799,7 +827,7 @@ describe('appeal linked appeals routes', () => {
 							})
 						);
 						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
-							6,
+							9,
 							expect.objectContaining({
 								appealId: mockAppealB.id,
 								details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [
