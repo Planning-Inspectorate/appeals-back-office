@@ -21,7 +21,7 @@ export const getCaseOverview = (mappedData, appealDetails) => ({
 			appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ||
 			appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
 				? mappedData.appeal?.enforcementReference?.display.summaryListItem
-				: removeSummaryListActions(mappedData.appeal?.lpaReference?.display.summaryListItem),
+				: mappedData.appeal?.lpaReference?.display.summaryListItem,
 			displayHorizonReference(appealDetails)
 				? mappedData.appeal?.horizonReference?.display.summaryListItem
 				: undefined,

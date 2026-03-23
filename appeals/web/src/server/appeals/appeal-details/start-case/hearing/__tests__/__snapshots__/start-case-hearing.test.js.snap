@@ -491,8 +491,11 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
     </div>
     <h2 class="govuk-heading-l">Overview</h2>
     <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
+        <div class="govuk-summary-list__row appeal-lpa-reference"><dt class="govuk-summary-list__key"> Planning application reference</dt>
             <dd             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-reference/change"
+                    data-cy="change-lpa-reference">Change<span class="govuk-visually-hidden"> Planning application reference</span></a>
+                </dd>
         </div>
         <div class="govuk-summary-list__row appeal-appeal-type"><dt class="govuk-summary-list__key"> Appeal type</dt>
             <dd class="govuk-summary-list__value">Planning appeal</dd>
