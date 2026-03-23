@@ -5,6 +5,7 @@ import {
 	casAdvertAppealLPAQuestionnaireIncomplete,
 	casPlanningAppeal,
 	casPlanningAppealLPAQuestionnaireIncomplete,
+	enforcementListedAppealAppellantCaseIncomplete,
 	enforcementNoticeAppeal,
 	fullPlanningAppeal,
 	fullPlanningAppealLPAQuestionnaireIncomplete,
@@ -386,6 +387,23 @@ describe('lpa questionnaires routes', () => {
 							what_happens_next:
 								'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.',
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+						}
+					}
+				],
+				[
+					'enforcementListedBuildingAppeal',
+					{
+						appeal: enforcementListedAppealAppellantCaseIncomplete,
+						templateName: 'lpaq-complete-appellant',
+						personalisation: {
+							lpa_reference: enforcementListedAppealAppellantCaseIncomplete.applicationReference,
+							appeal_reference_number: enforcementListedAppealAppellantCaseIncomplete.reference,
+							site_address: `${enforcementListedAppealAppellantCaseIncomplete.address.addressLine1}, ${enforcementListedAppealAppellantCaseIncomplete.address.addressLine2}, ${enforcementListedAppealAppellantCaseIncomplete.address.addressTown}, ${enforcementListedAppealAppellantCaseIncomplete.address.addressCounty}, ${enforcementListedAppealAppellantCaseIncomplete.address.postcode}, ${enforcementListedAppealAppellantCaseIncomplete.address.addressCountry}`,
+							what_happens_next:
+								'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.',
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+							enforcement_reference:
+								enforcementListedAppealAppellantCaseIncomplete.appellantCase.enforcementReference
 						}
 					}
 				]

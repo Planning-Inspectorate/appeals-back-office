@@ -370,6 +370,7 @@ export const sendChangeProcedureTypeNotifications = async (
 	const weekBeforeConferenceDate = conferenceDate
 		? new Date(conferenceDate.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString()
 		: '';
+	const enforcementReference = await getEnforcementReference(appeal);
 
 	const personalisation = {
 		change_message: `We have changed your appeal procedure to ${
@@ -414,7 +415,8 @@ export const sendChangeProcedureTypeNotifications = async (
 			: '',
 		existing_appeal_procedure: existingAppealProcedure ?? '',
 		hearing_date: eventDate ? dateISOStringToDisplayDate(eventDate) : '',
-		hearing_time: dateISOStringToDisplayTime12hr(eventDate ?? '')
+		hearing_time: dateISOStringToDisplayTime12hr(eventDate ?? ''),
+		...(enforcementReference && { enforcement_reference: enforcementReference })
 	};
 	await sendNotifications(notifyClient, templateName, appeal, lpaStatement, personalisation);
 };
