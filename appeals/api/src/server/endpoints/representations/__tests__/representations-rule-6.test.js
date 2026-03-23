@@ -708,6 +708,29 @@ describe('publishProofOfEvidence', () => {
 			expect.arrayContaining(['the local planning authority', 'the appellant'])
 		);
 	});
+
+	it('should send "not received" email to all parties when NO parties have submitted valid PoE', async () => {
+		const testAppeal = {
+			...mockAppeal,
+			representations: []
+		};
+
+		databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
+
+		await request
+			.post(`/appeals/${appealId}/reps/publish`)
+			.query({ type: 'evidence' })
+			.set('azureAdUserId', azureAdUserId);
+
+		expect(notifySend).toHaveBeenCalledTimes(4);
+
+		notifySend.mock.calls.forEach((call) => {
+			expect(call[0].templateName).toEqual('not-received-proof-of-evidence-and-witnesses');
+			expect(call[0].personalisation.inquiry_subject_line).toEqual(
+				'Proof of evidence and witnesses not received'
+			);
+		});
+	});
 });
 
 describe('publishStatements', () => {
