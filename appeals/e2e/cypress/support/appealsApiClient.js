@@ -130,6 +130,124 @@ export const appealsApiClient = {
 		}
 	},
 
+	async reviewAppellantStatement(reference) {
+		try {
+			const url = `${baseUrl}appeals/${reference}/review-appellant-statement`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+
+			expect(response.status).eq(200);
+
+			const responseBody = await response.json();
+			expect(responseBody).to.be.an('object');
+
+			return responseBody;
+		} catch (error) {
+			cy.writeLog(`Error reviewing appellant statement for ${reference}:`, error);
+			return false;
+		}
+	},
+
+	async reviewRule6PartyStatement(reference) {
+		try {
+			const url = `${baseUrl}appeals/${reference}/review-rule-6-statement`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+
+			expect(response.status).eq(200);
+
+			const responseBody = await response.json();
+			expect(responseBody).to.be.an('object');
+
+			return responseBody;
+		} catch (error) {
+			cy.writeLog(`Error reviewing rule6Party statement for ${reference}:`, error);
+			return false;
+		}
+	},
+
+	async reviewRule6ProofOfEvidence(reference) {
+		try {
+			const url = `${baseUrl}appeals/${reference}/review-rule-6-proof-of-evidence`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				},
+				body: JSON.stringify({
+					reviewOutcome: 'complete'
+				})
+			});
+
+			expect(response.status).eq(200);
+
+			const responseBody = await response.json();
+			expect(responseBody).to.be.an('object');
+
+			return responseBody;
+		} catch (error) {
+			cy.writeLog(`Error reviewing Rule 6 proof of evidence for ${reference}:`, error);
+			return false;
+		}
+	},
+
+	async reviewLpaProofOfEvidence(reference) {
+		try {
+			const url = `${baseUrl}appeals/${reference}/review-lpa-proof-of-evidence`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+
+			expect(response.status).eq(200);
+
+			const responseBody = await response.json();
+			expect(responseBody).to.be.an('object');
+
+			return responseBody;
+		} catch (error) {
+			cy.writeLog(`Error reviewing LPA proof of evidence for ${reference}:`, error);
+			return false;
+		}
+	},
+
+	async reviewAppellantProofOfEvidence(reference) {
+		try {
+			const url = `${baseUrl}appeals/${reference}/review-appellant-proof-of-evidence`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+
+			expect(response.status).eq(200);
+
+			const responseBody = await response.json();
+			expect(responseBody).to.be.an('object');
+
+			return responseBody;
+		} catch (error) {
+			cy.writeLog(`Error reviewing appellant proof of evidence for ${reference}:`, error);
+			return false;
+		}
+	},
+
 	async addRepresentation(reference, type, serviceUserId, representation) {
 		const submission = createApiSubmission(appealsApiRequests[type], type);
 		submission.caseReference = reference;

@@ -424,6 +424,51 @@ Cypress.Commands.add('addInquiryViaApi', (caseObj, date, propertyOverrides = {})
 	});
 });
 
+//If using reviewAppellantStatementViaApi, remember that success banner will not appear
+Cypress.Commands.add('reviewAppellantStatementViaApi', (caseObj, serviceUserId) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.reviewAppellantStatement(caseObj.reference);
+		cy.log('Reviewed appellant statement for case ref ' + caseObj.reference);
+		cy.reload();
+	});
+});
+
+//If using reviewRule6PartyStatement, remember that success banner will not appear
+Cypress.Commands.add('reviewRule6PartyStatement', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.reviewRule6PartyStatement(caseObj.reference);
+		cy.log('Reviewed Rule 6 party statement for case ref ' + caseObj.reference);
+		cy.reload();
+	});
+});
+
+//If using reviewRule6ProofOfEvidenceViaApi, remember that success banner will not appear
+Cypress.Commands.add('reviewRule6ProofOfEvidenceViaApi', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.reviewRule6ProofOfEvidence(caseObj.reference);
+		cy.log('Reviewed Rule 6 proof of evidence for case ref ' + caseObj.reference);
+		cy.reload();
+	});
+});
+
+//If using reviewLpaProofOfEvidenceViaApi, remember that success banner will not appear
+Cypress.Commands.add('reviewLpaProofOfEvidenceViaApi', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.reviewLpaProofOfEvidence(caseObj.reference);
+		cy.log('Reviewed LPA proof of evidence for case ref ' + caseObj.reference);
+		cy.reload();
+	});
+});
+
+//If using reviewAppellantProofOfEvidenceViaApi, remember that success banner will not appear
+Cypress.Commands.add('reviewAppellantProofOfEvidenceViaApi', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.reviewAppellantProofOfEvidence(caseObj.reference);
+		cy.log('Reviewed appellant proof of evidence for case ref ' + caseObj.reference);
+		cy.reload();
+	});
+});
+
 Cypress.Commands.add('reviewStatementViaApi', (caseObj) => {
 	return cy.wrap(null).then(async () => {
 		await appealsApiClient.reviewStatement(caseObj.reference);
