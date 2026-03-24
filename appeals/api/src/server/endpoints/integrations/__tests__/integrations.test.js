@@ -46,6 +46,7 @@ import { jest } from '@jest/globals';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import {
 	CASE_RELATIONSHIP_LINKED,
+	CASE_RELATIONSHIP_RELATED,
 	ERROR_INVALID_APPEAL_TYPE_REP,
 	ERROR_INVALID_APPELLANT_CASE_DATA
 } from '@pins/appeals/constants/support.js';
@@ -511,7 +512,10 @@ describe('/appeals/lpaq-submission', () => {
 					where: { reference: { in: ['1000000'] } }
 				});
 				expect(databaseConnector.appealRelationship.findMany).toHaveBeenCalledWith({
-					where: { parentId: 100 }
+					where: {
+						type: CASE_RELATIONSHIP_RELATED,
+						OR: [{ parentId: 100 }, { childId: 100 }]
+					}
 				});
 				expect(databaseConnector.appealRelationship.createMany).toHaveBeenCalledWith({
 					data: [
