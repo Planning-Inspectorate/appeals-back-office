@@ -336,6 +336,16 @@ export const getCheckPage = async (request, response) => {
 							summaryText: `Preview email to LPA`,
 							html: lpaTemplate.renderedHtml
 						}
+					},
+					{
+						type: 'hint',
+						parameters: {
+							html: `
+									<p class="govuk-body">
+										We will mark the appeal as invalid and send an email to the relevant parties.
+									</p>
+								`
+						}
 					}
 				]
 			},
