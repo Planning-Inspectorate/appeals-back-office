@@ -3,7 +3,7 @@ import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { addDays } from '@pins/appeals/utils/business-days.js';
 import { formatTime } from '@pins/appeals/utils/date-formatter.js';
 import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
@@ -158,7 +158,10 @@ export const postTypeOfSiteVisit = async (request, response) => {
 	}
 	request.session.visitType = request.body['visit-type'];
 	return response.redirect(
-		`/appeals-service/appeal-details/${request.currentAppeal.appealId}/site-visit/schedule`
+		addBackLinkQueryToUrl(
+			request,
+			`/appeals-service/appeal-details/${request.currentAppeal.appealId}/site-visit/schedule`
+		)
 	);
 };
 
