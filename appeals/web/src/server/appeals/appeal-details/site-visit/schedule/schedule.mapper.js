@@ -1,4 +1,3 @@
-import { baseUrl } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import {
 	dateISOStringToDayMonthYearHourMinute,
@@ -7,6 +6,7 @@ import {
 import { timeInput } from '#lib/mappers/components/page-components/time.js';
 import { dateInput, yesNoInput } from '#lib/mappers/index.js';
 import { capitalizeFirstLetter, padNumberWithZero } from '#lib/string-utilities.js';
+import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { siteVisitDateField } from '../site-visits.constants.js';
 
 /**
@@ -166,6 +166,7 @@ export function checkAndConfirmSiteVisitPage(request) {
 			visitDateYear
 		}
 	} = request;
+	const backLinkUrl = getBackLinkUrlFromQuery(request);
 	if (dateTimeKnown === 'no') {
 		/**@type {PageComponent} */
 		const summaryListComponent = {
@@ -215,7 +216,7 @@ export function checkAndConfirmSiteVisitPage(request) {
 
 		return {
 			title: 'Check details and confirm site visit',
-			backLinkUrl: `${baseUrl}`,
+			backLinkUrl: backLinkUrl,
 			preHeading: `Appeal ${appealShortReference(currentAppeal.appealReference)}`,
 			heading: 'Check details and confirm site visit',
 			submitButtonText: 'Confirm',
@@ -351,7 +352,7 @@ export function checkAndConfirmSiteVisitPage(request) {
 		];
 		return {
 			title: 'Check details and confirm site visit',
-			backLinkUrl: `${baseUrl}`,
+			backLinkUrl: backLinkUrl,
 			preHeading: `Appeal ${appealShortReference(currentAppeal.appealReference)}`,
 			heading: 'Check details and confirm site visit',
 			submitButtonText: 'Set up site visit',

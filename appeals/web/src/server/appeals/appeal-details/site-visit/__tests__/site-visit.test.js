@@ -141,7 +141,7 @@ describe('site-visit', () => {
 			});
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/site-visit/schedule'
+				'Found. Redirecting to /appeals-service/appeal-details/1/site-visit/schedule?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fsite-visit%2Fschedule-visit'
 			);
 		});
 		it('should redirect to date and time page', async () => {
@@ -155,7 +155,7 @@ describe('site-visit', () => {
 			});
 			expect(responseTwo.statusCode).toBe(302);
 			expect(responseTwo.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/site-visit/schedule/schedule-visit-date'
+				'Found. Redirecting to /appeals-service/appeal-details/1/site-visit/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fsite-visit%2Fschedule'
 			);
 		});
 
