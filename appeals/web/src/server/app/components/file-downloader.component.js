@@ -8,6 +8,7 @@ import {
 import { camelCaseToWords, toSentenceCase } from '#lib/string-utilities.js';
 import { BlobServiceClient } from '@azure/storage-blob';
 import config from '@pins/appeals.web/environment/config.js';
+import { REP_ATTACHMENT_DOCTYPE } from '@pins/appeals/constants/documents.js';
 import { BlobStorageClient } from '@pins/blob-storage-client';
 import { APPEAL_CASE_STAGE, APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
 import archiver from 'archiver';
@@ -238,7 +239,7 @@ const createBlobDownloadStream = async (
 /**
  * Build a zipped file and Download
  *
- * @param {{apiClient: import('got').Got, params: {caseId: string, filename?: string}, session: SessionWithAuth, currentAppeal: WebAppeal}} request
+ * @param {{apiClient: import('got').Got, params: {caseId: string, filename?: string, representationType?: string}, session: SessionWithAuth, currentAppeal: WebAppeal}} request
  * @param {Response} response
  * @returns {Promise<Response>}
  */
@@ -246,8 +247,8 @@ export const getBulkDocumentDownload = async (
 	{ apiClient, params, session, currentAppeal },
 	response
 ) => {
-	const { filename = '', caseId } = params;
-	const bulkFileInfo = await getBulkFileInfo(apiClient, caseId);
+	const { filename = '', caseId, representationType = '' } = params;
+	const bulkFileInfo = await getBulkFileInfo(apiClient, caseId, representationType);
 	const zipFileName = buildZipFileName(caseId, filename);
 
 	response.setHeader('content-type', 'application/zip');
@@ -371,19 +372,39 @@ export const getRepresentationAttachmentFullNames = async (apiClient, caseId) =>
 };
 
 /**
- * Get bulk file info
+ * Get document subset
+ *
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @returns {Promise<*>}
+ */
+const getRepresentationFolder = async (apiClient, appealId) => {
+	try {
+		return await apiClient
+			.get(`appeals/${appealId}/document-folders?path=representation/${REP_ATTACHMENT_DOCTYPE}`)
+			.json();
+	} catch {
+		return undefined;
+	}
+};
+
+/**
+ * Get bulk file info for a representation type
  *
  * @param {import('got').Got} apiClient
  * @param {string} caseId
+ * @param {string} representationType
  * @returns {Promise<*>}
  */
-export const getBulkFileInfo = async (apiClient, caseId) => {
+export const getBulkFileInfo = async (apiClient, caseId, representationType) => {
 	const representationAttachmentFullNames = await getRepresentationAttachmentFullNames(
 		apiClient,
 		caseId
 	);
 	// @ts-ignore
-	const folders = await getAllCaseFolders(apiClient, caseId);
+	const folders = representationType
+		? await getRepresentationFolder(apiClient, caseId)
+		: await getAllCaseFolders(apiClient, caseId);
 
 	return (
 		folders
@@ -399,44 +420,55 @@ export const getBulkFileInfo = async (apiClient, caseId) => {
 					.map((folderName) => camelCaseToWords(folderName.trim()).replace('Lpa', 'LPA'))
 					.join('/');
 
-				// @ts-ignore
-				return folder.documents
-					.map((document) => {
-						const { blobStorageContainer, blobStoragePath, documentURI } =
-							document.latestDocumentVersion;
+				return (
+					folder.documents
+						// @ts-ignore
+						.map((document) => {
+							const { blobStorageContainer, blobStoragePath, documentURI } =
+								document.latestDocumentVersion;
 
-						// If this is in Representation Attachments folder, only include if it's mapped
-						if (folderPath === 'Representation/Representation Attachments') {
-							// @ts-ignore
-							if (representationAttachmentFullNames[document.guid]) {
+							const representationAttachmentFullName =
+								representationAttachmentFullNames[document.id || document.guid];
+
+							// If this is in Representation Attachments folder, only include if it's mapped
+							if (folderPath === 'Representation/Representation Attachments') {
+								// @ts-ignore
+								if (representationAttachmentFullName) {
+									// if only ip comments required, only include ip comments
+									if (
+										representationType === 'ip-comments' &&
+										!representationAttachmentFullName?.includes('Interested party comments')
+									) {
+										return null;
+									}
+									return {
+										// @ts-ignore
+										fullName: representationAttachmentFullName,
+										blobStorageContainer,
+										blobStoragePath,
+										documentURI
+									};
+								} else {
+									// Skip unmapped representation attachments
+									// @ts-ignore
+
+									return null;
+								}
+							} else {
+								// For other folders, include all documents
 								return {
 									// @ts-ignore
-									fullName: representationAttachmentFullNames[document.guid],
+									fullName:
+										// @ts-ignore
+										representationAttachmentFullName || `${folderPath}/${document.name}`,
 									blobStorageContainer,
 									blobStoragePath,
 									documentURI
 								};
-							} else {
-								// Skip unmapped representation attachments
-								// @ts-ignore
-
-								return null;
 							}
-						} else {
-							// For other folders, include all documents
-							return {
-								// @ts-ignore
-								fullName:
-									// @ts-ignore
-									representationAttachmentFullNames[document.guid] ||
-									`${folderPath}/${document.name}`,
-								blobStorageContainer,
-								blobStoragePath,
-								documentURI
-							};
-						}
-					})
-					.filter(Boolean); // Remove null entries
+						})
+						.filter(Boolean)
+				); // Remove null entries
 			})
 	);
 };
