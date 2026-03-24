@@ -215,7 +215,8 @@ const setAppealRelationships = async (tx, appealId, caseReference, relatedRefere
 
 		const existingRelationships = await tx.appealRelationship.findMany({
 			where: {
-				parentId: appealId
+				type: CASE_RELATIONSHIP_RELATED,
+				OR: [{ parentId: appealId }, { childId: appealId }]
 			}
 		});
 
@@ -223,7 +224,8 @@ const setAppealRelationships = async (tx, appealId, caseReference, relatedRefere
 			.map((ref) => {
 				if (
 					!existingRelationships.find(
-						(/** @type {{ childRef: string; }} */ a) => a.childRef === ref
+						/** @type {{ childRef: string; parentRef: string; }} */ (a) =>
+							a.childRef === ref || a.parentRef === ref
 					)
 				) {
 					const foundAppeal = relatedAppeals.find(
