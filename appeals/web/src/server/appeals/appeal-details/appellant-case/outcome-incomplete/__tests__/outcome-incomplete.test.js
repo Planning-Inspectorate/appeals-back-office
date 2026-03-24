@@ -13,12 +13,16 @@ import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
 
-const { app, installMockApi } = createTestEnvironment();
+const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const appealId = appealDataEnforcementNotice.appealId;
 const baseUrl = `/appeals-service/appeal-details/${appealId}`;
 
 describe('incomplete-appeal', () => {
+	afterEach(() => {
+		teardown();
+	});
+
 	describe('enforcement notice appeal', () => {
 		describe('GET /appellant-case/incomplete', () => {
 			beforeEach(() => {
@@ -497,6 +501,29 @@ describe('incomplete-appeal', () => {
 				);
 				expect(unprettifiedElement.innerHTML).toContain('<li>Ground (a): invalid ground 1</li>');
 				expect(unprettifiedElement.innerHTML).toContain('Mark appeal as incomplete</button>');
+			});
+
+			it('should have a back link to the enforcement other information page if entered', async () => {
+				// Populate session data
+				await request.post(`${baseUrl}/appellant-case`).send({ reviewOutcome: 'incomplete' });
+				await request
+					.post(`${baseUrl}/appellant-case/incomplete/enforcement-notice`)
+					.send({ enforcementNoticeInvalid: 'no' });
+				await request
+					.post(`${baseUrl}/appellant-case/incomplete/enforcement-other-information`)
+					.send({
+						otherInformationValidRadio: 'Yes',
+						otherInformationDetails: 'Enforcement other information'
+					});
+
+				const response = await request.get(
+					`${baseUrl}/appellant-case/incomplete/check-details-and-mark-enforcement-as-incomplete`
+				);
+
+				const element = parseHtml(response.text, { rootElement: 'body' });
+				expect(element.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+					`/appeals-service/appeal-details/${appealId}/appellant-case/incomplete/enforcement-other-information`
+				);
 			});
 		});
 
