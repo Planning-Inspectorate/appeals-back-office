@@ -310,6 +310,16 @@ export const getCheckDetails = async (request, response) => {
 						html: lpaTemplate.renderedHtml,
 						id: 'lpa-preview'
 					}
+				},
+				{
+					type: 'hint',
+					parameters: {
+						html: `
+									<p class="govuk-body">
+										We will mark the appeal as invalid and send an email to the relevant parties.
+									</p>
+								`
+					}
 				}
 			]
 		},
