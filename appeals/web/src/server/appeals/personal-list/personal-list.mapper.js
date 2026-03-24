@@ -609,6 +609,12 @@ function mapRequiredActionToPersonalListActionHtml(
 				`/appeals-service/appeal-details/${appealId}/appellant-case`
 			)}">Update case</a>`;
 		}
+		case 'enforcementListedAppealIncomplete': {
+			return `Enforcement notice invalid<br><a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/appellant-case`
+			)}">Update case</a>`;
+		}
 		default: {
 			return '';
 		}
