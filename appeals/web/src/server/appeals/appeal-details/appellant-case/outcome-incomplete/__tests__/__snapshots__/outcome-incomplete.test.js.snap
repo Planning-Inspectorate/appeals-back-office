@@ -557,7 +557,7 @@ exports[`incomplete-appeal enforcement notice appeal GET /receipt-due-date shoul
                             <label class="govuk-label govuk-date-input__label" for="fee-receipt-due-date-day">Day</label>
                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                             id="fee-receipt-due-date-day" name="fee-receipt-due-date-day" type="text"
-                            inputmode="numeric">
+                            value="15" inputmode="numeric">
                         </div>
                     </div>
                     <div class="govuk-date-input__item">
@@ -565,7 +565,7 @@ exports[`incomplete-appeal enforcement notice appeal GET /receipt-due-date shoul
                             <label class="govuk-label govuk-date-input__label" for="fee-receipt-due-date-month">Month</label>
                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                             id="fee-receipt-due-date-month" name="fee-receipt-due-date-month" type="text"
-                            inputmode="numeric">
+                            value="1" inputmode="numeric">
                         </div>
                     </div>
                     <div class="govuk-date-input__item">
@@ -573,7 +573,7 @@ exports[`incomplete-appeal enforcement notice appeal GET /receipt-due-date shoul
                             <label class="govuk-label govuk-date-input__label" for="fee-receipt-due-date-year">Year</label>
                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                             id="fee-receipt-due-date-year" name="fee-receipt-due-date-year" type="text"
-                            inputmode="numeric">
+                            value="2025" inputmode="numeric">
                         </div>
                     </div>
                 </div>

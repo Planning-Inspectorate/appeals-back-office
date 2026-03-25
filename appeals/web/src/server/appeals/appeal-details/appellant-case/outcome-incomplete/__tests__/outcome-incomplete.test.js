@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 import {
 	appealCaseEnforcementInvalidReasons,
@@ -799,8 +800,23 @@ describe('incomplete-appeal', () => {
 		});
 
 		describe('GET /receipt-due-date', () => {
+			let RealDate;
+
 			beforeEach(() => {
-				jest.spyOn(Date, 'now').mockReturnValue(1735732800000); // set date for Hint text
+				RealDate = global.Date;
+				const mockTimestamp = 1735732800000;
+				global.Date = class extends RealDate {
+					constructor(arg) {
+						if (arg) {
+							return new RealDate(arg);
+						}
+						return new RealDate(mockTimestamp);
+					}
+
+					static now() {
+						return mockTimestamp;
+					}
+				};
 
 				nock('http://test/')
 					.get(`/appeals/${appealId}?include=all`)
@@ -815,6 +831,7 @@ describe('incomplete-appeal', () => {
 			});
 
 			afterEach(() => {
+				global.Date = RealDate;
 				nock.cleanAll();
 				jest.restoreAllMocks();
 			});
