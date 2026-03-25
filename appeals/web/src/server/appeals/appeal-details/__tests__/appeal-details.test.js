@@ -2739,6 +2739,38 @@ describe('appeal-details', () => {
 			);
 		});
 
+		it('should render a Decision inset panel when the appealStatus is complete and awaiting_event is missing', async () => {
+			const appealId = '2';
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, {
+					...appealData,
+					appealStatus: 'complete',
+					completedStateList: []
+				});
+			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+			nock('http://test/')
+				.get('/appeals/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
+				.reply(200, documentFileVersionInfo);
+			const response = await request.get(`${baseUrl}/${appealId}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const insetTextElementHTML = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: '.govuk-inset-text'
+			}).innerHTML;
+			expect(insetTextElementHTML).toContain('<li>Decision: Dismissed</li>');
+			expect(insetTextElementHTML).toContain(
+				'<li>Decision issued on 4 August 2023 (updated on 11 October 2023)</li>'
+			);
+			expect(insetTextElementHTML).toContain(
+				'<li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2">View decision</a></li>'
+			);
+		});
+
 		it('should render the view decision page', async () => {
 			const appealId = '2';
 
