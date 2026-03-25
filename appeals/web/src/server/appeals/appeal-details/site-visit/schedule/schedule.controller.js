@@ -28,7 +28,6 @@ export const postKnowDateTime = async (request, response) => {
 		return renderKnowDateTimePage(request, response);
 	}
 	session.dateTimeKnown = body['dateTimeRadio'];
-
 	if (session.dateTimeKnown === 'no') {
 		response.redirect(
 			addBackLinkQueryToUrl(
@@ -129,7 +128,9 @@ export const postScheduleVisitDateTime = async (request, response) => {
 					msg: 'Enter the end time'
 				};
 			}
-			return renderScheduleVisitDatePage(request, response, errorMessage);
+			if (errorMessage['visit-start-time-hour'] || errorMessage['visit-end-time-hour']) {
+				return renderScheduleVisitDatePage(request, response, errorMessage);
+			}
 		}
 
 		session.visitDateDay = siteVisitDateFieldDay;
