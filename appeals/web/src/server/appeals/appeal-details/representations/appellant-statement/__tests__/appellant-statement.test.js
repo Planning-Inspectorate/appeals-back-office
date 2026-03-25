@@ -2,8 +2,10 @@ import usersService from '#appeals/appeal-users/users-service.js';
 import {
 	activeDirectoryUsersData,
 	allocationDetailsData,
+	appealDataEnforcementListedBuilding,
 	appealDataEnforcementNotice,
 	appellantStatementAwaitingReview,
+	appellantStatementPublished,
 	costsFolderInfoAppellantApplication,
 	documentFileInfo,
 	documentFileVersionsInfo,
@@ -256,6 +258,35 @@ describe('appellant-statements', () => {
 
 			expect(response.statusCode).toBe(200);
 			expect(response.text).toContain(`href="/appeals-service/appeal-details/${appealId}"`);
+		});
+
+		it('should render a back link to case details in view mode when backUrl points to an internal confirm page', async () => {
+			const enforcementListedBuildingAppealId = 4;
+
+			nock('http://test/')
+				.get(`/appeals/${enforcementListedBuildingAppealId}?include=all`)
+				.reply(200, {
+					...appealDataEnforcementListedBuilding,
+					appealId: enforcementListedBuildingAppealId,
+					appealStatus: 'statements'
+				});
+
+			nock('http://test/')
+				.get(`/appeals/${enforcementListedBuildingAppealId}/reps?type=appellant_statement`)
+				.reply(200, {
+					...getAppealRepsResponse,
+					itemCount: 1,
+					items: [appellantStatementPublished]
+				});
+
+			const response = await request.get(
+				`${baseUrl}/${enforcementListedBuildingAppealId}/appellant-statement?backUrl=/appeals-service/appeal-details/${enforcementListedBuildingAppealId}/appellant-statement/valid/confirm`
+			);
+
+			expect(response.statusCode).toBe(200);
+			expect(response.text).toContain(
+				`href="/appeals-service/appeal-details/${enforcementListedBuildingAppealId}"`
+			);
 		});
 	});
 
