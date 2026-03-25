@@ -622,7 +622,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'U1050',
 		name: 'Derbyshire County Council',
-		email: 'planningcontrol@derbyshire.gov.uk',
+		email: 'development.management@derbyshire.gov.uk',
 		teamId: null
 	},
 	{
