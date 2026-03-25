@@ -45,9 +45,6 @@ export function emulateSendEmail(appealRef, templateName, recipientEmail, subjec
 			blockEnd = 0;
 			return line ? `</div>\n${line}<br>` : '</div><br>';
 		}
-		if (line.includes('__') || line.includes('**')) {
-			line = line.replaceAll(/(\*\*|__)([^*_]+)\1/g, '<strong>$2</strong>');
-		}
 		return line ? `${line}<br>` : '<br>';
 	});
 	// close blockquotes if required
@@ -101,10 +98,6 @@ export const generateNotifyPreview = (content, noBottomBorder) => {
 	const contentLines = content.split('\n').map((line, index, lines) => {
 		line = line.trim();
 
-		// Handle bold text
-		if (line.includes('__') || line.includes('**')) {
-			line = line.replaceAll(/(\*\*|__)([^*_]+)\1/g, '<strong>$2</strong>');
-		}
 		// Handle headers
 		if (line.startsWith('#')) {
 			// @ts-ignore

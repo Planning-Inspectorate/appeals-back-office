@@ -214,6 +214,7 @@ export const importAppeal = async (req, res) => {
 		);
 
 		const {
+			lpa,
 			agent,
 			appellant,
 			reference: parentReference,
@@ -222,29 +223,46 @@ export const importAppeal = async (req, res) => {
 
 		const oneAdditionalAppellant = childAppeals.length === 1;
 
-		await notifySend({
-			templateName: 'link-appeal-additional-appellants',
+		const personalisation = {
+			appeal_reference_number: parentReference ?? '',
+			site_address: parentAddress ? formatAddressSingleLine(parentAddress) : '',
+			enforcement_reference: casedata?.enforcementReference ?? '',
+			lead_appeal_reference_number: parentReference ?? '',
+			one_additional_appellant: oneAdditionalAppellant,
 			// @ts-ignore
-			notifyClient: req.notifyClient,
-			recipientEmail: agent?.email ?? appellant?.email ?? '',
-			personalisation: {
-				appeal_reference_number: parentReference ?? '',
-				site_address: parentAddress ? formatAddressSingleLine(parentAddress) : '',
-				enforcement_reference: casedata?.enforcementReference ?? '',
-				lead_appeal_reference_number: parentReference ?? '',
-				one_additional_appellant: oneAdditionalAppellant,
+			full_name_lead_appellant: formatName(appellant),
+			child_appeal_reference_number: oneAdditionalAppellant
+				? (childAppeals[0]?.reference ?? '')
+				: childAppeals.map((child) => child?.reference ?? ''),
+			full_name_additional_appellant: oneAdditionalAppellant
+				? // @ts-ignore
+					formatName(childAppeals[0].appellant)
+				: // @ts-ignore
+					childAppeals.map((child) => formatName(child.appellant))
+		};
+
+		const appellantEmail = agent?.email ?? appellant?.email;
+		const lpaEmail = lpa?.email;
+
+		if (appellantEmail) {
+			await notifySend({
+				templateName: 'link-appeal-additional-appellants',
 				// @ts-ignore
-				full_name_lead_appellant: formatName(appellant),
-				child_appeal_reference_number: oneAdditionalAppellant
-					? (childAppeals[0]?.reference ?? '')
-					: childAppeals.map((child) => child?.reference ?? ''),
-				full_name_additional_appellant: oneAdditionalAppellant
-					? // @ts-ignore
-						formatName(childAppeals[0].appellant)
-					: // @ts-ignore
-						childAppeals.map((child) => formatName(child.appellant))
-			}
-		});
+				notifyClient: req.notifyClient,
+				recipientEmail: appellantEmail,
+				personalisation
+			});
+		}
+
+		if (lpaEmail) {
+			await notifySend({
+				templateName: 'link-appeal-additional-appellants',
+				// @ts-ignore
+				notifyClient: req.notifyClient,
+				recipientEmail: lpaEmail,
+				personalisation
+			});
+		}
 	}
 
 	return res.status(201).send({ id, reference, assignedTeamId });
