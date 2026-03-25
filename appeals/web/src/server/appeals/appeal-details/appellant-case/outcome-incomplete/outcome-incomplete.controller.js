@@ -150,6 +150,16 @@ const renderUpdateDueDate = async (request, response) => {
 				dueDateYear = processedDueDate.year;
 			}
 		}
+
+		if (
+			currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
+			(!dueDateDay || !dueDateMonth || !dueDateYear)
+		) {
+			const dueDate = add(new Date(), { days: 7 });
+			dueDateDay = dueDate.getDate();
+			dueDateMonth = dueDate.getMonth() + 1;
+			dueDateYear = dueDate.getFullYear();
+		}
 	}
 	if (objectContainsAllKeys(body, ['due-date-day', 'due-date-month', 'due-date-year'])) {
 		dueDateDay = request.body['due-date-day'];
@@ -490,6 +500,15 @@ const renderReceiptFeeDueDate = async (request, response) => {
 		dueDateDay = request.body['due-date-day'];
 		dueDateMonth = request.body['due-date-month'];
 		dueDateYear = request.body['due-date-year'];
+	}
+
+	if (!dueDateDay && !dueDateMonth && !dueDateYear) {
+		const dueDate = currentAppeal.enforcementNotice?.appellantCase?.groundAFeeDueDate
+			? new Date(currentAppeal.enforcementNotice.appellantCase.groundAFeeDueDate)
+			: add(new Date(), { days: 14 });
+		dueDateDay = dueDate.getDate();
+		dueDateMonth = dueDate.getMonth() + 1;
+		dueDateYear = dueDate.getFullYear();
 	}
 
 	const backLinkUrl = request.session.webAppellantCaseReviewOutcome?.groundsFacts
