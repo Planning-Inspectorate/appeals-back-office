@@ -278,7 +278,7 @@ export const getBulkDocumentDownload = async (
 		);
 
 		blobStreams.forEach((blobStream, index) => {
-			if (blobStream && blobStream !== null) {
+			if (blobStream) {
 				archive.append(blobStream, { name: bulkFileInfo[index].fullName });
 			} else {
 				missingFiles.push(bulkFileInfo[index].fullName);
@@ -287,7 +287,7 @@ export const getBulkDocumentDownload = async (
 	}
 
 	if (config.featureFlags.featureFlagPdfDownload) {
-		const successfulPdfs = await generateAllPdfs(currentAppeal, apiClient);
+		const successfulPdfs = await generateAllPdfs(currentAppeal, apiClient, representationType);
 
 		// @ts-ignore
 		successfulPdfs.forEach((pdf) => archive.append(pdf.buffer, { name: pdf.name }));
@@ -406,69 +406,70 @@ export const getBulkFileInfo = async (apiClient, caseId, representationType) => 
 		? await getRepresentationFolder(apiClient, caseId)
 		: await getAllCaseFolders(apiClient, caseId);
 
-	return (
-		folders
-			?.filter(
-				// @ts-ignore
-				(folder) => folder.documents?.length && !folder.path.startsWith(APPEAL_CASE_STAGE.INTERNAL)
-			)
+	const bulkFileInfo = folders
+		?.filter(
 			// @ts-ignore
-			.flatMap((folder) => {
-				const folderPath = folder.path
-					.split('/')
+			(folder) => folder.documents?.length && !folder.path.startsWith(APPEAL_CASE_STAGE.INTERNAL)
+		)
+		// @ts-ignore
+		.flatMap((folder) => {
+			const folderPath = folder.path
+				.split('/')
+				// @ts-ignore
+				.map((folderName) => camelCaseToWords(folderName.trim()).replace('Lpa', 'LPA'))
+				.join('/');
+
+			return (
+				folder.documents
 					// @ts-ignore
-					.map((folderName) => camelCaseToWords(folderName.trim()).replace('Lpa', 'LPA'))
-					.join('/');
+					.map((document) => {
+						const { blobStorageContainer, blobStoragePath, documentURI } =
+							document.latestDocumentVersion;
 
-				return (
-					folder.documents
-						// @ts-ignore
-						.map((document) => {
-							const { blobStorageContainer, blobStoragePath, documentURI } =
-								document.latestDocumentVersion;
+						const representationAttachmentFullName =
+							representationAttachmentFullNames[document.id || document.guid];
 
-							const representationAttachmentFullName =
-								representationAttachmentFullNames[document.id || document.guid];
-
-							// If this is in Representation Attachments folder, only include if it's mapped
-							if (folderPath === 'Representation/Representation Attachments') {
-								// @ts-ignore
-								if (representationAttachmentFullName) {
-									// if only ip comments required, only include ip comments
-									if (
-										representationType === 'ip-comments' &&
-										!representationAttachmentFullName?.includes('Interested party comments')
-									) {
-										return null;
-									}
-									return {
-										// @ts-ignore
-										fullName: representationAttachmentFullName,
-										blobStorageContainer,
-										blobStoragePath,
-										documentURI
-									};
-								} else {
-									// Skip unmapped representation attachments
-									// @ts-ignore
-
+						// If this is in Representation Attachments folder, only include if it's mapped
+						if (folderPath === 'Representation/Representation Attachments') {
+							// @ts-ignore
+							if (representationAttachmentFullName) {
+								// if only ip comments required, only include ip comments
+								if (
+									representationType === 'ip-comments' &&
+									!representationAttachmentFullName?.includes('Interested party comments')
+								) {
 									return null;
 								}
-							} else {
-								// For other folders, include all documents
 								return {
 									// @ts-ignore
-									fullName:
-										// @ts-ignore
-										representationAttachmentFullName || `${folderPath}/${document.name}`,
+									fullName: representationAttachmentFullName,
 									blobStorageContainer,
 									blobStoragePath,
 									documentURI
 								};
+							} else {
+								// Skip unmapped representation attachments
+								// @ts-ignore
+
+								return null;
 							}
-						})
-						.filter(Boolean)
-				); // Remove null entries
-			})
-	);
+						} else {
+							// For other folders, include all documents
+							return {
+								// @ts-ignore
+								fullName:
+									// @ts-ignore
+									representationAttachmentFullName || `${folderPath}/${document.name}`,
+								blobStorageContainer,
+								blobStoragePath,
+								documentURI
+							};
+						}
+					})
+					.filter(Boolean)
+			); // Remove null entries
+		});
+
+	// @ts-ignore
+	return bulkFileInfo.filter((fileInfo) => fileInfo.blobStoragePath && fileInfo.documentURI); // don't fail all files if blob path is null (seeded data in development and testing)
 };
