@@ -192,7 +192,7 @@ describe('/appeals/case-submission', () => {
 					})
 				);
 
-				expect(mockNotifySend).toHaveBeenCalledTimes(appealType === 'ENFORCEMENT_NOTICE' ? 1 : 0);
+				expect(mockNotifySend).toHaveBeenCalledTimes(appealType === 'ENFORCEMENT_NOTICE' ? 2 : 0);
 
 				expect(databaseConnector.document.createMany).toHaveBeenCalled();
 				expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
@@ -1313,6 +1313,7 @@ const createIntegrationMocks = (/** @type {*} */ appealIngestionInput) => {
 		appealStatus: [{ status: 'ready_to_start', valid: true }],
 		agent: { email: 'test@email.com', firstName: 'Test', lastName: 'Agent' },
 		appellant: { email: 'test@email.com', firstName: 'Test', lastName: 'Agent' },
+		lpa: { email: 'test@email.com', firstName: 'Test', lastName: 'Agent' },
 		address: { addressLine1: '123 Test Street', postcode: 'TE1 1ST' }
 	});
 	// @ts-ignore
