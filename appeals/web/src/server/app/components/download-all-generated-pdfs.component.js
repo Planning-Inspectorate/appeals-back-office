@@ -55,10 +55,49 @@ async function generatePdfViaService(templateName, templateData, appealIdForLog,
  *
  * @param {WebAppeal} currentAppealData
  * @param {import('got').Got} apiClient
+ * @param {string | undefined} [representationType]
  * @returns {Promise<*>}
  */
-export async function generateAllPdfs(currentAppealData, apiClient) {
+async function getTasks(currentAppealData, apiClient, representationType) {
 	const { appealId, appealType } = currentAppealData;
+
+	const ipCommentsTask = {
+		filenameInZip: `Interested party comments ${currentAppealData.appealReference}.pdf`,
+		templateName: 'ip-comments-pdf',
+		async fetchData() {
+			logger.debug('[DownloadAll] Fetching data for: Interested Party Comments');
+			const statuses = ['awaiting_review', 'valid', 'invalid', 'published'];
+			const promises = statuses.map((s) =>
+				apiClient
+					.get(`appeals/${appealId}/reps`, {
+						searchParams: { type: 'comment', status: s, pageNumber: 1, pageSize: 1000 }
+					})
+					.json()
+					.catch(() => ({ items: [] }))
+			);
+			const [awaiting, accepted, rejected, published] = await Promise.all(promises);
+			if (
+				!awaiting?.items?.length &&
+				!accepted?.items?.length &&
+				!rejected?.items?.length &&
+				!published?.items?.length
+			)
+				return null;
+			return {
+				ipCommentsData: {
+					...currentAppealData,
+					awaitingReviewComments: awaiting.items,
+					acceptedComments: accepted.items,
+					rejectedComments: rejected.items,
+					publishedComments: published.items
+				}
+			};
+		}
+	};
+
+	if (representationType === 'ip-comments') {
+		return [ipCommentsTask];
+	}
 
 	const hasTasks = [
 		{
@@ -99,7 +138,9 @@ export async function generateAllPdfs(currentAppealData, apiClient) {
 		}
 	];
 
-	// --- Step 1: Define a single source of truth for all tasks ---
+	if (appealType === APPEAL_TYPE.HOUSEHOLDER) {
+		return hasTasks;
+	}
 
 	// folders are the same for s20 and s78
 	const s78s20Tasks = [
@@ -145,45 +186,27 @@ export async function generateAllPdfs(currentAppealData, apiClient) {
 				return rawData ? { lpaFinalCommentsData: { ...currentAppealData, ...rawData } } : null;
 			}
 		},
-		{
-			filenameInZip: `Interested party comments ${currentAppealData.appealReference}.pdf`,
-			templateName: 'ip-comments-pdf',
-			async fetchData() {
-				logger.debug('[DownloadAll] Fetching data for: Interested Party Comments');
-				const statuses = ['awaiting_review', 'valid', 'invalid', 'published'];
-				const promises = statuses.map((s) =>
-					apiClient
-						.get(`appeals/${appealId}/reps`, {
-							searchParams: { type: 'comment', status: s, pageNumber: 1, pageSize: 1000 }
-						})
-						.json()
-						.catch(() => ({ items: [] }))
-				);
-				const [awaiting, accepted, rejected, published] = await Promise.all(promises);
-				if (
-					!awaiting?.items?.length &&
-					!accepted?.items?.length &&
-					!rejected?.items?.length &&
-					!published?.items?.length
-				)
-					return null;
-				return {
-					ipCommentsData: {
-						...currentAppealData,
-						awaitingReviewComments: awaiting.items,
-						acceptedComments: accepted.items,
-						rejectedComments: rejected.items,
-						publishedComments: published.items
-					}
-				};
-			}
-		}
+		ipCommentsTask
 	];
 
-	const tasks = appealType === APPEAL_TYPE.HOUSEHOLDER ? hasTasks : s78s20Tasks;
+	return s78s20Tasks;
+}
+
+/**
+ *
+ * @param {WebAppeal} currentAppealData
+ * @param {import('got').Got} apiClient
+ * @param {string | undefined} [representationType]
+ * @returns {Promise<*>}
+ */
+export async function generateAllPdfs(currentAppealData, apiClient, representationType) {
+	const { appealId } = currentAppealData;
+
+	const tasks = await getTasks(currentAppealData, apiClient, representationType);
 
 	// --- Step 2: Fetch data and generate PDFs in parallel ---
 	logger.info(`[DownloadAll] Starting to process ${tasks.length} PDF generation tasks.`);
+	// @ts-ignore
 	const generationPromises = tasks.map(async (task) => {
 		try {
 			const templateData = await task.fetchData();
