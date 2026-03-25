@@ -3,6 +3,7 @@ import { mapLPAProofOfEvidence } from '#lib/mappers/data/appeal/submappers/lpa-p
 import { submaps as hasSubmaps } from './has.js';
 import { mapAppellantFinalComments } from './submappers/appellant-final-comments.mapper.js';
 import { mapAppellantStatement } from './submappers/appellant-statement.mapper.js';
+import { mapApplicationMadeUnderActSection } from './submappers/application-made-under-act-section.js';
 import { mapCaseManagementConferenceDueDate } from './submappers/case-management-conference-due-date.mapper.js';
 import { mapCostsRule6Parties } from './submappers/costs-rule-6-parties.mapper.js';
 import { mapEnforcementReference } from './submappers/enforcement-reference.mapper.js';
@@ -72,5 +73,6 @@ export const submaps = {
 	costsRule6Parties: mapCostsRule6Parties,
 	appellantStatement: mapAppellantStatement,
 	caseManagementConferenceDueDate: mapCaseManagementConferenceDueDate,
-	enforcementReference: mapEnforcementReference
+	enforcementReference: mapEnforcementReference,
+	applicationMadeUnderActSection: mapApplicationMadeUnderActSection
 };

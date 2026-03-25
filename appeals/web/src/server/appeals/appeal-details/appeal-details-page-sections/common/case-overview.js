@@ -26,6 +26,8 @@ export const getCaseOverview = (mappedData, appealDetails) => ({
 				? mappedData.appeal?.horizonReference?.display.summaryListItem
 				: undefined,
 			mappedData.appeal.appealType.display.summaryListItem,
+			appealDetails.appealType === APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE &&
+				mappedData.appeal?.applicationMadeUnderActSection?.display.summaryListItem,
 
 			displayProcedureChangeLink(appealDetails)
 				? mappedData.appeal?.caseProcedure?.display.summaryListItem
