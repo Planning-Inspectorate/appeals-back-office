@@ -296,6 +296,7 @@ export const renderDocumentDetails = async ({
  * @param {string} [params.addButtonTextOverride]
  * @param {string} [params.dateColumnLabelTextOverride]
  * @param {string} [params.preHeadingTextOverride]
+ * @param {boolean} [params.isCosts]
  */
 export const renderManageFolder = async ({
 	request,
@@ -306,7 +307,8 @@ export const renderManageFolder = async ({
 	pageHeadingTextOverride,
 	addButtonTextOverride,
 	dateColumnLabelTextOverride,
-	preHeadingTextOverride
+	preHeadingTextOverride,
+	isCosts = false
 }) => {
 	const { currentFolder, errors } = request;
 
@@ -323,7 +325,8 @@ export const renderManageFolder = async ({
 		pageHeadingTextOverride,
 		addButtonTextOverride,
 		dateColumnLabelTextOverride,
-		preHeadingTextOverride
+		preHeadingTextOverride,
+		isCosts
 	});
 
 	return response.status(200).render('appeals/documents/manage-folder.njk', {
@@ -343,6 +346,7 @@ export const renderManageFolder = async ({
  * @param {string} [params.dateRowLabelTextOverride]
  * @param {boolean} [params.skipChangeDocumentDetails]
  * @param {string} [params.manageDocumentPageBaseUrl]
+ * @param {boolean} [params.isCosts]
  */
 export const renderManageDocument = async ({
 	request,
@@ -353,7 +357,8 @@ export const renderManageDocument = async ({
 	pageTitleTextOverride,
 	dateRowLabelTextOverride,
 	skipChangeDocumentDetails = false,
-	manageDocumentPageBaseUrl
+	manageDocumentPageBaseUrl,
+	isCosts = false
 }) => {
 	const {
 		currentFolder,
@@ -390,7 +395,8 @@ export const renderManageDocument = async ({
 		dateRowLabelTextOverride,
 		editable: userHasPermission(permissionNames.updateCase, request.session),
 		skipChangeDocumentDetails,
-		baseUrl: manageDocumentPageBaseUrl
+		baseUrl: manageDocumentPageBaseUrl,
+		isCosts
 	});
 
 	return response.status(200).render('appeals/documents/manage-document.njk', {

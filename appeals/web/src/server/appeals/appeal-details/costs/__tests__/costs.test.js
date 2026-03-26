@@ -1478,6 +1478,55 @@ describe('costs', () => {
 					});
 				}
 			}
+
+			it(`Should render 'Manage and share' CTA and NO tag if document is NOT shared`, async () => {
+				nock.cleanAll();
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+
+				const unsharedDocumentFolder = structuredClone(costsFolderInfoAppellantApplication);
+				unsharedDocumentFolder.documents.forEach((doc) => {
+					doc.isShared = false;
+				});
+
+				nock('http://test/')
+					.get('/appeals/1/document-folders/1')
+					.reply(200, unsharedDocumentFolder);
+
+				const response = await request.get(
+					`${baseUrl}/1/costs/appellant/application/manage-documents/1`
+				);
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Manage and share');
+				expect(unprettifiedElement.innerHTML).not.toContain(
+					'<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong>'
+				);
+			});
+
+			it(`Should render 'Manage' CTA and 'Shared' tag if document IS shared`, async () => {
+				nock.cleanAll();
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+
+				const sharedDocumentFolder = structuredClone(costsFolderInfoAppellantApplication);
+				sharedDocumentFolder.documents.forEach((doc) => {
+					doc.isShared = true;
+				});
+
+				nock('http://test/').get('/appeals/1/document-folders/1').reply(200, sharedDocumentFolder);
+
+				const response = await request.get(
+					`${baseUrl}/1/costs/appellant/application/manage-documents/1`
+				);
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).not.toContain('Manage and share');
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Manage <span class="govuk-visually-hidden">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong>'
+				);
+			});
 		});
 
 		describe('GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId', () => {
@@ -1632,6 +1681,42 @@ describe('costs', () => {
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Upload a new version');
 						expect(unprettifiedElement.innerHTML).toContain('Remove current version');
+					});
+
+					it(`should render 'Shared' tags under the Version Summary and in Version History if document IS shared`, async () => {
+						nock.cleanAll();
+						nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+						nock('http://test/')
+							.get('/appeals/document-redaction-statuses')
+							.reply(200, documentRedactionStatuses)
+							.persist();
+						nock('http://test/')
+							.get(`/appeals/1/document-folders/${costsFolder.folderId}`)
+							.reply(200, costsFolder);
+						nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
+
+						const sharedDocumentVersionsInfo = structuredClone(documentFileVersionsInfoChecked);
+						sharedDocumentVersionsInfo.isShared = true;
+						sharedDocumentVersionsInfo.allVersions.forEach((version) => {
+							version.isShared = true;
+						});
+
+						nock('http://test/')
+							.get('/appeals/documents/1/versions')
+							.reply(200, sharedDocumentVersionsInfo);
+
+						const response = await request.get(
+							`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1`
+						);
+
+						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+						expect(unprettifiedElement.innerHTML).toContain(
+							'<br><strong class="govuk-tag govuk-tag--blue govuk-!-margin-top-1">Shared</strong>'
+						);
+						expect(unprettifiedElement.innerHTML).toContain(
+							'<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong><a class="govuk-link"'
+						);
 					});
 				}
 			}
