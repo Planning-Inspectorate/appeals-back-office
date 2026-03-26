@@ -378,14 +378,15 @@ describe('cancel invalid', () => {
 					'Appeal has not been submitted on time',
 					'Other reason: Eminently legitimate reason'
 				],
-				ground_a_barred: true
+				lpa_reference: '48269/APP/2021/1482',
+				site_address: '21 The Pavement, Wandsworth, SW4 0HY'
 			};
-			expect(appellantPreviewRequestBody).toMatchObject({
+			expect(appellantPreviewRequestBody).toStrictEqual({
 				...personalisation,
 				feedback_link: FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE
 			});
 			expect(mockLpaPreview.isDone()).toBe(true);
-			expect(lpaPreviewRequestBody).toMatchObject({
+			expect(lpaPreviewRequestBody).toStrictEqual({
 				...personalisation,
 				feedback_link: FEEDBACK_FORM_LINKS.LPA
 			});
@@ -459,13 +460,24 @@ describe('cancel invalid', () => {
 			expect(appellantPreviewRequestBody).toBeDefined();
 			expect(lpaPreviewRequestBody).toBeDefined();
 
-			expect(appellantPreviewRequestBody).toMatchObject({
-				ground_a_barred: false,
+			const personalisation = {
+				appeal_reference_number: appealDataEnforcementNotice.appealReference,
+				effective_date: '01 January 2026',
+				enforcement_reference: 'ELB-Ref',
+				lpa_reference: '48269/APP/2021/1482',
+				other_live_appeals: '',
+				reasons: ['Appeal has not been submitted on time'],
+				site_address: '21 The Pavement, Wandsworth, SW4 0HY',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+			};
+
+			expect(appellantPreviewRequestBody).toStrictEqual({
+				...personalisation,
 				feedback_link: FEEDBACK_FORM_LINKS.ENFORCEMENT_LISTED_BUILDING
 			});
 
-			expect(lpaPreviewRequestBody).toMatchObject({
-				ground_a_barred: false,
+			expect(lpaPreviewRequestBody).toStrictEqual({
+				...personalisation,
 				feedback_link: FEEDBACK_FORM_LINKS.LPA
 			});
 		});
