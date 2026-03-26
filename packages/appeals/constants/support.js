@@ -20,6 +20,8 @@ export const ENFORCEMENT_APPEAL_INVALID_LEGAL_INTEREST =
 	'Appellant does not have a legal interest in the land';
 export const ENFORCEMENT_APPEAL_INVALID_GROUND_A_BARRED = 'Ground (a) barred';
 export const ENFORCEMENT_APPEAL_INVALID_GROUND_A_FEE_NOT_PAID = 'Did not pay the ground (a) fee';
+export const ENFORCEMENT_APPEAL_INVALID_LPA_WITHDREW_ENFORCEMENT_NOTICE =
+	'LPA has withdrawn the enforcement notice';
 
 export const DECISION_TYPE_INSPECTOR = 'inspector-decision';
 export const DECISION_TYPE_APPELLANT_COSTS = 'appellant-costs-decision';
