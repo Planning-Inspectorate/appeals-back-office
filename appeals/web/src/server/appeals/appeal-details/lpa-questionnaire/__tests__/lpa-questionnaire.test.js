@@ -1047,7 +1047,9 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain('Green belt</dt>');
 
 			expect(element.innerHTML).toContain('2. Notifying relevant parties</h2>');
-			expect(element.innerHTML).toContain('Who did you notify about this application?</dt>');
+			expect(element.innerHTML).toContain(
+				'List of neighbours&#39; addresses that you notified about the application</dt>'
+			);
 			expect(element.innerHTML).toContain(
 				'How did you notify relevant parties about this application?</dt>'
 			);
@@ -1146,7 +1148,9 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain('Green belt</dt>');
 
 			expect(element.innerHTML).toContain('2. Notifying relevant parties</h2>');
-			expect(element.innerHTML).toContain('Who did you notify about this application?</dt>');
+			expect(element.innerHTML).toContain(
+				'List of neighbours&#39; addresses that you notified about the application</dt>'
+			);
 			expect(element.innerHTML).toContain(
 				'How did you notify relevant parties about this application?</dt>'
 			);
@@ -1225,7 +1229,9 @@ describe('LPA Questionnaire review', () => {
 			);
 
 			expect(element.innerHTML).toContain('2. Notifying relevant parties</h2>');
-			expect(element.innerHTML).toContain('Who did you notify about this application?</dt>');
+			expect(element.innerHTML).toContain(
+				'List of neighbours&#39; addresses that you notified about the application</dt>'
+			);
 			expect(element.innerHTML).toContain(
 				'How did you notify relevant parties about this application?</dt>'
 			);
@@ -1400,7 +1406,9 @@ describe('LPA Questionnaire review', () => {
 			);
 
 			expect(element.innerHTML).toContain('2. Notifying relevant parties</h2>');
-			expect(element.innerHTML).toContain('Who did you notify about this application?</dt>');
+			expect(element.innerHTML).toContain(
+				'List of neighbours&#39; addresses that you notified about the application</dt>'
+			);
 			expect(element.innerHTML).toContain(
 				'How did you notify relevant parties about this application?</dt>'
 			);
