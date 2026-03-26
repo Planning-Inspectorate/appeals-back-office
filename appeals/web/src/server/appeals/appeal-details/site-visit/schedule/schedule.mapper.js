@@ -7,6 +7,7 @@ import { timeInput } from '#lib/mappers/components/page-components/time.js';
 import { dateInput, yesNoInput } from '#lib/mappers/index.js';
 import { capitalizeFirstLetter, padNumberWithZero } from '#lib/string-utilities.js';
 import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { mapVisitTypeToReadable } from '../site-visit.mapper.js';
 import { siteVisitDateField } from '../site-visits.constants.js';
 
 /**
@@ -32,7 +33,7 @@ export function knowDateTimePage(appealDetails, appealReference, errors, session
 	return {
 		title: `Do you know the date and time of the site visit?`,
 		backLinkUrl: backlinkUrl,
-		preHeading: `Appeal ${shortAppealReference}`,
+		preHeading: `Appeal ${shortAppealReference}  - set up site visit`,
 		pageComponents: [
 			yesNoInput({
 				name: 'dateTimeRadio',
@@ -167,6 +168,7 @@ export function checkAndConfirmSiteVisitPage(request) {
 		}
 	} = request;
 	const backLinkUrl = getBackLinkUrlFromQuery(request);
+
 	if (dateTimeKnown === 'no') {
 		/**@type {PageComponent} */
 		const summaryListComponent = {
@@ -178,7 +180,7 @@ export function checkAndConfirmSiteVisitPage(request) {
 							text: 'Type'
 						},
 						value: {
-							text: capitalizeFirstLetter(visitType)
+							text: mapVisitTypeToReadable(visitType)
 						},
 						actions: {
 							items: [
@@ -236,7 +238,7 @@ export function checkAndConfirmSiteVisitPage(request) {
 							text: 'Type'
 						},
 						value: {
-							text: capitalizeFirstLetter(visitType)
+							text: mapVisitTypeToReadable(visitType)
 						},
 						actions: {
 							items: [

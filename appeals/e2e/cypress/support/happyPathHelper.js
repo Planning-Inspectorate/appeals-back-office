@@ -286,8 +286,6 @@ export const happyPathHelper = {
 		caseDetailsPage.clickSiteVisitBanner();
 		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Accompanied'));
 		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Yes'));
-		caseDetailsPage.clickButtonByText('Continue');
 		dateTimeSection.enterVisitDate(happyPathHelper.validVisitDate());
 		dateTimeSection.enterVisitStartTime('08', '00');
 		dateTimeSection.enterVisitEndTime('12', '00');
