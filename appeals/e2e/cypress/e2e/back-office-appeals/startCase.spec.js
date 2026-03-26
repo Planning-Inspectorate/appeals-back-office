@@ -3,6 +3,7 @@
 
 import { users } from '../../fixtures/users';
 import { AddressSection } from '../../page_objects/addressSection.js';
+import { HearingSectionPage } from '../../page_objects/caseDetails/hearingSectionPage.js';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { CYASection } from '../../page_objects/cyaSection';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
@@ -19,6 +20,7 @@ const procedureTypePage = new ProcedureTypePage();
 const dateTimeSection = new DateTimeSection();
 const estimatedDaysSection = new EstimatedDaysSection();
 const addressSection = new AddressSection();
+const hearingSectionPage = new HearingSectionPage();
 
 describe('Start case', () => {
 	const expectedNotifies = {
@@ -180,8 +182,7 @@ describe('Start case', () => {
 		});
 	});
 
-	//broken - bug has been raised
-	it.skip('S78 hearing case - start appeal with scheduled hearing', () => {
+	it('S78 hearing case - start appeal with scheduled hearing and estimated days', () => {
 		cy.login(users.appeals.caseAdmin);
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;
@@ -193,34 +194,95 @@ describe('Start case', () => {
 			// Validate Appeal Via API
 			cy.validateAppeal(caseObj);
 
-			happyPathHelper.viewCaseDetails(caseObj);
-			caseDetailsPage.clickReadyToStartCase();
-			caseDetailsPage.selectRadioButtonByValue('hearing');
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.selectRadioButtonByValue('yes');
-			caseDetailsPage.clickButtonByText('Continue');
-
 			cy.getBusinessActualDate(new Date(), 2).then((date) => {
-				dateTimeSection.enterHearingDate(date);
-				dateTimeSection.enterHearingTime(date.getHours(), date.getMinutes());
-				caseDetailsPage.clickButtonByText('Continue');
-				estimatedDaysSection.selectEstimatedDaysOption('Yes');
-				estimatedDaysSection.enterEstimatedHearingDays(6);
-				caseDetailsPage.clickButtonByText('Continue');
+				const estimatedDays = 6;
+
+				happyPathHelper.startS78HearingCase(caseObj, 'hearing', {
+					date,
+					setEstimatedDays: true,
+					estimatedDays,
+					startCase: false
+				});
 
 				// Set exact time and date format for assertions
 				const expectedDateTime = formatDateAndTime(date);
+
+				// verify answers on cya page
 				cyaSection.verifyCheckYourAnswers(
 					'Do you know the expected number of days to carry out the hearing?',
 					'Yes'
 				);
 				cyaSection.verifyCheckYourAnswers('Expected number of days to carry out the hearing', '6');
+
+				// verify oreview email content
 				cyaSection.verifyPreviewEmail('appellant', true, { date: expectedDateTime.date });
 				cyaSection.verifyPreviewEmail('lpa', true, { date: expectedDateTime.date });
 				caseDetailsPage.clickButtonByText('Start case');
 
+				// verify banner messages
 				caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
 				caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
+
+				// verify hearing details on case details page
+				hearingSectionPage.verifyHearingValues('date', expectedDateTime.date);
+				hearingSectionPage.verifyHearingValues('time', expectedDateTime.time);
+				hearingSectionPage.verifyHearingValues(
+					'whether-the-estimated-number-of-days-is-known-or-not',
+					'Yes'
+				);
+				hearingSectionPage.verifyHearingValues('estimated-days', `${estimatedDays} Days`);
+				hearingSectionPage.verifyHearingValues('whether-the-address-is-known-or-not', 'No');
+			});
+
+			cy.checkNotifySent(caseObj, expectedNotifies.PlanningAppealHearing);
+		});
+	});
+
+	it('S78 hearing case - start appeal with scheduled hearing and without estimated days', () => {
+		cy.login(users.appeals.caseAdmin);
+		cy.createCase({ caseType: 'W' }).then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.viewCaseDetails(caseObj);
+
+			// Assign Case Officer Via API
+			cy.assignCaseOfficerViaApi(caseObj);
+
+			// Validate Appeal Via API
+			cy.validateAppeal(caseObj);
+
+			cy.getBusinessActualDate(new Date(), 2).then((date) => {
+				happyPathHelper.startS78HearingCase(caseObj, 'hearing', {
+					date,
+					setEstimatedDays: false,
+					startCase: false
+				});
+
+				// Set exact time and date format for assertions
+				const expectedDateTime = formatDateAndTime(date);
+
+				// verify answers on cya page
+				cyaSection.verifyCheckYourAnswers(
+					'Do you know the expected number of days to carry out the hearing?',
+					'No'
+				);
+
+				// verify oreview email content
+				cyaSection.verifyPreviewEmail('appellant', true, { date: expectedDateTime.date });
+				cyaSection.verifyPreviewEmail('lpa', true, { date: expectedDateTime.date });
+				caseDetailsPage.clickButtonByText('Start case');
+
+				// verify banner messages
+				caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
+				caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
+
+				// verify hearing details on case details page
+				hearingSectionPage.verifyHearingValues('date', expectedDateTime.date);
+				hearingSectionPage.verifyHearingValues('time', expectedDateTime.time);
+				hearingSectionPage.verifyHearingValues(
+					'whether-the-estimated-number-of-days-is-known-or-not',
+					'No'
+				);
+				hearingSectionPage.verifyHearingValues('whether-the-address-is-known-or-not', 'No');
 			});
 
 			cy.checkNotifySent(caseObj, expectedNotifies.PlanningAppealHearing);
