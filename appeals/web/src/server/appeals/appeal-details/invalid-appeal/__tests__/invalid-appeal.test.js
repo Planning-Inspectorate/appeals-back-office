@@ -110,6 +110,9 @@ describe('invalid-appeal', () => {
 			);
 			expect(element.innerHTML).toContain('for="invalid-reason-5">Ground (a) barred');
 			expect(element.innerHTML).toContain('for="invalid-reason-6">Other reason');
+			expect(element.innerHTML).not.toContain(
+				'for="invalid-reason-7">LPA has withdrawn the enforcement notice'
+			);
 			expect(element.innerHTML).toContain('Continue</button>');
 		});
 

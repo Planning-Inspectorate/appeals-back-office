@@ -14,7 +14,8 @@ import {
 	CHANGE_APPEAL_TYPE_INVALID_REASON,
 	ENFORCEMENT_APPEAL_INVALID_GROUND_A_BARRED,
 	ENFORCEMENT_APPEAL_INVALID_GROUND_A_FEE_NOT_PAID,
-	ENFORCEMENT_APPEAL_INVALID_LEGAL_INTEREST
+	ENFORCEMENT_APPEAL_INVALID_LEGAL_INTEREST,
+	ENFORCEMENT_APPEAL_INVALID_LPA_WITHDREW_ENFORCEMENT_NOTICE
 } from '@pins/appeals/constants/support.js';
 import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters } from '../appellant-case/appellant-case.mapper.js';
@@ -87,7 +88,8 @@ const renderInvalidReason = async (request, response) => {
 	const filteredReasonOptions = invalidReasonOptions.reduce((acc, reason) => {
 		if (
 			reason.name === CHANGE_APPEAL_TYPE_INVALID_REASON ||
-			reason.name === ENFORCEMENT_APPEAL_INVALID_GROUND_A_FEE_NOT_PAID
+			reason.name === ENFORCEMENT_APPEAL_INVALID_GROUND_A_FEE_NOT_PAID ||
+			reason.name === ENFORCEMENT_APPEAL_INVALID_LPA_WITHDREW_ENFORCEMENT_NOTICE
 		) {
 			return acc;
 		}
