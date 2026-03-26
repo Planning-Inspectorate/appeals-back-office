@@ -1,5 +1,5 @@
 import { textSummaryListItem } from '#lib/mappers/index.js';
-import { toSentenceCase } from '#lib/string-utilities.js';
+import { formatAppealUnderActSection } from '#lib/mappers/utils/map-application-made-under-act-section.js';
 import { APPEAL_APPEAL_UNDER_ACT_SECTION } from '@planning-inspectorate/data-model';
 
 /** @type {import('../mapper.js').SubMapper} */
@@ -17,11 +17,7 @@ export const mapAppealUnderActSection = ({
 				appealUnderActSection
 			)
 		)
-			? toSentenceCase(
-					/** @type {"existing-development" | "proposed-changes-to-a-listed-building" | "proposed-use-of-a-development"} */ (
-						appealUnderActSection
-					)
-				)
+			? formatAppealUnderActSection(appealUnderActSection)
 			: appealUnderActSection || 'Not answered',
 		link: `${currentRoute}/appeal-under-act-section/change`,
 		editable: userHasUpdateCase,

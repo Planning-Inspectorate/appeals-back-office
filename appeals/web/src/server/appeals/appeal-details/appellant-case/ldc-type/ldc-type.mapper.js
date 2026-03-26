@@ -2,7 +2,7 @@
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
  */
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { toSentenceCase } from '#lib/string-utilities.js';
+import { formatAppealUnderActSection } from '#lib/mappers/utils/map-application-made-under-act-section.js';
 import { APPEAL_APPLICATION_MADE_UNDER_ACT_SECTION } from '@planning-inspectorate/data-model';
 
 /**
@@ -43,7 +43,7 @@ export const changeApplicationMadeUnderActSectionPage = (
 						...Object.values(APPEAL_APPLICATION_MADE_UNDER_ACT_SECTION).map(
 							(applicationMadeUnderActSectionOption) => ({
 								value: applicationMadeUnderActSectionOption,
-								text: toSentenceCase(applicationMadeUnderActSectionOption),
+								text: formatAppealUnderActSection(applicationMadeUnderActSectionOption),
 								checked: applicationMadeUnderActSectionOption === applicationMadeUnderActSection
 							})
 						)
