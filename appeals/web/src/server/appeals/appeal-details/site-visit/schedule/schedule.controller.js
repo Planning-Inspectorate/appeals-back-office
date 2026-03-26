@@ -30,6 +30,13 @@ export const postKnowDateTime = async (request, response) => {
 	session.dateTimeKnown = body['dateTimeRadio'];
 
 	if (session.dateTimeKnown === 'no') {
+		session.visitDateDay = null;
+		session.visitDateMonth = null;
+		session.visitDateYear = null;
+		session.visitStartTimeHour = null;
+		session.visitStartTimeMinute = null;
+		session.visitEndTimeHour = null;
+		session.visitEndTimeMinute = null;
 		response.redirect(
 			addBackLinkQueryToUrl(
 				request,

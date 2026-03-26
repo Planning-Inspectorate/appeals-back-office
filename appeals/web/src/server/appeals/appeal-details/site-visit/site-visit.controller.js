@@ -31,7 +31,7 @@ const renderTypeOfSiteVisit = async (request, response, pageType) => {
 	const appealDetails = request.currentAppeal;
 
 	if (appealDetails) {
-		let visitType = request.body['visit-type'] || '';
+		let visitType = request.session.visitType || appealDetails.siteVisit?.visitType || null;
 
 		request.session.visitType = visitType;
 		request.session.readyToSetUp = request.session.readyToSetUp || false;
@@ -156,13 +156,24 @@ export const postTypeOfSiteVisit = async (request, response) => {
 	if (request.errors) {
 		return renderTypeOfSiteVisit(request, response, 'schedule');
 	}
+	const appealId = request.params.appealId;
 	request.session.visitType = request.body['visit-type'];
-	return response.redirect(
-		addBackLinkQueryToUrl(
-			request,
-			`/appeals-service/appeal-details/${request.currentAppeal.appealId}/site-visit/schedule`
-		)
-	);
+	if (request.session.readyToSetUp) {
+		request.session.dateTimeKnown = 'yes';
+		return response.redirect(
+			addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/site-visit/schedule/schedule-visit-date`
+			)
+		);
+	} else {
+		return response.redirect(
+			addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/site-visit/schedule`
+			)
+		);
+	}
 };
 
 /**
