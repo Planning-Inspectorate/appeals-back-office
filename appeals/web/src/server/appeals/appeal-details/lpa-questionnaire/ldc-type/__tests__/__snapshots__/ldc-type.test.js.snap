@@ -20,17 +20,17 @@ exports[`appeal-under-act-section GET /change should render the ldc type page 1`
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-under-act-section" name="appealUnderActSection"
                                         type="radio" value="existing-development">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-under-act-section">Existing development</label>
+                                        <label class="govuk-label govuk-radios__label" for="appeal-under-act-section">Existing development (section 191)</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-under-act-section-2" name="appealUnderActSection"
                                         type="radio" value="proposed-changes-to-a-listed-building">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-under-act-section-2">Proposed changes to a listed building</label>
+                                        <label class="govuk-label govuk-radios__label" for="appeal-under-act-section-2">Proposed changes to a listed building (section 192)</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-under-act-section-3" name="appealUnderActSection"
                                         type="radio" value="proposed-use-of-a-development">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-under-act-section-3">Proposed use of a development</label>
+                                        <label class="govuk-label govuk-radios__label" for="appeal-under-act-section-3">Proposed use of a development (section 26H)</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -80,17 +80,17 @@ exports[`appeal-under-act-section POST /change should re-render the page with an
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-under-act-section" name="appealUnderActSection"
                                         type="radio" value="existing-development">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-under-act-section">Existing development</label>
+                                        <label class="govuk-label govuk-radios__label" for="appeal-under-act-section">Existing development (section 191)</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-under-act-section-2" name="appealUnderActSection"
                                         type="radio" value="proposed-changes-to-a-listed-building">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-under-act-section-2">Proposed changes to a listed building</label>
+                                        <label class="govuk-label govuk-radios__label" for="appeal-under-act-section-2">Proposed changes to a listed building (section 192)</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-under-act-section-3" name="appealUnderActSection"
                                         type="radio" value="proposed-use-of-a-development">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-under-act-section-3">Proposed use of a development</label>
+                                        <label class="govuk-label govuk-radios__label" for="appeal-under-act-section-3">Proposed use of a development (section 26H)</label>
                                     </div>
                                 </div>
                             </fieldset>
