@@ -7,5 +7,6 @@ export const teamsToCreate = [
 		id: 7,
 		name: 'Enforcement Appeals Officer',
 		email: 'ECAT@planninginspectorate.gov.uk'
-	}
+	},
+	{ id: 8, name: 'PADS team', email: 'PADSplanning@planninginspectorate.gov.uk' }
 ];
