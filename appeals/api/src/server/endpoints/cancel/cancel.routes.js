@@ -46,7 +46,10 @@ router.post(
 		'appealType',
 		'procedureType',
 		'appealRule6Parties',
-		'appellantCase'
+		'appellantCase',
+		'siteVisit',
+		'hearing',
+		'inquiry'
 	]),
 	validators.validateDryRunQueryParam,
 	handleValidationError,
