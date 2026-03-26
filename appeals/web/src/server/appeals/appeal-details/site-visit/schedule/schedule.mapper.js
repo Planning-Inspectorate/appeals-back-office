@@ -1,4 +1,3 @@
-import { baseUrl } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import {
 	dateISOStringToDayMonthYearHourMinute,
@@ -7,6 +6,8 @@ import {
 import { timeInput } from '#lib/mappers/components/page-components/time.js';
 import { dateInput, yesNoInput } from '#lib/mappers/index.js';
 import { capitalizeFirstLetter, padNumberWithZero } from '#lib/string-utilities.js';
+import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { mapVisitTypeToReadable } from '../site-visit.mapper.js';
 import { siteVisitDateField } from '../site-visits.constants.js';
 
 /**
@@ -32,7 +33,7 @@ export function knowDateTimePage(appealDetails, appealReference, errors, session
 	return {
 		title: `Do you know the date and time of the site visit?`,
 		backLinkUrl: backlinkUrl,
-		preHeading: `Appeal ${shortAppealReference}`,
+		preHeading: `Appeal ${shortAppealReference}  - set up site visit`,
 		pageComponents: [
 			yesNoInput({
 				name: 'dateTimeRadio',
@@ -166,6 +167,8 @@ export function checkAndConfirmSiteVisitPage(request) {
 			visitDateYear
 		}
 	} = request;
+	const backLinkUrl = getBackLinkUrlFromQuery(request);
+
 	if (dateTimeKnown === 'no') {
 		/**@type {PageComponent} */
 		const summaryListComponent = {
@@ -177,7 +180,7 @@ export function checkAndConfirmSiteVisitPage(request) {
 							text: 'Type'
 						},
 						value: {
-							text: capitalizeFirstLetter(visitType)
+							text: mapVisitTypeToReadable(visitType)
 						},
 						actions: {
 							items: [
@@ -215,7 +218,7 @@ export function checkAndConfirmSiteVisitPage(request) {
 
 		return {
 			title: 'Check details and confirm site visit',
-			backLinkUrl: `${baseUrl}`,
+			backLinkUrl: backLinkUrl,
 			preHeading: `Appeal ${appealShortReference(currentAppeal.appealReference)}`,
 			heading: 'Check details and confirm site visit',
 			submitButtonText: 'Confirm',
@@ -235,7 +238,7 @@ export function checkAndConfirmSiteVisitPage(request) {
 							text: 'Type'
 						},
 						value: {
-							text: capitalizeFirstLetter(visitType)
+							text: mapVisitTypeToReadable(visitType)
 						},
 						actions: {
 							items: [
@@ -351,7 +354,7 @@ export function checkAndConfirmSiteVisitPage(request) {
 		];
 		return {
 			title: 'Check details and confirm site visit',
-			backLinkUrl: `${baseUrl}`,
+			backLinkUrl: backLinkUrl,
 			preHeading: `Appeal ${appealShortReference(currentAppeal.appealReference)}`,
 			heading: 'Check details and confirm site visit',
 			submitButtonText: 'Set up site visit',
