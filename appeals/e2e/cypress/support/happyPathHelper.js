@@ -85,27 +85,44 @@ export const happyPathHelper = {
 	startS78HearingCase(
 		caseObj,
 		procedureType,
-		dateKnown = false,
-		hearingEstimationYesNo = 'no',
-		hearingEstimationDays = 1
+		hearingProperties = {
+			date: null,
+			setEstimatedDays: false,
+			estimatedDays: 1,
+			startCase: true
+		}
 	) {
+		// proceed to setup hrearing
 		happyPathHelper.viewCaseDetails(caseObj);
 		caseDetailsPage.clickReadyToStartCase();
 		caseDetailsPage.selectRadioButtonByValue(procedureType);
+
+		// check if date is known and if so enter date and time
 		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.selectRadioButtonByValue(dateKnown ? 'yes' : 'no');
+		caseDetailsPage.selectRadioButtonByValue(hearingProperties.date ? 'yes' : 'no');
 		caseDetailsPage.clickButtonByText('Continue');
-		if (dateKnown) {
-			dateTimeSection.enterHearingDate(happyPathHelper.validVisitDate());
-			dateTimeSection.enterHearingTime('13', '45');
+
+		if (hearingProperties.date) {
+			dateTimeSection.enterHearingDate(hearingProperties.date);
+			dateTimeSection.enterHearingTime(
+				hearingProperties.date.getHours(),
+				hearingProperties.date.getMinutes()
+			);
 			caseDetailsPage.clickButtonByText('Continue');
 		}
-		caseDetailsPage.selectRadioButtonByValue(hearingEstimationYesNo);
-		if (hearingEstimationYesNo === 'yes') {
-			cy.get('#hearing-estimation-days').clear().type(hearingEstimationDays.toString());
+
+		// check if estimated hearing days is known and if so enter estimated hearing days
+		const knowEstimatedDays = hearingProperties.setEstimatedDays ? 'Yes' : 'No';
+		caseDetailsPage.selectRadioButtonByValue(knowEstimatedDays);
+		if (hearingProperties.setEstimatedDays) {
+			cy.get('#hearing-estimation-days').clear().type(hearingProperties.estimatedDays.toString());
 		}
 		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.clickButtonByText('Start case');
+
+		// check if should start case as part of hearing setup
+		if (hearingProperties.startCase) {
+			caseDetailsPage.clickButtonByText('Start case');
+		}
 	},
 
 	startS78InquiryCase(caseObj, procedureType) {
@@ -136,7 +153,7 @@ export const happyPathHelper = {
 		cy.simulateStatementsDeadlineElapsed(caseObj);
 		cy.reload();
 		caseDetailsPage.basePageElements.bannerLink().click();
-		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.clickButtonByText('Progress case');
 		caseDetailsPage.validateBannerMessage('Success', 'Statements and IP comments shared');
 	},
 
