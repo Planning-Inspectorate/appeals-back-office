@@ -379,7 +379,8 @@ export const getManageFolder = async (request, response) => {
 		addButtonTextOverride: `Add document${costsCategory === 'decision' ? 's' : ''}`,
 		...(costsCategory === 'decision' && {
 			dateColumnLabelTextOverride: 'Decision date'
-		})
+		}),
+		isCosts: true
 	});
 };
 
@@ -415,7 +416,8 @@ export const getManageDocument = async (request, response) => {
 		}),
 		...(costsCategory === 'decision' && {
 			dateRowLabelTextOverride: 'Decision date'
-		})
+		}),
+		isCosts: true
 	});
 };
 
