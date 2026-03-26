@@ -1,9 +1,11 @@
 import { getTeamFromAppealId } from '#appeals/appeal-details/update-case-team/update-case-team.service.js';
 import { addressToString } from '#lib/address-formatter.js';
 import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
+import { ensureArray } from '#lib/array-utilities.js';
 import {
 	calculateIncompleteDueDate,
 	dateISOStringToDayMonthYearHourMinute,
+	dayMonthYearHourMinuteToDisplayDate,
 	getTodaysISOString
 } from '#lib/dates.js';
 import logger from '#lib/logger.js';
@@ -659,34 +661,75 @@ const renderCheckDetailsAndMarkEnforcementAsIncomplete = async (request, respons
 			throw new Error('error retrieving invalid enforcement reason options');
 		}
 
-		if (
-			outcome.enforcementNoticeInvalid === 'yes' &&
-			currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE
-		) {
+		if (currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+			const isEnforcementInvalid = outcome.enforcementNoticeInvalid === 'yes';
+
 			const { email: assignedTeamEmail } = await getTeamFromAppealId(
 				apiClient,
 				currentAppeal.appealId
 			);
-			const personalisation = {
-				appeal_reference_number: currentAppeal.appealReference,
-				lpa_reference: currentAppeal.planningApplicationReference,
-				site_address: addressToString(currentAppeal.appealSite),
-				team_email_address: assignedTeamEmail,
-				enforcement_reference: currentAppeal.enforcementNotice?.appellantCase?.reference || '',
+
+			const outcomeMissingDocuments = outcome?.missingDocuments?.length
+				? ensureArray(outcome.missingDocuments).map((id) => {
+						const documentId = Number(id);
+						// @ts-ignore
+						const missingDocument = missingDocuments.find((document) => document.id === documentId);
+						const text = outcome.missingDocumentsText?.[documentId] || '';
+						return text ? `${missingDocument?.name}: ${text}` : missingDocument?.name;
+					})
+				: [];
+
+			const personalisationEnforcementValid = {
+				missing_documents: outcomeMissingDocuments,
+				fee_due_date: outcome?.feeReceiptDueDate
+					? dayMonthYearHourMinuteToDisplayDate(outcome?.feeReceiptDueDate)
+					: '',
+				grounds_and_facts: outcome?.enforcementGroundsMismatchText?.length
+					? // @ts-ignore
+						outcome.enforcementGroundsMismatchText.map((ground) => {
+							return `Ground (${ground.name}): ${ground.text?.[0] || ''}`;
+						})
+					: [],
+				local_planning_authority: currentAppeal.localPlanningDepartment ?? '',
+				other_info: outcome?.reasonsText?.length ? Object.values(outcome?.reasonsText) : [],
+				due_date: outcome?.updatedDueDate
+					? dayMonthYearHourMinuteToDisplayDate(outcome?.updatedDueDate)
+					: '',
+				appeal_grounds: []
+			};
+
+			const personalisationEnforcementInvalid = {
 				...mapEnforcementIncompleteInvalidReasonsForNotifyPreview(
 					session.webAppellantCaseReviewOutcome?.enforcementNoticeReason
 				),
 				other_info: session.webAppellantCaseReviewOutcome?.otherInformationDetails || '',
 				due_date: formatDate(new Date(add(new Date(), { days: 7 })), false)
 			};
+
+			const personalisation = {
+				appeal_reference_number: currentAppeal.appealReference,
+				lpa_reference: currentAppeal.planningApplicationReference,
+				site_address: addressToString(currentAppeal.appealSite),
+				team_email_address: assignedTeamEmail,
+				enforcement_reference: currentAppeal.enforcementNotice?.appellantCase?.reference || '',
+				...(isEnforcementInvalid
+					? personalisationEnforcementInvalid
+					: personalisationEnforcementValid)
+			};
+
 			const appellantTemplate = await generateNotifyPreview(
 				apiClient,
-				'enforcement-notice-incomplete-appellant.content.md',
+				isEnforcementInvalid
+					? 'enforcement-notice-incomplete-appellant.content.md'
+					: 'enforcement-appeal-incomplete-appellant.content.md',
 				personalisation
 			);
+
 			const lpaTemplate = await generateNotifyPreview(
 				apiClient,
-				'enforcement-notice-incomplete-lpa.content.md',
+				isEnforcementInvalid
+					? 'enforcement-notice-incomplete-lpa.content.md'
+					: 'enforcement-appeal-incomplete-lpa.content.md',
 				personalisation
 			);
 

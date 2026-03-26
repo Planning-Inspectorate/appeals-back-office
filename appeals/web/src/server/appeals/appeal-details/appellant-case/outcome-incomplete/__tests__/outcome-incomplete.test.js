@@ -458,6 +458,21 @@ describe('incomplete-appeal', () => {
 					'groundsFacts-2': 'invalid ground 2'
 				});
 
+				// preview nocks
+				nock('http://test/')
+					.get(`/appeals/${appealDataEnforcementNotice.appealId}/case-team-email`)
+					.reply(200, {
+						id: 1,
+						email: 'caseofficers@planninginspectorate.gov.uk',
+						name: 'standard email'
+					});
+				const mockAppellantPreview = nock('http://test/')
+					.post(`/appeals/notify-preview/enforcement-appeal-incomplete-appellant.content.md`)
+					.reply(200, { renderedHtml: '' });
+				const mockLpaPreview = nock('http://test/')
+					.post(`/appeals/notify-preview/enforcement-appeal-incomplete-lpa.content.md`)
+					.reply(200, { renderedHtml: '' });
+
 				const response = await request.get(
 					`${baseUrl}/appellant-case/incomplete/check-details-and-mark-enforcement-as-incomplete`
 				);
@@ -502,6 +517,9 @@ describe('incomplete-appeal', () => {
 				);
 				expect(unprettifiedElement.innerHTML).toContain('<li>Ground (a): invalid ground 1</li>');
 				expect(unprettifiedElement.innerHTML).toContain('Mark appeal as incomplete</button>');
+
+				expect(mockAppellantPreview.isDone()).toBe(true);
+				expect(mockLpaPreview.isDone()).toBe(true);
 			});
 
 			it('should have a back link to the enforcement other information page if entered', async () => {
@@ -516,6 +534,21 @@ describe('incomplete-appeal', () => {
 						otherInformationValidRadio: 'Yes',
 						otherInformationDetails: 'Enforcement other information'
 					});
+
+				// preview nocks
+				nock('http://test/')
+					.get(`/appeals/${appealDataEnforcementNotice.appealId}/case-team-email`)
+					.reply(200, {
+						id: 1,
+						email: 'caseofficers@planninginspectorate.gov.uk',
+						name: 'standard email'
+					});
+				nock('http://test/')
+					.post(`/appeals/notify-preview/enforcement-appeal-incomplete-appellant.content.md`)
+					.reply(200, { renderedHtml: '' });
+				nock('http://test/')
+					.post(`/appeals/notify-preview/enforcement-appeal-incomplete-lpa.content.md`)
+					.reply(200, { renderedHtml: '' });
 
 				const response = await request.get(
 					`${baseUrl}/appellant-case/incomplete/check-details-and-mark-enforcement-as-incomplete`
