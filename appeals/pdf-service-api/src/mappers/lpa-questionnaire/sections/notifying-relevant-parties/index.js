@@ -18,7 +18,7 @@ export function notifyingRelevantPartiesSection(templateData) {
 		heading: 'Notifying relevant parties',
 		items: [
 			{
-				key: 'Who did you notify about this application?',
+				key: "List of neighbours' addresses that you notified about the application",
 				html: formatDocumentData(whoNotified)
 			},
 			{
