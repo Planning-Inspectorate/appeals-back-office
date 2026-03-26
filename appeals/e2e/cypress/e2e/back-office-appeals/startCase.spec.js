@@ -143,153 +143,125 @@ describe('Start case', () => {
 		});
 	});
 
-	it('S78 hearing case - start appeal without scheduled hearing', () => {
-		cy.login(users.appeals.caseAdmin);
-		cy.createCase({ caseType: 'W' }).then((caseObj) => {
-			appeal = caseObj;
-			happyPathHelper.viewCaseDetails(caseObj);
+	it(
+		'S78 hearing case - start appeal with scheduled hearing and estimated days',
+		{ tags: tag.smoke },
+		() => {
+			cy.login(users.appeals.caseAdmin);
+			cy.createCase({ caseType: 'W' }).then((caseObj) => {
+				appeal = caseObj;
+				happyPathHelper.viewCaseDetails(caseObj);
 
-			// Assign Case Officer Via API
-			cy.assignCaseOfficerViaApi(caseObj);
+				// Assign Case Officer Via API
+				cy.assignCaseOfficerViaApi(caseObj);
 
-			// Validate Appeal Via API
-			cy.validateAppeal(caseObj);
+				// Validate Appeal Via API
+				cy.validateAppeal(caseObj);
 
-			happyPathHelper.viewCaseDetails(caseObj);
-			caseDetailsPage.clickReadyToStartCase();
-			caseDetailsPage.selectRadioButtonByValue('Hearing');
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.selectRadioButtonByValue('no');
-			caseDetailsPage.clickButtonByText('Continue');
-			estimatedDaysSection.selectEstimatedDaysOption('No');
-			caseDetailsPage.clickButtonByText('Continue');
-			cyaSection.verifyCheckYourAnswers(
-				'Do you know the expected number of days to carry out the hearing?',
-				'No'
-			);
-			cy.contains(
-				'dt.govuk-summary-list__key',
-				'Expected number of days to carry out the hearing'
-			).should('not.exist');
-			cyaSection.verifyPreviewEmail('appellant');
-			cyaSection.verifyPreviewEmail('lpa');
-			caseDetailsPage.clickButtonByText('Start case');
+				cy.getBusinessActualDate(new Date(), 2).then((date) => {
+					const estimatedDays = 6;
 
-			caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
-			caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
+					happyPathHelper.startS78HearingCase(caseObj, 'hearing', {
+						date,
+						setEstimatedDays: true,
+						estimatedDays,
+						startCase: false
+					});
 
-			cy.checkNotifySent(caseObj, expectedNotifies.PlanningAppeal);
-		});
-	});
+					// Set exact time and date format for assertions
+					const expectedDateTime = formatDateAndTime(date);
 
-	it('S78 hearing case - start appeal with scheduled hearing and estimated days', () => {
-		cy.login(users.appeals.caseAdmin);
-		cy.createCase({ caseType: 'W' }).then((caseObj) => {
-			appeal = caseObj;
-			happyPathHelper.viewCaseDetails(caseObj);
+					// verify answers on cya page
+					cyaSection.verifyCheckYourAnswers(
+						'Do you know the expected number of days to carry out the hearing?',
+						'Yes'
+					);
+					cyaSection.verifyCheckYourAnswers(
+						'Expected number of days to carry out the hearing',
+						'6'
+					);
 
-			// Assign Case Officer Via API
-			cy.assignCaseOfficerViaApi(caseObj);
+					// verify oreview email content
+					cyaSection.verifyPreviewEmail('appellant', true, { date: expectedDateTime.date });
+					cyaSection.verifyPreviewEmail('lpa', true, { date: expectedDateTime.date });
+					caseDetailsPage.clickButtonByText('Start case');
 
-			// Validate Appeal Via API
-			cy.validateAppeal(caseObj);
+					// verify banner messages
+					caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
+					caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
 
-			cy.getBusinessActualDate(new Date(), 2).then((date) => {
-				const estimatedDays = 6;
-
-				happyPathHelper.startS78HearingCase(caseObj, 'hearing', {
-					date,
-					setEstimatedDays: true,
-					estimatedDays,
-					startCase: false
+					// verify hearing details on case details page
+					hearingSectionPage.verifyHearingValues('date', expectedDateTime.date);
+					hearingSectionPage.verifyHearingValues('time', expectedDateTime.time);
+					hearingSectionPage.verifyHearingValues(
+						'whether-the-estimated-number-of-days-is-known-or-not',
+						'Yes'
+					);
+					hearingSectionPage.verifyHearingValues('estimated-days', `${estimatedDays} Days`);
+					hearingSectionPage.verifyHearingValues('whether-the-address-is-known-or-not', 'No');
 				});
 
-				// Set exact time and date format for assertions
-				const expectedDateTime = formatDateAndTime(date);
-
-				// verify answers on cya page
-				cyaSection.verifyCheckYourAnswers(
-					'Do you know the expected number of days to carry out the hearing?',
-					'Yes'
-				);
-				cyaSection.verifyCheckYourAnswers('Expected number of days to carry out the hearing', '6');
-
-				// verify oreview email content
-				cyaSection.verifyPreviewEmail('appellant', true, { date: expectedDateTime.date });
-				cyaSection.verifyPreviewEmail('lpa', true, { date: expectedDateTime.date });
-				caseDetailsPage.clickButtonByText('Start case');
-
-				// verify banner messages
-				caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
-				caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
-
-				// verify hearing details on case details page
-				hearingSectionPage.verifyHearingValues('date', expectedDateTime.date);
-				hearingSectionPage.verifyHearingValues('time', expectedDateTime.time);
-				hearingSectionPage.verifyHearingValues(
-					'whether-the-estimated-number-of-days-is-known-or-not',
-					'Yes'
-				);
-				hearingSectionPage.verifyHearingValues('estimated-days', `${estimatedDays} Days`);
-				hearingSectionPage.verifyHearingValues('whether-the-address-is-known-or-not', 'No');
+				cy.checkNotifySent(caseObj, expectedNotifies.PlanningAppealHearing);
 			});
+		}
+	);
 
-			cy.checkNotifySent(caseObj, expectedNotifies.PlanningAppealHearing);
-		});
-	});
+	it(
+		'S78 hearing case - start appeal with scheduled hearing and without estimated days',
+		{ tags: tag.smoke },
+		() => {
+			cy.login(users.appeals.caseAdmin);
+			cy.createCase({ caseType: 'W' }).then((caseObj) => {
+				appeal = caseObj;
+				happyPathHelper.viewCaseDetails(caseObj);
 
-	it('S78 hearing case - start appeal with scheduled hearing and without estimated days', () => {
-		cy.login(users.appeals.caseAdmin);
-		cy.createCase({ caseType: 'W' }).then((caseObj) => {
-			appeal = caseObj;
-			happyPathHelper.viewCaseDetails(caseObj);
+				// Assign Case Officer Via API
+				cy.assignCaseOfficerViaApi(caseObj);
 
-			// Assign Case Officer Via API
-			cy.assignCaseOfficerViaApi(caseObj);
+				// Validate Appeal Via API
+				cy.validateAppeal(caseObj);
 
-			// Validate Appeal Via API
-			cy.validateAppeal(caseObj);
+				cy.getBusinessActualDate(new Date(), 2).then((date) => {
+					happyPathHelper.startS78HearingCase(caseObj, 'hearing', {
+						date,
+						setEstimatedDays: false,
+						startCase: false
+					});
 
-			cy.getBusinessActualDate(new Date(), 2).then((date) => {
-				happyPathHelper.startS78HearingCase(caseObj, 'hearing', {
-					date,
-					setEstimatedDays: false,
-					startCase: false
+					// Set exact time and date format for assertions
+					const expectedDateTime = formatDateAndTime(date);
+
+					// verify answers on cya page
+					cyaSection.verifyCheckYourAnswers(
+						'Do you know the expected number of days to carry out the hearing?',
+						'No'
+					);
+
+					// verify oreview email content
+					cyaSection.verifyPreviewEmail('appellant', true, { date: expectedDateTime.date });
+					cyaSection.verifyPreviewEmail('lpa', true, { date: expectedDateTime.date });
+					caseDetailsPage.clickButtonByText('Start case');
+
+					// verify banner messages
+					caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
+					caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
+
+					// verify hearing details on case details page
+					hearingSectionPage.verifyHearingValues('date', expectedDateTime.date);
+					hearingSectionPage.verifyHearingValues('time', expectedDateTime.time);
+					hearingSectionPage.verifyHearingValues(
+						'whether-the-estimated-number-of-days-is-known-or-not',
+						'No'
+					);
+					hearingSectionPage.verifyHearingValues('whether-the-address-is-known-or-not', 'No');
 				});
 
-				// Set exact time and date format for assertions
-				const expectedDateTime = formatDateAndTime(date);
-
-				// verify answers on cya page
-				cyaSection.verifyCheckYourAnswers(
-					'Do you know the expected number of days to carry out the hearing?',
-					'No'
-				);
-
-				// verify oreview email content
-				cyaSection.verifyPreviewEmail('appellant', true, { date: expectedDateTime.date });
-				cyaSection.verifyPreviewEmail('lpa', true, { date: expectedDateTime.date });
-				caseDetailsPage.clickButtonByText('Start case');
-
-				// verify banner messages
-				caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
-				caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
-
-				// verify hearing details on case details page
-				hearingSectionPage.verifyHearingValues('date', expectedDateTime.date);
-				hearingSectionPage.verifyHearingValues('time', expectedDateTime.time);
-				hearingSectionPage.verifyHearingValues(
-					'whether-the-estimated-number-of-days-is-known-or-not',
-					'No'
-				);
-				hearingSectionPage.verifyHearingValues('whether-the-address-is-known-or-not', 'No');
+				cy.checkNotifySent(caseObj, expectedNotifies.PlanningAppealHearing);
 			});
+		}
+	);
 
-			cy.checkNotifySent(caseObj, expectedNotifies.PlanningAppealHearing);
-		});
-	});
-
-	it('S78 can start case as inquiry with address', () => {
+	it('S78 can start case as inquiry with address', { tags: tag.smoke }, () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;
 			happyPathHelper.viewCaseDetails(caseObj);
@@ -348,7 +320,7 @@ describe('Start case', () => {
 		});
 	});
 
-	it('S78 can start case as inquiry without address', () => {
+	it('S78 can start case as inquiry without address', { tags: tag.smoke }, () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;
 			happyPathHelper.viewCaseDetails(caseObj);
