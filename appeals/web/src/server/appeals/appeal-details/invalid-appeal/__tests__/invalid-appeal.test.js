@@ -972,6 +972,21 @@ describe('invalid-appeal', () => {
 		});
 
 		it('should render the enforcement notice reasons page with no reasons selected', async () => {
+			// preview nocks
+			nock('http://test/')
+				.get(`/appeals/${appealDataEnforcementNotice.appealId}/case-team-email`)
+				.reply(200, {
+					id: 1,
+					email: 'caseofficers@planninginspectorate.gov.uk',
+					name: 'standard email'
+				});
+			const mockAppellantPreview = nock('http://test/')
+				.post(`/appeals/notify-preview/enforcement-notice-incomplete-appellant.content.md`)
+				.reply(200, { renderedHtml: '' });
+			const mockLpaPreview = nock('http://test/')
+				.post(`/appeals/notify-preview/enforcement-notice-incomplete-lpa.content.md`)
+				.reply(200, { renderedHtml: '' });
+
 			const response = await request.get(
 				`${baseUrl}/appellant-case/invalid/check-details-and-mark-enforcement-as-invalid`
 			);
@@ -999,6 +1014,9 @@ describe('invalid-appeal', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Mark enforcement notice as invalid</button>'
 			);
+
+			expect(mockAppellantPreview.isDone()).toBe(true);
+			expect(mockLpaPreview.isDone()).toBe(true);
 		});
 	});
 
