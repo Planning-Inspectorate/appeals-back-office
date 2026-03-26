@@ -64,3 +64,35 @@ export function decisionCheckAndConfirmPage(
 
 	return pageContent;
 }
+
+/**
+ * @param {string} backLinkUrl
+ * @returns {PageContent}
+ */
+export function inviteResponsesPage(backLinkUrl) {
+	/** @type {PageContent} */
+	return {
+		title: 'Do you want to invite responses?',
+		backLinkText: 'Back',
+		backLinkUrl: backLinkUrl,
+		heading: 'Do you want to invite responses?',
+		pageComponents: [
+			{
+				type: 'radios',
+				parameters: {
+					name: 'invite-responses',
+					idPrefix: 'invite-responses',
+					items: [
+						{ text: 'Yes', value: 'yes' },
+						{ text: 'No', value: 'no' }
+					]
+				}
+			}
+		],
+		submitButtonText: 'Confirm and share document',
+		submitButtonProperties: {
+			text: 'Confirm and share document',
+			type: 'submit'
+		}
+	};
+}

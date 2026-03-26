@@ -1266,6 +1266,9 @@ export async function manageDocumentPage({
 		'manage-documents',
 		`${baseUrl}change-document-name`
 	);
+
+	const headingText = isCosts ? 'Document details' : document?.name || '';
+
 	const session = request.session;
 	const latestVersion = getDocumentLatestVersion(document);
 	const virusCheckStatus = mapDocumentVersionDetailsVirusCheckStatus(latestVersion);
@@ -1309,6 +1312,33 @@ export async function manageDocumentPage({
 	}
 
 	const isShared = /** @type {any} */ (document).isShared;
+
+	if (isCosts && !isShared) {
+		const { costsDocumentType } = request.params;
+		const shareUrl =
+			costsDocumentType === 'withdrawal'
+				? request.originalUrl + '/check-your-answers'
+				: request.originalUrl + '/invite-responses';
+
+		pageComponents.push(
+			{
+				type: 'html',
+				parameters: { html: '<h2 class="govuk-heading-m">Current version</h2>' }
+			},
+			{
+				type: 'html',
+				parameters: { html: '<p class="govuk-body">This document is not shared</p>' }
+			},
+			{
+				type: 'button',
+				parameters: {
+					text: 'Share document',
+					href: shareUrl,
+					classes: 'govuk-!-margin-bottom-7'
+				}
+			}
+		);
+	}
 
 	/** @type {PageComponent} */
 	const documentSummary = {
@@ -1554,7 +1584,7 @@ export async function manageDocumentPage({
 			?.replace('{{folderId}}', folder.folderId.toString())
 			.replace('{{documentId}}', document.id || ''),
 		preHeading: pageTitleTextOverride || 'Manage document',
-		heading: document?.name || '',
+		heading: headingText,
 		pageComponents
 	};
 
