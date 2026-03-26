@@ -43,6 +43,24 @@ export function mapGetApiVisitTypeToWebVisitType(getApiVisitType) {
 }
 
 /**
+ *
+ * @param {ApiVisitType} visitType
+ * @returns {String}
+ */
+export function mapVisitTypeToReadable(visitType) {
+	switch (visitType) {
+		case 'unaccompanied':
+			return 'Unaccompanied';
+		case 'accessRequired':
+			return 'Access Required';
+		case 'accompanied':
+			return 'Accompanied';
+		default:
+			return '';
+	}
+}
+
+/**
  * @param {'schedule' | 'manage'} pageType
  * @param {Appeal} appealDetails
  * @param {string} currentRoute
@@ -72,9 +90,6 @@ export async function typeOfSiteVisitPage(
 	);
 	const titlePrefix = capitalize(pageType);
 
-	if (visitType === null || visitType === undefined || visitType.length === 0) {
-		visitType = mapGetApiVisitTypeToWebVisitType(appealDetails.siteVisit?.visitType);
-	}
 	/**
 	 * @type {(SummaryListRowProperties)[]}
 	 */
@@ -115,7 +130,7 @@ export async function typeOfSiteVisitPage(
 					classes: 'govuk-fieldset__legend--m'
 				}
 			},
-			value: visitType,
+			value: mapGetApiVisitTypeToWebVisitType(visitType),
 			items: [
 				{
 					value: 'unaccompanied',
@@ -140,7 +155,7 @@ export async function typeOfSiteVisitPage(
 	const pageContent = {
 		title: `${titlePrefix} site visit - ${shortAppealReference}`,
 		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
-		preHeading: `Appeal ${shortAppealReference}`,
+		preHeading: `Appeal ${shortAppealReference} - set up site visit`,
 		heading: `${titlePrefix} site visit`,
 		submitButtonText: 'Continue',
 		pageComponents: [selectVisitTypeComponent],
