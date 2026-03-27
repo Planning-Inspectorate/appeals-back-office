@@ -115,7 +115,8 @@ export const getDocumentRedactionStatuses = async (apiClient) => {
 /**
  * @typedef {Object} DocumentDetailAPIDocument
  * @property {string} id
- * @property {string} fileName
+ * @property {string} [fileName]
+ * @property {boolean} [isShared]
  */
 
 /**
