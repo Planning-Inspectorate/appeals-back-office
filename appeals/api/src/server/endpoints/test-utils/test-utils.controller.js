@@ -453,7 +453,7 @@ export const simulateShareIpCommentsAndLpaStatement = async (req, res) => {
 	const { appealReference } = req.params;
 	const appeal = await databaseConnector.appeal.findUnique({
 		where: { reference: appealReference },
-		include: { appealStatus: true, lpa: true, appellant: true }
+		include: { appealStatus: true, lpa: true, appellant: true, agent: true }
 	});
 
 	if (!appeal) return res.status(400).send(false);
