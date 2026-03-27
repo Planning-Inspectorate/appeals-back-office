@@ -765,7 +765,7 @@ const setupCaseForRule6StatementReview = () => {
 	cy.addRule6Party(caseObj, rule6Party);
 };
 
-it.only('Display Statement and POE on personal list page', () => {
+it('Display Statement and POE on personal list page', () => {
 	cy.addLpaqSubmissionToCase(caseObj);
 	cy.reviewLpaqSubmission(caseObj);
 	cy.addRule6Party(caseObj, rule6Party);
@@ -774,7 +774,6 @@ it.only('Display Statement and POE on personal list page', () => {
 	cy.getRule6ServiceUserId(caseObj, rule6Party.serviceUser.email).then((serviceUserId) => {
 		cy.log(`Service User ID: ${serviceUserId}`);
 		cy.addRepresentation(caseObj, 'rule6PartyStatement', serviceUserId);
-		cy.reload();
 	});
 	cy.visit(urlPaths.personalListFilteredStatement);
 	personalListPage.verifyActionRequiredLink(
@@ -782,17 +781,9 @@ it.only('Display Statement and POE on personal list page', () => {
 		`Review ${rule6Party.serviceUser.organisationName} statement`
 	);
 
-	caseDetailsPage.navigateToAppealsService();
+	caseDetailsPage.navigateToAppealsList();
 	listCasesPage.clickAppealByRef(caseObj);
-	documentationSectionPage.navigateToAddProofOfEvidenceReview('rule-6-statement');
-	caseDetailsPage.selectRadioButtonByValue('Accept statement');
-	caseDetailsPage.clickButtonByText('Continue');
-	caseDetailsPage.selectRadioButtonByValue('A');
-	caseDetailsPage.clickButtonByText('Continue');
-	caseDetailsPage.chooseCheckboxByText('General allocation');
-	caseDetailsPage.clickButtonByText('Continue');
-	caseDetailsPage.clickButtonByText('Accept statement');
-	// cy.reviewRule6StatementViaApi(caseObj); Todo - 7055 create the api request for reviewing rule6 statement and remove lines 787-794
+	cy.reviewRule6PartyStatement(caseObj);
 	cy.shareCommentsAndStatementsViaApi(caseObj);
 	cy.simulateStatementsDeadlineElapsed(caseObj);
 
@@ -806,7 +797,7 @@ it.only('Display Statement and POE on personal list page', () => {
 		cy.addRepresentation(caseObj, 'rule6ProofOfEvidence', serviceUserId);
 		cy.reload();
 	});
-	caseDetailsPage.navigateToAppealsService();
+	caseDetailsPage.navigateToAppealsList();
 	listCasesPage.clickAppealByRef(caseObj);
 	documentationSectionPage.navigateToAddProofOfEvidenceReview('rule-6-proof-of-evidence');
 	caseDetailsPage.selectRadioButtonByValue('Complete');

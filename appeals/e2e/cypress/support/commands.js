@@ -210,6 +210,7 @@ Cypress.Commands.add('addRepresentation', (caseObj, type, serviceUserId, represe
 			representation
 		);
 	});
+	cy.reload();
 });
 
 Cypress.Commands.add('loadAppealDetails', (caseObj) => {
