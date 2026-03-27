@@ -8,6 +8,7 @@ import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { Router as createRouter } from 'express';
 import {
 	createAppellantCaseContactAddress,
+	enforcementValidNotifyPreview,
 	getAppellantCaseById,
 	updateAppellantCaseById,
 	updateAppellantCaseContactAddress
@@ -118,6 +119,48 @@ router.post(
 	checkAppealTypeIsEnabled(APPEAL_CASE_TYPE.C),
 	createContactAddressValidator,
 	asyncHandler(createAppellantCaseContactAddress)
+);
+
+router.post(
+	'/:appealId/appellant-cases/:appellantCaseId/enforcement-valid-notify-preview',
+	/*
+		#swagger.tags = ['Appellant Cases']
+		#swagger.path = '/appeals/{appealId}/appellant-cases/{appellantCaseId}/enforcement-valid-notify-preview'
+		#swagger.description = 'Returns the rendered HTML of the emails that would be sent to the relevant parties'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.requestBody = {
+			in: 'body',
+			description: 'Appeal and enforcement valid details (groundABarred, otherInformation)',
+			schema: { $ref: '#/components/schemas/EnforcementValidNotifyPreviewRequest' },
+			required: true
+		}
+		#swagger.responses[200] = {
+			description: 'Returns the rendered HTML of the emails that would be sent to the relevant parties',
+			schema: { $ref: '#/components/schemas/EnforcementValidNotifyPreviewResponse' }
+		}
+		#swagger.responses[400] = {}
+		#swagger.responses[404] = {}
+		#swagger.responses[500] = {}
+	 */
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'appellantCase',
+		'address',
+		'agent',
+		'appellant',
+		'appealStatus',
+		'appealType',
+		'lpa',
+		'procedureType',
+		'parentAppeals',
+		'childAppeals',
+		'appealGrounds'
+	]),
+	checkAppealTypeIsEnabled(APPEAL_CASE_TYPE.C),
+	asyncHandler(enforcementValidNotifyPreview)
 );
 
 router.patch(

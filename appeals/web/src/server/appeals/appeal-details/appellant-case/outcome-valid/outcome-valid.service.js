@@ -32,3 +32,38 @@ export async function setReviewOutcomeValidForAppellantCase(
 		})
 		.json();
 }
+
+/**
+ * Generate Notify preview templates for appellant and LPA
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @param {number} appellantCaseId
+ * @param {boolean} [groundABarred]
+ * @param {string} [otherInformation]
+ * @returns {Promise<{appellant?: string, lpa?: string}>}
+ */
+export async function getEnforcementOutcomeValidNotifyPreviews(
+	apiClient,
+	appealId,
+	appellantCaseId,
+	groundABarred,
+	otherInformation
+) {
+	const result = await apiClient
+		.post(
+			`appeals/${appealId}/appellant-cases/${appellantCaseId}/enforcement-valid-notify-preview`,
+			{
+				json: {
+					groundABarred,
+					otherInformation
+				}
+			}
+		)
+		.json();
+
+	if (result.error) {
+		throw new Error(result.error);
+	}
+
+	return result;
+}

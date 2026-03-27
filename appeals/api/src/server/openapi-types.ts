@@ -2219,6 +2219,24 @@ export interface UpdateAppellantCaseRequest {
 
 export type UpdateAppellantCaseResponse = object;
 
+export interface EnforcementValidNotifyPreviewRequest {
+	/** @example true */
+	groundABarred?: boolean;
+	/** @example "some other information" */
+	otherInformation?: string;
+}
+
+export interface EnforcementValidNotifyPreviewResponse {
+	appellant?: {
+		/** @example "Rendered HTML for appellant preview" */
+		renderedHtml?: string;
+	};
+	lpa?: {
+		/** @example "Rendered HTML for LPA preview" */
+		renderedHtml?: string;
+	};
+}
+
 export interface UpdateLPAQuestionnaireRequest {
 	/** @example [1,2,3] */
 	designatedSites?: number[];
