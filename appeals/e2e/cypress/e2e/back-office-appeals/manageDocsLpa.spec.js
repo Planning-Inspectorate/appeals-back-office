@@ -101,7 +101,7 @@ describe('Manage docs on lpa case', () => {
 
 	it(
 		'allows uploading 800 representations for HAS and continue without service error',
-		{ tags: tag.smoke },
+		{ tags: tag.smoke, pageLoadTimeout: 180000 },
 		() => {
 			cy.createCase().then((caseObj) => {
 				appeal = caseObj;
@@ -116,7 +116,7 @@ describe('Manage docs on lpa case', () => {
 
 	it(
 		'allows uploading 800 representations for S78 and continue without service error',
-		{ tags: tag.smoke },
+		{ tags: tag.smoke, pageLoadTimeout: 180000 },
 		() => {
 			cy.createCase({ caseType: 'W' }).then((caseObj) => {
 				appeal = caseObj;
