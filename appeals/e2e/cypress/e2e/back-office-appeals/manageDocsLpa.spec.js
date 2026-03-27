@@ -99,27 +99,35 @@ describe('Manage docs on lpa case', () => {
 		});
 	});
 
-	it('allows uploading 800 representations for HAS and continue without service error', () => {
-		cy.createCase().then((caseObj) => {
-			appeal = caseObj;
-			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
-			caseDetailsPage.clickReviewLpaq();
+	it(
+		'allows uploading 800 representations for HAS and continue without service error',
+		{ tags: tag.smoke },
+		() => {
+			cy.createCase().then((caseObj) => {
+				appeal = caseObj;
+				cy.addLpaqSubmissionToCase(caseObj);
+				happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
+				caseDetailsPage.clickReviewLpaq();
 
-			verifyBulkUploadCanContinue('bulk-has-representations');
-		});
-	});
+				verifyBulkUploadCanContinue('bulk-has-representations');
+			});
+		}
+	);
 
-	it('allows uploading 800 representations for S78 and continue without service error', () => {
-		cy.createCase({ caseType: 'W' }).then((caseObj) => {
-			appeal = caseObj;
-			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'S78');
-			caseDetailsPage.clickReviewLpaq();
+	it(
+		'allows uploading 800 representations for S78 and continue without service error',
+		{ tags: tag.smoke },
+		() => {
+			cy.createCase({ caseType: 'W' }).then((caseObj) => {
+				appeal = caseObj;
+				cy.addLpaqSubmissionToCase(caseObj);
+				happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'S78');
+				caseDetailsPage.clickReviewLpaq();
 
-			verifyBulkUploadCanContinue('bulk-s78-representations');
-		});
-	});
+				verifyBulkUploadCanContinue('bulk-s78-representations');
+			});
+		}
+	);
 
 	it('remove a doc when not the last version', () => {
 		cy.createCase().then((caseObj) => {
