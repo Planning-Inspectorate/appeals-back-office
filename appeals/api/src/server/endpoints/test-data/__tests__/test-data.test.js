@@ -13,9 +13,24 @@ const request = supertest(app);
 describe('/appeals/generate-appeals', () => {
 	beforeAll(() => {
 		jest.spyOn(testDataService, 'generateAppeals').mockResolvedValue([
-			{ id: 1, reference: 'FAKE-1', type: 'has', appellant: { email: 'load-test@example.com' } },
-			{ id: 2, reference: 'FAKE-2', type: 'has', appellant: { email: 'load-test@example.com' } },
-			{ id: 3, reference: 'FAKE-3', type: 'has', appellant: { email: 'load-test@example.com' } }
+			{
+				id: 1,
+				reference: 'FAKE-1',
+				type: 'has',
+				appellant: { firstName: 'LOAD Load', lastName: 'Tester', email: 'load-test@example.com' }
+			},
+			{
+				id: 2,
+				reference: 'FAKE-2',
+				type: 'has',
+				appellant: { firstName: 'LOAD Load', lastName: 'Tester', email: 'load-test@example.com' }
+			},
+			{
+				id: 3,
+				reference: 'FAKE-3',
+				type: 'has',
+				appellant: { firstName: 'LOAD Load', lastName: 'Tester', email: 'load-test@example.com' }
+			}
 		]);
 	});
 
