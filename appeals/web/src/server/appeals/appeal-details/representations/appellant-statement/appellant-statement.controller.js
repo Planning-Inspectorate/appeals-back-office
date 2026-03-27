@@ -6,6 +6,21 @@ import {
 } from './appellant-statement.mapper.js';
 
 /**
+ * @param {string | undefined} backLinkUrlFromQuery
+ * @returns {boolean}
+ */
+const isAddDocumentCheckYourAnswersBackLink = (backLinkUrlFromQuery) =>
+	backLinkUrlFromQuery?.includes('/appellant-statement/add-document/check-your-answers') ?? false;
+
+/**
+ * @param {string | undefined} backLinkUrlFromQuery
+ * @returns {boolean}
+ */
+const isInternalReviewConfirmBackLink = (backLinkUrlFromQuery) =>
+	backLinkUrlFromQuery !== undefined &&
+	/\/appellant-statement\/(valid|redact|incomplete)\/confirm(?:\/|\?|$)/.test(backLinkUrlFromQuery);
+
+/**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
@@ -18,11 +33,11 @@ export const renderReviewAppellantStatement = async (request, response) => {
 	].includes(currentRepresentation.status);
 
 	const backLinkUrlFromQuery = getBackLinkUrlFromQuery(request);
-	const backLinkUrl = backLinkUrlFromQuery?.includes(
-		'/appellant-statement/add-document/check-your-answers'
-	)
-		? undefined
-		: backLinkUrlFromQuery;
+	const backLinkUrl =
+		isAddDocumentCheckYourAnswersBackLink(backLinkUrlFromQuery) ||
+		(!isReview && isInternalReviewConfirmBackLink(backLinkUrlFromQuery))
+			? undefined
+			: backLinkUrlFromQuery;
 
 	const pageContent = (isReview ? reviewAppellantStatementPage : viewAppellantStatementPage)(
 		currentAppeal,
