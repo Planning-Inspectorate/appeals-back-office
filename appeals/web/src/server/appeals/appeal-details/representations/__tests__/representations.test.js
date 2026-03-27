@@ -9,7 +9,9 @@ import {
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import nock from 'nock';
 import supertest from 'supertest';
 
@@ -245,6 +247,7 @@ describe('representations', () => {
 		it('should display correctly when LPA, Appellant, and Rule 6 statements all exist', async () => {
 			const appealWithAll = {
 				...appealData,
+				appealType: 'Enforcement notice appeal',
 				appealStatus: 'statements',
 				documentationSummary: {
 					lpaStatement: {
@@ -282,6 +285,7 @@ describe('representations', () => {
 		it('should display correctly when matching comments and statements exist', async () => {
 			const appealWithAll = {
 				...appealData,
+				appealType: 'Enforcement notice appeal',
 				appealStatus: 'statements',
 				documentationSummary: {
 					ipComments: {
@@ -316,6 +320,28 @@ describe('representations', () => {
 			);
 		});
 
+		it('should not include appellant statement for unsupported appeal types', async () => {
+			const unsupportedAppeal = {
+				...appealData,
+				appealType: 'Planning appeal',
+				appealStatus: 'statements',
+				documentationSummary: {
+					lpaStatement: {
+						representationStatus: 'valid'
+					},
+					appellantStatement: {
+						representationStatus: 'valid'
+					}
+				}
+			};
+			nock('http://test/').get('/appeals/1?include=all').reply(200, unsupportedAppeal);
+			const response = await request.get(`${baseUrl}/1/share`);
+			const textResponse = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(textResponse.innerHTML).toContain('1 LPA statement');
+			expect(textResponse.innerHTML).not.toContain('1 appellant statement');
+		});
+
 		it('should NOT display Rule 6 statements if they are not valid or incomplete', async () => {
 			const appealWithInvalidRule6 = {
 				...appealData,
@@ -344,6 +370,30 @@ describe('representations', () => {
 			expect(textResponse.innerHTML).not.toContain('Org One statement');
 			expect(textResponse.innerHTML).not.toContain('Org Two statement');
 			expect(textResponse.innerHTML).toContain('1 Org Three statement');
+		});
+
+		it('should contain correct content for enforcement listed building appeals', async () => {
+			const appealWithStatments = {
+				...appealData,
+				appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+				appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+				documentationSummary: {
+					ipComments: {
+						counts: {
+							valid: numIpComments
+						}
+					}
+				}
+			};
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealWithStatments);
+			const response = await request.get(`${baseUrl}/1/share`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Check details and share statements</h1>');
+			expect(element.innerHTML).toContain(
+				`<a href="/appeals-service/appeal-details/1/interested-party-comments?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare#valid"`
+			);
 		});
 	});
 

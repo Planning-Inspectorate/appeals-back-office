@@ -49,7 +49,7 @@ exports[`change inquiry GET /inquiry/change/address should match the snapshot 1`
                                 <form method="POST" novalidate="novalidate">
                                     <div class="govuk-form-group">
                                         <fieldset class="govuk-fieldset">
-                                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                                 <h1 class="govuk-fieldset__heading"> Do you know the address of where the inquiry will take place?</h1>
                                             </legend>
                                             <div class="govuk-radios" data-module="govuk-radios">
@@ -75,10 +75,19 @@ exports[`change inquiry GET /inquiry/change/address should match the snapshot 1`
                 </div>
             </main>
         </div>
-        <footer class="govuk-footer" role="contentinfo">
-            <div class="govuk-width-container ">
-                <div class="govuk-footer__meta">
-                    <div class="govuk-footer__meta-item govuk-footer__meta-item"></div>
+        <footer class="pins-footer" role="contentinfo">
+            <div class="pins-footer-row">
+                <div class="pins-footer-container govuk-width-container">
+                    <div class="pins-footer__meta">
+                        <div>
+                            <ul class="pins-footer__inline-list">
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/inquiry/change/address">Accessibility</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div><span class="pins-footer__copyright">© Planning Inspectorate</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </footer>
@@ -170,10 +179,19 @@ exports[`change inquiry GET /inquiry/change/address-details should match the sna
                 </div>
                 </main>
         </div>
-        <footer class="govuk-footer" role="contentinfo">
-            <div class="govuk-width-container ">
-                <div class="govuk-footer__meta">
-                    <div class="govuk-footer__meta-item govuk-footer__meta-item"></div>
+        <footer class="pins-footer" role="contentinfo">
+            <div class="pins-footer-row">
+                <div class="pins-footer-container govuk-width-container">
+                    <div class="pins-footer__meta">
+                        <div>
+                            <ul class="pins-footer__inline-list">
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/inquiry/change/address-details">Accessibility</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div><span class="pins-footer__copyright">© Planning Inspectorate</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </footer>
@@ -290,10 +308,19 @@ exports[`change inquiry GET /inquiry/change/check-details when all pages have be
                 </div>
             </main>
         </div>
-        <footer class="govuk-footer" role="contentinfo">
-            <div class="govuk-width-container ">
-                <div class="govuk-footer__meta">
-                    <div class="govuk-footer__meta-item govuk-footer__meta-item"></div>
+        <footer class="pins-footer" role="contentinfo">
+            <div class="pins-footer-row">
+                <div class="pins-footer-container govuk-width-container">
+                    <div class="pins-footer__meta">
+                        <div>
+                            <ul class="pins-footer__inline-list">
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/inquiry/change/check-details">Accessibility</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div><span class="pins-footer__copyright">© Planning Inspectorate</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </footer>
@@ -623,10 +650,19 @@ exports[`change inquiry GET /inquiry/change/date should match the snapshot 1`] =
                 </div>
                 </main>
         </div>
-        <footer class="govuk-footer" role="contentinfo">
-            <div class="govuk-width-container ">
-                <div class="govuk-footer__meta">
-                    <div class="govuk-footer__meta-item govuk-footer__meta-item"></div>
+        <footer class="pins-footer" role="contentinfo">
+            <div class="pins-footer-row">
+                <div class="pins-footer-container govuk-width-container">
+                    <div class="pins-footer__meta">
+                        <div>
+                            <ul class="pins-footer__inline-list">
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/inquiry/change/date">Accessibility</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div><span class="pins-footer__copyright">© Planning Inspectorate</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </footer>

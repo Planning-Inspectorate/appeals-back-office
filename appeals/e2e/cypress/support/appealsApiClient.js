@@ -85,7 +85,9 @@ export const appealsApiClient = {
 
 			if (!response.ok) {
 				const errorBody = await response.text();
-				throw new Error(`HTTP error calling: ${url} with status: ${response.status}`, errorBody);
+				throw new Error(
+					`HTTP error calling: ${url} with status: ${response.status}. Response body: ${errorBody}`
+				);
 			}
 
 			const responseBody = await response.json();
@@ -96,7 +98,7 @@ export const appealsApiClient = {
 			return responseBody.reference;
 		} catch (error) {
 			cy.writeLog(`Error submitting LPAQ for ${reference}:`, error);
-			return false;
+			throw error;
 		}
 	},
 	async appellantStatementSubmission(reference) {
@@ -126,6 +128,124 @@ export const appealsApiClient = {
 			return await response.json();
 		} catch (error) {
 			cy.writeLog(`Error submitting appellant statement for ${reference}:`, error);
+			return false;
+		}
+	},
+
+	async reviewAppellantStatement(reference) {
+		try {
+			const url = `${baseUrl}appeals/${reference}/review-appellant-statement`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+
+			expect(response.status).eq(200);
+
+			const responseBody = await response.json();
+			expect(responseBody).to.be.an('object');
+
+			return responseBody;
+		} catch (error) {
+			cy.writeLog(`Error reviewing appellant statement for ${reference}:`, error);
+			return false;
+		}
+	},
+
+	async reviewRule6PartyStatement(reference) {
+		try {
+			const url = `${baseUrl}appeals/${reference}/review-rule-6-statement`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+
+			expect(response.status).eq(200);
+
+			const responseBody = await response.json();
+			expect(responseBody).to.be.an('object');
+
+			return responseBody;
+		} catch (error) {
+			cy.writeLog(`Error reviewing rule6Party statement for ${reference}:`, error);
+			return false;
+		}
+	},
+
+	async reviewRule6ProofOfEvidence(reference) {
+		try {
+			const url = `${baseUrl}appeals/${reference}/review-rule-6-proof-of-evidence`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				},
+				body: JSON.stringify({
+					reviewOutcome: 'complete'
+				})
+			});
+
+			expect(response.status).eq(200);
+
+			const responseBody = await response.json();
+			expect(responseBody).to.be.an('object');
+
+			return responseBody;
+		} catch (error) {
+			cy.writeLog(`Error reviewing Rule 6 proof of evidence for ${reference}:`, error);
+			return false;
+		}
+	},
+
+	async reviewLpaProofOfEvidence(reference) {
+		try {
+			const url = `${baseUrl}appeals/${reference}/review-lpa-proof-of-evidence`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+
+			expect(response.status).eq(200);
+
+			const responseBody = await response.json();
+			expect(responseBody).to.be.an('object');
+
+			return responseBody;
+		} catch (error) {
+			cy.writeLog(`Error reviewing LPA proof of evidence for ${reference}:`, error);
+			return false;
+		}
+	},
+
+	async reviewAppellantProofOfEvidence(reference) {
+		try {
+			const url = `${baseUrl}appeals/${reference}/review-appellant-proof-of-evidence`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+
+			expect(response.status).eq(200);
+
+			const responseBody = await response.json();
+			expect(responseBody).to.be.an('object');
+
+			return responseBody;
+		} catch (error) {
+			cy.writeLog(`Error reviewing appellant proof of evidence for ${reference}:`, error);
 			return false;
 		}
 	},
@@ -810,7 +930,8 @@ export const appealsApiClient = {
 	async assignCaseOfficer(appealId) {
 		try {
 			const url = `${baseUrl}appeals/${appealId}`;
-			const caseOfficer = '544f5029-e660-4bc3-81b1-adc19d47e970';
+			const caseOfficer = '13de469c-8de6-4908-97cd-330ea73df618'; // use the real one if this is correct
+
 			const response = await fetch(url, {
 				method: 'PATCH',
 				headers: {
@@ -821,15 +942,14 @@ export const appealsApiClient = {
 					caseOfficerId: caseOfficer
 				})
 			});
-			expect(response.status).eq(200);
+
+			expect(response.status).to.eq(200);
 
 			const responseBody = await response.json();
 
-			expect(responseBody).to.deep.equal({
-				caseOfficerId: caseOfficer
-			});
+			expect(responseBody.caseOfficerId).to.eq(caseOfficer);
 
-			return await response.json();
+			return responseBody;
 		} catch (error) {
 			cy.writeLog(`Error assigning case officer for appeal ${appealId}:`, error);
 			return false;

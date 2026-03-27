@@ -1,6 +1,10 @@
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
-import { isAwaitingLinkedAppeal, isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import {
+	canStartAppeal,
+	isAwaitingLinkedAppeal,
+	isChildAppeal
+} from '#lib/mappers/utils/is-linked-appeal.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapStartedAt = ({ appealDetails, currentRoute, userHasUpdateCasePermission }) => {
@@ -26,6 +30,6 @@ export const mapStartedAt = ({ appealDetails, currentRoute, userHasUpdateCasePer
 			['not_received', 'received'].includes(lpaQuestionnaireStatus) &&
 			!awaitingLinkedAppeal,
 		classes: 'appeal-start-date',
-		actionText: appealDetails.startedAt ? 'Change' : 'Start'
+		actionText: appealDetails.startedAt ? 'Change' : canStartAppeal(appealDetails) ? 'Start' : ''
 	});
 };

@@ -186,6 +186,10 @@ describe('documents and folders', () => {
 				label: 'Decision letter'
 			},
 			{
+				documentType: APPEAL_DOCUMENT_TYPE.RELATED_APPLICATIONS,
+				label: 'Related applications'
+			},
+			{
 				documentType: APPEAL_DOCUMENT_TYPE.ENFORCEMENT_NOTICE,
 				label: 'Enforcement notice'
 			},

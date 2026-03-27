@@ -1,4 +1,5 @@
 import advert from './advert.js';
+import enforcementListed from './enforcement-listed.js';
 import has from './has.js';
 import s20 from './s20.js';
 import s78 from './s78.js';
@@ -298,6 +299,22 @@ export const advertisementAppeal = {
 		...householdAppeal.appellantCase,
 		hasDesignAndAccessStatement: true,
 		hasNewPlansOrDrawings: true
+	}
+};
+
+export const appealEnforcementListed = {
+	...enforcementListed,
+	siteVisit: {
+		id: 1,
+		appealId: 1,
+		visitDate: new Date('2022-03-31T01:00:00.000Z'),
+		visitEndTime: new Date('2022-03-31T03:00:00.000Z'),
+		visitStartTime: new Date('2022-03-31T01:00:00.000Z'),
+		siteVisitType: {
+			id: 1,
+			name: 'Access required',
+			key: 'site_visit_access_required'
+		}
 	}
 };
 
@@ -754,6 +771,7 @@ export const listedBuildingAppealLPAQuestionnaireIncomplete = {
 
 export const enforcementNoticeAppeal = {
 	...fullPlanningAppeal,
+	id: 35,
 	appellantCase: {
 		...fullPlanningAppeal.appellantCase,
 		enforcementNotice: true,
@@ -837,6 +855,41 @@ export const enforcementNoticeAppealAppellantCaseIncomplete = {
 		groundAFeeReceiptDueDate: new Date()
 	},
 	id: 4
+};
+
+export const enforcementListedAppealAppellantCaseIncomplete = {
+	...enforcementNoticeAppeal,
+	appellantCase: {
+		...enforcementNoticeAppeal.appellantCase,
+		...incompleteAppellantCaseOutcome,
+		appellantCaseEnforcementInvalidReasonsSelected: [
+			{
+				appellantCaseEnforcementInvalidReason: {
+					id: 3,
+					name: 'There is a mistake in the wording',
+					hasText: true
+				},
+				appellantCaseEnforcementInvalidReasonText: [
+					{
+						id: 6,
+						text: 'this is a short reason',
+						appellantCaseEnforcementInvalidReasonId: 3
+					}
+				]
+			}
+		],
+		appellantCaseEnforcementMissingDocumentsSelected: [{ id: 12 }]
+	},
+	enforcementNoticeAppealOutcome: {
+		enforcementNoticeInvalid: 'no'
+	},
+	id: 4,
+	appealType: {
+		id: 2,
+		key: APPEAL_CASE_TYPE.F,
+		type: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.ENFORCEMENT_LISTED_BUILDING
+	}
 };
 
 export const linkedAppeals = [

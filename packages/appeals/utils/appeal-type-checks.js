@@ -1,0 +1,52 @@
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+import { APPEAL_TYPE } from '../constants/common.js';
+
+/**
+ * @typedef {typeof APPEAL_CASE_TYPE['D'] | typeof APPEAL_CASE_TYPE['W']} BaseAppealType
+ * @typedef {Record<string, BaseAppealType>} BaseCaseType
+ */
+
+/** @type {BaseCaseType} */
+const baseCaseType = {
+	[APPEAL_CASE_TYPE.D]: APPEAL_CASE_TYPE.D,
+	[APPEAL_CASE_TYPE.ZP]: APPEAL_CASE_TYPE.D,
+	[APPEAL_CASE_TYPE.ZA]: APPEAL_CASE_TYPE.D,
+	[APPEAL_CASE_TYPE.H]: APPEAL_CASE_TYPE.W,
+	[APPEAL_CASE_TYPE.W]: APPEAL_CASE_TYPE.W,
+	[APPEAL_CASE_TYPE.Y]: APPEAL_CASE_TYPE.W,
+	[APPEAL_CASE_TYPE.C]: APPEAL_CASE_TYPE.W,
+	[APPEAL_CASE_TYPE.X]: APPEAL_CASE_TYPE.W,
+	[APPEAL_CASE_TYPE.F]: APPEAL_CASE_TYPE.W
+};
+
+/**
+ * @param {string | null} appealType
+ * @returns {boolean}
+ */
+export const isExpeditedAppealType = (appealType) => {
+	if (appealType === '') return false;
+
+	if (!appealType || !baseCaseType[appealType]) {
+		throw new Error(
+			`Appeal type - ${appealType} not defined in isExpeditedAppealType baseCaseType`
+		);
+	}
+	return Boolean(baseCaseType[appealType] === APPEAL_CASE_TYPE.D);
+};
+
+/**
+ *
+ * @param {string|undefined} caseType
+ * @returns {boolean}
+ */
+export const isEnforcementCaseType = (caseType) =>
+	caseType === APPEAL_CASE_TYPE.C || caseType === APPEAL_CASE_TYPE.F;
+
+/**
+ *
+ * @param {string|undefined} appealType
+ * @returns {boolean}
+ */
+export const isAnyEnforcementAppealType = (appealType) =>
+	appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ||
+	appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING;

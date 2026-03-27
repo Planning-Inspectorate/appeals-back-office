@@ -1,5 +1,5 @@
 /**
- * @typedef {'appealDetails'|'appellantCase'|'lpaQuestionnaire'|'manageDocuments'|'manageFolder'|'manageRelatedAppeals'|'manageNeighbouringSites'|'ipComments'|'viewIpComment'|'reviewIpComment'|'lpaStatement'|'viewFinalComments'|'appealDecision'|'viewProofOfEvidence'|'sharedIpComments'| 'appellantStatement'|'rule6PartyStatement'} ServicePageName
+ * @typedef {'appealDetails'|'appellantCase'|'lpaQuestionnaire'|'manageDocuments'|'manageFolder'|'manageRelatedAppeals'|'manageLinkedAppeals'|'manageNeighbouringSites'|'ipComments'|'viewIpComment'|'reviewIpComment'|'lpaStatement'|'viewFinalComments'|'appealDecision'|'viewProofOfEvidence'|'sharedIpComments'| 'appellantStatement'|'rule6PartyStatement'} ServicePageName
  */
 
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';

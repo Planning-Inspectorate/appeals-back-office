@@ -3,15 +3,17 @@ import { isDefined } from '#lib/ts-utilities.js';
 /**
  *
  * @param {{lpaq: MappedInstructions}} mappedLPAQData
- * @param {{appeal: MappedInstructions}} mappedAppealDetails
  * @returns {PageComponent[]}
  */
-export const generateSharedS78S20LpaQuestionnaireComponents = (
-	mappedLPAQData,
-	mappedAppealDetails
-) => {
+export const generateSharedS78S20LpaQuestionnaireComponents = (mappedLPAQData) => {
 	/** @type {PageComponent[]} */
 	const pageComponents = [];
+
+	const scheduleItem =
+		mappedLPAQData.lpaq?.eiaEnvironmentalImpactSchedule?.display?.summaryListItem;
+	const scheduleText = scheduleItem?.value?.text || scheduleItem?.value?.html || '';
+
+	const isSchedule2 = scheduleText.toLowerCase().includes('schedule 2');
 
 	pageComponents.push({
 		/** @type {'summary-list'} */
@@ -28,14 +30,20 @@ export const generateSharedS78S20LpaQuestionnaireComponents = (
 			},
 			rows: [
 				mappedLPAQData.lpaq?.eiaEnvironmentalImpactSchedule?.display.summaryListItem,
-				mappedLPAQData.lpaq?.eiaColumnTwoThreshold?.display.summaryListItem,
+				isSchedule2
+					? mappedLPAQData.lpaq?.eiaColumnTwoThreshold?.display.summaryListItem
+					: undefined,
 				mappedLPAQData.lpaq?.eiaRequiresEnvironmentalStatement?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaEnvironmentalStatement?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaScreeningOpinion?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaScreeningDirection?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaScopingOpinion?.display.summaryListItem,
-				mappedLPAQData.lpaq?.eiaDevelopmentDescription?.display.summaryListItem,
-				mappedLPAQData.lpaq?.eiaSensitiveAreaDetails?.display.summaryListItem
+				isSchedule2
+					? mappedLPAQData.lpaq?.eiaDevelopmentDescription?.display.summaryListItem
+					: undefined,
+				isSchedule2
+					? mappedLPAQData.lpaq?.eiaSensitiveAreaDetails?.display.summaryListItem
+					: undefined
 			].filter(isDefined)
 		}
 	});
@@ -129,7 +137,7 @@ export const generateSharedS78S20LpaQuestionnaireComponents = (
 			rows: [
 				mappedLPAQData.lpaq?.siteAccess?.display.summaryListItem,
 				mappedLPAQData.lpaq?.reasonForNeighbourVisits?.display.summaryListItem,
-				mappedAppealDetails.appeal.lpaNeighbouringSites?.display.summaryListItem,
+				mappedLPAQData.lpaq?.lpaNeighbouringSites?.display.summaryListItem,
 				mappedLPAQData.lpaq?.lpaHealthAndSafety?.display.summaryListItem
 			].filter(isDefined)
 		}

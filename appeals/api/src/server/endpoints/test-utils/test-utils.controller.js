@@ -3,6 +3,7 @@ import { updateCompletedEvents } from '#endpoints/appeals/appeals.service.js';
 import { postInspectorDecision } from '#endpoints/decision/decision.controller.js';
 import { updateDocumentsAvCheckStatus } from '#endpoints/documents/documents.controller.js';
 import { postHearing } from '#endpoints/hearings/hearing.controller.js';
+import { linkAppeal } from '#endpoints/link-appeals/link-appeals.controller.js';
 import { updateLPAQuestionnaireById } from '#endpoints/lpa-questionnaires/lpa-questionnaires.controller.js';
 import {
 	publish,
@@ -14,6 +15,7 @@ import appealRepository from '#repositories/appeal.repository.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
+	APPEAL_REPRESENTATION_TYPE,
 	APPEAL_START_RANGE
 } from '@pins/appeals/constants/common.js';
 import { AUDIT_TRAIL_SYSTEM_UUID } from '@pins/appeals/constants/support.js';
@@ -266,10 +268,11 @@ export const simulateStartAppeal = async (req, res) => {
 
 	if (!appeal) return res.status(400).send(false);
 
-	req.body = {
-		startDate: new Date().toISOString(),
-		procedureType: appeal.procedureType?.key || 'written'
-	};
+	if (!req.body.procedureType) {
+		req.body.procedureType = appeal.procedureType?.key || 'written';
+	}
+
+	req.body.startDate = new Date().toISOString();
 
 	req.appeal = appeal;
 
@@ -295,7 +298,7 @@ export const simulateReviewIpComment = async (req, res) => {
 	const representation = await databaseConnector.representation.findFirst({
 		where: {
 			appealId,
-			representationType: 'comment',
+			representationType: APPEAL_REPRESENTATION_TYPE.COMMENT,
 			status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
 		},
 		orderBy: { dateCreated: 'desc' }
@@ -321,8 +324,10 @@ export const simulateReviewLPAQ = async (req, res) => {
 		where: { reference: appealReference },
 		include: {
 			appealStatus: true,
+			appealType: true,
 			lpa: true,
 			appellant: true,
+			agent: true,
 			lpaQuestionnaire: {
 				include: {
 					listedBuildingDetails: {
@@ -348,7 +353,11 @@ export const simulateReviewLPAQ = async (req, res) => {
 					},
 					lpaQuestionnaireValidationOutcome: true
 				}
-			}
+			},
+			parentAppeals: true,
+			childAppeals: true,
+			address: true,
+			appealRule6Parties: true
 		}
 	});
 
@@ -421,7 +430,7 @@ export const simulateReviewLpaStatement = async (req, res) => {
 	const representation = await databaseConnector.representation.findFirst({
 		where: {
 			appealId,
-			representationType: 'lpa_statement',
+			representationType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
 			status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
 		},
 		orderBy: { dateCreated: 'desc' }
@@ -472,7 +481,7 @@ export const simulateReviewLpaFinalComments = async (req, res) => {
 	const representation = await databaseConnector.representation.findFirst({
 		where: {
 			appealId,
-			representationType: 'lpa_final_comment',
+			representationType: APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT,
 			status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
 		},
 		orderBy: { dateCreated: 'desc' }
@@ -504,7 +513,7 @@ export const simulateReviewAppellantFinalComments = async (req, res) => {
 	const representation = await databaseConnector.representation.findFirst({
 		where: {
 			appealId,
-			representationType: 'appellant_final_comment',
+			representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT,
 			status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
 		},
 		orderBy: { dateCreated: 'desc' }
@@ -653,4 +662,201 @@ export const simulateDocumentScan = async (req, res) => {
 	req.body = { documents: documentsBody };
 
 	return await updateDocumentsAvCheckStatus(req, res);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * */
+export const simulateLinkAppeals = async (req, res) => {
+	const { appealReference } = req.params;
+	const parentAppeal = await databaseConnector.appeal.findUnique({
+		where: { reference: appealReference },
+		include: {
+			childAppeals: true,
+			parentAppeals: true,
+			caseOfficer: true,
+			inspector: true,
+			appellantCase: true,
+			address: true,
+			appellant: true,
+			lpa: true,
+			agent: true,
+			appealStatus: true
+		}
+	});
+
+	if (!parentAppeal) return res.status(400).send(false);
+
+	const { childAppealReference } = req.body;
+
+	const childAppeal = await databaseConnector.appeal.findUnique({
+		where: { reference: childAppealReference }
+	});
+
+	if (!childAppeal) return res.status(400).send(false);
+
+	// @ts-ignore
+	req.appeal = parentAppeal;
+	req.body = {
+		linkedAppealId: childAppeal.id,
+		isCurrentAppealParent: true
+	};
+
+	return await linkAppeal(req, res);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ * */
+export const simulateReviewAppellantStatement = async (req, res) => {
+	const { appealReference } = req.params;
+	const appeal = await databaseConnector.appeal.findUnique({
+		where: { reference: appealReference }
+	});
+
+	if (!appeal) return res.status(400).send(false);
+
+	const appealId = appeal.id;
+	const representation = await databaseConnector.representation.findFirst({
+		where: {
+			appealId,
+			representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT,
+			status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+		},
+		orderBy: { dateCreated: 'desc' }
+	});
+
+	if (!representation) return res.status(400).send(false);
+
+	req.params = { appealId: String(appealId), repId: String(representation.id) };
+	req.body = { status: APPEAL_REPRESENTATION_STATUS.VALID };
+
+	return await updateRepresentation(req, res);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ * */
+export const simulateReviewRuleSixStatement = async (req, res) => {
+	const { appealReference } = req.params;
+	const appeal = await databaseConnector.appeal.findUnique({
+		where: { reference: appealReference }
+	});
+
+	if (!appeal) return res.status(400).send(false);
+
+	const appealId = appeal.id;
+	const representation = await databaseConnector.representation.findFirst({
+		where: {
+			appealId,
+			representationType: APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT,
+			status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+		},
+		orderBy: { dateCreated: 'desc' }
+	});
+
+	if (!representation) return res.status(400).send(false);
+
+	req.params = { appealId: String(appealId), repId: String(representation.id) };
+	req.body = { status: APPEAL_REPRESENTATION_STATUS.VALID };
+
+	return await updateRepresentation(req, res);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ * */
+export const simulateReviewRuleSixProofOfEvidence = async (req, res) => {
+	const { appealReference } = req.params;
+	const appeal = await databaseConnector.appeal.findUnique({
+		where: { reference: appealReference }
+	});
+
+	if (!appeal) return res.status(400).send(false);
+
+	const appealId = appeal.id;
+	const representation = await databaseConnector.representation.findFirst({
+		where: {
+			appealId,
+			representationType: APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE,
+			status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+		},
+		orderBy: { dateCreated: 'desc' }
+	});
+
+	if (!representation) return res.status(400).send(false);
+
+	req.params = { appealId: String(appealId), repId: String(representation.id) };
+	req.body = { status: APPEAL_REPRESENTATION_STATUS.VALID };
+
+	return await updateRepresentation(req, res);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ * */
+export const simulateReviewLpaProofOfEvidence = async (req, res) => {
+	const { appealReference } = req.params;
+	const appeal = await databaseConnector.appeal.findUnique({
+		where: { reference: appealReference }
+	});
+
+	if (!appeal) return res.status(400).send(false);
+
+	const appealId = appeal.id;
+	const representation = await databaseConnector.representation.findFirst({
+		where: {
+			appealId,
+			representationType: APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
+			status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+		},
+		orderBy: { dateCreated: 'desc' }
+	});
+
+	if (!representation) return res.status(400).send(false);
+
+	req.params = { appealId: String(appealId), repId: String(representation.id) };
+	req.body = { status: APPEAL_REPRESENTATION_STATUS.VALID };
+
+	return await updateRepresentation(req, res);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ * */
+export const simulateReviewAppellantProofOfEvidence = async (req, res) => {
+	const { appealReference } = req.params;
+	const appeal = await databaseConnector.appeal.findUnique({
+		where: { reference: appealReference }
+	});
+
+	if (!appeal) return res.status(400).send(false);
+
+	const appealId = appeal.id;
+	const representation = await databaseConnector.representation.findFirst({
+		where: {
+			appealId,
+			representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
+			status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+		},
+		orderBy: { dateCreated: 'desc' }
+	});
+
+	if (!representation) return res.status(400).send(false);
+
+	req.params = { appealId: String(appealId), repId: String(representation.id) };
+	req.body = { status: APPEAL_REPRESENTATION_STATUS.VALID };
+
+	return await updateRepresentation(req, res);
 };

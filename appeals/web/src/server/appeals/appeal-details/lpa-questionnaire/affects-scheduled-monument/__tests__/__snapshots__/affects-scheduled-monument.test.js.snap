@@ -13,7 +13,7 @@ exports[`affects-scheduled-monument GET /change should render the affectsSchedul
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Would the development affect a scheduled monument?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">

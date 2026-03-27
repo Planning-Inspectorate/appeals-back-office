@@ -1,5 +1,6 @@
 import config from '#config/config.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
@@ -24,32 +25,38 @@ import {
 } from '@pins/appeals/constants/common.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import {
+	AUDIT_TRAIL_REP_MANUALLY_ADDED,
+	AUDIT_TRAIL_REP_MANUALLY_ADDED_AND_SHARED,
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
+import { isEnforcementCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 import formatDate, {
 	dateISOStringToDisplayDate,
 	formatTime12h
 } from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
-import {
-	APPEAL_CASE_PROCEDURE,
-	APPEAL_CASE_STATUS,
-	APPEAL_CASE_TYPE
-} from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAddressRequest} UpdateAddressRequest */
 /** @typedef {import('#db-client/models.ts').RepresentationUpdateInput} RepresentationUpdateInput */
+/** @typedef {import('#db-client/models.ts').RepresentationUncheckedCreateInput} RepresentationCreateInput */
+/** @typedef {Awaited<ReturnType<getRepresentation>>} DBRepresentation */
 
 /**
- * @param {number} appealId
+ * @param {number[]} appealIds
  * @param {number} pageNumber
  * @param {number} pageSize
  * @param {{ representationType?: string[], status?: string }} [options]
  * */
-export const getRepresentations = async (appealId, pageNumber = 1, pageSize = 30, options = {}) => {
+export const getRepresentations = async (
+	appealIds,
+	pageNumber = 1,
+	pageSize = 30,
+	options = {}
+) => {
 	if (
 		options.representationType &&
 		!options.representationType.every((t) => Object.values(APPEAL_REPRESENTATION_TYPE).includes(t))
@@ -61,7 +68,7 @@ export const getRepresentations = async (appealId, pageNumber = 1, pageSize = 30
 	}
 
 	return await representationRepository.getRepresentations(
-		appealId,
+		appealIds,
 		options,
 		pageNumber - 1,
 		pageSize
@@ -69,11 +76,11 @@ export const getRepresentations = async (appealId, pageNumber = 1, pageSize = 30
 };
 
 /**
- * @param {number} appealId
+ * @param {number[]} appealIds
  * @param {{ status?: string }} [options]
  * */
-export const getRepresentationCounts = async (appealId, options = {}) => {
-	return await representationRepository.getRepresentationCounts(appealId, options);
+export const getRepresentationCounts = async (appealIds, options = {}) => {
+	return await representationRepository.getRepresentationCounts(appealIds, options);
 };
 
 /**
@@ -148,8 +155,6 @@ export const getRepStatusAuditLogDetails = (
 	return CONSTANTS[auditText];
 };
 
-/** @typedef {Awaited<ReturnType<getRepresentation>>} DBRepresentation */
-
 /**
  * @typedef {Object} CreateRepresentationInput
  * @property {'comment' | 'lpa_statement' | 'appellant_statement' | 'lpa_final_comment' | 'appellant_final_comment' | 'lpa_proofs_evidence' | 'appellant_proofs_evidence'} representationType
@@ -164,13 +169,27 @@ export const getRepStatusAuditLogDetails = (
  * @property {string} [appellantId]
  * @property {string} [representationText]
  * @property {number} [representedId]
- *
+ **/
+
+/**
  * @param {number} appealId
+ * @param {string} azureAdUserId
+ * @param {boolean} shouldAutoPublish
+ * @param {string} appealStatus
  * @param {CreateRepresentationInput} input
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
- * */
-export const createRepresentation = async (appealId, input) => {
+ **/
+export const createRepresentation = async (
+	appealId,
+	azureAdUserId,
+	shouldAutoPublish,
+	appealStatus,
+	input
+) => {
 	let representedId;
+	let status = shouldAutoPublish
+		? APPEAL_REPRESENTATION_STATUS.PUBLISHED
+		: APPEAL_REPRESENTATION_STATUS.VALID;
 	if (input.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT) {
 		const { ipDetails, ipAddress } = input;
 		const address =
@@ -191,7 +210,11 @@ export const createRepresentation = async (appealId, input) => {
 			addressId: address ? address.id : undefined
 		});
 		representedId = represented.id;
-	} else if (input.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT) {
+		if (!shouldAutoPublish) status = APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW;
+	} else if (
+		input.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT ||
+		input.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT
+	) {
 		representedId = input.representedId;
 	} else if (
 		input.representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT ||
@@ -206,7 +229,7 @@ export const createRepresentation = async (appealId, input) => {
 		representationType: input.representationType,
 		source: input.source,
 		dateCreated: input.dateCreated,
-		status: input.status,
+		status,
 		lpaCode: input.lpaCode,
 		originalRepresentation: input.representationText
 	});
@@ -232,6 +255,26 @@ export const createRepresentation = async (appealId, input) => {
 		}
 	}
 
+	await broadcasters.broadcastRepresentation(representation.id, EventType.Create);
+	await broadcasters.broadcastAppeal(Number(appealId));
+
+	const auditTrailType = shouldAutoPublish
+		? AUDIT_TRAIL_REP_MANUALLY_ADDED_AND_SHARED
+		: AUDIT_TRAIL_REP_MANUALLY_ADDED;
+
+	// Convert snake_case appealStatus to normal case (e.g., final_comments -> final comments)
+	const formattedAppealStatus =
+		typeof appealStatus === 'string' ? appealStatus.replace(/_/g, ' ') : '';
+
+	await createAuditTrail({
+		appealId,
+		azureAdUserId,
+		details: stringTokenReplacement(auditTrailType, [
+			getRepresentationLabel(input.representationType),
+			formattedAppealStatus
+		])
+	});
+
 	return representation;
 };
 
@@ -239,14 +282,17 @@ export const createRepresentation = async (appealId, input) => {
  * @param {Appeal} appeal
  * @param {string} proofOfEvidenceType
  * @param {string[]} attachments
+ * @param {number} [representedId]
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
  * */
 export const createRepresentationProofOfEvidence = async (
 	appeal,
 	proofOfEvidenceType,
-	attachments
+	attachments,
+	representedId
 ) => {
-	const representation = await representationRepository.createRepresentation({
+	/** @type {RepresentationCreateInput} */
+	const representationData = {
 		appealId: appeal.id,
 		representationType:
 			proofOfEvidenceType === 'lpa'
@@ -255,9 +301,18 @@ export const createRepresentationProofOfEvidence = async (
 					? APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
 					: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
 		source: proofOfEvidenceType === 'lpa' ? 'lpa' : 'citizen',
-		dateCreated: new Date(),
-		representedId: appeal.appellantId
-	});
+		dateCreated: new Date()
+	};
+
+	if (proofOfEvidenceType === 'rule-6-party') {
+		representationData.representedId = Number(representedId);
+	} else if (proofOfEvidenceType === 'lpa') {
+		representationData.lpaCode = appeal.lpa?.lpaCode;
+	} else {
+		representationData.representedId = appeal.appellantId;
+	}
+
+	const representation = await representationRepository.createRepresentation(representationData);
 
 	if (attachments.length > 0) {
 		const documents = await documentRepository.getDocumentsByIds(attachments);
@@ -382,7 +437,7 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient) {
 	}
 
 	const result = await representationRepository.updateRepresentations(
-		appeal.id,
+		[appeal.id],
 		{
 			OR: [
 				{
@@ -407,7 +462,6 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient) {
 	if (isLinkedAppealsActive(appeal)) {
 		await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 	}
-	await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 
 	const finalCommentsDueDate = formatDate(
 		new Date(appeal.appealTimetable?.finalCommentsDueDate || ''),
@@ -516,6 +570,7 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient) {
 				azureAdUserId
 			});
 		});
+		await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 	} catch (error) {
 		logger.error(error);
 	}
@@ -541,7 +596,7 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
 	}
 
 	const result = await representationRepository.updateRepresentations(
-		appeal.id,
+		[appeal.id],
 		{
 			representationType: APPEAL_REPRESENTATION_TYPE.FINAL_COMMENT,
 			status: APPEAL_REPRESENTATION_STATUS.VALID
@@ -609,7 +664,7 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 	}
 
 	const result = await representationRepository.updateRepresentations(
-		appeal.id,
+		[appeal.id],
 		{
 			representationType: {
 				in: representationTypes
@@ -681,19 +736,16 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 		const inquiryExpectedDays = appeal.inquiry?.estimatedDays
 			? appeal.inquiry?.estimatedDays.toString()
 			: 'Not available';
-		const whatHappensNext = appeal.inquiry
-			? `You need to attend the inquiry on ${inquiryDate}.`
-			: 'We will contact you by email when we set up the inquiry';
 
 		const allParties = [];
 		allParties.push({
-			name: 'local planning authority',
+			name: 'the local planning authority',
 			id: 'lpa',
 			email: appeal.lpa?.email,
 			isValid: isLpaValid
 		});
 		allParties.push({
-			name: 'appellant',
+			name: 'the appellant',
 			id: 'appellant',
 			email: appeal.agent?.email || appeal.appellant?.email,
 			isValid: isAppellantValid
@@ -710,51 +762,23 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 		}
 
 		const submittedParties = allParties.filter((p) => p.isValid);
-		const missingParties = allParties.filter((p) => !p.isValid);
 		const recipients = allParties.filter((p) => p.email);
 
-		for (const recipient of recipients) {
-			let templateName;
-			let partiesToNotifyAbout;
-			let subjectLine;
-			let templateWhatHappensNext;
-			const othersSubmitted = submittedParties.filter((p) => p.id !== recipient.id);
-			const othersMissing = missingParties.filter((p) => p.id !== recipient.id);
+		if (recipients.length > 0) {
+			const templateName =
+				submittedParties.length > 0
+					? 'proof-of-evidence-and-witnesses-shared'
+					: 'not-received-proof-of-evidence-and-witnesses';
 
-			const isRecipientSubmitted = recipient.isValid;
+			const inquirySubjectLine =
+				submittedParties.length > 0
+					? submittedParties.map((p) => p.name)
+					: 'Proof of evidence and witnesses not received';
 
-			if (isRecipientSubmitted) {
-				if (othersMissing.length > 0) {
-					templateName = 'not-received-proof-of-evidence-and-witnesses';
-					partiesToNotifyAbout = othersMissing;
-				} else {
-					templateName = 'proof-of-evidence-and-witnesses-shared';
-					partiesToNotifyAbout = othersSubmitted;
-				}
-			} else {
-				if (othersSubmitted.length > 0) {
-					templateName = 'proof-of-evidence-and-witnesses-shared';
-					partiesToNotifyAbout = othersSubmitted;
-				} else {
-					templateName = 'not-received-proof-of-evidence-and-witnesses';
-					partiesToNotifyAbout = othersMissing;
-				}
-			}
-
-			if (templateName === 'proof-of-evidence-and-witnesses-shared') {
-				subjectLine = partiesToNotifyAbout.map((p) => p.name);
-				templateWhatHappensNext =
+			for (const recipient of recipients) {
+				const templateWhatHappensNext =
 					recipient.id === 'lpa' ? 'manage-appeals' : recipient.isRule6 ? 'rule-6' : 'appeals';
-			} else {
-				const formatter = new Intl.ListFormat('en', { style: 'long', type: 'disjunction' });
-				templateWhatHappensNext = whatHappensNext;
-				const namesList = formatter.format(
-					partiesToNotifyAbout.map((p) => p.name).filter((n) => typeof n === 'string')
-				);
-				subjectLine = `We did not receive any proof of evidence and witnesses from the ${namesList}`;
-			}
 
-			if (partiesToNotifyAbout.length > 0) {
 				await notifyPublished({
 					appeal,
 					notifyClient,
@@ -769,7 +793,7 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 					inquiryTime,
 					inquiryExpectedDays,
 					inquiryAddress,
-					inquirySubjectLine: subjectLine
+					inquirySubjectLine
 				});
 			}
 		}
@@ -836,7 +860,7 @@ async function notifyPublished({
 }) {
 	const lpaReference = appeal.applicationReference;
 	const enforcementReference =
-		appeal.appealType?.key === APPEAL_CASE_TYPE.C && appeal.appellantCase?.enforcementReference;
+		isEnforcementCaseType(appeal.appealType?.key) && appeal.appellantCase?.enforcementReference;
 	if (!lpaReference && !enforcementReference) {
 		throw new Error(
 			`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: no applicationReference or enforcementReference in appeal`
@@ -947,3 +971,26 @@ function notifyNoFinalComments(appeal, notifyClient, azureAdUserId, userTypeNoCo
 		userTypeNoCommentSubmitted
 	});
 }
+
+/**
+ * @param {string} type
+ * @returns {string}
+ */
+export const getRepresentationLabel = (type) => {
+	return APPEAL_REPRESENTATION_LABEL_MAP[type] || 'Unknown representation';
+};
+
+/**
+ * @type {Record<string, string>}
+ */
+export const APPEAL_REPRESENTATION_LABEL_MAP = Object.freeze({
+	[APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT]: 'LPA statement',
+	[APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT]: 'Appellant statement',
+	[APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT]: 'Rule 6 party statement',
+	[APPEAL_REPRESENTATION_TYPE.COMMENT]: 'Interested party comment',
+	[APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT]: 'LPA final comment',
+	[APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT]: 'Appellant final comment',
+	[APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE]: 'LPA proof of evidence',
+	[APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE]: 'Appellant proof of evidence',
+	[APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE]: 'Rule 6 party proof of evidence'
+});

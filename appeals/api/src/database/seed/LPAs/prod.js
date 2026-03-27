@@ -18,7 +18,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'N5090',
 		name: 'Barnet',
 		email: 'planning.appeals@barnet.gov.uk',
-		teamId: 10 // West4
+		teamId: 9 // West3
 	},
 	{
 		lpaCode: 'H1705',
@@ -42,12 +42,13 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'G5180',
 		name: 'Bromley',
 		email: 'planningappeals@bromley.gov.uk',
-		teamId: 10 // West4
+		teamId: 11 // East1
 	},
 	{
 		lpaCode: 'K0425',
 		name: 'Buckinghamshire Council - Wycombe Area',
-		email: 'planning.wyc@buckinghamshire.gov.uk'
+		email: 'planning.wyc@buckinghamshire.gov.uk',
+		teamId: 7 // West1
 	},
 	{
 		lpaCode: 'X3405',
@@ -83,13 +84,13 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'D1265',
 		name: 'Dorset',
 		email: 'Appeals@dorsetcouncil.gov.uk',
-		teamId: 9 // West3
+		teamId: 10 // West4
 	},
 	{
 		lpaCode: 'C4615',
 		name: 'Dudley Metropolitan Borough Council',
 		email: 'development.control@dudley.gov.uk',
-		teamId: 9 // West3
+		teamId: 8 // West2
 	},
 	{
 		lpaCode: 'U1105',
@@ -154,7 +155,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'E5330',
 		name: 'Greenwich',
 		email: 'planning-enforcement@royalgreenwich.gov.uk',
-		teamId: 10 // West4
+		teamId: 9 // West3
 	},
 	{
 		lpaCode: 'N1730',
@@ -514,7 +515,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'Z2505',
 		name: 'Boston Borough Council',
 		email: 'Planning@boston.gov.uk',
-		teamId: 17 // North3
+		teamId: 14 // East4
 	},
 	{
 		lpaCode: 'H1515',
@@ -526,13 +527,13 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'K2610',
 		name: 'Broadland District Council',
 		email: 'appealbdc@southnorfolkandbroadland.gov.uk',
-		teamId: 14 // East4
+		teamId: 13 // East3
 	},
 	{
 		lpaCode: 'E9505',
 		name: 'Broads Authority',
 		email: 'planning@broads-authority.gov.uk',
-		teamId: 14 // East4
+		teamId: 13 // East3
 	},
 	{
 		lpaCode: 'W1905',
@@ -562,13 +563,13 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'Q0505',
 		name: 'Cambridge City Council',
 		email: 'appeals@greatercambridgeplanning.org',
-		teamId: 18 // North4
+		teamId: 14 // East4
 	},
 	{
 		lpaCode: 'E0535',
 		name: 'Cambridgeshire County Council',
 		email: 'planningdc@cambridgeshire.gov.uk',
-		teamId: 18 // North4
+		teamId: 14 // East4
 	},
 	{
 		lpaCode: 'M1520',
@@ -621,7 +622,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'U1050',
 		name: 'Derbyshire County Council',
-		email: 'planningcontrol@derbyshire.gov.uk',
+		email: 'development.management@derbyshire.gov.uk',
 		teamId: null
 	},
 	{
@@ -640,7 +641,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'V0510',
 		name: 'East Cambridgeshire District Council',
 		email: 'appeals@eastcambs.gov.uk',
-		teamId: 18 // North4
+		teamId: 14 // East4
 	},
 	{
 		lpaCode: 'D2510',
@@ -670,7 +671,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'D0515',
 		name: 'Fenland District Council',
 		email: 'planningappeals@fenland.gov.uk',
-		teamId: 18 // North4
+		teamId: 14 // East4
 	},
 	{
 		lpaCode: 'M2325',
@@ -700,7 +701,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'U2615',
 		name: 'Great Yarmouth Borough Council',
 		email: 'plan@great-yarmouth.gov.uk',
-		teamId: 14 // East4
+		teamId: 13 // East3
 	},
 	{
 		lpaCode: 'D0650',
@@ -766,7 +767,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'H0520',
 		name: 'Huntingdonshire District Council',
 		email: 'planning.appeals@huntingdonshire.gov.uk',
-		teamId: 18 // North4
+		teamId: 14 // East4
 	},
 	{
 		lpaCode: 'R2330',
@@ -892,7 +893,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'X2600',
 		name: 'Norfolk County Council',
 		email: 'mawp@norfolk.gov.uk',
-		teamId: 14 // East4
+		teamId: 13 // East3
 	},
 	{
 		lpaCode: 'R1038',
@@ -922,7 +923,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'Y2620',
 		name: 'North Norfolk District Council',
 		email: 'planning-appeals@north-norfolk.gov.uk',
-		teamId: 14 // East4
+		teamId: 13 // East3
 	},
 	{
 		lpaCode: 'W4515',
@@ -951,7 +952,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'Q3060',
 		name: 'Nottingham City Council',
-		email: 'planningappeals@nottinghamcity.gov.uk',
+		email: 'PlanningAppeals@nottinghamcity.gov.uk',
 		teamId: 17 // North3
 	},
 	{
@@ -988,7 +989,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'J0540',
 		name: 'Peterborough City Council',
 		email: 'planningappeals@peterborough.gov.uk',
-		teamId: 18 // North4
+		teamId: 14 // East4
 	},
 	{
 		lpaCode: 'N2345',
@@ -1066,7 +1067,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'W0530',
 		name: 'South Cambridgeshire District Council',
 		email: 'DSAppeals@scambs.gov.uk',
-		teamId: 18 // North4
+		teamId: 14 // East4
 	},
 	{
 		lpaCode: 'F1040',
@@ -1078,7 +1079,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'A2525',
 		name: 'South Holland District Council',
 		email: 'planningadvice@sholland.gov.uk',
-		teamId: 17 // North3
+		teamId: 14 // East4
 	},
 	{
 		lpaCode: 'E2530',
@@ -1090,7 +1091,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'L2630',
 		name: 'South Norfolk District Council',
 		email: 'appealsnc@southnorfolkandbroadland.gov.uk',
-		teamId: 14 // East4
+		teamId: 13 // East3
 	},
 	{
 		lpaCode: 'F2360',
@@ -1360,7 +1361,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'T0355',
 		name: 'Royal Borough of Windsor and Maidenhead',
 		email: 'planning.appeals@rbwm.gov.uk',
-		teamId: 10 //west4
+		teamId: 7 //West1
 	},
 	{
 		lpaCode: 'G4620',
@@ -1438,7 +1439,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'F2605',
 		name: 'Breckland District Council',
 		email: 'planningappeals@breckland.gov.uk',
-		teamId: 14 // East4
+		teamId: 13 // East3
 	},
 	{
 		lpaCode: 'Q1445',
@@ -1526,7 +1527,7 @@ export const localPlanningDepartmentList = [
 	},
 	{
 		lpaCode: 'A1530',
-		name: 'Colchester Borough Council',
+		name: 'Colchester City Council',
 		email: 'planning.services@colchester.gov.uk',
 		teamId: 11 // East1
 	},
@@ -1618,7 +1619,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'V2635',
 		name: "King's Lynn and West Norfolk Borough Council",
 		email: 'borough.planning@west-norfolk.gov.uk',
-		teamId: 14 // East4
+		teamId: 13 // East3
 	},
 	{
 		lpaCode: 'A2335',
@@ -1666,7 +1667,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'L5240',
 		name: 'London Borough of Croydon',
 		email: 'planning.appeals@croydon.gov.uk',
-		teamId: 14 // East4
+		teamId: 12 // East2
 	},
 	{
 		lpaCode: 'A5270',
@@ -1792,7 +1793,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'G2625',
 		name: 'Norwich City Council',
 		email: 'planning@norwich.gov.uk',
-		teamId: 14 // East4
+		teamId: 13 // East3
 	},
 	{
 		lpaCode: 'L3055',

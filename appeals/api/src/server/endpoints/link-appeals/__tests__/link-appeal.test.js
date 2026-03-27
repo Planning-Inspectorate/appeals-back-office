@@ -1,22 +1,21 @@
 // @ts-nocheck
+import { enforcementNoticeAppeal } from '#tests/appeals/mocks.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { jest } from '@jest/globals';
-import { ERROR_NOT_FOUND, ERROR_UNLINKING_APPEALS } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STAGE } from '@planning-inspectorate/data-model';
 import {
-	LINK_APPEALS_SWITCH_OPERATION,
+	AUDIT_TRAIL_APPEAL_LINK_UNLINKED,
+	AUDIT_TRAIL_APPEAL_LINK_UPDATED_AS_LEAD,
+	AUDIT_TRAIL_PROGRESSED_TO_STATUS,
+	LINK_APPEALS_CHANGE_LEAD_OPERATION,
 	LINK_APPEALS_UNLINK_OPERATION
-} from '../link-appeals.constants.js';
+} from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 jest.resetModules();
 
 const mockCreateAuditTrail = jest.fn().mockResolvedValue(undefined);
-const mockNotifySend = jest.fn().mockResolvedValue(true);
 
-jest.unstable_mockModule('#endpoints/integrations/integrations.broadcasters.js', () => ({
-	broadcasters: {
-		broadcastAppeal: jest.fn().mockResolvedValue(true)
-	}
-}));
+const mockNotifySend = jest.fn().mockResolvedValue(true);
 
 jest.unstable_mockModule('#endpoints/audit-trails/audit-trails.service.js', () => ({
 	createAuditTrail: mockCreateAuditTrail
@@ -30,8 +29,7 @@ jest.unstable_mockModule('#notify/notify-send.js', () => ({
 const { request } = await import('#server/app-test.js');
 const { eventClient } = await import('#infrastructure/event-client.js');
 const { householdAppeal, linkedAppeals } = await import('#tests/appeals/mocks.js');
-const { documentCreated, documentVersionCreated, savedFolder } =
-	await import('#tests/documents/mocks.js');
+const { documentVersionCreated, savedFolder } = await import('#tests/documents/mocks.js');
 const { horizonGetCaseSuccessResponse } = await import('#tests/horizon/mocks.js');
 const { linkedAppealLegacyRequest, linkedAppealRequest } =
 	await import('#tests/linked-appeals/mocks.js');
@@ -43,6 +41,33 @@ const { EventType } = await import('@pins/event-client');
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 const { default: got } = await import('got');
+
+const mockAppealA = {
+	id: 456,
+	reference: '456123',
+	appellantCase: {
+		id: 100,
+		appellantCaseValidationOutcome: { id: 1, name: 'Valid' }
+	}
+};
+
+const mockAppealB = {
+	id: 789,
+	reference: '789456',
+	appellantCase: {
+		id: 101,
+		appellantCaseValidationOutcome: { id: 1, name: 'Valid' }
+	}
+};
+
+const mockAppealC = {
+	id: 123,
+	reference: '123456',
+	appellantCase: {
+		id: 102,
+		appellantCaseValidationOutcome: { id: 1, name: 'Valid' }
+	}
+};
 
 const mockSavedFolderWithValidDates = {
 	...savedFolder,
@@ -144,8 +169,18 @@ describe('appeal linked appeals routes', () => {
 					databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
 					// @ts-ignore
 					databaseConnector.folder.findMany.mockResolvedValue([mockSavedFolderWithValidDates]);
-					databaseConnector.document.create.mockReturnValue(documentCreated);
-					databaseConnector.documentVersion.create.mockResolvedValue(documentVersionCreated);
+					databaseConnector.document.createMany.mockResolvedValue({ count: 1 });
+					databaseConnector.document.updateMany.mockResolvedValue({ count: 1 });
+					databaseConnector.documentVersion.createMany.mockResolvedValue({ count: 1 });
+					databaseConnector.documentVersion.findMany.mockResolvedValue([
+						{
+							...documentVersionCreated,
+							documentGuid: 'mock-uuid',
+							fileName: 'mydoc.pdf',
+							redactionStatus: { key: undefined }
+						}
+					]);
+					databaseConnector.documentVersionAvScan.findMany.mockResolvedValue([]);
 
 					got.post.mockReturnValueOnce({
 						json: jest
@@ -157,7 +192,7 @@ describe('appeal linked appeals routes', () => {
 						.post(`/appeals/${householdAppeal.id}/link-appeal`)
 						.send({
 							...linkedAppealRequest,
-							linkedAppealReference: '123456'
+							linkedAppealReference: mockAppealC.reference
 						})
 						.set('azureAdUserId', azureAdUserId);
 
@@ -185,37 +220,41 @@ describe('appeal linked appeals routes', () => {
 						EventType.Create
 					);
 
-					expect(databaseConnector.document.create).toHaveBeenCalledWith({
-						data: {
-							caseId: 1,
-							folderId: 23,
-							guid: 'mock-uuid',
-							name: 'mydoc-4567654.pdf'
-						}
+					expect(databaseConnector.document.createMany).toHaveBeenCalledWith({
+						data: [
+							{
+								caseId: 1,
+								folderId: 23,
+								guid: 'mock-uuid',
+								name: 'mydoc-4567654.pdf'
+							}
+						]
 					});
 
-					expect(databaseConnector.documentVersion.create).toHaveBeenCalledWith({
-						data: {
-							blobStorageContainer: 'document-service-uploads',
-							blobStoragePath: 'appeal/1345264/mock-uuid/v1/mydoc-4567654.pdf',
-							dateReceived: expect.any(Date),
-							documentGuid: 'mock-uuid',
-							documentType: 'appellantCostApplication',
-							documentURI:
-								'https://127.0.0.1:10000/document-service-uploads/appeal/1345264/mock-uuid/v1/mydoc-4567654.pdf',
-							draft: false,
-							fileName: 'mydoc.pdf',
-							isLateEntry: false,
-							lastModified: expect.any(Date),
-							mime: 'application/pdf',
-							originalFilename: 'mydoc-4567654.pdf',
-							published: false,
-							redactionStatusId: 1,
-							size: 14699,
-							stage: 'costs',
-							version: 1,
-							virusCheckStatus: 'affected'
-						}
+					expect(databaseConnector.documentVersion.createMany).toHaveBeenCalledWith({
+						data: [
+							{
+								blobStorageContainer: 'document-service-uploads',
+								blobStoragePath: 'appeal/1345264/mock-uuid/v1/mydoc-4567654.pdf',
+								dateReceived: expect.any(Date),
+								documentGuid: 'mock-uuid',
+								documentType: 'appellantCostApplication',
+								documentURI:
+									'https://127.0.0.1:10000/document-service-uploads/appeal/1345264/mock-uuid/v1/mydoc-4567654.pdf',
+								draft: false,
+								fileName: 'mydoc-4567654.pdf',
+								isLateEntry: false,
+								lastModified: expect.any(Date),
+								mime: 'application/pdf',
+								originalFilename: 'mydoc-4567654.pdf',
+								published: false,
+								redactionStatusId: 1,
+								size: 14699,
+								stage: 'costs',
+								version: 1,
+								virusCheckStatus: 'not_scanned'
+							}
+						]
 					});
 
 					expect(mockNotifySend).toHaveBeenCalledTimes(2);
@@ -303,7 +342,7 @@ describe('appeal linked appeals routes', () => {
 						.post(`/appeals/${householdAppeal.id}/link-legacy-appeal`)
 						.send({
 							...linkedAppealLegacyRequest,
-							linkedAppealReference: '123456'
+							linkedAppealReference: mockAppealC.reference
 						})
 						.set('azureAdUserId', azureAdUserId);
 
@@ -337,11 +376,11 @@ describe('appeal linked appeals routes', () => {
 					expect(response.text).toEqual('Missing operation field');
 				});
 
-				test(`returns 400 when the operation is not "${LINK_APPEALS_SWITCH_OPERATION}" or "${LINK_APPEALS_UNLINK_OPERATION}"`, async () => {
+				test(`returns 400 when the operation is not "${LINK_APPEALS_CHANGE_LEAD_OPERATION}" or "${LINK_APPEALS_UNLINK_OPERATION}"`, async () => {
 					// @ts-ignore
 					databaseConnector.appeal.findUnique.mockResolvedValue({
 						...householdAppeal,
-						childAppeals: [{ type: CASE_RELATIONSHIP_LINKED, childRef: '123456' }]
+						childAppeals: [{ type: CASE_RELATIONSHIP_LINKED, childRef: mockAppealC.reference }]
 					});
 
 					const response = await request
@@ -353,14 +392,14 @@ describe('appeal linked appeals routes', () => {
 					expect(response.text).toEqual('Invalid operation');
 				});
 
-				describe(`operation is "${LINK_APPEALS_SWITCH_OPERATION}"`, () => {
+				describe(`operation is "${LINK_APPEALS_CHANGE_LEAD_OPERATION}"`, () => {
 					test('returns 400 when the appeal is not linked', async () => {
 						// @ts-ignore
 						databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 
 						const response = await request
 							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
-							.send({ operation: LINK_APPEALS_SWITCH_OPERATION })
+							.send({ operation: LINK_APPEALS_CHANGE_LEAD_OPERATION })
 							.set('azureAdUserId', azureAdUserId);
 
 						expect(response.status).toEqual(400);
@@ -371,17 +410,17 @@ describe('appeal linked appeals routes', () => {
 						// @ts-ignore
 						databaseConnector.appeal.findUnique.mockResolvedValue({
 							...householdAppeal,
-							childAppeals: [{ type: CASE_RELATIONSHIP_LINKED, childRef: '123456' }]
+							childAppeals: [{ type: CASE_RELATIONSHIP_LINKED, childRef: mockAppealC.reference }]
 						});
 
 						const response = await request
 							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
-							.send({ operation: LINK_APPEALS_SWITCH_OPERATION })
+							.send({ operation: LINK_APPEALS_CHANGE_LEAD_OPERATION })
 							.set('azureAdUserId', azureAdUserId);
 
 						expect(response.status).toEqual(400);
 						expect(response.text).toEqual(
-							'Appeal to replace lead is required for "switch" operation'
+							`Appeal to replace lead is required for "${LINK_APPEALS_CHANGE_LEAD_OPERATION}" operation`
 						);
 					});
 
@@ -398,7 +437,10 @@ describe('appeal linked appeals routes', () => {
 
 						const response = await request
 							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
-							.send({ operation: LINK_APPEALS_SWITCH_OPERATION, appealRefToReplaceLead: '456123' })
+							.send({
+								operation: LINK_APPEALS_CHANGE_LEAD_OPERATION,
+								appealRefToReplaceLead: mockAppealA.reference
+							})
 							.set('azureAdUserId', azureAdUserId);
 
 						expect(response.status).toEqual(400);
@@ -412,14 +454,17 @@ describe('appeal linked appeals routes', () => {
 							childAppeals: [
 								{
 									type: CASE_RELATIONSHIP_LINKED,
-									child: { appellantCase: {}, reference: '123456' }
+									child: mockAppealC
 								}
 							]
 						});
 
 						const response = await request
 							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
-							.send({ operation: LINK_APPEALS_SWITCH_OPERATION, appealRefToReplaceLead: '456123' })
+							.send({
+								operation: LINK_APPEALS_CHANGE_LEAD_OPERATION,
+								appealRefToReplaceLead: mockAppealA.reference
+							})
 							.set('azureAdUserId', azureAdUserId);
 
 						expect(response.status).toEqual(400);
@@ -427,47 +472,79 @@ describe('appeal linked appeals routes', () => {
 					});
 
 					test('returns 200 when the appeal is a parent and appealRefToReplaceLead is a child of this parent', async () => {
+						const testAppeal = structuredClone(enforcementNoticeAppeal);
+						testAppeal.appealStatus = [{ valid: true, status: APPEAL_CASE_STATUS.VALIDATION }];
+						testAppeal.childAppeals = [
+							{
+								type: CASE_RELATIONSHIP_LINKED,
+								childId: mockAppealA.id,
+								childRef: mockAppealA.reference,
+								child: mockAppealA
+							},
+							{
+								type: CASE_RELATIONSHIP_LINKED,
+								childId: mockAppealB.id,
+								childRef: mockAppealB.reference,
+								child: mockAppealB
+							}
+						];
+						testAppeal.appellantCase.appellantCaseValidationOutcome = { id: 1, name: 'Valid' };
 						databaseConnector.folder.findMany.mockResolvedValue([]);
 						databaseConnector.appealRelationship.deleteMany.mockResolvedValue({});
 						databaseConnector.appealRelationship.create.mockResolvedValue({});
 						// @ts-ignore
-						databaseConnector.appeal.findUnique.mockResolvedValue({
-							...householdAppeal,
-							childAppeals: [
-								{
-									type: CASE_RELATIONSHIP_LINKED,
-									childId: 456,
-									childRef: '456123',
-									child: { appellantCase: {}, id: 456, reference: '456123' }
-								}
-							]
-						});
+						databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
 
 						const response = await request
-							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
-							.send({ operation: LINK_APPEALS_SWITCH_OPERATION, appealRefToReplaceLead: '456123' })
+							.post(`/appeals/${testAppeal.id}/update-linked-appeals`)
+							.send({
+								operation: LINK_APPEALS_CHANGE_LEAD_OPERATION,
+								appealRefToReplaceLead: mockAppealA.reference
+							})
 							.set('azureAdUserId', azureAdUserId);
 
-						expect(databaseConnector.folder.findMany).toHaveBeenCalledTimes(
-							Object.values(APPEAL_CASE_STAGE).length * 2
-						);
+						expect(databaseConnector.folder.findMany).toHaveBeenCalledTimes(2);
 
 						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledTimes(1);
 						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledWith({
 							where: {
-								parentId: householdAppeal.id
+								parentId: testAppeal.id
 							}
 						});
 
-						expect(databaseConnector.appealRelationship.create).toHaveBeenNthCalledWith(1, {
+						expect(databaseConnector.appealRelationship.create).toHaveBeenCalledTimes(2);
+						expect(databaseConnector.appealRelationship.create).toHaveBeenCalledWith({
 							data: {
-								childId: householdAppeal.id,
-								childRef: householdAppeal.reference,
-								parentId: 456,
-								parentRef: '456123',
+								childId: testAppeal.id,
+								childRef: testAppeal.reference,
+								parentId: mockAppealA.id,
+								parentRef: mockAppealA.reference,
 								type: CASE_RELATIONSHIP_LINKED
 							}
 						});
+						expect(databaseConnector.appealRelationship.create).toHaveBeenCalledWith({
+							data: {
+								childId: mockAppealB.id,
+								childRef: mockAppealB.reference,
+								parentId: mockAppealA.id,
+								parentRef: mockAppealA.reference,
+								type: CASE_RELATIONSHIP_LINKED
+							}
+						});
+
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledTimes(3);
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(testAppeal.id);
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(mockAppealA.id);
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(mockAppealB.id);
+
+						expect(mockCreateAuditTrail).toHaveBeenCalledWith(
+							expect.objectContaining({
+								appealId: testAppeal.id,
+								details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UPDATED_AS_LEAD, [
+									mockAppealA.reference
+								])
+							})
+						);
 
 						expect(response.status).toEqual(200);
 						expect(response.text).toEqual('true');
@@ -498,14 +575,17 @@ describe('appeal linked appeals routes', () => {
 							parentAppeals: [
 								{
 									type: CASE_RELATIONSHIP_LINKED,
-									parent: { appellantCase: {}, reference: '456123' }
+									parent: mockAppealA
 								}
 							]
 						});
 
 						const response = await request
 							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
-							.send({ operation: LINK_APPEALS_UNLINK_OPERATION, appealRefToReplaceLead: '456123' })
+							.send({
+								operation: LINK_APPEALS_UNLINK_OPERATION,
+								appealRefToReplaceLead: mockAppealA.reference
+							})
 							.set('azureAdUserId', azureAdUserId);
 
 						expect(response.status).toEqual(400);
@@ -539,134 +619,225 @@ describe('appeal linked appeals routes', () => {
 						);
 					});
 
-					test('returns 200 when the appeal is a child and appealRefToReplaceLead is not set', async () => {
+					test('returns 200 and creates audit trails when the appeal is a child and appealRefToReplaceLead is not set', async () => {
+						const testAppeal = structuredClone(enforcementNoticeAppeal);
+						testAppeal.appealStatus = [{ valid: true, status: APPEAL_CASE_STATUS.VALIDATION }];
+						testAppeal.parentAppeals = [
+							{
+								type: CASE_RELATIONSHIP_LINKED,
+								parentId: mockAppealA.id,
+								parentRef: mockAppealA.reference,
+								parent: mockAppealA
+							}
+						];
+						testAppeal.appellantCase.appellantCaseValidationOutcome = { id: 1, name: 'Valid' };
 						databaseConnector.folder.findMany.mockResolvedValue([]);
 						databaseConnector.appealRelationship.deleteMany.mockResolvedValue({});
 						// @ts-ignore
-						databaseConnector.appeal.findUnique.mockResolvedValue({
-							...householdAppeal,
-							parentAppeals: [
-								{
-									type: CASE_RELATIONSHIP_LINKED,
-									parentId: 456,
-									parentRef: '456123',
-									parent: { appellantCase: {}, id: 456, reference: '456123' }
-								}
-							]
-						});
+						databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
 
 						const response = await request
-							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
+							.post(`/appeals/${testAppeal.id}/update-linked-appeals`)
 							.send({ operation: LINK_APPEALS_UNLINK_OPERATION })
 							.set('azureAdUserId', azureAdUserId);
-
-						expect(databaseConnector.folder.findMany).toHaveBeenCalledTimes(
-							Object.values(APPEAL_CASE_STAGE).length * 2
-						);
+						expect(databaseConnector.folder.findMany).toHaveBeenCalledTimes(4);
 
 						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledTimes(1);
 						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledWith({
 							where: {
-								childId: householdAppeal.id
+								childId: testAppeal.id
 							}
 						});
+
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledTimes(2);
+
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenNthCalledWith(1, mockAppealA.id);
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenNthCalledWith(2, testAppeal.id);
+
+						expect(mockCreateAuditTrail).toHaveBeenCalledTimes(3);
+						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
+							1,
+							expect.objectContaining({
+								appealId: mockAppealA.id,
+								details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UNLINKED, [
+									testAppeal.reference
+								])
+							})
+						);
+						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
+							2,
+							expect.objectContaining({
+								appealId: testAppeal.id,
+								details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UNLINKED, [
+									testAppeal.reference
+								])
+							})
+						);
+						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
+							3,
+							expect.objectContaining({
+								appealId: testAppeal.id,
+								details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [
+									APPEAL_CASE_STATUS.READY_TO_START
+								])
+							})
+						);
 
 						expect(response.status).toEqual(200);
 						expect(response.text).toEqual('true');
 					});
 
 					test('returns 200 when the appeal is a parent and appealRefToReplaceLead is a child of this parent', async () => {
+						const testAppeal = structuredClone(enforcementNoticeAppeal);
+						testAppeal.appealStatus = [{ valid: true, status: APPEAL_CASE_STATUS.VALIDATION }];
+						testAppeal.childAppeals = [
+							{
+								type: CASE_RELATIONSHIP_LINKED,
+								childId: mockAppealA.id,
+								childRef: mockAppealA.reference,
+								child: mockAppealA
+							},
+							{
+								type: CASE_RELATIONSHIP_LINKED,
+								childId: mockAppealB.id,
+								childRef: mockAppealB.reference,
+								child: mockAppealB
+							}
+						];
+						testAppeal.appellantCase.appellantCaseValidationOutcome = { id: 1, name: 'Valid' };
 						databaseConnector.folder.findMany.mockResolvedValue([]);
 						databaseConnector.appealRelationship.deleteMany.mockResolvedValue({});
 						databaseConnector.appealRelationship.create.mockResolvedValue({});
 						// @ts-ignore
-						databaseConnector.appeal.findUnique.mockResolvedValue({
-							...householdAppeal,
-							childAppeals: [
-								{
-									type: CASE_RELATIONSHIP_LINKED,
-									childId: 456,
-									childRef: '456123',
-									child: { appellantCase: {}, id: 456, reference: '456123' }
-								},
-								{
-									type: CASE_RELATIONSHIP_LINKED,
-									childId: 789,
-									childRef: '789456',
-									child: { appellantCase: {}, id: 789, reference: '789456' }
-								}
-							]
-						});
+						databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
 
 						const response = await request
-							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
-							.send({ operation: LINK_APPEALS_UNLINK_OPERATION, appealRefToReplaceLead: '456123' })
+							.post(`/appeals/${testAppeal.id}/update-linked-appeals`)
+							.send({
+								operation: LINK_APPEALS_UNLINK_OPERATION,
+								appealRefToReplaceLead: mockAppealA.reference
+							})
 							.set('azureAdUserId', azureAdUserId);
 
-						expect(databaseConnector.folder.findMany).toHaveBeenCalledTimes(
-							Object.values(APPEAL_CASE_STAGE).length * 2
-						);
+						expect(databaseConnector.folder.findMany).toHaveBeenCalledTimes(4);
 
 						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledTimes(2);
 						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledWith({
 							where: {
-								childId: householdAppeal.id
+								childId: testAppeal.id
 							}
 						});
 
 						expect(databaseConnector.appealRelationship.create).toHaveBeenCalledTimes(2);
 						expect(databaseConnector.appealRelationship.create).toHaveBeenNthCalledWith(1, {
 							data: {
-								childId: householdAppeal.id,
-								childRef: householdAppeal.reference,
-								parentId: 456,
-								parentRef: '456123',
+								childId: testAppeal.id,
+								childRef: testAppeal.reference,
+								parentId: mockAppealA.id,
+								parentRef: mockAppealA.reference,
 								type: CASE_RELATIONSHIP_LINKED
 							}
 						});
 						expect(databaseConnector.appealRelationship.create).toHaveBeenNthCalledWith(2, {
 							data: {
-								childId: 789,
-								childRef: '789456',
-								parentId: 456,
-								parentRef: '456123',
+								childId: mockAppealB.id,
+								childRef: mockAppealB.reference,
+								parentId: mockAppealA.id,
+								parentRef: mockAppealA.reference,
 								type: CASE_RELATIONSHIP_LINKED
 							}
 						});
 
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledTimes(3);
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(testAppeal.id);
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(mockAppealA.id);
+						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(mockAppealB.id);
+
+						expect(mockCreateAuditTrail).toHaveBeenCalledTimes(9);
+						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
+							1,
+							expect.objectContaining({
+								appealId: testAppeal.id,
+								details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UNLINKED, [
+									testAppeal.reference
+								])
+							})
+						);
+						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
+							2,
+							expect.objectContaining({
+								appealId: mockAppealA.id,
+								details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UNLINKED, [
+									testAppeal.reference
+								])
+							})
+						);
+						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
+							3,
+							expect.objectContaining({
+								appealId: mockAppealB.id,
+								details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UNLINKED, [
+									testAppeal.reference
+								])
+							})
+						);
+						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
+							4,
+							expect.objectContaining({
+								appealId: testAppeal.id,
+								details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UPDATED_AS_LEAD, [
+									mockAppealA.reference
+								])
+							})
+						);
+						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
+							5,
+							expect.objectContaining({
+								appealId: mockAppealA.id,
+								details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UPDATED_AS_LEAD, [
+									mockAppealA.reference
+								])
+							})
+						);
+						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
+							6,
+							expect.objectContaining({
+								appealId: mockAppealB.id,
+								details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UPDATED_AS_LEAD, [
+									mockAppealA.reference
+								])
+							})
+						);
+						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
+							7,
+							expect.objectContaining({
+								appealId: testAppeal.id,
+								details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [
+									APPEAL_CASE_STATUS.READY_TO_START
+								])
+							})
+						);
+						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
+							8,
+							expect.objectContaining({
+								appealId: mockAppealA.id,
+								details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [
+									APPEAL_CASE_STATUS.READY_TO_START
+								])
+							})
+						);
+						expect(mockCreateAuditTrail).toHaveBeenNthCalledWith(
+							9,
+							expect.objectContaining({
+								appealId: mockAppealB.id,
+								details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [
+									APPEAL_CASE_STATUS.READY_TO_START
+								])
+							})
+						);
+
 						expect(response.status).toEqual(200);
 						expect(response.text).toEqual('true');
-					});
-
-					test('returns 500 when copying documents throws an exception', async () => {
-						databaseConnector.folder.findMany.mockResolvedValue([]);
-						databaseConnector.appealRelationship.deleteMany.mockImplementation(() => {
-							throw new Error(ERROR_NOT_FOUND);
-						});
-						// @ts-ignore
-						databaseConnector.appeal.findUnique.mockResolvedValue({
-							...householdAppeal,
-							parentAppeals: [
-								{
-									type: CASE_RELATIONSHIP_LINKED,
-									parentId: 456,
-									parentRef: '456123',
-									parent: { appellantCase: {}, id: 456, reference: '456123' }
-								}
-							]
-						});
-
-						const response = await request
-							.post(`/appeals/${householdAppeal.id}/update-linked-appeals`)
-							.send({ operation: LINK_APPEALS_UNLINK_OPERATION })
-							.set('azureAdUserId', azureAdUserId);
-
-						expect(response.status).toEqual(500);
-						expect(response.body).toMatchObject({
-							errors: {
-								body: ERROR_UNLINKING_APPEALS
-							}
-						});
 					});
 				});
 			});
@@ -760,7 +931,7 @@ describe('appeal linked appeals routes', () => {
 				expect(response.status).toEqual(400);
 			});
 
-			test('returns 200 when an external appeal reference is received', async () => {
+			test('returns 200 and creates audit trails when an external appeal reference is received', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
@@ -775,7 +946,7 @@ describe('appeal linked appeals routes', () => {
 					.post(`/appeals/${householdAppeal.id}/associate-legacy-appeal`)
 					.send({
 						...linkedAppealLegacyRequest,
-						linkedAppealReference: '123456'
+						linkedAppealReference: mockAppealC.reference
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -785,7 +956,7 @@ describe('appeal linked appeals routes', () => {
 					data: {
 						parentId: householdAppeal.id,
 						parentRef: householdAppeal.reference,
-						childRef: '123456',
+						childRef: mockAppealC.reference,
 						childId: null,
 						type: CASE_RELATIONSHIP_RELATED,
 						externalSource: true,

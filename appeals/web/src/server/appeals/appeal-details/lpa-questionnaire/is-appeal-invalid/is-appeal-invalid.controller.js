@@ -50,7 +50,10 @@ const renderChangeIsAppealInvalid = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postChangeIsAppealInvalid = async (request, response) => {
-	request.session.isAppealInvalid = request.body['lpaConsiderAppealInvalid'];
+	request.session.isAppealInvalid = {
+		radio: request.body['lpaConsiderAppealInvalid'],
+		details: request.body['lpaAppealInvalidReasons']
+	};
 
 	if (request.errors) {
 		return renderChangeIsAppealInvalid(request, response);

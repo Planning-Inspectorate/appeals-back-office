@@ -80,6 +80,19 @@ describe('mapAppellantProofOfEvidence', () => {
 		expect(result).toEqual(expected);
 	});
 
+	it('should return correct table row when representation status is published', () => {
+		data.appealDetails.documentationSummary.appellantProofOfEvidence.status = 'received';
+		data.appealDetails.documentationSummary.appellantProofOfEvidence.representationStatus =
+			'published';
+		expected.display.tableItem[1].text = 'Shared';
+		expected.display.tableItem[2].text = '2 August 2025';
+		expected.display.tableItem[3].html = expect.stringContaining('Appellant proof of evidence');
+
+		const result = mapAppellantProofOfEvidence(data);
+
+		expect(result).toEqual(expected);
+	});
+
 	it('should return correct table row when status is not received', () => {
 		data.appealDetails.documentationSummary.appellantProofOfEvidence.status = 'not_received';
 		data.appealDetails.documentationSummary.appellantProofOfEvidence.representationStatus =

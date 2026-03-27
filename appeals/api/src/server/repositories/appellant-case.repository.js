@@ -143,6 +143,7 @@ const updateAppellantCaseValidationOutcome = ({
 	otherLiveAppeals,
 	enforcementInvalidReasons,
 	enforcementMissingDocuments,
+	enforcementGroundsMismatchFacts,
 	groundAFeeReceiptDueDate
 }) => {
 	const transaction = [
@@ -193,10 +194,10 @@ const updateAppellantCaseValidationOutcome = ({
 					appeal: {
 						connect: { id: appealId }
 					},
-					otherInformation,
-					enforcementNoticeInvalid,
-					otherLiveAppeals,
-					groundAFeeReceiptDueDate
+					otherInformation: otherInformation ?? null,
+					enforcementNoticeInvalid: enforcementNoticeInvalid ?? null,
+					otherLiveAppeals: otherLiveAppeals ?? null,
+					groundAFeeReceiptDueDate: groundAFeeReceiptDueDate ?? null
 				}
 			)
 		);
@@ -257,6 +258,19 @@ const updateAppellantCaseValidationOutcome = ({
 				manyToManyRelationTable: 'appellantCaseEnforcementMissingDocumentsSelected',
 				incompleteInvalidReasonTextTable: 'appellantCaseEnforcementMissingDocumentText',
 				data: enforcementMissingDocuments
+			})
+		);
+	}
+
+	if (enforcementGroundsMismatchFacts) {
+		transaction.push(
+			...commonRepository.createIncompleteInvalidReasons({
+				id: appellantCaseId,
+				relationOne: 'appellantCaseId',
+				relationTwo: 'appellantCaseEnforcementGroundsMismatchFactsId',
+				manyToManyRelationTable: 'appellantCaseEnforcementGroundsMismatchFactsSelected',
+				incompleteInvalidReasonTextTable: 'appellantCaseEnforcementGroundsMismatchFactsText',
+				data: enforcementGroundsMismatchFacts
 			})
 		);
 	}

@@ -15,6 +15,7 @@ import { editLink } from '#lib/edit-utilities.js';
 import { detailsComponent } from '#lib/mappers/components/page-components/details.js';
 import { simpleHtmlComponent, textSummaryListItem } from '#lib/mappers/index.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { capitalize, pick } from 'lodash-es';
 
@@ -235,6 +236,17 @@ export const inquiryDueDatesPage = async (
 		'proofOfEvidenceAndWitnessesDueDate'
 	];
 
+	if (
+		[
+			APPEAL_TYPE.ENFORCEMENT_NOTICE,
+			APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+			APPEAL_TYPE.DISCONTINUANCE_NOTICE,
+			APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE
+		].includes(appealDetails.appealType)
+	) {
+		dueDateFields.push('finalCommentsDueDate');
+	}
+
 	if (appellantCase?.planningObligation?.hasObligation) {
 		dueDateFields.push('planningObligationDueDate');
 	}
@@ -295,6 +307,11 @@ export const getDueDateFieldNameAndID = (dateField) => {
 			return {
 				id: 'statement-of-common-ground-due-date',
 				name: 'Statement of common ground due date'
+			};
+		case 'finalCommentsDueDate':
+			return {
+				id: 'final-comments-due-date',
+				name: 'Final comments due date'
 			};
 		case 'proofOfEvidenceAndWitnessesDueDate':
 			return {
@@ -583,6 +600,7 @@ export function mapInquiryDetails(appealId, action, values) {
  * @returns {PageComponent[]}
  */
 export function mapInquiryTimetableDue(appealId, action, hasObligation, values) {
+	const TIMETABLE_LINK = `/appeals-service/appeal-details/${appealId}/inquiry/${action}/timetable-due-dates`;
 	/**@type {PageComponent[]} */
 	const pageComponents = [
 		simpleHtmlComponent(
@@ -606,7 +624,7 @@ export function mapInquiryTimetableDue(appealId, action, hasObligation, values) 
 								year: values['lpa-questionnaire-due-date-year']
 							})
 						),
-						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/timetable-due-dates`,
+						link: TIMETABLE_LINK,
 						editable: true
 					})?.display.summaryListItem
 				]
@@ -626,7 +644,7 @@ export function mapInquiryTimetableDue(appealId, action, hasObligation, values) 
 								year: values['statement-due-date-year']
 							})
 						),
-						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/timetable-due-dates`,
+						link: TIMETABLE_LINK,
 						editable: true
 					})?.display.summaryListItem
 				]
@@ -646,12 +664,42 @@ export function mapInquiryTimetableDue(appealId, action, hasObligation, values) 
 								year: values['ip-comments-due-date-year']
 							})
 						),
-						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/timetable-due-dates`,
+						link: TIMETABLE_LINK,
 						editable: true
 					})?.display.summaryListItem
 				]
 			}
-		},
+		}
+	];
+
+	if (
+		values['final-comments-due-date-day'] &&
+		values['final-comments-due-date-month'] &&
+		values['final-comments-due-date-year']
+	) {
+		pageComponents.push({
+			type: 'summary-list',
+			parameters: {
+				rows: [
+					textSummaryListItem({
+						id: 'final-comments-due',
+						text: 'Final comments due',
+						value: dateISOStringToDisplayDate(
+							dayMonthYearHourMinuteToISOString({
+								day: values['final-comments-due-date-day'],
+								month: values['final-comments-due-date-month'],
+								year: values['final-comments-due-date-year']
+							})
+						),
+						link: TIMETABLE_LINK,
+						editable: true
+					})?.display.summaryListItem
+				]
+			}
+		});
+	}
+
+	pageComponents.push(
 		{
 			type: 'summary-list',
 			parameters: {
@@ -666,7 +714,7 @@ export function mapInquiryTimetableDue(appealId, action, hasObligation, values) 
 								year: values['statement-of-common-ground-due-date-year']
 							})
 						),
-						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/timetable-due-dates`,
+						link: TIMETABLE_LINK,
 						editable: true
 					})?.display.summaryListItem
 				]
@@ -686,14 +734,13 @@ export function mapInquiryTimetableDue(appealId, action, hasObligation, values) 
 								year: values['proof-of-evidence-and-witnesses-due-date-year']
 							})
 						),
-						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/timetable-due-dates`,
+						link: TIMETABLE_LINK,
 						editable: true
 					})?.display.summaryListItem
 				]
 			}
 		}
-	];
-
+	);
 	if (hasObligation) {
 		pageComponents.push({
 			type: 'summary-list',
@@ -709,7 +756,7 @@ export function mapInquiryTimetableDue(appealId, action, hasObligation, values) 
 								year: values['planning-obligation-due-date-year']
 							})
 						),
-						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/timetable-due-dates`,
+						link: TIMETABLE_LINK,
 						editable: true
 					})?.display.summaryListItem
 				]
@@ -731,7 +778,7 @@ export function mapInquiryTimetableDue(appealId, action, hasObligation, values) 
 							year: values['case-management-conference-due-date-year']
 						})
 					),
-					link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/timetable-due-dates`,
+					link: TIMETABLE_LINK,
 					editable: true
 				})?.display.summaryListItem
 			]

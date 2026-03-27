@@ -14,12 +14,14 @@ import { appealStatusRoutes } from './appeal-status/appeal-status.routes.js';
 import { appealTimetablesRoutes } from './appeal-timetables/appeal-timetables.routes.js';
 import { appealTypeRoutes } from './appeal-types/appeal-types.routes.js';
 import { appealsRoutes } from './appeals/appeals.routes.js';
+import { appellantCaseEnforcementGroundsMismatchFactsRoutes } from './appellant-case-enforcement-grounds-mismatch-facts/appellant-case-enforcement-grounds-mismatch-facts.routes.js';
 import { appellantCaseIncompleteReasonsRoutes } from './appellant-case-incomplete-reasons/appellant-case-incomplete-reasons.routes.js';
 import { appellantCaseInvalidReasonsRoutes } from './appellant-case-invalid-reasons/appellant-case-invalid-reasons.routes.js';
 import { appellantCaseValidationOutcomesRoutes } from './appellant-case-validation-outcomes/appellant-case-validation-outcomes.routes.js';
 import { appellantCasesRoutes } from './appellant-cases/appellant-cases.routes.js';
 import { auditTrailsRoutes } from './audit-trails/audit-trails.routes.js';
 import { businessDaysRoutes } from './business-days/business-days.routes.js';
+import { cancelRoutes } from './cancel/cancel.routes.js';
 import { caseNotesRoutes } from './case-notes/case-notes.routes.js';
 import { caseTeamRouter } from './case-team/case-team.routes.js';
 import { changeAppealTypeRoutes } from './change-appeal-type/change-appeal-type.routes.js';
@@ -77,6 +79,7 @@ router.use(appealAllocationRouter);
 router.use(appellantCaseInvalidReasonsRoutes);
 router.use(appellantCaseEnforcementInvalidReasonsRoutes);
 router.use(appellantCaseEnforcementMissingDocumentsRoutes);
+router.use(appellantCaseEnforcementGroundsMismatchFactsRoutes);
 router.use(appellantCaseValidationOutcomesRoutes);
 router.use(documentRedactionStatusesRoutes);
 router.use(knowledgeOfOtherLandownersRoutes);
@@ -131,4 +134,7 @@ router.use(appealStatusRoutes);
 router.use(changeProcedureTypeRoutes);
 
 router.use(appealRule6PartiesRoutes);
+
+router.use(cancelRoutes);
+
 export { router as appealsRoutes };

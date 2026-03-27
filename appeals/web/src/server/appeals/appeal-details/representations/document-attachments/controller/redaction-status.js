@@ -78,6 +78,8 @@ export const renderRedactionStatusFactory =
 export const postRedactionStatusFactory =
 	({ errorHandler }) =>
 	async (request, response, next) => {
+		if (request.errors) return errorHandler(request, response, next);
+
 		try {
 			const baseUrl = request.baseUrl;
 

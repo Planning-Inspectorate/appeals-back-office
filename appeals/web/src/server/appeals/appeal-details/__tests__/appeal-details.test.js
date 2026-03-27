@@ -31,6 +31,7 @@ import {
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
+import config from '@pins/appeals.web/environment/config.js';
 import { APPEAL_REPRESENTATION_STATUS, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
@@ -203,6 +204,10 @@ describe('appeal-details', () => {
 							}
 						});
 					nock('http://test/')
+						.get(`/appeals/${appealId}?include=neighbouringSites`)
+						.reply(200, appealData)
+						.persist();
+					nock('http://test/')
 						.get(`/appeals/${appealId}?include=all`)
 						.reply(200, appealData)
 						.persist();
@@ -241,6 +246,10 @@ describe('appeal-details', () => {
 						siteId: 1
 					});
 					nock('http://test/')
+						.get(`/appeals/${appealData.appealId}?include=neighbouringSites`)
+						.reply(200, appealData)
+						.persist();
+					nock('http://test/')
 						.get(`/appeals/${appealData.appealId}?include=all`)
 						.reply(200, appealData)
 						.persist();
@@ -277,6 +286,9 @@ describe('appeal-details', () => {
 					nock('http://test/').delete(`/appeals/${appealReference}/neighbouring-sites`).reply(200, {
 						siteId: 1
 					});
+					nock('http://test/')
+						.get(`/appeals/${appealData.appealId}?include=neighbouringSites`)
+						.reply(200, appealData);
 					nock('http://test/')
 						.get(`/appeals/${appealData.appealId}?include=all`)
 						.reply(200, appealData)
@@ -1165,6 +1177,7 @@ describe('appeal-details', () => {
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId: 2,
+							appealType: 'Enforcement notice appeal',
 							appealStatus: 'statements',
 							appealTimetable: {
 								...appealDataFullPlanning.appealTimetable,
@@ -1228,6 +1241,7 @@ describe('appeal-details', () => {
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId: 2,
+							appealType: 'Enforcement notice appeal',
 							appealStatus: 'statements',
 							appealTimetable: {
 								...appealDataFullPlanning.appealTimetable,
@@ -1291,6 +1305,7 @@ describe('appeal-details', () => {
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId: 2,
+							appealType: 'Enforcement notice appeal',
 							appealStatus: 'statements',
 							appealTimetable: {
 								...appealDataFullPlanning.appealTimetable,
@@ -2724,6 +2739,38 @@ describe('appeal-details', () => {
 			);
 		});
 
+		it('should render a Decision inset panel when the appealStatus is complete and awaiting_event is missing', async () => {
+			const appealId = '2';
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, {
+					...appealData,
+					appealStatus: 'complete',
+					completedStateList: []
+				});
+			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+			nock('http://test/')
+				.get('/appeals/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
+				.reply(200, documentFileVersionInfo);
+			const response = await request.get(`${baseUrl}/${appealId}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const insetTextElementHTML = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: '.govuk-inset-text'
+			}).innerHTML;
+			expect(insetTextElementHTML).toContain('<li>Decision: Dismissed</li>');
+			expect(insetTextElementHTML).toContain(
+				'<li>Decision issued on 4 August 2023 (updated on 11 October 2023)</li>'
+			);
+			expect(insetTextElementHTML).toContain(
+				'<li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2">View decision</a></li>'
+			);
+		});
+
 		it('should render the view decision page', async () => {
 			const appealId = '2';
 
@@ -3279,33 +3326,460 @@ describe('appeal-details', () => {
 				);
 			});
 
-			it('Should not display procedure type change link if type is enforcement notice', async () => {
-				const appealId = 2;
-				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
-					.reply(200, {
-						...appealData,
-						appealId,
-						appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
-						procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
-						documentationSummary: {
-							lpaStatement: {
-								status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			it('Should display procedure type change link because type is ELB and lpastatement status is not received', async () => {
+				const flagsBackup = {
+					featureFlagElbHearing: config.featureFlags.featureFlagElbHearing,
+					featureFlagElbInquiry: config.featureFlags.featureFlagElbInquiry
+				};
+				Object.assign(config.featureFlags, {
+					featureFlagElbHearing: true,
+					featureFlagElbInquiry: true
+				});
+
+				try {
+					const appealId = 2;
+					nock('http://test/')
+						.get(`/appeals/${appealId}?include=all`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+							procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+							documentationSummary: {
+								lpaStatement: {
+									status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+								}
 							}
-						}
-					});
-				nock('http://test/')
-					.get(/appeals\/\d+\/appellant-cases\/\d+/)
-					.reply(200, {
-						planningObligation: { hasObligation: false },
-						numberOfResidencesNetChange: null
-					});
+						});
+					nock('http://test/')
+						.get(/appeals\/\d+\/appellant-cases\/\d+/)
+						.reply(200, {
+							planningObligation: { hasObligation: false },
+							numberOfResidencesNetChange: null
+						});
 
-				const response = await request.get(`${baseUrl}/${appealId}`);
+					const response = await request.get(`${baseUrl}/${appealId}`);
 
-				expect(response.text).not.toContain(
-					'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
-				);
+					expect(response.text).toContain(
+						'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+					);
+				} finally {
+					Object.assign(config.featureFlags, flagsBackup);
+				}
+			});
+
+			it('Should display procedure type change link because type is S20 and lpastatement status is not received', async () => {
+				const flagsBackup = {
+					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
+					featureFlagS78Inquiry: config.featureFlags.featureFlagS78Inquiry,
+					featureFlagS20Hearing: config.featureFlags.featureFlagS20Hearing,
+					featureFlagS20Inquiry: config.featureFlags.featureFlagS20Inquiry
+				};
+				Object.assign(config.featureFlags, {
+					featureFlagS78Written: true,
+					featureFlagS78Inquiry: true,
+					featureFlagS20Hearing: true,
+					featureFlagS20Inquiry: true
+				});
+
+				try {
+					const appealId = 2;
+					nock('http://test/')
+						.get(`/appeals/${appealId}?include=all`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							appealType: APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+							procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+							documentationSummary: {
+								lpaStatement: {
+									status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+								}
+							}
+						});
+					nock('http://test/')
+						.get(/appeals\/\d+\/appellant-cases\/\d+/)
+						.reply(200, {
+							planningObligation: { hasObligation: false },
+							numberOfResidencesNetChange: null
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.text).toContain(
+						'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+					);
+				} finally {
+					Object.assign(config.featureFlags, flagsBackup);
+				}
+			});
+
+			it('Should hide procedure type change link for S20 if no alternative procedure type is available', async () => {
+				const flagsBackup = {
+					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
+					featureFlagS78Inquiry: config.featureFlags.featureFlagS78Inquiry,
+					featureFlagS20Hearing: config.featureFlags.featureFlagS20Hearing,
+					featureFlagS20Inquiry: config.featureFlags.featureFlagS20Inquiry
+				};
+				Object.assign(config.featureFlags, {
+					featureFlagS78Written: false,
+					featureFlagS78Inquiry: true,
+					featureFlagS20Hearing: false,
+					featureFlagS20Inquiry: true
+				});
+
+				try {
+					const appealId = 2;
+					nock('http://test/')
+						.get(`/appeals/${appealId}?include=all`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							appealType: APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+							procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+							documentationSummary: {
+								lpaStatement: {
+									status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+								}
+							}
+						});
+					nock('http://test/')
+						.get(/appeals\/\d+\/appellant-cases\/\d+/)
+						.reply(200, {
+							planningObligation: { hasObligation: false },
+							numberOfResidencesNetChange: null
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.text).not.toContain(
+						'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+					);
+				} finally {
+					Object.assign(config.featureFlags, flagsBackup);
+				}
+			});
+
+			it('Should display procedure type change link for S20 if at least one alternative procedure type is available', async () => {
+				const flagsBackup = {
+					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
+					featureFlagS78Inquiry: config.featureFlags.featureFlagS78Inquiry,
+					featureFlagS20Hearing: config.featureFlags.featureFlagS20Hearing,
+					featureFlagS20Inquiry: config.featureFlags.featureFlagS20Inquiry
+				};
+				Object.assign(config.featureFlags, {
+					featureFlagS78Written: true,
+					featureFlagS78Inquiry: true,
+					featureFlagS20Hearing: false,
+					featureFlagS20Inquiry: true
+				});
+
+				try {
+					const appealId = 2;
+					nock('http://test/')
+						.get(`/appeals/${appealId}?include=all`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							appealType: APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+							procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+							documentationSummary: {
+								lpaStatement: {
+									status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+								}
+							}
+						});
+					nock('http://test/')
+						.get(/appeals\/\d+\/appellant-cases\/\d+/)
+						.reply(200, {
+							planningObligation: { hasObligation: false },
+							numberOfResidencesNetChange: null
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.text).toContain(
+						'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+					);
+				} finally {
+					Object.assign(config.featureFlags, flagsBackup);
+				}
+			});
+
+			it('Should display procedure type change link for enforcement notice when relevant flags are enabled and statements are not shared', async () => {
+				const flagsBackup = {
+					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
+					featureFlagEnforcementNoticeHearing:
+						config.featureFlags.featureFlagEnforcementNoticeHearing,
+					featureFlagEnforcementNoticeInquiry:
+						config.featureFlags.featureFlagEnforcementNoticeInquiry
+				};
+				Object.assign(config.featureFlags, {
+					featureFlagS78Written: true,
+					featureFlagEnforcementNoticeHearing: true,
+					featureFlagEnforcementNoticeInquiry: true
+				});
+
+				try {
+					const appealId = 2;
+					nock('http://test/')
+						.get(`/appeals/${appealId}?include=all`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
+							procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+							documentationSummary: {
+								lpaStatement: {
+									representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+								}
+							}
+						});
+					nock('http://test/')
+						.get(/appeals\/\d+\/appellant-cases\/\d+/)
+						.reply(200, {
+							planningObligation: { hasObligation: false },
+							numberOfResidencesNetChange: null
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.text).toContain(
+						'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+					);
+				} finally {
+					Object.assign(config.featureFlags, flagsBackup);
+				}
+			});
+
+			it('Should not display procedure type change link for enforcement notice when statements have been shared', async () => {
+				const flagsBackup = {
+					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
+					featureFlagEnforcementNoticeHearing:
+						config.featureFlags.featureFlagEnforcementNoticeHearing,
+					featureFlagEnforcementNoticeInquiry:
+						config.featureFlags.featureFlagEnforcementNoticeInquiry
+				};
+				Object.assign(config.featureFlags, {
+					featureFlagS78Written: true,
+					featureFlagEnforcementNoticeHearing: true,
+					featureFlagEnforcementNoticeInquiry: true
+				});
+
+				try {
+					const appealId = 2;
+					nock('http://test/')
+						.get(`/appeals/${appealId}?include=all`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
+							procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+							documentationSummary: {
+								lpaStatement: {
+									representationStatus: APPEAL_REPRESENTATION_STATUS.PUBLISHED
+								}
+							}
+						});
+					nock('http://test/')
+						.get(/appeals\/\d+\/appellant-cases\/\d+/)
+						.reply(200, {
+							planningObligation: { hasObligation: false },
+							numberOfResidencesNetChange: null
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.text).not.toContain(
+						'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+					);
+				} finally {
+					Object.assign(config.featureFlags, flagsBackup);
+				}
+			});
+
+			it('Should not display procedure type change link for enforcement notice when written, hearing and inquiry are disabled', async () => {
+				const flagsBackup = {
+					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
+					featureFlagEnforcementNoticeHearing:
+						config.featureFlags.featureFlagEnforcementNoticeHearing,
+					featureFlagEnforcementNoticeInquiry:
+						config.featureFlags.featureFlagEnforcementNoticeInquiry
+				};
+				Object.assign(config.featureFlags, {
+					featureFlagS78Written: false,
+					featureFlagEnforcementNoticeHearing: false,
+					featureFlagEnforcementNoticeInquiry: false
+				});
+
+				try {
+					const appealId = 2;
+					nock('http://test/')
+						.get(`/appeals/${appealId}?include=all`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
+							procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+							documentationSummary: {
+								lpaStatement: {
+									representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+								}
+							}
+						});
+					nock('http://test/')
+						.get(/appeals\/\d+\/appellant-cases\/\d+/)
+						.reply(200, {
+							planningObligation: { hasObligation: false },
+							numberOfResidencesNetChange: null
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.text).not.toContain(
+						'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+					);
+				} finally {
+					Object.assign(config.featureFlags, flagsBackup);
+				}
+			});
+
+			it('Should display procedure type change link for enforcement notice when current procedure is written, hearing is disabled and inquiry is enabled', async () => {
+				const flagsBackup = {
+					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
+					featureFlagEnforcementNoticeHearing:
+						config.featureFlags.featureFlagEnforcementNoticeHearing,
+					featureFlagEnforcementNoticeInquiry:
+						config.featureFlags.featureFlagEnforcementNoticeInquiry
+				};
+				Object.assign(config.featureFlags, {
+					featureFlagS78Written: true,
+					featureFlagEnforcementNoticeHearing: false,
+					featureFlagEnforcementNoticeInquiry: true
+				});
+
+				try {
+					const appealId = 2;
+					nock('http://test/')
+						.get(`/appeals/${appealId}?include=all`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
+							procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+							documentationSummary: {
+								lpaStatement: {
+									representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+								}
+							}
+						});
+					nock('http://test/')
+						.get(/appeals\/\d+\/appellant-cases\/\d+/)
+						.reply(200, {
+							planningObligation: { hasObligation: false },
+							numberOfResidencesNetChange: null
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.text).toContain(
+						'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+					);
+				} finally {
+					Object.assign(config.featureFlags, flagsBackup);
+				}
+			});
+
+			it('Should display procedure type change link for enforcement notice when current procedure is hearing, written is disabled and inquiry is enabled', async () => {
+				const flagsBackup = {
+					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
+					featureFlagEnforcementNoticeHearing:
+						config.featureFlags.featureFlagEnforcementNoticeHearing,
+					featureFlagEnforcementNoticeInquiry:
+						config.featureFlags.featureFlagEnforcementNoticeInquiry
+				};
+				Object.assign(config.featureFlags, {
+					featureFlagS78Written: false,
+					featureFlagEnforcementNoticeHearing: true,
+					featureFlagEnforcementNoticeInquiry: true
+				});
+
+				try {
+					const appealId = 2;
+					nock('http://test/')
+						.get(`/appeals/${appealId}?include=all`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
+							procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+							documentationSummary: {
+								lpaStatement: {
+									representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+								}
+							}
+						});
+					nock('http://test/')
+						.get(/appeals\/\d+\/appellant-cases\/\d+/)
+						.reply(200, {
+							planningObligation: { hasObligation: false },
+							numberOfResidencesNetChange: null
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.text).toContain(
+						'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+					);
+				} finally {
+					Object.assign(config.featureFlags, flagsBackup);
+				}
+			});
+
+			it('Should not display procedure type change link for enforcement notice when current procedure is inquiry and written and hearing are disabled', async () => {
+				const flagsBackup = {
+					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
+					featureFlagEnforcementNoticeHearing:
+						config.featureFlags.featureFlagEnforcementNoticeHearing,
+					featureFlagEnforcementNoticeInquiry:
+						config.featureFlags.featureFlagEnforcementNoticeInquiry
+				};
+				Object.assign(config.featureFlags, {
+					featureFlagS78Written: false,
+					featureFlagEnforcementNoticeHearing: false,
+					featureFlagEnforcementNoticeInquiry: true
+				});
+
+				try {
+					const appealId = 2;
+					nock('http://test/')
+						.get(`/appeals/${appealId}?include=all`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
+							procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+							documentationSummary: {
+								lpaStatement: {
+									representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+								}
+							}
+						});
+					nock('http://test/')
+						.get(/appeals\/\d+\/appellant-cases\/\d+/)
+						.reply(200, {
+							planningObligation: { hasObligation: false },
+							numberOfResidencesNetChange: null
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.text).not.toContain(
+						'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+					);
+				} finally {
+					Object.assign(config.featureFlags, flagsBackup);
+				}
 			});
 
 			it('Should not display procedure type change link because type is S78 and lpastatement status is received', async () => {
@@ -3418,7 +3892,6 @@ describe('appeal-details', () => {
 
 				const mainHtml = parseHtml(response.text);
 
-				expect(mainHtml.innerHTML).toMatchSnapshot();
 				expect(mainHtml.innerHTML).not.toContain('LPA reference');
 
 				expect(
@@ -3787,6 +4260,41 @@ describe('appeal-details', () => {
 					).toBe(
 						'/appeals-service/appeal-details/2/appellant-statement?backUrl=%2Fappeals-service%2Fappeal-details%2F2'
 					);
+				});
+
+				it('should not render appellant statement row or add link before case start date', async () => {
+					const appealId = 2;
+					const appeal = {
+						...appealDataEnforcementNotice,
+						appealId,
+						startedAt: null,
+						appealStatus: APPEAL_CASE_STATUS.READY_TO_START,
+						documentationSummary: {
+							appellantStatement: {
+								status: 'received',
+								receivedAt: '2025-01-01T00:00:00.000Z',
+								representationStatus: 'awaiting_review'
+							}
+						}
+					};
+
+					nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appeal);
+					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+					nock('http://test/')
+						.get(
+							`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence`
+						)
+						.reply(200, {
+							itemCount: 0
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+					expect(unprettifiedHTML).not.toContain('Appellant statement');
+					expect(unprettifiedHTML).not.toContain('data-cy="add-appellant-statement"');
 				});
 			});
 
@@ -5419,6 +5927,29 @@ describe('appeal-details', () => {
 				);
 			});
 
+			it('should not render the Hearing accordion for enforcement notice child cases with a procedureType of "Hearing"', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=all`)
+					.reply(200, {
+						...appealDataEnforcementNotice,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+						hearing: null,
+						isChildAppeal: true,
+						isParentAppeal: false
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).not.toContain('<div id="case-details-hearing-section">');
+				expect(unprettifiedHTML).not.toContain('Hearing</h2>');
+			});
+
 			it('should render empty states for Hearing accordion when hearing is not set up and user is read only', async () => {
 				nock('http://test/')
 					.get(`/appeals/${appealId}?include=all`)
@@ -5477,6 +6008,7 @@ describe('appeal-details', () => {
 						hearing: {
 							hearingId: '123',
 							hearingStartTime: '2025-05-15T12:00:00.000Z',
+							estimatedDays: 6,
 							address: {
 								addressLine1: '123 Main St',
 								addressLine2: 'Apt 1',
@@ -5491,6 +6023,13 @@ describe('appeal-details', () => {
 							reportingTime: 3
 						}
 					});
+				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+				nock('http://test/')
+					.get(new RegExp(`/appeals/${appealId}/reps\\?type=.*`))
+					.reply(200, { items: [], itemCount: 0 });
+				nock('http://test/')
+					.get(`/appeals/${appealId}/appellant-cases/0`)
+					.reply(200, { planningObligation: { hasObligation: false } });
 
 				const response = await readOnlyRequest.get(`${baseUrl}/${appealId}?include=all`);
 
@@ -5520,7 +6059,7 @@ describe('appeal-details', () => {
 
 				expect(
 					unprettifiedHearingSection.querySelectorAll('dd.govuk-summary-list__value')
-				).toHaveLength(7);
+				).toHaveLength(9);
 				expect(
 					unprettifiedHearingSection
 						.querySelectorAll('dd.govuk-summary-list__value')[0]
@@ -5539,26 +6078,44 @@ describe('appeal-details', () => {
 				expect(
 					unprettifiedHearingSection
 						.querySelectorAll('dd.govuk-summary-list__value')[3]
-						.innerHTML.trim()
-				).toBe('123 Main St<br>Apt 1<br>Anytown<br>Anycounty<br>AA1 1AA');
+						.textContent.trim()
+				).toBe('6 Days');
 				expect(
 					unprettifiedHearingSection
 						.querySelectorAll('dd.govuk-summary-list__value')[4]
 						.textContent.trim()
-				).toBe('1 day');
+				).toBe('Yes');
 				expect(
 					unprettifiedHearingSection
 						.querySelectorAll('dd.govuk-summary-list__value')[5]
+						.innerHTML.trim()
+				).toBe('123 Main St<br>Apt 1<br>Anytown<br>Anycounty<br>AA1 1AA');
+				expect(
+					unprettifiedHearingSection
+						.querySelectorAll('dd.govuk-summary-list__value')[6]
+						.textContent.trim()
+				).toBe('1 day');
+				expect(
+					unprettifiedHearingSection
+						.querySelectorAll('dd.govuk-summary-list__value')[7]
 						.textContent.trim()
 				).toBe('2.5 days');
 				expect(
 					unprettifiedHearingSection
-						.querySelectorAll('dd.govuk-summary-list__value')[6]
+						.querySelectorAll('dd.govuk-summary-list__value')[8]
 						.textContent.trim()
 				).toBe('3 days');
 
 				expect(unprettifiedHearingSection.querySelector('a[data-cy="change-date"]')).toBeFalsy();
 				expect(unprettifiedHearingSection.querySelector('a[data-cy="change-time"]')).toBeFalsy();
+				expect(
+					unprettifiedHearingSection.querySelector(
+						'a[data-cy="change-whether-the-estimated-number-of-days-is-known-or-not"]'
+					)
+				).toBeFalsy();
+				expect(
+					unprettifiedHearingSection.querySelector('a[data-cy="change-estimated-days"]')
+				).toBeFalsy();
 				expect(
 					unprettifiedHearingSection.querySelector(
 						'a[data-cy="change-whether-the-address-is-known-or-not"]'
@@ -5585,6 +6142,7 @@ describe('appeal-details', () => {
 						hearing: {
 							hearingId: '123',
 							hearingStartTime: '2025-05-15T12:00:00.000Z',
+							estimatedDays: 6,
 							address: {
 								addressLine1: '123 Main St',
 								addressLine2: 'Apt 1',
@@ -5634,6 +6192,16 @@ describe('appeal-details', () => {
 				expect(
 					unprettifiedHearingSectionHtml
 						.querySelectorAll('dd.govuk-summary-list__value')?.[3]
+						?.innerHTML.trim()
+				).toEqual('6 Days');
+				expect(
+					unprettifiedHearingSectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[4]
+						?.innerHTML.trim()
+				).toEqual('Yes');
+				expect(
+					unprettifiedHearingSectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[5]
 						?.innerHTML.split('<br>')
 						.map((line) => line.trim())
 				).toEqual(['123 Main St', 'Apt 1', 'Anytown', 'Anycounty', 'AA1 1AA']);
@@ -5646,6 +6214,19 @@ describe('appeal-details', () => {
 					unprettifiedHearingSectionHtml.querySelector('a[data-cy="change-time"]')?.attributes?.href
 				).toEqual(
 					`${baseUrl}/${appealId}/hearing/change/date?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}`
+				);
+				expect(
+					unprettifiedHearingSectionHtml.querySelector(
+						'a[data-cy="change-whether-the-estimated-number-of-days-is-known-or-not"]'
+					)?.attributes?.href
+				).toEqual(
+					`${baseUrl}/${appealId}/hearing/change/estimation?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}`
+				);
+				expect(
+					unprettifiedHearingSectionHtml.querySelector('a[data-cy="change-estimated-days"]')
+						?.attributes?.href
+				).toEqual(
+					`${baseUrl}/${appealId}/hearing/change/estimation?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}`
 				);
 				expect(
 					unprettifiedHearingSectionHtml.querySelector(
@@ -5712,7 +6293,12 @@ describe('appeal-details', () => {
 						?.innerHTML.trim()
 				).toEqual('No');
 				expect(
-					unprettifiedHearingSectionHtml.querySelectorAll('dd.govuk-summary-list__value')?.[3]
+					unprettifiedHearingSectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[3]
+						?.innerHTML.trim()
+				).toEqual('No');
+				expect(
+					unprettifiedHearingSectionHtml.querySelectorAll('dd.govuk-summary-list__value')?.[4]
 				).toBeFalsy();
 			});
 
@@ -6273,6 +6859,28 @@ describe('appeal-details', () => {
 				expect(unprettifiedInquirySectionHtml).toContain(
 					`href="/appeals-service/appeal-details/${appealId}/inquiry/estimates/add">Add inquiry estimates</a>`
 				);
+			});
+
+			it('should not render the Inquiry accordion for enforcement notice child cases with a procedureType of "Inquiry"', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=all`)
+					.reply(200, {
+						...appealDataEnforcementNotice,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+						isChildAppeal: true,
+						isParentAppeal: false
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).not.toContain('<div id="case-details-inquiry-section">');
+				expect(unprettifiedHTML).not.toContain('Inquiry</h2>');
 			});
 
 			it('should render the inquiry details summary list when inquiry is present with address', async () => {

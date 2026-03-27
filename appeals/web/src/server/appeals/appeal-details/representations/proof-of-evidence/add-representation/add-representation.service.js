@@ -1,3 +1,5 @@
+import logger from '#lib/logger.js';
+
 /**
  * Map an incoming proofOfEvidenceType string to a trusted representation type path segment.
  * Throws an error if the type is not recognised.
@@ -12,7 +14,7 @@ function mapProofOfEvidenceTypeToRepType(proofOfEvidenceType) {
 	const allowedTypes = {
 		lpa: 'lpa',
 		appellant: 'appellant',
-		'rule-6-party': 'rule_6_party_proofs_evidence'
+		'rule-6-party': 'rule-6-party'
 	};
 
 	const repType = allowedTypes[normalisedType];
@@ -26,24 +28,20 @@ function mapProofOfEvidenceTypeToRepType(proofOfEvidenceType) {
 /**
  * @param {import('got').Got} apiClient
  * @param {number} appealId
- * @param {string[]} documentGUIDs
  * @param {string} proofOfEvidenceType
- * @param {string|number} [representedId]
+ * @param {object} payload
+ * @param {string[]} payload.attachments
+ * @param {number} [payload.representedId]
+ * @param {string} proofOfEvidenceType
  * @returns {Promise<any>}
  */
 export async function postRepresentationProofOfEvidence(
 	apiClient,
 	appealId,
-	documentGUIDs,
-	proofOfEvidenceType,
-	representedId
+	payload,
+	proofOfEvidenceType
 ) {
 	try {
-		/** @type {any} */
-		const payload = { attachments: documentGUIDs };
-		if (representedId) {
-			payload.representedId = Number(representedId);
-		}
 		const repType = mapProofOfEvidenceTypeToRepType(proofOfEvidenceType);
 
 		const response = await apiClient.post(`appeals/${appealId}/reps/${repType}/proof-of-evidence`, {
@@ -51,7 +49,7 @@ export async function postRepresentationProofOfEvidence(
 		});
 		return response.body;
 	} catch (error) {
-		console.error('Error posting proof of evidence:', error);
+		logger.error('Error posting proof of evidence:', error);
 		throw new Error('Failed to post proof of evidence representation');
 	}
 }

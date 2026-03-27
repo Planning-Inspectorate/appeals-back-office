@@ -2,6 +2,7 @@ import nunjucksEnvironments from '#app/config/nunjucks.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate, dayMonthYearHourMinuteToDisplayDate } from '#lib/dates.js';
 import { enhanceCheckboxOptionWithAddAnotherReasonConditionalHtml } from '#lib/enhance-html.js';
+import { detailsComponent } from '#lib/mappers/components/page-components/details.js';
 import { yesNoInput } from '#lib/mappers/index.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
@@ -54,31 +55,24 @@ export function decisionInvalidConfirmationPage(appealId, appealReference) {
 }
 
 /**
- * @param {string} appealId
  * @param {string} appealReference
  * @param {import('#appeals/appeals.types.js').CheckboxItemParameter[]} mappedInvalidReasonOptions
  * @param {string} appealType
+ * @param {string} backLinkUrl
  * @param {string | undefined} errorMessage
- * @param {boolean} sourceIsAppellantCase
  * @returns {PageContent}
  */
 export const mapInvalidReasonPage = (
-	appealId,
 	appealReference,
 	mappedInvalidReasonOptions,
 	appealType,
-	errorMessage = undefined,
-	sourceIsAppellantCase
+	backLinkUrl,
+	errorMessage = undefined
 ) => {
 	const shortAppealReference = appealShortReference(appealReference);
 	const isEnforcementNotice =
 		appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ||
 		appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING;
-	const backLinkUrl = isEnforcementNotice
-		? `/appeals-service/appeal-details/${appealId}/appellant-case/invalid/enforcement-notice`
-		: `/appeals-service/appeal-details/${appealId}/${
-				sourceIsAppellantCase ? 'appellant-case' : 'cancel'
-			}`;
 
 	/** @type {PageContent} */
 	const pageContent = {
@@ -306,7 +300,9 @@ export const otherLiveAppealsPage = (appealDetails, otherLiveAppeals) => ({
  * @param {ReasonOption[]} reasonOptions
  * @param {ReasonOption[]} incompleteReasonOptions
  * @param {ReasonOption[]} missingDocuments
+ * @param {ReasonOption[]} groundsAndFactsMismatch
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {{appellant: string, lpa: string}} [emailPreviews]
  * @returns {PageContent}
  */
 export const checkDetailsAndMarkEnforcementAsInvalid = (
@@ -314,7 +310,9 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (
 	reasonOptions,
 	incompleteReasonOptions,
 	missingDocuments,
-	session
+	groundsAndFactsMismatch,
+	session,
+	emailPreviews
 ) => {
 	const {
 		enforcementNoticeInvalid,
@@ -406,6 +404,13 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (
 
 	// appeal incomplete
 	if (session?.webAppellantCaseReviewOutcome.reasons) {
+		incompleteReasonOptions.sort((a, b) => {
+			// identify id 10 'other' and send to back of item list
+			if (a.id === 10) return 1;
+			if (b.id === 10) return -1;
+			return +a.id - +b.id;
+		});
+
 		summaryListComponent.parameters.rows.push({
 			key: {
 				text: `Why is the appeal ${validationOutcome}?`
@@ -455,6 +460,41 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (
 						text: 'Change',
 						href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/missing-documents`,
 						visuallyHiddenText: `${capitalize(validationOutcome)} reasons`
+					}
+				]
+			}
+		});
+	}
+
+	// Grounds and facts mismatch
+	if (session?.webAppellantCaseReviewOutcome.groundsFacts) {
+		const htmlList = mapReasonsToReasonsListHtml(
+			groundsAndFactsMismatch,
+			session?.webAppellantCaseReviewOutcome.groundsFacts,
+			session?.webAppellantCaseReviewOutcome.groundsFactsText
+		);
+		const html = htmlList.replace(/([a-z]):/g, 'Ground ($1):');
+
+		summaryListComponent.parameters.rows.push({
+			key: {
+				text: 'Grounds and facts do not match'
+			},
+			value: {
+				html: nunjucksEnvironments.render('appeals/components/page-component.njk', {
+					component: {
+						type: 'show-more',
+						parameters: {
+							html
+						}
+					}
+				})
+			},
+			actions: {
+				items: [
+					{
+						text: 'Change',
+						href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/grounds-facts-check`,
+						visuallyHiddenText: 'Grounds and facts mismatch reasons'
 					}
 				]
 			}
@@ -542,6 +582,19 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (
 				? `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/date`
 				: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/incomplete/receipt-due-date`;
 
+	const emailPreviewComponents = emailPreviews
+		? [
+				detailsComponent({
+					summaryText: `Preview email to appellant`,
+					html: emailPreviews.appellant
+				}),
+				detailsComponent({
+					summaryText: `Preview email to LPA`,
+					html: emailPreviews.lpa
+				})
+			]
+		: [];
+
 	return {
 		title,
 		backLinkUrl,
@@ -554,7 +607,8 @@ export const checkDetailsAndMarkEnforcementAsInvalid = (
 				parameters: {
 					html: helperText
 				}
-			}
+			},
+			...emailPreviewComponents
 		],
 		submitButtonProperties: {
 			text:

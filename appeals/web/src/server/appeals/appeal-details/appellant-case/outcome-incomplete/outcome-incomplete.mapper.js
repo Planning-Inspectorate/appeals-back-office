@@ -1,8 +1,21 @@
+import nunjucksEnvironments from '#app/config/nunjucks.js';
+import { rejectionReasonHtml } from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import {
+	dateISOStringToDisplayDate,
+	dayMonthYearHourMinuteToDisplayDate,
+	dayMonthYearHourMinuteToISOString,
+	getExampleDateHint
+} from '#lib/dates.js';
 import { enhanceCheckboxOptionWithAddAnotherReasonConditionalHtml } from '#lib/enhance-html.js';
+import { detailsComponent } from '#lib/mappers/components/page-components/details.js';
 import { dateInput } from '#lib/mappers/index.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
+import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { LENGTH_300 } from '@pins/appeals/constants/support.js';
+import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import { capitalize } from 'lodash-es';
 
 /**
  *
@@ -70,7 +83,7 @@ export const mapIncompleteReasonPage = (
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Why is the appeal incomplete?`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealId}/appellant-case${appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ? '/incomplete/enforcement-notice' : ''}`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealId}/appellant-case${isAnyEnforcementAppealType(appealType) ? '/incomplete/enforcement-notice' : ''}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
 			{
@@ -205,7 +218,6 @@ export function updateFeeReceiptDueDatePage(
 		title: 'Ground (a) fee receipt due date',
 		backLinkUrl,
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
-		heading: 'Ground (a) fee receipt due date',
 		submitButtonProperties: {
 			text: 'Continue',
 			type: 'submit'
@@ -215,13 +227,14 @@ export function updateFeeReceiptDueDatePage(
 				name: 'fee-receipt-due-date',
 				id: 'fee-receipt-due-date',
 				namePrefix: 'fee-receipt-due-date',
-				hint: 'For example, 31 3 2025',
+				hint: `For example, ${getExampleDateHint(27)}`,
 				value: {
 					day: existingDueDate.day,
 					month: existingDueDate.month,
 					year: existingDueDate.year
 				},
-				legendText: '',
+				legendText: 'Ground (a) fee receipt due date',
+				legendIsPageHeading: true,
 				errors: errors
 			})
 		]
@@ -229,3 +242,398 @@ export function updateFeeReceiptDueDatePage(
 
 	return pageContent;
 }
+
+/**
+ *
+ * @param {import('../appellant-case.mapper.js').Appeal} appealDetails
+ * @param {import('../appellant-case.service.js').ReasonOption[]} enforcementInvalidReasonOptions
+ * @param {import('../appellant-case.service.js').ReasonOption[]} incompleteReasonOptions
+ * @param {import('../appellant-case.service.js').ReasonOption[]} missingDocuments
+ * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {{appellant: string, lpa: string}} [emailPreviews]
+ * @returns {PageContent}
+ */
+export const checkDetailsAndMarkEnforcementAsIncomplete = (
+	appealDetails,
+	enforcementInvalidReasonOptions,
+	incompleteReasonOptions,
+	missingDocuments,
+	session,
+	emailPreviews
+) => {
+	const {
+		enforcementNoticeInvalid,
+		enforcementNoticeReason = [],
+		otherInformationValidRadio,
+		otherInformationDetails,
+		validationOutcome
+	} = session?.webAppellantCaseReviewOutcome || {};
+	// @ts-ignore
+	const selectedReasons = enforcementNoticeReason.map((reason) => reason.reasonSelected);
+	const mappedInvalidReasonOptions = enforcementInvalidReasonOptions
+		.filter((reason) => selectedReasons.includes(reason.id))
+		.map(({ name, id }) => ({
+			id,
+			name,
+			text:
+				// @ts-ignore
+				enforcementNoticeReason.find(({ reasonSelected }) => reasonSelected === id)?.reasonText ||
+				''
+		}));
+	const formatedEnforcementNoticeReasons = mappedInvalidReasonOptions
+		.map(({ name, text }) =>
+			nunjucksEnvironments.render('appeals/components/page-component.njk', {
+				component: {
+					type: 'show-more',
+					parameters: {
+						html: `<li>${name}: ${text}</li>`,
+						maximumBeforeHiding: LENGTH_300,
+						toggleTextCollapsed: 'Show more',
+						toggleTextExpanded: 'Show less'
+					}
+				}
+			})
+		)
+		.join('');
+	/** @type {PageComponent} */
+	const summaryListComponent = {
+		type: 'summary-list',
+		parameters: {
+			rows: [
+				{
+					key: { text: 'What is the outcome of your review?' },
+					value: { text: capitalizeFirstLetter(validationOutcome) },
+					actions: {
+						items: [
+							{
+								text: 'Change',
+								href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case`,
+								visuallyHiddenText: 'review outcome'
+							}
+						]
+					}
+				},
+				{
+					key: { text: 'Is the enforcement notice invalid?' },
+					value: { text: capitalizeFirstLetter(enforcementNoticeInvalid) },
+					actions: {
+						items: [
+							{
+								text: 'Change',
+								href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/enforcement-notice`,
+								visuallyHiddenText: `is the enforcement notice ${validationOutcome}?`
+							}
+						]
+					}
+				}
+			]
+		}
+	};
+
+	if (formatedEnforcementNoticeReasons) {
+		summaryListComponent.parameters.rows.push({
+			key: { text: 'Why is the enforcement notice invalid?' },
+			value: {
+				html: `<ul class="govuk-list govuk-list--bullet">${formatedEnforcementNoticeReasons}</ul>`
+			},
+			actions: {
+				items: [
+					{
+						text: 'Change',
+						href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/enforcement-notice-reason`,
+						visuallyHiddenText: `why is the enforcement notice ${validationOutcome}?`
+					}
+				]
+			}
+		});
+	}
+
+	// appeal incomplete
+	if (session?.webAppellantCaseReviewOutcome.reasons) {
+		incompleteReasonOptions.sort((a, b) => {
+			// identify id 10 'other' and send to back of item list
+			if (a.id === 10) return 1;
+			if (b.id === 10) return -1;
+			return +a.id - +b.id;
+		});
+
+		summaryListComponent.parameters.rows.push({
+			key: {
+				text: `Why is the appeal ${validationOutcome}?`
+			},
+			value: {
+				html: mapReasonsToReasonsListHtml(
+					incompleteReasonOptions,
+					session?.webAppellantCaseReviewOutcome.reasons,
+					session?.webAppellantCaseReviewOutcome.reasonsText
+				)
+			},
+			actions: {
+				items: [
+					{
+						text: 'Change',
+						href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}`,
+						visuallyHiddenText: `${capitalize(validationOutcome)} reasons`
+					}
+				]
+			}
+		});
+	}
+
+	// documents incomplete
+	if (session?.webAppellantCaseReviewOutcome.missingDocuments) {
+		summaryListComponent.parameters.rows.push({
+			key: {
+				text: `Which documents are incomplete?`
+			},
+			value: {
+				html: nunjucksEnvironments.render('appeals/components/page-component.njk', {
+					component: {
+						type: 'show-more',
+						parameters: {
+							html: mapReasonsToReasonsListHtml(
+								missingDocuments,
+								session?.webAppellantCaseReviewOutcome.missingDocuments,
+								session?.webAppellantCaseReviewOutcome.missingDocumentsText
+							)
+						}
+					}
+				})
+			},
+			actions: {
+				items: [
+					{
+						text: 'Change',
+						href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/missing-documents`,
+						visuallyHiddenText: `${capitalize(validationOutcome)} reasons`
+					}
+				]
+			}
+		});
+	}
+
+	// ground and facts
+	if (session?.webAppellantCaseReviewOutcome.enforcementGroundsMismatchText) {
+		summaryListComponent.parameters.rows.push({
+			key: { text: 'Grounds and facts do not match' },
+			value: {
+				html: nunjucksEnvironments.render('appeals/components/page-component.njk', {
+					component: {
+						type: 'show-more',
+						parameters: {
+							html: mapGroundsAndFactsListHtml(
+								session.webAppellantCaseReviewOutcome.enforcementGroundsMismatchText
+							),
+							maximumBeforeHiding: LENGTH_300,
+							toggleTextCollapsed: 'Show more',
+							toggleTextExpanded: 'Show less'
+						}
+					}
+				})
+			},
+			actions: {
+				items: [
+					{
+						text: 'Change',
+						href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/grounds-facts-check`,
+						visuallyHiddenText: 'Grounds and facts'
+					}
+				]
+			}
+		});
+	}
+
+	// ground (a) fee receipt due date
+	if (session?.webAppellantCaseReviewOutcome.feeReceiptDueDate) {
+		const { day, month, year } = session.webAppellantCaseReviewOutcome.feeReceiptDueDate;
+		summaryListComponent.parameters.rows.push({
+			key: { text: 'Ground (a) fee receipt due date' },
+			value: { text: dayMonthYearHourMinuteToDisplayDate({ day, month, year }) },
+			actions: {
+				items: [
+					{
+						text: 'Change',
+						href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/incomplete/receipt-due-date`,
+						visuallyHiddenText: 'Ground (a) fee receipt due date'
+					}
+				]
+			}
+		});
+	}
+
+	// appeal due date
+	if (session?.webAppellantCaseReviewOutcome.updatedDueDate) {
+		const dueDate = session.webAppellantCaseReviewOutcome.updatedDueDate;
+		summaryListComponent.parameters.rows.push({
+			key: { text: 'Appeal due date' },
+			value: {
+				text: dateISOStringToDisplayDate(
+					dayMonthYearHourMinuteToISOString({
+						day: dueDate.day,
+						month: dueDate.month,
+						year: dueDate.year
+					})
+				)
+			},
+			actions: {
+				items: [
+					{
+						text: 'Change',
+						href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/date`,
+						visuallyHiddenText: 'Appeal due date'
+					}
+				]
+			}
+		});
+	}
+
+	// other information
+	if (otherInformationDetails) {
+		summaryListComponent.parameters.rows.push({
+			key: { text: 'Do you want to add any other information?' },
+			value: {
+				html: nunjucksEnvironments.render('appeals/components/page-component.njk', {
+					component: {
+						type: 'show-more',
+						parameters: {
+							html: otherInformationValidRadio === 'Yes' ? `Yes: ${otherInformationDetails}` : 'No',
+							maximumBeforeHiding: LENGTH_300,
+							toggleTextCollapsed: 'Show more',
+							toggleTextExpanded: 'Show less'
+						}
+					}
+				})
+			},
+			actions: {
+				items: [
+					{
+						text: 'Change',
+						href: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/enforcement-other-information`,
+						visuallyHiddenText: 'do you want to add any other information?'
+					}
+				]
+			}
+		});
+	}
+
+	const title = 'Check details and mark appeal as incomplete';
+	const helperText = `<p class="govuk-body">We will mark the appeal as ${validationOutcome} and send an email to the relevant parties.</p>`;
+	const backLinkUrl = session?.webAppellantCaseReviewOutcome.updatedDueDate
+		? `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/date`
+		: session?.webAppellantCaseReviewOutcome.otherInformationValidRadio
+			? `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/enforcement-other-information`
+			: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/incomplete/receipt-due-date`;
+
+	const emailPreviewComponents = emailPreviews
+		? [
+				detailsComponent({
+					summaryText: `Preview email to appellant`,
+					html: emailPreviews.appellant
+				}),
+				detailsComponent({
+					summaryText: `Preview email to LPA`,
+					html: emailPreviews.lpa
+				})
+			]
+		: [];
+
+	return {
+		title,
+		backLinkUrl,
+		preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
+		heading: title,
+		pageComponents: [
+			summaryListComponent,
+			{
+				type: 'html',
+				parameters: {
+					html: helperText
+				}
+			},
+			...emailPreviewComponents
+		],
+		submitButtonProperties: {
+			text: `Mark appeal as ${validationOutcome}`,
+			id: 'continue'
+		}
+	};
+};
+
+/**
+ * @param {any[]} groundsAndFacts
+ */
+export function mapGroundsAndFactsListHtml(groundsAndFacts) {
+	if (!groundsAndFacts || groundsAndFacts.length === 0) {
+		return '';
+	}
+	const items = groundsAndFacts.map(
+		(/** @type {{ name: any; text: any; }} */ ground) => `Ground (${ground.name}): ${ground.text}`
+	);
+	return rejectionReasonHtml(items);
+}
+
+/**
+ * @param {string} appealReference
+ * @param {(any & { selected: boolean, text: string })[]} appealGrounds
+ * @param {string} backLinkUrl
+ * @param {import("@pins/express").ValidationErrors | undefined} [errors]
+ * @returns {PageContent}
+ */
+export const groundsFactsCheckPage = (appealReference, appealGrounds, backLinkUrl, errors) => {
+	const mappedGroundOptions = appealGrounds.map((grounds) => {
+		const groundsId = `grounds-facts-${grounds.id}-1`;
+		const groundsName = `groundsFacts-${grounds.id}`;
+		const groundsError = errors?.[`${groundsName}-1`];
+		return {
+			value: grounds.id,
+			text: `Ground (${grounds.name})`,
+			checked: grounds.selected || !!grounds.text,
+			conditional: grounds.hasText
+				? {
+						html: renderPageComponentsToHtml([
+							{
+								type: 'input',
+								parameters: {
+									id: groundsId,
+									name: groundsName,
+									value: grounds.text ?? '',
+									...(groundsError && { errorMessage: { text: groundsError.msg } }),
+									label: {
+										text: 'Enter a reason',
+										classes: 'govuk-label--s'
+									}
+								}
+							}
+						])
+					}
+				: undefined
+		};
+	});
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title: 'Which grounds do not match the facts?',
+		backLinkUrl,
+		preHeading: `Appeal ${appealShortReference(appealReference)}`,
+		pageComponents: [
+			{
+				type: 'checkboxes',
+				parameters: {
+					idPrefix: 'grounds-facts',
+					name: 'groundsFacts',
+					fieldset: {
+						legend: {
+							text: 'Which grounds do not match the facts?',
+							isPageHeading: true,
+							classes: 'govuk-fieldset__legend--l'
+						}
+					},
+					items: mappedGroundOptions,
+					...(errors?.missingDocuments && { errorMessage: { text: errors.missingDocuments.msg } })
+				}
+			}
+		]
+	};
+
+	return pageContent;
+};

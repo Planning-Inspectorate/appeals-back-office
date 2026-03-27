@@ -14,7 +14,7 @@
         "tscheck": "npx tsc -p jsconfig.json --maxNodeModuleJsDepth 0"
     },
     "dependencies": {
-        "@azure/storage-blob": "^12.30.0",
+        "@azure/storage-blob": "^12.31.0",
         "@azure/identity": "4.13.0"
     }
 }

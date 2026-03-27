@@ -14,8 +14,8 @@ import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { addBusinessDays, isAfter, isBefore, isSameDay, isWeekend, parseISO } from 'date-fns';
 import { formatInTimeZone, zonedTimeToUtc } from 'date-fns-tz';
 import fetch from 'node-fetch';
+import { isExpeditedAppealType } from './appeal-type-checks.js';
 import { getCache, setCache } from './cache-data.js';
-import isExpeditedAppealType from './is-expedited-appeal-type.js';
 
 /** @typedef {import('../types/appeal.js').BankHolidayFeedEvents } BankHolidayFeedEvents */
 /** @typedef {import('../types/appeal.js').BankHolidayFeedDivisions } BankHolidayFeedDivisions */
@@ -31,12 +31,17 @@ import isExpeditedAppealType from './is-expedited-appeal-type.js';
  * @returns {number}
  */
 export const getNumberOfBankHolidaysBetweenDates = (dateFrom, dateTo, bankHolidays) => {
-	return bankHolidays.filter(
-		({ date }) =>
-			(isSameDay(new Date(date), new Date(dateFrom)) ||
-				isAfter(new Date(date), new Date(dateFrom))) &&
-			(isSameDay(new Date(date), new Date(dateTo)) || isBefore(new Date(date), new Date(dateTo)))
-	).length;
+	const dates = [new Date(dateFrom), new Date(dateTo)].sort((a, b) => a.getTime() - b.getTime());
+	const start = dates[0];
+	const end = dates[1];
+
+	return bankHolidays.filter(({ date }) => {
+		const holidayDate = new Date(date);
+		return (
+			(isSameDay(holidayDate, start) || isAfter(holidayDate, start)) &&
+			(isSameDay(holidayDate, end) || isBefore(holidayDate, end))
+		);
+	}).length;
 };
 
 /**
@@ -69,15 +74,25 @@ export const fetchBankHolidaysForDivision = async (
  * @param {Date} dateFrom
  * @param {Date} dateTo
  * @param {BankHolidayFeedEvents} bankHolidays
+ * @param {boolean|null} isBackward
  * @returns {{ bankHolidayCount: number, calculatedDate: Date }}
  */
-export const recalculateDateForBankHolidays = (dateFrom, dateTo, bankHolidays) => {
+export const recalculateDateForBankHolidays = (
+	dateFrom,
+	dateTo,
+	bankHolidays,
+	isBackward = null
+) => {
+	if (isBackward === null) {
+		isBackward = isBefore(new Date(dateTo), new Date(dateFrom));
+	}
+
 	const bankHolidayCount = getNumberOfBankHolidaysBetweenDates(dateFrom, dateTo, bankHolidays);
 
 	if (bankHolidayCount) {
 		return {
 			bankHolidayCount,
-			calculatedDate: addBusinessDays(dateTo, bankHolidayCount)
+			calculatedDate: addBusinessDays(dateTo, isBackward ? -bankHolidayCount : bankHolidayCount)
 		};
 	}
 
@@ -92,18 +107,21 @@ export const recalculateDateForBankHolidays = (dateFrom, dateTo, bankHolidays) =
  */
 const addBankHolidayDays = (startedAt, calculatedDate, bankHolidays) => {
 	let bankHolidayCount = 0;
+	const isBackward = isBefore(new Date(calculatedDate), new Date(startedAt));
 
 	({ bankHolidayCount, calculatedDate } = recalculateDateForBankHolidays(
 		startedAt,
 		calculatedDate,
-		bankHolidays
+		bankHolidays,
+		isBackward
 	));
 
 	while (bankHolidayCount > 0) {
 		({ bankHolidayCount, calculatedDate } = recalculateDateForBankHolidays(
 			calculatedDate,
 			calculatedDate,
-			bankHolidays
+			bankHolidays,
+			isBackward
 		));
 	}
 
@@ -186,6 +204,7 @@ export const getFullAppealBaseTimetableKey = (appealType) => {
 		case APPEAL_CASE_TYPE.X:
 			return APPEAL_CASE_TYPE.H;
 		case APPEAL_CASE_TYPE.C:
+		case APPEAL_CASE_TYPE.F:
 			return APPEAL_CASE_TYPE.C;
 		default:
 			return APPEAL_CASE_TYPE.W;
@@ -202,9 +221,15 @@ export const getFullAppealBaseTimetableKey = (appealType) => {
  * @param {string} appealType
  * @param {Date|null} startedAt
  * @param {string} procedureType
+ * @param {Date|null} inquiryDate
  * @returns {Promise<TimetableDeadlineDate | undefined>}
  */
-const calculateTimetable = async (appealType, startedAt, procedureType = 'written') => {
+const calculateTimetable = async (
+	appealType,
+	startedAt,
+	procedureType = 'written',
+	inquiryDate = null
+) => {
 	if (startedAt) {
 		const startDate = setTimeInTimeZone(startedAt, DAYTIME_HOUR, DAYTIME_MINUTE);
 
@@ -220,14 +245,29 @@ const calculateTimetable = async (appealType, startedAt, procedureType = 'writte
 			const bankHolidays = await fetchBankHolidaysForDivision();
 
 			return Object.fromEntries(
-				Object.entries(appealTimetableConfig).map(([fieldName, { daysFromStartDate }]) => {
-					let calculatedDate = addBusinessDays(startDate, daysFromStartDate);
-					calculatedDate = addBankHolidayDays(startDate, calculatedDate, bankHolidays);
+				Object.entries(appealTimetableConfig)
+					.map(([fieldName, config]) => {
+						const { daysFromStartDate, daysBeforeInquiryDate } = config;
+						let baseDate = startDate;
+						let days = daysFromStartDate;
 
-					const deadline = setTimeInTimeZone(calculatedDate, DEADLINE_HOUR, DEADLINE_MINUTE);
+						if (daysBeforeInquiryDate && inquiryDate) {
+							baseDate = setTimeInTimeZone(inquiryDate, DAYTIME_HOUR, DAYTIME_MINUTE);
+							days = -daysBeforeInquiryDate;
+						}
 
-					return [fieldName, deadline];
-				})
+						if (days === undefined) {
+							return null;
+						}
+
+						let calculatedDate = addBusinessDays(baseDate, days);
+						calculatedDate = addBankHolidayDays(baseDate, calculatedDate, bankHolidays);
+
+						const deadline = setTimeInTimeZone(calculatedDate, DEADLINE_HOUR, DEADLINE_MINUTE);
+
+						return [fieldName, deadline];
+					})
+					.filter((entry) => entry !== null)
 			);
 		}
 	}

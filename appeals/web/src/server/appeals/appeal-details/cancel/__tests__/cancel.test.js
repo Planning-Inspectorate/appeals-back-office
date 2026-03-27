@@ -1,5 +1,10 @@
 import featureFlags from '#common/feature-flags.js';
-import { appealData, appealDataEnforcementNotice } from '#testing/appeals/appeals.js';
+import {
+	appealData,
+	appealDataEnforcementListedBuilding,
+	appealDataEnforcementNotice,
+	appellantCaseInvalidReasonsRealIds
+} from '#testing/appeals/appeals.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
@@ -91,6 +96,68 @@ describe('cancel', () => {
 			);
 			expect(element.querySelector('button')?.innerHTML.trim()).toBe('Continue');
 		});
+
+		it('should have a back link to the appeal details page', async () => {
+			const response = await request.get(`${baseUrl}/${mockAppealId}${cancelPath}`);
+			const element = parseHtml(response.text, { rootElement: 'body' });
+			expect(element.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+				`${baseUrl}/${mockAppealId}`
+			);
+		});
+
+		it('should have a back link to the CYA page if editing and invalid selected', async () => {
+			await request.post(`${baseUrl}/${mockAppealId}${cancelPath}`).send({
+				cancelReasonRadio: 'invalid'
+			});
+			const queryString = `?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F${mockAppealId}${cancelPath}`;
+			const response = await request.get(`${baseUrl}/${mockAppealId}${cancelPath}${queryString}`);
+			const element = parseHtml(response.text, { rootElement: 'body' });
+			expect(element.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+				`${baseUrl}/${mockAppealId}/cancel/invalid/check-details`
+			);
+		});
+
+		it('should have a back link to the CYA page if editing and enforcement-notice-withdrawn selected', async () => {
+			await request.post(`${baseUrl}/${mockAppealId}${cancelPath}`).send({
+				cancelReasonRadio: 'enforcement-notice-withdrawn'
+			});
+			const queryString = `?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F${mockAppealId}${cancelPath}`;
+			const response = await request.get(`${baseUrl}/${mockAppealId}${cancelPath}${queryString}`);
+			const element = parseHtml(response.text, { rootElement: 'body' });
+			expect(element.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+				`${baseUrl}/${mockAppealId}/cancel/enforcement-notice-withdrawal/check-details`
+			);
+		});
+	});
+
+	describe('GET (Enforcement listed building) /new', () => {
+		it('should render the correct options for an ELB enforcement notice appeal', async () => {
+			featureFlags.isFeatureActive = () => true;
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, { ...appealDataEnforcementListedBuilding });
+
+			const response = await request.get(`${baseUrl}/${mockAppealId}${cancelPath}`);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			expect(element.querySelector('h1')?.innerHTML.trim()).toBe(
+				'Why are you cancelling the appeal?'
+			);
+			expect(element.querySelectorAll('[name="cancelReasonRadio"]').length).toBe(3);
+			expect(element.querySelector('label[for="cancel-reason-radio"]')?.innerHTML.trim()).toBe(
+				'Appeal invalid'
+			);
+			expect(element.querySelector('label[for="cancel-reason-radio-2"]')?.innerHTML.trim()).toBe(
+				'LPA has withdrawn the enforcement notice'
+			);
+			expect(element.innerHTML).not.toContain('Did not pay the ground (a) fee');
+			expect(element.querySelector('label[for="cancel-reason-radio-3"]')?.innerHTML.trim()).toBe(
+				'Request to withdraw appeal'
+			);
+			expect(element.querySelector('button')?.innerHTML.trim()).toBe('Continue');
+		});
 	});
 
 	describe('POST /new', () => {
@@ -108,8 +175,8 @@ describe('cancel', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/invalid/new'
+			expect(response.headers.location).toBe(
+				'/appeals-service/appeal-details/1/invalid/new?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fcancel'
 			);
 		});
 
@@ -176,6 +243,113 @@ describe('cancel', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Sorry, there is a problem with the service</h1>'
 			);
+		});
+	});
+
+	describe('Get /check-details', () => {
+		beforeEach(async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealDataEnforcementNotice.appealId}?include=all`)
+				.reply(200, {
+					...appealDataEnforcementNotice,
+					enforcementNotice: {
+						appealOutcome: {
+							groundABarred: true
+						},
+						appellantCase: {
+							reference: 'Reference',
+							effectiveDate: '2026-01-01',
+							groundAFeeDueDate: '2026-03-01',
+							issueDate: '2026-02-01'
+						}
+					}
+				})
+				.persist();
+			nock('http://test/')
+				.get(`/appeals/${appealDataEnforcementNotice.appealId}/case-team-email`)
+				.reply(200, {
+					id: 1,
+					email: 'caseofficers@planninginspectorate.gov.uk',
+					name: 'standard email'
+				});
+		});
+
+		it('should render the check details screen', async () => {
+			const mockAppellantPreview = nock('http://test/')
+				.post(`/appeals/notify-preview/enforcement-cancel-appeal-no-fee-appellant.content.md`)
+				.reply(200, { renderedHtml: '' });
+			const mockLpaPreview = nock('http://test/')
+				.post(`/appeals/notify-preview/enforcement-cancel-appeal-no-fee-lpa.content.md`)
+				.reply(200, { renderedHtml: '' });
+
+			const response = await request.get(
+				`${baseUrl}/${appealDataEnforcementNotice.appealId}/cancel/check-details`
+			);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.querySelector('h1')?.innerHTML.trim()).toBe('Check details and cancel appeal');
+
+			const rows = element.querySelectorAll('.govuk-summary-list__row');
+			expect(rows.length).toBe(1);
+			expect(rows[0].querySelector('.govuk-summary-list__key')?.innerHTML.trim()).toBe(
+				'Why are you cancelling the appeal?'
+			);
+			expect(rows[0].querySelector('.govuk-summary-list__value')?.innerHTML.trim()).toBe(
+				'Did not pay the ground (a) fee'
+			);
+			expect(element.querySelector('button')?.innerHTML.trim()).toBe('Cancel appeal');
+
+			expect(mockAppellantPreview.isDone()).toBe(true);
+			expect(mockLpaPreview.isDone()).toBe(true);
+
+			expect(
+				element.querySelector('#appellant-preview .govuk-details__summary-text')?.innerHTML.trim()
+			).toBe('Preview email to appellant');
+			expect(
+				element.querySelector('#lpa-preview .govuk-details__summary-text')?.innerHTML.trim()
+			).toBe('Preview email to LPA');
+		});
+	});
+
+	describe('POST /check-details', () => {
+		beforeEach(async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealDataEnforcementNotice.appealId}?include=all`)
+				.reply(200, {
+					...appealDataEnforcementNotice,
+					enforcementNotice: {
+						appealOutcome: {
+							groundABarred: true
+						},
+						appellantCase: {
+							reference: 'Reference',
+							effectiveDate: '2026-01-01',
+							groundAFeeDueDate: '2026-03-01',
+							issue_date: '2026-02-01'
+						}
+					}
+				})
+				.persist();
+			nock('http://test/')
+				.get('/appeals/appellant-case-invalid-reasons')
+				.reply(200, appellantCaseInvalidReasonsRealIds)
+				.persist();
+			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				id: 1,
+				email: 'caseofficers@planninginspectorate.gov.uk',
+				name: 'standard email'
+			});
+			nock('http://test/')
+				.patch(`/appeals/${appealDataEnforcementNotice.appealId}/appellant-cases/0`)
+				.reply(200);
+		});
+
+		it('should redirect on success', async () => {
+			const response = await request.post(
+				`${baseUrl}/${appealDataEnforcementNotice.appealId}/cancel/check-details`
+			);
+			expect(response.status).toBe(302);
+			expect(response.headers.location).toBe(`${baseUrl}/${appealDataEnforcementNotice.appealId}`);
 		});
 	});
 });

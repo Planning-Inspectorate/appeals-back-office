@@ -5,13 +5,14 @@ import { addDocumentAudit } from '#endpoints/documents/documents.service.js';
 import { commandMappers } from '#mappers/integration/commands/index.js';
 import { serviceUserIdStartRange } from '#mappers/integration/map-service-user-entity.js';
 import { notifySend } from '#notify/notify-send.js';
-import { getLinkedAppealsById } from '#repositories/appeal.repository.js';
+import appealRepository, { getLinkedAppealsById } from '#repositories/appeal.repository.js';
 import { getAssignedTeam } from '#repositories/team.repository.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
+import { formatName } from '#utils/format-name.js';
 import { linkAppeals } from '#utils/link-appeals.js';
 import { markAwaitingTransfer } from '#utils/mark-for-transfer.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { APPEAL_REPRESENTATION_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
 	AUDIT_TRAIL_APPELLANT_IMPORT_MSG,
 	AUDIT_TRAIL_DOCUMENT_IMPORTED,
@@ -19,18 +20,19 @@ import {
 	AUDIT_TRAIL_LPA_UUID,
 	AUDIT_TRAIL_LPAQ_IMPORT_MSG,
 	AUDIT_TRAIL_REP_IMPORT_MSG,
+	AUDIT_TRAIL_RULE_6_PARTY_PROOFS_EVIDENCE_ADDED,
 	AUDIT_TRAIL_RULE_6_STATEMENT_ADDED,
 	AUDIT_TRAIL_SYSTEM_UUID,
 	AUDIT_TRAIL_TEAM_ASSIGNED,
 	AUDIT_TRIAL_APPELLANT_UUID,
 	AUDIT_TRIAL_RULE_6_PARTY_ID
 } from '@pins/appeals/constants/support.js';
+import { isEnforcementCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
 import {
 	APPEAL_APPELLANT_PROCEDURE_PREFERENCE,
 	APPEAL_CASE_TYPE,
-	APPEAL_REPRESENTATION_TYPE,
 	SERVICE_USER_TYPE
 } from '@planning-inspectorate/data-model';
 import { broadcasters } from './integrations.broadcasters.js';
@@ -160,10 +162,12 @@ const importNamedIndividuals = async ({ parentAppeal, casedata, documents, users
 			return data;
 		}) || [];
 
+	const childAppeals = [];
 	for (const individual of namedIndividuals) {
 		const childAppeal = await importIndividualAppeal(individual);
 		if (isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_LINKED)) {
 			await linkAppeals(AUDIT_TRAIL_LPA_UUID, parentAppeal, childAppeal);
+			childAppeals.push(childAppeal);
 		} else {
 			await markAwaitingTransfer(
 				childAppeal.id,
@@ -172,6 +176,7 @@ const importNamedIndividuals = async ({ parentAppeal, casedata, documents, users
 			);
 		}
 	}
+	return childAppeals;
 };
 
 /**
@@ -183,8 +188,8 @@ export const importAppeal = async (req, res) => {
 	const { casedata, documents, users } = req.body || {};
 	const data = { casedata, documents, users };
 
-	const parentAppeal = await importIndividualAppeal(data);
-	const { id, reference, assignedTeamId, appealTypeId } = await parentAppeal;
+	const parentResult = await importIndividualAppeal(data);
+	const { id, reference, assignedTeamId, appealTypeId } = parentResult;
 
 	if (
 		isEnforcementCaseType(casedata?.caseType) &&
@@ -194,13 +199,70 @@ export const importAppeal = async (req, res) => {
 		if (!isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_LINKED)) {
 			await markAwaitingTransfer(id, appealTypeId, AUDIT_TRIAL_APPELLANT_UUID);
 		}
-		await importNamedIndividuals({
+		const childResults = await importNamedIndividuals({
 			// @ts-ignore
-			parentAppeal,
+			parentAppeal: parentResult,
 			casedata,
 			documents,
 			users
 		});
+
+		const [parentAppeal, ...childAppeals] = await Promise.all(
+			[parentResult, ...childResults].map(async (caseData) => {
+				return appealRepository.getAppealById(caseData.id);
+			})
+		);
+
+		const {
+			lpa,
+			agent,
+			appellant,
+			reference: parentReference,
+			address: parentAddress
+		} = parentAppeal || {};
+
+		const oneAdditionalAppellant = childAppeals.length === 1;
+
+		const personalisation = {
+			appeal_reference_number: parentReference ?? '',
+			site_address: parentAddress ? formatAddressSingleLine(parentAddress) : '',
+			enforcement_reference: casedata?.enforcementReference ?? '',
+			lead_appeal_reference_number: parentReference ?? '',
+			one_additional_appellant: oneAdditionalAppellant,
+			// @ts-ignore
+			full_name_lead_appellant: formatName(appellant),
+			child_appeal_reference_number: oneAdditionalAppellant
+				? (childAppeals[0]?.reference ?? '')
+				: childAppeals.map((child) => child?.reference ?? ''),
+			full_name_additional_appellant: oneAdditionalAppellant
+				? // @ts-ignore
+					formatName(childAppeals[0].appellant)
+				: // @ts-ignore
+					childAppeals.map((child) => formatName(child.appellant))
+		};
+
+		const appellantEmail = agent?.email ?? appellant?.email;
+		const lpaEmail = lpa?.email;
+
+		if (appellantEmail) {
+			await notifySend({
+				templateName: 'link-appeal-additional-appellants',
+				// @ts-ignore
+				notifyClient: req.notifyClient,
+				recipientEmail: appellantEmail,
+				personalisation
+			});
+		}
+
+		if (lpaEmail) {
+			await notifySend({
+				templateName: 'link-appeal-additional-appellants',
+				// @ts-ignore
+				notifyClient: req.notifyClient,
+				recipientEmail: lpaEmail,
+				personalisation
+			});
+		}
 	}
 
 	return res.status(201).send({ id, reference, assignedTeamId });
@@ -420,8 +482,8 @@ export const importRepresentation = async (req, res) => {
 		case 'lpa_statement':
 			azureAdUserId = AUDIT_TRAIL_LPA_UUID;
 			break;
-		case 'rule_6_party_statement':
-		case 'rule_6_party_proofs_evidence':
+		case APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT:
+		case APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE:
 			azureAdUserId = AUDIT_TRIAL_RULE_6_PARTY_ID;
 			break;
 		default:
@@ -429,13 +491,21 @@ export const importRepresentation = async (req, res) => {
 	}
 	let details = stringTokenReplacement(AUDIT_TRAIL_REP_IMPORT_MSG, [repType]);
 
-	if (repType === 'rule_6_party_statement') {
+	if (
+		repType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT ||
+		repType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
+	) {
 		const party = req.appeal.appealRule6Parties?.find(
 			(party) => party.serviceUserId === serviceUserId
 		);
 
 		if (party) {
-			details = stringTokenReplacement(AUDIT_TRAIL_RULE_6_STATEMENT_ADDED, [
+			const template =
+				repType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT
+					? AUDIT_TRAIL_RULE_6_STATEMENT_ADDED
+					: AUDIT_TRAIL_RULE_6_PARTY_PROOFS_EVIDENCE_ADDED;
+
+			details = stringTokenReplacement(template, [
 				party.serviceUser?.organisationName || 'Rule 6 party'
 			]);
 		}
@@ -467,30 +537,12 @@ export const importRepresentation = async (req, res) => {
 		})
 	);
 
-	if (repType === 'rule_6_party_statement') {
+	if (repType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT) {
 		await sendRepresentationReceivedNotifications(
 			req.appeal,
 			req.notifyClient,
 			azureAdUserId,
 			'rule-6-statement-received'
-		);
-	}
-
-	if (repType === 'rule_6_party_proofs_evidence') {
-		await sendRepresentationReceivedNotifications(
-			req.appeal,
-			req.notifyClient,
-			azureAdUserId,
-			'rule-6-party-proof-of-evidence-received'
-		);
-	}
-
-	if (repType === 'appellant_statement') {
-		await sendRepresentationReceivedNotifications(
-			req.appeal,
-			req.notifyClient,
-			azureAdUserId,
-			'appellant-statement-received'
 		);
 	}
 
@@ -514,14 +566,6 @@ const writeDocumentAuditTrail = async (appealId, document, azureAdUserId) => {
 		await addDocumentAudit(document.documentGuid, 1, auditTrail, EventType.Create);
 	}
 };
-
-/**
- *
- * @param {string|undefined} caseType
- * @returns {boolean}
- */
-const isEnforcementCaseType = (caseType) =>
-	caseType === APPEAL_CASE_TYPE.C || caseType === APPEAL_CASE_TYPE.F;
 
 /**
  *

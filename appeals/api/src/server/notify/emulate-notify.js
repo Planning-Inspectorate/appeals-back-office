@@ -89,7 +89,7 @@ export function initNotifyEmulator() {
 }
 
 /**
- * @param {string} content,
+ * @param {string} content
  * @param {boolean} [noBottomBorder]
  * @returns {string}
  */
@@ -97,6 +97,7 @@ export const generateNotifyPreview = (content, noBottomBorder) => {
 	let blockEnd = 0;
 	const contentLines = content.split('\n').map((line, index, lines) => {
 		line = line.trim();
+
 		// Handle headers
 		if (line.startsWith('#')) {
 			// @ts-ignore
@@ -126,7 +127,7 @@ export const generateNotifyPreview = (content, noBottomBorder) => {
 			return line ? `</div>\n${line}` : '</div>';
 		}
 		return line && line !== ''
-			? blockEnd == 0 && lines.length !== 1
+			? blockEnd === 0 && lines.length !== 1
 				? `<p>${line}</p>`
 				: `${line}<br>`
 			: '';

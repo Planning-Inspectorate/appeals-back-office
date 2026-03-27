@@ -1,6 +1,7 @@
 // @ts-nocheck
 /* eslint-disable jest/expect-expect */
-import { appealData } from '#testing/app/fixtures/referencedata.js';
+import { appealData, appealDataEnforcementNotice } from '#testing/app/fixtures/referencedata.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { addDays } from 'date-fns';
 import { getRequiredActionsForAppeal } from '../required-actions.js';
@@ -164,6 +165,29 @@ describe('required actions', () => {
 					)
 				).toEqual(['reviewAppellantCase']);
 			});
+
+			it('should return "enforcementNoticeAppealIncomplete" if: the appeal is an Enforcement Notice, the enforcement notice is invalid, appellant case due date has not passed, and the appellant case is marked as incomplete', async () => {
+				expect(
+					getRequiredActionsForAppeal(
+						{
+							...{
+								...appealDataEnforcementNotice,
+								enforcementNoticeInvalid: 'yes',
+								appealStatus: APPEAL_CASE_STATUS.VALIDATION
+							},
+							documentationSummary: {
+								...appealDataWithValidationStatus.documentationSummary,
+								appellantCase: {
+									...appealDataWithValidationStatus.documentationSummary.appellantCase,
+									dueDate: futureDate,
+									status: 'Incomplete'
+								}
+							}
+						},
+						'detail'
+					)
+				).toEqual(['enforcementNoticeAppealIncomplete']);
+			});
 		});
 
 		describe('when appeal status is "LPA_QUESTIONNAIRE"', () => {
@@ -271,6 +295,7 @@ describe('required actions', () => {
 		describe('when appeal status is "STATEMENTS"', () => {
 			const appealDataWithStatementsStatus = {
 				...appealData,
+				appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
 				appealStatus: APPEAL_CASE_STATUS.STATEMENTS
 			};
 
@@ -1164,6 +1189,53 @@ describe('required actions', () => {
 						])
 					);
 				});
+
+				it('should return "updateAppellantStatement" if appellant statement is incomplete', () => {
+					expect(
+						getRequiredActionsForAppeal(
+							{
+								...appealDataWithStatementsStatus,
+								appealTimetable: {
+									...appealDataWithStatementsStatus.appealTimetable,
+									ipCommentsDueDate: futureDate,
+									lpaStatementDueDate: futureDate
+								},
+								documentationSummary: {
+									...appealDataWithStatementsStatus.documentationSummary,
+									appellantStatement: {
+										status: 'received',
+										representationStatus: 'incomplete'
+									}
+								}
+							},
+							'detail'
+						)
+					).toEqual(expect.arrayContaining(['updateAppellantStatement']));
+				});
+
+				it('should not return appellant statement actions for unsupported appeal types', () => {
+					expect(
+						getRequiredActionsForAppeal(
+							{
+								...appealDataWithStatementsStatus,
+								appealType: APPEAL_TYPE.S78,
+								appealTimetable: {
+									...appealDataWithStatementsStatus.appealTimetable,
+									ipCommentsDueDate: futureDate,
+									lpaStatementDueDate: futureDate
+								},
+								documentationSummary: {
+									...appealDataWithStatementsStatus.documentationSummary,
+									appellantStatement: {
+										status: 'received',
+										representationStatus: 'awaiting_review'
+									}
+								}
+							},
+							'detail'
+						)
+					).not.toContain('appellantStatementAwaitingReview');
+				});
 			});
 		});
 
@@ -1741,7 +1813,7 @@ describe('required actions', () => {
 				expect(result).toContain('reviewAppellantProofOfEvidence');
 			});
 
-			it('should return "progressToInquiry" if LPA proof of evidence is not received and proof of evidence and due date has passed', () => {
+			it('should not return "progressToInquiry" if LPA proof of evidence is not received but appellant proof is still awaiting review', () => {
 				expect(
 					getRequiredActionsForAppeal(
 						{
@@ -1772,10 +1844,10 @@ describe('required actions', () => {
 						},
 						'detail'
 					)
-				).toEqual(['reviewAppellantProofOfEvidence', 'progressToInquiry']);
+				).toEqual(['reviewAppellantProofOfEvidence']);
 			});
 
-			it('should return "progressToInquiry" if appellant proof of evidence is not received and proof of evidence dure date has passed', () => {
+			it('should not return "progressToInquiry" if appellant proof of evidence is not received but LPA proof is still awaiting review', () => {
 				expect(
 					getRequiredActionsForAppeal(
 						{
@@ -1806,7 +1878,7 @@ describe('required actions', () => {
 						},
 						'detail'
 					)
-				).toEqual(['reviewLpaProofOfEvidence', 'progressToInquiry']);
+				).toEqual(['reviewLpaProofOfEvidence']);
 			});
 
 			it('should return "progressToInquiry" if both appellant and LPA proof of evidence is not received and proof of evidence dure date has passed', () => {
@@ -1841,6 +1913,42 @@ describe('required actions', () => {
 						'detail'
 					)
 				).toContain('progressToInquiry');
+			});
+
+			it('should not return "progressToInquiry" if proof of evidence due date has passed but LPA proof is still awaiting review', () => {
+				const result = getRequiredActionsForAppeal(
+					{
+						...appealDataWithStatementsStatus,
+						appealTimetable: {
+							...appealDataWithStatementsStatus.appealTimetable,
+							proofOfEvidenceAndWitnessesDueDate: pastDate
+						},
+						documentationSummary: {
+							...appealDataWithStatementsStatus.documentationSummary,
+							lpaProofOfEvidence: {
+								status: 'received',
+								representationStatus: 'awaiting_review',
+								counts: {
+									awaiting_review: 1,
+									valid: 0,
+									published: 0
+								}
+							},
+							appellantProofOfEvidence: {
+								status: 'not_received',
+								counts: {
+									awaiting_review: 1,
+									valid: 0,
+									published: 0
+								}
+							}
+						}
+					},
+					'detail'
+				);
+
+				expect(result).toContain('reviewLpaProofOfEvidence');
+				expect(result).not.toContain('progressToInquiry');
 			});
 
 			it('should include "awaitingRule6PartyProofOfEvidence" if Rule 6 proof of evidence is not submitted', () => {

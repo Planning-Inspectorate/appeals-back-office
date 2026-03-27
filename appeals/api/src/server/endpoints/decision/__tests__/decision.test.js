@@ -1,10 +1,13 @@
 // @ts-nocheck
 import {
+	advertisementAppeal,
+	appealEnforcementListed,
 	casAdvertAppeal,
 	casPlanningAppeal,
 	enforcementNoticeAppeal,
 	fullPlanningAppeal,
 	householdAppeal,
+	ldcAppeal,
 	listedBuildingAppeal
 } from '#tests/appeals/mocks.js';
 import { documentCreated, documentVersionCreated, savedFolder } from '#tests/documents/mocks.js';
@@ -251,6 +254,58 @@ describe('decision routes', () => {
 				FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE,
 				'Enforcement notice',
 				'invalid'
+			],
+			[
+				'ldcAppeal',
+				'allowed',
+				'',
+				ldcAppeal,
+				FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE,
+				'Lawful development certificate'
+			],
+
+			[
+				'ldcAppeal',
+				'invalid',
+				'Because it is.',
+				ldcAppeal,
+				FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE,
+				'Lawful development certificate',
+				'invalid'
+			],
+			[
+				'advertisementAppeal',
+				'allowed',
+				'',
+				advertisementAppeal,
+				FEEDBACK_FORM_LINKS.FULL_ADVERTS,
+				'Advertisement'
+			],
+			[
+				'advertisementAppeal',
+				'invalid',
+				'Because it is.',
+				advertisementAppeal,
+				FEEDBACK_FORM_LINKS.FULL_ADVERTS,
+				'Advertisement',
+				'invalid'
+			],
+			[
+				'appealEnforcementListed',
+				'allowed',
+				'',
+				appealEnforcementListed,
+				FEEDBACK_FORM_LINKS.ENFORCEMENT_LISTED_BUILDING,
+				'Enforcement listed building and conservation area'
+			],
+			[
+				'appealEnforcementListed',
+				'invalid',
+				'Because it is.',
+				appealEnforcementListed,
+				FEEDBACK_FORM_LINKS.ENFORCEMENT_LISTED_BUILDING,
+				'Enforcement listed building and conservation area',
+				'invalid'
 			]
 		])(
 			'returns 200 when all good, appeal type: %s, outcome: %s, reason: %s',
@@ -328,10 +383,10 @@ describe('decision routes', () => {
 				} else {
 					personalisation.child_appeals = [];
 					personalisation.decision_date = formatDate(utcDate, false);
-					personalisation.front_office_url = `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`;
+					personalisation.front_office_url = `https://appeal-planning-decision.service.gov.uk/appeals/1345264`;
 				}
 
-				if (appealType === 'enforcementNoticeAppeal') {
+				if (appealType === 'enforcementNoticeAppeal' || appealType === 'appealEnforcementListed') {
 					personalisation.enforcement_reference = enforcementReference;
 				}
 
@@ -354,7 +409,7 @@ describe('decision routes', () => {
 					personalisation: {
 						...personalisation,
 						feedback_link:
-							appealType === 'enforcementNoticeAppeal'
+							appealType === 'enforcementNoticeAppeal' || appealType === 'appealEnforcementListed'
 								? FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE
 								: FEEDBACK_FORM_LINKS.LPA
 					},
@@ -420,10 +475,17 @@ describe('decision routes', () => {
 			['casAdvertAppeal', casAdvertAppeal, FEEDBACK_FORM_LINKS.CAS_ADVERTS],
 			['fullPlanningAppeal', fullPlanningAppeal, FEEDBACK_FORM_LINKS.S78],
 			['listedBuildingAppeal', listedBuildingAppeal, FEEDBACK_FORM_LINKS.S20],
-			['enforcementNoticeAppeal', enforcementNoticeAppeal, FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE]
+			['enforcementNoticeAppeal', enforcementNoticeAppeal, FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE],
+			['advertisementAppeal', advertisementAppeal, FEEDBACK_FORM_LINKS.FULL_ADVERTS],
+			['ldcAppeal', ldcAppeal, FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE],
+			[
+				'appealEnforcementListed',
+				appealEnforcementListed,
+				FEEDBACK_FORM_LINKS.ENFORCEMENT_LISTED_BUILDING
+			]
 		])(
 			'returns 200 when only issuing appellant costs decisions (%s)',
-			async (_, appeal, expectedFeedbackLink) => {
+			async (appealType, appeal, expectedFeedbackLink) => {
 				const correctAppealState = {
 					...appeal,
 					appealStatus: [
@@ -467,8 +529,11 @@ describe('decision routes', () => {
 						appeal_reference_number: appeal.reference,
 						lpa_reference: appeal.applicationReference,
 						site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
-						front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`,
-						feedback_link: expectedFeedbackLink
+						front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/1345264`,
+						feedback_link: expectedFeedbackLink,
+						...(appeal.appellantCase.enforcementReference && {
+							enforcement_reference: appeal.appellantCase.enforcementReference
+						})
 					},
 					recipientEmail: appeal.agent.email
 				});
@@ -480,8 +545,11 @@ describe('decision routes', () => {
 						appeal_reference_number: appeal.reference,
 						lpa_reference: appeal.applicationReference,
 						site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
-						front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`,
-						feedback_link: FEEDBACK_FORM_LINKS.LPA
+						front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/1345264`,
+						feedback_link: FEEDBACK_FORM_LINKS.LPA,
+						...(appeal.appellantCase.enforcementReference && {
+							enforcement_reference: appeal.appellantCase.enforcementReference
+						})
 					},
 					templateName: 'appellant-costs-decision-lpa',
 					recipientEmail: appeal.lpa.email
@@ -626,12 +694,18 @@ describe('decision routes', () => {
 
 			// @ts-ignore
 			databaseConnector.folder.findMany.mockResolvedValue([savedFolder]);
-			databaseConnector.document.create = jest.fn().mockImplementation(() => {
-				return documentCreated;
-			});
-			databaseConnector.documentVersion.create = jest
-				.fn()
-				.mockResolvedValue(documentVersionCreated);
+			databaseConnector.document.createMany.mockResolvedValue({ count: 1 });
+			databaseConnector.document.updateMany.mockResolvedValue({ count: 1 });
+			databaseConnector.documentVersion.createMany.mockResolvedValue({ count: 1 });
+			databaseConnector.documentVersion.findMany.mockResolvedValue([
+				{
+					...documentVersionCreated,
+					documentGuid: 'mock-uuid',
+					fileName: 'mydoc-1345264.pdf',
+					redactionStatus: { key: undefined }
+				}
+			]);
+			databaseConnector.documentVersionAvScan.findMany.mockResolvedValue([]);
 
 			const response = await request
 				.post(`/appeals/${appeal.id}/decision`)
@@ -655,37 +729,41 @@ describe('decision routes', () => {
 				})
 				.set('azureAdUserId', azureAdUserId);
 
-			expect(databaseConnector.document.create).toHaveBeenCalledWith({
-				data: {
-					caseId: childAppeal.childId,
-					folderId: 23,
-					guid: 'mock-uuid',
-					name: 'mydoc-1345264.pdf'
-				}
+			expect(databaseConnector.document.createMany).toHaveBeenCalledWith({
+				data: [
+					{
+						caseId: childAppeal.childId,
+						folderId: 23,
+						guid: 'mock-uuid',
+						name: 'mydoc-1345264.pdf'
+					}
+				]
 			});
 
-			expect(databaseConnector.documentVersion.create).toHaveBeenCalledWith({
-				data: {
-					blobStorageContainer: 'document-service-uploads',
-					blobStoragePath: 'appeal/CHILD123/mock-uuid/v1/mydoc-1345264.pdf',
-					dateReceived: expect.any(Date),
-					documentGuid: 'mock-uuid',
-					documentType: 'appellantCostApplication',
-					documentURI:
-						'https://127.0.0.1:10000/document-service-uploads/appeal/CHILD123/mock-uuid/v1/mydoc-1345264.pdf',
-					draft: false,
-					fileName: 'mydoc-1345264.pdf',
-					isLateEntry: false,
-					lastModified: expect.any(Date),
-					mime: 'application/pdf',
-					originalFilename: 'mydoc-1345264.pdf',
-					published: false,
-					redactionStatusId: 1,
-					size: 14699,
-					stage: 'appeal-decision',
-					version: 1,
-					virusCheckStatus: 'affected'
-				}
+			expect(databaseConnector.documentVersion.createMany).toHaveBeenCalledWith({
+				data: [
+					{
+						blobStorageContainer: 'document-service-uploads',
+						blobStoragePath: 'appeal/CHILD123/mock-uuid/v1/mydoc-1345264.pdf',
+						dateReceived: expect.any(Date),
+						documentGuid: 'mock-uuid',
+						documentType: 'appellantCostApplication',
+						documentURI:
+							'https://127.0.0.1:10000/document-service-uploads/appeal/CHILD123/mock-uuid/v1/mydoc-1345264.pdf',
+						draft: false,
+						fileName: 'mydoc-1345264.pdf',
+						isLateEntry: false,
+						lastModified: expect.any(Date),
+						mime: 'application/pdf',
+						originalFilename: 'mydoc-1345264.pdf',
+						published: false,
+						redactionStatusId: 1,
+						size: 14699,
+						stage: 'appeal-decision',
+						version: 1,
+						virusCheckStatus: 'not_scanned'
+					}
+				]
 			});
 
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
@@ -1336,6 +1414,45 @@ describe('decision routes', () => {
 			expect(recipients.filter((e) => e === 'dup@test.com')).toHaveLength(1);
 		});
 
+		test('falls back to inspectorDecision date when decisionDate is missing', async () => {
+			const caseDecisionOutcomeDate = new Date('2024-06-15');
+			const correctAppealState = {
+				...householdAppeal,
+				inspectorDecision: {
+					caseDecisionOutcomeDate
+				},
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						valid: true
+					}
+				]
+			};
+
+			databaseConnector.representation.count.mockResolvedValue(0);
+			databaseConnector.appeal.findUnique.mockResolvedValue(correctAppealState);
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			databaseConnector.representation.findMany.mockResolvedValue([]);
+
+			const correctionNotice = 'Test correction notice';
+
+			await sendNewDecisionLetter(
+				correctAppealState,
+				correctionNotice,
+				azureAdUserId,
+				mockNotifyClient,
+				undefined
+			);
+
+			expect(mockNotifySend).toHaveBeenCalledWith(
+				expect.objectContaining({
+					personalisation: expect.objectContaining({
+						decision_date: formatDate(caseDecisionOutcomeDate, false)
+					})
+				})
+			);
+		});
+
 		test('handles missing emails correctly', async () => {
 			const appealWithMissingEmails = {
 				...householdAppeal,
@@ -1380,6 +1497,45 @@ describe('decision routes', () => {
 					decision_date: formatDate(decisionDate, false),
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
 					feedback_link: FEEDBACK_FORM_LINKS.HAS
+				}
+			});
+		});
+
+		test('handles child appeals correctly', async () => {
+			const appealWithMissingEmails = {
+				...householdAppeal,
+				agent: null,
+				appellant: null,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						valid: true
+					}
+				]
+			};
+
+			const childAppeals = [{ childId: 111 }, { childId: 222 }];
+
+			databaseConnector.appeal.findUnique.mockResolvedValue(appealWithMissingEmails);
+			databaseConnector.representation.count.mockResolvedValue(0);
+			databaseConnector.representation.findMany.mockResolvedValue([]);
+			databaseConnector.appealRelationship.findMany.mockResolvedValue(childAppeals);
+
+			const correctionNotice = 'Test correction notice';
+			const decisionDate = new Date('2023-11-10');
+
+			await sendNewDecisionLetter(
+				appealWithMissingEmails,
+				correctionNotice,
+				azureAdUserId,
+				mockNotifyClient,
+				decisionDate
+			);
+
+			expect(databaseConnector.representation.count).toHaveBeenCalledWith({
+				where: {
+					appealId: { in: [appealWithMissingEmails.id, ...childAppeals.map((a) => a.childId)] },
+					representationType: { in: ['comment'] }
 				}
 			});
 		});

@@ -231,7 +231,7 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 													items: [
 														{
 															text: 'Change',
-															href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-check`,
+															href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/redact/allocation-check`,
 															visuallyHiddenText: 'allocation level and specialisms'
 														}
 													]
@@ -247,7 +247,7 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 													items: [
 														{
 															text: 'Change',
-															href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-level`,
+															href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/redact/allocation-level`,
 															visuallyHiddenText: 'allocation level'
 														}
 													]
@@ -267,7 +267,7 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 													items: [
 														{
 															text: 'Change',
-															href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-specialisms`,
+															href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/redact/allocation-specialisms`,
 															visuallyHiddenText: 'allocation specialisms'
 														}
 													]

@@ -14,10 +14,14 @@ describe('is-appeal-invalid', () => {
 	(beforeEach(installMockApi), afterEach(teardown));
 
 	describe('GET /change', () => {
-		it('should render the lpaConsiderAppealInvalid change page', async () => {
+		it('should render the lpaConsiderAppealInvalid change page with yes and no reason', async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
-				.reply(200, lpaQuestionnaireData);
+				.reply(200, {
+					...lpaQuestionnaireData,
+					lpaConsiderAppealInvalid: 'yes',
+					lpaAppealInvalidReasons: 'reason'
+				});
 			const response = await request.get(`${lpaQuestionnaireUrl}/is-appeal-invalid/change`);
 
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
@@ -25,13 +29,73 @@ describe('is-appeal-invalid', () => {
 
 			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain('Do you think the appeal is invalid?</h1>');
+			expect(elementInnerHtml).toContain('Why did the LPA think the appeal is invalid?');
+			expect(elementInnerHtml).not.toContain('govuk-radios__conditional--hidden');
+		});
+
+		it('should render the lpaConsiderAppealInvalid change page with yes and reason', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
+				.reply(200, {
+					...lpaQuestionnaireData,
+					lpaConsiderAppealInvalid: 'yes',
+					lpaAppealInvalidReasons: 'reason'
+				});
+			const response = await request.get(`${lpaQuestionnaireUrl}/is-appeal-invalid/change`);
+
+			const elementInnerHtml = parseHtml(response.text).innerHTML;
+			expect(response.statusCode).toEqual(200);
+
+			expect(elementInnerHtml).toMatchSnapshot();
+			expect(elementInnerHtml).toContain('Do you think the appeal is invalid?</h1>');
+			expect(elementInnerHtml).toContain('Why did the LPA think the appeal is invalid?');
+			expect(elementInnerHtml).not.toContain('govuk-radios__conditional--hidden');
+		});
+
+		it('should render the lpaConsiderAppealInvalid change page with no', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
+				.reply(200, {
+					...lpaQuestionnaireData,
+					lpaConsiderAppealInvalid: 'no',
+					lpaAppealInvalidReasons: null
+				});
+			const response = await request.get(`${lpaQuestionnaireUrl}/is-appeal-invalid/change`);
+
+			const elementInnerHtml = parseHtml(response.text).innerHTML;
+			expect(response.statusCode).toEqual(200);
+
+			expect(elementInnerHtml).toMatchSnapshot();
+			expect(elementInnerHtml).toContain('Do you think the appeal is invalid?</h1>');
+			expect(elementInnerHtml).toContain('govuk-radios__conditional--hidden');
 		});
 	});
 
 	describe('POST /change', () => {
-		it('should re-direct to LPA questionnaire if "yes"', async () => {
+		it('should re-direct to LPA questionnaire if "yes" and no reason is provided', async () => {
 			const validData = {
-				lpaConsiderAppealInvalid: 'yes'
+				lpaConsiderAppealInvalid: 'yes',
+				lpaAppealInvalidReasons: null
+			};
+
+			nock('http://test/')
+				.patch(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
+				.reply(200, {});
+
+			const response = await request
+				.post(`${lpaQuestionnaireUrl}/is-appeal-invalid/change`)
+				.send(validData);
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				`Found. Redirecting to /appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`
+			);
+		});
+
+		it('should re-direct to LPA questionnaire if "yes" and reason is provided', async () => {
+			const validData = {
+				lpaConsiderAppealInvalid: 'yes',
+				lpaAppealInvalidReasons: 'The appeal is invalid because it does not meet the requirements.'
 			};
 
 			nock('http://test/')

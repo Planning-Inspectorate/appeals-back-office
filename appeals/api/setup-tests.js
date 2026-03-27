@@ -67,6 +67,7 @@ const mockDocumentMetdataUpsert = jest.fn().mockResolvedValue({});
 const mockDocumentMetdataUpdate = jest.fn().mockResolvedValue({});
 const mockDocumentMetdataUpdateMany = jest.fn().mockResolvedValue({});
 const mockDocumentAvScanFindFirst = jest.fn().mockResolvedValue({});
+const mockDocumentAvScanFindMany = jest.fn().mockResolvedValue([]);
 const mockDocumentAvScanUpsert = jest.fn().mockResolvedValue({});
 const mockDocumentVersionAvScanDeleteMany = jest.fn().mockResolvedValue({});
 const mockAddressCreate = jest.fn().mockResolvedValue({});
@@ -94,6 +95,19 @@ const mockAppellantCaseEnforcementMissingDocumentsSelectedDeleteMany = jest
 	.fn()
 	.mockResolvedValue({});
 const mockAppellantCaseEnforcementMissingDocumentsSelectedCreateMany = jest
+	.fn()
+	.mockResolvedValue({});
+const mockAppellantCaseEnforcementGroundsMismatchFactsFindMany = jest.fn().mockResolvedValue([]);
+const mockAppellantCaseEnforcementGroundsMismatchFactsTextDeleteMany = jest
+	.fn()
+	.mockResolvedValue({});
+const mockAppellantCaseEnforcementGroundsMismatchFactsTextCreateMany = jest
+	.fn()
+	.mockResolvedValue({});
+const mockAppellantCaseEnforcementGroundsMismatchFactsSelectedDeleteMany = jest
+	.fn()
+	.mockResolvedValue({});
+const mockAppellantCaseEnforcementGroundsMismatchFactsSelectedCreateMany = jest
 	.fn()
 	.mockResolvedValue({});
 const mockAppellantCaseValidationOutcomeFindMany = jest.fn().mockResolvedValue({});
@@ -382,6 +396,7 @@ class MockPrismaClient {
 		return {
 			upsert: mockDocumentAvScanUpsert,
 			findUnique: mockDocumentAvScanFindFirst,
+			findMany: mockDocumentAvScanFindMany,
 			deleteMany: mockDocumentVersionAvScanDeleteMany
 		};
 	}
@@ -433,6 +448,26 @@ class MockPrismaClient {
 		return {
 			deleteMany: mockAppellantCaseEnforcementMissingDocumentsSelectedDeleteMany,
 			createMany: mockAppellantCaseEnforcementMissingDocumentsSelectedCreateMany
+		};
+	}
+
+	get appellantCaseEnforcementGroundsMismatchFacts() {
+		return {
+			findMany: mockAppellantCaseEnforcementGroundsMismatchFactsFindMany
+		};
+	}
+
+	get appellantCaseEnforcementGroundsMismatchFactsText() {
+		return {
+			deleteMany: mockAppellantCaseEnforcementGroundsMismatchFactsTextDeleteMany,
+			createMany: mockAppellantCaseEnforcementGroundsMismatchFactsTextCreateMany
+		};
+	}
+
+	get appellantCaseEnforcementGroundsMismatchFactsSelected() {
+		return {
+			deleteMany: mockAppellantCaseEnforcementGroundsMismatchFactsSelectedDeleteMany,
+			createMany: mockAppellantCaseEnforcementGroundsMismatchFactsSelectedCreateMany
 		};
 	}
 

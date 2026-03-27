@@ -1,6 +1,9 @@
 // @ts-nocheck
 import { mapStatusDependentNotifications } from '#lib/mappers/utils/map-status-dependent-notifications.js';
 import { appealDataToGetRequiredActions } from '#testing/appeals/appeals.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { VALIDATION_OUTCOME_INCOMPLETE } from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 describe('mapStatusDependentNotifications', () => {
 	const mockAppealData = {
@@ -135,6 +138,13 @@ describe('mapStatusDependentNotifications', () => {
 			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
+			bannerKey: 'updateAppellantStatement',
+			requiredAction: 'updateAppellantStatement',
+			expectedContainedHtml:
+				'<p class="govuk-notification-banner__heading">Appellant statement incomplete</p>',
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
 			bannerKey: 'addResidencesNetChange',
 			requiredAction: 'addResidencesNetChangeS78',
 			expectedContainedHtml: `<a class="govuk-link" data-cy="add-residences-net-change" href="/appeals-service/appeal-details/${mockAppealData.appealId}/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}">Add number of residential units</a>`,
@@ -208,12 +218,101 @@ describe('mapStatusDependentNotifications', () => {
 		}
 	];
 
+	const enforcementNoticeMockData = {
+		appealId: 1,
+		lpaQuestionnaireId: 1,
+		appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
+		appealStatus: APPEAL_CASE_STATUS.VALIDATION,
+		documentationSummary: {
+			appellantCase: { status: VALIDATION_OUTCOME_INCOMPLETE, dueDate: '2099-01-01' }
+		},
+		enforcementNotice: { appealOutcome: { enforcementNoticeInvalid: 'yes' } }
+	};
+
+	const enforcementNoticeAppealIncompleteTestCases = [
+		{
+			bannerKey: 'enforcementNoticeAppealIncomplete',
+			requiredAction: 'enforcementNoticeAppealIncomplete',
+			mockData: enforcementNoticeMockData,
+			expectedFirstBannerComponent: [
+				{
+					key: { text: 'Due date' },
+					value: { text: '1 Jan 2099' }
+				},
+				{
+					key: { text: 'Incomplete reasons' },
+					value: { text: 'Enforcement notice invalid' }
+				}
+			],
+			expectedContainedHtmlLink:
+				'<a class="govuk-notification-banner__link" data-cy="" href="/appeals-service/appeal-details/1/appellant-case?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Update appeal</a></p>'
+		},
+		{
+			bannerKey: 'enforcementNoticeAppealIncomplete',
+			requiredAction: 'enforcementNoticeAppealIncomplete',
+			mockData: {
+				...enforcementNoticeMockData,
+				documentationSummary: {
+					appellantCase: { status: VALIDATION_OUTCOME_INCOMPLETE }
+				},
+				enforcementNotice: {
+					appealOutcome: { enforcementNoticeInvalid: 'no', groundAFeeReceiptDueDate: '2099-01-01' }
+				}
+			},
+			expectedFirstBannerComponent: [
+				{
+					key: { text: 'Due date' },
+					value: { text: '1 Jan 2099' }
+				},
+				{
+					key: { text: 'Incomplete reasons' },
+					value: { text: 'Ground (a) fee receipt due' }
+				}
+			],
+			expectedContainedHtmlLink:
+				'<a class="govuk-notification-banner__link" data-cy="" href="/appeals-service/appeal-details/1/appellant-case?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Update appeal</a></p>'
+		},
+		{
+			bannerKey: 'enforcementNoticeAppealIncomplete',
+			requiredAction: 'enforcementNoticeAppealIncomplete',
+			mockData: {
+				...enforcementNoticeMockData,
+				enforcementNotice: {
+					appealOutcome: { enforcementNoticeInvalid: 'no', groundAFeeReceiptDueDate: '2099-05-01' }
+				}
+			},
+			expectedFirstBannerComponent: [
+				{
+					key: { text: 'Due date' },
+					value: { text: '1 Jan 2099' }
+				},
+				{
+					key: { text: 'Incomplete reasons' },
+					value: { text: 'Missing information' }
+				}
+			],
+			expectedSecondBannerComponent: [
+				{
+					key: { text: 'Due date' },
+					value: { text: '1 May 2099' }
+				},
+				{
+					key: { text: 'Incomplete reasons' },
+					value: { text: 'Ground (a) fee receipt due' }
+				}
+			],
+			expectedContainedHtmlLink:
+				'<a class="govuk-notification-banner__link" data-cy="" href="/appeals-service/appeal-details/1/appellant-case?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Update appeal</a></p>'
+		}
+	];
+
 	for (const testCase of testCases) {
 		it(`should return "${testCase.bannerKey}" banner when getRequiredActionsForAppeal returns "${testCase.requiredAction}"`, async () => {
 			const result = mapStatusDependentNotifications(
 				appealDataToGetRequiredActions[testCase.requiredAction],
 				{
-					originalUrl: `/appeals-service/appeal-details/${mockAppealData.appealId}`
+					originalUrl: `/appeals-service/appeal-details/${mockAppealData.appealId}`,
+					session: {}
 				}
 			);
 
@@ -255,6 +354,27 @@ describe('mapStatusDependentNotifications', () => {
 
 			expect(Array.isArray(result)).toBe(true);
 			expect(result.length).toBe(0);
+		});
+	}
+
+	for (const testCase of enforcementNoticeAppealIncompleteTestCases) {
+		it(`should return "${testCase.bannerKey}" with correct summary list items`, async () => {
+			const result = mapStatusDependentNotifications(testCase.mockData, {
+				originalUrl: `/appeals-service/appeal-details/${testCase.mockData.appealId}`
+			});
+
+			expect(Array.isArray(result)).toBe(true);
+			expect(result[0]?.type).toBe('notification-banner');
+			expect(result[0]?.parameters.type).toBe('important');
+			testCase.expectedFirstBannerComponent.forEach((row, index) => {
+				expect(result[0]?.parameters.pageComponents[index]?.parameters.rows[0]).toEqual(row);
+			});
+			testCase.expectedSecondBannerComponent?.forEach((row, index) => {
+				expect(result[1]?.parameters.pageComponents[index]?.parameters.rows[0]).toEqual(row);
+			});
+			expect(result[0]?.parameters.pageComponents[2]?.parameters?.html).toContain(
+				testCase.expectedContainedHtmlLink
+			);
 		});
 	}
 });

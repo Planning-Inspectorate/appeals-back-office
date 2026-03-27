@@ -6,6 +6,7 @@ import { installAuthMock } from '#testing/app/mocks/auth.js';
 import { APPEAL_START_RANGE } from '@pins/appeals/constants/common.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
+import accessibilityStatementRouter from '../appeals/accessibility-statement/accessibility-statement.router.js';
 import appealsRouter from '../appeals/appeals.router.js';
 import { addApiClientToRequest } from '../lib/middleware/add-apiclient-to-request.js';
 import {
@@ -40,6 +41,8 @@ router.route('/').head(handleHeadHealthCheck); // used by Front Door health chec
 router.route('/unauthenticated').get(viewUnauthenticatedError);
 router.route('/health').get(handleHeathCheck);
 
+router.use('/accessibility-statement', accessibilityStatementRouter);
+
 // Authenticated routes
 
 if (!config.authDisabled) {
@@ -69,6 +72,10 @@ router.route('/auth/signout').get(handleSignout);
 
 router
 	.route('/documents/:caseId/bulk-download{/:filename}')
+	.get(addApiClientToRequest, validateAppeal, asyncHandler(getBulkDocumentDownload));
+
+router
+	.route('/documents/:caseId/bulk-download/:representationType{/:filename}')
 	.get(addApiClientToRequest, validateAppeal, asyncHandler(getBulkDocumentDownload));
 
 router

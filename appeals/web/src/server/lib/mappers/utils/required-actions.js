@@ -2,7 +2,11 @@ import { isNetResidencesAppealType } from '#common/net-residences-appeal-types.j
 import config from '#environment/config.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
-import { isAwaitingLinkedAppeal, isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import {
+	canStartAppeal,
+	isAwaitingLinkedAppeal,
+	isChildAppeal
+} from '#lib/mappers/utils/is-linked-appeal.js';
 import {
 	APPEAL_PROOF_OF_EVIDENCE_STATUS,
 	APPEAL_REPRESENTATION_STATUS,
@@ -13,9 +17,11 @@ import {
 	DOCUMENT_STATUS_RECEIVED,
 	VALIDATION_OUTCOME_INCOMPLETE
 } from '@pins/appeals/constants/support.js';
+import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import isAppellantStatementAppealType from '@pins/appeals/utils/is-appellant-statement-appeal-type.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
-/** @typedef {'addHorizonReference'|'awaitingEvent'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'|'reviewLpaProofOfEvidence'|'reviewAppellantProofOfEvidence'|'progressToProofOfEvidenceAndWitnesses'|'awaitingProofOfEvidenceAndWitnesses'|'progressToInquiry'|'setupInquiry'|'addInquiryAddress'|'awaitingLpaProofOfEvidenceAndWitnesses'|'awaitingAppellantProofOfEvidenceAndWitnesses'|'awaitingAppellantStatement'|'appellantStatementAwaitingReview'|'awaitingRule6PartyStatement'|'reviewRule6PartyStatement'|'awaitingRule6PartyProofOfEvidence'|'reviewRule6PartyProofOfEvidence'|'enforcementNoticeAppealIncomplete'} AppealRequiredAction */
+/** @typedef {'addHorizonReference'|'awaitingEvent'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'|'reviewLpaProofOfEvidence'|'reviewAppellantProofOfEvidence'|'progressToProofOfEvidenceAndWitnesses'|'awaitingProofOfEvidenceAndWitnesses'|'progressToInquiry'|'setupInquiry'|'addInquiryAddress'|'awaitingLpaProofOfEvidenceAndWitnesses'|'awaitingAppellantProofOfEvidenceAndWitnesses'|'awaitingAppellantStatement'|'appellantStatementAwaitingReview'|'awaitingRule6PartyStatement'|'reviewRule6PartyStatement'|'awaitingRule6PartyProofOfEvidence'|'reviewRule6PartyProofOfEvidence'|'addSiteVisitDateTime'|'addSiteVisitTime'|'enforcementNoticeAppealIncomplete'|'enforcementListedAppealIncomplete'|'updateAppellantStatement'} AppealRequiredAction */
 
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal */
@@ -31,7 +37,7 @@ export function canDisplayAction(appeal) {
 	}
 	switch (appeal.appealStatus) {
 		case APPEAL_CASE_STATUS.VALIDATION:
-			return true;
+			return appeal.appealType !== APPEAL_TYPE.ENFORCEMENT_NOTICE;
 		case APPEAL_CASE_STATUS.AWAITING_TRANSFER:
 			return true;
 		case APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE:
@@ -58,6 +64,9 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			actions.push('assignCaseOfficer');
 			break;
 		case APPEAL_CASE_STATUS.READY_TO_START:
+			if (!canStartAppeal(appealDetails)) {
+				break;
+			}
 			if (isAwaitingLinkedAppeal(appealDetails)) {
 				actions.push('awaitingLinkedAppeal');
 				break;
@@ -163,11 +172,17 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				actions.push('appellantCaseOverdue');
 			} else if (appellantCaseIncomplete) {
 				if (
-					appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
+					isAnyEnforcementAppealType(appealDetails.appealType) &&
 					// @ts-ignore
-					appealDetails.enforcementNoticeInvalid === 'yes'
+					(appealDetails.enforcementNoticeInvalid === 'yes' ||
+						// @ts-ignore
+						appealDetails.enforcementNotice?.appealOutcome?.enforcementNoticeInvalid)
 				) {
-					actions.push('enforcementNoticeAppealIncomplete');
+					const banner =
+						appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
+							? 'enforcementListedAppealIncomplete'
+							: 'enforcementNoticeAppealIncomplete';
+					actions.push(banner);
 				} else {
 					actions.push('awaitingAppellantUpdate');
 				}
@@ -245,8 +260,13 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			const appellantStatementAwaitingReview =
 				appellantStatementRepresentationStatus &&
 				appellantStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW;
+			const appellantStatementIncomplete =
+				appellantStatementRepresentationStatus &&
+				appellantStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.INCOMPLETE;
 
-			const appellantStatementEnabled = config.featureFlags.featureFlagAppellantStatement;
+			const appellantStatementEnabled =
+				config.featureFlags.featureFlagAppellantStatement &&
+				isAppellantStatementAppealType(appealDetails.appealType);
 			const rule6StatementEnabled = config.featureFlags.featureFlagRule6Statement;
 
 			const rule6PartyStatements = appealDetails.documentationSummary.rule6PartyStatements || {};
@@ -323,6 +343,8 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 						actions.push('awaitingAppellantStatement');
 					} else if (appellantStatementAwaitingReview) {
 						actions.push('appellantStatementAwaitingReview');
+					} else if (appellantStatementIncomplete) {
+						actions.push('updateAppellantStatement');
 					}
 				}
 
@@ -416,6 +438,10 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			const appellantProofOfEvidenceReceived =
 				appealDetails.documentationSummary?.appellantProofOfEvidence?.status ===
 				APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED;
+			const lpaProofOfEvidenceAwaitingReview =
+				lpaProofOfEvidenceReceived && !lpaProofOfEvidenceDone;
+			const appellantProofOfEvidenceAwaitingReview =
+				appellantProofOfEvidenceReceived && !appellantProofOfEvidenceDone;
 
 			const rule6PoEEnabled = config.featureFlags.featureFlagRule6PoE;
 
@@ -437,8 +463,15 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				actions.push('reviewLpaProofOfEvidence');
 			}
 
+			const hasPendingProofReviews =
+				lpaProofOfEvidenceAwaitingReview ||
+				appellantProofOfEvidenceAwaitingReview ||
+				(rule6PoEEnabled && rule6ProofOfEvidenceAwaitingReview);
+
 			if (proofOfEvidenceDueDatePassed) {
-				actions.push('progressToInquiry');
+				if (!hasPendingProofReviews) {
+					actions.push('progressToInquiry');
+				}
 			} else if (!lpaProofOfEvidenceReceived && !appellantProofOfEvidenceReceived) {
 				actions.push('awaitingProofOfEvidenceAndWitnesses');
 			} else if (!lpaProofOfEvidenceReceived) {
@@ -476,5 +509,12 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 		actions.push('addResidencesNetChange');
 	}
 
+	// @ts-ignore
+	const siteVisit = appealDetails?.siteVisit;
+	if (siteVisit && !siteVisit.visitDate && !siteVisit.visitStartTime) {
+		actions.push('addSiteVisitDateTime');
+	} else if (siteVisit && siteVisit.visitDate && !siteVisit.visitStartTime) {
+		actions.push('addSiteVisitTime');
+	}
 	return actions;
 }

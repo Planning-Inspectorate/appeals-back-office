@@ -56,7 +56,8 @@ describe('Interested Party Comments (Shared/Published View)', () => {
 				rootElement: '.govuk-body'
 			}).innerHTML;
 			expect(response.statusCode).toEqual(200);
-			const downloadLinkUrl = '/documents/2/bulk-download/documents';
+			const downloadLinkUrl =
+				'/documents/2/bulk-download/ip-comments/case-SHAREDTEST-ip-comments.zip';
 			expect(downloadLinkInnerHtml).toContain(`href="${downloadLinkUrl}`);
 
 			//check number of table rows
@@ -120,7 +121,8 @@ describe('Interested Party Comments (Shared/Published View)', () => {
 			const downloadLinkInnerHtml = parseHtml(response.text, {
 				rootElement: '.govuk-body'
 			}).innerHTML;
-			const downloadLinkUrl = `/documents/2/bulk-download/documents`;
+			const downloadLinkUrl =
+				'/documents/2/bulk-download/ip-comments/case-SHAREDTEST-ip-comments.zip';
 			expect(downloadLinkInnerHtml).toContain(`href="${downloadLinkUrl}`);
 
 			//check number of table rows
@@ -170,7 +172,8 @@ describe.each([
 			const downloadLinkInnerHtml = parseHtml(response.text, {
 				rootElement: '.govuk-body'
 			}).innerHTML;
-			const downloadLinkUrl = '/documents/2/bulk-download/documents';
+			const downloadLinkUrl =
+				'/documents/2/bulk-download/ip-comments/case-SHAREDTEST-ip-comments.zip';
 			expect(downloadLinkInnerHtml).toContain(`href="${downloadLinkUrl}`);
 
 			expect(response.text).not.toContain('Add interested party comment');

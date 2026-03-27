@@ -884,6 +884,7 @@ describe('LPA Questionnaire review', () => {
 						.reply(200, {
 							...lpaQuestionnaireData,
 							lpaQuestionnaireId: 1,
+							eiaEnvironmentalImpactSchedule: 'schedule-2',
 							[fieldName]: false
 						});
 
@@ -909,6 +910,7 @@ describe('LPA Questionnaire review', () => {
 						.reply(200, {
 							...lpaQuestionnaireData,
 							lpaQuestionnaireId: 1,
+							eiaEnvironmentalImpactSchedule: 'schedule-2',
 							[fieldName]: true
 						});
 
@@ -935,6 +937,7 @@ describe('LPA Questionnaire review', () => {
 						.reply(200, {
 							...lpaQuestionnaireData,
 							lpaQuestionnaireId: 1,
+							eiaEnvironmentalImpactSchedule: 'schedule-2',
 							[fieldName]: undefined
 						});
 
@@ -961,6 +964,7 @@ describe('LPA Questionnaire review', () => {
 						.reply(200, {
 							...lpaQuestionnaireData,
 							lpaQuestionnaireId: 1,
+							eiaEnvironmentalImpactSchedule: 'schedule-2',
 							[fieldName]: null
 						});
 
@@ -988,6 +992,7 @@ describe('LPA Questionnaire review', () => {
 				.reply(200, {
 					...lpaQuestionnaireData,
 					lpaQuestionnaireId: 1,
+					eiaEnvironmentalImpactSchedule: 'schedule-2',
 					eiaDevelopmentDescription: 'other-projects'
 				});
 
@@ -1009,6 +1014,7 @@ describe('LPA Questionnaire review', () => {
 				.reply(200, {
 					...lpaQuestionnaireDataNotValidated,
 					lpaQuestionnaireId: 1,
+					eiaEnvironmentalImpactSchedule: 'schedule-2',
 					eiaDevelopmentDescription: undefined
 				});
 
@@ -1041,7 +1047,9 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain('Green belt</dt>');
 
 			expect(element.innerHTML).toContain('2. Notifying relevant parties</h2>');
-			expect(element.innerHTML).toContain('Who did you notify about this application?</dt>');
+			expect(element.innerHTML).toContain(
+				'List of neighbours&#39; addresses that you notified about the application</dt>'
+			);
 			expect(element.innerHTML).toContain(
 				'How did you notify relevant parties about this application?</dt>'
 			);
@@ -1140,7 +1148,9 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain('Green belt</dt>');
 
 			expect(element.innerHTML).toContain('2. Notifying relevant parties</h2>');
-			expect(element.innerHTML).toContain('Who did you notify about this application?</dt>');
+			expect(element.innerHTML).toContain(
+				'List of neighbours&#39; addresses that you notified about the application</dt>'
+			);
 			expect(element.innerHTML).toContain(
 				'How did you notify relevant parties about this application?</dt>'
 			);
@@ -1219,7 +1229,9 @@ describe('LPA Questionnaire review', () => {
 			);
 
 			expect(element.innerHTML).toContain('2. Notifying relevant parties</h2>');
-			expect(element.innerHTML).toContain('Who did you notify about this application?</dt>');
+			expect(element.innerHTML).toContain(
+				'List of neighbours&#39; addresses that you notified about the application</dt>'
+			);
 			expect(element.innerHTML).toContain(
 				'How did you notify relevant parties about this application?</dt>'
 			);
@@ -1302,6 +1314,10 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain(
 				'Is lawful development certificate appeal the correct type of appeal?</dt>'
 			);
+			expect(element.innerHTML).toContain('Planning permission</dt>');
+			expect(element.innerHTML).toContain('Enforcement notice</dt>');
+			expect(element.innerHTML).toContain('Related applications</dt>');
+			expect(element.innerHTML).toContain('Do you think the appeal is invalid?</dt>');
 
 			expect(element.innerHTML).toContain(
 				'2. Planning officer’s report and supplementary documents</h2>'
@@ -1318,6 +1334,7 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain(
 				'When do you expect to formally adopt the community infrastructure levy?</dt>'
 			);
+			expect(element.innerHTML).toContain('Other relevant matters</dt>');
 
 			expect(element.innerHTML).toContain('3. Site access</h2>');
 			expect(element.innerHTML).toContain(
@@ -1331,7 +1348,6 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain(
 				'What type of lawful development certificate is the appeal about?'
 			);
-			expect(element.innerHTML).toContain('Do you think the appeal is invalid?');
 
 			expect(element.innerHTML).toContain('4. Appeal process</h2>');
 			expect(element.innerHTML).toContain(
@@ -1390,7 +1406,9 @@ describe('LPA Questionnaire review', () => {
 			);
 
 			expect(element.innerHTML).toContain('2. Notifying relevant parties</h2>');
-			expect(element.innerHTML).toContain('Who did you notify about this application?</dt>');
+			expect(element.innerHTML).toContain(
+				'List of neighbours&#39; addresses that you notified about the application</dt>'
+			);
 			expect(element.innerHTML).toContain(
 				'How did you notify relevant parties about this application?</dt>'
 			);
@@ -1796,6 +1814,92 @@ describe('LPA Questionnaire review', () => {
 				}).innerHTML;
 
 				expect(unprettifiedHtml).toContain('<li>Other: test custom designation</li>');
+			});
+		});
+	});
+
+	describe('EIA Conditional Questions (Schedule 2 vs Other)', () => {
+		const targetAppealTypes = [
+			['S78', APPEAL_TYPE.S78],
+			['S20', APPEAL_TYPE.PLANNED_LISTED_BUILDING],
+			['enforcement', APPEAL_TYPE.ENFORCEMENT_NOTICE],
+			['enforcement listed building', APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING]
+		];
+
+		describe.each(targetAppealTypes)('For appeal type: %s', (appealTypeName, appealTypeEnum) => {
+			it('should NOT render development description, sensitive area, or column 2 threshold if schedule is "other" or empty', async () => {
+				nock('http://test/')
+					.get('/appeals/10?include=all')
+					.reply(200, {
+						...lpaqAppealData,
+						appealId: 10,
+						appealType: appealTypeEnum
+					})
+					.persist();
+
+				nock('http://test/')
+					.get('/appeals/10/lpa-questionnaires/20')
+					.reply(200, {
+						...lpaQuestionnaireDataNotValidated,
+						lpaQuestionnaireId: 20,
+						eiaEnvironmentalImpactSchedule: 'other'
+					});
+
+				const response = await request.get(
+					'/appeals-service/appeal-details/10/lpa-questionnaire/20'
+				);
+
+				const unprettifiedHtml = parseHtml(response.text, {
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedHtml).not.toContain(
+					'Does the development meet or exceed the threshold or criteria in column 2?</dt>'
+				);
+				expect(unprettifiedHtml).not.toContain('Description of development</dt>');
+				expect(unprettifiedHtml).not.toContain(
+					'Is the development in, partly in, or likely to affect a sensitive area?</dt>'
+				);
+
+				expect(unprettifiedHtml).toContain('What is the development category?</dt>');
+			});
+
+			it('SHOULD render development description, sensitive area, and column 2 threshold if schedule is "schedule-2"', async () => {
+				nock('http://test/')
+					.get('/appeals/11?include=all')
+					.reply(200, {
+						...lpaqAppealData,
+						appealId: 11,
+						appealType: appealTypeEnum
+					})
+					.persist();
+
+				nock('http://test/')
+					.get('/appeals/11/lpa-questionnaires/21')
+					.reply(200, {
+						...lpaQuestionnaireDataNotValidated,
+						lpaQuestionnaireId: 21,
+						eiaEnvironmentalImpactSchedule: 'schedule-2',
+						eiaColumnTwoThreshold: true,
+						eiaDevelopmentDescription: 'test description',
+						eiaSensitiveAreaDetails: 'test area'
+					});
+
+				const response = await request.get(
+					'/appeals-service/appeal-details/11/lpa-questionnaire/21'
+				);
+
+				const unprettifiedHtml = parseHtml(response.text, {
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedHtml).toContain(
+					'Does the development meet or exceed the threshold or criteria in column 2?</dt>'
+				);
+				expect(unprettifiedHtml).toContain('Description of development</dt>');
+				expect(unprettifiedHtml).toContain(
+					'Is the development in, partly in, or likely to affect a sensitive area?</dt>'
+				);
 			});
 		});
 	});

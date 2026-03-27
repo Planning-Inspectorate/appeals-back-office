@@ -35,7 +35,7 @@ exports[`set up hearing GET /hearing/setup/address should match the snapshot 1`]
                     <span                     class="govuk-phase-banner__text">This is a new service. Help us improve it and <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQzNVQjdaV0U0TDdTOE1LNktBT0w5NEQ1Vy4u"
                         class="govuk-link" target="_blank" rel="noopener noreferrer">give your feedback (opens in a new tab)</a>.</span>
                 </p>
-            </div><a href="/appeals-service/appeal-details/2/hearing/setup/date" class="govuk-back-link">Back</a>
+            </div><a href="/appeals-service/appeal-details/2/hearing/setup/estimation" class="govuk-back-link">Back</a>
             <main             class="govuk-main-wrapper" id="main-content">
                 <div class="govuk-grid-row">
                     <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - set up hearing</span>
@@ -48,7 +48,7 @@ exports[`set up hearing GET /hearing/setup/address should match the snapshot 1`]
                                 <form method="POST" novalidate="novalidate">
                                     <div class="govuk-form-group">
                                         <fieldset class="govuk-fieldset">
-                                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                                 <h1 class="govuk-fieldset__heading"> Do you know the address of where the hearing will take place?</h1>
                                             </legend>
                                             <div class="govuk-radios" data-module="govuk-radios">
@@ -74,10 +74,19 @@ exports[`set up hearing GET /hearing/setup/address should match the snapshot 1`]
                 </div>
                 </main>
         </div>
-        <footer class="govuk-footer" role="contentinfo">
-            <div class="govuk-width-container ">
-                <div class="govuk-footer__meta">
-                    <div class="govuk-footer__meta-item govuk-footer__meta-item"></div>
+        <footer class="pins-footer" role="contentinfo">
+            <div class="pins-footer-row">
+                <div class="pins-footer-container govuk-width-container">
+                    <div class="pins-footer__meta">
+                        <div>
+                            <ul class="pins-footer__inline-list">
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/hearing/setup/address">Accessibility</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div><span class="pins-footer__copyright">© Planning Inspectorate</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </footer>
@@ -169,10 +178,19 @@ exports[`set up hearing GET /hearing/setup/address-details should match the snap
                 </div>
                 </main>
         </div>
-        <footer class="govuk-footer" role="contentinfo">
-            <div class="govuk-width-container ">
-                <div class="govuk-footer__meta">
-                    <div class="govuk-footer__meta-item govuk-footer__meta-item"></div>
+        <footer class="pins-footer" role="contentinfo">
+            <div class="pins-footer-row">
+                <div class="pins-footer-container govuk-width-container">
+                    <div class="pins-footer__meta">
+                        <div>
+                            <ul class="pins-footer__inline-list">
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/hearing/setup/address-details">Accessibility</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div><span class="pins-footer__copyright">© Planning Inspectorate</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </footer>
@@ -266,10 +284,19 @@ exports[`set up hearing GET /hearing/setup/check-details should match the snapsh
                 </div>
             </main>
         </div>
-        <footer class="govuk-footer" role="contentinfo">
-            <div class="govuk-width-container ">
-                <div class="govuk-footer__meta">
-                    <div class="govuk-footer__meta-item govuk-footer__meta-item"></div>
+        <footer class="pins-footer" role="contentinfo">
+            <div class="pins-footer-row">
+                <div class="pins-footer-container govuk-width-container">
+                    <div class="pins-footer__meta">
+                        <div>
+                            <ul class="pins-footer__inline-list">
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/1/hearing/setup/check-details?backUrl=%2Fappeals-service%2Fappeal-details%2F2">Accessibility</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div><span class="pins-footer__copyright">© Planning Inspectorate</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </footer>
@@ -385,10 +412,19 @@ exports[`set up hearing GET /hearing/setup/date should match the snapshot 1`] = 
                 </div>
                 </main>
         </div>
-        <footer class="govuk-footer" role="contentinfo">
-            <div class="govuk-width-container ">
-                <div class="govuk-footer__meta">
-                    <div class="govuk-footer__meta-item govuk-footer__meta-item"></div>
+        <footer class="pins-footer" role="contentinfo">
+            <div class="pins-footer-row">
+                <div class="pins-footer-container govuk-width-container">
+                    <div class="pins-footer__meta">
+                        <div>
+                            <ul class="pins-footer__inline-list">
+                                <li class="pins-footer__inline-list-item"><a class="pins-footer__link" href="/accessibility-statement?returnUrl=/appeals-service/appeal-details/2/hearing/setup/date">Accessibility</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div><span class="pins-footer__copyright">© Planning Inspectorate</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </footer>

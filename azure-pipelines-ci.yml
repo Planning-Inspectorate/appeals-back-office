@@ -18,7 +18,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.24.2
+      ref: refs/tags/release/3.25.2
 
 extends:
   template: stages/wrapper_ci.yml@templates
@@ -183,7 +183,7 @@ extends:
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
-              script: npm --prefix ./appeals/api run db:seed
+              script: npm --prefix ./appeals/api run db:seed:test
               environmentVariables:
                 NODE_ENV: development
                 DATABASE_URL: "sqlserver://127.0.0.1:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true"
@@ -220,7 +220,14 @@ extends:
                 APP: appeals
                 AZURE_TENANT_ID: $(AZURE_TENANT_ID)
                 NODE_EXTRA_CA_CERTS: $(Build.SourcesDirectory)/certificate.pem
+                TZ: Europe/London 
               condition: eq(variables['runE2E'], 'true')
+          - task: PublishBuildArtifacts@1
+            condition: failed()
+            inputs:
+              pathToPublish: 'appeals/e2e/cypress/screenshots'
+              artifactName: 'FailedTests'
+              displayName: "Publish Failed Tests Artifacts"
           - script: docker logs api
             condition: eq(variables['runE2E'], 'true')
             displayName: View api logs

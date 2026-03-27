@@ -25,7 +25,7 @@ import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-fo
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { capitalize, upperCase } from 'lodash-es';
-import { decisionCheckAndConfirmPage } from './costs.mapper.js';
+import { decisionCheckAndConfirmPage, inviteResponsesPage } from './costs.mapper.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getDocumentUpload = async (request, response) => {
@@ -379,7 +379,8 @@ export const getManageFolder = async (request, response) => {
 		addButtonTextOverride: `Add document${costsCategory === 'decision' ? 's' : ''}`,
 		...(costsCategory === 'decision' && {
 			dateColumnLabelTextOverride: 'Decision date'
-		})
+		}),
+		isCosts: true
 	});
 };
 
@@ -415,7 +416,8 @@ export const getManageDocument = async (request, response) => {
 		}),
 		...(costsCategory === 'decision' && {
 			dateRowLabelTextOverride: 'Decision date'
-		})
+		}),
+		isCosts: true
 	});
 };
 
@@ -581,6 +583,42 @@ export const renderDecisionCheckAndConfirm = async (request, response) => {
 		pageContent: mappedPageContent,
 		errors
 	});
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getInviteResponses = async (request, response) => {
+	const { appealId, folderId, documentId, costsCategory, costsDocumentType } = request.params;
+	const backLinkUrl = `/appeals-service/appeal-details/${appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/${folderId}/${documentId}`;
+
+	const pageContent = inviteResponsesPage(backLinkUrl);
+
+	return response.render('patterns/change-page.pattern.njk', {
+		pageContent,
+		errors: request.errors
+	});
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postInviteResponses = async (request, response) => {
+	const { errors, body } = request;
+	const { appealId, folderId, documentId, costsCategory, costsDocumentType } = request.params;
+
+	if (errors) {
+		return getInviteResponses(request, response);
+	}
+
+	request.session.inviteResponses = body['invite-responses'];
+	return response.redirect(
+		`/appeals-service/appeal-details/${appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/${folderId}/${documentId}/check-your-answers`
+	);
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>} */

@@ -43,7 +43,8 @@ export const changeFloorSpaceCreatedByBreachInSquareMetresPage = (
 					id: 'floor-space-created-details',
 					name: 'floorSpaceCreatedByBreachInSquareMetres',
 					hint: 'Floor space created by the breach, in square metres',
-					details: currentDetailsValue
+					details: currentDetailsValue,
+					type: 'input'
 				}
 			})
 		]

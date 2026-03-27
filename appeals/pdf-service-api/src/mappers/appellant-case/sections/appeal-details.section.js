@@ -1,5 +1,5 @@
 import { appealTypeToAppealCaseTypeMapper } from '@pins/appeals/utils/appeal-type-case.mapper.js';
-import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
+import { isExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { formatSentenceCase } from '../../../lib/nunjucks-filters/index.js';
 
 export function appealDetailsSection(templateData) {

@@ -19,6 +19,9 @@ export const INVALID_APPEAL_OTHER_REASON = 'Other reason';
 export const ENFORCEMENT_APPEAL_INVALID_LEGAL_INTEREST =
 	'Appellant does not have a legal interest in the land';
 export const ENFORCEMENT_APPEAL_INVALID_GROUND_A_BARRED = 'Ground (a) barred';
+export const ENFORCEMENT_APPEAL_INVALID_GROUND_A_FEE_NOT_PAID = 'Did not pay the ground (a) fee';
+export const ENFORCEMENT_APPEAL_INVALID_LPA_WITHDREW_ENFORCEMENT_NOTICE =
+	'LPA has withdrawn the enforcement notice';
 
 export const DECISION_TYPE_INSPECTOR = 'inspector-decision';
 export const DECISION_TYPE_APPELLANT_COSTS = 'appellant-costs-decision';
@@ -134,7 +137,11 @@ export const AUDIT_TRAIL_REMOVED_INSPECTOR =
 export const AUDIT_TRAIL_SITE_VISIT_ARRANGED = 'The site visit was arranged for {replacement0}';
 export const AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED = 'The site visit type was selected';
 export const AUDIT_TRAIL_APPEAL_LINK_ADDED = 'Linked appeal {replacement0} added';
-export const AUDIT_TRAIL_APPEAL_LINK_REMOVED = 'Linked appeal {replacement0} removed';
+export const AUDIT_TRAIL_APPEAL_LINK_UNLINKED = 'Linked appeal {replacement0} unlinked';
+export const AUDIT_TRAIL_APPEAL_LINK_UNLINKED_ALL =
+	'Linked appeal {replacement0} unlinked and there are no other linked appeals';
+export const AUDIT_TRAIL_APPEAL_LINK_UPDATED_AS_LEAD =
+	'Linked appeal {replacement0} updated to lead appeal';
 export const AUDIT_TRAIL_APPEAL_RELATION_ADDED = 'Related appeal {replacement0} added';
 export const AUDIT_TRAIL_APPEAL_RELATION_REMOVED = 'Related appeal {replacement0} removed';
 export const AUDIT_TRAIL_APPLICATION_REFERENCE_UPDATED = 'Planning application reference updated';
@@ -330,6 +337,11 @@ export const AUDIT_TRAIL_LPAQ_APPEAL_UNDER_ACT_SECTION_UPDATED =
 	"'What type of lawful development certificate is the appeal about?' updated to {replacement0}";
 export const AUDIT_TRAIL_LPAQ_LPA_CONSIDER_APPEAL_INVALID_UPDATED =
 	"'Do you consider the appeal invalid?' updated to {replacement0}";
+export const AUDIT_TRAIL_LPAQ_LPA_APPEAL_INVALID_REASONS_UPDATED =
+	"'Do you consider the appeal invalid?' reasons updated to {replacement0}";
+export const AUDIT_TRAIL_REP_MANUALLY_ADDED = '{replacement0} added in {replacement1}';
+export const AUDIT_TRAIL_REP_MANUALLY_ADDED_AND_SHARED =
+	'{replacement0} added in {replacement1} and shared';
 
 export const DATABASE_ORDER_BY_ASC = 'asc';
 export const DATABASE_ORDER_BY_DESC = 'desc';
@@ -478,6 +490,9 @@ export const USER_TYPE_PADS_INSPECTOR = 'padsInspector';
 export const CASE_RELATIONSHIP_LINKED = 'linked';
 export const CASE_RELATIONSHIP_RELATED = 'related';
 
+export const LINK_APPEALS_CHANGE_LEAD_OPERATION = 'change-lead';
+export const LINK_APPEALS_UNLINK_OPERATION = 'unlink';
+
 // Static config
 export const CONFIG_BANKHOLIDAYS_FEED_URL = 'https://www.gov.uk/bank-holidays.json';
 
@@ -524,6 +539,39 @@ const enforcementNoticeTimetable = {
 	}
 };
 
+const s78InquiryTimetable = {
+	lpaQuestionnaireDueDate: {
+		daysFromStartDate: 5
+	},
+	ipCommentsDueDate: {
+		daysFromStartDate: 25
+	},
+	lpaStatementDueDate: {
+		daysFromStartDate: 25
+	},
+	proofOfEvidenceAndWitnessesDueDate: {
+		daysBeforeInquiryDate: 20
+	}
+};
+
+const enforcementInquiryTimetable = {
+	lpaQuestionnaireDueDate: {
+		daysFromStartDate: 10
+	},
+	ipCommentsDueDate: {
+		daysFromStartDate: 30
+	},
+	lpaStatementDueDate: {
+		daysFromStartDate: 30
+	},
+	proofOfEvidenceAndWitnessesDueDate: {
+		daysBeforeInquiryDate: 20
+	},
+	finalCommentsDueDate: {
+		daysFromStartDate: 45
+	}
+};
+
 /** @type {Record<string, Record<string, any>>} */
 export const CONFIG_APPEAL_TIMETABLE = {
 	[APPEAL_CASE_TYPE.W]: {
@@ -535,29 +583,17 @@ export const CONFIG_APPEAL_TIMETABLE = {
 				daysFromStartDate: 25
 			}
 		},
-		[APPEAL_CASE_PROCEDURE.INQUIRY]: {
-			...s78timetable,
-			statementOfCommonGroundDueDate: {
-				daysFromStartDate: 25
-			}
-		}
+		[APPEAL_CASE_PROCEDURE.INQUIRY]: { ...s78InquiryTimetable }
 	},
 	[APPEAL_CASE_TYPE.H]: {
 		[APPEAL_CASE_PROCEDURE.WRITTEN]: { ...advertTimetable },
 		[APPEAL_CASE_PROCEDURE.HEARING]: {
 			...advertTimetable,
-			//Needs updating when inquiries with adverts is supported
 			statementOfCommonGroundDueDate: {
 				daysFromStartDate: 25
 			}
 		},
-		[APPEAL_CASE_PROCEDURE.INQUIRY]: {
-			...advertTimetable,
-			//Needs updating when inquiries with adverts is supported
-			statementOfCommonGroundDueDate: {
-				daysFromStartDate: 25
-			}
-		}
+		[APPEAL_CASE_PROCEDURE.INQUIRY]: { ...enforcementInquiryTimetable }
 	},
 	[APPEAL_CASE_TYPE.D]: {
 		lpaQuestionnaireDueDate: {
@@ -573,10 +609,7 @@ export const CONFIG_APPEAL_TIMETABLE = {
 			}
 		},
 		[APPEAL_CASE_PROCEDURE.INQUIRY]: {
-			...enforcementNoticeTimetable,
-			statementOfCommonGroundDueDate: {
-				daysFromStartDate: 25
-			}
+			...enforcementInquiryTimetable
 		}
 	}
 };

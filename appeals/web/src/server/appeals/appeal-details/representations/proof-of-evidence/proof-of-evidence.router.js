@@ -89,6 +89,16 @@ router.use(
 );
 
 router.use(
+	'/:proofOfEvidenceType/:rule6PartyId/add-document',
+	validateAppeal,
+	validateRule6Party,
+	addPageContentToLocals,
+	withSingularRepresentation,
+	getRepresentationAttachmentsFolder,
+	addDocumentRouter
+);
+
+router.use(
 	'/:proofOfEvidenceType/:rule6PartyId/manage-documents',
 	validateAppeal,
 	validateRule6Party,

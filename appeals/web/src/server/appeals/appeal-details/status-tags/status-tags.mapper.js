@@ -60,7 +60,8 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 
 	if (
 		isAppealInvalid ||
-		(isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) &&
+		((isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) ||
+			appealDetails.appealStatus === APPEAL_CASE_STATUS.COMPLETE) &&
 			(appealDetails.decision?.outcome ||
 				appealDetails.costs.appellantDecisionFolder?.documents?.length ||
 				appealDetails.costs.lpaDecisionFolder?.documents?.length))

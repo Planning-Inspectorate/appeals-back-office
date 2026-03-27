@@ -1,31 +1,42 @@
 // @ts-nocheck
+import config from '#config/config.js';
 import {
 	simulateDocumentScan,
 	simulateIssueDecision,
+	simulateLinkAppeals,
 	simulateReviewAppellantFinalComments,
+	simulateReviewAppellantProofOfEvidence,
+	simulateReviewAppellantStatement,
 	simulateReviewIpComment,
 	simulateReviewLpaFinalComments,
+	simulateReviewLpaProofOfEvidence,
 	simulateReviewLPAQ,
 	simulateReviewLpaStatement,
+	simulateReviewRuleSixProofOfEvidence,
+	simulateReviewRuleSixStatement,
 	simulateSetUpHearing,
 	simulateSetUpSiteVisit,
 	simulateShareIpCommentsAndLpaStatement,
 	simulateStartAppeal
 } from '#endpoints/test-utils/test-utils.controller.js';
 import { fullPlanningAppeal, householdAppeal } from '#tests/appeals/mocks.js';
-import { documentCreated } from '#tests/documents/mocks.js';
+import { documentCreated, documentVersionCreated, savedFolder } from '#tests/documents/mocks.js';
+import { horizonGetCaseSuccessResponse } from '#tests/horizon/mocks.js';
 import { azureAdUserId, lpaQuestionnaireValidationOutcomes } from '#tests/shared/mocks.js';
+import { parseHorizonGetCaseResponse } from '#utils/mapping/map-horizon.js';
 import { jest } from '@jest/globals';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import bodyParser from 'body-parser';
 import express from 'express';
 import supertest from 'supertest';
 import { request } from '../../../app-test.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
-
+const { default: got } = await import('got');
 const baseDate = '2025-10-23T00:00:00.000Z';
 jest.useFakeTimers({ doNotFake: ['performance'] }).setSystemTime(new Date(baseDate));
 
 const app = express();
+app.use(bodyParser.json({ limit: config.requestSizeLimit }));
 app.post('/:appealReference/start-appeal', simulateStartAppeal);
 app.post('/:appealReference/review-ip-comment', simulateReviewIpComment);
 app.post('/:appealReference/review-lpaq', simulateReviewLPAQ);
@@ -37,6 +48,15 @@ app.post('/:appealReference/issue-decision', simulateIssueDecision);
 app.post('/:appealReference/set-up-site-visit', simulateSetUpSiteVisit);
 app.post('/:appealReference/set-up-hearing', simulateSetUpHearing);
 app.post('/:appealReference/document-scan-complete', simulateDocumentScan);
+app.post('/:appealReference/link-appeals', simulateLinkAppeals);
+app.post('/:appealReference/review-appellant-statement', simulateReviewAppellantStatement);
+app.post('/:appealReference/review-rule-6-statement', simulateReviewRuleSixStatement);
+app.post('/:appealReference/review-rule-6-proof-of-evidence', simulateReviewRuleSixProofOfEvidence);
+app.post('/:appealReference/review-lpa-proof-of-evidence', simulateReviewLpaProofOfEvidence);
+app.post(
+	'/:appealReference/review-appellant-proof-of-evidence',
+	simulateReviewAppellantProofOfEvidence
+);
 const testApiRequest = supertest(app);
 
 describe('test utils routes', () => {
@@ -329,6 +349,24 @@ describe('test utils routes', () => {
 				lpaQuestionnaireDueDate: '2025-10-30T23:59:00.000Z',
 				lpaStatementDueDate: '2025-11-27T23:59:00.000Z',
 				s106ObligationDueDate: '2025-12-11T23:59:00.000Z'
+			});
+		});
+
+		test('returns 201 for valid appeal reference with procedureType', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+			const response = await testApiRequest
+				.post('/1/start-appeal')
+				.send({ procedureType: 'hearing' });
+
+			expect(response.status).toEqual(201);
+			expect(response.body).toEqual({
+				finalCommentsDueDate: '2025-12-11T23:59:00.000Z',
+				ipCommentsDueDate: '2025-11-27T23:59:00.000Z',
+				lpaQuestionnaireDueDate: '2025-10-30T23:59:00.000Z',
+				lpaStatementDueDate: '2025-11-27T23:59:00.000Z',
+				s106ObligationDueDate: '2025-12-11T23:59:00.000Z',
+				statementOfCommonGroundDueDate: '2025-11-27T23:59:00.000Z'
 			});
 		});
 
@@ -818,6 +856,375 @@ describe('test utils routes', () => {
 			databaseConnector.document.findMany.mockResolvedValue([]);
 
 			const response = await testApiRequest.post('/1/document-scan-complete');
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+	});
+
+	describe('POST /:appealReference/link-appeals', () => {
+		test('returns 201 for valid parent and child appeal references', async () => {
+			const mockSavedFolderWithValidDates = {
+				...savedFolder,
+				documents: [
+					{
+						...savedFolder.documents[0],
+						latestDocumentVersion: {
+							...savedFolder.documents[0].latestDocumentVersion,
+							dateReceived: new Date(),
+							fileName: 'mydoc.pdf'
+						}
+					}
+				]
+			};
+
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+			databaseConnector.folder.findMany.mockResolvedValue([mockSavedFolderWithValidDates]);
+			databaseConnector.document.create.mockReturnValue(documentCreated);
+			databaseConnector.documentVersion.create.mockResolvedValue(documentVersionCreated);
+
+			got.post.mockReturnValueOnce({
+				json: jest
+					.fn()
+					.mockResolvedValueOnce(parseHorizonGetCaseResponse(horizonGetCaseSuccessResponse))
+			});
+
+			const response = await testApiRequest
+				.post('/1/link-appeals')
+				.send({
+					childAppealReference: '2'
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+			expect(response.body).toEqual({});
+		});
+
+		test('returns 400 for invalid parent appeal references', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+			const response = await testApiRequest
+				.post('/1/link-appeals')
+				.send({
+					childAppealReference: '2'
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+
+		test('returns 400 for invalid parent child references', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValueOnce(householdAppeal);
+			databaseConnector.appeal.findUnique.mockResolvedValueOnce(null);
+
+			const response = await testApiRequest
+				.post('/1/link-appeals')
+				.send({
+					childAppealReference: '2'
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+	});
+
+	describe('POST /:appealReference/review-appellant-statement', () => {
+		test('returns 200 for valid appeal reference', async () => {
+			const mockRepresentation = {
+				id: 1,
+				lpa: true,
+				status: 'awaiting_review',
+				originalRepresentation: 'Original text of the representation',
+				redactedRepresentation: '',
+				dateCreated: new Date('2024-12-06T12:00:00Z'),
+				notes: 'Some notes',
+				representationType: 'appellant_statement',
+				siteVisitRequested: true,
+				source: 'appellant',
+				representationRejectionReasonsSelected: []
+			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+			databaseConnector.representation.findFirst.mockResolvedValue(mockRepresentation);
+			databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
+			databaseConnector.representation.update.mockResolvedValue({
+				...mockRepresentation,
+				status: 'valid'
+			});
+
+			const response = await testApiRequest.post('/1/review-appellant-statement');
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				attachments: [],
+				created: '2024-12-06T12:00:00.000Z',
+				id: 1,
+				notes: 'Some notes',
+				origin: 'lpa',
+				originalRepresentation: 'Original text of the representation',
+				redactedRepresentation: '',
+				rejectionReasons: [],
+				representationType: 'appellant_statement',
+				siteVisitRequested: true,
+				source: 'appellant',
+				status: 'valid'
+			});
+		});
+
+		test('returns 400 for null representation', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+			databaseConnector.representation.findFirst.mockResolvedValue(null);
+
+			const response = await testApiRequest.post('/1/review-appellant-statement');
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+
+		test('returns 400 for invalid appeal', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+			const response = await testApiRequest.post('/1/review-appellant-statement');
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+	});
+
+	describe('POST /:appealReference/review-rule-6-statement', () => {
+		test('returns 200 for valid appeal reference', async () => {
+			const mockRepresentation = {
+				id: 1,
+				lpa: true,
+				status: 'awaiting_review',
+				originalRepresentation: 'Original text of the representation',
+				redactedRepresentation: '',
+				dateCreated: new Date('2024-12-06T12:00:00Z'),
+				notes: 'Some notes',
+				representationType: 'rule_6_party_statement',
+				siteVisitRequested: true,
+				source: 'citizen',
+				representationRejectionReasonsSelected: []
+			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+			databaseConnector.representation.findFirst.mockResolvedValue(mockRepresentation);
+			databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
+			databaseConnector.representation.update.mockResolvedValue({
+				...mockRepresentation,
+				status: 'valid'
+			});
+
+			const response = await testApiRequest.post('/1/review-rule-6-statement');
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				attachments: [],
+				created: '2024-12-06T12:00:00.000Z',
+				id: 1,
+				notes: 'Some notes',
+				origin: 'lpa',
+				originalRepresentation: 'Original text of the representation',
+				redactedRepresentation: '',
+				rejectionReasons: [],
+				representationType: 'rule_6_party_statement',
+				siteVisitRequested: true,
+				source: 'citizen',
+				status: 'valid'
+			});
+		});
+
+		test('returns 400 for null representation', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+			databaseConnector.representation.findFirst.mockResolvedValue(null);
+
+			const response = await testApiRequest.post('/1/review-rule-6-statement');
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+
+		test('returns 400 for invalid appeal', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+			const response = await testApiRequest.post('/1/review-rule-6-statement');
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+	});
+
+	describe('POST /:appealReference/review-rule-6-proof-of-evidence', () => {
+		test('returns 200 for valid appeal reference', async () => {
+			const mockRepresentation = {
+				id: 1,
+				lpa: true,
+				status: 'awaiting_review',
+				originalRepresentation: 'Original text of the representation',
+				redactedRepresentation: '',
+				dateCreated: new Date('2024-12-06T12:00:00Z'),
+				notes: 'Some notes',
+				representationType: 'rule_6_party_proofs_evidence',
+				siteVisitRequested: true,
+				source: 'citizen',
+				representationRejectionReasonsSelected: []
+			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+			databaseConnector.representation.findFirst.mockResolvedValue(mockRepresentation);
+			databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
+			databaseConnector.representation.update.mockResolvedValue({
+				...mockRepresentation,
+				status: 'valid'
+			});
+
+			const response = await testApiRequest.post('/1/review-rule-6-proof-of-evidence');
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				attachments: [],
+				created: '2024-12-06T12:00:00.000Z',
+				id: 1,
+				notes: 'Some notes',
+				origin: 'lpa',
+				originalRepresentation: 'Original text of the representation',
+				redactedRepresentation: '',
+				rejectionReasons: [],
+				representationType: 'rule_6_party_proofs_evidence',
+				siteVisitRequested: true,
+				source: 'citizen',
+				status: 'valid'
+			});
+		});
+
+		test('returns 400 for null representation', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+			databaseConnector.representation.findFirst.mockResolvedValue(null);
+
+			const response = await testApiRequest.post('/1/review-rule-6-proof-of-evidence');
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+
+		test('returns 400 for invalid appeal', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+			const response = await testApiRequest.post('/1/review-rule-6-proof-of-evidence');
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+	});
+
+	describe('POST /:appealReference/review-lpa-proof-of-evidence', () => {
+		test('returns 200 for valid appeal reference', async () => {
+			const mockRepresentation = {
+				id: 1,
+				lpa: true,
+				status: 'awaiting_review',
+				originalRepresentation: 'Original text of the representation',
+				redactedRepresentation: '',
+				dateCreated: new Date('2024-12-06T12:00:00Z'),
+				notes: 'Some notes',
+				representationType: 'lpa_proofs_evidence',
+				siteVisitRequested: true,
+				source: 'lpa',
+				representationRejectionReasonsSelected: []
+			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+			databaseConnector.representation.findFirst.mockResolvedValue(mockRepresentation);
+			databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
+			databaseConnector.representation.update.mockResolvedValue({
+				...mockRepresentation,
+				status: 'valid'
+			});
+
+			const response = await testApiRequest.post('/1/review-lpa-proof-of-evidence');
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				attachments: [],
+				created: '2024-12-06T12:00:00.000Z',
+				id: 1,
+				notes: 'Some notes',
+				origin: 'lpa',
+				originalRepresentation: 'Original text of the representation',
+				redactedRepresentation: '',
+				rejectionReasons: [],
+				representationType: 'lpa_proofs_evidence',
+				siteVisitRequested: true,
+				source: 'lpa',
+				status: 'valid'
+			});
+		});
+
+		test('returns 400 for null representation', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+			databaseConnector.representation.findFirst.mockResolvedValue(null);
+
+			const response = await testApiRequest.post('/1/review-lpa-proof-of-evidence');
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+
+		test('returns 400 for invalid appeal', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+			const response = await testApiRequest.post('/1/review-lpa-proof-of-evidence');
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+	});
+
+	describe('POST /:appealReference/review-appellant-proof-of-evidence', () => {
+		test('returns 200 for valid appeal reference', async () => {
+			const mockRepresentation = {
+				id: 1,
+				lpa: true,
+				status: 'awaiting_review',
+				originalRepresentation: 'Original text of the representation',
+				redactedRepresentation: '',
+				dateCreated: new Date('2024-12-06T12:00:00Z'),
+				notes: 'Some notes',
+				representationType: 'appellant_proofs_evidence',
+				siteVisitRequested: true,
+				source: 'appellant',
+				representationRejectionReasonsSelected: []
+			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+			databaseConnector.representation.findFirst.mockResolvedValue(mockRepresentation);
+			databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
+			databaseConnector.representation.update.mockResolvedValue({
+				...mockRepresentation,
+				status: 'valid'
+			});
+
+			const response = await testApiRequest.post('/1/review-lpa-proof-of-evidence');
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				attachments: [],
+				created: '2024-12-06T12:00:00.000Z',
+				id: 1,
+				notes: 'Some notes',
+				origin: 'lpa',
+				originalRepresentation: 'Original text of the representation',
+				redactedRepresentation: '',
+				rejectionReasons: [],
+				representationType: 'appellant_proofs_evidence',
+				siteVisitRequested: true,
+				source: 'appellant',
+				status: 'valid'
+			});
+		});
+
+		test('returns 400 for null representation', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+			databaseConnector.representation.findFirst.mockResolvedValue(null);
+
+			const response = await testApiRequest.post('/1/review-appellant-proof-of-evidence');
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual(false);
+		});
+
+		test('returns 400 for invalid appeal', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+			const response = await testApiRequest.post('/1/review-appellant-proof-of-evidence');
 			expect(response.status).toEqual(400);
 			expect(response.body).toEqual(false);
 		});

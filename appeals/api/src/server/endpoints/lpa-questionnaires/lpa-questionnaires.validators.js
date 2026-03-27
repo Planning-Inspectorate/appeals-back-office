@@ -30,6 +30,8 @@ const patchLPAQuestionnaireValidator = composeMiddleware(
 	validateIdParameter('appealId'),
 	validateIdParameter('lpaQuestionnaireId'),
 	validateIncompleteInvalidReasonParameter('incompleteReasons'),
+	validateBooleanParameter('preserveGrantLoan').optional(),
+	validateBooleanParameter('consultHistoricEngland').optional(),
 	body('validationOutcome')
 		.optional()
 		.isString()

@@ -362,6 +362,9 @@ exports[`invalid-appeal GET /check should render the invalid appeal check page f
                     </details>
                 </div>
             </div>
+            <div class="govuk-hint">
+                <p class="govuk-body">We will mark the appeal as invalid and send an email to the relevant parties.</p>
+            </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="post" novalidate="novalidate">
@@ -453,6 +456,9 @@ exports[`invalid-appeal GET /check should render the invalid appeal check page f
                         </div>
                     </details>
                 </div>
+            </div>
+            <div class="govuk-hint">
+                <p class="govuk-body">We will mark the appeal as invalid and send an email to the relevant parties.</p>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
@@ -546,6 +552,9 @@ exports[`invalid-appeal GET /check should render the invalid appeal check page f
                     </details>
                 </div>
             </div>
+            <div class="govuk-hint">
+                <p class="govuk-body">We will mark the appeal as invalid and send an email to the relevant parties.</p>
+            </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="post" novalidate="novalidate">
@@ -637,6 +646,9 @@ exports[`invalid-appeal GET /check should render the invalid appeal check page f
                         </div>
                     </details>
                 </div>
+            </div>
+            <div class="govuk-hint">
+                <p class="govuk-body">We will mark the appeal as invalid and send an email to the relevant parties.</p>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
@@ -730,6 +742,9 @@ exports[`invalid-appeal GET /check should render the invalid appeal check page f
                     </details>
                 </div>
             </div>
+            <div class="govuk-hint">
+                <p class="govuk-body">We will mark the appeal as invalid and send an email to the relevant parties.</p>
+            </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="post" novalidate="novalidate">
@@ -821,6 +836,9 @@ exports[`invalid-appeal GET /check should render the invalid appeal check page f
                         </div>
                     </details>
                 </div>
+            </div>
+            <div class="govuk-hint">
+                <p class="govuk-body">We will mark the appeal as invalid and send an email to the relevant parties.</p>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
@@ -914,6 +932,9 @@ exports[`invalid-appeal GET /check should render the invalid appeal check page f
                     </details>
                 </div>
             </div>
+            <div class="govuk-hint">
+                <p class="govuk-body">We will mark the appeal as invalid and send an email to the relevant parties.</p>
+            </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="post" novalidate="novalidate">
@@ -977,6 +998,24 @@ exports[`invalid-appeal GET /check-details-and-mark-enforcement-as-invalid shoul
             </dl>
             <p class="govuk-body">We will mark the enforcement notice as invalid and send an email to the
                 relevant parties.</p>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <details class="govuk-details" data-cy="preview-email-to-appellant">
+                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
+                        </summary>
+                        <div class="govuk-details__text"></div>
+                    </details>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <details class="govuk-details" data-cy="preview-email-to-lpa">
+                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to LPA</span>
+                        </summary>
+                        <div class="govuk-details__text"></div>
+                    </details>
+                </div>
+            </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="post" novalidate="novalidate">

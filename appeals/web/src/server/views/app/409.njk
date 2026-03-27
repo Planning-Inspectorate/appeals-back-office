@@ -1,0 +1,11 @@
+{% extends "app/layouts/app-two-column.layout.njk" %}
+
+{% set pageTitle = 'Conflict' %}
+{% set heading = 'Sorry, there is a conflict with your request' %}
+
+{% block pageContent %}
+    <p class="govuk-body">The action you tried to perform cannot be completed because it conflicts with the current state of the application.</p>
+    <p class="govuk-body">
+        <a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if you need further assistance. 
+    </p>
+{% endblock %}

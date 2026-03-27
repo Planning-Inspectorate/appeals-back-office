@@ -18,7 +18,7 @@ import {
 	CASE_RELATIONSHIP_LINKED,
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
-import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
+import { isExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import {
 	APPEAL_CASE_PROCEDURE,
 	APPEAL_CASE_STATUS,
@@ -116,7 +116,7 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 		[APPEAL_CASE_TYPE.W].includes(appealTypeKey) &&
 		procedureKey === APPEAL_CASE_PROCEDURE.INQUIRY
 	) {
-		const evidenceRepresentations = await representationRepository.getRepresentations(appealId, {
+		const evidenceRepresentations = await representationRepository.getRepresentations([appealId], {
 			representationType: [
 				APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
 				APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE

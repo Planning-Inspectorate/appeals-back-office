@@ -13,7 +13,7 @@ import { EventType } from '@pins/event-client';
  */
 export const copyBlobs = async (copyList) => {
 	if (config.useBlobEmulator) {
-		await copyBlobsUsingEmulator(copyList);
+		return copyBlobsUsingEmulator(copyList);
 	}
 
 	return copyBlobsUsingAzure(copyList);

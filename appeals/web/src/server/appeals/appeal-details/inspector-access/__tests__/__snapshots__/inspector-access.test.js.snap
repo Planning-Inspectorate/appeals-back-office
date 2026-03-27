@@ -13,7 +13,7 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Will an inspector need to access your land or property?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
@@ -61,7 +61,7 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Will an inspector need to access your land or property?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
@@ -109,7 +109,7 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Will the inspector need access to the appellant’s land or property?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
@@ -157,7 +157,7 @@ exports[`inspector-access GET /change/:source should render changeInspectorAcces
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Will the inspector need access to the appellant’s land or property?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
@@ -220,7 +220,7 @@ exports[`inspector-access POST /change/:source should re-render changeInspectorA
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Will the inspector need access to the appellant’s land or property?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
@@ -282,7 +282,7 @@ exports[`inspector-access POST /change/:source should re-render changeInspectorA
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Will the inspector need access to the appellant’s land or property?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">

@@ -38,7 +38,7 @@ router.patch(
 	#swagger.responses[400] = {}
 	#swagger.responses[404] = {}
  */
-	checkAppealExistsByIdAndAddPartialToRequest(['agent']),
+	checkAppealExistsByIdAndAddPartialToRequest(['agent', 'childAppeals']),
 	updateServiceUserValidator,
 	asyncHandler(updateServiceUserById)
 );

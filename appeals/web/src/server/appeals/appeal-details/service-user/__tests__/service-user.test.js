@@ -328,7 +328,7 @@ describe('service-user', () => {
 						lastName: 'Jones',
 						emailAddress: 'jessica.jones@email.com'
 					};
-					nock('http://test/').patch(`/appeals/${appealId}`).reply(200, {
+					nock('http://test/').patch(`/appeals/${appealId}?include=childAppeals`).reply(200, {
 						agent: invalidData
 					});
 					const response = await request
@@ -351,7 +351,7 @@ describe('service-user', () => {
 						phoneNumber: '07921909967',
 						emailAddress: 'aria.murry@email.com'
 					};
-					nock('http://test/').patch(`/appeals/${appealId}`).reply(200, {
+					nock('http://test/').patch(`/appeals/${appealId}?include=childAppeals`).reply(200, {
 						agent: validData
 					});
 					const response = await request
@@ -374,7 +374,7 @@ describe('service-user', () => {
 						phoneNumber: '+44 7975451891',
 						emailAddress: 'jakub.mccallum@email.com'
 					};
-					nock('http://test/').patch(`/appeals/${appealId}`).reply(200, {
+					nock('http://test/').patch(`/appeals/${appealId}?include=childAppeals`).reply(200, {
 						agent: validData
 					});
 					const response = await request

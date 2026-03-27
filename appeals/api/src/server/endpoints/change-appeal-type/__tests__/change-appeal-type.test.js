@@ -118,6 +118,19 @@ const appealTypes = [
 		changeAppealType: 'Commercial planning (CAS)'
 	}
 ];
+const enforcementAppeal = {
+	...fullPlanningAppeal,
+	appellantCase: {
+		...fullPlanningAppeal.appellantCase,
+		enforcementReference: 'ENF/2025/001'
+	},
+	appealType: {
+		id: 2,
+		key: APPEAL_CASE_TYPE.C,
+		type: 'Enforcement notice appeal',
+		changeAppealType: 'Enforcement notice'
+	}
+};
 const appealsWithValidStatus = [
 	{
 		...householdAppeal,
@@ -290,6 +303,42 @@ describe('appeal change type resubmit routes', () => {
 
 			expect(response.status).toEqual(200);
 		});
+
+		test('includes enforcement_reference in personalisation for enforcement notice appeal', async () => {
+			const enforcementAppealWithValidStatus = {
+				...enforcementAppeal,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+						valid: true
+					}
+				]
+			};
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(enforcementAppealWithValidStatus);
+			// @ts-ignore
+			databaseConnector.appealType.findMany.mockResolvedValue(appealTypes);
+
+			const response = await request
+				.post(`/appeals/${enforcementAppealWithValidStatus.id}/appeal-change-request`)
+				.send({
+					newAppealTypeId: 1,
+					newAppealTypeFinalDate: '3000-02-05T00:00:00.000Z'
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(1);
+			expect(mockNotifySend).toHaveBeenCalledWith(
+				expect.objectContaining({
+					personalisation: expect.objectContaining({
+						enforcement_reference: 'ENF/2025/001'
+					})
+				})
+			);
+
+			expect(response.status).toEqual(200);
+		});
 	});
 });
 
@@ -366,6 +415,42 @@ describe('appeal resubmit mark invalid type routes', () => {
 				recipientEmail: householdAppeal.agent.email,
 				templateName: 'appeal-type-change-non-has'
 			});
+
+			expect(response.status).toEqual(200);
+		});
+
+		test('includes enforcement_reference in personalisation for enforcement notice appeal', async () => {
+			jest.clearAllMocks();
+			// @ts-ignore
+			databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(enforcementAppeal);
+			// @ts-ignore
+			databaseConnector.appealType.findMany.mockResolvedValue(appealTypes);
+			// @ts-ignore
+			databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+				appellantCaseValidationOutcomes[0]
+			);
+			// @ts-ignore
+			databaseConnector.appellantCaseInvalidReason.findUnique.mockResolvedValue(mockInvalidReason);
+
+			const response = await request
+				.post(`/appeals/${enforcementAppeal.id}/appeal-resubmit-mark-invalid`)
+				.send({
+					newAppealTypeId: 1,
+					newAppealTypeFinalDate: '3000-02-05T00:00:00.000Z',
+					appellantCaseId: 1
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(1);
+			expect(mockNotifySend).toHaveBeenCalledWith(
+				expect.objectContaining({
+					personalisation: expect.objectContaining({
+						enforcement_reference: 'ENF/2025/001'
+					})
+				})
+			);
 
 			expect(response.status).toEqual(200);
 		});
@@ -808,6 +893,52 @@ describe('appeal change update routes', () => {
 					expect(response.status).toEqual(200);
 				}
 			);
+
+			test('includes enforcement_reference in personalisation for enforcement notice appeal', async () => {
+				const enforcementAppealWithValidStatus = {
+					...enforcementAppeal,
+					appealStatus: [
+						{
+							status: caseStatus,
+							valid: true
+						}
+					]
+				};
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(enforcementAppealWithValidStatus);
+				// @ts-ignore
+				databaseConnector.appealType.findMany.mockResolvedValue(appealTypes);
+
+				const response = await request
+					.post(`/appeals/${enforcementAppealWithValidStatus.id}/appeal-update-request`)
+					.send({
+						newAppealTypeId: 1
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(
+					1,
+					expect.objectContaining({
+						personalisation: expect.objectContaining({
+							enforcement_reference: 'ENF/2025/001'
+						})
+					})
+				);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(
+					2,
+					expect.objectContaining({
+						personalisation: expect.objectContaining({
+							enforcement_reference: 'ENF/2025/001'
+						})
+					})
+				);
+
+				expect(response.status).toEqual(200);
+			});
 		});
 
 		describe('when appeal status is validation', () => {

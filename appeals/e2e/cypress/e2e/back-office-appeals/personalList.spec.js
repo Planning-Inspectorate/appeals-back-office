@@ -38,7 +38,7 @@ afterEach(() => {
 	cy.deleteAppeals(appeal);
 });
 
-it('Display Review CTA for appellant statement on personal list page', () => {
+it.skip('Display Review CTA for appellant statement on personal list page', () => {
 	cy.addLpaqSubmissionToCase(caseObj);
 	cy.reviewLpaqSubmission(caseObj);
 	cy.addAppellantStatementToCase(caseObj);

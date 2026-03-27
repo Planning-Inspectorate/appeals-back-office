@@ -5,11 +5,13 @@ import {
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { addBusinessDays, dateISOStringToDisplayDate } from '#lib/dates.js';
+import { editLink } from '#lib/edit-utilities.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { newLine2LineBreak } from '#lib/string-utilities.js';
+import { preserveQueryString } from '#lib/url-utilities.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { capitalize } from 'lodash-es';
 import { mapRejectionReasonOptionsToCheckboxItemParameters } from '../../common/render-select-rejection-reasons.js';
@@ -19,6 +21,7 @@ import {
 	representationIncomplete,
 	updateRejectionReasons
 } from '../../representations.service.js';
+import { getRule6BackLinkUrl, getRule6ConfirmBackLinkUrl } from '../back-link-utilities.js';
 import { rejectRule6PartyStatementPage, setNewDatePage } from './incomplete.mapper.js';
 
 const statusFormatMap = {
@@ -56,7 +59,14 @@ export async function renderReasons(request, response) {
 
 	return response.status(200).render('appeals/appeal/reject-representation.njk', {
 		errors,
-		pageContent,
+		pageContent: {
+			...pageContent,
+			backLinkUrl: getRule6BackLinkUrl(
+				request,
+				pageContent.backLinkUrl || '',
+				`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/incomplete/confirm`
+			)
+		},
 		rejectionReasons: mappedRejectionReasons
 	});
 }
@@ -79,7 +89,10 @@ export const postReasons = async (request, response, next) => {
 	return response
 		.status(200)
 		.redirect(
-			`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/incomplete/date`
+			preserveQueryString(
+				request,
+				`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/incomplete/date`
+			)
 		);
 };
 
@@ -100,7 +113,14 @@ export async function renderSetNewDate(request, response) {
 		.status(request.errors ? 400 : 200)
 		.render('patterns/check-and-confirm-page.pattern.njk', {
 			errors: request.errors,
-			pageContent
+			pageContent: {
+				...pageContent,
+				backLinkUrl: getRule6BackLinkUrl(
+					request,
+					pageContent.backLinkUrl || '',
+					`/appeals-service/appeal-details/${request.currentAppeal.appealId}/rule-6-party-statement/${rule6PartyId}/incomplete/confirm`
+				)
+			}
 		});
 }
 
@@ -121,24 +141,27 @@ export const postSetNewDate = async (request, response) => {
 	return response
 		.status(200)
 		.redirect(
-			`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/incomplete/confirm`
+			preserveQueryString(
+				request,
+				`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/incomplete/confirm`
+			)
 		);
 };
 
 /**
- * @type {import('@pins/express').RenderHandler<{}>}
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const renderCheckYourAnswers = async (
-	{
+export const renderCheckYourAnswers = async (request, response) => {
+	const {
 		errors,
 		currentAppeal: { appealReference, appealId },
 		currentRepresentation,
 		session,
 		apiClient,
 		params: { rule6PartyId }
-	},
-	response
-) => {
+	} = request;
+
 	const reasonOptions = await getRepresentationRejectionReasonOptions(
 		apiClient,
 		currentRepresentation.representationType
@@ -180,7 +203,10 @@ export const renderCheckYourAnswers = async (
 			title: 'Check details and confirm statement is incomplete',
 			heading: 'Check details and confirm statement is incomplete',
 			preHeading: `Appeal ${appealShortReference(appealReference)}`,
-			backLinkUrl: `/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/incomplete/date`,
+			backLinkUrl: getRule6ConfirmBackLinkUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/incomplete/date`
+			),
 			submitButtonText: 'Confirm statement is incomplete',
 			responses: {
 				Statement: {
@@ -213,7 +239,7 @@ export const renderCheckYourAnswers = async (
 					value: statusFormatMap[rule6PartyStatement.status],
 					actions: {
 						Change: {
-							href: `/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}`,
+							href: `/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}%2Frule-6-party-statement%2F${rule6PartyId}%2Fincomplete%2Fconfirm`,
 							visuallyHiddenText: 'Review decision'
 						}
 					}
@@ -231,7 +257,9 @@ export const renderCheckYourAnswers = async (
 					],
 					actions: {
 						Change: {
-							href: `/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/incomplete/reasons`,
+							href: editLink(
+								`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/incomplete/reasons`
+							),
 							visuallyHiddenText: 'Incomplete reasons'
 						}
 					}
@@ -240,7 +268,9 @@ export const renderCheckYourAnswers = async (
 					html: capitalize(rule6PartyStatement?.setNewDate),
 					actions: {
 						Change: {
-							href: `/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/incomplete/date`,
+							href: editLink(
+								`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/incomplete/date`
+							),
 							visuallyHiddenText: 'Incomplete reasons'
 						}
 					}

@@ -1,5 +1,20 @@
 apps_config = {
-  app_service_plan_sku       = "P0v3"
+  app_service_plan = {
+    sku                      = "P0v3"
+    per_site_scaling_enabled = false
+    worker_count             = 1
+    zone_balancing_enabled   = false
+  }
+  api = {
+    worker_count = 1
+  }
+  pdf = {
+    worker_count = 1
+  }
+  web = {
+    worker_count = 1
+  }
+  worker_count               = 1
   functions_node_version     = 22
   functions_service_plan_sku = "P0v3"
   node_environment           = "development"
@@ -33,41 +48,45 @@ apps_config = {
   }
 
   featureFlags = {
-    featureFlagS78Written               = true
-    featureFlagS78Inquiry               = true
-    featureFlagLinkedAppeals            = true
-    featureFlagLinkedAppealsUnlink      = true
-    featureFlagNotifyCaseHistory        = true
-    featureFlagSimplifyTeamAssignment   = true
-    featureFlagPdfDownload              = true
-    featureFlagNetResidence             = true
-    featureFlagNetResidenceS20          = true
-    featureFlagCancelCase               = true
-    featureFlagChangeProcedureType      = true
-    featureFlagHearingPostMvp           = true
-    featureFlagAutoAssignTeam           = true
-    featureFlagCancelSiteVisit          = true
-    featureFlagSearchCaseOfficer        = true
-    featureFlagEnforcementNotice        = true
-    featureFlagEnforcementLinked        = true
-    featureFlagEnforcementCancel        = true
-    featureFlagInvalidDecisionLetter    = true
-    featureFlagRule6Mvp                 = true
-    featureFlagRule6PoE                 = true
-    featureFlagExpeditedAppeals         = true
-    featureFlagManuallyAddReps          = true
-    featureFlagAppellantStatement       = true
-    featureFlagRule6Statement           = true
-    featureFlagLDC                      = true
-    featureFlagRule6Costs               = true
-    featureFlagS20Hearing               = true
-    featureFlagS20Inquiry               = true
-    featureFlagEnforcementNoticeHearing = true
-    featureFlagEnforcementNoticeInquiry = true
-    featureFlagLdcHearing               = true
-    featureFlagLdcInquiry               = true
-    featureFlagElbHearing               = true
-    featureFlagElbInquiry               = true
+    featureFlagS78Written                       = true
+    featureFlagS78Inquiry                       = true
+    featureFlagLinkedAppeals                    = true
+    featureFlagLinkedAppealsUnlink              = true
+    featureFlagNotifyCaseHistory                = true
+    featureFlagSimplifyTeamAssignment           = true
+    featureFlagPdfDownload                      = true
+    featureFlagNetResidence                     = true
+    featureFlagNetResidenceS20                  = true
+    featureFlagCancelCase                       = true
+    featureFlagChangeProcedureType              = true
+    featureFlagHearingPostMvp                   = true
+    featureFlagAutoAssignTeam                   = true
+    featureFlagCancelSiteVisit                  = true
+    featureFlagSearchCaseOfficer                = true
+    featureFlagEnforcementNotice                = true
+    featureFlagEnforcementLinked                = true
+    featureFlagEnforcementLeadCanStart          = true
+    featureFlagEnforcementCancel                = true
+    featureFlagInvalidDecisionLetter            = true
+    featureFlagRule6Mvp                         = true
+    featureFlagRule6PoE                         = true
+    featureFlagExpeditedAppeals                 = true
+    featureFlagManuallyAddReps                  = true
+    featureFlagAppellantStatement               = true
+    featureFlagRule6Statement                   = true
+    featureFlagLDC                              = true
+    featureFlagRule6Costs                       = true
+    featureFlagS20Hearing                       = true
+    featureFlagS20Inquiry                       = true
+    featureFlagEnforcementNoticeHearing         = true
+    featureFlagEnforcementNoticeInquiry         = true
+    featureFlagLdcHearing                       = true
+    featureFlagLdcInquiry                       = true
+    featureFlagElbHearing                       = true
+    featureFlagElbInquiry                       = true
+    featureFlagEnforcementHearingLinked         = true
+    featureFlagEnforcementInquiryLinked         = true
+    featureFlagEnforcementChangeProcedureLinked = true
   }
 
 
@@ -138,7 +157,7 @@ horizon_infra_config = {
 
 monitoring_config = {
   web_app_insights_web_test_enabled = false
-  log_daily_cap                     = 0.2
+  log_daily_cap                     = 0.5
 }
 
 service_bus_config = {
@@ -152,7 +171,7 @@ sql_config = {
     login_username = "pins-odt-sql-dev-appeals-bo"
     object_id      = "1c3b7d11-36c4-41ca-90b5-d15eafbe3b61"
   }
-  sku_name    = "Basic"
+  sku_name    = "S0"
   max_size_gb = 2
   retention = {
     audit_days               = 7

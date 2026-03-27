@@ -25,13 +25,18 @@ import commonRepository from '#repositories/common.repository.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import auditApplicationDecisionMapper from '#utils/audit-application-decision-mapper.js';
 import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
+import { currentStatus } from '#utils/current-status.js';
 import { Prisma } from '#utils/db-client/client.js';
 import { getFormattedReasons } from '#utils/email-formatter.js';
 import { formatContactDetails } from '#utils/format-contact-details.js';
 import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
 import { allAppellantCaseOutcomesAreComplete } from '#utils/is-awaiting-linked-appeal.js';
 import { isChildAppeal, isLinkedAppeal, isParentAppeal } from '#utils/is-linked-appeal.js';
-import { getChildAppeals, getLeadAppeal } from '#utils/link-appeals.js';
+import {
+	getChildAppeals,
+	getChildEnforcementsWithGrounds,
+	getLeadAppeal
+} from '#utils/link-appeals.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
@@ -44,18 +49,25 @@ import {
 	APPEAL_DEVELOPMENT_TYPES,
 	PLANNING_OBLIGATION_STATUSES
 } from '@pins/appeals/constants/appellant-cases.constants.js';
-import formatDate from '@pins/appeals/utils/date-formatter.js';
+import { ENFORCEMENT_APPEAL_INVALID_GROUND_A_FEE_NOT_PAID } from '@pins/appeals/constants/support.js';
+import {
+	isAnyEnforcementAppealType,
+	isEnforcementCaseType
+} from '@pins/appeals/utils/appeal-type-checks.js';
+import formatDate, { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
-import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { add } from 'date-fns';
 import transitionState from '../../state/transition-state.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {UpdateAppellantCaseValidationOutcomeParams['validationOutcome']} ValidationOutcome */
 /** @typedef {import('@pins/appeals.api').Api.AppellantCaseUpdateRequest} AppellantCaseUpdateRequest */
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
 /** @typedef {import('express').NextFunction} NextFunction */
+/** @typedef {import('#repositories/appellant-case.repository.js').UpdateAppellantCaseValidationOutcome} UpdateAppellantCaseValidationOutcome */
 
 /**
  * @param {Request} req
@@ -86,11 +98,7 @@ export const checkAppellantCaseExists = (req, res, next) => {
 export const updateAppellantCaseData = async (appellantCaseId, data, appeal) => {
 	await appellantCaseRepository.updateAppellantCaseById(appellantCaseId, data);
 	// Only sync the child appellant case with the parent when the appeal type is enforcement notice or enforcement listed building
-	if (
-		!isParentAppeal(appeal) ||
-		appeal.appealType?.type !== APPEAL_TYPE.ENFORCEMENT_NOTICE ||
-		appeal.appealType?.type !== APPEAL_TYPE.ENFORCEMENT_NOTICE
-	) {
+	if (!isParentAppeal(appeal) || !isAnyEnforcementAppealType(appeal.appealType?.type)) {
 		return;
 	}
 	// eslint-disable-next-line no-unused-vars
@@ -121,6 +129,61 @@ const getEnforcementInvalidReasonsParams = (enforcementInvalidReasons) => {
 };
 
 /**
+ * @param {{ appeal: UpdateAppellantCaseValidationOutcomeParams['appeal'], validationOutcome: ValidationOutcome, validationOutcomeData: UpdateAppellantCaseValidationOutcome, azureAdUserId: string }} param0
+ */
+export const transitionAppealStatesAfterValidationOutcomeUpdate = async ({
+	appeal,
+	validationOutcome,
+	validationOutcomeData,
+	azureAdUserId
+}) => {
+	const { id: appealId } = appeal;
+	const leadAppeal = getLeadAppeal(appeal);
+
+	if (!isOutcomeIncomplete(validationOutcome.name)) {
+		if (!isLinkedAppeal(appeal)) {
+			await transitionState(appealId, azureAdUserId, validationOutcome.name);
+		} else {
+			// @ts-ignore
+			const linkedAppeals = await buildListOfLinkedAppeals(appeal);
+			if (appeal.appealType?.type === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+				// Update the child outcome to match the lead outcome and transition all linked enforcements as child enforcements do not validate their appellant case
+				for (const linkedAppeal of linkedAppeals) {
+					const { appealId, id: appellantCaseId } = linkedAppeal.appellantCase || {};
+					await appellantCaseRepository.updateAppellantCaseValidationOutcome({
+						...validationOutcomeData,
+						appealId,
+						// @ts-ignore
+						appellantCaseId,
+						validationOutcomeId: validationOutcome.id
+					});
+					await transitionState(linkedAppeal.id, azureAdUserId, validationOutcome.name);
+				}
+			} else {
+				if (allAppellantCaseOutcomesAreComplete(linkedAppeals, appealId, validationOutcome)) {
+					// @ts-ignore
+					for (const linkedAppeal of linkedAppeals) {
+						const outcome =
+							linkedAppeal.id === leadAppeal?.id
+								? validationOutcome
+								: linkedAppeal?.appellantCase?.appellantCaseValidationOutcome;
+						// @ts-ignore
+						if (currentStatus(linkedAppeal) === APPEAL_CASE_STATUS.VALIDATION) {
+							await transitionState(
+								linkedAppeal.id,
+								azureAdUserId,
+								// @ts-ignore
+								outcome?.name
+							);
+						}
+					}
+				}
+			}
+		}
+	}
+};
+
+/**
  * @param {UpdateAppellantCaseValidationOutcomeParams} param0
  * @param { import('#endpoints/appeals.js').NotifyClient } notifyClient
  */
@@ -139,11 +202,13 @@ export const updateAppellantCaseValidationOutcome = async (
 		otherLiveAppeals,
 		enforcementInvalidReasons,
 		enforcementMissingDocuments,
+		enforcementGroundsMismatchFacts,
 		feeReceiptDueDate
 	} = data;
+
 	const teamEmail = await getTeamEmailFromAppealId(appealId);
 	const incompleteAppealDueDate =
-		appealDueDate || enforcementNoticeInvalid ? add(new Date(), { days: 7 }) : undefined;
+		appealDueDate ?? (enforcementNoticeInvalid === 'yes' ? add(new Date(), { days: 7 }) : null);
 
 	const validationOutcomeData = {
 		appealId,
@@ -156,6 +221,7 @@ export const updateAppellantCaseValidationOutcome = async (
 			...(enforcementNoticeInvalid && { enforcementNoticeInvalid }),
 			...(enforcementInvalidReasons && { enforcementInvalidReasons }),
 			...(enforcementMissingDocuments && { enforcementMissingDocuments }),
+			...(enforcementGroundsMismatchFacts && { enforcementGroundsMismatchFacts }),
 			...(feeReceiptDueDate && { groundAFeeReceiptDueDate: feeReceiptDueDate })
 		}),
 		...(isOutcomeInvalid(validationOutcome.name) && {
@@ -172,68 +238,18 @@ export const updateAppellantCaseValidationOutcome = async (
 			...(otherInformation && { otherInformation })
 		})
 	};
-	const leadAppeal = getLeadAppeal(appeal);
-
-	const isEnforcementAppealType = appeal.appealType?.key === APPEAL_CASE_TYPE.C;
-	const isChildEnforcement = isEnforcementAppealType && isChildAppeal(appeal);
-	const isParentEnforcement = isEnforcementAppealType && isParentAppeal(appeal);
-
-	const leadOutcomeId =
-		leadAppeal?.appellantCase?.appellantCaseValidationOutcome?.id ?? validationOutcome.id;
 
 	await appellantCaseRepository.updateAppellantCaseValidationOutcome({
 		...validationOutcomeData,
-		validationOutcomeId: isChildEnforcement ? leadOutcomeId : validationOutcome.id
+		validationOutcomeId: validationOutcome.id
 	});
 
-	if (isParentEnforcement) {
-		// Keep linked enforcement children in sync with their parent
-		for (const childAppeal of getChildAppeals(appeal)) {
-			const childHasOutcome = Boolean(childAppeal.appellantCase?.appellantCaseValidationOutcome);
-
-			await appellantCaseRepository.updateAppellantCaseValidationOutcome({
-				...validationOutcomeData,
-				appealId: childAppeal?.id,
-				// @ts-ignore
-				appellantCaseId: childAppeal?.appellantCase?.id,
-				// Only set the outcome if one already exists (indicates the child had been confirmed)
-				validationOutcomeId: childHasOutcome ? validationOutcome.id : undefined
-			});
-		}
-	}
-
-	if (!isOutcomeIncomplete(validationOutcome.name)) {
-		if (!isLinkedAppeal(appeal)) {
-			await transitionState(appealId, azureAdUserId, validationOutcome.name);
-		} else {
-			// @ts-ignore
-			const linkedAppeals = await buildListOfLinkedAppeals(appeal);
-			let leadAppellantCaseValidationOutcome = {};
-			if (allAppellantCaseOutcomesAreComplete(linkedAppeals, appealId, validationOutcome)) {
-				// @ts-ignore
-				leadAppellantCaseValidationOutcome =
-					leadAppeal?.appellantCase?.appellantCaseValidationOutcome;
-				for (const appeal of linkedAppeals) {
-					if (
-						appeal.appealType?.key === APPEAL_CASE_TYPE.C &&
-						appeal.id === leadAppeal?.id &&
-						appeal.appellantCase?.appellantCaseValidationOutcome?.id !==
-							// @ts-ignore
-							leadAppellantCaseValidationOutcome?.id
-					) {
-						await appellantCaseRepository.updateAppellantCaseValidationOutcome({
-							// @ts-ignore
-							appellantCaseId: appeal.appellantCase?.id,
-							// @ts-ignore
-							appellantCaseValidationOutcomeId: leadAppellantCaseValidationOutcome?.id
-						});
-					}
-					// @ts-ignore
-					await transitionState(appeal.id, azureAdUserId, leadAppellantCaseValidationOutcome?.name);
-				}
-			}
-		}
-	}
+	await transitionAppealStatesAfterValidationOutcomeUpdate({
+		appeal,
+		validationOutcome,
+		validationOutcomeData,
+		azureAdUserId
+	});
 
 	const updatedAppeal = await appealRepository.getAppealById(Number(appealId));
 
@@ -253,7 +269,9 @@ export const updateAppellantCaseValidationOutcome = async (
 		if (!recipientEmail) {
 			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 		}
-		const isEnforcement = appeal.appealType.key === APPEAL_CASE_TYPE.C;
+		const isEnforcement = isEnforcementCaseType(appeal.appealType.key);
+		const childEnforcementWithGrounds = await getChildEnforcementsWithGrounds(appeal);
+
 		const personalisation = {
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
@@ -266,6 +284,9 @@ export const updateAppellantCaseValidationOutcome = async (
 				appeal_grounds:
 					updatedAppeal?.appealGrounds?.map((ground) => ground.ground?.groundRef || '').sort() ||
 					[],
+				...(childEnforcementWithGrounds && {
+					other_appeals_grounds_group: childEnforcementWithGrounds
+				}),
 				ground_a_barred: groundABarred || false,
 				other_info: otherInformation || ''
 			})
@@ -307,19 +328,27 @@ export const updateAppellantCaseValidationOutcome = async (
 			}
 
 			if (
-				updatedAppeal.appealType?.type === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
+				isAnyEnforcementAppealType(updatedAppeal.appealType?.type) &&
 				updatedAppeal.enforcementNoticeAppealOutcome?.enforcementNoticeInvalid === 'no'
 			) {
 				const reasonsToFormat = [];
 				const { appellantCase, enforcementNoticeAppealOutcome } = updatedAppeal;
-				if (appellantCase?.appellantCaseEnforcementMissingDocumentsSelected?.length) {
+				if (
+					appellantCase?.appellantCaseEnforcementMissingDocumentsSelected?.length ||
+					appellantCase?.appellantCaseEnforcementGroundsMismatchSelected?.length ||
+					appellantCase?.appellantCaseIncompleteReasonsSelected?.find(
+						(reason) => reason.appellantCaseIncompleteReason?.name === 'Other'
+					)
+				) {
 					reasonsToFormat.push('Missing information');
+				}
+				if (appellantCase?.appellantCaseEnforcementGroundsMismatchSelected?.length) {
+					reasonsToFormat.push('Grounds mismatch');
 				}
 
 				if (enforcementNoticeAppealOutcome.groundAFeeReceiptDueDate) {
-					reasonsToFormat.push('Ground (a) fee receipt due date');
+					reasonsToFormat.push('Ground (a) fee receipt due');
 				}
-
 				const details = `${
 					stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, ['Appeal']) + '\n'
 				}${formatReasonsToHtmlList(reasonsToFormat)}`;
@@ -330,29 +359,38 @@ export const updateAppellantCaseValidationOutcome = async (
 					details
 				});
 
-				if (updatedDueDate) {
+				if (incompleteAppealDueDate) {
 					const missingDocumentOptions = await commonRepository.getLookupList(
 						'appellantCaseEnforcementMissingDocument'
+					);
+					const groundsMismatchOptions = await commonRepository.getLookupList(
+						'appellantCaseEnforcementGroundsMismatchFacts'
 					);
 					const personalisation = {
 						appeal_reference_number: appeal.reference,
 						site_address: siteAddress,
 						enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
-						...(enforcementMissingDocuments && {
-							missing_documents: enforcementMissingDocuments.map(
-								(document) =>
-									`${missingDocumentOptions.find((option) => option.id === document.id)?.name}: ${document.text?.[0] || ''}`
-							)
-						}),
-						...(updatedAppeal?.enforcementNoticeAppealOutcome?.groundAFeeReceiptDueDate && {
-							fee_due_date: formatDate(
-								new Date(updatedAppeal.enforcementNoticeAppealOutcome.groundAFeeReceiptDueDate)
-							)
-						}),
+						missing_documents: enforcementMissingDocuments
+							? enforcementMissingDocuments.map(
+									(document) =>
+										`${missingDocumentOptions.find((option) => option.id === document.id)?.name}: ${document.text?.[0] || ''}`
+								)
+							: [],
+						fee_due_date: updatedAppeal?.enforcementNoticeAppealOutcome?.groundAFeeReceiptDueDate
+							? formatDate(
+									new Date(updatedAppeal.enforcementNoticeAppealOutcome.groundAFeeReceiptDueDate)
+								)
+							: '',
+						grounds_and_facts: enforcementGroundsMismatchFacts
+							? enforcementGroundsMismatchFacts.map(
+									(ground) =>
+										`Ground (${groundsMismatchOptions.find((option) => option.id === ground.id)?.name}): ${ground.text?.[0] || ''}`
+								)
+							: [],
 						local_planning_authority: updatedAppeal?.lpa?.name || '',
-						other_info: incompleteReasons?.find((reason) => reason.id === 10)?.['text']?.[0] || '',
+						other_info: incompleteReasons?.find((reason) => reason.id === 10)?.['text'] || [],
 						team_email_address: teamEmail,
-						due_date: formatDate(new Date(updatedDueDate), false),
+						due_date: formatDate(new Date(incompleteAppealDueDate), false),
 						appeal_grounds:
 							updatedAppeal?.appealGrounds
 								?.map((ground) => ground.ground?.groundRef || '')
@@ -397,8 +435,10 @@ export const updateAppellantCaseValidationOutcome = async (
 					azureAdUserId,
 					details
 				});
-
-				if (updatedDueDate) {
+				if (
+					updatedDueDate &&
+					updatedAppeal.appealType?.type !== APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
+				) {
 					if (!enforcementNoticeInvalid) {
 						const personalisation = {
 							appeal_reference_number: appeal.reference,
@@ -426,6 +466,15 @@ export const updateAppellantCaseValidationOutcome = async (
 							team_email_address: teamEmail,
 							due_date: formatDate(new Date(updatedDueDate), false)
 						};
+						if (recipientEmail) {
+							await notifySend({
+								azureAdUserId,
+								templateName: 'enforcement-notice-incomplete-appellant',
+								notifyClient,
+								recipientEmail,
+								personalisation
+							});
+						}
 						if (updatedAppeal.lpa?.email) {
 							await notifySend({
 								azureAdUserId,
@@ -447,107 +496,146 @@ export const updateAppellantCaseValidationOutcome = async (
 					? updatedAppellantCase?.appellantCaseEnforcementInvalidReasonsSelected
 					: [];
 
-			const invalidReasonsList = getFormattedReasons(reasonsToFormat);
-			const applicantEmail = appeal.agent?.email || appeal.appellant?.email;
+			const invalidReasonsList = getFormattedReasons(reasonsToFormat).sort((a, b) =>
+				a.startsWith('Other') ? 1 : b.startsWith('Other') ? -1 : 0
+			);
 
-			if (!enforcementNoticeInvalid) {
+			const isAnyEnfType = isAnyEnforcementAppealType(appeal.appealType?.type);
+			const isChildAnyEnfType = isAnyEnfType && isChildAppeal(appeal);
+
+			if (!isChildAnyEnfType) {
+				const applicantEmail = appeal.agent?.email || appeal.appellant?.email;
 				if (!applicantEmail) {
 					throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 				}
 
-				const personalisation = {
-					appeal_reference_number: appeal.reference,
-					lpa_reference: appeal.applicationReference,
-					site_address: siteAddress,
-					reasons: invalidReasonsList,
-					team_email_address: teamEmail
-				};
-				await notifySend({
-					azureAdUserId,
-					templateName: 'appeal-invalid',
-					notifyClient,
-					recipientEmail: applicantEmail,
-					personalisation: {
-						...personalisation,
-						feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key)
-					}
-				});
+				if (!enforcementNoticeInvalid) {
+					if (invalidReasonsList.includes(ENFORCEMENT_APPEAL_INVALID_GROUND_A_FEE_NOT_PAID)) {
+						// Cancel enforcement notice appeal flow, did not pay the ground (a) fee
+						const personalisation = {
+							appeal_reference_number: appeal.reference,
+							lpa_reference: appeal.applicationReference,
+							site_address: siteAddress,
+							team_email_address: teamEmail,
+							enforcement_reference: updatedAppellantCase?.enforcementReference || '',
+							due_date:
+								dateISOStringToDisplayDate(
+									updatedAppeal?.enforcementNoticeAppealOutcome?.groundAFeeReceiptDueDate
+								) || '',
+							issue_date:
+								dateISOStringToDisplayDate(updatedAppellantCase?.enforcementIssueDate) || ''
+						};
+						await notifySend({
+							azureAdUserId,
+							templateName: 'enforcement-cancel-appeal-no-fee-appellant',
+							notifyClient,
+							recipientEmail: applicantEmail,
+							personalisation
+						});
 
-				if (updatedAppeal.lpa?.email) {
-					await notifySend({
-						azureAdUserId,
-						templateName: 'appeal-invalid-lpa',
-						notifyClient,
-						recipientEmail: updatedAppeal.lpa.email,
-						personalisation: {
-							...personalisation,
-							feedback_link: FEEDBACK_FORM_LINKS.LPA
+						if (updatedAppeal.lpa?.email) {
+							await notifySend({
+								azureAdUserId,
+								templateName: 'enforcement-cancel-appeal-no-fee-lpa',
+								notifyClient,
+								recipientEmail: updatedAppeal.lpa.email,
+								personalisation
+							});
 						}
-					});
-				}
-			} else if (enforcementNoticeInvalid === 'yes') {
-				const personalisation = {
-					appeal_reference_number: appeal.reference,
-					enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
-					site_address: siteAddress,
-					...getEnforcementInvalidReasonsParams(enforcementInvalidReasons),
-					other_info: otherInformation || '',
-					team_email_address: teamEmail
-				};
-				await notifySend({
-					azureAdUserId,
-					templateName: 'enforcement-notice-invalid-appellant',
-					notifyClient,
-					recipientEmail: applicantEmail,
-					personalisation
-				});
-				if (updatedAppeal.lpa?.email) {
+					} else {
+						const personalisation = {
+							appeal_reference_number: appeal.reference,
+							lpa_reference: appeal.applicationReference,
+							site_address: siteAddress,
+							reasons: invalidReasonsList,
+							team_email_address: teamEmail
+						};
+						await notifySend({
+							azureAdUserId,
+							templateName: 'appeal-invalid',
+							notifyClient,
+							recipientEmail: applicantEmail,
+							personalisation: {
+								...personalisation,
+								feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key)
+							}
+						});
+
+						if (updatedAppeal.lpa?.email) {
+							await notifySend({
+								azureAdUserId,
+								templateName: 'appeal-invalid-lpa',
+								notifyClient,
+								recipientEmail: updatedAppeal.lpa.email,
+								personalisation: {
+									...personalisation,
+									feedback_link: FEEDBACK_FORM_LINKS.LPA
+								}
+							});
+						}
+					}
+				} else if (enforcementNoticeInvalid === 'yes') {
+					const personalisation = {
+						appeal_reference_number: appeal.reference,
+						enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
+						site_address: siteAddress,
+						...getEnforcementInvalidReasonsParams(enforcementInvalidReasons),
+						other_info: otherInformation || '',
+						team_email_address: teamEmail
+					};
 					await notifySend({
 						azureAdUserId,
-						templateName: 'enforcement-notice-invalid-lpa',
+						templateName: 'enforcement-notice-invalid-appellant',
 						notifyClient,
-						recipientEmail: updatedAppeal.lpa.email,
+						recipientEmail: applicantEmail,
 						personalisation
 					});
-				}
-			} else if (enforcementNoticeInvalid === 'no' && isEnforcementAppealType) {
-				if (!applicantEmail) {
-					throw new Error(ERROR_NO_RECIPIENT_EMAIL);
-				}
+					if (updatedAppeal.lpa?.email) {
+						await notifySend({
+							azureAdUserId,
+							templateName: 'enforcement-notice-invalid-lpa',
+							notifyClient,
+							recipientEmail: updatedAppeal.lpa.email,
+							personalisation
+						});
+					}
+				} else if (enforcementNoticeInvalid === 'no') {
+					const GROUND_A_BARRED_REASON_ID = 7;
+					const personalisation = {
+						appeal_reference_number: appeal.reference,
+						enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
+						site_address: siteAddress,
+						reasons: invalidReasonsList,
+						team_email_address: teamEmail,
+						ground_a_barred: reasonsToFormat.some(
+							(reason) => reason.appellantCaseInvalidReasonId === GROUND_A_BARRED_REASON_ID
+						),
+						other_live_appeals: otherLiveAppeals === 'yes',
+						effective_date: updatedAppeal.appellantCase?.enforcementEffectiveDate
+							? formatDate(new Date(updatedAppeal.appellantCase.enforcementEffectiveDate), false)
+							: undefined
+					};
 
-				const GROUND_A_BARRED_REASON_ID = 7;
-
-				const personalisation = {
-					appeal_reference_number: appeal.reference,
-					enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
-					site_address: siteAddress,
-					reasons: invalidReasonsList,
-					team_email_address: teamEmail,
-					ground_a_barred: reasonsToFormat.some(
-						(reason) => reason.appellantCaseInvalidReasonId === GROUND_A_BARRED_REASON_ID
-					),
-					other_live_appeals: !!(otherLiveAppeals === 'yes'),
-					effective_date: updatedAppeal.appellantCase?.enforcementEffectiveDate
-						? formatDate(new Date(updatedAppeal.appellantCase.enforcementEffectiveDate), false)
-						: undefined
-				};
-
-				await notifySend({
-					azureAdUserId,
-					templateName: 'enforcement-appeal-invalid-appellant',
-					notifyClient,
-					recipientEmail: applicantEmail,
-					personalisation
-				});
-
-				if (updatedAppeal.lpa?.email) {
 					await notifySend({
 						azureAdUserId,
-						templateName: 'enforcement-appeal-invalid-lpa',
+						templateName: 'enforcement-appeal-invalid-appellant',
 						notifyClient,
-						recipientEmail: updatedAppeal.lpa.email,
+						recipientEmail: applicantEmail,
 						personalisation
 					});
+
+					if (updatedAppeal.lpa?.email) {
+						await notifySend({
+							azureAdUserId,
+							templateName: 'enforcement-appeal-invalid-lpa',
+							notifyClient,
+							recipientEmail: updatedAppeal.lpa.email,
+							personalisation: {
+								...personalisation,
+								feedback_link: FEEDBACK_FORM_LINKS.LPA
+							}
+						});
+					}
 				}
 			}
 

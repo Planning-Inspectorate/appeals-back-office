@@ -5,7 +5,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { newLine2LineBreak } from '#lib/string-utilities.js';
 import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
-import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
+import { APPEAL_REPRESENTATION_STATUS, COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -201,6 +201,11 @@ export function reviewLpaStatementPage(appealDetails, lpaStatement, session, bac
 	});
 
 	const { status } = session.lpaStatement?.[appealDetails.appealId] ?? {};
+	const selectedStatus =
+		status ||
+		(lpaStatement.status === APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+			? COMMENT_STATUS.INCOMPLETE
+			: undefined);
 
 	/** @type {PageComponent} */
 	const lpaStatementValidityRadioButtons = {
@@ -219,7 +224,7 @@ export function reviewLpaStatementPage(appealDetails, lpaStatement, session, bac
 				{
 					value: COMMENT_STATUS.VALID,
 					text: 'Accept statement',
-					checked: status === COMMENT_STATUS.VALID
+					checked: selectedStatus === COMMENT_STATUS.VALID
 				},
 				lpaStatement.originalRepresentation
 					? {
@@ -230,7 +235,7 @@ export function reviewLpaStatementPage(appealDetails, lpaStatement, session, bac
 				{
 					value: COMMENT_STATUS.INCOMPLETE,
 					text: 'Statement incomplete',
-					checked: status === COMMENT_STATUS.INCOMPLETE
+					checked: selectedStatus === COMMENT_STATUS.INCOMPLETE
 				}
 			]
 		}

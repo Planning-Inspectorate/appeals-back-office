@@ -1,5 +1,6 @@
 import { Address } from './address.js';
 import { Allocation } from './allocation.js';
+import { AppealCancellation } from './appeal-cancellation.js';
 import { AppealDecision } from './appeal-decision.js';
 import { AppealRelationship } from './appeal-relationship.js';
 import { AppealSummary } from './appeal-summary.js';
@@ -38,6 +39,7 @@ const partials = {
 	StateList,
 	AppealDecision,
 	AppealWithdrawal,
+	AppealCancellation,
 	AppealRelationship,
 	Folder,
 	Document,

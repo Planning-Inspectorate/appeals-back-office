@@ -78,6 +78,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			didAppellantSubmitCompletePhotosAndPlans,
 			appealUnderActSection,
 			lpaConsiderAppealInvalid,
+			lpaAppealInvalidReasons,
 			// Enforcement
 			noticeRelatesToBuildingEngineeringMiningOther,
 			siteAreaSquareMetres,
@@ -153,6 +154,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 						didAppellantSubmitCompletePhotosAndPlans,
 						appealUnderActSection,
 						lpaConsiderAppealInvalid,
+						lpaAppealInvalidReasons,
 						// Enforcement
 						noticeRelatesToBuildingEngineeringMiningOther,
 						siteAreaSquareMetres,
@@ -186,7 +188,9 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			AUDIT_TRAIL_LPAQ_APPEAL_UNDER_ACT_SECTION_UPDATED: () =>
 				capitalizeFirstLetter((body.appealUnderActSection || '').replaceAll('-', ' ')),
 			AUDIT_TRAIL_LPAQ_LPA_CONSIDER_APPEAL_INVALID_UPDATED: () =>
-				body.lpaConsiderAppealInvalid ? 'Yes' : 'No'
+				body.lpaConsiderAppealInvalid ? 'Yes' : 'No',
+			AUDIT_TRAIL_LPAQ_LPA_APPEAL_INVALID_REASONS_UPDATED: () =>
+				capitalizeFirstLetter(body.lpaAppealInvalidReasons || '')
 		};
 
 		// Make sure we only create unique audit trail details for properties that have changed.

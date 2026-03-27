@@ -12,6 +12,7 @@ import serviceUserRepository from '#repositories/service-user.repository.js';
 import userRepository from '#repositories/user.repository.js';
 import transitionState from '#state/transition-state.js';
 import { formatCostsDecision } from '#utils/format-costs-decision.js';
+import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import { hasValueOrIsNull } from '#utils/has-value-or-null.js';
 import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
@@ -133,10 +134,12 @@ const assignUser = async (
 			? formatAddressSingleLine(caseData.address)
 			: 'Address not available';
 
+		const enforcementReference = await getEnforcementReference(caseData);
 		const personalisation = {
 			appeal_reference_number: caseData.reference || '',
 			site_address: siteAddress,
 			lpa_reference: caseData.applicationReference || '',
+			...(enforcementReference && { enforcement_reference: enforcementReference }),
 			team_email_address: await getTeamEmailFromAppealId(caseData.id),
 			inspector_name: ''
 		};
@@ -151,11 +154,13 @@ const assignUser = async (
 			details = stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_INSPECTOR, [padsInspector]);
 		} else if (inspector == null && prevUserName) {
 			if (caseData.inspector?.azureAdUserId) {
-				azureAdUserId = caseData.inspector.azureAdUserId;
-				details = stringTokenReplacement(AUDIT_TRAIL_UNASSIGNED_INSPECTOR, [azureAdUserId]);
+				details = stringTokenReplacement(AUDIT_TRAIL_UNASSIGNED_INSPECTOR, [
+					caseData.inspector?.azureAdUserId
+				]);
 			} else if (caseData.padsInspectorUserId) {
-				azureAdUserId = caseData.padsInspectorUserId;
-				details = stringTokenReplacement(AUDIT_TRAIL_UNASSIGNED_INSPECTOR, [azureAdUserId]);
+				details = stringTokenReplacement(AUDIT_TRAIL_UNASSIGNED_INSPECTOR, [
+					caseData.padsInspectorUserId
+				]);
 			}
 		}
 

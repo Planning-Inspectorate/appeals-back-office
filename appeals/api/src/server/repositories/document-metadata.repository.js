@@ -9,6 +9,28 @@ import { randomUUID } from 'node:crypto';
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} RedactionStatus */
 
+const BULK_DOCUMENTS_CHUNK_SIZE = 100;
+
+/**
+ * @typedef {Object} BulkDocumentMetadata
+ * @property {string} guid
+ * @property {string} originalFilename
+ * @property {string} fileName
+ * @property {number} caseId
+ * @property {number} folderId
+ * @property {string|undefined} mime
+ * @property {string|undefined} documentType
+ * @property {string|undefined} stage
+ * @property {number|undefined} size
+ * @property {string|undefined} blobStorageContainer
+ * @property {string|undefined} blobStoragePath
+ * @property {string|undefined} documentURI
+ * @property {Date|string|undefined} dateReceived
+ * @property {string|undefined} virusCheckStatus
+ * @property {number|null|undefined} redactionStatusId
+ * @property {boolean} isLateEntry
+ */
+
 /**
  * @param {any} metadata
  * @param {any} context
@@ -76,6 +98,105 @@ export const addDocument = async (metadata, context) => {
 	});
 
 	return transaction;
+};
+
+/**
+ * Creates document metadata in bulk using chunked createMany operations and returns
+ * the created version rows in input order.
+ *
+ * @param {BulkDocumentMetadata[]} documents
+ * @returns {Promise<(DocumentVersion | null)[]>}
+ */
+export const addDocumentsBulk = async (documents) => {
+	if (!documents.length) {
+		return [];
+	}
+
+	const chunks = chunkDocuments(documents, BULK_DOCUMENTS_CHUNK_SIZE);
+	const allGuids = documents.map((document) => document.guid);
+	const now = new Date();
+
+	const createdVersions = await databaseConnector.$transaction(async (tx) => {
+		for (const chunk of chunks) {
+			await tx.document.createMany({
+				data: chunk.map((document) => ({
+					guid: document.guid,
+					caseId: document.caseId,
+					folderId: document.folderId,
+					name: document.originalFilename
+				}))
+			});
+
+			const pendingScanGuids = chunk
+				.filter((document) => !document.virusCheckStatus)
+				.map((document) => document.guid);
+
+			/** @type {Map<string, string>} */
+			const virusCheckStatusByGuid = new Map();
+			if (pendingScanGuids.length) {
+				const scanResults = await tx.documentVersionAvScan.findMany({
+					where: {
+						documentGuid: { in: pendingScanGuids },
+						version: 1
+					}
+				});
+
+				for (const scanResult of scanResults) {
+					virusCheckStatusByGuid.set(
+						scanResult.documentGuid,
+						scanResult.avScanSuccess === true
+							? APPEAL_VIRUS_CHECK_STATUS.SCANNED
+							: APPEAL_VIRUS_CHECK_STATUS.AFFECTED
+					);
+				}
+			}
+
+			await tx.documentVersion.createMany({
+				data: chunk.map((document) => ({
+					documentGuid: document.guid,
+					version: 1,
+					lastModified: now,
+					documentType: document.documentType,
+					published: false,
+					draft: false,
+					virusCheckStatus:
+						document.virusCheckStatus ??
+						virusCheckStatusByGuid.get(document.guid) ??
+						APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED,
+					originalFilename: document.originalFilename,
+					fileName: document.fileName,
+					mime: document.mime,
+					size: document.size,
+					stage: document.stage,
+					blobStorageContainer: document.blobStorageContainer,
+					blobStoragePath: document.blobStoragePath,
+					documentURI: document.documentURI,
+					dateReceived: document.dateReceived ?? now,
+					isLateEntry: document.isLateEntry,
+					redactionStatusId: document.redactionStatusId ?? null
+				}))
+			});
+
+			await tx.document.updateMany({
+				where: { guid: { in: chunk.map((document) => document.guid) } },
+				data: { latestVersionId: 1 }
+			});
+		}
+
+		return tx.documentVersion.findMany({
+			include: { document: true, redactionStatus: true },
+			where: {
+				documentGuid: { in: allGuids },
+				version: 1
+			}
+		});
+	});
+
+	const versionsByGuid = new Map(
+		createdVersions.map((documentVersion) => [documentVersion.documentGuid, documentVersion])
+	);
+
+	return allGuids.map((guid) => versionsByGuid.get(guid) || null);
 };
 
 /**
@@ -295,4 +416,20 @@ export const deleteDocumentAndVersions = async (tx, documentGuid, name) => {
 		where: { documentGuid },
 		data: { isDeleted: true }
 	});
+};
+
+/**
+ * @template T
+ * @param {T[]} documents
+ * @param {number} chunkSize
+ * @returns {T[][]}
+ */
+const chunkDocuments = (documents, chunkSize) => {
+	/** @type {T[][]} */
+	const chunks = [];
+	for (let index = 0; index < documents.length; index += chunkSize) {
+		chunks.push(documents.slice(index, index + chunkSize));
+	}
+
+	return chunks;
 };

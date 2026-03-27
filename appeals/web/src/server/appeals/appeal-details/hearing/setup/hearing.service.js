@@ -1,6 +1,6 @@
 /**
  * @param {import('@pins/express/types/express.js').Request} request
- * @param {{hearingStartTime: string, address?: {addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string}}} hearingDetails
+ * @param {{hearingStartTime: string, estimatedDays?: string, address?: {addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string}}} hearingDetails
  * @returns {Promise<{hearingEstimateId: number}>}
  */
 export const createHearing = async (request, hearingDetails) => {
@@ -17,7 +17,7 @@ export const createHearing = async (request, hearingDetails) => {
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {string} hearingId
- * @param {{hearingStartTime?: string, address?: {addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string} | null, addressId?: string}} hearingDetails
+ * @param {{hearingStartTime?: string, estimatedDays?: string, address?: {addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string} | null, addressId?: string}} hearingDetails
  * @returns {Promise<{hearingEstimateId: number}>}
  */
 export const updateHearing = async (request, hearingId, hearingDetails) => {

@@ -1,4 +1,13 @@
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
+/** @type {import('../../lpa-questionnaire/mapper.js').SubMapper} */
+
+export const mapLpaNeighbouringSitesLpaqAdapter = (params) =>
+	// @ts-expect-error
+	mapLpaNeighbouringSites({
+		appealDetails: params.appealDetails,
+		currentRoute: params.currentRoute,
+		userHasUpdateCasePermission: params.userHasUpdateCase
+	});
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapLpaNeighbouringSites = ({

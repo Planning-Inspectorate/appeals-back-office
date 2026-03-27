@@ -1,0 +1,20 @@
+{% macro globalFooter(currentUrl) %}
+    <footer class="pins-footer" role="contentinfo">
+        <div class="pins-footer-row">
+            <div class="pins-footer-container govuk-width-container">
+                <div class="pins-footer__meta">
+                    <div>
+                        <ul class="pins-footer__inline-list">
+                            <li class="pins-footer__inline-list-item">
+                                <a class="pins-footer__link" href="/accessibility-statement?returnUrl={{ currentUrl }}">Accessibility</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <span class="pins-footer__copyright">© Planning Inspectorate</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+{% endmacro %}

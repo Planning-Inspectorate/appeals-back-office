@@ -8,6 +8,7 @@ import {
 	getSessionValuesForAppeal
 } from '#lib/edit-utilities.js';
 import logger from '#lib/logger.js';
+import isLinkedAppeal from '#lib/mappers/utils/is-linked-appeal.js';
 import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import {
@@ -16,6 +17,7 @@ import {
 	preserveQueryString
 } from '#lib/url-utilities.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { recalculateDateIfNotBusinessDay } from '@pins/appeals/utils/business-days.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import {
@@ -45,8 +47,12 @@ export const getStartDate = async (request, response) => {
 		getEnabledInquiryAppealTypes().includes(appealType);
 
 	if (
-		// S78 and enforcement should always go to select procedure, other appeal types should only go to select procedure if hearing or inquiry is enabled for that appeal type
-		[APPEAL_TYPE.S78, APPEAL_TYPE.ENFORCEMENT_NOTICE].includes(appealType) ||
+		// S78 and enforcement and ELB should always go to select procedure, other appeal types should only go to select procedure if hearing or inquiry is enabled for that appeal type
+		[
+			APPEAL_TYPE.S78,
+			APPEAL_TYPE.ENFORCEMENT_NOTICE,
+			APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
+		].includes(appealType) ||
 		hearingOrInquiryEnabled
 	) {
 		return response.redirect(
@@ -176,16 +182,14 @@ export const getSelectProcedure = async (request, response) => {
 		session
 	} = request;
 
+	const isLinked = isLinkedAppeal(request.currentAppeal);
+
 	const hearingOrInquiryEnabled =
-		getEnabledHearingAppealTypes().includes(appealType) ||
-		getEnabledInquiryAppealTypes().includes(appealType);
+		getEnabledHearingAppealTypes(isLinked).includes(appealType) ||
+		getEnabledInquiryAppealTypes(isLinked).includes(appealType);
 
 	// enforcement should redirect to check your answers if hearing or inquiry is not enabled, as there is only one procedure option available
-	if (
-		appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
-		featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE) &&
-		!hearingOrInquiryEnabled
-	) {
+	if (isAnyEnforcementAppealType(appealType) && !hearingOrInquiryEnabled) {
 		session.startCaseAppealProcedure = {
 			[appealId]: { appealProcedure: APPEAL_CASE_PROCEDURE.WRITTEN }
 		};
@@ -207,6 +211,7 @@ const renderSelectProcedure = async (request, response) => {
 	} = request;
 
 	const sessionValues = getSessionValuesForAppeal(request, 'startCaseAppealProcedure', appealId);
+	const isLinked = isLinkedAppeal(request.currentAppeal);
 
 	const backUrl = getBackLinkUrl(
 		request,
@@ -217,6 +222,7 @@ const renderSelectProcedure = async (request, response) => {
 	const mappedPageContent = selectProcedurePage(
 		appealReference,
 		appealType,
+		isLinked,
 		backUrl,
 		{ appealProcedure: sessionValues?.appealProcedure },
 		errors ? errors['appealProcedure']?.msg : undefined
@@ -327,7 +333,8 @@ const renderConfirmProcedure = async (request, response) => {
 
 	clearEditsForAppeal(request, 'startCaseAppealProcedure', appealId);
 
-	const showEmailPreviews = appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE;
+	const showEmailPreviews = isAnyEnforcementAppealType(appealType);
+
 	/** @type {{appellant: string, lpa: string} | undefined} */
 	let emailPreviews;
 

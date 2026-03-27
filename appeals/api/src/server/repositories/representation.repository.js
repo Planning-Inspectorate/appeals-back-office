@@ -39,16 +39,16 @@ const getById = (id) => {
 };
 
 /**
- * @param {number} appealId
- * @param {{ representationType?: string[], status?: string }} options
+ * @param {number[]} appealIds
+ * @param {{ representationType?: string[], status?: string }} [options]
  * @param {number} [pageNumber]
  * @param {number} [pageSize]
  * */
-const getRepresentations = async (appealId, options, pageNumber, pageSize) => {
+const getRepresentations = async (appealIds, options, pageNumber, pageSize) => {
 	const whereClause = {
-		appealId,
-		status: options.status,
-		...(options.representationType
+		appealId: { in: appealIds },
+		...(options?.status ? { status: options.status } : {}),
+		...(options?.representationType
 			? {
 					representationType: {
 						in: options.representationType
@@ -121,13 +121,13 @@ const getRepresentations = async (appealId, options, pageNumber, pageSize) => {
 };
 
 /**
- * @param {number} appealId
+ * @param {number[]} appealIds
  * @param {{ status?: string }} options
  * @returns {Promise<{ [key: string]: number }>}
  */
-const getRepresentationCounts = async (appealId, options) => {
+const getRepresentationCounts = async (appealIds, options) => {
 	const whereClause = {
-		appealId,
+		appealId: { in: appealIds },
 		status: options.status
 	};
 
@@ -189,16 +189,16 @@ const updateRepresentationById = (id, data) => {
 };
 
 /**
- * @param {number} appealId
+ * @param {number[]} appealIds
  * @param {RepresentationWhereInput} options
- * @param {RepresentationUpdateInput} data
+ * @param {RepresentationUpdateInput & { appealId?: number }} data
  */
-const updateRepresentations = (appealId, options, data) => {
-	const { status, redactedRepresentation, notes, reviewer, siteVisitRequested } = data;
+const updateRepresentations = (appealIds, options, data) => {
+	const { status, redactedRepresentation, notes, reviewer, siteVisitRequested, appealId } = data;
 
 	return databaseConnector.$transaction(async (tx) => {
 		const reps = await tx.representation.findMany({
-			where: { appealId, ...options }
+			where: { appealId: { in: appealIds }, ...options }
 		});
 
 		const repIds = reps.map((r) => r.id);
@@ -210,6 +210,7 @@ const updateRepresentations = (appealId, options, data) => {
 				}
 			},
 			data: {
+				...(appealId && { appealId }),
 				...(status && { status }),
 				...(redactedRepresentation && { redactedRepresentation }),
 				...(notes && { notes }),
@@ -230,15 +231,15 @@ const updateRepresentations = (appealId, options, data) => {
 };
 
 /**
- * @param {number} appealId
+ * @param {number[]} appealIds
  * @param {string} [representationType]
  * @returns {Promise<Record<string, number>>}
  * */
-const countAppealRepresentationsByStatus = async (appealId, representationType) => {
+const countAppealRepresentationsByStatus = async (appealIds, representationType) => {
 	const statusCounts = await databaseConnector.representation.groupBy({
 		by: ['status'],
 		where: {
-			appealId,
+			appealId: { in: appealIds },
 			representationType
 		},
 		_count: true
@@ -258,6 +259,13 @@ const countAppealRepresentationsByStatus = async (appealId, representationType) 
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
  * */
 const createRepresentation = (data) => databaseConnector.representation.create({ data });
+
+/**
+ * @param {RepresentationCreateInput[]} data
+ * @returns {Promise<import('@pins/appeals.api').Schema.Representation[]>}
+ * */
+// @ts-ignore
+const createRepresentations = (data) => databaseConnector.representation.createMany({ data });
 
 /**
  * @param {number} repId
@@ -333,6 +341,7 @@ export default {
 	updateRepresentations,
 	countAppealRepresentationsByStatus,
 	createRepresentation,
+	createRepresentations,
 	addAttachments,
 	updateRejectionReasons
 };

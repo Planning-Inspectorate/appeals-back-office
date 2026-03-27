@@ -12,6 +12,8 @@ export async function getInvalidStatusCreatedDate(apiClient, appealId) {
 const mapIncompleteReviewOutcomeApiResponse = (/** @type {any} */ reviewOutcome) => {
 	let parsedReasons;
 	let missingDocumentReasons;
+	let groundsFactsReasons;
+
 	if (reviewOutcome.reasons) {
 		const reasons = !Array.isArray(reviewOutcome.reasons)
 			? [reviewOutcome.reasons]
@@ -32,6 +34,17 @@ const mapIncompleteReviewOutcomeApiResponse = (/** @type {any} */ reviewOutcome)
 		// @ts-ignore
 		if (!missingDocumentReasons.every((value) => !Number.isNaN(value))) {
 			throw new Error('failed to parse one or more missing document IDs to integer');
+		}
+	}
+	if (reviewOutcome.groundsFacts) {
+		const reasons = !Array.isArray(reviewOutcome.groundsFacts)
+			? [reviewOutcome.groundsFacts]
+			: reviewOutcome.groundsFacts;
+		// @ts-ignore
+		groundsFactsReasons = reasons.map((reason) => parseInt(reason, 10));
+		// @ts-ignore
+		if (!groundsFactsReasons.every((value) => !Number.isNaN(value))) {
+			throw new Error('failed to parse one or more grounds and facts IDs to integer');
 		}
 	}
 
@@ -69,6 +82,16 @@ const mapIncompleteReviewOutcomeApiResponse = (/** @type {any} */ reviewOutcome)
 				hour: DEADLINE_HOUR,
 				minute: DEADLINE_MINUTE
 			})
+		}),
+		...(reviewOutcome.groundsFacts && {
+			// @ts-ignore
+			enforcementGroundsMismatchFacts: groundsFactsReasons.map((reason) => ({
+				id: reason,
+				...(reviewOutcome.groundsFacts &&
+					reviewOutcome.groundsFactsText[reason] && {
+						text: reviewOutcome.groundsFactsText[reason]
+					})
+			}))
 		})
 	};
 };

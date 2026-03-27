@@ -79,13 +79,12 @@ export function loadConfig() {
 		RETRY_MAX_ATTEMPTS,
 		RETRY_STATUS_CODES,
 		USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
-		FEATURE_FLAG_CANCEL_CASE,
 		FEATURE_FLAG_CHANGE_PROCEDURE_TYPE,
-		FEATURE_FLAG_AUTO_ASSIGN_TEAM,
 		FEATURE_FLAG_CANCEL_SITE_VISIT,
 		FEATURE_FLAG_SEARCH_CASE_OFFICER,
 		FEATURE_FLAG_ENFORCEMENT_NOTICE,
 		FEATURE_FLAG_ENFORCEMENT_LINKED,
+		FEATURE_FLAG_ENFORCEMENT_LEAD_CAN_START,
 		FEATURE_FLAG_ENFORCEMENT_CANCEL,
 		FEATURE_FLAG_INVALID_DECISION_LETTER,
 		FEATURE_FLAG_RULE_6_MVP,
@@ -101,7 +100,10 @@ export function loadConfig() {
 		FEATURE_FLAG_LDC_HEARING,
 		FEATURE_FLAG_LDC_INQUIRY,
 		FEATURE_FLAG_ELB_HEARING,
-		FEATURE_FLAG_ELB_INQUIRY
+		FEATURE_FLAG_ELB_INQUIRY,
+		FEATURE_FLAG_ENFORCEMENT_HEARING_LINKED,
+		FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED,
+		FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED
 	} = environment;
 
 	const config = {
@@ -165,14 +167,13 @@ export function loadConfig() {
 			featureFlagPdfDownload: FEATURE_FLAG_PDF_DOWNLOAD === 'true',
 			featureFlagNetResidence: FEATURE_FLAG_NET_RESIDENCE === 'true',
 			featureFlagNetResidenceS20: FEATURE_FLAG_NET_RESIDENCE_S20 === 'true',
-			featureFlagCancelCase: FEATURE_FLAG_CANCEL_CASE === 'true',
 			featureFlagChangeProcedureType: FEATURE_FLAG_CHANGE_PROCEDURE_TYPE === 'true',
 			featureFlagHearingPostMvp: FEATURE_FLAG_HEARING_POST_MVP === 'true',
-			featureFlagAutoAssignTeam: FEATURE_FLAG_AUTO_ASSIGN_TEAM === 'true',
 			featureFlagCancelSiteVisit: FEATURE_FLAG_CANCEL_SITE_VISIT === 'true',
 			featureFlagSearchCaseOfficer: FEATURE_FLAG_SEARCH_CASE_OFFICER === 'true',
 			featureFlagEnforcementNotice: FEATURE_FLAG_ENFORCEMENT_NOTICE === 'true',
 			featureFlagEnforcementLinked: FEATURE_FLAG_ENFORCEMENT_LINKED === 'true',
+			featureFlagEnforcementLeadCanStart: FEATURE_FLAG_ENFORCEMENT_LEAD_CAN_START === 'true',
 			featureFlagEnforcementCancel: FEATURE_FLAG_ENFORCEMENT_CANCEL === 'true',
 			featureFlagInvalidDecisionLetter: FEATURE_FLAG_INVALID_DECISION_LETTER === 'true',
 			featureFlagRule6Mvp: FEATURE_FLAG_RULE_6_MVP === 'true',
@@ -190,7 +191,11 @@ export function loadConfig() {
 			featureFlagLdcHearing: FEATURE_FLAG_LDC_HEARING === 'true',
 			featureFlagLdcInquiry: FEATURE_FLAG_LDC_INQUIRY === 'true',
 			featureFlagElbHearing: FEATURE_FLAG_ELB_HEARING === 'true',
-			featureFlagElbInquiry: FEATURE_FLAG_ELB_INQUIRY === 'true'
+			featureFlagElbInquiry: FEATURE_FLAG_ELB_INQUIRY === 'true',
+			featureFlagEnforcementHearingLinked: FEATURE_FLAG_ENFORCEMENT_HEARING_LINKED === 'true',
+			featureFlagEnforcementInquiryLinked: FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED === 'true',
+			featureFlagEnforcementChangeProcedureLinked:
+				FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED === 'true'
 		},
 		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
 		pdfServiceHost: PDF_SERVICE_HOST

@@ -63,6 +63,7 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 				)}">Mark as transferred</a></p>`
 			});
 		case 'readyForSetUpSiteVisit':
+			request.session.readyToSetUp = true;
 			return createNotificationBanner({
 				bannerDefinitionKey,
 				html: `<p class="govuk-notification-banner__heading">Site visit ready to set up</p><p><a class="govuk-notification-banner__link" data-cy="set-up-site-visit-banner" href="${addBackLinkQueryToUrl(
@@ -224,6 +225,14 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 					`/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement`
 				)}" class="govuk-heading-s govuk-notification-banner__link">Update LPA statement</a>`
 			});
+		case 'updateAppellantStatement':
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<p class="govuk-notification-banner__heading">Appellant statement incomplete</p> <a href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/appellant-statement`
+				)}" class="govuk-heading-s govuk-notification-banner__link">Update appellant statement</a>`
+			});
 		case 'addHearingAddress': {
 			return createNotificationBanner({
 				bannerDefinitionKey,
@@ -305,6 +314,24 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 				)}">Set up inquiry</a>`
 			});
 		}
+		case 'addSiteVisitTime': {
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<a class="govuk-heading-s govuk-notification-banner__link" data-cy="add-site-visit-time" href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/site-visit/schedule/schedule-visit-date`
+				)}">Add site visit time</a>`
+			});
+		}
+		case 'addSiteVisitDateTime': {
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<a class="govuk-heading-s govuk-notification-banner__link" data-cy="add-site-visit-date-time" href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/site-visit/schedule/schedule-visit-date`
+				)}">Add site visit date and time</a>`
+			});
+		}
 		case 'reviewRule6PartyStatement': {
 			const banners = Object.values(
 				appealDetails.documentationSummary.rule6PartyStatements || []
@@ -346,13 +373,92 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 			return banners.length ? banners : undefined;
 		}
 		case 'enforcementNoticeAppealIncomplete': {
+			const createPageComponent = (/** @type {Array<{key: string, value: string}>} */ items) => {
+				/** @type {PageComponent[]} */
+				const bannerContentPageComponents = items.map((item) => ({
+					type: 'summary-list',
+					parameters: {
+						classes: 'govuk-summary-list--no-border govuk-!-margin-bottom-4',
+						rows: [
+							{
+								key: {
+									text: item.key
+								},
+								value: {
+									text: item.value
+								}
+							}
+						]
+					}
+				}));
+				bannerContentPageComponents.push({
+					type: 'html',
+					parameters: {
+						html: `<a class="govuk-notification-banner__link" data-cy="" href="${addBackLinkQueryToUrl(
+							request,
+							`/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case`
+						)}">Update appeal</a></p>`
+					}
+				});
+
+				return bannerContentPageComponents;
+			};
+
+			/** @type {PageComponent[]} */
+			const notificationBanners = [];
+			const enforcementNoticeInvalid =
+				appealDetails.enforcementNotice?.appealOutcome?.enforcementNoticeInvalid === 'yes';
+
+			if (appealDetails.documentationSummary.appellantCase?.dueDate) {
+				const dueDate = formatDate(
+					new Date(appealDetails.documentationSummary.appellantCase?.dueDate)
+				);
+				const bannerContentPageComponents = createPageComponent([
+					{ key: 'Due date', value: dueDate },
+					{
+						key: 'Incomplete reasons',
+						value: enforcementNoticeInvalid ? 'Enforcement notice invalid' : 'Missing information'
+					}
+				]);
+				notificationBanners.push(
+					createNotificationBanner({
+						titleText: `Appeal is incomplete`,
+						bannerDefinitionKey,
+						pageComponents: bannerContentPageComponents
+					})
+				);
+			}
+
+			if (
+				!enforcementNoticeInvalid &&
+				appealDetails.enforcementNotice?.appealOutcome?.groundAFeeReceiptDueDate
+			) {
+				const dueDate = formatDate(
+					new Date(appealDetails.enforcementNotice?.appealOutcome?.groundAFeeReceiptDueDate)
+				);
+				const bannerContentPageComponents = createPageComponent([
+					{ key: 'Due date', value: dueDate },
+					{ key: 'Incomplete reasons', value: 'Ground (a) fee receipt due' }
+				]);
+				notificationBanners.push(
+					createNotificationBanner({
+						titleText: `Appeal is incomplete`,
+						bannerDefinitionKey,
+						pageComponents: bannerContentPageComponents
+					})
+				);
+			}
+
+			return notificationBanners;
+		}
+		case 'enforcementListedAppealIncomplete': {
 			const dueDate = formatDate(
 				// @ts-ignore
 				new Date(appealDetails.documentationSummary.appellantCase?.dueDate)
 			);
 			const listItems = [
-				{ key: 'Due date', value: dueDate },
-				{ key: 'Incomplete reasons', value: 'Enforcement notice invalid' }
+				{ key: 'Due dates', value: dueDate },
+				{ key: 'Incomplete reasons', value: 'Appeal incomplete' }
 			];
 			/** @type {PageComponent[]} */
 			const bannerContentPageComponents = listItems.map((item) => ({

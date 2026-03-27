@@ -19,10 +19,10 @@ export const mapLinkedAppeals = ({ appealDetails, session }) => {
 		!isChildAppeal(appealDetails) &&
 		appealDetails.appealType !== APPEAL_TYPE.ENFORCEMENT_NOTICE &&
 		[
-			(APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+			APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
 			APPEAL_CASE_STATUS.VALIDATION,
 			APPEAL_CASE_STATUS.READY_TO_START,
-			APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE)
+			APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
 			// @ts-ignore
 		].includes(appealDetails.appealStatus);
 

@@ -7,8 +7,10 @@ import {
 	dateISOStringToDayMonthYearHourMinute,
 	dateISOStringToDisplayDate,
 	dayMonthYearHourMinuteToDisplayDate,
-	dayMonthYearHourMinuteToISOString
+	dayMonthYearHourMinuteToISOString,
+	getExampleDateHint
 } from '#lib/dates.js';
+import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
 import { initialiseAndMapData } from '#lib/mappers/data/appellant-case/mapper.js';
 import {
 	createNotificationBanner,
@@ -19,6 +21,7 @@ import {
 	sortNotificationBanners,
 	userHasPermission
 } from '#lib/mappers/index.js';
+import { generateCaseSummary } from '#lib/mappers/utils/generate-case-summary.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { objectContainsAllValues } from '#lib/object-utilities.js';
@@ -26,6 +29,7 @@ import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
 import { mapReasonOptionsToCheckboxItemParameters } from '#lib/validation-outcome-reasons-formatter.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
+import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import {
 	APPEAL_CASE_STATUS,
 	APPEAL_DOCUMENT_TYPE,
@@ -75,6 +79,18 @@ export async function appellantCasePage(
 	errorMessage = undefined,
 	request
 ) {
+	const baseAppealRoute = `/appeals-service/appeal-details/${appealDetails.appealId}`;
+
+	const mappedAppealDetails = await initialiseAndMapAppealData(
+		appealDetails,
+		baseAppealRoute,
+		session,
+		request,
+		false
+	);
+
+	const appellantCaseSummary = generateCaseSummary(mappedAppealDetails);
+
 	const mappedAppellantCaseData = initialiseAndMapData(
 		appellantCaseData,
 		appealDetails,
@@ -82,32 +98,6 @@ export async function appellantCasePage(
 		session,
 		request
 	);
-
-	/**
-	 * @type {PageComponent}
-	 */
-	const appellantCaseSummary = {
-		type: 'summary-list',
-		wrapperHtml: {
-			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds">',
-			closing: '</div></div>'
-		},
-		parameters: {
-			classes: 'govuk-summary-list--no-border',
-			rows: [
-				...(mappedAppellantCaseData.siteAddress.display.summaryListItem
-					? [
-							{
-								...mappedAppellantCaseData.siteAddress.display.summaryListItem,
-								key: {
-									text: 'Site address'
-								}
-							}
-						]
-					: [])
-			]
-		}
-	};
 
 	const userHasUpdateCase = userHasPermission(permissionNames.updateCase, session);
 	const appealTypeSpecificComponents = generateCaseTypeSpecificComponents(
@@ -153,21 +143,7 @@ export async function appellantCasePage(
 		appealDetails.documentationSummary?.appellantCase?.status?.toLowerCase() !== 'valid' &&
 		userHasPermission(permissionNames.setStageOutcome, session)
 	) {
-		if (appellantCaseData.isEnforcementChild) {
-			if (
-				appealDetails.documentationSummary?.appellantCase?.status?.toLowerCase() !== 'incomplete'
-			) {
-				reviewOutcomeComponents.push({
-					type: 'input',
-					parameters: {
-						type: 'hidden',
-						id: 'review-outcome',
-						name: 'reviewOutcome',
-						value: 'continue'
-					}
-				});
-			}
-		} else {
+		if (!appellantCaseData.isEnforcementChild) {
 			if (session.webAppellantCaseReviewOutcome?.validationOutcome) {
 				reviewOutcomeRadiosInputInstruction.properties.items =
 					// @ts-ignore
@@ -214,25 +190,16 @@ export async function appellantCasePage(
 	}
 
 	const existingValidationOutcome = getValidationOutcomeFromAppellantCase(appellantCaseData);
-
-	const hideNotificationBannerForIncompleteValidEnforcement =
-		appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
-		existingValidationOutcome === 'incomplete' &&
-		appealDetails.enforcementNotice?.appealOutcome?.enforcementNoticeInvalid === 'no';
-
-	const notificationBanners = hideNotificationBannerForIncompleteValidEnforcement
-		? []
-		: mapAppellantCaseNotificationBanners(
-				appellantCaseData,
-				currentRoute,
-				session,
-				existingValidationOutcome,
-				existingValidationOutcome === 'invalid'
-					? appellantCaseData.validation?.invalidReasons || []
-					: appellantCaseData.validation?.incompleteReasons || [],
-				appealDetails?.appealId,
-				appealDetails?.documentationSummary.appellantCase?.dueDate
-			);
+	const notificationBanners = mapAppellantCaseNotificationBanners(
+		appellantCaseData,
+		session,
+		existingValidationOutcome,
+		existingValidationOutcome === 'invalid'
+			? appellantCaseData.validation?.invalidReasons || []
+			: appellantCaseData.validation?.incompleteReasons || [],
+		appealDetails?.appealId,
+		appealDetails?.documentationSummary.appellantCase?.dueDate
+	);
 
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
@@ -349,7 +316,6 @@ export function updateDueDatePage(
 		title: 'Check answers',
 		backLinkUrl,
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
-		heading: 'Update appeal due date',
 		submitButtonProperties: {
 			text:
 				appealData.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ? 'Continue' : 'Save and continue',
@@ -360,13 +326,14 @@ export function updateDueDatePage(
 				name: 'due-date',
 				id: 'due-date',
 				namePrefix: 'due-date',
-				hint: 'For example, 27 3 2007',
+				hint: `For example, ${getExampleDateHint(27)}`,
 				value: {
 					day: existingDueDateDayMonthYear.day,
 					month: existingDueDateDayMonthYear.month,
 					year: existingDueDateDayMonthYear.year
 				},
-				legendText: '',
+				legendText: 'Update appeal due date',
+				legendIsPageHeading: true,
 				errors: errors
 			})
 		]
@@ -407,7 +374,6 @@ export function checkAndConfirmPage(
 	) {
 		throw new Error(`validationOutcome "${validationOutcome}" requires invalidOrIncompleteReasons`);
 	}
-
 	const isEnforcementAppeal =
 		enforcementNoticeInvalid !== undefined && otherLiveAppeals !== undefined;
 	const validationOutcomeAsString = String(validationOutcome);
@@ -565,7 +531,6 @@ export function checkAndConfirmPage(
 
 /**
  * @param {SingleAppellantCaseResponse} appellantCaseData
- * @param {string} currentRoute
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {AppellantCaseValidationOutcome|undefined} validationOutcome
  * @param {IncompleteInvalidReasonsResponse[]} notValidReasons
@@ -575,7 +540,6 @@ export function checkAndConfirmPage(
  */
 export function mapAppellantCaseNotificationBanners(
 	appellantCaseData,
-	currentRoute,
 	session,
 	validationOutcome,
 	notValidReasons,
@@ -591,27 +555,31 @@ export function mapAppellantCaseNotificationBanners(
 	}
 
 	if (validationOutcome === 'invalid' || validationOutcome === 'incomplete') {
+		const isIncompleteEnforcementNotice =
+			appellantCaseData.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
+			validationOutcome === 'incomplete';
 		notValidReasons = ensureArray(notValidReasons);
-
 		const listClasses = 'govuk-!-margin-top-0';
 
 		/** @type {PageComponent[]} */
-		const bannerContentPageComponents = (notValidReasons || [])
-			.filter((reason) => reason.name.hasText)
-			.map((reason) => ({
-				type: 'details',
-				parameters: {
-					summaryText: reason.name?.name,
-					html: buildHtmlList({
-						...(reason.text ? { items: reason.text } : {}),
-						listClasses
-					})
-				}
-			}));
+		const bannerContentPageComponents = !isIncompleteEnforcementNotice
+			? (notValidReasons || [])
+					.filter((reason) => reason.name.hasText)
+					.map((reason) => ({
+						type: 'details',
+						parameters: {
+							summaryText: reason.name?.name,
+							html: buildHtmlList({
+								...(reason.text ? { items: reason.text } : {}),
+								listClasses
+							})
+						}
+					}))
+			: [];
 
 		const reasonsWithoutText = (notValidReasons || []).filter((reason) => !reason.name.hasText);
 
-		if (reasonsWithoutText.length > 0) {
+		if (reasonsWithoutText.length > 0 && !isIncompleteEnforcementNotice) {
 			bannerContentPageComponents.unshift({
 				type: 'details',
 				parameters: {
@@ -637,42 +605,71 @@ export function mapAppellantCaseNotificationBanners(
 							value: {
 								text: dateISOStringToDisplayDate(appealDueDate)
 							}
-						}
-					]
+						},
+						isAnyEnforcementAppealType(appellantCaseData.appealType)
+							? {
+									key: {
+										text: 'Incomplete reasons'
+									},
+									value: {
+										text:
+											appellantCaseData.enforcementNotice?.enforcementNoticeInvalid === 'yes'
+												? 'Enforcement notice invalid'
+												: 'Missing information'
+									}
+								}
+							: null
+					].filter(Boolean)
 				}
 			});
 		}
 
-		if (
-			// @ts-ignore
-			appellantCaseData.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
-			validationOutcome === 'incomplete'
-		) {
-			bannerContentPageComponents.push({
-				type: 'summary-list',
-				parameters: {
-					classes: 'govuk-summary-list--no-border govuk-!-margin-bottom-4',
-					rows: [
+		if (bannerContentPageComponents.length) {
+			banners.push(
+				createNotificationBanner({
+					bannerDefinitionKey: 'appellantCaseNotValid',
+					titleText: `Appeal is ${String(validationOutcome)}`,
+					pageComponents: bannerContentPageComponents
+				})
+			);
+		}
+
+		if (isIncompleteEnforcementNotice && appellantCaseData?.enforcementNotice?.groundAFeeDueDate) {
+			banners.push(
+				createNotificationBanner({
+					bannerDefinitionKey: 'appellantCaseNotValid',
+					titleText: `Appeal is ${String(validationOutcome)}`,
+					pageComponents: [
 						{
-							key: {
-								text: 'Incomplete reasons'
-							},
-							value: {
-								text: 'Enforcement notice invalid'
+							type: 'summary-list',
+							parameters: {
+								classes: 'govuk-summary-list--no-border govuk-!-margin-bottom-4',
+								rows: [
+									{
+										key: {
+											text: 'Due date'
+										},
+										value: {
+											text: dateISOStringToDisplayDate(
+												appellantCaseData?.enforcementNotice?.groundAFeeDueDate
+											)
+										}
+									},
+									{
+										key: {
+											text: 'Incomplete reasons'
+										},
+										value: {
+											text: 'Ground (a) fee receipt due'
+										}
+									}
+								]
 							}
 						}
 					]
-				}
-			});
+				})
+			);
 		}
-
-		banners.push(
-			createNotificationBanner({
-				bannerDefinitionKey: 'appellantCaseNotValid',
-				titleText: `Appeal is ${String(validationOutcome)}`,
-				pageComponents: bannerContentPageComponents
-			})
-		);
 	}
 
 	return sortNotificationBanners(banners);
@@ -946,6 +943,14 @@ export function getPageHeadingTextOverrideForFolder(folder) {
 			return 'Ground (f) supporting documents';
 		case APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING:
 			return 'Ground (g) supporting documents';
+		case APPEAL_DOCUMENT_TYPE.GROUND_H_SUPPORTING:
+			return 'Ground (h) supporting documents';
+		case APPEAL_DOCUMENT_TYPE.GROUND_I_SUPPORTING:
+			return 'Ground (i) supporting documents';
+		case APPEAL_DOCUMENT_TYPE.GROUND_J_SUPPORTING:
+			return 'Ground (j) supporting documents';
+		case APPEAL_DOCUMENT_TYPE.GROUND_K_SUPPORTING:
+			return 'Ground (k) supporting documents';
 		case APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT:
 			return 'Ground (a) fee receipt';
 		default:
@@ -1005,6 +1010,14 @@ export function getPageHeadingTextOverrideForAddDocuments(folder, appealType) {
 			return 'Upload your ground (f) supporting documents';
 		case APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING:
 			return 'Upload your ground (g) supporting documents';
+		case APPEAL_DOCUMENT_TYPE.GROUND_H_SUPPORTING:
+			return 'Upload your ground (h) supporting documents';
+		case APPEAL_DOCUMENT_TYPE.GROUND_I_SUPPORTING:
+			return 'Upload your ground (i) supporting documents';
+		case APPEAL_DOCUMENT_TYPE.GROUND_J_SUPPORTING:
+			return 'Upload your ground (j) supporting documents';
+		case APPEAL_DOCUMENT_TYPE.GROUND_K_SUPPORTING:
+			return 'Upload your ground (k) supporting documents';
 		case APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT:
 			return 'Upload your ground (a) fee receipt';
 		default:
@@ -1056,6 +1069,14 @@ export function getDocumentNameFromFolder(folderPath) {
 			return 'ground (f) supporting documents';
 		case APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING:
 			return 'ground (g) supporting documents';
+		case APPEAL_DOCUMENT_TYPE.GROUND_H_SUPPORTING:
+			return 'ground (h) supporting documents';
+		case APPEAL_DOCUMENT_TYPE.GROUND_I_SUPPORTING:
+			return 'ground (i) supporting documents';
+		case APPEAL_DOCUMENT_TYPE.GROUND_J_SUPPORTING:
+			return 'ground (j) supporting documents';
+		case APPEAL_DOCUMENT_TYPE.GROUND_K_SUPPORTING:
+			return 'ground (k) supporting documents';
 		case APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT:
 			return 'ground (a) fee receipt';
 	}

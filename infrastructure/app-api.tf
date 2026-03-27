@@ -1,6 +1,6 @@
 module "app_api" {
   #checkov:skip=CKV_TF_1: Use of commit hash are not required for our Terraform modules
-  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-app-service?ref=1.53"
+  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-app-service?ref=1.54"
 
   resource_group_name = azurerm_resource_group.primary.name
   location            = module.primary_region.location
@@ -14,6 +14,7 @@ module "app_api" {
   # service plan
   app_service_plan_id                  = azurerm_service_plan.apps.id
   app_service_plan_resource_group_name = azurerm_resource_group.primary.name
+  worker_count                         = var.apps_config.api.worker_count
 
   # container
   container_registry_name = var.tooling_config.container_registry_name
@@ -69,23 +70,29 @@ module "app_api" {
     GOV_NOTIFY_APPEAL_GENERIC_ID = var.apps_config.integrations.notify_template_ids.appeal_generic_id
 
     #feature flags
-    FEATURE_FLAG_S78_WRITTEN             = var.apps_config.featureFlags.featureFlagS78Written
-    FEATURE_FLAG_S78_INQUIRY             = var.apps_config.featureFlags.featureFlagS78Inquiry
-    FEATURE_FLAG_LINKED_APPEALS          = var.apps_config.featureFlags.featureFlagLinkedAppeals
-    FEATURE_FLAG_LINKED_APPEALS_UNLINK   = var.apps_config.featureFlags.featureFlagLinkedAppealsUnlink
-    FEATURE_FLAG_NET_RESIDENCE           = var.apps_config.featureFlags.featureFlagNetResidence
-    FEATURE_FLAG_NET_RESIDENCE_S20       = var.apps_config.featureFlags.featureFlagNetResidenceS20
-    FEATURE_FLAG_HEARING_POST_MVP        = var.apps_config.featureFlags.featureFlagHearingPostMvp
-    FEATURE_FLAG_SEARCH_CASE_OFFICER     = var.apps_config.featureFlags.featureFlagSearchCaseOfficer
-    FEATURE_FLAG_ENFORCEMENT_NOTICE      = var.apps_config.featureFlags.featureFlagEnforcementNotice
-    FEATURE_FLAG_ENFORCEMENT_LINKED      = var.apps_config.featureFlags.featureFlagEnforcementLinked
-    FEATURE_FLAG_INVALID_DECISION_LETTER = var.apps_config.featureFlags.featureFlagInvalidDecisionLetter
-    FEATURE_FLAG_RULE_6_MVP              = var.apps_config.featureFlags.featureFlagRule6Mvp
-    FEATURE_FLAG_RULE_6_POE              = var.apps_config.featureFlags.featureFlagRule6PoE
-    FEATURE_FLAG_RULE_6_COSTS            = var.apps_config.featureFlags.featureFlagRule6Costs
-    FEATURE_FLAG_RULE_6_STATEMENT        = var.apps_config.featureFlags.featureFlagRule6Statement
-    FEATURE_FLAG_EXPEDITED_APPEALS       = var.apps_config.featureFlags.featureFlagExpeditedAppeals
-    FEATURE_FLAG_LDC                     = var.apps_config.featureFlags.featureFlagLDC
+    FEATURE_FLAG_S78_WRITTEN                         = var.apps_config.featureFlags.featureFlagS78Written
+    FEATURE_FLAG_S78_INQUIRY                         = var.apps_config.featureFlags.featureFlagS78Inquiry
+    FEATURE_FLAG_S20_HEARING                         = var.apps_config.featureFlags.featureFlagS20Hearing
+    FEATURE_FLAG_S20_INQUIRY                         = var.apps_config.featureFlags.featureFlagS20Inquiry
+    FEATURE_FLAG_LINKED_APPEALS                      = var.apps_config.featureFlags.featureFlagLinkedAppeals
+    FEATURE_FLAG_LINKED_APPEALS_UNLINK               = var.apps_config.featureFlags.featureFlagLinkedAppealsUnlink
+    FEATURE_FLAG_NET_RESIDENCE                       = var.apps_config.featureFlags.featureFlagNetResidence
+    FEATURE_FLAG_NET_RESIDENCE_S20                   = var.apps_config.featureFlags.featureFlagNetResidenceS20
+    FEATURE_FLAG_HEARING_POST_MVP                    = var.apps_config.featureFlags.featureFlagHearingPostMvp
+    FEATURE_FLAG_SEARCH_CASE_OFFICER                 = var.apps_config.featureFlags.featureFlagSearchCaseOfficer
+    FEATURE_FLAG_ENFORCEMENT_NOTICE                  = var.apps_config.featureFlags.featureFlagEnforcementNotice
+    FEATURE_FLAG_ENFORCEMENT_LINKED                  = var.apps_config.featureFlags.featureFlagEnforcementLinked
+    FEATURE_FLAG_INVALID_DECISION_LETTER             = var.apps_config.featureFlags.featureFlagInvalidDecisionLetter
+    FEATURE_FLAG_RULE_6_MVP                          = var.apps_config.featureFlags.featureFlagRule6Mvp
+    FEATURE_FLAG_RULE_6_POE                          = var.apps_config.featureFlags.featureFlagRule6PoE
+    FEATURE_FLAG_RULE_6_COSTS                        = var.apps_config.featureFlags.featureFlagRule6Costs
+    FEATURE_FLAG_RULE_6_STATEMENT                    = var.apps_config.featureFlags.featureFlagRule6Statement
+    FEATURE_FLAG_EXPEDITED_APPEALS                   = var.apps_config.featureFlags.featureFlagExpeditedAppeals
+    FEATURE_FLAG_LDC                                 = var.apps_config.featureFlags.featureFlagLDC
+    FEATURE_FLAG_APPELLANT_STATEMENT                 = var.apps_config.featureFlags.featureFlagAppellantStatement
+    FEATURE_FLAG_ENFORCEMENT_HEARING_LINKED          = var.apps_config.featureFlags.featureFlagEnforcementHearingLinked
+    FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED          = var.apps_config.featureFlags.featureFlagEnforcementInquiryLinked
+    FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED = var.apps_config.featureFlags.featureFlagEnforcementChangeProcedureLinked
 
 
 

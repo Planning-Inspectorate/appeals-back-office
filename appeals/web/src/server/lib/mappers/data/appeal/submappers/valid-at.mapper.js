@@ -2,7 +2,12 @@ import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapValidAt = ({ appealDetails, currentRoute, userHasUpdateCasePermission }) =>
+export const mapValidAt = ({
+	appealDetails,
+	appellantCase,
+	currentRoute,
+	userHasUpdateCasePermission
+}) =>
 	textSummaryListItem({
 		id: 'valid-date',
 		text: 'Valid date',
@@ -11,7 +16,7 @@ export const mapValidAt = ({ appealDetails, currentRoute, userHasUpdateCasePermi
 			? `${currentRoute}/appellant-case/valid/date`
 			: `${currentRoute}/appellant-case`,
 		actionText:
-			!appealDetails.caseOfficer || appealDetails.startedAt
+			!appealDetails.caseOfficer || appealDetails.startedAt || appellantCase?.isEnforcementChild
 				? ''
 				: appealDetails.validAt
 					? 'Change'

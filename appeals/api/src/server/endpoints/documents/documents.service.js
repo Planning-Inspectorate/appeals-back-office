@@ -1,7 +1,7 @@
 import config from '#config/config.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import {
-	addDocument,
+	addDocumentsBulk,
 	addDocumentVersion,
 	addDocumentVersionAudit,
 	deleteDocumentVersion
@@ -22,7 +22,6 @@ import {
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_VIRUS_CHECK_STATUS
 } from '@planning-inspectorate/data-model';
-import { PromisePool } from '@supercharge/promise-pool/dist/promise-pool.js';
 import { formatFolder } from './documents.formatter.js';
 import { mapDocumentsForAuditTrail, mapDocumentsForDatabase } from './documents.mapper.js';
 
@@ -130,7 +129,8 @@ export const getRootFoldersForAppeal = async (appealId) => {
 		`${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`,
 		`${APPEAL_CASE_STAGE.STATEMENTS}/${APPEAL_DOCUMENT_TYPE.RULE_6_STATEMENT}`,
 		`${APPEAL_CASE_STAGE.STATEMENTS}/${APPEAL_DOCUMENT_TYPE.RULE_6_PROOF_OF_EVIDENCE}`,
-		`${APPEAL_CASE_STAGE.STATEMENTS}/${APPEAL_DOCUMENT_TYPE.RULE_6_WITNESSES_EVIDENCE}`
+		`${APPEAL_CASE_STAGE.STATEMENTS}/${APPEAL_DOCUMENT_TYPE.RULE_6_WITNESSES_EVIDENCE}`,
+		`${APPEAL_CASE_STAGE.CANCELLATION}/${APPEAL_DOCUMENT_TYPE.LPA_ENFORCEMENT_NOTICE_WITHDRAWAL}`
 	]);
 };
 
@@ -171,6 +171,10 @@ export const getFoldersForStage = (path) => {
 				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_E_SUPPORTING}`,
 				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_F_SUPPORTING}`,
 				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING}`,
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_H_SUPPORTING}`,
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_I_SUPPORTING}`,
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_J_SUPPORTING}`,
+				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_K_SUPPORTING}`,
 				`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT}`
 			];
 			break;
@@ -231,6 +235,9 @@ export const getFoldersForStage = (path) => {
 				`${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
 			];
 			break;
+		case 'cancellation': // TODO: use the enum
+			folders = [`cancellation/${APPEAL_DOCUMENT_TYPE.LPA_ENFORCEMENT_NOTICE_WITHDRAWAL}`];
+			break;
 		default:
 			folders = [`${APPEAL_CASE_STAGE.INTERNAL}/${APPEAL_DOCUMENT_TYPE.UNCATEGORISED}`];
 	}
@@ -265,7 +272,7 @@ export const addDocumentsToAppeal = async (upload, appeal, skipBlobValidation = 
 	}
 
 	const documentsCreated = documentsToSendToDatabase?.length
-		? await addDocumentAndVersion(appeal, documentsToSendToDatabase)
+		? await addDocumentAndVersion(appeal, documentsToSendToDatabase, skipBlobValidation)
 		: [];
 
 	for (const document of documentsCreated) {
@@ -286,51 +293,49 @@ export const addDocumentsToAppeal = async (upload, appeal, skipBlobValidation = 
 /**
  * @param {Appeal} appeal
  * @param {*[]} documents
+ * @param {boolean} [allowErrors]
  * @returns {Promise<(DocumentVersion | null)[]>}
  */
-const addDocumentAndVersion = async (appeal, documents) => {
-	const { results } = await PromisePool.withConcurrency(5)
-		.for(documents)
-		.handleError((error, document) => {
-			logger.error(`Error while upserting document name "${document.name}" to database: ${error}`);
-			throw error;
-		})
-		.process(async (d) => {
-			const document = await addDocument(
-				{
-					GUID: d.GUID,
-					originalFilename: d.name,
-					mime: d.mime,
-					documentType: d.documentType,
-					stage: d.stage,
-					size: d.documentSize,
-					version: 1,
-					blobStorageContainer: d.blobStorageContainer,
-					blobStoragePath: d.blobStoragePath,
-					documentURI: d.documentURI,
-					dateReceived: d.dateReceived,
-					virusCheckStatus: d.virusCheckStatus,
-					redactionStatusId: d.redactionStatusId,
-					isLateEntry: await isLateEntry(d.stage, appeal)
-				},
-				{
-					caseId: appeal.id,
-					reference: appeal.reference,
-					folderId: Number(d.folderId),
-					blobStorageHost: d.blobStorageHost
-				}
-			);
+const addDocumentAndVersion = async (appeal, documents, allowErrors = false) => {
+	const bulkDocuments = documents.map((document) => ({
+		guid: document.GUID,
+		originalFilename: document.name,
+		fileName: document.name,
+		caseId: appeal.id,
+		folderId: Number(document.folderId),
+		mime: document.mime,
+		documentType: document.documentType,
+		stage: document.stage,
+		size: document.documentSize,
+		blobStorageContainer: document.blobStorageContainer,
+		blobStoragePath: document.blobStoragePath,
+		documentURI: document.documentURI,
+		dateReceived: document.dateReceived,
+		virusCheckStatus: document.virusCheckStatus,
+		redactionStatusId: document.redactionStatusId,
+		isLateEntry: isLateEntry(document.stage, appeal)
+	}));
 
-			if (!document) {
-				logger.error(`Error adding document named: ${d.name}`);
-				throw new Error(
-					`Error adding document named: ${d.name} in folder ${d.folderId} for appeal ${d.caseId}`
-				);
+	if (!allowErrors) {
+		const documentsCreated = await addDocumentsBulk(bulkDocuments);
+		logger.info(`Added ${documentsCreated.length} documents to database`);
+		return documentsCreated;
+	}
+
+	/** @type {(DocumentVersion | null)[]} */
+	const results = [];
+	for (const bulkDocument of bulkDocuments) {
+		try {
+			const [documentCreated] = await addDocumentsBulk([bulkDocument]);
+			if (documentCreated) {
+				results.push(documentCreated);
 			}
-			logger.info(`Added document with guid: ${document.documentGuid}`);
-
-			return document;
-		});
+		} catch (error) {
+			logger.error(
+				`Error while upserting document name "${bulkDocument.originalFilename}" to database: ${error}`
+			);
+		}
+	}
 
 	logger.info(`Added ${results.length} documents to database`);
 

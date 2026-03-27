@@ -37,11 +37,13 @@ export const buildRejectionReasons = (reasonOptions, reasons, reasonsText) => {
 	const selectedReasons = ensureArray(reasons)
 		.filter((reason) => !!reason)
 		.map((reason) => parseInt(reason, 10));
-	return reasonOptions.reduce((/** @type {string[]} */ acc, reason) => {
+	const /** type ReasonOptions[] */ selectedOptions = selectedReasons.map((reason) =>
+			reasonOptions.find((option) => option.id === reason)
+		);
+
+	return selectedOptions.reduce((/** @type {string[]} */ acc, reason) => {
+		// @ts-ignore
 		const { id, name, hasText } = reason;
-		if (!selectedReasons.includes(id)) {
-			return acc;
-		}
 		const otherReasons = hasText ? ensureArray(reasonsText && reasonsText[id]) : [];
 		if (otherReasons?.length) {
 			return [

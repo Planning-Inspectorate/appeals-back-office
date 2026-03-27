@@ -56,7 +56,7 @@ router.patch(
 		#swagger.responses[404] = {}
 	 */
 	patchAddressValidator,
-	checkAppealExistsByIdAndAddPartialToRequest(['address']),
+	checkAppealExistsByIdAndAddPartialToRequest(['address', 'appealType', 'childAppeals']),
 	checkAddressExists,
 	asyncHandler(updateAddressById)
 );

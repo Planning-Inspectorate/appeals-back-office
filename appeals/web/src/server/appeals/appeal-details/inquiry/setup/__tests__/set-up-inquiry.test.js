@@ -1751,4 +1751,143 @@ describe('set up inquiry', () => {
 			expect(response.text).toContain('Sorry, there is a problem with the service');
 		});
 	});
+
+	describe('GET /inquiry/setup/timetable-due-dates pre-population', () => {
+		const appealId = 10;
+		const inquiryDate = {
+			'inquiry-date-day': '01',
+			'inquiry-date-month': '10',
+			'inquiry-date-year': '2025',
+			'inquiry-time-hour': '10',
+			'inquiry-time-minute': '00'
+		};
+
+		const mockCalculatedTimetable = {
+			lpaQuestionnaireDueDate: '2025-10-01T00:00:00.000Z',
+			statementDueDate: '2025-10-02T00:00:00.000Z',
+			ipCommentsDueDate: '2025-10-03T00:00:00.000Z',
+			finalCommentsDueDate: '2025-10-04T00:00:00.000Z',
+			statementOfCommonGroundDueDate: '2025-10-05T00:00:00.000Z',
+			proofOfEvidenceAndWitnessesDueDate: '2025-10-06T00:00:00.000Z',
+			planningObligationDueDate: '2025-10-07T00:00:00.000Z',
+			caseManagementConferenceDueDate: '2025-10-08T00:00:00.000Z'
+		};
+
+		const testCases = [
+			{
+				name: 'Planning Appeal (S78)',
+				appealType: 'Planning appeal',
+				expectedFields: [
+					'lpa-questionnaire-due-date',
+					'statement-due-date',
+					'ip-comments-due-date',
+					'statement-of-common-ground-due-date',
+					'proof-of-evidence-and-witnesses-due-date',
+					'case-management-conference-due-date'
+				],
+				excludedFields: ['final-comments-due-date']
+			},
+			{
+				name: 'Planning Listed Building',
+				appealType: 'Planning listed building and conservation area appeal',
+				expectedFields: [
+					'lpa-questionnaire-due-date',
+					'statement-due-date',
+					'ip-comments-due-date',
+					'statement-of-common-ground-due-date',
+					'proof-of-evidence-and-witnesses-due-date',
+					'case-management-conference-due-date'
+				],
+				excludedFields: ['final-comments-due-date']
+			},
+			{
+				name: 'Adverts (Discontinuance Notice)',
+				appealType: 'Discontinuance notice appeal',
+				expectedFields: [
+					'lpa-questionnaire-due-date',
+					'statement-due-date',
+					'ip-comments-due-date',
+					'statement-of-common-ground-due-date',
+					'proof-of-evidence-and-witnesses-due-date',
+					'case-management-conference-due-date',
+					'final-comments-due-date'
+				]
+			},
+			{
+				name: 'Enforcement',
+				appealType: 'Enforcement notice appeal',
+				expectedFields: [
+					'lpa-questionnaire-due-date',
+					'statement-due-date',
+					'ip-comments-due-date',
+					'statement-of-common-ground-due-date',
+					'proof-of-evidence-and-witnesses-due-date',
+					'case-management-conference-due-date',
+					'final-comments-due-date'
+				]
+			},
+			{
+				name: 'Enforcement Listed Building',
+				appealType: 'Enforcement listed building and conservation area appeal',
+				expectedFields: [
+					'lpa-questionnaire-due-date',
+					'statement-due-date',
+					'ip-comments-due-date',
+					'statement-of-common-ground-due-date',
+					'proof-of-evidence-and-witnesses-due-date',
+					'case-management-conference-due-date',
+					'final-comments-due-date'
+				]
+			},
+			{
+				name: 'LDC',
+				appealType: 'Lawful development certificate appeal',
+				expectedFields: [
+					'lpa-questionnaire-due-date',
+					'statement-due-date',
+					'ip-comments-due-date',
+					'statement-of-common-ground-due-date',
+					'proof-of-evidence-and-witnesses-due-date',
+					'case-management-conference-due-date',
+					'final-comments-due-date'
+				]
+			}
+		];
+
+		testCases.forEach(({ name, appealType, expectedFields, excludedFields }) => {
+			it(`should pre-populate and render correct fields for ${name}`, async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=all`)
+					.reply(200, { ...appealData, appealId, appealType })
+					.persist();
+
+				await request.post(`${baseUrl}/${appealId}/inquiry/setup/date`).send(inquiryDate);
+
+				nock('http://test/')
+					.get(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
+					.reply(200, { planningObligation: { hasObligation: true } });
+
+				nock('http://test/')
+					.get(`/appeals/${appealId}/appeal-timetables/calculate`)
+					.query(true)
+					.reply(200, mockCalculatedTimetable);
+
+				const response = await request.get(
+					`${baseUrl}/${appealId}/inquiry/setup/timetable-due-dates`
+				);
+				const pageHtml = parseHtml(response.text);
+
+				expectedFields.forEach((field) => {
+					expect(pageHtml.querySelector(`input#${field}-day`)).not.toBeNull();
+					expect(pageHtml.querySelector(`input#${field}-day`).getAttribute('value')).not.toBe('');
+				});
+
+				excludedFields?.forEach((field) => {
+					expect(pageHtml.querySelector(`input#${field}-day`)).toBeNull();
+				});
+
+				expect(pageHtml.querySelector('input#planning-obligation-due-date-day')).not.toBeNull();
+			});
+		});
+	});
 });

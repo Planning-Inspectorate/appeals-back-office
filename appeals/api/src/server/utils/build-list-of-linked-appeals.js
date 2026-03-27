@@ -42,17 +42,22 @@ export async function buildListOfLinkedAppeals(parentAppeal) {
 		CASE_RELATIONSHIP_LINKED
 	);
 
+	// Add the lead appeal to the list of child appeals
 	// @ts-ignore
-	const childAppeals = linkedChildAppeals.map(({ child }) => child);
+	const linkedAppeals = linkedChildAppeals?.length
+		? linkedChildAppeals.map(({ child }) => child)
+		: [];
 
-	// As the function appealRepository.getAppealsByIds does not return the parentAppeals array property (list of child appeal, parent appeal relationships), we need to add this to each child appeal.
+	linkedAppeals.push({ ...linkedChildAppeals[0]?.parent, ...parentAppeal });
+
+	// As the function appealRepository.getAppealsByIds does not return the parentAppeals array property (list of child appeal, parent appeal relationships), we need to add this to each linked appeal.
 	// As the parentAppeal contains the array of childAppeals (list of child appeal, parent appeal relationships), it's possible to add the parentAppeals property with the correct entry taken from the parentAppeal's childAppeals list.
 
-	const childAppealsAugmentedWithParentAppealRelationshipData = childAppeals.map(
-		(childAppeal) =>
-			childAppeal && augmentChildAppealWithParentAppealRelationshipData(parentAppeal, childAppeal)
+	const linkedAppealsAugmentedWithParentAppealRelationshipData = linkedAppeals.map(
+		(linkedAppeal) =>
+			linkedAppeal && augmentChildAppealWithParentAppealRelationshipData(parentAppeal, linkedAppeal)
 	);
 
 	// @ts-ignore
-	return [parentAppeal, ...childAppealsAugmentedWithParentAppealRelationshipData];
+	return linkedAppealsAugmentedWithParentAppealRelationshipData;
 }
