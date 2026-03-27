@@ -5,10 +5,16 @@ export class ProcedureTypePage extends CaseDetailsPage {
 		...this.elements, // Inherit parent elements
 		written: () => cy.get('#appeal-procedure'),
 		hearing: () => cy.get('#appeal-procedure-2'),
-		inquiry: () => cy.get('#appeal-procedure-3')
+		inquiry: () => cy.get('#appeal-procedure-3'),
+		'part 1': () => cy.get('#appeal-procedure-4')
 	};
 
 	procedureTypeMappings = {
+		part1: {
+			element: () => cy.get('#appeal-procedure'),
+			displayName: 'Part 1',
+			value: 'writtenPart1'
+		},
 		written: {
 			element: this.procedureTypeElements.written,
 			displayName: 'Written representations',
@@ -23,6 +29,11 @@ export class ProcedureTypePage extends CaseDetailsPage {
 			element: this.procedureTypeElements.inquiry,
 			displayName: 'Inquiry',
 			value: 'inquiry'
+		},
+		'part 1': {
+			element: this.procedureTypeElements['part 1'],
+			displayName: 'Part 1',
+			value: 'part 1'
 		}
 	};
 
@@ -61,5 +72,18 @@ export class ProcedureTypePage extends CaseDetailsPage {
 
 	verifyHeader(procedureTypeCaption) {
 		this.elements.getAppealRefCaseDetails().should('contain.text', procedureTypeCaption);
+	}
+
+	verifyNoProcedureTypeSelected(part1 = true, linkedCase = false) {
+		if (part1) {
+			this.procedureTypeMappings.part1.element().should('not.be.checked');
+		}
+
+		this.procedureTypeMappings.written.element().should('not.be.checked');
+
+		if (!linkedCase) {
+			this.procedureTypeMappings.hearing.element().should('not.be.checked');
+			this.procedureTypeMappings.inquiry.element().should('not.be.checked');
+		}
 	}
 }

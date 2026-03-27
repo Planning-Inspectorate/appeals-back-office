@@ -8,6 +8,7 @@ import {
 	AUDIT_TRAIL_APPEAL_LINK_ADDED,
 	CASE_RELATIONSHIP_LINKED
 } from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 
@@ -19,7 +20,7 @@ import {
 export const getChildAppeals = (appeal) =>
 	// @ts-ignore
 	appeal?.childAppeals
-		?.filter(({ type, child }) => type === CASE_RELATIONSHIP_LINKED && child?.appellantCase)
+		?.filter(({ type, child }) => type === CASE_RELATIONSHIP_LINKED && child)
 		.map(({ child }) => child) || [];
 
 /**
@@ -79,4 +80,32 @@ export const linkAppeals = async (azureAdUserId, parentAppeal, childAppeal) => {
 	await Promise.all(
 		[relationship.parentId, relationship.childId].map((id) => broadcasters.broadcastAppeal(id))
 	);
+};
+
+/**
+ *
+ * @param {Partial<Appeal> | undefined} appeal
+ * @returns {Promise<{ reference: string | undefined, grounds: string[] }[]>}
+ */
+export const getChildEnforcementsWithGrounds = async (appeal) => {
+	let childEnforcementWithGrounds = [];
+	if (appeal?.appealType?.key === APPEAL_CASE_TYPE.C) {
+		for (const childAppeal of getChildAppeals(appeal)) {
+			if (childAppeal.appealType?.key === APPEAL_CASE_TYPE.C) {
+				const childWithInfo = await appealRepository.getAppealById(Number(childAppeal.id), true, [
+					'appealGrounds'
+				]);
+				childEnforcementWithGrounds.push({
+					reference: childAppeal.reference,
+					grounds:
+						childWithInfo?.appealGrounds?.map((ground) => ground.ground?.groundRef || '').sort() ||
+						[]
+				});
+			}
+		}
+		childEnforcementWithGrounds?.sort(
+			(a, b) => parseInt(a.reference ?? '0') - parseInt(b.reference ?? '0')
+		);
+	}
+	return childEnforcementWithGrounds;
 };

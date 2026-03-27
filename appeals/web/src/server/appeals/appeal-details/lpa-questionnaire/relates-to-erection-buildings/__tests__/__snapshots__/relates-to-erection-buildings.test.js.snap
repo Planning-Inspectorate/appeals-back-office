@@ -13,7 +13,7 @@ exports[`relates-to-erection-of-buildings GET /change should render the relatesT
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Does the enforcement notice include the erection of a building or buildings?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">

@@ -1,0 +1,53 @@
+@use "../../../node_modules/govuk-frontend/dist/govuk/settings/_colours-applied"
+	as colors;
+@use "../../1-settings/_settings.global.scss" as pins-colours;
+
+.pins-footer {
+	background-color: pins-colours.$pins-colours-grey-100;
+	border-top: 5px solid pins-colours.$pins-colours-green-200 !important;
+	padding: 30px 0;
+	margin-top: 40px;
+	font-family: Arial, sans-serif;
+	font-size: 16px;
+	color: colors.govuk-colour("black");
+
+	.pins-footer__meta {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		@media (max-width: 600px) {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 10px;
+		}
+	}
+
+	.pins-footer__inline-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		gap: 20px;
+	}
+
+	.pins-footer__inline-list-item {
+		display: inline;
+	}
+
+	.pins-footer__link {
+		color: pins-colours.$pins-colours-blue-500;
+		text-decoration: underline;
+		text-decoration-thickness: max(1px, 0.0625rem);
+		text-underline-offset: 0.157em;
+
+		&:hover {
+			color: #003078;
+			text-decoration: none;
+		}
+	}
+
+	.pins-footer__copyright {
+		color: colors.govuk-colour("black");
+	}
+}

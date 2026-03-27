@@ -4,19 +4,25 @@ import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.
 
 /**
  * @param {import('../appeal-details.types.js').WebAppeal} appealData
+ * @param {string} backLinkUrl
  * @param {string|undefined} errorMessage
+ * @param {Record<string, string>} [values]
  * @returns {PageContent}
  */
-export function mapCancelAppealPage(appealData, errorMessage) {
+export function mapCancelAppealPage(appealData, backLinkUrl, errorMessage, values) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
-	const showEnforcementOptions =
+	const showEnforcmentNoticeWithdrawn =
+		(appealData.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ||
+			appealData.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING) &&
+		featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_CANCEL);
+	const showGroundAFee =
 		appealData.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
 		featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_CANCEL);
 
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Why are you cancelling the appeal?`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}`,
+		backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference} - cancel appeal`,
 		pageComponents: [
 			{
@@ -31,22 +37,22 @@ export function mapCancelAppealPage(appealData, errorMessage) {
 							classes: 'govuk-fieldset__legend--l'
 						}
 					},
+					value: values?.cancelReasonRadio,
 					items: [
 						{
 							value: 'invalid',
 							text: 'Appeal invalid'
 						},
-						...(showEnforcementOptions
+						...(showEnforcmentNoticeWithdrawn
 							? [
 									{
 										value: 'enforcement-notice-withdrawn',
 										text: 'LPA has withdrawn the enforcement notice'
-									},
-									{
-										value: 'did-not-pay',
-										text: 'Did not pay the ground (a) fee'
 									}
 								]
+							: []),
+						...(showGroundAFee
+							? [{ value: 'did-not-pay', text: 'Did not pay the ground (a) fee' }]
 							: []),
 						{
 							value: 'withdrawal',

@@ -23,6 +23,9 @@ const renderChangeGroundsForAppeal = async (request, response) => {
 		const { errors, currentAppeal } = request;
 
 		const groundsForAppeal = await getAllGrounds(request.apiClient);
+		const filteredGrounds = groundsForAppeal.filter(
+			(ground) => ground.appealType === currentAppeal.appealType
+		);
 
 		const appellantCaseData = await getAppellantCaseFromAppealId(
 			request.apiClient,
@@ -33,14 +36,13 @@ const renderChangeGroundsForAppeal = async (request, response) => {
 		const selectedGrounds = errors
 			? []
 			: // @ts-ignore
-				(appellantCaseData.appealGrounds?.map((appealGround) => appealGround?.ground?.groundRef) ??
-				[]);
+				(appellantCaseData.appealGrounds?.map((appealGround) => appealGround?.ground?.id) ?? []);
 
 		const mappedPageContents = changeGroundsForAppealPage(
 			currentAppeal,
 			selectedGrounds,
 			// @ts-ignore
-			groundsForAppeal,
+			filteredGrounds,
 			errors && typeof errors === 'object' ? errors.groundsForAppeal?.msg : undefined
 		);
 

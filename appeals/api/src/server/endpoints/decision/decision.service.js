@@ -10,6 +10,7 @@ import appellantCaseRepository from '#repositories/appellant-case.repository.js'
 import transitionState from '#state/transition-state.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import { getFeedbackLinkFromAppealTypeKey } from '#utils/feedback-form-link.js';
+import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { trimAppealType } from '#utils/string-utils.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
@@ -144,7 +145,7 @@ export const publishDecision = async (
 			})
 		};
 
-		if (appealTypeKey === APPEAL_CASE_TYPE.C) {
+		if (appealTypeKey === APPEAL_CASE_TYPE.C || appealTypeKey === APPEAL_CASE_TYPE.F) {
 			const appellantCase = await appellantCaseRepository.getAppellantCaseByAppealId(appeal.id);
 			// @ts-ignore
 			personalisation.enforcement_reference = appellantCase?.enforcementReference;
@@ -174,7 +175,7 @@ export const publishDecision = async (
 		}
 
 		const feedbackLinkForLPA =
-			appealTypeKey === APPEAL_CASE_TYPE.C
+			appealTypeKey === APPEAL_CASE_TYPE.C || appealTypeKey === APPEAL_CASE_TYPE.F
 				? FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE
 				: FEEDBACK_FORM_LINKS.LPA;
 
@@ -307,12 +308,14 @@ export const publishCostsDecision = async (
 	await updatePersonalList(appeal.id);
 
 	if (!skipNotifies) {
+		const enforcementReference = await getEnforcementReference(appeal);
 		const personalisation = {
 			appeal_reference_number: appeal.reference,
 			site_address: siteAddress,
 			lpa_reference: appeal.applicationReference || '',
 			front_office_url: environment.FRONT_OFFICE_URL || '',
-			feedback_link: getFeedbackLinkFromAppealTypeKey(appeal?.appealType?.key || '')
+			feedback_link: getFeedbackLinkFromAppealTypeKey(appeal?.appealType?.key || ''),
+			...(enforcementReference && { enforcement_reference: enforcementReference })
 		};
 		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 		const lpaEmail = appeal.lpa?.email || '';
@@ -405,7 +408,12 @@ export const sendNewDecisionLetter = async (
 	notifyClient,
 	decisionDate
 ) => {
-	const representations = await getRepresentations(appeal.id, 1, 1000, {
+	const childAppeals = await appealRepository.getLinkedAppealsById(appeal.id);
+	const appealIds = [
+		Number(appeal.id),
+		...childAppeals.map((childAppeal) => Number(childAppeal?.childId))
+	];
+	const representations = await getRepresentations(appealIds, 1, 1000, {
 		representationType: ['comment']
 	});
 
@@ -417,14 +425,30 @@ export const sendNewDecisionLetter = async (
 
 	const uniqueEmails = [...new Set(relevantEmails)].filter(Boolean);
 
+	const enforcementReference = await getEnforcementReference(appeal);
+
+	let formattedDecisionDate = formatDate(new Date(decisionDate), false);
+	if (!formattedDecisionDate) {
+		const appealWithDecision = await appealRepository.getAppealById(appeal.id, true, [
+			'inspectorDecision'
+		]);
+		if (appealWithDecision?.inspectorDecision?.caseDecisionOutcomeDate) {
+			formattedDecisionDate = formatDate(
+				new Date(appealWithDecision.inspectorDecision.caseDecisionOutcomeDate),
+				false
+			);
+		}
+	}
+
 	const personalisation = {
 		appeal_reference_number: appeal.reference,
 		lpa_reference: appeal.applicationReference || '',
+		...(enforcementReference && { enforcement_reference: enforcementReference }),
 		site_address: appeal.address
 			? formatAddressSingleLine(appeal.address)
 			: 'Address not available',
 		correction_notice_reason: correctionNotice,
-		decision_date: formatDate(decisionDate, false),
+		decision_date: formattedDecisionDate,
 		front_office_url: environment.FRONT_OFFICE_URL || '',
 		team_email_address: await getTeamEmailFromAppealId(appeal.id),
 		feedback_link: getFeedbackLinkFromAppealTypeKey(appeal?.appealType?.key || '')

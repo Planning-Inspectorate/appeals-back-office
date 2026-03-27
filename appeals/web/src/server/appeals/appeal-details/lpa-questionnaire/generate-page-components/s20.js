@@ -4,10 +4,9 @@ import { generateSharedS78S20LpaQuestionnaireComponents } from './shared-s78-s20
 /**
  *
  * @param {{lpaq: MappedInstructions}} mappedLPAQData
- * @param {{appeal: MappedInstructions}} mappedAppealDetails
  * @returns {PageComponent[]}
  */
-export const generateS20LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetails) => {
+export const generateS20LpaQuestionnaireComponents = (mappedLPAQData) => {
 	/** @type {PageComponent[]} */
 	const pageComponents = [];
 
@@ -48,9 +47,7 @@ export const generateS20LpaQuestionnaireComponents = (mappedLPAQData, mappedAppe
 		}
 	});
 
-	pageComponents.push(
-		...generateSharedS78S20LpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails)
-	);
+	pageComponents.push(...generateSharedS78S20LpaQuestionnaireComponents(mappedLPAQData));
 
 	return pageComponents;
 };

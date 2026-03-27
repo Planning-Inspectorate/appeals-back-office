@@ -1,6 +1,7 @@
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
 /** @typedef {import('@pins/appeals.api').Schema.DesignatedSite} DesignatedSite */
 
+import { isEnforcementCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 /**
@@ -16,14 +17,13 @@ export const mapQuestionnaireIn = (command, designatedSites) => {
 	const isS78 = casedata.caseType === APPEAL_CASE_TYPE.W;
 	const isAdverts = casedata.caseType === APPEAL_CASE_TYPE.H;
 	const isLDC = casedata.caseType === APPEAL_CASE_TYPE.X;
-	const isEnforcement = casedata.caseType === APPEAL_CASE_TYPE.C;
-	const isELB = casedata.caseType === APPEAL_CASE_TYPE.F;
+	const isEnforcement = isEnforcementCaseType(casedata.caseType);
 
 	//@ts-ignore
 	const listedBuildingsData = mapListedBuildings(
 		// @ts-ignore
 		casedata,
-		isS78 || isS20 || isAdverts || isLDC || isEnforcement || isELB
+		isS78 || isS20 || isAdverts || isLDC || isEnforcement
 	);
 
 	switch (casedata.caseType) {

@@ -28,6 +28,9 @@ export function getFeedbackLinkFromAppealTypeKey(appealKey) {
 		case APPEAL_CASE_TYPE.C: // Enforcement notice
 			return FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE;
 
+		case APPEAL_CASE_TYPE.F: // Enforcement listed building
+			return FEEDBACK_FORM_LINKS.ENFORCEMENT_LISTED_BUILDING;
+
 		case APPEAL_CASE_TYPE.X: // Lawful development certificate
 			return FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE;
 

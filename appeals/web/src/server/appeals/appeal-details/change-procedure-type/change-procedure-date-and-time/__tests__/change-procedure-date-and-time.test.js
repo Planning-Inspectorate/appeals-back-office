@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { appealData } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -102,6 +103,25 @@ describe('change to inquiry date and time', () => {
 			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toContain(
 				`${baseUrl}/${appealId}/change-appeal-procedure-type/inquiry/check-and-confirm`
 			);
+		});
+
+		it('renders inquiry date and time page for enforcement notice appeal type', async () => {
+			const enforcementAppealId = 19;
+			nock('http://test/')
+				.get(`/appeals/${enforcementAppealId}?include=all`)
+				.reply(200, {
+					...appealData,
+					appealId: enforcementAppealId,
+					appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE
+				});
+
+			const response = await request.get(
+				`${baseUrl}/${enforcementAppealId}/change-appeal-procedure-type/inquiry/date`
+			);
+
+			expect(response.statusCode).toBe(200);
+			const html = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+			expect(html).toContain('Inquiry date and time');
 		});
 	});
 

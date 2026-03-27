@@ -20,6 +20,7 @@ import { importListedBuildingsDataset } from './seed-listed-buildings.js';
  * @typedef {import('@pins/appeals.api').Schema.AppellantCaseInvalidReason} AppellantCaseInvalidReason
  * @typedef {import('@pins/appeals.api').Schema.AppellantCaseEnforcementInvalidReason} AppellantCaseEnforcementInvalidReason
  * @typedef {import('@pins/appeals.api').Schema.AppellantCaseEnforcementMissingDocument} AppellantCaseEnforcementMissingDocument
+ * @typedef {import('@pins/appeals.api').Schema.AppellantCaseEnforcementGroundsMismatchFacts} AppellantCaseEnforcementGroundsMismatchFacts
  * @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaireValidationOutcome} LPAQuestionnaireValidationOutcome
  * @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaireIncompleteReason} LPAQuestionnaireIncompleteReason
  * @typedef {import('@pins/appeals.api').Schema.LPANotificationMethods} LPANotificationMethods
@@ -376,6 +377,16 @@ export const appellantCaseInvalidReasons = [
 		id: 7,
 		name: 'Ground (a) barred',
 		hasText: false
+	},
+	{
+		id: 8,
+		name: 'LPA has withdrawn the enforcement notice',
+		hasText: false
+	},
+	{
+		id: 9,
+		name: 'Did not pay the ground (a) fee',
+		hasText: false
 	}
 ];
 
@@ -466,6 +477,69 @@ export const appellantCaseEnforcementMissingDocuments = [
 ];
 
 /**
+ * An array of appellant case enforcement Ground mismatches.
+ *
+ * @type {Pick<AppellantCaseEnforcementGroundsMismatchFacts, 'id' |'name' | 'hasText'>[]}
+ */
+export const appellantCaseEnforcementGroundsMismatchFacts = [
+	{
+		id: 1,
+		name: 'a',
+		hasText: true
+	},
+	{
+		id: 2,
+		name: 'b',
+		hasText: true
+	},
+	{
+		id: 3,
+		name: 'c',
+		hasText: true
+	},
+	{
+		id: 4,
+		name: 'd',
+		hasText: true
+	},
+	{
+		id: 5,
+		name: 'e',
+		hasText: true
+	},
+	{
+		id: 6,
+		name: 'f',
+		hasText: true
+	},
+	{
+		id: 7,
+		name: 'g',
+		hasText: true
+	},
+	{
+		id: 8,
+		name: 'h',
+		hasText: true
+	},
+	{
+		id: 9,
+		name: 'i',
+		hasText: true
+	},
+	{
+		id: 10,
+		name: 'j',
+		hasText: true
+	},
+	{
+		id: 11,
+		name: 'k',
+		hasText: true
+	}
+];
+
+/**
  * An array of LPA questionnaire validation outcomes.
  *
  * @type {Pick<LPAQuestionnaireValidationOutcome, 'name'>[]}
@@ -535,39 +609,105 @@ export const specialisms = [
 /**
  * An array of grounds for appeal.
  *
- * @type {Pick<Ground, 'groundRef' | 'groundDescription'>[]}
+ * @type {Pick<Ground, 'appealType' | 'groundRef' | 'groundDescription'>[]}
  */
 export const groundsForAppeal = [
 	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
 		groundRef: 'a',
 		groundDescription:
 			'The local planning authority (LPA) should grant planning permission for all (or part) of the development described in the alleged breach.'
 	},
 	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
 		groundRef: 'b',
 		groundDescription: 'The alleged breach did not happen.'
 	},
 	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
 		groundRef: 'c',
 		groundDescription:
 			'You do not need planning permission (for example, it is a permitted development or you already have planning permission).'
 	},
 	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
 		groundRef: 'd',
 		groundDescription: 'It is too late for the LPA to take enforcement action.'
 	},
 	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
 		groundRef: 'e',
 		groundDescription:
 			'The LPA did not serve the notice properly to everyone with an interest in the land.'
 	},
 	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
 		groundRef: 'f',
 		groundDescription: 'A simpler step (or steps) would achieve the same result.'
 	},
 	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
 		groundRef: 'g',
 		groundDescription: 'The time to comply with the notice is too short.'
+	},
+	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		groundRef: 'a',
+		groundDescription: 'The building is not of special architectural or historic interest.'
+	},
+	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		groundRef: 'b',
+		groundDescription: 'The alleged breach did not happen.'
+	},
+	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		groundRef: 'c',
+		groundDescription:
+			"You do not need listed building consent (for example, the works do not affect the building's character or they are for a part of the building that is not listed)."
+	},
+	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		groundRef: 'd',
+		groundDescription:
+			'The work was urgently necessary. To appeal this ground, you must have: completed the work straight away for safety, health or to preserve the building, not been able to preserve or make the building safe with repair or temporary support, only completed the minimum work to deal with the immediate risk'
+	},
+	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		groundRef: 'e',
+		groundDescription:
+			'Listed building consent should be granted (or conditions changed) for the work.'
+	},
+	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		groundRef: 'f',
+		groundDescription:
+			'The local planning authority did not serve the notice properly to everyone with an interest in the land.'
+	},
+	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		groundRef: 'g',
+		groundDescription: 'A simpler step (or steps) would achieve the same result.'
+	},
+	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		groundRef: 'h',
+		groundDescription: 'The time to comply with the notice is too short.'
+	},
+	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		groundRef: 'i',
+		groundDescription: 'The required steps will not restore the building’s character.'
+	},
+	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		groundRef: 'j',
+		groundDescription: 'A simpler step (or steps) would reduce the harm caused.'
+	},
+	{
+		appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		groundRef: 'k',
+		groundDescription: 'A simpler step (or steps) would meet listed building consent conditions.'
 	}
 ];
 
@@ -942,7 +1082,9 @@ export async function seedStaticData(databaseConnector) {
 	for (const ground of groundsForAppeal) {
 		await databaseConnector.ground.upsert({
 			create: ground,
-			where: { groundRef: ground.groundRef },
+			where: {
+				appealType_groundRef: { groundRef: ground.groundRef, appealType: ground.appealType }
+			},
 			update: ground
 		});
 	}
@@ -952,6 +1094,15 @@ export async function seedStaticData(databaseConnector) {
 			where: { id: appellantCaseEnforcementMissingDocument.id },
 			update: {
 				name: appellantCaseEnforcementMissingDocument.name
+			}
+		});
+	}
+	for (const appellantCaseEnforcementGroundsMismatchFact of appellantCaseEnforcementGroundsMismatchFacts) {
+		await databaseConnector.appellantCaseEnforcementGroundsMismatchFacts.upsert({
+			create: appellantCaseEnforcementGroundsMismatchFact,
+			where: { id: appellantCaseEnforcementGroundsMismatchFact.id },
+			update: {
+				name: appellantCaseEnforcementGroundsMismatchFact.name
 			}
 		});
 	}

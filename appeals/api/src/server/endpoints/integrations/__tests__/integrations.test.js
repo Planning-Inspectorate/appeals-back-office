@@ -12,6 +12,7 @@ import {
 	appealIngestionInputS78,
 	appealIngestionInputS78Written,
 	docIngestionInput,
+	generateMockDocuments,
 	validAppellantCase,
 	validAppellantCaseAdverts,
 	validAppellantCaseCasAdverts,
@@ -45,10 +46,11 @@ import { jest } from '@jest/globals';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import {
 	CASE_RELATIONSHIP_LINKED,
+	CASE_RELATIONSHIP_RELATED,
 	ERROR_INVALID_APPEAL_TYPE_REP,
 	ERROR_INVALID_APPELLANT_CASE_DATA
 } from '@pins/appeals/constants/support.js';
-import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
+import { isExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import {
 	APPEAL_CASE_STATUS,
 	APPEAL_CASE_TYPE,
@@ -129,6 +131,10 @@ describe('/appeals/case-submission', () => {
 		});
 	});
 	describe('POST successful appeal gets ingested', () => {
+		beforeEach(() => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue({});
+		});
 		test.each([
 			['HAS', appealIngestionInput, validAppellantCase, { id: 1 }],
 			['CAS_PLANNING', appealIngestionInputCasPlanning, validAppellantCaseCasPlanning, { id: 1 }],
@@ -155,7 +161,7 @@ describe('/appeals/case-submission', () => {
 			]
 		])(
 			'POST valid %s appellant case payload and create appeal',
-			async (_, appealIngestionInput, validAppellantCase, expectedTeamQueryParam) => {
+			async (appealType, appealIngestionInput, validAppellantCase, expectedTeamQueryParam) => {
 				const result = createIntegrationMocks(appealIngestionInput);
 				const payload = validAppellantCase;
 				const response = await request.post('/appeals/case-submission').send(payload);
@@ -185,6 +191,8 @@ describe('/appeals/case-submission', () => {
 						where: expectedTeamQueryParam
 					})
 				);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(appealType === 'ENFORCEMENT_NOTICE' ? 2 : 0);
 
 				expect(databaseConnector.document.createMany).toHaveBeenCalled();
 				expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
@@ -480,24 +488,17 @@ describe('/appeals/lpaq-submission', () => {
 						}
 					]
 				});
-				expect(databaseConnector.document.update).toHaveBeenCalledTimes(2);
-				expect(databaseConnector.document.update).toHaveBeenNthCalledWith(1, {
+				expect(databaseConnector.document.updateMany).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.document.updateMany).toHaveBeenNthCalledWith(1, {
 					data: {
 						latestVersionId: 1
 					},
 					where: {
-						guid: expect.any(String)
+						guid: {
+							in: [expect.any(String), expect.any(String)]
+						}
 					}
 				});
-				expect(databaseConnector.document.update).toHaveBeenNthCalledWith(2, {
-					data: {
-						latestVersionId: 1
-					},
-					where: {
-						guid: expect.any(String)
-					}
-				});
-
 				expect(databaseConnector.documentVersion.findMany).toHaveBeenCalledWith({
 					where: {
 						documentGuid: {
@@ -511,7 +512,10 @@ describe('/appeals/lpaq-submission', () => {
 					where: { reference: { in: ['1000000'] } }
 				});
 				expect(databaseConnector.appealRelationship.findMany).toHaveBeenCalledWith({
-					where: { parentId: 100 }
+					where: {
+						type: CASE_RELATIONSHIP_RELATED,
+						OR: [{ parentId: 100 }, { childId: 100 }]
+					}
 				});
 				expect(databaseConnector.appealRelationship.createMany).toHaveBeenCalledWith({
 					data: [
@@ -535,6 +539,37 @@ describe('/appeals/lpaq-submission', () => {
 				expect(response.body).toEqual({ id: 100, reference: '6000100' });
 			}
 		);
+
+		test('large document list gets split into batches', async () => {
+			const ingestion = validLpaQuestionnaireIngestionHas;
+			const questionnaire = {
+				...validLpaQuestionnaireHas,
+				documents: generateMockDocuments(101, 'lpaCostsApplication')
+			};
+
+			databaseConnector.appeal.update.mockResolvedValue(ingestion);
+			// @ts-ignore-next-line
+
+			createIntegrationMocks({
+				folders: {
+					create: FOLDERS.map((/** @type {{ path: string; }} */ f) => {
+						return { path: f };
+					})
+				}
+			});
+
+			const payload = questionnaire;
+			const response = await request.post('/appeals/lpaq-submission').send(payload);
+
+			expect(databaseConnector.folder.findMany).toHaveBeenCalledWith({ where: { caseId: 100 } });
+			expect(databaseConnector.document.createMany).toHaveBeenCalledTimes(2);
+			expect(databaseConnector.documentVersion.createMany).toHaveBeenCalledTimes(2);
+			expect(databaseConnector.document.updateMany).toHaveBeenCalledTimes(2);
+			expect(databaseConnector.documentVersion.findMany).toHaveBeenCalledTimes(2);
+
+			expect(response.status).toEqual(201);
+			expect(response.body).toEqual({ id: 100, reference: '6000100' });
+		});
 	});
 });
 
@@ -1159,10 +1194,19 @@ describe('/appeals/representation-submission', () => {
 					expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
 					expect(databaseConnector.documentVersion.findMany).toHaveBeenCalled();
 					expect(databaseConnector.representationAttachment.createMany).toHaveBeenCalled();
+
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith(
+						expect.objectContaining({
+							data: expect.objectContaining({
+								details: 'Test Organisation proof of evidence and witnesses was received'
+							})
+						})
+					);
+
 					expect(response.status).toEqual(201);
 				});
 
-				test('valid rep payload: Rule 6 party proof of evidence sends notifications to all parties with correct links', async () => {
+				test('valid rep payload: Rule 6 party proof of evidence does not send notifications', async () => {
 					const validRepresentation = {
 						...validRepresentationRule6PartyProofsEvidence,
 						serviceUserId: (200000000 + 729).toString()
@@ -1231,55 +1275,18 @@ describe('/appeals/representation-submission', () => {
 						.send(validRepresentation);
 
 					expect(response.status).toEqual(201);
-					expect(global.mockNotifySend).toHaveBeenCalledTimes(3);
-
-					expect(global.mockNotifySend).toHaveBeenNthCalledWith(1, {
-						azureAdUserId: expect.any(String),
-						notifyClient: expect.any(Object),
-						templateName: 'rule-6-party-proof-of-evidence-received',
-						recipientEmail: 'agent@example.com',
-						personalisation: {
-							appeal_reference_number: validRepresentationRule6PartyStatement.caseReference,
-							site_address: '123 Test Street, TE1 1ST',
-							lpa_reference: 'LPA/2024/001',
-							statement_url: expect.stringMatching(/\/appeals\/\d+/),
-							inquiry_date: '15 March 2025'
-						}
-					});
-
-					expect(global.mockNotifySend).toHaveBeenNthCalledWith(2, {
-						azureAdUserId: expect.any(String),
-						notifyClient: expect.any(Object),
-						templateName: 'rule-6-party-proof-of-evidence-received',
-						recipientEmail: 'lpa@example.com',
-						personalisation: {
-							appeal_reference_number: validRepresentationRule6PartyStatement.caseReference,
-							site_address: '123 Test Street, TE1 1ST',
-							lpa_reference: 'LPA/2024/001',
-							statement_url: expect.stringMatching(/\/manage-appeals\/\d+/),
-							inquiry_date: '15 March 2025'
-						}
-					});
-
-					expect(global.mockNotifySend).toHaveBeenNthCalledWith(3, {
-						azureAdUserId: expect.any(String),
-						notifyClient: expect.any(Object),
-						templateName: 'rule-6-party-proof-of-evidence-received',
-						recipientEmail: 'rule6party@example.com',
-						personalisation: {
-							appeal_reference_number: validRepresentationRule6PartyStatement.caseReference,
-							site_address: '123 Test Street, TE1 1ST',
-							lpa_reference: 'LPA/2024/001',
-							statement_url: expect.stringMatching(/\/rule-6\/\d+/),
-							inquiry_date: '15 March 2025'
-						}
-					});
+					expect(global.mockNotifySend).not.toHaveBeenCalled();
 				});
 			}
 		);
 	});
 });
 
+/**
+ *
+ * @param {*} appealIngestionInput
+ * @returns {{id: number, reference: string, assignedTeamId: number}}
+ */
 const createIntegrationMocks = (/** @type {*} */ appealIngestionInput) => {
 	const appealCreatedResult = {
 		id: 100,
@@ -1303,7 +1310,11 @@ const createIntegrationMocks = (/** @type {*} */ appealIngestionInput) => {
 	databaseConnector.appeal.findUnique.mockResolvedValue({
 		...appealCreatedResult,
 		appealType: appealIngestionInput.appealType?.connect,
-		appealStatus: [{ status: 'ready_to_start', valid: true }]
+		appealStatus: [{ status: 'ready_to_start', valid: true }],
+		agent: { email: 'test@email.com', firstName: 'Test', lastName: 'Agent' },
+		appellant: { email: 'test@email.com', firstName: 'Test', lastName: 'Agent' },
+		lpa: { email: 'test@email.com', firstName: 'Test', lastName: 'Agent' },
+		address: { addressLine1: '123 Test Street', postcode: 'TE1 1ST' }
 	});
 	// @ts-ignore
 	databaseConnector.document.createMany.mockResolvedValue([

@@ -19,22 +19,38 @@ Enforcement notice reference: {{enforcement_reference}}
 {{ missing_documents[0] }}
 {% endif %}
 {% endif -%}
+{% if grounds_and_facts.length -%}
+## Grounds and facts do not match
+
+{% if grounds_and_facts.length > 1 -%}
+{%- for grounds_and_fact in grounds_and_facts -%}
+- {{ grounds_and_fact }}
+{% endfor %}
+{%- else -%}
+{{ grounds_and_facts[0] }}
+{% endif %}
+{% endif -%}
 {% if fee_due_date -%}
 ## Pay the ground (a) fee
 
 You need to pay the correct fee to {{local_planning_authority}}, then email your receipt to {{team_email_address}} by {{fee_due_date}}.
 
 {% endif -%}
-{% if other_info -%}
+{% if other_info.length -%}
 ## Other
 
-{{other_info}}
-
+{% if other_info.length > 1 -%}
+{%- for info in other_info -%}
+- {{ info }}
+{% endfor %}
+{%- else -%}
+{{ other_info[0] }}
+{% endif %}
 {% endif -%}
 
 # What happens next
 
-{% if fee_due_date and (missing_documents.length or other_info) -%}
+{% if fee_due_date and (missing_documents.length or other_info.length or grounds_and_facts.length) -%}
 You need to send the missing information to {{team_email_address}} by {{due_date}} and pay the correct fee by {{fee_due_date}}.
 
 {% elseif fee_due_date -%}

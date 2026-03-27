@@ -2,6 +2,7 @@ import { isFeatureActive } from '#common/feature-flags.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
+	APPEAL_REPRESENTATION_TYPES_PATHS,
 	FEATURE_FLAG_NAMES
 } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
@@ -65,12 +66,7 @@ export function mapRepresentationDocumentSummaryActionLink(
 		reviewRequired ? 'Review' : 'View'
 	}<span class="govuk-visually-hidden"> ${visuallyHiddenText}</span></a>`;
 
-	if (
-		!['appellant-final-comments', 'lpa-final-comments', 'lpa-statement'].includes(
-			representationType
-		) &&
-		documentationStatus !== 'received'
-	) {
+	if (!manuallyAddRepTypes.has(representationType) && documentationStatus !== 'received') {
 		return addLink;
 	}
 
@@ -98,21 +94,21 @@ export function mapRepresentationDocumentSummaryActionLink(
  */
 const getRepresentationVisuallyHiddenText = (representationType, rule6Party) => {
 	switch (representationType) {
-		case 'lpa-statement':
+		case APPEAL_REPRESENTATION_TYPES_PATHS.LPA_STATEMENT:
 			return 'LPA statement';
-		case 'rule-6-party-statement':
+		case APPEAL_REPRESENTATION_TYPES_PATHS.RULE_6_PARTY_STATEMENT:
 			return `${rule6Party?.serviceUser?.organisationName} statement`;
-		case 'appellant-final-comments':
+		case APPEAL_REPRESENTATION_TYPES_PATHS.APPELLANT_FINAL_COMMENTS:
 			return 'Appellant final comments';
-		case 'lpa-final-comments':
+		case APPEAL_REPRESENTATION_TYPES_PATHS.LPA_FINAL_COMMENTS:
 			return 'LPA final comments';
-		case 'appellant-proofs-evidence':
+		case APPEAL_REPRESENTATION_TYPES_PATHS.APPELLANT_PROOFS_EVIDENCE:
 			return 'Appellant proof of evidence';
-		case 'lpa-proofs-evidence':
+		case APPEAL_REPRESENTATION_TYPES_PATHS.LPA_PROOFS_EVIDENCE:
 			return 'LPA proof of evidence';
-		case 'rule-6-party-proofs-evidence':
+		case APPEAL_REPRESENTATION_TYPES_PATHS.RULE_6_PARTY_PROOFS_EVIDENCE:
 			return `${rule6Party?.serviceUser?.organisationName} proof of evidence`;
-		case 'appellant-statement':
+		case APPEAL_REPRESENTATION_TYPES_PATHS.APPELLANT_STATEMENT:
 			return 'Appellant statement';
 		default:
 			return '';
@@ -128,27 +124,27 @@ const getRepresentationVisuallyHiddenText = (representationType, rule6Party) => 
  */
 const getRepresentationHref = (representationType, currentRoute, reviewRequired, rule6Party) => {
 	switch (representationType) {
-		case 'lpa-statement':
-			return `${currentRoute}/lpa-statement`;
-		case 'rule-6-party-statement':
-			return `${currentRoute}/rule-6-party-statement/${rule6Party?.id}`;
-		case 'lpa-final-comments':
+		case APPEAL_REPRESENTATION_TYPES_PATHS.LPA_STATEMENT:
+			return `${currentRoute}/${APPEAL_REPRESENTATION_TYPES_PATHS.LPA_STATEMENT}`;
+		case APPEAL_REPRESENTATION_TYPES_PATHS.RULE_6_PARTY_STATEMENT:
+			return `${currentRoute}/${APPEAL_REPRESENTATION_TYPES_PATHS.RULE_6_PARTY_STATEMENT}/${rule6Party?.id}`;
+		case APPEAL_REPRESENTATION_TYPES_PATHS.LPA_FINAL_COMMENTS:
 			return `${currentRoute}/final-comments/lpa`;
-		case 'appellant-final-comments':
+		case APPEAL_REPRESENTATION_TYPES_PATHS.APPELLANT_FINAL_COMMENTS:
 			return `${currentRoute}/final-comments/appellant`;
-		case 'appellant-proofs-evidence':
+		case APPEAL_REPRESENTATION_TYPES_PATHS.APPELLANT_PROOFS_EVIDENCE:
 			return reviewRequired
 				? `${currentRoute}/proof-of-evidence/appellant`
 				: `${currentRoute}/proof-of-evidence/appellant/manage-documents`;
-		case 'lpa-proofs-evidence':
+		case APPEAL_REPRESENTATION_TYPES_PATHS.LPA_PROOFS_EVIDENCE:
 			return reviewRequired
 				? `${currentRoute}/proof-of-evidence/lpa`
 				: `${currentRoute}/proof-of-evidence/lpa/manage-documents`;
-		case 'rule-6-party-proofs-evidence':
+		case APPEAL_REPRESENTATION_TYPES_PATHS.RULE_6_PARTY_PROOFS_EVIDENCE:
 			return reviewRequired
 				? `${currentRoute}/proof-of-evidence/rule-6-party/${rule6Party?.id}`
 				: `${currentRoute}/proof-of-evidence/rule-6-party/${rule6Party?.id}/manage-documents`;
-		case 'appellant-statement':
+		case APPEAL_REPRESENTATION_TYPES_PATHS.APPELLANT_STATEMENT:
 			return `${currentRoute}/appellant-statement`;
 		default:
 			return '';
@@ -225,14 +221,14 @@ export function mapFinalCommentRepresentationStatusToLabelText(representationSta
  */
 const isInCorrectCaseStatusOrLater = (appeal, representationType) => {
 	switch (representationType) {
-		case 'lpa-statement':
-		case 'appellant-statement':
+		case APPEAL_REPRESENTATION_TYPES_PATHS.LPA_STATEMENT:
+		case APPEAL_REPRESENTATION_TYPES_PATHS.APPELLANT_STATEMENT:
 			return (
 				appeal.appealStatus === APPEAL_CASE_STATUS.STATEMENTS ||
 				isStatePassed(appeal, APPEAL_CASE_STATUS.STATEMENTS)
 			);
-		case 'lpa-final-comments':
-		case 'appellant-final-comments':
+		case APPEAL_REPRESENTATION_TYPES_PATHS.LPA_FINAL_COMMENTS:
+		case APPEAL_REPRESENTATION_TYPES_PATHS.APPELLANT_FINAL_COMMENTS:
 			return (
 				appeal.appealStatus === APPEAL_CASE_STATUS.FINAL_COMMENTS ||
 				isStatePassed(appeal, APPEAL_CASE_STATUS.FINAL_COMMENTS)
@@ -241,3 +237,10 @@ const isInCorrectCaseStatusOrLater = (appeal, representationType) => {
 			return false;
 	}
 };
+
+const manuallyAddRepTypes = new Set([
+	APPEAL_REPRESENTATION_TYPES_PATHS.LPA_STATEMENT,
+	APPEAL_REPRESENTATION_TYPES_PATHS.APPELLANT_STATEMENT,
+	APPEAL_REPRESENTATION_TYPES_PATHS.APPELLANT_FINAL_COMMENTS,
+	APPEAL_REPRESENTATION_TYPES_PATHS.LPA_FINAL_COMMENTS
+]);

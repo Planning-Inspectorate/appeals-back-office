@@ -13,7 +13,7 @@ exports[`agricultural-holding GET /change should render the change part of agric
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Is the appeal site part of an agricultural holding?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
@@ -53,7 +53,7 @@ exports[`agricultural-holding GET /change should render the change part of agric
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Is the appeal site part of an agricultural holding?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
@@ -93,7 +93,7 @@ exports[`agricultural-holding GET /other-tenants/change should render the change
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Are there any other tenants?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
@@ -133,7 +133,7 @@ exports[`agricultural-holding GET /other-tenants/change should render the change
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Are there any other tenants?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
@@ -174,7 +174,7 @@ exports[`agricultural-holding GET /tenant/change should render the change tenant
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Are you a tenant of the agricultural holding?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
@@ -214,7 +214,7 @@ exports[`agricultural-holding GET /tenant/change should render the change tenant
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Are you a tenant of the agricultural holding?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">

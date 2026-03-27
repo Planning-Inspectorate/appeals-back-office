@@ -94,6 +94,7 @@ export function changeDatePage(appealId, appealReference, today) {
 /**
  * @param {string} appealReference
  * @param {string} appealType
+ * @param {boolean} isLinkedAppeal
  * @param {string} backLinkUrl
  * @param {{appealProcedure: string}} [storedSessionData]
  * @param {string|undefined} errorMessage
@@ -102,6 +103,7 @@ export function changeDatePage(appealId, appealReference, today) {
 export function selectProcedurePage(
 	appealReference,
 	appealType,
+	isLinkedAppeal,
 	backLinkUrl,
 	storedSessionData,
 	errorMessage = undefined
@@ -119,12 +121,11 @@ export function selectProcedurePage(
 		},
 		{
 			case: APPEAL_CASE_PROCEDURE.HEARING,
-			appeals: getEnabledHearingAppealTypes()
+			appeals: getEnabledHearingAppealTypes(isLinkedAppeal)
 		},
 		{
 			case: APPEAL_CASE_PROCEDURE.INQUIRY,
-			featureFlag: FEATURE_FLAG_NAMES.SECTION_78_INQUIRY,
-			appeals: getEnabledInquiryAppealTypes()
+			appeals: getEnabledInquiryAppealTypes(isLinkedAppeal)
 		}
 	];
 
@@ -193,9 +194,10 @@ export function confirmProcedurePage(
 			]
 		: [];
 
-	const isEditable =
-		appealType !== APPEAL_TYPE.ENFORCEMENT_NOTICE ||
-		!featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE);
+	const isEditable = ![
+		APPEAL_TYPE.ENFORCEMENT_NOTICE,
+		APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
+	].includes(appealType);
 
 	/** @type {PageContent} */
 	const pageContent = {

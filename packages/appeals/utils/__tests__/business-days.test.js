@@ -1,7 +1,30 @@
+// @ts-nocheck
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+import nock from 'nock';
 import { calculateTimetable, getFullAppealBaseTimetableKey } from '../business-days.js';
 
 describe('business-days', () => {
+	beforeEach(() => {
+		nock.cleanAll();
+		nock('https://www.gov.uk')
+			.get('/bank-holidays.json')
+			.reply(200, {
+				'england-and-wales': {
+					division: 'england-and-wales',
+					events: [
+						{ title: 'Good Friday', date: '2024-03-29', notes: '', bunting: true },
+						{ title: 'Easter Monday', date: '2024-04-01', notes: '', bunting: true },
+						{ title: 'Early May bank holiday', date: '2024-05-06', notes: '', bunting: true },
+						{ title: 'Spring bank holiday', date: '2024-05-27', notes: '', bunting: true }
+					]
+				}
+			})
+			.persist();
+	});
+
+	afterEach(() => {
+		nock.cleanAll();
+	});
 	describe('calculateTimetable', () => {
 		const tests = [
 			{
@@ -43,6 +66,19 @@ describe('business-days', () => {
 				timetable: {
 					lpaQuestionnaireDueDate: new Date('2024-10-04T22:59:00Z')
 				}
+			},
+			{
+				name: 'calculates days before inquiry date correctly',
+				appealType: APPEAL_CASE_TYPE.W,
+				startedAt: new Date('2024-03-28T00:00:00Z'),
+				procedureType: 'inquiry',
+				inquiryDate: new Date('2024-05-15T00:00:00Z'),
+				timetable: {
+					lpaQuestionnaireDueDate: new Date('2024-04-08T22:59:00Z'),
+					ipCommentsDueDate: new Date('2024-05-07T22:59:00Z'),
+					lpaStatementDueDate: new Date('2024-05-07T22:59:00Z'),
+					proofOfEvidenceAndWitnessesDueDate: new Date('2024-04-16T22:59:00Z')
+				}
 			}
 		];
 
@@ -60,7 +96,12 @@ describe('business-days', () => {
 
 		for (const t of tests) {
 			it('' + t.name, async () => {
-				const timetable = await calculateTimetable(t.appealType, t.startedAt);
+				const timetable = await calculateTimetable(
+					t.appealType,
+					t.startedAt,
+					t.procedureType,
+					t.inquiryDate
+				);
 				// @ts-ignore
 				expect(timetable).toEqual(t.timetable);
 			});
@@ -82,5 +123,56 @@ describe('business-days', () => {
 				expect(result).toBe(t.expected);
 			}, 20000); // Increased timeout to allow for slow CI machines
 		}
+	});
+});
+describe('business-days backward calculations', () => {
+	beforeEach(() => {
+		nock.cleanAll();
+		nock('https://www.gov.uk')
+			.get('/bank-holidays.json')
+			.reply(200, {
+				'england-and-wales': {
+					division: 'england-and-wales',
+					events: [{ title: 'Summer Bank Holiday', date: '2025-08-25', notes: '', bunting: true }]
+				}
+			})
+			.persist();
+	});
+
+	afterEach(() => {
+		nock.cleanAll();
+	});
+
+	describe('calculateTimetable with inquiryDate (backward calc)', () => {
+		it('should account for bank holidays by moving the deadline earlier', async () => {
+			const inquiryDate = new Date('2025-08-27T10:00:00Z');
+			const startedAt = new Date('2025-01-01T10:00:00Z');
+
+			const timetable = await calculateTimetable(
+				APPEAL_CASE_TYPE.W,
+				startedAt,
+				'inquiry',
+				inquiryDate
+			);
+
+			expect(timetable.proofOfEvidenceAndWitnessesDueDate).toEqual(
+				new Date('2025-07-30T22:59:00Z')
+			);
+		});
+
+		it('should move the deadline even further if the calculated day itself is a bank holiday', async () => {
+			const inquiryDate = new Date('2025-09-22T10:00:00Z');
+			const startedAt = new Date('2025-01-01T10:00:00Z');
+
+			const timetable = await calculateTimetable(
+				APPEAL_CASE_TYPE.W,
+				startedAt,
+				'inquiry',
+				inquiryDate
+			);
+			expect(timetable.proofOfEvidenceAndWitnessesDueDate).toEqual(
+				new Date('2025-08-25T22:59:00Z')
+			);
+		});
 	});
 });

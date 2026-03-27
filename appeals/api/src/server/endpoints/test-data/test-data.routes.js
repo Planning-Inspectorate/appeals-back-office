@@ -22,6 +22,12 @@ router.get(
 			example: 100,
 			description: 'Number of appeals to generate'
 		}
+		#swagger.parameters['docCount'] = {
+			in: 'query',
+			required: false,
+			example: 25,
+			description: 'Number of additional documents to generate per appeal (default 25)'
+		}
 		#swagger.responses[200] = {
 			description: 'Successful generation of test appeals'
 		}

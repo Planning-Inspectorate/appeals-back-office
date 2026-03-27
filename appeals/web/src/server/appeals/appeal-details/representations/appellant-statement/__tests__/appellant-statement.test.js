@@ -2,7 +2,7 @@ import usersService from '#appeals/appeal-users/users-service.js';
 import {
 	activeDirectoryUsersData,
 	allocationDetailsData,
-	appealDataFullPlanning,
+	appealDataEnforcementNotice,
 	appellantStatementAwaitingReview,
 	costsFolderInfoAppellantApplication,
 	documentFileInfo,
@@ -30,7 +30,7 @@ describe('appellant-statements', () => {
 		nock('http://test/')
 			.get('/appeals/2?include=all')
 			.reply(200, {
-				...appealDataFullPlanning,
+				...appealDataEnforcementNotice,
 				appealId: 2,
 				appealStatus: 'statements'
 			});
@@ -59,10 +59,27 @@ describe('appellant-statements', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements'
 				});
+		});
+
+		it('should render 404 for unsupported appeal types', async () => {
+			nock.cleanAll();
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, {
+					...appealDataEnforcementNotice,
+					appealId,
+					appealType: 'Planning appeal',
+					appealStatus: 'statements'
+				});
+
+			const response = await request.get(`${baseUrl}/${appealId}/appellant-statement`);
+
+			expect(response.statusCode).toBe(404);
 		});
 
 		it('should render the review Appellant statement page with the expected content if the statement is awaiting review', async () => {
@@ -152,7 +169,33 @@ describe('appellant-statements', () => {
 				'name="status" type="radio" value="valid_requires_redaction">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="status" type="radio" value="incomplete">'
+				'name="status" type="radio" value="incomplete" checked>'
+			);
+		});
+
+		it('should pre-select "Statement incomplete" when representation status is incomplete and no session status exists', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}/reps?type=appellant_statement`)
+				.reply(200, {
+					...getAppealRepsResponse,
+					itemCount: 1,
+					items: [
+						{
+							...appellantStatementAwaitingReview,
+							status: 'incomplete'
+						}
+					]
+				});
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/appellant-statement?backUrl=/appeals-service/appeal-details/${appealId}/share`
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="status" type="radio" value="incomplete" checked>'
 			);
 		});
 
@@ -197,6 +240,23 @@ describe('appellant-statements', () => {
 				'name="status" type="radio" value="incomplete">'
 			);
 		});
+
+		it('should render a back link to case details after submission even when backUrl points to add-document CYA', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}/reps?type=appellant_statement`)
+				.reply(200, {
+					...getAppealRepsResponse,
+					itemCount: 1,
+					items: [appellantStatementAwaitingReview]
+				});
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/appellant-statement?backUrl=/appeals-service/appeal-details/${appealId}/appellant-statement/add-document/check-your-answers`
+			);
+
+			expect(response.statusCode).toBe(200);
+			expect(response.text).toContain(`href="/appeals-service/appeal-details/${appealId}"`);
+		});
 	});
 
 	describe('POST /', () => {
@@ -216,7 +276,7 @@ describe('appellant-statements', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements'
 				});
@@ -239,11 +299,11 @@ describe('appellant-statements', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements',
 					allocationDetails: {
-						...appealDataFullPlanning.allocationDetails,
+						...appealDataEnforcementNotice.allocationDetails,
 						level: null
 					}
 				});
@@ -262,11 +322,11 @@ describe('appellant-statements', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements',
 					allocationDetails: {
-						...appealDataFullPlanning.allocationDetails,
+						...appealDataEnforcementNotice.allocationDetails,
 						specialisms: []
 					}
 				});
@@ -285,7 +345,7 @@ describe('appellant-statements', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements'
 				});
@@ -304,7 +364,7 @@ describe('appellant-statements', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements'
 				});
@@ -323,7 +383,7 @@ describe('appellant-statements', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId,
 					appealStatus: 'statements'
 				});
@@ -337,6 +397,99 @@ describe('appellant-statements', () => {
 				'Found. Redirecting to /appeals-service/appeal-details/3/appellant-statement/redact'
 			);
 		});
+		describe('allocation pages', () => {
+			const appealId = 3;
+
+			beforeEach(() => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=all`)
+					.reply(200, {
+						...appealDataEnforcementNotice,
+						appealId,
+						appealStatus: 'statements'
+					})
+					.persist();
+				nock('http://test/')
+					.get('/appeals/appeal-allocation-levels')
+					.reply(200, allocationDetailsData.levels)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/appeal-allocation-specialisms')
+					.reply(200, allocationDetailsData.specialisms)
+					.persist();
+			});
+
+			describe('GET /allocation-check', () => {
+				it('should render allocation-check page', async () => {
+					const response = await request.get(
+						`${baseUrl}/${appealId}/appellant-statement/valid/allocation-check`
+					);
+					expect(response.statusCode).toBe(200);
+					expect(response.text).toContain(
+						'Do you need to update the allocation level and specialisms?'
+					);
+				});
+			});
+
+			describe('POST /allocation-check', () => {
+				it('should redirect to allocation-level if answer is yes', async () => {
+					const response = await request
+						.post(`${baseUrl}/${appealId}/appellant-statement/valid/allocation-check`)
+						.send({ allocationLevelAndSpecialisms: 'yes' });
+					expect(response.statusCode).toBe(302);
+					expect(response.text).toContain('allocation-level');
+				});
+
+				it('should redirect to confirm if answer is no', async () => {
+					const response = await request
+						.post(`${baseUrl}/${appealId}/appellant-statement/valid/allocation-check`)
+						.send({ allocationLevelAndSpecialisms: 'no' });
+					expect(response.statusCode).toBe(302);
+					expect(response.text).toContain('valid/confirm');
+				});
+			});
+
+			describe('GET /allocation-level', () => {
+				it('should render allocation-level page', async () => {
+					const response = await request.get(
+						`${baseUrl}/${appealId}/appellant-statement/valid/allocation-level`
+					);
+					expect(response.statusCode).toBe(200);
+					expect(response.text).toContain('Allocation level');
+				});
+			});
+
+			describe('POST /allocation-level', () => {
+				it('should redirect to allocation-specialisms', async () => {
+					const response = await request
+						.post(`${baseUrl}/${appealId}/appellant-statement/valid/allocation-level`)
+						.send({ allocationLevel: 'A' });
+					expect(response.statusCode).toBe(302);
+					expect(response.text).toContain('allocation-specialisms');
+				});
+			});
+
+			describe('GET /allocation-specialisms', () => {
+				it('should render allocation-specialisms page', async () => {
+					const response = await request.get(
+						`${baseUrl}/${appealId}/appellant-statement/valid/allocation-specialisms`
+					);
+					expect(response.statusCode).toBe(200);
+					expect(response.text).toContain('Allocation specialisms');
+				});
+			});
+
+			describe('POST /allocation-specialisms', () => {
+				it('should redirect to confirm', async () => {
+					const response = await request
+						.post(`${baseUrl}/${appealId}/appellant-statement/valid/allocation-specialisms`)
+						.send({ allocationSpecialisms: ['1'] });
+					expect(response.statusCode).toBe(302);
+					expect(response.text).toContain('valid/confirm');
+				});
+			});
+		});
+
 		describe('check your answers page', () => {
 			const appealId = 3;
 
@@ -363,7 +516,7 @@ describe('appellant-statements', () => {
 				nock('http://test/')
 					.get(`/appeals/${appealId}?include=all`)
 					.reply(200, {
-						...appealDataFullPlanning,
+						...appealDataEnforcementNotice,
 						appealId,
 						appealStatus: 'statements',
 						allocationDetails: {
@@ -401,7 +554,7 @@ describe('appellant-statements', () => {
 				nock('http://test/')
 					.get(`/appeals/${appealId}?include=all`)
 					.reply(200, {
-						...appealDataFullPlanning,
+						...appealDataEnforcementNotice,
 						appealId,
 						appealStatus: 'statements',
 						allocationDetails: null
@@ -435,7 +588,7 @@ describe('appellant-statements', () => {
 				nock('http://test/')
 					.get(`/appeals/${appealId}?include=all`)
 					.reply(200, {
-						...appealDataFullPlanning,
+						...appealDataEnforcementNotice,
 						appealId,
 						appealStatus: 'statements',
 						allocationDetails: {
@@ -604,7 +757,7 @@ describe('appellant-statements', () => {
 			nock('http://test/')
 				.get('/appeals/2?include=all')
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId: 2,
 					appealStatus: 'statements'
 				});
@@ -642,7 +795,7 @@ describe('appellant-statements', () => {
 			nock('http://test/')
 				.get('/appeals/2?include=all')
 				.reply(200, {
-					...appealDataFullPlanning,
+					...appealDataEnforcementNotice,
 					appealId: 2,
 					appealStatus: 'statements'
 				});

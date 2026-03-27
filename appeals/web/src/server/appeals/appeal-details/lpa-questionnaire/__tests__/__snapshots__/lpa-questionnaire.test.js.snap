@@ -9,9 +9,20 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-case-officer/search-case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F2%2Flpa-questionnaire%2F2"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
@@ -92,7 +103,7 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="notifications-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> List of neighbours&#39; addresses that you notified about the application</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
                                     <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
@@ -102,10 +113,10 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
-                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> List of neighbours&#39; addresses that you notified about the application (2. Notifying relevant parties)</span></a>
                                         </li>
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
-                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> List of neighbours&#39; addresses that you notified about the application (2. Notifying relevant parties)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -372,9 +383,20 @@ exports[`LPA Questionnaire review GET / should render the CAS planning LPA Quest
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/assign-case-officer/search-case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F3%2Flpa-questionnaire%2F1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
@@ -455,7 +477,7 @@ exports[`LPA Questionnaire review GET / should render the CAS planning LPA Quest
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="notifications-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> List of neighbours&#39; addresses that you notified about the application</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
                                     <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
@@ -465,10 +487,10 @@ exports[`LPA Questionnaire review GET / should render the CAS planning LPA Quest
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/manage-documents/2/"
-                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> List of neighbours&#39; addresses that you notified about the application (2. Notifying relevant parties)</span></a>
                                         </li>
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/2"
-                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> List of neighbours&#39; addresses that you notified about the application (2. Notifying relevant parties)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -695,9 +717,20 @@ exports[`LPA Questionnaire review GET / should render the Cas Advert LPA Questio
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/4/assign-case-officer/search-case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/4/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F4%2Flpa-questionnaire%2F1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
@@ -810,7 +843,7 @@ exports[`LPA Questionnaire review GET / should render the Cas Advert LPA Questio
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> List of neighbours&#39; addresses that you notified about the application</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
                                     <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
@@ -820,10 +853,10 @@ exports[`LPA Questionnaire review GET / should render the Cas Advert LPA Questio
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/manage-documents/2/"
-                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> List of neighbours&#39; addresses that you notified about the application (2. Notifying relevant parties)</span></a>
                                         </li>
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/2"
-                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> List of neighbours&#39; addresses that you notified about the application (2. Notifying relevant parties)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -1100,12 +1133,26 @@ exports[`LPA Questionnaire review GET / should render the Householder LPA Questi
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-case-officer/search-case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Flpa-questionnaire%2F2"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
+                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
+                    </dd>
                 </div>
             </dl>
         </div>
@@ -1183,7 +1230,7 @@ exports[`LPA Questionnaire review GET / should render the Householder LPA Questi
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="notifications-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> List of neighbours&#39; addresses that you notified about the application</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
                                     <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
@@ -1193,10 +1240,10 @@ exports[`LPA Questionnaire review GET / should render the Householder LPA Questi
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
-                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> List of neighbours&#39; addresses that you notified about the application (2. Notifying relevant parties)</span></a>
                                         </li>
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
-                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> List of neighbours&#39; addresses that you notified about the application (2. Notifying relevant parties)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -1428,9 +1475,20 @@ exports[`LPA Questionnaire review GET / should render the Ldc LPA Questionnaire 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/6/assign-case-officer/search-case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/6/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F5%2Flpa-questionnaire%2F1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
@@ -1463,13 +1521,19 @@ exports[`LPA Questionnaire review GET / should render the Ldc LPA Questionnaire 
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-planning-permission">Add<span class="govuk-visually-hidden"> Planning permission (1. Constraints, designations and other issues)</span></a>
                             </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Enforcement notice</dt>
+                            <dd class="govuk-summary-list__value">No documents</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-enforcement-notice">Add<span class="govuk-visually-hidden"> Enforcement notice (1. Constraints, designations and other issues)</span></a>
+                            </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Related applications</dt>
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-related-applications">Add<span class="govuk-visually-hidden"> Related applications (1. Constraints, designations and other issues)</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you think the appeal is invalid?</dt>
-                            <dd                             class="govuk-summary-list__value"></dd>
+                            <dd                             class="govuk-summary-list__value"><span>No answer provided</span>
+                                </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/is-appeal-invalid/change"
                                     data-cy="change-is-appeal-invalid">Change<span class="govuk-visually-hidden"> Do you think the appeal is invalid? (1. Constraints, designations and other issues)</span></a>
                                 </dd>
@@ -1506,12 +1570,6 @@ exports[`LPA Questionnaire review GET / should render the Ldc LPA Questionnaire 
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Community infrastructure levy</dt>
-                            <dd                             class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/has-community-infrastructure-levy/change"
-                                    data-cy="change-has-community-infrastructure-levy">Change<span class="govuk-visually-hidden"> Community infrastructure levy (2. Planning officer’s report and supplementary documents)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Community infrastructure levy</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-community-infrastructure-levy">Add<span class="govuk-visually-hidden"> Community infrastructure levy (2. Planning officer’s report and supplementary documents)</span></a>
                                 </dd>
@@ -1533,6 +1591,11 @@ exports[`LPA Questionnaire review GET / should render the Ldc LPA Questionnaire 
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/lpa-questionnaire/1/infrastructure-levy-expected-date/change"
                                     data-cy="change-infrastructure-levy-expected-date">Change<span class="govuk-visually-hidden"> When do you expect to formally adopt the community infrastructure levy? (2. Planning officer’s report and supplementary documents)</span></a>
                                 </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Other relevant matters</dt>
+                            <dd class="govuk-summary-list__value">No documents</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-other-relevant-matters">Add<span class="govuk-visually-hidden"> Other relevant matters (2. Planning officer’s report and supplementary documents)</span></a>
+                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -1666,9 +1729,20 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-case-officer/search-case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F2%2Flpa-questionnaire%2F1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
@@ -1803,12 +1877,6 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                                     data-cy="change-eia-environmental-impact-schedule">Change<span class="govuk-visually-hidden"> What is the development category? (2. Environmental impact assessment)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row lpa-eia-column-two-threshold"><dt class="govuk-summary-list__key"> Does the development meet or exceed the threshold or criteria in column 2?</dt>
-                            <dd                             class="govuk-summary-list__value">Not answered</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/environmental-impact-assessment/column-two-threshold/change"
-                                    data-cy="change-eia-column-two-threshold">Change<span class="govuk-visually-hidden"> Does the development meet or exceed the threshold or criteria in column 2? (2. Environmental impact assessment)</span></a>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row lpa-eia-requires-environmental-statement"><dt class="govuk-summary-list__key"> Did your screening opinion say the development needed an environmental statement?</dt>
                             <dd                             class="govuk-summary-list__value">Not answered</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/environmental-impact-assessment/requires-environmental-statement/change"
@@ -1835,19 +1903,6 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-eia-scoping-opinion">Add<span class="govuk-visually-hidden"> Scoping opinion documents (2. Environmental impact assessment)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row lpa-eia-development-description"><dt class="govuk-summary-list__key"> Description of development</dt>
-                            <dd                             class="govuk-summary-list__value">No Data</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/eia-development-description/change"
-                                    data-cy="change-eia-development-description">Change<span class="govuk-visually-hidden"> Description of development (2. Environmental impact assessment)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row lpa-eia-sensitive-area-details"><dt class="govuk-summary-list__key"> Is the development in, partly in, or likely to affect a sensitive area?</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No</span>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/environmental-impact-assessment/sensitive-area-details/change"
-                                    data-cy="change-eia-sensitive-area-details">Change<span class="govuk-visually-hidden"> Is the development in, partly in, or likely to affect a sensitive area? (2. Environmental impact assessment)</span></a>
-                                </dd>
-                        </div>
                     </dl>
                 </div>
             </div>
@@ -1861,7 +1916,7 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> List of neighbours&#39; addresses that you notified about the application</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
                                     <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
@@ -1871,10 +1926,10 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/manage-documents/2/"
-                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (3. Notifying relevant parties)</span></a>
+                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> List of neighbours&#39; addresses that you notified about the application (3. Notifying relevant parties)</span></a>
                                         </li>
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/2"
-                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (3. Notifying relevant parties)</span></a>
+                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> List of neighbours&#39; addresses that you notified about the application (3. Notifying relevant parties)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -2004,12 +2059,6 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-other-relevant-policies">Add<span class="govuk-visually-hidden"> Other relevant policies (5. Planning officer’s report and supplementary documents)</span></a>
                             </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Community infrastructure levy</dt>
-                            <dd                             class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/has-community-infrastructure-levy/change"
-                                    data-cy="change-has-community-infrastructure-levy">Change<span class="govuk-visually-hidden"> Community infrastructure levy (5. Planning officer’s report and supplementary documents)</span></a>
-                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Community infrastructure levy</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
@@ -2173,9 +2222,20 @@ exports[`LPA Questionnaire review GET / should render the advert LPA Questionnai
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/assign-case-officer/search-case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F5%2Flpa-questionnaire%2F1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
@@ -2294,7 +2354,7 @@ exports[`LPA Questionnaire review GET / should render the advert LPA Questionnai
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> List of neighbours&#39; addresses that you notified about the application</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
                                     <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
@@ -2304,10 +2364,10 @@ exports[`LPA Questionnaire review GET / should render the advert LPA Questionnai
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/manage-documents/2/"
-                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> List of neighbours&#39; addresses that you notified about the application (2. Notifying relevant parties)</span></a>
                                         </li>
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/2"
-                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> List of neighbours&#39; addresses that you notified about the application (2. Notifying relevant parties)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -2638,9 +2698,20 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-case-officer/search-case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Flpa-questionnaire%2F2"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
@@ -2723,7 +2794,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="notifications-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> List of neighbours&#39; addresses that you notified about the application</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
                                     <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
@@ -2733,10 +2804,10 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
-                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> List of neighbours&#39; addresses that you notified about the application (2. Notifying relevant parties)</span></a>
                                         </li>
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
-                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> List of neighbours&#39; addresses that you notified about the application (2. Notifying relevant parties)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -2983,9 +3054,20 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-case-officer/search-case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Flpa-questionnaire%2F2"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
@@ -3068,7 +3150,7 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="notifications-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> List of neighbours&#39; addresses that you notified about the application</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
                                     <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
@@ -3078,10 +3160,10 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
-                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> List of neighbours&#39; addresses that you notified about the application (2. Notifying relevant parties)</span></a>
                                         </li>
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
-                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> List of neighbours&#39; addresses that you notified about the application (2. Notifying relevant parties)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -4136,7 +4218,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/environment-service-t
                             statement or issue an environmental screening in your email.</p>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Does the environmental services team need to review the case?</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Does the environmental services team need to review the case?</legend>
                                 <div                                 class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="eia-screening-required" name="eiaScreeningRequired"
@@ -6139,12 +6221,26 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <dl class="govuk-summary-list govuk-summary-list--no-border">
+            <dl class="govuk-summary-list pins-summary-list--no-border">
+                <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">
+                        <p class="govuk-body">Not assigned</p>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-case-officer/search-case-officer"
+                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
+                    </dd>
+                </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-address/change/1?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Flpa-questionnaire%2F2"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> Site address</span></a>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-local-planning-authority"><dt class="govuk-summary-list__key"> LPA</dt>
                     <dd class="govuk-summary-list__value">Wiltshire Council</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-details/local-planning-authority"
+                        data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> LPA</span></a>
+                    </dd>
                 </div>
             </dl>
         </div>
@@ -6222,7 +6318,7 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="notifications-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who did you notify about this application?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> List of neighbours&#39; addresses that you notified about the application</dt>
                             <dd                             class="govuk-summary-list__value">
                                 <ul class="govuk-list pins-file-list">
                                     <li><span><div class="govuk-body govuk-!-margin-bottom-2">notifyingParties.docx</div><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></span>
@@ -6232,10 +6328,10 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                                 <dd class="govuk-summary-list__actions">
                                     <ul class="govuk-summary-list__actions-list">
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/manage-documents/2/"
-                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                            data-cy="manage-notifying-parties">Change<span class="govuk-visually-hidden"> List of neighbours&#39; addresses that you notified about the application (2. Notifying relevant parties)</span></a>
                                         </li>
                                         <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2"
-                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> Who did you notify about this application? (2. Notifying relevant parties)</span></a>
+                                            data-cy="add-notifying-parties">Add<span class="govuk-visually-hidden"> List of neighbours&#39; addresses that you notified about the application (2. Notifying relevant parties)</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -8480,7 +8576,7 @@ exports[`LPA Questionnaire review POST /lpa-questionnaire/1/environment-service-
                             statement or issue an environmental screening in your email.</p>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Does the environmental services team need to review the case?</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Does the environmental services team need to review the case?</legend>
                                 <div                                 class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="eia-screening-required" name="eiaScreeningRequired"

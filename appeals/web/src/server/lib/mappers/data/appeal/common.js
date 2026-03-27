@@ -129,14 +129,17 @@ export const statementReceivedText = (appealDetails, statement) => {
  * @returns {string}
  */
 export const proofsStatusText = (status, representationStatus) => {
-	if (representationStatus?.toLowerCase() === APPEAL_REPRESENTATION_STATUS.VALID) {
-		return 'Completed';
-	} else if (representationStatus?.toLowerCase() === APPEAL_REPRESENTATION_STATUS.INCOMPLETE) {
-		return 'Incomplete';
-	} else {
-		return status && status.toLowerCase() === APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED
-			? APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED
-			: 'Awaiting proof of evidence and witness';
+	switch (representationStatus?.toLowerCase()) {
+		case APPEAL_REPRESENTATION_STATUS.VALID.toLowerCase():
+			return 'Completed';
+		case APPEAL_REPRESENTATION_STATUS.INCOMPLETE.toLowerCase():
+			return 'Incomplete';
+		case APPEAL_REPRESENTATION_STATUS.PUBLISHED.toLowerCase():
+			return 'Shared';
+		default:
+			return status && status.toLowerCase() === APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED
+				? APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED
+				: 'Awaiting proof of evidence and witness';
 	}
 };
 

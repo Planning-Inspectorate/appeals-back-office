@@ -57,7 +57,7 @@ export const validLpaQuestionnaireHas = {
 		inConservationArea: true,
 		newConditionDetails: 'cupidatat',
 		notificationMethod: ['notice', 'letter'],
-		affectedListedBuildingNumbers: ['1021466', '1021468'],
+		affectedListedBuildingNumbers: ['1021469', '1021473'],
 		lpaCostsAppliedFor: false
 	},
 };
@@ -113,7 +113,7 @@ const appealsApiRequests = {
             otherTenantsAgriculturalHolding: null,
             informedTenantsAgriculturalHolding: null,
             planningObligation: false,
-            statusPlanningObligation: null
+            statusPlanningObligation: 'not_started'
         },
 		users: [
 			{
@@ -274,7 +274,6 @@ const appealsApiRequests = {
 	},
 	lpaqSubmission: {
 		casedata: {
-			...validLpaQuestionnaireCommon.casedata,
 			...validLpaQuestionnaireHas.casedata,
 			changedListedBuildingNumbers: [],
 			designatedSitesNames: ['cSAC', 'SAC', 'customVal1'],

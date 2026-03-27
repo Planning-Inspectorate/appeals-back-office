@@ -96,6 +96,12 @@ export const appealDetailsInclude = /** @type {Object} */ {
 					appellantCaseEnforcementMissingDocumentText: true
 				}
 			},
+			appellantCaseEnforcementGroundsMismatchFactsSelected: {
+				include: {
+					appellantCaseEnforcementGroundsMismatchFacts: true,
+					appellantCaseEnforcementGroundsMismatchFactsText: true
+				}
+			},
 			appellantCaseValidationOutcome: true,
 			knowsOtherOwners: true,
 			knowsAllOwners: true,
@@ -243,6 +249,12 @@ export const appealDetailsIncludeMap = /** @type {Object} */ {
 				include: {
 					appellantCaseEnforcementMissingDocument: true,
 					appellantCaseEnforcementMissingDocumentText: true
+				}
+			},
+			appellantCaseEnforcementGroundsMismatchFactsSelected: {
+				include: {
+					appellantCaseEnforcementGroundsMismatchFacts: true,
+					appellantCaseEnforcementGroundsMismatchFactsText: true
 				}
 			},
 			appellantCaseValidationOutcome: true,
@@ -469,7 +481,8 @@ const updateAppealById = (
 		agent,
 		applicationReference,
 		procedureTypeId,
-		hearingStartTime
+		hearingStartTime,
+		hearingEstimatedDays
 	}
 ) =>
 	databaseConnector.appeal.update({
@@ -485,11 +498,17 @@ const updateAppealById = (
 			...(hasValueOrIsNull(agent) && { agentId: agent }),
 			...(hasValueOrIsNull(procedureTypeId) && { procedureTypeId }),
 			caseUpdatedDate: new Date(),
-			...(hearingStartTime && {
+			...((hearingStartTime || hearingEstimatedDays) && {
 				hearing: {
 					upsert: {
-						create: { hearingStartTime },
-						update: { hearingStartTime },
+						create: {
+							...(hearingStartTime && { hearingStartTime }),
+							...(hearingEstimatedDays && { estimatedDays: Number(hearingEstimatedDays) })
+						},
+						update: {
+							...(hearingStartTime && { hearingStartTime }),
+							...(hearingEstimatedDays && { estimatedDays: Number(hearingEstimatedDays) })
+						},
 						where: { appealId: id }
 					}
 				}

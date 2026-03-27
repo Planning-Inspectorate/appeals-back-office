@@ -1,3 +1,4 @@
+import { mapLpaNeighbouringSitesLpaqAdapter } from '../appeal/submappers/lpa-neighbouring-sites.mapper.js';
 import { mapAdditionalDocumentsContents } from './submappers/map-additional-documents-contents.js';
 import { mapAdditionalDocuments } from './submappers/map-additional-documents.js';
 import { mapAffectsListedBuildingDetails } from './submappers/map-affects-listed-building-details.js';
@@ -39,6 +40,7 @@ export const submaps = {
 	supplementaryPlanning: mapSupplementaryPlanning,
 	siteAccess: mapSiteAccess,
 	lpaHealthAndSafety: mapLpaHealthAndSafety,
+	lpaNeighbouringSites: mapLpaNeighbouringSitesLpaqAdapter,
 	extraConditions: mapExtraConditions,
 	otherAppeals: mapOtherAppeals,
 	additionalDocumentsContents: mapAdditionalDocumentsContents,

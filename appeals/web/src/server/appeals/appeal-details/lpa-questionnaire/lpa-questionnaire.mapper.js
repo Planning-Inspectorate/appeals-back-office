@@ -19,6 +19,7 @@ import {
 	userHasPermission,
 	yesNoInput
 } from '#lib/mappers/index.js';
+import { generateCaseSummary } from '#lib/mappers/utils/generate-case-summary.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
@@ -64,53 +65,23 @@ export async function lpaQuestionnairePage(
 		currentRoute
 	);
 
+	const baseAppealRoute = `/appeals-service/appeal-details/${appealDetails.appealId}`;
+
 	const mappedAppealDetails = await initialiseAndMapAppealData(
 		appealDetails,
-		currentRoute,
+		baseAppealRoute,
 		session,
 		request,
+		false,
 		true
 	);
+
+	const caseSummary = generateCaseSummary(mappedAppealDetails);
 
 	/** @type {PageComponent[]} */
 	let appealTypeSpecificPageComponents = generateCaseTypeSpecificComponents(
 		appealDetails,
-		mappedAppealDetails,
 		mappedLpaqDetails
-	);
-
-	const lpaText = 'LPA';
-
-	/**
-	 * @type {PageComponent}
-	 */
-	const caseSummary = {
-		type: 'summary-list',
-		wrapperHtml: {
-			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-			closing: '</div></div>'
-		},
-		parameters: {
-			classes: 'govuk-summary-list--no-border',
-			rows: [
-				...(mappedAppealDetails.appeal.siteAddress.display.summaryListItem
-					? [mappedAppealDetails.appeal.siteAddress.display.summaryListItem]
-					: []),
-				...(mappedAppealDetails.appeal.localPlanningAuthority.display.summaryListItem
-					? [
-							{
-								...mappedAppealDetails.appeal.localPlanningAuthority.display.summaryListItem,
-								key: {
-									text: lpaText
-								}
-							}
-						]
-					: [])
-			]
-		}
-	};
-	caseSummary.parameters.rows = caseSummary.parameters.rows.map(
-		(/** @type {SummaryListRowProperties} */ row) => removeSummaryListActions(row)
 	);
 
 	/**

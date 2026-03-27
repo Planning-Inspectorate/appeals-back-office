@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`is-appeal-invalid GET /change should render the lpaConsiderAppealInvalid change page 1`] = `
+exports[`is-appeal-invalid GET /change should render the lpaConsiderAppealInvalid change page with no 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
@@ -13,14 +13,119 @@ exports[`is-appeal-invalid GET /change should render the lpaConsiderAppealInvali
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Do you think the appeal is invalid?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="lpa-consider-appeal-invalid" name="lpaConsiderAppealInvalid"
-                                        type="radio" value="yes">
+                                        type="radio" value="yes" data-aria-controls="conditional-lpa-consider-appeal-invalid">
                                         <label class="govuk-label govuk-radios__label" for="lpa-consider-appeal-invalid">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-lpa-consider-appeal-invalid">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="lpa-consider-appeal-invalid-reason">Why did the LPA think the appeal is invalid?</label>
+                                            <textarea class="govuk-textarea"
+                                            id="lpa-consider-appeal-invalid-reason" name="lpaAppealInvalidReasons"
+                                            rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="lpa-consider-appeal-invalid-2"
+                                        name="lpaConsiderAppealInvalid" type="radio" value="no" checked>
+                                        <label class="govuk-label govuk-radios__label" for="lpa-consider-appeal-invalid-2">No</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`is-appeal-invalid GET /change should render the lpaConsiderAppealInvalid change page with yes and no reason 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    <h1 class="govuk-fieldset__heading"> Do you think the appeal is invalid?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="lpa-consider-appeal-invalid" name="lpaConsiderAppealInvalid"
+                                        type="radio" value="yes" checked data-aria-controls="conditional-lpa-consider-appeal-invalid">
+                                        <label class="govuk-label govuk-radios__label" for="lpa-consider-appeal-invalid">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional" id="conditional-lpa-consider-appeal-invalid">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="lpa-consider-appeal-invalid-reason">Why did the LPA think the appeal is invalid?</label>
+                                            <textarea class="govuk-textarea"
+                                            id="lpa-consider-appeal-invalid-reason" name="lpaAppealInvalidReasons"
+                                            rows="3">reason</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="lpa-consider-appeal-invalid-2"
+                                        name="lpaConsiderAppealInvalid" type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="lpa-consider-appeal-invalid-2">No</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`is-appeal-invalid GET /change should render the lpaConsiderAppealInvalid change page with yes and reason 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    <h1 class="govuk-fieldset__heading"> Do you think the appeal is invalid?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="lpa-consider-appeal-invalid" name="lpaConsiderAppealInvalid"
+                                        type="radio" value="yes" checked data-aria-controls="conditional-lpa-consider-appeal-invalid">
+                                        <label class="govuk-label govuk-radios__label" for="lpa-consider-appeal-invalid">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional" id="conditional-lpa-consider-appeal-invalid">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="lpa-consider-appeal-invalid-reason">Why did the LPA think the appeal is invalid?</label>
+                                            <textarea class="govuk-textarea"
+                                            id="lpa-consider-appeal-invalid-reason" name="lpaAppealInvalidReasons"
+                                            rows="3">reason</textarea>
+                                        </div>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="lpa-consider-appeal-invalid-2"

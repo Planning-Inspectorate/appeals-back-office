@@ -207,34 +207,38 @@ export const postCheckYourAnswers = async (request, response) => {
 	let bannerText = undefined;
 
 	switch (representationType) {
-		case 'comment':
+		case APPEAL_REPRESENTATION_TYPE.COMMENT:
 			nextPageUrl = `${nextPageUrl}/review`;
 			bannerDefinitionKey = 'interestedPartyCommentsDocumentAddedSuccess';
 			break;
-		case 'lpa_statement':
+		case APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT:
 			bannerDefinitionKey = session.createNewRepresentation
 				? 'lpaStatementAddedSuccess'
 				: 'lpaStatementDocumentAddedSuccess';
 			break;
-		case 'lpa_proofs_evidence':
-			nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
+		case APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE:
+			if (!session.createNewRepresentation) {
+				nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
+			}
 			bannerDefinitionKey = 'lpaProofOfEvidenceDocumentAddedSuccess';
 			break;
-		case 'appellant_proofs_evidence':
-			nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
+		case APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE:
+			if (!session.createNewRepresentation) {
+				nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
+			}
 			bannerDefinitionKey = 'appellantProofOfEvidenceDocumentAddedSuccess';
 			break;
-		case 'lpa_final_comment':
+		case APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT:
 			bannerDefinitionKey = session.createNewRepresentation
 				? 'lpaFinalCommentsAddedSuccess'
 				: 'finalCommentsDocumentAddedSuccess';
 			break;
-		case 'appellant_final_comment':
+		case APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT:
 			bannerDefinitionKey = session.createNewRepresentation
 				? 'appellantFinalCommentsAddedSuccess'
 				: 'finalCommentsDocumentAddedSuccess';
 			break;
-		case 'rule_6_party_statement':
+		case APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT:
 			bannerDefinitionKey = session.createNewRepresentation
 				? 'rule6PartyStatementAddedSuccess'
 				: 'rule6PartyStatementDocumentAddedSuccess';
@@ -242,14 +246,22 @@ export const postCheckYourAnswers = async (request, response) => {
 				bannerText = `${rule6Party.serviceUser.organisationName} statement added`;
 			}
 			break;
-		case 'rule_6_party_proofs_evidence':
-			nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
+		case APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE:
+			if (!session.createNewRepresentation) {
+				nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
+			}
 			bannerDefinitionKey = session.createNewRepresentation
 				? 'rule6PartyProofOfEvidenceAddedSuccess'
 				: 'rule6PartyProofOfEvidenceDocumentAddedSuccess';
 			if (rule6Party && session.createNewRepresentation) {
 				bannerText = `${rule6Party.serviceUser.organisationName} proof of evidence and witnesses added`;
 			}
+			break;
+		case APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT:
+			nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
+			bannerDefinitionKey = session.createNewRepresentation
+				? 'appellantStatementAddedSuccess'
+				: 'appellantStatementDocumentAddedSuccess';
 			break;
 		default:
 			bannerDefinitionKey = 'finalCommentsDocumentAddedSuccess';
@@ -262,6 +274,11 @@ export const postCheckYourAnswers = async (request, response) => {
 		appealId,
 		text: bannerText
 	});
+
+	if (session.createNewRepresentation) {
+		delete session.createNewRepresentation;
+	}
+
 	return response.redirect(nextPageUrl);
 };
 
@@ -273,7 +290,7 @@ export const postCheckYourAnswers = async (request, response) => {
  * @param {number} [representedId]
  * @return {RepresentationRequest}
  */
-const buildPayload = (
+export const buildPayload = (
 	representationType,
 	documentGuid,
 	redactionStatus,
@@ -281,19 +298,27 @@ const buildPayload = (
 	representedId
 ) => {
 	const source = [
+		APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT,
 		APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT,
+		APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
 		APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT,
 		APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
 	].includes(representationType)
 		? 'citizen'
 		: 'lpa';
 
+	const isProofOfEvidence = [
+		APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
+		APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
+		APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
+	].includes(representationType);
+
 	return {
 		attachments: [documentGuid],
 		redactionStatus,
 		source,
 		dateCreated: createdDate,
-		representationText: REPRESENTATION_ADDED_AS_DOCUMENT,
+		representationText: isProofOfEvidence ? null : REPRESENTATION_ADDED_AS_DOCUMENT,
 		...(representedId ? { representedId } : {})
 	};
 };
@@ -302,7 +327,7 @@ const buildPayload = (
  * @param {string} url
  * @return {string}
  */
-const getRepresentationType = (url) => {
+export const getRepresentationType = (url) => {
 	const parts = url.split('/');
 
 	const immediateParent = parts[parts.length - 2];
@@ -327,7 +352,7 @@ const getRepresentationType = (url) => {
  * @param {string} repStatus
  * @return {boolean}
  */
-const onlySingularRepresentationAllowed = (representationType, repStatus) => {
+export const onlySingularRepresentationAllowed = (representationType, repStatus) => {
 	return (
 		[
 			APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,

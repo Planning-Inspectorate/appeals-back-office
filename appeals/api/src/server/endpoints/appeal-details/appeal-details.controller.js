@@ -1,9 +1,12 @@
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { updateServiceUser } from '#endpoints/service-user/service-user.service.js';
 import { contextEnum } from '#mappers/context-enum.js';
-import { hasChildAppeals } from '#utils/is-linked-appeal.js';
+import { isParentAppeal } from '#utils/is-linked-appeal.js';
+import { getChildAppeals } from '#utils/link-appeals.js';
 import logger from '#utils/logger.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
 import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
+import { SERVICE_USER_TYPE } from '@planning-inspectorate/data-model';
 import { appealDetailService } from './appeal-details.service.js';
 
 /** @typedef {import('express').Request} Request */
@@ -54,14 +57,21 @@ const updateAppealById = async (req, res) => {
 	const azureAdUserId = req.get('azureAdUserId');
 
 	const notifyClient = req.notifyClient;
+
+	// logic:
+	// - first update the appeal assignment or other changes
+	// - update the personal list
+	// - broadcast the change
+	// - update any child appeal assignments + broadcast
+	// - update any child appeal agents + broadcast
 	try {
-		if (
-			appealDetailService.assignedUserType({
-				caseOfficer: caseOfficerId,
-				inspector: inspectorId,
-				padsInspector: padsInspectorId
-			})
-		) {
+		const isAssignmentChange = appealDetailService.assignedUserType({
+			caseOfficer: caseOfficerId,
+			inspector: inspectorId,
+			padsInspector: padsInspectorId
+		});
+		// if its an assignment change - just handle the assignment
+		if (isAssignmentChange) {
 			await appealDetailService.assignUser(
 				appeal,
 				{ caseOfficer: caseOfficerId, inspector: inspectorId, padsInspector: padsInspectorId },
@@ -73,20 +83,8 @@ const updateAppealById = async (req, res) => {
 				azureAdUserId,
 				notifyClient
 			);
-			if (hasChildAppeals(appeal)) {
-				await appealDetailService.assignUserForLinkedAppeals(
-					appeal,
-					{ caseOfficer: caseOfficerId, inspector: inspectorId, padsInspector: padsInspectorId },
-					{
-						caseOfficerName: caseOfficerName,
-						inspectorName: inspectorName,
-						prevUserName: prevUserName
-					},
-					azureAdUserId,
-					notifyClient
-				);
-			}
 		} else {
+			// otherwise update any other appeal details
 			await appealDetailService.updateAppealDetails(
 				{
 					appealId,
@@ -98,10 +96,58 @@ const updateAppealById = async (req, res) => {
 				azureAdUserId
 			);
 		}
-
 		await updatePersonalList(appealId);
-
+		// broadcast any changes
 		await broadcasters.broadcastAppeal(appeal.id);
+
+		// if an assignment change, also assign to linked/child appeals
+		if (isAssignmentChange && isParentAppeal(appeal)) {
+			// includes a call to broadcast child appeals
+			await appealDetailService.assignUserForLinkedAppeals(
+				appeal,
+				{ caseOfficer: caseOfficerId, inspector: inspectorId, padsInspector: padsInspectorId },
+				{
+					caseOfficerName: caseOfficerName,
+					inspectorName: inspectorName,
+					prevUserName: prevUserName
+				},
+				azureAdUserId,
+				notifyClient
+			);
+		}
+
+		// if its an agent change, add the agent to all child appeals
+		if (agent && isParentAppeal(appeal)) {
+			const childAppeals = getChildAppeals(appeal);
+			await Promise.allSettled(
+				childAppeals.map(async (childAppeal) => {
+					if (childAppeal?.id) {
+						if (childAppeal?.agent) {
+							await updateServiceUser(
+								azureAdUserId,
+								childAppeal.agent.id,
+								SERVICE_USER_TYPE.AGENT,
+								childAppeal,
+								agent
+							);
+						} else {
+							await appealDetailService.updateAppealDetails(
+								{
+									appealId: childAppeal.id,
+									startedAt,
+									validAt,
+									planningApplicationReference,
+									agent
+								},
+								azureAdUserId
+							);
+
+							return broadcasters.broadcastAppeal(childAppeal.id);
+						}
+					}
+				})
+			);
+		}
 	} catch (error) {
 		if (error) {
 			logger.error(error);

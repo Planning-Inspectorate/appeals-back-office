@@ -13,7 +13,7 @@ exports[`alleged-breach-creates-floor-space GET /change should render the allege
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading"> Does the alleged breach create any floor space?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
@@ -26,9 +26,137 @@ exports[`alleged-breach-creates-floor-space GET /change should render the allege
                                     <div class="govuk-radios__conditional" id="conditional-floor-space-created-by-breach-in-square-metres-radio">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label" for="floor-space-created-details">Floor space created by the breach, in square metres</label>
-                                            <textarea class="govuk-textarea"
+                                            <input class="govuk-input govuk-input--width-10"
                                             id="floor-space-created-details" name="floorSpaceCreatedByBreachInSquareMetres"
-                                            rows="3">20</textarea>
+                                            type="number" value=20>
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="floor-space-created-by-breach-in-square-metres-radio-2"
+                                        name="floorSpaceCreatedByBreachInSquareMetresRadio" type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="floor-space-created-by-breach-in-square-metres-radio-2">No</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`alleged-breach-creates-floor-space POST /change should redirect back to the change page if invalid floor space value is provided 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#floor-space-created-by-breach-in-square-metres">Floor space must be a number or decimal</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    <h1 class="govuk-fieldset__heading"> Does the alleged breach create any floor space?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="floor-space-created-by-breach-in-square-metres-radio"
+                                        name="floorSpaceCreatedByBreachInSquareMetresRadio" type="radio" value="yes"
+                                        checked data-aria-controls="conditional-floor-space-created-by-breach-in-square-metres-radio">
+                                        <label class="govuk-label govuk-radios__label" for="floor-space-created-by-breach-in-square-metres-radio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional" id="conditional-floor-space-created-by-breach-in-square-metres-radio">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="floor-space-created-details">Floor space created by the breach, in square metres</label>
+                                            <input class="govuk-input govuk-input--width-10"
+                                            id="floor-space-created-details" name="floorSpaceCreatedByBreachInSquareMetres"
+                                            type="number" value=20>
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="floor-space-created-by-breach-in-square-metres-radio-2"
+                                        name="floorSpaceCreatedByBreachInSquareMetresRadio" type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="floor-space-created-by-breach-in-square-metres-radio-2">No</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`alleged-breach-creates-floor-space POST /change should redirect back to the change page if no answer is given 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#floor-space-created-by-breach-in-square-metres-radio">Select yes if the alleged breach creates any floor space</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    <h1 class="govuk-fieldset__heading"> Does the alleged breach create any floor space?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="floor-space-created-by-breach-in-square-metres-radio"
+                                        name="floorSpaceCreatedByBreachInSquareMetresRadio" type="radio" value="yes"
+                                        checked data-aria-controls="conditional-floor-space-created-by-breach-in-square-metres-radio">
+                                        <label class="govuk-label govuk-radios__label" for="floor-space-created-by-breach-in-square-metres-radio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional" id="conditional-floor-space-created-by-breach-in-square-metres-radio">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="floor-space-created-details">Floor space created by the breach, in square metres</label>
+                                            <input class="govuk-input govuk-input--width-10"
+                                            id="floor-space-created-details" name="floorSpaceCreatedByBreachInSquareMetres"
+                                            type="number" value=20>
                                         </div>
                                     </div>
                                     <div class="govuk-radios__item">

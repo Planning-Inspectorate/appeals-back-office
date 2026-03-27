@@ -35,7 +35,7 @@ export const mapHearingDetails = ({
 		};
 	};
 
-	const { hearingStartTime, address } = appealDetails.hearing || {};
+	const { hearingStartTime, address, estimatedDays } = appealDetails.hearing || {};
 
 	/** @type {SummaryListRowProperties[]} */
 	const rows = [
@@ -49,6 +49,20 @@ export const mapHearingDetails = ({
 			value: { text: dateISOStringToDisplayTime12hr(hearingStartTime) },
 			...actions('Time', 'date')
 		},
+		{
+			key: { text: 'Do you know the estimated number of days needed to carry out the hearing?' },
+			value: { text: estimatedDays ? 'Yes' : 'No' },
+			...actions('Whether the estimated number of days is known or not', 'estimation')
+		},
+		...(estimatedDays
+			? [
+					{
+						key: { text: 'Estimated number of days needed to carry out hearing' },
+						value: { text: `${estimatedDays} Days` },
+						...actions('Estimated Days', 'estimation')
+					}
+				]
+			: []),
 		{
 			key: { text: 'Do you know the address of where the hearing will take place?' },
 			value: { text: address ? 'Yes' : 'No' },

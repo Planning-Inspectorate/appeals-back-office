@@ -31,7 +31,7 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 				caseStarted ? mappedData.appeal.lpaQuestionnaire.display.tableItem : undefined,
 				...(!isChildAppeal(appealDetails)
 					? [
-							mappedData.appeal.appellantStatement.display.tableItem,
+							caseStarted ? mappedData.appeal.appellantStatement.display.tableItem : undefined,
 							caseStarted ? mappedData.appeal.lpaStatement.display.tableItem : undefined,
 							...(mappedData.appeal.rule6PartyStatements?.display?.tableItems || []),
 							caseStarted ? mappedData.appeal.ipComments.display.tableItem : undefined,

@@ -17,11 +17,18 @@ export const renderReviewAppellantStatement = async (request, response) => {
 		APPEAL_REPRESENTATION_STATUS.INCOMPLETE
 	].includes(currentRepresentation.status);
 
+	const backLinkUrlFromQuery = getBackLinkUrlFromQuery(request);
+	const backLinkUrl = backLinkUrlFromQuery?.includes(
+		'/appellant-statement/add-document/check-your-answers'
+	)
+		? undefined
+		: backLinkUrlFromQuery;
+
 	const pageContent = (isReview ? reviewAppellantStatementPage : viewAppellantStatementPage)(
 		currentAppeal,
 		currentRepresentation,
 		session,
-		getBackLinkUrlFromQuery(request)
+		backLinkUrl
 	);
 
 	return response

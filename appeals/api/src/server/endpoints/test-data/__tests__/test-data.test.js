@@ -30,6 +30,6 @@ describe('/appeals/generate-appeals', () => {
 
 		expect(response.status).toEqual(200);
 		expect(response.body.count).toEqual(3);
-		expect(testDataService.generateAppeals).toHaveBeenCalledWith('has', 3, expect.any(Array));
+		expect(testDataService.generateAppeals).toHaveBeenCalledWith('has', 3, expect.any(Array), 25);
 	});
 });

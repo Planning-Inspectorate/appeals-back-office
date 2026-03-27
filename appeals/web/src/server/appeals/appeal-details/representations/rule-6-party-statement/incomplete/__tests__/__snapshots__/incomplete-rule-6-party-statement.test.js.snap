@@ -28,19 +28,19 @@ exports[`rule 6 party statement - incomplete GET /incomplete/confirm should rend
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decision</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-party-statement/1">Change <span class="govuk-visually-hidden">Review decision</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-party-statement/1?backUrl=%2Fappeals-service%2Fappeal-details%2F2%2Frule-6-party-statement%2F1%2Fincomplete%2Fconfirm">Change <span class="govuk-visually-hidden">Review decision</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Why is the statement incomplete?</dt>
                     <dd                     class="govuk-summary-list__value">
                         <div class="pins-show-more" data-label="Read more" data-mode="html">Received after deadline</div>
                         </dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-party-statement/1/incomplete/reasons">Change <span class="govuk-visually-hidden">Incomplete reasons</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-party-statement/1/incomplete/reasons?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Frule-6-party-statement%2F1%2Fincomplete%2Freasons">Change <span class="govuk-visually-hidden">Incomplete reasons</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you want to allow the rule 6 party to resubmit their statement?</dt>
                     <dd                     class="govuk-summary-list__value">No</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-party-statement/1/incomplete/date">Change <span class="govuk-visually-hidden">Incomplete reasons</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-party-statement/1/incomplete/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Frule-6-party-statement%2F1%2Fincomplete%2Fdate">Change <span class="govuk-visually-hidden">Incomplete reasons</span></a>
                         </dd>
                 </div>
             </dl>
@@ -71,7 +71,7 @@ exports[`rule 6 party statement - incomplete GET /incomplete/date should render 
                     <form method="post" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" aria-describedby="set-new-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Do you want to allow the rule 6 party to resubmit their statement?</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Do you want to allow the rule 6 party to resubmit their statement?</legend>
                                 <div                                 id="set-new-date-hint" class="govuk-hint">We will update the statement due date to 1 January 2023.</div>
                         <div class="govuk-radios"
                         data-module="govuk-radios">

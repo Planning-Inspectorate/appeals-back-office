@@ -1,6 +1,6 @@
 module "app_pdf" {
   #checkov:skip=CKV_TF_1: Use of commit hash are not required for our Terraform modules
-  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-app-service?ref=1.53"
+  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-app-service?ref=1.54"
 
   resource_group_name = azurerm_resource_group.primary.name
   location            = module.primary_region.location
@@ -14,6 +14,7 @@ module "app_pdf" {
   # service plan
   app_service_plan_id                  = azurerm_service_plan.apps.id
   app_service_plan_resource_group_name = azurerm_resource_group.primary.name
+  worker_count                         = var.apps_config.pdf.worker_count
 
   # container
   container_registry_name = var.tooling_config.container_registry_name

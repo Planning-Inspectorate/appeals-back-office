@@ -1,6 +1,7 @@
 import { mapAppealCostsDecision } from '#mappers/api/shared/map-appeal-costs-decision.js';
 import { mapCompletedStateList } from '#mappers/api/shared/map-completed-state-list.js';
 import { mapAllocationDetails } from './map-allocation-details.js';
+import { mapAppealCancellation } from './map-appeal-cancellation.js';
 import { mapAppealDecision } from './map-appeal-decision.js';
 import { mapAppealRelationships } from './map-appeal-relationships.js';
 import { mapAppealRule6Parties } from './map-appeal-rule-6-parties.js';
@@ -44,6 +45,7 @@ export const apiSharedMappers = {
 	appellantCase: mapAppellantCase,
 	lpaQuestionnaire: mapLpaQuestionnaire,
 	withdrawal: mapAppealWithdrawal,
+	cancellation: mapAppealCancellation,
 	folders: mapAppealFolders,
 	hearingEstimate: mapHearingEstimate,
 	inquiryEstimate: mapInquiryEstimate,

@@ -1,4 +1,3 @@
-import config from '#environment/config.js';
 import { wrapComponents } from '#lib/mappers/index.js';
 import isLinkedAppeal from '#lib/mappers/utils/is-linked-appeal.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
@@ -10,7 +9,6 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
  */
 export const getCancelAppealSection = (appealDetails, currentRoute) => {
 	if (
-		!config.featureFlags.featureFlagCancelCase ||
 		appealDetails.appealStatus === APPEAL_CASE_STATUS.WITHDRAWN ||
 		appealDetails.appealStatus === APPEAL_CASE_STATUS.INVALID ||
 		appealDetails.appealStatus === APPEAL_CASE_STATUS.COMPLETE ||

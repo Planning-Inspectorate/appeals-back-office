@@ -3,15 +3,11 @@ import { generateCasAdvertLpaQuestionnaireComponents } from './cas-advert.js';
 /**
  *
  * @param {{lpaq: MappedInstructions}} mappedLPAQData
- * @param {{appeal: MappedInstructions}} mappedAppealDetails
  * @returns {PageComponent[]}
  */
-export const generateAdvertLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetails) => {
+export const generateAdvertLpaQuestionnaireComponents = (mappedLPAQData) => {
 	/** @type {PageComponent[]} */
-	const pageComponents = generateCasAdvertLpaQuestionnaireComponents(
-		mappedLPAQData,
-		mappedAppealDetails
-	);
+	const pageComponents = generateCasAdvertLpaQuestionnaireComponents(mappedLPAQData);
 
 	const constraintsDesignationsIndex = pageComponents.findIndex(
 		(component) =>

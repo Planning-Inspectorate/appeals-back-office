@@ -10,7 +10,7 @@ import { mapS78AppellantCase } from '../s78/map-appellant-case.js';
  * @param {MappingRequest} data
  * @returns {AppellantCase|undefined}
  */
-export const mapEnforcementAppellantCase = (data) => {
+export const mapEnforcementListedAppellantCase = (data) => {
 	const {
 		appeal: { appellantCase, parentAppeals = [], childAppeals = [], appealType }
 	} = data;

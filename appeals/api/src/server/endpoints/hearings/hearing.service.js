@@ -3,6 +3,7 @@ import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import hearingRepository from '#repositories/hearing.repository.js';
+import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import logger from '#utils/logger.js';
 import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
 import {
@@ -47,7 +48,8 @@ const checkHearingExists = async (req, res, next) => {
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} templateName
  * @param {Appeal} appeal
- * @param {string | Date} hearingStartTime
+ * @param {string | Date | null} hearingStartTime
+ * @param {string} estimatedDays
  * @param {Omit<import('@pins/appeals.api').Schema.Address, 'id'> | null} address
  * @param {string} azureAdUserId
  * @returns {Promise<void>}
@@ -57,25 +59,31 @@ const sendHearingDetailsNotifications = async (
 	templateName,
 	appeal,
 	hearingStartTime,
+	estimatedDays,
 	address,
 	azureAdUserId
 ) => {
 	const personalisation = {
-		hearing_date: dateISOStringToDisplayDate(
-			typeof hearingStartTime === 'string' ? hearingStartTime : hearingStartTime.toISOString()
-		),
-		hearing_time: formatTime12h(
-			typeof hearingStartTime === 'string' ? new Date(hearingStartTime) : hearingStartTime
-		),
-		hearing_address: address ? formatAddressSingleLine({ ...address, id: 0 }) : '',
-		team_email_address: await getTeamEmailFromAppealId(appeal.id)
+		hearing_date: hearingStartTime
+			? dateISOStringToDisplayDate(
+					typeof hearingStartTime === 'string' ? hearingStartTime : hearingStartTime.toISOString()
+				)
+			: 'Not set',
+		hearing_time: hearingStartTime
+			? formatTime12h(
+					typeof hearingStartTime === 'string' ? new Date(hearingStartTime) : hearingStartTime
+				)
+			: 'Not set',
+		hearing_expected_days: estimatedDays ?? '',
+		hearing_address: address ? formatAddressSingleLine({ ...address, id: 0 }) : ''
 	};
 	await sendHearingNotifications(
 		notifyClient,
 		templateName,
 		appeal,
 		azureAdUserId,
-		personalisation
+		personalisation,
+		true
 	);
 };
 
@@ -85,6 +93,7 @@ const sendHearingDetailsNotifications = async (
  * @param {Appeal} appeal
  * @param {string} azureAdUserId
  * @param {Record<string, string>} [personalisation]
+ * @param {boolean} [includeRecipientRole]
  * @returns {Promise<void>}
  */
 const sendHearingNotifications = async (
@@ -92,7 +101,8 @@ const sendHearingNotifications = async (
 	templateName,
 	appeal,
 	azureAdUserId,
-	personalisation = {}
+	personalisation = {},
+	includeRecipientRole = false
 ) => {
 	const appellantEmail = appeal.appellant?.email ?? appeal.agent?.email;
 	const lpaEmail = appeal.lpa?.email;
@@ -100,21 +110,32 @@ const sendHearingNotifications = async (
 		throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 	}
 
-	[appellantEmail, lpaEmail].forEach(async (email) => {
-		await notifySend({
-			azureAdUserId,
-			notifyClient,
-			templateName,
-			personalisation: {
-				appeal_reference_number: appeal.reference,
-				site_address: appeal.address ? formatAddressSingleLine(appeal.address) : '',
-				lpa_reference: appeal.applicationReference ?? '',
-				...personalisation,
-				team_email_address: await getTeamEmailFromAppealId(appeal.id)
-			},
-			recipientEmail: email
-		});
-	});
+	const teamEmailAddress = await getTeamEmailFromAppealId(appeal.id);
+	const enforcementReference = await getEnforcementReference(appeal);
+	const recipients = [
+		{ email: appellantEmail, isLpa: false },
+		{ email: lpaEmail, isLpa: true }
+	];
+
+	await Promise.all(
+		recipients.map(({ email, isLpa }) =>
+			notifySend({
+				azureAdUserId,
+				notifyClient,
+				templateName,
+				personalisation: {
+					appeal_reference_number: appeal.reference,
+					site_address: appeal.address ? formatAddressSingleLine(appeal.address) : '',
+					lpa_reference: appeal.applicationReference ?? '',
+					...(enforcementReference && { enforcement_reference: enforcementReference }),
+					...personalisation,
+					...(includeRecipientRole && { is_lpa: isLpa }),
+					team_email_address: teamEmailAddress
+				},
+				recipientEmail: email
+			})
+		)
+	);
 };
 
 /**
@@ -129,26 +150,30 @@ const createHearing = async (createHearingData, appeal, notifyClient, azureAdUse
 		const appealId = createHearingData.appealId;
 		const hearingStartTime = createHearingData.hearingStartTime;
 		const hearingEndTime = createHearingData.hearingEndTime;
+		const estimatedDays = createHearingData.estimatedDays;
 		const address = createHearingData.address;
 
 		const hearing = await hearingRepository.createHearingById({
 			appealId,
 			hearingStartTime,
 			hearingEndTime,
+			estimatedDays,
 			address
 		});
 
 		if (address) {
 			await broadcasters.broadcastEvent(hearing.id, EVENT_TYPE.HEARING, EventType.Create);
-			await sendHearingDetailsNotifications(
-				notifyClient,
-				'hearing-set-up',
-				appeal,
-				hearingStartTime,
-				address,
-				azureAdUserId
-			);
 		}
+
+		await sendHearingDetailsNotifications(
+			notifyClient,
+			'hearing-set-up',
+			appeal,
+			hearingStartTime,
+			estimatedDays ?? '',
+			address || null,
+			azureAdUserId
+		);
 	} catch (error) {
 		logger.error(error, 'Failed to create hearing');
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
@@ -174,6 +199,7 @@ const updateHearing = async (
 		const hearingId = Number(updateHearingData.hearingId);
 		const hearingStartTime = updateHearingData.hearingStartTime;
 		const hearingEndTime = updateHearingData.hearingEndTime;
+		const estimatedDays = updateHearingData.estimatedDays;
 		const address = updateHearingData.address;
 		const addressId = updateHearingData.addressId;
 
@@ -182,6 +208,7 @@ const updateHearing = async (
 			hearingId,
 			hearingStartTime: hearingStartTime,
 			hearingEndTime: hearingEndTime || undefined,
+			estimatedDays,
 			addressId: addressId,
 			address: address
 		};
@@ -191,15 +218,17 @@ const updateHearing = async (
 		// @ts-ignore
 		if (result.address || existingAddressId) {
 			await broadcasters.broadcastEvent(updateData.hearingId, EVENT_TYPE.HEARING, EventType.Update);
-			await sendHearingDetailsNotifications(
-				notifyClient,
-				'hearing-updated',
-				appeal,
-				hearingStartTime,
-				result.address,
-				azureAdUserId
-			);
 		}
+
+		await sendHearingDetailsNotifications(
+			notifyClient,
+			'hearing-updated',
+			appeal,
+			hearingStartTime,
+			estimatedDays ? String(estimatedDays) : '',
+			result.address,
+			azureAdUserId
+		);
 
 		return result;
 	} catch (error) {

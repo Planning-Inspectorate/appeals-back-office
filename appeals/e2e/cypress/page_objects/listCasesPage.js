@@ -13,7 +13,8 @@ export class ListCasesPage extends Page {
 	};
 
 	elements = {
-		link: () => cy.get(this._selectors.link)
+		link: () => cy.get(this._selectors.link),
+		appealProcedureFilterDropdown: () => cy.get('#appeal-procedure-filter')
 	};
 
 	useBaseElementOrSelector() {
@@ -41,6 +42,12 @@ export class ListCasesPage extends Page {
 
 	clickAppealByRef(ref) {
 		cy.getByData(ref.reference).click();
+	}
+
+	filterByAppealProcedure(procedure) {
+		cy.get('#main-content details summary').click();
+		this.elements.appealProcedureFilterDropdown().select(procedure);
+		this.clickButtonByText('Apply filters');
 	}
 
 	clickStartCaseBanner(text) {

@@ -5,6 +5,7 @@ import { Page } from '../page_objects/basePage.js';
 import { CaseDetailsPage } from '../page_objects/caseDetailsPage.js';
 import { DateTimeSection } from '../page_objects/dateTimeSection';
 import { ListCasesPage } from '../page_objects/listCasesPage';
+import { ProcedureTypePage } from '../page_objects/procedureTypePage';
 import { FileUploader } from '../page_objects/shared.js';
 import { FLOWS, STATUSES } from './flows';
 import { urlPaths } from './urlPaths.js';
@@ -14,6 +15,7 @@ const caseDetailsPage = new CaseDetailsPage();
 const dateTimeSection = new DateTimeSection();
 const listCasesPage = new ListCasesPage();
 const fileUploader = new FileUploader();
+const procedureTypePage = new ProcedureTypePage();
 
 let sampleFiles = fileUploader.sampleFiles;
 let pdf = sampleFiles.pdf;
@@ -63,21 +65,30 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Confirm');
 	},
 
-	startCaseWithProcedureType(caseObj, procedureType) {
+	startCaseWithProcedureType(caseObj, procedureType, linkedCase = false) {
 		if (procedureType === 'hearing') {
 			return happyPathHelper.startS78HearingCase(caseObj, procedureType);
 		} else if (procedureType === 'inquiry') {
 			return happyPathHelper.startS78InquiryCase(caseObj, procedureType);
+		} else if (procedureType === 'part 1') {
+			return happyPathHelper.startS78Part1Case(caseObj, procedureType);
 		}
 		happyPathHelper.viewCaseDetails(caseObj);
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
 		caseDetailsPage.clickReadyToStartCase();
+		procedureTypePage.verifyNoProcedureTypeSelected(false, true);
 		caseDetailsPage.selectRadioButtonByValue(procedureType);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Start case');
 	},
 
-	startS78HearingCase(caseObj, procedureType, dateKnown = false) {
+	startS78HearingCase(
+		caseObj,
+		procedureType,
+		dateKnown = false,
+		hearingEstimationYesNo = 'no',
+		hearingEstimationDays = 1
+	) {
 		happyPathHelper.viewCaseDetails(caseObj);
 		caseDetailsPage.clickReadyToStartCase();
 		caseDetailsPage.selectRadioButtonByValue(procedureType);
@@ -89,6 +100,11 @@ export const happyPathHelper = {
 			dateTimeSection.enterHearingTime('13', '45');
 			caseDetailsPage.clickButtonByText('Continue');
 		}
+		caseDetailsPage.selectRadioButtonByValue(hearingEstimationYesNo);
+		if (hearingEstimationYesNo === 'yes') {
+			cy.get('#hearing-estimation-days').clear().type(hearingEstimationDays.toString());
+		}
+		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Start case');
 	},
 
@@ -101,6 +117,13 @@ export const happyPathHelper = {
 		//caseDetailsPage.clickButtonByText('Continue');
 		//caseDetailsPage.selectRadioButtonByValue('Yes');
 		//caseDetailsPage.clickButtonByText('Continue');
+	},
+	startS78Part1Case(caseObj, procedureType) {
+		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
+		caseDetailsPage.clickReadyToStartCase();
+		caseDetailsPage.selectRadioButtonByValue(procedureType);
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Start case');
 	},
 	reviewLPaStatement(caseObj) {
 		happyPathHelper.reviewS78Lpaq(caseObj);
@@ -245,10 +268,14 @@ export const happyPathHelper = {
 	progressSiteVisit(caseObj) {
 		caseDetailsPage.clickSetUpSiteVisitType();
 		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Accompanied'));
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Yes'));
+		caseDetailsPage.clickButtonByText('Continue');
 		dateTimeSection.enterVisitDate(happyPathHelper.validVisitDate());
 		dateTimeSection.enterVisitStartTime('08', '00');
 		dateTimeSection.enterVisitEndTime('12', '00');
-		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Set up site visit');
 		caseDetailsPage.validateBannerMessage('Success', 'Site visit set up');
 		cy.simulateSiteVisit(caseObj).then((caseObj) => {
 			cy.reload();
@@ -258,10 +285,12 @@ export const happyPathHelper = {
 	setupSiteVisitFromBanner(caseObj) {
 		caseDetailsPage.clickSiteVisitBanner();
 		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Accompanied'));
+		caseDetailsPage.clickButtonByText('Continue');
 		dateTimeSection.enterVisitDate(happyPathHelper.validVisitDate());
 		dateTimeSection.enterVisitStartTime('08', '00');
 		dateTimeSection.enterVisitEndTime('12', '00');
-		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Set up site visit');
 		caseDetailsPage.validateBannerMessage('Success', 'Site visit set up');
 	},
 

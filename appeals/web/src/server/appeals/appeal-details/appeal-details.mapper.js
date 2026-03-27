@@ -1,7 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
 import { mapNotificationBannersFromSession, sortNotificationBanners } from '#lib/mappers/index.js';
-import { formatCaseOfficerDetailsForCaseSummary } from '#lib/mappers/utils/format-case-officer-details-for-case-summary.js';
+import { generateCaseSummary } from '#lib/mappers/utils/generate-case-summary.js';
 import { mapStatusDependentNotifications } from '#lib/mappers/utils/map-status-dependent-notifications.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { generateAppealDetailsSections } from './appeal-details-page-sections/index.js';
@@ -46,6 +46,7 @@ export async function appealDetailsPage(
 		session,
 		request,
 		false,
+		false,
 		appellantFinalComments,
 		lpaFinalComments,
 		appellantCase,
@@ -54,34 +55,7 @@ export async function appealDetailsPage(
 	);
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
-	/**
-	 * @type {PageComponent}
-	 */
-	const caseSummary = {
-		type: 'summary-list',
-		wrapperHtml: {
-			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-			closing: '</div></div>'
-		},
-		parameters: {
-			classes: 'pins-summary-list--no-border',
-			rows: [
-				...(mappedData.appeal.caseOfficer.display.summaryListItem
-					? [
-							formatCaseOfficerDetailsForCaseSummary(
-								mappedData.appeal.caseOfficer.display.summaryListItem
-							)
-						]
-					: []),
-				...(mappedData.appeal.siteAddress.display.summaryListItem
-					? [mappedData.appeal.siteAddress.display.summaryListItem]
-					: []),
-				...(mappedData.appeal.localPlanningAuthority.display.summaryListItem
-					? [mappedData.appeal.localPlanningAuthority.display.summaryListItem]
-					: [])
-			]
-		}
-	};
+	const caseSummary = generateCaseSummary(mappedData);
 
 	const caseNotes = await generateCaseNotes(appealCaseNotes, request);
 	const caseDownload = mappedData.appeal.downloadCaseFiles.display.htmlItem

@@ -5,7 +5,6 @@ import { mapAppealDecision } from './submappers/appeal-decision.mapper.js';
 import { mapAppealReference } from './submappers/appeal-reference.mapper.js';
 import { mapAppealStatus } from './submappers/appeal-status.mapper.js';
 import { mapAppealType } from './submappers/appeal-type.mapper.js';
-import { mapAppealWithdrawal } from './submappers/appeal-withdrawal.mapper.js';
 import { mapAppellantCase } from './submappers/appellant-case.mapper.js';
 import { mapAppellantHealthAndSafety } from './submappers/appellant-health-and-safety.mapper.js';
 import { mapAppellant } from './submappers/appellant.mapper.js';
@@ -52,14 +51,6 @@ import { mapCaseTeam } from './submappers/team.mapper.js';
 import { mapValidAt } from './submappers/valid-at.mapper.js';
 import { mapVisitType } from './submappers/visit-type.mapper.js';
 
-// Default empty mapper for when feature flag is off
-const mapDefaultCaseTeam = () => ({
-	display: {},
-	id: 'caseTeam',
-	title: 'Team',
-	items: []
-});
-
 /** @type {Record<string, import('./mapper.js').SubMapper>} */
 export const submaps = {
 	appealReference: mapAppealReference,
@@ -87,7 +78,7 @@ export const submaps = {
 	siteVisitDate: mapSiteVisitDate,
 	siteVisitStartTime: mapSiteVisitStartTime,
 	siteVisitEndTime: mapSiteVisitEndTime,
-	caseTeam: config.featureFlags.featureFlagAutoAssignTeam ? mapCaseTeam : mapDefaultCaseTeam,
+	caseTeam: mapCaseTeam,
 
 	caseOfficer: mapCaseOfficer,
 	inspector: mapInspector,
@@ -95,7 +86,6 @@ export const submaps = {
 	inspectorCorrespondence: mapInspectorCorrespondence,
 	mainPartyCorrespondence: mapMainPartyCorrespondence,
 	caseHistory: mapCaseHistory,
-	appealWithdrawal: mapAppealWithdrawal,
 	appellantCase: mapAppellantCase,
 	lpaQuestionnaire: mapLpaQuestionnaire,
 	appealDecision: mapAppealDecision,

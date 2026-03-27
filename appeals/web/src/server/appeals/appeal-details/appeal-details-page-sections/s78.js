@@ -80,16 +80,18 @@ export function generateAppealDetailsPageComponents(appealDetails, mappedData, s
 
 	const caseManagement = getCaseManagement(mappedData);
 
-	const caseHearing = getCaseHearing(mappedData, appealDetails, session);
+	const caseHearing =
+		!isChildAppeal(appealDetails) && getCaseHearing(mappedData, appealDetails, session);
 
-	const caseInquiry = getCaseInquiry(mappedData, appealDetails, session);
+	const caseInquiry =
+		!isChildAppeal(appealDetails) && getCaseInquiry(mappedData, appealDetails, session);
 
 	const pageComponents = [
 		caseOverview,
 		...(siteDetails ?? []),
 		caseTimetable[0],
-		...(caseHearing ?? []),
-		...(caseInquiry ?? []),
+		...(caseHearing ? [caseHearing] : []),
+		...(caseInquiry ? [caseInquiry] : []),
 		caseDocumentation,
 		...(caseCosts ? [caseCosts] : []),
 		caseContacts,

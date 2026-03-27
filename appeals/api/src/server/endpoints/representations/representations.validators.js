@@ -54,7 +54,10 @@ export const createRepresentationValidator = composeMiddleware(
 		.custom((value) => value.every((/** @type {*} */ item) => typeof item === 'string'))
 		.withMessage(ERROR_MUST_BE_ARRAY_OF_STRINGS),
 	body('redactionStatus').isString(),
-	body('representationText').optional().isString().withMessage(ERROR_MUST_BE_STRING),
+	body('representationText')
+		.optional({ nullable: true })
+		.isString()
+		.withMessage(ERROR_MUST_BE_STRING),
 	validationErrorHandler
 );
 

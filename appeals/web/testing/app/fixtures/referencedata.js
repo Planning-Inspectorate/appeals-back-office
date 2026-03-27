@@ -473,7 +473,16 @@ export const appealData = {
 				addressLine2: 'Maidstone',
 				addressCounty: 'Kent',
 				postCode: 'MD21 5XY'
-			}
+			},
+			reference: 'Reference'
+		}
+	},
+	cancellation: {
+		cancellationFolder: {
+			caseId: '1',
+			documents: [],
+			folderId: 123,
+			path: 'cancellation/lpaEnforcementNoticeWithdrawal'
 		}
 	}
 };
@@ -1302,6 +1311,25 @@ export const appellantCaseDataIncompleteOutcome = {
 	}
 };
 
+export const enforcementAppealAppellantCaseDataIncompleteOutcome = {
+	...appellantCaseDataIncompleteOutcome,
+	appealId: 5623,
+	appealType: 'Enforcement notice appeal',
+	documentationSummary: {
+		appellantCase: {
+			dueDate: '2024-10-02'
+		}
+	},
+	enforcementNotice: {
+		enforcementNoticeInvalid: 'yes',
+		groundAFeeDueDate: undefined
+	},
+	validation: {
+		outcome: 'Incomplete',
+		incompleteReasons: []
+	}
+};
+
 export const appellantCaseDataValidOutcome = {
 	...appellantCaseDataNotValidated,
 	validation: {
@@ -1727,6 +1755,11 @@ export const appellantCaseInvalidReasons = [
 		id: 26,
 		name: 'Ground (a) barred',
 		hasText: false
+	},
+	{
+		id: 27,
+		name: 'Did not pay the ground (a) fee',
+		hasText: false
 	}
 ];
 
@@ -1764,6 +1797,16 @@ export const appellantCaseInvalidReasonsRealIds = [
 	{
 		id: 7,
 		name: 'Ground (a) barred',
+		hasText: false
+	},
+	{
+		id: 8,
+		name: 'LPA has withdrawn the enforcement notice',
+		hasText: false
+	},
+	{
+		id: 9,
+		name: 'Did not pay the ground (a) fee',
 		hasText: false
 	}
 ];
@@ -4749,6 +4792,7 @@ export const appealDataToGetRequiredActions = {
 	awaitingAppellantStatement: {
 		...baseAppealDataToGetRequiredActions,
 		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealType: 'Enforcement notice appeal',
 		appealTimetable: {
 			ipCommentsDueDate: pastDate,
 			lpaStatementDueDate: futureDate
@@ -4775,6 +4819,7 @@ export const appealDataToGetRequiredActions = {
 	appellantStatementAwaitingReview: {
 		...baseAppealDataToGetRequiredActions,
 		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealType: 'Enforcement notice appeal',
 		appealTimetable: {
 			ipCommentsDueDate: pastDate,
 			lpaStatementDueDate: pastDate
@@ -4795,6 +4840,33 @@ export const appealDataToGetRequiredActions = {
 			appellantStatement: {
 				status: DOCUMENT_STATUS_RECEIVED,
 				representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			}
+		}
+	},
+	updateAppellantStatement: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealType: 'Enforcement notice appeal',
+		appealTimetable: {
+			ipCommentsDueDate: futureDate,
+			lpaStatementDueDate: futureDate
+		},
+		documentationSummary: {
+			ipComments: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED,
+				counts: {
+					awaiting_review: 0,
+					valid: 0,
+					published: 0
+				}
+			},
+			lpaStatement: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.VALID
+			},
+			appellantStatement: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.INCOMPLETE
 			}
 		}
 	},
@@ -5172,4 +5244,18 @@ export const missingDocumentOptions = [
 	{ id: 4, name: 'Planning obligation', hasText: true },
 	{ id: 5, name: 'Application for an award of appeal costs', hasText: true },
 	{ id: 6, name: 'Other new supporting documents', hasText: true }
+];
+
+export const enforcementGroundsMismatchFacts = [
+	{ name: 'a', id: 1, hasText: true },
+	{ name: 'b', id: 2, hasText: true },
+	{ name: 'c', id: 3, hasText: true },
+	{ name: 'd', id: 4, hasText: true },
+	{ name: 'e', id: 5, hasText: true },
+	{ name: 'f', id: 6, hasText: true },
+	{ name: 'g', id: 7, hasText: true },
+	{ name: 'h', id: 8, hasText: true },
+	{ name: 'i', id: 9, hasText: true },
+	{ name: 'j', id: 10, hasText: true },
+	{ name: 'k', id: 11, hasText: true }
 ];

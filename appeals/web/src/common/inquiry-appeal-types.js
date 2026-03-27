@@ -1,14 +1,20 @@
-import { isFeatureActive } from '#common/feature-flags.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { isAppealTypeEnabled } from './feature-flags-appeal-types.js';
+import { isFeatureActive } from './feature-flags.js';
 
 /**
  *
+ * @param {boolean} [linked]
  * @returns Array<string>
  */
-export const getEnabledInquiryAppealTypes = () => {
+export const getEnabledInquiryAppealTypes = (linked = false) => {
 	let enabledInquiryAppealTypes = [];
-	if (isAppealTypeEnabled(APPEAL_TYPE.S78)) {
+	let enabledLinkedInquiryAppealTypes = [];
+
+	if (
+		isAppealTypeEnabled(APPEAL_TYPE.S78) &&
+		isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78_INQUIRY)
+	) {
 		enabledInquiryAppealTypes.push(APPEAL_TYPE.S78);
 	}
 
@@ -24,6 +30,9 @@ export const getEnabledInquiryAppealTypes = () => {
 		isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_INQUIRY)
 	) {
 		enabledInquiryAppealTypes.push(APPEAL_TYPE.ENFORCEMENT_NOTICE);
+		if (isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_INQUIRY_LINKED)) {
+			enabledLinkedInquiryAppealTypes.push(APPEAL_TYPE.ENFORCEMENT_NOTICE);
+		}
 	}
 
 	if (
@@ -39,5 +48,6 @@ export const getEnabledInquiryAppealTypes = () => {
 	) {
 		enabledInquiryAppealTypes.push(APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING);
 	}
-	return enabledInquiryAppealTypes;
+
+	return linked ? enabledLinkedInquiryAppealTypes : enabledInquiryAppealTypes;
 };

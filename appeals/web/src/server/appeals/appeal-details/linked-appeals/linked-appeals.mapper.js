@@ -1,6 +1,7 @@
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { radiosInput } from '#lib/mappers/index.js';
+import { mapNotificationBannersFromSession, radiosInput } from '#lib/mappers/index.js';
+import { nameToString } from '#lib/person-name-formatter.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { LINK_APPEALS_UNLINK_OPERATION } from '@pins/appeals/constants/support.js';
 
@@ -13,9 +14,10 @@ import { LINK_APPEALS_UNLINK_OPERATION } from '@pins/appeals/constants/support.j
 /**
  *
  * @param {Appeal} appealData
+ * @param {import('express-session').Session} session
  * @returns {PageContent}
  */
-export function manageLinkedAppealsPage(appealData) {
+export function manageLinkedAppealsPage(appealData, session) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	const linkedAppeals = [appealData, ...appealData.linkedAppeals];
@@ -36,7 +38,7 @@ export function manageLinkedAppealsPage(appealData) {
 					linkedAppeal?.appealId
 				}" aria-label="Appeal ${numberToAccessibleDigitLabel(
 					childAppealRef
-				)}" data-cy="${linkedAppeal?.appealReference}">${childAppealRef}</a>${linkedAppeal.isParentAppeal ? ' (lead)' : ''}<br>${linkedAppeal.appealType}`
+				)}" data-cy="${linkedAppeal?.appealReference}">${childAppealRef}</a>${linkedAppeal.isParentAppeal ? ' (lead)' : ''}<br><span>${nameToString(linkedAppeal.appellant)}</span></br>${linkedAppeal.appealType}`
 			},
 			{
 				html: (() => {
@@ -77,7 +79,10 @@ export function manageLinkedAppealsPage(appealData) {
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}`,
 		preHeading: `Appeal ${shortAppealReference} (lead)`,
 		heading: 'Linked appeals',
-		pageComponents: [childAppealsTable]
+		pageComponents: [
+			...mapNotificationBannersFromSession(session, 'manageLinkedAppeals', appealData.appealId),
+			childAppealsTable
+		]
 	};
 
 	return pageContent;
@@ -96,10 +101,9 @@ function operationText(operation) {
  *
  * @param {Appeal} appealData
  * @param {string} childRef
- * @param {string} appealId
  * @returns {PageContent}
  */
-export function unlinkAppealPage(appealData, childRef, appealId) {
+export function unlinkAppealPage(appealData, childRef) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const shortChildAppealReference = appealShortReference(childRef);
 	const titleAndHeading = `Confirm that you want to unlink linked appeal ${shortChildAppealReference}`;
@@ -107,7 +111,7 @@ export function unlinkAppealPage(appealData, childRef, appealId) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: titleAndHeading,
-		backLinkUrl: `/appeals-service/appeal-details/${appealId}/linked-appeals/manage`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/manage`,
 		preHeading: `Appeal ${shortAppealReference} (lead)`,
 		heading: titleAndHeading,
 		pageComponents: []
@@ -140,7 +144,7 @@ export function changeLeadAppealPage(appealData, leadAppeal, operation, errors) 
 			value: appeal.appealId,
 			text: appealShortReference(appeal.appealReference),
 			hint: {
-				html: `<span>${appeal.address.addressLine1}</span></br><span>${appeal.appealType}</span>`
+				html: `<span>${nameToString(appeal.appellant)}</span></br><span>${appeal.address.addressLine1}</span></br><span>${appeal.appealType}</span>`
 			}
 		})),
 		errorMessage: errors?.leadAppeal.msg ?? null
@@ -186,7 +190,7 @@ export function confirmChangeLeadAppealPage(appealData, leadAppeal, operation) {
 					},
 					value: {
 						// @ts-ignore
-						html: `<span>${appealShortReference(leadAppeal.appealReference)}</span></br><span>${leadAppeal.address?.addressLine1}</span></br><span>${leadAppeal.appealType}</span>`
+						html: `<span>${appealShortReference(leadAppeal.appealReference)}</span></br><span>${nameToString(leadAppeal.appellant)}</span></br><span>${leadAppeal.address?.addressLine1}</span></br><span>${leadAppeal.appealType}</span>`
 					},
 					actions: {
 						items: [

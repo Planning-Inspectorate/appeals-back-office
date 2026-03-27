@@ -9,7 +9,22 @@ variable "alerts_enabled" {
 variable "apps_config" {
   description = "Config for the apps"
   type = object({
-    app_service_plan_sku              = string
+    app_service_plan = object({
+      sku                      = string
+      per_site_scaling_enabled = bool
+      worker_count             = number
+      zone_balancing_enabled   = bool
+    })
+    api = object({
+      worker_count = number
+    })
+    pdf = object({
+      worker_count = number
+    })
+    web = object({
+      worker_count = number
+    })
+
     functions_node_version            = number
     functions_service_plan_sku        = string
     node_environment                  = string
@@ -42,41 +57,45 @@ variable "apps_config" {
     })
 
     featureFlags = object({
-      featureFlagS78Written               = bool
-      featureFlagS78Inquiry               = bool
-      featureFlagLinkedAppeals            = bool
-      featureFlagLinkedAppealsUnlink      = bool
-      featureFlagNotifyCaseHistory        = bool
-      featureFlagSimplifyTeamAssignment   = bool
-      featureFlagPdfDownload              = bool
-      featureFlagNetResidence             = bool
-      featureFlagNetResidenceS20          = bool
-      featureFlagCancelCase               = bool
-      featureFlagChangeProcedureType      = bool
-      featureFlagHearingPostMvp           = bool
-      featureFlagAutoAssignTeam           = bool
-      featureFlagCancelSiteVisit          = bool
-      featureFlagSearchCaseOfficer        = bool
-      featureFlagEnforcementNotice        = bool
-      featureFlagEnforcementLinked        = bool
-      featureFlagEnforcementCancel        = bool
-      featureFlagInvalidDecisionLetter    = bool
-      featureFlagRule6Mvp                 = bool
-      featureFlagRule6PoE                 = bool
-      featureFlagExpeditedAppeals         = bool
-      featureFlagManuallyAddReps          = bool
-      featureFlagAppellantStatement       = bool
-      featureFlagRule6Statement           = bool
-      featureFlagLDC                      = bool
-      featureFlagRule6Costs               = bool
-      featureFlagS20Hearing               = bool
-      featureFlagS20Inquiry               = bool
-      featureFlagEnforcementNoticeHearing = bool
-      featureFlagEnforcementNoticeInquiry = bool
-      featureFlagLdcHearing               = bool
-      featureFlagLdcInquiry               = bool
-      featureFlagElbHearing               = bool
-      featureFlagElbInquiry               = bool
+      featureFlagS78Written                       = bool
+      featureFlagS78Inquiry                       = bool
+      featureFlagLinkedAppeals                    = bool
+      featureFlagLinkedAppealsUnlink              = bool
+      featureFlagNotifyCaseHistory                = bool
+      featureFlagSimplifyTeamAssignment           = bool
+      featureFlagPdfDownload                      = bool
+      featureFlagNetResidence                     = bool
+      featureFlagNetResidenceS20                  = bool
+      featureFlagCancelCase                       = bool
+      featureFlagChangeProcedureType              = bool
+      featureFlagHearingPostMvp                   = bool
+      featureFlagAutoAssignTeam                   = bool
+      featureFlagCancelSiteVisit                  = bool
+      featureFlagSearchCaseOfficer                = bool
+      featureFlagEnforcementNotice                = bool
+      featureFlagEnforcementLinked                = bool
+      featureFlagEnforcementLeadCanStart          = bool
+      featureFlagEnforcementCancel                = bool
+      featureFlagInvalidDecisionLetter            = bool
+      featureFlagRule6Mvp                         = bool
+      featureFlagRule6PoE                         = bool
+      featureFlagExpeditedAppeals                 = bool
+      featureFlagManuallyAddReps                  = bool
+      featureFlagAppellantStatement               = bool
+      featureFlagRule6Statement                   = bool
+      featureFlagLDC                              = bool
+      featureFlagRule6Costs                       = bool
+      featureFlagS20Hearing                       = bool
+      featureFlagS20Inquiry                       = bool
+      featureFlagEnforcementNoticeHearing         = bool
+      featureFlagEnforcementNoticeInquiry         = bool
+      featureFlagLdcHearing                       = bool
+      featureFlagLdcInquiry                       = bool
+      featureFlagElbHearing                       = bool
+      featureFlagElbInquiry                       = bool
+      featureFlagEnforcementHearingLinked         = bool
+      featureFlagEnforcementInquiryLinked         = bool
+      featureFlagEnforcementChangeProcedureLinked = bool
     })
 
     logging = object({

@@ -8,12 +8,14 @@ import { yesNoInput } from '#lib/mappers/index.js';
  * @param {Appeal} appealData
  * @param {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} appellantCaseData
  * @param {{radio: boolean}} storedSessionData
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {PageContent}
  */
 export const changeRetrospectiveApplicationPage = (
 	appealData,
 	appellantCaseData,
-	storedSessionData
+	storedSessionData,
+	errors
 ) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const retrospectiveApplication =
@@ -24,7 +26,8 @@ export const changeRetrospectiveApplicationPage = (
 		id: 'retrospective-application',
 		legendText: 'Did anyone submit a retrospective planning application?',
 		legendIsPageHeading: true,
-		value: retrospectiveApplication
+		value: retrospectiveApplication,
+		errorMessage: errors ? errors?.retrospectiveApplication?.msg : null
 	});
 
 	/** @type {PageContent} */

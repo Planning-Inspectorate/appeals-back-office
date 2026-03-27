@@ -54,6 +54,10 @@ const { value, error } = schema.validate({
 			environment.FEATURE_FLAG_S78_WRITTEN && environment.FEATURE_FLAG_S78_WRITTEN === 'true',
 		featureFlagS78Inquiry:
 			environment.FEATURE_FLAG_S78_INQUIRY && environment.FEATURE_FLAG_S78_INQUIRY === 'true',
+		featureFlagS20Hearing:
+			environment.FEATURE_FLAG_S20_HEARING && environment.FEATURE_FLAG_S20_HEARING === 'true',
+		featureFlagS20Inquiry:
+			environment.FEATURE_FLAG_S20_INQUIRY && environment.FEATURE_FLAG_S20_INQUIRY === 'true',
 		featureFlagLinkedAppeals:
 			environment.FEATURE_FLAG_LINKED_APPEALS && environment.FEATURE_FLAG_LINKED_APPEALS === 'true',
 		featureFlagLinkedAppealsUnlink:
@@ -91,7 +95,19 @@ const { value, error } = schema.validate({
 			environment.FEATURE_FLAG_EXPEDITED_APPEALS === 'true',
 		featureFlagRule6Costs:
 			environment.FEATURE_FLAG_RULE_6_COSTS && environment.FEATURE_FLAG_RULE_6_COSTS === 'true',
-		featureFlagLDC: environment.FEATURE_FLAG_LDC && environment.FEATURE_FLAG_LDC === 'true'
+		featureFlagLDC: environment.FEATURE_FLAG_LDC && environment.FEATURE_FLAG_LDC === 'true',
+		featureFlagAppellantStatement:
+			environment.FEATURE_FLAG_APPELLANT_STATEMENT &&
+			environment.FEATURE_FLAG_APPELLANT_STATEMENT === 'true',
+		featureFlagEnforcementHearingLinked:
+			environment.FEATURE_FLAG_ENFORCEMENT_HEARING_LINKED &&
+			environment.FEATURE_FLAG_ENFORCEMENT_HEARING_LINKED === 'true',
+		featureFlagEnforcementInquiryLinked:
+			environment.FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED &&
+			environment.FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED === 'true',
+		featureFlagEnforcementChangeProcedureLinked:
+			environment.FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED &&
+			environment.FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED === 'true'
 	},
 	serviceBusEnabled: environment.SERVICE_BUS_ENABLED && environment.SERVICE_BUS_ENABLED === 'true',
 	enableTestEndpoints:

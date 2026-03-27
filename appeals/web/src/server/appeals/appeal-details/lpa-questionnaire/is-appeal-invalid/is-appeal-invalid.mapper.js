@@ -17,6 +17,9 @@ export const changeIsAppealInvalidPage = (appealData, lpaQuestionnaireData, stor
 	const currentRadioValue =
 		storedSessionData?.radio ?? lpaQuestionnaireData.lpaConsiderAppealInvalid;
 
+	const currentReasonValue =
+		storedSessionData?.details ?? lpaQuestionnaireData.lpaAppealInvalidReasons;
+
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Do you think the appeal is invalid?`,
@@ -27,7 +30,13 @@ export const changeIsAppealInvalidPage = (appealData, lpaQuestionnaireData, stor
 				name: 'lpaConsiderAppealInvalid',
 				value: currentRadioValue,
 				legendText: `Do you think the appeal is invalid?`,
-				legendIsPageHeading: true
+				legendIsPageHeading: true,
+				yesConditional: {
+					id: 'lpa-consider-appeal-invalid-reason',
+					name: 'lpaAppealInvalidReasons',
+					hint: 'Why did the LPA think the appeal is invalid?',
+					details: currentReasonValue || ''
+				}
 			})
 		]
 	};

@@ -1,22 +1,29 @@
+// @ts-nocheck
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 import {
 	appealCaseEnforcementInvalidReasons,
 	appealDataEnforcementNotice,
 	appellantCaseDataNotValidated,
 	appellantCaseIncompleteReasons,
+	enforcementGroundsMismatchFacts,
 	missingDocumentOptions
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
 
-const { app, installMockApi } = createTestEnvironment();
+const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const appealId = appealDataEnforcementNotice.appealId;
 const baseUrl = `/appeals-service/appeal-details/${appealId}`;
 
 describe('incomplete-appeal', () => {
+	afterEach(() => {
+		teardown();
+	});
+
 	describe('enforcement notice appeal', () => {
 		describe('GET /appellant-case/incomplete', () => {
 			beforeEach(() => {
@@ -331,7 +338,11 @@ describe('incomplete-appeal', () => {
 					.reply(200, missingDocumentOptions);
 				nock('http://test/')
 					.get('/appeals/appellant-case-incomplete-reasons')
-					.reply(200, appellantCaseIncompleteReasons);
+					.reply(200, appellantCaseIncompleteReasons)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/appellant-case-enforcement-grounds-mismatch-facts')
+					.reply(200, enforcementGroundsMismatchFacts);
 			});
 
 			afterEach(() => {
@@ -357,6 +368,21 @@ describe('incomplete-appeal', () => {
 						otherInformationDetails: 'Enforcement other information'
 					});
 
+				// preview nocks
+				nock('http://test/')
+					.get(`/appeals/${appealDataEnforcementNotice.appealId}/case-team-email`)
+					.reply(200, {
+						id: 1,
+						email: 'caseofficers@planninginspectorate.gov.uk',
+						name: 'standard email'
+					});
+				const mockAppellantPreview = nock('http://test/')
+					.post(`/appeals/notify-preview/enforcement-notice-incomplete-appellant.content.md`)
+					.reply(200, { renderedHtml: '' });
+				const mockLpaPreview = nock('http://test/')
+					.post(`/appeals/notify-preview/enforcement-notice-incomplete-lpa.content.md`)
+					.reply(200, { renderedHtml: '' });
+
 				const response = await request.get(
 					`${baseUrl}/appellant-case/incomplete/check-details-and-mark-enforcement-as-incomplete`
 				);
@@ -376,15 +402,25 @@ describe('incomplete-appeal', () => {
 					'<dt class="govuk-summary-list__key"> What is the outcome of your review?</dt><dd class="govuk-summary-list__value"> Incomplete</dd>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<dt class="govuk-summary-list__key"> Do you want to add any other information?</dt>'
-				);
-				expect(unprettifiedElement.innerHTML).toContain(
 					'>Yes: Enforcement other information</div></dd>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Mark appeal as incomplete</button>');
+
+				expect(mockAppellantPreview.isDone()).toBe(true);
+				expect(mockLpaPreview.isDone()).toBe(true);
+				expect(
+					element
+						.querySelector('[data-cy="preview-email-to-appellant"] .govuk-details__summary-text')
+						?.innerHTML.trim()
+				).toBe('Preview email to appellant');
+				expect(
+					element
+						.querySelector('[data-cy="preview-email-to-lpa"] .govuk-details__summary-text')
+						?.innerHTML.trim()
+				).toBe('Preview email to LPA');
 			});
 
-			it('should render the check details page where the enforcement notice is valid', async () => {
+			it('should render the check details page where the enforcement notice is not valid', async () => {
 				// Populate session data
 				// review outcome
 				await request.post(`${baseUrl}/appellant-case`).send({ reviewOutcome: 'incomplete' });
@@ -415,6 +451,27 @@ describe('incomplete-appeal', () => {
 					'due-date-month': '7',
 					'due-date-year': '3000'
 				});
+				// grounds and facts
+				await request.post(`${baseUrl}/appellant-case/incomplete/grounds-facts-check`).send({
+					groundsFacts: ['1', '2'],
+					'groundsFacts-1': 'invalid ground 1',
+					'groundsFacts-2': 'invalid ground 2'
+				});
+
+				// preview nocks
+				nock('http://test/')
+					.get(`/appeals/${appealDataEnforcementNotice.appealId}/case-team-email`)
+					.reply(200, {
+						id: 1,
+						email: 'caseofficers@planninginspectorate.gov.uk',
+						name: 'standard email'
+					});
+				const mockAppellantPreview = nock('http://test/')
+					.post(`/appeals/notify-preview/enforcement-appeal-incomplete-appellant.content.md`)
+					.reply(200, { renderedHtml: '' });
+				const mockLpaPreview = nock('http://test/')
+					.post(`/appeals/notify-preview/enforcement-appeal-incomplete-lpa.content.md`)
+					.reply(200, { renderedHtml: '' });
 
 				const response = await request.get(
 					`${baseUrl}/appellant-case/incomplete/check-details-and-mark-enforcement-as-incomplete`
@@ -441,7 +498,7 @@ describe('incomplete-appeal', () => {
 					'<dt class="govuk-summary-list__key"> Why is the appeal incomplete?</dt>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<li>Waiting for appellant to pay the fee</li></ul></dd>'
+					'<li>Waiting for appellant to pay the fee</li>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<dt class="govuk-summary-list__key"> Which documents are incomplete?</dt>'
@@ -455,7 +512,52 @@ describe('incomplete-appeal', () => {
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<dt class="govuk-summary-list__key"> Appeal due date</dt><dd class="govuk-summary-list__value"> 2 July 3000</dd>'
 				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<dt class="govuk-summary-list__key"> Grounds and facts do not match</dt>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('<li>Ground (a): invalid ground 1</li>');
 				expect(unprettifiedElement.innerHTML).toContain('Mark appeal as incomplete</button>');
+
+				expect(mockAppellantPreview.isDone()).toBe(true);
+				expect(mockLpaPreview.isDone()).toBe(true);
+			});
+
+			it('should have a back link to the enforcement other information page if entered', async () => {
+				// Populate session data
+				await request.post(`${baseUrl}/appellant-case`).send({ reviewOutcome: 'incomplete' });
+				await request
+					.post(`${baseUrl}/appellant-case/incomplete/enforcement-notice`)
+					.send({ enforcementNoticeInvalid: 'no' });
+				await request
+					.post(`${baseUrl}/appellant-case/incomplete/enforcement-other-information`)
+					.send({
+						otherInformationValidRadio: 'Yes',
+						otherInformationDetails: 'Enforcement other information'
+					});
+
+				// preview nocks
+				nock('http://test/')
+					.get(`/appeals/${appealDataEnforcementNotice.appealId}/case-team-email`)
+					.reply(200, {
+						id: 1,
+						email: 'caseofficers@planninginspectorate.gov.uk',
+						name: 'standard email'
+					});
+				nock('http://test/')
+					.post(`/appeals/notify-preview/enforcement-appeal-incomplete-appellant.content.md`)
+					.reply(200, { renderedHtml: '' });
+				nock('http://test/')
+					.post(`/appeals/notify-preview/enforcement-appeal-incomplete-lpa.content.md`)
+					.reply(200, { renderedHtml: '' });
+
+				const response = await request.get(
+					`${baseUrl}/appellant-case/incomplete/check-details-and-mark-enforcement-as-incomplete`
+				);
+
+				const element = parseHtml(response.text, { rootElement: 'body' });
+				expect(element.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+					`/appeals-service/appeal-details/${appealId}/appellant-case/incomplete/enforcement-other-information`
+				);
 			});
 		});
 
@@ -731,7 +833,24 @@ describe('incomplete-appeal', () => {
 		});
 
 		describe('GET /receipt-due-date', () => {
+			let RealDate;
+
 			beforeEach(() => {
+				RealDate = global.Date;
+				const mockTimestamp = 1735732800000;
+				global.Date = class extends RealDate {
+					constructor(arg) {
+						if (arg) {
+							return new RealDate(arg);
+						}
+						return new RealDate(mockTimestamp);
+					}
+
+					static now() {
+						return mockTimestamp;
+					}
+				};
+
 				nock('http://test/')
 					.get(`/appeals/${appealId}?include=all`)
 					.reply(200, appealDataEnforcementNotice)
@@ -745,7 +864,9 @@ describe('incomplete-appeal', () => {
 			});
 
 			afterEach(() => {
+				global.Date = RealDate;
 				nock.cleanAll();
+				jest.restoreAllMocks();
 			});
 
 			it('should render the receipt due date page and content', async () => {
@@ -763,6 +884,8 @@ describe('incomplete-appeal', () => {
 
 		describe('POST /receipt-due-date', () => {
 			beforeEach(async () => {
+				jest.spyOn(Date, 'now').mockReturnValue(1735732800000); // set date for Hint text
+
 				nock('http://test/')
 					.get(`/appeals/${appealId}?include=all`)
 					.reply(200, appealDataEnforcementNotice)
@@ -780,6 +903,7 @@ describe('incomplete-appeal', () => {
 
 			afterEach(() => {
 				nock.cleanAll();
+				jest.restoreAllMocks();
 			});
 
 			const invalidDateTestCases = [
@@ -889,6 +1013,106 @@ describe('incomplete-appeal', () => {
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toBe(
 					`Found. Redirecting to /appeals-service/appeal-details/${appealId}/appellant-case/incomplete/check-details-and-mark-enforcement-as-incomplete`
+				);
+			});
+		});
+
+		describe('GET /grounds-and-facts', () => {
+			beforeEach(async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=all`)
+					.reply(200, appealDataEnforcementNotice)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/appellant-case-enforcement-grounds-mismatch-facts')
+					.reply(200, enforcementGroundsMismatchFacts);
+			});
+
+			afterEach(() => {
+				nock.cleanAll();
+			});
+
+			it('should render the change grounds page with grounds up to (g) for enforcement notice', async () => {
+				const response = await request.get(
+					`${baseUrl}/appellant-case/incomplete/grounds-facts-check`
+				);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Which grounds do not match the facts?</h1>');
+				expect(element.innerHTML).toContain('data-module="govuk-checkboxes">');
+
+				// Checkbox content check
+				if (!element.textContent) {
+					throw new Error('Test setup failed: The main element was not found in the HTML');
+				}
+				const textContent = element.textContent.replace(/\s+/g, ' ').trim();
+				const enforcementGrounds = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
+				enforcementGrounds.forEach((ground) =>
+					expect(textContent).toContain(`Ground (${ground}) Enter a reason`)
+				);
+
+				const extraELBGrounds = ['h', 'i', 'j', 'k'];
+				extraELBGrounds.forEach((ground) =>
+					expect(textContent).not.toContain(`Ground (${ground}) Enter a reason`)
+				);
+
+				expect(element.innerHTML).toContain('Continue</button>');
+			});
+		});
+
+		describe('POST /grounds-facts-check', () => {
+			beforeEach(async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=all`)
+					.reply(200, appealDataEnforcementNotice)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/appellant-case-enforcement-grounds-mismatch-facts')
+					.reply(200, enforcementGroundsMismatchFacts);
+			});
+
+			afterEach(() => {
+				nock.cleanAll();
+			});
+
+			it('should redirect to the date page', async () => {
+				// set session data
+				await request.post(`${baseUrl}/appellant-case/incomplete`).send({
+					incompleteReason: ['13']
+				});
+
+				const response = await request
+					.post(`${baseUrl}/appellant-case/incomplete/grounds-facts-check`)
+					.send({
+						groundsFacts: ['a', 'c'],
+						'groundsFacts-1': 'reason for ground a',
+						'groundsFacts-3': 'reason for ground c'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					`Found. Redirecting to /appeals-service/appeal-details/${appealId}/appellant-case/incomplete/date`
+				);
+			});
+
+			it('should redirect to the fee receipt due date if also selected', async () => {
+				// set session data
+				await request.post(`${baseUrl}/appellant-case/incomplete`).send({
+					incompleteReason: ['13', '14']
+				});
+
+				const response = await request
+					.post(`${baseUrl}/appellant-case/incomplete/grounds-facts-check`)
+					.send({
+						groundsFacts: ['a', 'c'],
+						'groundsFacts-1': 'reason for ground a',
+						'groundsFacts-3': 'reason for ground c'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					`Found. Redirecting to /appeals-service/appeal-details/${appealId}/appellant-case/incomplete/receipt-due-date`
 				);
 			});
 		});

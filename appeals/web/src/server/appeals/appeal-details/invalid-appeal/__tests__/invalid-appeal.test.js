@@ -16,7 +16,7 @@ import {
 	appellantCaseInvalidReasons
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
-import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -110,6 +110,9 @@ describe('invalid-appeal', () => {
 			);
 			expect(element.innerHTML).toContain('for="invalid-reason-5">Ground (a) barred');
 			expect(element.innerHTML).toContain('for="invalid-reason-6">Other reason');
+			expect(element.innerHTML).not.toContain(
+				'for="invalid-reason-7">LPA has withdrawn the enforcement notice'
+			);
 			expect(element.innerHTML).toContain('Continue</button>');
 		});
 
@@ -146,6 +149,40 @@ describe('invalid-appeal', () => {
 			);
 			expect(element.innerHTML).toContain('for="invalid-reason-5">Other reason');
 			expect(element.innerHTML).toContain('Continue</button>');
+		});
+
+		it('should have a back link to the saved back url if present', async () => {
+			const response = await request.get(`${baseUrl}/invalid/new?backUrl=/cancel`);
+			const element = parseHtml(response.text, { rootElement: 'body' });
+			expect(element.querySelector('.govuk-back-link')?.getAttribute('href')).toBe('/cancel');
+		});
+
+		it('should have a back link to the appellant case page if not enforcement', async () => {
+			const response = await request.get(`${baseUrl}/invalid/new`);
+			const element = parseHtml(response.text, { rootElement: 'body' });
+			expect(element.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+				'/appeals-service/appeal-details/1/appellant-case'
+			);
+		});
+
+		it('should have a back link to the enforcement notice page if enforcement', async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/')
+				.get('/appeals/appellant-case-invalid-reasons')
+				.reply(200, appellantCaseInvalidReasons);
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, { ...appealData, appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE })
+				.persist();
+
+			const response = await request.get(`${baseUrl}/invalid/new`);
+			const element = parseHtml(response.text, { rootElement: 'body' });
+			expect(element.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+				`/appeals-service/appeal-details/${appealId}/appellant-case/invalid/enforcement-notice`
+			);
 		});
 	});
 
@@ -938,6 +975,21 @@ describe('invalid-appeal', () => {
 		});
 
 		it('should render the enforcement notice reasons page with no reasons selected', async () => {
+			// preview nocks
+			nock('http://test/')
+				.get(`/appeals/${appealDataEnforcementNotice.appealId}/case-team-email`)
+				.reply(200, {
+					id: 1,
+					email: 'caseofficers@planninginspectorate.gov.uk',
+					name: 'standard email'
+				});
+			const mockAppellantPreview = nock('http://test/')
+				.post(`/appeals/notify-preview/enforcement-notice-incomplete-appellant.content.md`)
+				.reply(200, { renderedHtml: '' });
+			const mockLpaPreview = nock('http://test/')
+				.post(`/appeals/notify-preview/enforcement-notice-incomplete-lpa.content.md`)
+				.reply(200, { renderedHtml: '' });
+
 			const response = await request.get(
 				`${baseUrl}/appellant-case/invalid/check-details-and-mark-enforcement-as-invalid`
 			);
@@ -965,6 +1017,9 @@ describe('invalid-appeal', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Mark enforcement notice as invalid</button>'
 			);
+
+			expect(mockAppellantPreview.isDone()).toBe(true);
+			expect(mockLpaPreview.isDone()).toBe(true);
 		});
 	});
 

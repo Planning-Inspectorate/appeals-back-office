@@ -162,6 +162,12 @@ describe('start-case', () => {
 					APPEAL_TYPE.ENFORCEMENT_NOTICE,
 					[],
 					[]
+				],
+				[
+					'for enforcement listed building appeals regardless of enabled types (empty arrays)',
+					APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+					[],
+					[]
 				]
 			])('%s', async (_, appealType, hearingTypes, inquiryTypes) => {
 				// @ts-ignore
@@ -728,17 +734,52 @@ describe('start-case', () => {
 				);
 			});
 
-			it('should redirect to check and confirm page when appeal type is enforcement and enforcement hearing and inquiry are not enabled', async () => {
+			it.each([
+				['enforcement', APPEAL_TYPE.ENFORCEMENT_NOTICE],
+				['enforcement listed building', APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING]
+			])(
+				'should redirect to check and confirm page when appeal type is %s and hearing and inquiry are not enabled',
+				async (_, appealType) => {
+					// @ts-ignore
+					getEnabledHearingAppealTypes.mockReturnValue([]);
+					// @ts-ignore
+					getEnabledInquiryAppealTypes.mockReturnValue([]);
+
+					nock('http://test/')
+						.get('/appeals/1?include=all')
+						.reply(200, {
+							...appealDataWithoutStartDate,
+							appealType: appealType
+						});
+
+					const response = await request.get(
+						'/appeals-service/appeal-details/1/start-case/select-procedure'
+					);
+
+					expect(response.statusCode).toBe(302);
+					expect(response.text).toBe(
+						'Found. Redirecting to /appeals-service/appeal-details/1/start-case/select-procedure/check-and-confirm'
+					);
+				}
+			);
+
+			it('should show all radio button labels for enforcement linked appeals when hearing and inquiry are enabled', async () => {
 				// @ts-ignore
-				getEnabledHearingAppealTypes.mockReturnValue([]);
+				getEnabledHearingAppealTypes.mockImplementation((linked) =>
+					linked ? [] : [APPEAL_TYPE.ENFORCEMENT_NOTICE]
+				);
 				// @ts-ignore
-				getEnabledInquiryAppealTypes.mockReturnValue([]);
+				getEnabledInquiryAppealTypes.mockImplementation((linked) =>
+					linked ? [] : [APPEAL_TYPE.ENFORCEMENT_NOTICE]
+				);
 
 				nock('http://test/')
 					.get('/appeals/1?include=all')
 					.reply(200, {
 						...appealDataWithoutStartDate,
-						appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE
+						appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
+						isParentAppeal: true,
+						isChildAppeal: false
 					});
 
 				const response = await request.get(
@@ -749,6 +790,37 @@ describe('start-case', () => {
 				expect(response.text).toBe(
 					'Found. Redirecting to /appeals-service/appeal-details/1/start-case/select-procedure/check-and-confirm'
 				);
+			});
+
+			it('should redirect to check and confirm page when appeal type is enforcement, linked and hearing and inquiry are not enabled', async () => {
+				// @ts-ignore
+				getEnabledHearingAppealTypes.mockImplementation((linked) =>
+					linked ? [APPEAL_TYPE.ENFORCEMENT_NOTICE] : []
+				);
+				// @ts-ignore
+				getEnabledInquiryAppealTypes.mockImplementation((linked) =>
+					linked ? [APPEAL_TYPE.ENFORCEMENT_NOTICE] : []
+				);
+
+				nock('http://test/')
+					.get('/appeals/1?include=all')
+					.reply(200, {
+						...appealDataWithoutStartDate,
+						appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
+						isParentAppeal: true,
+						isChildAppeal: false
+					});
+
+				const response = await request.get(
+					'/appeals-service/appeal-details/1/start-case/select-procedure'
+				);
+
+				expect(response.statusCode).toBe(200);
+				const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="hearing"');
+				expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="inquiry"');
+				expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="written"');
 			});
 		});
 	});
@@ -883,13 +955,16 @@ describe('start-case', () => {
 			expect(unprettifiedHtml).toContain('Start case</button>');
 		});
 
-		it('should render email previews if it is an enforcement appeal', async () => {
+		it.each([
+			['Enforcement notice', APPEAL_TYPE.ENFORCEMENT_NOTICE],
+			['Enforcement listed building', APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING]
+		])('should render email previews if it is an %s appeal', async (_, appealType) => {
 			nock('http://test/')
 				.get('/appeals/1?include=all')
 				.twice()
 				.reply(200, {
 					...appealDataWithoutStartDate,
-					appealType: 'Enforcement notice appeal'
+					appealType: appealType
 				});
 			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
 				id: 1,

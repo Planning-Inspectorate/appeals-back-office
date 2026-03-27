@@ -531,6 +531,7 @@ export interface Folder {
 				| 'lpaCostsWithdrawal'
 				| 'lpaEnforcementNotice'
 				| 'lpaEnforcementNoticePlan'
+				| 'lpaEnforcementNoticeWithdrawal'
 				| 'lpaFinalComment'
 				| 'lpaProofOfEvidence'
 				| 'lpaStatement'
@@ -566,6 +567,7 @@ export interface Folder {
 			stage?:
 				| 'appeal-decision'
 				| 'appellant-case'
+				| 'cancellation'
 				| 'costs'
 				| 'evidence'
 				| 'final-comments'
@@ -660,6 +662,7 @@ export interface Folder {
 				| 'lpaCostsWithdrawal'
 				| 'lpaEnforcementNotice'
 				| 'lpaEnforcementNoticePlan'
+				| 'lpaEnforcementNoticeWithdrawal'
 				| 'lpaFinalComment'
 				| 'lpaProofOfEvidence'
 				| 'lpaStatement'
@@ -695,6 +698,7 @@ export interface Folder {
 			stage?:
 				| 'appeal-decision'
 				| 'appellant-case'
+				| 'cancellation'
 				| 'costs'
 				| 'evidence'
 				| 'final-comments'
@@ -1278,6 +1282,14 @@ export interface SingleAppealResponse {
 	stateList?: any[];
 	/** @example ["awaiting_event"] */
 	completedStateList?: string[];
+	cancellation?: {
+		cancellationFolder?: {
+			/** @example 2125 */
+			folderId?: number;
+			/** @example [] */
+			documents?: any[];
+		};
+	};
 }
 
 export interface SingleAppellantCaseResponse {
@@ -1540,6 +1552,17 @@ export interface StartCaseResponse {
 }
 
 export interface StartCaseNotifyPreviewResponse {
+	appellant?: {
+		/** @example "Rendered HTML for appellant preview" */
+		renderedHtml?: string;
+	};
+	lpa?: {
+		/** @example "Rendered HTML for LPA preview" */
+		renderedHtml?: string;
+	};
+}
+
+export interface CancelEnforcementNoticeWithdrawalResponse {
 	appellant?: {
 		/** @example "Rendered HTML for appellant preview" */
 		renderedHtml?: string;
@@ -2984,6 +3007,11 @@ export interface HearingResponse {
 	 * @example "2014-11-14T00:00:00+00:00"
 	 */
 	hearingEndTime?: string;
+	/**
+	 * Estimated number of days
+	 * @example 5
+	 */
+	estimatedDays?: number;
 	/** @example 1 */
 	addressId?: number;
 	address?: {
@@ -3354,6 +3382,11 @@ export interface SimulateLinkedAppealRequest {
 	childAppealReference?: string;
 }
 
+export interface SimulateStartAppealRequest {
+	/** @example "hearing" */
+	procedureType?: string;
+}
+
 export interface Address {
 	addressId?: number;
 	addressLine1: string;
@@ -3606,6 +3639,7 @@ export interface AppealDecision {
 				| 'lpaCostsWithdrawal'
 				| 'lpaEnforcementNotice'
 				| 'lpaEnforcementNoticePlan'
+				| 'lpaEnforcementNoticeWithdrawal'
 				| 'lpaFinalComment'
 				| 'lpaProofOfEvidence'
 				| 'lpaStatement'
@@ -3641,6 +3675,7 @@ export interface AppealDecision {
 			stage?:
 				| 'appeal-decision'
 				| 'appellant-case'
+				| 'cancellation'
 				| 'costs'
 				| 'evidence'
 				| 'final-comments'
@@ -3735,6 +3770,7 @@ export interface AppealDecision {
 				| 'lpaCostsWithdrawal'
 				| 'lpaEnforcementNotice'
 				| 'lpaEnforcementNoticePlan'
+				| 'lpaEnforcementNoticeWithdrawal'
 				| 'lpaFinalComment'
 				| 'lpaProofOfEvidence'
 				| 'lpaStatement'
@@ -3770,6 +3806,7 @@ export interface AppealDecision {
 			stage?:
 				| 'appeal-decision'
 				| 'appellant-case'
+				| 'cancellation'
 				| 'costs'
 				| 'evidence'
 				| 'final-comments'
@@ -3896,6 +3933,7 @@ export interface AppealWithdrawal {
 					| 'lpaCostsWithdrawal'
 					| 'lpaEnforcementNotice'
 					| 'lpaEnforcementNoticePlan'
+					| 'lpaEnforcementNoticeWithdrawal'
 					| 'lpaFinalComment'
 					| 'lpaProofOfEvidence'
 					| 'lpaStatement'
@@ -3931,6 +3969,7 @@ export interface AppealWithdrawal {
 				stage?:
 					| 'appeal-decision'
 					| 'appellant-case'
+					| 'cancellation'
 					| 'costs'
 					| 'evidence'
 					| 'final-comments'
@@ -4025,6 +4064,7 @@ export interface AppealWithdrawal {
 					| 'lpaCostsWithdrawal'
 					| 'lpaEnforcementNotice'
 					| 'lpaEnforcementNoticePlan'
+					| 'lpaEnforcementNoticeWithdrawal'
 					| 'lpaFinalComment'
 					| 'lpaProofOfEvidence'
 					| 'lpaStatement'
@@ -4060,6 +4100,7 @@ export interface AppealWithdrawal {
 				stage?:
 					| 'appeal-decision'
 					| 'appellant-case'
+					| 'cancellation'
 					| 'costs'
 					| 'evidence'
 					| 'final-comments'
@@ -4086,6 +4127,285 @@ export interface AppealWithdrawal {
 	};
 	/** @format date-time */
 	withdrawalRequestDate?: string | null;
+}
+
+export interface AppealCancellation {
+	cancellationFolder?: {
+		caseId: number;
+		folderId: number;
+		path: string;
+		documents: {
+			/** @format uuid */
+			id: string;
+			caseId?: number;
+			folderId?: number;
+			name: string;
+			/** @format date-time */
+			createdAt?: string;
+			latestDocumentVersion?: {
+				/** @format uuid */
+				id: string;
+				version: number;
+				fileName?: string;
+				originalFileName?: string;
+				size?: number;
+				mime?: string;
+				/** @format date-time */
+				createdAt?: string;
+				/** @format date-time */
+				dateReceived?: string;
+				redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+				virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+				documentType?:
+					| 'appealNotification'
+					| 'appellantCaseCorrespondence'
+					| 'appellantCaseWithdrawalLetter'
+					| 'appellantCostsApplication'
+					| 'appellantCostsCorrespondence'
+					| 'appellantCostsDecisionLetter'
+					| 'appellantCostsWithdrawal'
+					| 'appellantFinalComment'
+					| 'appellantProofOfEvidence'
+					| 'appellantStatement'
+					| 'appellantWitnessesEvidence'
+					| 'applicationDecisionLetter'
+					| 'article4Direction'
+					| 'caseDecisionLetter'
+					| 'changedDescription'
+					| 'communityInfrastructureLevy'
+					| 'conservationDocuments'
+					| 'conservationMap'
+					| 'consultationResponses'
+					| 'crossTeamCorrespondence'
+					| 'definitiveMapAndStatementExtract'
+					| 'definitiveMapStatement'
+					| 'delegatedReport'
+					| 'designAccessStatement'
+					| 'developmentPlanPolicies'
+					| 'eiaEnvironmentalStatement'
+					| 'eiaScopingOpinion'
+					| 'eiaScreeningDirection'
+					| 'eiaScreeningOpinion'
+					| 'emergingPlan'
+					| 'enforcementList'
+					| 'enforcementNotice'
+					| 'enforcementNoticePlan'
+					| 'environmentalAssessment'
+					| 'groundAFeeReceipt'
+					| 'groundASupporting'
+					| 'groundBSupporting'
+					| 'groundCSupporting'
+					| 'groundDSupporting'
+					| 'groundESupporting'
+					| 'groundFSupporting'
+					| 'groundGSupporting'
+					| 'groundHSupporting'
+					| 'groundISupporting'
+					| 'groundJSupporting'
+					| 'groundKSupporting'
+					| 'historicEnglandConsultation'
+					| 'inspectorCorrespondence'
+					| 'interestedPartyComment'
+					| 'localDevelopmentOrder'
+					| 'lpaCaseCorrespondence'
+					| 'lpaCostsApplication'
+					| 'lpaCostsCorrespondence'
+					| 'lpaCostsDecisionLetter'
+					| 'lpaCostsWithdrawal'
+					| 'lpaEnforcementNotice'
+					| 'lpaEnforcementNoticePlan'
+					| 'lpaEnforcementNoticeWithdrawal'
+					| 'lpaFinalComment'
+					| 'lpaProofOfEvidence'
+					| 'lpaStatement'
+					| 'lpaWitnessesEvidence'
+					| 'mainPartyCorrespondence'
+					| 'newPlansDrawings'
+					| 'originalApplicationForm'
+					| 'otherNewDocuments'
+					| 'otherPartyRepresentations'
+					| 'otherRelevantMatters'
+					| 'otherRelevantPolicies'
+					| 'ownershipCertificate'
+					| 'planShowingExtentOfOrder'
+					| 'planningContraventionNotice'
+					| 'planningObligation'
+					| 'planningOfficerReport'
+					| 'planningPermission'
+					| 'plansDrawings'
+					| 'priorCorrespondenceWithPINS'
+					| 'relatedApplications'
+					| 'rule6ProofOfEvidence'
+					| 'rule6Statement'
+					| 'rule6WitnessesEvidence'
+					| 'statementCommonGround'
+					| 'stopNotice'
+					| 'supplementaryPlanning'
+					| 'treePreservationPlan'
+					| 'uncategorised'
+					| 'whoNotified'
+					| 'whoNotifiedLetterToNeighbours'
+					| 'whoNotifiedPressAdvert'
+					| 'whoNotifiedSiteNotice';
+				stage?:
+					| 'appeal-decision'
+					| 'appellant-case'
+					| 'cancellation'
+					| 'costs'
+					| 'evidence'
+					| 'final-comments'
+					| 'internal'
+					| 'lpa-questionnaire'
+					| 'statements'
+					| 'third-party-comments'
+					| 'witnesses';
+				documentURI: string;
+				isLateEntry?: boolean;
+				isDeleted?: boolean;
+				versionAudit?:
+					| {
+							/** @format date-time */
+							loggedAt: string;
+							/** @format uuid */
+							user: string;
+							action: string;
+							details: string;
+					  }[]
+					| null;
+			};
+			allVersions?: {
+				/** @format uuid */
+				id: string;
+				version: number;
+				fileName?: string;
+				originalFileName?: string;
+				size?: number;
+				mime?: string;
+				/** @format date-time */
+				createdAt?: string;
+				/** @format date-time */
+				dateReceived?: string;
+				redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+				virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+				documentType?:
+					| 'appealNotification'
+					| 'appellantCaseCorrespondence'
+					| 'appellantCaseWithdrawalLetter'
+					| 'appellantCostsApplication'
+					| 'appellantCostsCorrespondence'
+					| 'appellantCostsDecisionLetter'
+					| 'appellantCostsWithdrawal'
+					| 'appellantFinalComment'
+					| 'appellantProofOfEvidence'
+					| 'appellantStatement'
+					| 'appellantWitnessesEvidence'
+					| 'applicationDecisionLetter'
+					| 'article4Direction'
+					| 'caseDecisionLetter'
+					| 'changedDescription'
+					| 'communityInfrastructureLevy'
+					| 'conservationDocuments'
+					| 'conservationMap'
+					| 'consultationResponses'
+					| 'crossTeamCorrespondence'
+					| 'definitiveMapAndStatementExtract'
+					| 'definitiveMapStatement'
+					| 'delegatedReport'
+					| 'designAccessStatement'
+					| 'developmentPlanPolicies'
+					| 'eiaEnvironmentalStatement'
+					| 'eiaScopingOpinion'
+					| 'eiaScreeningDirection'
+					| 'eiaScreeningOpinion'
+					| 'emergingPlan'
+					| 'enforcementList'
+					| 'enforcementNotice'
+					| 'enforcementNoticePlan'
+					| 'environmentalAssessment'
+					| 'groundAFeeReceipt'
+					| 'groundASupporting'
+					| 'groundBSupporting'
+					| 'groundCSupporting'
+					| 'groundDSupporting'
+					| 'groundESupporting'
+					| 'groundFSupporting'
+					| 'groundGSupporting'
+					| 'groundHSupporting'
+					| 'groundISupporting'
+					| 'groundJSupporting'
+					| 'groundKSupporting'
+					| 'historicEnglandConsultation'
+					| 'inspectorCorrespondence'
+					| 'interestedPartyComment'
+					| 'localDevelopmentOrder'
+					| 'lpaCaseCorrespondence'
+					| 'lpaCostsApplication'
+					| 'lpaCostsCorrespondence'
+					| 'lpaCostsDecisionLetter'
+					| 'lpaCostsWithdrawal'
+					| 'lpaEnforcementNotice'
+					| 'lpaEnforcementNoticePlan'
+					| 'lpaEnforcementNoticeWithdrawal'
+					| 'lpaFinalComment'
+					| 'lpaProofOfEvidence'
+					| 'lpaStatement'
+					| 'lpaWitnessesEvidence'
+					| 'mainPartyCorrespondence'
+					| 'newPlansDrawings'
+					| 'originalApplicationForm'
+					| 'otherNewDocuments'
+					| 'otherPartyRepresentations'
+					| 'otherRelevantMatters'
+					| 'otherRelevantPolicies'
+					| 'ownershipCertificate'
+					| 'planShowingExtentOfOrder'
+					| 'planningContraventionNotice'
+					| 'planningObligation'
+					| 'planningOfficerReport'
+					| 'planningPermission'
+					| 'plansDrawings'
+					| 'priorCorrespondenceWithPINS'
+					| 'relatedApplications'
+					| 'rule6ProofOfEvidence'
+					| 'rule6Statement'
+					| 'rule6WitnessesEvidence'
+					| 'statementCommonGround'
+					| 'stopNotice'
+					| 'supplementaryPlanning'
+					| 'treePreservationPlan'
+					| 'uncategorised'
+					| 'whoNotified'
+					| 'whoNotifiedLetterToNeighbours'
+					| 'whoNotifiedPressAdvert'
+					| 'whoNotifiedSiteNotice';
+				stage?:
+					| 'appeal-decision'
+					| 'appellant-case'
+					| 'cancellation'
+					| 'costs'
+					| 'evidence'
+					| 'final-comments'
+					| 'internal'
+					| 'lpa-questionnaire'
+					| 'statements'
+					| 'third-party-comments'
+					| 'witnesses';
+				documentURI: string;
+				isLateEntry?: boolean;
+				isDeleted?: boolean;
+				versionAudit?:
+					| {
+							/** @format date-time */
+							loggedAt: string;
+							/** @format uuid */
+							user: string;
+							action: string;
+							details: string;
+					  }[]
+					| null;
+			}[];
+		}[];
+	};
 }
 
 export interface AppealRelationship {
@@ -4181,6 +4501,7 @@ export interface Document {
 			| 'lpaCostsWithdrawal'
 			| 'lpaEnforcementNotice'
 			| 'lpaEnforcementNoticePlan'
+			| 'lpaEnforcementNoticeWithdrawal'
 			| 'lpaFinalComment'
 			| 'lpaProofOfEvidence'
 			| 'lpaStatement'
@@ -4216,6 +4537,7 @@ export interface Document {
 		stage?:
 			| 'appeal-decision'
 			| 'appellant-case'
+			| 'cancellation'
 			| 'costs'
 			| 'evidence'
 			| 'final-comments'
@@ -4310,6 +4632,7 @@ export interface Document {
 			| 'lpaCostsWithdrawal'
 			| 'lpaEnforcementNotice'
 			| 'lpaEnforcementNoticePlan'
+			| 'lpaEnforcementNoticeWithdrawal'
 			| 'lpaFinalComment'
 			| 'lpaProofOfEvidence'
 			| 'lpaStatement'
@@ -4345,6 +4668,7 @@ export interface Document {
 		stage?:
 			| 'appeal-decision'
 			| 'appellant-case'
+			| 'cancellation'
 			| 'costs'
 			| 'evidence'
 			| 'final-comments'
@@ -4441,6 +4765,7 @@ export interface DocumentVersion {
 		| 'lpaCostsWithdrawal'
 		| 'lpaEnforcementNotice'
 		| 'lpaEnforcementNoticePlan'
+		| 'lpaEnforcementNoticeWithdrawal'
 		| 'lpaFinalComment'
 		| 'lpaProofOfEvidence'
 		| 'lpaStatement'
@@ -4476,6 +4801,7 @@ export interface DocumentVersion {
 	stage?:
 		| 'appeal-decision'
 		| 'appellant-case'
+		| 'cancellation'
 		| 'costs'
 		| 'evidence'
 		| 'final-comments'
@@ -4812,6 +5138,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -4847,6 +5174,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -4941,6 +5269,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -4976,6 +5305,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -5084,6 +5414,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -5119,6 +5450,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -5213,6 +5545,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -5248,6 +5581,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -5356,6 +5690,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -5391,6 +5726,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -5485,6 +5821,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -5520,6 +5857,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -5628,6 +5966,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -5663,6 +6002,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -5757,6 +6097,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -5792,6 +6133,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -5900,6 +6242,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -5935,6 +6278,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -6029,6 +6373,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -6064,6 +6409,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -6172,6 +6518,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -6207,6 +6554,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -6301,6 +6649,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -6336,6 +6685,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -6444,6 +6794,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -6479,6 +6830,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -6573,6 +6925,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -6608,6 +6961,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -6716,6 +7070,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -6751,6 +7106,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -6845,6 +7201,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -6880,6 +7237,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -6988,6 +7346,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -7023,6 +7382,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -7117,6 +7477,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -7152,6 +7513,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -7260,6 +7622,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -7295,6 +7658,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -7389,6 +7753,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -7424,6 +7789,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -7532,6 +7898,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -7567,6 +7934,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -7661,6 +8029,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -7696,6 +8065,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -7804,6 +8174,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -7839,6 +8210,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -7933,6 +8305,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -7968,6 +8341,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -8076,6 +8450,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -8111,6 +8486,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -8205,6 +8581,7 @@ export type AppellantCase = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -8240,6 +8617,7 @@ export type AppellantCase = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -8483,6 +8861,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -8518,6 +8897,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -8612,6 +8992,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -8647,6 +9028,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -8755,6 +9137,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -8790,6 +9173,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -8884,6 +9268,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -8919,6 +9304,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -9027,6 +9413,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -9062,6 +9449,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -9156,6 +9544,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -9191,6 +9580,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -9299,6 +9689,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -9334,6 +9725,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -9428,6 +9820,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -9463,6 +9856,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -9571,6 +9965,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -9606,6 +10001,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -9700,6 +10096,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -9735,6 +10132,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -9843,6 +10241,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -9878,6 +10277,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -9972,6 +10372,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -10007,6 +10408,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -10115,6 +10517,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -10150,6 +10553,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -10244,6 +10648,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -10279,6 +10684,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -10387,6 +10793,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -10422,6 +10829,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -10516,6 +10924,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -10551,6 +10960,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -10659,6 +11069,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -10694,6 +11105,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -10788,6 +11200,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -10823,6 +11236,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -10931,6 +11345,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -10966,6 +11381,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -11060,6 +11476,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -11095,6 +11512,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -11203,6 +11621,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -11238,6 +11657,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -11332,6 +11752,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -11367,6 +11788,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -11475,6 +11897,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -11510,6 +11933,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -11604,6 +12028,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -11639,6 +12064,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -11747,6 +12173,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -11782,6 +12209,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -11876,6 +12304,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -11911,6 +12340,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -12019,6 +12449,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -12054,6 +12485,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -12148,6 +12580,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -12183,6 +12616,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -12291,6 +12725,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -12326,6 +12761,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -12420,6 +12856,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -12455,6 +12892,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -12563,6 +13001,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -12598,6 +13037,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -12692,6 +13132,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -12727,6 +13168,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -12835,6 +13277,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -12870,6 +13313,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -12964,6 +13408,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -12999,6 +13444,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -13107,6 +13553,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -13142,6 +13589,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -13236,6 +13684,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -13271,6 +13720,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -13379,6 +13829,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -13414,6 +13865,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -13508,6 +13960,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -13543,6 +13996,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -13651,6 +14105,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -13686,6 +14141,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -13780,6 +14236,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -13815,6 +14272,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -13923,6 +14381,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -13958,6 +14417,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -14052,6 +14512,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -14087,6 +14548,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -14195,6 +14657,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -14230,6 +14693,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -14324,6 +14788,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -14359,6 +14824,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -14467,6 +14933,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -14502,6 +14969,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -14596,6 +15064,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -14631,6 +15100,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -14739,6 +15209,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -14774,6 +15245,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -14868,6 +15340,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -14903,6 +15376,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -15011,6 +15485,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -15046,6 +15521,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -15140,6 +15616,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -15175,6 +15652,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -15283,6 +15761,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -15318,6 +15797,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -15412,6 +15892,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -15447,6 +15928,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -15555,6 +16037,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -15590,6 +16073,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -15684,6 +16168,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -15719,6 +16204,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -15827,6 +16313,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -15862,6 +16349,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -15956,6 +16444,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -15991,6 +16480,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -16099,6 +16589,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -16134,6 +16625,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -16228,6 +16720,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -16263,6 +16756,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -16371,6 +16865,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -16406,6 +16901,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -16500,6 +16996,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -16535,6 +17032,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -16643,6 +17141,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -16678,6 +17177,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -16772,6 +17272,7 @@ export type LpaQuestionnaire = {
 						| 'lpaCostsWithdrawal'
 						| 'lpaEnforcementNotice'
 						| 'lpaEnforcementNoticePlan'
+						| 'lpaEnforcementNoticeWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
@@ -16807,6 +17308,7 @@ export type LpaQuestionnaire = {
 					stage?:
 						| 'appeal-decision'
 						| 'appellant-case'
+						| 'cancellation'
 						| 'costs'
 						| 'evidence'
 						| 'final-comments'
@@ -17069,6 +17571,7 @@ export interface Appeal {
 					| 'lpaCostsWithdrawal'
 					| 'lpaEnforcementNotice'
 					| 'lpaEnforcementNoticePlan'
+					| 'lpaEnforcementNoticeWithdrawal'
 					| 'lpaFinalComment'
 					| 'lpaProofOfEvidence'
 					| 'lpaStatement'
@@ -17104,6 +17607,7 @@ export interface Appeal {
 				stage?:
 					| 'appeal-decision'
 					| 'appellant-case'
+					| 'cancellation'
 					| 'costs'
 					| 'evidence'
 					| 'final-comments'
@@ -17198,6 +17702,7 @@ export interface Appeal {
 					| 'lpaCostsWithdrawal'
 					| 'lpaEnforcementNotice'
 					| 'lpaEnforcementNoticePlan'
+					| 'lpaEnforcementNoticeWithdrawal'
 					| 'lpaFinalComment'
 					| 'lpaProofOfEvidence'
 					| 'lpaStatement'
@@ -17233,6 +17738,7 @@ export interface Appeal {
 				stage?:
 					| 'appeal-decision'
 					| 'appellant-case'
+					| 'cancellation'
 					| 'costs'
 					| 'evidence'
 					| 'final-comments'
@@ -17359,6 +17865,7 @@ export interface Appeal {
 					| 'lpaCostsWithdrawal'
 					| 'lpaEnforcementNotice'
 					| 'lpaEnforcementNoticePlan'
+					| 'lpaEnforcementNoticeWithdrawal'
 					| 'lpaFinalComment'
 					| 'lpaProofOfEvidence'
 					| 'lpaStatement'
@@ -17394,6 +17901,7 @@ export interface Appeal {
 				stage?:
 					| 'appeal-decision'
 					| 'appellant-case'
+					| 'cancellation'
 					| 'costs'
 					| 'evidence'
 					| 'final-comments'
@@ -17488,6 +17996,7 @@ export interface Appeal {
 					| 'lpaCostsWithdrawal'
 					| 'lpaEnforcementNotice'
 					| 'lpaEnforcementNoticePlan'
+					| 'lpaEnforcementNoticeWithdrawal'
 					| 'lpaFinalComment'
 					| 'lpaProofOfEvidence'
 					| 'lpaStatement'
@@ -17523,6 +18032,7 @@ export interface Appeal {
 				stage?:
 					| 'appeal-decision'
 					| 'appellant-case'
+					| 'cancellation'
 					| 'costs'
 					| 'evidence'
 					| 'final-comments'

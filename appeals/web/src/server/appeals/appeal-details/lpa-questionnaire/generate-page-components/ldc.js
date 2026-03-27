@@ -3,10 +3,9 @@ import { isDefined } from '#lib/ts-utilities.js';
 /**
  *
  * @param {{lpaq: MappedInstructions}} mappedLPAQData
- * @param {{appeal: MappedInstructions}} mappedAppealDetails
  * @returns {PageComponent[]}
  */
-export const generateLdcLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetails) => {
+export const generateLdcLpaQuestionnaireComponents = (mappedLPAQData) => {
 	/** @type {PageComponent[]} */
 	const pageComponents = [];
 
@@ -30,6 +29,7 @@ export const generateLdcLpaQuestionnaireComponents = (mappedLPAQData, mappedAppe
 				mappedLPAQData.lpaq?.isCorrectAppealType?.display.summaryListItem,
 				mappedLPAQData.lpaq?.appealUnderActSection?.display.summaryListItem,
 				mappedLPAQData.lpaq?.planningPermission.display.summaryListItem,
+				mappedLPAQData.lpaq?.enforcementNotice.display.summaryListItem,
 				mappedLPAQData.lpaq?.relatedApplications?.display.summaryListItem,
 				mappedLPAQData.lpaq?.lpaConsiderAppealInvalid?.display.summaryListItem
 			].filter(isDefined)
@@ -55,7 +55,8 @@ export const generateLdcLpaQuestionnaireComponents = (mappedLPAQData, mappedAppe
 				mappedLPAQData.lpaq?.communityInfrastructureLevy?.display.summaryListItem,
 				mappedLPAQData.lpaq?.isInfrastructureLevyFormallyAdopted?.display.summaryListItem,
 				mappedLPAQData.lpaq?.infrastructureLevyAdoptedDate?.display.summaryListItem,
-				mappedLPAQData.lpaq?.infrastructureLevyExpectedDate?.display.summaryListItem
+				mappedLPAQData.lpaq?.infrastructureLevyExpectedDate?.display.summaryListItem,
+				mappedLPAQData.lpaq?.otherRelevantMatters?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});
@@ -76,7 +77,7 @@ export const generateLdcLpaQuestionnaireComponents = (mappedLPAQData, mappedAppe
 			rows: [
 				mappedLPAQData.lpaq?.siteAccess?.display.summaryListItem,
 				mappedLPAQData.lpaq?.reasonForNeighbourVisits?.display.summaryListItem,
-				mappedAppealDetails.appeal.lpaNeighbouringSites?.display.summaryListItem,
+				mappedLPAQData.lpaq?.lpaNeighbouringSites?.display.summaryListItem,
 				mappedLPAQData.lpaq?.lpaHealthAndSafety?.display.summaryListItem
 			].filter(isDefined)
 		}

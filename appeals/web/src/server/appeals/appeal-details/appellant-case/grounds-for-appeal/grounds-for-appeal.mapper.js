@@ -39,10 +39,10 @@ export const changeGroundsForAppealPage = (
 					hint: { text: 'Select all that apply' },
 					// @ts-ignore
 					items: groundsForAppeal?.map((ground) => ({
-						value: ground.groundRef,
+						value: ground.id,
 						text: `Ground (${ground.groundRef})`,
 						hint: { text: ground.groundDescription },
-						checked: selectedGrounds.some((selectedGround) => selectedGround === ground.groundRef)
+						checked: selectedGrounds.some((selectedGround) => selectedGround === ground.id)
 					})),
 					errorMessage: errorMessage && { text: errorMessage }
 				}

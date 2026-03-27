@@ -1,12 +1,15 @@
 import * as api from '#lib/api/allocation-details.api.js';
 import { ensureArray } from '#lib/array-utilities.js';
+import { applyEdits, applyEditsForAppeal, clearEditsForAppeal } from '#lib/edit-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { preserveQueryString } from '#lib/url-utilities.js';
 import { acceptRepresentation } from '../../representations.service.js';
 import {
 	allocationCheckPage,
 	allocationLevelPage,
 	allocationSpecialismsPage
 } from '../allocation/allocation.mapper.js';
+import { getRule6BackLinkUrl, getRule6ConfirmBackLinkUrl } from '../back-link-utilities.js';
 import { confirmPage } from './valid.mapper.js';
 
 /**
@@ -27,7 +30,14 @@ export function renderAllocationCheck(request, response) {
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		errors,
-		pageContent
+		pageContent: {
+			...pageContent,
+			backLinkUrl: getRule6BackLinkUrl(
+				request,
+				pageContent.backLinkUrl || '',
+				`/appeals-service/appeal-details/${currentAppeal.appealId}/rule-6-party-statement/${rule6PartyId}/valid/confirm`
+			)
+		}
 	});
 }
 
@@ -41,7 +51,6 @@ export function postAllocationCheck(request, response) {
 		errors,
 		params: { appealId, rule6PartyId },
 		body,
-		currentAppeal,
 		session
 	} = request;
 
@@ -49,18 +58,22 @@ export function postAllocationCheck(request, response) {
 		return renderAllocationCheck(request, response);
 	}
 
-	if (
-		session.acceptRule6PartyStatement[currentAppeal.appealId] &&
-		body.allocationLevelAndSpecialisms === 'no'
-	) {
-		delete session.acceptRule6PartyStatement[currentAppeal.appealId].allocationLevel;
-		delete session.acceptRule6PartyStatement[currentAppeal.appealId].allocationSpecialisms;
+	const sessionKey = 'acceptRule6PartyStatement';
+
+	applyEdits(request, 'acceptRule6PartyStatement');
+
+	if (session[sessionKey]?.allocationLevel && body.allocationLevelAndSpecialisms === 'no') {
+		delete session[sessionKey].allocationLevel;
+		delete session[sessionKey].allocationSpecialisms;
 	}
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/valid/${
-			body.allocationLevelAndSpecialisms === 'yes' ? 'allocation-level' : 'confirm'
-		}`
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/valid/${
+				body.allocationLevelAndSpecialisms === 'yes' ? 'allocation-level' : 'confirm'
+			}`
+		)
 	);
 }
 
@@ -88,7 +101,14 @@ export async function renderAllocationLevel(request, response) {
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		errors,
-		pageContent
+		pageContent: {
+			...pageContent,
+			backLinkUrl: getRule6BackLinkUrl(
+				request,
+				pageContent.backLinkUrl || '',
+				`/appeals-service/appeal-details/${currentAppeal.appealId}/rule-6-party-statement/${rule6PartyId}/valid/confirm`
+			)
+		}
 	});
 }
 
@@ -108,7 +128,10 @@ export function postAllocationLevel(request, response) {
 	}
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-specialisms`
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/valid/allocation-specialisms`
+		)
 	);
 }
 
@@ -132,7 +155,14 @@ export async function renderAllocationSpecialisms(request, response) {
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		errors,
-		pageContent
+		pageContent: {
+			...pageContent,
+			backLinkUrl: getRule6BackLinkUrl(
+				request,
+				pageContent.backLinkUrl || '',
+				`/appeals-service/appeal-details/${currentAppeal.appealId}/rule-6-party-statement/${rule6PartyId}/valid/confirm`
+			)
+		}
 	});
 }
 
@@ -144,15 +174,21 @@ export async function renderAllocationSpecialisms(request, response) {
 export function postAllocationSpecialisms(request, response) {
 	const {
 		errors,
-		params: { appealId, rule6PartyId }
+		params: { appealId, rule6PartyId },
+		currentAppeal
 	} = request;
 
 	if (errors) {
 		return renderAllocationSpecialisms(request, response);
 	}
 
+	applyEditsForAppeal(request, 'acceptRule6PartyStatement', currentAppeal.appealId);
+
 	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/valid/confirm`
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${appealId}/rule-6-party-statement/${rule6PartyId}/valid/confirm`
+		)
 	);
 }
 
@@ -166,11 +202,23 @@ export async function renderConfirm(request, response) {
 
 	const specialisms = await api.getAllocationDetailsSpecialisms(request.apiClient);
 
-	const pageContent = confirmPage(currentAppeal, currentRepresentation, specialisms, session);
+	const { rule6PartyId } = request.params;
+	const pageContent = confirmPage(
+		currentAppeal,
+		currentRepresentation,
+		specialisms,
+		session,
+		rule6PartyId
+	);
+
+	clearEditsForAppeal(request, 'acceptRule6PartyStatement', currentAppeal.appealId);
 
 	return response.status(200).render('patterns/check-and-confirm-page-full-width.pattern.njk', {
 		errors,
-		pageContent
+		pageContent: {
+			...pageContent,
+			backLinkUrl: getRule6ConfirmBackLinkUrl(request, pageContent.backLinkUrl || '')
+		}
 	});
 }
 

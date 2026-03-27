@@ -39,7 +39,7 @@ export const mapAppellantCase = (data) => {
 	return {
 		...mapAppellantCaseSharedFields(data),
 		ownerOccupancyStatus: interestInLand ? capitalize(interestInLand) : null,
-		applicationElbAppealGroundDetails: appealGrounds?.length
+		applicationElbAppealGroundsDetails: appealGrounds?.length
 			? appealGrounds.filter(({ isDeleted }) => !isDeleted).map(mapAppealGround)
 			: null,
 		issueDateOfEnforcementNotice: enforcementIssueDate?.toISOString() ?? null,

@@ -1635,6 +1635,16 @@
 						"schema": {
 							"type": "string"
 						}
+					},
+					{
+						"name": "docCount",
+						"in": "query",
+						"required": false,
+						"example": 25,
+						"description": "Number of additional documents to generate per appeal (default 25)",
+						"schema": {
+							"type": "string"
+						}
 					}
 				],
 				"responses": {
@@ -1847,6 +1857,43 @@
 							"application/xml": {
 								"schema": {
 									"$ref": "#/components/schemas/AllAppellantCaseInvalidReasonsResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
+		"/appeals/appellant-case-enforcement-grounds-mismatch-facts": {
+			"get": {
+				"tags": ["Appellant Case Enforcement Grounds Mismatch Facts"],
+				"description": "Gets appellant case enforcement grounds mismatch facts",
+				"parameters": [
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Appellant case enforcement grounds mismatch facts",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AllAppellantCaseEnforcementGroundsMismatchFactsResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/AllAppellantCaseEnforcementGroundsMismatchFactsResponse"
 								}
 							}
 						}
@@ -6735,6 +6782,23 @@
 					"500": {
 						"description": "Internal Server Error"
 					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Appeal IDs to delete",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SimulateStartAppealRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/SimulateStartAppealRequest"
+							}
+						}
+					}
 				}
 			}
 		},
@@ -7222,6 +7286,231 @@
 								"$ref": "#/components/schemas/SimulateLinkedAppealRequest"
 							}
 						}
+					}
+				}
+			}
+		},
+		"/appeals/{appealReference}/review-appellant-statement": {
+			"post": {
+				"tags": ["Test Utilities"],
+				"description": "A test endpoint to simulate the completion of a review appellant statement event",
+				"parameters": [
+					{
+						"name": "appealReference",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Get a single representation for an appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
+		"/appeals/{appealReference}/review-rule-6-statement": {
+			"post": {
+				"tags": ["Test Utilities"],
+				"description": "A test endpoint to simulate the completion of a review rule 6 statement event",
+				"parameters": [
+					{
+						"name": "appealReference",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Get a single representation for an appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
+		"/appeals/{appealReference}/review-rule-6-proof-of-evidence": {
+			"post": {
+				"tags": ["Test Utilities"],
+				"description": "A test endpoint to simulate the completion of a review rule 6 proof of evidence event",
+				"parameters": [
+					{
+						"name": "appealReference",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Get a single representation for an appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
+		"/appeals/{appealReference}/review-lpa-proof-of-evidence": {
+			"post": {
+				"tags": ["Test Utilities"],
+				"description": "A test endpoint to simulate the completion of a review lpa proof of evidence event",
+				"parameters": [
+					{
+						"name": "appealReference",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Get a single representation for an appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
+		"/appeals/{appealReference}/review-appellant-proof-of-evidence": {
+			"post": {
+				"tags": ["Test Utilities"],
+				"description": "A test endpoint to simulate the completion of a review appellant proof of evidence event",
+				"parameters": [
+					{
+						"name": "appealReference",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Get a single representation for an appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/RepResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
 					}
 				}
 			}
@@ -7931,6 +8220,81 @@
 						"application/xml": {
 							"schema": {
 								"$ref": "#/components/schemas/AppealProcedureChangeRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/cancel/enforcement-notice-withdrawn": {
+			"post": {
+				"tags": ["Cancel Appeal"],
+				"description": "Cancels an appeal because the LPA has withdrawn the enforcement notice",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "dryRun",
+						"in": "query",
+						"description": "If true, does not update the appeal and only returns the notify previews.",
+						"required": false,
+						"example": true,
+						"schema": {
+							"type": "boolean"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Returns the notify previews if this is a dry run",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CancelEnforcementNoticeWithdrawalResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/CancelEnforcementNoticeWithdrawalResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Cancel enforcement notice withdrawal request",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CancelEnforcementNoticeWithdrawalRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/CancelEnforcementNoticeWithdrawalRequest"
 							}
 						}
 					}
@@ -9172,6 +9536,7 @@
 												"lpaCostsWithdrawal",
 												"lpaEnforcementNotice",
 												"lpaEnforcementNoticePlan",
+												"lpaEnforcementNoticeWithdrawal",
 												"lpaFinalComment",
 												"lpaProofOfEvidence",
 												"lpaStatement",
@@ -9211,6 +9576,7 @@
 											"enum": [
 												"appeal-decision",
 												"appellant-case",
+												"cancellation",
 												"costs",
 												"evidence",
 												"final-comments",
@@ -9364,6 +9730,7 @@
 													"lpaCostsWithdrawal",
 													"lpaEnforcementNotice",
 													"lpaEnforcementNoticePlan",
+													"lpaEnforcementNoticeWithdrawal",
 													"lpaFinalComment",
 													"lpaProofOfEvidence",
 													"lpaStatement",
@@ -9403,6 +9770,7 @@
 												"enum": [
 													"appeal-decision",
 													"appellant-case",
+													"cancellation",
 													"costs",
 													"evidence",
 													"final-comments",
@@ -10656,6 +11024,25 @@
 						"items": {
 							"type": "string"
 						}
+					},
+					"cancellation": {
+						"type": "object",
+						"properties": {
+							"cancellationFolder": {
+								"type": "object",
+								"properties": {
+									"folderId": {
+										"type": "number",
+										"example": 2125
+									},
+									"documents": {
+										"type": "array",
+										"example": [],
+										"items": {}
+									}
+								}
+							}
+						}
 					}
 				},
 				"xml": {
@@ -11256,6 +11643,32 @@
 				},
 				"xml": {
 					"name": "StartCaseNotifyPreviewResponse"
+				}
+			},
+			"CancelEnforcementNoticeWithdrawalResponse": {
+				"type": "object",
+				"properties": {
+					"appellant": {
+						"type": "object",
+						"properties": {
+							"renderedHtml": {
+								"type": "string",
+								"example": "Rendered HTML for appellant preview"
+							}
+						}
+					},
+					"lpa": {
+						"type": "object",
+						"properties": {
+							"renderedHtml": {
+								"type": "string",
+								"example": "Rendered HTML for LPA preview"
+							}
+						}
+					}
+				},
+				"xml": {
+					"name": "CancelEnforcementNoticeWithdrawalResponse"
 				}
 			},
 			"SingleLPAQuestionnaireResponse": {
@@ -14360,6 +14773,11 @@
 						"description": "Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM",
 						"example": "2014-11-14T00:00:00+00:00"
 					},
+					"estimatedDays": {
+						"type": "number",
+						"description": "Estimated number of days",
+						"example": 5
+					},
 					"addressId": {
 						"type": "number",
 						"example": 1
@@ -14940,6 +15358,15 @@
 					"childAppealReference": {
 						"type": "string",
 						"example": "6000118"
+					}
+				}
+			},
+			"SimulateStartAppealRequest": {
+				"type": "object",
+				"properties": {
+					"procedureType": {
+						"type": "string",
+						"example": "hearing"
 					}
 				}
 			},
@@ -15564,6 +15991,7 @@
 												"lpaCostsWithdrawal",
 												"lpaEnforcementNotice",
 												"lpaEnforcementNoticePlan",
+												"lpaEnforcementNoticeWithdrawal",
 												"lpaFinalComment",
 												"lpaProofOfEvidence",
 												"lpaStatement",
@@ -15603,6 +16031,7 @@
 											"enum": [
 												"appeal-decision",
 												"appellant-case",
+												"cancellation",
 												"costs",
 												"evidence",
 												"final-comments",
@@ -15756,6 +16185,7 @@
 													"lpaCostsWithdrawal",
 													"lpaEnforcementNotice",
 													"lpaEnforcementNoticePlan",
+													"lpaEnforcementNoticeWithdrawal",
 													"lpaFinalComment",
 													"lpaProofOfEvidence",
 													"lpaStatement",
@@ -15795,6 +16225,7 @@
 												"enum": [
 													"appeal-decision",
 													"appellant-case",
+													"cancellation",
 													"costs",
 													"evidence",
 													"final-comments",
@@ -16027,6 +16458,7 @@
 														"lpaCostsWithdrawal",
 														"lpaEnforcementNotice",
 														"lpaEnforcementNoticePlan",
+														"lpaEnforcementNoticeWithdrawal",
 														"lpaFinalComment",
 														"lpaProofOfEvidence",
 														"lpaStatement",
@@ -16066,6 +16498,7 @@
 													"enum": [
 														"appeal-decision",
 														"appellant-case",
+														"cancellation",
 														"costs",
 														"evidence",
 														"final-comments",
@@ -16219,6 +16652,7 @@
 															"lpaCostsWithdrawal",
 															"lpaEnforcementNotice",
 															"lpaEnforcementNoticePlan",
+															"lpaEnforcementNoticeWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
@@ -16258,6 +16692,7 @@
 														"enum": [
 															"appeal-decision",
 															"appellant-case",
+															"cancellation",
 															"costs",
 															"evidence",
 															"final-comments",
@@ -16314,6 +16749,440 @@
 						"type": "string",
 						"format": "date-time",
 						"nullable": true
+					}
+				}
+			},
+			"AppealCancellation": {
+				"type": "object",
+				"properties": {
+					"cancellationFolder": {
+						"type": "object",
+						"required": ["caseId", "folderId", "path", "documents"],
+						"properties": {
+							"caseId": {
+								"type": "number"
+							},
+							"folderId": {
+								"type": "number"
+							},
+							"path": {
+								"type": "string"
+							},
+							"documents": {
+								"nullable": true,
+								"type": "array",
+								"items": {
+									"type": "object",
+									"required": ["id", "name"],
+									"properties": {
+										"id": {
+											"type": "string",
+											"format": "uuid"
+										},
+										"caseId": {
+											"type": "number"
+										},
+										"folderId": {
+											"type": "number"
+										},
+										"name": {
+											"type": "string"
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"latestDocumentVersion": {
+											"type": "object",
+											"required": [
+												"id",
+												"version",
+												"virusCheckStatus",
+												"redactionStatus",
+												"documentURI"
+											],
+											"properties": {
+												"id": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"version": {
+													"type": "number"
+												},
+												"fileName": {
+													"type": "string"
+												},
+												"originalFileName": {
+													"type": "string"
+												},
+												"size": {
+													"type": "number"
+												},
+												"mime": {
+													"type": "string"
+												},
+												"createdAt": {
+													"type": "string",
+													"format": "date-time"
+												},
+												"dateReceived": {
+													"type": "string",
+													"format": "date-time"
+												},
+												"redactionStatus": {
+													"type": "string",
+													"enum": ["no_redaction_required", "not_redacted", "redacted"]
+												},
+												"virusCheckStatus": {
+													"type": "string",
+													"enum": ["affected", "not_scanned", "scanned"]
+												},
+												"documentType": {
+													"type": "string",
+													"enum": [
+														"appealNotification",
+														"appellantCaseCorrespondence",
+														"appellantCaseWithdrawalLetter",
+														"appellantCostsApplication",
+														"appellantCostsCorrespondence",
+														"appellantCostsDecisionLetter",
+														"appellantCostsWithdrawal",
+														"appellantFinalComment",
+														"appellantProofOfEvidence",
+														"appellantStatement",
+														"appellantWitnessesEvidence",
+														"applicationDecisionLetter",
+														"article4Direction",
+														"caseDecisionLetter",
+														"changedDescription",
+														"communityInfrastructureLevy",
+														"conservationDocuments",
+														"conservationMap",
+														"consultationResponses",
+														"crossTeamCorrespondence",
+														"definitiveMapAndStatementExtract",
+														"definitiveMapStatement",
+														"delegatedReport",
+														"designAccessStatement",
+														"developmentPlanPolicies",
+														"eiaEnvironmentalStatement",
+														"eiaScopingOpinion",
+														"eiaScreeningDirection",
+														"eiaScreeningOpinion",
+														"emergingPlan",
+														"enforcementList",
+														"enforcementNotice",
+														"enforcementNoticePlan",
+														"environmentalAssessment",
+														"groundAFeeReceipt",
+														"groundASupporting",
+														"groundBSupporting",
+														"groundCSupporting",
+														"groundDSupporting",
+														"groundESupporting",
+														"groundFSupporting",
+														"groundGSupporting",
+														"groundHSupporting",
+														"groundISupporting",
+														"groundJSupporting",
+														"groundKSupporting",
+														"historicEnglandConsultation",
+														"inspectorCorrespondence",
+														"interestedPartyComment",
+														"localDevelopmentOrder",
+														"lpaCaseCorrespondence",
+														"lpaCostsApplication",
+														"lpaCostsCorrespondence",
+														"lpaCostsDecisionLetter",
+														"lpaCostsWithdrawal",
+														"lpaEnforcementNotice",
+														"lpaEnforcementNoticePlan",
+														"lpaEnforcementNoticeWithdrawal",
+														"lpaFinalComment",
+														"lpaProofOfEvidence",
+														"lpaStatement",
+														"lpaWitnessesEvidence",
+														"mainPartyCorrespondence",
+														"newPlansDrawings",
+														"originalApplicationForm",
+														"otherNewDocuments",
+														"otherPartyRepresentations",
+														"otherRelevantMatters",
+														"otherRelevantPolicies",
+														"ownershipCertificate",
+														"planShowingExtentOfOrder",
+														"planningContraventionNotice",
+														"planningObligation",
+														"planningOfficerReport",
+														"planningPermission",
+														"plansDrawings",
+														"priorCorrespondenceWithPINS",
+														"relatedApplications",
+														"rule6ProofOfEvidence",
+														"rule6Statement",
+														"rule6WitnessesEvidence",
+														"statementCommonGround",
+														"stopNotice",
+														"supplementaryPlanning",
+														"treePreservationPlan",
+														"uncategorised",
+														"whoNotified",
+														"whoNotifiedLetterToNeighbours",
+														"whoNotifiedPressAdvert",
+														"whoNotifiedSiteNotice"
+													]
+												},
+												"stage": {
+													"type": "string",
+													"enum": [
+														"appeal-decision",
+														"appellant-case",
+														"cancellation",
+														"costs",
+														"evidence",
+														"final-comments",
+														"internal",
+														"lpa-questionnaire",
+														"statements",
+														"third-party-comments",
+														"witnesses"
+													]
+												},
+												"documentURI": {
+													"type": "string"
+												},
+												"isLateEntry": {
+													"type": "boolean"
+												},
+												"isDeleted": {
+													"type": "boolean"
+												},
+												"versionAudit": {
+													"nullable": true,
+													"type": "array",
+													"items": {
+														"type": "object",
+														"required": ["loggedAt", "user", "action", "details"],
+														"properties": {
+															"loggedAt": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"user": {
+																"type": "string",
+																"format": "uuid"
+															},
+															"action": {
+																"type": "string"
+															},
+															"details": {
+																"type": "string"
+															}
+														}
+													}
+												}
+											},
+											"nullable": true
+										},
+										"allVersions": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"required": [
+													"id",
+													"version",
+													"virusCheckStatus",
+													"redactionStatus",
+													"documentURI"
+												],
+												"properties": {
+													"id": {
+														"type": "string",
+														"format": "uuid"
+													},
+													"version": {
+														"type": "number"
+													},
+													"fileName": {
+														"type": "string"
+													},
+													"originalFileName": {
+														"type": "string"
+													},
+													"size": {
+														"type": "number"
+													},
+													"mime": {
+														"type": "string"
+													},
+													"createdAt": {
+														"type": "string",
+														"format": "date-time"
+													},
+													"dateReceived": {
+														"type": "string",
+														"format": "date-time"
+													},
+													"redactionStatus": {
+														"type": "string",
+														"enum": ["no_redaction_required", "not_redacted", "redacted"]
+													},
+													"virusCheckStatus": {
+														"type": "string",
+														"enum": ["affected", "not_scanned", "scanned"]
+													},
+													"documentType": {
+														"type": "string",
+														"enum": [
+															"appealNotification",
+															"appellantCaseCorrespondence",
+															"appellantCaseWithdrawalLetter",
+															"appellantCostsApplication",
+															"appellantCostsCorrespondence",
+															"appellantCostsDecisionLetter",
+															"appellantCostsWithdrawal",
+															"appellantFinalComment",
+															"appellantProofOfEvidence",
+															"appellantStatement",
+															"appellantWitnessesEvidence",
+															"applicationDecisionLetter",
+															"article4Direction",
+															"caseDecisionLetter",
+															"changedDescription",
+															"communityInfrastructureLevy",
+															"conservationDocuments",
+															"conservationMap",
+															"consultationResponses",
+															"crossTeamCorrespondence",
+															"definitiveMapAndStatementExtract",
+															"definitiveMapStatement",
+															"delegatedReport",
+															"designAccessStatement",
+															"developmentPlanPolicies",
+															"eiaEnvironmentalStatement",
+															"eiaScopingOpinion",
+															"eiaScreeningDirection",
+															"eiaScreeningOpinion",
+															"emergingPlan",
+															"enforcementList",
+															"enforcementNotice",
+															"enforcementNoticePlan",
+															"environmentalAssessment",
+															"groundAFeeReceipt",
+															"groundASupporting",
+															"groundBSupporting",
+															"groundCSupporting",
+															"groundDSupporting",
+															"groundESupporting",
+															"groundFSupporting",
+															"groundGSupporting",
+															"groundHSupporting",
+															"groundISupporting",
+															"groundJSupporting",
+															"groundKSupporting",
+															"historicEnglandConsultation",
+															"inspectorCorrespondence",
+															"interestedPartyComment",
+															"localDevelopmentOrder",
+															"lpaCaseCorrespondence",
+															"lpaCostsApplication",
+															"lpaCostsCorrespondence",
+															"lpaCostsDecisionLetter",
+															"lpaCostsWithdrawal",
+															"lpaEnforcementNotice",
+															"lpaEnforcementNoticePlan",
+															"lpaEnforcementNoticeWithdrawal",
+															"lpaFinalComment",
+															"lpaProofOfEvidence",
+															"lpaStatement",
+															"lpaWitnessesEvidence",
+															"mainPartyCorrespondence",
+															"newPlansDrawings",
+															"originalApplicationForm",
+															"otherNewDocuments",
+															"otherPartyRepresentations",
+															"otherRelevantMatters",
+															"otherRelevantPolicies",
+															"ownershipCertificate",
+															"planShowingExtentOfOrder",
+															"planningContraventionNotice",
+															"planningObligation",
+															"planningOfficerReport",
+															"planningPermission",
+															"plansDrawings",
+															"priorCorrespondenceWithPINS",
+															"relatedApplications",
+															"rule6ProofOfEvidence",
+															"rule6Statement",
+															"rule6WitnessesEvidence",
+															"statementCommonGround",
+															"stopNotice",
+															"supplementaryPlanning",
+															"treePreservationPlan",
+															"uncategorised",
+															"whoNotified",
+															"whoNotifiedLetterToNeighbours",
+															"whoNotifiedPressAdvert",
+															"whoNotifiedSiteNotice"
+														]
+													},
+													"stage": {
+														"type": "string",
+														"enum": [
+															"appeal-decision",
+															"appellant-case",
+															"cancellation",
+															"costs",
+															"evidence",
+															"final-comments",
+															"internal",
+															"lpa-questionnaire",
+															"statements",
+															"third-party-comments",
+															"witnesses"
+														]
+													},
+													"documentURI": {
+														"type": "string"
+													},
+													"isLateEntry": {
+														"type": "boolean"
+													},
+													"isDeleted": {
+														"type": "boolean"
+													},
+													"versionAudit": {
+														"nullable": true,
+														"type": "array",
+														"items": {
+															"type": "object",
+															"required": ["loggedAt", "user", "action", "details"],
+															"properties": {
+																"loggedAt": {
+																	"type": "string",
+																	"format": "date-time"
+																},
+																"user": {
+																	"type": "string",
+																	"format": "uuid"
+																},
+																"action": {
+																	"type": "string"
+																},
+																"details": {
+																	"type": "string"
+																}
+															}
+														}
+													}
+												}
+											},
+											"nullable": true
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 			},
@@ -16483,6 +17352,7 @@
 									"lpaCostsWithdrawal",
 									"lpaEnforcementNotice",
 									"lpaEnforcementNoticePlan",
+									"lpaEnforcementNoticeWithdrawal",
 									"lpaFinalComment",
 									"lpaProofOfEvidence",
 									"lpaStatement",
@@ -16522,6 +17392,7 @@
 								"enum": [
 									"appeal-decision",
 									"appellant-case",
+									"cancellation",
 									"costs",
 									"evidence",
 									"final-comments",
@@ -16669,6 +17540,7 @@
 										"lpaCostsWithdrawal",
 										"lpaEnforcementNotice",
 										"lpaEnforcementNoticePlan",
+										"lpaEnforcementNoticeWithdrawal",
 										"lpaFinalComment",
 										"lpaProofOfEvidence",
 										"lpaStatement",
@@ -16708,6 +17580,7 @@
 									"enum": [
 										"appeal-decision",
 										"appellant-case",
+										"cancellation",
 										"costs",
 										"evidence",
 										"final-comments",
@@ -16856,6 +17729,7 @@
 							"lpaCostsWithdrawal",
 							"lpaEnforcementNotice",
 							"lpaEnforcementNoticePlan",
+							"lpaEnforcementNoticeWithdrawal",
 							"lpaFinalComment",
 							"lpaProofOfEvidence",
 							"lpaStatement",
@@ -16895,6 +17769,7 @@
 						"enum": [
 							"appeal-decision",
 							"appellant-case",
+							"cancellation",
 							"costs",
 							"evidence",
 							"final-comments",
@@ -17775,6 +18650,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -17814,6 +18690,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -17967,6 +18844,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -18006,6 +18884,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -18200,6 +19079,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -18239,6 +19119,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -18392,6 +19273,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -18431,6 +19313,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -18625,6 +19508,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -18664,6 +19548,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -18817,6 +19702,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -18856,6 +19742,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -19050,6 +19937,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -19089,6 +19977,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -19242,6 +20131,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -19281,6 +20171,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -19475,6 +20366,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -19514,6 +20406,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -19667,6 +20560,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -19706,6 +20600,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -19900,6 +20795,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -19939,6 +20835,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -20092,6 +20989,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -20131,6 +21029,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -20325,6 +21224,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -20364,6 +21264,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -20517,6 +21418,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -20556,6 +21458,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -20750,6 +21653,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -20789,6 +21693,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -20942,6 +21847,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -20981,6 +21887,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -21175,6 +22082,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -21214,6 +22122,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -21367,6 +22276,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -21406,6 +22316,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -21600,6 +22511,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -21639,6 +22551,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -21792,6 +22705,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -21831,6 +22745,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -22025,6 +22940,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -22064,6 +22980,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -22217,6 +23134,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -22256,6 +23174,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -22450,6 +23369,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -22489,6 +23409,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -22642,6 +23563,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -22681,6 +23603,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -22875,6 +23798,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -22914,6 +23838,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -23067,6 +23992,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -23106,6 +24032,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -23747,6 +24674,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -23786,6 +24714,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -23939,6 +24868,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -23978,6 +24908,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -24172,6 +25103,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -24211,6 +25143,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -24364,6 +25297,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -24403,6 +25337,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -24597,6 +25532,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -24636,6 +25572,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -24789,6 +25726,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -24828,6 +25766,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -25022,6 +25961,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -25061,6 +26001,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -25214,6 +26155,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -25253,6 +26195,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -25447,6 +26390,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -25486,6 +26430,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -25639,6 +26584,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -25678,6 +26624,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -25872,6 +26819,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -25911,6 +26859,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -26064,6 +27013,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -26103,6 +27053,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -26297,6 +27248,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -26336,6 +27288,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -26489,6 +27442,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -26528,6 +27482,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -26722,6 +27677,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -26761,6 +27717,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -26914,6 +27871,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -26953,6 +27911,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -27147,6 +28106,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -27186,6 +28146,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -27339,6 +28300,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -27378,6 +28340,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -27572,6 +28535,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -27611,6 +28575,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -27764,6 +28729,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -27803,6 +28769,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -27997,6 +28964,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -28036,6 +29004,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -28189,6 +29158,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -28228,6 +29198,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -28422,6 +29393,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -28461,6 +29433,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -28614,6 +29587,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -28653,6 +29627,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -28847,6 +29822,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -28886,6 +29862,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -29039,6 +30016,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -29078,6 +30056,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -29272,6 +30251,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -29311,6 +30291,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -29464,6 +30445,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -29503,6 +30485,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -29697,6 +30680,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -29736,6 +30720,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -29889,6 +30874,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -29928,6 +30914,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -30122,6 +31109,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -30161,6 +31149,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -30314,6 +31303,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -30353,6 +31343,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -30547,6 +31538,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -30586,6 +31578,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -30739,6 +31732,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -30778,6 +31772,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -30972,6 +31967,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -31011,6 +32007,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -31164,6 +32161,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -31203,6 +32201,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -31397,6 +32396,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -31436,6 +32436,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -31589,6 +32590,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -31628,6 +32630,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -31822,6 +32825,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -31861,6 +32865,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -32014,6 +33019,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -32053,6 +33059,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -32247,6 +33254,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -32286,6 +33294,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -32439,6 +33448,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -32478,6 +33488,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -32672,6 +33683,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -32711,6 +33723,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -32864,6 +33877,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -32903,6 +33917,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -33097,6 +34112,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -33136,6 +34152,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -33289,6 +34306,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -33328,6 +34346,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -33522,6 +34541,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -33561,6 +34581,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -33714,6 +34735,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -33753,6 +34775,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -33947,6 +34970,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -33986,6 +35010,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -34139,6 +35164,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -34178,6 +35204,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -34372,6 +35399,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -34411,6 +35439,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -34564,6 +35593,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -34603,6 +35633,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -34797,6 +35828,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -34836,6 +35868,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -34989,6 +36022,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -35028,6 +36062,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -35222,6 +36257,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -35261,6 +36297,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -35414,6 +36451,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -35453,6 +36491,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -35647,6 +36686,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -35686,6 +36726,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -35839,6 +36880,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -35878,6 +36920,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -36072,6 +37115,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -36111,6 +37155,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -36264,6 +37309,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -36303,6 +37349,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -36497,6 +37544,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -36536,6 +37584,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -36689,6 +37738,7 @@
 																	"lpaCostsWithdrawal",
 																	"lpaEnforcementNotice",
 																	"lpaEnforcementNoticePlan",
+																	"lpaEnforcementNoticeWithdrawal",
 																	"lpaFinalComment",
 																	"lpaProofOfEvidence",
 																	"lpaStatement",
@@ -36728,6 +37778,7 @@
 																"enum": [
 																	"appeal-decision",
 																	"appellant-case",
+																	"cancellation",
 																	"costs",
 																	"evidence",
 																	"final-comments",
@@ -37462,6 +38513,7 @@
 														"lpaCostsWithdrawal",
 														"lpaEnforcementNotice",
 														"lpaEnforcementNoticePlan",
+														"lpaEnforcementNoticeWithdrawal",
 														"lpaFinalComment",
 														"lpaProofOfEvidence",
 														"lpaStatement",
@@ -37501,6 +38553,7 @@
 													"enum": [
 														"appeal-decision",
 														"appellant-case",
+														"cancellation",
 														"costs",
 														"evidence",
 														"final-comments",
@@ -37654,6 +38707,7 @@
 															"lpaCostsWithdrawal",
 															"lpaEnforcementNotice",
 															"lpaEnforcementNoticePlan",
+															"lpaEnforcementNoticeWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
@@ -37693,6 +38747,7 @@
 														"enum": [
 															"appeal-decision",
 															"appellant-case",
+															"cancellation",
 															"costs",
 															"evidence",
 															"final-comments",
@@ -37922,6 +38977,7 @@
 															"lpaCostsWithdrawal",
 															"lpaEnforcementNotice",
 															"lpaEnforcementNoticePlan",
+															"lpaEnforcementNoticeWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
@@ -37961,6 +39017,7 @@
 														"enum": [
 															"appeal-decision",
 															"appellant-case",
+															"cancellation",
 															"costs",
 															"evidence",
 															"final-comments",
@@ -38114,6 +39171,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -38153,6 +39211,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -38346,6 +39405,7 @@
 															"lpaCostsWithdrawal",
 															"lpaEnforcementNotice",
 															"lpaEnforcementNoticePlan",
+															"lpaEnforcementNoticeWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
@@ -38385,6 +39445,7 @@
 														"enum": [
 															"appeal-decision",
 															"appellant-case",
+															"cancellation",
 															"costs",
 															"evidence",
 															"final-comments",
@@ -38538,6 +39599,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -38577,6 +39639,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -38770,6 +39833,7 @@
 															"lpaCostsWithdrawal",
 															"lpaEnforcementNotice",
 															"lpaEnforcementNoticePlan",
+															"lpaEnforcementNoticeWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
@@ -38809,6 +39873,7 @@
 														"enum": [
 															"appeal-decision",
 															"appellant-case",
+															"cancellation",
 															"costs",
 															"evidence",
 															"final-comments",
@@ -38962,6 +40027,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -39001,6 +40067,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -39194,6 +40261,7 @@
 															"lpaCostsWithdrawal",
 															"lpaEnforcementNotice",
 															"lpaEnforcementNoticePlan",
+															"lpaEnforcementNoticeWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
@@ -39233,6 +40301,7 @@
 														"enum": [
 															"appeal-decision",
 															"appellant-case",
+															"cancellation",
 															"costs",
 															"evidence",
 															"final-comments",
@@ -39386,6 +40455,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -39425,6 +40495,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -39618,6 +40689,7 @@
 															"lpaCostsWithdrawal",
 															"lpaEnforcementNotice",
 															"lpaEnforcementNoticePlan",
+															"lpaEnforcementNoticeWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
@@ -39657,6 +40729,7 @@
 														"enum": [
 															"appeal-decision",
 															"appellant-case",
+															"cancellation",
 															"costs",
 															"evidence",
 															"final-comments",
@@ -39810,6 +40883,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -39849,6 +40923,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -40042,6 +41117,7 @@
 															"lpaCostsWithdrawal",
 															"lpaEnforcementNotice",
 															"lpaEnforcementNoticePlan",
+															"lpaEnforcementNoticeWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
@@ -40081,6 +41157,7 @@
 														"enum": [
 															"appeal-decision",
 															"appellant-case",
+															"cancellation",
 															"costs",
 															"evidence",
 															"final-comments",
@@ -40234,6 +41311,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -40273,6 +41351,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -40466,6 +41545,7 @@
 															"lpaCostsWithdrawal",
 															"lpaEnforcementNotice",
 															"lpaEnforcementNoticePlan",
+															"lpaEnforcementNoticeWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
@@ -40505,6 +41585,7 @@
 														"enum": [
 															"appeal-decision",
 															"appellant-case",
+															"cancellation",
 															"costs",
 															"evidence",
 															"final-comments",
@@ -40658,6 +41739,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -40697,6 +41779,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -40890,6 +41973,7 @@
 															"lpaCostsWithdrawal",
 															"lpaEnforcementNotice",
 															"lpaEnforcementNoticePlan",
+															"lpaEnforcementNoticeWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
@@ -40929,6 +42013,7 @@
 														"enum": [
 															"appeal-decision",
 															"appellant-case",
+															"cancellation",
 															"costs",
 															"evidence",
 															"final-comments",
@@ -41082,6 +42167,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -41121,6 +42207,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -41314,6 +42401,7 @@
 															"lpaCostsWithdrawal",
 															"lpaEnforcementNotice",
 															"lpaEnforcementNoticePlan",
+															"lpaEnforcementNoticeWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
@@ -41353,6 +42441,7 @@
 														"enum": [
 															"appeal-decision",
 															"appellant-case",
+															"cancellation",
 															"costs",
 															"evidence",
 															"final-comments",
@@ -41506,6 +42595,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -41545,6 +42635,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -41740,6 +42831,7 @@
 															"lpaCostsWithdrawal",
 															"lpaEnforcementNotice",
 															"lpaEnforcementNoticePlan",
+															"lpaEnforcementNoticeWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
@@ -41779,6 +42871,7 @@
 														"enum": [
 															"appeal-decision",
 															"appellant-case",
+															"cancellation",
 															"costs",
 															"evidence",
 															"final-comments",
@@ -41932,6 +43025,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -41971,6 +43065,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -42164,6 +43259,7 @@
 															"lpaCostsWithdrawal",
 															"lpaEnforcementNotice",
 															"lpaEnforcementNoticePlan",
+															"lpaEnforcementNoticeWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
@@ -42203,6 +43299,7 @@
 														"enum": [
 															"appeal-decision",
 															"appellant-case",
+															"cancellation",
 															"costs",
 															"evidence",
 															"final-comments",
@@ -42356,6 +43453,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -42395,6 +43493,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -42588,6 +43687,7 @@
 															"lpaCostsWithdrawal",
 															"lpaEnforcementNotice",
 															"lpaEnforcementNoticePlan",
+															"lpaEnforcementNoticeWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
@@ -42627,6 +43727,7 @@
 														"enum": [
 															"appeal-decision",
 															"appellant-case",
+															"cancellation",
 															"costs",
 															"evidence",
 															"final-comments",
@@ -42780,6 +43881,7 @@
 																"lpaCostsWithdrawal",
 																"lpaEnforcementNotice",
 																"lpaEnforcementNoticePlan",
+																"lpaEnforcementNoticeWithdrawal",
 																"lpaFinalComment",
 																"lpaProofOfEvidence",
 																"lpaStatement",
@@ -42819,6 +43921,7 @@
 															"enum": [
 																"appeal-decision",
 																"appellant-case",
+																"cancellation",
 																"costs",
 																"evidence",
 																"final-comments",
@@ -43013,6 +44116,7 @@
 														"lpaCostsWithdrawal",
 														"lpaEnforcementNotice",
 														"lpaEnforcementNoticePlan",
+														"lpaEnforcementNoticeWithdrawal",
 														"lpaFinalComment",
 														"lpaProofOfEvidence",
 														"lpaStatement",
@@ -43052,6 +44156,7 @@
 													"enum": [
 														"appeal-decision",
 														"appellant-case",
+														"cancellation",
 														"costs",
 														"evidence",
 														"final-comments",
@@ -43205,6 +44310,7 @@
 															"lpaCostsWithdrawal",
 															"lpaEnforcementNotice",
 															"lpaEnforcementNoticePlan",
+															"lpaEnforcementNoticeWithdrawal",
 															"lpaFinalComment",
 															"lpaProofOfEvidence",
 															"lpaStatement",
@@ -43244,6 +44350,7 @@
 														"enum": [
 															"appeal-decision",
 															"appellant-case",
+															"cancellation",
 															"costs",
 															"evidence",
 															"final-comments",

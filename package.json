@@ -34,7 +34,7 @@
 	},
 	"dependencies": {
 		"@badeball/cypress-cucumber-preprocessor": "23.2.0",
-		"@planning-inspectorate/data-model": "^2.26.0",
+		"@planning-inspectorate/data-model": "^2.29.0",
 		"cypress": "15.3.0",
 		"got": "^12.5.2",
 		"joi": "^17.7.0",
@@ -43,8 +43,8 @@
 		"turbo": "1.2.14"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "20.3.1",
-		"@commitlint/config-conventional": "20.3.1",
+		"@commitlint/cli": "20.4.2",
+		"@commitlint/config-conventional": "20.4.2",
 		"@types/escape-html": "^1.0.4",
 		"@types/prettier": "^3.0.0",
 		"@types/stream-json": "^1.7.8",

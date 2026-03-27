@@ -1,3 +1,4 @@
+import { ServiceUser } from '#server/openapi-types';
 import { Address, ContactAddress } from '@pins/appeals';
 import { Schema } from 'index';
 import { AppealGround, Ground } from '../../database/schema';
@@ -85,6 +86,7 @@ interface SingleAppealDetailsResponse {
 		crossTeam?: FolderInfo | null;
 		inspector?: FolderInfo | null;
 		mainParty?: FolderInfo | null;
+		enforcementNoticeWithdrawal?: FolderInfo | null;
 	};
 	documentationSummary: DocumentationSummary;
 	healthAndSafety: {
@@ -144,6 +146,9 @@ interface SingleAppealDetailsResponse {
 		appealOutcome?: EnforcementNoticeAppealOutcome;
 		appellantCase: EnforcementNoticeAppellantCase;
 	};
+	cancellation?: {
+		cancellationFolder?: FolderInfo | null;
+	};
 }
 
 interface UpdateAppealRequest {
@@ -157,12 +162,14 @@ interface UpdateAppealRequest {
 	agent?: number | null;
 	procedureTypeId?: number | null;
 	hearingStartTime?: string;
+	hearingEstimatedDays?: number;
 }
 
 interface SingleAppellantCaseResponse {
 	appealId: number;
 	appealReference: string;
 	appealSite: AppealSite;
+	appealType: string;
 	appellantCaseId: number;
 	applicant: {
 		firstName: string | null;
@@ -195,6 +202,8 @@ interface SingleAppellantCaseResponse {
 		descriptionOfAllegedBreach: string | null;
 		applicationDevelopmentAllOrPart: string | null;
 		appealDecisionDate: string | null;
+		enforcementNoticeInvalid: string | null;
+		groundAFeeDueDate: string | null;
 	};
 	isEnforcementChild?: boolean | null;
 	isEnforcementParent?: boolean | null;
@@ -323,6 +332,7 @@ interface UpdateAppellantCaseValidationOutcome {
 	otherLiveAppeals?: string;
 	enforcementInvalidReasons?: IncompleteInvalidReasons;
 	enforcementMissingDocuments?: IncompleteInvalidReasons;
+	enforcementGroundsMismatchFacts?: IncompleteInvalidReasons;
 	groundAFeeReceiptDueDate?: Date;
 }
 
@@ -350,6 +360,7 @@ interface UpdateAppellantCaseValidationOutcomeParams {
 		otherLiveAppeals?: string;
 		enforcementInvalidReasons?: IncompleteInvalidReasons;
 		enforcementMissingDocuments?: IncompleteInvalidReasons;
+		enforcementGroundsMismatchFacts?: IncompleteInvalidReasons;
 		feeReceiptDueDate?: Date;
 	};
 	validationOutcome: ValidationOutcome;
@@ -396,6 +407,7 @@ interface SingleLPAQuestionnaireResponse {
 		appealNotification?: FolderInfo | null;
 		historicEnglandConsultation?: FolderInfo | null;
 		relatedApplications: FolderInfo | null;
+		otherRelevantMatters: FolderInfo | null;
 		// Enforcement
 		enforcementList?: FolderInfo | null;
 		stopNotice?: FolderInfo | null;
@@ -467,6 +479,7 @@ interface SingleLPAQuestionnaireResponse {
 	floorSpaceCreatedByBreachInSquareMetres?: number | null;
 	appealUnderActSection?: string | null;
 	lpaConsiderAppealInvalid?: boolean;
+	lpaAppealInvalidReasons?: string | null;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -506,6 +519,7 @@ interface UpdateLPAQuestionnaireRequest {
 	didAppellantSubmitCompletePhotosAndPlans?: boolean;
 	appealUnderActSection?: string | null;
 	lpaConsiderAppealInvalid?: boolean;
+	lpaAppealInvalidReasons?: string | null;
 
 	// Enforcement
 	noticeRelatesToBuildingEngineeringMiningOther?: boolean | null;
@@ -555,6 +569,8 @@ interface LinkedAppeal {
 	isParentAppeal: boolean;
 	linkingDate: Date;
 	address: AppealSite;
+	appellant: ServiceUser;
+	agent: ServiceUser | null;
 	appealType?: string | null;
 	relationshipId: number;
 	externalSource: boolean;
@@ -607,8 +623,9 @@ interface HearingEstimate {
 
 interface Hearing {
 	hearingId: number;
-	hearingStartTime: string;
-	hearingEndTime?: string;
+	hearingStartTime: string | null;
+	hearingEndTime?: string | null;
+	estimatedDays?: number;
 	addressId?: number;
 	address: Schema.Address;
 }
@@ -1007,6 +1024,7 @@ export interface CreateSiteVisitData {
 	lpaReference: string;
 	siteAddress: string;
 	inspectorName?: string;
+	enforcementReference?: string;
 }
 
 export interface UpdateSiteVisitData {
@@ -1024,6 +1042,7 @@ export interface UpdateSiteVisitData {
 	siteAddress: string;
 	inspectorName?: string;
 	siteVisitChangeType: string;
+	enforcementReference?: string;
 }
 
 export interface RepresentationRejectionReason {
@@ -1073,8 +1092,9 @@ type UpdateDocumentAvCheckRequest = {
 
 type CreateHearing = {
 	appealId: number;
-	hearingStartTime: Date | string;
-	hearingEndTime: Date | string | undefined;
+	hearingStartTime: Date | string | null;
+	hearingEndTime: Date | string | undefined | null;
+	estimatedDays: string | undefined;
 	address: Omit<Schema.Address, 'id'> | undefined;
 };
 
@@ -1108,8 +1128,9 @@ type UpdateInquiry = {
 type UpdateHearing = {
 	appealId: number;
 	hearingId: number;
-	hearingStartTime: Date | string;
-	hearingEndTime: Date | string | undefined;
+	hearingStartTime: Date | string | null;
+	hearingEndTime: Date | string | undefined | null;
+	estimatedDays: number | undefined;
 	addressId?: number;
 	address?: Omit<Schema.Address, 'id'> | null;
 };
@@ -1122,10 +1143,11 @@ type CancelHearing = {
 type HearingResponse = {
 	appealId: number;
 	hearingId: number;
-	hearingStartTime: Date;
+	hearingStartTime: Date | null;
 	hearingEndTime: Date | null;
 	address: Schema.Address | null;
 	addressId: number | null;
+	estimatedDays: number | undefined | null;
 };
 
 type InquiryResponse = {

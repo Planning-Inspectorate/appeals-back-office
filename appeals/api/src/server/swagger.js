@@ -417,7 +417,13 @@ export const spec = {
 				}
 			},
 			stateList: [],
-			completedStateList: ['awaiting_event']
+			completedStateList: ['awaiting_event'],
+			cancellation: {
+				cancellationFolder: {
+					folderId: 2125,
+					documents: []
+				}
+			}
 		},
 		SingleAppellantCaseResponse: {
 			agriculturalHolding: {
@@ -580,6 +586,14 @@ export const spec = {
 			statementReviewDate: '2024-08-12'
 		},
 		StartCaseNotifyPreviewResponse: {
+			appellant: {
+				renderedHtml: 'Rendered HTML for appellant preview'
+			},
+			lpa: {
+				renderedHtml: 'Rendered HTML for LPA preview'
+			}
+		},
+		CancelEnforcementNoticeWithdrawalResponse: {
 			appellant: {
 				renderedHtml: 'Rendered HTML for appellant preview'
 			},
@@ -1510,6 +1524,11 @@ export const spec = {
 					description: 'Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
 					example: '2014-11-14T00:00:00+00:00'
 				},
+				estimatedDays: {
+					type: 'number',
+					description: 'Estimated number of days',
+					example: 5
+				},
 				addressId: {
 					type: 'number',
 					example: 1
@@ -2075,6 +2094,15 @@ export const spec = {
 				childAppealReference: {
 					type: 'string',
 					example: '6000118'
+				}
+			}
+		},
+		SimulateStartAppealRequest: {
+			type: 'object',
+			properties: {
+				procedureType: {
+					type: 'string',
+					example: 'hearing'
 				}
 			}
 		},

@@ -12,6 +12,18 @@ describe('isAppealTypeEnabled', () => {
 		expect(typeof feature).toBe('boolean');
 	});
 
+	it('Returns flag as a boolean for Enforcement (C)', () => {
+		const feature = isAppealTypeEnabled(APPEAL_CASE_TYPE.C);
+
+		expect(typeof feature).toBe('boolean');
+	});
+
+	it('Returns flag as a boolean for Enforcement Listed Building (F)', () => {
+		const feature = isAppealTypeEnabled(APPEAL_CASE_TYPE.F);
+
+		expect(typeof feature).toBe('boolean');
+	});
+
 	it('Returns false when no flag set in the .env file or in the config', () => {
 		const feature = isAppealTypeEnabled('featureFlagBOAS2SomeFeatrue');
 		expect(feature).toBe(false);

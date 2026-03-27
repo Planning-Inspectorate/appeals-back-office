@@ -1,3 +1,5 @@
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+
 export default {
 	id: 1,
 	reference: '60000001',
@@ -27,11 +29,15 @@ export default {
 		addressLine1: 'FOR TRAINERS ONLY',
 		addressLine2: '1 Grove Cottage',
 		postcode: 'NR35 2ND',
-		addressCounty: null,
+		addressCounty: 'London',
 		addressTown: 'Woodton',
-		addressCountry: null
+		addressCountry: 'UK'
 	},
-	procedureType: null,
+	procedureType: {
+		id: 3,
+		name: 'Written',
+		key: 'written'
+	},
 	parentAppeals: [],
 	childAppeals: [],
 	otherAppeals: [],
@@ -43,7 +49,6 @@ export default {
 		appealId: 1,
 		appellantCaseValidationOutcomeId: 1,
 		applicationDate: new Date('2024-10-16T14:08:50.409Z'),
-		applicationDecision: 'refused',
 		applicationDecisionDate: new Date('2024-10-27T15:08:50.409Z'),
 		caseSubmittedDate: new Date('2024-11-27T15:08:53.375Z'),
 		caseSubmissionDueDate: null,
@@ -73,7 +78,8 @@ export default {
 		appellantCaseValidationOutcome: {
 			id: 1,
 			name: 'Valid'
-		}
+		},
+		enforcementReference: 'Reference'
 	},
 	appellant: {
 		id: 1,
@@ -190,7 +196,7 @@ export default {
 	appealType: {
 		id: 13,
 		type: 'Enforcement listed building and conservation area appeal',
-		key: 'F',
+		key: APPEAL_CASE_TYPE.F,
 		processCode: null,
 		enabled: true
 	},

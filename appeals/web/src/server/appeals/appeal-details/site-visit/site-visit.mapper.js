@@ -1,15 +1,10 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import {
-	dateISOStringToDayMonthYearHourMinute,
-	dayMonthYearHourMinuteToISOString
-} from '#lib/dates.js';
-import { timeInput } from '#lib/mappers/components/page-components/time.js';
+import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
 import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
-import { dateInput, removeSummaryListActions } from '#lib/mappers/index.js';
+import { removeSummaryListActions } from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { padNumberWithZero } from '#lib/string-utilities.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { capitalize, upperCase } from 'lodash-es';
-import { siteVisitDateField } from './site-visits.constants.js';
 /**
  * @typedef {'unaccompanied'|'accompanied'|'accessRequired'} WebSiteVisitType
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -48,6 +43,24 @@ export function mapGetApiVisitTypeToWebVisitType(getApiVisitType) {
 }
 
 /**
+ *
+ * @param {ApiVisitType} visitType
+ * @returns {String}
+ */
+export function mapVisitTypeToReadable(visitType) {
+	switch (visitType) {
+		case 'unaccompanied':
+			return 'Unaccompanied';
+		case 'accessRequired':
+			return 'Access Required';
+		case 'accompanied':
+			return 'Accompanied';
+		default:
+			return '';
+	}
+}
+
+/**
  * @param {'schedule' | 'manage'} pageType
  * @param {Appeal} appealDetails
  * @param {string} currentRoute
@@ -55,17 +68,10 @@ export function mapGetApiVisitTypeToWebVisitType(getApiVisitType) {
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {WebSiteVisitType|null|undefined} visitType
- * @param {string|number|null|undefined} visitDateDay
- * @param {string|number|null|undefined} visitDateMonth
- * @param {string|number|null|undefined} visitDateYear
- * @param {string|number|null|undefined} visitStartTimeHour
- * @param {string|number|null|undefined} visitStartTimeMinute
- * @param {string|number|null|undefined} visitEndTimeHour
- * @param {string|number|null|undefined} visitEndTimeMinute
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {Promise<PageContent>}
  */
-export async function scheduleOrManageSiteVisitPage(
+export async function typeOfSiteVisitPage(
 	pageType,
 	appealDetails,
 	currentRoute,
@@ -73,13 +79,6 @@ export async function scheduleOrManageSiteVisitPage(
 	session,
 	request,
 	visitType,
-	visitDateDay,
-	visitDateMonth,
-	visitDateYear,
-	visitStartTimeHour,
-	visitStartTimeMinute,
-	visitEndTimeHour,
-	visitEndTimeMinute,
 	errors
 ) {
 	const mappedData = await initialiseAndMapAppealData(
@@ -90,31 +89,6 @@ export async function scheduleOrManageSiteVisitPage(
 		true
 	);
 	const titlePrefix = capitalize(pageType);
-
-	visitType ??= mapGetApiVisitTypeToWebVisitType(appealDetails.siteVisit?.visitType);
-
-	const { day, month, year } = dateISOStringToDayMonthYearHourMinute(
-		appealDetails.siteVisit?.visitDate
-	);
-	let { hour: startTimeHour, minute: startTimeMinute } = dateISOStringToDayMonthYearHourMinute(
-		appealDetails.siteVisit?.visitStartTime
-	);
-	let { hour: endTimeHour, minute: endTimeMinute } = dateISOStringToDayMonthYearHourMinute(
-		appealDetails.siteVisit?.visitEndTime
-	);
-
-	startTimeHour = startTimeHour !== undefined ? padNumberWithZero(startTimeHour) : undefined;
-	startTimeMinute = startTimeMinute !== undefined ? padNumberWithZero(startTimeMinute) : undefined;
-	endTimeHour = endTimeHour !== undefined ? padNumberWithZero(endTimeHour) : undefined;
-	endTimeMinute = endTimeMinute !== undefined ? padNumberWithZero(endTimeMinute) : undefined;
-
-	visitDateDay ??= appealDetails.siteVisit?.visitDate ? day : undefined;
-	visitDateMonth ??= appealDetails.siteVisit?.visitDate ? month : undefined;
-	visitDateYear ??= appealDetails.siteVisit?.visitDate ? year : undefined;
-	visitStartTimeHour ??= appealDetails.siteVisit?.visitStartTime ? startTimeHour : undefined;
-	visitStartTimeMinute ??= appealDetails.siteVisit?.visitStartTime ? startTimeMinute : undefined;
-	visitEndTimeHour ??= appealDetails.siteVisit?.visitEndTime ? endTimeHour : undefined;
-	visitEndTimeMinute ??= appealDetails.siteVisit?.visitEndTime ? endTimeMinute : undefined;
 
 	/**
 	 * @type {(SummaryListRowProperties)[]}
@@ -156,7 +130,7 @@ export async function scheduleOrManageSiteVisitPage(
 					classes: 'govuk-fieldset__legend--m'
 				}
 			},
-			value: visitType,
+			value: mapGetApiVisitTypeToWebVisitType(visitType),
 			items: [
 				{
 					value: 'unaccompanied',
@@ -175,79 +149,21 @@ export async function scheduleOrManageSiteVisitPage(
 		}
 	};
 
-	// /** @type {PageComponent} */
-	const selectDateComponent = dateInput({
-		name: siteVisitDateField,
-		id: siteVisitDateField,
-		namePrefix: siteVisitDateField,
-		value: {
-			day: visitDateDay,
-			month: visitDateMonth,
-			year: visitDateYear
-		},
-		legendText: 'Select date',
-		hint: 'For example, 27 3 2023',
-		errors: errors
-	});
-
-	/** @type {PageComponent} */
-	const selectTimeHtmlComponent = {
-		type: 'html',
-		parameters: {
-			html: '<h2>Select time</h2><p class="govuk-hint">Optional for unaccompanied visits</p><p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>'
-		}
-	};
-
-	const selectStartTimeComponent = timeInput({
-		id: 'visit-start-time',
-		value: { hour: visitStartTimeHour, minute: visitStartTimeMinute },
-		legendText: 'Start time',
-		legendClasses: 'govuk-fieldset__legend--s',
-		fieldsetClasses: 'govuk-!-margin-bottom-4',
-		showLabels: false,
-		errorMessage: errors?.['visit-start-time-hour']?.msg
-	});
-
-	const selectEndTimeComponent = timeInput({
-		id: 'visit-end-time',
-		value: { hour: visitEndTimeHour, minute: visitEndTimeMinute },
-		legendText: 'End time',
-		legendClasses: 'govuk-fieldset__legend--s',
-		fieldsetClasses: 'govuk-!-margin-bottom-6',
-		showLabels: false,
-		errorMessage: errors?.['visit-end-time-hour']?.msg
-	});
-
-	/** @type {PageComponent} */
-	const insetTextComponent = {
-		type: 'inset-text',
-		parameters: {
-			text: 'Confirming will inform the relevant parties of the site visit '
-		}
-	};
-
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `${titlePrefix} site visit - ${shortAppealReference}`,
 		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
-		preHeading: `Appeal ${shortAppealReference}`,
+		preHeading: `Appeal ${shortAppealReference} - set up site visit`,
 		heading: `${titlePrefix} site visit`,
-		submitButtonText: 'Confirm',
-		prePageComponents: [siteInformationComponent],
-		pageComponents: [
-			selectVisitTypeComponent,
-			selectDateComponent,
-			selectTimeHtmlComponent,
-			selectStartTimeComponent,
-			selectEndTimeComponent,
-			insetTextComponent
-		]
+		submitButtonText: 'Continue',
+		pageComponents: [selectVisitTypeComponent],
+		postPageComponents: [siteInformationComponent]
 	};
 
-	if (pageContent.prePageComponents) {
-		preRenderPageComponents(pageContent.prePageComponents);
+	if (pageContent.postPageComponents) {
+		preRenderPageComponents(pageContent.postPageComponents);
 	}
 
 	return pageContent;
@@ -397,14 +313,15 @@ export function scheduleOrManageSiteVisitConfirmationPage(pageType, appealDetail
 }
 
 /**
+ * @param {import('@pins/express').Request} request
  * @param {string} appealId
  * @param {string} appealReference
  * @returns {PageContent}
  */
-export function siteVisitBookedPage(appealId, appealReference) {
+export function siteVisitBookedPage(request, appealId, appealReference) {
 	return {
 		title: 'Site visit is booked already',
-		backLinkUrl: `/appeals-service/appeal-details/${appealId}`,
+		backLinkUrl: addBackLinkQueryToUrl(request, `/appeals-service/appeal-details/${appealId}`),
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
 		heading: 'Site visit is booked already',
 		pageComponents: [
@@ -418,7 +335,10 @@ export function siteVisitBookedPage(appealId, appealReference) {
 				type: 'button',
 				parameters: {
 					text: 'Manage the site visit',
-					href: `/appeals-service/appeal-details/${appealId}/site-visit/manage-visit`,
+					href: addBackLinkQueryToUrl(
+						request,
+						`/appeals-service/appeal-details/${appealId}/site-visit/schedule/schedule-visit-date`
+					),
 					classes: 'govuk-!-margin-top-3'
 				}
 			}
@@ -630,44 +550,34 @@ export const cancelSiteVisitPage = (appealDetails, emailTemplate) => {
 			}
 		],
 		pageComponents: [
-			...(appealDetails.siteVisit?.visitType !== 'Unaccompanied'
-				? [
-						{
-							type: 'html',
-							parameters: {
-								html: `<p class="govuk-body">We will send an email to the appellant
- ${appealDetails.siteVisit?.visitType === 'Accompanied' ? `and the LPA ` : ''}
-to tell them that we have cancelled the site visit.</p>`
-							}
-						},
-						{
-							type: 'details',
-							wrapperHtml: {
-								opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-								closing: '</div></div>'
-							},
-							parameters: {
-								summaryText: `Preview email to appellant`,
-								html: emailTemplate
-							}
-						},
-						...(appealDetails.siteVisit?.visitType === 'Accompanied'
-							? [
-									{
-										type: 'details',
-										wrapperHtml: {
-											opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-											closing: '</div></div>'
-										},
-										parameters: {
-											summaryText: `Preview email to LPA`,
-											html: emailTemplate
-										}
-									}
-								]
-							: [])
-					]
-				: [])
+			{
+				type: 'html',
+				parameters: {
+					html: `<p class="govuk-body">We will send an email to the appellant and LPA to tell them that we have cancelled the site visit.</p>`
+				}
+			},
+			{
+				type: 'details',
+				wrapperHtml: {
+					opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+					closing: '</div></div>'
+				},
+				parameters: {
+					summaryText: `Preview email to appellant`,
+					html: emailTemplate
+				}
+			},
+			{
+				type: 'details',
+				wrapperHtml: {
+					opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+					closing: '</div></div>'
+				},
+				parameters: {
+					summaryText: `Preview email to LPA`,
+					html: emailTemplate
+				}
+			}
 		]
 	};
 };

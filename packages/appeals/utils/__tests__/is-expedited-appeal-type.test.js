@@ -1,5 +1,5 @@
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
-import isExpeditedAppealType from '../is-expedited-appeal-type';
+import { isExpeditedAppealType } from '../appeal-type-checks';
 
 describe('isExpeditedAppealType', () => {
 	it('returns true for HAS appealType', () => {

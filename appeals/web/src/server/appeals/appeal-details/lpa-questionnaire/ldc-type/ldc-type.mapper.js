@@ -3,7 +3,7 @@
  * @typedef {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} LPAQuestionnaire
  */
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { toSentenceCase } from '#lib/string-utilities.js';
+import { formatAppealUnderActSection } from '#lib/mappers/utils/map-application-made-under-act-section.js';
 import { APPEAL_APPLICATION_MADE_UNDER_ACT_SECTION } from '@planning-inspectorate/data-model';
 
 /**
@@ -43,7 +43,7 @@ export const changeAppealUnderActSectionPage = (
 					items: Object.values(APPEAL_APPLICATION_MADE_UNDER_ACT_SECTION).map(
 						(appealUnderActSectionOption) => ({
 							value: appealUnderActSectionOption,
-							text: toSentenceCase(appealUnderActSectionOption),
+							text: formatAppealUnderActSection(appealUnderActSectionOption),
 							checked: appealUnderActSectionOption === appealUnderActSection
 						})
 					)

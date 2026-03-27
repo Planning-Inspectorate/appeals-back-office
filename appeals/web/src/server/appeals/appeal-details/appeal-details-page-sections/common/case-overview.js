@@ -1,3 +1,4 @@
+import { getAvailableProcedureTypesForAppealType } from '#appeals/appeal-details/change-procedure-type/change-procedure-type.utils.js';
 import featureFlags from '#common/feature-flags.js';
 import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { removeSummaryListActions } from '#lib/mappers/index.js';
@@ -20,11 +21,13 @@ export const getCaseOverview = (mappedData, appealDetails) => ({
 			appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ||
 			appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
 				? mappedData.appeal?.enforcementReference?.display.summaryListItem
-				: removeSummaryListActions(mappedData.appeal?.lpaReference?.display.summaryListItem),
+				: mappedData.appeal?.lpaReference?.display.summaryListItem,
 			displayHorizonReference(appealDetails)
 				? mappedData.appeal?.horizonReference?.display.summaryListItem
 				: undefined,
 			mappedData.appeal.appealType.display.summaryListItem,
+			appealDetails.appealType === APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE &&
+				mappedData.appeal?.applicationMadeUnderActSection?.display.summaryListItem,
 
 			displayProcedureChangeLink(appealDetails)
 				? mappedData.appeal?.caseProcedure?.display.summaryListItem
@@ -68,9 +71,19 @@ const displayProcedureChangeLink = (appealDetails) => {
 				dateISOStringToDayMonthYearHourMinute(appealDetails.appealTimetable.ipCommentsDueDate)
 			)
 		: false;
+	const availableProcedureTypes = getAvailableProcedureTypesForAppealType(appealDetails.appealType);
+	const hasAlternativeProcedureType = availableProcedureTypes.some(
+		(procedureType) => procedureType !== appealDetails.procedureType?.toLowerCase()
+	);
 
 	if (
-		![APPEAL_TYPE.S78, APPEAL_TYPE.ENFORCEMENT_NOTICE].includes(appealDetails.appealType) ||
+		![
+			APPEAL_TYPE.S78,
+			APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+			APPEAL_TYPE.ENFORCEMENT_NOTICE,
+			APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
+		].includes(appealDetails.appealType) ||
+		!hasAlternativeProcedureType ||
 		lpaStatementrepresentationStatus === APPEAL_REPRESENTATION_STATUS.PUBLISHED ||
 		ipCommentsrepresentationStatus === APPEAL_REPRESENTATION_STATUS.PUBLISHED ||
 		lpaStatementDueDateElapsed ||

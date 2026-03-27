@@ -53,7 +53,7 @@ Due by {{final_comments_deadline}}.
 
 # What happens next
 
-Email a copy of your appeal statement to {{team_email_address}} by {{lpa_statement_deadline}}. You will be able to view this in your appeal details.
+You need to [submit your statement]({{front_office_url}}) by {{lpa_statement_deadline}}.
 
 {% if procedure_type == 'a hearing' -%}
 We will send you another email:

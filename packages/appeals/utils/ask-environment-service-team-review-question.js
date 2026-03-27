@@ -1,6 +1,6 @@
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { appealTypeToAppealCaseTypeMapper } from './appeal-type-case.mapper.js';
-import isExpeditedAppealType from './is-expedited-appeal-type.js';
+import { isExpeditedAppealType } from './appeal-type-checks.js';
 
 /**
  * @param {string} appealType

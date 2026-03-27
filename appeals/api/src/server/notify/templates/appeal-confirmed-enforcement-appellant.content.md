@@ -1,16 +1,25 @@
+{% from 'macros/create-grounds-list.md' import create_grounds_list %}
+
 We have confirmed your appeal and you have submitted all of the information we need.
 
-The appeal will continue on the following grounds:
-
-{% if appeal_grounds.length -%}
-{% if appeal_grounds.length > 1 -%}
-{%- for ground in appeal_grounds -%}
-- Ground ({{ ground }})
-{% endfor %}
+{% if other_appeals_grounds_group.length -%}
+{{ appeal_reference_number }} will continue on the following grounds:
 {%- else -%}
-Ground ({{ appeal_grounds[0] }})
-{% endif %}
+The appeal will continue on the following grounds:
+{%- endif %}
+
+{{ create_grounds_list(appeal_grounds) }}
+{% if other_appeals_grounds_group.length -%}
+
+{% for appeal_with_grounds in other_appeals_grounds_group -%}
+{% if appeal_with_grounds.grounds.length -%}
+{{ appeal_with_grounds.reference }} will continue on the following grounds:
+
+{{ create_grounds_list(appeal_with_grounds.grounds) }}
 {% endif -%}
+{% endfor -%}
+{% endif -%}
+
 # Appeal details
 
 ^Appeal reference number: {{appeal_reference_number}}

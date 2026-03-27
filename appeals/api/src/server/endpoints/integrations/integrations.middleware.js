@@ -13,7 +13,7 @@ import {
 	ERROR_INVALID_REP_DATA,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import isExpeditedAppealType from '@pins/appeals/utils/is-expedited-appeal-type.js';
+import { isExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@planning-inspectorate/data-model';
 import { schemas, validateFromSchema } from './integrations.validators.js';
 
@@ -140,7 +140,9 @@ export const validateRepresentation = async (req, res, next) => {
 		});
 	}
 
-	const useLeadAppealIfLinked = isLinkedAppealsActive();
+	// Use lead appeal if linked and the representation type is not an ip comment
+	const useLeadAppealIfLinked =
+		isLinkedAppealsActive() && body?.representationType !== APPEAL_REPRESENTATION_TYPE.COMMENT;
 	const referenceData = await loadReferenceData(body?.caseReference, useLeadAppealIfLinked);
 	if (!referenceData?.appeal) {
 		pino.error(

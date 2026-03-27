@@ -19,9 +19,10 @@ import { postUpdateLinkedAppealsRequest } from './linked-appeals.service.js';
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderManageLinkedAppeals = async (request, response) => {
-	const { errors } = request;
+	const { errors, session } = request;
 	const appealData = request.currentAppeal;
-	const mappedPageContent = manageLinkedAppealsPage(appealData);
+
+	const mappedPageContent = manageLinkedAppealsPage(appealData, session);
 
 	return response.status(200).render('patterns/display-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -45,12 +46,6 @@ export const postUnlinkAppeal = async (request, response) => {
 		appealId: currentAppeal.appealId,
 		text: 'Appeal unlinked'
 	});
-
-	if (currentAppeal.linkedAppeals.length > 1) {
-		return response.redirect(
-			`/appeals-service/appeal-details/${currentAppeal.appealId}/linked-appeals/manage`
-		);
-	}
 
 	return response.redirect(`/appeals-service/appeal-details/${currentAppeal.appealId}`);
 };
@@ -77,7 +72,7 @@ export const renderUnlinkAppeal = (request, response) => {
 			) => linkedAppeal.appealId === Number(appealId)
 		)?.appealReference || '';
 
-	const mappedPageContent = unlinkAppealPage(appealData, childRef, appealId);
+	const mappedPageContent = unlinkAppealPage(appealData, childRef);
 
 	return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -138,24 +133,32 @@ export const renderChangeLeadAppeal = (operation) => (request, response) => {
 export const postConfirmChangeLeadAppeal = (operation) => async (request, response) => {
 	const { currentAppeal, session } = request;
 
+	const { leadAppeal } = session;
+
 	await postUpdateLinkedAppealsRequest(
 		request.apiClient,
 		currentAppeal.appealId,
-		appealShortReference(session?.leadAppeal?.appealReference) ?? '',
+		appealShortReference(leadAppeal?.appealReference) ?? '',
 		operation
 	);
 
+	if (operation === LINK_APPEALS_UNLINK_OPERATION) {
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'appealUnlinked',
+			appealId: currentAppeal.appealId,
+			text: 'Appeal unlinked'
+		});
+	}
+
 	addNotificationBannerToSession({
 		session: request.session,
-		bannerDefinitionKey:
-			operation === LINK_APPEALS_UNLINK_OPERATION ? 'appealUnlinked' : 'leadAppealChanged',
+		bannerDefinitionKey: 'leadAppealChanged',
 		appealId: currentAppeal.appealId,
-		text: operation === LINK_APPEALS_UNLINK_OPERATION ? 'Appeal unlinked' : 'Lead appeal changed'
+		text: 'Lead appeal changed'
 	});
 
-	return response.redirect(
-		`/appeals-service/appeal-details/${session.leadAppeal.appealId}/linked-appeals/manage`
-	);
+	return response.redirect(`/appeals-service/appeal-details/${currentAppeal.appealId}`);
 };
 
 /**

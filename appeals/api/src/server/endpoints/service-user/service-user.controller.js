@@ -1,18 +1,17 @@
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import appealRepository from '#repositories/appeal.repository.js';
-import serviceUserRepository from '#repositories/service-user.repository.js';
+import { isParentAppeal } from '#utils/is-linked-appeal.js';
+import { getChildAppeals } from '#utils/link-appeals.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { capitalizeFirstLetter } from '#utils/string-utils.js';
 import {
 	AUDIT_TRAIL_SERVICE_USER_ADDRESS_UPDATED,
 	AUDIT_TRAIL_SERVICE_USER_REMOVED,
-	AUDIT_TRAIL_SERVICE_USER_UPDATED,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
 import { EventType } from '@pins/event-client';
 import { SERVICE_USER_TYPE } from '@planning-inspectorate/data-model';
-import { formatServiceUser, upsertServiceUserAddress } from './service-user.service.js';
+import { updateServiceUser, upsertServiceUserAddress } from './service-user.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -25,8 +24,7 @@ import { formatServiceUser, upsertServiceUserAddress } from './service-user.serv
  */
 export const updateServiceUserById = async (req, res) => {
 	const { serviceUser } = req.body;
-	const { agent, reference: appealReference } = req.appeal;
-	const { appealId } = req.params;
+	const { agent } = req.appeal;
 	const {
 		serviceUserId,
 		userType,
@@ -52,8 +50,13 @@ export const updateServiceUserById = async (req, res) => {
 		...(addExtraData && { email, phoneNumber })
 	};
 
-	const dbSavedResult = await serviceUserRepository.updateServiceUserById(
+	const azureAdUserId = req.get('azureAdUserId');
+
+	const dbSavedResult = await updateServiceUser(
+		azureAdUserId,
 		parseInt(serviceUserId),
+		userType,
+		req.appeal,
 		dataToUpdate
 	);
 
@@ -61,21 +64,26 @@ export const updateServiceUserById = async (req, res) => {
 		return res.status(404).send({ errors: { serviceUserId: ERROR_NOT_FOUND } });
 	}
 
-	await createAuditTrail({
-		appealId: parseInt(appealId),
-		azureAdUserId: req.get('azureAdUserId'),
-		details: stringTokenReplacement(AUDIT_TRAIL_SERVICE_USER_UPDATED, [
-			capitalizeFirstLetter(userType),
-			formatServiceUser(dbSavedResult)
-		])
-	});
+	// Make sure child appeal agents are kept in sync with the lead appeal
+	if (isParentAppeal(req.appeal)) {
+		const childAppeals = getChildAppeals(req.appeal);
 
-	await broadcasters.broadcastServiceUser(
-		dbSavedResult.id,
-		EventType.Update,
-		userType,
-		appealReference
-	);
+		if (!isUpdatingAppellant || !isAgentPresent) {
+			await Promise.allSettled(
+				childAppeals.map(async (childAppeal) => {
+					if (childAppeal.agent) {
+						await updateServiceUser(
+							azureAdUserId,
+							childAppeal?.agent?.id,
+							userType,
+							childAppeal,
+							dataToUpdate
+						);
+					}
+				})
+			);
+		}
+	}
 
 	return res.send({
 		serviceUserId

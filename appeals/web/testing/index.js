@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { createSessionMockMiddleware } from '@pins/express';
 import express from 'express';
 import nock from 'nock';
@@ -52,6 +53,7 @@ export const createTestEnvironment = ({
 		},
 		teardown: () => {
 			dateMock?.restore();
+			jest.useRealTimers();
 			nock.cleanAll();
 			sessionId += 1;
 		}

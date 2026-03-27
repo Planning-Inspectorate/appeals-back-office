@@ -32,13 +32,14 @@ import {
 	documentFileVersionsInfoVirusFound,
 	documentFolderInfo,
 	documentRedactionStatuses,
+	enforcementAppealAppellantCaseDataIncompleteOutcome,
 	fileUploadInfo,
 	text300Characters,
 	text301Characters
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
-import { parseHtml } from '@pins/platform';
+import { parseHtml, parseHtmlSelectAll } from '@pins/platform';
 import {
 	APPEAL_CASE_STAGE,
 	APPEAL_CASE_STATUS,
@@ -1558,6 +1559,116 @@ describe('appellant-case', () => {
 				);
 			});
 
+			it('should render an "Appeal is incomplete" banner where the enforcement notice appeal is incomplete with "Missing information"', async () => {
+				nock.cleanAll();
+				nock('http://test/')
+					.get('/appeals/5623?include=all')
+					.reply(200, appealDataEnforcementNotice);
+				nock('http://test/')
+					.get('/appeals/5623/appellant-cases/0')
+					.reply(200, enforcementAppealAppellantCaseDataIncompleteOutcome);
+
+				const response = await request.get(`${baseUrl}/5623${appellantCasePagePath}`);
+
+				const notificationBannerHTML = parseHtml(response.text, {
+					rootElement: '.govuk-notification-banner'
+				}).innerHTML;
+
+				expect(notificationBannerHTML).toMatchSnapshot();
+
+				const unprettifiedNotificationBannerHTML = parseHtml(response.text, {
+					rootElement: '.govuk-notification-banner',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedNotificationBannerHTML).toContain('Appeal is incomplete</h3>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Due date</dt>');
+				expect(unprettifiedNotificationBannerHTML).toContain('2 October 2024</dd>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Incomplete reasons</dt>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Enforcement notice invalid</dd>');
+			});
+
+			it('should render an "Appeal is incomplete" banner where the enforcement notice appeal is incomplete with "Ground (a) fee receipt due"', async () => {
+				nock.cleanAll();
+				nock('http://test/')
+					.get('/appeals/5623?include=all')
+					.reply(200, {
+						...appealDataEnforcementNotice,
+						documentationSummary: {
+							appellantCase: {
+								dueDate: null
+							}
+						}
+					});
+				nock('http://test/')
+					.get('/appeals/5623/appellant-cases/0')
+					.reply(200, {
+						...enforcementAppealAppellantCaseDataIncompleteOutcome,
+						enforcementNotice: {
+							enforcementNoticeInvalid: 'no',
+							groundAFeeDueDate: '2024-01-02'
+						}
+					});
+
+				const response = await request.get(`${baseUrl}/5623${appellantCasePagePath}`);
+
+				const notificationBannerHTML = parseHtml(response.text, {
+					rootElement: '.govuk-notification-banner'
+				}).innerHTML;
+
+				expect(notificationBannerHTML).toMatchSnapshot();
+
+				const unprettifiedNotificationBannerHTML = parseHtml(response.text, {
+					rootElement: '.govuk-notification-banner',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedNotificationBannerHTML).toContain('Appeal is incomplete</h3>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Due date</dt>');
+				expect(unprettifiedNotificationBannerHTML).toContain('2 January 2024</dd>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Incomplete reasons</dt>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Ground (a) fee receipt due</dd>');
+			});
+
+			it('should render both "Appeal is incomplete" banners where the enforcement notice appeal is incomplete with "Missing information" and "Ground (a) fee receipt due"', async () => {
+				nock.cleanAll();
+				nock('http://test/')
+					.get('/appeals/5623?include=all')
+					.reply(200, appealDataEnforcementNotice);
+				nock('http://test/')
+					.get('/appeals/5623/appellant-cases/0')
+					.reply(200, {
+						...enforcementAppealAppellantCaseDataIncompleteOutcome,
+						enforcementNotice: {
+							enforcementNoticeInvalid: 'no',
+							groundAFeeDueDate: '2024-01-02'
+						}
+					});
+
+				const response = await request.get(`${baseUrl}/5623${appellantCasePagePath}`);
+				const notificationBannerHTML = parseHtmlSelectAll(response.text, {
+					rootElement: '.govuk-notification-banner'
+				}).innerHTML;
+
+				expect(notificationBannerHTML).toMatchSnapshot();
+
+				const unprettifiedNotificationBannerHTML = parseHtmlSelectAll(response.text, {
+					rootElement: '.govuk-notification-banner',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedNotificationBannerHTML).toContain('Appeal is incomplete</h3>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Due date</dt>');
+				expect(unprettifiedNotificationBannerHTML).toContain('2 October 2024</dd>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Incomplete reasons</dt>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Missing information</dd>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Appeal is incomplete</h3>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Due date</dt>');
+				expect(unprettifiedNotificationBannerHTML).toContain('2 January 2024</dd>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Incomplete reasons</dt>');
+				expect(unprettifiedNotificationBannerHTML).toContain('Ground (a) fee receipt due</dd>');
+			});
+
 			describe('Document added success banners', () => {
 				const appealId = 2;
 				const folderId = 1;
@@ -2682,6 +2793,8 @@ describe('appellant-case', () => {
 
 	describe('GET /appellant-case/incomplete/date', () => {
 		beforeEach(() => {
+			jest.spyOn(Date, 'now').mockReturnValue(1735732800000); // set date for Hint text
+
 			nock('http://test/')
 				.get(`/appeals/1?include=all`)
 				.reply(200, {
@@ -2691,6 +2804,7 @@ describe('appellant-case', () => {
 		});
 
 		afterEach(() => {
+			jest.restoreAllMocks();
 			nock.cleanAll();
 		});
 
@@ -2827,6 +2941,8 @@ describe('appellant-case', () => {
 
 	describe('POST /appellant-case/incomplete/date', () => {
 		beforeEach(async () => {
+			jest.spyOn(Date, 'now').mockReturnValue(1735732800000); // set date for Hint text
+
 			nock('http://test/')
 				.get(`/appeals/1`)
 				.reply(200, {
@@ -2839,6 +2955,7 @@ describe('appellant-case', () => {
 		});
 
 		afterEach(() => {
+			jest.restoreAllMocks();
 			nock.cleanAll();
 		});
 
@@ -2974,7 +3091,7 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('class="govuk-error-summary"');
 			expect(element.innerHTML).toContain('There is a problem</h2>');
-			expect(element.innerHTML).toContain('Appeal due date day must be between 1 and 31</a>');
+			expect(element.innerHTML).toContain('The appeal due date day must be between 1 and 31</a>');
 
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
@@ -2997,7 +3114,7 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('class="govuk-error-summary"');
 			expect(element.innerHTML).toContain('There is a problem</h2>');
-			expect(element.innerHTML).toContain('Appeal due date day must be between 1 and 31</a>');
+			expect(element.innerHTML).toContain('The appeal due date day must be between 1 and 31</a>');
 
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
@@ -3024,7 +3141,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Appeal due date day must be a number</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'The appeal due date day must be a number</a>'
+			);
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid month was provided', async () => {
@@ -3059,7 +3178,7 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('class="govuk-error-summary"');
 			expect(element.innerHTML).toContain('There is a problem</h2>');
-			expect(element.innerHTML).toContain('Appeal due date month must be between 1 and 12</a>');
+			expect(element.innerHTML).toContain('The appeal due date month must be between 1 and 12</a>');
 
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
@@ -3082,7 +3201,7 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('class="govuk-error-summary"');
 			expect(element.innerHTML).toContain('There is a problem</h2>');
-			expect(element.innerHTML).toContain('Appeal due date month must be between 1 and 12</a>');
+			expect(element.innerHTML).toContain('The appeal due date month must be between 1 and 12</a>');
 
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
@@ -3109,7 +3228,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Appeal due date must be a real date</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('The appeal due date must be a real date</a>');
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid year was provided', async () => {
@@ -3144,7 +3263,7 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('class="govuk-error-summary"');
 			expect(element.innerHTML).toContain('There is a problem</h2>');
-			expect(element.innerHTML).toContain('Appeal due date year must be 4 digits</a>');
+			expect(element.innerHTML).toContain('The appeal due date year must be 4 digits</a>');
 
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
@@ -3167,14 +3286,16 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('class="govuk-error-summary"');
 			expect(element.innerHTML).toContain('There is a problem</h2>');
-			expect(element.innerHTML).toContain('Appeal due date year must be a number</a>');
+			expect(element.innerHTML).toContain('The appeal due date year must be a number</a>');
 
 			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Appeal due date year must be a number</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'The appeal due date year must be a number</a>'
+			);
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid date was provided', async () => {
@@ -3213,7 +3334,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Appeal due date must be a real date</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('The appeal due date must be a real date</a>');
 		});
 
 		it('should redirect to the check and confirm page if a valid date was provided', async () => {

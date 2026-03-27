@@ -19,6 +19,8 @@ import session from './config/session.js';
 
 // Create a new Express app.
 const app = express();
+const REQUEST_BODY_LIMIT = '10mb';
+const URL_ENCODED_PARAMETER_LIMIT = 50000;
 
 app.use(installRequestLocalsMiddleware());
 
@@ -44,8 +46,14 @@ app.use((request, response, next) => {
 });
 
 // Parse incoming request bodies in a middleware before your handlers, available under the req.body property.
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(
+	bodyParser.urlencoded({
+		extended: true,
+		limit: REQUEST_BODY_LIMIT,
+		parameterLimit: URL_ENCODED_PARAMETER_LIMIT
+	})
+);
+app.use(bodyParser.json({ limit: REQUEST_BODY_LIMIT }));
 
 // Parse Cookie header and populate req.cookies with an object keyed by the cookie names.
 app.use(cookieParser());
@@ -104,6 +112,12 @@ app.set('view engine', 'njk');
 
 // Serve static files (fonts, images, generated CSS and JS, etc)
 app.use(serveStatic('src/server/static', { maxAge: config.cacheControl.maxAge }));
+
+// Make current url global for all nunjucks templates
+app.use((request, response, next) => {
+	response.locals.currentUrl = request.originalUrl;
+	next();
+});
 
 // Mount all routes on / path.
 // All the other subpaths will be defined in the `routes.js` file.

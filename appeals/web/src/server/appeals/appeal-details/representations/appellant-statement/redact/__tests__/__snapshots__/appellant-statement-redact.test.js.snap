@@ -237,7 +237,7 @@ exports[`redact GET /confirm should render the CYA redaction page with expected 
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you need to update the allocation level and specialisms?</dt>
                     <dd                     class="govuk-summary-list__value">No</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-statement/valid/allocation-check">Change<span class="govuk-visually-hidden"> allocation level and specialisms</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-statement/redact/allocation-check">Change<span class="govuk-visually-hidden"> allocation level and specialisms</span></a>
                         </dd>
                 </div>
             </dl>

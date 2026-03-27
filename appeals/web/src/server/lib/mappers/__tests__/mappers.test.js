@@ -499,6 +499,11 @@ describe('URL mappers', () => {
 			expect(url).toBe('/appeals-service/appeal-details/1/');
 		});
 
+		it('should return the same URL when URL contains "/appeals-service/appeal-details/:appealId"', () => {
+			const url = constructUrl('/appeals-service/appeal-details/1/other-page', appealId);
+			expect(url).toBe('/appeals-service/appeal-details/1/other-page');
+		});
+
 		it('should return the "share" page URL when given "/share" along with appeal ID as input', () => {
 			const url = constructUrl('/share', appealId);
 			expect(url).toBe('/appeals-service/appeal-details/1/share');

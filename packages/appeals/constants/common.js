@@ -16,10 +16,10 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	LINKED_APPEALS_UNLINK: 'featureFlagLinkedAppealsUnlink',
 	CHANGE_PROCEDURE_TYPE: 'featureFlagChangeProcedureType',
 	HEARING_POST_MVP: 'featureFlagHearingPostMvp',
-	AUTO_ASSIGN_TEAM: 'featureFlagAutoAssignTeam',
 	SEARCH_CASE_OFFICER: 'featureFlagSearchCaseOfficer',
 	ENFORCEMENT_NOTICE: 'featureFlagEnforcementNotice',
 	ENFORCEMENT_LINKED: 'featureFlagEnforcementLinked',
+	ENFORCEMENT_LEAD_CAN_START: 'featureFlagEnforcementLeadCanStart',
 	ENFORCEMENT_CANCEL: 'featureFlagEnforcementCancel',
 	INVALID_DECISION_LETTER: 'featureFlagInvalidDecisionLetter',
 	RULE_6_PARTIES_MVP: 'featureFlagRule6Mvp',
@@ -36,7 +36,10 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	LDC_HEARING: 'featureFlagLdcHearing',
 	LDC_INQUIRY: 'featureFlagLdcInquiry',
 	ELB_HEARING: 'featureFlagElbHearing',
-	ELB_INQUIRY: 'featureFlagElbInquiry'
+	ELB_INQUIRY: 'featureFlagElbInquiry',
+	ENFORCEMENT_HEARING_LINKED: 'featureFlagEnforcementHearingLinked',
+	ENFORCEMENT_INQUIRY_LINKED: 'featureFlagEnforcementInquiryLinked',
+	ENFORCEMENT_CHANGE_PROCEDURE_LINKED: 'featureFlagEnforcementChangeProcedureLinked'
 });
 
 export const APPEAL_TYPE = Object.freeze({
@@ -100,6 +103,18 @@ export const APPEAL_REPRESENTATION_TYPE = Object.freeze({
 	RULE_6_PARTY_PROOFS_EVIDENCE: 'rule_6_party_proofs_evidence'
 });
 
+export const APPEAL_REPRESENTATION_TYPES_PATHS = Object.freeze({
+	LPA_STATEMENT: 'lpa-statement',
+	APPELLANT_STATEMENT: 'appellant-statement',
+	RULE_6_PARTY_STATEMENT: 'rule-6-party-statement',
+	COMMENT: 'comment',
+	LPA_FINAL_COMMENTS: 'lpa-final-comments',
+	APPELLANT_FINAL_COMMENTS: 'appellant-final-comments',
+	LPA_PROOFS_EVIDENCE: 'lpa-proofs-evidence',
+	APPELLANT_PROOFS_EVIDENCE: 'appellant-proofs-evidence',
+	RULE_6_PARTY_PROOFS_EVIDENCE: 'rule-6-party-proofs-evidence'
+});
+
 export const APPEAL_PROOF_OF_EVIDENCE_STATUS = Object.freeze({
 	AWAITING: 'awaiting',
 	RECEIVED: 'received',
@@ -159,7 +174,10 @@ export const FEEDBACK_FORM_LINKS = Object.freeze({
 	ENFORCEMENT_NOTICE:
 		'https://forms.cloud.microsoft/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQVRSQlBKOUJVR05TOE1URElSSUVZUjVDMS4u&route=shorturl',
 
-	LAWFUL_DEVELOPMENT_CERTIFICATE: 'https://forms.cloud.microsoft/e/J5EwyG3e0e'
+	LAWFUL_DEVELOPMENT_CERTIFICATE: 'https://forms.cloud.microsoft/e/J5EwyG3e0e',
+
+	ENFORCEMENT_LISTED_BUILDING:
+		'https://forms.cloud.microsoft/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UNDJFTjBCRTlFV1pYVjVWRkhKQVBYTVRKUC4u&route=shorturl'
 });
 
 export const REPRESENTATION_ADDED_AS_DOCUMENT = 'Added as a document';
