@@ -483,7 +483,7 @@ it('add a rule 6 POE', () => {
 	);
 });
 
-it.only('should mark rule 6 POE complete', () => {
+it('should mark rule 6 POE complete', () => {
 	setupCaseForRule6StatementReview();
 	cy.simulateStatementsDeadlineElapsed(caseObj);
 	cy.shareCommentsAndStatementsViaApi(caseObj);
