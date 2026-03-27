@@ -2,12 +2,14 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import { databaseConnector } from '#utils/database-connector.js';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import { AUDIT_TRAIL_SYSTEM_UUID } from '@pins/appeals/constants/support.js';
+import { EventType } from '@pins/event-client';
 import {
 	APPEAL_CASE_STAGE,
 	APPEAL_CASE_STATUS,
 	APPEAL_CASE_TYPE,
 	APPEAL_DOCUMENT_TYPE,
-	APPEAL_TYPE_OF_PLANNING_APPLICATION
+	APPEAL_TYPE_OF_PLANNING_APPLICATION,
+	SERVICE_USER_TYPE
 } from '@planning-inspectorate/data-model';
 import { sub } from 'date-fns';
 import { randomUUID } from 'node:crypto';
@@ -43,11 +45,45 @@ const generateAppeals = async (appealType, count, userEmails, docCount = 25) => 
 			promises.push(
 				createAppeal(appealInput)
 					.then(async (appeal) => {
-						await createCaseDocuments(appeal.id, docCount);
-						await createRepresentationWithAttachments(databaseConnector, appeal.id, folder.id, {
-							count: docCount
-						});
+						const caseDocuments = await createCaseDocuments(appeal.id, docCount);
+						const { rep, docs: repDocs } = await createRepresentationWithAttachments(
+							databaseConnector,
+							appeal.id,
+							folder.id,
+							{
+								count: docCount,
+								fileName: 'LOAD-test-file'
+							}
+						);
+
 						await broadcasters.broadcastAppeal(appeal.id);
+
+						// broadcast service-user entities in isolation
+						if (appeal.appellantId) {
+							await broadcasters.broadcastServiceUser(
+								appeal.appellantId,
+								EventType.Create,
+								SERVICE_USER_TYPE.APPELLANT,
+								appeal.reference
+							);
+						}
+						if (appeal.agentId) {
+							await broadcasters.broadcastServiceUser(
+								appeal.agentId,
+								EventType.Create,
+								SERVICE_USER_TYPE.AGENT,
+								appeal.reference
+							);
+						}
+
+						// broadcast appeal-document entities in isolation
+						const allDocs = [...caseDocuments, ...repDocs];
+						await Promise.all(
+							allDocs.map((doc) => broadcasters.broadcastDocument(doc.guid, 1, EventType.Create))
+						);
+
+						// broadcast representation entity
+						await broadcasters.broadcastRepresentation(rep.id, EventType.Create);
 					})
 					.catch((err) => console.error('Error creating appeal:', err))
 			);
@@ -137,22 +173,22 @@ const CASE_DOCUMENT_DEFS = [
 	{
 		folderPath: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.ORIGINAL_APPLICATION_FORM}`,
 		documentType: APPEAL_DOCUMENT_TYPE.ORIGINAL_APPLICATION_FORM,
-		fileName: 'application-form.pdf'
+		fileName: 'LOAD-application-form.pdf'
 	},
 	{
 		folderPath: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPLICATION_DECISION_LETTER}`,
 		documentType: APPEAL_DOCUMENT_TYPE.APPLICATION_DECISION_LETTER,
-		fileName: 'decision-letter.pdf'
+		fileName: 'LOAD-decision-letter.pdf'
 	},
 	{
 		folderPath: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.PLANS_DRAWINGS}`,
 		documentType: APPEAL_DOCUMENT_TYPE.PLANS_DRAWINGS,
-		fileName: 'plans-drawings.pdf'
+		fileName: 'LOAD-plans-drawings.pdf'
 	},
 	{
 		folderPath: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_CORRESPONDENCE}`,
 		documentType: APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_CORRESPONDENCE,
-		fileName: 'additional-document',
+		fileName: 'LOAD-additional-document',
 		useDocCount: true
 	}
 ];
@@ -200,7 +236,7 @@ const createCaseDocuments = async (appealId, docCount = 25) => {
 		}
 	}
 
-	if (documentData.length === 0) return;
+	if (documentData.length === 0) return [];
 
 	await createDocuments(documentData);
 	await createDocumentVersions(versionData);
@@ -208,6 +244,8 @@ const createCaseDocuments = async (appealId, docCount = 25) => {
 	for (const doc of documentData) {
 		await updateDocumentLatestVersion(doc.guid, 1);
 	}
+
+	return documentData;
 };
 
 /**
@@ -264,14 +302,14 @@ export function createMockAppeal(type = 'has', userEmails = []) {
 
 		appellant: {
 			create: {
-				firstName: 'Load',
+				firstName: 'LOAD Load',
 				lastName: 'Tester',
 				email: userEmails[0] || 'load-test@example.com'
 			}
 		},
 		agent: {
 			create: {
-				firstName: 'Agent',
+				firstName: 'LOAD Agent',
 				lastName: 'Smith',
 				email: userEmails[1] || 'load-agent@example.com'
 			}
