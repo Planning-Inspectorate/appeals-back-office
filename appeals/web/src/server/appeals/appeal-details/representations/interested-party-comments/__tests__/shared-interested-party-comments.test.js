@@ -71,6 +71,9 @@ describe('Interested Party Comments (Shared/Published View)', () => {
 			const row1columns = firstRow?.querySelectorAll('.govuk-table__cell');
 			expect(firstRow).not.toBeNull();
 			expect(row1columns?.[1].textContent?.trim()).toBe('Comment 1');
+
+			expect(row1columns?.[2].innerHTML).not.toContain('govuk-!-padding-left-0');
+
 			const nextRow = firstRow?.nextElementSibling;
 			expect(nextRow).not.toBeNull();
 			const row2columns = nextRow?.querySelectorAll('.govuk-table__cell');
@@ -187,6 +190,9 @@ describe.each([
 			const row1columns = firstRow?.querySelectorAll('.govuk-table__cell');
 			expect(firstRow).not.toBeNull();
 			expect(row1columns?.[1].textContent?.trim()).toBe('Comment 1');
+
+			expect(row1columns?.[2].innerHTML).not.toContain('govuk-!-padding-left-0');
+
 			const nextRow = firstRow?.nextElementSibling;
 			expect(nextRow).not.toBeNull();
 			const row2columns = nextRow?.querySelectorAll('.govuk-table__cell');
