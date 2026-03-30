@@ -10,6 +10,7 @@ import {
 	dayMonthYearHourMinuteToISOString,
 	getExampleDateHint
 } from '#lib/dates.js';
+import { detailsComponent } from '#lib/mappers/components/page-components/details.js';
 import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
 import { initialiseAndMapData } from '#lib/mappers/data/appellant-case/mapper.js';
 import {
@@ -343,20 +344,25 @@ export function updateDueDatePage(
 }
 
 /**
- *
- * @param {number} appealId
- * @param {string} appealReference
- * @param {ReasonOption[]} reasonOptions
- * @param {AppellantCaseValidationOutcome} validationOutcome
- * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
- * @param {string|string[]} [invalidOrIncompleteReasons]
- * @param {Object<string, string[]>} [invalidOrIncompleteReasonsText]
- * @param {DayMonthYearHourMinute} [updatedDueDate]
- * @param {string} [enforcementNoticeInvalid]
- * @param {string} [otherLiveAppeals]
+ * @typedef {Object} CheckAndConfirmOptions
+ * @property {number} appealId
+ * @property {string} appealReference
+ * @property {ReasonOption[]} reasonOptions
+ * @property {AppellantCaseValidationOutcome} validationOutcome
+ * @property {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @property {string|string[]} [invalidOrIncompleteReasons]
+ * @property {Object<string, string[]>} [invalidOrIncompleteReasonsText]
+ * @property {DayMonthYearHourMinute} [updatedDueDate]
+ * @property {string} [enforcementNoticeInvalid]
+ * @property {string} [otherLiveAppeals]
+ * @property {{appellant: string, lpa: string}} [emailPreviews]
+ */
+
+/**
+ * @param {CheckAndConfirmOptions} options
  * @returns {PageContent}
  */
-export function checkAndConfirmPage(
+export function checkAndConfirmPage({
 	appealId,
 	appealReference,
 	reasonOptions,
@@ -366,8 +372,9 @@ export function checkAndConfirmPage(
 	invalidOrIncompleteReasonsText,
 	updatedDueDate,
 	enforcementNoticeInvalid,
-	otherLiveAppeals
-) {
+	otherLiveAppeals,
+	emailPreviews
+}) {
 	if (
 		(validationOutcome === 'invalid' || validationOutcome === 'incomplete') &&
 		!invalidOrIncompleteReasons
@@ -489,8 +496,21 @@ export function checkAndConfirmPage(
 		}
 	};
 
+	const emailPreviewComponents = emailPreviews
+		? [
+				detailsComponent({
+					summaryText: `Preview email to appellant`,
+					html: emailPreviews.appellant
+				}),
+				detailsComponent({
+					summaryText: `Preview email to LPA`,
+					html: emailPreviews.lpa
+				})
+			]
+		: [];
+
 	/** @type {PageComponent[]} */
-	const pageComponents = [summaryListComponent, insetTextComponent];
+	const pageComponents = [summaryListComponent, ...emailPreviewComponents, insetTextComponent];
 
 	preRenderPageComponents(pageComponents);
 

@@ -1,13 +1,17 @@
 import { getDocumentFileType } from '#appeals/appeal-documents/appeal.documents.service.js';
+import { addressToString } from '#lib/address-formatter.js';
+import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
+import { getFeedbackLinkFromAppealTypeName } from '#lib/feedback-form-link.js';
 import logger from '#lib/logger.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import { CHANGE_APPEAL_TYPE_INVALID_REASON } from '@pins/appeals/constants/support.js';
 import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import {
 	postChangeDocumentDetails,
@@ -26,6 +30,8 @@ import {
 	renderManageFolder,
 	renderUploadDocumentsCheckAndConfirm
 } from '../../appeal-documents/appeal-documents.controller.js';
+import { buildRejectionReasons } from '../representations/common/components/reject-reasons.js';
+import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
 import {
 	appellantCasePage,
 	checkAndConfirmPage,
@@ -124,18 +130,79 @@ const renderCheckAndConfirm = async (request, response) => {
 			throw new Error('error retrieving invalid reason options');
 		}
 
-		const mappedPageContent = checkAndConfirmPage(
-			currentAppeal.appealId,
-			currentAppeal.appealReference,
-			filteredReasonOptions,
-			webAppellantCaseReviewOutcome.validationOutcome,
-			request.session,
-			webAppellantCaseReviewOutcome.reasons,
-			webAppellantCaseReviewOutcome.reasonsText,
-			webAppellantCaseReviewOutcome.updatedDueDate,
-			webAppellantCaseReviewOutcome.enforcementNoticeInvalid,
-			webAppellantCaseReviewOutcome.otherLiveAppeals
-		);
+		const checkAndConfirmOptions = {
+			appealId: currentAppeal.appealId,
+			appealReference: currentAppeal.appealReference,
+			reasonOptions: filteredReasonOptions,
+			validationOutcome: webAppellantCaseReviewOutcome.validationOutcome,
+			session: request.session,
+			invalidOrIncompleteReasons: webAppellantCaseReviewOutcome.reasons,
+			invalidOrIncompleteReasonsText: webAppellantCaseReviewOutcome.reasonsText,
+			updatedDueDate: webAppellantCaseReviewOutcome.updatedDueDate,
+			enforcementNoticeInvalid: webAppellantCaseReviewOutcome.enforcementNoticeInvalid,
+			otherLiveAppeals: webAppellantCaseReviewOutcome.otherLiveAppeals
+		};
+
+		if (currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+			const GROUND_A_BARRED_REASON_ID = 7;
+			const OTHER_REASON_ID = 4;
+			const sortedReasonsOptions = filteredReasonOptions.sort((a, b) => {
+				if (a.id === OTHER_REASON_ID) return 1;
+				if (b.id === OTHER_REASON_ID) return -1;
+				return 0;
+			});
+
+			const { email: assignedTeamEmail } = await getTeamFromAppealId(
+				request.apiClient,
+				currentAppeal.appealId
+			);
+
+			const personalisation = {
+				appeal_reference_number: currentAppeal.appealReference,
+				enforcement_reference: currentAppeal.enforcementNotice?.appellantCase?.reference || '',
+				site_address: addressToString(currentAppeal.appealSite),
+				reasons: buildRejectionReasons(
+					sortedReasonsOptions,
+					webAppellantCaseReviewOutcome.reasons,
+					webAppellantCaseReviewOutcome.reasonsText
+				),
+				team_email_address: assignedTeamEmail,
+				ground_a_barred: webAppellantCaseReviewOutcome.reasons.includes(GROUND_A_BARRED_REASON_ID),
+				other_live_appeals: webAppellantCaseReviewOutcome.otherLiveAppeals === 'yes',
+				effective_date: currentAppeal.enforcementNotice?.appellantCase?.effectiveDate
+					? formatDate(
+							new Date(currentAppeal.enforcementNotice?.appellantCase?.effectiveDate),
+							false
+						)
+					: undefined
+			};
+
+			const [appellantTemplate, lpaTemplate] = await Promise.all([
+				generateNotifyPreview(
+					request.apiClient,
+					'enforcement-appeal-invalid-appellant.content.md',
+					{
+						...personalisation,
+						feedback_link: getFeedbackLinkFromAppealTypeName(currentAppeal.appealType)
+					}
+				),
+				generateNotifyPreview(request.apiClient, 'enforcement-appeal-invalid-lpa.content.md', {
+					...personalisation,
+					feedback_link: FEEDBACK_FORM_LINKS.LPA
+				})
+			]);
+
+			const mappedPageContent = checkAndConfirmPage({
+				...checkAndConfirmOptions,
+				emailPreviews: { appellant: appellantTemplate.renderedHtml, lpa: lpaTemplate.renderedHtml }
+			});
+
+			return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
+				pageContent: mappedPageContent
+			});
+		}
+
+		const mappedPageContent = checkAndConfirmPage(checkAndConfirmOptions);
 
 		return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
 			pageContent: mappedPageContent

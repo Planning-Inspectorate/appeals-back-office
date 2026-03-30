@@ -7082,6 +7082,24 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
                     </dd>
                 </div>
             </dl>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <details class="govuk-details" data-cy="preview-email-to-appellant">
+                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
+                        </summary>
+                        <div class="govuk-details__text"></div>
+                    </details>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <details class="govuk-details" data-cy="preview-email-to-lpa">
+                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to LPA</span>
+                        </summary>
+                        <div class="govuk-details__text"></div>
+                    </details>
+                </div>
+            </div>
             <div class="govuk-inset-text">We will mark the appeal as invalid and send an email to the relevant parties.</div>
             <div             class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
