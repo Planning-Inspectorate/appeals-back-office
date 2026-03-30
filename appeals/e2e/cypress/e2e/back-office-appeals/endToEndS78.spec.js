@@ -7,7 +7,6 @@ import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
-import { tag } from '../../support/tag';
 
 const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();
@@ -36,7 +35,7 @@ describe('Progress S78 to decision', () => {
 		cy.deleteAppeals(appeal);
 	});
 
-	it(`Completes a S78 appeal to decision`, { tags: tag.smoke }, () => {
+	it(`Completes a S78 appeal to decision`, () => {
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {
