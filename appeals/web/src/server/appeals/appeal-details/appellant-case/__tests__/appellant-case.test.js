@@ -3505,6 +3505,19 @@ describe('appellant-case', () => {
 			nock('http://test/')
 				.get('/appeals/appellant-case-incomplete-reasons')
 				.reply(200, appellantCaseIncompleteReasons);
+			nock('http://test/')
+				.post(`/appeals/notify-preview/enforcement-appeal-invalid-appellant.content.md`)
+				.reply(200, { renderedHtml: '' });
+			nock('http://test/')
+				.post(`/appeals/notify-preview/enforcement-appeal-invalid-lpa.content.md`)
+				.reply(200, { renderedHtml: '' });
+			nock('http://test/')
+				.get(`/appeals/${appealDataEnforcementNotice.appealId}/case-team-email`)
+				.reply(200, {
+					id: 1,
+					email: 'caseofficers@planninginspectorate.gov.uk',
+					name: 'standard email'
+				});
 
 			// post to incomplete reason page controller is necessary to set required data in the session
 			const enforcementNoticeInvalidResponse = await request
@@ -3567,6 +3580,9 @@ describe('appellant-case', () => {
 				'We will mark the appeal as invalid and send an email to the relevant parties.</div>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Mark appeal as invalid</button>');
+			expect(element.innerHTML).toContain('Check details and mark appeal as invalid</h1>');
+			expect(element.innerHTML).toContain('Preview email to appellant');
+			expect(element.innerHTML).toContain('Preview email to LPA');
 		});
 	});
 
