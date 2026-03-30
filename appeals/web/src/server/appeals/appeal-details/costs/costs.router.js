@@ -193,4 +193,17 @@ router
 		asyncHandler(controller.postInviteResponses)
 	);
 
+router
+	.route([
+		'/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId/check-your-answers'
+	])
+	.get(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.getShareDocumentCheckAndConfirm)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.postShareDocumentCheckAndConfirm)
+	);
+
 export default router;
