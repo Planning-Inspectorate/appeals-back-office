@@ -1,27 +1,32 @@
 # Notifications and triggers
 
-The following notifications are sent from the back-office using these [Notify Templates](../appeals/api/src/server/notify/templates):
+The following notifications are sent from the back-office using
+these [Notify Templates](../appeals/api/src/server/notify/templates):
 
 ## Change appeal type
 
 ### Appeal type change
 
 - **Appeal type:** all
-- **Notify Template:** [appeal-type-change-non-has](../appeals/api/src/server/notify/templates/appeal-type-change-non-has.content.md)
-- **Trigger:** Click "Change" in the Appeal type row within the overview section, select the new type, select yes to resubmit and confirm.
+- **Notify Template:
+  ** [appeal-type-change-non-has](../appeals/api/src/server/notify/templates/appeal-type-change-non-has.content.md)
+- **Trigger:** Click "Change" in the Appeal type row within the overview section, select the new type, select yes to
+  resubmit and confirm.
 
 ## Withdrawal
 
 ### Appeal withdrawn appellant
 
 - **Appeal type:** all
-- **Notify Template:** [appeal-withdrawn-appellant](../appeals/api/src/server/notify/templates/appeal-withdrawn-appellant.content.md)
+- **Notify Template:
+  ** [appeal-withdrawn-appellant](../appeals/api/src/server/notify/templates/appeal-withdrawn-appellant.content.md)
 - **Trigger:** Click "Start" in the Appeal withdrawal row within the case management section and confirm.
 
 ### Appeal withdrawn lpa
 
 - **Appeal type:** all
-- **Notify Template:** [appeal-withdrawn-lpa](../appeals/api/src/server/notify/templates/appeal-withdrawn-lpa.content.md)
+- **Notify Template:
+  ** [appeal-withdrawn-lpa](../appeals/api/src/server/notify/templates/appeal-withdrawn-lpa.content.md)
 - **Trigger:** Click "Start" in the Appeal withdrawal row within the case management section and confirm.
 
 ## Cancellation
@@ -29,7 +34,8 @@ The following notifications are sent from the back-office using these [Notify Te
 ### Enforcement notice withdrawn
 
 - **Appeal type:** enforcement types
-- **Notify Template:** [appeal-cancelled-enforcement-notice-withdrawn](../appeals/api/src/server/notify/templates/appeal-cancelled-enforcement-notice-withdrawn.content.md)
+- **Notify Template:
+  ** [appeal-cancelled-enforcement-notice-withdrawn](../appeals/api/src/server/notify/templates/appeal-cancelled-enforcement-notice-withdrawn.content.md)
 - **Trigger:** Cancel appeal and select "LPA has withdrawn the enforcement notice" and confirm.
 
 ## Validation
@@ -38,19 +44,22 @@ The following notifications are sent from the back-office using these [Notify Te
 
 - **Appeal type:** all
 - **Notify Template:** [appeal-incomplete](../appeals/api/src/server/notify/templates/appeal-incomplete.content.md)
-- **Trigger:** Select "Incomplete" when answering "What is the outcome of your review?", Pick some reasons and then confirm.
+- **Trigger:** Select "Incomplete" when answering "What is the outcome of your review?", Pick some reasons and then
+  confirm.
 
 ### Appeal invalid
 
 - **Appeal type:** all
 - **Notify Template:** [appeal-invalid](../appeals/api/src/server/notify/templates/appeal-invalid.content.md)
-- **Trigger:** Select "Invalid" when answering "What is the outcome of your review?", Pick some reasons and then confirm.
+- **Trigger:** Select "Invalid" when answering "What is the outcome of your review?", Pick some reasons and then
+  confirm.
 
 ### Appeal invalid lpa
 
 - **Appeal type:** all
 - **Notify Template:** [appeal-invalid-lpa](../appeals/api/src/server/notify/templates/appeal-invalid-lpa.content.md)
-- **Trigger:** Select "Invalid" when answering "What is the outcome of your review?", Pick some reasons and then confirm.
+- **Trigger:** Select "Invalid" when answering "What is the outcome of your review?", Pick some reasons and then
+  confirm.
 
 ### Appeal confirmed
 
@@ -63,25 +72,29 @@ The following notifications are sent from the back-office using these [Notify Te
 ### Appeal valid start case s78 appellant
 
 - **Appeal type:** s78, s20
-- **Notify Template:** [appeal-valid-start-case-s78-appellant](../appeals/api/src/server/notify/templates/appeal-valid-start-case-s78-appellant.content.md)
+- **Notify Template:
+  ** [appeal-valid-start-case-s78-appellant](../appeals/api/src/server/notify/templates/appeal-valid-start-case-s78-appellant.content.md)
 - **Trigger:** Start a full planning or listed building case, select an appeal procedure, and confirm.
 
 ### Appeal valid start case s78 lpa
 
 - **Appeal type:** s78, s20
-- **Notify Template:** [appeal-valid-start-case-s78-lpa](../appeals/api/src/server/notify/templates/appeal-valid-start-case-s78-lpa.content.md)
+- **Notify Template:
+  ** [appeal-valid-start-case-s78-lpa](../appeals/api/src/server/notify/templates/appeal-valid-start-case-s78-lpa.content.md)
 - **Trigger:** Start a full planning or listed building case, select an appeal procedure, and confirm.
 
 ### Appeal valid start case householder appellant
 
 - **Appeal type:** householder, CAS planning, CAS advert, Full advert
-- **Notify Template:** [appeal-valid-start-case-appellant](../appeals/api/src/server/notify/templates/appeal-valid-start-case-appellant.content.md)
+- **Notify Template:
+  ** [appeal-valid-start-case-appellant](../appeals/api/src/server/notify/templates/appeal-valid-start-case-appellant.content.md)
 - **Trigger:** Start a householder case, select an appeal procedure, and confirm.
 
 ### Appeal valid start case householder lpa
 
 - **Appeal type:** householder, CAS planning, CAS advert, Full advert
-- **Notify Template:** [appeal-valid-start-case-lpa](../appeals/api/src/server/notify/templates/appeal-valid-start-case-lpa.content.md)
+- **Notify Template:
+  ** [appeal-valid-start-case-lpa](../appeals/api/src/server/notify/templates/appeal-valid-start-case-lpa.content.md)
 - **Trigger:** Start a householder case, select an appeal procedure, and confirm.
 
 ## Timetable updated
@@ -90,33 +103,39 @@ The following notifications are sent from the back-office using these [Notify Te
 
 - **Appeal type:** s78, s20
 - **Procedure:** Written
-- **Notify Template:** [appeal-timetable-updated](../appeals/api/src/server/notify/templates/appeal-timetable-updated.content.md)
+- **Notify Template:
+  ** [appeal-timetable-updated](../appeals/api/src/server/notify/templates/appeal-timetable-updated.content.md)
 - **Trigger:** Update timetable dates from the timetable section of the appeal. Sent to appellant/agent and LPA.
 
 ### Timetable updated - s78/s20 inquiry
 
 - **Appeal type:** s78, s20
 - **Procedure:** Inquiry
-- **Notify Template:** [appeal-timetable-updated-inquiry](../appeals/api/src/server/notify/templates/appeal-timetable-updated-inquiry.content.md)
-- **Trigger:** Update timetable dates from the timetable section of the appeal. Sent to appellant/agent, LPA, and any Rule 6 parties.
+- **Notify Template:
+  ** [appeal-timetable-updated-inquiry](../appeals/api/src/server/notify/templates/appeal-timetable-updated-inquiry.content.md)
+- **Trigger:** Update timetable dates from the timetable section of the appeal. Sent to appellant/agent, LPA, and any
+  Rule 6 parties.
 
 ### Timetable updated - s78/s20 hearing
 
 - **Appeal type:** s78, s20
 - **Procedure:** Hearing
-- **Notify Template:** [appeal-timetable-updated-hearing](../appeals/api/src/server/notify/templates/appeal-timetable-updated-hearing.content.md)
+- **Notify Template:
+  ** [appeal-timetable-updated-hearing](../appeals/api/src/server/notify/templates/appeal-timetable-updated-hearing.content.md)
 - **Trigger:** Update timetable dates from the timetable section of the appeal. Sent to appellant/agent and LPA.
 
 ### Timetable updated - householder/CAS
 
 - **Appeal type:** householder, CAS planning, CAS advert
-- **Notify Template:** [has-appeal-timetable-updated](../appeals/api/src/server/notify/templates/has-appeal-timetable-updated.content.md)
+- **Notify Template:
+  ** [has-appeal-timetable-updated](../appeals/api/src/server/notify/templates/has-appeal-timetable-updated.content.md)
 - **Trigger:** Update timetable dates from the timetable section of the appeal. Sent to appellant/agent and LPA.
 
 ### Timetable updated - full advert
 
 - **Appeal type:** full advert
-- **Notify Template:** [advertisement-appeal-timetable-updated](../appeals/api/src/server/notify/templates/advertisement-appeal-timetable-updated.content.md)
+- **Notify Template:
+  ** [advertisement-appeal-timetable-updated](../appeals/api/src/server/notify/templates/advertisement-appeal-timetable-updated.content.md)
 - **Trigger:** Update timetable dates from the timetable section of the appeal. Sent to appellant/agent and LPA.
 
 ## LPA questionnaire
@@ -124,25 +143,29 @@ The following notifications are sent from the back-office using these [Notify Te
 ### Appeal start date change appellant
 
 - **Appeal type:** all
-- **Notify Template:** [appeal-start-date-change-appellant](../appeals/api/src/server/notify/templates/appeal-start-date-change-appellant.content.md)
+- **Notify Template:
+  ** [appeal-start-date-change-appellant](../appeals/api/src/server/notify/templates/appeal-start-date-change-appellant.content.md)
 - **Trigger:** Click "Change" in the Start date row within the timetable and confirm.
 
 ### Appeal start date change lpa
 
 - **Appeal type:** all
-- **Notify Template:** [appeal-start-date-change-lpa](../appeals/api/src/server/notify/templates/appeal-start-date-change-lpa.content.md)
+- **Notify Template:
+  ** [appeal-start-date-change-lpa](../appeals/api/src/server/notify/templates/appeal-start-date-change-lpa.content.md)
 - **Trigger:** Click "Change" in the Start date row within the timetable and confirm.
 
 ### Lpaq complete s78 appellant
 
 - **Appeal type:** s78, s20
-- **Notify Template:** [lpaq-complete-appellant](../appeals/api/src/server/notify/templates/lpaq-complete-appellant.content.md)
+- **Notify Template:
+  ** [lpaq-complete-appellant](../appeals/api/src/server/notify/templates/lpaq-complete-appellant.content.md)
 - **Trigger:** Review a Lpaq and mark it as complete by selecting "Complete" and continue
 
 ### Lpaq complete householder appellant
 
 - **Appeal type:** householder, CAS planning, CAS advert, Full advert
-- **Notify Template:** [lpaq-complete-has-appellant](../appeals/api/src/server/notify/templates/lpaq-complete-has-appellant.content.md)
+- **Notify Template:
+  ** [lpaq-complete-has-appellant](../appeals/api/src/server/notify/templates/lpaq-complete-has-appellant.content.md)
 - **Trigger:** Review a Lpaq and mark it as complete by selecting "Complete" and continue
 
 ### Lpaq complete lpa
@@ -162,7 +185,8 @@ The following notifications are sent from the back-office using these [Notify Te
 ### Lpa statement incomplete
 
 - **Appeal type:** s78, s20
-- **Notify Template:** [lpa-statement-incomplete](../appeals/api/src/server/notify/templates/lpa-statement-incomplete.content.md)
+- **Notify Template:
+  ** [lpa-statement-incomplete](../appeals/api/src/server/notify/templates/lpa-statement-incomplete.content.md)
 - **Trigger:** Review a lpa statement and mark it as incomplete by selecting "Incomplete" and continue
 
 ### Ip comment rejected
@@ -174,174 +198,236 @@ The following notifications are sent from the back-office using these [Notify Te
 ### Ip comment rejected deadline extended
 
 - **Appeal type:** s78, s20
-- **Notify Template:** [ip-comment-rejected-deadline-extended](../appeals/api/src/server/notify/templates/ip-comment-rejected-deadline-extended.content.md)
-- **Trigger:** Update and extend the ip comment due date and then review an ip comment and mark it as rejected by selecting "Reject" and continue
+- **Notify Template:
+  ** [ip-comment-rejected-deadline-extended](../appeals/api/src/server/notify/templates/ip-comment-rejected-deadline-extended.content.md)
+- **Trigger:** Update and extend the ip comment due date and then review an ip comment and mark it as rejected by
+  selecting "Reject" and continue
 
 ## Site visit
 
 ### Site visit access required date change appellant
 
 - **Appeal type:** all
-- **Notify Template:** [site-visit-change-access-required-date-change-appellant](../appeals/api/src/server/notify/templates/site-visit-change-access-required-date-change-appellant.content.md)
-- **Trigger:** A site visit is already set up and the CO edits the site visit to update the date/time. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+- **Notify Template:
+  ** [site-visit-change-access-required-date-change-appellant](../appeals/api/src/server/notify/templates/site-visit-change-access-required-date-change-appellant.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the date/time. Confirming the
+  change from the ‘Check details and update site visit’ page triggers this email.
 
 ### Site visit access required to accompanied appellant
 
 - **Appeal type:** all
-- **Notify Template:** [site-visit-change-access-required-to-accompanied-appellant](../appeals/api/src/server/notify/templates/site-visit-change-access-required-to-accompanied-appellant.content.md)
-- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from access required to accompanied. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+- **Notify Template:
+  ** [site-visit-change-access-required-to-accompanied-appellant](../appeals/api/src/server/notify/templates/site-visit-change-access-required-to-accompanied-appellant.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from access
+  required to accompanied. Confirming the change from the ‘Check details and update site visit’ page triggers this
+  email.
 
 ### Site visit access required to accompanied lpa
 
 - **Appeal type:** all
-- **Notify Template:** [site-visit-change-access-required-to-accompanied-lpa](../appeals/api/src/server/notify/templates/site-visit-change-access-required-to-accompanied-lpa.content.md)
-- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from access required to accompanied. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+- **Notify Template:
+  ** [site-visit-change-access-required-to-accompanied-lpa](../appeals/api/src/server/notify/templates/site-visit-change-access-required-to-accompanied-lpa.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from access
+  required to accompanied. Confirming the change from the ‘Check details and update site visit’ page triggers this
+  email.
 
 ### Site visit access required to unaccompanied appellant
 
 - **Appeal type:** all
-- **Notify Template:** [site-visit-change-access-required-to-unaccompanied-appellant](../appeals/api/src/server/notify/templates/site-visit-change-access-required-to-unaccompanied-appellant.content.md)
-- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from access required to unaccompanied. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+- **Notify Template:
+  ** [site-visit-change-access-required-to-unaccompanied-appellant](../appeals/api/src/server/notify/templates/site-visit-change-access-required-to-unaccompanied-appellant.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from access
+  required to unaccompanied. Confirming the change from the ‘Check details and update site visit’ page triggers this
+  email.
 
 ### Site visit accompanied date change appellant
 
 - **Appeal type:** all
-- **Notify Template:** [site-visit-change-accompanied-date-change-appellant](../appeals/api/src/server/notify/templates/site-visit-change-accompanied-date-change-appellant.content.md)
-- **Trigger:** A site visit is already set up and the CO edits the site visit to update the date/time. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+- **Notify Template:
+  ** [site-visit-change-accompanied-date-change-appellant](../appeals/api/src/server/notify/templates/site-visit-change-accompanied-date-change-appellant.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the date/time. Confirming the
+  change from the ‘Check details and update site visit’ page triggers this email.
 
 ### Site visit accompanied date change lpa
 
 - **Appeal type:** all
-- **Notify Template:** [site-visit-change-accompanied-date-change-lpa](../appeals/api/src/server/notify/templates/site-visit-change-accompanied-date-change-lpa.content.md)
-- **Trigger:** A site visit is already set up and the CO edits the site visit to update the date/time. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+- **Notify Template:
+  ** [site-visit-change-accompanied-date-change-lpa](../appeals/api/src/server/notify/templates/site-visit-change-accompanied-date-change-lpa.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the date/time. Confirming the
+  change from the ‘Check details and update site visit’ page triggers this email.
 
 ### Site visit accompanied to access required appellant
 
 - **Appeal type:** all
-- **Notify Template:** [site-visit-change-accompanied-to-access-required-appellant](../appeals/api/src/server/notify/templates/site-visit-change-accompanied-to-access-required-appellant.content.md)
-- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from accompanied to access required. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+- **Notify Template:
+  ** [site-visit-change-accompanied-to-access-required-appellant](../appeals/api/src/server/notify/templates/site-visit-change-accompanied-to-access-required-appellant.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from
+  accompanied to access required. Confirming the change from the ‘Check details and update site visit’ page triggers
+  this email.
 
 ### Site visit accompanied to access required lpa
 
 - **Appeal type:** all
-- **Notify Template:** [site-visit-change-accompanied-to-access-required-lpa](../appeals/api/src/server/notify/templates/site-visit-change-accompanied-to-access-required-lpa.content.md)
-- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from accompanied to access required. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+- **Notify Template:
+  ** [site-visit-change-accompanied-to-access-required-lpa](../appeals/api/src/server/notify/templates/site-visit-change-accompanied-to-access-required-lpa.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from
+  accompanied to access required. Confirming the change from the ‘Check details and update site visit’ page triggers
+  this email.
 
 ### Site visit accompanied to unaccompanied appellant
 
 - **Appeal type:** all
-- **Notify Template:** [site-visit-change-accompanied-to-unaccompanied-appellant](../appeals/api/src/server/notify/templates/site-visit-change-accompanied-to-unaccompanied-appellant.content.md)
-- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from accompanied to unaccompanied. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+- **Notify Template:
+  ** [site-visit-change-accompanied-to-unaccompanied-appellant](../appeals/api/src/server/notify/templates/site-visit-change-accompanied-to-unaccompanied-appellant.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from
+  accompanied to unaccompanied. Confirming the change from the ‘Check details and update site visit’ page triggers this
+  email.
 
 ### Site visit accompanied to unaccompanied lpa
 
 - **Appeal type:** all
-- **Notify Template:** [site-visit-change-accompanied-to-unaccompanied-lpa](../appeals/api/src/server/notify/templates/site-visit-change-accompanied-to-unaccompanied-lpa.content.md)
-- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from accompanied to unaccompanied. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+- **Notify Template:
+  ** [site-visit-change-accompanied-to-unaccompanied-lpa](../appeals/api/src/server/notify/templates/site-visit-change-accompanied-to-unaccompanied-lpa.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from
+  accompanied to unaccompanied. Confirming the change from the ‘Check details and update site visit’ page triggers this
+  email.
 
 ### Site visit unaccompanied to access required appellant
 
 - **Appeal type:** all
-- **Notify Template:** [site-visit-change-unaccompanied-to-access-required-appellant](../appeals/api/src/server/notify/templates/site-visit-change-unaccompanied-to-access-required-appellant.content.md)
-- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from unaccompanied to access required. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+- **Notify Template:
+  ** [site-visit-change-unaccompanied-to-access-required-appellant](../appeals/api/src/server/notify/templates/site-visit-change-unaccompanied-to-access-required-appellant.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from
+  unaccompanied to access required. Confirming the change from the ‘Check details and update site visit’ page triggers
+  this email.
 
 ### Site visit unaccompanied to accompanied appellant
 
 - **Appeal type:** all
-- **Notify Template:** [site-visit-change-unaccompanied-to-accompanied-appellant](../appeals/api/src/server/notify/templates/site-visit-change-unaccompanied-to-accompanied-appellant.content.md)
-- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from unaccompanied to accompanied. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+- **Notify Template:
+  ** [site-visit-change-unaccompanied-to-accompanied-appellant](../appeals/api/src/server/notify/templates/site-visit-change-unaccompanied-to-accompanied-appellant.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from
+  unaccompanied to accompanied. Confirming the change from the ‘Check details and update site visit’ page triggers this
+  email.
 
 ### Site visit unaccompanied to accompanied lpa
 
 - **Appeal type:** all
-- **Notify Template:** [site-visit-change-unaccompanied-to-accompanied-lpa](../appeals/api/src/server/notify/templates/site-visit-change-unaccompanied-to-accompanied-lpa.content.md)
-- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from unaccompanied to accompanied. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+- **Notify Template:
+  ** [site-visit-change-unaccompanied-to-accompanied-lpa](../appeals/api/src/server/notify/templates/site-visit-change-unaccompanied-to-accompanied-lpa.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from
+  unaccompanied to accompanied. Confirming the change from the ‘Check details and update site visit’ page triggers this
+  email.
 
 ### Site visit access required appellant
 
 - **Appeal type:** all
-- **Notify Template:** [site-visit-schedule-access-required-appellant](../appeals/api/src/server/notify/templates/site-visit-schedule-access-required-appellant.content.md)
-- **Trigger:** A site visit is not set up and the CO sets up an access required site visit. Confirming the change from the ‘Check details and set up site visit’ page triggers this email.
+- **Notify Template:
+  ** [site-visit-schedule-access-required-appellant](../appeals/api/src/server/notify/templates/site-visit-schedule-access-required-appellant.content.md)
+- **Trigger:** A site visit is not set up and the CO sets up an access required site visit. Confirming the change from
+  the ‘Check details and set up site visit’ page triggers this email.
 
 ### Site visit accompanied appellant
 
 - **Appeal type:** all
-- **Notify Template:** [site-visit-schedule-accompanied-appellant](../appeals/api/src/server/notify/templates/site-visit-schedule-accompanied-appellant.content.md)
-- **Trigger:** A site visit is not set up and the CO sets up an accompanied site visit. Confirming the change from the ‘Check details and set up site visit’ page triggers this email.
+- **Notify Template:
+  ** [site-visit-schedule-accompanied-appellant](../appeals/api/src/server/notify/templates/site-visit-schedule-accompanied-appellant.content.md)
+- **Trigger:** A site visit is not set up and the CO sets up an accompanied site visit. Confirming the change from the
+  ‘Check details and set up site visit’ page triggers this email.
 
 ### Site visit accompanied lpa
 
 - **Appeal type:** all
-- **Notify Template:** [site-visit-schedule-accompanied-lpa](../appeals/api/src/server/notify/templates/site-visit-schedule-accompanied-lpa.content.md)
-- **Trigger:** A site visit is not set up and the CO sets up an accompanied site visit. Confirming the change from the ‘Check details and set up site visit’ page triggers this email.
+- **Notify Template:
+  ** [site-visit-schedule-accompanied-lpa](../appeals/api/src/server/notify/templates/site-visit-schedule-accompanied-lpa.content.md)
+- **Trigger:** A site visit is not set up and the CO sets up an accompanied site visit. Confirming the change from the
+  ‘Check details and set up site visit’ page triggers this email.
 
 ### Site visit unaccompanied appellant
 
 - **Appeal type:** all
-- **Notify Template:** [site-visit-schedule-unaccompanied-appellant](../appeals/api/src/server/notify/templates/site-visit-schedule-unaccompanied-appellant.content.md)
-- **Trigger:** A site visit is not set up and the CO sets up an unaccompanied site visit. Confirming the change from the ‘Check details and set up site visit’ page triggers this email.
+- **Notify Template:
+  ** [site-visit-schedule-unaccompanied-appellant](../appeals/api/src/server/notify/templates/site-visit-schedule-unaccompanied-appellant.content.md)
+- **Trigger:** A site visit is not set up and the CO sets up an unaccompanied site visit. Confirming the change from the
+  ‘Check details and set up site visit’ page triggers this email.
 
 ### Site visit cancellation
 
 - **Appeal type:** all
-- **Notify Template:** [site-visit-cancelled](../appeals/api/src/server/notify/templates/site-visit-cancelled.content.md)
-- **Trigger:** The CO cancels the site visit. Confirming from the 'Confirm that you want to cancel the site visit' page using the 'Cancel site visit' button triggers this email.
+- **Notify Template:
+  ** [site-visit-cancelled](../appeals/api/src/server/notify/templates/site-visit-cancelled.content.md)
+- **Trigger:** The CO cancels the site visit. Confirming from the 'Confirm that you want to cancel the site visit' page
+  using the 'Cancel site visit' button triggers this email.
 
 ### Missed site visit appellant
 
 - **Appeal type:** all
-- **Notify Template:** [record-missed-site-visit-appellant](../appeals/api/src/server/notify/templates/record-missed-site-visit-appellant.content.md)
-- **Trigger:** The CO records that the site visit has been missed by the appellant. Confirming from the 'Check details and record missed site visit' page using the 'Record missed site visit' button triggers this email.
+- **Notify Template:
+  ** [record-missed-site-visit-appellant](../appeals/api/src/server/notify/templates/record-missed-site-visit-appellant.content.md)
+- **Trigger:** The CO records that the site visit has been missed by the appellant. Confirming from the 'Check details
+  and record missed site visit' page using the 'Record missed site visit' button triggers this email.
 
 ### Missed site visit LPA
 
 - **Appeal type:** all
-- **Notify Template:** [record-missed-site-visit-lpa](../appeals/api/src/server/notify/templates/record-missed-site-visit-lpa.content.md)
-- **Trigger:** The CO records that the site visit has been missed by the LPA. Confirming from the 'Check details and record missed site visit' page using the 'Record missed site visit' button triggers this email.
+- **Notify Template:
+  ** [record-missed-site-visit-lpa](../appeals/api/src/server/notify/templates/record-missed-site-visit-lpa.content.md)
+- **Trigger:** The CO records that the site visit has been missed by the LPA. Confirming from the 'Check details and
+  record missed site visit' page using the 'Record missed site visit' button triggers this email.
 
 ### Rearrange missed site visit to unaccompanied appellant
 
 - **Appeal type:** all
-- **Notify Template:** [missed-site-visit-rearranged-unaccompanied-appellant](../appeals/api/src/server/notify/templates/missed-site-visit-rearranged-unaccompanied-appellant.content.md)
-- **Trigger:** Having had a site visit cancelled (of any type) when a new unaccompanied site visit is set up this email is sent. Confirming on the 'Schedule site visit' page triggers this email.
+- **Notify Template:
+  ** [missed-site-visit-rearranged-unaccompanied-appellant](../appeals/api/src/server/notify/templates/missed-site-visit-rearranged-unaccompanied-appellant.content.md)
+- **Trigger:** Having had a site visit cancelled (of any type) when a new unaccompanied site visit is set up this email
+  is sent. Confirming on the 'Schedule site visit' page triggers this email.
 
 ### Rearrange missed site visit appellant
 
 - **Appeal type:** all
-- **Notify Template:** [missed-site-visit-rearranged-appellant](../appeals/api/src/server/notify/templates/missed-site-visit-rearranged-appellant.content.md)
-- **Trigger:** Having had a site visit cancelled (of any type) when a new access required or accompanied site visit is set up this email is sent. Confirming on the 'Schedule site visit' page triggers this email.
+- **Notify Template:
+  ** [missed-site-visit-rearranged-appellant](../appeals/api/src/server/notify/templates/missed-site-visit-rearranged-appellant.content.md)
+- **Trigger:** Having had a site visit cancelled (of any type) when a new access required or accompanied site visit is
+  set up this email is sent. Confirming on the 'Schedule site visit' page triggers this email.
 
 ### Rearrange missed site visit LPA
 
 - **Appeal type:** all
-- **Notify Template:** [missed-site-visit-rearranged-lpa](../appeals/api/src/server/notify/templates/missed-site-visit-rearranged-lpa.content.md)
-- **Trigger:** Having had a site visit cancelled (of any type) when a new accompanied site visit is set up this email is sent. Confirming on the 'Schedule site visit' page triggers this email.
+- **Notify Template:
+  ** [missed-site-visit-rearranged-lpa](../appeals/api/src/server/notify/templates/missed-site-visit-rearranged-lpa.content.md)
+- **Trigger:** Having had a site visit cancelled (of any type) when a new accompanied site visit is set up this email is
+  sent. Confirming on the 'Schedule site visit' page triggers this email.
 
 ## Final comments
 
 ### Final comments done appellant
 
 - **Appeal type:** s78, s20
-- **Notify Template:** [final-comments-done-appellant](../appeals/api/src/server/notify/templates/final-comments-done-appellant.content.md)
+- **Notify Template:
+  ** [final-comments-done-appellant](../appeals/api/src/server/notify/templates/final-comments-done-appellant.content.md)
 - **Trigger:** Review final comments and mark as accepted and continue
 
 ### Final comments done lpa
 
 - **Appeal type:** s78, s20
-- **Notify Template:** [final-comments-done-lpa](../appeals/api/src/server/notify/templates/final-comments-done-lpa.content.md)
+- **Notify Template:
+  ** [final-comments-done-lpa](../appeals/api/src/server/notify/templates/final-comments-done-lpa.content.md)
 - **Trigger:** Review final comments and mark as accepted and continue
 
 ### Final comment rejected appellant
 
 - **Appeal type:** s78, s20
-- **Notify Template:** [final-comment-rejected-appellant](../appeals/api/src/server/notify/templates/final-comment-rejected-appellant.content.md)
+- **Notify Template:
+  ** [final-comment-rejected-appellant](../appeals/api/src/server/notify/templates/final-comment-rejected-appellant.content.md)
 - **Trigger:** Review final comments and mark as rejected, add some reasons and continue
 -
 
 ### Final comment rejected lpa
 
 - **Appeal type:** s78, s20
-- **Notify Template:** [final-comment-rejected-lpa](../appeals/api/src/server/notify/templates/final-comment-rejected-lpa.content.md)
+- **Notify Template:
+  ** [final-comment-rejected-lpa](../appeals/api/src/server/notify/templates/final-comment-rejected-lpa.content.md)
 - **Trigger:** Review final comments and mark as rejected, add some reasons and continue
 
 ## Decision
@@ -349,25 +435,43 @@ The following notifications are sent from the back-office using these [Notify Te
 ### Decision is (allowed, split, or dismissed) appellant
 
 - **Appeal type:** all
-- **Notify Template:** [decision-is-allowed-split-dismissed-appellant](../appeals/api/src/server/notify/templates/decision-is-allowed-split-dismissed-appellant.content.md)
+- **Notify Template:
+  ** [decision-is-allowed-split-dismissed-appellant](../appeals/api/src/server/notify/templates/decision-is-allowed-split-dismissed-appellant.content.md)
 - **Trigger:** Issue decision and select allowed, split, or dismissed and continue
 
 ### Decision is (allowed, split, or dismissed) lpa
 
 - **Appeal type:** all
-- **Notify Template:** [decision-is-allowed-split-dismissed-lpa](../appeals/api/src/server/notify/templates/decision-is-allowed-split-dismissed-lpa.content.md)
+- **Notify Template:
+  ** [decision-is-allowed-split-dismissed-lpa](../appeals/api/src/server/notify/templates/decision-is-allowed-split-dismissed-lpa.content.md)
+- **Trigger:** Issue decision and select allowed, split, or dismissed and continue
+
+### Decision is (allowed, split, or dismissed) interested party
+
+- **Appeal type:** all
+- **Notify Template:
+  ** [decision-is-allowed-split-dismissed-interested-party](../appeals/api/src/server/notify/templates/decision-is-allowed-split-dismissed-interested-party.content.md)
 - **Trigger:** Issue decision and select allowed, split, or dismissed and continue
 
 ### Decision is invalid appellant
 
 - **Appeal type:** all
-- **Notify Template:** [decision-is-invalid-appellant](../appeals/api/src/server/notify/templates/decision-is-invalid-appellant.content.md)
+- **Notify Template:
+  ** [decision-is-invalid-appellant](../appeals/api/src/server/notify/templates/decision-is-invalid-appellant.content.md)
 - **Trigger:** Issue decision and select invalid and continue
 
 ### Decision is invalid lpa
 
 - **Appeal type:** all
-- **Notify Template:** [decision-is-invalid-lpa](../appeals/api/src/server/notify/templates/decision-is-invalid-lpa.content.md)
+- **Notify Template:
+  ** [decision-is-invalid-lpa](../appeals/api/src/server/notify/templates/decision-is-invalid-lpa.content.md)
+- **Trigger:** Issue decision and select invalid and continue
+
+### Decision is invalid interested party
+
+- **Appeal type:** all
+- **Notify Template:
+  ** [decision-is-invalid-interested-party](../appeals/api/src/server/notify/templates/decision-is-invalid-interested-party.content.md)
 - **Trigger:** Issue decision and select invalid and continue
 
 ## Missed site visit
@@ -375,25 +479,29 @@ The following notifications are sent from the back-office using these [Notify Te
 ### Record missed site visit appellant
 
 - **Appeal type:** all
-- **Notify Template:** [record-missed-site-visit-appellant](../appeals/api/src/server/notify/templates/decision-is-allowed-split-dismissed-appellant.content.md)
+- **Notify Template:
+  ** [record-missed-site-visit-appellant](../appeals/api/src/server/notify/templates/decision-is-allowed-split-dismissed-appellant.content.md)
 - **Trigger:** Record missed site visit for appellant
 
 ### Record missed site visit lpa
 
 - **Appeal type:** all
-- **Notify Template:** [record-missed-site-visit-lpa](../appeals/api/src/server/notify/templates/decision-is-allowed-split-dismissed-lpa.content.md)
+- **Notify Template:
+  ** [record-missed-site-visit-lpa](../appeals/api/src/server/notify/templates/decision-is-allowed-split-dismissed-lpa.content.md)
 - **Trigger:** Record missed site visit for lpa
 
 ### Rearrange missed site visit appellant
 
 - **Appeal type:** all
-- **Notify Template:** [rearrange-missed-site-visit-appellant](../appeals/api/src/server/notify/templates/rearrange-missed-site-visit-appellant.content.md)
+- **Notify Template:
+  ** [rearrange-missed-site-visit-appellant](../appeals/api/src/server/notify/templates/rearrange-missed-site-visit-appellant.content.md)
 - **Trigger:** Setting up a site visit after recording a missed site visit
 
 ### Rearrange missed site visit lpa
 
 - **Appeal type:** all
-- **Notify Template:** [rearrange-missed-site-visit-lpa](../appeals/api/src/server/notify/templates/rearrange-missed-site-visit-lpa.content.md)
+- **Notify Template:
+  ** [rearrange-missed-site-visit-lpa](../appeals/api/src/server/notify/templates/rearrange-missed-site-visit-lpa.content.md)
 - **Trigger:** Setting up a site visit after recording a missed site visit
 
 ## Rule 6 Party
@@ -401,17 +509,20 @@ The following notifications are sent from the back-office using these [Notify Te
 ### Rule 6 Party admitted - Rule 6 party
 
 - **Appeal type:** Inquiry
-- **Notify Template:** [rule-6-status-accepted-rule-6-party](../appeals/api/src/server/notify/templates/rule-6-status-accepted-rule-6-party.content.md)
+- **Notify Template:
+  ** [rule-6-status-accepted-rule-6-party](../appeals/api/src/server/notify/templates/rule-6-status-accepted-rule-6-party.content.md)
 - **Trigger:** Added a Rule 6 party to the appeal
 
 ### Rule 6 Party admitted - Main parties
 
 - **Appeal type:** Inquiry
-- **Notify Template:** [rule-6-status-accepted-main-parties](../appeals/api/src/server/notify/templates/rule-6-status-accepted-main-parties.content.md)
+- **Notify Template:
+  ** [rule-6-status-accepted-main-parties](../appeals/api/src/server/notify/templates/rule-6-status-accepted-main-parties.content.md)
 - **Trigger:** Added a Rule 6 party to the appeal
 
 ### Rule 6 Party updated
 
 - **Appeal type:** Inquiry
-- **Notify Template:** [rule-6-party-updated](../appeals/api/src/server/notify/templates/rule-6-party-updated.content.md)
+- **Notify Template:
+  ** [rule-6-party-updated](../appeals/api/src/server/notify/templates/rule-6-party-updated.content.md)
 - **Trigger:** Updated Rule 6 party details

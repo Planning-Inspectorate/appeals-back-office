@@ -629,9 +629,10 @@ function checkAndConfirmPageRows(appealData, request) {
 /**
  * @param {Appeal} appealData
  * @param {Request} request
+ * @param {PageComponent[]} [emailPreviewComponents]
  * @returns {PageContent}
  */
-export function checkAndConfirmPage(appealData, request) {
+export function checkAndConfirmPage(appealData, request, emailPreviewComponents = []) {
 	const { currentAppeal, specificDecisionType } = request;
 
 	const {
@@ -668,7 +669,7 @@ export function checkAndConfirmPage(appealData, request) {
 		preHeading: preHeadingText(appealData),
 		heading: title,
 		submitButtonText: `Issue ${decisionTypeText}`,
-		pageComponents: [summaryListComponent]
+		pageComponents: [summaryListComponent, ...emailPreviewComponents]
 	};
 
 	return pageContent;

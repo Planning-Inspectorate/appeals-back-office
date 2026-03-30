@@ -19,6 +19,36 @@ import { publishChildDecision, publishCostsDecision, publishDecision } from './d
  * @param {Response} res
  * @returns {Promise<Response>}
  */
+export const postDecisionPreview = async (req, res) => {
+	const { appeal } = req;
+	const { outcome, invalidDecisionReason } = req.body;
+
+	const siteAddress = appeal.address
+		? formatAddressSingleLine(appeal.address)
+		: 'Address not available';
+
+	const azureAdUserId = req.get('azureAdUserId') || '';
+
+	const previews = await publishDecision(
+		appeal,
+		outcome || 'allowed',
+		new Date(),
+		'',
+		req.notifyClient,
+		siteAddress,
+		azureAdUserId,
+		invalidDecisionReason || null,
+		true
+	);
+
+	return res.json(previews);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
 export const postInspectorDecision = async (req, res) => {
 	const { appeal } = req;
 	const { decisions } = req.body;

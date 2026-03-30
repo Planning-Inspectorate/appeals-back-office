@@ -860,10 +860,27 @@ describe('issue-decision', () => {
 		let issueDecisionAppealData;
 
 		beforeEach(() => {
+			nock.cleanAll();
+
 			issueDecisionAppealData = structuredClone(appealData);
 			issueDecisionAppealData.costs.appellantApplicationFolder.documents = [{}];
 			issueDecisionAppealData.costs.lpaApplicationFolder.documents = [{}];
-			nock.cleanAll();
+
+			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				id: 1,
+				email: 'caseofficers@planninginspectorate.gov.uk',
+				name: 'standard email'
+			});
+
+			nock('http://test/')
+				.post('/appeals/1/decision/preview')
+				.reply(200, {
+					previews: {
+						appellant: '<p>Appellant email preview</p>',
+						lpa: '<p>LPA email preview</p>',
+						interestedParty: '<p>Interested party email preview</p>'
+					}
+				});
 		});
 
 		afterEach(teardown);
@@ -1363,6 +1380,22 @@ describe('issue-decision', () => {
 				.reply(200, documentRedactionStatuses)
 				.persist();
 
+			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				id: 1,
+				email: 'caseofficers@planninginspectorate.gov.uk',
+				name: 'standard email'
+			});
+
+			nock('http://test/')
+				.post('/appeals/1/decision/preview')
+				.reply(200, {
+					previews: {
+						appellant: '<p>Appellant email preview</p>',
+						lpa: '<p>LPA email preview</p>',
+						interestedParty: '<p>Interested party email preview</p>'
+					}
+				});
+
 			uploadAppellantCostsDecisionLetterResponse = await request
 				.post(`${baseUrl}/1${issueDecisionPath}${appellantCostsDecisionLetterUploadPath}`)
 				.send({
@@ -1577,6 +1610,22 @@ describe('issue-decision', () => {
 				.send({
 					'upload-info':
 						'[{"name": "test-document-lpa.pdf", "GUID": "2", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "lpaCostsDecisionLetter", "size": 1, "stage": "lpa-case"}]'
+				});
+
+			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				id: 1,
+				email: 'caseofficers@planninginspectorate.gov.uk',
+				name: 'standard email'
+			});
+
+			nock('http://test/')
+				.post('/appeals/1/decision/preview')
+				.reply(200, {
+					previews: {
+						appellant: '<p>Appellant email preview</p>',
+						lpa: '<p>LPA email preview</p>',
+						interestedParty: '<p>Interested party email preview</p>'
+					}
 				});
 		});
 

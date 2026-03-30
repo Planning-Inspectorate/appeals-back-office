@@ -612,8 +612,43 @@ exports[`issue-decision GET /issue-decision/check-your-appellant-costs-decision 
                             </dd>
                     </div>
                 </dl>
-                <p class="govuk-body">We'll send an email to the appellant and LPA to tell them about the decision.</p>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Issue appellant costs decision</button>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-full">
+                        <details class="govuk-details" data-cy="preview-email-to-appellant">
+                            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
+                            </summary>
+                            <div class="govuk-details__text">
+                                <p>Appellant email preview</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-full">
+                        <details class="govuk-details" data-cy="preview-email-to-lpa">
+                            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to LPA</span>
+                            </summary>
+                            <div class="govuk-details__text">
+                                <p>LPA email preview</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-full">
+                        <details class="govuk-details" data-cy="preview-email-to-interested-parties">
+                            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to interested parties</span>
+                            </summary>
+                            <div class="govuk-details__text">
+                                <p>Interested party email preview</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+                <p class="govuk-body">We'll send an email to the appellant, LPA and any interested parties to
+                    tell them about the decision.</p>
+                <button type="submit" class="govuk-button"
+                data-module="govuk-button">Issue appellant costs decision</button>
             </form>
         </div>
     </div>
@@ -673,8 +708,43 @@ exports[`issue-decision GET /issue-decision/check-your-decision Linked appeals s
                             </dd>
                     </div>
                 </dl>
-                <p class="govuk-body">We'll send an email to the appellant and LPA to tell them about the decision.</p>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Issue decision</button>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-full">
+                        <details class="govuk-details" data-cy="preview-email-to-appellant">
+                            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
+                            </summary>
+                            <div class="govuk-details__text">
+                                <p>Appellant email preview</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-full">
+                        <details class="govuk-details" data-cy="preview-email-to-lpa">
+                            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to LPA</span>
+                            </summary>
+                            <div class="govuk-details__text">
+                                <p>LPA email preview</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-full">
+                        <details class="govuk-details" data-cy="preview-email-to-interested-parties">
+                            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to interested parties</span>
+                            </summary>
+                            <div class="govuk-details__text">
+                                <p>Interested party email preview</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+                <p class="govuk-body">We'll send an email to the appellant, LPA and any interested parties to
+                    tell them about the decision.</p>
+                <button type="submit" class="govuk-button"
+                data-module="govuk-button">Issue decision</button>
             </form>
         </div>
     </div>
@@ -729,8 +799,43 @@ exports[`issue-decision GET /issue-decision/check-your-decision Single appeal sh
                             </dd>
                     </div>
                 </dl>
-                <p class="govuk-body">We'll send an email to the appellant and LPA to tell them about the decision.</p>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Issue decision</button>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-full">
+                        <details class="govuk-details" data-cy="preview-email-to-appellant">
+                            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
+                            </summary>
+                            <div class="govuk-details__text">
+                                <p>Appellant email preview</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-full">
+                        <details class="govuk-details" data-cy="preview-email-to-lpa">
+                            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to LPA</span>
+                            </summary>
+                            <div class="govuk-details__text">
+                                <p>LPA email preview</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-full">
+                        <details class="govuk-details" data-cy="preview-email-to-interested-parties">
+                            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to interested parties</span>
+                            </summary>
+                            <div class="govuk-details__text">
+                                <p>Interested party email preview</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+                <p class="govuk-body">We'll send an email to the appellant, LPA and any interested parties to
+                    tell them about the decision.</p>
+                <button type="submit" class="govuk-button"
+                data-module="govuk-button">Issue decision</button>
             </form>
         </div>
     </div>
@@ -756,8 +861,43 @@ exports[`issue-decision GET /issue-decision/check-your-lpa-costs-decision should
                             </dd>
                     </div>
                 </dl>
-                <p class="govuk-body">We'll send an email to the appellant and LPA to tell them about the decision.</p>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Issue LPA costs decision</button>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-full">
+                        <details class="govuk-details" data-cy="preview-email-to-appellant">
+                            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
+                            </summary>
+                            <div class="govuk-details__text">
+                                <p>Appellant email preview</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-full">
+                        <details class="govuk-details" data-cy="preview-email-to-lpa">
+                            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to LPA</span>
+                            </summary>
+                            <div class="govuk-details__text">
+                                <p>LPA email preview</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-full">
+                        <details class="govuk-details" data-cy="preview-email-to-interested-parties">
+                            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to interested parties</span>
+                            </summary>
+                            <div class="govuk-details__text">
+                                <p>Interested party email preview</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+                <p class="govuk-body">We'll send an email to the appellant, LPA and any interested parties to
+                    tell them about the decision.</p>
+                <button type="submit" class="govuk-button"
+                data-module="govuk-button">Issue LPA costs decision</button>
             </form>
         </div>
     </div>

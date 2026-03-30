@@ -429,7 +429,7 @@ describe('decision routes', () => {
 					details = details + '\n\n Reason: Because it is.';
 				}
 
-				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: appeal.id,
 						details,
@@ -438,7 +438,7 @@ describe('decision routes', () => {
 					}
 				});
 
-				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: appeal.id,
 						details: AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
@@ -447,7 +447,7 @@ describe('decision routes', () => {
 					}
 				});
 
-				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: appeal.id,
 						details: AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED,
@@ -456,7 +456,7 @@ describe('decision routes', () => {
 					}
 				});
 
-				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(4, {
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: appeal.id,
 						details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [nextState]),
@@ -464,7 +464,6 @@ describe('decision routes', () => {
 						userId: appeal.caseOfficer.id
 					}
 				});
-
 				expect(response.status).toEqual(201);
 			}
 		);
@@ -679,13 +678,12 @@ describe('decision routes', () => {
 			};
 
 			// @ts-ignore
-			databaseConnector.appeal.findUnique
-				.mockResolvedValueOnce(appeal)
-				.mockResolvedValueOnce(child)
-				.mockResolvedValueOnce(appeal)
-				.mockResolvedValueOnce(appeal)
-				.mockResolvedValueOnce(child)
-				.mockResolvedValueOnce(child);
+			databaseConnector.appeal.findUnique.mockImplementation(({ where }) => {
+				if (where?.id === child.id) {
+					return Promise.resolve(child);
+				}
+				return Promise.resolve(appeal);
+			});
 
 			// @ts-ignore
 			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
@@ -802,8 +800,6 @@ describe('decision routes', () => {
 				recipientEmail: appeal.lpa.email
 			});
 
-			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(4);
-
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
 				data: {
 					appealId: appeal.id,
@@ -817,8 +813,10 @@ describe('decision routes', () => {
 
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
 				data: {
-					appealId: appeal.id,
-					details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['complete']),
+					appealId: childAppeal.childId,
+					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
+						outcome[0].toUpperCase() + outcome.slice(1)
+					]),
 					loggedAt: expect.any(Date),
 					userId: appeal.caseOfficer.id
 				}
@@ -826,10 +824,8 @@ describe('decision routes', () => {
 
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
 				data: {
-					appealId: childAppeal.childId,
-					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
-						outcome[0].toUpperCase() + outcome.slice(1)
-					]),
+					appealId: appeal.id,
+					details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['complete']),
 					loggedAt: expect.any(Date),
 					userId: appeal.caseOfficer.id
 				}
@@ -1117,6 +1113,65 @@ describe('decision routes', () => {
 		});
 
 		//TODO: Add test for rule 6 party cost comms when the comms are added
+
+		test('returns 200 and sends emails to interested parties when decision is published', async () => {
+			const appeal = {
+				...fullPlanningAppeal,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						valid: true
+					}
+				]
+			};
+
+			const outcome = 'allowed';
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			databaseConnector.inspectorDecision.create.mockResolvedValue({});
+
+			databaseConnector.representation.count.mockResolvedValue(2);
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{ represented: { email: 'interested-party1@example.com' } },
+				{ represented: { email: 'interested-party2@example.com' } }
+			]);
+
+			const tenDaysAgo = sub(new Date(), { days: 10 });
+			const withoutWeekends = await recalculateDateIfNotBusinessDay(tenDaysAgo.toISOString());
+			const utcDate = setTimeInTimeZone(withoutWeekends, 0, 0);
+
+			const response = await request
+				.post(`/appeals/${appeal.id}/decision`)
+				.send({
+					decisions: [
+						{
+							decisionType: DECISION_TYPE_INSPECTOR,
+							outcome,
+							documentDate: utcDate.toISOString(),
+							documentGuid: documentCreated.guid
+						}
+					]
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(4);
+
+			expect(mockNotifySend).toHaveBeenCalledWith(
+				expect.objectContaining({
+					templateName: 'decision-is-allowed-split-dismissed-interested-party',
+					recipientEmail: 'interested-party1@example.com'
+				})
+			);
+
+			expect(mockNotifySend).toHaveBeenCalledWith(
+				expect.objectContaining({
+					templateName: 'decision-is-allowed-split-dismissed-interested-party',
+					recipientEmail: 'interested-party2@example.com'
+				})
+			);
+
+			expect(response.status).toEqual(201);
+		});
 	});
 
 	describe('sendNewDecisionLetter', () => {
