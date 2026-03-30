@@ -214,7 +214,8 @@ export function sharedIpCommentsPage(
 								)
 							: ['No documents'],
 						isOrderedList: true,
-						isNumberedList: comment.attachments.length > 1
+						isNumberedList: comment.attachments.length > 1,
+						listClasses: 'govuk-list govuk-!-margin-top-0'
 					})
 				}
 			])
