@@ -5,5 +5,5 @@ export const validateLpa = createValidator(
 	body('localPlanningAuthority')
 		.trim()
 		.notEmpty()
-		.withMessage('Select the local planning authority.')
+		.withMessage('Enter the local planning authority.')
 );

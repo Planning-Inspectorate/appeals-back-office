@@ -285,6 +285,177 @@ export const householdAppeal = {
 		lpaQuestionnaireSubmittedDate: new Date(2024, 5, 24)
 	}
 };
+export const householdAppealAgent = {
+	caseCreatedDate: new Date('2024-03-25T23:59:59.999Z'),
+	caseUpdatedDate: new Date('2024-03-25T23:59:59.999Z'),
+	id: 1,
+	assignedTeamId: 1,
+	reference: '1345264',
+	procedureType: {
+		id: 1,
+		key: 'written',
+		name: 'Written'
+	},
+	neighbouringSites: [],
+	appealStatus: [
+		{
+			status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+			valid: true
+		}
+	],
+	completedStateList: [],
+	addressId: 1,
+	lpa: {
+		name: 'Maidstone Borough Council',
+		lpaCode: 'MAID',
+		id: 1,
+		email: 'maid@lpa-email.gov.uk'
+	},
+	applicationReference: '48269/APP/2021/1482',
+	agent: {
+		id: 1,
+		firstName: 'John',
+		lastName: 'Smith',
+		email: 'test@136s7.com',
+		phoneNumber: '09876 543 210',
+		organisationName: 'Smith Inc.'
+	},
+	address: {
+		addressLine1: '96 The Avenue',
+		addressLine2: 'Leftfield',
+		addressCountry: 'United Kingdom',
+		addressCounty: 'Kent',
+		id: 1,
+		postcode: 'MD21 5XY',
+		addressTown: 'Maidstone'
+	},
+	appealType: {
+		id: 2,
+		key: APPEAL_CASE_TYPE.D,
+		processCode: 'HAS',
+		type: APPEAL_TYPE.HOUSEHOLDER,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.HOUSEHOLDER
+	},
+	appellantCase: {
+		id: 1,
+		appellantCaseIncompleteReasonsSelected: [],
+		appellantCaseValidationOutcome: null,
+		appellantCostsAppliedFor: null,
+		applicationDate: new Date(2022, 2, 18),
+		applicationDecision: 'refused',
+		applicationDecisionDate: new Date(2022, 2, 18),
+		caseSubmissionDueDate: new Date(2022, 2, 18),
+		caseSubmittedDate: new Date(2022, 2, 18),
+		changedDevelopmentDescription: false,
+		enforcementNotice: null,
+		floorSpaceSquareMetres: null,
+		hasAdvertisedAppeal: true,
+		knowsAllOwners: null,
+		knowsOtherOwners: null,
+		originalDevelopmentDescription: 'A test description',
+		ownersInformed: true,
+		ownsAllLand: true,
+		ownsSomeLand: true,
+		siteAccessDetails: 'There is no mobile reception at the site',
+		siteSafetyDetails: 'Small dog big character',
+		siteAreaSquareMetres: '100',
+		appellantProcedurePreference: 'Hearing',
+		appellantProcedurePreferenceDetails: 'Reason for preference',
+		appellantProcedurePreferenceDuration: 5,
+		appellantProcedurePreferenceWitnessCount: 1,
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.HOUSEHOLDER_PLANNING,
+		numberOfResidencesNetChange: 5
+	},
+	caseOfficer: {
+		id: 1,
+		azureAdUserId: 'a8973f33-4d2e-486b-87b0-d068343ad9eb'
+	},
+	inspector: {
+		id: 2,
+		azureAdUserId: 'e8f89175-d02c-4a60-870e-dc954d5b530a'
+	},
+	siteVisit: {
+		id: 1,
+		appealId: 1,
+		visitDate: new Date('2022-03-31T01:00:00.000Z'),
+		visitEndTime: new Date('2022-03-31T03:00:00.000Z'),
+		visitStartTime: new Date('2022-03-31T01:00:00.000Z'),
+		siteVisitType: {
+			id: 1,
+			name: 'Access required',
+			key: 'site_visit_access_required'
+		}
+	},
+	hearing: {
+		id: 1,
+		appealId: 1,
+		hearingStartTime: new Date('2022-03-31T01:00:00.000Z'),
+		hearingEndTime: new Date('2022-03-31T03:00:00.000Z'),
+		addressId: 1,
+		address: {
+			id: 1,
+			addressLine1: '96 The Avenue',
+			addressLine2: 'Leftfield',
+			addressCountry: 'United Kingdom',
+			addressCounty: 'Kent',
+			postcode: 'MD21 5XY',
+			addressTown: 'Maidstone'
+		}
+	},
+	inquiry: {
+		id: 1,
+		appealId: 1,
+		inquiryStartTime: new Date('2022-03-31T01:00:00.000Z'),
+		inquiryEndTime: new Date('2022-03-31T03:00:00.000Z'),
+		estimatedDays: 6,
+		addressId: 1,
+		address: {
+			id: 1,
+			addressLine1: '96 The Avenue',
+			addressLine2: 'Leftfield',
+			addressCountry: 'United Kingdom',
+			addressCounty: 'Kent',
+			postcode: 'MD21 5XY',
+			addressTown: 'Maidstone'
+		}
+	},
+	parentAppeals: [],
+	childAppeals: [],
+	lpaQuestionnaire: {
+		id: 1,
+		appealId: 1,
+		siteSafetyDetails: 'There may be no mobile reception at the site',
+		siteAccessDetails: 'There is a tall hedge around the site which obstructs the view of the site',
+		inConservationArea: true,
+		isCorrectAppealType: true,
+		lpaStatement: null,
+		newConditionDetails: null,
+		lpaCostsAppliedFor: false,
+		siteWithinGreenBelt: null,
+		listedBuildingDetails: [
+			{
+				id: 1,
+				listEntry: '1',
+				affectsListedBuilding: false
+			},
+			{
+				id: 2,
+				listEntry: '2',
+				affectsListedBuilding: true
+			}
+		],
+		lpaNotificationMethods: [
+			{
+				lpaNotificationMethod: {
+					name: 'A site notice',
+					key: 'notice'
+				}
+			}
+		],
+		lpaqCreatedDate: new Date(2024, 5, 24),
+		lpaQuestionnaireSubmittedDate: new Date(2024, 5, 24)
+	}
+};
 
 export const advertisementAppeal = {
 	...householdAppeal,

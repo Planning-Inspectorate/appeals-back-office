@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { request } from '#server/app-test.js';
-import { householdAppeal } from '#tests/appeals/mocks.js';
+import { householdAppeal, householdAppealAgent } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { jest } from '@jest/globals';
@@ -13,10 +13,10 @@ import {
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 const validLPA = {
-	id: 47,
-	name: 'Dorset Council',
-	lpaCode: 'DORS',
-	email: 'test@example.com'
+	id: 1,
+	name: 'Maidstone Borough Council',
+	lpaCode: 'MAID',
+	email: 'maid@lpa-email.gov.uk'
 };
 
 const newLPA = {
@@ -53,6 +53,7 @@ describe('local-planning-authorities', () => {
 			databaseConnector.lPA.findMany.mockResolvedValue([validLPA, newLPA]);
 			// @ts-ignore
 			databaseConnector.lPA.findUnique.mockResolvedValue(newLPA);
+
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
@@ -75,6 +76,35 @@ describe('local-planning-authorities', () => {
 					id: householdAppeal.id
 				}
 			});
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
+			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				azureAdUserId,
+				templateName: 'lpa-changed-appellant',
+				notifyClient: expect.anything(),
+				recipientEmail: householdAppeal.appellant.email,
+				personalisation: {
+					appeal_reference_number: householdAppeal.reference,
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					local_planning_authority: newLPA.name,
+					lpa_reference: householdAppeal.applicationReference || ''
+				}
+			});
+			databaseConnector.lPA.findUnique.mockResolvedValue(validLPA);
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+				azureAdUserId,
+				templateName: 'lpa-removed',
+				notifyClient: expect.anything(),
+				recipientEmail: validLPA.email,
+				personalisation: {
+					appeal_reference_number: householdAppeal.reference,
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					local_planning_authority: newLPA.name,
+					lpa_reference: householdAppeal.applicationReference || ''
+				}
+			});
 			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 				data: {
 					appealId: householdAppeal.id,
@@ -83,6 +113,78 @@ describe('local-planning-authorities', () => {
 					userId: 1
 				}
 			});
+
+			expect(response.status).toEqual(200);
+		});
+
+		test('returns 200 if valid request and no appellant details', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppealAgent);
+			// @ts-ignore
+			databaseConnector.lPA.findMany.mockResolvedValue([validLPA, newLPA]);
+			// @ts-ignore
+			databaseConnector.lPA.findUnique.mockResolvedValue(newLPA);
+
+			// @ts-ignore
+			databaseConnector.user.upsert.mockResolvedValue({
+				id: 1,
+				azureAdUserId
+			});
+
+			const response = await request
+				.post(`/appeals/${householdAppeal.id}/lpa`)
+				.send({
+					newLpaId: 48
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+				data: {
+					lpaId: 48,
+					caseUpdatedDate: expect.any(Date)
+				},
+				where: {
+					id: householdAppeal.id
+				}
+			});
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
+			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				azureAdUserId,
+				templateName: 'lpa-changed-appellant',
+				notifyClient: expect.anything(),
+				recipientEmail: householdAppeal.agent.email,
+				personalisation: {
+					appeal_reference_number: householdAppeal.reference,
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					local_planning_authority: newLPA.name,
+					lpa_reference: householdAppeal.applicationReference || ''
+				}
+			});
+			databaseConnector.lPA.findUnique.mockResolvedValue(validLPA);
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+				azureAdUserId,
+				templateName: 'lpa-removed',
+				notifyClient: expect.anything(),
+				recipientEmail: validLPA.email,
+				personalisation: {
+					appeal_reference_number: householdAppeal.reference,
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					local_planning_authority: newLPA.name,
+					lpa_reference: householdAppeal.applicationReference || ''
+				}
+			});
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+				data: {
+					appealId: householdAppeal.id,
+					details: stringTokenReplacement(AUDIT_TRAIL_LPA_UPDATED, [newLPA.name]),
+					loggedAt: expect.any(Date),
+					userId: 1
+				}
+			});
+
 			expect(response.status).toEqual(200);
 		});
 
@@ -92,7 +194,12 @@ describe('local-planning-authorities', () => {
 				childAppeals: [
 					{
 						type: CASE_RELATIONSHIP_LINKED,
-						child: { id: 99, reference: '1234599', agent: { id: 111 } }
+						child: {
+							id: 99,
+							reference: '1234599',
+							agent: { id: 111 },
+							appellant: { id: 222, email: 'test@example.com' }
+						}
 					}
 				]
 			};
@@ -144,6 +251,8 @@ describe('local-planning-authorities', () => {
 					userId: 1
 				}
 			});
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
 				data: {
 					appealId: parentLinkedAppeal.childAppeals[0].child.id,

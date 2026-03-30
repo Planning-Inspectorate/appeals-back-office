@@ -6686,7 +6686,9 @@ describe('appellant-case', () => {
 					)
 					.send({ localPlanningAuthority: 2 });
 
-				expect(response.text).toEqual(`Found. Redirecting to ${baseUrl}/1${appellantCasePagePath}`);
+				expect(response.text).toEqual(
+					`Found. Redirecting to ${baseUrl}/1/change-appeal-details/local-planning-authority/check-details?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fappellant-case%2Fchange-appeal-details%2Flocal-planning-authority`
+				);
 				expect(response.statusCode).toBe(302);
 			});
 
@@ -6701,7 +6703,6 @@ describe('appellant-case', () => {
 
 				const element = parseHtml(response.text);
 				expect(element.innerHTML).toMatchSnapshot();
-				expect(element.innerHTML).toContain('Local planning authority</h1>');
 
 				const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',
@@ -6709,7 +6710,7 @@ describe('appellant-case', () => {
 				}).innerHTML;
 
 				expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-				expect(unprettifiedErrorSummaryHTML).toContain('Select the local planning authority');
+				expect(unprettifiedErrorSummaryHTML).toContain('Enter the local planning authority');
 			});
 		});
 	});
