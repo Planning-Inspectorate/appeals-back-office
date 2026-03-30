@@ -1,6 +1,8 @@
 import { addDocumentsCheckAndConfirmPage } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 
+/** @typedef {import('@pins/appeals.api').Appeals.DocumentVersionInfo} DocumentVersionInfo */
+
 /**
  *
  * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
@@ -95,4 +97,63 @@ export function inviteResponsesPage(backLinkUrl) {
 			type: 'submit'
 		}
 	};
+}
+
+/**
+ * @param {string} backLinkUrl
+ * @param {import('@pins/appeals.api').Appeals.DocumentVersionInfo} documentVersion
+ * @param {string} [inviteResponses]
+ * @returns {PageContent}
+ */
+export function shareDocumentCheckAndConfirmPage(backLinkUrl, documentVersion, inviteResponses) {
+	/** @type {PageContent} */
+	const pageContent = {
+		title: 'Check your answers',
+		backLinkText: 'Back',
+		backLinkUrl: backLinkUrl,
+		heading: `Confirm you want to share ${documentVersion.originalFilename} with the main parties`,
+		pageComponents: [],
+		submitButtonText: 'Confirm and share document',
+		submitButtonProperties: {
+			text: 'Confirm and share document',
+			type: 'submit'
+		}
+	};
+
+	if (inviteResponses) {
+		pageContent.pageComponents?.push({
+			type: 'summary-list',
+			parameters: {
+				rows: [
+					{
+						key: {
+							text: 'Do you want to invite responses?'
+						},
+						value: {
+							text: inviteResponses === 'yes' ? 'Yes' : 'No'
+						},
+						actions: {
+							items: [
+								{
+									text: 'Change',
+									href: backLinkUrl,
+									visuallyHiddenText: 'invite responses answer'
+								}
+							]
+						}
+					}
+				]
+			}
+		});
+	}
+
+	pageContent.pageComponents?.push({
+		type: 'details',
+		parameters: {
+			summaryText: 'Preview email to LPA',
+			html: '<p class="govuk-body">Notify email preview content will appear here.</p>'
+		}
+	});
+
+	return pageContent;
 }

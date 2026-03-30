@@ -18,14 +18,21 @@ import {
 import {
 	getDocumentFileType,
 	getDocumentRedactionStatuses,
-	getFileInfo
+	getFileInfo,
+	getFileVersionsInfo,
+	updateDocument
 } from '#appeals/appeal-documents/appeal.documents.service.js';
 import logger from '#lib/logger.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { capitalize, upperCase } from 'lodash-es';
-import { decisionCheckAndConfirmPage, inviteResponsesPage } from './costs.mapper.js';
+
+import {
+	decisionCheckAndConfirmPage,
+	inviteResponsesPage,
+	shareDocumentCheckAndConfirmPage
+} from './costs.mapper.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getDocumentUpload = async (request, response) => {
@@ -664,4 +671,72 @@ export const postDecisionCheckAndConfirm = async (request, response) => {
 	}
 
 	return response.redirect(`/appeals-service/appeal-details/${currentAppeal.appealId}`);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getShareDocumentCheckAndConfirm = async (request, response) => {
+	const { appealId, folderId, documentId, costsCategory, costsDocumentType } = request.params;
+	const session = request.session;
+
+	const documentInfo = await getFileVersionsInfo(request.apiClient, documentId);
+	if (!documentInfo || !documentInfo.latestDocumentVersion) {
+		return response.status(404).render('app/404.njk');
+	}
+
+	const backLinkUrl =
+		costsDocumentType === 'withdrawal'
+			? `/appeals-service/appeal-details/${appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/${folderId}/${documentId}`
+			: `/appeals-service/appeal-details/${appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/${folderId}/${documentId}/invite-responses`;
+
+	const pageContent = shareDocumentCheckAndConfirmPage(
+		backLinkUrl,
+		documentInfo.latestDocumentVersion,
+		session.inviteResponses
+	);
+
+	return response.render('patterns/change-page.pattern.njk', {
+		pageContent,
+		errors: request.errors
+	});
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postShareDocumentCheckAndConfirm = async (request, response) => {
+	const { appealId, documentId } = request.params;
+
+	try {
+		/** @type {import('#appeals/appeal-documents/appeal.documents.service.js').DocumentDetailAPIPatchRequest} */
+		const apiRequest = {
+			document: {
+				id: documentId,
+				isShared: true
+			}
+		};
+
+		await updateDocument(request.apiClient, appealId, apiRequest);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when marking document as shared'
+		);
+	}
+
+	delete request.session.inviteResponses;
+
+	addNotificationBannerToSession({
+		session: request.session,
+		bannerDefinitionKey: 'documentAdded',
+		appealId: appealId,
+		text: 'Document shared'
+	});
+
+	return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 };

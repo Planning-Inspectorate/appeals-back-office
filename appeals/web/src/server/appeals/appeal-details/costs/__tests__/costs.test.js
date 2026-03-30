@@ -2066,6 +2066,82 @@ describe('costs', () => {
 		}
 	});
 
+	describe('GET and POST /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId/check-your-answers', () => {
+		for (const costsCategory of costsCategoriesNotIncludingDecision) {
+			for (const costsDocumentType of costsDocumentTypes) {
+				const costsFolder =
+					appealData.costs[`${costsCategory}${capitalize(costsDocumentType)}Folder`];
+
+				describe(`Testing Share CYA for ${costsCategory} ${costsDocumentType}`, () => {
+					beforeEach(() => {
+						nock.cleanAll();
+						nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+						nock('http://test/')
+							.get(`/appeals/1/document-folders/${costsFolder.folderId}`)
+							.reply(200, costsFolder)
+							.persist();
+						nock('http://test/')
+							.get('/appeals/documents/1/versions')
+							.reply(200, documentFileVersionsInfoChecked)
+							.persist();
+					});
+
+					it(`should render the check your answers page`, async () => {
+						const response = await request.get(
+							`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1/check-your-answers`
+						);
+
+						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+						expect(response.statusCode).toBe(200);
+						expect(unprettifiedElement.innerHTML).toContain(
+							'Confirm you want to share test-pdf-documentFileVersionsInfo.pdf with the main parties</h1>'
+						);
+						expect(unprettifiedElement.innerHTML).toContain('Confirm and share document</button>');
+					});
+
+					it(`should route the backlink properly depending on the document type`, async () => {
+						const response = await request.get(
+							`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1/check-your-answers`
+						);
+
+						const backLinkElement = parseHtml(response.text, {
+							rootElement: '.govuk-back-link',
+							skipPrettyPrint: true
+						});
+
+						const expectedHref =
+							costsDocumentType === 'withdrawal'
+								? `/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1`
+								: `/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1/invite-responses`;
+
+						expect(backLinkElement.innerHTML).toContain(`href="${expectedHref}"`);
+					});
+
+					it(`should redirect to the case details page on successful share`, async () => {
+						const mockPatchEndpoint = nock('http://test/')
+							.patch('/appeals/1/documents/1', (body) => {
+								return body.document && body.document.isShared === true;
+							})
+							.reply(200);
+
+						const response = await request
+							.post(
+								`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1/check-your-answers`
+							)
+							.send({});
+
+						expect(response.statusCode).toBe(302);
+						expect(response.text).toContain(
+							`Found. Redirecting to /appeals-service/appeal-details/1`
+						);
+						expect(mockPatchEndpoint.isDone()).toBe(true);
+					});
+				});
+			}
+		}
+	});
+
 	describe('decision', () => {
 		describe('GET /costs/decision/upload-documents/:folderId', () => {
 			it('should render the upload documents page', async () => {
