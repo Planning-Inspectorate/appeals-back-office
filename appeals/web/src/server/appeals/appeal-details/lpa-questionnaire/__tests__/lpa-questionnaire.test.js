@@ -4741,7 +4741,9 @@ describe('LPA Questionnaire review', () => {
 					.post(`${baseUrl}/change-appeal-details/local-planning-authority`)
 					.send({ localPlanningAuthority: 2 });
 
-				expect(response.text).toEqual(`Found. Redirecting to ${baseUrl}`);
+				expect(response.text).toEqual(
+					`Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-details/local-planning-authority/check-details?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Flpa-questionnaire%2F2%2Fchange-appeal-details%2Flocal-planning-authority`
+				);
 				expect(response.statusCode).toBe(302);
 			});
 
@@ -4754,7 +4756,6 @@ describe('LPA Questionnaire review', () => {
 
 				const element = parseHtml(response.text);
 				expect(element.innerHTML).toMatchSnapshot();
-				expect(element.innerHTML).toContain('Local planning authority</h1>');
 
 				const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',
@@ -4762,7 +4763,7 @@ describe('LPA Questionnaire review', () => {
 				}).innerHTML;
 
 				expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-				expect(unprettifiedErrorSummaryHTML).toContain('Select the local planning authority');
+				expect(unprettifiedErrorSummaryHTML).toContain('Enter the local planning authority.');
 			});
 		});
 	});

@@ -13951,23 +13951,12 @@ exports[`appellant-case change LPA page GET /appellant-case/change-appeal-detail
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Local planning authority</h1>
-                                </legend>
-                                <div class="govuk-radios" data-module="govuk-radios">
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="local-planning-authority" name="localPlanningAuthority"
-                                        type="radio" value="3">
-                                        <label class="govuk-label govuk-radios__label" for="local-planning-authority">Barnsley Metropolitan Borough Council</label>
-                                    </div>
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="local-planning-authority-2" name="localPlanningAuthority"
-                                        type="radio" value="2">
-                                        <label class="govuk-label govuk-radios__label" for="local-planning-authority-2">Maidstone Borough Council</label>
-                                    </div>
-                                </div>
-                            </fieldset>
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-fieldset__legend--l" for="lpas"> Local planning authority</label></h1>
+                            <select class="govuk-select accessible-autocomplete" id="lpas" name="localPlanningAuthority"
+                            data-cy="search-lpas">
+                                <option value="3">Barnsley Metropolitan Borough Council</option>
+                                <option value="2">Maidstone Borough Council</option>
+                            </select>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -13988,7 +13977,7 @@ exports[`appellant-case change LPA page POST /appellant-case/change-appeal-detai
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#local-planning-authority">Select the local planning authority.</a>
+                            <li><a href="#local-planning-authority">Enter the local planning authority.</a>
                             </li>
                         </ul>
                     </div>
@@ -14006,25 +13995,14 @@ exports[`appellant-case change LPA page POST /appellant-case/change-appeal-detai
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
-                            <fieldset class="govuk-fieldset" aria-describedby="local-planning-authority-error">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Local planning authority</h1>
-                                </legend>
-                                <p id="local-planning-authority-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select the local planning
-                                    authority.</p>
-                                <div class="govuk-radios" data-module="govuk-radios">
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="local-planning-authority" name="localPlanningAuthority"
-                                        type="radio" value="3">
-                                        <label class="govuk-label govuk-radios__label" for="local-planning-authority">Barnsley Metropolitan Borough Council</label>
-                                    </div>
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="local-planning-authority-2" name="localPlanningAuthority"
-                                        type="radio" value="2">
-                                        <label class="govuk-label govuk-radios__label" for="local-planning-authority-2">Maidstone Borough Council</label>
-                                    </div>
-                                </div>
-                            </fieldset>
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-fieldset__legend--l" for="lpas"> Local planning authority</label></h1>
+                            <p id="lpas-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the local planning
+                                authority.</p>
+                            <select class="govuk-select accessible-autocomplete govuk-select--error"
+                            id="lpas" name="localPlanningAuthority" aria-describedby="lpas-error" data-cy="search-lpas">
+                                <option value="3">Barnsley Metropolitan Borough Council</option>
+                                <option value="2">Maidstone Borough Council</option>
+                            </select>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>

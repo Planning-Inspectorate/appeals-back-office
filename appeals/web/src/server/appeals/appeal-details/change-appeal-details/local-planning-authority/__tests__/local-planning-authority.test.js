@@ -52,15 +52,8 @@ describe('change-appeal-details/local-planning-authority', () => {
 				`${baseUrl}/1/change-appeal-details/local-planning-authority`
 			);
 			const element = parseHtml(response.text);
-
-			expect(response.text).toContain(`<a href="${baseUrl}/1" class="govuk-back-link">Back</a>`);
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('Local planning authority');
-			expect(element.innerHTML).not.toContain(lpaList[0].name);
-			expect(element.innerHTML).toContain(lpaList[1].name);
-			expect(element.innerHTML).toContain(lpaList[2].name);
-			expect(element.innerHTML).not.toContain(lpaList[3].name);
-			expect(element.innerHTML).toContain(`type="radio" value="${lpaList[1].id}" checked>`);
 			expect(element.innerHTML).toContain('Continue</button>');
 		});
 	});
@@ -81,6 +74,16 @@ describe('change-appeal-details/local-planning-authority', () => {
 				.post(`${baseUrl}/1/change-appeal-details/local-planning-authority`)
 				.send({ localPlanningAuthority: 2 });
 
+			expect(response.text).toEqual(
+				`Found. Redirecting to ${baseUrl}/1/change-appeal-details/local-planning-authority/check-details?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fchange-appeal-details%2Flocal-planning-authority`
+			);
+			expect(response.statusCode).toBe(302);
+		});
+		it('should redirect to correct url when update local planning authority is clicked', async () => {
+			const response = await request
+				.post(`${baseUrl}/1/change-appeal-details/local-planning-authority/check-details`)
+				.send({ localPlanningAuthority: 2 });
+
 			expect(response.text).toEqual(`Found. Redirecting to ${baseUrl}/1`);
 			expect(response.statusCode).toBe(302);
 		});
@@ -94,7 +97,7 @@ describe('change-appeal-details/local-planning-authority', () => {
 
 			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Local planning authority</h1>');
+			expect(element.innerHTML).toContain('Local planning authority');
 
 			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -102,7 +105,46 @@ describe('change-appeal-details/local-planning-authority', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain('Select the local planning authority');
+			expect(unprettifiedErrorSummaryHTML).toContain('Enter the local planning authority.');
+		});
+	});
+
+	describe('GET change-appeal-details/local-planning-authority/check-details', () => {
+		beforeEach(() => {
+			nock('http://test/').post('/appeals/1/lpa').reply(200, { success: true });
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/')
+				.get('/appeals/1/case-team-email')
+				.reply(200, { email: 'test@example.com' });
+			nock('http://test/')
+				.post('/appeals/notify-preview/lpa-changed-appellant.content.md')
+				.reply(200, { renderedHtml: 'appellant preview' });
+			nock('http://test/')
+				.post('/appeals/notify-preview/lpa-removed.content.md')
+				.reply(200, { renderedHtml: 'lpa preview' });
+		});
+
+		afterEach(() => {
+			nock.cleanAll();
+		});
+		it('should render the check details page with email previews', async () => {
+			await request
+				.post(`${baseUrl}/1/change-appeal-details/local-planning-authority`)
+				.send({ localPlanningAuthority: 2 });
+
+			const response = await request.get(
+				`${baseUrl}/1/change-appeal-details/local-planning-authority/check-details`
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Check details and update local planning authority');
+			expect(element.innerHTML).toContain('Preview email to appellant');
+			expect(element.innerHTML).toContain('Preview email to lpa');
 		});
 	});
 });
