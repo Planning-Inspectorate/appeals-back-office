@@ -65,7 +65,7 @@ describe('Review LPAQ', () => {
 		});
 	});
 
-	it('incomplete LPAQ add another', { tags: tag.smoke }, () => {
+	it('incomplete LPAQ add another reason', () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
@@ -88,7 +88,7 @@ describe('Review LPAQ', () => {
 			listCasesPage.verifyTableCellText(testData);
 		});
 	});
-	it('HAS - LPAQ', { tags: tag.smoke }, () => {
+	it('Review LPAQ - HAS', () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
@@ -165,7 +165,7 @@ describe('Review LPAQ', () => {
 		});
 	});
 
-	it('S78 Full Planning - LPAQ Review', { tags: tag.smoke }, () => {
+	it('Review LPAQ - S78 Full Planning', { tags: tag.smoke }, () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
@@ -270,7 +270,7 @@ describe('Review LPAQ', () => {
 		});
 	});
 
-	it('S20 Listed Building - LPAQ Review', { tags: tag.smoke }, () => {
+	it('Review LPAQ - S20 Listed Building', { tags: tag.smoke }, () => {
 		cy.createCase({ caseType: 'Y' }).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
@@ -380,7 +380,7 @@ describe('Review LPAQ', () => {
 		});
 	});
 
-	it('CAS Adverts - LPAQ Review', () => {
+	it('Review LPAQ - CAS Adverts', () => {
 		cy.createCase({ ...appealsApiRequests.casAdvertsSubmission.casedata }).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
@@ -493,7 +493,7 @@ describe('Review LPAQ', () => {
 		});
 	});
 
-	it('CAS Planning - LPAQ review', { tags: tag.smoke }, () => {
+	it('Review LPAQ - CAS Planning', { tags: tag.smoke }, () => {
 		cy.createCase({ caseType: 'ZP' }).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
@@ -570,7 +570,7 @@ describe('Review LPAQ', () => {
 		});
 	});
 
-	it('Full Adverts - LPAQ Review', () => {
+	it('Review LPAQ - Full Adverts', () => {
 		cy.createCase({ ...appealsApiRequests.advertsSubmission.casedata }).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
