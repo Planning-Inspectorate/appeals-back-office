@@ -22,6 +22,10 @@ const evidenceReasonsSection = new EvidenceReasonsSection();
 const documentationSectionPage = new DocumentationSectionPage();
 const BULK_UPLOAD_COUNT = 800;
 const REPRESENTATIONS_ROW_ID = 'representations-from-other-parties';
+const BULK_UPLOAD_FILE_INPUT_SELECTOR = 'input[type="file"][id^="upload-file-"]';
+const BULK_UPLOAD_INPUT_TIMEOUT_MS = 60000;
+const BULK_UPLOAD_ROW_RENDER_TIMEOUT_MS = 240000;
+const BULK_UPLOAD_ROW_POLL_INTERVAL_MS = 2000;
 
 describe('Manage docs on lpa case', () => {
 	beforeEach(() => {
@@ -34,6 +38,61 @@ describe('Manage docs on lpa case', () => {
 		cy.deleteAppeals(appeal);
 	});
 
+	const logBulkUploadDiagnostics = (renderedRowsCount) => {
+		return cy
+			.url()
+			.then((currentUrl) => cy.task('log', `[bulk-upload] current url: ${currentUrl}`))
+			.then(() =>
+				cy.document().then((document) => {
+					const uploader = document.querySelector('.pins-file-upload');
+					const uploaderHtmlSnippet = (uploader?.outerHTML || '[no uploader container found]')
+						.replace(/\s+/g, ' ')
+						.slice(0, 2000);
+					return cy.task('log', `[bulk-upload] uploader html snippet: ${uploaderHtmlSnippet}`);
+				})
+			)
+			.then(() =>
+				cy.get('@bulkUploadInput').then(($input) => {
+					const selectedFileCount = $input[0]?.files?.length ?? 0;
+					return cy.task('log', `[bulk-upload] selected input files count: ${selectedFileCount}`);
+				})
+			)
+			.then(() =>
+				cy.task('log', `[bulk-upload] rendered rows count at timeout: ${renderedRowsCount}`)
+			);
+	};
+
+	const waitForBulkUploadRows = (
+		expectedRowsCount,
+		timeoutMs = BULK_UPLOAD_ROW_RENDER_TIMEOUT_MS
+	) => {
+		const startedAt = Date.now();
+
+		const pollRows = () => {
+			return cy.document().then((document) => {
+				const renderedRowsCount = document.querySelectorAll(
+					'.pins-file-upload__files-rows > li'
+				).length;
+
+				if (renderedRowsCount === expectedRowsCount) {
+					return;
+				}
+
+				if (Date.now() - startedAt >= timeoutMs) {
+					return logBulkUploadDiagnostics(renderedRowsCount).then(() => {
+						throw new Error(
+							`Timed out waiting for uploaded file rows. Expected: ${expectedRowsCount}, observed: ${renderedRowsCount}, timeout: ${timeoutMs}ms`
+						);
+					});
+				}
+
+				return cy.wait(BULK_UPLOAD_ROW_POLL_INTERVAL_MS).then(pollRows);
+			});
+		};
+
+		return pollRows();
+	};
+
 	const uploadGeneratedBulkFiles = (prefix, count = BULK_UPLOAD_COUNT) => {
 		const files = Cypress._.times(count, (index) => {
 			const fileNumber = index + 1;
@@ -45,9 +104,27 @@ describe('Manage docs on lpa case', () => {
 			};
 		});
 
-		cy.getByData('upload-file-button').click().selectFile(files, {
-			action: 'drag-drop',
-			force: true
+		cy.get(BULK_UPLOAD_FILE_INPUT_SELECTOR, { timeout: BULK_UPLOAD_INPUT_TIMEOUT_MS })
+			.should(($inputs) => {
+				expect($inputs.length).to.be.greaterThan(0, 'bulk upload file input should be present');
+			})
+			.first()
+			.as('bulkUploadInput')
+			.should(($input) => {
+				expect($input[0]?.isConnected).to.equal(true, 'file input should be attached');
+				expect($input[0]?.multiple).to.equal(
+					true,
+					'bulk upload input should accept multiple files'
+				);
+			});
+
+		cy.get('@bulkUploadInput').selectFile(files, { force: true });
+
+		cy.get('@bulkUploadInput', { timeout: BULK_UPLOAD_INPUT_TIMEOUT_MS }).should(($input) => {
+			expect($input[0]?.files).to.have.length(
+				count,
+				`file input should contain ${count} selected files`
+			);
 		});
 	};
 
@@ -58,10 +135,7 @@ describe('Manage docs on lpa case', () => {
 		);
 
 		uploadGeneratedBulkFiles(prefix);
-		cy.get('.pins-file-upload__files-rows > li', { timeout: 120000 }).should(
-			'have.length',
-			BULK_UPLOAD_COUNT
-		);
+		waitForBulkUploadRows(BULK_UPLOAD_COUNT);
 
 		cy.intercept('POST', '**/lpa-questionnaire/**/add-documents/**').as('postAddDocuments');
 		caseDetailsPage.clickButtonByText('Continue');
