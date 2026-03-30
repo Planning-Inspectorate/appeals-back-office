@@ -15,7 +15,7 @@ Planning application reference: planningApplicationReference<br>
 
 <p>correctionNotice</p>
 
-<p><a href="/manage-appeals/12345" class="govuk-link">Sign in to our service</a> to view the decision letter dated dateISOStringToDisplayDate(file.receivedDate).</p>
+<p>[Sign in to our service]() to view the decision letter dated dateISOStringToDisplayDate(file.receivedDate).</p>
 
 <h3> The Planning Inspectorate's role</h3>
 
