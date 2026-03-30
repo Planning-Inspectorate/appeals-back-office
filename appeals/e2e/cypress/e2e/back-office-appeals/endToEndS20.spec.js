@@ -6,7 +6,6 @@ import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
-import { tag } from '../../support/tag';
 
 const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();
@@ -23,7 +22,7 @@ describe('Progress S20 to decision', () => {
 		cy.deleteAppeals(appeal);
 	});
 
-	it(`Completes a s20 appeal to decision`, { tags: tag.smoke }, () => {
+	it(`Completes a s20 appeal to decision`, () => {
 		let todaysDate = new Date();
 
 		cy.createCase({

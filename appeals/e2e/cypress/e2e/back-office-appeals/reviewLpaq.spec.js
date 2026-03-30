@@ -270,7 +270,7 @@ describe('Review LPAQ', () => {
 		});
 	});
 
-	it('Review LPAQ - S20 Listed Building', { tags: tag.smoke }, () => {
+	it('Review LPAQ - S20 Listed Building', () => {
 		cy.createCase({ caseType: 'Y' }).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
@@ -493,7 +493,7 @@ describe('Review LPAQ', () => {
 		});
 	});
 
-	it('Review LPAQ - CAS Planning', { tags: tag.smoke }, () => {
+	it('Review LPAQ - CAS Planning', () => {
 		cy.createCase({ caseType: 'ZP' }).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);

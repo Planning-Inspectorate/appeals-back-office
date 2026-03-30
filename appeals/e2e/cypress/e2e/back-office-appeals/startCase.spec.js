@@ -119,7 +119,7 @@ describe('Start case', () => {
 		});
 	});
 
-	it('Start S20 Listed Building case', { tags: tag.smoke }, () => {
+	it('Start S20 Listed Building case', () => {
 		cy.createCase({
 			caseType: 'Y'
 		}).then((caseObj) => {
@@ -261,7 +261,7 @@ describe('Start case', () => {
 		}
 	);
 
-	it('S78 can start case as inquiry with address', { tags: tag.smoke }, () => {
+	it('S78 can start case as inquiry with address', () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;
 			happyPathHelper.viewCaseDetails(caseObj);
