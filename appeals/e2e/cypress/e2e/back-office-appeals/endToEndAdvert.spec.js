@@ -81,7 +81,7 @@ describe('Progress Advertisment Appeal to Decision', () => {
 		});
 	});
 
-	it(`Completes a Full Advertisment appeal to decision`, { tags: tag.smoke }, () => {
+	it(`Completes a Full Advertisment appeal to decision`, () => {
 		cy.createCase({ ...appealsApiRequests.advertsSubmission.casedata }).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);

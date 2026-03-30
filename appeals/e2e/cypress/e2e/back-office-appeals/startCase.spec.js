@@ -76,7 +76,7 @@ describe('Start case', () => {
 		cy.deleteAppeals(appeal);
 	});
 
-	it('Start case', { tags: tag.smoke }, () => {
+	it('Start case', () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 
