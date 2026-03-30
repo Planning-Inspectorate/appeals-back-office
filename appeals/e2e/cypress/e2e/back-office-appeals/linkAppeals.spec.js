@@ -41,7 +41,7 @@ afterEach(() => {
 });
 
 describe('Link appeals', () => {
-	it('Link an unlinked appeal to an unlinked appeal (from lead)', () => {
+	it('Link an unlinked appeal to an unlinked appeal (from lead)', { tags: tag.smoke }, () => {
 		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
 			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
 				cases = [leadCaseObj, childCaseObj];
@@ -563,7 +563,7 @@ describe('Site visit', () => {
 });
 
 describe('Issue Decision', () => {
-	it('Issue a decision with costs for linked appeals - S78', { tags: tag.smoke }, () => {
+	it('Issue a decision with costs for linked appeals - S78', () => {
 		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
 			cy.createCase({ caseType: 'W' }).then((childCaseObj1) => {
 				cy.createCase({ caseType: 'W' }).then((childCaseObj2) => {

@@ -105,7 +105,7 @@ describe('Progress S78 to decision', () => {
 		});
 	});
 
-	it(`Completes a CAS Planning Appeal to decision`, { tags: tag.smoke }, () => {
+	it(`Completes a CAS Planning Appeal to decision`, () => {
 		cy.createCase({ caseType: 'ZP' }).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
