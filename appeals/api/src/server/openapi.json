@@ -2931,6 +2931,61 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/decision/preview": {
+			"post": {
+				"tags": ["Decision"],
+				"description": "Returns email previews for the decision notification emails",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Returns rendered email previews"
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Decision preview request",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"outcome": "allowed",
+								"invalidDecisionReason": null
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"outcome": "allowed",
+								"invalidDecisionReason": null
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/decision": {
 			"post": {
 				"tags": ["Decision"],

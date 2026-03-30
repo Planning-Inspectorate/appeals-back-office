@@ -4,7 +4,8 @@ import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { duplicateFiles } from '#endpoints/link-appeals/link-appeals.service.js';
 import { getRepresentations } from '#endpoints/representations/representations.service.js';
-import { notifySend } from '#notify/notify-send.js';
+import { generateNotifyPreview } from '#notify/emulate-notify.js';
+import { notifySend, renderTemplate } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import transitionState from '#state/transition-state.js';
@@ -82,7 +83,7 @@ const formatIssueDecisionAuditTrail = (outcome, invalidDecisionReason) => {
  * @param {string} siteAddress
  * @param {string} azureAdUserId
  * @param {string|null} [invalidDecisionReason]
- * @returns
+ * @param {boolean} [dryRun=false]
  */
 export const publishDecision = async (
 	appeal,
@@ -92,8 +93,81 @@ export const publishDecision = async (
 	notifyClient,
 	siteAddress,
 	azureAdUserId,
-	invalidDecisionReason = null
+	invalidDecisionReason = null,
+	dryRun = false
 ) => {
+	const { type = '', key: appealTypeKey = APPEAL_CASE_TYPE.D } = appeal.appealType || {};
+	const appealType = trimAppealType(type);
+	const caseTeamEmail = await getTeamEmailFromAppealId(appeal.id);
+
+	const feedbackLinkForAppellant = getFeedbackLinkFromAppealTypeKey(appealTypeKey || '');
+	const feedbackLinkForInterestedParty = FEEDBACK_FORM_LINKS.COMMENT_ON_APPEAL;
+	const feedbackLinkForLPA =
+		appealTypeKey === APPEAL_CASE_TYPE.C || appealTypeKey === APPEAL_CASE_TYPE.F
+			? FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE
+			: FEEDBACK_FORM_LINKS.LPA;
+
+	const personalisation = {
+		appeal_reference_number: appeal.reference,
+		lpa_reference: appeal.applicationReference || '',
+		site_address: siteAddress,
+		appeal_type: appealType,
+		...(invalidDecisionReason && { reasons: [invalidDecisionReason] }),
+		...(!invalidDecisionReason && {
+			front_office_url: environment.FRONT_OFFICE_URL || '',
+			decision_date: formatDate(new Date(documentDate || ''), false),
+			child_appeals:
+				appeal.childAppeals
+					?.filter((childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED)
+					.map((childAppeal) => childAppeal.childRef) || []
+		})
+	};
+
+	if (appealTypeKey === APPEAL_CASE_TYPE.C || appealTypeKey === APPEAL_CASE_TYPE.F) {
+		const appellantCase = await appellantCaseRepository.getAppellantCaseByAppealId(appeal.id);
+		// @ts-ignore
+		personalisation.enforcement_reference = appellantCase?.enforcementReference;
+	}
+
+	if (dryRun) {
+		const appellantTemplate = renderTemplate(
+			invalidDecisionReason
+				? 'decision-is-invalid-appellant.content.md'
+				: 'decision-is-allowed-split-dismissed-appellant.content.md',
+			{
+				...personalisation,
+				feedback_link: feedbackLinkForAppellant
+			}
+		);
+		const lpaTemplate = renderTemplate(
+			invalidDecisionReason
+				? 'decision-is-invalid-lpa.content.md'
+				: 'decision-is-allowed-split-dismissed-lpa.content.md',
+			{
+				...personalisation,
+				feedback_link: feedbackLinkForLPA
+			}
+		);
+		const interestedPartyTemplate = renderTemplate(
+			invalidDecisionReason
+				? 'decision-is-invalid-interested-party.content.md'
+				: 'decision-is-allowed-split-dismissed-interested-party.content.md',
+			{
+				...personalisation,
+				feedback_link: FEEDBACK_FORM_LINKS.COMMENT_ON_APPEAL,
+				case_team_email_address: caseTeamEmail
+			}
+		);
+
+		return {
+			previews: {
+				appellant: generateNotifyPreview(appellantTemplate),
+				lpa: generateNotifyPreview(lpaTemplate),
+				interestedParty: generateNotifyPreview(interestedPartyTemplate)
+			}
+		};
+	}
+
 	const result = await appealRepository.setAppealDecision(appeal.id, {
 		documentDate,
 		documentGuid,
@@ -102,142 +176,135 @@ export const publishDecision = async (
 		invalidDecisionReason
 	});
 
-	if (result) {
-		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
-
-		if (!recipientEmail || !appeal.lpa?.email) {
-			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
-		}
-
-		const hasAppellantCostsDecision = hasCostsDocument(
-			appeal,
-			APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER
-		);
-
-		const hasLpaCostsDecision = hasCostsDocument(
-			appeal,
-			APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER
-		);
-
-		const lpaEmail = appeal.lpa?.email || '';
-
-		const nextState =
-			outcome === APPEAL_CASE_DECISION_OUTCOME.INVALID
-				? APPEAL_CASE_STATUS.INVALID
-				: APPEAL_CASE_STATUS.COMPLETE;
-
-		const { type = '', key: appealTypeKey = APPEAL_CASE_TYPE.D } = appeal.appealType || {};
-		const appealType = trimAppealType(type);
-
-		const personalisation = {
-			appeal_reference_number: appeal.reference,
-			lpa_reference: appeal.applicationReference || '',
-			site_address: siteAddress,
-			appeal_type: appealType,
-			...(invalidDecisionReason && { reasons: [invalidDecisionReason] }),
-			...(!invalidDecisionReason && {
-				front_office_url: environment.FRONT_OFFICE_URL || '',
-				decision_date: formatDate(new Date(documentDate || ''), false),
-				child_appeals:
-					appeal.childAppeals
-						?.filter((childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED)
-						.map((childAppeal) => childAppeal.childRef) || []
-			})
-		};
-
-		if (appealTypeKey === APPEAL_CASE_TYPE.C || appealTypeKey === APPEAL_CASE_TYPE.F) {
-			const appellantCase = await appellantCaseRepository.getAppellantCaseByAppealId(appeal.id);
-			// @ts-ignore
-			personalisation.enforcement_reference = appellantCase?.enforcementReference;
-		}
-
-		const feedbackLinkForAppellant = getFeedbackLinkFromAppealTypeKey(appealTypeKey || '');
-
-		if (recipientEmail) {
-			await notifySend({
-				azureAdUserId,
-				templateName: invalidDecisionReason
-					? 'decision-is-invalid-appellant'
-					: 'decision-is-allowed-split-dismissed-appellant',
-				notifyClient,
-				recipientEmail,
-				personalisation: invalidDecisionReason
-					? {
-							...personalisation,
-							has_costs_decision: hasAppellantCostsDecision,
-							feedback_link: feedbackLinkForAppellant
-						}
-					: {
-							...personalisation,
-							feedback_link: feedbackLinkForAppellant
-						}
-			});
-		}
-
-		const feedbackLinkForLPA =
-			appealTypeKey === APPEAL_CASE_TYPE.C || appealTypeKey === APPEAL_CASE_TYPE.F
-				? FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE
-				: FEEDBACK_FORM_LINKS.LPA;
-
-		if (lpaEmail) {
-			await notifySend({
-				azureAdUserId,
-				templateName: invalidDecisionReason
-					? 'decision-is-invalid-lpa'
-					: 'decision-is-allowed-split-dismissed-lpa',
-				notifyClient,
-				recipientEmail: lpaEmail,
-				personalisation: invalidDecisionReason
-					? {
-							...personalisation,
-							has_costs_decision: hasLpaCostsDecision,
-							feedback_link: feedbackLinkForLPA
-						}
-					: {
-							...personalisation,
-							feedback_link: feedbackLinkForLPA
-						}
-			});
-		}
-
-		if (appeal.appealRule6Parties && appeal.appealRule6Parties.length > 0) {
-			for (const party of appeal.appealRule6Parties) {
-				if (party.serviceUser?.email) {
-					await notifySend({
-						azureAdUserId,
-						templateName: invalidDecisionReason
-							? 'decision-is-invalid-appellant'
-							: 'decision-is-allowed-split-dismissed-appellant',
-						notifyClient,
-						recipientEmail: party.serviceUser.email,
-						personalisation: invalidDecisionReason
-							? {
-									...personalisation,
-									has_costs_decision: hasAppellantCostsDecision,
-									feedback_link: feedbackLinkForAppellant
-								}
-							: {
-									...personalisation,
-									feedback_link: feedbackLinkForAppellant
-								}
-					});
-				}
-			}
-		}
-
-		await createAuditTrail({
-			appealId: appeal.id,
-			azureAdUserId: azureAdUserId,
-			details: formatIssueDecisionAuditTrail(outcome, invalidDecisionReason)
-		});
-
-		await transitionState(appeal.id, azureAdUserId, nextState);
-		await broadcasters.broadcastAppeal(appeal.id);
-
-		return result;
+	if (!result) {
+		return null;
 	}
 
-	return null;
+	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+
+	if (!recipientEmail || !appeal.lpa?.email) {
+		throw new Error(ERROR_NO_RECIPIENT_EMAIL);
+	}
+
+	const hasAppellantCostsDecision = hasCostsDocument(
+		appeal,
+		APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER
+	);
+
+	const hasLpaCostsDecision = hasCostsDocument(
+		appeal,
+		APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER
+	);
+
+	const lpaEmail = appeal.lpa?.email || '';
+
+	const representations = await getRepresentations([appeal.id], 1, 1000, {
+		representationType: ['comment']
+	});
+	const interestedPartyEmails = representations?.comments
+		.map((comment) => comment.represented?.email)
+		.filter(Boolean);
+
+	const nextState =
+		outcome === APPEAL_CASE_DECISION_OUTCOME.INVALID
+			? APPEAL_CASE_STATUS.INVALID
+			: APPEAL_CASE_STATUS.COMPLETE;
+
+	if (recipientEmail) {
+		await notifySend({
+			azureAdUserId,
+			templateName: invalidDecisionReason
+				? 'decision-is-invalid-appellant'
+				: 'decision-is-allowed-split-dismissed-appellant',
+			notifyClient,
+			recipientEmail,
+			personalisation: invalidDecisionReason
+				? {
+						...personalisation,
+						has_costs_decision: hasAppellantCostsDecision,
+						feedback_link: feedbackLinkForAppellant
+					}
+				: {
+						...personalisation,
+						feedback_link: feedbackLinkForAppellant
+					}
+		});
+	}
+
+	if (lpaEmail) {
+		await notifySend({
+			azureAdUserId,
+			templateName: invalidDecisionReason
+				? 'decision-is-invalid-lpa'
+				: 'decision-is-allowed-split-dismissed-lpa',
+			notifyClient,
+			recipientEmail: lpaEmail,
+			personalisation: invalidDecisionReason
+				? {
+						...personalisation,
+						has_costs_decision: hasLpaCostsDecision,
+						feedback_link: feedbackLinkForLPA
+					}
+				: {
+						...personalisation,
+						feedback_link: feedbackLinkForLPA
+					}
+		});
+	}
+
+	if (appeal.appealRule6Parties && appeal.appealRule6Parties.length > 0) {
+		for (const party of appeal.appealRule6Parties) {
+			if (party.serviceUser?.email) {
+				await notifySend({
+					azureAdUserId,
+					templateName: invalidDecisionReason
+						? 'decision-is-invalid-appellant'
+						: 'decision-is-allowed-split-dismissed-appellant',
+					notifyClient,
+					recipientEmail: party.serviceUser.email,
+					personalisation: invalidDecisionReason
+						? {
+								...personalisation,
+								has_costs_decision: hasAppellantCostsDecision,
+								feedback_link: feedbackLinkForAppellant
+							}
+						: {
+								...personalisation,
+								feedback_link: feedbackLinkForAppellant
+							}
+				});
+			}
+		}
+	}
+
+	if (interestedPartyEmails.length > 0) {
+		for (const email of interestedPartyEmails) {
+			await notifySend({
+				azureAdUserId,
+				templateName: invalidDecisionReason
+					? 'decision-is-invalid-interested-party'
+					: 'decision-is-allowed-split-dismissed-interested-party',
+				notifyClient,
+				recipientEmail: email,
+				personalisation: {
+					...personalisation,
+					feedback_link: feedbackLinkForInterestedParty,
+					case_team_email_address: caseTeamEmail
+				}
+			});
+		}
+	}
+
+	await createAuditTrail({
+		appealId: appeal.id,
+		azureAdUserId: azureAdUserId,
+		details: formatIssueDecisionAuditTrail(outcome, invalidDecisionReason)
+	});
+
+	await transitionState(appeal.id, azureAdUserId, nextState);
+	await broadcasters.broadcastAppeal(appeal.id);
+
+	return result;
 };
 
 /**

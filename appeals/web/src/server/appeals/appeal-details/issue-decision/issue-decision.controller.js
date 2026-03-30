@@ -11,6 +11,7 @@ import {
 	lpaCostsDecisionPage,
 	viewDecisionPage
 } from './issue-decision.mapper.js';
+
 import { postInspectorDecision } from './issue-decision.service.js';
 
 import { createNewDocument } from '#app/components/file-uploader.component.js';
@@ -31,6 +32,7 @@ import {
 import { isFeatureActive } from '#common/feature-flags.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { getOriginalAndLatestLetterDatesObject, getTodaysISOString } from '#lib/dates.js';
+import { detailsComponent } from '#lib/mappers/components/page-components/details.js';
 import { preHeadingText } from '#lib/mappers/utils/appeal-preheading.js';
 import { mapFileUploadInfoToMappedDocuments } from '#lib/mappers/utils/file-upload-info-to-documents.js';
 import { isParentAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
@@ -752,7 +754,31 @@ export const renderCheckDecision = async (request, response) => {
 		return response.status(500).render('app/500.njk');
 	}
 
-	const mappedPageContent = checkAndConfirmPage(currentAppeal, request);
+	const { previews } = await request.apiClient
+		.post(`appeals/${currentAppeal.appealId}/decision/preview`, {
+			json: {
+				outcome: session.inspectorDecision.outcome,
+				invalidDecisionReason: session.inspectorDecision.invalidReason
+			}
+		})
+		.json();
+
+	const emailPreviewComponents = [
+		detailsComponent({
+			summaryText: 'Preview email to appellant',
+			html: previews.appellant
+		}),
+		detailsComponent({
+			summaryText: 'Preview email to LPA',
+			html: previews.lpa
+		}),
+		detailsComponent({
+			summaryText: 'Preview email to interested parties',
+			html: previews.interestedParty
+		})
+	];
+
+	const mappedPageContent = checkAndConfirmPage(currentAppeal, request, emailPreviewComponents);
 
 	return response.status(200).render('appeals/appeal/issue-decision.njk', {
 		pageContent: mappedPageContent,
@@ -814,13 +840,37 @@ export const postCostsCheckDecision = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderCostsCheckDecision = async (request, response) => {
-	const { errors, currentAppeal } = request;
+	const { errors, currentAppeal, session } = request;
 
 	if (!currentAppeal) {
 		return response.status(404).render('app/404.njk');
 	}
 
-	const mappedPageContent = checkAndConfirmPage(currentAppeal, request);
+	const { previews } = await request.apiClient
+		.post(`appeals/${currentAppeal.appealId}/decision/preview`, {
+			json: {
+				outcome: session.inspectorDecision?.outcome,
+				invalidDecisionReason: session.inspectorDecision?.invalidReason
+			}
+		})
+		.json();
+
+	const emailPreviewComponents = [
+		detailsComponent({
+			summaryText: 'Preview email to appellant',
+			html: previews.appellant
+		}),
+		detailsComponent({
+			summaryText: 'Preview email to LPA',
+			html: previews.lpa
+		}),
+		detailsComponent({
+			summaryText: 'Preview email to interested parties',
+			html: previews.interestedParty
+		})
+	];
+
+	const mappedPageContent = checkAndConfirmPage(currentAppeal, request, emailPreviewComponents);
 
 	return response.status(200).render('appeals/appeal/issue-decision.njk', {
 		pageContent: mappedPageContent,
