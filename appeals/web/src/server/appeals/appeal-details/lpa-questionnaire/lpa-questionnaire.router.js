@@ -272,7 +272,6 @@ router
 	.get(
 		validateAppeal,
 		clearUncommittedFilesFromSession,
-		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getLpaQuestionnaire)
 	)
 	.post(
