@@ -768,12 +768,12 @@ const renderCheckDetailsAndMarkEnforcementAsInvalid = async (request, response) 
 			};
 			const appellantTemplate = await generateNotifyPreview(
 				apiClient,
-				'enforcement-notice-incomplete-appellant.content.md',
+				'enforcement-notice-invalid-appellant.content.md',
 				personalisation
 			);
 			const lpaTemplate = await generateNotifyPreview(
 				apiClient,
-				'enforcement-notice-incomplete-lpa.content.md',
+				'enforcement-notice-invalid-lpa.content.md',
 				personalisation
 			);
 
