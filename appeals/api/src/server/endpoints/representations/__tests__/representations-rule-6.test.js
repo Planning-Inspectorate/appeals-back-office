@@ -727,7 +727,7 @@ describe('publishProofOfEvidence', () => {
 		notifySend.mock.calls.forEach((call) => {
 			expect(call[0].templateName).toEqual('not-received-proof-of-evidence-and-witnesses');
 			expect(call[0].personalisation.inquiry_subject_line).toEqual(
-				'Proof of evidence and witnesses not received'
+				'We did not receive any proof of evidence or any details of witnesses from the local planning authority, the appellant, Rule 6 Org 1 or Rule 6 Org 2'
 			);
 		});
 	});

@@ -24,12 +24,12 @@ describe('not-received-proof-of-evidence-and-witnesses.md', () => {
 				inquiry_witnesses_text:
 					'Your witnesses should be available for the duration of the inquiry.',
 				inquiry_subject_line:
-					'We did not receive any proof of evidence and witnesses from appellant or any other parties'
+					'We did not receive any proof of evidence or any details of witnesses from the local planning authority or the appellant'
 			}
 		};
 
 		const expectedContent = [
-			'We did not receive any proof of evidence and witnesses from appellant or any other parties.',
+			'We did not receive any proof of evidence or any details of witnesses from the local planning authority or the appellant.',
 			'',
 			'# Appeal details',
 			'',
@@ -43,6 +43,7 @@ describe('not-received-proof-of-evidence-and-witnesses.md', () => {
 			'Time: 2:00pm',
 			'Expected days: 8',
 			'Venue address: 10, Test Street, London, AH6 9KL',
+			'',
 			'',
 			'The details of the inquiry are subject to change. We will contact you by email if we make any changes.',
 			'',
@@ -62,7 +63,7 @@ describe('not-received-proof-of-evidence-and-witnesses.md', () => {
 			{
 				content: expectedContent,
 				subject:
-					'We did not receive any proof of evidence and witnesses from appellant or any other parties: ABC45678'
+					'We did not receive any proof of evidence or any details of witnesses from the local planning authority or the appellant: ABC45678'
 			}
 		);
 	});
@@ -89,12 +90,12 @@ describe('not-received-proof-of-evidence-and-witnesses.md', () => {
 				inquiry_witnesses_text:
 					'Your witnesses should be available for the duration of the inquiry.',
 				inquiry_subject_line:
-					'We did not receive any proof of evidence and witnesses from appellant or any other parties'
+					'We did not receive any proof of evidence or any details of witnesses from the local planning authority or the appellant'
 			}
 		};
 
 		const expectedContent = [
-			'We did not receive any proof of evidence and witnesses from appellant or any other parties.',
+			'We did not receive any proof of evidence or any details of witnesses from the local planning authority or the appellant.',
 			'',
 			'# Appeal details',
 			'',
@@ -107,6 +108,8 @@ describe('not-received-proof-of-evidence-and-witnesses.md', () => {
 			'^Date: 13 December 2025',
 			'Time: 2:00pm',
 			'Expected days: 8',
+			'',
+			'',
 			'The details of the inquiry are subject to change. We will contact you by email if we make any changes.',
 			'',
 			'Your witnesses should be available for the duration of the inquiry.',
@@ -125,7 +128,7 @@ describe('not-received-proof-of-evidence-and-witnesses.md', () => {
 			{
 				content: expectedContent,
 				subject:
-					'We did not receive any proof of evidence and witnesses from appellant or any other parties: ABC45678'
+					'We did not receive any proof of evidence or any details of witnesses from the local planning authority or the appellant: ABC45678'
 			}
 		);
 	});

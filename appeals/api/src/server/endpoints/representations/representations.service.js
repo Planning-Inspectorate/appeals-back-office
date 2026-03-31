@@ -770,14 +770,30 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 					? 'proof-of-evidence-and-witnesses-shared'
 					: 'not-received-proof-of-evidence-and-witnesses';
 
+			const nonSubmittedParties = allParties.filter((p) => !p.isValid).map((p) => p.name);
+
+			const formattedParties = nonSubmittedParties.reduce((acc, name, index, array) => {
+				if (index === 0) return name;
+				if (index === array.length - 1) return `${acc} or ${name}`;
+				return `${acc}, ${name}`;
+			}, '');
+
 			const inquirySubjectLine =
 				submittedParties.length > 0
 					? submittedParties.map((p) => p.name)
-					: 'Proof of evidence and witnesses not received';
+					: `We did not receive any proof of evidence or any details of witnesses from ${formattedParties}`;
 
 			for (const recipient of recipients) {
 				const templateWhatHappensNext =
-					recipient.id === 'lpa' ? 'manage-appeals' : recipient.isRule6 ? 'rule-6' : 'appeals';
+					submittedParties.length === 0
+						? appeal.inquiry
+							? `You need to attend the inquiry on ${inquiryDate}.`
+							: 'We will contact you by email when we set up the inquiry'
+						: recipient.id === 'lpa'
+							? 'manage-appeals'
+							: recipient.isRule6
+								? 'rule-6'
+								: 'appeals';
 
 				await notifyPublished({
 					appeal,
