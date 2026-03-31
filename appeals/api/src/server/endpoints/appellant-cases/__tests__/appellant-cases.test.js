@@ -2560,7 +2560,7 @@ describe('appellant cases routes', () => {
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
 					local_planning_authority: 'Maidstone Borough Council',
 					due_date: '14 July 2099',
-					fee_due_date: '14 Aug 2035',
+					fee_due_date: '14 August 2035',
 					missing_documents: ['Grounds of appeal supporting documents: Missing doc'],
 					other_info: ['Other reason'],
 					appeal_grounds: ['a', 'b'],
@@ -2716,6 +2716,127 @@ describe('appellant cases routes', () => {
 				});
 				expect(response.status).toEqual(200);
 			});
+
+			test('updates the appellant case for incomplete enforcement notice appeal with valid enforcement notice where ground fee receipt due', async () => {
+				databaseConnector.appellantCaseIncompleteReason.findMany.mockResolvedValue([
+					{
+						id: 14,
+						name: 'Waiting for appellant to pay the fee',
+						hasText: false
+					}
+				]);
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...enforcementNoticeAppealAppellantCaseIncomplete,
+					appellantCase: {
+						...enforcementNoticeAppealAppellantCaseIncomplete.appellantCase,
+						appellantCaseEnforcementMissingDocumentsSelected: [],
+						appellantCaseEnforcementGroundsMismatchSelected: [],
+						appellantCaseIncompleteReasonsSelected: []
+					},
+					enforcementNoticeAppealOutcome: {
+						...enforcementNoticeAppealAppellantCaseIncomplete.enforcementNoticeAppealOutcome,
+						groundAFeeReceiptDueDate: '2099-07-14T00:00:00.000Z'
+					}
+				});
+				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+					appellantCaseValidationOutcomes[0]
+				);
+				databaseConnector.appellantCaseIncompleteReasonsSelected.deleteMany.mockResolvedValue(true);
+				databaseConnector.appellantCaseIncompleteReasonsSelected.createMany.mockResolvedValue(true);
+				databaseConnector.appellantCaseEnforcementGroundsMismatchFactsText.deleteMany.mockResolvedValue(
+					true
+				);
+				databaseConnector.appellantCaseEnforcementGroundsMismatchFactsText.createMany.mockResolvedValue(
+					true
+				);
+				databaseConnector.appeal.update.mockResolvedValue();
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+				databaseConnector.appellantCaseEnforcementGroundsMismatchFacts.findMany.mockResolvedValue(
+					appellantCaseEnforcementGroundsMismatchFacts
+				);
+
+				const body = {
+					enforcementNoticeInvalid: 'no',
+					feeReceiptDueDate: '2099-07-14T00:00:00.000Z',
+					incompleteReasons: [{ id: 14 }],
+					validationOutcome: 'incomplete'
+				};
+				const { appellantCase, id } = enforcementNoticeAppealAppellantCaseIncomplete;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { id: appellantCase.id },
+					data: {
+						appellantCaseValidationOutcomeId: 1
+					}
+				});
+				expect(databaseConnector.enforcementNoticeAppealOutcome.upsert).toHaveBeenCalledWith({
+					create: expect.any(Object),
+					update: {
+						appeal: { connect: { id } },
+						otherInformation: null,
+						enforcementNoticeInvalid: 'no',
+						groundAFeeReceiptDueDate: '2099-07-14T00:00:00.000Z',
+						otherLiveAppeals: null
+					},
+					where: { appealId: id }
+				});
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+					data: {
+						appealId: id,
+						details: 'Appeal marked as incomplete:\n<ul><li>Ground (a) fee receipt due</li></ul>',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+					data: {
+						appealId: id,
+						details: 'Case updated',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+
+				const personalisation = {
+					appeal_reference_number: '1345264',
+					enforcement_reference: 'Reference',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					local_planning_authority: 'Maidstone Borough Council',
+					due_date: '',
+					fee_due_date: '14 July 2099',
+					missing_documents: [],
+					other_info: [],
+					appeal_grounds: [],
+					grounds_and_facts: []
+				};
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation,
+					recipientEmail: enforcementNoticeAppealAppellantCaseIncomplete.agent.email,
+					templateName: 'enforcement-appeal-incomplete-appellant'
+				});
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation,
+					recipientEmail: enforcementNoticeAppealAppellantCaseIncomplete.lpa.email,
+					templateName: 'enforcement-appeal-incomplete-lpa'
+				});
+				expect(response.status).toEqual(200);
+			});
+
 			test('updates the appellant case for incomplete enforcement notice appeal with invalid enforcement listed building', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...enforcementListedAppealAppellantCaseIncomplete,
