@@ -359,7 +359,7 @@ export const updateAppellantCaseValidationOutcome = async (
 					details
 				});
 
-				if (incompleteAppealDueDate) {
+				if (incompleteAppealDueDate || enforcementNoticeAppealOutcome?.groundAFeeReceiptDueDate) {
 					const missingDocumentOptions = await commonRepository.getLookupList(
 						'appellantCaseEnforcementMissingDocument'
 					);
@@ -376,10 +376,8 @@ export const updateAppellantCaseValidationOutcome = async (
 										`${missingDocumentOptions.find((option) => option.id === document.id)?.name}: ${document.text?.[0] || ''}`
 								)
 							: [],
-						fee_due_date: updatedAppeal?.enforcementNoticeAppealOutcome?.groundAFeeReceiptDueDate
-							? formatDate(
-									new Date(updatedAppeal.enforcementNoticeAppealOutcome.groundAFeeReceiptDueDate)
-								)
+						fee_due_date: enforcementNoticeAppealOutcome?.groundAFeeReceiptDueDate
+							? formatDate(new Date(enforcementNoticeAppealOutcome.groundAFeeReceiptDueDate), false)
 							: '',
 						grounds_and_facts: enforcementGroundsMismatchFacts
 							? enforcementGroundsMismatchFacts.map(
@@ -390,7 +388,9 @@ export const updateAppellantCaseValidationOutcome = async (
 						local_planning_authority: updatedAppeal?.lpa?.name || '',
 						other_info: incompleteReasons?.find((reason) => reason.id === 10)?.['text'] || [],
 						team_email_address: teamEmail,
-						due_date: formatDate(new Date(incompleteAppealDueDate), false),
+						due_date: incompleteAppealDueDate
+							? formatDate(new Date(incompleteAppealDueDate), false)
+							: '',
 						appeal_grounds:
 							updatedAppeal?.appealGrounds
 								?.map((ground) => ground.ground?.groundRef || '')
