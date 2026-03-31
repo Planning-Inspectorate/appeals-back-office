@@ -180,7 +180,7 @@ describe('Appellant Case Valid Flow', () => {
 				const element = parseHtml(response.text);
 
 				expect(element.innerHTML).toMatchSnapshot();
-				expect(element.innerHTML).toContain('Enter the decision date</a>');
+				expect(element.innerHTML).toContain('Enter the valid date</a>');
 
 				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',
@@ -188,7 +188,7 @@ describe('Appellant Case Valid Flow', () => {
 				}).innerHTML;
 
 				expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-				expect(unprettifiedErrorSummaryHtml).toContain('Enter the decision date');
+				expect(unprettifiedErrorSummaryHtml).toContain('Enter the valid date');
 			});
 
 			it(`should re-render the 'Valid date' screen if the date is in the future`, async () => {
@@ -205,7 +205,7 @@ describe('Appellant Case Valid Flow', () => {
 				const element = parseHtml(response.text);
 
 				expect(element.innerHTML).toMatchSnapshot();
-				expect(element.innerHTML).toContain('The decision date must be today or in the past</a>');
+				expect(element.innerHTML).toContain('The valid date must be today or in the past</a>');
 
 				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',
@@ -214,7 +214,7 @@ describe('Appellant Case Valid Flow', () => {
 
 				expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 				expect(unprettifiedErrorSummaryHtml).toContain(
-					'The decision date must be today or in the past'
+					'The valid date must be today or in the past'
 				);
 			});
 

@@ -194,7 +194,7 @@ exports[`Appellant Case Valid Flow Enforcement Appeals POST /enforcement/date sh
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#valid-date-day">The decision date must be today or in the past</a>
+                            <li><a href="#valid-date-day">The valid date must be today or in the past</a>
                             </li>
                         </ul>
                     </div>
@@ -219,8 +219,8 @@ exports[`Appellant Case Valid Flow Enforcement Appeals POST /enforcement/date sh
                             <div id="valid-date-hint" class="govuk-hint">
                                 <div class="govuk-hint">For example, 31 3 2025</div>
                             </div>
-                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The decision date must
-                                be today or in the past</p>
+                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The valid date must be
+                                today or in the past</p>
                             <div class="govuk-date-input" id="valid-date">
                                 <div class="govuk-date-input__item">
                                     <div class="govuk-form-group">
@@ -264,7 +264,7 @@ exports[`Appellant Case Valid Flow Enforcement Appeals POST /enforcement/date sh
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#valid-date-day">Enter the decision date</a>
+                            <li><a href="#valid-date-day">Enter the valid date</a>
                             </li>
                         </ul>
                     </div>
@@ -289,7 +289,7 @@ exports[`Appellant Case Valid Flow Enforcement Appeals POST /enforcement/date sh
                             <div id="valid-date-hint" class="govuk-hint">
                                 <div class="govuk-hint">For example, 31 3 2025</div>
                             </div>
-                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the decision date</p>
+                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the valid date</p>
                             <div                             class="govuk-date-input" id="valid-date">
                                 <div class="govuk-date-input__item">
                                     <div class="govuk-form-group">
