@@ -332,4 +332,3 @@ extends:
     globalVariables:
       - template: azure-pipelines-variables.yml@self
       - group: cd_e2e-deploy
-      - group: e2e-dev
