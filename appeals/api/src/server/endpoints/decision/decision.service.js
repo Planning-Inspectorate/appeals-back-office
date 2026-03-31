@@ -14,7 +14,7 @@ import { getFeedbackLinkFromAppealTypeKey } from '#utils/feedback-form-link.js';
 import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { trimAppealType } from '#utils/string-utils.js';
-import { updatePersonalList } from '#utils/update-personal-list.js';
+import { setPersonalList } from '#utils/update-personal-list.js';
 import { FEATURE_FLAG_NAMES, FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import {
 	AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
@@ -372,7 +372,7 @@ export const publishCostsDecision = async (
 	}
 	const { recipientEmailTemplate, lpaEmailTemplate, auditTrailDetails } = costDecisionDetails;
 
-	await updatePersonalList(appeal.id);
+	await setPersonalList({ appealId: appeal.id });
 
 	if (!skipNotifies) {
 		const enforcementReference = await getEnforcementReference(appeal);

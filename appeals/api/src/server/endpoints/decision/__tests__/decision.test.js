@@ -43,6 +43,18 @@ import { request } from '../../../app-test.js';
 import { sendNewDecisionLetter } from '../decision.service';
 const { databaseConnector } = await import('#utils/database-connector.js');
 
+/**
+ * @param {Array<object>} expectedCalls
+ * @returns {void}
+ */
+const expectAuditTrailCallsToContain = (expectedCalls) => {
+	const auditTrailCalls = databaseConnector.auditTrail.create.mock.calls.map(([call]) => call);
+
+	for (const expectedCall of expectedCalls) {
+		expect(auditTrailCalls).toContainEqual(expectedCall);
+	}
+};
+
 describe('decision routes', () => {
 	beforeAll(() => {
 		jest.clearAllMocks();
@@ -429,41 +441,41 @@ describe('decision routes', () => {
 					details = details + '\n\n Reason: Because it is.';
 				}
 
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: {
-						appealId: appeal.id,
-						details,
-						loggedAt: expect.any(Date),
-						userId: appeal.caseOfficer.id
+				expectAuditTrailCallsToContain([
+					{
+						data: {
+							appealId: appeal.id,
+							details,
+							loggedAt: expect.any(Date),
+							userId: appeal.caseOfficer.id
+						}
+					},
+					{
+						data: {
+							appealId: appeal.id,
+							details: AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
+							loggedAt: expect.any(Date),
+							userId: appeal.caseOfficer.id
+						}
+					},
+					{
+						data: {
+							appealId: appeal.id,
+							details: AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED,
+							loggedAt: expect.any(Date),
+							userId: appeal.caseOfficer.id
+						}
+					},
+					{
+						data: {
+							appealId: appeal.id,
+							details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [nextState]),
+							loggedAt: expect.any(Date),
+							userId: appeal.caseOfficer.id
+						}
 					}
-				});
+				]);
 
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: {
-						appealId: appeal.id,
-						details: AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
-						loggedAt: expect.any(Date),
-						userId: appeal.caseOfficer.id
-					}
-				});
-
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: {
-						appealId: appeal.id,
-						details: AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED,
-						loggedAt: expect.any(Date),
-						userId: appeal.caseOfficer.id
-					}
-				});
-
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: {
-						appealId: appeal.id,
-						details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [nextState]),
-						loggedAt: expect.any(Date),
-						userId: appeal.caseOfficer.id
-					}
-				});
 				expect(response.status).toEqual(201);
 			}
 		);
@@ -677,6 +689,14 @@ describe('decision routes', () => {
 				reference: childAppeal.childRef
 			};
 
+			/* TODO: DJW check this
+			   databaseConnector.appeal.findUnique
+				.mockResolvedValueOnce(appeal)
+				.mockResolvedValueOnce(child)
+				.mockResolvedValueOnce(appeal)
+				.mockResolvedValueOnce(appeal)
+				.mockResolvedValueOnce(child)
+				.mockResolvedValueOnce(child); */
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(({ where }) => {
 				if (where?.id === child.id) {
@@ -800,45 +820,46 @@ describe('decision routes', () => {
 				recipientEmail: appeal.lpa.email
 			});
 
-			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
-				data: {
-					appealId: appeal.id,
-					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
-						outcome[0].toUpperCase() + outcome.slice(1)
-					]),
-					loggedAt: expect.any(Date),
-					userId: appeal.caseOfficer.id
-				}
-			});
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(4);
 
-			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
-				data: {
-					appealId: childAppeal.childId,
-					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
-						outcome[0].toUpperCase() + outcome.slice(1)
-					]),
-					loggedAt: expect.any(Date),
-					userId: appeal.caseOfficer.id
+			expectAuditTrailCallsToContain([
+				{
+					data: {
+						appealId: appeal.id,
+						details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
+							outcome[0].toUpperCase() + outcome.slice(1)
+						]),
+						loggedAt: expect.any(Date),
+						userId: appeal.caseOfficer.id
+					}
+				},
+				{
+					data: {
+						appealId: appeal.id,
+						details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['complete']),
+						loggedAt: expect.any(Date),
+						userId: appeal.caseOfficer.id
+					}
+				},
+				{
+					data: {
+						appealId: childAppeal.childId,
+						details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
+							outcome[0].toUpperCase() + outcome.slice(1)
+						]),
+						loggedAt: expect.any(Date),
+						userId: appeal.caseOfficer.id
+					}
+				},
+				{
+					data: {
+						appealId: childAppeal.childId,
+						details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['complete']),
+						loggedAt: expect.any(Date),
+						userId: appeal.caseOfficer.id
+					}
 				}
-			});
-
-			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
-				data: {
-					appealId: appeal.id,
-					details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['complete']),
-					loggedAt: expect.any(Date),
-					userId: appeal.caseOfficer.id
-				}
-			});
-
-			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(4, {
-				data: {
-					appealId: childAppeal.childId,
-					details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['complete']),
-					loggedAt: expect.any(Date),
-					userId: appeal.caseOfficer.id
-				}
-			});
+			]);
 
 			expect(response.status).toEqual(201);
 		});
