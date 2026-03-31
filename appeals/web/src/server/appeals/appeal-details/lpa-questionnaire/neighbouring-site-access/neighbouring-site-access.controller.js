@@ -1,9 +1,13 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { removeNeighbouringSite } from '../../neighbouring-sites/neighbouring-sites.service.js';
 import { getLpaQuestionnaireFromId } from '../lpa-questionnaire.service.js';
 import { changeNeighbouringSiteAccessPage } from './neighbouring-site-access.mapper.js';
 import { changeNeighbouringSiteAccess } from './neighbouring-site-access.service.js';
+/**
+ * @typedef {import('@pins/appeals.api').Appeals.NeighbouringSite} NeighbouringSite
+ */
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -45,7 +49,7 @@ const renderChangeNeighbouringSiteAccess = async (request, response) => {
  * @param {string} appealId
  * @param {string} lpaQuestionnaireId
  * @param {'yes' | 'no'} neighbouringSiteAccess
- * @param {{siteId: number, source: string, address: {}}[]} neighbouringSites
+ * @param {NeighbouringSite[]} neighbouringSites
  */
 const createNextPageUrl = (
 	request,
@@ -61,14 +65,6 @@ const createNextPageUrl = (
 		const addNeighbouringSiteUrlBackLink = addBackLinkQueryToUrl(request, addNeighbouringSiteUrl);
 
 		return addNeighbouringSiteUrlBackLink;
-	}
-	if (neighbouringSiteAccess === 'no' && lpaNeighbouringSites.length > 0) {
-		const removeNeighbouringSiteUrl = `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/neighbouring-sites/remove/site/${neighbouringSites[0].siteId}`;
-		const removeNeighbouringSiteUrlBackLink = addBackLinkQueryToUrl(
-			request,
-			removeNeighbouringSiteUrl
-		);
-		return removeNeighbouringSiteUrlBackLink;
 	}
 	return `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`;
 };
@@ -100,14 +96,26 @@ export const postChangeNeighbouringSiteAccess = async (request, response) => {
 			request.session.neighbouringSiteAccess
 		);
 
+		if (request.session.neighbouringSiteAccess.radio === 'no') {
+			const lpaNeighbouringSites = request.currentAppeal.neighbouringSites?.filter(
+				(/** @type {NeighbouringSite} */ site) => site.source === 'lpa'
+			);
+
+			if (lpaNeighbouringSites?.length > 0) {
+				await Promise.all(
+					lpaNeighbouringSites.map((/** @type {NeighbouringSite} */ site) =>
+						removeNeighbouringSite(apiClient, appealId, site.siteId.toString())
+					)
+				);
+			}
+		}
+
 		addNotificationBannerToSession({
 			session: request.session,
 			bannerDefinitionKey: 'changePage',
 			appealId,
 			text: 'Will the inspector need to enter a neighbour’s land or property updated'
 		});
-
-		console.log(request.currentAppeal.neighboringSites);
 
 		const nextPageUrl = createNextPageUrl(
 			request,
