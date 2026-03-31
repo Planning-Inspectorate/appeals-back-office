@@ -5059,7 +5059,7 @@ describe('/appeals/:id/reps', () => {
 					notifyClient: expect.anything(),
 					personalisation: {
 						...expectedEmailPayload,
-						what_happens_next: 'manage-appeals',
+						what_happens_next: 'You need to attend the inquiry on 13 December 2025.',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
 						inquiry_address: expectedinquiryAddress,
 						inquiry_date: '13 December 2025',
@@ -5069,7 +5069,8 @@ describe('/appeals/:id/reps', () => {
 						inquiry_time: '2:00pm',
 						inquiry_witnesses_text:
 							'Your witnesses should be available for the duration of the inquiry.',
-						inquiry_subject_line: 'Proof of evidence and witnesses not received',
+						inquiry_subject_line:
+							'We did not receive any proof of evidence or any details of witnesses from the local planning authority or the appellant',
 						is_inquiry_procedure: true
 					},
 					recipientEmail: appealS78.lpa.email,
@@ -5081,7 +5082,7 @@ describe('/appeals/:id/reps', () => {
 					notifyClient: expect.anything(),
 					personalisation: {
 						...expectedEmailPayload,
-						what_happens_next: 'appeals',
+						what_happens_next: 'You need to attend the inquiry on 13 December 2025.',
 						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
 						inquiry_address: expectedinquiryAddress,
 						inquiry_date: '13 December 2025',
@@ -5092,7 +5093,8 @@ describe('/appeals/:id/reps', () => {
 						is_inquiry_procedure: true,
 						inquiry_witnesses_text:
 							'Your witnesses should be available for the duration of the inquiry.',
-						inquiry_subject_line: 'Proof of evidence and witnesses not received'
+						inquiry_subject_line:
+							'We did not receive any proof of evidence or any details of witnesses from the local planning authority or the appellant'
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'not-received-proof-of-evidence-and-witnesses'
