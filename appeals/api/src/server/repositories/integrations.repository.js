@@ -5,7 +5,9 @@ import { createAppealReference } from '#utils/appeal-reference.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { PROCEDURE_TYPE_ID_MAP, TEAM_NAME_MAP } from '@pins/appeals/constants/common.js';
 import { CASE_RELATIONSHIP_RELATED } from '@pins/appeals/constants/support.js';
+import { isLdcOrDiscontinuanceOrEnforcementCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_STATUS, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
+import { getAppealTypeByTypeId } from './appeal-type.repository.js';
 import { getTeamIdFromLpaCode, getTeamIdFromName } from './team.repository.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
@@ -52,10 +54,16 @@ export const createAppeal = async (
 			const appellantSelectedProcedureType =
 				PROCEDURE_TYPE_ID_MAP[appellantProcedurePreference || 'written'];
 
-			const teamId =
-				appellantSelectedProcedureType === inquiryProcedureTypeId
-					? await getTeamIdFromName(TEAM_NAME_MAP.MAJOR_CASEWORK)
-					: await getTeamIdFromLpaCode(data.lpa.connect?.lpaCode || '');
+			const appealType = await getAppealTypeByTypeId(Number(appeal.appealTypeId));
+
+			let teamId;
+			if (isLdcOrDiscontinuanceOrEnforcementCaseType(appealType?.key)) {
+				teamId = await getTeamIdFromName(TEAM_NAME_MAP.ENFORCEMENT_APPEALS_TEAM);
+			} else if (appellantSelectedProcedureType === inquiryProcedureTypeId) {
+				teamId = await getTeamIdFromName(TEAM_NAME_MAP.MAJOR_CASEWORK);
+			} else {
+				teamId = await getTeamIdFromLpaCode(data.lpa.connect?.lpaCode || '');
+			}
 
 			appeal = await tx.appeal.update({
 				where: { id: appeal.id },
@@ -215,7 +223,8 @@ const setAppealRelationships = async (tx, appealId, caseReference, relatedRefere
 
 		const existingRelationships = await tx.appealRelationship.findMany({
 			where: {
-				parentId: appealId
+				type: CASE_RELATIONSHIP_RELATED,
+				OR: [{ parentId: appealId }, { childId: appealId }]
 			}
 		});
 
@@ -223,7 +232,8 @@ const setAppealRelationships = async (tx, appealId, caseReference, relatedRefere
 			.map((ref) => {
 				if (
 					!existingRelationships.find(
-						(/** @type {{ childRef: string; }} */ a) => a.childRef === ref
+						/** @type {{ childRef: string; parentRef: string; }} */ (a) =>
+							a.childRef === ref || a.parentRef === ref
 					)
 				) {
 					const foundAppeal = relatedAppeals.find(

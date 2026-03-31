@@ -199,6 +199,8 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 	const totalLpaStatements = lpaStatementText ? 1 : 0;
 	const totalAppellantStatements = appellantStatementText ? 1 : 0;
 	const totalRule6Statements = rule6StatementTexts?.length ?? 0;
+	const totalStatementsCount = totalLpaStatements + totalAppellantStatements + totalRule6Statements;
+	const hasIpCommentsAndStatements = numIpComments > 0 && totalStatementsCount > 0;
 	const totalShareCount =
 		numIpComments + totalLpaStatements + totalAppellantStatements + totalRule6Statements;
 
@@ -251,6 +253,13 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 	} else if (appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY) {
 		heading = 'Progress to proof of evidence and witnesses';
 		confirm = 'Progress to proof of evidence and witnesses';
+	} else if (
+		valueTexts.length > 0 &&
+		appeal.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING &&
+		hasIpCommentsAndStatements
+	) {
+		heading = 'Check details and share interested party comments and statements';
+		confirm = 'Share interested party comments and statements';
 	} else if (
 		valueTexts.length > 0 &&
 		appeal.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING

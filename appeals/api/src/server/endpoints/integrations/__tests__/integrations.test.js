@@ -46,6 +46,7 @@ import { jest } from '@jest/globals';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import {
 	CASE_RELATIONSHIP_LINKED,
+	CASE_RELATIONSHIP_RELATED,
 	ERROR_INVALID_APPEAL_TYPE_REP,
 	ERROR_INVALID_APPELLANT_CASE_DATA
 } from '@pins/appeals/constants/support.js';
@@ -191,7 +192,7 @@ describe('/appeals/case-submission', () => {
 					})
 				);
 
-				expect(mockNotifySend).toHaveBeenCalledTimes(appealType === 'ENFORCEMENT_NOTICE' ? 1 : 0);
+				expect(mockNotifySend).toHaveBeenCalledTimes(appealType === 'ENFORCEMENT_NOTICE' ? 2 : 0);
 
 				expect(databaseConnector.document.createMany).toHaveBeenCalled();
 				expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
@@ -511,7 +512,10 @@ describe('/appeals/lpaq-submission', () => {
 					where: { reference: { in: ['1000000'] } }
 				});
 				expect(databaseConnector.appealRelationship.findMany).toHaveBeenCalledWith({
-					where: { parentId: 100 }
+					where: {
+						type: CASE_RELATIONSHIP_RELATED,
+						OR: [{ parentId: 100 }, { childId: 100 }]
+					}
 				});
 				expect(databaseConnector.appealRelationship.createMany).toHaveBeenCalledWith({
 					data: [
@@ -1309,6 +1313,7 @@ const createIntegrationMocks = (/** @type {*} */ appealIngestionInput) => {
 		appealStatus: [{ status: 'ready_to_start', valid: true }],
 		agent: { email: 'test@email.com', firstName: 'Test', lastName: 'Agent' },
 		appellant: { email: 'test@email.com', firstName: 'Test', lastName: 'Agent' },
+		lpa: { email: 'test@email.com', firstName: 'Test', lastName: 'Agent' },
 		address: { addressLine1: '123 Test Street', postcode: 'TE1 1ST' }
 	});
 	// @ts-ignore
@@ -1369,6 +1374,10 @@ const createIntegrationMocks = (/** @type {*} */ appealIngestionInput) => {
 	databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
 		{ key: APPEAL_REDACTED_STATUS.NOT_REDACTED }
 	]);
+
+	databaseConnector.appealType.findFirst.mockResolvedValue({
+		appealType: appealIngestionInput.appealType?.connect
+	});
 
 	return appealCreatedResult;
 };

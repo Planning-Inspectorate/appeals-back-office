@@ -186,8 +186,9 @@ const getCalculatedAppealTimetable = async (req, res) => {
 	const { appeal, query } = req;
 	let startDate = query.startDate ? String(query.startDate) : new Date().toISOString();
 	const procedureType = String(query.procedureType) || 'written';
+	const inquiryDate = query.inquiryDate ? new Date(String(query.inquiryDate)) : null;
 
-	const timetable = await calculateAppealTimetable(appeal, startDate, procedureType);
+	const timetable = await calculateAppealTimetable(appeal, startDate, procedureType, inquiryDate);
 	return res.send(timetable);
 };
 

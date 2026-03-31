@@ -18,12 +18,14 @@ import {
 	addressKnownPage,
 	confirmChangeInquiryPage,
 	confirmInquiryPage,
+	getDueDateFieldNameAndID,
 	inquiryDatePage,
 	inquiryDueDatesPage,
 	inquiryEstimationPage
 } from './set-up-inquiry.mapper.js';
 import {
 	addAppellantCaseToLocals,
+	calculateAppealTimetable,
 	createInquiry,
 	updateInquiry
 } from './set-up-inquiry.service.js';
@@ -456,14 +458,82 @@ export const postInquiryAddressDetails = async (request, response) => {
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
+ * @param {Record<string, string>} sessionValues
+ * @returns {Promise<Record<string, string>>}
+ */
+const populateCalculatedDueDates = async (request, sessionValues) => {
+	if (sessionValues['lpa-questionnaire-due-date-day']) {
+		return sessionValues;
+	}
+
+	try {
+		const { appealId } = request.currentAppeal;
+		const procedureType =
+			request.session?.startCaseAppealProcedure?.[appealId]?.appealProcedure ||
+			request.currentAppeal.procedureType;
+		const inquiryDateISO = dayMonthYearHourMinuteToISOString({
+			day: sessionValues['inquiry-date-day'],
+			month: sessionValues['inquiry-date-month'],
+			year: sessionValues['inquiry-date-year'],
+			hour: sessionValues['inquiry-time-hour'],
+			minute: sessionValues['inquiry-time-minute']
+		});
+
+		const calculatedTimetable = await calculateAppealTimetable(
+			request.apiClient,
+			appealId,
+			procedureType.toLowerCase(),
+			inquiryDateISO
+		);
+
+		if (calculatedTimetable) {
+			const dateFields = [
+				'lpaQuestionnaireDueDate',
+				'statementDueDate',
+				'lpaStatementDueDate',
+				'ipCommentsDueDate',
+				'finalCommentsDueDate',
+				'statementOfCommonGroundDueDate',
+				'proofOfEvidenceAndWitnessesDueDate',
+				'planningObligationDueDate',
+				'caseManagementConferenceDueDate'
+			];
+
+			const updatedSessionValues = { ...sessionValues };
+			dateFields.forEach((field) => {
+				const dateISO = calculatedTimetable[field];
+				if (dateISO) {
+					const sessionFieldId = getDueDateFieldNameAndID(
+						field === 'lpaStatementDueDate' ? 'statementDueDate' : field
+					)?.id;
+					if (sessionFieldId && !updatedSessionValues[`${sessionFieldId}-day`]) {
+						const dateObj = dateISOStringToDayMonthYearHourMinute(dateISO);
+						updatedSessionValues[`${sessionFieldId}-day`] = String(dateObj.day);
+						updatedSessionValues[`${sessionFieldId}-month`] = String(dateObj.month);
+						updatedSessionValues[`${sessionFieldId}-year`] = String(dateObj.year);
+					}
+				}
+			});
+			return updatedSessionValues;
+		}
+	} catch (error) {
+		logger.error(error);
+	}
+
+	return sessionValues;
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getInquiryDueDates = async (request, response) => {
-	const sessionValues = getSessionValuesForAppeal(
+	let sessionValues = getSessionValuesForAppeal(
 		request,
 		'setUpInquiry',
 		request.currentAppeal.appealId
 	);
+	sessionValues = await populateCalculatedDueDates(request, sessionValues || {});
 	return renderInquiryDueDates(request, response, 'setup', sessionValues);
 };
 
@@ -472,11 +542,12 @@ export const getInquiryDueDates = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getChangeInquiryDueDates = async (request, response) => {
-	const sessionValues = getSessionValuesForAppeal(
+	let sessionValues = getSessionValuesForAppeal(
 		request,
 		'changeInquiry',
 		request.currentAppeal.appealId
 	);
+	sessionValues = await populateCalculatedDueDates(request, sessionValues || {});
 	return renderInquiryDueDates(request, response, 'change', sessionValues);
 };
 

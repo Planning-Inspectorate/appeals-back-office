@@ -2980,6 +2980,54 @@ describe('appellant cases routes', () => {
 		});
 	});
 
+	describe('POST /appeals/:appealId/appellant-cases/:appellantCaseId/enforcement-valid-notify-preview', () => {
+		test('returns the rendered HTML of the emails that would be sent to the relevant parties', async () => {
+			const appeal = {
+				...enforcementNoticeAppeal
+			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+
+			const { id, appellantCase } = appeal;
+			const response = await request
+				.post(`/appeals/${id}/appellant-cases/${appellantCase.id}/enforcement-valid-notify-preview`)
+				.send({
+					groundABarred: true,
+					otherInformation: 'Test information'
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+			const appellantPreview = response.body.appellant;
+			const lpaPreview = response.body.lpa;
+			expect(appellantPreview).toContain('Test information');
+			expect(lpaPreview).toContain('Test information');
+			expect(appellantPreview).toContain(
+				'We cannot consider ground (a) because the enforcement notice was issued'
+			);
+			expect(lpaPreview).toContain(
+				'We cannot consider ground (a) because the enforcement notice was issued'
+			);
+		});
+
+		test('returns an error if the appeal is not found', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(null);
+			const { id } = fullPlanningAppeal;
+			const response = await request
+				.post(`/appeals/${id}/appeal-timetables/notify-preview`)
+				.set('azureAdUserId', azureAdUserId)
+				.send({
+					startDate: '2024-06-12T22:59:00.000Z',
+					procedureType: 'hearing',
+					hearingStartTime: '2024-06-12T12:00:00.000Z'
+				});
+
+			expect(response.status).toEqual(404);
+			expect(response.body).toMatchObject({
+				errors: { appealId: 'Not found' }
+			});
+		});
+	});
+
 	describe('POST /appeals/:appealId/appellant-cases/:appellantCaseId/contact-address', () => {
 		test('creates a new contact address and updates appellant case and case history', async () => {
 			const { postCode: postcode, ...restAddress } =

@@ -152,7 +152,7 @@ describe('Manage docs on lpa case', () => {
 			happyPathHelper.uploadDocsLpaq();
 			happyPathHelper.removeDocLpaq();
 			caseDetailsPage.checkAnswerNotifyingParties(
-				'Who did you notify about this application?',
+				"List of neighbours' addresses that you notified about the application",
 				'No documents'
 			);
 		});

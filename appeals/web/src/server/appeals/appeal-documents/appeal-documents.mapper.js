@@ -800,14 +800,21 @@ export function addDocumentsCheckAndConfirmPage({
 /**
  * @param {FolderInfo} folder
  * @param {DocumentInfo} document
+ * @param {boolean} [isCosts]
  * @returns {HtmlProperty & ClassesProperty}
  */
-export function mapFolderDocumentInformationHtmlProperty(folder, document) {
+export function mapFolderDocumentInformationHtmlProperty(folder, document, isCosts = false) {
 	/** @type {HtmlProperty} */
 	const htmlProperty = {
 		html: '',
 		pageComponents: []
 	};
+
+	const isShared = /** @type {any} */ (document).isShared;
+	const sharedTagHtml =
+		isCosts && isShared
+			? `<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong>`
+			: '';
 
 	if (document?.id) {
 		const linkWrapperHtml = {
@@ -821,7 +828,7 @@ export function mapFolderDocumentInformationHtmlProperty(folder, document) {
 				type: 'html',
 				wrapperHtml: linkWrapperHtml,
 				parameters: {
-					html: `<a class="govuk-link" href="${mapDocumentDownloadUrl(
+					html: `${sharedTagHtml}<a class="govuk-link" href="${mapDocumentDownloadUrl(
 						folder.caseId,
 						document.id,
 						document.name
@@ -833,7 +840,7 @@ export function mapFolderDocumentInformationHtmlProperty(folder, document) {
 				type: 'html',
 				wrapperHtml: linkWrapperHtml,
 				parameters: {
-					html: `<span class="govuk-body">${document.name || ''}</span>`.trim()
+					html: `${sharedTagHtml}<span class="govuk-body">${document.name || ''}</span>`.trim()
 				}
 			});
 		}
@@ -868,9 +875,15 @@ export function mapFolderDocumentInformationHtmlProperty(folder, document) {
  * @param {FolderInfo} folder
  * @param {DocumentInfo} document
  * @param {string} viewAndEditUrl
+ * @param {boolean} [isCosts]
  * @returns {HtmlProperty & ClassesProperty}
  */
-export function mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEditUrl) {
+export function mapFolderDocumentActionsHtmlProperty(
+	folder,
+	document,
+	viewAndEditUrl,
+	isCosts = false
+) {
 	/** @type {HtmlProperty} */
 	const htmlProperty = {
 		html: ''
@@ -878,10 +891,18 @@ export function mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEd
 
 	if (document?.id) {
 		const virusCheckStatus = mapDocumentInfoVirusCheckStatus(document);
+
+		let actionText = virusCheckStatus.manageFolderPageActionText;
+		const isShared = /** @type {any} */ (document).isShared;
+
+		if (isCosts && virusCheckStatus.safe) {
+			actionText = isShared ? 'Manage' : 'Manage and share';
+		}
+
 		htmlProperty.html = `<a href="${viewAndEditUrl
 			.replace('{{folderId}}', folder.folderId.toString())
 			.replace('{{documentId}}', document.id)}" class="govuk-link">${
-			virusCheckStatus.manageFolderPageActionText
+			actionText
 		} <span class="govuk-visually-hidden">${document.name}</span></a>`;
 	}
 
@@ -899,6 +920,7 @@ export function mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEd
  * @param {string} [params.addButtonTextOverride]
  * @param {string} [params.dateColumnLabelTextOverride]
  * @param {string} [params.preHeadingTextOverride]
+ * @param {boolean} [params.isCosts]
  * @returns {PageContent}
  */
 export function manageFolderPage({
@@ -910,7 +932,8 @@ export function manageFolderPage({
 	pageHeadingTextOverride,
 	addButtonTextOverride,
 	dateColumnLabelTextOverride,
-	preHeadingTextOverride
+	preHeadingTextOverride,
+	isCosts = false
 }) {
 	const appealType = request.currentAppeal?.appealType;
 	const notificationBanners = mapNotificationBannersFromSession(
@@ -993,7 +1016,7 @@ export function manageFolderPage({
 						id: 'documents-table'
 					},
 					rows: (folder?.documents || []).map((document) => [
-						mapFolderDocumentInformationHtmlProperty(folder, document),
+						mapFolderDocumentInformationHtmlProperty(folder, document, isCosts),
 						folderIsAdditionalDocuments(folder.path) && document?.latestDocumentVersion?.isLateEntry
 							? {
 									html: '',
@@ -1028,7 +1051,7 @@ export function manageFolderPage({
 						{
 							text: document?.latestDocumentVersion?.redactionStatus
 						},
-						mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEditUrl)
+						mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEditUrl, isCosts)
 					])
 				}
 			}
@@ -1112,9 +1135,10 @@ function mapVersionDocumentInformationHtmlProperty(document, documentVersion) {
 /**
  * @param {DocumentInfo} document
  * @param {DocumentVersionInfo} documentVersion
+ * @param {boolean} [isCosts]
  * @returns {HtmlProperty & ClassesProperty}
  */
-function mapDocumentNameHtmlProperty(document, documentVersion) {
+function mapDocumentNameHtmlProperty(document, documentVersion, isCosts = false) {
 	/** @type {HtmlProperty} */
 	const htmlProperty = {
 		html: '',
@@ -1125,6 +1149,12 @@ function mapDocumentNameHtmlProperty(document, documentVersion) {
 		opening: '<div class="govuk-!-margin-bottom-2">',
 		closing: '</div>'
 	};
+
+	const isShared = /** @type {any} */ (documentVersion).isShared;
+	const sharedTagHtml =
+		isCosts && isShared
+			? `<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong>`
+			: '';
 
 	if (virusCheckStatus.checked && virusCheckStatus.safe) {
 		htmlProperty.pageComponents.push({
@@ -1137,13 +1167,13 @@ function mapDocumentNameHtmlProperty(document, documentVersion) {
 					!documentVersion.isDeleted &&
 					document?.caseId &&
 					document?.id
-						? `<a class="govuk-link" href="${mapDocumentDownloadUrl(
+						? `${sharedTagHtml}<a class="govuk-link" href="${mapDocumentDownloadUrl(
 								document.caseId,
 								document.id,
 								documentVersion.originalFilename,
 								documentVersion.version
 							)}" target="_blank">${documentVersion.originalFilename || ''}</a>`
-						: documentVersion.originalFilename || ''
+						: `${sharedTagHtml}${documentVersion.originalFilename || ''}`
 			}
 		});
 	} else {
@@ -1151,7 +1181,7 @@ function mapDocumentNameHtmlProperty(document, documentVersion) {
 			type: 'html',
 			wrapperHtml: linkWrapperHtml,
 			parameters: {
-				html: `<span class="govuk-body">${documentVersion.originalFilename || ''}</span>`.trim()
+				html: `${sharedTagHtml}<span class="govuk-body">${documentVersion.originalFilename || ''}</span>`.trim()
 			}
 		});
 	}
@@ -1211,6 +1241,7 @@ function mapDocumentNameHtmlProperty(document, documentVersion) {
  * @param {boolean} [params.editable]
  * @param {boolean} [params.skipChangeDocumentDetails]
  * @param {string} [params.baseUrl]
+ * @param {boolean} [params.isCosts]
  * @returns {Promise<PageContent>}
  */
 export async function manageDocumentPage({
@@ -1225,7 +1256,8 @@ export async function manageDocumentPage({
 	dateRowLabelTextOverride,
 	editable,
 	skipChangeDocumentDetails,
-	baseUrl = ''
+	baseUrl = '',
+	isCosts = false
 }) {
 	const changeDetailsUrl =
 		!skipChangeDocumentDetails &&
@@ -1234,6 +1266,9 @@ export async function manageDocumentPage({
 		'manage-documents',
 		`${baseUrl}change-document-name`
 	);
+
+	const headingText = isCosts ? 'Document details' : document?.name || '';
+
 	const session = request.session;
 	const latestVersion = getDocumentLatestVersion(document);
 	const virusCheckStatus = mapDocumentVersionDetailsVirusCheckStatus(latestVersion);
@@ -1276,6 +1311,35 @@ export async function manageDocumentPage({
 		pageComponents.push(errorSummaryComponent);
 	}
 
+	const isShared = /** @type {any} */ (document).isShared;
+
+	if (isCosts && !isShared) {
+		const { costsDocumentType } = request.params;
+		const shareUrl =
+			costsDocumentType === 'withdrawal'
+				? request.originalUrl + '/check-your-answers'
+				: request.originalUrl + '/invite-responses';
+
+		pageComponents.push(
+			{
+				type: 'html',
+				parameters: { html: '<h2 class="govuk-heading-m">Current version</h2>' }
+			},
+			{
+				type: 'html',
+				parameters: { html: '<p class="govuk-body">This document is not shared</p>' }
+			},
+			{
+				type: 'button',
+				parameters: {
+					text: 'Share document',
+					href: shareUrl,
+					classes: 'govuk-!-margin-bottom-7'
+				}
+			}
+		);
+	}
+
 	/** @type {PageComponent} */
 	const documentSummary = {
 		wrapperHtml: {
@@ -1305,7 +1369,7 @@ export async function manageDocumentPage({
 				{
 					key: { text: 'Version' },
 					value: {
-						text: versionId
+						html: `${versionId} ${isCosts && isShared ? '<br><strong class="govuk-tag govuk-tag--blue govuk-!-margin-top-1">Shared</strong>' : ''}`
 					}
 				}
 			]
@@ -1474,7 +1538,7 @@ export async function manageDocumentPage({
 									{
 										text: documentVersion.version?.toString() || ''
 									},
-									mapDocumentNameHtmlProperty(document, documentVersion),
+									mapDocumentNameHtmlProperty(document, documentVersion, isCosts),
 									{
 										html: await mapDocumentVersionToAuditActivityHtml(
 											documentVersion,
@@ -1520,7 +1584,7 @@ export async function manageDocumentPage({
 			?.replace('{{folderId}}', folder.folderId.toString())
 			.replace('{{documentId}}', document.id || ''),
 		preHeading: pageTitleTextOverride || 'Manage document',
-		heading: document?.name || '',
+		heading: headingText,
 		pageComponents
 	};
 

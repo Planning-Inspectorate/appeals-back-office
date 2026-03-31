@@ -9,7 +9,7 @@ import {
 } from '../../appeal-documents/appeal-documents.middleware.js';
 import * as documentsValidators from '../../appeal-documents/appeal-documents.validators.js';
 import * as controller from './costs.controller.js';
-import { validatePostDecisionConfirmation } from './costs.validators.js';
+import { validateInviteResponses, validatePostDecisionConfirmation } from './costs.validators.js';
 
 const router = createRouter({ mergeParams: true });
 router.param('folderId', (req, res, next) => {
@@ -177,6 +177,33 @@ router
 	.post(
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.postAddDocumentVersionCheckAndConfirm)
+	);
+
+router
+	.route([
+		'/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId/invite-responses'
+	])
+	.get(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.getInviteResponses)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.updateCase),
+		validateInviteResponses,
+		asyncHandler(controller.postInviteResponses)
+	);
+
+router
+	.route([
+		'/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId/check-your-answers'
+	])
+	.get(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.getShareDocumentCheckAndConfirm)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.postShareDocumentCheckAndConfirm)
 	);
 
 export default router;

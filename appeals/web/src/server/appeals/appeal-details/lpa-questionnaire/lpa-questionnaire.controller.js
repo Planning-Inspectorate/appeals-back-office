@@ -326,7 +326,8 @@ export const getAddDocuments = async (request, response) => {
 
 	// @ts-ignore
 	const pageHeadingTextOverride = {
-		[APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED]: 'Upload who you notified about the application',
+		[APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED]:
+			"Upload the list of neighbours' addresses that you notified about the application",
 		[APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_SITE_NOTICE]: 'Upload the site notice',
 		[APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_LETTER_TO_NEIGHBOURS]: 'Upload letter or email notification',
 		[APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_PRESS_ADVERT]: 'Upload press advertisement',

@@ -26,7 +26,7 @@ const renderChangeGroundsForAppeal = async (request, response) => {
 		const filteredGrounds = groundsForAppeal.filter(
 			(ground) => ground.appealType === currentAppeal.appealType
 		);
-		console.log(currentAppeal.appealType);
+
 		const appellantCaseData = await getAppellantCaseFromAppealId(
 			request.apiClient,
 			currentAppeal.appealId,

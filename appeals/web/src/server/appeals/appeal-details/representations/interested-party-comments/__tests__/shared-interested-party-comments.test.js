@@ -56,7 +56,8 @@ describe('Interested Party Comments (Shared/Published View)', () => {
 				rootElement: '.govuk-body'
 			}).innerHTML;
 			expect(response.statusCode).toEqual(200);
-			const downloadLinkUrl = '/documents/2/bulk-download/documents';
+			const downloadLinkUrl =
+				'/documents/2/bulk-download/ip-comments/case-SHAREDTEST-ip-comments.zip';
 			expect(downloadLinkInnerHtml).toContain(`href="${downloadLinkUrl}`);
 
 			//check number of table rows
@@ -70,6 +71,9 @@ describe('Interested Party Comments (Shared/Published View)', () => {
 			const row1columns = firstRow?.querySelectorAll('.govuk-table__cell');
 			expect(firstRow).not.toBeNull();
 			expect(row1columns?.[1].textContent?.trim()).toBe('Comment 1');
+
+			expect(row1columns?.[2].innerHTML).not.toContain('govuk-!-padding-left-0');
+
 			const nextRow = firstRow?.nextElementSibling;
 			expect(nextRow).not.toBeNull();
 			const row2columns = nextRow?.querySelectorAll('.govuk-table__cell');
@@ -120,7 +124,8 @@ describe('Interested Party Comments (Shared/Published View)', () => {
 			const downloadLinkInnerHtml = parseHtml(response.text, {
 				rootElement: '.govuk-body'
 			}).innerHTML;
-			const downloadLinkUrl = `/documents/2/bulk-download/documents`;
+			const downloadLinkUrl =
+				'/documents/2/bulk-download/ip-comments/case-SHAREDTEST-ip-comments.zip';
 			expect(downloadLinkInnerHtml).toContain(`href="${downloadLinkUrl}`);
 
 			//check number of table rows
@@ -170,7 +175,8 @@ describe.each([
 			const downloadLinkInnerHtml = parseHtml(response.text, {
 				rootElement: '.govuk-body'
 			}).innerHTML;
-			const downloadLinkUrl = '/documents/2/bulk-download/documents';
+			const downloadLinkUrl =
+				'/documents/2/bulk-download/ip-comments/case-SHAREDTEST-ip-comments.zip';
 			expect(downloadLinkInnerHtml).toContain(`href="${downloadLinkUrl}`);
 
 			expect(response.text).not.toContain('Add interested party comment');
@@ -184,6 +190,9 @@ describe.each([
 			const row1columns = firstRow?.querySelectorAll('.govuk-table__cell');
 			expect(firstRow).not.toBeNull();
 			expect(row1columns?.[1].textContent?.trim()).toBe('Comment 1');
+
+			expect(row1columns?.[2].innerHTML).not.toContain('govuk-!-padding-left-0');
+
 			const nextRow = firstRow?.nextElementSibling;
 			expect(nextRow).not.toBeNull();
 			const row2columns = nextRow?.querySelectorAll('.govuk-table__cell');

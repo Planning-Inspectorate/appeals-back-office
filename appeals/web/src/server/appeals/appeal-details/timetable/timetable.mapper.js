@@ -3,7 +3,11 @@ import { dateISOStringToDayMonthYearHourMinute, getExampleDateHint } from '#lib/
 import { dateInput } from '#lib/mappers/index.js';
 import { appealTypeToAppealCaseTypeMapper } from '@pins/appeals/utils/appeal-type-case.mapper.js';
 import { isExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_CASE_PROCEDURE,
+	APPEAL_CASE_STATUS,
+	APPEAL_CASE_TYPE
+} from '@planning-inspectorate/data-model';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -153,7 +157,8 @@ export const getAppealTimetableTypes = (appeal, appellantCase) => {
 	/** @type {AppealTimetableType[]} */
 	let validAppealTimetableType = [];
 
-	if (isExpeditedAppealType(appealTypeToAppealCaseTypeMapper(appeal.appealType))) {
+	const caseType = appealTypeToAppealCaseTypeMapper(appeal.appealType);
+	if (isExpeditedAppealType(caseType)) {
 		validAppealTimetableType = ['lpaQuestionnaireDueDate'];
 	} else {
 		validAppealTimetableType = [];
@@ -169,7 +174,14 @@ export const getAppealTimetableTypes = (appeal, appellantCase) => {
 		) {
 			validAppealTimetableType.push('lpaStatementDueDate', 'ipCommentsDueDate');
 		}
-		if (appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN) {
+		if (
+			appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN ||
+			([APPEAL_CASE_TYPE.C, APPEAL_CASE_TYPE.F, APPEAL_CASE_TYPE.G, APPEAL_CASE_TYPE.X].includes(
+				caseType
+			) &&
+				(appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING ||
+					appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY))
+		) {
 			validAppealTimetableType.push('finalCommentsDueDate');
 		}
 		if (appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING) {

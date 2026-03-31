@@ -50,3 +50,13 @@ export const isEnforcementCaseType = (caseType) =>
 export const isAnyEnforcementAppealType = (appealType) =>
 	appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ||
 	appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING;
+
+/**
+ *
+ * @param {string|undefined} caseType
+ * @returns {boolean}
+ */
+export const isLdcOrDiscontinuanceOrEnforcementCaseType = (caseType) =>
+	caseType === APPEAL_CASE_TYPE.X ||
+	caseType === APPEAL_CASE_TYPE.G ||
+	isEnforcementCaseType(caseType);

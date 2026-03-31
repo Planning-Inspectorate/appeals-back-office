@@ -1,6 +1,7 @@
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { transitionAppealStatesAfterValidationOutcomeUpdate } from '#endpoints/appellant-cases/appellant-cases.service.js';
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { generateNotifyPreview } from '#notify/emulate-notify.js';
 import { notifySend, renderTemplate } from '#notify/notify-send.js';
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
@@ -142,5 +143,15 @@ export const enforcementNoticeWithdrawn = async (
 				personalisation
 			});
 		}
+	}
+
+	await broadcasters.broadcastAppeal(appeal.id);
+
+	if (appeal.childAppeals?.length) {
+		await Promise.allSettled(
+			appeal.childAppeals
+				.filter(({ type }) => type === 'linked')
+				.map(({ childId }) => (childId ? broadcasters.broadcastAppeal(childId) : Promise.resolve()))
+		);
 	}
 };

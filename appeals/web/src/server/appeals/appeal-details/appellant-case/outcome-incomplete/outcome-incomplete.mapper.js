@@ -520,7 +520,9 @@ export const checkDetailsAndMarkEnforcementAsIncomplete = (
 	const helperText = `<p class="govuk-body">We will mark the appeal as ${validationOutcome} and send an email to the relevant parties.</p>`;
 	const backLinkUrl = session?.webAppellantCaseReviewOutcome.updatedDueDate
 		? `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/date`
-		: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/incomplete/receipt-due-date`;
+		: session?.webAppellantCaseReviewOutcome.otherInformationValidRadio
+			? `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/${validationOutcome}/enforcement-other-information`
+			: `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/incomplete/receipt-due-date`;
 
 	const emailPreviewComponents = emailPreviews
 		? [

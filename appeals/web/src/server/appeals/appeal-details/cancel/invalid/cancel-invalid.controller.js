@@ -200,11 +200,7 @@ export const getCheckDetails = async (request, response) => {
 		effective_date: enforcementNotice?.appellantCase?.effectiveDate
 			? format(new Date(enforcementNotice?.appellantCase?.effectiveDate), 'dd MMMM yyyy')
 			: '',
-		other_live_appeals: sessionValues?.otherLiveAppeals === 'yes' ? 'yes' : '',
-		ground_a_barred:
-			currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
-				? false
-				: enforcementNotice?.appealOutcome?.groundABarred || ''
+		other_live_appeals: sessionValues?.otherLiveAppeals === 'yes' ? 'yes' : ''
 	};
 
 	// Note: this route is only enabled for enforcement appeals at the time of writing,
@@ -309,6 +305,16 @@ export const getCheckDetails = async (request, response) => {
 						summaryText: `Preview email to LPA`,
 						html: lpaTemplate.renderedHtml,
 						id: 'lpa-preview'
+					}
+				},
+				{
+					type: 'hint',
+					parameters: {
+						html: `
+									<p class="govuk-body">
+										We will mark the appeal as invalid and send an email to the relevant parties.
+									</p>
+								`
 					}
 				}
 			]

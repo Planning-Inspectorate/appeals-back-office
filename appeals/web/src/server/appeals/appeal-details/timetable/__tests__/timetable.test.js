@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { appealData as baseAppealData } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
@@ -365,6 +366,55 @@ describe('Timetable', () => {
 						'name="proof-of-evidence-and-witnesses-due-date-year"'
 					);
 					expect(element.innerHTML).toContain('Continue</button>');
+				});
+			}
+		);
+
+		describe.each([APPEAL_TYPE.ENFORCEMENT_NOTICE, APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE])(
+			'Enforcement and LDC',
+			(appealType) => {
+				it(`should render correct "Timetable due dates" page for ${appealType} type inquiry appeal`, async () => {
+					const appealData = {
+						...baseAppealData,
+						appealStatus: 'lpa_questionnaire',
+						appealTimetable: {
+							appealTimetableId: 1
+						},
+						appealType: appealType,
+						procedureType: 'Inquiry'
+					};
+
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
+					nock('http://test/')
+						.get('/appeals/1/appellant-cases/0')
+						.reply(200, { planningObligation: { hasObligation: false } });
+
+					const response = await request.get(`${baseUrl}/edit`);
+					const element = parseHtml(response.text);
+
+					expect(element.innerHTML).toContain('name="final-comments-due-date-day"');
+				});
+
+				it(`should render correct "Timetable due dates" page for ${appealType} type hearing appeal`, async () => {
+					const appealData = {
+						...baseAppealData,
+						appealStatus: 'lpa_questionnaire',
+						appealTimetable: {
+							appealTimetableId: 1
+						},
+						appealType: appealType,
+						procedureType: 'Hearing'
+					};
+
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
+					nock('http://test/')
+						.get('/appeals/1/appellant-cases/0')
+						.reply(200, { planningObligation: { hasObligation: false } });
+
+					const response = await request.get(`${baseUrl}/edit`);
+					const element = parseHtml(response.text);
+
+					expect(element.innerHTML).toContain('name="final-comments-due-date-day"');
 				});
 			}
 		);

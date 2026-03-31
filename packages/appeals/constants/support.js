@@ -20,6 +20,8 @@ export const ENFORCEMENT_APPEAL_INVALID_LEGAL_INTEREST =
 	'Appellant does not have a legal interest in the land';
 export const ENFORCEMENT_APPEAL_INVALID_GROUND_A_BARRED = 'Ground (a) barred';
 export const ENFORCEMENT_APPEAL_INVALID_GROUND_A_FEE_NOT_PAID = 'Did not pay the ground (a) fee';
+export const ENFORCEMENT_APPEAL_INVALID_LPA_WITHDREW_ENFORCEMENT_NOTICE =
+	'LPA has withdrawn the enforcement notice';
 
 export const DECISION_TYPE_INSPECTOR = 'inspector-decision';
 export const DECISION_TYPE_APPELLANT_COSTS = 'appellant-costs-decision';
@@ -537,6 +539,39 @@ const enforcementNoticeTimetable = {
 	}
 };
 
+const s78InquiryTimetable = {
+	lpaQuestionnaireDueDate: {
+		daysFromStartDate: 5
+	},
+	ipCommentsDueDate: {
+		daysFromStartDate: 25
+	},
+	lpaStatementDueDate: {
+		daysFromStartDate: 25
+	},
+	proofOfEvidenceAndWitnessesDueDate: {
+		daysBeforeInquiryDate: 20
+	}
+};
+
+const enforcementInquiryTimetable = {
+	lpaQuestionnaireDueDate: {
+		daysFromStartDate: 10
+	},
+	ipCommentsDueDate: {
+		daysFromStartDate: 30
+	},
+	lpaStatementDueDate: {
+		daysFromStartDate: 30
+	},
+	proofOfEvidenceAndWitnessesDueDate: {
+		daysBeforeInquiryDate: 20
+	},
+	finalCommentsDueDate: {
+		daysFromStartDate: 45
+	}
+};
+
 /** @type {Record<string, Record<string, any>>} */
 export const CONFIG_APPEAL_TIMETABLE = {
 	[APPEAL_CASE_TYPE.W]: {
@@ -548,29 +583,17 @@ export const CONFIG_APPEAL_TIMETABLE = {
 				daysFromStartDate: 25
 			}
 		},
-		[APPEAL_CASE_PROCEDURE.INQUIRY]: {
-			...s78timetable,
-			statementOfCommonGroundDueDate: {
-				daysFromStartDate: 25
-			}
-		}
+		[APPEAL_CASE_PROCEDURE.INQUIRY]: { ...s78InquiryTimetable }
 	},
 	[APPEAL_CASE_TYPE.H]: {
 		[APPEAL_CASE_PROCEDURE.WRITTEN]: { ...advertTimetable },
 		[APPEAL_CASE_PROCEDURE.HEARING]: {
 			...advertTimetable,
-			//Needs updating when inquiries with adverts is supported
 			statementOfCommonGroundDueDate: {
 				daysFromStartDate: 25
 			}
 		},
-		[APPEAL_CASE_PROCEDURE.INQUIRY]: {
-			...advertTimetable,
-			//Needs updating when inquiries with adverts is supported
-			statementOfCommonGroundDueDate: {
-				daysFromStartDate: 25
-			}
-		}
+		[APPEAL_CASE_PROCEDURE.INQUIRY]: { ...enforcementInquiryTimetable }
 	},
 	[APPEAL_CASE_TYPE.D]: {
 		lpaQuestionnaireDueDate: {
@@ -586,10 +609,7 @@ export const CONFIG_APPEAL_TIMETABLE = {
 			}
 		},
 		[APPEAL_CASE_PROCEDURE.INQUIRY]: {
-			...enforcementNoticeTimetable,
-			statementOfCommonGroundDueDate: {
-				daysFromStartDate: 25
-			}
+			...enforcementInquiryTimetable
 		}
 	}
 };

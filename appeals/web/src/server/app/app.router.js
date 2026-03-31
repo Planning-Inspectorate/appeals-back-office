@@ -75,6 +75,10 @@ router
 	.get(addApiClientToRequest, validateAppeal, asyncHandler(getBulkDocumentDownload));
 
 router
+	.route('/documents/:caseId/bulk-download/:representationType{/:filename}')
+	.get(addApiClientToRequest, validateAppeal, asyncHandler(getBulkDocumentDownload));
+
+router
 	.route('/documents/:caseId/download/:guid{/:filename}')
 	.get(addApiClientToRequest, asyncHandler(getDocumentDownload));
 

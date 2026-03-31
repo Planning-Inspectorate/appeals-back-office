@@ -140,7 +140,8 @@ export const COMMENT_STATUS = Object.freeze({
 });
 
 export const TEAM_NAME_MAP = Object.freeze({
-	MAJOR_CASEWORK: 'Major Casework Officer'
+	MAJOR_CASEWORK: 'Major Casework Officer',
+	ENFORCEMENT_APPEALS_TEAM: 'Enforcement Appeals Team'
 });
 
 export const REVERT_BUTTON_TEXT = Object.freeze({

@@ -25,7 +25,7 @@ const filterAttachmentsForCurrentRepresentation = (
  * @type {import('express').RequestHandler}
  */
 export const getRepresentationAttachmentsFolder = async (req, res, next) => {
-	const { appealId } = req.params;
+	const { caseId, appealId = caseId } = req.params;
 
 	try {
 		req.currentFolder = await getAttachmentsFolder(req.apiClient, appealId);

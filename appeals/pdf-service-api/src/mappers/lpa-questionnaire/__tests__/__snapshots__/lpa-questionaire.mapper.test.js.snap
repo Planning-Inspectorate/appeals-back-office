@@ -508,7 +508,7 @@ exports[`mapLpaQuestionnaireData should map advert LPA questionnaire data correc
       "items": [
         {
           "html": "No documents",
-          "key": "Who did you notify about this application?",
+          "key": "List of neighbours' addresses that you notified about the application",
         },
         {
           "html": "Letter/email to interested parties<br>A press advert",
@@ -1140,7 +1140,7 @@ exports[`mapLpaQuestionnaireData should map cas advert LPA questionnaire data co
       "items": [
         {
           "html": "No documents",
-          "key": "Who did you notify about this application?",
+          "key": "List of neighbours' addresses that you notified about the application",
         },
         {
           "html": "Letter/email to interested parties<br>A press advert",
@@ -1727,7 +1727,7 @@ exports[`mapLpaQuestionnaireData should map householder LPA questionnaire data c
       "items": [
         {
           "html": "No documents",
-          "key": "Who did you notify about this application?",
+          "key": "List of neighbours' addresses that you notified about the application",
         },
         {
           "html": "Letter/email to interested parties<br>A press advert",
@@ -2428,7 +2428,7 @@ exports[`mapLpaQuestionnaireData should map s20 LPA questionnaire data correctly
       "items": [
         {
           "html": "No documents",
-          "key": "Who did you notify about this application?",
+          "key": "List of neighbours' addresses that you notified about the application",
         },
         {
           "html": "Letter/email to interested parties<br>A press advert",
@@ -3164,7 +3164,7 @@ exports[`mapLpaQuestionnaireData should map s78 LPA questionnaire data correctly
       "items": [
         {
           "html": "No documents",
-          "key": "Who did you notify about this application?",
+          "key": "List of neighbours' addresses that you notified about the application",
         },
         {
           "html": "Letter/email to interested parties<br>A press advert",

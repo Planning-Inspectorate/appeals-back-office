@@ -8,7 +8,7 @@ The lead appeal {{lead_appeal_reference_number}} is for {{full_name_lead_appella
 
 # Linked appeals
 {% for childAppellantRefNumber in child_appeal_reference_number %}
-__{{childAppellantRefNumber}}__
+#### {{childAppellantRefNumber}}
 {{full_name_additional_appellant[loop.index0]}}
 {% endfor %}{% endif %}{% if one_additional_appellant %}
 The linked appeal will use the timetable for the lead appeal {{lead_appeal_reference_number}}.

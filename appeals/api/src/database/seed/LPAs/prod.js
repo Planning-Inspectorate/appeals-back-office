@@ -622,7 +622,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'U1050',
 		name: 'Derbyshire County Council',
-		email: 'planningcontrol@derbyshire.gov.uk',
+		email: 'development.management@derbyshire.gov.uk',
 		teamId: null
 	},
 	{
@@ -952,7 +952,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'Q3060',
 		name: 'Nottingham City Council',
-		email: 'Planning.registration@nottinghamcity.gov.uk',
+		email: 'PlanningAppeals@nottinghamcity.gov.uk',
 		teamId: 17 // North3
 	},
 	{

@@ -123,6 +123,16 @@ function generateTableRows(items, isReview = false) {
 }
 
 /**
+ *
+ * @param {string} reference
+ * @returns {string}
+ */
+const createZipFileName = (reference) => {
+	const zipFileName = `case-${appealShortReference(reference)}-ip-comments.zip`;
+	return zipFileName;
+};
+
+/**
  * @param {Appeal} appealDetails
  * @param {Representation[]} comments
  * @param {string} addInterestedPartCommentsLink
@@ -204,7 +214,8 @@ export function sharedIpCommentsPage(
 								)
 							: ['No documents'],
 						isOrderedList: true,
-						isNumberedList: comment.attachments.length > 1
+						isNumberedList: comment.attachments.length > 1,
+						listClasses: 'govuk-list govuk-!-margin-top-0'
 					})
 				}
 			])
@@ -217,7 +228,7 @@ export function sharedIpCommentsPage(
 				simpleHtmlComponent(
 					'a',
 					{
-						href: `/documents/${appealDetails.appealId}/bulk-download/documents`,
+						href: `/documents/${appealDetails.appealId}/bulk-download/ip-comments/${createZipFileName(appealDetails.appealReference)}`,
 						class: 'govuk-link'
 					},
 					'Download all documents'

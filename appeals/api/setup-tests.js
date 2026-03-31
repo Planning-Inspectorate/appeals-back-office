@@ -181,6 +181,7 @@ const mockAuditTrailDeleteMany = jest.fn().mockResolvedValue({});
 const mockDocumentVersionAuditCreate = jest.fn().mockResolvedValue({});
 const mockDocumentVersionAuditDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppealTypes = jest.fn().mockResolvedValue({});
+const mockAppealTypesFindFirst = jest.fn().mockResolvedValue({});
 const mockNeighbouringSites = jest.fn().mockResolvedValue({});
 const mockNeighbouringSitesDeleteMany = jest.fn().mockResolvedValue({});
 const mockListedBuildingSelected = jest.fn().mockResolvedValue({});
@@ -313,7 +314,8 @@ class MockPrismaClient {
 
 	get appealType() {
 		return {
-			findMany: mockAppealTypes
+			findMany: mockAppealTypes,
+			findFirst: mockAppealTypesFindFirst
 		};
 	}
 

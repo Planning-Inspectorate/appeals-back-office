@@ -247,8 +247,8 @@ exports[`site-visit GET /site-visit/missed/check should render the who missed th
 exports[`site-visit GET /site-visit/schedule-visit should render the schedule visit page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Schedule site visit</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - set up site visit</span>
+            <h1             class="govuk-heading-l">Schedule site visit</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1686,8 +1686,8 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Schedule site visit</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - set up site visit</span>
+            <h1             class="govuk-heading-l">Schedule site visit</h1>
         </div>
     </div>
     <div class="govuk-grid-row">

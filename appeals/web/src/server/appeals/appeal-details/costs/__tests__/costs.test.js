@@ -1478,6 +1478,55 @@ describe('costs', () => {
 					});
 				}
 			}
+
+			it(`Should render 'Manage and share' CTA and NO tag if document is NOT shared`, async () => {
+				nock.cleanAll();
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+
+				const unsharedDocumentFolder = structuredClone(costsFolderInfoAppellantApplication);
+				unsharedDocumentFolder.documents.forEach((doc) => {
+					doc.isShared = false;
+				});
+
+				nock('http://test/')
+					.get('/appeals/1/document-folders/1')
+					.reply(200, unsharedDocumentFolder);
+
+				const response = await request.get(
+					`${baseUrl}/1/costs/appellant/application/manage-documents/1`
+				);
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Manage and share');
+				expect(unprettifiedElement.innerHTML).not.toContain(
+					'<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong>'
+				);
+			});
+
+			it(`Should render 'Manage' CTA and 'Shared' tag if document IS shared`, async () => {
+				nock.cleanAll();
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+
+				const sharedDocumentFolder = structuredClone(costsFolderInfoAppellantApplication);
+				sharedDocumentFolder.documents.forEach((doc) => {
+					doc.isShared = true;
+				});
+
+				nock('http://test/').get('/appeals/1/document-folders/1').reply(200, sharedDocumentFolder);
+
+				const response = await request.get(
+					`${baseUrl}/1/costs/appellant/application/manage-documents/1`
+				);
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).not.toContain('Manage and share');
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Manage <span class="govuk-visually-hidden">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong>'
+				);
+			});
 		});
 
 		describe('GET /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId', () => {
@@ -1504,9 +1553,9 @@ describe('costs', () => {
 
 						expect(element.innerHTML).toMatchSnapshot();
 
-						const h1Element = parseHtml(response.text, { rootElement: 'main h1' });
+						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-						expect(h1Element.innerHTML).toContain('Page not found');
+						expect(unprettifiedElement.innerHTML).toContain('Page not found');
 					});
 
 					it(`should render a 404 error page if the documentId is not valid (${costsCategory} ${costsDocumentType})`, async () => {
@@ -1521,9 +1570,9 @@ describe('costs', () => {
 
 						expect(element.innerHTML).toMatchSnapshot();
 
-						const h1Element = parseHtml(response.text, { rootElement: 'main h1' });
+						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-						expect(h1Element.innerHTML).toContain('Page not found');
+						expect(unprettifiedElement.innerHTML).toContain('Page not found');
 					});
 
 					it(`should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is null (${costsCategory} ${costsDocumentType})`, async () => {
@@ -1540,8 +1589,9 @@ describe('costs', () => {
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
+						expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 						expect(unprettifiedElement.innerHTML).toContain(
-							'test-pdf-documentFileVersionsInfo.pdf</h1>'
+							'test-pdf-documentFileVersionsInfo.pdf'
 						);
 						expect(unprettifiedElement.innerHTML).toContain(
 							'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
@@ -1564,8 +1614,9 @@ describe('costs', () => {
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
+						expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 						expect(unprettifiedElement.innerHTML).toContain(
-							'test-pdf-documentFileVersionsInfo.pdf</h1>'
+							'test-pdf-documentFileVersionsInfo.pdf'
 						);
 						expect(unprettifiedElement.innerHTML).toContain(
 							'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
@@ -1589,8 +1640,9 @@ describe('costs', () => {
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
+						expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 						expect(unprettifiedElement.innerHTML).toContain(
-							'test-pdf-documentFileVersionsInfo.pdf</h1>'
+							'test-pdf-documentFileVersionsInfo.pdf'
 						);
 						expect(unprettifiedElement.innerHTML).toContain(
 							'<strong class="govuk-tag govuk-tag--red">Virus detected</strong>'
@@ -1621,8 +1673,9 @@ describe('costs', () => {
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
+						expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 						expect(unprettifiedElement.innerHTML).toContain(
-							'test-pdf-documentFileVersionsInfo.pdf</h1>'
+							'test-pdf-documentFileVersionsInfo.pdf'
 						);
 						expect(unprettifiedElement.innerHTML).not.toContain(
 							'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
@@ -1632,6 +1685,82 @@ describe('costs', () => {
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Upload a new version');
 						expect(unprettifiedElement.innerHTML).toContain('Remove current version');
+					});
+
+					it(`should render 'Shared' tags under the Version Summary and in Version History if document IS shared`, async () => {
+						nock.cleanAll();
+						nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+						nock('http://test/')
+							.get('/appeals/document-redaction-statuses')
+							.reply(200, documentRedactionStatuses)
+							.persist();
+						nock('http://test/')
+							.get(`/appeals/1/document-folders/${costsFolder.folderId}`)
+							.reply(200, costsFolder);
+						nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
+
+						const sharedDocumentVersionsInfo = structuredClone(documentFileVersionsInfoChecked);
+						sharedDocumentVersionsInfo.isShared = true;
+						sharedDocumentVersionsInfo.allVersions.forEach((version) => {
+							version.isShared = true;
+						});
+
+						nock('http://test/')
+							.get('/appeals/documents/1/versions')
+							.reply(200, sharedDocumentVersionsInfo);
+
+						const response = await request.get(
+							`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1`
+						);
+
+						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+						expect(unprettifiedElement.innerHTML).toContain(
+							'<br><strong class="govuk-tag govuk-tag--blue govuk-!-margin-top-1">Shared</strong>'
+						);
+						expect(unprettifiedElement.innerHTML).toContain(
+							'<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong><a class="govuk-link"'
+						);
+					});
+
+					it(`should render 'Document details' and 'Share document' button with correct link if document is NOT shared`, async () => {
+						nock.cleanAll();
+						nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+						nock('http://test/')
+							.get('/appeals/document-redaction-statuses')
+							.reply(200, documentRedactionStatuses)
+							.persist();
+
+						nock('http://test/')
+							.get(`/appeals/1/document-folders/${costsFolder.folderId}`)
+							.reply(200, costsFolder);
+
+						nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
+
+						const unsharedDocumentVersionsInfo = structuredClone(documentFileVersionsInfoChecked);
+						unsharedDocumentVersionsInfo.isShared = false;
+
+						nock('http://test/')
+							.get('/appeals/documents/1/versions')
+							.reply(200, unsharedDocumentVersionsInfo);
+
+						const response = await request.get(
+							`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1`
+						);
+
+						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+						expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
+						expect(unprettifiedElement.innerHTML).toContain('Current version</h2>');
+						expect(unprettifiedElement.innerHTML).toContain('This document is not shared</p>');
+
+						const expectedHref =
+							costsDocumentType === 'withdrawal'
+								? `/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1/check-your-answers`
+								: `/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1/invite-responses`;
+
+						expect(unprettifiedElement.innerHTML).toContain(`href="${expectedHref}"`);
+						expect(unprettifiedElement.innerHTML).toContain('Share document</a>');
 					});
 				}
 			}
@@ -1865,6 +1994,152 @@ describe('costs', () => {
 				}
 			}
 		});
+	});
+
+	describe('GET and POST /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId/invite-responses', () => {
+		for (const costsCategory of costsCategoriesNotIncludingDecision) {
+			for (const costsDocumentType of costsDocumentTypes) {
+				if (costsDocumentType === 'withdrawal') continue;
+
+				const costsFolder =
+					appealData.costs[`${costsCategory}${capitalize(costsDocumentType)}Folder`];
+
+				describe(`Testing ${costsCategory} ${costsDocumentType}`, () => {
+					beforeEach(() => {
+						nock.cleanAll();
+						nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+						nock('http://test/')
+							.get(`/appeals/1/document-folders/${costsFolder.folderId}`)
+							.reply(200, costsFolder)
+							.persist();
+					});
+
+					it(`should render the invite responses page`, async () => {
+						const response = await request.get(
+							`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1/invite-responses`
+						);
+
+						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+						expect(response.statusCode).toBe(200);
+						expect(unprettifiedElement.innerHTML).toContain(
+							'Do you want to invite responses?</h1>'
+						);
+						expect(unprettifiedElement.innerHTML).toContain(
+							'name="invite-responses" type="radio" value="yes"'
+						);
+						expect(unprettifiedElement.innerHTML).toContain(
+							'name="invite-responses" type="radio" value="no"'
+						);
+						expect(unprettifiedElement.innerHTML).toContain('Confirm and share document</button>');
+					});
+
+					it(`should return a validation error if no option is selected on POST`, async () => {
+						const response = await request
+							.post(
+								`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1/invite-responses`
+							)
+							.send({});
+
+						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+						expect(response.statusCode).toBe(200);
+						expect(unprettifiedElement.innerHTML).toContain(
+							'Select yes if you want to invite responses'
+						);
+					});
+
+					it(`should redirect to check-your-answers if an option is selected on POST`, async () => {
+						const response = await request
+							.post(
+								`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1/invite-responses`
+							)
+							.send({ 'invite-responses': 'yes' });
+
+						expect(response.statusCode).toBe(302);
+						expect(response.text).toContain(
+							`Found. Redirecting to /appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1/check-your-answers`
+						);
+					});
+				});
+			}
+		}
+	});
+
+	describe('GET and POST /costs/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId/check-your-answers', () => {
+		for (const costsCategory of costsCategoriesNotIncludingDecision) {
+			for (const costsDocumentType of costsDocumentTypes) {
+				const costsFolder =
+					appealData.costs[`${costsCategory}${capitalize(costsDocumentType)}Folder`];
+
+				describe(`Testing Share CYA for ${costsCategory} ${costsDocumentType}`, () => {
+					beforeEach(() => {
+						nock.cleanAll();
+						nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+						nock('http://test/')
+							.get(`/appeals/1/document-folders/${costsFolder.folderId}`)
+							.reply(200, costsFolder)
+							.persist();
+						nock('http://test/')
+							.get('/appeals/documents/1/versions')
+							.reply(200, documentFileVersionsInfoChecked)
+							.persist();
+					});
+
+					it(`should render the check your answers page`, async () => {
+						const response = await request.get(
+							`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1/check-your-answers`
+						);
+
+						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+						expect(response.statusCode).toBe(200);
+						expect(unprettifiedElement.innerHTML).toContain(
+							'Confirm you want to share test-pdf-documentFileVersionsInfo.pdf with the main parties</h1>'
+						);
+						expect(unprettifiedElement.innerHTML).toContain('Confirm and share document</button>');
+					});
+
+					it(`should route the backlink properly depending on the document type`, async () => {
+						const response = await request.get(
+							`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1/check-your-answers`
+						);
+
+						const backLinkElement = parseHtml(response.text, {
+							rootElement: '.govuk-back-link',
+							skipPrettyPrint: true
+						});
+
+						const expectedHref =
+							costsDocumentType === 'withdrawal'
+								? `/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1`
+								: `/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1/invite-responses`;
+
+						expect(backLinkElement.innerHTML).toContain(`href="${expectedHref}"`);
+					});
+
+					it(`should redirect to the case details page on successful share`, async () => {
+						const mockPatchEndpoint = nock('http://test/')
+							.patch('/appeals/1/documents/1', (body) => {
+								return body.document && body.document.isShared === true;
+							})
+							.reply(200);
+
+						const response = await request
+							.post(
+								`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1/check-your-answers`
+							)
+							.send({});
+
+						expect(response.statusCode).toBe(302);
+						expect(response.text).toContain(
+							`Found. Redirecting to /appeals-service/appeal-details/1`
+						);
+						expect(mockPatchEndpoint.isDone()).toBe(true);
+					});
+				});
+			}
+		}
 	});
 
 	describe('decision', () => {
@@ -2945,9 +3220,9 @@ describe('costs', () => {
 
 				expect(element.innerHTML).toMatchSnapshot();
 
-				const h1Element = parseHtml(response.text, { rootElement: 'main h1' });
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(h1Element.innerHTML).toContain('Page not found');
+				expect(unprettifiedElement.innerHTML).toContain('Page not found');
 			});
 
 			it(`should render a 404 error page if the documentId is not valid`, async () => {
@@ -2962,9 +3237,9 @@ describe('costs', () => {
 
 				expect(element.innerHTML).toMatchSnapshot();
 
-				const h1Element = parseHtml(response.text, { rootElement: 'main h1' });
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(h1Element.innerHTML).toContain('Page not found');
+				expect(unprettifiedElement.innerHTML).toContain('Page not found');
 			});
 
 			it(`should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is null`, async () => {
@@ -2981,9 +3256,8 @@ describe('costs', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain(
-					'test-pdf-documentFileVersionsInfo.pdf</h1>'
-				);
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
+				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
 				);
@@ -3005,9 +3279,8 @@ describe('costs', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain(
-					'test-pdf-documentFileVersionsInfo.pdf</h1>'
-				);
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
+				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
 				);
@@ -3030,9 +3303,8 @@ describe('costs', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain(
-					'test-pdf-documentFileVersionsInfo.pdf</h1>'
-				);
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
+				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<strong class="govuk-tag govuk-tag--red">Virus detected</strong>'
 				);
@@ -3062,9 +3334,8 @@ describe('costs', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain(
-					'test-pdf-documentFileVersionsInfo.pdf</h1>'
-				);
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
+				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
 				expect(unprettifiedElement.innerHTML).not.toContain(
 					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
 				);

@@ -12,7 +12,10 @@ import {
 	updateEnforcementValidDatePage,
 	updateValidDatePage
 } from './outcome-valid.mapper.js';
-import * as outcomeValidService from './outcome-valid.service.js';
+import {
+	getEnforcementOutcomeValidNotifyPreviews,
+	setReviewOutcomeValidForAppellantCase
+} from './outcome-valid.service.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getValidDate = async (request, response) => {
@@ -82,7 +85,7 @@ export const postValidDate = async (request, response) => {
 			return renderValidDatePage(request, response, errorMessage);
 		}
 
-		await outcomeValidService.setReviewOutcomeValidForAppellantCase(
+		await setReviewOutcomeValidForAppellantCase(
 			request.apiClient,
 			appealId,
 			appellantCaseId,
@@ -414,7 +417,7 @@ export const postEnforcementCheckDetails = async (request, response) => {
 		} = session;
 		const appealGroundABarred = appealGroundABarredString === 'yes';
 
-		await outcomeValidService.setReviewOutcomeValidForAppellantCase(
+		await setReviewOutcomeValidForAppellantCase(
 			request.apiClient,
 			appealId,
 			appellantCaseId,
@@ -457,9 +460,47 @@ export const postEnforcementCheckDetails = async (request, response) => {
  * @param {import('@pins/express').ValidationErrors} [apiErrors]
  */
 const renderEnforcementCheckDetails = async (request, response, apiErrors) => {
-	const mappedPageContent = checkAndConfirmEnforcementPage(request);
+	const {
+		currentAppeal: { appealId, appellantCaseId },
+		apiClient,
+		session,
+		errors
+	} = request;
+
+	const {
+		webAppellantCaseReviewOutcome: {
+			appealGroundABarred: appealGroundABarredString,
+			otherInformationValidRadio,
+			otherInformationDetails
+		}
+	} = session;
+
+	const groundABarred = appealGroundABarredString === 'yes';
+
+	/** @type {{appellant: string, lpa: string} | undefined} */
+	let emailPreviews;
+
+	try {
+		const errorMessage = 'Failed to generate email preview';
+		const result = await getEnforcementOutcomeValidNotifyPreviews(
+			apiClient,
+			appealId,
+			appellantCaseId,
+			groundABarred,
+			otherInformationDetails ?? otherInformationValidRadio
+		);
+		emailPreviews = {
+			appellant: result.appellant || errorMessage,
+			lpa: result.lpa || errorMessage
+		};
+	} catch (error) {
+		logger.error(error);
+	}
+
+	const mappedPageContent = checkAndConfirmEnforcementPage(request, emailPreviews);
+
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
-		errors: request.errors || apiErrors
+		errors: errors || apiErrors
 	});
 };

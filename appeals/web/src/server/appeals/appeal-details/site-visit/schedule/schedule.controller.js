@@ -3,7 +3,7 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { getSiteVisitSuccessBannerTypeAndChangeType } from '../site-visit.mapper.js';
 import * as siteVisitService from '../site-visit.service.js';
 import {
@@ -28,14 +28,26 @@ export const postKnowDateTime = async (request, response) => {
 		return renderKnowDateTimePage(request, response);
 	}
 	session.dateTimeKnown = body['dateTimeRadio'];
-
 	if (session.dateTimeKnown === 'no') {
+		session.visitDateDay = null;
+		session.visitDateMonth = null;
+		session.visitDateYear = null;
+		session.visitStartTimeHour = null;
+		session.visitStartTimeMinute = null;
+		session.visitEndTimeHour = null;
+		session.visitEndTimeMinute = null;
 		response.redirect(
-			`/appeals-service/appeal-details/${currentAppeal.appealId}/site-visit/schedule/check-details`
+			addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${currentAppeal.appealId}/site-visit/schedule/check-details`
+			)
 		);
 	} else {
 		response.redirect(
-			`/appeals-service/appeal-details/${currentAppeal.appealId}/site-visit/schedule/schedule-visit-date`
+			addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${currentAppeal.appealId}/site-visit/schedule/schedule-visit-date`
+			)
 		);
 	}
 };
@@ -123,7 +135,9 @@ export const postScheduleVisitDateTime = async (request, response) => {
 					msg: 'Enter the end time'
 				};
 			}
-			return renderScheduleVisitDatePage(request, response, errorMessage);
+			if (errorMessage['visit-start-time-hour'] || errorMessage['visit-end-time-hour']) {
+				return renderScheduleVisitDatePage(request, response, errorMessage);
+			}
 		}
 
 		session.visitDateDay = siteVisitDateFieldDay;
@@ -137,7 +151,10 @@ export const postScheduleVisitDateTime = async (request, response) => {
 		session.readyToSetUp = readyToSetUp;
 		session.dateTimeKnown = dateTimeKnown;
 		response.redirect(
-			`/appeals-service/appeal-details/${currentAppeal.appealId}/site-visit/schedule/check-details`
+			addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${currentAppeal.appealId}/site-visit/schedule/check-details`
+			)
 		);
 	} catch (error) {
 		logger.error(

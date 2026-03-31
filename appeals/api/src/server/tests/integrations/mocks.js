@@ -1154,6 +1154,11 @@ export const appealIngestionInputEnforcementNotice = {
 			key: APPEAL_CASE_TYPE.C
 		}
 	},
+	lpa: {
+		connect: {
+			lpaCode: 'Q9999'
+		}
+	},
 	appellant: {
 		create: {
 			address: {

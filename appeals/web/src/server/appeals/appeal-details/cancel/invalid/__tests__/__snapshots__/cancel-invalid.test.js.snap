@@ -51,6 +51,9 @@ exports[`cancel invalid GET /check-details should render the check details page 
                     </details>
                 </div>
             </div>
+            <div class="govuk-hint">
+                <p class="govuk-body">We will mark the appeal as invalid and send an email to the relevant parties.</p>
+            </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="post" novalidate="novalidate">

@@ -109,7 +109,7 @@ describe('Review LPAQ', () => {
 
 			// Section 2 – Notifications
 			lpaqPage.assertFieldLabelAndValue(
-				'Who did you notify about this application?',
+				"List of neighbours' addresses that you notified about the application",
 				'No documents'
 			);
 			lpaqPage.assertFieldLabelAndValue(
@@ -202,7 +202,7 @@ describe('Review LPAQ', () => {
 
 			// Section 3 – Notifying relevant parties
 			lpaqPage.assertFieldLabelAndValue(
-				'Who did you notify about this application?',
+				"List of neighbours' addresses that you notified about the application",
 				'No documents'
 			);
 			lpaqPage.assertFieldLabelAndValue(
@@ -312,7 +312,7 @@ describe('Review LPAQ', () => {
 
 			// Section 3 – Notifying relevant parties
 			lpaqPage.assertFieldLabelAndValue(
-				'Who did you notify about this application?',
+				"List of neighbours' addresses that you notified about the application",
 				'No documents'
 			);
 			lpaqPage.assertFieldLabelAndValue(
@@ -418,7 +418,7 @@ describe('Review LPAQ', () => {
 
 			// Section 2 – Notifying relevant parties
 			lpaqPage.assertFieldLabelAndValue(
-				'Who did you notify about this application?',
+				"List of neighbours' addresses that you notified about the application",
 				'No documents'
 			);
 			lpaqPage.assertFieldLabelAndValue(
@@ -514,7 +514,7 @@ describe('Review LPAQ', () => {
 
 			// Section 2 – Notifications
 			lpaqPage.assertFieldLabelAndValue(
-				'Who did you notify about this application?',
+				"List of neighbours' addresses that you notified about the application",
 				'No documents'
 			);
 			lpaqPage.assertFieldLabelAndValue(
@@ -607,7 +607,7 @@ describe('Review LPAQ', () => {
 
 			// Section 2 – Notifying relevant parties
 			lpaqPage.assertFieldLabelAndValue(
-				'Who did you notify about this application?',
+				"List of neighbours' addresses that you notified about the application",
 				'No documents'
 			);
 			lpaqPage.assertFieldLabelAndValue(
