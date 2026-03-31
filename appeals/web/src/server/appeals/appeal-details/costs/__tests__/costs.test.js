@@ -2014,7 +2014,7 @@ describe('costs', () => {
 							.persist();
 					});
 
-					it(`should render the invite responses page (AC 4)`, async () => {
+					it(`should render the invite responses page`, async () => {
 						const response = await request.get(
 							`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1/invite-responses`
 						);
@@ -2034,7 +2034,7 @@ describe('costs', () => {
 						expect(unprettifiedElement.innerHTML).toContain('Confirm and share document</button>');
 					});
 
-					it(`should return a validation error if no option is selected on POST (AC 5)`, async () => {
+					it(`should return a validation error if no option is selected on POST`, async () => {
 						const response = await request
 							.post(
 								`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1/invite-responses`
@@ -2049,7 +2049,7 @@ describe('costs', () => {
 						);
 					});
 
-					it(`should redirect to check-your-answers if an option is selected on POST (AC 3)`, async () => {
+					it(`should redirect to check-your-answers if an option is selected on POST`, async () => {
 						const response = await request
 							.post(
 								`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1/invite-responses`

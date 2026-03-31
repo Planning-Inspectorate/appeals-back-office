@@ -1375,5 +1375,9 @@ const createIntegrationMocks = (/** @type {*} */ appealIngestionInput) => {
 		{ key: APPEAL_REDACTED_STATUS.NOT_REDACTED }
 	]);
 
+	databaseConnector.appealType.findFirst.mockResolvedValue({
+		appealType: appealIngestionInput.appealType?.connect
+	});
+
 	return appealCreatedResult;
 };

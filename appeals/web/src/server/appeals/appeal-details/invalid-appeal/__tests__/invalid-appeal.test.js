@@ -984,10 +984,10 @@ describe('invalid-appeal', () => {
 					name: 'standard email'
 				});
 			const mockAppellantPreview = nock('http://test/')
-				.post(`/appeals/notify-preview/enforcement-notice-incomplete-appellant.content.md`)
+				.post(`/appeals/notify-preview/enforcement-notice-invalid-appellant.content.md`)
 				.reply(200, { renderedHtml: '' });
 			const mockLpaPreview = nock('http://test/')
-				.post(`/appeals/notify-preview/enforcement-notice-incomplete-lpa.content.md`)
+				.post(`/appeals/notify-preview/enforcement-notice-invalid-lpa.content.md`)
 				.reply(200, { renderedHtml: '' });
 
 			const response = await request.get(

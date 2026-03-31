@@ -199,7 +199,8 @@ router.post(
 		'address',
 		'appellant',
 		'lpa',
-		'appealStatus'
+		'appealStatus',
+		'agent'
 	]),
 	asyncHandler(postSiteVisitMissed)
 );

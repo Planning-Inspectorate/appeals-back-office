@@ -372,12 +372,42 @@ describe('representations', () => {
 			expect(textResponse.innerHTML).toContain('1 Org Three statement');
 		});
 
-		it('should contain correct content for enforcement listed building appeals', async () => {
+		it('should contain correct content for enforcement listed building appeals when sharing statements only', async () => {
 			const appealWithStatments = {
 				...appealData,
 				appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
 				appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
 				documentationSummary: {
+					lpaStatement: {
+						representationStatus: 'valid'
+					},
+					appellantStatement: {
+						representationStatus: 'valid'
+					}
+				}
+			};
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealWithStatments);
+			const response = await request.get(`${baseUrl}/1/share`);
+			const element = parseHtml(response.text);
+			const textResponse = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Check details and share statements</h1>');
+			expect(textResponse.innerHTML).toContain('Share statements</button>');
+		});
+
+		it('should contain correct content for enforcement listed building appeals when sharing statements and interested party comments', async () => {
+			const appealWithStatments = {
+				...appealData,
+				appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+				appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+				documentationSummary: {
+					lpaStatement: {
+						representationStatus: 'valid'
+					},
+					appellantStatement: {
+						representationStatus: 'valid'
+					},
 					ipComments: {
 						counts: {
 							valid: numIpComments
@@ -388,9 +418,15 @@ describe('representations', () => {
 			nock('http://test/').get('/appeals/1?include=all').reply(200, appealWithStatments);
 			const response = await request.get(`${baseUrl}/1/share`);
 			const element = parseHtml(response.text);
+			const textResponse = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Check details and share statements</h1>');
+			expect(element.innerHTML).toContain(
+				'Check details and share interested party comments and statements</h1>'
+			);
+			expect(textResponse.innerHTML).toContain(
+				'Share interested party comments and statements</button>'
+			);
 			expect(element.innerHTML).toContain(
 				`<a href="/appeals-service/appeal-details/1/interested-party-comments?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare#valid"`
 			);
