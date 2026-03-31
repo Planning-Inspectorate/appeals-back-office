@@ -16,6 +16,7 @@ import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import {
 	AUDIT_TRIAL_APPELLANT_UUID,
 	AUDIT_TRIAL_RULE_6_PARTY_ID,
+	CASE_RELATIONSHIP_LINKED,
 	DEFAULT_PAGE_NUMBER,
 	DEFAULT_PAGE_SIZE,
 	ERROR_NOT_FOUND,
@@ -56,7 +57,9 @@ export const getRepresentations = async (req, res) => {
 	const { itemCount, comments } = await representationService.getRepresentations(
 		[
 			Number(appeal.id),
-			...(appeal?.childAppeals?.map((childAppeal) => Number(childAppeal.childId)) || [])
+			...(appeal?.childAppeals
+				?.filter((childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED)
+				?.map((childAppeal) => Number(childAppeal.childId)) || [])
 		],
 		pageNumber,
 		pageSize,
@@ -89,7 +92,9 @@ export const getRepresentationCounts = async (req, res) => {
 		const counts = await representationService.getRepresentationCounts(
 			[
 				Number(appeal.id),
-				...(appeal?.childAppeals?.map((childAppeal) => Number(childAppeal.childId)) || [])
+				...(appeal?.childAppeals
+					?.filter((childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED)
+					?.map((childAppeal) => Number(childAppeal.childId)) || [])
 			],
 			{
 				status: status ? String(status) : undefined

@@ -106,7 +106,14 @@ describe('/appeals/:id/reps', () => {
 
 			expect(databaseConnector.representation.count).toHaveBeenCalledWith({
 				where: {
-					appealId: { in: [enforcementNoticeAppeal.id, ...childAppeals.map((a) => a.childId)] },
+					appealId: {
+						in: [
+							enforcementNoticeAppeal.id,
+							...childAppeals
+								.filter((childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED)
+								.map((a) => a.childId)
+						]
+					},
 					representationType: { in: ['comment'] },
 					status: 'valid'
 				}
