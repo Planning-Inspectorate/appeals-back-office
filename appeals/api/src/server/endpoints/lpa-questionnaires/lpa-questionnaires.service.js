@@ -249,63 +249,7 @@ async function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddres
 				azureAdUserId
 			);
 		case APPEAL_TYPE.S78:
-		case APPEAL_TYPE.ENFORCEMENT_NOTICE: {
-			const enforcementReference = await getEnforcementReference(appeal);
-
-			if (String(appeal.procedureType) === APPEAL_CASE_PROCEDURE.HEARING) {
-				const hearingStartTime = appeal.hearing?.hearingStartTime;
-				const hearingDate = hearingStartTime ? formatDate(hearingStartTime, false) : undefined;
-				return sendLpaqCompleteEmail(
-					notifyClient,
-					appeal,
-					{
-						...s78Fields,
-						hearing_date: hearingDate,
-						what_happens_next: 'We will contact you if we need any more information.',
-						...(enforcementReference && { enforcement_reference: enforcementReference })
-					},
-					s78Template,
-					email,
-					azureAdUserId
-				);
-			}
-
-			const s78EmailPromises = [
-				sendLpaqCompleteEmail(
-					notifyClient,
-					appeal,
-					{
-						...s78Fields,
-						...(enforcementReference && { enforcement_reference: enforcementReference })
-					},
-					s78Template,
-					email,
-					azureAdUserId
-				)
-			];
-
-			if (appeal.appealRule6Parties && appeal.appealRule6Parties.length > 0) {
-				for (const party of appeal.appealRule6Parties) {
-					if (party.serviceUser?.email) {
-						s78EmailPromises.push(
-							sendLpaqCompleteEmail(
-								notifyClient,
-								appeal,
-								{
-									...s78Fields,
-									...(enforcementReference && { enforcement_reference: enforcementReference })
-								},
-								s78Template,
-								party.serviceUser.email,
-								azureAdUserId
-							)
-						);
-					}
-				}
-			}
-
-			return Promise.all(s78EmailPromises);
-		}
+		case APPEAL_TYPE.ENFORCEMENT_NOTICE:
 		case APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING: {
 			const enforcementReference = await getEnforcementReference(appeal);
 
