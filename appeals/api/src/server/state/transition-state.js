@@ -7,7 +7,7 @@ import { currentStatus as getCurrentStatus } from '#utils/current-status.js';
 import { isChildAppeal } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { updatePersonalList } from '#utils/update-personal-list.js';
+import { setPersonalList } from '#utils/update-personal-list.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE
@@ -107,7 +107,7 @@ const transitionState = async (appealId, azureAdUserId, trigger, options = {}) =
 	if (newState === currentState) {
 		stateMachineService.stop();
 		if (!isChildAppeal(appeal)) {
-			await updatePersonalList(appealId);
+			await setPersonalList({ appealId });
 		}
 		return false;
 	}
@@ -182,7 +182,7 @@ const transitionState = async (appealId, azureAdUserId, trigger, options = {}) =
 	}
 
 	if (!isChildAppeal(appeal)) {
-		await updatePersonalList(appealId);
+		await setPersonalList({ appealId });
 	}
 
 	stateMachineService.stop();

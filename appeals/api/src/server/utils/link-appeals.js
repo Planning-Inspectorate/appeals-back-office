@@ -3,7 +3,7 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import appealRepository from '#repositories/appeal.repository.js';
 import { isParentAppeal } from '#utils/is-linked-appeal.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { updatePersonalList } from '#utils/update-personal-list.js';
+import { setPersonalList } from '#utils/update-personal-list.js';
 import {
 	AUDIT_TRAIL_APPEAL_LINK_ADDED,
 	CASE_RELATIONSHIP_LINKED
@@ -60,9 +60,9 @@ export const linkAppeals = async (azureAdUserId, parentAppeal, childAppeal) => {
 	await appealRepository.linkAppeal(relationship);
 
 	await Promise.all([
-		await updatePersonalList(relationship.parentId),
+		await setPersonalList({ appealId: relationship.parentId }),
 
-		await updatePersonalList(relationship.childId),
+		await setPersonalList({ appealId: relationship.childId }),
 
 		createAuditTrail({
 			appealId: relationship.parentId,

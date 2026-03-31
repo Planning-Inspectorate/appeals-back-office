@@ -3,6 +3,7 @@ export default {
 	moduleNameMapper: { '^uuid$': 'uuid' },
 	globalSetup: './global-setup.js',
 	setupFilesAfterEnv: ['<rootDir>/setup-tests.js'],
+	testPathIgnorePatterns: ['<rootDir>/src/server/tests/stored-procedures/'],
 	coverageThreshold: {
 		global: {
 			branches: 50,

@@ -14,13 +14,12 @@ import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { trimAppealType } from '#utils/string-utils.js';
-import { updatePersonalList } from '#utils/update-personal-list.js';
+import { setPersonalList } from '#utils/update-personal-list.js';
 import {
 	FEATURE_FLAG_NAMES,
 	FEEDBACK_FORM_LINKS,
 	FRONT_OFFICE_DASHBOARD_PATH_STUBS
-} from '@pins/appeals/constants/common.js';
-import {
+} from '@pins/appeals/constants/common.js';import {
 	AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
 	AUDIT_TRAIL_CORRECTION_NOTICE_ADDED,
 	AUDIT_TRAIL_DECISION_ISSUED,
@@ -393,7 +392,7 @@ export const publishCostsDecision = async (
 	}
 	const { recipientEmailTemplate, lpaEmailTemplate, auditTrailDetails } = costDecisionDetails;
 
-	await updatePersonalList(appeal.id);
+	await setPersonalList({ appealId: appeal.id });
 
 	if (!skipNotifies) {
 		const enforcementReference = await getEnforcementReference(appeal);
