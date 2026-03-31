@@ -2,11 +2,11 @@ apps_config = {
   app_service_plan = {
     sku                      = "P1v3"
     per_site_scaling_enabled = true
-    worker_count             = 2
+    worker_count             = 5
     zone_balancing_enabled   = false
   }
   api = {
-    worker_count = 2
+    worker_count = 5
   }
   pdf = {
     worker_count = 1
