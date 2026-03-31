@@ -780,6 +780,14 @@ const shouldSendNotify = (appealTypeShorthand, procedureType) => {
 				procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 ||
 				procedureType === APPEAL_CASE_PROCEDURE.INQUIRY ||
 				procedureType === APPEAL_CASE_PROCEDURE.HEARING)) ||
+		(appealTypeShorthand === APPEAL_CASE_TYPE.C &&
+			(procedureType === APPEAL_CASE_PROCEDURE.WRITTEN ||
+				procedureType === APPEAL_CASE_PROCEDURE.INQUIRY ||
+				procedureType === APPEAL_CASE_PROCEDURE.HEARING)) ||
+		(appealTypeShorthand === APPEAL_CASE_TYPE.F &&
+			(procedureType === APPEAL_CASE_PROCEDURE.WRITTEN ||
+				procedureType === APPEAL_CASE_PROCEDURE.INQUIRY ||
+				procedureType === APPEAL_CASE_PROCEDURE.HEARING)) ||
 		procedureType === undefined
 	);
 };

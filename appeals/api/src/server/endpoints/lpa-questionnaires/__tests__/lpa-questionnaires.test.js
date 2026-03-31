@@ -1156,13 +1156,60 @@ describe('lpa questionnaires routes', () => {
 				['cas advert', casAdvertAppealLPAQuestionnaireIncomplete],
 				['full planning', fullPlanningAppealLPAQuestionnaireIncomplete],
 				['listed building', listedBuildingAppealLPAQuestionnaireIncomplete],
-				['ldc', ldcAppealLPAQuestionnaireIncomplete]
+				['ldc', ldcAppealLPAQuestionnaireIncomplete],
+				['enforcement', enforcementNoticeAppeal],
+				['enforcement listed building', enforcementListedAppealAppellantCaseIncomplete]
 			])(
 				'sends a correctly formatted notify email when the outcome is incomplete for a %s appeal',
 				async (_, appealLPAQIncomplete) => {
-					const appeal = appealLPAQIncomplete;
+					const appeal = {
+						...appealLPAQIncomplete,
+						appealStatus: [
+							{
+								status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+								valid: true
+							}
+						],
+						lpa: {
+							...(appealLPAQIncomplete.lpa || {}),
+							email: appealLPAQIncomplete.lpa?.email || 'lpa@example.com'
+						},
+						lpaQuestionnaire: {
+							id: appealLPAQIncomplete.lpaQuestionnaire?.id || 1,
+							...(appealLPAQIncomplete.lpaQuestionnaire || {}),
+							lpaQuestionnaireIncompleteReasonsSelected: [
+								{
+									lpaQuestionnaireIncompleteReason: {
+										name: 'Documents or information are missing'
+									},
+									lpaQuestionnaireIncompleteReasonText: [{ text: 'Policy is missing' }]
+								},
+								{
+									lpaQuestionnaireIncompleteReason: {
+										name: 'Other'
+									},
+									lpaQuestionnaireIncompleteReasonText: [
+										{ text: 'Addresses are incorrect or missing' }
+									]
+								}
+							]
+						}
+					};
 					// @ts-ignore
 					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+					// @ts-ignore
+					databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
+						lpaQuestionnaireValidationOutcomes[1]
+					);
+					// @ts-ignore
+					databaseConnector.lPAQuestionnaireIncompleteReason.findMany.mockResolvedValue(
+						lpaQuestionnaireIncompleteReasons
+					);
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
 
 					const body = {
 						incompleteReasons: [{ id: 1 }, { id: 2 }],
@@ -1189,7 +1236,10 @@ describe('lpa questionnaires routes', () => {
 								'Documents or information are missing: Policy is missing',
 								'Other: Addresses are incorrect or missing'
 							],
-							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+							...(appeal.appellantCase?.enforcementReference && {
+								enforcement_reference: appeal.appellantCase.enforcementReference
+							})
 						},
 						recipientEmail: appeal.lpa.email,
 						templateName: 'lpaq-incomplete'
