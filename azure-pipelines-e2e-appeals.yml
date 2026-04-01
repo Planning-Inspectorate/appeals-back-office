@@ -87,7 +87,7 @@ yamljobs:
       ${{ if eq(parameters.RunParallel, false) }}:
         matrix:
           single:
-            SPEC: cypress/e2e/back-office-appeals/**/*.spec.js
+            SPEC: '**/*.spec.js'
 
     steps:
       - task: NodeTool@0
