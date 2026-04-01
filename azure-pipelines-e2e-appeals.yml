@@ -39,7 +39,8 @@ jobs:
               inquiry.spec.js,
               manuallyAddRepresentation.spec.js,
               part1.spec.js,
-              personalList.spec.js
+              personalList.spec.js,
+              endToEndEnforcement.spec.js
           group2:
             SPEC: >-
               relatedAppeals.spec.js,

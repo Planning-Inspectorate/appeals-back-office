@@ -1,6 +1,7 @@
 // @ts-nocheck
 /// <reference types="cypress"/>
 
+import { appealsApiRequests } from '../../fixtures/appealsApiRequests.js';
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
@@ -11,7 +12,7 @@ describe('Create Test Data', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
-	it.only('HAS', () => {
+	it('HAS', () => {
 		cy.createCase().then((caseObj) => {
 			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'VALIDATION', 'HAS');
 		});
@@ -50,6 +51,18 @@ describe('Create Test Data', () => {
 		cy.createCase({ caseType: 'H' }).then((caseObj) => {
 			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'ADVERT');
 		});
+	});
+	it('Enforcement', () => {
+		cy.createCase({ ...appealsApiRequests.enforcementSubmission.casedata }).then((caseObj) => {
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'ENFORCEMENT');
+		});
+	});
+	it('Enforcement Listed Building', () => {
+		cy.createCase({ ...appealsApiRequests.enforcementListedSubmission.casedata }).then(
+			(caseObj) => {
+				happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'ENFORCEMENT_LISTED');
+			}
+		);
 	});
 	it('Update Case', () => {
 		const caseObj = { reference: '6053117' };

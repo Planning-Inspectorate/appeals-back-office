@@ -40,6 +40,19 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 	},
+	reviewEnforcementAppeallantCase(caseObj) {
+		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
+		caseDetailsPage.clickReviewAppellantCase();
+		caseDetailsPage.selectRadioButtonByValue('Valid');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue('Yes');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue('No');
+		caseDetailsPage.clickButtonByText('Continue');
+		dateTimeSection.enterValidDate(happyPathHelper.getYesterday());
+		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.clickButtonByText('Mark appeal as valid');
+	},
 	reviewLpaq(caseObj, state = 'Complete') {
 		let dueDate = new Date();
 
