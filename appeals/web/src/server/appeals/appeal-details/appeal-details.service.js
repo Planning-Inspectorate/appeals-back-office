@@ -10,7 +10,10 @@ export function getAppealDetailsFromId(apiClient, appealId, include) {
 		throw new Error('include=all is not allowed, select only the keys needed');
 	}
 
-	const url = include ? `appeals/${appealId}?include=${include}` : `appeals/${appealId}`;
+	const encodedAppealId = encodeURIComponent(appealId);
+	const url = include
+		? `appeals/${encodedAppealId}?include=${include}`
+		: `appeals/${encodedAppealId}`;
 
 	return apiClient.get(url).json();
 }
@@ -22,7 +25,8 @@ export function getAppealDetailsFromId(apiClient, appealId, include) {
  * @returns {Promise<import('./appeal-details.types.js').WebAppeal>}
  */
 export function deprecatedGetAppealDetailsFromId(apiClient, appealId) {
-	const url = `appeals/${appealId}?include=all`;
+	const encodedAppealId = encodeURIComponent(appealId);
+	const url = `appeals/${encodedAppealId}?include=all`;
 
 	return apiClient.get(url).json();
 }
@@ -38,8 +42,9 @@ export function setEnvironmentalImpactAssessmentScreening(
 	appealId,
 	eiaScreeningRequired
 ) {
+	const encodedAppealId = encodeURIComponent(appealId);
 	return apiClient
-		.patch(`appeals/${appealId}/eia-screening-required`, {
+		.patch(`appeals/${encodedAppealId}/eia-screening-required`, {
 			json: { eiaScreeningRequired }
 		})
 		.json();
