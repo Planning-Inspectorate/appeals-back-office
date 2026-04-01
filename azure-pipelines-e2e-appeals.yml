@@ -29,57 +29,60 @@ jobs:
     pool: pins-odt-agent-pool-tests
 
     strategy:
-          matrix:
-            ${{ if eq(parameters.RunParallel, true) }}:
-              group1:
-                SPEC: >-
-                  issueDecision.spec.js,
-                  hearing.spec.js,
-                  reviewAppellantCase.spec.js,
-                  inquiry.spec.js,
-                  manuallyAddRepresentation.spec.js,
-                  part1.spec.js,
-                  personalList.spec.js
-              group2:
-                SPEC: >-
-                  relatedAppeals.spec.js,
-                  manageCorrespondence.spec.js,
-                  manageDocsAppellant.spec.js,
-                  manageDocsLpa.spec.js,
-                  nationalListSearch.spec.js,
-                  reviewLpaq.spec.js,
-                  s78ChangeTimetable.spec.js,
-                  scheduleSiteVisit.spec.js,
-                  startCase.spec.js,
-                  unrelateAppeals.spec.js,
-                  updateLpaqDueDate.spec.js,
-                  addCostDecisionRedacted.spec.js,
-                  cancelAppeal.spec.js,
-                  captureNetResidence.spec.js,
-                  changeAppealProcedureType.spec.js,
-                  changeAppealType.spec.js,
-                  rule6Party.spec.js
-              group3:
-                SPEC: >-
-                  addCorrespondence.spec.js,
-                  appellantCase.spec.js,
-                  assignUserToCase.spec.js,
-                  caseHistory.spec.js,
-                  caseNotes.spec.js,
-                  changeContact.spec.js,
-                  changeSiteVisit.spec.js,
-                  changeStartDate.spec.js,
-                  globalValidation.spec.js,
-                  linkAppeals.spec.js,
-                  lpaStatement.spec.js,
-                  manageDocsSupporting.spec.js,
-                  endToEndAdvert.spec.js,
-                  endToEndS20.spec.js,
-                  endToEndS78.spec.js,
-                  updateDecisionLetter.spec.js
-            ${{ if eq(parameters.RunParallel, false) }}:
-              single:
-                SPEC: '**/*.spec.js'
+      ${{ if eq(parameters.RunParallel, true) }}:
+        matrix:
+          group1:
+            SPEC: >-
+              issueDecision.spec.js,
+              hearing.spec.js,
+              reviewAppellantCase.spec.js,
+              inquiry.spec.js,
+              manuallyAddRepresentation.spec.js,
+              part1.spec.js,
+              personalList.spec.js
+          group2:
+            SPEC: >-
+              relatedAppeals.spec.js,
+              manageCorrespondence.spec.js,
+              manageDocsAppellant.spec.js,
+              manageDocsLpa.spec.js,
+              nationalListSearch.spec.js,
+              reviewLpaq.spec.js,
+              s78ChangeTimetable.spec.js,
+              scheduleSiteVisit.spec.js,
+              startCase.spec.js,
+              unrelateAppeals.spec.js,
+              updateLpaqDueDate.spec.js,
+              addCostDecisionRedacted.spec.js,
+              cancelAppeal.spec.js,
+              captureNetResidence.spec.js,
+              changeAppealProcedureType.spec.js,
+              changeAppealType.spec.js,
+              rule6Party.spec.js
+          group3:
+            SPEC: >-
+              addCorrespondence.spec.js,
+              appellantCase.spec.js,
+              assignUserToCase.spec.js,
+              caseHistory.spec.js,
+              caseNotes.spec.js,
+              changeContact.spec.js,
+              changeSiteVisit.spec.js,
+              changeStartDate.spec.js,
+              globalValidation.spec.js,
+              linkAppeals.spec.js,
+              lpaStatement.spec.js,
+              manageDocsSupporting.spec.js,
+              endToEndAdvert.spec.js,
+              endToEndS20.spec.js,
+              endToEndS78.spec.js,
+              updateDecisionLetter.spec.js
+
+      #  SINGLE AGENT RUN (manual toggle)
+      ${{ if eq(parameters.RunParallel, false) }}:
+        matrix:
+          single:
+            SPEC: '**/*.spec.js'
 
     steps:
       - task: NodeTool@0
