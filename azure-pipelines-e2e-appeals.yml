@@ -28,11 +28,6 @@ jobs:
     timeoutInMinutes: 180
     pool: pins-odt-agent-pool-tests
 
-yamljobs:
-  - job: Run_Cypress_Tests_For_Appeals
-    timeoutInMinutes: 180
-    pool: pins-odt-agent-pool-tests
-
     strategy:
       ${{ if eq(parameters.RunParallel, true) }}:
         matrix:
