@@ -6,7 +6,7 @@ parameters:
 
   - name: RunParallel
     type: boolean
-    default: true 
+    default: true
 
 variables:
   - name: APP
@@ -29,19 +29,19 @@ jobs:
     pool: pins-odt-agent-pool-tests
 
     strategy:
-      # PARALLEL RUNS (default)
       ${{ if eq(parameters.RunParallel, true) }}:
         matrix:
           group1:
-            SPEC: |
+            SPEC: >-
               issueDecision.spec.js,
               hearing.spec.js,
               reviewAppellantCase.spec.js,
               inquiry.spec.js,
               manuallyAddRepresentation.spec.js,
+              part1.spec.js,
               personalList.spec.js
           group2:
-            SPEC: |
+            SPEC: >-
               relatedAppeals.spec.js,
               manageCorrespondence.spec.js,
               manageDocsAppellant.spec.js,
@@ -57,18 +57,17 @@ jobs:
               cancelAppeal.spec.js,
               captureNetResidence.spec.js,
               changeAppealProcedureType.spec.js,
-              changeEndAdvert.spec.js,
               changeAppealType.spec.js,
               rule6Party.spec.js
           group3:
-            SPEC: | 
+            SPEC: >-
               addCorrespondence.spec.js,
               appellantCase.spec.js,
               assignUserToCase.spec.js,
               caseHistory.spec.js,
               caseNotes.spec.js,
               changeContact.spec.js,
-              cchangeSiteVisit.spec.js,
+              changeSiteVisit.spec.js,
               changeStartDate.spec.js,
               globalValidation.spec.js,
               linkAppeals.spec.js,
@@ -78,12 +77,12 @@ jobs:
               endToEndS20.spec.js,
               endToEndS78.spec.js,
               updateDecisionLetter.spec.js
-   
+
       #  SINGLE AGENT RUN (manual toggle)
       ${{ if eq(parameters.RunParallel, false) }}:
         matrix:
           single:
-            SPEC: \**/*.spec.js
+            SPEC: '**/*.spec.js'
 
     steps:
       - task: NodeTool@0
@@ -103,14 +102,11 @@ jobs:
           workingDir: $(System.DefaultWorkingDirectory)/appeals/e2e
         displayName: "Install Dependencies"
 
-      # remove whitespace, newline and trailing commas so that spec is formatted for cypress
       - script: |
-          CLEANED_SPEC=$(echo "$(SPEC)" \
-            | tr -d '\n' \
-            | tr -d ' ' \
-            | sed 's/,$//')
-          echo "Running Cypress specs: $(CLEANED_SPEC)"
-          npx cypress run --spec "cypress/e2e/back-office-appeals/$(CLEANED_SPEC)"
+          CLEAN_SPEC=$(echo "$(SPEC)" | tr -d ' \n' | sed 's/,/,cypress\/e2e\/back-office-appeals\//g')
+          CLEAN_SPEC="cypress/e2e/back-office-appeals/$CLEAN_SPEC"
+          echo "Running: $CLEAN_SPEC"
+          npx cypress run --spec "$CLEAN_SPEC"
         workingDirectory: $(System.DefaultWorkingDirectory)/appeals/e2e        
         env:
           TZ: 'Europe/London'
