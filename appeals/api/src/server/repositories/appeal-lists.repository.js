@@ -69,6 +69,8 @@ const getAllAppeals = async (
 
 	const appeals = await databaseConnector.appeal.findMany({
 		where,
+		// TODO: performance
+		// use selects not include to only return the data needed for the appeals list
 		include: {
 			address: true,
 			appealStatus: {
@@ -201,6 +203,9 @@ const getAppealsWithoutIncludes = async (
 		appellantProcedurePreferencePreFilter
 	);
 
+	// TODO: performance
+	// gets all appeals, performance will get worse over time
+	// only used for filtering the filters
 	return databaseConnector.appeal.findMany({ where });
 };
 
@@ -511,6 +516,10 @@ const getAppealsStatusesInNationalList = async () => {
 			status: true
 		},
 		distinct: ['status']
+		// TODO: performance
+		// Prisma Client's distinct option does not use SQL SELECT DISTINCT. Instead, distinct uses:
+		// A SELECT query + In-memory post-processing to select distinct
+		// this will get worse over time
 	});
 
 	return results.map((result) => result.status);

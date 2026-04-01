@@ -1,5 +1,8 @@
 import { areIdParamsValid } from '#lib/validators/id-param.validator.js';
-import { getAppealDetailsFromId } from './appeal-details.service.js';
+import {
+	deprecatedGetAppealDetailsFromId,
+	getAppealDetailsFromId
+} from './appeal-details.service.js';
 
 /**
  * @deprecated too inefficient, use validateAppealWithInclude
@@ -15,7 +18,9 @@ export const validateAppeal = async (req, res, next) => {
 	}
 
 	try {
-		const appeal = await getAppealDetailsFromId(req.apiClient, appealId || caseId);
+		// TODO: performance
+		// is returning all data, return only needed data
+		const appeal = await deprecatedGetAppealDetailsFromId(req.apiClient, appealId || caseId);
 		if (!appeal) {
 			return res.status(404).render('app/404.njk');
 		}
