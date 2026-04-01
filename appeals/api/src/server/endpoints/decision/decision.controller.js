@@ -84,7 +84,11 @@ export const postInspectorDecision = async (req, res) => {
 				switch (decisionType) {
 					case DECISION_TYPE_INSPECTOR: {
 						if (isChildAppeal) {
-							const childAppeal = await appealRepository.getAppealById(Number(decisionAppealId));
+							// TODO: performance
+							// is returning all data, return only needed data
+							const childAppeal = await appealRepository.deprecatedGetAppealById(
+								Number(decisionAppealId)
+							);
 
 							if (childAppeal) {
 								return publishChildDecision(

@@ -79,6 +79,8 @@ const getPersonalList = async (userId, pageNumber, pageSize, status, leadAppealI
 	return databaseConnector.$transaction(async (tx) => {
 		const personalList = await tx.personalList.findMany({
 			where: where({ status, leadAppealId }),
+			// TODO: performance
+			// use selects not include to only return the data needed for the personal list
 			include: {
 				appeal: {
 					include: {

@@ -13,7 +13,9 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
  * @returns {Promise<void>}
  */
 export const updatePersonalList = async (appealId) => {
-	const appeal = await appealRepository.getAppealById(appealId);
+	// TODO: performance
+	// is returning all data, return only needed data
+	const appeal = await appealRepository.deprecatedGetAppealById(appealId);
 	if (!appeal) {
 		return;
 	}
@@ -36,7 +38,11 @@ export const updatePersonalList = async (appealId) => {
 			linkType = 'parent';
 		}
 		if (!dueDate && linkedAppeals[0]?.parentId) {
-			const parentAppeal = await appealRepository.getAppealById(linkedAppeals[0].parentId);
+			// TODO: performance
+			// is returning all data, return only needed data
+			const parentAppeal = await appealRepository.deprecatedGetAppealById(
+				linkedAppeals[0].parentId
+			);
 			if (!parentAppeal) {
 				dueDate = null;
 			} else {
