@@ -103,8 +103,10 @@ jobs:
         displayName: "Install Dependencies"
 
       - script: |
-          CLEAN_SPEC=$(echo "$(SPEC)" | tr -d ' ')
-          npx cypress run --spec "cypress/e2e/back-office-appeals/$CLEAN_SPEC"
+          CLEAN_SPEC=$(echo "$(SPEC)" | tr -d ' \n' | sed 's/,/,cypress\/e2e\/back-office-appeals\//g')
+          CLEAN_SPEC="cypress/e2e/back-office-appeals/$CLEAN_SPEC"
+          echo "Running: $CLEAN_SPEC"
+          npx cypress run --spec "$CLEAN_SPEC"
         workingDirectory: $(System.DefaultWorkingDirectory)/appeals/e2e        
         env:
           TZ: 'Europe/London'
