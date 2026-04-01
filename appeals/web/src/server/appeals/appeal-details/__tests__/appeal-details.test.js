@@ -411,7 +411,7 @@ describe('appeal-details', () => {
 						.reply(200, appealData)
 						.persist();
 					nock('http://test/')
-						.patch(`/appeals/${appealData.appealId}?include=all`)
+						.patch(`/appeals/${appealData.appealId}`)
 						.reply(200, {
 							...appealData,
 							caseOfficer: 'updatedCaseOfficerId'
@@ -452,13 +452,13 @@ describe('appeal-details', () => {
 						.reply(200, appealData)
 						.persist();
 					nock('http://test/')
-						.patch(`/appeals/${appealData.appealId}?include=all`)
+						.patch(`/appeals/${appealData.appealId}`)
 						.reply(200, {
 							...appealData,
 							inspector: 'updatedInspectorId'
 						});
 					nock('http://test/')
-						.get(`/appeals/${appealData.appealId}/case-notes`)
+						.get(`/appeals/${appealData.appealId}/case-notes?include=all`)
 						.reply(200, caseNotes);
 
 					await request
@@ -1929,7 +1929,7 @@ describe('appeal-details', () => {
 						.reply(200, appealInValidationStatus)
 						.persist();
 					nock('http://test/')
-						.patch(`/appeals/${appealId}?include=all`)
+						.patch(`/appeals/${appealId}`)
 						.reply(200, {
 							...appealInValidationStatus,
 							caseOfficer: 'updatedCaseOfficerId'
