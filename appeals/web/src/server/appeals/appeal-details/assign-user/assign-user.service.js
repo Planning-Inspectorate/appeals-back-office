@@ -33,7 +33,7 @@ export async function setAppealAssignee(apiClient, appealId, assigneeUser, isIns
 	} else {
 		userJson = { caseOfficerId: assigneeUserId, caseOfficerName: assigneeUser.name };
 	}
-	return apiClient.patch(`appeals/${appealId}?include=all`, { json: userJson }).json();
+	return apiClient.patch(`appeals/${appealId}`, { json: userJson }).json();
 }
 
 /**

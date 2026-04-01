@@ -37,7 +37,9 @@ import createStateMachine from './create-state-machine.js';
  * @param {string} trigger
  */
 const transitionState = async (appealId, azureAdUserId, trigger) => {
-	const appeal = await appealRepository.getAppealById(appealId);
+	// TODO: performance
+	// is returning all data, return only needed data
+	const appeal = await appealRepository.deprecatedGetAppealById(appealId);
 
 	if (!appeal) {
 		throw new Error(`no appeal exists with ID: ${appealId}`);

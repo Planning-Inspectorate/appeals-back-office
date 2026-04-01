@@ -156,7 +156,9 @@ const updateLPAQuestionnaireValidationOutcome = async (
 		await sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress, azureAdUserId);
 	}
 
-	const updatedAppeal = await appealRepository.getAppealById(Number(appealId));
+	// TODO: performance
+	// is returning all data, return only needed data
+	const updatedAppeal = await appealRepository.deprecatedGetAppealById(Number(appealId));
 	if (updatedAppeal) {
 		const { lpaQuestionnaire: updatedLpaQuestionnaire } = updatedAppeal;
 
