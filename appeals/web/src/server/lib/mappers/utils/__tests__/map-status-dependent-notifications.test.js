@@ -2,9 +2,13 @@
 import { mapStatusDependentNotifications } from '#lib/mappers/utils/map-status-dependent-notifications.js';
 import { appealDataToGetRequiredActions } from '#testing/appeals/appeals.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { VALIDATION_OUTCOME_INCOMPLETE } from '@pins/appeals/constants/support.js';
+import {
+	SITE_VISIT_TYPE_ACCESS_REQUIRED,
+	SITE_VISIT_TYPE_ACCOMPANIED,
+	SITE_VISIT_TYPE_UNACCOMPANIED,
+	VALIDATION_OUTCOME_INCOMPLETE
+} from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-
 describe('mapStatusDependentNotifications', () => {
 	const mockAppealData = {
 		appealId: 1
@@ -309,7 +313,8 @@ describe('mapStatusDependentNotifications', () => {
 			mockData: {
 				appealId: 1,
 				siteVisit: {
-					visitDate: '2026-01-01'
+					visitDate: '2026-01-01',
+					visitType: SITE_VISIT_TYPE_ACCESS_REQUIRED
 				}
 			},
 			expectedContainedHtml: `<a class="govuk-heading-s govuk-notification-banner__link" data-cy="add-site-visit-time" href="/appeals-service/appeal-details/${mockAppealData.appealId}/site-visit/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Add site visit time</a>`,
@@ -320,10 +325,52 @@ describe('mapStatusDependentNotifications', () => {
 			requiredAction: 'addSiteVisitDateTime',
 			mockData: {
 				appealId: 1,
-				appealStatus: APPEAL_CASE_STATUS.INVALID,
-				siteVisit: {}
+				appealStatus: APPEAL_CASE_STATUS.VALID,
+				siteVisit: {
+					visitType: SITE_VISIT_TYPE_UNACCOMPANIED
+				}
 			},
 			expectedContainedHtml: `<a class="govuk-heading-s govuk-notification-banner__link" data-cy="add-site-visit-date-time" href="/appeals-service/appeal-details/${mockAppealData.appealId}/site-visit/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Add site visit date and time</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
+			bannerKey: 'addSiteVisitDateTime',
+			requiredAction: 'addSiteVisitDateTime',
+			mockData: {
+				appealId: 1,
+				appealStatus: APPEAL_CASE_STATUS.VALID,
+				siteVisit: {
+					visitType: SITE_VISIT_TYPE_ACCESS_REQUIRED
+				}
+			},
+			expectedContainedHtml: `<a class="govuk-heading-s govuk-notification-banner__link" data-cy="add-site-visit-date-time" href="/appeals-service/appeal-details/${mockAppealData.appealId}/site-visit/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Add site visit date and time</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
+			bannerKey: 'addSiteVisitDateTime',
+			requiredAction: 'addSiteVisitDateTime',
+			mockData: {
+				appealId: 1,
+				appealStatus: APPEAL_CASE_STATUS.VALID,
+				siteVisit: {
+					visitType: SITE_VISIT_TYPE_ACCOMPANIED
+				}
+			},
+			expectedContainedHtml: `<a class="govuk-heading-s govuk-notification-banner__link" data-cy="add-site-visit-date-time" href="/appeals-service/appeal-details/${mockAppealData.appealId}/site-visit/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Add site visit date and time</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
+			bannerKey: 'addSiteVisitTime',
+			requiredAction: 'addSiteVisitTime',
+			mockData: {
+				appealId: 1,
+				appealStatus: APPEAL_CASE_STATUS.VALID,
+				siteVisit: {
+					visitType: SITE_VISIT_TYPE_ACCOMPANIED,
+					visitDate: '2026-01-01'
+				}
+			},
+			expectedContainedHtml: `<a class="govuk-heading-s govuk-notification-banner__link" data-cy="add-site-visit-time" href="/appeals-service/appeal-details/${mockAppealData.appealId}/site-visit/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Add site visit time</a>`,
 			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
@@ -502,4 +549,27 @@ describe('mapStatusDependentNotifications', () => {
 			);
 		});
 	}
+
+	it(`should return no banner when siteVisit type is Unaccompanied and site visit date has been set up but no time has been setup"`, async () => {
+		const testCase = {
+			mockData: {
+				appealId: 1,
+				appealStatus: APPEAL_CASE_STATUS.VALID,
+				siteVisit: {
+					visitType: SITE_VISIT_TYPE_UNACCOMPANIED,
+					visitDate: '2026-01-01'
+				}
+			}
+		};
+		const appealData = testCase.mockData || appealDataToGetRequiredActions[testCase.requiredAction];
+		const result = mapStatusDependentNotifications(appealData, {
+			originalUrl: `/appeals-service/appeal-details/${mockAppealData.appealId}`,
+			session: {}
+		});
+
+		expect(Array.isArray(result)).toBe(true);
+		expect(result[0]?.type).not.toBe('notification-banner');
+		expect(result[0]?.parameters.type).not.toBe('important');
+		expect(result[0]?.parameters.html).toBeUndefined();
+	});
 });
