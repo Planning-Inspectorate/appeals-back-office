@@ -1611,6 +1611,225 @@
 				}
 			}
 		},
+		"/appeals/broadcast/appeal/{appealId}": {
+			"post": {
+				"tags": ["Broadcast"],
+				"description": "Broadcasts an appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/appeals/broadcast/document/{documentGuid}": {
+			"post": {
+				"tags": ["Broadcast"],
+				"description": "Broadcasts a document",
+				"parameters": [
+					{
+						"name": "documentGuid",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Document broadcasting options",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"updateType": {
+										"type": "string",
+										"enum": ["Create", "Update", "Delete"]
+									},
+									"version": {
+										"type": "number"
+									}
+								},
+								"required": ["updateType", "version"]
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"updateType": {
+										"type": "string",
+										"enum": ["Create", "Update", "Delete"]
+									},
+									"version": {
+										"type": "number"
+									}
+								},
+								"required": ["updateType", "version"]
+							}
+						}
+					}
+				}
+			}
+		},
+		"/appeals/broadcast/representation/{representationId}": {
+			"post": {
+				"tags": ["Broadcast"],
+				"description": "Broadcasts a representation",
+				"parameters": [
+					{
+						"name": "representationId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Representation broadcasting options",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"updateType": {
+										"type": "string",
+										"enum": ["Create", "Update", "Delete"]
+									}
+								},
+								"required": ["updateType"]
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"updateType": {
+										"type": "string",
+										"enum": ["Create", "Update", "Delete"]
+									}
+								},
+								"required": ["updateType"]
+							}
+						}
+					}
+				}
+			}
+		},
+		"/appeals/broadcast/serviceUser/{serviceUserId}": {
+			"post": {
+				"tags": ["Broadcast"],
+				"description": "Broadcasts a service user",
+				"parameters": [
+					{
+						"name": "serviceUserId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Service user broadcasting options",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"updateType": {
+										"type": "string",
+										"enum": ["Create", "Update", "Delete"]
+									},
+									"roleName": {
+										"type": "string"
+									},
+									"caseReference": {
+										"type": "string"
+									}
+								},
+								"required": ["updateType", "roleName", "caseReference"]
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"updateType": {
+										"type": "string",
+										"enum": ["Create", "Update", "Delete"]
+									},
+									"roleName": {
+										"type": "string"
+									},
+									"caseReference": {
+										"type": "string"
+									}
+								},
+								"required": ["updateType", "roleName", "caseReference"]
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/generate-appeals": {
 			"get": {
 				"tags": ["Test Data"],
