@@ -274,6 +274,14 @@ interface SingleAppellantCaseResponse {
 	landownerPermission?: boolean | null;
 	siteGridReferenceEasting?: string | null;
 	siteGridReferenceNorthing?: string | null;
+	reasonForAppealAppellant?: string | null;
+	anySignificantChanges?: string | null;
+	anySignificantChanges_otherSignificantChanges?: string | null;
+	anySignificantChanges_localPlanSignificantChanges?: string | null;
+	anySignificantChanges_nationalPolicySignificantChanges?: string | null;
+	anySignificantChanges_courtJudgementSignificantChanges?: string | null;
+	screeningOpinionIndicatesEiaRequired?: boolean | null;
+	ownershipCertificate?: boolean | null;
 	appealGrounds?: AppealGround[] | null;
 	siteUseAtTimeOfApplication?: string | null;
 	applicationMadeUnderActSection?: string | null;

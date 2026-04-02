@@ -29,7 +29,6 @@ export const mapAppellantCaseSharedFields = (data) => {
 		statusPlanningObligation: casedata?.statusPlanningObligation ?? null,
 		// @ts-ignore
 		typeOfPlanningApplication: casedata?.typeOfPlanningApplication,
-
 		//TODO:
 		designAccessStatementProvided: null
 	};

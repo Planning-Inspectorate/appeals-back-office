@@ -20,6 +20,18 @@ export const mapAppellantCase = (data) => {
 		informedTenantsAgriculturalHolding: casedata?.informedTenantsAgriculturalHolding ?? null,
 		agriculturalHolding: casedata?.agriculturalHolding ?? null,
 		tenantAgriculturalHolding: casedata?.tenantAgriculturalHolding ?? null,
-		otherTenantsAgriculturalHolding: casedata?.otherTenantsAgriculturalHolding ?? null
+		otherTenantsAgriculturalHolding: casedata?.otherTenantsAgriculturalHolding ?? null,
+		reasonForAppealAppellant: casedata?.reasonForAppealAppellant ?? null,
+		anySignificantChanges: casedata?.anySignificantChanges ?? null,
+		anySignificantChanges_otherSignificantChanges:
+			casedata?.anySignificantChanges_otherSignificantChanges ?? null,
+		anySignificantChanges_localPlanSignificantChanges:
+			casedata?.anySignificantChanges_localPlanSignificantChanges ?? null,
+		anySignificantChanges_nationalPolicySignificantChanges:
+			casedata?.anySignificantChanges_nationalPolicySignificantChanges ?? null,
+		anySignificantChanges_courtJudgementSignificantChanges:
+			casedata?.anySignificantChanges_courtJudgementSignificantChanges ?? null,
+		screeningOpinionIndicatesEiaRequired: casedata?.screeningOpinionIndicatesEiaRequired ?? null,
+		ownershipCertificate: casedata?.ownershipCertificate ?? null
 	};
 };

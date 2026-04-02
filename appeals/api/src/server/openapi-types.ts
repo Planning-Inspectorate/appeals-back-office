@@ -1481,6 +1481,22 @@ export interface SingleAppellantCaseResponse {
 	siteGridReferenceEasting?: string;
 	/** @example "654321" */
 	siteGridReferenceNorthing?: string;
+	/** @example "My reason for appeal" */
+	reasonForAppealAppellant?: string;
+	/** @example "Yes" */
+	anySignificantChanges?: string;
+	/** @example "Other changes" */
+	anySignificantChanges_otherSignificantChanges?: string;
+	/** @example "Local plan changes" */
+	anySignificantChanges_localPlanSignificantChanges?: string;
+	/** @example "National policy changes" */
+	anySignificantChanges_nationalPolicySignificantChanges?: string;
+	/** @example "Court judgment changes" */
+	anySignificantChanges_courtJudgementSignificantChanges?: string;
+	/** @example true */
+	screeningOpinionIndicatesEiaRequired?: boolean;
+	/** @example true */
+	ownershipCertificate?: boolean;
 }
 
 export interface UpdateCaseTeamRequest {

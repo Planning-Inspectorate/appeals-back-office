@@ -11543,6 +11543,38 @@
 					"siteGridReferenceNorthing": {
 						"type": "string",
 						"example": "654321"
+					},
+					"reasonForAppealAppellant": {
+						"type": "string",
+						"example": "My reason for appeal"
+					},
+					"anySignificantChanges": {
+						"type": "string",
+						"example": "Yes"
+					},
+					"anySignificantChanges_otherSignificantChanges": {
+						"type": "string",
+						"example": "Other changes"
+					},
+					"anySignificantChanges_localPlanSignificantChanges": {
+						"type": "string",
+						"example": "Local plan changes"
+					},
+					"anySignificantChanges_nationalPolicySignificantChanges": {
+						"type": "string",
+						"example": "National policy changes"
+					},
+					"anySignificantChanges_courtJudgementSignificantChanges": {
+						"type": "string",
+						"example": "Court judgment changes"
+					},
+					"screeningOpinionIndicatesEiaRequired": {
+						"type": "boolean",
+						"example": true
+					},
+					"ownershipCertificate": {
+						"type": "boolean",
+						"example": true
 					}
 				},
 				"xml": {

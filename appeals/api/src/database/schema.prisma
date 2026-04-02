@@ -358,6 +358,16 @@ model AppellantCase {
   //LDC Fields
   siteUseAtTimeOfApplication     String?
   applicationMadeUnderActSection String?
+
+  //Expedited Fields
+  reasonForAppealAppellant                               String?
+  anySignificantChanges                                  String?
+  anySignificantChanges_otherSignificantChanges          String?  @db.NVarChar(Max)
+  anySignificantChanges_localPlanSignificantChanges      String?  @db.NVarChar(Max)
+  anySignificantChanges_nationalPolicySignificantChanges String?  @db.NVarChar(Max)
+  anySignificantChanges_courtJudgementSignificantChanges String?  @db.NVarChar(Max)
+  screeningOpinionIndicatesEiaRequired                   Boolean?
+  ownershipCertificate                                   Boolean?
 }
 
 /// AppealGround model

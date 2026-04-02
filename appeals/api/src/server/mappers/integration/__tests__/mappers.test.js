@@ -479,6 +479,33 @@ describe('mapAppellantCaseIn', () => {
 			})
 		},
 		{
+			desc: 'S78 case with expedited fields',
+			input: {
+				casedata: {
+					caseType: APPEAL_CASE_TYPE.W,
+					reasonForAppealAppellant: 'reason',
+					significantChangesAffectingApplicationAppellant: [
+						'Local plan: lp',
+						'National policy: np',
+						'Court judgment: cj',
+						'Other: o'
+					],
+					screeningOpinionIndicatesEiaRequired: true,
+					ownershipCertificate: true
+				}
+			},
+			expected: expect.objectContaining({
+				reasonForAppealAppellant: 'reason',
+				anySignificantChanges: 'Yes',
+				anySignificantChanges_localPlanSignificantChanges: 'lp',
+				anySignificantChanges_nationalPolicySignificantChanges: 'np',
+				anySignificantChanges_courtJudgementSignificantChanges: 'cj',
+				anySignificantChanges_otherSignificantChanges: 'o',
+				screeningOpinionIndicatesEiaRequired: true,
+				ownershipCertificate: true
+			})
+		},
+		{
 			desc: 'Enforcement case (C)',
 			input: {
 				casedata: {
