@@ -107,6 +107,9 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/lpa-reference/change"
+                                    data-cy="change-application-reference">Change<span class="govuk-visually-hidden"> What is the application reference number? (Before you start)</span></a>
+                                </dd>
                         </div>
                     </dl>
                 </div>
@@ -745,6 +748,9 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/lpa-reference/change"
+                                    data-cy="change-application-reference">Change<span class="govuk-visually-hidden"> What is the application reference number? (Before you start)</span></a>
+                                </dd>
                         </div>
                     </dl>
                 </div>
@@ -1056,6 +1062,9 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/lpa-reference/change"
+                                    data-cy="change-application-reference">Change<span class="govuk-visually-hidden"> What is the application reference number? (Before you start)</span></a>
+                                </dd>
                         </div>
                     </dl>
                 </div>
@@ -1499,6 +1508,9 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/lpa-reference/change"
+                                    data-cy="change-application-reference">Change<span class="govuk-visually-hidden"> What is the application reference number? (Before you start)</span></a>
+                                </dd>
                         </div>
                     </dl>
                 </div>
@@ -1809,6 +1821,9 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/lpa-reference/change"
+                                    data-cy="change-application-reference">Change<span class="govuk-visually-hidden"> What is the application reference number? (Before you start)</span></a>
+                                </dd>
                         </div>
                     </dl>
                 </div>
@@ -2080,6 +2095,9 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/lpa-reference/change"
+                                    data-cy="change-application-reference">Change<span class="govuk-visually-hidden"> What is the application reference number? (Before you start)</span></a>
+                                </dd>
                         </div>
                     </dl>
                 </div>
@@ -2336,6 +2354,9 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/lpa-reference/change"
+                                    data-cy="change-application-reference">Change<span class="govuk-visually-hidden"> What is the application reference number? (Before you start)</span></a>
+                                </dd>
                         </div>
                     </dl>
                 </div>
@@ -3052,6 +3073,9 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/lpa-reference/change"
+                                    data-cy="change-application-reference">Change<span class="govuk-visually-hidden"> What is the application reference number? (3. Grounds and facts)</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
                             <dd                             class="govuk-summary-list__value"></dd>
@@ -3472,6 +3496,9 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/lpa-reference/change"
+                                    data-cy="change-application-reference">Change<span class="govuk-visually-hidden"> What is the application reference number? (3. Grounds and facts)</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
                             <dd                             class="govuk-summary-list__value"></dd>
@@ -3732,6 +3759,9 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/lpa-reference/change"
+                                    data-cy="change-application-reference">Change<span class="govuk-visually-hidden"> What is the application reference number? (Before you start)</span></a>
+                                </dd>
                         </div>
                     </dl>
                 </div>
@@ -4103,6 +4133,9 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/lpa-reference/change"
+                                    data-cy="change-application-reference">Change<span class="govuk-visually-hidden"> What is the application reference number? (Before you start)</span></a>
+                                </dd>
                         </div>
                     </dl>
                 </div>
@@ -4526,6 +4559,9 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/lpa-reference/change"
+                                    data-cy="change-application-reference">Change<span class="govuk-visually-hidden"> What is the application reference number? (3. Grounds and facts)</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
                             <dd                             class="govuk-summary-list__value"></dd>
@@ -4825,6 +4861,9 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/lpa-reference/change"
+                                    data-cy="change-application-reference">Change<span class="govuk-visually-hidden"> What is the application reference number? (Before you start)</span></a>
+                                </dd>
                         </div>
                     </dl>
                 </div>
@@ -5181,6 +5220,9 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/lpa-reference/change"
+                                    data-cy="change-application-reference">Change<span class="govuk-visually-hidden"> What is the application reference number? (Before you start)</span></a>
+                                </dd>
                         </div>
                     </dl>
                 </div>
@@ -5474,6 +5516,9 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/lpa-reference/change"
+                                    data-cy="change-application-reference">Change<span class="govuk-visually-hidden"> What is the application reference number? (Before you start)</span></a>
+                                </dd>
                         </div>
                     </dl>
                 </div>
@@ -5779,6 +5824,9 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/lpa-reference/change"
+                                    data-cy="change-application-reference">Change<span class="govuk-visually-hidden"> What is the application reference number? (Before you start)</span></a>
+                                </dd>
                         </div>
                     </dl>
                 </div>
@@ -9336,6 +9384,9 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
                             <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/lpa-reference/change"
+                                    data-cy="change-application-reference">Change<span class="govuk-visually-hidden"> What is the application reference number? (Before you start)</span></a>
+                                </dd>
                         </div>
                     </dl>
                 </div>
