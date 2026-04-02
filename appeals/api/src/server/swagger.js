@@ -545,7 +545,15 @@ export const spec = {
 			advertInPosition: true,
 			landownerPermission: true,
 			siteGridReferenceEasting: '123456',
-			siteGridReferenceNorthing: '654321'
+			siteGridReferenceNorthing: '654321',
+			reasonForAppealAppellant: 'My reason for appeal',
+			anySignificantChanges: 'Yes',
+			anySignificantChanges_otherSignificantChanges: 'Other changes',
+			anySignificantChanges_localPlanSignificantChanges: 'Local plan changes',
+			anySignificantChanges_nationalPolicySignificantChanges: 'National policy changes',
+			anySignificantChanges_courtJudgementSignificantChanges: 'Court judgment changes',
+			screeningOpinionIndicatesEiaRequired: true,
+			ownershipCertificate: true
 		},
 		UpdateCaseTeamRequest: {
 			caseOfficerId: '13de469c-8de6-4908-97cd-330ea73df618',
