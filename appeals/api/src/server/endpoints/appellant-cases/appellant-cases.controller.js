@@ -95,6 +95,7 @@ const updateAppellantCaseById = async (req, res) => {
 			appealDecisionDate,
 			siteUseAtTimeOfApplication,
 			applicationMadeUnderActSection,
+			anySignificantChanges,
 			reasonForAppealAppellant
 		},
 		params,
@@ -189,6 +190,7 @@ const updateAppellantCaseById = async (req, res) => {
 						appealDecisionDate,
 						siteUseAtTimeOfApplication,
 						applicationMadeUnderActSection,
+						anySignificantChanges,
 						reasonForAppealAppellant
 					},
 					appeal
