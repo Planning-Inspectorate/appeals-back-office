@@ -12,7 +12,7 @@ apps_config = {
     worker_count = 1
   }
   web = {
-    worker_count = 1
+    worker_count = 5
   }
   functions_node_version     = 22
   functions_service_plan_sku = "P1v3"
