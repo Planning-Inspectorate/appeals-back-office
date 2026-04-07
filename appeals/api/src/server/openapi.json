@@ -13458,6 +13458,10 @@
 					"applicationMadeUnderActSection": {
 						"type": "string",
 						"example": "existing-development"
+					},
+					"reasonForAppealAppellant": {
+						"type": "string",
+						"example": "My reason for appeal"
 					}
 				},
 				"xml": {
@@ -18655,6 +18659,30 @@
 					},
 					"appellantProcedurePreferenceWitnessCount": {
 						"type": "number",
+						"nullable": true
+					},
+					"reasonForAppealAppellant": {
+						"type": "string",
+						"nullable": true
+					},
+					"anySignificantChanges": {
+						"type": "string",
+						"nullable": true
+					},
+					"anySignificantChanges_otherSignificantChanges": {
+						"type": "string",
+						"nullable": true
+					},
+					"anySignificantChanges_localPlanSignificantChanges": {
+						"type": "string",
+						"nullable": true
+					},
+					"anySignificantChanges_nationalPolicySignificantChanges": {
+						"type": "string",
+						"nullable": true
+					},
+					"anySignificantChanges_courtJudgementSignificantChanges": {
+						"type": "string",
 						"nullable": true
 					},
 					"developmentDescription": {
@@ -44948,6 +44976,30 @@
 					},
 					"appellantProcedurePreferenceWitnessCount": {
 						"type": "number",
+						"nullable": true
+					},
+					"reasonForAppealAppellant": {
+						"type": "string",
+						"nullable": true
+					},
+					"anySignificantChanges": {
+						"type": "string",
+						"nullable": true
+					},
+					"anySignificantChanges_otherSignificantChanges": {
+						"type": "string",
+						"nullable": true
+					},
+					"anySignificantChanges_localPlanSignificantChanges": {
+						"type": "string",
+						"nullable": true
+					},
+					"anySignificantChanges_nationalPolicySignificantChanges": {
+						"type": "string",
+						"nullable": true
+					},
+					"anySignificantChanges_courtJudgementSignificantChanges": {
+						"type": "string",
 						"nullable": true
 					},
 					"developmentDescription": {

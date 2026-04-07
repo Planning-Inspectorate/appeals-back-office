@@ -154,6 +154,30 @@ const updateableFields = {
 		type: 'number',
 		nullable: true
 	},
+	reasonForAppealAppellant: {
+		type: 'string',
+		nullable: true
+	},
+	anySignificantChanges: {
+		type: 'string',
+		nullable: true
+	},
+	anySignificantChanges_otherSignificantChanges: {
+		type: 'string',
+		nullable: true
+	},
+	anySignificantChanges_localPlanSignificantChanges: {
+		type: 'string',
+		nullable: true
+	},
+	anySignificantChanges_nationalPolicySignificantChanges: {
+		type: 'string',
+		nullable: true
+	},
+	anySignificantChanges_courtJudgementSignificantChanges: {
+		type: 'string',
+		nullable: true
+	},
 	developmentDescription: {
 		type: 'object',
 		properties: {

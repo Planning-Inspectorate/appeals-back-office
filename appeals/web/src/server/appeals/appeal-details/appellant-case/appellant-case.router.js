@@ -52,6 +52,7 @@ import outcomeValidRouter from './outcome-valid/outcome-valid.router.js';
 import ownersKnownRouter from './owners-known/owners-known.router.js';
 import planningObligationRouter from './planning-obligation/planning-obligation.router.js';
 import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
+import reasonForAppealRouter from './reason-for-appeal/reason-for-appeal.router.js';
 import retrospectiveApplicationRouter from './retrospective-application/retrospective-application.router.js';
 import siteAreaRouter from './site-area/site-area.router.js';
 import siteOwnershipRouter from './site-ownership/site-ownership.router.js';
@@ -336,6 +337,12 @@ router.use(
 	'/application-made-under-act-section',
 	validateAppealWithInclude(['appellantCase']),
 	applicationMadeUnderActSectionRouter
+);
+
+router.use(
+	'/reason-for-appeal',
+	validateAppealWithInclude(['appellantCase']),
+	reasonForAppealRouter
 );
 
 router

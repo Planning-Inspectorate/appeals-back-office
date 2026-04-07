@@ -94,7 +94,8 @@ const updateAppellantCaseById = async (req, res) => {
 			applicationDevelopmentAllOrPart,
 			appealDecisionDate,
 			siteUseAtTimeOfApplication,
-			applicationMadeUnderActSection
+			applicationMadeUnderActSection,
+			reasonForAppealAppellant
 		},
 		params,
 		validationOutcome
@@ -187,7 +188,8 @@ const updateAppellantCaseById = async (req, res) => {
 						applicationDevelopmentAllOrPart,
 						appealDecisionDate,
 						siteUseAtTimeOfApplication,
-						applicationMadeUnderActSection
+						applicationMadeUnderActSection,
+						reasonForAppealAppellant
 					},
 					appeal
 				);
