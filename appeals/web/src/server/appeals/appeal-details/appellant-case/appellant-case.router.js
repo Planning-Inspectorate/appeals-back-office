@@ -33,6 +33,7 @@ import siteAddressRouter from './address/address.router.js';
 import advertisementDescriptionRouter from './advertisement-description/advertisement-description.router.js';
 import advertisementInPositionRouter from './advertisement-in-position/advertisement-in-position.router.js';
 import agriculturalHoldingRouter from './agricultural-holding/agricultural-holding.router.js';
+import significantChangesRouter from './any-significant-changes/any-significant-changes.router.js';
 import * as controller from './appellant-case.controller.js';
 import * as validators from './appellant-case.validators.js';
 import applicationDecisionDateRouter from './application-decision-date/application-decision-date.router.js';
@@ -337,6 +338,12 @@ router.use(
 	'/application-made-under-act-section',
 	validateAppealWithInclude(['appellantCase']),
 	applicationMadeUnderActSectionRouter
+);
+
+router.use(
+	'/any-significant-changes',
+	validateAppealWithInclude(['appellantCase']),
+	significantChangesRouter
 );
 
 router.use(
