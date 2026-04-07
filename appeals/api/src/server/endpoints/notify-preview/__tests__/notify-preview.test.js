@@ -7,20 +7,20 @@ describe('notify preview tests', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('/appeals/notify-preview/correction-notice-decision.content.md', () => {
+	describe('/appeals/notify-preview/correction-notice-decision-lpa.content.md', () => {
 		describe('POST', () => {
-			test('get notify preview for correction-notice-decision.content.md', async () => {
+			test('get notify preview for correction-notice-decision-lpa.content.md', async () => {
 				const personalisation = {
 					appeal_reference_number: `12345`,
 					site_address: `2222`,
 					lpa_reference: `planningApplicationReference`,
 					correction_notice_reason: `correctionNotice`,
 					decision_date: `dateISOStringToDisplayDate(file.receivedDate)`,
-					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					team_email_address: 'lpa@planninginspectorate.gov.uk',
 					feedback_link: '/mock-feedback-link'
 				};
 				const response = await request
-					.post(`/appeals/notify-preview/correction-notice-decision.content.md`)
+					.post(`/appeals/notify-preview/correction-notice-decision-lpa.content.md`)
 					.set('azureAdUserId', azureAdUserId)
 					.send(personalisation);
 

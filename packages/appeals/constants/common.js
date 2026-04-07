@@ -177,6 +177,9 @@ export const FEEDBACK_FORM_LINKS = Object.freeze({
 
 	LAWFUL_DEVELOPMENT_CERTIFICATE: 'https://forms.cloud.microsoft/e/J5EwyG3e0e',
 
+	COMMENT_ON_APPEAL:
+		'https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQVU3UkdCT0FPVlYwQUsxUDYySDA1V1NXWC4u',
+
 	ENFORCEMENT_LISTED_BUILDING:
 		'https://forms.cloud.microsoft/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UNDJFTjBCRTlFV1pYVjVWRkhKQVBYTVRKUC4u&route=shorturl'
 });
