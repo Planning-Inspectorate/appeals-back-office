@@ -205,8 +205,18 @@ describe('update-decision-letter', () => {
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 			nock('http://test/')
-				.post(`/appeals/notify-preview/correction-notice-decision.content.md`)
-				.reply(200, template);
+				.post(`/appeals/notify-preview/correction-notice-decision-lpa.content.md`)
+				.reply(200, template)
+				.persist();
+			nock('http://test/')
+				.post('/appeals/notify-preview/correction-notice-decision-appellant.content.md')
+				.reply(200, template)
+				.persist();
+			nock('http://test/')
+				.post('/appeals/notify-preview/correction-notice-decision-interested-party.content.md')
+				.reply(200, template)
+				.persist();
+
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -237,7 +247,7 @@ describe('update-decision-letter', () => {
 
 		afterEach(teardown);
 
-		it('should render the check your decision page', async () => {
+		it('should render the check your details page', async () => {
 			nock('http://test/')
 				.get('/appeals/1/case-team-email')
 				.reply(200, {
@@ -260,7 +270,9 @@ describe('update-decision-letter', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Check details and update decision letter');
 			expect(unprettifiedElement.innerHTML).toContain('Decision letter');
 			expect(unprettifiedElement.innerHTML).toContain('Correction notice');
-			expect(unprettifiedElement.innerHTML).toContain('Preview');
+			expect(unprettifiedElement.innerHTML).toContain('Preview LPA email');
+			expect(unprettifiedElement.innerHTML).toContain('Preview appellant email');
+			expect(unprettifiedElement.innerHTML).toContain('Preview interested party email');
 			expect(unprettifiedElement.innerHTML).toContain('Update decision letter');
 		});
 
@@ -292,11 +304,17 @@ describe('update-decision-letter', () => {
 
 			let capturedPreviewBody;
 			nock('http://test/')
-				.post(`/appeals/notify-preview/correction-notice-decision.content.md`)
+				.post('/appeals/notify-preview/correction-notice-decision-lpa.content.md')
 				.reply(200, function (_, body) {
 					capturedPreviewBody = body;
 					return template;
 				});
+			nock('http://test/')
+				.post('/appeals/notify-preview/correction-notice-decision-appellant.content.md')
+				.reply(200, template);
+			nock('http://test/')
+				.post('/appeals/notify-preview/correction-notice-decision-interested-party.content.md')
+				.reply(200, template);
 
 			await request.get(`${baseUrl}/1/update-decision-letter/check-details`);
 

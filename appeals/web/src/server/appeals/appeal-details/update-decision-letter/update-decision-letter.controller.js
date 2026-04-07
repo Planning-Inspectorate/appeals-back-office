@@ -12,6 +12,7 @@ import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import config from '@pins/appeals.web/environment/config.js';
+import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
 import { correctionNoticePage } from './update-decision-letter.mapper.js';
 
@@ -88,8 +89,29 @@ export const renderUpdateDocumentCheckDetails = async (request, response) => {
 		team_email_address: assignedTeamEmail,
 		feedback_link: getFeedbackLinkFromAppealTypeName(appealType)
 	};
-	const templateName = 'correction-notice-decision.content.md';
-	const template = await generateNotifyPreview(request.apiClient, templateName, personalisation);
+	const lpaTemplateName = 'correction-notice-decision-lpa.content.md';
+	const appellantTemplateName = 'correction-notice-decision-appellant.content.md';
+	const interestedPartyTemplateName = 'correction-notice-decision-interested-party.content.md';
+
+	const lpaTemplate = await generateNotifyPreview(
+		request.apiClient,
+		lpaTemplateName,
+		personalisation
+	);
+	const appellantTemplate = await generateNotifyPreview(
+		request.apiClient,
+		appellantTemplateName,
+		personalisation
+	);
+	const interestedPartyTemplate = await generateNotifyPreview(
+		request.apiClient,
+		interestedPartyTemplateName,
+		{
+			...personalisation,
+			feedback_link: FEEDBACK_FORM_LINKS.COMMENT_ON_APPEAL
+		}
+	);
+
 	return renderCheckYourAnswersComponent(
 		{
 			title: 'Check details and update decision letter',
@@ -145,8 +167,30 @@ export const renderUpdateDocumentCheckDetails = async (request, response) => {
 						closing: '</div></div>'
 					},
 					parameters: {
-						summaryText: `Preview email`,
-						html: template.renderedHtml
+						summaryText: `Preview LPA email`,
+						html: lpaTemplate.renderedHtml
+					}
+				},
+				{
+					type: 'details',
+					wrapperHtml: {
+						opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+						closing: '</div></div>'
+					},
+					parameters: {
+						summaryText: `Preview appellant email`,
+						html: appellantTemplate.renderedHtml
+					}
+				},
+				{
+					type: 'details',
+					wrapperHtml: {
+						opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+						closing: '</div></div>'
+					},
+					parameters: {
+						summaryText: `Preview interested party email`,
+						html: interestedPartyTemplate.renderedHtml
 					}
 				}
 			]

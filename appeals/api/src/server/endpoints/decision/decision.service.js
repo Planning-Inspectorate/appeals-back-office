@@ -484,13 +484,15 @@ export const sendNewDecisionLetter = async (
 		representationType: ['comment']
 	});
 
-	const relevantEmails = [
-		appeal.agent?.email || appeal.appellant?.email,
-		appeal.lpa?.email,
-		...representations.comments.map((comment) => comment.represented?.email).filter(Boolean)
+	const interestedPartyEmails = [
+		...new Set(
+			representations.comments.map((comment) => comment.represented?.email).filter(Boolean)
+		)
 	];
 
-	const uniqueEmails = [...new Set(relevantEmails)].filter(Boolean);
+	const lpaEmail = appeal.lpa?.email;
+
+	const appellantEmail = appeal.agent?.email || appeal.appellant?.email;
 
 	const enforcementReference = await getEnforcementReference(appeal);
 
@@ -521,17 +523,43 @@ export const sendNewDecisionLetter = async (
 		feedback_link: getFeedbackLinkFromAppealTypeKey(appeal?.appealType?.key || '')
 	};
 
-	await Promise.all(
-		uniqueEmails.map(async (email) => {
-			await notifySend({
-				azureAdUserId,
-				templateName: 'correction-notice-decision',
-				notifyClient,
-				recipientEmail: email,
-				personalisation
-			});
-		})
-	);
+	if (lpaEmail) {
+		await notifySend({
+			azureAdUserId,
+			templateName: 'correction-notice-decision-lpa',
+			notifyClient,
+			recipientEmail: lpaEmail,
+			personalisation
+		});
+	}
+
+	if (appellantEmail) {
+		await notifySend({
+			azureAdUserId,
+			templateName: 'correction-notice-decision-appellant',
+			notifyClient,
+			recipientEmail: appellantEmail,
+			personalisation
+		});
+	}
+
+	if (interestedPartyEmails.length > 0) {
+		const interestedParyPersonalisation = {
+			...personalisation,
+			feedback_link: FEEDBACK_FORM_LINKS.COMMENT_ON_APPEAL
+		};
+		await Promise.all(
+			interestedPartyEmails.map(async (email) => {
+				await notifySend({
+					azureAdUserId,
+					templateName: 'correction-notice-decision-interested-party',
+					notifyClient,
+					recipientEmail: email,
+					personalisation: interestedParyPersonalisation
+				});
+			})
+		);
+	}
 
 	await createAuditTrail({
 		appealId: appeal.id,
