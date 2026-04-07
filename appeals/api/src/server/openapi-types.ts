@@ -2231,6 +2231,8 @@ export interface UpdateAppellantCaseRequest {
 	siteUseAtTimeOfApplication?: string;
 	/** @example "existing-development" */
 	applicationMadeUnderActSection?: string;
+	/** @example "My reason for appeal" */
+	reasonForAppealAppellant?: string;
 }
 
 export type UpdateAppellantCaseResponse = object;
@@ -5004,6 +5006,12 @@ export type AppellantCase = {
 	appellantProcedurePreferenceDetails?: string | null;
 	appellantProcedurePreferenceDuration?: number | null;
 	appellantProcedurePreferenceWitnessCount?: number | null;
+	reasonForAppealAppellant?: string | null;
+	anySignificantChanges?: string | null;
+	anySignificantChanges_otherSignificantChanges?: string | null;
+	anySignificantChanges_localPlanSignificantChanges?: string | null;
+	anySignificantChanges_nationalPolicySignificantChanges?: string | null;
+	anySignificantChanges_courtJudgementSignificantChanges?: string | null;
 	developmentDescription?: {
 		details?: string | null;
 		isChanged?: boolean;
@@ -18143,6 +18151,12 @@ export interface AppellantCaseUpdateRequest {
 	appellantProcedurePreferenceDetails?: string | null;
 	appellantProcedurePreferenceDuration?: number | null;
 	appellantProcedurePreferenceWitnessCount?: number | null;
+	reasonForAppealAppellant?: string | null;
+	anySignificantChanges?: string | null;
+	anySignificantChanges_otherSignificantChanges?: string | null;
+	anySignificantChanges_localPlanSignificantChanges?: string | null;
+	anySignificantChanges_nationalPolicySignificantChanges?: string | null;
+	anySignificantChanges_courtJudgementSignificantChanges?: string | null;
 	developmentDescription?: {
 		details?: string | null;
 		isChanged?: boolean;

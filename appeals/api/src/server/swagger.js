@@ -772,7 +772,8 @@ export const spec = {
 			siteGridReferenceEasting: '123456',
 			siteGridReferenceNorthing: '654321',
 			siteUseAtTimeOfApplication: 'Residential',
-			applicationMadeUnderActSection: 'existing-development'
+			applicationMadeUnderActSection: 'existing-development',
+			reasonForAppealAppellant: 'My reason for appeal'
 		},
 		UpdateAppellantCaseResponse: {},
 		EnforcementValidNotifyPreviewRequest: {
