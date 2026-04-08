@@ -485,6 +485,13 @@ describe('appeals documents', () => {
 	});
 
 	describe('documents AV scanning', () => {
+		beforeEach(() => {
+			jest.clearAllMocks();
+		});
+		afterEach(() => {
+			jest.clearAllMocks();
+		});
+
 		test('validate AV scan result: no UUID provided', async () => {
 			databaseConnector.document.findUnique.mockReturnValue(null);
 			const requestBody = {
@@ -559,6 +566,7 @@ describe('appeals documents', () => {
 
 			expect(databaseConnector.documentVersionAvScan.upsert).toHaveBeenCalled();
 			expect(response.status).toEqual(200);
+			expect(mockBroadcasters.broadcastDocument).not.toHaveBeenCalled();
 		});
 		test('validate AV scan result: version not found / scan result requested', async () => {
 			databaseConnector.document.findUnique.mockReturnValue(documentCreated);
@@ -579,6 +587,7 @@ describe('appeals documents', () => {
 
 			expect(databaseConnector.documentVersionAvScan.upsert).toHaveBeenCalled();
 			expect(response.status).toEqual(200);
+			expect(mockBroadcasters.broadcastDocument).not.toHaveBeenCalled();
 		});
 		test('validate AV scan result: document found', async () => {
 			databaseConnector.document.findUnique.mockReturnValue({
@@ -610,6 +619,7 @@ describe('appeals documents', () => {
 			expect(databaseConnector.documentVersionAvScan.upsert).toHaveBeenCalled();
 			expect(databaseConnector.document.findUnique).toHaveBeenCalled();
 			expect(response.status).toEqual(200);
+			expect(mockBroadcasters.broadcastDocument).not.toHaveBeenCalled();
 		});
 
 		test('updates AV scan document not yet saved', async () => {
@@ -639,6 +649,7 @@ describe('appeals documents', () => {
 				]
 			});
 			expect(response.status).toEqual(200);
+			expect(mockBroadcasters.broadcastDocument).not.toHaveBeenCalled();
 		});
 
 		test('updates AV scan document already saved', async () => {
@@ -678,6 +689,7 @@ describe('appeals documents', () => {
 				]
 			});
 			expect(response.status).toEqual(200);
+			expect(mockBroadcasters.broadcastDocument).toHaveBeenCalled();
 		});
 	});
 
