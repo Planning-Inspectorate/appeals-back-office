@@ -68,7 +68,7 @@ const validationErrorHandlerTemplate = (request, response, next, status) => {
 	const result = validationResult(request).formatWith(({ msg }) => msg);
 
 	if (!result.isEmpty()) {
-		logger.error('Validation errors', result);
+		logger.error({ errors: result.mapped() }, 'Validation errors');
 		response.status(status).send({ errors: result.mapped() });
 	} else {
 		next();
