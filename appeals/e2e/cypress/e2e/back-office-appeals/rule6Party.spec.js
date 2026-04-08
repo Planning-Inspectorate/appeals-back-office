@@ -6,6 +6,7 @@ import { users } from '../../fixtures/users';
 import { ContactsSectionPage } from '../../page_objects/caseDetails/contactsSectionPage.js';
 import { CostsSectionPage } from '../../page_objects/caseDetails/costsSectionPage';
 import { DocumentationSectionPage } from '../../page_objects/caseDetails/documentationSectionPage';
+import { PersonalListPage } from '../../page_objects/caseDetails/personalListPage';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.js';
 import { ContactDetailsPage } from '../../page_objects/contactDetailsPage.js';
@@ -31,6 +32,7 @@ const fileUploaderSection = new FileUploaderSection();
 const redactionStatusPage = new RedactionStatusPage();
 const dateTimeSection = new DateTimeSection();
 const caseHistoryPage = new CaseHistoryPage();
+const personalListPage = new PersonalListPage();
 const cyaPoePage = new CyaPoePage();
 
 const rule6Details = {
@@ -782,3 +784,48 @@ const setupCaseForRule6StatementReview = () => {
 
 	cy.addRule6Party(caseObj, rule6Party);
 };
+
+it('Display Statement and POE on personal list page', () => {
+	cy.addLpaqSubmissionToCase(caseObj);
+	cy.reviewLpaqSubmission(caseObj);
+	cy.addRule6Party(caseObj, rule6Party);
+	cy.addRepresentation(caseObj, 'lpaStatement', null);
+	cy.reviewStatementViaApi(caseObj);
+	cy.getRule6ServiceUserId(caseObj, rule6Party.serviceUser.email).then((serviceUserId) => {
+		cy.log(`Service User ID: ${serviceUserId}`);
+		cy.addRepresentation(caseObj, 'rule6PartyStatement', serviceUserId);
+	});
+	cy.visit(urlPaths.personalListFilteredStatement);
+	personalListPage.verifyActionRequiredLink(
+		caseObj.reference,
+		`Review ${rule6Party.serviceUser.organisationName} statement`
+	);
+
+	caseDetailsPage.navigateToAppealsList();
+	listCasesPage.clickAppealByRef(caseObj);
+	cy.reviewRule6PartyStatement(caseObj);
+	cy.shareCommentsAndStatementsViaApi(caseObj);
+	cy.simulateStatementsDeadlineElapsed(caseObj);
+
+	cy.visit(urlPaths.personalListFilteredEvidence);
+	personalListPage.verifyActionRequiredText(
+		caseObj.reference,
+		`Awaiting ${rule6Party.serviceUser.organisationName} proof of evidence and witnesses`
+	);
+	cy.getRule6ServiceUserId(caseObj, rule6Party.serviceUser.email).then((serviceUserId) => {
+		cy.log(`Service User ID: ${serviceUserId}`);
+		cy.addRepresentation(caseObj, 'rule6ProofOfEvidence', serviceUserId);
+		cy.reload();
+	});
+	caseDetailsPage.navigateToAppealsList();
+	listCasesPage.clickAppealByRef(caseObj);
+	documentationSectionPage.navigateToAddProofOfEvidenceReview('rule-6-proof-of-evidence');
+	caseDetailsPage.selectRadioButtonByValue('Complete');
+	caseDetailsPage.clickButtonByText('Continue');
+
+	cy.visit(urlPaths.personalListFilteredEvidence);
+	personalListPage.verifyActionRequiredLink(
+		caseObj.reference,
+		`Review ${rule6Party.serviceUser.organisationName} proof of evidence and witnesses`
+	);
+});

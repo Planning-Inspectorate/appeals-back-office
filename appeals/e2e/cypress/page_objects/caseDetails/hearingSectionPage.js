@@ -80,7 +80,7 @@ export class HearingSectionPage extends CaseDetailsPage {
 		cy.clearAllSessionStorage();
 		cy.clearAllCookies();
 		cy.login(users.appeals.caseAdmin);
-		caseDetailsPage.navigateToAppealsService();
+		caseDetailsPage.navigateToAppealsList();
 		listCasesPage.clickAppealByRef(caseObj);
 	}
 	ensureHearingExists(caseObj, date) {
