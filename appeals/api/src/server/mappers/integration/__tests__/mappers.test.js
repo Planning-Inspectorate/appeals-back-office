@@ -485,10 +485,10 @@ describe('mapAppellantCaseIn', () => {
 					caseType: APPEAL_CASE_TYPE.W,
 					reasonForAppealAppellant: 'reason',
 					significantChangesAffectingApplicationAppellant: [
-						'Local plan: lp',
-						'National policy: np',
-						'Court judgment: cj',
-						'Other: o'
+						{ value: 'adopted-a-new-local-plan', comment: 'lp' },
+						{ value: 'national-policy-change', comment: 'np' },
+						{ value: 'court-judgement', comment: 'cj' },
+						{ value: 'other', comment: 'o' }
 					],
 					screeningOpinionIndicatesEiaRequired: true,
 					ownershipCertificate: true
