@@ -10,8 +10,10 @@ import enforcementNoticeRouter from '#appeals/appeal-details/appellant-case/enfo
 import enforcementReferenceRouter from '#appeals/appeal-details/appellant-case/enforcement-reference/enforcement-reference.router.js';
 import groundsForAppealRouter from '#appeals/appeal-details/appellant-case/grounds-for-appeal/grounds-for-appeal.router.js';
 import changeProcedureTypeRouter from '#appeals/appeal-details/change-procedure-type/change-procedure-type.router.js';
+import { isFeatureActive } from '#common/feature-flags.js';
 import { permissionNames } from '#environment/permissions.js';
 import { extractAndProcessDocumentDateErrors } from '#lib/validators/date-input.validator.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import {
@@ -42,6 +44,7 @@ import applicationOutcomeRouter from './application-outcome/application-outcome.
 import applicationSubmissionDateRouter from './application-submission-date/application-submission-date.router.js';
 import contactAddressRouter from './contact-address/contact-address.router.js';
 import developmentDescriptionRouter from './development-description/development-description.router.js';
+import eiaScreeningRouter from './eia-screening/eia-screening.router.js';
 import factsForGroundRouter from './facts-for-ground/facts-for-ground.router.js';
 import gridReferenceRouter from './grid-reference/grid-reference.router.js';
 import highwayLandRouter from './highway-land/highway-land.router.js';
@@ -350,6 +353,19 @@ router.use(
 	'/reason-for-appeal',
 	validateAppealWithInclude(['appellantCase']),
 	reasonForAppealRouter
+);
+
+router.use(
+	'/eia-screening',
+	(req, res, next) => {
+		if (isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS)) {
+			return next();
+		}
+		return res.status(404).render('app/404.njk');
+	},
+	validateAppealWithInclude(['appellantCase']),
+	assertUserHasPermission(permissionNames.updateCase),
+	eiaScreeningRouter
 );
 
 router

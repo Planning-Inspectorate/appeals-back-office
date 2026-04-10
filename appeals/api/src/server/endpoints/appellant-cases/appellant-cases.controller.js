@@ -96,7 +96,8 @@ const updateAppellantCaseById = async (req, res) => {
 			siteUseAtTimeOfApplication,
 			applicationMadeUnderActSection,
 			anySignificantChanges,
-			reasonForAppealAppellant
+			reasonForAppealAppellant,
+			screeningOpinionIndicatesEiaRequired
 		},
 		params,
 		validationOutcome
@@ -191,7 +192,8 @@ const updateAppellantCaseById = async (req, res) => {
 						siteUseAtTimeOfApplication,
 						applicationMadeUnderActSection,
 						anySignificantChanges,
-						reasonForAppealAppellant
+						reasonForAppealAppellant,
+						screeningOpinionIndicatesEiaRequired
 					},
 					appeal
 				);
@@ -246,7 +248,8 @@ const updateAppellantCaseById = async (req, res) => {
 				appellantProcedurePreference,
 				appellantProcedurePreferenceDetails,
 				appellantProcedurePreferenceDuration,
-				appellantProcedurePreferenceWitnessCount
+				appellantProcedurePreferenceWitnessCount,
+				screeningOpinionIndicatesEiaRequired
 			};
 
 	return res.send(response);

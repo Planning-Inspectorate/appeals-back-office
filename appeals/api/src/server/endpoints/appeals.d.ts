@@ -250,6 +250,7 @@ interface SingleAppellantCaseResponse {
 		enforcementNotice?: FolderInfo | null;
 		enforcementNoticePlan?: FolderInfo | null;
 		groundAFeeReceipt?: FolderInfo | null;
+		environmentalAssessment: FolderInfo | null;
 	};
 	validation: ValidationOutcomeResponse | null;
 	isGreenBelt?: boolean | null;

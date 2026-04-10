@@ -498,6 +498,10 @@ export const spec = {
 				statementCommonGround: {
 					folderId: 4576,
 					documents: []
+				},
+				environmentalAssessment: {
+					folderId: 4577,
+					documents: []
 				}
 			},
 			appellantProcedurePreference: 'Hearing',
@@ -773,7 +777,8 @@ export const spec = {
 			siteGridReferenceNorthing: '654321',
 			siteUseAtTimeOfApplication: 'Residential',
 			applicationMadeUnderActSection: 'existing-development',
-			reasonForAppealAppellant: 'My reason for appeal'
+			reasonForAppealAppellant: 'My reason for appeal',
+			screeningOpinionIndicatesEiaRequired: true
 		},
 		UpdateAppellantCaseResponse: {},
 		EnforcementValidNotifyPreviewRequest: {

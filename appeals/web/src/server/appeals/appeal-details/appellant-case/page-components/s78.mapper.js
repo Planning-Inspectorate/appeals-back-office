@@ -1,3 +1,5 @@
+import { isFeatureActive } from '#common/feature-flags.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { generateS20Components } from './s20.mapper.js';
 
 /**
@@ -19,6 +21,7 @@ export function generateS78Components(
 	mappedAppellantCaseData,
 	userHasUpdateCasePermission
 ) {
+	const isExpeditedAppealsActive = isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS);
 	const pageComponents = generateS20Components(
 		appealDetails,
 		appellantCaseData,
@@ -61,11 +64,8 @@ export function generateS78Components(
 					mappedAppellantCaseData.otherTenantsOfAgriculturalHolding.display.summaryListItem,
 					mappedAppellantCaseData.inspectorAccess.display.summaryListItem,
 					mappedAppellantCaseData.healthAndSafetyIssues.display.summaryListItem,
-					...(appellantCaseData.anySignificantChanges != null
+					...(isExpeditedAppealsActive && appellantCaseData.anySignificantChanges != null
 						? [mappedAppellantCaseData.anySignificantChanges.display.summaryListItem]
-						: []),
-					...(appellantCaseData.screeningOpinionIndicatesEiaRequired != null
-						? [mappedAppellantCaseData.screeningOpinionIndicatesEiaRequired.display.summaryListItem]
 						: [])
 				]
 			}
@@ -79,7 +79,11 @@ export function generateS78Components(
 			component.type === 'summary-list' && component.parameters.attributes?.id === 'appeal-summary'
 	);
 
-	if (appealDetailsComponentIndex !== -1 && appellantCaseData.reasonForAppealAppellant != null) {
+	if (
+		appealDetailsComponentIndex !== -1 &&
+		isExpeditedAppealsActive &&
+		appellantCaseData.reasonForAppealAppellant != null
+	) {
 		/**
 		 * @type {PageComponent}
 		 */
@@ -145,10 +149,19 @@ export function generateS78Components(
 					mappedAppellantCaseData.planningObligation.display.summaryListItem,
 					mappedAppellantCaseData.statementCommonGround.display.summaryListItem,
 					mappedAppellantCaseData.ownershipCertificate.display.summaryListItem,
-					mappedAppellantCaseData.ownershipCertificateExpedited.display.summaryListItem,
+					...(isExpeditedAppealsActive
+						? [mappedAppellantCaseData.ownershipCertificateExpedited.display.summaryListItem]
+						: []),
 					mappedAppellantCaseData.costsDocument.display.summaryListItem,
 					mappedAppellantCaseData.designAccessStatement.display.summaryListItem,
 					mappedAppellantCaseData.supportingDocuments.display.summaryListItem,
+					...(isExpeditedAppealsActive &&
+					appellantCaseData.screeningOpinionIndicatesEiaRequired != null
+						? [mappedAppellantCaseData.screeningOpinionIndicatesEiaRequired.display.summaryListItem]
+						: []),
+					...(isExpeditedAppealsActive
+						? [mappedAppellantCaseData.environmentalStatement.display.summaryListItem]
+						: []),
 					mappedAppellantCaseData.newPlansDrawings.display.summaryListItem,
 					mappedAppellantCaseData.otherNewDocuments.display.summaryListItem
 				]
