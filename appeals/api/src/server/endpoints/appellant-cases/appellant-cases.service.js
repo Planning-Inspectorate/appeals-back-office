@@ -789,7 +789,9 @@ export function renderAuditTrailDetail(data) {
 		AUDIT_TRAIL_APPLICATION_MADE_UNDER_ACT_SECTION_UPDATED: () =>
 			capitalizeFirstLetter(
 				/** @type {string} */ (data.applicationMadeUnderActSection || '').replaceAll('-', ' ')
-			)
+			),
+		AUDIT_TRAIL_SCREENING_OPINION_INDICATES_EIA_REQUIRED_UPDATED: () =>
+			data.screeningOpinionIndicatesEiaRequired ? 'Yes' : 'No'
 	};
 
 	if (!auditTrailParameters[constantKey]) {

@@ -1,5 +1,6 @@
 import { submaps as s20SubMaps } from './s20.js';
 import { mapEiaScreening } from './submappers/eia-screening.js';
+import { mapEnvironmentalStatement } from './submappers/environmental-statement.js';
 import { mapOtherTenantsOfAgriculturalHolding } from './submappers/other-tenants-of-agricultural-holding.js';
 import { mapOwnershipCertificateExpedited } from './submappers/ownership-certificate-expedited.js';
 import { mapPartOfAgriculturalHolding } from './submappers/part-of-agricultural-holding.js';
@@ -16,5 +17,6 @@ export const submaps = {
 	reasonForAppealAppellant: mapReasonForAppeal,
 	anySignificantChanges: mapSignificantChanges,
 	screeningOpinionIndicatesEiaRequired: mapEiaScreening,
+	environmentalStatement: mapEnvironmentalStatement,
 	ownershipCertificateExpedited: mapOwnershipCertificateExpedited
 };
