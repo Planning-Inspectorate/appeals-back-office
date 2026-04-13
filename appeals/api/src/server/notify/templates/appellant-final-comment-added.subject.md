@@ -1,0 +1,1 @@
+New ({representation_type}) document: {{appeal_reference_number}}
