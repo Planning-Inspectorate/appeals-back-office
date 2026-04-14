@@ -90,6 +90,10 @@ apps_config = {
 
   use_system_test_bc_for_change_lpa = false
 
+  analytics = {
+    google_analytics_id = "G-8X56B5X9SN"
+  }
+
   logging = {
     level_file   = "silent"
     level_stdout = "info"

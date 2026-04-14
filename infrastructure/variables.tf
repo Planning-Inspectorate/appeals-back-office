@@ -98,6 +98,10 @@ variable "apps_config" {
       featureFlagEnforcementChangeProcedureLinked = bool
     })
 
+    analytics = object({
+      google_analytics_id = string
+    })
+
     logging = object({
       level_file   = string
       level_stdout = string
