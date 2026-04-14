@@ -306,7 +306,7 @@ describe('Appeal detail routes', () => {
 				});
 
 				const response = await request
-					.get(`/appeals/${mocks.householdAppeal.id}?include=all`)
+					.get(`/appeals/${mocks.householdAppeal.id}`)
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
@@ -326,7 +326,7 @@ describe('Appeal detail routes', () => {
 				});
 
 				const response = await request
-					.get(`/appeals/${fullPlanningAppeal.id}?include=all`)
+					.get(`/appeals/${fullPlanningAppeal.id}`)
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
@@ -348,9 +348,7 @@ describe('Appeal detail routes', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(null);
 
-				const response = await request
-					.get('/appeals/3?include=all')
-					.set('azureAdUserId', azureAdUserId);
+				const response = await request.get('/appeals/3').set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(404);
 				expect(response.body).toEqual({
@@ -380,7 +378,7 @@ describe('Appeal detail routes', () => {
 				});
 
 				const response = await request
-					.get(`/appeals/${fullPlanningAppeal.id}?include=all`)
+					.get(`/appeals/${fullPlanningAppeal.id}`)
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
@@ -414,7 +412,7 @@ describe('Appeal detail routes', () => {
 				});
 
 				const response = await request
-					.get(`/appeals/${fullPlanningAppeal.id}?include=all`)
+					.get(`/appeals/${fullPlanningAppeal.id}`)
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
@@ -448,7 +446,7 @@ describe('Appeal detail routes', () => {
 				});
 
 				const response = await request
-					.get(`/appeals/${fullPlanningAppeal.id}?include=all`)
+					.get(`/appeals/${fullPlanningAppeal.id}`)
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
