@@ -58,6 +58,10 @@ describe('documents and folders', () => {
 				label: 'Environmental assessment'
 			},
 			{
+				documentType: APPEAL_DOCUMENT_TYPE.EIA_ENVIRONMENTAL_STATEMENT_APPELLANT,
+				label: 'Environmental statement'
+			},
+			{
 				documentType: APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED,
 				label: 'Who was notified about the application'
 			},

@@ -364,7 +364,7 @@ const appellantCase = {
 				ownershipCertificate: { ...Folder },
 				otherNewDocuments: { ...Folder },
 				statementCommonGround: { ...Folder },
-				environmentalAssessment: { ...Folder }
+				eiaEnvironmentalStatementAppellant: { ...Folder }
 			}
 		},
 		enforcementNotice: {

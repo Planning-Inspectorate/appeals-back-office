@@ -6,12 +6,12 @@ export const mapEnvironmentalStatement = ({ appellantCaseData, userHasUpdateCase
 	documentSummaryListItem({
 		manageUrl: mapDocumentManageUrl(
 			appellantCaseData.appealId,
-			appellantCaseData.documents.environmentalAssessment?.folderId
+			appellantCaseData.documents.eiaEnvironmentalStatementAppellant?.folderId
 		),
 		appealId: appellantCaseData.appealId,
 		editable: userHasUpdateCase,
 		uploadUrlTemplate: documentUploadUrlTemplate,
 		id: 'environmental-statement',
 		text: 'Environmental statement',
-		folderInfo: appellantCaseData.documents.environmentalAssessment
+		folderInfo: appellantCaseData.documents.eiaEnvironmentalStatementAppellant
 	});
