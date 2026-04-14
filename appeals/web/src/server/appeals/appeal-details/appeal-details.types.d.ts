@@ -415,6 +415,7 @@ export interface WebAppeal extends SingleAppealDetailsResponse {
 		withdrawalRequestDate: string | null;
 	};
 	environmentalAssessment?: FolderInfo | null;
+	eiaEnvironmentalStatementAppellant?: FolderInfo | null;
 	procedureType?: string | undefined;
 	appealRule6Parties?: AppealRule6Party[] | null;
 }

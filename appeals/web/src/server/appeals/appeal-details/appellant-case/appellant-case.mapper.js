@@ -973,6 +973,8 @@ export function getPageHeadingTextOverrideForFolder(folder) {
 			return 'Ground (k) supporting documents';
 		case APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT:
 			return 'Ground (a) fee receipt';
+		case APPEAL_DOCUMENT_TYPE.EIA_ENVIRONMENTAL_STATEMENT_APPELLANT:
+			return 'Environmental statement';
 		default:
 			return;
 	}
@@ -1040,6 +1042,8 @@ export function getPageHeadingTextOverrideForAddDocuments(folder, appealType) {
 			return 'Upload your ground (k) supporting documents';
 		case APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT:
 			return 'Upload your ground (a) fee receipt';
+		case 'eiaEnvironmentalStatementAppellant':
+			return 'Upload your environmental statement';
 		default:
 			break;
 	}
@@ -1099,5 +1103,7 @@ export function getDocumentNameFromFolder(folderPath) {
 			return 'ground (k) supporting documents';
 		case APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT:
 			return 'ground (a) fee receipt';
+		case 'eiaEnvironmentalStatementAppellant':
+			return 'environmental statement';
 	}
 }

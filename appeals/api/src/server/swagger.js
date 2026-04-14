@@ -499,7 +499,7 @@ export const spec = {
 					folderId: 4576,
 					documents: []
 				},
-				environmentalAssessment: {
+				eiaEnvironmentalStatementAppellant: {
 					folderId: 4577,
 					documents: []
 				}

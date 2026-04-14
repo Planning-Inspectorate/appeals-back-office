@@ -1725,6 +1725,10 @@ describe('appellant-case', () => {
 					{
 						folderPath: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.ENVIRONMENTAL_ASSESSMENT}`,
 						label: 'Environmental assessment'
+					},
+					{
+						folderPath: `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.EIA_ENVIRONMENTAL_STATEMENT_APPELLANT}`,
+						label: 'Environmental statement'
 					}
 				];
 
