@@ -89,8 +89,11 @@ apps_config = {
     featureFlagEnforcementChangeProcedureLinked = true
   }
 
-
   use_system_test_bc_for_change_lpa = true
+
+  analytics = {
+    google_analytics_id = "G-Q3NCERD9XE"
+  }
 
   logging = {
     level_file   = "silent"

@@ -66,6 +66,9 @@ module "app_web" {
     AZURE_BLOB_DEFAULT_CONTAINER = azurerm_storage_container.appeal_documents.name
     AZURE_BLOB_STORE_HOST        = azurerm_storage_account.documents.primary_blob_endpoint # TODO: replace with custom domain
 
+    # analytics
+    GOOGLE_ANALYTICS_ID = var.apps_config.analytics.google_analytics_id
+
     # logging
     LOG_LEVEL_FILE   = var.apps_config.logging.level_file
     LOG_LEVEL_STDOUT = var.apps_config.logging.level_stdout
