@@ -5,6 +5,7 @@ import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import {
+	CASE_RELATIONSHIP_LINKED,
 	ERROR_FAILED_TO_SAVE_DATA,
 	VALIDATION_OUTCOME_COMPLETE,
 	VALIDATION_OUTCOME_INCOMPLETE
@@ -134,6 +135,7 @@ const rearrangeSiteVisit = async (req, res) => {
 		visitType,
 		appeal
 	} = req;
+	const childAppeals = appeal.childAppeals;
 	const appealId = Number(params.appealId);
 	const azureAdUserId = String(req.get('azureAdUserId'));
 	const notifyClient = req.notifyClient;
@@ -168,8 +170,17 @@ const rearrangeSiteVisit = async (req, res) => {
 	};
 
 	try {
+		let appealsToUpdate = [appeal.id];
+		if (isLinkedAppealsActive(appeal)) {
+			// we also want to update the site visits associated with the child appeals
+			childAppeals?.forEach((childAppeal) => {
+				if (childAppeal.type === CASE_RELATIONSHIP_LINKED && childAppeal.childId !== null) {
+					appealsToUpdate.push(childAppeal.childId);
+				}
+			});
+		}
 		// @ts-ignore
-		await updateSiteVisit(azureAdUserId, updateSiteVisitData, notifyClient);
+		await updateSiteVisit(azureAdUserId, updateSiteVisitData, notifyClient, appealsToUpdate);
 
 		return res.send({
 			visitDate,
@@ -197,6 +208,7 @@ const rearrangeMissedSiteVisit = async (req, res) => {
 		visitType,
 		appeal
 	} = req;
+	const childAppeals = appeal.childAppeals;
 	const appealId = Number(params.appealId);
 	const azureAdUserId = String(req.get('azureAdUserId'));
 	const notifyClient = req.notifyClient;
@@ -229,10 +241,26 @@ const rearrangeMissedSiteVisit = async (req, res) => {
 	};
 
 	try {
+		let appealsToUpdate = [appeal.id];
+		if (isLinkedAppealsActive(appeal)) {
+			childAppeals?.forEach((childAppeal) => {
+				if (childAppeal.type === CASE_RELATIONSHIP_LINKED && childAppeal.childId !== null) {
+					appealsToUpdate.push(childAppeal.childId);
+				}
+			});
+		}
 		// @ts-ignore
-		await updateWhenSiteVisitMissed(azureAdUserId, updateSiteVisitData, notifyClient);
+		await updateWhenSiteVisitMissed(
+			azureAdUserId,
+			updateSiteVisitData,
+			notifyClient,
+			appealsToUpdate
+		);
 
 		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT)) {
+			if (isLinkedAppealsActive(appeal)) {
+				await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+			}
 			await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 		}
 
@@ -254,13 +282,36 @@ const rearrangeMissedSiteVisit = async (req, res) => {
  */
 const cancelSiteVisit = async (req, res) => {
 	const { params, appeal, notifyClient } = req;
+	const childAppeals = appeal.childAppeals;
 	const siteVisitId = Number(params.siteVisitId);
 
 	const azureAdUserId = req.get('azureAdUserId') || '';
 	try {
-		await deleteSiteVisit(siteVisitId, appeal, notifyClient, String(azureAdUserId));
+		let appealsToUpdate = [appeal.id];
+		if (isLinkedAppealsActive(appeal)) {
+			// we also want to delete the site visits associated with the child appeals
+			childAppeals?.forEach((childAppeal) => {
+				if (childAppeal.type === CASE_RELATIONSHIP_LINKED && childAppeal.childId !== null) {
+					appealsToUpdate.push(childAppeal.childId);
+				}
+			});
+		}
+		await deleteSiteVisit(
+			siteVisitId,
+			appeal,
+			notifyClient,
+			String(azureAdUserId),
+			appealsToUpdate
+		);
 
 		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.AWAITING_EVENT)) {
+			if (isLinkedAppealsActive(appeal)) {
+				await transitionLinkedChildAppealsState(
+					appeal,
+					azureAdUserId,
+					VALIDATION_OUTCOME_INCOMPLETE
+				);
+			}
 			await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_INCOMPLETE);
 		}
 
@@ -283,23 +334,42 @@ const postSiteVisitMissed = async (req, res) => {
 		body: { whoMissedSiteVisit }
 	} = req;
 
+	const childAppeals = appeal.childAppeals;
+
 	const siteVisitId = Number(params.siteVisitId);
 
 	const azureAdUserId = req.get('azureAdUserId') || '';
 	try {
+		let appealsToUpdate = [appeal.id];
+		if (isLinkedAppealsActive(appeal)) {
+			// we also want to update the site visits associated with the linked child appeals
+			childAppeals?.forEach((childAppeal) => {
+				if (childAppeal.type === CASE_RELATIONSHIP_LINKED && childAppeal.childId !== null) {
+					appealsToUpdate.push(childAppeal.childId);
+				}
+			});
+		}
 		// @ts-ignore
 		const result = await recordMissedSiteVisit(
 			siteVisitId,
 			appeal,
 			notifyClient,
 			String(azureAdUserId),
-			whoMissedSiteVisit
+			whoMissedSiteVisit,
+			appealsToUpdate
 		);
 		if (!result) {
 			return res.status(404).send({ errors: { body: 'Record missed site visit failed' } });
 		}
 
 		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.AWAITING_EVENT)) {
+			if (isLinkedAppealsActive(appeal)) {
+				await transitionLinkedChildAppealsState(
+					appeal,
+					azureAdUserId,
+					VALIDATION_OUTCOME_INCOMPLETE
+				);
+			}
 			await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_INCOMPLETE);
 		}
 
