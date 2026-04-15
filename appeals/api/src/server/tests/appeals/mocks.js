@@ -2,6 +2,7 @@ import advert from './advert.js';
 import enforcementListed from './enforcement-listed.js';
 import has from './has.js';
 import s20 from './s20.js';
+import s78Expedite from './s78-expedite.js';
 import s78 from './s78.js';
 
 import {
@@ -96,6 +97,10 @@ export const appealHas = {
 
 export const appealS78 = {
 	...s78
+};
+
+export const appealS78Expedite = {
+	...s78Expedite
 };
 
 export const appealS20 = {

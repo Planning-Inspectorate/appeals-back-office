@@ -1,6 +1,7 @@
 import { isFeatureActive } from '#utils/feature-flags.js';
 import mergeMaps from '#utils/merge-maps.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { isS78ExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import {
 	APPEAL_CASE_STAGE,
 	APPEAL_CASE_TYPE,
@@ -63,8 +64,18 @@ function createDataMap(mappingRequest) {
 			return mergeMaps(caseData, s20);
 		}
 		case APPEAL_CASE_TYPE.W: {
-			const s78 = createMap(apiMappers.apiS78Mappers, mappingRequest);
-			return mergeMaps(caseData, s78);
+			const isS78Expedited = isS78ExpeditedAppealType(
+				appeal.appealType?.key,
+				appeal.appellantCase?.applicationDate,
+				appeal.appellantCase?.applicationDecision
+			);
+			if (isS78Expedited && isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS)) {
+				const s78 = createMap(apiMappers.apiS78ExpeditedMappers, mappingRequest);
+				return mergeMaps(caseData, s78);
+			} else {
+				const s78 = createMap(apiMappers.apiS78Mappers, mappingRequest);
+				return mergeMaps(caseData, s78);
+			}
 		}
 		case APPEAL_CASE_TYPE.ZA: {
 			const casAdvert = createMap(apiMappers.apiCasAdvertMappers, mappingRequest);

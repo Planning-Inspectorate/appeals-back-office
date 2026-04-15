@@ -2,6 +2,16 @@ import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { APPEAL_TYPE } from '../constants/common.js';
 
 /**
+ *
+ * @param {Date} date
+ * @param {Date} afterDate
+ * @returns {boolean}
+ */
+export const dateIsAfterDate = (date, afterDate) => {
+	return date.getTime() >= afterDate.getTime();
+};
+
+/**
  * @typedef {typeof APPEAL_CASE_TYPE['D'] | typeof APPEAL_CASE_TYPE['W']} BaseAppealType
  * @typedef {Record<string, BaseAppealType>} BaseCaseType
  */
@@ -32,6 +42,26 @@ export const isExpeditedAppealType = (appealType) => {
 		);
 	}
 	return Boolean(baseCaseType[appealType] === APPEAL_CASE_TYPE.D);
+};
+
+/**
+ * @param {string | null} appealType
+ * @param {string} caseSubmissionDate
+ * @param {string} applicationDecision
+ * @returns {boolean}
+ */
+export const isS78ExpeditedAppealType = (appealType, caseSubmissionDate, applicationDecision) => {
+	if (appealType === '' || appealType === null) return false;
+	if (
+		(appealType.length === 1
+			? baseCaseType[appealType] === APPEAL_CASE_TYPE.W
+			: appealType === APPEAL_TYPE.S78) &&
+		dateIsAfterDate(new Date(caseSubmissionDate), new Date(2026, 3, 1)) &&
+		(applicationDecision === 'refused' || applicationDecision === 'granted')
+	) {
+		return true;
+	}
+	return false;
 };
 
 /**

@@ -56,7 +56,8 @@ export const APPEAL_TYPE = Object.freeze({
 	LAWFUL_DEVELOPMENT_CERTIFICATE: 'Lawful development certificate appeal',
 	PLANNED_LISTED_BUILDING: 'Planning listed building and conservation area appeal',
 	CAS_PLANNING: 'CAS planning',
-	CAS_ADVERTISEMENT: 'CAS advert'
+	CAS_ADVERTISEMENT: 'CAS advert',
+	S78_EXPEDITED: 'S78 expedited'
 });
 
 export const APPEAL_TYPE_CHANGE_APPEALS = Object.freeze({

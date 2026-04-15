@@ -4,6 +4,7 @@ import { apiEnforcementListedMappers } from './enforcement-listed/index.js';
 import { apiEnforcementMappers } from './enforcement/index.js';
 import { apiLdcMappers } from './ldc/index.js';
 import { apiS20Mappers } from './s20/index.js';
+import { apiS78ExpeditedMappers } from './s78-expedited/index.js';
 import { apiS78Mappers } from './s78/index.js';
 import { apiSharedMappers } from './shared/index.js';
 
@@ -15,5 +16,6 @@ export const apiMappers = {
 	apiAdvertMappers,
 	apiEnforcementMappers,
 	apiLdcMappers,
-	apiEnforcementListedMappers
+	apiEnforcementListedMappers,
+	apiS78ExpeditedMappers
 };
