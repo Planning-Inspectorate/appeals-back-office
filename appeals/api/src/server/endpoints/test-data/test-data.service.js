@@ -138,6 +138,7 @@ export const createRepresentationWithAttachments = async (tx, appealId, folderId
 		versionData.push({
 			blobStorageContainer: 'document-service-uploads',
 			dateCreated: new Date().toISOString(),
+			dateReceived: new Date().toISOString(),
 			description: `${fileName} imported`,
 			documentGuid: guid,
 			documentType: options.documentType || REP_ATTACHMENT_DOCTYPE,
@@ -221,6 +222,7 @@ const createCaseDocuments = async (appealId, docCount = 25) => {
 			versionData.push({
 				blobStorageContainer: 'document-service-uploads',
 				dateCreated: new Date().toISOString(),
+				dateReceived: new Date().toISOString(),
 				description: `${fileName} imported`,
 				documentGuid: guid,
 				documentType: def.documentType,
