@@ -184,8 +184,14 @@ const checkSiteVisitExists = async (req, res, next) => {
  * @param {string} azureAdUserId
  * @param {UpdateSiteVisitData} updateSiteVisitData
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {number[]} appealIdsToUpdate
  */
-const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient) => {
+const updateSiteVisit = async (
+	azureAdUserId,
+	updateSiteVisitData,
+	notifyClient,
+	appealIdsToUpdate
+) => {
 	try {
 		const visitDate = updateSiteVisitData.visitDate;
 		const visitEndTime = updateSiteVisitData.visitEndTime;
@@ -206,8 +212,8 @@ const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient)
 			updateSiteVisitData.siteVisitChangeType
 		);
 
-		const result = await siteVisitRepository.updateSiteVisitById(
-			updateSiteVisitData.siteVisitId,
+		const result = await siteVisitRepository.updateMultiSiteVisitByAppealId(
+			appealIdsToUpdate,
 			updateData
 		);
 		if (!result) {
@@ -277,12 +283,19 @@ const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient)
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
 };
+
 /**
  * @param {string} azureAdUserId
  * @param {UpdateSiteVisitData} updateSiteVisitData
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {number[]} appealIdsToUpdate
  */
-const updateWhenSiteVisitMissed = async (azureAdUserId, updateSiteVisitData, notifyClient) => {
+const updateWhenSiteVisitMissed = async (
+	azureAdUserId,
+	updateSiteVisitData,
+	notifyClient,
+	appealIdsToUpdate
+) => {
 	try {
 		const visitDate = updateSiteVisitData.visitDate;
 		const visitEndTime = updateSiteVisitData.visitEndTime;
@@ -301,8 +314,8 @@ const updateWhenSiteVisitMissed = async (azureAdUserId, updateSiteVisitData, not
 			updateSiteVisitData.visitType.name
 		);
 
-		const result = await siteVisitRepository.updateSiteVisitById(
-			updateSiteVisitData.siteVisitId,
+		const result = await siteVisitRepository.updateMultiSiteVisitByAppealId(
+			appealIdsToUpdate,
 			updateData
 		);
 		if (!result) {
@@ -505,11 +518,18 @@ const fetchRearrangeMissedSiteVisitTemplateIds = (visitTypeName) => {
  * @param {import('@pins/appeals.api').Schema.Appeal} appeal
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
+ * @param {number[]} appealIdsToUpdate
  */
-const deleteSiteVisit = async (siteVisitId, appeal, notifyClient, azureAdUserId) => {
+const deleteSiteVisit = async (
+	siteVisitId,
+	appeal,
+	notifyClient,
+	azureAdUserId,
+	appealIdsToUpdate
+) => {
 	try {
 		const existingSiteVisit = await siteVisitRepository.getSiteVisitById(siteVisitId);
-		await siteVisitRepository.deleteSiteVisitById(siteVisitId);
+		await siteVisitRepository.deleteMultiSiteVisitByAppealId(appealIdsToUpdate);
 
 		await broadcasters.broadcastEvent(
 			siteVisitId,
@@ -543,6 +563,7 @@ const deleteSiteVisit = async (siteVisitId, appeal, notifyClient, azureAdUserId)
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
  * @param {string} whoMissedSiteVisit
+ * @param {number[]} appealIdsToUpdate
  * @returns
  */
 const recordMissedSiteVisit = async (
@@ -550,9 +571,12 @@ const recordMissedSiteVisit = async (
 	appeal,
 	notifyClient,
 	azureAdUserId,
-	whoMissedSiteVisit
+	whoMissedSiteVisit,
+	appealIdsToUpdate
 ) => {
-	const result = await siteVisitRepository.updateSiteVisitById(siteVisitId, { whoMissedSiteVisit });
+	const result = await siteVisitRepository.updateMultiSiteVisitByAppealId(appealIdsToUpdate, {
+		whoMissedSiteVisit
+	});
 	if (!result) {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}

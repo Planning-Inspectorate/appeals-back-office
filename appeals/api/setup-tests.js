@@ -126,6 +126,7 @@ const mockLPAQuestionnaireIncompleteReasonsSelectedUpdate = jest.fn().mockResolv
 const mockLPAQuestionnaireIncompleteReasonTextDeleteMany = jest.fn().mockResolvedValue({});
 const mockSiteVisitCreate = jest.fn().mockResolvedValue({});
 const mockSiteVisitUpdate = jest.fn().mockResolvedValue({});
+const mockSiteVisitUpdateMany = jest.fn().mockResolvedValue({});
 const mockSiteVisitFindUnique = jest.fn().mockResolvedValue({});
 const mockSiteVisitFindFirst = jest.fn().mockResolvedValue({});
 const mockSiteVisitDelete = jest.fn().mockResolvedValue({});
@@ -536,6 +537,7 @@ class MockPrismaClient {
 		return {
 			create: mockSiteVisitCreate,
 			update: mockSiteVisitUpdate,
+			updateMany: mockSiteVisitUpdateMany,
 			findUnique: mockSiteVisitFindUnique,
 			findFirst: mockSiteVisitFindFirst,
 			delete: mockSiteVisitDelete,

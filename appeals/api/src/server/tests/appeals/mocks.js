@@ -15,6 +15,10 @@ import {
 } from '#tests/shared/mocks.js';
 import { APPEAL_TYPE, APPEAL_TYPE_CHANGE_APPEALS } from '@pins/appeals/constants/common.js';
 import {
+	CASE_RELATIONSHIP_LINKED,
+	CASE_RELATIONSHIP_RELATED
+} from '@pins/appeals/constants/support.js';
+import {
 	APPEAL_CASE_STATUS,
 	APPEAL_CASE_TYPE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
@@ -1084,6 +1088,38 @@ export const linkedAppeals = [
 		relationshipId: 1,
 		type: 'linked',
 		externalSource: true
+	}
+];
+
+export const childAppealsEnforcementBase = [
+	{
+		id: 0,
+		childId: 101,
+		parentId: enforcementNoticeAppeal.id,
+		type: CASE_RELATIONSHIP_LINKED,
+		child: {
+			id: 101,
+			appealType: enforcementNoticeAppeal.appealType
+		}
+	},
+	{
+		id: 1,
+		childId: 102,
+		parentId: enforcementNoticeAppeal.id,
+		type: CASE_RELATIONSHIP_RELATED,
+		child: {
+			id: 102
+		}
+	},
+	{
+		id: 2,
+		childId: 103,
+		parentId: enforcementNoticeAppeal.id,
+		type: CASE_RELATIONSHIP_LINKED,
+		child: {
+			id: 103,
+			appealType: enforcementNoticeAppeal.appealType
+		}
 	}
 ];
 
