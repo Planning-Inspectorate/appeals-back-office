@@ -45,7 +45,10 @@ import { generateEnforcementNoticeComponents } from './page-components/enforceme
 import { generateHASComponents } from './page-components/has.mapper.js';
 import { generateLdcComponents } from './page-components/ldc.mapper.js';
 import { generateS20Components } from './page-components/s20.mapper.js';
+import { generateS78ExpeditedComponents } from './page-components/s78-expedited.mapper.js';
 import { generateS78Components } from './page-components/s78.mapper.js';
+
+import { isS78ExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 
 /**
  * @typedef {import('../../appeals.types.js').DayMonthYearHourMinute} DayMonthYearHourMinute
@@ -839,6 +842,7 @@ function getDocumentsForVirusStatus(appellantCaseData, virusStatus) {
 	}
 	return unscannedFiles;
 }
+const isExpeditedAppealsActive = isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS);
 /**
  *
  * @param {Appeal} appealDetails
@@ -862,6 +866,22 @@ function generateCaseTypeSpecificComponents(
 				userHasUpdateCasePermission
 			);
 		case APPEAL_TYPE.S78:
+			if (isExpeditedAppealsActive) {
+				if (
+					isS78ExpeditedAppealType(
+						appealDetails.appealType,
+						appellantCaseData.applicationDate,
+						appellantCaseData.applicationDecision
+					)
+				) {
+					return generateS78ExpeditedComponents(
+						appealDetails,
+						appellantCaseData,
+						mappedAppellantCaseData,
+						userHasUpdateCasePermission
+					);
+				}
+			}
 			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
 				return generateS78Components(
 					appealDetails,

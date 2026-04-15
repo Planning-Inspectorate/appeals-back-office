@@ -1,5 +1,7 @@
+import { isFeatureActive } from '#common/feature-flags.js';
 import { permissionNames } from '#environment/permissions.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { isS78ExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { userHasPermission } from '../../utils/permissions.mapper.js';
 import { submaps as advertSubmaps } from './advert.js';
 import { submaps as casAdvertSubmaps } from './cas-advert.js';
@@ -9,6 +11,7 @@ import { submaps as enforcementSubmaps } from './enforcement-notice.js';
 import { submaps as hasSubmaps } from './has.js';
 import { submaps as ldcSubmaps } from './ldc.js';
 import { submaps as s20Submaps } from './s20.js';
+import { submaps as s78ExpeditedSubmaps } from './s78-expedited.js';
 import { submaps as s78Submaps } from './s78.js';
 
 /**
@@ -38,7 +41,8 @@ const submaps = {
 	[APPEAL_TYPE.ADVERTISEMENT]: advertSubmaps,
 	[APPEAL_TYPE.ENFORCEMENT_NOTICE]: enforcementSubmaps,
 	[APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE]: ldcSubmaps,
-	[APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING]: enforcementListedSubmaps
+	[APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING]: enforcementListedSubmaps,
+	[APPEAL_TYPE.S78_EXPEDITED]: s78ExpeditedSubmaps
 };
 
 /**
@@ -79,11 +83,25 @@ export function initialiseAndMapData(
 		request,
 		userHasUpdateCase
 	};
+
+	let appealType = appealDetails.appealType;
+
+	if (
+		isS78ExpeditedAppealType(
+			appealDetails.appealType,
+			appellantCaseData.applicationDate,
+			appellantCaseData.applicationDecision
+		) &&
+		isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS)
+	) {
+		appealType = APPEAL_TYPE.S78_EXPEDITED;
+	}
+
 	/** @type {Record<string, SubMapper | SubMapperList>} */
-	const submappers = submaps[appealDetails.appealType];
+	const submappers = submaps[appealType];
 
 	if (!submappers) {
-		throw new Error(`No submappers found for appeal type ${appealDetails.appealType}`);
+		throw new Error(`No submappers found for appeal type ${appealType}`);
 	}
 
 	/** @type {MappedInstructions} */
