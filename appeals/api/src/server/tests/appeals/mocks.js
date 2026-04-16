@@ -198,7 +198,15 @@ export const householdAppeal = {
 		appellantProcedurePreferenceDuration: 5,
 		appellantProcedurePreferenceWitnessCount: 1,
 		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.HOUSEHOLDER_PLANNING,
-		numberOfResidencesNetChange: 5
+		numberOfResidencesNetChange: 5,
+		reasonForAppealAppellant: null,
+		anySignificantChanges: null,
+		anySignificantChanges_otherSignificantChanges: null,
+		anySignificantChanges_localPlanSignificantChanges: null,
+		anySignificantChanges_nationalPolicySignificantChanges: null,
+		anySignificantChanges_courtJudgementSignificantChanges: null,
+		screeningOpinionIndicatesEiaRequired: null,
+		ownershipCertificate: null
 	},
 	caseOfficer: {
 		id: 1,

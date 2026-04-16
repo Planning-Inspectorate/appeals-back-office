@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { producers } from '#infrastructure/topics.js';
 import { fullPlanningAppeal, householdAppeal } from '#tests/appeals/mocks.js';
 import { jest } from '@jest/globals';
@@ -48,12 +49,51 @@ describe('broadcastAppeal', () => {
 		jest.clearAllMocks();
 	});
 
-	it.each(caseTypes)(
-		'broadcasts correct schema and topic for appeal type %s',
-		async ({ expectedTopic, mockAppeal }) => {
+	const expeditedCaseTypes = caseTypes.filter((c) => c.type === APPEAL_CASE_TYPE.W);
+	const standardCaseTypes = caseTypes.filter((c) => c.type !== APPEAL_CASE_TYPE.W);
+
+	it.each(expeditedCaseTypes)(
+		'broadcasts correct schema and topic for expedited appeal type %s',
+		async ({ type, expectedTopic, mockAppeal }) => {
 			const testCase = structuredClone(mockAppeal);
 			// @ts-ignore
-			testCase.appealType = { key: mockAppeal.appealType.key };
+			testCase.appealType = { key: type };
+
+			testCase.appellantCase.reasonForAppealAppellant = 'S78 reason';
+			testCase.appellantCase.anySignificantChanges = 'Yes';
+			testCase.appellantCase.anySignificantChanges_localPlanSignificantChanges = 'lp changes';
+			testCase.appellantCase.screeningOpinionIndicatesEiaRequired = true;
+			testCase.appellantCase.ownershipCertificate = true;
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(testCase);
+
+			await broadcastAppeal(123);
+
+			const expectedFields = {
+				reasonForAppealAppellant: expect.any(String),
+				screeningOpinionIndicatesEiaRequired: expect.any(Boolean),
+				ownershipCertificate: expect.any(Boolean),
+				significantChangesAffectingApplicationAppellant: expect.any(Array)
+			};
+
+			// @ts-ignore
+			expect(global.mockSendEvents).toHaveBeenCalledWith(
+				expectedTopic,
+				expect.arrayContaining([expect.objectContaining(expectedFields)]),
+				expect.any(String),
+				expect.any(Object)
+			);
+		}
+	);
+
+	it.each(standardCaseTypes)(
+		'broadcasts correct schema and topic for appeal type %s',
+		async ({ type, expectedTopic, mockAppeal }) => {
+			const testCase = structuredClone(mockAppeal);
+			// @ts-ignore
+			testCase.appealType = { key: type };
+
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(testCase);
 
@@ -62,12 +102,40 @@ describe('broadcastAppeal', () => {
 			// @ts-ignore
 			expect(global.mockSendEvents).toHaveBeenCalledWith(
 				expectedTopic,
-				expect.any(Array),
+				expect.arrayContaining([expect.objectContaining({})]),
 				expect.any(String),
 				expect.any(Object)
 			);
+
+			// @ts-ignore
+			const sentEvent = global.mockSendEvents.mock.calls[0][1][0];
+
+			expect(sentEvent).not.toHaveProperty('reasonForAppealAppellant');
+			expect(sentEvent).not.toHaveProperty('screeningOpinionIndicatesEiaRequired');
+			expect(sentEvent).not.toHaveProperty('ownershipCertificate');
+			expect(sentEvent).not.toHaveProperty('significantChangesAffectingApplicationAppellant');
 		}
 	);
+
+	it('does not broadcast significant changes details if anySignificantChanges is No', async () => {
+		const testCase = structuredClone(fullPlanningAppeal);
+		// @ts-ignore
+		testCase.appealType = { key: APPEAL_CASE_TYPE.W };
+		testCase.appellantCase.reasonForAppealAppellant = 'S78 reason';
+		testCase.appellantCase.anySignificantChanges = 'No';
+		testCase.appellantCase.anySignificantChanges_localPlanSignificantChanges = 'Should be ignored';
+		testCase.appellantCase.screeningOpinionIndicatesEiaRequired = true;
+		testCase.appellantCase.ownershipCertificate = true;
+
+		// @ts-ignore
+		databaseConnector.appeal.findUnique.mockResolvedValue(testCase);
+
+		await broadcastAppeal(123);
+
+		// @ts-ignore
+		const sentEvent = global.mockSendEvents.mock.calls[0][1][0];
+		expect(sentEvent.significantChangesAffectingApplicationAppellant).toEqual([]);
+	});
 
 	it('does not broadcast if appeal not found', async () => {
 		// @ts-ignore

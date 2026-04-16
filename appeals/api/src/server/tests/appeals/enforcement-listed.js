@@ -79,7 +79,15 @@ export default {
 			id: 1,
 			name: 'Valid'
 		},
-		enforcementReference: 'Reference'
+		enforcementReference: 'Reference',
+		reasonForAppealAppellant: null,
+		anySignificantChanges: null,
+		anySignificantChanges_otherSignificantChanges: null,
+		anySignificantChanges_localPlanSignificantChanges: null,
+		anySignificantChanges_nationalPolicySignificantChanges: null,
+		anySignificantChanges_courtJudgementSignificantChanges: null,
+		screeningOpinionIndicatesEiaRequired: null,
+		ownershipCertificate: null
 	},
 	appellant: {
 		id: 1,
