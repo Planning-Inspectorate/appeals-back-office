@@ -1899,6 +1899,7 @@ async function addProofsEvidence(databaseConnector, id, source, sourceId) {
 		data: {
 			blobStorageContainer: 'document-service-uploads',
 			dateCreated: '2024-03-01T13:48:35.847Z',
+			dateReceived: '2024-03-01T13:48:35.847Z',
 			description: 'Document img2.jpg (001) imported',
 			documentGuid: doc.guid,
 			documentType,

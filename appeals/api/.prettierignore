@@ -1,0 +1,3 @@
+appeals/api/src/server/notify/templates/**/*.md
+src/server/notify/templates/**/*.md
+appeals/api/src/server/notify/templates/**/*.md

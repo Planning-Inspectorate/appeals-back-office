@@ -1,11 +1,11 @@
 import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
 
-describe('correction-notice-decision.md', () => {
+describe('correction-notice-decision-appellant.md', () => {
 	test('should call notify sendEmail with the correct data', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'correction-notice-decision',
+			templateName: 'correction-notice-decision-appellant',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
@@ -41,7 +41,7 @@ describe('correction-notice-decision.md', () => {
 			'',
 			'There has been a mistake - but we fixed it thanks',
 			'',
-			'[Sign in to our service](/mock-front-office-url) to view the decision letter dated 01 January 2025.',
+			'[Sign in to our service](/mock-front-office-url/appeals/new-saved-appeal) to view the decision letter dated 01 January 2025.',
 			'',
 			"# The Planning Inspectorate's role",
 			'',
