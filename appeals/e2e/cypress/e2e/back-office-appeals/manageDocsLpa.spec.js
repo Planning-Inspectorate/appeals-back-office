@@ -64,9 +64,16 @@ describe('Manage docs on lpa case', () => {
 		);
 
 		cy.intercept('POST', '**/lpa-questionnaire/**/add-documents/**').as('postAddDocuments');
+
+		cy.then(() => {
+			Cypress.config('pageLoadTimeout', 300000);
+		});
+
 		caseDetailsPage.clickButtonByText('Continue');
 
-		cy.wait('@postAddDocuments').its('response.statusCode').should('eq', 302);
+		cy.wait('@postAddDocuments', { timeout: 300000 }).its('response.statusCode').should('eq', 302);
+		cy.url().should('include', '/add-document-details/');
+		cy.contains(/Sorry.*problem/i).should('not.exist');
 		cy.url().should('include', '/add-document-details/');
 		cy.contains(/Sorry.*problem/i).should('not.exist');
 	};

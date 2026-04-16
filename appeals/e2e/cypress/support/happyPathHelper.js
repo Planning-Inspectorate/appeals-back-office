@@ -38,7 +38,9 @@ export const happyPathHelper = {
 		caseDetailsPage.clickReviewAppellantCase();
 		caseDetailsPage.selectRadioButtonByValue('Valid');
 		caseDetailsPage.clickButtonByText('Continue');
+		cy.intercept('POST', '**/appellant-case/valid/date').as('confirmValidDate');
 		caseDetailsPage.clickButtonByText('Confirm');
+		cy.wait('@confirmValidDate');
 	},
 	reviewEnforcementAppeallantCase(caseObj) {
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
