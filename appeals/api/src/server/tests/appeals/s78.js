@@ -95,7 +95,15 @@ export default {
 			key: 'some',
 			name: 'Some'
 		},
-		knowsAllOwners: null
+		knowsAllOwners: null,
+		reasonForAppealAppellant: null,
+		anySignificantChanges: null,
+		anySignificantChanges_otherSignificantChanges: null,
+		anySignificantChanges_localPlanSignificantChanges: null,
+		anySignificantChanges_nationalPolicySignificantChanges: null,
+		anySignificantChanges_courtJudgementSignificantChanges: null,
+		screeningOpinionIndicatesEiaRequired: null,
+		ownershipCertificate: null
 	},
 	appellant: {
 		id: 2,

@@ -22,16 +22,29 @@ export const mapAppellantCase = (data) => {
 		tenantAgriculturalHolding: casedata?.tenantAgriculturalHolding ?? null,
 		otherTenantsAgriculturalHolding: casedata?.otherTenantsAgriculturalHolding ?? null,
 		reasonForAppealAppellant: casedata?.reasonForAppealAppellant ?? null,
-		anySignificantChanges: casedata?.anySignificantChanges ?? null,
-		anySignificantChanges_otherSignificantChanges:
-			casedata?.anySignificantChanges_otherSignificantChanges ?? null,
-		anySignificantChanges_localPlanSignificantChanges:
-			casedata?.anySignificantChanges_localPlanSignificantChanges ?? null,
-		anySignificantChanges_nationalPolicySignificantChanges:
-			casedata?.anySignificantChanges_nationalPolicySignificantChanges ?? null,
-		anySignificantChanges_courtJudgementSignificantChanges:
-			casedata?.anySignificantChanges_courtJudgementSignificantChanges ?? null,
 		screeningOpinionIndicatesEiaRequired: casedata?.screeningOpinionIndicatesEiaRequired ?? null,
-		ownershipCertificate: casedata?.ownershipCertificate ?? null
+		ownershipCertificate: casedata?.ownershipCertificate ?? null,
+		/** @type {any[]} */
+		significantChangesAffectingApplicationAppellant:
+			casedata?.anySignificantChanges === 'Yes'
+				? [
+						{
+							value: 'adopted-a-new-local-plan',
+							comment: casedata?.anySignificantChanges_localPlanSignificantChanges ?? null
+						},
+						{
+							value: 'national-policy-change',
+							comment: casedata?.anySignificantChanges_nationalPolicySignificantChanges ?? null
+						},
+						{
+							value: 'court-judgement',
+							comment: casedata?.anySignificantChanges_courtJudgementSignificantChanges ?? null
+						},
+						{
+							value: 'other',
+							comment: casedata?.anySignificantChanges_otherSignificantChanges ?? null
+						}
+					].filter((c) => c.comment !== null)
+				: []
 	};
 };
