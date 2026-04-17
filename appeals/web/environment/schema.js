@@ -31,6 +31,7 @@ export default baseSchema
 		blobStorageDefaultContainer: joi.string(),
 		cacheControl: joi.object({ maxAge: joi.string() }).options({ presence: 'required' }),
 		googleAnalyticsId: joi.string(),
+		googleTagManagerId: joi.string(),
 		horizonAppealBaseUrl: joi.string().optional().empty(''),
 		useBlobEmulator: joi.boolean().optional(),
 		logLevelStdOut: joi.string().valid(...logLevel),
