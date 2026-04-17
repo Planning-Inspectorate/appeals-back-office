@@ -4,9 +4,13 @@ import {
 } from '#lib/dates.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { APPEAL_TYPE, PROCEDURE_TYPE_ID_MAP } from '@pins/appeals/constants/common.js';
+import { isS78ExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { isBefore } from 'date-fns';
+import * as appellantCaseService from '../appellant-case.service.js';
 import {
 	checkAndConfirmEnforcementPage,
+	environmentalServicesReviewPage,
 	updateEnforcementGroundAPage,
 	updateEnforcementOtherInformationPage,
 	updateEnforcementValidDatePage,
@@ -101,6 +105,29 @@ export const postValidDate = async (request, response) => {
 			bannerDefinitionKey: 'appealValidated',
 			appealId
 		});
+
+		const appellantCaseResponse = await appellantCaseService
+			.getAppellantCaseFromAppealId(
+				request.apiClient,
+				currentAppeal.appealId,
+				currentAppeal.appellantCaseId
+			)
+			.catch((error) => {
+				return logger.error(error);
+			});
+
+		if (
+			isS78ExpeditedAppealType(
+				currentAppeal.appealType,
+				appellantCaseResponse.applicationDate,
+				appellantCaseResponse.applicationDecision
+			) &&
+			appellantCaseResponse.screeningOpinionIndicatesEiaRequired
+		) {
+			return response.redirect(
+				`/appeals-service/appeal-details/${appealId}/appellant-case/valid/environmental-services-review`
+			);
+		}
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
@@ -439,6 +466,16 @@ export const postEnforcementCheckDetails = async (request, response) => {
 
 		delete session.webAppellantCaseReviewOutcome;
 
+		if (
+			currentAppeal.appealType === APPEAL_TYPE.S78 &&
+			currentAppeal.procedureTypeId === PROCEDURE_TYPE_ID_MAP.writtenPart1 &&
+			currentAppeal.appellantCase?.screeningOpinionIndicatesEiaRequired
+		) {
+			return response.redirect(
+				`/appeals-service/appeal-details/${appealId}/appellant-case/valid/environmental-services-review`
+			);
+		}
+
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
 		logger.error(
@@ -503,4 +540,26 @@ const renderEnforcementCheckDetails = async (request, response, apiErrors) => {
 		pageContent: mappedPageContent,
 		errors: errors || apiErrors
 	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const getEnvironmentalServicesReview = async (request, response) => {
+	const {
+		currentAppeal: { appealId, appealReference }
+	} = request;
+
+	const mappedPageContent = environmentalServicesReviewPage(appealId, appealReference);
+
+	return response.status(200).render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postEnvironmentalServicesReview = async (request, response) => {
+	const {
+		currentAppeal: { appealId }
+	} = request;
+
+	return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 };

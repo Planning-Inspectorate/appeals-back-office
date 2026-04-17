@@ -67,7 +67,7 @@ const router = createRouter({ mergeParams: true });
 
 router.use(
 	'/valid',
-	validateAppealWithInclude(['appellantCase']),
+	validateAppealWithInclude(['appellantCase', 'appealType']),
 	assertUserHasPermission(permissionNames.updateCase),
 	outcomeValidRouter
 );

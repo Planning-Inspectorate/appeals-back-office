@@ -5,18 +5,23 @@ import { actionsHtml, documentationFolderTableItem } from '#lib/mappers/index.js
 export const mapEnvironmentalAssessment = (data) => {
 	const { currentRoute, appealDetails } = data;
 	const { eiaScreeningRequired, environmentalAssessment } = appealDetails;
+	const screeningOpinionIndicatesEiaRequired =
+		data.appellantCase?.screeningOpinionIndicatesEiaRequired;
 
 	const id = 'environmental-assessment';
 
-	if (!eiaScreeningRequired || !environmentalAssessment) {
+	if (
+		!environmentalAssessment ||
+		(!eiaScreeningRequired && !screeningOpinionIndicatesEiaRequired)
+	) {
 		return { id, display: {} };
 	}
 
-	const documents = environmentalAssessment.documents.filter(
+	const documents = environmentalAssessment?.documents.filter(
 		(doc) => !doc.latestDocumentVersion?.isDeleted
 	);
 
-	const latestReceivedDocument = documents.reduce(
+	const latestReceivedDocument = documents?.reduce(
 		(latestReceivedDocument, currentDocument) => {
 			if (!latestReceivedDocument) {
 				return currentDocument;
@@ -35,19 +40,19 @@ export const mapEnvironmentalAssessment = (data) => {
 	return documentationFolderTableItem({
 		id,
 		text,
-		statusText: documents.length
-			? `${documents.length} document${documents.length === 1 ? '' : 's'}`
+		statusText: documents?.length
+			? `${documents?.length} document${documents.length === 1 ? '' : 's'}`
 			: 'No documents',
-		receivedText: documents.length
-			? dateISOStringToDisplayDate(latestReceivedDocument.latestDocumentVersion.dateReceived)
+		receivedText: documents?.length
+			? dateISOStringToDisplayDate(latestReceivedDocument?.latestDocumentVersion.dateReceived)
 			: 'Not applicable',
 		actionHtml: actionsHtml({
 			id,
 			text,
-			hasDocuments: !!documents.length,
+			hasDocuments: !!documents?.length,
 			link: `${currentRoute}/${id}`,
 			editable: true,
-			folderId: environmentalAssessment.folderId
+			folderId: environmentalAssessment?.folderId
 		}),
 		actionHtmlClasses: 'govuk-!-width-one-quarter'
 	});

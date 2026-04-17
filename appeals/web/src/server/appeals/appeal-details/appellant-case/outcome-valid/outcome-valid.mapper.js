@@ -379,3 +379,26 @@ export function checkAndConfirmEnforcementPage(request, emailPreviews) {
 		]
 	};
 }
+
+/**
+ * @param {number} appealId
+ * @param {string} appealReference
+ * @returns {PageContent}
+ */
+export function environmentalServicesReviewPage(appealId, appealReference) {
+	return {
+		title: 'The environmental services team needs to review the case',
+		backLinkUrl: `/appeals-service/appeal-details/${appealId}/appellant-case/valid/date`,
+		preHeading: `Appeal ${appealShortReference(appealReference)}`,
+		heading: 'The environmental services team needs to review the case',
+		submitButtonText: 'Continue',
+		pageComponents: [
+			{
+				type: 'html',
+				parameters: {
+					html: `<p class="govuk-body">Email <a class="govuk-link" href="mailto:environmentalservices@planninginspectorate.gov.uk">environmentalservices@planninginspectorate.gov.uk</a> to request an environmental assessment.</p>`
+				}
+			}
+		]
+	};
+}
