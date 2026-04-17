@@ -770,16 +770,6 @@ describe('publishStatements', () => {
 		}
 	};
 
-	const emailPayload = {
-		inquiry_address: '',
-		inquiry_date: '',
-		inquiry_detail_warning_text: '',
-		inquiry_expected_days: '',
-		inquiry_time: '',
-		inquiry_witnesses_text: '',
-		inquiry_subject_line: ''
-	};
-
 	beforeAll(async () => {
 		const appTest = await import('#server/app-test.js');
 		request = appTest.request;
@@ -820,21 +810,6 @@ describe('publishStatements', () => {
 		databaseConnector.representation.findMany.mockResolvedValue(representations);
 		databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
 
-		const expectedEmailPayload = {
-			...emailPayload,
-			lpa_reference: testAppeal.applicationReference,
-			has_ip_comments: false,
-			has_statement: true,
-			is_hearing_procedure: false,
-			is_inquiry_procedure: true,
-			has_rule_6_parties: true,
-			has_rule_6_statement: true,
-			appeal_reference_number: testAppeal.reference,
-			final_comments_deadline: '1 January 2024',
-			site_address: 'Address not available',
-			user_type: ''
-		};
-
 		const response = await request
 			.post(`/appeals/${appealId}/reps/publish`)
 			.set('azureAdUserId', azureAdUserId);
@@ -847,39 +822,54 @@ describe('publishStatements', () => {
 			azureAdUserId: expect.anything(),
 			notifyClient: expect.anything(),
 			personalisation: {
-				...expectedEmailPayload,
-				what_happens_next: `You need to [submit your proof of evidence and witnesses](/mock-front-office-url/manage-appeals/${testAppeal.reference}) by 1 February 2024.`,
-				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-				statement_url: `/mock-front-office-url/manage-appeals/${testAppeal.reference}`
+				appeal_reference_number: testAppeal.reference,
+				has_rule_6_statement: true,
+				has_rule_6_parties: true,
+				has_lpa_statement: true,
+				has_ip_comments: false,
+				site_address: 'Address not available',
+				lpa_reference: testAppeal.applicationReference,
+				proof_of_evidence_due_date: '1 February 2024',
+				team_email_address: expect.any(String)
 			},
 			recipientEmail: testAppeal.lpa.email,
-			templateName: 'received-statement-and-ip-comments-lpa'
+			templateName: 'publish-statements-inquiry-lpa'
 		});
 
 		expect(notifySend).toHaveBeenNthCalledWith(2, {
 			azureAdUserId: expect.anything(),
 			notifyClient: expect.anything(),
 			personalisation: {
-				...expectedEmailPayload,
-				what_happens_next: `You need to [submit your proof of evidence and witnesses](/mock-front-office-url/appeals/${testAppeal.reference}) by 1 February 2024.`,
-				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-				statement_url: `/mock-front-office-url/appeals/${testAppeal.reference}`
+				appeal_reference_number: testAppeal.reference,
+				has_rule_6_statement: true,
+				has_rule_6_parties: true,
+				has_lpa_statement: true,
+				has_ip_comments: false,
+				site_address: 'Address not available',
+				lpa_reference: testAppeal.applicationReference,
+				proof_of_evidence_due_date: '1 February 2024',
+				team_email_address: expect.any(String)
 			},
 			recipientEmail: testAppeal.appellant.email,
-			templateName: 'received-statement-and-ip-comments-appellant'
+			templateName: 'publish-statements-inquiry-appellant'
 		});
 
 		expect(notifySend).toHaveBeenNthCalledWith(3, {
 			azureAdUserId: expect.anything(),
 			notifyClient: expect.anything(),
 			personalisation: {
-				...expectedEmailPayload,
-				what_happens_next: `You need to [submit your proof of evidence and witnesses](/mock-front-office-url/appeals/${testAppeal.reference}) by 1 February 2024.`,
-				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-				statement_url: ''
+				appeal_reference_number: testAppeal.reference,
+				has_rule_6_statement: true,
+				has_rule_6_parties: true,
+				has_lpa_statement: true,
+				has_ip_comments: false,
+				site_address: 'Address not available',
+				lpa_reference: testAppeal.applicationReference,
+				proof_of_evidence_due_date: '1 February 2024',
+				team_email_address: expect.any(String)
 			},
 			recipientEmail: testAppeal.appealRule6Parties[0].serviceUser.email,
-			templateName: 'received-statement-and-ip-comments-appellant'
+			templateName: 'publish-statements-inquiry-rule-6'
 		});
 	});
 
@@ -891,21 +881,6 @@ describe('publishStatements', () => {
 		databaseConnector.representation.findMany.mockResolvedValue([]);
 		databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
 
-		const expectedEmailPayload = {
-			...emailPayload,
-			lpa_reference: testAppeal.applicationReference,
-			has_ip_comments: false,
-			has_statement: false,
-			is_hearing_procedure: false,
-			is_inquiry_procedure: true,
-			has_rule_6_parties: true,
-			has_rule_6_statement: false,
-			appeal_reference_number: testAppeal.reference,
-			final_comments_deadline: '1 January 2024',
-			site_address: 'Address not available',
-			user_type: ''
-		};
-
 		const response = await request
 			.post(`/appeals/${appealId}/reps/publish`)
 			.set('azureAdUserId', azureAdUserId);
@@ -918,39 +893,54 @@ describe('publishStatements', () => {
 			azureAdUserId: expect.anything(),
 			notifyClient: expect.anything(),
 			personalisation: {
-				...expectedEmailPayload,
-				what_happens_next: `You need to [submit your proof of evidence and witnesses](/mock-front-office-url/manage-appeals/${testAppeal.reference}) by 1 February 2024.`,
-				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-				statement_url: `/mock-front-office-url/manage-appeals/${testAppeal.reference}`
+				appeal_reference_number: testAppeal.reference,
+				has_lpa_statement: false,
+				has_ip_comments: false,
+				has_rule_6_statement: false,
+				has_rule_6_parties: true,
+				site_address: 'Address not available',
+				lpa_reference: testAppeal.applicationReference,
+				proof_of_evidence_due_date: '1 February 2024',
+				team_email_address: expect.any(String)
 			},
 			recipientEmail: testAppeal.lpa.email,
-			templateName: 'not-received-statement-and-ip-comments'
+			templateName: 'publish-statements-inquiry-lpa'
 		});
 
 		expect(notifySend).toHaveBeenNthCalledWith(2, {
 			azureAdUserId: expect.anything(),
 			notifyClient: expect.anything(),
 			personalisation: {
-				...expectedEmailPayload,
-				what_happens_next: `You need to [submit your proof of evidence and witnesses](/mock-front-office-url/appeals/${testAppeal.reference}) by 1 February 2024.`,
-				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-				statement_url: `/mock-front-office-url/appeals/${testAppeal.reference}`
+				appeal_reference_number: testAppeal.reference,
+				has_lpa_statement: false,
+				has_ip_comments: false,
+				has_rule_6_statement: false,
+				has_rule_6_parties: true,
+				site_address: 'Address not available',
+				lpa_reference: testAppeal.applicationReference,
+				proof_of_evidence_due_date: '1 February 2024',
+				team_email_address: expect.any(String)
 			},
 			recipientEmail: testAppeal.appellant.email,
-			templateName: 'not-received-statement-and-ip-comments'
+			templateName: 'publish-statements-inquiry-appellant'
 		});
 
 		expect(notifySend).toHaveBeenNthCalledWith(3, {
 			azureAdUserId: expect.anything(),
 			notifyClient: expect.anything(),
 			personalisation: {
-				...expectedEmailPayload,
-				what_happens_next: `You need to [submit your proof of evidence and witnesses](/mock-front-office-url/appeals/${testAppeal.reference}) by 1 February 2024.`,
-				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-				statement_url: ''
+				appeal_reference_number: testAppeal.reference,
+				has_lpa_statement: false,
+				has_ip_comments: false,
+				has_rule_6_statement: false,
+				has_rule_6_parties: true,
+				site_address: 'Address not available',
+				lpa_reference: testAppeal.applicationReference,
+				proof_of_evidence_due_date: '1 February 2024',
+				team_email_address: expect.any(String)
 			},
 			recipientEmail: testAppeal.appealRule6Parties[0].serviceUser.email,
-			templateName: 'not-received-statement-and-ip-comments'
+			templateName: 'publish-statements-inquiry-rule-6'
 		});
 	});
 
@@ -970,21 +960,6 @@ describe('publishStatements', () => {
 		databaseConnector.representation.findMany.mockResolvedValue(representations);
 		databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
 
-		const expectedEmailPayload = {
-			...emailPayload,
-			lpa_reference: testAppeal.applicationReference,
-			has_ip_comments: false,
-			has_statement: false,
-			is_hearing_procedure: false,
-			is_inquiry_procedure: true,
-			has_rule_6_parties: true,
-			has_rule_6_statement: true,
-			appeal_reference_number: testAppeal.reference,
-			final_comments_deadline: '1 January 2024',
-			site_address: 'Address not available',
-			user_type: ''
-		};
-
 		const response = await request
 			.post(`/appeals/${appealId}/reps/publish`)
 			.set('azureAdUserId', azureAdUserId);
@@ -997,39 +972,54 @@ describe('publishStatements', () => {
 			azureAdUserId: expect.anything(),
 			notifyClient: expect.anything(),
 			personalisation: {
-				...expectedEmailPayload,
-				what_happens_next: `You need to [submit your proof of evidence and witnesses](/mock-front-office-url/manage-appeals/${testAppeal.reference}) by 1 February 2024.`,
-				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-				statement_url: `/mock-front-office-url/manage-appeals/${testAppeal.reference}`
+				appeal_reference_number: testAppeal.reference,
+				has_lpa_statement: false,
+				has_ip_comments: false,
+				has_rule_6_statement: true,
+				has_rule_6_parties: true,
+				site_address: 'Address not available',
+				lpa_reference: testAppeal.applicationReference,
+				proof_of_evidence_due_date: '1 February 2024',
+				team_email_address: expect.any(String)
 			},
 			recipientEmail: testAppeal.lpa.email,
-			templateName: 'rule-6-statement-received'
+			templateName: 'publish-statements-inquiry-lpa'
 		});
 
 		expect(notifySend).toHaveBeenNthCalledWith(2, {
 			azureAdUserId: expect.anything(),
 			notifyClient: expect.anything(),
 			personalisation: {
-				...expectedEmailPayload,
-				what_happens_next: `You need to [submit your proof of evidence and witnesses](/mock-front-office-url/appeals/${testAppeal.reference}) by 1 February 2024.`,
-				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-				statement_url: `/mock-front-office-url/appeals/${testAppeal.reference}`
+				appeal_reference_number: testAppeal.reference,
+				has_lpa_statement: false,
+				has_ip_comments: false,
+				has_rule_6_statement: true,
+				has_rule_6_parties: true,
+				site_address: 'Address not available',
+				lpa_reference: testAppeal.applicationReference,
+				proof_of_evidence_due_date: '1 February 2024',
+				team_email_address: expect.any(String)
 			},
 			recipientEmail: testAppeal.appellant.email,
-			templateName: 'rule-6-statement-received'
+			templateName: 'publish-statements-inquiry-appellant'
 		});
 
 		expect(notifySend).toHaveBeenNthCalledWith(3, {
 			azureAdUserId: expect.anything(),
 			notifyClient: expect.anything(),
 			personalisation: {
-				...expectedEmailPayload,
-				what_happens_next: `You need to [submit your proof of evidence and witnesses](/mock-front-office-url/appeals/${testAppeal.reference}) by 1 February 2024.`,
-				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-				statement_url: ''
+				appeal_reference_number: testAppeal.reference,
+				has_lpa_statement: false,
+				has_ip_comments: false,
+				has_rule_6_statement: true,
+				has_rule_6_parties: true,
+				site_address: 'Address not available',
+				lpa_reference: testAppeal.applicationReference,
+				proof_of_evidence_due_date: '1 February 2024',
+				team_email_address: expect.any(String)
 			},
 			recipientEmail: testAppeal.appealRule6Parties[0].serviceUser.email,
-			templateName: 'received-only-rule-6-statement-rule-6-party'
+			templateName: 'publish-statements-inquiry-rule-6'
 		});
 	});
 });
