@@ -92,7 +92,8 @@ apps_config = {
   use_system_test_bc_for_change_lpa = true
 
   analytics = {
-    google_analytics_id = "G-Q3NCERD9XE"
+    google_analytics_id   = "dummy-id",
+    google_tag_manager_id = "dummy-tag-manager-id"
   }
 
   logging = {
