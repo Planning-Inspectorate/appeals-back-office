@@ -1,6 +1,7 @@
 import {
 	appealDataEnforcementListedBuilding,
-	appealDataEnforcementNotice
+	appealDataEnforcementNotice,
+	appealDataFullPlanning
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform/testing/html-parser.js';
@@ -23,8 +24,12 @@ describe('Appellant Case Valid Flow', () => {
 				.reply(200, appealDataEnforcementNotice)
 				.persist();
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=appellantCase`)
+				.get(`/appeals/${appealId}?include=appellantCase,appealType`)
 				.reply(200, appealDataEnforcementNotice);
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=appellantCase,appealType`)
+				.reply(200, appealDataEnforcementNotice)
+				.persist();
 		});
 		describe('GET /enforcement/ground-a', () => {
 			it(`should render the 'Is the appeal ground (a) barred?' screen`, async () => {
@@ -241,7 +246,7 @@ describe('Appellant Case Valid Flow', () => {
 			it(`should render the 'Check details' screen`, async () => {
 				// mock API call
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=appellantCase`)
+					.get(`/appeals/${appealId}?include=appellantCase,appealType`)
 					.reply(200, appealDataEnforcementNotice)
 					.persist();
 
@@ -298,7 +303,7 @@ describe('Appellant Case Valid Flow', () => {
 			it(`should redirect to the Check Details' screen on success`, async () => {
 				// mock API call
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=appellantCase`)
+					.get(`/appeals/${appealId}?include=appellantCase,appealType`)
 					.reply(200, appealDataEnforcementNotice)
 					.persist();
 				nock('http://test/')
@@ -345,7 +350,7 @@ describe('Appellant Case Valid Flow', () => {
 		it(`should redirect to the Check Details' screen on success`, async () => {
 			// mock API call
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=appellantCase`)
+				.get(`/appeals/${appealId}?include=appellantCase,appealType`)
 				.reply(200, appealDataEnforcementNotice)
 				.persist();
 			nock('http://test/')
@@ -390,15 +395,19 @@ describe('Appellant Case Valid Flow', () => {
 	});
 
 	describe('Enforcement listed Appeals', () => {
-		const appealId = appealDataEnforcementNotice.appealId;
+		const appealId = appealDataEnforcementListedBuilding.appealId;
 		beforeEach(() => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, appealDataEnforcementListedBuilding)
 				.persist();
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=appellantCase`)
+				.get(`/appeals/${appealId}?include=appellantCase,appealType`)
 				.reply(200, appealDataEnforcementListedBuilding);
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=appellantCase,appealType`)
+				.reply(200, appealDataEnforcementListedBuilding)
+				.persist();
 		});
 		describe('GET /enforcement/check-details', () => {
 			afterEach(() => {
@@ -407,7 +416,7 @@ describe('Appellant Case Valid Flow', () => {
 			it(`should render the 'Check details' screen for ELB`, async () => {
 				// mock API call
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=appellantCase`)
+					.get(`/appeals/${appealId}?include=appellantCase,appealType`)
 					.reply(200, appealDataEnforcementListedBuilding)
 					.persist();
 
@@ -474,7 +483,7 @@ describe('Appellant Case Valid Flow', () => {
 			it(`should redirect to the Check Details' screen on success`, async () => {
 				// mock API call
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=appellantCase`)
+					.get(`/appeals/${appealId}?include=appellantCase,appealType`)
 					.reply(200, appealDataEnforcementNotice)
 					.persist();
 				nock('http://test/')
@@ -514,6 +523,91 @@ describe('Appellant Case Valid Flow', () => {
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toBe(
 					`Found. Redirecting to /appeals-service/appeal-details/${appealId}`
+				);
+			});
+		});
+	});
+
+	describe('Environmental Services Review', () => {
+		const appealId = 12345;
+		const appealReference = 'APP/Q9999/D/21/114328';
+
+		beforeEach(() => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId,
+					appealReference,
+					procedureTypeId: 4,
+					appellantCase: {
+						screeningOpinionIndicatesEiaRequired: true
+					}
+				})
+				.persist();
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=appellantCase,appealType`)
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId,
+					appealReference,
+					procedureTypeId: 4,
+					appellantCase: {
+						screeningOpinionIndicatesEiaRequired: true
+					}
+				})
+				.persist();
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=appellantCase,appealType`)
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId,
+					appealReference,
+					procedureTypeId: 4,
+					appellantCase: {
+						screeningOpinionIndicatesEiaRequired: true
+					}
+				})
+				.persist();
+		});
+
+		describe('GET /environmental-services-review', () => {
+			it('should render the environmental services review screen', async () => {
+				const response = await request.get(
+					`${baseUrl}/${appealId}/appellant-case/valid/environmental-services-review`
+				);
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain(
+					'The environmental services team needs to review the case</h1>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Email <a class="govuk-link" href="mailto:environmentalservices@planninginspectorate.gov.uk">environmentalservices@planninginspectorate.gov.uk</a> to request an environmental assessment.'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+			});
+		});
+
+		describe('Redirection to environmental services review', () => {
+			it('should redirect to environmental services review screen after posting valid date for S78 Part 1 with EIA flag', async () => {
+				nock('http://test/').patch(`/appeals/${appealId}/appellant-cases/0`).reply(200);
+				nock('http://test/').get(`/appeals/${appealId}/appellant-cases/0`).reply(200, {
+					screeningOpinionIndicatesEiaRequired: true,
+					applicationDate: '2026-05-01',
+					applicationDecision: 'refused'
+				});
+
+				const response = await request
+					.post(`${baseUrl}/${appealId}/appellant-case/valid/date`)
+					.send({
+						'valid-date-day': '1',
+						'valid-date-month': 'Jan',
+						'valid-date-year': '2025'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					`Found. Redirecting to /appeals-service/appeal-details/${appealId}/appellant-case/valid/environmental-services-review`
 				);
 			});
 		});

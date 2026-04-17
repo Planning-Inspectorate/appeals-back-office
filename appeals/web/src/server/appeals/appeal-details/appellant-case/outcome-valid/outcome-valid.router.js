@@ -51,4 +51,9 @@ router
 	.get(controller.getEnforcementCheckDetails)
 	.post(controller.postEnforcementCheckDetails);
 
+router
+	.route('/environmental-services-review')
+	.get(asyncHandler(controller.getEnvironmentalServicesReview))
+	.post(asyncHandler(controller.postEnvironmentalServicesReview));
+
 export default router;

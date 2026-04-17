@@ -3683,13 +3683,17 @@ describe('appellant-case', () => {
 		beforeEach(async () => {
 			nock.cleanAll();
 			nock('http://test/')
-				.get(`/appeals/${appealData.appealId}?include=appellantCase`)
+				.get(`/appeals/${appealData.appealId}?include=appellantCase,appealType`)
 				.reply(200, appealData)
 				.persist();
 			nock('http://test/').patch(`/appeals/${appealData.appealId}`).reply(200);
 			nock('http://test/')
 				.patch('/appeals/1/appellant-cases/0')
 				.reply(200, { validationOutcome: 'valid' });
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataValidOutcome)
+				.persist();
 
 			await request.post(`${baseUrl}/1${appellantCasePagePath}`).send({
 				reviewOutcome: 'valid'
@@ -5975,7 +5979,8 @@ describe('appellant-case', () => {
 				.persist();
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
-				.reply(200, appellantCaseDataNotValidated);
+				.reply(200, appellantCaseDataNotValidated)
+				.persist();
 		});
 		afterEach(() => {
 			nock.cleanAll();
@@ -6200,13 +6205,11 @@ describe('appellant-case', () => {
 			nock.cleanAll();
 			// @ts-ignore
 			usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
-			nock('http://test/')
-				.get('/appeals/1?include=appealType')
-				.reply(200, { appealType: APPEAL_TYPE.HOUSEHOLDER })
-				.persist();
+			nock('http://test/').get('/appeals/1?include=appealType').reply(200, appealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
-				.reply(200, documentRedactionStatuses);
+				.reply(200, documentRedactionStatuses)
+				.persist();
 		});
 		afterEach(() => {
 			nock.cleanAll();
