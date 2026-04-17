@@ -203,6 +203,62 @@ these [Notify Templates](../appeals/api/src/server/notify/templates):
 - **Trigger:** Update and extend the ip comment due date and then review an ip comment and mark it as rejected by
   selecting "Reject" and continue
 
+### Statements published - written reps lpa
+
+- **Appeal type:** All
+- **Procedure:** Written
+- **Notify Template:
+  ** [publish-statements-written-reps-lpa](../appeals/api/src/server/notify/templates/publish-statements-written-reps-lpa.content.md)
+- **Trigger:** Publish representations when the appeal is in the statements stage. Sent to LPA.
+
+### Statements published - written reps appellant
+
+- **Appeal type:** All
+- **Procedure:** Written
+- **Notify Template:
+  ** [publish-statements-written-reps-appellant](../appeals/api/src/server/notify/templates/publish-statements-written-reps-appellant.content.md)
+- **Trigger:** Publish representations when the appeal is in the statements stage. Sent to appellant/agent.
+
+### Statements published - hearing lpa
+
+- **Appeal type:** All
+- **Procedure:** Hearing
+- **Notify Template:
+  ** [publish-statements-hearing-lpa](../appeals/api/src/server/notify/templates/publish-statements-hearing-lpa.content.md)
+- **Trigger:** Publish representations when the appeal is in the statements stage. Sent to LPA.
+
+### Statements published - hearing appellant
+
+- **Appeal type:** All
+- **Procedure:** Hearing
+- **Notify Template:
+  ** [publish-statements-hearing-appellant](../appeals/api/src/server/notify/templates/publish-statements-hearing-appellant.content.md)
+- **Trigger:** Publish representations when the appeal is in the statements stage. Sent to appellant/agent.
+
+### Statements published - inquiry lpa
+
+- **Appeal type:** All
+- **Procedure:** Inquiry
+- **Notify Template:
+  ** [publish-statements-inquiry-lpa](../appeals/api/src/server/notify/templates/publish-statements-inquiry-lpa.content.md)
+- **Trigger:** Publish representations when the appeal is in the statements stage. Sent to LPA.
+
+### Statements published - inquiry appellant
+
+- **Appeal type:** All
+- **Procedure:** Inquiry
+- **Notify Template:
+  ** [publish-statements-inquiry-appellant](../appeals/api/src/server/notify/templates/publish-statements-inquiry-appellant.content.md)
+- **Trigger:** Publish representations when the appeal is in the statements stage. Sent to appellant/agent.
+
+### Statements published - inquiry rule 6
+
+- **Appeal type:** All
+- **Procedure:** Inquiry
+- **Notify Template:
+  ** [publish-statements-inquiry-rule-6](../appeals/api/src/server/notify/templates/publish-statements-inquiry-rule-6.content.md)
+- **Trigger:** Publish representations when the appeal is in the statements stage. Sent to any Rule 6 parties.
+
 ## Site visit
 
 ### Site visit access required date change appellant
