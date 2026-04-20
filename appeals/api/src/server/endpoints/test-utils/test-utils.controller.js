@@ -472,7 +472,7 @@ export const simulateReviewLpaFinalComments = async (req, res) => {
 	const { appealReference } = req.params;
 	const appeal = await databaseConnector.appeal.findUnique({
 		where: { reference: appealReference },
-		include: { appealStatus: true, lpa: true, appellant: true }
+		include: { appealStatus: true, lpa: true, appellant: true, agent: true }
 	});
 
 	if (!appeal) return res.status(400).send(false);
@@ -504,7 +504,7 @@ export const simulateReviewAppellantFinalComments = async (req, res) => {
 	const { appealReference } = req.params;
 	const appeal = await databaseConnector.appeal.findUnique({
 		where: { reference: appealReference },
-		include: { appealStatus: true, lpa: true, appellant: true }
+		include: { appealStatus: true, lpa: true, appellant: true, agent: true }
 	});
 
 	if (!appeal) return res.status(400).send(false);
@@ -536,7 +536,7 @@ export const simulateIssueDecision = async (req, res) => {
 	const { appealReference } = req.params;
 	const appeal = await databaseConnector.appeal.findUnique({
 		where: { reference: appealReference },
-		include: { appealStatus: true, lpa: true, appellant: true }
+		include: { appealStatus: true, lpa: true, appellant: true, agent: true }
 	});
 
 	if (!appeal) return res.status(400).send(false);
@@ -565,7 +565,7 @@ export const simulateSetUpSiteVisit = async (req, res) => {
 	const { appealReference } = req.params;
 	const appeal = await databaseConnector.appeal.findUnique({
 		where: { reference: appealReference },
-		include: { appealStatus: true, lpa: true, appellant: true }
+		include: { appealStatus: true, lpa: true, appellant: true, agent: true }
 	});
 
 	if (!appeal) return res.status(400).send(false);
@@ -602,7 +602,7 @@ export const simulateSetUpHearing = async (req, res) => {
 	const { appealReference } = req.params;
 	const appeal = await databaseConnector.appeal.findUnique({
 		where: { reference: appealReference },
-		include: { appealStatus: true, appellant: true, lpa: true }
+		include: { appealStatus: true, lpa: true, appellant: true, agent: true }
 	});
 
 	if (!appeal) return res.status(400).send(false);
