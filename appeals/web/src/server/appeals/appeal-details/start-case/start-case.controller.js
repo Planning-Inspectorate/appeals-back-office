@@ -20,6 +20,7 @@ import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.
 import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { recalculateDateIfNotBusinessDay } from '@pins/appeals/utils/business-days.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
+import { getAppellantCaseFromAppealId } from '../appellant-case/appellant-case.service.js';
 import {
 	changeDatePage,
 	confirmProcedurePage,
@@ -206,9 +207,14 @@ export const getSelectProcedure = async (request, response) => {
  */
 const renderSelectProcedure = async (request, response) => {
 	const {
-		currentAppeal: { appealId, appealReference, appealType },
+		currentAppeal: { appealId, appealReference, appealType, appellantCaseId },
 		errors
 	} = request;
+	const appellantCase = await getAppellantCaseFromAppealId(
+		request.apiClient,
+		appealId,
+		appellantCaseId
+	);
 
 	const sessionValues = getSessionValuesForAppeal(request, 'startCaseAppealProcedure', appealId);
 	const isLinked = isLinkedAppeal(request.currentAppeal);
@@ -225,6 +231,7 @@ const renderSelectProcedure = async (request, response) => {
 		isLinked,
 		backUrl,
 		{ appealProcedure: sessionValues?.appealProcedure },
+		appellantCase,
 		errors ? errors['appealProcedure']?.msg : undefined
 	);
 

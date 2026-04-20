@@ -62,26 +62,35 @@ describe('All cases search', () => {
 	});
 
 	it('check Part 1 filter visible', () => {
-		cy.createCase({ caseType: 'W' }).then((caseObj) => {
-			appeal = caseObj;
-			cy.assignCaseOfficerViaApi(caseObj);
-			cy.validateAppeal(caseObj);
-			happyPathHelper.viewCaseDetails(caseObj);
-			happyPathHelper.startCaseWithProcedureType(caseObj, 'Part 1');
-			const testData = { rowIndex: 0, cellIndex: 0, textToMatch: caseObj.reference, strict: true };
-			cy.visit(urlPaths.appealsList);
-			listCasesPage.filterByAppealProcedure('Part 1');
-			listCasesPage.verifyTableCellText(testData);
-		});
+		cy.createCase({ caseType: 'W', applicationDate: '2026-04-01T00:00:00.000Z' }).then(
+			(caseObj) => {
+				appeal = caseObj;
+				cy.assignCaseOfficerViaApi(caseObj);
+				cy.validateAppeal(caseObj);
+				happyPathHelper.viewCaseDetails(caseObj);
+				happyPathHelper.startCaseWithProcedureType(caseObj, 'Part 1');
+				const testData = {
+					rowIndex: 0,
+					cellIndex: 0,
+					textToMatch: caseObj.reference,
+					strict: true
+				};
+				cy.visit(urlPaths.appealsList);
+				listCasesPage.filterByAppealProcedure('Part 1');
+				listCasesPage.verifyTableCellText(testData);
+			}
+		);
 	});
 
 	it('should not show case under Part 1 filter if case type is Y', () => {
-		cy.createCase({ caseType: 'Y' }).then((caseObj) => {
-			appeal = caseObj;
-			cy.visit(urlPaths.appealsList);
-			listCasesPage.filterByAppealProcedure('Part 1');
-			cy.contains(caseObj.reference).should('not.exist');
-		});
+		cy.createCase({ caseType: 'Y', applicationDate: '2026-04-01T00:00:00.000Z' }).then(
+			(caseObj) => {
+				appeal = caseObj;
+				cy.visit(urlPaths.appealsList);
+				listCasesPage.filterByAppealProcedure('Part 1');
+				cy.contains(caseObj.reference).should('not.exist');
+			}
+		);
 	});
 
 	const setupTestCase = () => {

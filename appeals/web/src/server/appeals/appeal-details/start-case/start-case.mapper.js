@@ -9,6 +9,7 @@ import { radiosInput } from '#lib/mappers/components/page-components/radio.js';
 import { simpleHtmlComponent, textSummaryListItem } from '#lib/mappers/index.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { isS78ExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /**
@@ -97,6 +98,7 @@ export function changeDatePage(appealId, appealReference, today) {
  * @param {boolean} isLinkedAppeal
  * @param {string} backLinkUrl
  * @param {{appealProcedure: string}} [storedSessionData]
+ * @param {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} [appellantCase]
  * @param {string|undefined} errorMessage
  * @returns {PageContent}
  */
@@ -106,14 +108,27 @@ export function selectProcedurePage(
 	isLinkedAppeal,
 	backLinkUrl,
 	storedSessionData,
+	appellantCase,
 	errorMessage = undefined
 ) {
+	const showPart1 =
+		appellantCase &&
+		isS78ExpeditedAppealType(
+			appealType,
+			appellantCase.applicationDate,
+			appellantCase.applicationDecision
+		);
+
 	const dataMappers = [
-		{
-			case: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
-			featureFlag: FEATURE_FLAG_NAMES.EXPEDITED_APPEALS,
-			appeals: [APPEAL_TYPE.S78]
-		},
+		...(showPart1
+			? [
+					{
+						case: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
+						featureFlag: FEATURE_FLAG_NAMES.EXPEDITED_APPEALS,
+						appeals: [APPEAL_TYPE.S78]
+					}
+				]
+			: []),
 		{
 			case: APPEAL_CASE_PROCEDURE.WRITTEN,
 			featureFlag: FEATURE_FLAG_NAMES.SECTION_78,
