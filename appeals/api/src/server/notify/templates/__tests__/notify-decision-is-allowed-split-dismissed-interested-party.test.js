@@ -33,7 +33,7 @@ const expectedContentRows = (replacementRows) => [
 	'',
 	...replacementRows,
 	'',
-	'[View the decision letter](/mock-front-office-url/appeals/ABC45678) dated 01 January 2021.',
+	'[View the decision letter](/mock-front-office-url/comment-planning-appeal/enter-appeal-reference) dated 01 January 2021.',
 	'',
 	'We have informed the appellant and local planning authority about the decision.',
 	'',

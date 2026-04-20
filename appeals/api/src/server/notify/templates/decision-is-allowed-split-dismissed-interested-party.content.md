@@ -14,7 +14,7 @@ We have made a decision on the following appeals:
 
 We have made a decision on this appeal {%- endif %}
 
-[View the decision letter]({{front_office_url}}/appeals/{{appeal_reference_number}}) dated {{decision_date}}.
+[View the decision letter]({{front_office_url}}/comment-planning-appeal/enter-appeal-reference) dated {{decision_date}}.
 
 We have informed the appellant and local planning authority about the decision.
 
