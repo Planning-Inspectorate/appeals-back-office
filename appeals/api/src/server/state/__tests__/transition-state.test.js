@@ -1,4 +1,5 @@
 // @ts-nocheck
+import appealRepository from '#repositories/appeal.repository.js';
 import { jest } from '@jest/globals';
 import {
 	CASE_RELATIONSHIP_LINKED,
@@ -275,6 +276,26 @@ describe('transitionState', () => {
 
 				expect(databaseConnector.appeal.findUnique).not.toHaveBeenCalled();
 			});
+		});
+	});
+
+	describe('transitionState repository call', () => {
+		beforeEach(() => {
+			jest.clearAllMocks();
+			jest.spyOn(appealRepository, 'getAppealById').mockResolvedValue(appealFixture);
+		});
+
+		test('calls getAppealById with only required fields', async () => {
+			await transitionState(11, 'user-123', VALIDATION_OUTCOME_VALID);
+			expect(appealRepository.getAppealById).toHaveBeenCalledWith(11, true, [
+				'appealStatus',
+				'appealType',
+				'procedureType',
+				'siteVisit',
+				'hearing',
+				'inquiry',
+				'childAppeals'
+			]);
 		});
 	});
 });
