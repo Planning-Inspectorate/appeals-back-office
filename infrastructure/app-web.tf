@@ -42,6 +42,7 @@ module "app_web" {
     APPLICATIONINSIGHTS_CONNECTION_STRING      = local.key_vault_refs["app-insights-connection-string"]
     ApplicationInsightsAgent_EXTENSION_VERSION = "~3"
     NODE_ENV                                   = var.apps_config.node_environment
+    WEBSITES_ENABLE_APP_SERVICE_STORAGE        = false
 
     API_HOST     = "https://${module.app_api.default_site_hostname}"
     APP_HOSTNAME = var.web_app_domain
