@@ -15,7 +15,6 @@ export const mapS78ExpeditedAppellantCase = (data) => {
 	} = data;
 
 	let sharedS20Mappers = mapS20AppellantCase(data);
-	delete sharedS20Mappers?.planningObligation;
 	delete sharedS20Mappers?.statusPlanningObligation;
 	return {
 		...sharedS20Mappers,
