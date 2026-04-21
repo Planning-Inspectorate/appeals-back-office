@@ -256,6 +256,40 @@ describe('POST /:appealId/site-visits', () => {
 
 			expect(response.status).toEqual(201);
 		});
+		test('creates an Access Required site visit with no date and time and does not send notify email to appellant/agent', async () => {
+			const { siteVisit } = JSON.parse(JSON.stringify(appeal));
+
+			siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCESS_REQUIRED;
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+			// @ts-ignore
+			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+
+			const visitData = {
+				visitEndTime: '',
+				visitStartTime: '',
+				visitType: siteVisit.siteVisitType.name
+			};
+
+			const response = await request
+				.post(`/appeals/${appeal.id}/site-visits`)
+				.send({
+					visitDate: '',
+					inspectorName,
+					...visitData
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.body).toEqual({
+				visitDate: '',
+				...visitData
+			});
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(0);
+
+			expect(response.status).toEqual(201);
+		});
 	});
 
 	describe.each([
