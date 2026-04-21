@@ -167,7 +167,9 @@ const renderCheckAndConfirm = async (request, response) => {
 					webAppellantCaseReviewOutcome.reasonsText
 				),
 				team_email_address: assignedTeamEmail,
-				ground_a_barred: webAppellantCaseReviewOutcome.reasons.includes(GROUND_A_BARRED_REASON_ID),
+				ground_a_barred: webAppellantCaseReviewOutcome.reasons.includes(
+					GROUND_A_BARRED_REASON_ID.toString()
+				),
 				other_live_appeals: webAppellantCaseReviewOutcome.otherLiveAppeals === 'yes',
 				effective_date: currentAppeal.enforcementNotice?.appellantCase?.effectiveDate
 					? formatDate(
