@@ -8,6 +8,7 @@ import { mapOtherTenantsOfAgriculturalHolding } from './submappers/other-tenants
 import { mapOwnershipCertificateExpedited } from './submappers/ownership-certificate-expedited.js';
 import { mapOwnershipCertificate } from './submappers/ownership-certificate.js';
 import { mapPartOfAgriculturalHolding } from './submappers/part-of-agricultural-holding.js';
+import { mapPlanningObligation } from './submappers/planning-obligation.js';
 import { mapProcedurePreferenceDetails } from './submappers/procedure-preference-details.js';
 import { mapProcedurePreferenceDuration } from './submappers/procedure-preference-duration.js';
 import { mapProcedurePreference } from './submappers/procedure-preference.js';
@@ -32,5 +33,6 @@ export const submaps = {
 	anySignificantChanges: mapSignificantChanges,
 	screeningOpinionIndicatesEiaRequired: mapEiaScreening,
 	ownershipCertificateExpedited: mapOwnershipCertificateExpedited,
-	environmentalStatement: mapEnvironmentalStatement
+	environmentalStatement: mapEnvironmentalStatement,
+	planningObligation: mapPlanningObligation
 };
