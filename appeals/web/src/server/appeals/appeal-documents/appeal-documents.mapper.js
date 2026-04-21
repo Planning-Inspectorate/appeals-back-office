@@ -1,5 +1,6 @@
 import usersService from '#appeals/appeal-users/users-service.js';
 import { gigabyte, kilobyte, megabyte } from '#appeals/appeal.constants.js';
+import { isFeatureActive } from '#common/feature-flags.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import {
 	dateISOStringToDayMonthYearHourMinute,
@@ -17,7 +18,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
 import { redactionStatusIdToName } from '#lib/redaction-statuses.js';
 import config from '@pins/appeals.web/environment/config.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_REDACTED_STATUS,
@@ -896,7 +897,10 @@ export function mapFolderDocumentActionsHtmlProperty(
 		const isShared = /** @type {any} */ (document).isShared;
 
 		if (isCosts && virusCheckStatus.safe) {
-			actionText = isShared ? 'Manage' : 'Manage and share';
+			actionText =
+				!isFeatureActive(FEATURE_FLAG_NAMES.SHARE_COSTS) || isShared
+					? 'Manage'
+					: 'Manage and share';
 		}
 
 		htmlProperty.html = `<a href="${viewAndEditUrl
@@ -1313,7 +1317,7 @@ export async function manageDocumentPage({
 
 	const isShared = /** @type {any} */ (document).isShared;
 
-	if (isCosts && !isShared) {
+	if (isFeatureActive(FEATURE_FLAG_NAMES.SHARE_COSTS) && isCosts && !isShared) {
 		const { costsDocumentType } = request.params;
 		const shareUrl =
 			costsDocumentType === 'withdrawal'
