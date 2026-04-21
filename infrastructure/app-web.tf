@@ -30,7 +30,6 @@ module "app_web" {
   outbound_vnet_connectivity      = true
   public_network_access           = var.environment == "dev" ? false : true
 
-
   # monitoring
   action_group_ids                  = local.action_group_ids
   log_analytics_workspace_id        = azurerm_log_analytics_workspace.main.id
@@ -44,7 +43,6 @@ module "app_web" {
     NODE_ENV                                   = var.apps_config.node_environment
     WEBSITES_ENABLE_APP_SERVICE_STORAGE        = false
 
-    # Temporary change to enable PR creation
     API_HOST     = "https://${module.app_api.default_site_hostname}"
     APP_HOSTNAME = var.web_app_domain
 
