@@ -31,7 +31,11 @@ const renderTypeOfSiteVisit = async (request, response, pageType) => {
 	const appealDetails = request.currentAppeal;
 
 	if (appealDetails) {
-		let visitType = request.session.visitType || appealDetails.siteVisit?.visitType || null;
+		let visitType =
+			request.query.visitType?.toString() ||
+			request.session.visitType ||
+			appealDetails.siteVisit?.visitType ||
+			null;
 
 		request.session.visitType = visitType;
 		request.session.readyToSetUp = request.session.readyToSetUp || false;
