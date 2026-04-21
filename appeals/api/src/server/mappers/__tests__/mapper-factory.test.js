@@ -188,7 +188,7 @@ describe('appeals api mappers', () => {
 		expect(s78ExpediteAppCaseOutput).toHaveProperty('healthAndSafety');
 		expect(s78ExpediteAppCaseOutput).toHaveProperty('appellantProcedurePreference');
 
-		expect(s78ExpediteAppCaseOutput).not.toHaveProperty('planningObligation');
+		expect(s78ExpediteAppCaseOutput).toHaveProperty('planningObligation');
 	});
 
 	test('should only map the data model fields specific to the case type', async () => {
@@ -257,7 +257,7 @@ describe('appeals api mappers', () => {
 		expect(s78AppCaseOutput).not.toHaveProperty('appealGrounds');
 		expect(s78AppCaseOutput).not.toHaveProperty('enforcementNotice');
 
-		expect(s78ExpediteAppCaseOutput).not.toHaveProperty('planningObligation');
+		expect(s78ExpediteAppCaseOutput).toHaveProperty('planningObligation');
 	});
 
 	test('should only map the lpaq fields for LDC', async () => {
