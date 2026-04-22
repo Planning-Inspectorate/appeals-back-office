@@ -101,8 +101,8 @@ export const enforcementNoticeWithdrawn = async (
 		appeal_reference_number: appeal.reference,
 		local_planning_authority: appeal.lpa?.name || '',
 		enforcement_reference: appellantCase.enforcementReference || '',
-		effective_date: appellantCase.enforcementEffectiveDate
-			? formatDate(new Date(appellantCase.enforcementEffectiveDate), false)
+		issue_date: appellantCase.enforcementIssueDate
+			? formatDate(new Date(appellantCase.enforcementIssueDate), false)
 			: undefined,
 		site_address: siteAddress,
 		event_type: eventType,
