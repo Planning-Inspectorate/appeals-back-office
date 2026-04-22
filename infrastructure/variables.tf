@@ -1,3 +1,8 @@
+variable "endpoint_subnet_id" {
+  description = "The subnet ID to use for private endpoint integration (DEV only)"
+  type        = string
+  default     = null
+}
 # variables should be sorted A-Z
 
 variable "alerts_enabled" {

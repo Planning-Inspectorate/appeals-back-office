@@ -26,10 +26,11 @@ module "app_web" {
   app_service_private_dns_zone_id = data.azurerm_private_dns_zone.app_service.id
   front_door_restriction          = var.apps_config.private_endpoint_enabled
   endpoint_subnet_id              = azurerm_subnet.main.id
-  inbound_vnet_connectivity       = var.apps_config.private_endpoint_enabled
-  integration_subnet_id           = azurerm_subnet.apps.id
+  inbound_vnet_connectivity       = var.environment == "dev" ? true : false
+  integration_subnet_id           = var.environment == "dev" ? var.endpoint_subnet_id : azurerm_subnet.apps.id
   outbound_vnet_connectivity      = true
   public_network_access           = var.environment == "dev" ? false : true
+
 
   # monitoring
   action_group_ids                  = local.action_group_ids
@@ -144,6 +145,7 @@ module "app_web" {
     azurerm         = azurerm
     azurerm.tooling = azurerm.tooling
   }
+
 }
 
 ## RBAC for secrets
@@ -174,4 +176,26 @@ resource "azurerm_key_vault_secret" "session_secret" {
   content_type = "session-secret"
 
   tags = local.tags
+}
+
+## Private Endpoint for Web App (DEV only)
+resource "azurerm_private_endpoint" "web" {
+  count               = var.environment == "dev" ? 1 : 0
+  name                = "${local.org}-pe-${local.service_name}-web-${var.environment}"
+  location            = module.primary_region.location
+  resource_group_name = azurerm_resource_group.primary.name
+  subnet_id           = azurerm_subnet.main.id
+  private_service_connection {
+    name                           = "${local.org}-psc-${local.service_name}-web-${var.environment}"
+    private_connection_resource_id = module.app_web.id
+    subresource_names              = ["sites"]
+    is_manual_connection           = false
+  }
+  private_dns_zone_group {
+    name                 = "${local.org}-pdns-web-${local.service_name}-${var.environment}"
+    private_dns_zone_ids = [data.azurerm_private_dns_zone.app_service.id]
+  }
+  tags       = local.tags
+  provider   = azurerm.tooling
+  depends_on = [module.app_web]
 }
