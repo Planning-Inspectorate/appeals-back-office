@@ -44,6 +44,7 @@ module "app_web" {
     NODE_ENV                                   = var.apps_config.node_environment
     WEBSITES_ENABLE_APP_SERVICE_STORAGE        = false
 
+    # Temporary change to enable PR creation
     API_HOST     = "https://${module.app_api.default_site_hostname}"
     APP_HOSTNAME = var.web_app_domain
 
