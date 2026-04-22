@@ -1,6 +1,6 @@
 {{local_planning_authority}} has withdrawn the enforcement notice.
 
-The enforcement notice issued on {{effective_date}} will not take effect.
+The enforcement notice issued on {{issue_date}} will not take effect.
 
 {% include 'parts/appeal-details.md' %}
 
