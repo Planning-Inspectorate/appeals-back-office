@@ -40,6 +40,7 @@ exports[`lpa questionnaires routes /appeals/:appealId/lpa-questionnaires/:lpaQue
   },
   "isConservationArea": true,
   "isCorrectAppealType": true,
+  "isS78Expedited": false,
   "listedBuildingDetails": [
     {
       "affectsListedBuilding": false,
@@ -113,6 +114,7 @@ exports[`lpa questionnaires routes /appeals/:appealId/lpa-questionnaires/:lpaQue
   },
   "isConservationArea": true,
   "isCorrectAppealType": true,
+  "isS78Expedited": false,
   "listedBuildingDetails": [
     {
       "affectsListedBuilding": false,
@@ -204,6 +206,7 @@ exports[`lpa questionnaires routes /appeals/:appealId/lpa-questionnaires/:lpaQue
   },
   "isConservationArea": true,
   "isCorrectAppealType": true,
+  "isS78Expedited": false,
   "listedBuildingDetails": [
     {
       "affectsListedBuilding": false,

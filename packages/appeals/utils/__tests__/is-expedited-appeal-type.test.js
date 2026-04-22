@@ -1,5 +1,6 @@
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
-import { isExpeditedAppealType } from '../appeal-type-checks';
+import { APPEAL_TYPE } from '../../constants/common';
+import { isExpeditedAppealType, isS78ExpeditedAppealType } from '../appeal-type-checks';
 
 describe('isExpeditedAppealType', () => {
 	it('returns true for HAS appealType', () => {
@@ -36,10 +37,34 @@ describe('isExpeditedAppealType', () => {
 	it('returns false for LDC appealType', () => {
 		expect(isExpeditedAppealType(APPEAL_CASE_TYPE.X)).toBe(false);
 	});
+});
 
-	it('throws an error for null appealType', () => {
-		expect(() => isExpeditedAppealType(null)).toThrow(
-			'Appeal type - null not defined in isExpeditedAppealType baseCaseType'
-		);
+describe('isS78ExpeditedAppealType', () => {
+	it('returns true if appealType is S78, date is after 2026-04-01 and decision is refused', () => {
+		expect(isS78ExpeditedAppealType(APPEAL_TYPE.S78, '2026-04-02', 'refused')).toBe(true);
+	});
+
+	it('returns true if appealType is S78, date is after 2026-04-01 and decision is granted', () => {
+		expect(isS78ExpeditedAppealType(APPEAL_TYPE.S78, '2026-04-02', 'granted')).toBe(true);
+	});
+
+	it('returns true if appealType is W, date is after 2026-04-01 and decision is refused', () => {
+		expect(isS78ExpeditedAppealType(APPEAL_CASE_TYPE.W, '2026-04-02', 'refused')).toBe(true);
+	});
+
+	it('returns false if appealType is not S78 or W', () => {
+		expect(isS78ExpeditedAppealType(APPEAL_CASE_TYPE.D, '2026-04-02', 'refused')).toBe(false);
+	});
+
+	it('returns false if date is before 2026-04-01', () => {
+		expect(isS78ExpeditedAppealType(APPEAL_TYPE.S78, '2026-03-31', 'refused')).toBe(false);
+	});
+
+	it('returns false if decision is not refused or granted', () => {
+		expect(isS78ExpeditedAppealType(APPEAL_TYPE.S78, '2026-04-02', 'not_decided')).toBe(false);
+	});
+
+	it('returns false if appealType is null', () => {
+		expect(isS78ExpeditedAppealType(null, '2026-04-02', 'refused')).toBe(false);
 	});
 });

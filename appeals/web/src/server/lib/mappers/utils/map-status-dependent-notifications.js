@@ -62,6 +62,11 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 					`/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/add-horizon-reference`
 				)}">Mark as transferred</a></p>`
 			});
+		case 'appealValidated':
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: '<p class="govuk-notification-banner__heading">Appeal valid</p>'
+			});
 		case 'readyForSetUpSiteVisit':
 			request.session.readyToSetUp = true;
 			return createNotificationBanner({

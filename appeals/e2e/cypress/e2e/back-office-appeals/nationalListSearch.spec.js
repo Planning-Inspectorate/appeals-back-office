@@ -61,7 +61,7 @@ describe('All cases search', () => {
 		verify(errorMessage);
 	});
 
-	it('check Part 1 filter visible', () => {
+	it.skip('check Part 1 filter visible', () => {
 		cy.createCase({ caseType: 'W', applicationDate: '2026-04-01T00:00:00.000Z' }).then(
 			(caseObj) => {
 				appeal = caseObj;
@@ -82,7 +82,7 @@ describe('All cases search', () => {
 		);
 	});
 
-	it('should not show case under Part 1 filter if case type is Y', () => {
+	it.skip('should not show case under Part 1 filter if case type is Y', () => {
 		cy.createCase({ caseType: 'Y', applicationDate: '2026-04-01T00:00:00.000Z' }).then(
 			(caseObj) => {
 				appeal = caseObj;

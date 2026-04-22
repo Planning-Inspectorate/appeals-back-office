@@ -22,7 +22,7 @@ import * as authSession from '../../app/auth/auth-session.service.js';
 /** @typedef {import('@pins/appeals').AppealList} AppealList */
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
 /** @typedef {import('../../app/auth/auth.service').AccountInfo} AccountInfo */
-/** @typedef {Partial<AppealSummary & { appealTimetable: Record<string,string>, awaitingLinkedAppeal: boolean, costsDecision?: CostsDecision}>} PersonalListAppeal */
+/** @typedef {Partial<AppealSummary & { appealTimetable: Record<string,string>, awaitingLinkedAppeal: boolean, costsDecision?: CostsDecision, isS78Expedited?: boolean}>} PersonalListAppeal */
 
 /**
  * @param {AppealList|void} appealsAssignedToCurrentUser
@@ -206,9 +206,16 @@ export function personalListPage(
 							{
 								type: 'status-tag',
 								parameters: {
-									status: appeal.appealStatus
-										? mapStatusText(appeal.appealStatus, appeal.appealType, appeal.procedureType)
-										: 'ERROR'
+									status:
+										appeal.isS78Expedited && appeal.appealStatus === 'ready_to_start'
+											? 'validated'
+											: appeal.appealStatus
+												? mapStatusText(
+														appeal.appealStatus,
+														appeal.appealType,
+														appeal.procedureType
+													)
+												: 'ERROR'
 								}
 							}
 						]
@@ -614,6 +621,9 @@ function mapRequiredActionToPersonalListActionHtml(
 				request,
 				`/appeals-service/appeal-details/${appealId}/appellant-case`
 			)}">Update case</a>`;
+		}
+		case 'appealValidated': {
+			return 'Appeal valid';
 		}
 		default: {
 			return '';

@@ -353,6 +353,29 @@ describe('personal-list', () => {
 
 			expect(element.innerHTML).toContain('Search all cases</a>');
 		});
+		it('should render a Validated status tag for S78 expedited appeals that are ready to start', async () => {
+			const assignedAppealsWithExpedited = {
+				...assignedAppealsPage1,
+				items: [
+					{
+						...assignedAppealsPage1.items[0],
+						appealStatus: 'ready_to_start',
+						isS78Expedited: true
+					}
+				]
+			};
+
+			nock('http://test/')
+				.get('/appeals/personal-list?pageNumber=1&pageSize=30')
+				.reply(200, assignedAppealsWithExpedited);
+
+			const response = await request.get(`${baseUrl}${'?pageNumber=1&pageSize=30'}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toContain(
+				'<strong class="govuk-tag govuk-tag--green">Validated</strong>'
+			);
+		});
 	});
 
 	describe('mapActionLinksForAppeal', () => {
@@ -626,6 +649,13 @@ describe('personal-list', () => {
 				requiredAction: 'reviewRule6PartyProofOfEvidence',
 				expectedHtml: {
 					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/proof-of-evidence/rule-6-party/1?backUrl=%2Fappeals-service%2Fpersonal-list">Review Test Organisation proof of evidence and witnesses</a>`
+				}
+			},
+			{
+				name: 'Appeal valid',
+				requiredAction: 'appealValidated',
+				expectedHtml: {
+					caseOfficer: 'Appeal valid'
 				}
 			},
 			{

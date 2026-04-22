@@ -115,6 +115,7 @@ const householdAppealDto = {
 		}
 	},
 	isParentAppeal: false,
+	isS78Expedited: false,
 	isChildAppeal: false,
 	linkedAppeals: [],
 	otherAppeals: [],
@@ -267,6 +268,7 @@ const s78AppealDto = {
 	},
 	isParentAppeal: false,
 	isChildAppeal: false,
+	isS78Expedited: false,
 	linkedAppeals: [],
 	otherAppeals: [],
 	localPlanningDepartment: fullPlanningAppeal.lpa.name,

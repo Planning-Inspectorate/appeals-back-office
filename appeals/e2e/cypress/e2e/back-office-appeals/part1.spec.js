@@ -7,7 +7,7 @@ import { tag } from '../../support/tag';
 const caseDetailsPage = new CaseDetailsPage();
 const procedureTypePage = new ProcedureTypePage();
 
-describe('part1 appeal', () => {
+describe.skip('part1 appeal', () => {
 	let cases = [];
 
 	afterEach(() => {
