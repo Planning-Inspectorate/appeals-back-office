@@ -298,7 +298,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'Q3115',
 		name: 'South Oxfordshire District Council',
-		email: 'registration@southoxon.gov.uk',
+		email: 'planning.admin@southoxon.gov.uk',
 		teamId: 7 // West1
 	},
 	{
@@ -388,7 +388,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'V3120',
 		name: 'Vale of White Horse District Council',
-		email: 'registration@whitehorsedc.gov.uk',
+		email: 'planning.admin@whitehorsedc.gov.uk',
 		teamId: 9 // West3
 	},
 	{
