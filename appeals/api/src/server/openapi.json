@@ -16126,6 +16126,9 @@
 							}
 						},
 						"nullable": true
+					},
+					"isS78Expedited": {
+						"type": "boolean"
 					}
 				}
 			},
@@ -18493,6 +18496,9 @@
 							}
 						},
 						"nullable": true
+					},
+					"isS78Expedited": {
+						"type": "boolean"
 					},
 					"applicationDate": {
 						"type": "string",
@@ -25236,6 +25242,9 @@
 							}
 						},
 						"nullable": true
+					},
+					"isS78Expedited": {
+						"type": "boolean"
 					},
 					"isCorrectAppealType": {
 						"type": "boolean",
@@ -39257,6 +39266,9 @@
 							}
 						},
 						"nullable": true
+					},
+					"isS78Expedited": {
+						"type": "boolean"
 					},
 					"caseOfficer": {
 						"type": "string",

@@ -28,8 +28,16 @@ export const mapStartedAt = ({ appealDetails, currentRoute, userHasUpdateCasePer
 			!isChildAppeal(appealDetails) &&
 			Boolean(userHasUpdateCasePermission) &&
 			['not_received', 'received'].includes(lpaQuestionnaireStatus) &&
-			!awaitingLinkedAppeal,
+			!awaitingLinkedAppeal &&
+			!appealDetails.isS78Expedited,
 		classes: 'appeal-start-date',
-		actionText: appealDetails.startedAt ? 'Change' : canStartAppeal(appealDetails) ? 'Start' : ''
+		actionText:
+			appealDetails.startedAt || appealDetails.isS78Expedited
+				? appealDetails.startedAt
+					? 'Change'
+					: ''
+				: canStartAppeal(appealDetails)
+					? 'Start'
+					: ''
 	});
 };

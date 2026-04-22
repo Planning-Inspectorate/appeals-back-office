@@ -2,7 +2,10 @@
 /** @typedef {import('@pins/appeals.api').Api.AppealSummary} AppealSummary */
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
 
+import { isFeatureActive } from '#utils/feature-flags.js';
 import formatAddress from '#utils/format-address.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { isS78ExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { mapAgent } from './map-agent.js';
 import { mapAppealType } from './map-appeal-type.js';
 import { mapAppellant } from './map-appellant.js';
@@ -33,6 +36,12 @@ export const mapAppealSummary = (data) => {
 		},
 		appealType: mapAppealType(data),
 		agent: mapAgent(data),
-		appellant: mapAppellant(data)
+		appellant: mapAppellant(data),
+		isS78Expedited:
+			isS78ExpeditedAppealType(
+				appeal.appealType?.key,
+				appeal.appellantCase?.applicationDate,
+				appeal.appellantCase?.applicationDecision
+			) && isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS)
 	};
 };

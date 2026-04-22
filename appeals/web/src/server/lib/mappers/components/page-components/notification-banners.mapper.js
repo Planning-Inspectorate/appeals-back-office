@@ -569,7 +569,7 @@ export const notificationBannerDefinitions = {
 		text: 'Inspector assigned'
 	},
 	appealValidated: {
-		type: 'success',
+		type: 'important',
 		pages: ['appealDetails'],
 		text: 'Appeal validated'
 	},
@@ -800,6 +800,7 @@ export const notificationBannerDefinitions = {
 
 /** @type {Object<import('#lib/mappers/utils/required-actions.js').AppealRequiredAction, import('#lib/mappers/utils/map-status-dependent-notifications.js').NotificationBannerDefinitionKey>} */
 const appealActionRequiredToNotificationBannerMapping = {
+	appealValidated: 'appealValidated',
 	addHorizonReference: 'appealAwaitingTransfer',
 	arrangeSiteVisit: 'readyForSetUpSiteVisit',
 	assignCaseOfficer: 'assignCaseOfficer',
