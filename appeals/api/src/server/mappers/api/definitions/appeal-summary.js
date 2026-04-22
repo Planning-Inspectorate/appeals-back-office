@@ -48,6 +48,9 @@ const appealSummary = {
 		agent: {
 			...ServiceUser,
 			nullable: true
+		},
+		isS78Expedited: {
+			type: 'boolean'
 		}
 	}
 };

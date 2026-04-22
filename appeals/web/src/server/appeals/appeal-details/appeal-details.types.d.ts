@@ -418,6 +418,7 @@ export interface WebAppeal extends SingleAppealDetailsResponse {
 	eiaEnvironmentalStatementAppellant?: FolderInfo | null;
 	procedureType?: string | undefined;
 	appealRule6Parties?: AppealRule6Party[] | null;
+	isS78Expedited?: boolean;
 }
 
 export interface WebServiceUser {

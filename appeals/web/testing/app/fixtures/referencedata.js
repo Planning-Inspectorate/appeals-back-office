@@ -4265,6 +4265,11 @@ export const appealDataToGetRequiredActions = {
 		lpaQuestionnaireId: 1,
 		appealStatus: APPEAL_CASE_STATUS.AWAITING_TRANSFER
 	},
+	appealValidated: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.READY_TO_START,
+		isS78Expedited: true
+	},
 	arrangeSiteVisit: {
 		...baseAppealDataToGetRequiredActions,
 		appealStatus: APPEAL_CASE_STATUS.EVENT,

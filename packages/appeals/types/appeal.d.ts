@@ -38,6 +38,7 @@ export interface AppealSummary {
 	planningApplicationReference: string | null;
 	enforcementReference?: string | null;
 	numberOfResidencesNetChange?: number | null;
+	isS78Expedited?: boolean;
 }
 
 export interface CostsDecision {

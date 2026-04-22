@@ -722,6 +722,7 @@ interface AppealListResponse {
 	enforcementReference?: string | null;
 	enforcementNoticeInvalid?: string | null;
 	enforcementNoticeGroundAFeeReceiptDueDate?: Date | null;
+	isS78Expedited?: boolean;
 }
 
 interface DocumentationSummary {

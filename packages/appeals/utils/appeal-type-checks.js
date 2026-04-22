@@ -51,7 +51,7 @@ export const isExpeditedAppealType = (appealType) => {
  * @returns {boolean}
  */
 export const isS78ExpeditedAppealType = (appealType, caseSubmissionDate, applicationDecision) => {
-	if (appealType === '' || appealType === null) return false;
+	if (!appealType) return false;
 	if (
 		(appealType.length === 1
 			? baseCaseType[appealType] === APPEAL_CASE_TYPE.W

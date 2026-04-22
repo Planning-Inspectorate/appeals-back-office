@@ -3542,6 +3542,7 @@ export interface AppealSummary {
 		email: string | null;
 		phoneNumber?: string | null;
 	};
+	isS78Expedited?: boolean;
 }
 
 export interface DocumentationSummary {
@@ -4971,6 +4972,7 @@ export type AppellantCase = {
 		email: string | null;
 		phoneNumber?: string | null;
 	};
+	isS78Expedited?: boolean;
 	/** @format date-time */
 	applicationDate?: string | null;
 	/** @format date-time */
@@ -9129,6 +9131,7 @@ export type LpaQuestionnaire = {
 		email: string | null;
 		phoneNumber?: string | null;
 	};
+	isS78Expedited?: boolean;
 	isCorrectAppealType?: boolean | null;
 	isGreenBelt?: boolean | null;
 	isConservationArea?: boolean | null;
@@ -18037,6 +18040,7 @@ export interface Appeal {
 		email: string | null;
 		phoneNumber?: string | null;
 	};
+	isS78Expedited?: boolean;
 	/** @format uuid */
 	caseOfficer?: string | null;
 	/** @format uuid */

@@ -125,6 +125,12 @@ describe('mapStatusDependentNotifications', () => {
 			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
+			bannerKey: 'appealValidated',
+			requiredAction: 'appealValidated',
+			expectedContainedHtml: '<p class="govuk-notification-banner__heading">Appeal valid</p>',
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
 			bannerKey: 'awaitingLinkedAppeal',
 			requiredAction: 'awaitingLinkedAppeal',
 			expectedContainedHtml:
