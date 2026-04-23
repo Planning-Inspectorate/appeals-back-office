@@ -93,7 +93,7 @@ apps_config = {
 
   analytics = {
     google_analytics_id   = "G-Q3NCERD9XE",
-    google_tag_manager_id = "GTM-P3SL44C2"
+    google_tag_manager_id = "GTM-PJ9GKHWJ"
   }
 
   logging = {
