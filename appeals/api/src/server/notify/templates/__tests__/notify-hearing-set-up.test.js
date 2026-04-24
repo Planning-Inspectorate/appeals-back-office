@@ -12,6 +12,7 @@ describe('hearing-set-up.md', () => {
 			recipientEmail: 'test@136s7.com',
 			personalisation: {
 				appeal_reference_number: 'ABC45678',
+				inspector_name: 'B. Jones',
 				site_address: '10, Test Street',
 				lpa_reference: '12345XYZ',
 				hearing_date: '31 January 2025',
@@ -29,6 +30,7 @@ describe('hearing-set-up.md', () => {
 			'^Appeal reference number: ABC45678',
 			'Address: 10, Test Street',
 			'Planning application reference: 12345XYZ',
+			'Inspector: B. Jones',
 			'',
 			'# Hearing details',
 			'',

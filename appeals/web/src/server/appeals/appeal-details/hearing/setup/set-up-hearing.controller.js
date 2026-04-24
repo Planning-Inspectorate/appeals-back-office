@@ -1,3 +1,4 @@
+import usersService from '#appeals/appeal-users/users-service.js';
 import {
 	dateISOStringToDayMonthYearHourMinute,
 	dayMonthYearHourMinuteToISOString
@@ -10,6 +11,7 @@ import {
 } from '#lib/edit-utilities.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { formatFirstInitialLastName } from '#lib/string-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
 import { has, isEmpty, isEqual, pick } from 'lodash-es';
 import { createHearing, updateHearing } from './hearing.service.js';
@@ -598,11 +600,19 @@ export const getChangeHearingCheckDetails = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postHearingCheckDetails = async (request, response) => {
-	const { appealId } = request.currentAppeal;
+	const { appealId, inspector } = request.currentAppeal;
 	const hearing = request.session.setUpHearing;
 
 	if (!hearing) {
 		return renderAlreadySubmittedError(request, response);
+	}
+
+	let inspectorEmailName;
+	if (inspector) {
+		const assignedInspector = await usersService.getUserById(inspector, request.session);
+		inspectorEmailName = assignedInspector
+			? formatFirstInitialLastName(assignedInspector?.name)
+			: null;
 	}
 
 	try {
@@ -623,7 +633,8 @@ export const postHearingCheckDetails = async (request, response) => {
 			...(hearing.hearingEstimationYesNo === 'yes' && {
 				estimatedDays: hearing.hearingEstimationDays
 			}),
-			...(hearing.addressKnown === 'yes' && submittedAddress)
+			...(hearing.addressKnown === 'yes' && submittedAddress),
+			inspectorName: inspectorEmailName
 		});
 
 		addNotificationBannerToSession({
@@ -647,7 +658,7 @@ export const postHearingCheckDetails = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postChangeHearingCheckDetails = async (request, response) => {
-	const { appealId, hearing } = request.currentAppeal;
+	const { appealId, hearing, inspector } = request.currentAppeal;
 	const sessionData = request.session.changeHearing;
 
 	if (!sessionData) {
@@ -665,13 +676,22 @@ export const postChangeHearingCheckDetails = async (request, response) => {
 		address = submittedAddress;
 	}
 
+	let inspectorEmailName;
+	if (inspector) {
+		const assignedInspector = await usersService.getUserById(inspector, request.session);
+		inspectorEmailName = assignedInspector
+			? formatFirstInitialLastName(assignedInspector?.name)
+			: null;
+	}
+
 	try {
 		await updateHearing(request, request.currentAppeal.hearing.hearingId, {
 			hearingStartTime: hearingStartTimeForUpdate(sessionData, hearing.hearingStartTime),
 			...(sessionData.hearingEstimationYesNo === 'yes' && {
 				estimatedDays: sessionData.hearingEstimationDays
 			}),
-			address
+			address,
+			inspectorName: inspectorEmailName
 		});
 
 		addNotificationBannerToSession({

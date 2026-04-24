@@ -4,7 +4,9 @@ We will decide the appeal by a hearing. You can tell us if you think a different
 
 {% include 'parts/appeal-details.md' %}
 Start date: {{start_date}}
-
+{% if inspector_name -%}
+Inspector: {{inspector_name}}
+{% endif %}
 # Timetable
 
 ## Local planning authority questionnaire

@@ -92,6 +92,7 @@ export const postInquiry = async (req, res) => {
 				})
 			},
 			appeal,
+			req.body.inspectorName,
 			req.notifyClient,
 			req.get('azureAdUserId') || ''
 		);
@@ -155,6 +156,7 @@ export const patchInquiry = async (req, res) => {
 			},
 			req.notifyClient,
 			appeal,
+			req.body.inspectorName,
 			existingAddressId
 		);
 

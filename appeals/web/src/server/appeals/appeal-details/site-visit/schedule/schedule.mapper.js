@@ -5,7 +5,11 @@ import {
 } from '#lib/dates.js';
 import { timeInput } from '#lib/mappers/components/page-components/time.js';
 import { dateInput, yesNoInput } from '#lib/mappers/index.js';
-import { capitalizeFirstLetter, padNumberWithZero } from '#lib/string-utilities.js';
+import {
+	capitalizeFirstLetter,
+	formatFirstInitialLastName,
+	padNumberWithZero
+} from '#lib/string-utilities.js';
 import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { mapVisitTypeToReadable } from '../site-visit.mapper.js';
 import { siteVisitDateField } from '../site-visits.constants.js';
@@ -416,7 +420,7 @@ export function mapPostScheduleOrManageSiteVisitCommonParameters(
 				: '',
 		apiVisitType: mapWebVisitTypeToApiVisitType(visitType),
 		previousVisitType: '',
-		inspectorName
+		inspectorName: formatFirstInitialLastName(inspectorName)
 	};
 }
 /**

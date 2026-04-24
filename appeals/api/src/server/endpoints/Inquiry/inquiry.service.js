@@ -40,6 +40,7 @@ import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from '@planning-inspectorate/dat
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} templateName
  * @param {Appeal} appeal
+ * @param {string} inspectorName
  * @param {string | Date} inquiryStartTime
  * @param {string} estimatedDays
  * @param {TimetableData | undefined} timetableData
@@ -51,6 +52,7 @@ const sendInquiryDetailsNotifications = async (
 	notifyClient,
 	templateName,
 	appeal,
+	inspectorName,
 	inquiryStartTime,
 	estimatedDays,
 	timetableData,
@@ -119,7 +121,8 @@ const sendInquiryDetailsNotifications = async (
 					: timetableData?.planningObligationDueDate.toISOString()
 				: ''
 		),
-		team_email_address: await getTeamEmailFromAppealId(appeal.id)
+		team_email_address: await getTeamEmailFromAppealId(appeal.id),
+		inspector_name: inspectorName ? inspectorName : null
 	};
 	await sendInquiryNotifications(notifyClient, templateName, appeal, personalisation);
 };
@@ -149,7 +152,7 @@ const checkInquiryExists = async (req, res, next) => {
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} templateName
  * @param {Appeal} appeal
- * @param {Record<string, string>} [personalisation]
+ * @param {Record<string, string | null>} [personalisation]
  * @returns {Promise<void>}
  */
 const sendInquiryNotifications = async (
@@ -200,9 +203,16 @@ const sendInquiryNotifications = async (
  * @param {Appeal} appeal
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
+ * @param {string} inspectorName
  * @returns {Promise<void>}
  */
-const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUserId) => {
+const createInquiry = async (
+	createInquiryData,
+	appeal,
+	inspectorName,
+	notifyClient,
+	azureAdUserId
+) => {
 	try {
 		const appealId = createInquiryData.appealId;
 		const inquiryStartTime = createInquiryData.inquiryStartTime;
@@ -305,6 +315,7 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 				notifyClient,
 				appellantTemplate,
 				appeal,
+				inspectorName,
 				inquiryStartTime,
 				estimatedDays,
 				timetableData,
@@ -316,6 +327,7 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 				notifyClient,
 				'inquiry-set-up',
 				appeal,
+				inspectorName,
 				inquiryStartTime,
 				estimatedDays,
 				timetableData,
@@ -335,10 +347,17 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
  * @param {UpdateInquiry | Omit<UpdateInquiry, 'address'>} updateInquiryData
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {Appeal} appeal
+ * @param {string} inspectorName
  * @param {number | null | undefined} existingAddressId
  * @returns {Promise<void>}
  */
-const updateInquiry = async (updateInquiryData, notifyClient, appeal, existingAddressId) => {
+const updateInquiry = async (
+	updateInquiryData,
+	notifyClient,
+	appeal,
+	inspectorName,
+	existingAddressId
+) => {
 	try {
 		const appealId = updateInquiryData.appealId;
 		const inquiryId = updateInquiryData.inquiryId;
@@ -371,6 +390,7 @@ const updateInquiry = async (updateInquiryData, notifyClient, appeal, existingAd
 				notifyClient,
 				'inquiry-updated',
 				appeal,
+				inspectorName,
 				inquiryStartTime,
 				result?.estimatedDays ? result?.estimatedDays.toString() : '',
 				undefined,

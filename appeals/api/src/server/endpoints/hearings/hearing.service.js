@@ -48,6 +48,7 @@ const checkHearingExists = async (req, res, next) => {
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} templateName
  * @param {Appeal} appeal
+ * @param {string} inspectorName
  * @param {string | Date | null} hearingStartTime
  * @param {string} estimatedDays
  * @param {Omit<import('@pins/appeals.api').Schema.Address, 'id'> | null} address
@@ -58,6 +59,7 @@ const sendHearingDetailsNotifications = async (
 	notifyClient,
 	templateName,
 	appeal,
+	inspectorName,
 	hearingStartTime,
 	estimatedDays,
 	address,
@@ -75,7 +77,8 @@ const sendHearingDetailsNotifications = async (
 				)
 			: 'Not set',
 		hearing_expected_days: estimatedDays ?? '',
-		hearing_address: address ? formatAddressSingleLine({ ...address, id: 0 }) : ''
+		hearing_address: address ? formatAddressSingleLine({ ...address, id: 0 }) : '',
+		inspector_name: inspectorName ? inspectorName : null
 	};
 	await sendHearingNotifications(
 		notifyClient,
@@ -92,7 +95,7 @@ const sendHearingDetailsNotifications = async (
  * @param {string} templateName
  * @param {Appeal} appeal
  * @param {string} azureAdUserId
- * @param {Record<string, string>} [personalisation]
+ * @param {Record<string, string | null>} [personalisation]
  * @param {boolean} [includeRecipientRole]
  * @returns {Promise<void>}
  */
@@ -141,11 +144,18 @@ const sendHearingNotifications = async (
 /**
  * @param {CreateHearing} createHearingData
  * @param {Appeal} appeal
+ * @param {string} inspectorName
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
  * @returns {Promise<void>}
  */
-const createHearing = async (createHearingData, appeal, notifyClient, azureAdUserId) => {
+const createHearing = async (
+	createHearingData,
+	appeal,
+	inspectorName,
+	notifyClient,
+	azureAdUserId
+) => {
 	try {
 		const appealId = createHearingData.appealId;
 		const hearingStartTime = createHearingData.hearingStartTime;
@@ -169,6 +179,7 @@ const createHearing = async (createHearingData, appeal, notifyClient, azureAdUse
 			notifyClient,
 			'hearing-set-up',
 			appeal,
+			inspectorName,
 			hearingStartTime,
 			estimatedDays ?? '',
 			address || null,
@@ -183,6 +194,7 @@ const createHearing = async (createHearingData, appeal, notifyClient, azureAdUse
 /**
  * @param {UpdateHearing} updateHearingData
  * @param {Appeal} appeal
+ * @param {string} inspectorName
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
  * @param {number | null | undefined} existingAddressId
@@ -190,6 +202,7 @@ const createHearing = async (createHearingData, appeal, notifyClient, azureAdUse
 const updateHearing = async (
 	updateHearingData,
 	appeal,
+	inspectorName,
 	notifyClient,
 	azureAdUserId,
 	existingAddressId
@@ -224,6 +237,7 @@ const updateHearing = async (
 			notifyClient,
 			'hearing-updated',
 			appeal,
+			inspectorName,
 			hearingStartTime,
 			estimatedDays ? String(estimatedDays) : '',
 			result.address,

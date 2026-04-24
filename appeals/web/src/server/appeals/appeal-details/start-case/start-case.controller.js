@@ -1,3 +1,4 @@
+import usersService from '#appeals/appeal-users/users-service.js';
 import featureFlags from '#common/feature-flags.js';
 import { getEnabledHearingAppealTypes } from '#common/hearing-appeal-types.js';
 import { getEnabledInquiryAppealTypes } from '#common/inquiry-appeal-types.js';
@@ -11,6 +12,7 @@ import logger from '#lib/logger.js';
 import isLinkedAppeal from '#lib/mappers/utils/is-linked-appeal.js';
 import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { formatFirstInitialLastName } from '#lib/string-utilities.js';
 import {
 	addBackLinkQueryToUrl,
 	getBackLinkUrlFromQuery,
@@ -328,7 +330,7 @@ export const getConfirmProcedure = async (request, response) => {
  */
 const renderConfirmProcedure = async (request, response) => {
 	const {
-		currentAppeal: { appealId, appealReference, appealType },
+		currentAppeal: { appealId, appealReference, appealType, inspector },
 		errors
 	} = request;
 
@@ -345,6 +347,12 @@ const renderConfirmProcedure = async (request, response) => {
 	/** @type {{appellant: string, lpa: string} | undefined} */
 	let emailPreviews;
 
+	let inspectorName;
+	if (inspector) {
+		const assignedInspector = await usersService.getUserById(inspector, request.session);
+		inspectorName = assignedInspector ? formatFirstInitialLastName(assignedInspector.name) : null;
+	}
+
 	if (showEmailPreviews) {
 		const errorMessage = 'Failed to generate email preview';
 		try {
@@ -352,7 +360,11 @@ const renderConfirmProcedure = async (request, response) => {
 				request.apiClient,
 				appealId,
 				undefined,
-				sessionValues?.appealProcedure
+				sessionValues?.appealProcedure,
+				null,
+				null,
+				null,
+				inspectorName
 			);
 			emailPreviews = {
 				appellant: result.appellant || errorMessage,
@@ -381,7 +393,7 @@ const renderConfirmProcedure = async (request, response) => {
 export const postConfirmProcedure = async (request, response) => {
 	try {
 		const {
-			currentAppeal: { appealId }
+			currentAppeal: { appealId, inspector }
 		} = request;
 
 		const sessionValues = getSessionValuesForAppeal(request, 'startCaseAppealProcedure', appealId);
@@ -390,11 +402,20 @@ export const postConfirmProcedure = async (request, response) => {
 			return response.status(500).render('app/500.njk');
 		}
 
+		let inspectorName;
+		if (inspector) {
+			const assignedInspector = await usersService.getUserById(inspector, request.session);
+			inspectorName = assignedInspector ? formatFirstInitialLastName(assignedInspector.name) : null;
+		}
+
 		await startCaseService.setStartDate(
 			request.apiClient,
 			appealId,
 			getTodaysISOString(),
-			sessionValues?.appealProcedure
+			sessionValues?.appealProcedure,
+			null,
+			null,
+			inspectorName
 		);
 
 		addNotificationBannerToSession({

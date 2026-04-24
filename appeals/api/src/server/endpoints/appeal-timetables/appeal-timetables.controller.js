@@ -49,7 +49,8 @@ const startAppeal = async (req, res) => {
 							req.get('azureAdUserId') || '',
 							body.procedureType || appeal.procedureType?.key,
 							body.hearingStartTime,
-							body.hearingEstimatedDays
+							body.hearingEstimatedDays,
+							body.inspectorName
 						)
 					)
 				);
@@ -77,7 +78,8 @@ const startAppeal = async (req, res) => {
 				req.get('azureAdUserId') || '',
 				body.procedureType || appeal.procedureType?.key,
 				body.hearingStartTime,
-				body.hearingEstimatedDays
+				body.hearingEstimatedDays,
+				body.inspectorName
 			);
 
 			if (result.success) {
@@ -115,7 +117,8 @@ const startAppealNotifyPreview = async (req, res) => {
 				body.procedureType || appeal.procedureType?.key,
 				body.hearingStartTime,
 				body.hearingEstimatedDays,
-				body.inquiry
+				body.inquiry,
+				body.inspectorName
 			);
 			return res.status(200).send(result);
 		} catch (/** @type {any} */ error) {
