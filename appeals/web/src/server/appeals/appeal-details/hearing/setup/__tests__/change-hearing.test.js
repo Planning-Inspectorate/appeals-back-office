@@ -1002,6 +1002,7 @@ describe('change hearing', () => {
 			});
 		});
 	});
+
 	describe('POST /hearing/change/check-details', () => {
 		const dateValues = {
 			'hearing-date-day': '01',
@@ -1029,7 +1030,8 @@ describe('change hearing', () => {
 			nock('http://test/')
 				.patch(`/appeals/${appealId}/hearing/${appealWithHearing.hearing.hearingId}`, {
 					hearingStartTime: '3025-02-01T12:00:00.000Z',
-					address: { ...omit(addressValues, 'postCode'), postcode: addressValues.postCode }
+					address: { ...omit(addressValues, 'postCode'), postcode: addressValues.postCode },
+					inspectorName: null
 				})
 				.reply(200, { hearingId: 1 });
 
@@ -1052,7 +1054,8 @@ describe('change hearing', () => {
 			nock('http://test/')
 				.patch(`/appeals/${appealId}/hearing/${appealWithHearing.hearing.hearingId}`, {
 					hearingStartTime: '3025-02-01T12:00:00.000Z',
-					address: null
+					address: null,
+					inspectorName: null
 				})
 				.reply(200, { hearingId: 1 });
 
@@ -1071,7 +1074,8 @@ describe('change hearing', () => {
 		it('should redirect to appeal details page after submission with unchanged address', async () => {
 			nock('http://test/')
 				.patch(`/appeals/${appealId}/hearing/${appealWithHearing.hearing.hearingId}`, {
-					hearingStartTime: '3025-02-01T12:00:00.000Z' // address not sent if unchanged
+					hearingStartTime: '3025-02-01T12:00:00.000Z', // address not sent if unchanged
+					inspectorName: null
 				})
 				.reply(200, { hearingId: 1 });
 
@@ -1095,7 +1099,8 @@ describe('change hearing', () => {
 			nock('http://test/')
 				.patch(`/appeals/${appealId}/hearing/${appealWithHearing.hearing.hearingId}`, {
 					hearingStartTime: '3024-03-02T08:54:00.000Z', // original date and time
-					address: { ...omit(addressValues, 'postCode'), postcode: addressValues.postCode }
+					address: { ...omit(addressValues, 'postCode'), postcode: addressValues.postCode },
+					inspectorName: null
 				})
 				.reply(200, { hearingId: 1 });
 
@@ -1114,7 +1119,8 @@ describe('change hearing', () => {
 			nock('http://test/')
 				.patch(`/appeals/${appealId}/hearing/${appealWithHearing.hearing.hearingId}`, {
 					hearingStartTime: '3024-03-02T08:54:00.000Z', // original date and time
-					address: { ...omit(addressValues, 'postCode'), postcode: addressValues.postCode }
+					address: { ...omit(addressValues, 'postCode'), postcode: addressValues.postCode },
+					inspectorName: null
 				})
 				.reply(200, { hearingId: 1 });
 
@@ -1136,7 +1142,8 @@ describe('change hearing', () => {
 			nock('http://test/')
 				.patch(`/appeals/${appealId}/hearing/${appealWithHearing.hearing.hearingId}`, {
 					hearingStartTime: '3024-03-02T08:54:00.000Z', // original date and time
-					address: null
+					address: null,
+					inspectorName: null
 				})
 				.reply(200, { hearingId: 1 });
 

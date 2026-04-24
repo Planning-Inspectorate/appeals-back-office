@@ -1,7 +1,6 @@
 import { appealProcedureToLabelText } from '#appeals/appeal-details/change-procedure-type/change-procedure-check-and-confirm/change-procedure-check-and-confirm.mapper.js';
 import { sessionValuesToDateTime } from '#appeals/appeal-details/hearing/setup/set-up-hearing.controller.js';
 import { hearingDatePage } from '#appeals/appeal-details/hearing/setup/set-up-hearing.mapper.js';
-import usersService from '#appeals/appeal-users/users-service.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import {
 	dateISOStringToDisplayDate,
@@ -19,8 +18,8 @@ import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { detailsComponent } from '#lib/mappers/components/page-components/details.js';
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
+import { getInspectorFormattedEmailName } from '#lib/service-user-formatter.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { formatFirstInitialLastName } from '#lib/string-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
 import { capitalize } from 'lodash-es';
 import * as startCaseService from '../start-case.service.js';
@@ -239,12 +238,7 @@ export const getHearingConfirm = async (request, response) => {
 	/** @type {string} */
 	let lpaPreview = errorMessage;
 
-	const inspector = currentAppeal.inspector;
-	let inspectorName;
-	if (inspector) {
-		const assignedInspector = await usersService.getUserById(inspector, request.session);
-		inspectorName = assignedInspector ? formatFirstInitialLastName(assignedInspector.name) : null;
-	}
+	const inspectorName = await getInspectorFormattedEmailName(currentAppeal.inspector, request);
 
 	try {
 		const result = await getStartCaseNotifyPreviews(
@@ -400,11 +394,7 @@ export const postHearingConfirm = async (request, response) => {
 		const hearingStartTime =
 			sessionValues?.dateKnown === 'yes' ? hearingStartTimeFromSession(sessionValues) : undefined;
 
-		let inspectorName;
-		if (inspector) {
-			const assignedInspector = await usersService.getUserById(inspector, request.session);
-			inspectorName = assignedInspector ? formatFirstInitialLastName(assignedInspector.name) : null;
-		}
+		const inspectorName = await getInspectorFormattedEmailName(inspector, request);
 
 		await startCaseService.setStartDate(
 			request.apiClient,

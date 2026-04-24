@@ -1,5 +1,4 @@
 import { getStartCaseNotifyPreviews } from '#appeals/appeal-details/start-case/start-case.service.js';
-import usersService from '#appeals/appeal-users/users-service.js';
 import { addressToString } from '#lib/address-formatter.js';
 import {
 	dateISOStringToDayMonthYearHourMinute,
@@ -10,8 +9,8 @@ import { applyEditsForAppeal, clearEdits, getSessionValuesForAppeal } from '#lib
 import logger from '#lib/logger.js';
 import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
 import { resolveAppealId } from '#lib/resolveAppealId.js';
+import { getInspectorFormattedEmailName } from '#lib/service-user-formatter.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { formatFirstInitialLastName } from '#lib/string-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { isEmpty, isEqual, pick } from 'lodash-es';
@@ -725,13 +724,7 @@ export const getInquiryCheckDetails = async (request, response) => {
 	if (procedureType.toLowerCase() !== APPEAL_CASE_PROCEDURE.INQUIRY) {
 		const errorMessage = 'Failed to generate email preview';
 		try {
-			let inspectorName;
-			if (inspector) {
-				const assignedInspector = await usersService.getUserById(inspector, request.session);
-				inspectorName = assignedInspector
-					? formatFirstInitialLastName(assignedInspector.name)
-					: null;
-			}
+			const inspectorName = await getInspectorFormattedEmailName(inspector, request);
 
 			const result = await getStartCaseNotifyPreviews(
 				request.apiClient,
@@ -891,12 +884,7 @@ export const postInquiryCheckDetails = async (request, response) => {
 			isStartCase
 		};
 
-		if (inspector) {
-			const assignedInspector = await usersService.getUserById(inspector, request.session);
-			request.currentAppeal.inspectorName = assignedInspector
-				? formatFirstInitialLastName(assignedInspector.name)
-				: null;
-		}
+		request.currentAppeal.inspectorName = await getInspectorFormattedEmailName(inspector, request);
 
 		//Create Inquiry
 		await createInquiry(request, inquiryRequest);
@@ -963,12 +951,7 @@ export const postChangeInquiryCheckDetails = async (request, response) => {
 			return renderAlreadySubmittedError(request, response);
 		}
 
-		if (inspector) {
-			const assignedInspector = await usersService.getUserById(inspector, request.session);
-			request.currentAppeal.inspectorName = assignedInspector
-				? formatFirstInitialLastName(assignedInspector.name)
-				: null;
-		}
+		request.currentAppeal.inspectorName = await getInspectorFormattedEmailName(inspector, request);
 
 		// Update Inquiry
 		await updateInquiry(request, buildChangeInquiryRequest(inquiry, request.currentAppeal));

@@ -1,4 +1,3 @@
-import usersService from '#appeals/appeal-users/users-service.js';
 import {
 	dateISOStringToDayMonthYearHourMinute,
 	dayMonthYearHourMinuteToISOString
@@ -10,8 +9,8 @@ import {
 	isAtEditEntrypoint
 } from '#lib/edit-utilities.js';
 import logger from '#lib/logger.js';
+import { getInspectorFormattedEmailName } from '#lib/service-user-formatter.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { formatFirstInitialLastName } from '#lib/string-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
 import { has, isEmpty, isEqual, pick } from 'lodash-es';
 import { createHearing, updateHearing } from './hearing.service.js';
@@ -607,13 +606,7 @@ export const postHearingCheckDetails = async (request, response) => {
 		return renderAlreadySubmittedError(request, response);
 	}
 
-	let inspectorEmailName;
-	if (inspector) {
-		const assignedInspector = await usersService.getUserById(inspector, request.session);
-		inspectorEmailName = assignedInspector
-			? formatFirstInitialLastName(assignedInspector?.name)
-			: null;
-	}
+	const inspectorName = await getInspectorFormattedEmailName(inspector, request);
 
 	try {
 		const submittedAddress = {
@@ -634,7 +627,7 @@ export const postHearingCheckDetails = async (request, response) => {
 				estimatedDays: hearing.hearingEstimationDays
 			}),
 			...(hearing.addressKnown === 'yes' && submittedAddress),
-			inspectorName: inspectorEmailName
+			inspectorName
 		});
 
 		addNotificationBannerToSession({
@@ -676,13 +669,7 @@ export const postChangeHearingCheckDetails = async (request, response) => {
 		address = submittedAddress;
 	}
 
-	let inspectorEmailName;
-	if (inspector) {
-		const assignedInspector = await usersService.getUserById(inspector, request.session);
-		inspectorEmailName = assignedInspector
-			? formatFirstInitialLastName(assignedInspector?.name)
-			: null;
-	}
+	const inspectorName = await getInspectorFormattedEmailName(inspector, request);
 
 	try {
 		await updateHearing(request, request.currentAppeal.hearing.hearingId, {
@@ -691,7 +678,7 @@ export const postChangeHearingCheckDetails = async (request, response) => {
 				estimatedDays: sessionData.hearingEstimationDays
 			}),
 			address,
-			inspectorName: inspectorEmailName
+			inspectorName
 		});
 
 		addNotificationBannerToSession({
