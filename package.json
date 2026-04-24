@@ -26,7 +26,7 @@
 		"tscheck": "turbo run prisma-generate --concurrency=1 && turbo run tscheck --parallel",
 		"dev": "turbo run dev --filter=./appeals/* --no-cache --parallel --continue",
 		"test": "dotenv turbo run test -- --concurrency=2",
-		"test:cov": "dotenv turbo run test:cov -- --concurrency=2",
+		"test:cov": "dotenv turbo run test:cov -- --concurrency=1",
 		"web": "npm run dev --workspace=@pins/appeals.web",
 		"api": "npm run dev --workspace=@pins/appeals.api",
 		"pdf-service": "npm run start:dev --workspace=@pins/pdf-service-api",

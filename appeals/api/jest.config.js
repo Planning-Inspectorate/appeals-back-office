@@ -1,4 +1,5 @@
 export default {
+	coverageProvider: 'v8',
 	transform: {},
 	moduleNameMapper: { '^uuid$': 'uuid' },
 	globalSetup: './global-setup.js',
@@ -10,7 +11,5 @@ export default {
 			lines: 70,
 			statements: 70
 		}
-	},
-	workerThreads: false,
-	workerIdleMemoryLimit: '1500MB'
+	}
 };

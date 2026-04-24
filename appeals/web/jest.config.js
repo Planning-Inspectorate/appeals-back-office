@@ -23,7 +23,5 @@ export default {
 			lines: 70,
 			statements: 70
 		}
-	},
-	workerThreads: false,
-	workerIdleMemoryLimit: '1500MB'
+	}
 };
