@@ -1,4 +1,3 @@
-import usersService from '#appeals/appeal-users/users-service.js';
 import featureFlags from '#common/feature-flags.js';
 import { getEnabledHearingAppealTypes } from '#common/hearing-appeal-types.js';
 import { getEnabledInquiryAppealTypes } from '#common/inquiry-appeal-types.js';
@@ -11,8 +10,8 @@ import {
 import logger from '#lib/logger.js';
 import isLinkedAppeal from '#lib/mappers/utils/is-linked-appeal.js';
 import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
+import { getInspectorFormattedEmailName } from '#lib/service-user-formatter.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { formatFirstInitialLastName } from '#lib/string-utilities.js';
 import {
 	addBackLinkQueryToUrl,
 	getBackLinkUrlFromQuery,
@@ -347,11 +346,7 @@ const renderConfirmProcedure = async (request, response) => {
 	/** @type {{appellant: string, lpa: string} | undefined} */
 	let emailPreviews;
 
-	let inspectorName;
-	if (inspector) {
-		const assignedInspector = await usersService.getUserById(inspector, request.session);
-		inspectorName = assignedInspector ? formatFirstInitialLastName(assignedInspector.name) : null;
-	}
+	const inspectorName = await getInspectorFormattedEmailName(inspector, request);
 
 	if (showEmailPreviews) {
 		const errorMessage = 'Failed to generate email preview';
@@ -402,11 +397,7 @@ export const postConfirmProcedure = async (request, response) => {
 			return response.status(500).render('app/500.njk');
 		}
 
-		let inspectorName;
-		if (inspector) {
-			const assignedInspector = await usersService.getUserById(inspector, request.session);
-			inspectorName = assignedInspector ? formatFirstInitialLastName(assignedInspector.name) : null;
-		}
+		const inspectorName = await getInspectorFormattedEmailName(inspector, request);
 
 		await startCaseService.setStartDate(
 			request.apiClient,

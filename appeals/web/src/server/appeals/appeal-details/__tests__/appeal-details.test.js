@@ -1079,7 +1079,8 @@ describe('appeal-details', () => {
 					nock('http://test/')
 						.post(`/appeals/${appealId}/hearing`, {
 							hearingStartTime: '3025-02-01T12:00:00.000Z',
-							address: { ...omit(addressValues, 'postCode'), postcode: addressValues.postCode }
+							address: { ...omit(addressValues, 'postCode'), postcode: addressValues.postCode },
+							inspectorName: null
 						})
 						.reply(201, { hearingId: 1 });
 					nock('http://test/').get(`/appeals/1?include=all`).reply(200, appealData).persist();
@@ -1132,7 +1133,8 @@ describe('appeal-details', () => {
 					nock('http://test/')
 						.patch(`/appeals/${appealId}/hearing/0`, {
 							hearingStartTime: '3025-02-01T12:00:00.000Z',
-							address: { ...omit(addressValues, 'postCode'), postcode: addressValues.postCode }
+							address: { ...omit(addressValues, 'postCode'), postcode: addressValues.postCode },
+							inspectorName: null
 						})
 						.reply(201, { hearingId: 1 });
 					nock('http://test/').get(`/appeals/1?include=all`).reply(200, appealData).persist();
