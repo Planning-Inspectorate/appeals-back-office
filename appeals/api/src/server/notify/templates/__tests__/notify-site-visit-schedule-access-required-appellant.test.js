@@ -12,6 +12,7 @@ describe('site-visit-schedule-access-required-appellant.md', () => {
 			recipientEmail: 'appellant@example.com',
 			personalisation: {
 				appeal_reference_number: 'ZZZ99123',
+				inspector_name: 'B. Jones',
 				site_address: '18, Field Lane',
 				lpa_reference: 'LPA-77889',
 				visit_date: '9 October 2025',
@@ -30,7 +31,7 @@ describe('site-visit-schedule-access-required-appellant.md', () => {
 			'',
 			'# When we will visit',
 			'',
-			'The inspector (or their representative) will visit 18, Field Lane between 8:30am and 12:30pm on 9 October 2025.',
+			'The inspector B. Jones (or their representative) will visit 18, Field Lane between 8:30am and 12:30pm on 9 October 2025.',
 			'',
 			'# Give the inspector access to the site',
 			'',

@@ -2,7 +2,7 @@
 
 # When we will visit
 
-The inspector (or their representative) will visit {{site_address}} between {{start_time}} and {{end_time}} on {{visit_date}}.
+The inspector {% if inspector_name -%}{{inspector_name}} {% endif %}(or their representative) will visit {{site_address}} between {{start_time}} and {{end_time}} on {{visit_date}}.
 
 # Give the inspector access to the site
 

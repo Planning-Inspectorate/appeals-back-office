@@ -75,6 +75,7 @@ export const postHearing = async (req, res) => {
 				})
 			},
 			appeal,
+			req.body.inspectorName,
 			req.notifyClient,
 			azureAdUserId
 		);
@@ -139,6 +140,7 @@ export const rearrangeHearing = async (req, res) => {
 				})
 			},
 			appeal,
+			req.body.inspectorName,
 			req.notifyClient,
 			azureAdUserId,
 			existingAddressId

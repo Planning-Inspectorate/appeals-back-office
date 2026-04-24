@@ -760,6 +760,7 @@ describe('appeal timetables routes', () => {
 							notifyClient: expect.anything(),
 							personalisation: {
 								appeal_reference_number: appeal.reference,
+								inspector_name: null,
 								appeal_type: trimAppealType(appeal.appealType.type),
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: [],
@@ -798,6 +799,7 @@ describe('appeal timetables routes', () => {
 							notifyClient: expect.anything(),
 							personalisation: {
 								appeal_reference_number: appeal.reference,
+								inspector_name: null,
 								appeal_type: trimAppealType(appeal.appealType.type),
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: [],
@@ -857,6 +859,7 @@ describe('appeal timetables routes', () => {
 							notifyClient: expect.anything(),
 							personalisation: {
 								appeal_reference_number: appeal.reference,
+								inspector_name: null,
 								appeal_type: trimAppealType(appeal.appealType.type),
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: [],
@@ -895,6 +898,7 @@ describe('appeal timetables routes', () => {
 							notifyClient: expect.anything(),
 							personalisation: {
 								appeal_reference_number: appeal.reference,
+								inspector_name: null,
 								appeal_type: trimAppealType(appeal.appealType.type),
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: [],
@@ -1027,6 +1031,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
+							inspector_name: null,
 							appeal_type: trimAppealType(appeal.appealType.type),
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
@@ -1063,6 +1068,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
+							inspector_name: null,
 							appeal_type: trimAppealType(appeal.appealType.type),
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
@@ -1169,6 +1175,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: '1345264',
+							inspector_name: null,
 							appeal_type: trimAppealType(appeal.appealType.type),
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
@@ -1205,6 +1212,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
+							inspector_name: null,
 							appeal_type: trimAppealType(appeal.appealType.type),
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
@@ -1437,6 +1445,7 @@ describe('appeal timetables routes', () => {
 							notifyClient: expect.anything(),
 							personalisation: {
 								appeal_reference_number: appeal.reference,
+								inspector_name: null,
 								appeal_type: trimAppealType(appeal.appealType.type),
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: [],
@@ -1475,6 +1484,7 @@ describe('appeal timetables routes', () => {
 							notifyClient: expect.anything(),
 							personalisation: {
 								appeal_reference_number: appeal.reference,
+								inspector_name: null,
 								appeal_type: trimAppealType(appeal.appealType.type),
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: [],
@@ -1590,6 +1600,7 @@ describe('appeal timetables routes', () => {
 							notifyClient: expect.anything(),
 							personalisation: {
 								appeal_reference_number: appeal.reference,
+								inspector_name: null,
 								appeal_type: trimAppealType(appeal.appealType.type),
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: [],
@@ -1631,6 +1642,7 @@ describe('appeal timetables routes', () => {
 							notifyClient: expect.anything(),
 							personalisation: {
 								appeal_reference_number: appeal.reference,
+								inspector_name: null,
 								appeal_type: trimAppealType(appeal.appealType.type),
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: [],
@@ -1772,6 +1784,7 @@ describe('appeal timetables routes', () => {
 							notifyClient: expect.anything(),
 							personalisation: {
 								appeal_reference_number: appeal.reference,
+								inspector_name: null,
 								appeal_type: trimAppealType(appeal.appealType.type),
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: [],
@@ -1810,6 +1823,7 @@ describe('appeal timetables routes', () => {
 							notifyClient: expect.anything(),
 							personalisation: {
 								appeal_reference_number: appeal.reference,
+								inspector_name: null,
 								appeal_type: trimAppealType(appeal.appealType.type),
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: [],
@@ -1899,6 +1913,7 @@ describe('appeal timetables routes', () => {
 							notifyClient: expect.anything(),
 							personalisation: {
 								appeal_reference_number: appeal.reference,
+								inspector_name: null,
 								appeal_type: trimAppealType(appeal.appealType.type),
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: ['1111111', '3333333'],
@@ -1937,6 +1952,7 @@ describe('appeal timetables routes', () => {
 							notifyClient: expect.anything(),
 							personalisation: {
 								appeal_reference_number: appeal.reference,
+								inspector_name: null,
 								appeal_type: trimAppealType(appeal.appealType.type),
 								appellant_email_address: appeal.appellant.email,
 								child_appeals: ['1111111', '3333333'],
@@ -2091,6 +2107,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
+							inspector_name: null,
 							appeal_type: trimAppealType(appeal.appealType.type),
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
@@ -2130,6 +2147,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
+							inspector_name: null,
 							appeal_type: trimAppealType(appeal.appealType.type),
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
@@ -2244,6 +2262,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
+							inspector_name: null,
 							appeal_type: trimAppealType(appeal.appealType.type),
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
@@ -2286,6 +2305,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
+							inspector_name: null,
 							appeal_type: trimAppealType(appeal.appealType.type),
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
@@ -2380,6 +2400,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
+							inspector_name: null,
 							appeal_type: trimAppealType(appeal.appealType.type),
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
@@ -2422,6 +2443,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
+							inspector_name: null,
 							appeal_type: trimAppealType(appeal.appealType.type),
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
@@ -2528,6 +2550,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
+							inspector_name: null,
 							appeal_type: trimAppealType(appeal.appealType.type),
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
@@ -2567,6 +2590,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
+							inspector_name: null,
 							appeal_type: trimAppealType(appeal.appealType.type),
 							appellant_email_address: appeal.appellant.email,
 							child_appeals: [],
@@ -2655,6 +2679,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: restartedAppeal.reference,
+							inspector_name: null,
 							appeal_type: trimAppealType(restartedAppeal.appealType.type),
 							appellant_email_address: restartedAppeal.appellant.email,
 							child_appeals: [],
@@ -2694,6 +2719,7 @@ describe('appeal timetables routes', () => {
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: restartedAppeal.reference,
+							inspector_name: null,
 							appeal_type: trimAppealType(restartedAppeal.appealType.type),
 							appellant_email_address: restartedAppeal.appellant.email,
 							child_appeals: [],

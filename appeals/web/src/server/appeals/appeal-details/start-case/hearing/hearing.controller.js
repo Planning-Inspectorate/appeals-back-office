@@ -1,6 +1,7 @@
 import { appealProcedureToLabelText } from '#appeals/appeal-details/change-procedure-type/change-procedure-check-and-confirm/change-procedure-check-and-confirm.mapper.js';
 import { sessionValuesToDateTime } from '#appeals/appeal-details/hearing/setup/set-up-hearing.controller.js';
 import { hearingDatePage } from '#appeals/appeal-details/hearing/setup/set-up-hearing.mapper.js';
+import usersService from '#appeals/appeal-users/users-service.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import {
 	dateISOStringToDisplayDate,
@@ -19,9 +20,11 @@ import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-co
 import { detailsComponent } from '#lib/mappers/components/page-components/details.js';
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { formatFirstInitialLastName } from '#lib/string-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
 import { capitalize } from 'lodash-es';
-import { getStartCaseNotifyPreviews, setStartDate } from '../start-case.service.js';
+import * as startCaseService from '../start-case.service.js';
+import { getStartCaseNotifyPreviews } from '../start-case.service.js';
 import { dateKnownPage, estimationPage } from './hearing.mapper.js';
 
 /** @typedef {import('@pins/express').ValidationErrors} ValidationErrors */
@@ -235,6 +238,14 @@ export const getHearingConfirm = async (request, response) => {
 	let appellantPreview = errorMessage;
 	/** @type {string} */
 	let lpaPreview = errorMessage;
+
+	const inspector = currentAppeal.inspector;
+	let inspectorName;
+	if (inspector) {
+		const assignedInspector = await usersService.getUserById(inspector, request.session);
+		inspectorName = assignedInspector ? formatFirstInitialLastName(assignedInspector.name) : null;
+	}
+
 	try {
 		const result = await getStartCaseNotifyPreviews(
 			request.apiClient,
@@ -242,7 +253,9 @@ export const getHearingConfirm = async (request, response) => {
 			undefined,
 			sessionValues?.appealProcedure,
 			dateKnown ? hearingStartTime : undefined,
-			hearingEstimatedDays
+			hearingEstimatedDays,
+			null,
+			inspectorName
 		);
 		appellantPreview = result.appellant || '';
 		lpaPreview = result.lpa || '';
@@ -370,7 +383,7 @@ export const getHearingConfirm = async (request, response) => {
 export const postHearingConfirm = async (request, response) => {
 	try {
 		const {
-			currentAppeal: { appealId }
+			currentAppeal: { appealId, inspector }
 		} = request;
 
 		const sessionValues = getSessionValuesForAppeal(request, 'startCaseAppealProcedure', appealId);
@@ -387,13 +400,20 @@ export const postHearingConfirm = async (request, response) => {
 		const hearingStartTime =
 			sessionValues?.dateKnown === 'yes' ? hearingStartTimeFromSession(sessionValues) : undefined;
 
-		await setStartDate(
+		let inspectorName;
+		if (inspector) {
+			const assignedInspector = await usersService.getUserById(inspector, request.session);
+			inspectorName = assignedInspector ? formatFirstInitialLastName(assignedInspector.name) : null;
+		}
+
+		await startCaseService.setStartDate(
 			request.apiClient,
 			appealId,
 			getTodaysISOString(),
 			sessionValues?.appealProcedure,
 			hearingStartTime,
-			hearingEstimatedDays
+			hearingEstimatedDays,
+			inspectorName
 		);
 
 		addNotificationBannerToSession({

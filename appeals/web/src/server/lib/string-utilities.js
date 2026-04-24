@@ -1,6 +1,20 @@
 import { escape } from 'lodash-es';
 
 /**
+ * @param {string} name
+ * @returns {string}
+ */
+export const formatFirstInitialLastName = (name) => {
+	if (!name || typeof name !== 'string') return '';
+	const parts = name.trim().split(/\s+/).filter(Boolean);
+	if (parts.length === 0) return '';
+	const firstInitial = parts[0].charAt(0).toUpperCase();
+	const lastNameRaw = parts.length > 1 ? parts[parts.length - 1] : parts[0];
+	const lastName = lastNameRaw.charAt(0).toUpperCase() + lastNameRaw.slice(1).toLowerCase();
+	return `${firstInitial}. ${lastName}`;
+};
+
+/**
  * @param {string} str
  * @returns {boolean}
  */

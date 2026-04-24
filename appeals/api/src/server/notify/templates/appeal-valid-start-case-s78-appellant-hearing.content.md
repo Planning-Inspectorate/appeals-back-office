@@ -5,7 +5,9 @@ Your appeal started on {{start_date}}. The timetable for the appeal begins from 
 Your appeal procedure is a hearing.
 
 {% include 'parts/appeal-details.md' %}
-
+{% if inspector_name -%}
+Inspector: {{inspector_name}}
+{% endif %}
 # Timetable
 
 ## Local planning authority questionnaire

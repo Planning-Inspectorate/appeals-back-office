@@ -1,4 +1,5 @@
 import { getStartCaseNotifyPreviews } from '#appeals/appeal-details/start-case/start-case.service.js';
+import usersService from '#appeals/appeal-users/users-service.js';
 import { addressToString } from '#lib/address-formatter.js';
 import {
 	dateISOStringToDayMonthYearHourMinute,
@@ -10,6 +11,7 @@ import logger from '#lib/logger.js';
 import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
 import { resolveAppealId } from '#lib/resolveAppealId.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { formatFirstInitialLastName } from '#lib/string-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { isEmpty, isEqual, pick } from 'lodash-es';
@@ -699,7 +701,7 @@ export const postChangeInquiryAddressDetails = async (request, response) => {
  */
 export const getInquiryCheckDetails = async (request, response) => {
 	const {
-		currentAppeal: { appealId, appealReference, procedureType },
+		currentAppeal: { appealId, appealReference, procedureType, inspector },
 		session,
 		errors
 	} = request;
@@ -723,6 +725,14 @@ export const getInquiryCheckDetails = async (request, response) => {
 	if (procedureType.toLowerCase() !== APPEAL_CASE_PROCEDURE.INQUIRY) {
 		const errorMessage = 'Failed to generate email preview';
 		try {
+			let inspectorName;
+			if (inspector) {
+				const assignedInspector = await usersService.getUserById(inspector, request.session);
+				inspectorName = assignedInspector
+					? formatFirstInitialLastName(assignedInspector.name)
+					: null;
+			}
+
 			const result = await getStartCaseNotifyPreviews(
 				request.apiClient,
 				appealId,
@@ -795,7 +805,8 @@ export const getInquiryCheckDetails = async (request, response) => {
 							year: session.setUpInquiry?.[appealId]['planning-obligation-due-date-year']
 						})
 					}
-				}
+				},
+				inspectorName
 			);
 			appellantPreview = result.appellant || errorMessage;
 			lpaPreview = result.lpa || errorMessage;
@@ -856,7 +867,7 @@ export const getChangeInquiryCheckDetails = async (request, response) => {
 export const postInquiryCheckDetails = async (request, response) => {
 	try {
 		const {
-			currentAppeal: { appealId, procedureType }
+			currentAppeal: { appealId, procedureType, inspector }
 		} = request;
 
 		const { session } = request;
@@ -879,6 +890,14 @@ export const postInquiryCheckDetails = async (request, response) => {
 			startDate: getTodaysISOString(),
 			isStartCase
 		};
+
+		if (inspector) {
+			const assignedInspector = await usersService.getUserById(inspector, request.session);
+			request.currentAppeal.inspectorName = assignedInspector
+				? formatFirstInitialLastName(assignedInspector.name)
+				: null;
+		}
+
 		//Create Inquiry
 		await createInquiry(request, inquiryRequest);
 
@@ -934,7 +953,7 @@ export const postInquiryCheckDetails = async (request, response) => {
 export const postChangeInquiryCheckDetails = async (request, response) => {
 	try {
 		const {
-			currentAppeal: { appealId }
+			currentAppeal: { appealId, inspector }
 		} = request;
 
 		const { session } = request;
@@ -942,6 +961,13 @@ export const postChangeInquiryCheckDetails = async (request, response) => {
 
 		if (!inquiry) {
 			return renderAlreadySubmittedError(request, response);
+		}
+
+		if (inspector) {
+			const assignedInspector = await usersService.getUserById(inspector, request.session);
+			request.currentAppeal.inspectorName = assignedInspector
+				? formatFirstInitialLastName(assignedInspector.name)
+				: null;
 		}
 
 		// Update Inquiry
@@ -1041,7 +1067,7 @@ const buildInquiryRequest = (inquiry, hasObligation) => {
 /**
  * @param {any} inquiry
  * @param {any} currentAppeal
- * @returns {{estimatedDays?: string, addressId?: number, inquiryStartTime: string, address?: {addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string}  | null}}
+ * @returns {{inspectorName: string | null | undefined, estimatedDays?: string, addressId?: number, inquiryStartTime: string, address?: {addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string}  | null}}
  */
 const buildChangeInquiryRequest = (inquiry, currentAppeal) => {
 	const submittedAddress = {
@@ -1067,7 +1093,8 @@ const buildChangeInquiryRequest = (inquiry, currentAppeal) => {
 		address,
 		...(inquiry.inquiryEstimationYesNo === 'yes' && {
 			estimatedDays: inquiry.inquiryEstimationDays
-		})
+		}),
+		inspectorName: currentAppeal.inspectorName
 	};
 };
 

@@ -12,6 +12,7 @@ describe('site-visit-schedule-accompanied-appellant.md', () => {
 			recipientEmail: 'appellant@example.com',
 			personalisation: {
 				appeal_reference_number: 'AAA11234',
+				inspector_name: 'B. Jones',
 				site_address: '45, Hearing Road',
 				lpa_reference: 'PLAN-12345',
 				visit_date: '15 October 2025',
@@ -29,7 +30,7 @@ describe('site-visit-schedule-accompanied-appellant.md', () => {
 			'',
 			'# About the visit',
 			'',
-			'Our inspector (or their representative) will visit 45, Hearing Road at 11:00am on 15 October 2025.',
+			'Our inspector B. Jones (or their representative) will visit 45, Hearing Road at 11:00am on 15 October 2025.',
 			'',
 			'You cannot give the inspector any documents or discuss the appeal with them.',
 			'',

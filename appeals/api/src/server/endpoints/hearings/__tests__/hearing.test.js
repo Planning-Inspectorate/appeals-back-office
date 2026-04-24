@@ -226,6 +226,7 @@ describe('hearing routes', () => {
 					lpa_reference: '48269/APP/2021/1482',
 					hearing_date: '1 January 2999',
 					hearing_time: '12:00pm',
+					inspector_name: null,
 					hearing_expected_days: '',
 					hearing_address:
 						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
@@ -347,6 +348,7 @@ describe('hearing routes', () => {
 					lpa_reference: '48269/APP/2021/1482',
 					hearing_date: '2 January 2999',
 					hearing_time: '12:00pm',
+					inspector_name: null,
 					hearing_expected_days: '',
 					hearing_address:
 						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
@@ -399,6 +401,7 @@ describe('hearing routes', () => {
 					lpa_reference: '48269/APP/2021/1482',
 					hearing_date: '3 January 2999',
 					hearing_time: '12:00pm',
+					inspector_name: null,
 					hearing_expected_days: '',
 					hearing_address: '',
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -1188,6 +1191,7 @@ describe('hearing routes', () => {
 					lpa_reference: '48269/APP/2021/1482',
 					hearing_date: '1 January 2999',
 					hearing_time: '1:00pm',
+					inspector_name: null,
 					hearing_expected_days: '',
 					hearing_address:
 						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
@@ -1250,6 +1254,7 @@ describe('hearing routes', () => {
 					lpa_reference: '48269/APP/2021/1482',
 					hearing_date: '1 January 2999',
 					hearing_time: '12:00pm',
+					inspector_name: null,
 					hearing_expected_days: '',
 					hearing_address: '',
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
