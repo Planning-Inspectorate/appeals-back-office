@@ -29,13 +29,7 @@ extends:
       - group: e2e-dev
       - group: cd_e2e-pr-checks
     validationJobs:
-      - name: Run Linting & Tests
-        variables:
-        - name: test-script
-          ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/gh-readonly-queue') }}:
-            value: npm run test
-          ${{ else }}:
-            value: npm run test:cov
+      - name: Run Linting
         steps:
           - task: Cache@2
             inputs:
@@ -70,6 +64,28 @@ extends:
             parameters:
                 nodeVersion: 22
                 script: npm run format-check
+      
+      - name: Run Web Tests
+        variables:
+        - name: test-script
+          ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/gh-readonly-queue') }}:
+            value: npx turbo run test --filter=./appeals/web
+          ${{ else }}:
+            value: npx turbo run test:cov --filter=./appeals/web
+        steps:
+          - task: Cache@2
+            inputs:
+              key: 'npm | "$(Agent.OS)" | package-lock.json'
+              restoreKeys: |
+                npm | "$(Agent.OS)" | package-lock.json
+              path: $(npm_config_cache)
+            displayName: Cache NPM
+          - template: ../steps/node_script.yml
+            parameters:
+              nodeVersion: 22
+              script: npm ci
+              environmentVariables:
+                npm_config_cache: $(npm_config_cache)
           - template: ../steps/node_script.yml
             parameters:
               script: $(test-script)
@@ -86,6 +102,67 @@ extends:
                 TURBO_TEAM: $(TURBO_TEAM)
                 TURBO_API: $(TURBO_API)
                 TURBO_TOKEN: $(TURBO_TOKEN)
+      
+      - name: Run Api Tests
+        variables:
+        - name: test-script
+          ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/gh-readonly-queue') }}:
+            value: npx turbo run test --filter=./appeals/api
+          ${{ else }}:
+            value: npx turbo run test:cov --filter=./appeals/api
+        steps:
+          - task: Cache@2
+            inputs:
+              key: 'npm | "$(Agent.OS)" | package-lock.json'
+              restoreKeys: |
+                npm | "$(Agent.OS)" | package-lock.json
+              path: $(npm_config_cache)
+            displayName: Cache NPM
+          - template: ../steps/node_script.yml
+            parameters:
+              nodeVersion: 22
+              script: npm ci
+              environmentVariables:
+                npm_config_cache: $(npm_config_cache)          
+          - template: ../steps/node_script.yml
+            parameters:
+              script: $(test-script)
+              nodeVersion: 22
+              environmentVariables:
+                TURBO_TEAM: $(TURBO_TEAM)
+                TURBO_API: $(TURBO_API)
+                TURBO_TOKEN: $(TURBO_TOKEN)
+      
+      - name: Run Other Tests
+        variables:
+        - name: test-script
+          ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/gh-readonly-queue') }}:
+            value: npx turbo run test --filter=./appeals/functions/* --filter=./appeals/pdf-service-api --filter=./packages/*
+          ${{ else }}:
+            value: npx turbo run test:cov --filter=./appeals/functions/* --filter=./appeals/pdf-service-api --filter=./packages/*
+        steps:
+          - task: Cache@2
+            inputs:
+              key: 'npm | "$(Agent.OS)" | package-lock.json'
+              restoreKeys: |
+                npm | "$(Agent.OS)" | package-lock.json
+              path: $(npm_config_cache)
+            displayName: Cache NPM
+          - template: ../steps/node_script.yml
+            parameters:
+              nodeVersion: 22
+              script: npm ci
+              environmentVariables:
+                npm_config_cache: $(npm_config_cache)          
+          - template: ../steps/node_script.yml
+            parameters:
+              script: $(test-script)
+              nodeVersion: 22
+              environmentVariables:
+                TURBO_TEAM: $(TURBO_TEAM)
+                TURBO_API: $(TURBO_API)
+                TURBO_TOKEN: $(TURBO_TOKEN)
+
       - name: Run cypress e2e tests
         condition: eq(variables['Build.Reason'], 'PullRequest')
         steps:
