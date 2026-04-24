@@ -26,12 +26,16 @@ module "app_web" {
   app_service_private_dns_zone_id = data.azurerm_private_dns_zone.app_service.id
   front_door_restriction          = var.apps_config.private_endpoint_enabled
 <<<<<<< HEAD
+<<<<<<< HEAD
   inbound_vnet_connectivity       = var.apps_config.private_endpoint_enabled
   integration_subnet_id           = azurerm_subnet.apps.id
 =======
   endpoint_subnet_id              = azurerm_subnet.main.id
   inbound_vnet_connectivity       = var.environment == "dev" ? true : false
   integration_subnet_id           = var.environment == "dev" ? var.endpoint_subnet_id : azurerm_subnet.apps.id
+=======
+  inbound_vnet_connectivity       = var.apps_config.private_endpoint_enabled
+  integration_subnet_id           = azurerm_subnet.apps.id
   outbound_vnet_connectivity      = true
   public_network_access           = var.environment == "dev" ? false : true
 
