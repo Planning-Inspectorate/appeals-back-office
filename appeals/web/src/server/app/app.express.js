@@ -74,16 +74,24 @@ app.use((req, res, next) => {
  */
 const addCSPNonce = (req, res) => `'nonce-${res.locals.cspNonce}'`;
 
+// Google analytics
+const scriptSrc = ['https://*.googletagmanager.com', 'https://*.google-analytics.com'];
+const imgSrc = [
+	'https://*.google-analytics.com',
+	'https://*.analytics.google.com',
+	'https://*.googletagmanager.com'
+];
+
 // Secure apps by setting various HTTP headers
 app.use(helmet());
 app.use(
 	helmet.contentSecurityPolicy({
 		directives: {
 			// @ts-ignore
-			scriptSrc: ["'self'", addCSPNonce],
+			scriptSrc: ["'self'", ...scriptSrc, addCSPNonce],
 			defaultSrc: ["'self'", config.blobStorageUrl],
 			'font-src': ["'self'"],
-			'img-src': ["'self'", config.blobStorageUrl],
+			'img-src': ["'self'", ...imgSrc, config.blobStorageUrl],
 			'style-src': ["'self'"]
 		}
 	})
