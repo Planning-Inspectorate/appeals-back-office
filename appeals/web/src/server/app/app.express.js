@@ -66,36 +66,37 @@ app.use((req, res, next) => {
 	next();
 });
 
-/**
- * Middleware to return current nonce
- *
- * @type {import('express').RequestHandler}
- * @returns {string}
- */
-const addCSPNonce = (req, res) => `'nonce-${res.locals.cspNonce}'`;
+if (!config.isTest) {
+	/**
+	 * Middleware to return current nonce
+	 *
+	 * @type {import('express').RequestHandler}
+	 * @returns {string}
+	 */
+	const addCSPNonce = (req, res) => `'nonce-${res.locals.cspNonce}'`;
 
-// Google analytics
-const scriptSrc = ['https://*.googletagmanager.com', 'https://*.google-analytics.com'];
-const imgSrc = [
-	'https://*.google-analytics.com',
-	'https://*.analytics.google.com',
-	'https://*.googletagmanager.com'
-];
+	// Google analytics
+	const scriptSrc = ['https://*.googletagmanager.com', 'https://*.google-analytics.com'];
+	const imgSrc = [
+		'https://*.google-analytics.com',
+		'https://*.analytics.google.com',
+		'https://*.googletagmanager.com'
+	];
 
-// Secure apps by setting various HTTP headers
-app.use(helmet());
-app.use(
-	helmet.contentSecurityPolicy({
-		directives: {
-			// @ts-ignore
-			scriptSrc: ["'self'", ...scriptSrc, addCSPNonce],
-			defaultSrc: ["'self'", config.blobStorageUrl],
-			'font-src': ["'self'"],
-			'img-src': ["'self'", ...imgSrc, config.blobStorageUrl],
-			'style-src': ["'self'"]
-		}
-	})
-);
+	// Secure apps by setting various HTTP headers
+	app.use(helmet());
+	app.use(
+		helmet.contentSecurityPolicy({
+			directives: {
+				// @ts-ignore
+				scriptSrc: ["'self'", ...scriptSrc, addCSPNonce],
+				defaultSrc: ["'self'", config.blobStorageUrl],
+				'font-src': ["'self'"],
+				'img-src': ["'self'", ...imgSrc, config.blobStorageUrl],
+				'style-src': ["'self'"]
+			}
+		})
+	);
 
 	// Enable CORS - Cross Origin Resource Sharing
 	app.use(cors());
@@ -107,13 +108,13 @@ app.use(
 
 	// Response time header
 	app.use(responseTime());
+
+	// Session middleware
+	app.use(session);
 }
 
 // MSAL middleware
 app.use(msalMiddleware);
-
-// Session middleware
-app.use(session);
 
 // Set the express view engine to nunjucks.
 nunjucksEnvironment.express(app);

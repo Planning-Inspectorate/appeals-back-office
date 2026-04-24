@@ -24,7 +24,6 @@ export default {
 			statements: 70
 		}
 	},
-	// forced worker exits; use process workers for deterministic teardown.
 	workerThreads: false,
-	workerIdleMemoryLimit: '500MB'
+	workerIdleMemoryLimit: '1500MB'
 };

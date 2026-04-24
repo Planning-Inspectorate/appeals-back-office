@@ -7,15 +7,18 @@ const [requestLogger, responseLogger] = createHttpLoggerHooks(pino, config.logLe
 
 export const prefixUrl = 'https://graph.microsoft.com/v1.0/';
 
-const instance = got.extend({
-	prefixUrl,
-	responseType: 'json',
-	resolveBodyOnly: true,
-	hooks: {
-		beforeRequest: [requestLogger],
-		afterResponse: [responseLogger]
-	}
-});
+let instance = got;
+if (!config.isTest) {
+	instance = got.extend({
+		prefixUrl,
+		responseType: 'json',
+		resolveBodyOnly: true,
+		hooks: {
+			beforeRequest: [requestLogger],
+			afterResponse: [responseLogger]
+		}
+	});
+}
 
 /**
  * Type-safe implementation of a post request using the got instance.

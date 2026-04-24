@@ -44,7 +44,6 @@ describe('update-decision-letter', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-			console.log('unprettifiedElement', unprettifiedElement.innerHTML);
 			expect(unprettifiedElement.innerHTML).toContain('Correction notice');
 		});
 	});

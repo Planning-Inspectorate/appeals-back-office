@@ -20,5 +20,5 @@ export default {
 		}
 	},
 	workerThreads: false,
-	workerIdleMemoryLimit: '500MB'
+	workerIdleMemoryLimit: '1500MB'
 };

@@ -38,6 +38,7 @@ export default joi
 		featureFlags: joi.object().pattern(/featureFlag.*/, joi.boolean()),
 		serviceBusEnabled: joi.boolean().optional(),
 		forcePersonalListFullRefresh: joi.boolean().optional(),
+		refreshPersonalListOnStartup: joi.boolean().optional(),
 		enableTestEndpoints: joi.boolean().optional(),
 		govNotify: joi
 			.object({

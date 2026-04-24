@@ -11,6 +11,6 @@ export default {
 			statements: 70
 		}
 	},
-	workerThreads: true,
-	workerIdleMemoryLimit: '500MB'
+	workerThreads: false,
+	workerIdleMemoryLimit: '1500MB'
 };

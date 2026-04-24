@@ -4,20 +4,29 @@ import got from 'got';
 import * as authSession from '../../app/auth/auth-session.service.js';
 import pino from '../logger.js';
 
-const [requestLogger, responseLogger, retryLogger] = createHttpLoggerHooks(
-	pino,
-	config.logLevelStdOut
-);
-const retryParams = createHttpRetryParams(config.retry);
-
 const instance = got.extend({
 	prefixUrl: config.apiUrl,
 	responseType: 'json',
 	resolveBodyOnly: true
 });
 
-const getInstance = (/** @type {string} */ userId) =>
-	instance.extend({
+/** @type {import('got').BeforeRequestHook} */
+let requestLogger;
+/** @type {import('got').AfterResponseHook<any>} */
+let responseLogger;
+/** @type {import('got').BeforeRetryHook} */
+let retryLogger;
+
+if (!config.isTest) {
+	[requestLogger, responseLogger, retryLogger] = createHttpLoggerHooks(pino, config.logLevelStdOut);
+}
+const retryParams = createHttpRetryParams(config.retry);
+
+const getInstance = (/** @type {string} */ userId) => {
+	if (config.isTest) {
+		return instance;
+	}
+	return instance.extend({
 		retry: retryParams,
 		hooks: {
 			beforeRetry: [retryLogger],
@@ -30,6 +39,7 @@ const getInstance = (/** @type {string} */ userId) =>
 			afterResponse: [responseLogger]
 		}
 	});
+};
 
 /**
  * @type {import('express').RequestHandler}
