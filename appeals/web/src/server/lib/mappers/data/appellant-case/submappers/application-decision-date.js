@@ -7,6 +7,7 @@ export const mapApplicationDecisionDate = ({
 	currentRoute,
 	userHasUpdateCase
 }) =>
+	// @ts-ignore
 	textSummaryListItem({
 		id: 'application-decision-date',
 		text:
@@ -15,5 +16,6 @@ export const mapApplicationDecisionDate = ({
 				: 'What’s the date on the decision letter from the local planning authority?​',
 		value: dateISOStringToDisplayDate(appellantCaseData.applicationDecisionDate, 'No data'),
 		link: `${currentRoute}/application-decision-date/change`,
-		editable: userHasUpdateCase && !appellantCaseData.isEnforcementChild
+		editable: userHasUpdateCase && !appellantCaseData.isEnforcementChild,
+		actionText: appellantCaseData.applicationDecisionDate ? 'Change' : 'Add'
 	});
