@@ -115,6 +115,9 @@ const { value, error } = schema.validate({
 	forcePersonalListFullRefresh:
 		environment.FORCE_PERSONAL_LIST_FULL_REFRESH &&
 		environment.FORCE_PERSONAL_LIST_FULL_REFRESH === 'true',
+	refreshPersonalListOnStartup:
+		environment.REFRESH_PERSONAL_LIST_ON_STARTUP &&
+		environment.REFRESH_PERSONAL_LIST_ON_STARTUP === 'true',
 	govNotify: {
 		api: {
 			key: environment.GOV_NOTIFY_API_KEY
