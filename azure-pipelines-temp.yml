@@ -14,12 +14,11 @@ extends:
       - template: azure-pipelines-variables.yml@self
       - group: e2e-dev
       - group: cd_e2e-pr-checks
-    validationJobs:    
-      - name: Run Temp
-        steps:
-          - script: |
-              echo "TURBO_TEAM: $(TURBO_TEAM)"
-              echo "TURBO_API: $(TURBO_API)"
-        env:
-          TURBO_TEAM: $(TURBO_TEAM)
-          TURBO_API: $(TURBO_API)
+    validationJobs:
+      - template: ../steps/node_script.yml
+        parameters:
+          nodeVersion: 22
+          script: node test.js
+          environmentVariables:
+            TURBO_TEAM: $(TURBO_TEAM)
+            TURBO_API: $(TURBO_API)
