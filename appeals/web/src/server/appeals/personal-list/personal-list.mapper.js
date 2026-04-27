@@ -1,3 +1,4 @@
+import featureFlags from '#common/feature-flags.js';
 import config from '#environment/config.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import { mapStatusFilterLabel, mapStatusText } from '#lib/appeal-status.js';
@@ -12,7 +13,10 @@ import {
 import { getRequiredActionsForAppeal } from '#lib/mappers/utils/required-actions.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
-import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_REPRESENTATION_STATUS,
+	FEATURE_FLAG_NAMES
+} from '@pins/appeals/constants/common.js';
 import { DOCUMENT_STATUS_NOT_RECEIVED } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import * as authSession from '../../app/auth/auth-session.service.js';
@@ -207,7 +211,9 @@ export function personalListPage(
 								type: 'status-tag',
 								parameters: {
 									status:
-										appeal.isS78Expedited && appeal.appealStatus === 'ready_to_start'
+										appeal.isS78Expedited &&
+										appeal.appealStatus === 'ready_to_start' &&
+										!featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS_LPAQ)
 											? 'validated'
 											: appeal.appealStatus
 												? mapStatusText(

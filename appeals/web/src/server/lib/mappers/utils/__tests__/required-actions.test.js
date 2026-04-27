@@ -35,7 +35,7 @@ describe('required actions', () => {
 			).toEqual(['startAppeal']);
 		});
 
-		it('should return "appealValidated" if appeal status is "READY_TO_START" and appeal is S78 expedited', () => {
+		it('should return "startAppeal" if appeal status is "READY_TO_START" and appeal is S78 expedited', () => {
 			expect(
 				getRequiredActionsForAppeal(
 					{
@@ -45,7 +45,7 @@ describe('required actions', () => {
 					},
 					'detail'
 				)
-			).toEqual(['appealValidated']);
+			).toEqual(['startAppeal']);
 		});
 
 		it('should return "addHorizonReference" if appeal status is "AWAITING_TRANSFER"', () => {

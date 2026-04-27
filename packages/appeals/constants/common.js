@@ -25,6 +25,7 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	RULE_6_PARTIES_MVP: 'featureFlagRule6Mvp',
 	RULE_6_PARTIES_POE: 'featureFlagRule6PoE',
 	EXPEDITED_APPEALS: 'featureFlagExpeditedAppeals',
+	EXPEDITED_APPEALS_LPAQ: 'featureFlagExpeditedAppealsLpaq',
 	MANUALLY_ADD_REPS: 'featureFlagManuallyAddReps',
 	APPELLANT_STATEMENT: 'featureFlagAppellantStatement',
 	RULE_6_STATEMENT: 'featureFlagRule6Statement',

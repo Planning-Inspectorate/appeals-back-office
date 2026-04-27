@@ -112,6 +112,7 @@ export function selectProcedurePage(
 	errorMessage = undefined
 ) {
 	const showPart1 =
+		featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS_LPAQ) &&
 		appellantCase &&
 		isS78ExpeditedAppealType(
 			appealType,

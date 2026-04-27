@@ -45,28 +45,6 @@ describe('started-at.mapper', () => {
 		});
 	});
 
-	it('should contain Not started and no action link if appeal is S78 expedited', () => {
-		data.appealDetails.isS78Expedited = true;
-		const mappedData = mapStartedAt(data);
-		expect(mappedData).toEqual({
-			display: {
-				summaryListItem: {
-					actions: {
-						items: []
-					},
-					classes: 'appeal-start-date',
-					key: {
-						text: 'Start date'
-					},
-					value: {
-						text: 'Not started'
-					}
-				}
-			},
-			id: 'start-case-date'
-		});
-	});
-
 	it('should contain Not started and a Start action link', () => {
 		const mappedData = mapStartedAt(data);
 		expect(mappedData).toEqual({

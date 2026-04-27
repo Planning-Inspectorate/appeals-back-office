@@ -87,6 +87,7 @@ apps_config = {
     featureFlagEnforcementInquiryLinked         = false
     featureFlagEnforcementChangeProcedureLinked = false
     featureFlagShareCosts                       = false
+    featureFlagExpeditedAppealsLpaq             = false
   }
 
   use_system_test_bc_for_change_lpa = false

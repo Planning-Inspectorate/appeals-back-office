@@ -211,11 +211,9 @@ const renderSelectProcedure = async (request, response) => {
 		currentAppeal: { appealId, appealReference, appealType, appellantCaseId },
 		errors
 	} = request;
-	const appellantCase = await getAppellantCaseFromAppealId(
-		request.apiClient,
-		appealId,
-		appellantCaseId
-	);
+	const appellantCase = featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS_LPAQ)
+		? await getAppellantCaseFromAppealId(request.apiClient, appealId, appellantCaseId)
+		: undefined;
 
 	const sessionValues = getSessionValuesForAppeal(request, 'startCaseAppealProcedure', appealId);
 	const isLinked = isLinkedAppeal(request.currentAppeal);
