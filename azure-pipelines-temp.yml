@@ -15,17 +15,13 @@ extends:
       - group: e2e-dev
       - group: cd_e2e-pr-checks
     validationJobs:
-      - name: Run Linting
+      - name: Run Temp
         steps:
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
               script: |
-                console.log("$(TURBO_TEAM)"); console.log("$(TURBO_API)"); console.log("$(TURBO_TOKEN)".slice(0, 2));
-          - template: ../steps/node_script.yml
-            parameters:
-              nodeVersion: 22
-              script: npm run tscheck
+                node -e "console.log('$(TURBO_TEAM)'); console.log('$(TURBO_API)'); console.log('$(TURBO_TOKEN)'.slice(0, 2));"
               environmentVariables:
                 TURBO_TEAM: $(TURBO_TEAM)
                 TURBO_API: $(TURBO_API)
