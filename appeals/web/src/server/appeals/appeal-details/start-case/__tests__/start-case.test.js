@@ -25,6 +25,16 @@ describe('start-case', () => {
 	});
 
 	beforeEach(() => {
+		nock('https://www.gov.uk')
+			.get(`/bank-holidays.json`)
+			.reply(200, {
+				'england-and-wales': {
+					division: 'england-and-wales',
+					events: [{ title: 'New Year’s Day', date: '2019-01-01', notes: '', bunting: true }]
+				}
+			})
+			.persist();
+
 		jest.spyOn(featureFlags, 'isFeatureActive').mockImplementation((flag) => {
 			if (flag === 'featureFlagExpeditedAppeals') {
 				return true;
