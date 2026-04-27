@@ -96,6 +96,10 @@ const updateAppellantCaseById = async (req, res) => {
 			siteUseAtTimeOfApplication,
 			applicationMadeUnderActSection,
 			anySignificantChanges,
+			anySignificantChanges_localPlanSignificantChanges,
+			anySignificantChanges_nationalPolicySignificantChanges,
+			anySignificantChanges_otherSignificantChanges,
+			anySignificantChanges_courtJudgementSignificantChanges,
 			reasonForAppealAppellant,
 			screeningOpinionIndicatesEiaRequired
 		},
@@ -192,6 +196,10 @@ const updateAppellantCaseById = async (req, res) => {
 						siteUseAtTimeOfApplication,
 						applicationMadeUnderActSection,
 						anySignificantChanges,
+						anySignificantChanges_localPlanSignificantChanges,
+						anySignificantChanges_nationalPolicySignificantChanges,
+						anySignificantChanges_otherSignificantChanges,
+						anySignificantChanges_courtJudgementSignificantChanges,
 						reasonForAppealAppellant,
 						screeningOpinionIndicatesEiaRequired
 					},
