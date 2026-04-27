@@ -20,3 +20,6 @@ extends:
           - script: |
               echo "TURBO_TEAM: $(TURBO_TEAM)"
               echo "TURBO_API: $(TURBO_API)"
+        env:
+          TURBO_TEAM: $(TURBO_TEAM)
+          TURBO_API: $(TURBO_API)
