@@ -1,37 +1,61 @@
 {
 	"npmClient": "npm",
+	"globalEnv": ["NODE_ENV"],
+	"globalPassThroughEnv": ["TURBO_*"],
 	"pipeline": {
 		"build": {
 			"outputs": ["src/server/static/scripts/**", "src/server/static/styles/**"],
-			"dependsOn": ["^build", "$NODE_ENV", "$APP_RELEASE"]
+			"dependsOn": ["^build"],
+			"env": ["NODE_ENV"],
+			"inputs": ["src/**", "scripts/rollup/**", "package.json"]
 		},
 		"build:release": {
 			"outputs": ["src/server/static/scripts/**", "src/server/static/styles/**"],
-			"dependsOn": ["^build", "$NODE_ENV", "$APP_RELEASE"]
-		},
-		"topo": {
-			"dependsOn": ["^topo"]
+			"dependsOn": ["^build"],
+			"env": ["NODE_ENV"],
+			"inputs": ["src/**", "scripts/rollup/**", "package.json"]
 		},
 		"test": {
-			"outputs": ["coverage/**"],
-			"dependsOn": ["topo"]
+			"inputs": [
+				"index.js",
+				"src/**",
+				"environment/**",
+				"jest.config.js",
+				"global-setup.js",
+				"setup-tests.js",
+				"package.json"
+			],
+			"env": ["NODE_ENV", "DATABASE_URL"]
 		},
 		"test:cov": {
-			"outputs": ["coverage/**"]
+			"outputs": ["coverage/**"],
+			"inputs": [
+				"index.js",
+				"environment/**",
+				"src/**",
+				"jest.config.js",
+				"global-setup.js",
+				"setup-tests.js",
+				"package.json"
+			],
+			"env": ["NODE_ENV", "DATABASE_URL"]
 		},
 		"lint:js": {
-			"dependsOn": ["^build"],
+			"inputs": ["*.ts", "*.js", ".eslintrc*", "package.json"],
 			"outputs": []
 		},
 		"lint:js:fix": {
-			"dependsOn": ["^build"],
+			"inputs": ["*.ts", "*.js", ".eslintrc*", "package.json"],
+			"outputs": []
+		},
+		"tscheck": {
+			"inputs": ["*.ts", "*.js", "jsconfig.json", "package.json"],
 			"outputs": []
 		},
 		"prisma-generate": {
-			"cache": false
-		},
-		"tscheck": {
-			"dependsOn": ["topo"]
+			"inputs": ["src/database/schema.prisma", "src/database/migrations/**", "package.json"],
+			"outputs": ["src/server/utils/db-client/**"],
+			"env": ["DATABASE_URL"]
 		},
 		"dev": {
 			"cache": false
