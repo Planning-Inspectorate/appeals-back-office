@@ -129,6 +129,7 @@ module "app_web" {
     FEATURE_FLAG_ENFORCEMENT_HEARING_LINKED          = var.apps_config.featureFlags.featureFlagEnforcementHearingLinked
     FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED          = var.apps_config.featureFlags.featureFlagEnforcementInquiryLinked
     FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED = var.apps_config.featureFlags.featureFlagEnforcementChangeProcedureLinked
+    FEATURE_FLAG_EXPEDITED_APPEALS_LPAQ              = var.apps_config.featureFlags.featureFlagExpeditedAppealsLpaq
     FEATURE_FLAG_SHARE_COSTS                         = var.apps_config.featureFlags.featureFlagShareCosts
 
 

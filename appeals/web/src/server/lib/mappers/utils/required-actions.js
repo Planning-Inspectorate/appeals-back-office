@@ -1,3 +1,4 @@
+import featureFlags from '#common/feature-flags.js';
 import { isNetResidencesAppealType } from '#common/net-residences-appeal-types.js';
 import config from '#environment/config.js';
 import { isStatePassed } from '#lib/appeal-status.js';
@@ -10,7 +11,8 @@ import {
 import {
 	APPEAL_PROOF_OF_EVIDENCE_STATUS,
 	APPEAL_REPRESENTATION_STATUS,
-	APPEAL_TYPE
+	APPEAL_TYPE,
+	FEATURE_FLAG_NAMES
 } from '@pins/appeals/constants/common.js';
 import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
@@ -64,7 +66,10 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			actions.push('assignCaseOfficer');
 			break;
 		case APPEAL_CASE_STATUS.READY_TO_START:
-			if (appealDetails.isS78Expedited) {
+			if (
+				appealDetails.isS78Expedited &&
+				!featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS_LPAQ)
+			) {
 				actions.push('appealValidated');
 				break;
 			}

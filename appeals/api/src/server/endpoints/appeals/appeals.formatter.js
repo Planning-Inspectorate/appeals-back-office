@@ -1,5 +1,4 @@
 import { completedStateList, currentStatus } from '#utils/current-status.js';
-import { isFeatureActive } from '#utils/feature-flags.js';
 import formatAddress from '#utils/format-address.js';
 import { formatCostsDecision } from '#utils/format-costs-decision.js';
 import {
@@ -7,7 +6,7 @@ import {
 	formatLpaQuestionnaireDocumentationStatus,
 	formatRepresentationStatus
 } from '#utils/format-documentation-status.js';
-import { APPEAL_REPRESENTATION_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
 	DOCUMENT_STATUS_RECEIVED
@@ -64,12 +63,11 @@ const formatAppeal = (appeal, linkedAppeals) => {
 		isInquirySetup: !!appeal.inquiry,
 		hasInquiryAddress: !!appeal.inquiry?.addressId,
 		enforcementReference: appeal.appellantCase?.enforcementReference,
-		isS78Expedited:
-			isS78ExpeditedAppealType(
-				appeal.appealType?.key,
-				appeal.appellantCase?.applicationDate,
-				appeal.appellantCase?.applicationDecision
-			) && isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS)
+		isS78Expedited: isS78ExpeditedAppealType(
+			appeal.appealType?.key,
+			appeal.appellantCase?.applicationDate,
+			appeal.appellantCase?.applicationDecision
+		)
 	};
 };
 
@@ -131,12 +129,11 @@ const formatPersonalListItem = async ({
 			appeal.enforcementNoticeAppealOutcome?.enforcementNoticeInvalid || null,
 		enforcementNoticeGroundAFeeReceiptDueDate:
 			appeal.enforcementNoticeAppealOutcome?.groundAFeeReceiptDueDate || null,
-		isS78Expedited:
-			isS78ExpeditedAppealType(
-				appealType?.key,
-				appellantCase?.applicationDate,
-				appellantCase?.applicationDecision
-			) && isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS)
+		isS78Expedited: isS78ExpeditedAppealType(
+			appealType?.key,
+			appellantCase?.applicationDate,
+			appellantCase?.applicationDecision
+		)
 	};
 };
 

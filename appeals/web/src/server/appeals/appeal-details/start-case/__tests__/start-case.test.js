@@ -26,8 +26,8 @@ describe('start-case', () => {
 
 	beforeEach(() => {
 		jest.spyOn(featureFlags, 'isFeatureActive').mockImplementation((flag) => {
-			if (flag === 'featureFlagExpeditedAppeals') {
-				return true;
+			if (flag === 'featureFlagExpeditedAppealsLpaq') {
+				return false;
 			}
 			return true;
 		});
@@ -359,6 +359,13 @@ describe('start-case', () => {
 		});
 
 		it('should render the select procedure page with the expected content', async () => {
+			jest.spyOn(featureFlags, 'isFeatureActive').mockImplementation((flag) => {
+				if (flag === 'featureFlagExpeditedAppealsLpaq') {
+					return true;
+				}
+				return true;
+			});
+
 			nock('http://test/').get('/appeals/1/appellant-cases/0').reply(200, {
 				applicationDate: '2026-04-01',
 				applicationDecision: 'refused'
@@ -409,6 +416,13 @@ describe('start-case', () => {
 		});
 
 		it('should render the select procedure page with the expected content if the appeal is S78 and is NOT expedited', async () => {
+			jest.spyOn(featureFlags, 'isFeatureActive').mockImplementation((flag) => {
+				if (flag === 'featureFlagExpeditedAppealsLpaq') {
+					return true;
+				}
+				return true;
+			});
+
 			nock.cleanAll();
 			nock('http://test/')
 				.get('/appeals/1?include=all')
@@ -435,6 +449,38 @@ describe('start-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="appealProcedure" type="radio" value="written">'
 			);
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'name="appealProcedure" type="radio" value="writtenPart1">'
+			);
+		});
+
+		it('should NOT render the select procedure page with the Part 1 option if the featureFlagExpeditedAppealsLpaq is OFF', async () => {
+			// featureFlagExpeditedAppealsLpaq is OFF by default in our global mock
+
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+			// NOT expedited dates
+			nock('http://test/').get('/appeals/1/appellant-cases/0').reply(200, {
+				applicationDate: '2026-03-31',
+				applicationDecision: 'refused'
+			});
+
+			const response = await request.get(
+				'/appeals-service/appeal-details/1/start-case/select-procedure'
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: 'body',
+				skipPrettyPrint: true
+			});
+
 			expect(unprettifiedElement.innerHTML).not.toContain(
 				'name="appealProcedure" type="radio" value="writtenPart1">'
 			);
@@ -769,7 +815,14 @@ describe('start-case', () => {
 				);
 			});
 
-			it('should show all radio button labels for S78 when hearing and inquiry are enabled', async () => {
+			it('should show all radio button labels for S78 when hearing and inquiry are enabled and the appeal is expedited', async () => {
+				jest.spyOn(featureFlags, 'isFeatureActive').mockImplementation((flag) => {
+					if (flag === 'featureFlagExpeditedAppealsLpaq') {
+						return true;
+					}
+					return true;
+				});
+
 				// @ts-ignore
 				getEnabledHearingAppealTypes.mockReturnValue([APPEAL_TYPE.S78]);
 				// @ts-ignore
