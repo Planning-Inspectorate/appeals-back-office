@@ -22,11 +22,10 @@ export const mapSignificantChanges = ({ appellantCaseData, currentRoute, userHas
 		details.push(`Other: ${appellantCaseData.anySignificantChanges_otherSignificantChanges}`);
 	}
 
-	userHasUpdateCase = false;
 	return booleanWithDetailsSummaryListItem({
 		id: 'any-significant-changes',
 		text: 'Have there been any significant changes that would affect the application?',
-		value: appellantCaseData.anySignificantChanges?.toLowerCase() === 'yes',
+		value: appellantCaseData.anySignificantChanges === 'Yes',
 		valueDetails: details.join('\n'),
 		link: `${currentRoute}/any-significant-changes/change`,
 		editable: userHasUpdateCase,
