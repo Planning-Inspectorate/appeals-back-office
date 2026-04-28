@@ -10,23 +10,22 @@ exports[`notify preview tests /appeals/notify-preview/correction-notice-decision
 Appeal reference number: 12345 <br>
 Address: 2222<br>
 Planning application reference: planningApplicationReference<br>
-
+</div>
 <h3> Why we corrected the appeal decision letter</h3>
 
-correctionNotice<br>
+<p>correctionNotice</p>
 
-<a href="/manage-appeals/12345" class="govuk-link">Sign in to our service</a> to view the decision letter dated dateISOStringToDisplayDate(file.receivedDate).<br>
+<p><a href="/manage-appeals/12345" class="govuk-link">Sign in to our service</a> to view the decision letter dated dateISOStringToDisplayDate(file.receivedDate).</p>
 
 <h3> The Planning Inspectorate's role</h3>
 
-The Planning Inspectorate cannot change or revoke the decision. Only the High Court can change this decision.<br>
+<p>The Planning Inspectorate cannot change or revoke the decision. Only the High Court can change this decision.</p>
 
 <h3> Feedback</h3>
 
-We welcome your feedback on our appeals service. Tell us on this short <a href="/mock-feedback-link" class="govuk-link">feedback form</a>.<br>
+<p>We welcome your feedback on our appeals service. Tell us on this short <a href="/mock-feedback-link" class="govuk-link">feedback form</a>.</p>
 
-The Planning Inspectorate<br>
-lpa@planninginspectorate.gov.uk<br>
-</div> </div>",
+<p>The Planning Inspectorate</p>
+<p>lpa@planninginspectorate.gov.uk</p> </div>",
 }
 `;
