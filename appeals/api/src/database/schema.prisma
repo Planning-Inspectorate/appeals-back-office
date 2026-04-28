@@ -360,7 +360,7 @@ model AppellantCase {
   applicationMadeUnderActSection String?
 
   //Expedited Fields
-  reasonForAppealAppellant                               String?
+  reasonForAppealAppellant                               String?  @db.NVarChar(Max)
   anySignificantChanges                                  String?
   anySignificantChanges_otherSignificantChanges          String?  @db.NVarChar(Max)
   anySignificantChanges_localPlanSignificantChanges      String?  @db.NVarChar(Max)
