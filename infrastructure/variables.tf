@@ -100,8 +100,7 @@ variable "apps_config" {
     })
 
     analytics = object({
-      google_analytics_id   = string,
-      google_tag_manager_id = string
+      google_analytics_id = string
     })
 
     logging = object({

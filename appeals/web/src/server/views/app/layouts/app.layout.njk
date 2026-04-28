@@ -24,10 +24,6 @@
   {{ globalHeader(domainType, domainName, containerClasses, pageIsPersonalList, pageIsNationalList) }}
 {% endblock %}
 
-{% block bodyStart %}
-  {% include "../includes/body-start.njk" %}
-{% endblock %}
-
 {% block beforeContent %}
   {% block feedbackBanner %}
     {% include '../includes/beta-feedback-banner.njk' %}
