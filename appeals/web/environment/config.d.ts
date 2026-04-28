@@ -38,7 +38,6 @@ export interface EnvironmentConfig extends BaseEnvironmentConfig {
 		maxAge: string;
 	};
 	googleAnalyticsId: string;
-	googleTagManagerId: string;
 	horizonAppealBaseUrl?: string;
 	useBlobEmulator: boolean;
 	cwd: string;

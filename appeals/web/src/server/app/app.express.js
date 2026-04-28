@@ -81,6 +81,11 @@ const imgSrc = [
 	'https://*.analytics.google.com',
 	'https://*.googletagmanager.com'
 ];
+const connectSrc = [
+	'https://*.google-analytics.com',
+	'https://*.analytics.google.com',
+	'https://*.googletagmanager.com'
+];
 
 // Secure apps by setting various HTTP headers
 app.use(helmet());
@@ -92,7 +97,8 @@ app.use(
 			defaultSrc: ["'self'", config.blobStorageUrl],
 			'font-src': ["'self'"],
 			'img-src': ["'self'", ...imgSrc, config.blobStorageUrl],
-			'style-src': ["'self'"]
+			'style-src': ["'self'"],
+			'connect-src': ["'self'", ...connectSrc]
 		}
 	})
 );

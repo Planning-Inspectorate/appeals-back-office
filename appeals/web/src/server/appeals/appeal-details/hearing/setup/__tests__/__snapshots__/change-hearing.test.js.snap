@@ -4,11 +4,7 @@ exports[`change hearing GET /hearing/change/address should match the snapshot 1`
 "<body class="govuk-template__body">
     <script nonce="EdcOUaJ8lczj9tIPO0lPow==">
         document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
-    </script>
-    <noscript>
-        <iframe src="https://www.googletagmanager.com/ns.html?id=dummy-gtag-manager-id"
-        height="0" width="0" style="display:none;visibility:hidden"></iframe>
-    </noscript><a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
+    </script><a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
     <header     class="govuk-header govuk-!-margin-bottom-0" id="pins-applications-header"
     role="banner" data-module="govuk-header">
         <div class="govuk-width-container">
@@ -102,11 +98,7 @@ exports[`change hearing GET /hearing/change/address-details should match the sna
 "<body class="govuk-template__body">
     <script nonce="EdcOUaJ8lczj9tIPO0lPow==">
         document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
-    </script>
-    <noscript>
-        <iframe src="https://www.googletagmanager.com/ns.html?id=dummy-gtag-manager-id"
-        height="0" width="0" style="display:none;visibility:hidden"></iframe>
-    </noscript><a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
+    </script><a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
     <header     class="govuk-header govuk-!-margin-bottom-0" id="pins-applications-header"
     role="banner" data-module="govuk-header">
         <div class="govuk-width-container">
@@ -210,11 +202,7 @@ exports[`change hearing GET /hearing/change/check-details when all pages have be
 "<body class="govuk-template__body">
     <script nonce="EdcOUaJ8lczj9tIPO0lPow==">
         document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
-    </script>
-    <noscript>
-        <iframe src="https://www.googletagmanager.com/ns.html?id=dummy-gtag-manager-id"
-        height="0" width="0" style="display:none;visibility:hidden"></iframe>
-    </noscript><a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
+    </script><a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
     <header     class="govuk-header govuk-!-margin-bottom-0" id="pins-applications-header"
     role="banner" data-module="govuk-header">
         <div class="govuk-width-container">
@@ -466,11 +454,7 @@ exports[`change hearing GET /hearing/change/date should match the snapshot 1`] =
 "<body class="govuk-template__body">
     <script nonce="EdcOUaJ8lczj9tIPO0lPow==">
         document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
-    </script>
-    <noscript>
-        <iframe src="https://www.googletagmanager.com/ns.html?id=dummy-gtag-manager-id"
-        height="0" width="0" style="display:none;visibility:hidden"></iframe>
-    </noscript><a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
+    </script><a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
     <header     class="govuk-header govuk-!-margin-bottom-0" id="pins-applications-header"
     role="banner" data-module="govuk-header">
         <div class="govuk-width-container">
