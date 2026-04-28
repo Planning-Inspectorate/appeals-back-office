@@ -37,6 +37,7 @@ import formatDate, {
 } from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { manuallyAddedRepNotifySend } from '#endpoints/representations/notify/services/index.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
@@ -172,6 +173,8 @@ export const getRepStatusAuditLogDetails = (
  **/
 
 /**
+ * @param {Appeal} appeal
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {number} appealId
  * @param {string} azureAdUserId
  * @param {boolean} shouldAutoPublish
@@ -180,6 +183,8 @@ export const getRepStatusAuditLogDetails = (
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
  **/
 export const createRepresentation = async (
+	appeal,
+	notifyClient,
 	appealId,
 	azureAdUserId,
 	shouldAutoPublish,
@@ -274,6 +279,15 @@ export const createRepresentation = async (
 			formattedAppealStatus
 		])
 	});
+
+	if (shouldAutoPublish) {
+		await manuallyAddedRepNotifySend(
+			appeal,
+			notifyClient,
+			representation,
+			azureAdUserId
+		);
+	}
 
 	return representation;
 };

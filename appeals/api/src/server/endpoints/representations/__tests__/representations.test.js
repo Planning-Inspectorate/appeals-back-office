@@ -1719,7 +1719,7 @@ describe('/appeals/:id/reps', () => {
 			);
 		});
 
-		test('200 and should not auto-publishe for lpa_final_comment rep_type when appeal is in final_comments state', async () => {
+		test('200 and should not auto-publish for lpa_final_comment rep_type when appeal is in final_comments state', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...householdAppeal,
 				appealStatus: [

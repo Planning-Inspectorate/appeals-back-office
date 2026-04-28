@@ -284,6 +284,8 @@ export const createRepresentation = () => async (req, res) => {
 	}
 
 	const rep = await representationService.createRepresentation(
+		req.appeal,
+		req.notifyClient,
 		parseInt(appealId),
 		String(req.get('azureAdUserId')),
 		shouldAutoPublish,

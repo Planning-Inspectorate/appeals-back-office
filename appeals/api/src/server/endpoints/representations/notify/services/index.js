@@ -356,3 +356,60 @@ export const rule6PartyProofOfEvidenceIncomplete = async ({
 		rule6Party.serviceUser.email
 	);
 };
+
+
+/**
+ * @param {Appeal} appeal
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {Representation} representation
+ * @param {string|undefined} azureAdUserId
+ * @returns
+ */
+export const manuallyAddedRepNotifySend = async (
+	appeal,
+	notifyClient,
+	representation,
+	azureAdUserId
+) => {
+	const repType = representation?.representationType;
+	const siteAddress = formatSiteAddress(appeal);
+	const appellantAgentEmail = appeal.agent?.email || appeal.appellant?.email;
+	let recipients = [appeal.lpa?.email, appellantAgentEmail];
+	let templateName = '';
+
+	if (!appellantAgentEmail) {
+		throw new Error(`no recipient email address found for Appeal: ${appeal.reference}`);
+	}
+
+	let personalisation = {
+		appeal_reference_number: appeal.reference,
+		lpa_reference: appeal.applicationReference || '',
+		site_address: siteAddress,
+		case_team_email: ''
+	};
+
+	switch (repType) {
+		case 'lpa_statement':
+			templateName = 'lpa-statement-added';
+			personalisation.case_team_email = await getTeamEmailFromAppealId(appeal.id);
+			break;
+		case 'appellant_final_comment':
+			personalisation.case_team_email = await getTeamEmailFromAppealId(appeal.id);
+			break;
+		case 'comment':
+			templateName = 'ip-comment-added';
+			break;
+		default:
+			throw new Error(`Unknown representation type: ${repType}`);
+	}
+
+	for(const recipient of recipients) {
+		await notifySend({
+			azureAdUserId,
+			templateName: templateName,
+			notifyClient,
+			recipientEmail: recipient,
+			personalisation
+		});
+	}
+}
