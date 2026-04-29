@@ -1,6 +1,5 @@
 import { getAvailableProcedureTypesForAppealType } from '#appeals/appeal-details/change-procedure-type/change-procedure-type.utils.js';
 import featureFlags from '#common/feature-flags.js';
-import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { removeSummaryListActions } from '#lib/mappers/index.js';
 import { isDefined } from '#lib/ts-utilities.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
@@ -61,16 +60,6 @@ const displayProcedureChangeLink = (appealDetails) => {
 		appealDetails.documentationSummary?.lpaStatement ?? {};
 	const { representationStatus: ipCommentsrepresentationStatus } =
 		appealDetails.documentationSummary?.ipComments ?? {};
-	const lpaStatementDueDateElapsed = appealDetails.appealTimetable?.lpaStatementDueDate
-		? dateIsInThePast(
-				dateISOStringToDayMonthYearHourMinute(appealDetails.appealTimetable.lpaStatementDueDate)
-			)
-		: false;
-	const ipCommentsDueDateElapsed = appealDetails.appealTimetable?.ipCommentsDueDate
-		? dateIsInThePast(
-				dateISOStringToDayMonthYearHourMinute(appealDetails.appealTimetable.ipCommentsDueDate)
-			)
-		: false;
 	const availableProcedureTypes = getAvailableProcedureTypesForAppealType(appealDetails.appealType);
 	const hasAlternativeProcedureType = availableProcedureTypes.some(
 		(procedureType) => procedureType !== appealDetails.procedureType?.toLowerCase()
@@ -85,9 +74,7 @@ const displayProcedureChangeLink = (appealDetails) => {
 		].includes(appealDetails.appealType) ||
 		!hasAlternativeProcedureType ||
 		lpaStatementrepresentationStatus === APPEAL_REPRESENTATION_STATUS.PUBLISHED ||
-		ipCommentsrepresentationStatus === APPEAL_REPRESENTATION_STATUS.PUBLISHED ||
-		lpaStatementDueDateElapsed ||
-		ipCommentsDueDateElapsed
+		ipCommentsrepresentationStatus === APPEAL_REPRESENTATION_STATUS.PUBLISHED
 	)
 		return false;
 
