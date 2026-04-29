@@ -4,7 +4,7 @@
 /** @typedef {import('@pins/appeals').Address} Address */
 
 import { isAwaitingLinkedAppeal } from '#utils/is-awaiting-linked-appeal.js';
-import { hasChildAppeals, isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
+import { hasChildLinkedAppeals, isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import {
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED
@@ -29,7 +29,7 @@ export const mapAppealRelationships = (data) => {
 					})
 			: [];
 
-	const childAppeals = hasChildAppeals(appeal)
+	const childAppeals = hasChildLinkedAppeals(appeal)
 		? // @ts-ignore
 			appeal.childAppeals
 				.filter((relationship) => relationship.type === CASE_RELATIONSHIP_LINKED)
