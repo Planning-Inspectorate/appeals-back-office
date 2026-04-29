@@ -9,7 +9,8 @@ import {
 	AUDIT_TRAIL_APPEAL_LINK_ADDED,
 	AUDIT_TRAIL_APPEAL_LINK_UNLINKED,
 	AUDIT_TRAIL_APPEAL_RELATION_ADDED,
-	AUDIT_TRAIL_APPEAL_RELATION_REMOVED
+	AUDIT_TRAIL_APPEAL_RELATION_REMOVED,
+	CASE_RELATIONSHIP_LINKED
 } from '@pins/appeals/constants/support.js';
 
 describe('Link Appeals Service', () => {
@@ -36,7 +37,7 @@ describe('Link Appeals Service', () => {
 						valid: true
 					}
 				],
-				childAppeals: [{ appeal: { id: 3 } }]
+				childAppeals: [{ appeal: { id: 3 }, type: CASE_RELATIONSHIP_LINKED }]
 			});
 			const isCurrentAppealParent = false;
 

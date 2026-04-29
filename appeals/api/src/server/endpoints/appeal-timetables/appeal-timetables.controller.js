@@ -1,6 +1,10 @@
 import appealRepository from '#repositories/appeal.repository.js';
 import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
-import { hasChildAppeals, isLinkedAppeal, isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
+import {
+	hasChildLinkedAppeals,
+	isLinkedAppeal,
+	isLinkedAppealsActive
+} from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
@@ -143,7 +147,7 @@ const updateAppealTimetableById = async (req, res) => {
 		const azureAdUserId = req.get('azureAdUserId') || '';
 		await updateAppealTimetable(appeal, body, notifyClient, azureAdUserId);
 
-		if (hasChildAppeals(appeal)) {
+		if (hasChildLinkedAppeals(appeal)) {
 			await Promise.all(
 				// @ts-ignore
 				appeal.childAppeals.map(async (childAppeal) => {

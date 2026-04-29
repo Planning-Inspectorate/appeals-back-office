@@ -387,7 +387,13 @@ const startCase = async (
 	hearingEstimatedDays
 ) => {
 	try {
-		const isChildAppeal = isLinkedAppealsActive(appeal) && Boolean(appeal?.parentAppeals?.length);
+		const isChildAppeal =
+			isLinkedAppealsActive(appeal) &&
+			Boolean(
+				appeal?.parentAppeals?.filter(
+					(parentAppeal) => parentAppeal.type === CASE_RELATIONSHIP_LINKED
+				).length
+			);
 
 		const appealType = appeal.appealType || null;
 		if (!appealType) {
@@ -493,7 +499,13 @@ const getStartCaseNotifyPreviews = async (
 	inquiry
 ) => {
 	try {
-		const isChildAppeal = isLinkedAppealsActive(appeal) && Boolean(appeal?.parentAppeals?.length);
+		const isChildAppeal =
+			isLinkedAppealsActive(appeal) &&
+			Boolean(
+				appeal?.parentAppeals?.filter(
+					(parentAppeal) => parentAppeal.type === CASE_RELATIONSHIP_LINKED
+				).length
+			);
 
 		const appealType = appeal.appealType || null;
 		if (!appealType) {
