@@ -64,13 +64,13 @@ const formatAppeal = (appeal, linkedAppeals) => {
 		hasInquiryAddress: !!appeal.inquiry?.addressId,
 		enforcementReference: appeal.appellantCase?.enforcementReference,
 		isS78Expedited: isS78ExpeditedAppealType(
-			appeal.appealType?.key,
+			appeal.appealType?.type,
 			appeal.appellantCase?.applicationDate,
 			appeal.appellantCase?.applicationDecision
 		)
 	};
 };
-1;
+
 /**
  *
  * @param {Object} options
@@ -130,7 +130,7 @@ const formatPersonalListItem = async ({
 		enforcementNoticeGroundAFeeReceiptDueDate:
 			appeal.enforcementNoticeAppealOutcome?.groundAFeeReceiptDueDate || null,
 		isS78Expedited: isS78ExpeditedAppealType(
-			appealType?.key,
+			appealType?.type,
 			appellantCase?.applicationDate,
 			appellantCase?.applicationDecision
 		)
