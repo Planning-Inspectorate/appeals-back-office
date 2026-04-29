@@ -724,7 +724,7 @@ describe('mapQuestionnaireIn', () => {
 			})
 		},
 		{
-			desc: 'S78 case',
+			desc: 'S78 case with expedited fields',
 			input: {
 				casedata: {
 					caseType: APPEAL_CASE_TYPE.W,
@@ -733,21 +733,23 @@ describe('mapQuestionnaireIn', () => {
 					siteSafetyDetails: ['safety1'],
 					notificationMethod: ['email'],
 					affectedListedBuildingNumbers: ['LB1'],
-					designatedSitesNames: ['siteA', 'customSite']
+					designatedSitesNames: ['siteA'],
+					significantChangesAffectingApplicationLpa: [
+						{ value: 'adopted-a-new-local-plan', comment: 'lp' },
+						{ value: 'national-policy-change', comment: 'np' },
+						{ value: 'court-judgement', comment: 'cj' },
+						{ value: 'other', comment: 'o' }
+					],
+					listOfDocumentsBeforeDecision: 'docs'
 				}
 			},
 			expected: expect.objectContaining({
-				lpaQuestionnaireSubmittedDate: '2025-10-22',
-				siteAccessDetails: 'access1',
-				siteSafetyDetails: 'safety1',
-				listedBuildingDetails: { create: [{ listEntry: 'LB1', affectsListedBuilding: true }] },
-				lpaNotificationMethods: {
-					create: [{ lpaNotificationMethod: { connect: { key: 'email' } } }]
-				},
-				designatedSiteNames: {
-					create: [{ designatedSite: { connect: { key: 'siteA' } } }]
-				},
-				designatedSiteNameCustom: 'customSite'
+				anySignificantChangesLpa: 'Yes',
+				anySignificantChangesLpa_localPlanSignificantChanges: 'lp',
+				anySignificantChangesLpa_nationalPolicySignificantChanges: 'np',
+				anySignificantChangesLpa_courtJudgementSignificantChanges: 'cj',
+				anySignificantChangesLpa_otherSignificantChanges: 'o',
+				listOfDocumentsBeforeDecision: 'docs'
 			})
 		},
 		{

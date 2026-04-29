@@ -2160,6 +2160,12 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                                     data-cy="change-procedure-preference-duration">Change<span class="govuk-visually-hidden"> How many days would you expect the inquiry to last? (7. Appeal process)</span></a>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have there been any significant changes that would affect the application?</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/any-significant-changes-lpa/change">Change<span class="govuk-visually-hidden"> Have there been any significant changes that would affect the application? (7. Appeal process)</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Are there any other ongoing appeals next to, or close to the site?</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
@@ -2172,6 +2178,40 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                                 <br><span>Some extra conditions</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/extra-conditions/change">Change<span class="govuk-visually-hidden"> Are there any new conditions? (7. Appeal process)</span></a>
+                                </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-summary-card">
+                <div class="govuk-summary-card__title-wrapper">
+                    <h2 class="govuk-summary-card__title"> 8. Original Evidence</h2>
+                </div>
+                <div class="govuk-summary-card__content">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Design and access statement</dt>
+                            <dd                             class="govuk-summary-list__value">No documents</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-design-access-statement-lpa">Add<span class="govuk-visually-hidden"> Design and access statement (8. Original Evidence)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Plans and drawings</dt>
+                            <dd class="govuk-summary-list__value">No documents</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-plans-drawings-lpa">Add<span class="govuk-visually-hidden"> Plans and drawings (8. Original Evidence)</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Any other documents submitted with the application</dt>
+                            <dd                             class="govuk-summary-list__value">No documents</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-additional-documents-lpa">Add<span class="govuk-visually-hidden"> Any other documents submitted with the application (8. Original Evidence)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What documents and plans did you use to make your decision?</dt>
+                            <dd                             class="govuk-summary-list__value">Not provided</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/list-of-documents-before-decision/change"
+                                    data-cy="change-list-of-documents-before-decision">Change<span class="govuk-visually-hidden"> What documents and plans did you use to make your decision? (8. Original Evidence)</span></a>
                                 </dd>
                         </div>
                     </dl>

@@ -401,6 +401,9 @@ interface SingleLPAQuestionnaireResponse {
 		otherPartyRepresentations?: FolderInfo | null;
 		planningOfficerReport?: FolderInfo | null;
 		plansDrawings?: FolderInfo | null;
+		additionalDocumentsLPA?: FolderInfo | null;
+		designAccessStatementLPA?: FolderInfo | null;
+		plansDrawingsLPA?: FolderInfo | null;
 		developmentPlanPolicies?: FolderInfo | null;
 		treePreservationPlan?: FolderInfo | null;
 		definitiveMapStatement?: FolderInfo | null;
@@ -489,6 +492,12 @@ interface SingleLPAQuestionnaireResponse {
 	appealUnderActSection?: string | null;
 	lpaConsiderAppealInvalid?: boolean;
 	lpaAppealInvalidReasons?: string | null;
+	listOfDocumentsBeforeDecision?: string | null;
+	anySignificantChangesLpa?: string | null;
+	anySignificantChangesLpa_otherSignificantChanges?: string | null;
+	anySignificantChangesLpa_localPlanSignificantChanges?: string | null;
+	anySignificantChangesLpa_nationalPolicySignificantChanges?: string | null;
+	anySignificantChangesLpa_courtJudgementSignificantChanges?: string | null;
 }
 
 interface UpdateLPAQuestionnaireRequest {

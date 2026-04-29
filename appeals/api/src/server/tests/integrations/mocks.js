@@ -1688,6 +1688,12 @@ export const validLpaQuestionnaireIngestionS78 = {
 					lpaProcedurePreference: 'written',
 					lpaProcedurePreferenceDetails: '',
 					lpaProcedurePreferenceDuration: 1,
+					anySignificantChangesLpa: 'No',
+					anySignificantChangesLpa_courtJudgementSignificantChanges: null,
+					anySignificantChangesLpa_localPlanSignificantChanges: null,
+					anySignificantChangesLpa_nationalPolicySignificantChanges: null,
+					anySignificantChangesLpa_otherSignificantChanges: null,
+					listOfDocumentsBeforeDecision: undefined,
 					designatedSiteNameCustom: undefined,
 					designatedSiteNames: {
 						create: [

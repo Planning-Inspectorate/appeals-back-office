@@ -293,6 +293,9 @@ export interface SingleLPAQuestionnaireResponse {
 		lpaCaseCorrespondence: FolderInfo | {};
 		otherPartyRepresentations: FolderInfo | {};
 		planningOfficerReport: FolderInfo | {};
+		additionalDocumentsLPA?: FolderInfo | null;
+		designAccessStatementLPA?: FolderInfo | null;
+		plansDrawingsLPA?: FolderInfo | null;
 	};
 	doesAffectAListedBuilding?: boolean | null;
 	doesAffectAScheduledMonument?: boolean | null;
@@ -336,6 +339,12 @@ export interface SingleLPAQuestionnaireResponse {
 	siteWithinGreenBelt?: boolean | null;
 	statutoryConsulteesDetails?: string;
 	validation: LPAQuestionnaireValidationOutcomeResponse | null;
+	listOfDocumentsBeforeDecision?: string | null;
+	anySignificantChangesLpa?: string | null;
+	anySignificantChangesLpa_otherSignificantChanges?: string | null;
+	anySignificantChangesLpa_localPlanSignificantChanges?: string | null;
+	anySignificantChangesLpa_nationalPolicySignificantChanges?: string | null;
+	anySignificantChangesLpa_courtJudgementSignificantChanges?: string | null;
 }
 
 export type BodyValidationOutcome = Object<string, string | string[]>;

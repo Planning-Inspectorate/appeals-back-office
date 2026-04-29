@@ -362,7 +362,14 @@ export const getAddDocuments = async (request, response) => {
 			'Upload the planning permission and any other relevant documents',
 		[APPEAL_DOCUMENT_TYPE.LPA_ENFORCEMENT_NOTICE]: 'Upload the enforcement notice',
 		[APPEAL_DOCUMENT_TYPE.LPA_ENFORCEMENT_NOTICE_PLAN]: 'Upload the enforcement notice plan',
-		[APPEAL_DOCUMENT_TYPE.PLANNING_CONTRAVENTION_NOTICE]: 'Upload the planning contravention notice'
+		[APPEAL_DOCUMENT_TYPE.PLANNING_CONTRAVENTION_NOTICE]:
+			'Upload the planning contravention notice',
+		[APPEAL_DOCUMENT_TYPE.DESIGN_ACCESS_STATEMENT_LPA]:
+			'Upload the design and access statement submitted for the application',
+		[APPEAL_DOCUMENT_TYPE.PLANS_DRAWINGS_LPA]:
+			'Upload the plans and drawings submitted for the application',
+		[APPEAL_DOCUMENT_TYPE.ADDITIONAL_DOCUMENTS_LPA]:
+			'Upload any other documents submitted with the application'
 	}[documentType];
 
 	await renderDocumentUpload({

@@ -26,6 +26,7 @@ export const mapLpaQuestionnaire = (data) => {
 			casedata?.listedBuildingDetails
 				?.filter((lp) => lp.affectsListedBuilding)
 				.map((lb) => lb.listEntry) || null,
-		reasonForNeighbourVisits: casedata?.reasonForNeighbourVisits
+		reasonForNeighbourVisits: casedata?.reasonForNeighbourVisits,
+		listOfDocumentsBeforeDecision: casedata?.listOfDocumentsBeforeDecision ?? null
 	};
 };
