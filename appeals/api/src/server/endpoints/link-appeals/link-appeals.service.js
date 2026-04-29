@@ -73,7 +73,12 @@ export const canLinkAppeals = (appeal, type, relationship) => {
  * @returns {Boolean}
  */
 export const checkAppealsStatusBeforeLPAQ = (appeal, linkedAppeal, isCurrentAppealParent) => {
-	if (!isCurrentAppealParent && linkedAppeal.childAppeals?.length) {
+	if (
+		!isCurrentAppealParent &&
+		linkedAppeal.childAppeals?.filter(
+			(childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED
+		).length
+	) {
 		const appealStatus = linkedAppeal.appealStatus?.[linkedAppeal.appealStatus.length - 1];
 		return appealStatus?.status !== 'lpa_questionnaire';
 	}

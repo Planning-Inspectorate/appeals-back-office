@@ -398,7 +398,13 @@ const startCase = async (
 	inspectorName = null
 ) => {
 	try {
-		const isChildAppeal = isLinkedAppealsActive(appeal) && Boolean(appeal?.parentAppeals?.length);
+		const isChildAppeal =
+			isLinkedAppealsActive(appeal) &&
+			Boolean(
+				appeal?.parentAppeals?.filter(
+					(parentAppeal) => parentAppeal.type === CASE_RELATIONSHIP_LINKED
+				).length
+			);
 
 		const appealType = appeal.appealType || null;
 		if (!appealType) {
@@ -507,7 +513,13 @@ const getStartCaseNotifyPreviews = async (
 	inspectorName = null
 ) => {
 	try {
-		const isChildAppeal = isLinkedAppealsActive(appeal) && Boolean(appeal?.parentAppeals?.length);
+		const isChildAppeal =
+			isLinkedAppealsActive(appeal) &&
+			Boolean(
+				appeal?.parentAppeals?.filter(
+					(parentAppeal) => parentAppeal.type === CASE_RELATIONSHIP_LINKED
+				).length
+			);
 
 		const appealType = appeal.appealType || null;
 		if (!appealType) {

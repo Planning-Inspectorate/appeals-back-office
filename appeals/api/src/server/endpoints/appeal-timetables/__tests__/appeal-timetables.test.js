@@ -301,7 +301,7 @@ describe('appeal timetables routes', () => {
 				databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
 				const child = { ...fullPlanningAppeal, id: 4 };
 				const appealWithTimetable = structuredClone(fullPlanningAppealWithTimetable);
-				appealWithTimetable.childAppeals = [{ child }];
+				appealWithTimetable.childAppeals = [{ child, type: CASE_RELATIONSHIP_LINKED }];
 				const requestBody = structuredClone(householdAppealRequestBody);
 				const responseBody = structuredClone(householdAppealResponseBody);
 				// @ts-ignore
