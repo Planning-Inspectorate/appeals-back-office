@@ -54,6 +54,11 @@ describe('isS78ExpeditedAppealType', () => {
 
 	it('returns false if appealType is not S78 or W', () => {
 		expect(isS78ExpeditedAppealType(APPEAL_CASE_TYPE.D, '2026-04-02', 'refused')).toBe(false);
+		expect(isS78ExpeditedAppealType(APPEAL_CASE_TYPE.H, '2026-04-02', 'refused')).toBe(false);
+		expect(isS78ExpeditedAppealType(APPEAL_CASE_TYPE.Y, '2026-04-02', 'refused')).toBe(false);
+		expect(isS78ExpeditedAppealType(APPEAL_CASE_TYPE.X, '2026-04-02', 'refused')).toBe(false);
+		expect(isS78ExpeditedAppealType(APPEAL_CASE_TYPE.F, '2026-04-02', 'refused')).toBe(false);
+		expect(isS78ExpeditedAppealType(APPEAL_CASE_TYPE.C, '2026-04-02', 'refused')).toBe(false);
 	});
 
 	it('returns false if date is before 2026-04-01', () => {
