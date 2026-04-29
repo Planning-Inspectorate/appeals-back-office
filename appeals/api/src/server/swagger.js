@@ -660,7 +660,10 @@ export const spec = {
 				planningContraventionNotice: folderWithDocs,
 				enforcementNoticePlan: folderWithDocs,
 				enforcementNotice: folderWithDocs,
-				planningPermission: folderWithDocs
+				planningPermission: folderWithDocs,
+				additionalDocumentsLPA: folderWithDocs,
+				designAccessStatementLPA: folderWithDocs,
+				plansDrawingsLPA: folderWithDocs
 			},
 			doesAffectAListedBuilding: true,
 			doesAffectAScheduledMonument: true,
@@ -736,7 +739,15 @@ export const spec = {
 			preserveGrantLoan: true,
 			isSiteInAreaOfSpecialControlAdverts: true,
 			wasApplicationRefusedDueToHighwayOrTraffic: true,
-			didAppellantSubmitCompletePhotosAndPlans: true
+			didAppellantSubmitCompletePhotosAndPlans: true,
+			listOfDocumentsBeforeDecision: 'List of documents before decision',
+			anySignificantChangesLpa: 'Yes',
+			anySignificantChangesLpa_otherSignificantChanges: 'Other significant changes',
+			anySignificantChangesLpa_localPlanSignificantChanges: 'Local plan significant changes',
+			anySignificantChangesLpa_nationalPolicySignificantChanges:
+				'National policy significant changes',
+			anySignificantChangesLpa_courtJudgementSignificantChanges:
+				'Court judgement significant changes'
 		},
 		UpdateAppellantCaseRequest: {
 			appealDueDate: '2024-12-13',

@@ -1,24 +1,7 @@
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
 
-const SIGNIFICANT_CHANGE_VALUE_MAP = {
-	'Local plan': 'adopted-a-new-local-plan',
-	'National policy': 'national-policy-change',
-	'Court judgment': 'court-judgement',
-	Other: 'other'
-};
-
-/**
- *
- * @param {{value: string, comment: string}[]|undefined} changes
- * @param {keyof SIGNIFICANT_CHANGE_VALUE_MAP} type
- * @returns {string|null}
- */
-const extractSignificantChangeValue = (changes, type) => {
-	const mappedValue = SIGNIFICANT_CHANGE_VALUE_MAP[type];
-	const change = changes?.find((c) => c.value === mappedValue);
-	return change?.comment ?? null;
-};
+import { extractSignificantChangeValue } from '#utils/mapping/map-significant-changes.js';
 
 /**
  * @param {Pick<AppellantSubmissionCommand, 'casedata'>} command

@@ -1,6 +1,7 @@
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
 /** @typedef {import('@pins/appeals.api').Schema.DesignatedSite} DesignatedSite */
 
+import { extractSignificantChangeValue } from '#utils/mapping/map-significant-changes.js';
 import { isEnforcementCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
@@ -163,11 +164,15 @@ const generateHasSchemaFields = (casedata, listedBuildingsData) => {
 
 /**
  *
- * @param {import('@planning-inspectorate/data-model').Schemas.LPAQuestionnaireCommand} casedata
+ * @param {import('@planning-inspectorate/data-model').Schemas.LPAQuestionnaireCommand['casedata']} casedata
  * @param {DesignatedSite[]} designatedSites
  * @returns
  */
 const generateS78SchemaFields = (casedata, designatedSites) => {
+	const significantChanges = /** @type {{value: string, comment: string}[] | undefined} */ (
+		casedata.significantChangesAffectingApplicationLpa
+	);
+
 	return {
 		affectsScheduledMonument: casedata.affectsScheduledMonument,
 		isAonbNationalLandscape: casedata.isAonbNationalLandscape,
@@ -195,13 +200,31 @@ const generateS78SchemaFields = (casedata, designatedSites) => {
 		infrastructureLevyExpectedDate: casedata.infrastructureLevyExpectedDate,
 		lpaProcedurePreference: casedata.lpaProcedurePreference,
 		lpaProcedurePreferenceDetails: casedata.lpaProcedurePreferenceDetails,
-		lpaProcedurePreferenceDuration: casedata.lpaProcedurePreferenceDuration
+		lpaProcedurePreferenceDuration: casedata.lpaProcedurePreferenceDuration,
+		anySignificantChangesLpa: (significantChanges?.length ?? 0) > 0 ? 'Yes' : 'No',
+		anySignificantChangesLpa_otherSignificantChanges: extractSignificantChangeValue(
+			significantChanges,
+			'Other'
+		),
+		anySignificantChangesLpa_localPlanSignificantChanges: extractSignificantChangeValue(
+			significantChanges,
+			'Local plan'
+		),
+		anySignificantChangesLpa_nationalPolicySignificantChanges: extractSignificantChangeValue(
+			significantChanges,
+			'National policy'
+		),
+		anySignificantChangesLpa_courtJudgementSignificantChanges: extractSignificantChangeValue(
+			significantChanges,
+			'Court judgment'
+		),
+		listOfDocumentsBeforeDecision: casedata.listOfDocumentsBeforeDecision
 	};
 };
 
 /**
  *
- * @param {import('@planning-inspectorate/data-model').Schemas.LPAQuestionnaireCommand} casedata
+ * @param {import('@planning-inspectorate/data-model').Schemas.LPAQuestionnaireCommand['casedata']} casedata
  * @param {DesignatedSite[]} designatedSites
  * @returns
  */

@@ -193,6 +193,30 @@ const updateableFields = {
 	article4AffectedDevelopmentRights: {
 		type: 'string',
 		nullable: true
+	},
+	anySignificantChangesLpa: {
+		type: 'string',
+		nullable: true
+	},
+	anySignificantChangesLpa_otherSignificantChanges: {
+		type: 'string',
+		nullable: true
+	},
+	anySignificantChangesLpa_localPlanSignificantChanges: {
+		type: 'string',
+		nullable: true
+	},
+	anySignificantChangesLpa_nationalPolicySignificantChanges: {
+		type: 'string',
+		nullable: true
+	},
+	anySignificantChangesLpa_courtJudgementSignificantChanges: {
+		type: 'string',
+		nullable: true
+	},
+	listOfDocumentsBeforeDecision: {
+		type: 'string',
+		nullable: true
 	}
 };
 
@@ -292,7 +316,10 @@ const lpaQuestionnaire = {
 				planningPermission: { ...Folder },
 				lpaEnforcementNotice: { ...Folder },
 				lpaEnforcementNoticePlan: { ...Folder },
-				planningContraventionNotice: { ...Folder }
+				planningContraventionNotice: { ...Folder },
+				designAccessStatementLpa: { ...Folder },
+				plansDrawingsLpa: { ...Folder },
+				additionalDocumentsLpa: { ...Folder }
 			},
 			nullable: true
 		}

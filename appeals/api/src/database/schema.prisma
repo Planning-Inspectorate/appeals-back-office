@@ -596,46 +596,52 @@ model LPAQuestionnaire {
   isGreenBelt                               Boolean?
 
   // S78 fields
-  affectsScheduledMonument            Boolean?
-  isAonbNationalLandscape             Boolean?
-  isGypsyOrTravellerSite              Boolean?
-  isPublicRightOfWay                  Boolean?
-  eiaEnvironmentalImpactSchedule      String?
-  eiaDevelopmentDescription           String?
-  eiaSensitiveAreaDetails             String?
-  eiaColumnTwoThreshold               Boolean?
-  eiaScreeningOpinion                 Boolean?
-  eiaRequiresEnvironmentalStatement   Boolean?
-  eiaCompletedEnvironmentalStatement  Boolean?
-  eiaScopingOpinion                   Boolean?
-  consultedBodiesDetails              String?
-  hasProtectedSpecies                 Boolean?
-  hasStatutoryConsultees              Boolean?
-  hasInfrastructureLevy               Boolean?
-  hasTreePreservationOrder            Boolean?
-  hasConsultationResponses            Boolean?
-  hasEmergingPlan                     Boolean?
-  hasSupplementaryPlanningDocs        Boolean?
-  isInfrastructureLevyFormallyAdopted Boolean?
-  infrastructureLevyAdoptedDate       DateTime?
-  infrastructureLevyExpectedDate      DateTime?
-  lpaProcedurePreference              String?
-  lpaProcedurePreferenceDetails       String?
-  lpaProcedurePreferenceDuration      Int?
-  lpaFinalCommentDetails              String?
-  lpaAddedWitnesses                   Boolean?
-  siteWithinSSSI                      Boolean?
-  reasonForNeighbourVisits            String?
-  importantInformation                String?
-  redeterminedIndicator               String?
-  dateCostsReportDespatched           DateTime?
-  dateNotRecoveredOrDerecovered       DateTime?
-  dateRecovered                       DateTime?
-  originalCaseDecisionDate            DateTime?
-  targetDate                          DateTime?
-  siteNoticesSentDate                 DateTime?
-  designatedSiteNameCustom            String?
-  designatedSiteNames                 DesignatedSiteSelected[]
+  affectsScheduledMonument                                  Boolean?
+  isAonbNationalLandscape                                   Boolean?
+  isGypsyOrTravellerSite                                    Boolean?
+  isPublicRightOfWay                                        Boolean?
+  eiaEnvironmentalImpactSchedule                            String?
+  eiaDevelopmentDescription                                 String?
+  eiaSensitiveAreaDetails                                   String?
+  eiaColumnTwoThreshold                                     Boolean?
+  eiaScreeningOpinion                                       Boolean?
+  eiaRequiresEnvironmentalStatement                         Boolean?
+  eiaCompletedEnvironmentalStatement                        Boolean?
+  eiaScopingOpinion                                         Boolean?
+  consultedBodiesDetails                                    String?
+  hasProtectedSpecies                                       Boolean?
+  hasStatutoryConsultees                                    Boolean?
+  hasInfrastructureLevy                                     Boolean?
+  hasTreePreservationOrder                                  Boolean?
+  hasConsultationResponses                                  Boolean?
+  hasEmergingPlan                                           Boolean?
+  hasSupplementaryPlanningDocs                              Boolean?
+  isInfrastructureLevyFormallyAdopted                       Boolean?
+  infrastructureLevyAdoptedDate                             DateTime?
+  infrastructureLevyExpectedDate                            DateTime?
+  lpaProcedurePreference                                    String?
+  lpaProcedurePreferenceDetails                             String?
+  lpaProcedurePreferenceDuration                            Int?
+  lpaFinalCommentDetails                                    String?
+  lpaAddedWitnesses                                         Boolean?
+  siteWithinSSSI                                            Boolean?
+  reasonForNeighbourVisits                                  String?
+  importantInformation                                      String?
+  redeterminedIndicator                                     String?
+  dateCostsReportDespatched                                 DateTime?
+  dateNotRecoveredOrDerecovered                             DateTime?
+  dateRecovered                                             DateTime?
+  originalCaseDecisionDate                                  DateTime?
+  targetDate                                                DateTime?
+  siteNoticesSentDate                                       DateTime?
+  designatedSiteNameCustom                                  String?
+  designatedSiteNames                                       DesignatedSiteSelected[]
+  anySignificantChangesLpa                                  String?
+  anySignificantChangesLpa_otherSignificantChanges          String?                  @db.NVarChar(Max)
+  anySignificantChangesLpa_localPlanSignificantChanges      String?                  @db.NVarChar(Max)
+  anySignificantChangesLpa_nationalPolicySignificantChanges String?                  @db.NVarChar(Max)
+  anySignificantChangesLpa_courtJudgementSignificantChanges String?                  @db.NVarChar(Max)
+  listOfDocumentsBeforeDecision                             String?                  @db.NVarChar(Max)
 
   // S20 fields
   historicEnglandConsultation Boolean?

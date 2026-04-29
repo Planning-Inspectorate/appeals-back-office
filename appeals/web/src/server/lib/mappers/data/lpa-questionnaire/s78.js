@@ -1,10 +1,13 @@
 import { mapLpaNeighbouringSitesLpaqAdapter } from '../appeal/submappers/lpa-neighbouring-sites.mapper.js';
 import { submaps as hasSubmaps } from './has.js';
+import { mapAdditionalDocumentsLpa } from './submappers/map-additional-documents-lpa.js';
 import { mapAffectsScheduledMonument } from './submappers/map-affects-scheduled-monument.js';
+import { mapAnySignificantChangesLpa } from './submappers/map-any-significant-changes-lpa.js';
 import { mapChangedListedBuildingDetails } from './submappers/map-changed-listed-building-details.js';
 import { mapCommunityInfrastructureLevy } from './submappers/map-community-infrastructure-levy.js';
 import { mapConsultationResponses } from './submappers/map-consultation-responses.js';
 import { mapDefinitiveMapStatement } from './submappers/map-definitive-map-statement.js';
+import { mapDesignAccessStatementLpa } from './submappers/map-design-access-statement-lpa.js';
 import { mapInNearOrLikelyToAffectDesignatedSites } from './submappers/map-designated-sites.js';
 import { mapEiaColumnTwoThreshold } from './submappers/map-eia-column-two-threshold.js';
 import { mapEiaConsultedBodiesDetails } from './submappers/map-eia-consulted-bodies-details.js';
@@ -22,7 +25,9 @@ import { mapInfrastructureLevyExpectedDate } from './submappers/map-infrastructu
 import { mapIsAonbNationalLandscape } from './submappers/map-is-aonb-national-landscape.js';
 import { mapIsGypsyOrTravellerSite } from './submappers/map-is-gypsy-or-traveller-site.js';
 import { mapIsInfrastructureLevyFormallyAdopted } from './submappers/map-is-infrastructure-levy-formally-adopted.js';
+import { mapListOfDocumentsBeforeDecision } from './submappers/map-list-of-documents-before-decision.js';
 import { mapOtherRelevantPolicies } from './submappers/map-other-relevant-policies.js';
+import { mapPlansDrawingsLpa } from './submappers/map-plans-drawings-lpa.js';
 import { mapProcedurePreferenceDetails } from './submappers/map-procedure-preference-details.js';
 import { mapProcedurePreferenceDuration } from './submappers/map-procedure-preference-duration.js';
 import { mapProcedurePreference } from './submappers/map-procedure-preference.js';
@@ -59,5 +64,10 @@ export const submaps = {
 	reasonForNeighbourVisits: mapReasonForNeighbourVisits,
 	lpaNeighbouringSites: mapLpaNeighbouringSitesLpaqAdapter,
 	inNearOrLikelyToAffectDesignatedSites: mapInNearOrLikelyToAffectDesignatedSites,
-	changedListedBuildingDetails: mapChangedListedBuildingDetails
+	changedListedBuildingDetails: mapChangedListedBuildingDetails,
+	designAccessStatementLpa: mapDesignAccessStatementLpa,
+	plansDrawingsLpa: mapPlansDrawingsLpa,
+	additionalDocumentsLpa: mapAdditionalDocumentsLpa,
+	listOfDocumentsBeforeDecision: mapListOfDocumentsBeforeDecision,
+	anySignificantChangesLpa: mapAnySignificantChangesLpa
 };
