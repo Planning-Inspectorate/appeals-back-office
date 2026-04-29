@@ -98,7 +98,7 @@ app.use(
 			'font-src': ["'self'"],
 			'img-src': ["'self'", ...imgSrc, config.blobStorageUrl],
 			'style-src': ["'self'"],
-			'connect-src': ["'self'", ...connectSrc]
+			'connect-src': ["'self'", ...connectSrc, config.blobStorageUrl]
 		}
 	})
 );
