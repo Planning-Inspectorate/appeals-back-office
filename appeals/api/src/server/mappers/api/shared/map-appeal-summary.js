@@ -39,7 +39,7 @@ export const mapAppealSummary = (data) => {
 		appellant: mapAppellant(data),
 		isS78Expedited:
 			isS78ExpeditedAppealType(
-				appeal.appealType?.key,
+				appeal.appealType?.type,
 				appeal.appellantCase?.applicationDate,
 				appeal.appellantCase?.applicationDecision
 			) && isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS)
