@@ -22,8 +22,12 @@ export const isLinkedAppealsActive = (appeal = null) => {
  * @param {*} appeal
  * @returns {boolean}
  */
-export const hasChildAppeals = (appeal) =>
-	isLinkedAppealsActive(appeal) && appeal.childAppeals?.length;
+export const hasChildLinkedAppeals = (appeal) =>
+	isLinkedAppealsActive(appeal) &&
+	appeal.childAppeals?.filter(
+		//@ts-ignore
+		(childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED
+	).length;
 
 /**
  *
