@@ -65,7 +65,7 @@ function createDataMap(mappingRequest) {
 		}
 		case APPEAL_CASE_TYPE.W: {
 			const isS78Expedited = isS78ExpeditedAppealType(
-				appeal.appealType?.key,
+				appeal.appealType?.type,
 				appeal.appellantCase?.applicationDate,
 				appeal.appellantCase?.applicationDecision
 			);

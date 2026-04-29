@@ -53,9 +53,7 @@ export const isExpeditedAppealType = (appealType) => {
 export const isS78ExpeditedAppealType = (appealType, caseSubmissionDate, applicationDecision) => {
 	if (!appealType) return false;
 	if (
-		(appealType.length === 1
-			? baseCaseType[appealType] === APPEAL_CASE_TYPE.W
-			: appealType === APPEAL_TYPE.S78) &&
+		(appealType === APPEAL_CASE_TYPE.W || appealType === APPEAL_TYPE.S78) &&
 		dateIsAfterDate(new Date(caseSubmissionDate), new Date(2026, 3, 1)) &&
 		(applicationDecision === 'refused' || applicationDecision === 'granted')
 	) {

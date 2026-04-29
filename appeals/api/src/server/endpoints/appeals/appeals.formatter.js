@@ -66,7 +66,7 @@ const formatAppeal = (appeal, linkedAppeals) => {
 		enforcementReference: appeal.appellantCase?.enforcementReference,
 		isS78Expedited:
 			isS78ExpeditedAppealType(
-				appeal.appealType?.key,
+				appeal.appealType?.type,
 				appeal.appellantCase?.applicationDate,
 				appeal.appellantCase?.applicationDecision
 			) && isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS)
@@ -133,7 +133,7 @@ const formatPersonalListItem = async ({
 			appeal.enforcementNoticeAppealOutcome?.groundAFeeReceiptDueDate || null,
 		isS78Expedited:
 			isS78ExpeditedAppealType(
-				appealType?.key,
+				appealType?.type,
 				appellantCase?.applicationDate,
 				appellantCase?.applicationDecision
 			) && isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS)
