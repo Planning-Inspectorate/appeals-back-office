@@ -638,6 +638,7 @@ const renderCheckDetailsAndMarkEnforcementAsIncomplete = async (request, respons
 		}
 
 		const outcome = session?.webAppellantCaseReviewOutcome;
+
 		const isIncomplete = outcome?.validationOutcome === 'incomplete';
 
 		const tasks = {
@@ -691,7 +692,7 @@ const renderCheckDetailsAndMarkEnforcementAsIncomplete = async (request, respons
 						})
 					: [],
 				local_planning_authority: currentAppeal.localPlanningDepartment ?? '',
-				other_info: outcome?.reasonsText?.length ? Object.values(outcome?.reasonsText) : [],
+				other_info: outcome?.reasonsText ? Object.values(outcome?.reasonsText) : [],
 				due_date: outcome?.updatedDueDate
 					? dayMonthYearHourMinuteToDisplayDate(outcome?.updatedDueDate)
 					: '',
