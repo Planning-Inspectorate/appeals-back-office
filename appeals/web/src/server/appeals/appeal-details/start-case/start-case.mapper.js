@@ -117,9 +117,9 @@ export function selectProcedurePage(
 		isS78ExpeditedAppealType(
 			appealType,
 			appellantCase.applicationDate,
-			appellantCase.applicationDecision
+			appellantCase.applicationDecision,
+			appellantCase.typeOfPlanningApplication
 		);
-
 	const dataMappers = [
 		...(showPart1
 			? [

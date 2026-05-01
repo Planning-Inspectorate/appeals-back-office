@@ -871,7 +871,8 @@ function generateCaseTypeSpecificComponents(
 					isS78ExpeditedAppealType(
 						appealDetails.appealType,
 						appellantCaseData.applicationDate,
-						appellantCaseData.applicationDecision
+						appellantCaseData.applicationDecision,
+						appellantCaseData.typeOfPlanningApplication
 					)
 				) {
 					return generateS78ExpeditedComponents(

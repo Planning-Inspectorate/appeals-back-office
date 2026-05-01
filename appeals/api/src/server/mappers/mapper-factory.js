@@ -67,7 +67,8 @@ function createDataMap(mappingRequest) {
 			const isS78Expedited = isS78ExpeditedAppealType(
 				appeal.appealType?.type,
 				appeal.appellantCase?.applicationDate,
-				appeal.appellantCase?.applicationDecision
+				appeal.appellantCase?.applicationDecision,
+				appeal.appellantCase?.typeOfPlanningApplication
 			);
 			if (isS78Expedited && isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS)) {
 				const s78 = createMap(apiMappers.apiS78ExpeditedMappers, mappingRequest);

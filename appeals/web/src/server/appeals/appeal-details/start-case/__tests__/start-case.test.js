@@ -7,6 +7,7 @@ import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
+import { APPEAL_TYPE_OF_PLANNING_APPLICATION } from '@planning-inspectorate/data-model';
 import nock from 'nock';
 import supertest from 'supertest';
 
@@ -350,7 +351,8 @@ describe('start-case', () => {
 
 			nock('http://test/').get('/appeals/1/appellant-cases/0').reply(200, {
 				applicationDate: '2026-04-01',
-				applicationDecision: 'refused'
+				applicationDecision: 'refused',
+				typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
 			});
 		});
 
@@ -368,7 +370,8 @@ describe('start-case', () => {
 
 			nock('http://test/').get('/appeals/1/appellant-cases/0').reply(200, {
 				applicationDate: '2026-04-01',
-				applicationDecision: 'refused'
+				applicationDecision: 'refused',
+				typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
 			});
 
 			nock('http://test/')
