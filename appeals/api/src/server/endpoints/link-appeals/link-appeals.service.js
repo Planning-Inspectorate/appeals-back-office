@@ -179,20 +179,22 @@ export const copyRepresentations = async (sourceAppeal, destinationAppeal) => {
 	}
 	const documents = await getDocumentsInFolder({ folderId: sourceFolders[0].id });
 	const attachmentsByRepresentedId = {};
-	const copiedRepresentations = await Promise.all(
+	const copiedRepresentations = await Promise.allSettled(
 		representations.map(async (representation) => {
-			const copyList = representation.attachments.map((attachment) => {
-				const document = documents.find((doc) => {
-					return doc.guid === attachment.documentGuid;
-				});
-				return buildFileCopyDetails(
-					// @ts-ignore
-					document,
-					destinationAppeal,
-					destinationFolders[0].id,
-					sourceAppeal
-				);
-			});
+			const copyList = representation.attachments
+				.map((attachment) => {
+					const document = documents.find((doc) => {
+						return doc.guid === attachment.documentGuid;
+					});
+					return buildFileCopyDetails(
+						// @ts-ignore
+						document,
+						destinationAppeal,
+						destinationFolders[0].id,
+						sourceAppeal
+					);
+				})
+				.filter((copyDetails) => copyDetails != undefined);
 			const copyBlobList = copyList.map(({ sourceBlobName, destinationBlobName }) => ({
 				sourceBlobName,
 				destinationBlobName
@@ -239,7 +241,9 @@ export const copyRepresentations = async (sourceAppeal, destinationAppeal) => {
 		})
 	);
 	// @ts-ignore
-	await representationRepository.createRepresentations(copiedRepresentations);
+	await representationRepository.createRepresentations(
+		copiedRepresentations.filter((rep) => rep.status === 'fulfilled').map((rep) => rep.value)
+	);
 	const { comments: representationsInDestinationAppeal } =
 		await representationRepository.getRepresentations([Number(destinationAppeal.id)]);
 	await Promise.allSettled(
@@ -272,7 +276,7 @@ export const duplicateAllFiles = async (sourceAppeal, destinationAppeal, options
  * @param {Appeal | {id: number, reference: string}} sourceAppeal
  * @param {string[]} [existingDocuments]
  * @param {string | null} [stage]
- * @returns {{sourceBlobName: string, destinationBlobName: string, destinationDocument: Partial<Document>, sourceGuid: string, destinationGuid: string, version: number}}
+ * @returns {{sourceBlobName: string, destinationBlobName: string, destinationDocument: Partial<Document>, sourceGuid: string, destinationGuid: string, version: number} | undefined}
  */
 export const buildFileCopyDetails = (
 	sourceDocument,
@@ -282,8 +286,9 @@ export const buildFileCopyDetails = (
 	existingDocuments = [],
 	stage = null
 ) => {
+	if (!sourceDocument) return;
 	const destinationGuid = generate_uuid();
-	const fileExtension = '.' + sourceDocument.name.split('.').pop();
+	const fileExtension = '.' + sourceDocument.name?.split('.').pop();
 	const sourceBlobName = sourceDocument.latestDocumentVersion?.blobStoragePath ?? '';
 	const documentName = sourceBlobName.split('/').pop() ?? '';
 	const destinationFileName = existingDocuments.includes(documentName)
@@ -353,7 +358,8 @@ export const duplicateFiles = async (sourceAppeal, destinationAppeal, stage, opt
 						existingDocuments,
 						stage
 					);
-				});
+				})
+				.filter((copyDetails) => copyDetails != undefined);
 		})
 		.flat();
 	const copyBlobList = copyList.map(({ sourceBlobName, destinationBlobName }) => ({
