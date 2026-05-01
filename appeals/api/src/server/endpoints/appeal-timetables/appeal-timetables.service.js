@@ -25,7 +25,10 @@ import {
 	CASE_RELATIONSHIP_LINKED,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import { isEnforcementCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
+import {
+	isEnforcementCaseType,
+	isS78ExpeditedAppealType
+} from '@pins/appeals/utils/appeal-type-checks.js';
 import {
 	calculateTimetable,
 	recalculateDateIfNotBusinessDay,
@@ -121,19 +124,27 @@ const getStartCaseNotifyParams = async ({
 	const { type = '', key: appealTypeKey = APPEAL_CASE_TYPE.D } = appeal.appealType || {};
 	const appealType = trimAppealType(type);
 
+	const isS78Expedited = isS78ExpeditedAppealType(
+		appeal.appealType?.type,
+		appeal.appellantCase?.applicationDate,
+		appeal.appellantCase?.applicationDecision,
+		appeal.appellantCase?.typeOfPlanningApplication
+	);
+
+	// ${ isS78Expedited ? `-expedited-` : '' }`
 	const appellantTemplate = appeal.caseStartedDate
 		? inquirySuffix
 			? 'appeal-start-date-change-inquiry'
 			: 'appeal-start-date-change-appellant'
-		: `appeal-valid-start-case${[appealTypeMap(appealTypeKey)]}${
-				hearingSuffix ? `appellant${hearingSuffix}` : inquirySuffix ? inquirySuffix : 'appellant'
-			}`;
+		: `appeal-valid-start-case${[appealTypeMap(appealTypeKey)]}
+		${isS78Expedited ? `-expedited-` : ''}
+		${hearingSuffix ? `appellant${hearingSuffix}` : inquirySuffix ? inquirySuffix : 'appellant'}`;
 
 	const lpaTemplate = appeal.caseStartedDate
 		? inquirySuffix
 			? 'appeal-start-date-change-inquiry'
 			: 'appeal-start-date-change-lpa'
-		: `appeal-valid-start-case${[appealTypeMap(appealTypeKey)]}${
+		: `appeal-valid-start-case${[appealTypeMap(appealTypeKey)]}${isS78Expedited ? `-expedited-` : ''}${
 				hearingSuffix ? `lpa${hearingSuffix}` : inquirySuffix ? inquirySuffix : 'lpa'
 			}`;
 
