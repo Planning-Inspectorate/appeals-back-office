@@ -474,6 +474,7 @@ export interface Folder {
 			redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 			virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 			documentType?:
+				| 'additionalDocumentsLPA'
 				| 'appealNotification'
 				| 'appellantCaseCorrespondence'
 				| 'appellantCaseWithdrawalLetter'
@@ -498,6 +499,7 @@ export interface Folder {
 				| 'definitiveMapStatement'
 				| 'delegatedReport'
 				| 'designAccessStatement'
+				| 'designAccessStatementLPA'
 				| 'developmentPlanPolicies'
 				| 'discontinuanceNotice'
 				| 'eiaEnvironmentalStatement'
@@ -545,7 +547,6 @@ export interface Folder {
 				| 'otherPartyRepresentations'
 				| 'otherRelevantMatters'
 				| 'otherRelevantPolicies'
-				| 'otherSupportingInformationAppellant'
 				| 'ownershipCertificate'
 				| 'planShowingExtentOfOrder'
 				| 'planningContraventionNotice'
@@ -553,6 +554,7 @@ export interface Folder {
 				| 'planningOfficerReport'
 				| 'planningPermission'
 				| 'plansDrawings'
+				| 'plansDrawingsLPA'
 				| 'priorCorrespondenceWithPINS'
 				| 'relatedApplications'
 				| 'rule6ProofOfEvidence'
@@ -608,6 +610,7 @@ export interface Folder {
 			redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 			virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 			documentType?:
+				| 'additionalDocumentsLPA'
 				| 'appealNotification'
 				| 'appellantCaseCorrespondence'
 				| 'appellantCaseWithdrawalLetter'
@@ -632,6 +635,7 @@ export interface Folder {
 				| 'definitiveMapStatement'
 				| 'delegatedReport'
 				| 'designAccessStatement'
+				| 'designAccessStatementLPA'
 				| 'developmentPlanPolicies'
 				| 'discontinuanceNotice'
 				| 'eiaEnvironmentalStatement'
@@ -679,7 +683,6 @@ export interface Folder {
 				| 'otherPartyRepresentations'
 				| 'otherRelevantMatters'
 				| 'otherRelevantPolicies'
-				| 'otherSupportingInformationAppellant'
 				| 'ownershipCertificate'
 				| 'planShowingExtentOfOrder'
 				| 'planningContraventionNotice'
@@ -687,6 +690,7 @@ export interface Folder {
 				| 'planningOfficerReport'
 				| 'planningPermission'
 				| 'plansDrawings'
+				| 'plansDrawingsLPA'
 				| 'priorCorrespondenceWithPINS'
 				| 'relatedApplications'
 				| 'rule6ProofOfEvidence'
@@ -3693,6 +3697,7 @@ export interface AppealDecision {
 			redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 			virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 			documentType?:
+				| 'additionalDocumentsLPA'
 				| 'appealNotification'
 				| 'appellantCaseCorrespondence'
 				| 'appellantCaseWithdrawalLetter'
@@ -3717,6 +3722,7 @@ export interface AppealDecision {
 				| 'definitiveMapStatement'
 				| 'delegatedReport'
 				| 'designAccessStatement'
+				| 'designAccessStatementLPA'
 				| 'developmentPlanPolicies'
 				| 'discontinuanceNotice'
 				| 'eiaEnvironmentalStatement'
@@ -3764,7 +3770,6 @@ export interface AppealDecision {
 				| 'otherPartyRepresentations'
 				| 'otherRelevantMatters'
 				| 'otherRelevantPolicies'
-				| 'otherSupportingInformationAppellant'
 				| 'ownershipCertificate'
 				| 'planShowingExtentOfOrder'
 				| 'planningContraventionNotice'
@@ -3772,6 +3777,7 @@ export interface AppealDecision {
 				| 'planningOfficerReport'
 				| 'planningPermission'
 				| 'plansDrawings'
+				| 'plansDrawingsLPA'
 				| 'priorCorrespondenceWithPINS'
 				| 'relatedApplications'
 				| 'rule6ProofOfEvidence'
@@ -3827,6 +3833,7 @@ export interface AppealDecision {
 			redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 			virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 			documentType?:
+				| 'additionalDocumentsLPA'
 				| 'appealNotification'
 				| 'appellantCaseCorrespondence'
 				| 'appellantCaseWithdrawalLetter'
@@ -3851,6 +3858,7 @@ export interface AppealDecision {
 				| 'definitiveMapStatement'
 				| 'delegatedReport'
 				| 'designAccessStatement'
+				| 'designAccessStatementLPA'
 				| 'developmentPlanPolicies'
 				| 'discontinuanceNotice'
 				| 'eiaEnvironmentalStatement'
@@ -3898,7 +3906,6 @@ export interface AppealDecision {
 				| 'otherPartyRepresentations'
 				| 'otherRelevantMatters'
 				| 'otherRelevantPolicies'
-				| 'otherSupportingInformationAppellant'
 				| 'ownershipCertificate'
 				| 'planShowingExtentOfOrder'
 				| 'planningContraventionNotice'
@@ -3906,6 +3913,7 @@ export interface AppealDecision {
 				| 'planningOfficerReport'
 				| 'planningPermission'
 				| 'plansDrawings'
+				| 'plansDrawingsLPA'
 				| 'priorCorrespondenceWithPINS'
 				| 'relatedApplications'
 				| 'rule6ProofOfEvidence'
@@ -3993,6 +4001,7 @@ export interface AppealWithdrawal {
 				redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 				virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 				documentType?:
+					| 'additionalDocumentsLPA'
 					| 'appealNotification'
 					| 'appellantCaseCorrespondence'
 					| 'appellantCaseWithdrawalLetter'
@@ -4017,6 +4026,7 @@ export interface AppealWithdrawal {
 					| 'definitiveMapStatement'
 					| 'delegatedReport'
 					| 'designAccessStatement'
+					| 'designAccessStatementLPA'
 					| 'developmentPlanPolicies'
 					| 'discontinuanceNotice'
 					| 'eiaEnvironmentalStatement'
@@ -4064,7 +4074,6 @@ export interface AppealWithdrawal {
 					| 'otherPartyRepresentations'
 					| 'otherRelevantMatters'
 					| 'otherRelevantPolicies'
-					| 'otherSupportingInformationAppellant'
 					| 'ownershipCertificate'
 					| 'planShowingExtentOfOrder'
 					| 'planningContraventionNotice'
@@ -4072,6 +4081,7 @@ export interface AppealWithdrawal {
 					| 'planningOfficerReport'
 					| 'planningPermission'
 					| 'plansDrawings'
+					| 'plansDrawingsLPA'
 					| 'priorCorrespondenceWithPINS'
 					| 'relatedApplications'
 					| 'rule6ProofOfEvidence'
@@ -4127,6 +4137,7 @@ export interface AppealWithdrawal {
 				redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 				virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 				documentType?:
+					| 'additionalDocumentsLPA'
 					| 'appealNotification'
 					| 'appellantCaseCorrespondence'
 					| 'appellantCaseWithdrawalLetter'
@@ -4151,6 +4162,7 @@ export interface AppealWithdrawal {
 					| 'definitiveMapStatement'
 					| 'delegatedReport'
 					| 'designAccessStatement'
+					| 'designAccessStatementLPA'
 					| 'developmentPlanPolicies'
 					| 'discontinuanceNotice'
 					| 'eiaEnvironmentalStatement'
@@ -4198,7 +4210,6 @@ export interface AppealWithdrawal {
 					| 'otherPartyRepresentations'
 					| 'otherRelevantMatters'
 					| 'otherRelevantPolicies'
-					| 'otherSupportingInformationAppellant'
 					| 'ownershipCertificate'
 					| 'planShowingExtentOfOrder'
 					| 'planningContraventionNotice'
@@ -4206,6 +4217,7 @@ export interface AppealWithdrawal {
 					| 'planningOfficerReport'
 					| 'planningPermission'
 					| 'plansDrawings'
+					| 'plansDrawingsLPA'
 					| 'priorCorrespondenceWithPINS'
 					| 'relatedApplications'
 					| 'rule6ProofOfEvidence'
@@ -4280,6 +4292,7 @@ export interface AppealCancellation {
 				redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 				virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 				documentType?:
+					| 'additionalDocumentsLPA'
 					| 'appealNotification'
 					| 'appellantCaseCorrespondence'
 					| 'appellantCaseWithdrawalLetter'
@@ -4304,6 +4317,7 @@ export interface AppealCancellation {
 					| 'definitiveMapStatement'
 					| 'delegatedReport'
 					| 'designAccessStatement'
+					| 'designAccessStatementLPA'
 					| 'developmentPlanPolicies'
 					| 'discontinuanceNotice'
 					| 'eiaEnvironmentalStatement'
@@ -4351,7 +4365,6 @@ export interface AppealCancellation {
 					| 'otherPartyRepresentations'
 					| 'otherRelevantMatters'
 					| 'otherRelevantPolicies'
-					| 'otherSupportingInformationAppellant'
 					| 'ownershipCertificate'
 					| 'planShowingExtentOfOrder'
 					| 'planningContraventionNotice'
@@ -4359,6 +4372,7 @@ export interface AppealCancellation {
 					| 'planningOfficerReport'
 					| 'planningPermission'
 					| 'plansDrawings'
+					| 'plansDrawingsLPA'
 					| 'priorCorrespondenceWithPINS'
 					| 'relatedApplications'
 					| 'rule6ProofOfEvidence'
@@ -4414,6 +4428,7 @@ export interface AppealCancellation {
 				redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 				virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 				documentType?:
+					| 'additionalDocumentsLPA'
 					| 'appealNotification'
 					| 'appellantCaseCorrespondence'
 					| 'appellantCaseWithdrawalLetter'
@@ -4438,6 +4453,7 @@ export interface AppealCancellation {
 					| 'definitiveMapStatement'
 					| 'delegatedReport'
 					| 'designAccessStatement'
+					| 'designAccessStatementLPA'
 					| 'developmentPlanPolicies'
 					| 'discontinuanceNotice'
 					| 'eiaEnvironmentalStatement'
@@ -4485,7 +4501,6 @@ export interface AppealCancellation {
 					| 'otherPartyRepresentations'
 					| 'otherRelevantMatters'
 					| 'otherRelevantPolicies'
-					| 'otherSupportingInformationAppellant'
 					| 'ownershipCertificate'
 					| 'planShowingExtentOfOrder'
 					| 'planningContraventionNotice'
@@ -4493,6 +4508,7 @@ export interface AppealCancellation {
 					| 'planningOfficerReport'
 					| 'planningPermission'
 					| 'plansDrawings'
+					| 'plansDrawingsLPA'
 					| 'priorCorrespondenceWithPINS'
 					| 'relatedApplications'
 					| 'rule6ProofOfEvidence'
@@ -4573,6 +4589,7 @@ export interface Document {
 		redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 		virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 		documentType?:
+			| 'additionalDocumentsLPA'
 			| 'appealNotification'
 			| 'appellantCaseCorrespondence'
 			| 'appellantCaseWithdrawalLetter'
@@ -4597,6 +4614,7 @@ export interface Document {
 			| 'definitiveMapStatement'
 			| 'delegatedReport'
 			| 'designAccessStatement'
+			| 'designAccessStatementLPA'
 			| 'developmentPlanPolicies'
 			| 'discontinuanceNotice'
 			| 'eiaEnvironmentalStatement'
@@ -4644,7 +4662,6 @@ export interface Document {
 			| 'otherPartyRepresentations'
 			| 'otherRelevantMatters'
 			| 'otherRelevantPolicies'
-			| 'otherSupportingInformationAppellant'
 			| 'ownershipCertificate'
 			| 'planShowingExtentOfOrder'
 			| 'planningContraventionNotice'
@@ -4652,6 +4669,7 @@ export interface Document {
 			| 'planningOfficerReport'
 			| 'planningPermission'
 			| 'plansDrawings'
+			| 'plansDrawingsLPA'
 			| 'priorCorrespondenceWithPINS'
 			| 'relatedApplications'
 			| 'rule6ProofOfEvidence'
@@ -4707,6 +4725,7 @@ export interface Document {
 		redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 		virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 		documentType?:
+			| 'additionalDocumentsLPA'
 			| 'appealNotification'
 			| 'appellantCaseCorrespondence'
 			| 'appellantCaseWithdrawalLetter'
@@ -4731,6 +4750,7 @@ export interface Document {
 			| 'definitiveMapStatement'
 			| 'delegatedReport'
 			| 'designAccessStatement'
+			| 'designAccessStatementLPA'
 			| 'developmentPlanPolicies'
 			| 'discontinuanceNotice'
 			| 'eiaEnvironmentalStatement'
@@ -4778,7 +4798,6 @@ export interface Document {
 			| 'otherPartyRepresentations'
 			| 'otherRelevantMatters'
 			| 'otherRelevantPolicies'
-			| 'otherSupportingInformationAppellant'
 			| 'ownershipCertificate'
 			| 'planShowingExtentOfOrder'
 			| 'planningContraventionNotice'
@@ -4786,6 +4805,7 @@ export interface Document {
 			| 'planningOfficerReport'
 			| 'planningPermission'
 			| 'plansDrawings'
+			| 'plansDrawingsLPA'
 			| 'priorCorrespondenceWithPINS'
 			| 'relatedApplications'
 			| 'rule6ProofOfEvidence'
@@ -4843,6 +4863,7 @@ export interface DocumentVersion {
 	redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 	virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 	documentType?:
+		| 'additionalDocumentsLPA'
 		| 'appealNotification'
 		| 'appellantCaseCorrespondence'
 		| 'appellantCaseWithdrawalLetter'
@@ -4867,6 +4888,7 @@ export interface DocumentVersion {
 		| 'definitiveMapStatement'
 		| 'delegatedReport'
 		| 'designAccessStatement'
+		| 'designAccessStatementLPA'
 		| 'developmentPlanPolicies'
 		| 'discontinuanceNotice'
 		| 'eiaEnvironmentalStatement'
@@ -4914,7 +4936,6 @@ export interface DocumentVersion {
 		| 'otherPartyRepresentations'
 		| 'otherRelevantMatters'
 		| 'otherRelevantPolicies'
-		| 'otherSupportingInformationAppellant'
 		| 'ownershipCertificate'
 		| 'planShowingExtentOfOrder'
 		| 'planningContraventionNotice'
@@ -4922,6 +4943,7 @@ export interface DocumentVersion {
 		| 'planningOfficerReport'
 		| 'planningPermission'
 		| 'plansDrawings'
+		| 'plansDrawingsLPA'
 		| 'priorCorrespondenceWithPINS'
 		| 'relatedApplications'
 		| 'rule6ProofOfEvidence'
@@ -5229,6 +5251,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -5253,6 +5276,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -5300,7 +5324,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -5308,6 +5331,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -5363,6 +5387,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -5387,6 +5412,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -5434,7 +5460,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -5442,6 +5467,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -5511,6 +5537,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -5535,6 +5562,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -5582,7 +5610,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -5590,6 +5617,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -5645,6 +5673,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -5669,6 +5698,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -5716,7 +5746,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -5724,6 +5753,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -5793,6 +5823,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -5817,6 +5848,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -5864,7 +5896,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -5872,6 +5903,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -5927,6 +5959,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -5951,6 +5984,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -5998,7 +6032,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -6006,6 +6039,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -6075,6 +6109,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -6099,6 +6134,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -6146,7 +6182,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -6154,6 +6189,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -6209,6 +6245,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -6233,6 +6270,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -6280,7 +6318,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -6288,6 +6325,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -6357,6 +6395,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -6381,6 +6420,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -6428,7 +6468,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -6436,6 +6475,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -6491,6 +6531,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -6515,6 +6556,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -6562,7 +6604,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -6570,6 +6611,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -6639,6 +6681,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -6663,6 +6706,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -6710,7 +6754,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -6718,6 +6761,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -6773,6 +6817,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -6797,6 +6842,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -6844,7 +6890,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -6852,6 +6897,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -6921,6 +6967,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -6945,6 +6992,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -6992,7 +7040,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -7000,6 +7047,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -7055,6 +7103,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -7079,6 +7128,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -7126,7 +7176,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -7134,6 +7183,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -7203,6 +7253,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -7227,6 +7278,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -7274,7 +7326,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -7282,6 +7333,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -7337,6 +7389,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -7361,6 +7414,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -7408,7 +7462,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -7416,6 +7469,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -7485,6 +7539,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -7509,6 +7564,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -7556,7 +7612,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -7564,6 +7619,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -7619,6 +7675,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -7643,6 +7700,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -7690,7 +7748,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -7698,6 +7755,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -7767,6 +7825,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -7791,6 +7850,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -7838,7 +7898,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -7846,6 +7905,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -7901,6 +7961,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -7925,6 +7986,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -7972,7 +8034,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -7980,6 +8041,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -8049,6 +8111,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -8073,6 +8136,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -8120,7 +8184,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -8128,6 +8191,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -8183,6 +8247,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -8207,6 +8272,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -8254,7 +8320,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -8262,6 +8327,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -8331,6 +8397,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -8355,6 +8422,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -8402,7 +8470,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -8410,6 +8477,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -8465,6 +8533,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -8489,6 +8558,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -8536,7 +8606,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -8544,6 +8613,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -8613,6 +8683,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -8637,6 +8708,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -8684,7 +8756,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -8692,6 +8763,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -8747,6 +8819,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -8771,6 +8844,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -8818,7 +8892,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -8826,6 +8899,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -8895,6 +8969,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -8919,6 +8994,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -8966,7 +9042,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -8974,6 +9049,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -9029,6 +9105,7 @@ export type AppellantCase = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -9053,6 +9130,7 @@ export type AppellantCase = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -9100,7 +9178,6 @@ export type AppellantCase = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -9108,6 +9185,7 @@ export type AppellantCase = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -9319,6 +9397,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -9343,6 +9422,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -9390,7 +9470,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -9398,6 +9477,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -9453,6 +9533,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -9477,6 +9558,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -9524,7 +9606,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -9532,6 +9613,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -9601,6 +9683,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -9625,6 +9708,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -9672,7 +9756,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -9680,6 +9763,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -9735,6 +9819,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -9759,6 +9844,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -9806,7 +9892,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -9814,6 +9899,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -9883,6 +9969,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -9907,6 +9994,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -9954,7 +10042,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -9962,6 +10049,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -10017,6 +10105,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -10041,6 +10130,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -10088,7 +10178,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -10096,6 +10185,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -10165,6 +10255,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -10189,6 +10280,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -10236,7 +10328,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -10244,6 +10335,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -10299,6 +10391,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -10323,6 +10416,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -10370,7 +10464,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -10378,6 +10471,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -10447,6 +10541,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -10471,6 +10566,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -10518,7 +10614,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -10526,6 +10621,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -10581,6 +10677,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -10605,6 +10702,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -10652,7 +10750,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -10660,6 +10757,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -10729,6 +10827,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -10753,6 +10852,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -10800,7 +10900,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -10808,6 +10907,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -10863,6 +10963,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -10887,6 +10988,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -10934,7 +11036,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -10942,6 +11043,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -11011,6 +11113,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -11035,6 +11138,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -11082,7 +11186,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -11090,6 +11193,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -11145,6 +11249,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -11169,6 +11274,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -11216,7 +11322,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -11224,6 +11329,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -11293,6 +11399,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -11317,6 +11424,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -11364,7 +11472,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -11372,6 +11479,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -11427,6 +11535,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -11451,6 +11560,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -11498,7 +11608,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -11506,6 +11615,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -11575,6 +11685,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -11599,6 +11710,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -11646,7 +11758,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -11654,6 +11765,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -11709,6 +11821,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -11733,6 +11846,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -11780,7 +11894,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -11788,6 +11901,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -11857,6 +11971,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -11881,6 +11996,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -11928,7 +12044,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -11936,6 +12051,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -11991,6 +12107,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -12015,6 +12132,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -12062,7 +12180,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -12070,6 +12187,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -12139,6 +12257,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -12163,6 +12282,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -12210,7 +12330,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -12218,6 +12337,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -12273,6 +12393,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -12297,6 +12418,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -12344,7 +12466,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -12352,6 +12473,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -12421,6 +12543,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -12445,6 +12568,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -12492,7 +12616,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -12500,6 +12623,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -12555,6 +12679,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -12579,6 +12704,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -12626,7 +12752,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -12634,6 +12759,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -12703,6 +12829,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -12727,6 +12854,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -12774,7 +12902,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -12782,6 +12909,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -12837,6 +12965,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -12861,6 +12990,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -12908,7 +13038,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -12916,6 +13045,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -12985,6 +13115,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -13009,6 +13140,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -13056,7 +13188,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -13064,6 +13195,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -13119,6 +13251,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -13143,6 +13276,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -13190,7 +13324,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -13198,6 +13331,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -13267,6 +13401,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -13291,6 +13426,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -13338,7 +13474,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -13346,6 +13481,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -13401,6 +13537,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -13425,6 +13562,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -13472,7 +13610,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -13480,6 +13617,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -13549,6 +13687,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -13573,6 +13712,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -13620,7 +13760,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -13628,6 +13767,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -13683,6 +13823,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -13707,6 +13848,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -13754,7 +13896,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -13762,6 +13903,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -13831,6 +13973,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -13855,6 +13998,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -13902,7 +14046,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -13910,6 +14053,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -13965,6 +14109,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -13989,6 +14134,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -14036,7 +14182,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -14044,6 +14189,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -14113,6 +14259,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -14137,6 +14284,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -14184,7 +14332,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -14192,6 +14339,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -14247,6 +14395,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -14271,6 +14420,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -14318,7 +14468,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -14326,6 +14475,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -14395,6 +14545,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -14419,6 +14570,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -14466,7 +14618,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -14474,6 +14625,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -14529,6 +14681,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -14553,6 +14706,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -14600,7 +14754,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -14608,6 +14761,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -14677,6 +14831,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -14701,6 +14856,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -14748,7 +14904,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -14756,6 +14911,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -14811,6 +14967,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -14835,6 +14992,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -14882,7 +15040,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -14890,6 +15047,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -14959,6 +15117,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -14983,6 +15142,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -15030,7 +15190,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -15038,6 +15197,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -15093,6 +15253,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -15117,6 +15278,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -15164,7 +15326,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -15172,6 +15333,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -15241,6 +15403,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -15265,6 +15428,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -15312,7 +15476,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -15320,6 +15483,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -15375,6 +15539,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -15399,6 +15564,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -15446,7 +15612,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -15454,6 +15619,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -15523,6 +15689,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -15547,6 +15714,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -15594,7 +15762,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -15602,6 +15769,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -15657,6 +15825,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -15681,6 +15850,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -15728,7 +15898,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -15736,6 +15905,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -15805,6 +15975,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -15829,6 +16000,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -15876,7 +16048,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -15884,6 +16055,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -15939,6 +16111,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -15963,6 +16136,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -16010,7 +16184,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -16018,6 +16191,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -16087,6 +16261,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -16111,6 +16286,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -16158,7 +16334,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -16166,6 +16341,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -16221,6 +16397,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -16245,6 +16422,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -16292,7 +16470,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -16300,6 +16477,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -16369,6 +16547,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -16393,6 +16572,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -16440,7 +16620,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -16448,6 +16627,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -16503,6 +16683,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -16527,6 +16708,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -16574,7 +16756,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -16582,6 +16763,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -16651,6 +16833,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -16675,6 +16858,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -16722,7 +16906,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -16730,6 +16913,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -16785,6 +16969,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -16809,6 +16994,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -16856,7 +17042,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -16864,6 +17049,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -16933,6 +17119,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -16957,6 +17144,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -17004,7 +17192,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -17012,6 +17199,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -17067,6 +17255,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -17091,6 +17280,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -17138,7 +17328,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -17146,6 +17335,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -17215,6 +17405,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -17239,6 +17430,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -17286,7 +17478,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -17294,6 +17485,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -17349,6 +17541,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -17373,6 +17566,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -17420,7 +17614,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -17428,6 +17621,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -17497,6 +17691,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -17521,6 +17716,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -17568,7 +17764,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -17576,6 +17771,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -17631,6 +17827,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -17655,6 +17852,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -17702,7 +17900,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -17710,6 +17907,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -17779,6 +17977,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -17803,6 +18002,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -17850,7 +18050,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -17858,6 +18057,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -17913,6 +18113,7 @@ export type LpaQuestionnaire = {
 					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 					documentType?:
+						| 'additionalDocumentsLPA'
 						| 'appealNotification'
 						| 'appellantCaseCorrespondence'
 						| 'appellantCaseWithdrawalLetter'
@@ -17937,6 +18138,7 @@ export type LpaQuestionnaire = {
 						| 'definitiveMapStatement'
 						| 'delegatedReport'
 						| 'designAccessStatement'
+						| 'designAccessStatementLPA'
 						| 'developmentPlanPolicies'
 						| 'discontinuanceNotice'
 						| 'eiaEnvironmentalStatement'
@@ -17984,7 +18186,6 @@ export type LpaQuestionnaire = {
 						| 'otherPartyRepresentations'
 						| 'otherRelevantMatters'
 						| 'otherRelevantPolicies'
-						| 'otherSupportingInformationAppellant'
 						| 'ownershipCertificate'
 						| 'planShowingExtentOfOrder'
 						| 'planningContraventionNotice'
@@ -17992,6 +18193,7 @@ export type LpaQuestionnaire = {
 						| 'planningOfficerReport'
 						| 'planningPermission'
 						| 'plansDrawings'
+						| 'plansDrawingsLPA'
 						| 'priorCorrespondenceWithPINS'
 						| 'relatedApplications'
 						| 'rule6ProofOfEvidence'
@@ -19074,6 +19276,7 @@ export interface Appeal {
 				redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 				virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 				documentType?:
+					| 'additionalDocumentsLPA'
 					| 'appealNotification'
 					| 'appellantCaseCorrespondence'
 					| 'appellantCaseWithdrawalLetter'
@@ -19098,6 +19301,7 @@ export interface Appeal {
 					| 'definitiveMapStatement'
 					| 'delegatedReport'
 					| 'designAccessStatement'
+					| 'designAccessStatementLPA'
 					| 'developmentPlanPolicies'
 					| 'discontinuanceNotice'
 					| 'eiaEnvironmentalStatement'
@@ -19145,7 +19349,6 @@ export interface Appeal {
 					| 'otherPartyRepresentations'
 					| 'otherRelevantMatters'
 					| 'otherRelevantPolicies'
-					| 'otherSupportingInformationAppellant'
 					| 'ownershipCertificate'
 					| 'planShowingExtentOfOrder'
 					| 'planningContraventionNotice'
@@ -19153,6 +19356,7 @@ export interface Appeal {
 					| 'planningOfficerReport'
 					| 'planningPermission'
 					| 'plansDrawings'
+					| 'plansDrawingsLPA'
 					| 'priorCorrespondenceWithPINS'
 					| 'relatedApplications'
 					| 'rule6ProofOfEvidence'
@@ -19208,6 +19412,7 @@ export interface Appeal {
 				redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 				virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 				documentType?:
+					| 'additionalDocumentsLPA'
 					| 'appealNotification'
 					| 'appellantCaseCorrespondence'
 					| 'appellantCaseWithdrawalLetter'
@@ -19232,6 +19437,7 @@ export interface Appeal {
 					| 'definitiveMapStatement'
 					| 'delegatedReport'
 					| 'designAccessStatement'
+					| 'designAccessStatementLPA'
 					| 'developmentPlanPolicies'
 					| 'discontinuanceNotice'
 					| 'eiaEnvironmentalStatement'
@@ -19279,7 +19485,6 @@ export interface Appeal {
 					| 'otherPartyRepresentations'
 					| 'otherRelevantMatters'
 					| 'otherRelevantPolicies'
-					| 'otherSupportingInformationAppellant'
 					| 'ownershipCertificate'
 					| 'planShowingExtentOfOrder'
 					| 'planningContraventionNotice'
@@ -19287,6 +19492,7 @@ export interface Appeal {
 					| 'planningOfficerReport'
 					| 'planningPermission'
 					| 'plansDrawings'
+					| 'plansDrawingsLPA'
 					| 'priorCorrespondenceWithPINS'
 					| 'relatedApplications'
 					| 'rule6ProofOfEvidence'
@@ -19374,6 +19580,7 @@ export interface Appeal {
 				redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 				virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 				documentType?:
+					| 'additionalDocumentsLPA'
 					| 'appealNotification'
 					| 'appellantCaseCorrespondence'
 					| 'appellantCaseWithdrawalLetter'
@@ -19398,6 +19605,7 @@ export interface Appeal {
 					| 'definitiveMapStatement'
 					| 'delegatedReport'
 					| 'designAccessStatement'
+					| 'designAccessStatementLPA'
 					| 'developmentPlanPolicies'
 					| 'discontinuanceNotice'
 					| 'eiaEnvironmentalStatement'
@@ -19445,7 +19653,6 @@ export interface Appeal {
 					| 'otherPartyRepresentations'
 					| 'otherRelevantMatters'
 					| 'otherRelevantPolicies'
-					| 'otherSupportingInformationAppellant'
 					| 'ownershipCertificate'
 					| 'planShowingExtentOfOrder'
 					| 'planningContraventionNotice'
@@ -19453,6 +19660,7 @@ export interface Appeal {
 					| 'planningOfficerReport'
 					| 'planningPermission'
 					| 'plansDrawings'
+					| 'plansDrawingsLPA'
 					| 'priorCorrespondenceWithPINS'
 					| 'relatedApplications'
 					| 'rule6ProofOfEvidence'
@@ -19508,6 +19716,7 @@ export interface Appeal {
 				redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
 				virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
 				documentType?:
+					| 'additionalDocumentsLPA'
 					| 'appealNotification'
 					| 'appellantCaseCorrespondence'
 					| 'appellantCaseWithdrawalLetter'
@@ -19532,6 +19741,7 @@ export interface Appeal {
 					| 'definitiveMapStatement'
 					| 'delegatedReport'
 					| 'designAccessStatement'
+					| 'designAccessStatementLPA'
 					| 'developmentPlanPolicies'
 					| 'discontinuanceNotice'
 					| 'eiaEnvironmentalStatement'
@@ -19579,7 +19789,6 @@ export interface Appeal {
 					| 'otherPartyRepresentations'
 					| 'otherRelevantMatters'
 					| 'otherRelevantPolicies'
-					| 'otherSupportingInformationAppellant'
 					| 'ownershipCertificate'
 					| 'planShowingExtentOfOrder'
 					| 'planningContraventionNotice'
@@ -19587,6 +19796,7 @@ export interface Appeal {
 					| 'planningOfficerReport'
 					| 'planningPermission'
 					| 'plansDrawings'
+					| 'plansDrawingsLPA'
 					| 'priorCorrespondenceWithPINS'
 					| 'relatedApplications'
 					| 'rule6ProofOfEvidence'

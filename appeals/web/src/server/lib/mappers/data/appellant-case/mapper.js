@@ -90,7 +90,8 @@ export function initialiseAndMapData(
 		isS78ExpeditedAppealType(
 			appealDetails.appealType,
 			appellantCaseData.applicationDate,
-			appellantCaseData.applicationDecision
+			appellantCaseData.applicationDecision,
+			appellantCaseData.typeOfPlanningApplication
 		) &&
 		isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS)
 	) {

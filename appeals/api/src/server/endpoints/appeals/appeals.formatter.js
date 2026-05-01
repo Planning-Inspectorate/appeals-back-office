@@ -66,7 +66,8 @@ const formatAppeal = (appeal, linkedAppeals) => {
 		isS78Expedited: isS78ExpeditedAppealType(
 			appeal.appealType?.type,
 			appeal.appellantCase?.applicationDate,
-			appeal.appellantCase?.applicationDecision
+			appeal.appellantCase?.applicationDecision,
+			appeal.appellantCase?.typeOfPlanningApplication
 		)
 	};
 };
@@ -132,7 +133,8 @@ const formatPersonalListItem = async ({
 		isS78Expedited: isS78ExpeditedAppealType(
 			appealType?.type,
 			appellantCase?.applicationDate,
-			appellantCase?.applicationDecision
+			appellantCase?.applicationDecision,
+			appellantCase?.typeOfPlanningApplication
 		)
 	};
 };
