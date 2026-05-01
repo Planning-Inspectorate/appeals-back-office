@@ -6,7 +6,9 @@ import logger from './server/utils/logger.js';
 
 initNotify();
 
-refreshPersonalList(config.forcePersonalListFullRefresh);
+if (config.refreshPersonalListOnStartup) {
+	refreshPersonalList(config.forcePersonalListFullRefresh);
+}
 
 app.listen(config.PORT, () => {
 	logger.info(`Server is live at http://localhost:${config.PORT}`);
