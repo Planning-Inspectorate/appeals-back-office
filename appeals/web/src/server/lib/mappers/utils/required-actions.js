@@ -17,6 +17,8 @@ import {
 import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
 	DOCUMENT_STATUS_RECEIVED,
+	SITE_VISIT_TYPE_ACCESS_REQUIRED,
+	SITE_VISIT_TYPE_ACCOMPANIED,
 	VALIDATION_OUTCOME_INCOMPLETE
 } from '@pins/appeals/constants/support.js';
 import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
@@ -520,10 +522,18 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 
 	// @ts-ignore
 	const siteVisit = appealDetails?.siteVisit;
-	if (siteVisit && !siteVisit.visitDate && !siteVisit.visitStartTime) {
-		actions.push('addSiteVisitDateTime');
-	} else if (siteVisit && siteVisit.visitDate && !siteVisit.visitStartTime) {
-		actions.push('addSiteVisitTime');
+	if (siteVisit && siteVisit.visitType) {
+		const visitType = siteVisit.visitType;
+		if (!siteVisit.visitDate) {
+			actions.push('addSiteVisitDateTime');
+		} else if (
+			(visitType === SITE_VISIT_TYPE_ACCOMPANIED ||
+				visitType === SITE_VISIT_TYPE_ACCESS_REQUIRED) &&
+			!siteVisit.visitStartTime
+		) {
+			actions.push('addSiteVisitTime');
+		}
 	}
+
 	return actions;
 }
