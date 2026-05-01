@@ -102,6 +102,9 @@ describe('transitionState', () => {
 				expect(databaseConnector.appealStatus.create).toHaveBeenCalledTimes(expectCreate ? 1 : 0);
 
 				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledWith(
+					expect.stringContaining('EXEC dbo.spSetPersonalList')
+				);
 			}
 		);
 	});
@@ -137,6 +140,9 @@ describe('transitionState', () => {
 			expect(appealStatusRepository.updateAppealStatusByAppealId).not.toHaveBeenCalled();
 			expect(appealStatusRepository.rollBackAppealStatusTo).not.toHaveBeenCalled();
 			expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalled();
+			expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledWith(
+				expect.stringContaining('EXEC dbo.spSetPersonalList')
+			);
 		});
 
 		describe('Expedited Appeals (HAS)', () => {
@@ -222,6 +228,9 @@ describe('transitionState', () => {
 				await transitionState(11, 'user-123', VALIDATION_OUTCOME_VALID);
 
 				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalled();
+				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledWith(
+					expect.stringContaining('EXEC dbo.spSetPersonalList')
+				);
 			});
 		});
 
