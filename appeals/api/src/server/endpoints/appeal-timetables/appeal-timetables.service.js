@@ -13,7 +13,7 @@ import { getChildEnforcementsWithGrounds } from '#utils/link-appeals.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { trimAppealType } from '#utils/string-utils.js';
-import { updatePersonalList } from '#utils/update-personal-list.js';
+import { setPersonalList } from '#utils/update-personal-list.js';
 import { PROCEDURE_TYPE_ID_MAP, PROCEDURE_TYPE_MAP } from '@pins/appeals/constants/common.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import {
@@ -597,7 +597,7 @@ const updateAppealTimetable = async (
 	);
 
 	if (result) {
-		await updatePersonalList(appeal.id);
+		await setPersonalList({ appealId: appeal.id });
 
 		if (!isChildAppeal) {
 			let details = 'Timetable updated:';

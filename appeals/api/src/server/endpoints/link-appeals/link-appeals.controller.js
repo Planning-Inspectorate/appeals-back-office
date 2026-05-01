@@ -15,7 +15,7 @@ import { isChildAppeal, isLinkedAppeal, isParentAppeal } from '#utils/is-linked-
 import { getChildAppeals, getLeadAppeal } from '#utils/link-appeals.js';
 import { formatHorizonGetCaseData } from '#utils/mapping/map-horizon.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { updatePersonalList } from '#utils/update-personal-list.js';
+import { setPersonalList } from '#utils/update-personal-list.js';
 import { logger } from '@azure/identity';
 import {
 	AUDIT_TRAIL_APPEAL_LINK_ADDED,
@@ -161,9 +161,9 @@ export const linkAppeal = async (req, res) => {
 	const lpaEmail = currentAppeal.lpa?.email || '';
 
 	await Promise.all([
-		await updatePersonalList(parentAppeal.id),
+		await setPersonalList({ appealId: parentAppeal.id }),
 
-		await updatePersonalList(childAppeal.id),
+		await setPersonalList({ appealId: childAppeal.id }),
 
 		notifySend({
 			templateName: 'link-appeal',
@@ -496,7 +496,7 @@ export const updateLinkedAppeals = async (req, res) => {
 					// @ts-ignore
 					unlinkChildAppeal(appealToUnlink),
 					// @ts-ignore
-					updatePersonalList(appealToUnlink.id)
+					setPersonalList({ appealId: appealToUnlink.id })
 				]);
 
 				if (currentLead?.id && appealToUnlink?.reference) {
@@ -520,7 +520,7 @@ export const updateLinkedAppeals = async (req, res) => {
 		}
 
 		// Refresh the personal list for the lead
-		await updatePersonalList(appealToReplaceLead?.id || currentLead?.id);
+		await setPersonalList({ appealId: appealToReplaceLead?.id || currentLead?.id });
 
 		if (currentLead?.id && appealToReplaceLead?.reference) {
 			await Promise.allSettled(

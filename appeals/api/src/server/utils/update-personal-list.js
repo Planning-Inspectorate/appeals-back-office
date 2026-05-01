@@ -1,11 +1,8 @@
 import appealRepository from '#repositories/appeal.repository.js';
-import personalListRepository from '#repositories/personal-list.repository.js';
-import { calculateDueDate } from '#utils/calculate-due-date.js';
-import { currentStatus } from '#utils/current-status.js';
-import { formatCostsDecision } from '#utils/format-costs-decision.js';
+import { databaseConnector } from '#utils/database-connector.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
 import logger from '#utils/logger.js';
-import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
 /**
  * Updates the PersonalList for the specified appeal
@@ -13,81 +10,44 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
  * @returns {Promise<void>}
  */
 export const updatePersonalList = async (appealId) => {
-	const appeal = await appealRepository.getAppealById(appealId);
-	if (!appeal) {
-		return;
-	}
-
-	const appealStatus = currentStatus(appeal);
-	const appealIsCompleteOrWithdrawn =
-		appealStatus === APPEAL_CASE_STATUS.COMPLETE || appealStatus === APPEAL_CASE_STATUS.WITHDRAWN;
-	const costsDecision = appealIsCompleteOrWithdrawn ? await formatCostsDecision(appeal) : null;
-
-	let dueDate = await calculateDueDate(appeal, costsDecision);
-	let linkType = null;
-	const linkedAppeals = await appealRepository.getLinkedAppeals(
-		appeal.reference,
-		CASE_RELATIONSHIP_LINKED
-	);
-	if (linkedAppeals?.length) {
-		if (linkedAppeals.some((linkedAppeal) => linkedAppeal.childId === appeal.id)) {
-			return; // Do not update children here as their parent should display the correct date
-		} else if (linkedAppeals.some((linkedAppeal) => linkedAppeal.parentId === appeal.id)) {
-			linkType = 'parent';
-		}
-		if (!dueDate && linkedAppeals[0]?.parentId) {
-			const parentAppeal = await appealRepository.getAppealById(linkedAppeals[0].parentId);
-			if (!parentAppeal) {
-				dueDate = null;
-			} else {
-				const costsDecision =
-					currentStatus(parentAppeal) === APPEAL_CASE_STATUS.COMPLETE
-						? await formatCostsDecision(parentAppeal)
-						: null;
-				dueDate = await calculateDueDate(parentAppeal, costsDecision);
-			}
-		}
-	}
-	const personalListEntry = {
-		appealId: appeal.id,
-		dueDate,
-		linkType,
-		leadAppealId: linkType === 'parent' ? appeal.id : null
-	};
-
-	await performUpdate(personalListEntry);
-
-	if (linkType === 'parent') {
-		await Promise.all(
-			linkedAppeals.map(async (linkedAppeal) => {
-				if (linkedAppeal.childId) {
-					await performUpdate({
-						appealId: linkedAppeal.childId,
-						dueDate,
-						linkType: 'child',
-						leadAppealId: linkedAppeal.parentId
-					});
-				}
-			})
-		);
-	}
+	await setPersonalList({ appealId });
 };
 
 /**
- *
- * @param {{ appealId: number, dueDate: Date | null | undefined, linkType: string | null, leadAppealId: number | null }} personalListEntry
+ * @param {string | null | undefined} appealType
+ * @returns {boolean}
  */
-async function performUpdate(personalListEntry) {
-	const { appealId, dueDate = null, linkType = null, leadAppealId = null } = personalListEntry;
+const isNetResidencesAppealType = (appealType) => {
+	return (
+		(isFeatureActive(FEATURE_FLAG_NAMES.NET_RESIDENCE) && appealType === APPEAL_TYPE.S78) ||
+		(isFeatureActive(FEATURE_FLAG_NAMES.NET_RESIDENCE_S20) &&
+			appealType === APPEAL_TYPE.PLANNED_LISTED_BUILDING)
+	);
+};
 
-	// @ts-ignore
-	return personalListRepository.upsertPersonalListEntry({
-		appealId,
-		dueDate,
-		linkType,
-		leadAppealId
-	});
-}
+/**
+ * Executes the spSetPersonalList stored procedure.
+ * @param {{appealId?: number | null, isNetResidentsAppealType?: boolean}} [options]
+ * @returns {Promise<void>}
+ */
+export const setPersonalList = async ({ appealId = null, isNetResidentsAppealType } = {}) => {
+	const parsedAppealId = appealId === null ? null : Number(appealId);
+
+	if (appealId !== null && Number.isNaN(parsedAppealId)) {
+		throw new Error(`spSetPersonalList appealId must be numeric. Received: ${appealId}`);
+	}
+
+	let resolvedIsNetResidentsAppealType = Boolean(isNetResidentsAppealType);
+
+	if (typeof isNetResidentsAppealType === 'undefined' && parsedAppealId !== null) {
+		const appealType = await appealRepository.getAppealTypeById(parsedAppealId);
+		resolvedIsNetResidentsAppealType = isNetResidencesAppealType(appealType?.type);
+	}
+
+	await databaseConnector.$executeRawUnsafe(
+		`EXEC dbo.spSetPersonalList @appealId = ${parsedAppealId === null ? 'NULL' : parsedAppealId}, @isNetResidentsAppealType = ${resolvedIsNetResidentsAppealType ? 1 : 0};`
+	);
+};
 
 /**
  * Sleep for a specified number of milliseconds
@@ -105,14 +65,20 @@ function sleep(ms) {
  */
 export async function refreshPersonalList(forceFullRefresh = false) {
 	try {
-		const appealsWithoutPersonalListEntry =
-			await appealRepository.getAppealIdList(!forceFullRefresh);
+		if (forceFullRefresh) {
+			logger.info(`PersonalList full refresh starting`);
+			await setPersonalList();
+			logger.info(`PersonalList full refresh complete`);
+			return;
+		}
+
+		const appealsWithoutPersonalListEntry = await appealRepository.getAppealIdList(true);
 		if (appealsWithoutPersonalListEntry.length > 0) {
 			logger.info(
 				`PersonalList will be refreshed for ${appealsWithoutPersonalListEntry.length} appeals`
 			);
 			for (const appeal of appealsWithoutPersonalListEntry) {
-				await updatePersonalList(appeal.id);
+				await setPersonalList({ appealId: appeal.id });
 				await sleep(5); // sleep for 5 milliseconds
 			}
 			logger.info(`PersonalList refresh complete`);
