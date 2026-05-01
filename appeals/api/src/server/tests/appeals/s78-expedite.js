@@ -1,4 +1,7 @@
-import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_CASE_TYPE,
+	APPEAL_TYPE_OF_PLANNING_APPLICATION
+} from '@planning-inspectorate/data-model';
 
 export default {
 	id: 2,
@@ -95,7 +98,8 @@ export default {
 			key: 'some',
 			name: 'Some'
 		},
-		knowsAllOwners: null
+		knowsAllOwners: null,
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
 	},
 	appellant: {
 		id: 2,
