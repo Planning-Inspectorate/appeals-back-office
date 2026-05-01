@@ -98,7 +98,7 @@ const updateAppealById = async (req, res) => {
 		}
 		await setPersonalList({ appealId });
 		// broadcast any changes
-		await broadcasters.broadcastAppeal(appeal.id);
+		await broadcasters.broadcastAppeal(appealId);
 
 		// if an assignment change, also assign to linked/child appeals
 		if (isAssignmentChange && isParentAppeal(appeal)) {
