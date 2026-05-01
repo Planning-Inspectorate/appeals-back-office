@@ -13,6 +13,7 @@ import {
 	advertisementAppealWithTimetable,
 	casAdvertAppealWithTimetable,
 	casPlanningAppealWithTimetable,
+	fullPlanningAppealExpediteWithTimetable,
 	fullPlanningAppealWithTimetable,
 	fullPlanningHearingAppealWithTimetable,
 	fullPlanningInquiryAppealWithTimetable,
@@ -23,7 +24,7 @@ import {
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { trimAppealType } from '#utils/string-utils.js';
-import { jest } from '@jest/globals';
+import { expect, jest } from '@jest/globals';
 import { PROCEDURE_TYPE_MAP } from '@pins/appeals/constants/common.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import {
@@ -2811,6 +2812,40 @@ describe('appeal timetables routes', () => {
 				expect(response.status).toEqual(404);
 				expect(response.body).toEqual({
 					errors: { appealId: 'Not found' }
+				});
+			});
+
+			test('start an expedited appeal timetable', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...fullPlanningAppealExpediteWithTimetable
+				});
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+				const { id } = fullPlanningAppealExpediteWithTimetable;
+				const response = await request
+					.post(`/appeals/${id}/appeal-timetables/`)
+					.send()
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: expect.anything(),
+					recipientEmail: expect.anything(),
+					templateName: 'appeal-valid-start-case-s78-expedited-appellant'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: expect.anything(),
+					recipientEmail: expect.anything(),
+					templateName: 'appeal-valid-start-case-s78-expedited-lpa'
 				});
 			});
 		});
