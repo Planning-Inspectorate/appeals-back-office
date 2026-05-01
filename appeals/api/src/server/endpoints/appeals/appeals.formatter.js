@@ -68,7 +68,8 @@ const formatAppeal = (appeal, linkedAppeals) => {
 			isS78ExpeditedAppealType(
 				appeal.appealType?.type,
 				appeal.appellantCase?.applicationDate,
-				appeal.appellantCase?.applicationDecision
+				appeal.appellantCase?.applicationDecision,
+				appeal.appellantCase?.typeOfPlanningApplication
 			) && isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS)
 	};
 };
@@ -135,7 +136,8 @@ const formatPersonalListItem = async ({
 			isS78ExpeditedAppealType(
 				appealType?.type,
 				appellantCase?.applicationDate,
-				appellantCase?.applicationDecision
+				appellantCase?.applicationDecision,
+				appellantCase?.typeOfPlanningApplication
 			) && isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS)
 	};
 };

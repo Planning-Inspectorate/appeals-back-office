@@ -1,4 +1,8 @@
-import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_APPLICATION_DECISION,
+	APPEAL_CASE_TYPE,
+	APPEAL_TYPE_OF_PLANNING_APPLICATION
+} from '@planning-inspectorate/data-model';
 import { APPEAL_TYPE } from '../constants/common.js';
 
 /**
@@ -48,14 +52,24 @@ export const isExpeditedAppealType = (appealType) => {
  * @param {string | null} appealType
  * @param {string} caseSubmissionDate
  * @param {string} applicationDecision
+ * @param {string} typeOfPlanningApplication
  * @returns {boolean}
  */
-export const isS78ExpeditedAppealType = (appealType, caseSubmissionDate, applicationDecision) => {
+export const isS78ExpeditedAppealType = (
+	appealType,
+	caseSubmissionDate,
+	applicationDecision,
+	typeOfPlanningApplication
+) => {
 	if (!appealType) return false;
 	if (
 		(appealType === APPEAL_CASE_TYPE.W || appealType === APPEAL_TYPE.S78) &&
 		dateIsAfterDate(new Date(caseSubmissionDate), new Date(2026, 3, 1)) &&
-		(applicationDecision === 'refused' || applicationDecision === 'granted')
+		(applicationDecision === APPEAL_APPLICATION_DECISION.REFUSED ||
+			applicationDecision === APPEAL_APPLICATION_DECISION.GRANTED) &&
+		(typeOfPlanningApplication === APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL ||
+			typeOfPlanningApplication === APPEAL_TYPE_OF_PLANNING_APPLICATION.OUTLINE_PLANNING ||
+			typeOfPlanningApplication === APPEAL_TYPE_OF_PLANNING_APPLICATION.RESERVED_MATTERS)
 	) {
 		return true;
 	}

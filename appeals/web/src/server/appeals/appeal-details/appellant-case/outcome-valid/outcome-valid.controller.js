@@ -120,7 +120,8 @@ export const postValidDate = async (request, response) => {
 			isS78ExpeditedAppealType(
 				currentAppeal.appealType,
 				appellantCaseResponse.applicationDate,
-				appellantCaseResponse.applicationDecision
+				appellantCaseResponse.applicationDecision,
+				appellantCaseResponse.typeOfPlanningApplication
 			) &&
 			appellantCaseResponse.screeningOpinionIndicatesEiaRequired
 		) {

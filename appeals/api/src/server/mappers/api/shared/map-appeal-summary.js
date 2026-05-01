@@ -41,7 +41,8 @@ export const mapAppealSummary = (data) => {
 			isS78ExpeditedAppealType(
 				appeal.appealType?.type,
 				appeal.appellantCase?.applicationDate,
-				appeal.appellantCase?.applicationDecision
+				appeal.appellantCase?.applicationDecision,
+				appeal.appellantCase?.typeOfPlanningApplication
 			) && isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS)
 	};
 };
