@@ -43,8 +43,8 @@
 		"turbo": "1.2.14"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "20.4.2",
-		"@commitlint/config-conventional": "20.4.2",
+		"@commitlint/cli": "20.5.2",
+		"@commitlint/config-conventional": "20.5.0",
 		"@types/escape-html": "^1.0.4",
 		"@types/prettier": "^3.0.0",
 		"@types/stream-json": "^1.7.8",
