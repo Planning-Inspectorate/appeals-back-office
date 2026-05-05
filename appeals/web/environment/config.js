@@ -125,7 +125,7 @@ export function loadConfig() {
 		cacheControl: {
 			maxAge: CACHE_CONTROL_MAX_AGE || '1d'
 		},
-		googleAnalyticsId: GOOGLE_ANALYTICS_ID || '',
+		googleAnalyticsId: GOOGLE_ANALYTICS_ID || 'id',
 		horizonAppealBaseUrl: HORIZON_APPEAL_BASE_URL,
 		useBlobEmulator: AZURE_BLOB_USE_EMULATOR === 'true',
 		logLevelStdOut: LOG_LEVEL_STDOUT,
