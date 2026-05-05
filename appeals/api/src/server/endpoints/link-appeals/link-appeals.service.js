@@ -234,7 +234,8 @@ export const copyRepresentations = async (sourceAppeal, destinationAppeal) => {
 				dateCreated: representation.dateCreated ?? null,
 				status: representation.status ?? null,
 				lpaCode: representation.lpa?.lpaCode ?? null,
-				originalRepresentation: representation.originalRepresentation ?? null
+				originalRepresentation: representation.originalRepresentation ?? null,
+				redactedRepresentation: representation.redactedRepresentation ?? null
 			};
 		})
 	);

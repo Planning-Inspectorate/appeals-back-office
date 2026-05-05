@@ -107,7 +107,8 @@ const getRepresentations = async (appealIds, options, pageNumber, pageSize) => {
 				status: true,
 				dateCreated: true,
 				originalRepresentation: true,
-				source: true
+				source: true,
+				redactedRepresentation: true
 			},
 			orderBy: { dateCreated: 'desc' },
 			...(pageNumber && pageSize ? { skip: pageNumber * pageSize } : {}),
