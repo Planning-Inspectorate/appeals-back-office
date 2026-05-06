@@ -67,10 +67,6 @@ export const createSiteVisit = async (
 			siteVisitTypeId: visitTypeId
 		});
 
-		if (isChildAppeal) {
-			return;
-		}
-
 		if (visitDate) {
 			await broadcasters.broadcastEvent(siteVisit.id, EVENT_TYPE.SITE_VISIT, EventType.Create);
 			await createAuditTrail({
@@ -81,6 +77,11 @@ export const createSiteVisit = async (
 				])
 			});
 		}
+
+		if (isChildAppeal) {
+			return;
+		}
+
 		if (visitDate && visitStartTime) {
 			const notifyTemplateIds = fetchSiteVisitScheduleTemplateIds(siteVisitData.visitType.name);
 
@@ -221,6 +222,8 @@ const updateSiteVisit = async (
 			throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 		}
 
+		const siteVisits = await siteVisitRepository.getSiteVisitByAppealId(appealIdsToUpdate);
+
 		await updatePersonalList(appealId);
 
 		if (updateSiteVisitData.visitType) {
@@ -230,10 +233,11 @@ const updateSiteVisit = async (
 				details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED
 			});
 
-			await broadcasters.broadcastEvent(
-				updateSiteVisitData.siteVisitId,
-				EVENT_TYPE.SITE_VISIT,
-				EventType.Update
+			// @ts-ignore
+			await Promise.allSettled(
+				siteVisits.map((siteVisit) =>
+					broadcasters.broadcastEvent(siteVisit.id, EVENT_TYPE.SITE_VISIT, EventType.Update)
+				)
 			);
 		}
 		if (visitDate && visitStartTime) {
@@ -323,6 +327,8 @@ const updateWhenSiteVisitMissed = async (
 			throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 		}
 
+		const siteVisits = await siteVisitRepository.getSiteVisitByAppealId(appealIdsToUpdate);
+
 		if (updateSiteVisitData.visitType) {
 			if (visitDate) {
 				await createAuditTrail({
@@ -334,10 +340,11 @@ const updateWhenSiteVisitMissed = async (
 				});
 			}
 
-			await broadcasters.broadcastEvent(
-				updateSiteVisitData.siteVisitId,
-				EVENT_TYPE.SITE_VISIT,
-				EventType.Update
+			// @ts-ignore
+			await Promise.allSettled(
+				siteVisits.map((siteVisit) =>
+					broadcasters.broadcastEvent(siteVisit.id, EVENT_TYPE.SITE_VISIT, EventType.Update)
+				)
 			);
 		}
 
@@ -515,29 +522,26 @@ const fetchRearrangeMissedSiteVisitTemplateIds = (visitTypeName) => {
 
 /**
  *
- * @param {number} siteVisitId
  * @param {import('@pins/appeals.api').Schema.Appeal} appeal
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
  * @param {number[]} appealIdsToUpdate
  */
-const deleteSiteVisit = async (
-	siteVisitId,
-	appeal,
-	notifyClient,
-	azureAdUserId,
-	appealIdsToUpdate
-) => {
+const deleteSiteVisit = async (appeal, notifyClient, azureAdUserId, appealIdsToUpdate) => {
 	try {
-		const existingSiteVisit = await siteVisitRepository.getSiteVisitById(siteVisitId);
+		const siteVisits = await siteVisitRepository.getSiteVisitByAppealId(appealIdsToUpdate);
 		await siteVisitRepository.deleteMultiSiteVisitByAppealId(appealIdsToUpdate);
 
-		await broadcasters.broadcastEvent(
-			siteVisitId,
-			EVENT_TYPE.SITE_VISIT,
-			EventType.Delete,
-			// @ts-ignore
-			existingSiteVisit
+		await Promise.allSettled(
+			siteVisits.map((siteVisit) =>
+				broadcasters.broadcastEvent(
+					siteVisit.id,
+					EVENT_TYPE.SITE_VISIT,
+					EventType.Delete,
+					// @ts-ignore
+					siteVisit
+				)
+			)
 		);
 
 		await sendCancelledSiteVisitNotification({

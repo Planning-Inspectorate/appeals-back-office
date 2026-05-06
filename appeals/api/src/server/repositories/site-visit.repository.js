@@ -110,6 +110,25 @@ const getSiteVisitById = (id) => {
 	});
 };
 
+/**
+ * @param {number[]} appealIds
+ * @returns
+ */
+const getSiteVisitByAppealId = (appealIds) =>
+	databaseConnector.siteVisit.findMany({
+		where: {
+			appealId: { in: appealIds }
+		},
+		include: {
+			siteVisitType: true,
+			appeal: {
+				include: {
+					address: true
+				}
+			}
+		}
+	});
+
 export default {
 	createSiteVisitById,
 	updateSiteVisitById,
@@ -117,5 +136,6 @@ export default {
 	deleteSiteVisitById,
 	deleteMultiSiteVisitByAppealId,
 	getMissedSiteVisitByAppealId,
-	getSiteVisitById
+	getSiteVisitById,
+	getSiteVisitByAppealId
 };

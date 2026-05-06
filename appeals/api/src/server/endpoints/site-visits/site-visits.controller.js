@@ -296,13 +296,7 @@ const cancelSiteVisit = async (req, res) => {
 				}
 			});
 		}
-		await deleteSiteVisit(
-			siteVisitId,
-			appeal,
-			notifyClient,
-			String(azureAdUserId),
-			appealsToUpdate
-		);
+		await deleteSiteVisit(appeal, notifyClient, String(azureAdUserId), appealsToUpdate);
 
 		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.AWAITING_EVENT)) {
 			if (isLinkedAppealsActive(appeal)) {
