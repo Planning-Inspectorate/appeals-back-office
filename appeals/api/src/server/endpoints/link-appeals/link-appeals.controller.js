@@ -539,6 +539,13 @@ export const updateLinkedAppeals = async (req, res) => {
 			appealsToBroadcast = appealsToAudit;
 		}
 
+		await updateAppealStatusIfRequired(
+			appealToReplaceLead?.id || currentLead?.id,
+			appealToUnlink?.id,
+			currentLead?.id,
+			azureAdUserId
+		);
+
 		if (appealsToBroadcast) {
 			await Promise.allSettled(
 				appealsToBroadcast
@@ -547,13 +554,6 @@ export const updateLinkedAppeals = async (req, res) => {
 					.map((appealId) => broadcasters.broadcastAppeal(appealId))
 			);
 		}
-
-		await updateAppealStatusIfRequired(
-			appealToReplaceLead?.id || currentLead?.id,
-			appealToUnlink?.id,
-			currentLead?.id,
-			azureAdUserId
-		);
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).send({ errors: { body: ERROR_UNLINKING_APPEALS } });
