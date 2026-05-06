@@ -9,15 +9,6 @@ import * as validators from './hearing.validators.js';
 const router = createRouter({ mergeParams: true });
 
 router
-	.route('/')
-	.get(asyncHandler(controller.getHearingDateKnown))
-	.post(
-		validators.validateDateKnown,
-		saveBodyToSession('startCaseAppealProcedure', { scopeToAppeal: true }),
-		asyncHandler(controller.postHearingDateKnown)
-	);
-
-router
 	.route('/date')
 	.get(asyncHandler(controller.getHearingDate))
 	.post(
