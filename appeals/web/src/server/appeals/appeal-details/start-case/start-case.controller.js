@@ -307,7 +307,7 @@ const redirectionTarget = (request) => {
 		sessionValues?.appealProcedure === APPEAL_CASE_PROCEDURE.HEARING &&
 		useNewHearingRoute(request)
 	) {
-		return `/appeals-service/appeal-details/${appealId}/start-case/hearing`;
+		return `/appeals-service/appeal-details/${appealId}/start-case/hearing/date`;
 	}
 
 	applyEditsForAppeal(request, 'startCaseAppealProcedure', appealId);
