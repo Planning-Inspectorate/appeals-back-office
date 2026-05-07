@@ -494,6 +494,7 @@ describe('appeal linked appeals routes', () => {
 						databaseConnector.appealRelationship.create.mockResolvedValue({});
 						// @ts-ignore
 						databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
+						databaseConnector.representation.findMany.mockResolvedValue([{ id: 'testId' }]);
 
 						const response = await request
 							.post(`/appeals/${testAppeal.id}/update-linked-appeals`)
@@ -532,6 +533,7 @@ describe('appeal linked appeals routes', () => {
 							}
 						});
 
+						expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledTimes(1);
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledTimes(3);
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(testAppeal.id);
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(mockAppealA.id);

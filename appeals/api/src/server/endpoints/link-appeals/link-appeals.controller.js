@@ -30,6 +30,7 @@ import {
 	LINK_APPEALS_CHANGE_LEAD_OPERATION,
 	LINK_APPEALS_UNLINK_OPERATION
 } from '@pins/appeals/constants/support.js';
+import { EventType } from '@pins/event-client';
 import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import {
 	canLinkAppeals,
@@ -447,20 +448,29 @@ export const updateLinkedAppeals = async (req, res) => {
 
 		let appealToUnlink;
 		let appealsToBroadcast;
+		let representationsToBroadcast;
+		// @ts-ignore
+		let representationBroadcastAction;
 
 		switch (operation) {
 			case LINK_APPEALS_CHANGE_LEAD_OPERATION: {
-				await Promise.allSettled([
+				const results = await Promise.allSettled([
 					// @ts-ignore
-					moveRepresentations(currentLead.id, appealToReplaceLead.id),
+					moveRepresentations(currentLead, appealToReplaceLead),
 					// @ts-ignore
 					duplicateAllFiles(currentLead, appealToReplaceLead, options),
 					// @ts-ignore
 					replaceLeadAppeal(currentLead, appealToReplaceLead)
 				]);
+				// @ts-ignore
+				representationsToBroadcast = results[0].value;
+				// @ts-ignore
+				representationBroadcastAction = EventType.Update;
 				break;
 			}
 			case LINK_APPEALS_UNLINK_OPERATION: {
+				representationBroadcastAction = EventType.Create;
+
 				appealToUnlink =
 					// Just unlink the child if it's a parent of only one child
 					isParentAppeal(appeal) && childAppeals.length === 1
@@ -469,12 +479,14 @@ export const updateLinkedAppeals = async (req, res) => {
 						: appeal;
 
 				if (isChildAppeal(appealToUnlink)) {
-					await Promise.allSettled([
+					const results = await Promise.allSettled([
 						// @ts-ignore
 						copyRepresentations(currentLead, appealToUnlink),
 						// @ts-ignore
 						duplicateAllFiles(currentLead, appealToUnlink, options)
 					]);
+					// @ts-ignore
+					representationsToBroadcast = results[0].value;
 					// only need to broadcast to the child and lead involved in the unlink action
 					appealsToBroadcast = [currentLead?.id, appealToUnlink?.id];
 				} else {
@@ -483,7 +495,7 @@ export const updateLinkedAppeals = async (req, res) => {
 							.status(400)
 							.send('Appeal to replace lead is required for unlinking a parent appeal');
 					}
-					await Promise.allSettled([
+					const results = await Promise.allSettled([
 						// @ts-ignore
 						copyRepresentations(appealToUnlink, appealToReplaceLead),
 						// @ts-ignore
@@ -491,6 +503,8 @@ export const updateLinkedAppeals = async (req, res) => {
 						// @ts-ignore
 						replaceLeadAppeal(appealToUnlink, appealToReplaceLead)
 					]);
+					// @ts-ignore
+					representationsToBroadcast = results[0].value;
 				}
 				await Promise.allSettled([
 					// @ts-ignore
@@ -545,6 +559,20 @@ export const updateLinkedAppeals = async (req, res) => {
 			currentLead?.id,
 			azureAdUserId
 		);
+
+		if (representationsToBroadcast) {
+			await Promise.allSettled(
+				// @ts-ignore
+				representationsToBroadcast
+					// @ts-ignore
+					.filter((representation) => representation.id !== undefined)
+					// @ts-ignore
+					.map((representation) =>
+						// @ts-ignore
+						broadcasters.broadcastRepresentation(representation.id, representationBroadcastAction)
+					)
+			);
+		}
 
 		if (appealsToBroadcast) {
 			await Promise.allSettled(
