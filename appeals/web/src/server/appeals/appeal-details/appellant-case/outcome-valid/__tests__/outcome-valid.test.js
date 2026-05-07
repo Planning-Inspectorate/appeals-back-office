@@ -612,6 +612,28 @@ describe('Appellant Case Valid Flow', () => {
 					`Found. Redirecting to /appeals-service/appeal-details/${appealId}/appellant-case/valid/environmental-services-review`
 				);
 			});
+			it('should handle posting environmental services review details', async () => {
+				nock('http://test/').patch(`/appeals/${appealId}/appellant-cases/0`).reply(200);
+				nock('http://test/').get(`/appeals/${appealId}/appellant-cases/0`).reply(200, {
+					screeningOpinionIndicatesEiaRequired: true,
+					applicationDate: '2026-05-01',
+					applicationDecision: 'refused',
+					typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+				});
+
+				const response = await request
+					.post(`${baseUrl}/${appealId}/appellant-case/valid/environmental-services-review`)
+					.send({
+						day: '1',
+						month: 'Jan',
+						year: '2025'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					`Found. Redirecting to /appeals-service/appeal-details/${appealId}`
+				);
+			});
 		});
 	});
 });
