@@ -147,7 +147,7 @@ export const unlinkChildAppeal = async (appeal) => {
 
 /**
  * Moves representations from the source appeal to the destination appeal.
- * @param {Appeal | {id: number, reference: string}} sourceAppeal
+ * @param {Appeal | Partial<Appeal> | {id: number, reference: string}} sourceAppeal
  * @param {Appeal | {id: number, reference: string}} destinationAppeal
  * @returns {Promise<*>}
  */
@@ -256,6 +256,7 @@ export const copyRepresentations = async (sourceAppeal, destinationAppeal) => {
 				await representationRepository.addAttachments(representation.id, attachments);
 		})
 	);
+	return representationsInDestinationAppeal;
 };
 
 /**
