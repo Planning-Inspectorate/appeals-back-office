@@ -87,10 +87,12 @@ describe('DELETE /:appealId/site-visits/:siteVisitId', () => {
 			];
 
 			// @ts-ignore
-			databaseConnector.siteVisit.findUnique.mockResolvedValue({
-				...appeal.siteVisit,
-				appeal: appeal
-			});
+			databaseConnector.siteVisit.findMany.mockResolvedValue([
+				{
+					...appeal.siteVisit,
+					appeal: appeal
+				}
+			]);
 
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));

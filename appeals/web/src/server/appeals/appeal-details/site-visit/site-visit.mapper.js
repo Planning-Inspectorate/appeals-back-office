@@ -6,9 +6,9 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { capitalize, upperCase } from 'lodash-es';
 /**
- * @typedef {'unaccompanied'|'accompanied'|'accessRequired'} WebSiteVisitType
+ * @typedef {'Unaccompanied'|'Accompanied'|'Access required'} WebSiteVisitType
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
- * @typedef {string|null|undefined} ApiVisitType
+ * @typedef {string} ApiVisitType
  */
 
 /**
@@ -18,25 +18,28 @@ import { capitalize, upperCase } from 'lodash-es';
  */
 export function mapWebVisitTypeToApiVisitType(webVisitType) {
 	switch (webVisitType) {
-		case 'accessRequired':
+		case 'Access required':
 			return 'access required';
-		default:
-			return webVisitType;
+		case 'Unaccompanied':
+			return 'unaccompanied';
+		case 'Accompanied':
+			return 'accompanied';
 	}
 }
+
 /**
  *
  * @param {ApiVisitType} getApiVisitType
  * @returns {WebSiteVisitType | null}
  */
 export function mapGetApiVisitTypeToWebVisitType(getApiVisitType) {
-	switch (getApiVisitType) {
-		case 'Unaccompanied':
-			return 'unaccompanied';
-		case 'Access required':
-			return 'accessRequired';
-		case 'Accompanied':
-			return 'accompanied';
+	switch (getApiVisitType?.toLowerCase()) {
+		case 'unaccompanied':
+			return 'Unaccompanied';
+		case 'access required':
+			return 'Access required';
+		case 'accompanied':
+			return 'Accompanied';
 		default:
 			return null;
 	}
@@ -49,14 +52,14 @@ export function mapGetApiVisitTypeToWebVisitType(getApiVisitType) {
  */
 export function mapVisitTypeToReadable(visitType) {
 	switch (visitType) {
-		case 'unaccompanied':
+		case 'Unaccompanied':
 			return 'Unaccompanied';
-		case 'accessRequired':
+		case 'Access required':
 			return 'Access Required';
-		case 'accompanied':
+		case 'Accompanied':
 			return 'Accompanied';
 		default:
-			return '';
+			return visitType ? capitalize(visitType) : '';
 	}
 }
 
@@ -117,7 +120,6 @@ export async function typeOfSiteVisitPage(
 			]
 		}
 	};
-
 	/** @type {PageComponent} */
 	const selectVisitTypeComponent = {
 		type: 'radios',
@@ -130,18 +132,18 @@ export async function typeOfSiteVisitPage(
 					classes: 'govuk-fieldset__legend--m'
 				}
 			},
-			value: mapGetApiVisitTypeToWebVisitType(visitType),
+			value: visitType,
 			items: [
 				{
-					value: 'unaccompanied',
+					value: 'Unaccompanied',
 					text: 'Unaccompanied'
 				},
 				{
-					value: 'accessRequired',
+					value: 'Access required',
 					text: 'Access Required'
 				},
 				{
-					value: 'accompanied',
+					value: 'Accompanied',
 					text: 'Accompanied'
 				}
 			],

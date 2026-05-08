@@ -949,8 +949,47 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 				recipientEmail: appeal.agent.email
 			});
 		});
-	});
 
+		test('updates a site visit with date but no time fields and doesnt send notify email', async () => {
+			const { siteVisit } = JSON.parse(JSON.stringify(appeal));
+			siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCESS_REQUIRED;
+
+			siteVisit.visitStartTime = null;
+			siteVisit.visitEndTime = null;
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
+			// @ts-ignore
+			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			// @ts-ignore
+			databaseConnector.user.upsert.mockResolvedValue({
+				id: 1,
+				azureAdUserId
+			});
+
+			const response = await request
+				.patch(`/appeals/${appeal.id}/site-visits/${siteVisit.id}`)
+				.send({
+					visitDate: siteVisit.visitDate,
+					visitEndTime: '',
+					visitStartTime: '',
+					visitType: siteVisit.siteVisitType.name,
+					previousVisitType: SITE_VISIT_TYPE_UNACCOMPANIED,
+					siteVisitChangeType: 'visit-type'
+				})
+				.set('azureAdUserId', azureAdUserId);
+			expect(mockNotifySend).not.toHaveBeenCalled();
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				visitDate: siteVisit.visitDate,
+				visitEndTime: '',
+				visitStartTime: '',
+				visitType: siteVisit.siteVisitType.name,
+				previousVisitType: SITE_VISIT_TYPE_UNACCOMPANIED,
+				siteVisitChangeType: 'visit-type'
+			});
+		});
+	});
 	describe.each([
 		['single appeal', getHouseholdAppeal],
 		['linked appeals- enforcement multiple appellants', getEnforcementLeadAppeal]
@@ -1406,8 +1445,8 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 				.patch(`/appeals/${appeal.id}/site-visits/${siteVisit.id}`)
 				.send({
 					visitDate: siteVisit.visitDate,
-					visitEndTime: siteVisit.visitEndTime,
-					visitStartTime: siteVisit.visitStartTime,
+					visitEndTime: '',
+					visitStartTime: '',
 					visitType: siteVisit.siteVisitType.name,
 					siteVisitChangeType: 'unchanged',
 					knowDateTime: true
@@ -1418,8 +1457,8 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 				where: { appealId: { in: idsOfLinkedGroup } },
 				data: {
 					visitDate: new Date(siteVisit.visitDate),
-					visitEndTime: new Date(siteVisit.visitEndTime),
-					visitStartTime: new Date(siteVisit.visitStartTime),
+					visitEndTime: null,
+					visitStartTime: null,
 					siteVisitTypeId: siteVisit.siteVisitType.id
 				}
 			});
@@ -1435,8 +1474,8 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			expect(response.status).toEqual(200);
 			expect(response.body).toEqual({
 				visitDate: siteVisit.visitDate,
-				visitEndTime: siteVisit.visitEndTime,
-				visitStartTime: siteVisit.visitStartTime,
+				visitEndTime: '',
+				visitStartTime: '',
 				visitType: siteVisit.siteVisitType.name,
 				siteVisitChangeType: 'unchanged'
 			});

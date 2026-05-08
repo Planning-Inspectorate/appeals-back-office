@@ -72,7 +72,7 @@ export const postScheduleVisitDateTime = async (request, response) => {
 	const siteVisitStartTimeMinute = body['visit-start-time-minute'];
 	const siteVisitEndTimeHour = body['visit-end-time-hour'] || '';
 	const siteVisitEndTimeMinute = body['visit-end-time-minute'] || '';
-	const siteVisitType = session.visitType || currentAppeal.siteVisit.visitType.toLowerCase();
+	const siteVisitType = session.visitType || currentAppeal.siteVisit.visitType;
 	const readyToSetUp = session.readyToSetUp || false;
 	const dateTimeKnown = session.dateTimeKnown || currentAppeal.siteVisit ? 'yes' : 'no';
 
@@ -314,7 +314,7 @@ const renderKnowDateTimePage = async (request, response, apiErrors) => {
  * @param {import('@pins/express').ValidationErrors} [apiErrors]
  */
 const renderScheduleVisitDatePage = async (request, response, apiErrors) => {
-	const { session, currentAppeal } = request;
+	const { session, currentAppeal, body } = request;
 	const errors = request.errors || apiErrors;
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: scheduleVisitDateTimePage(
@@ -322,7 +322,8 @@ const renderScheduleVisitDatePage = async (request, response, apiErrors) => {
 			currentAppeal.appealReference,
 			errors,
 			session,
-			getBackLinkUrlFromQuery(request)
+			getBackLinkUrlFromQuery(request),
+			body
 		),
 		errors
 	});
