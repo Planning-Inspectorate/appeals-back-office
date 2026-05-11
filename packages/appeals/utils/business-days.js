@@ -222,21 +222,24 @@ export const getFullAppealBaseTimetableKey = (appealType) => {
  * @param {Date|null} startedAt
  * @param {string} procedureType
  * @param {Date|null} inquiryDate
+ * @param {boolean} isS78Expedited
  * @returns {Promise<TimetableDeadlineDate | undefined>}
  */
 const calculateTimetable = async (
 	appealType,
 	startedAt,
 	procedureType = 'written',
-	inquiryDate = null
+	inquiryDate = null,
+	isS78Expedited = false
 ) => {
 	if (startedAt) {
 		const startDate = setTimeInTimeZone(startedAt, DAYTIME_HOUR, DAYTIME_MINUTE);
 
 		// @ts-ignore
-		const fullAppealTypeKey = getFullAppealBaseTimetableKey(appealType);
+		const fullAppealTypeKey = isS78Expedited
+			? 'EXPEDITED_S78'
+			: getFullAppealBaseTimetableKey(appealType);
 		const expeditedAppealTypeKey = APPEAL_CASE_TYPE.D;
-
 		const appealTimetableConfig = !isExpeditedAppealType(appealType)
 			? CONFIG_APPEAL_TIMETABLE[fullAppealTypeKey][procedureType]
 			: CONFIG_APPEAL_TIMETABLE[expeditedAppealTypeKey];

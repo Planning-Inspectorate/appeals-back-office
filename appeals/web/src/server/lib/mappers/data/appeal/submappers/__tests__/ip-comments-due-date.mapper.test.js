@@ -121,3 +121,30 @@ describe.each([
 		});
 	});
 });
+describe('S78 expedited appeal - ip-comments-due-date.mapper', () => {
+	let data;
+	beforeEach(() => {
+		data = {
+			currentRoute: '/test',
+			appealDetails: {
+				startedAt: '2026-04-01',
+				appealTimetable: { ipCommentsDueDate: '' },
+				documentationSummary: { ipComments: { counts: { published: 0 } } },
+				appealType: APPEAL_TYPE.S78
+			},
+			appellantCase: {
+				applicationDate: '2026-04-01',
+				applicationDecision: 'refused',
+				typeOfPlanningApplication: 'full-appeal'
+			},
+			userHasUpdateCasePermission: true
+		};
+	});
+	it(`should not display IP Comments due date`, () => {
+		const mappedData = mapIpCommentsDueDate(data);
+		expect(mappedData).toEqual({
+			display: {},
+			id: 'ip-comments-due-date'
+		});
+	});
+});

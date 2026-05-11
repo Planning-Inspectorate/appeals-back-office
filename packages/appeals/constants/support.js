@@ -515,7 +515,17 @@ const s78timetable = {
 		daysFromStartDate: 35
 	}
 };
-
+const s78ExpeditedTimetable = {
+	lpaQuestionnaireDueDate: {
+		daysFromStartDate: 5
+	},
+	finalCommentsDueDate: {
+		daysFromStartDate: 35
+	},
+	s106ObligationDueDate: {
+		daysFromStartDate: 35
+	}
+};
 const advertTimetable = {
 	lpaQuestionnaireDueDate: {
 		daysFromStartDate: 10
@@ -586,6 +596,17 @@ export const CONFIG_APPEAL_TIMETABLE = {
 			}
 		},
 		[APPEAL_CASE_PROCEDURE.INQUIRY]: { ...s78InquiryTimetable }
+	},
+	['EXPEDITED_S78']: {
+		[APPEAL_CASE_PROCEDURE.WRITTEN]: { ...s78timetable },
+		[APPEAL_CASE_PROCEDURE.WRITTEN_PART_1]: { ...s78ExpeditedTimetable },
+		[APPEAL_CASE_PROCEDURE.HEARING]: {
+			...s78timetable,
+			statementOfCommonGroundDueDate: {
+				daysFromStartDate: 25
+			}
+		},
+		[APPEAL_CASE_PROCEDURE.INQUIRY]: { ...s78timetable }
 	},
 	[APPEAL_CASE_TYPE.H]: {
 		[APPEAL_CASE_PROCEDURE.WRITTEN]: { ...advertTimetable },

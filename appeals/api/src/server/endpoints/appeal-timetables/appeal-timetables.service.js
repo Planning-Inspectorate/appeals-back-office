@@ -416,7 +416,20 @@ const startCase = async (
 		}
 
 		const startedAt = await recalculateDateIfNotBusinessDay(startDate);
-		const timetable = await calculateTimetable(appealType.key, startedAt, procedureType);
+		const isS78Expedited = isS78ExpeditedAppealType(
+			appealType.type,
+			appeal.appellantCase?.applicationDate,
+			appeal.appellantCase?.applicationDecision,
+			appeal.appellantCase?.typeOfPlanningApplication
+		);
+
+		const timetable = await calculateTimetable(
+			appealType.key,
+			startedAt,
+			procedureType,
+			null,
+			isS78Expedited
+		);
 		const startDateWithTimeCorrection = setTimeInTimeZone(startedAt, 0, 0);
 
 		const procedureTypeId = procedureType && PROCEDURE_TYPE_ID_MAP[procedureType];
