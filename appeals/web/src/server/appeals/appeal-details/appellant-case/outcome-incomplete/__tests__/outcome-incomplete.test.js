@@ -13,6 +13,7 @@ import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
+import { getFilteredReasons } from '../outcome-incomplete.service.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -1116,5 +1117,29 @@ describe('incomplete-appeal', () => {
 				);
 			});
 		});
+	});
+});
+
+describe('getFilteredReasons', () => {
+	it('should not display option 2 when selecting an incomplete reason for expedited case validation', () => {
+		const forbiddenString =
+			'Attachments and/or appendices have not been included to the full statement of case';
+		const incompleteReasonOptions = [
+			{ id: 1, name: 'Appellant name is not the same on the application form and appeal form' },
+			{ id: 2, name: forbiddenString },
+			{ id: 3, name: "LPA's decision notice is missing" },
+			{ id: 4, name: "LPA's decision notice is incorrect or incomplete" },
+			{ id: 10, name: 'Other' }
+		];
+		// Expedited appeal conditions
+		const appellantCase = {
+			applicationDate: '2027-04-02',
+			applicationDecision: 'refused',
+			typeOfPlanningApplication: 'full-appeal'
+		};
+		const filtered = getFilteredReasons(incompleteReasonOptions, 'Planning appeal', appellantCase);
+		const reason2 = filtered.find((r) => r.id === 2);
+		expect(reason2).toBeUndefined();
+		expect(filtered.some((r) => r.name === forbiddenString)).toBe(false);
 	});
 });
