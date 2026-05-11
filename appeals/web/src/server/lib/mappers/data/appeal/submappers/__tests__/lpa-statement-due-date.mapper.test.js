@@ -121,3 +121,31 @@ describe.each([
 		});
 	});
 });
+
+describe('S78 expedited appeal - lpa-statement-due-date.mapper', () => {
+	let data;
+	beforeEach(() => {
+		data = {
+			currentRoute: '/test',
+			appealDetails: {
+				validAt: '2026-04-01',
+				appealTimetable: { lpaStatementDueDate: '' },
+				appealType: APPEAL_TYPE.S78
+			},
+			appellantCase: {
+				applicationDate: '2026-04-01',
+				applicationDecision: 'refused',
+				typeOfPlanningApplication: 'full-appeal'
+			},
+			userHasUpdateCasePermission: true
+		};
+	});
+
+	it('should not display LPA Statement due date for S78 expedited appeal', () => {
+		const mappedData = mapLpaStatementDueDate(data);
+		expect(mappedData).toEqual({
+			display: {},
+			id: 'lpa-statement-due-date'
+		});
+	});
+});

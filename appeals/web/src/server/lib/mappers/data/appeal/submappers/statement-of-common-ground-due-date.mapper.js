@@ -1,19 +1,27 @@
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import { isS78ExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapStatementOfCommonGroundDueDate = ({
 	appealDetails,
 	currentRoute,
-	userHasUpdateCasePermission
+	userHasUpdateCasePermission,
+	appellantCase
 }) => {
 	const id = 'statement-of-common-ground-due-date';
 
 	if (
 		!appealDetails.startedAt ||
-		appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN
+		appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN ||
+		isS78ExpeditedAppealType(
+			appealDetails.appealType,
+			appellantCase?.applicationDate,
+			appellantCase?.applicationDecision,
+			appellantCase?.typeOfPlanningApplication
+		)
 	) {
 		return { id, display: {} };
 	}
