@@ -45,7 +45,7 @@ export function canDisplayAction(appeal) {
 		case APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE:
 			return appeal.appealType !== APPEAL_TYPE.ENFORCEMENT_NOTICE;
 		case APPEAL_CASE_STATUS.EVENT:
-			return appeal.procedureType !== APPEAL_CASE_PROCEDURE.WRITTEN;
+			return false; // one site visit, hearing or inquiry event recorded against lead appeal
 		default:
 			return false;
 	}

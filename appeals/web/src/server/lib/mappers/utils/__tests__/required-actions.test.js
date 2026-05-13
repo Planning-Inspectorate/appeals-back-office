@@ -4,9 +4,73 @@ import { appealData, appealDataEnforcementNotice } from '#testing/app/fixtures/r
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { addDays } from 'date-fns';
-import { getRequiredActionsForAppeal } from '../required-actions.js';
+import { canDisplayAction, getRequiredActionsForAppeal } from '../required-actions.js';
 
 describe('required actions', () => {
+	describe('canDisplayAction', () => {
+		it('returns true for non-child appeals', () => {
+			expect(
+				canDisplayAction({
+					appealStatus: APPEAL_CASE_STATUS.EVENT,
+					appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
+					isChildAppeal: false
+				})
+			).toBe(true);
+		});
+		it.each([
+			[
+				'true for non-enforcement child appeal in status VALIDATION, validation on each appeal',
+				APPEAL_CASE_STATUS.VALIDATION,
+				APPEAL_TYPE.S78,
+				true
+			],
+			[
+				'false for enforcement notice child appeal in status VALIDATION, validation only on the lead',
+				APPEAL_CASE_STATUS.VALIDATION,
+				APPEAL_TYPE.ENFORCEMENT_NOTICE,
+				false
+			],
+			[
+				'true for child appeal in status AWAITING_TRANSFER, awaiting transfer on each appeal',
+				APPEAL_CASE_STATUS.AWAITING_TRANSFER,
+				APPEAL_TYPE.ENFORCEMENT_NOTICE,
+				true
+			],
+			[
+				'true for non-enforcement child appeal in status LPA_QUESTIONNAIRE, lpaq on each appeal',
+				APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				APPEAL_TYPE.S78,
+				true
+			],
+			[
+				'false for enforcement notice child appeal in status LPA_QUESTIONNAIRE, lpaq only submitted on the lead',
+				APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				APPEAL_TYPE.ENFORCEMENT_NOTICE,
+				false
+			],
+			[
+				'false for child appeal in status EVENT, event only set up on the lead',
+				APPEAL_CASE_STATUS.EVENT,
+				APPEAL_TYPE.S78,
+				false
+			],
+			[
+				'false for child appeal in any other status',
+				APPEAL_CASE_STATUS.COMPLETE,
+				APPEAL_TYPE.S78,
+				false
+			]
+		])('returns %s', (_, appealStatus, appealType, expectedResult) => {
+			expect(
+				canDisplayAction({
+					appealStatus,
+					appealType,
+					isChildAppeal: true
+				})
+			).toBe(expectedResult);
+		});
+	});
+
 	describe('getRequiredActionsForAppeal', () => {
 		const pastDate = '2025-01-06T23:59:00.000Z';
 		const futureDate = '3000-01-06T23:59:00.000Z';
