@@ -58,7 +58,7 @@ exports[`national-list GET / should render national list - 10 pages - all page i
                             <select class="govuk-select" id="appeal-procedure-filter"
                             name="appealProcedureFilter" data-cy="filter-by-appeal-procedure">
                                 <option value="all">All</option>
-                                <option value="1">Written</option>
+                                <option value="1">Written representations (Part 2)</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
                             </select>
@@ -290,7 +290,7 @@ exports[`national-list GET / should render national list - 15 pages - pagination
                             <select class="govuk-select" id="appeal-procedure-filter"
                             name="appealProcedureFilter" data-cy="filter-by-appeal-procedure">
                                 <option value="all">All</option>
-                                <option value="1">Written</option>
+                                <option value="1">Written representations (Part 2)</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
                             </select>
@@ -505,7 +505,7 @@ exports[`national-list GET / should render national list - appeal procedure type
                             <select class="govuk-select" id="appeal-procedure-filter"
                             name="appealProcedureFilter" data-cy="filter-by-appeal-procedure">
                                 <option value="all">All</option>
-                                <option value="1" selected>Written</option>
+                                <option value="1" selected>Written representations (Part 2)</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
                             </select>
@@ -681,7 +681,7 @@ exports[`national-list GET / should render national list - appeal type filter ap
                             <select class="govuk-select" id="appeal-procedure-filter"
                             name="appealProcedureFilter" data-cy="filter-by-appeal-procedure">
                                 <option value="all">All</option>
-                                <option value="1">Written</option>
+                                <option value="1">Written representations (Part 2)</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
                             </select>
@@ -857,7 +857,7 @@ exports[`national-list GET / should render national list - case team filter appl
                             <select class="govuk-select" id="appeal-procedure-filter"
                             name="appealProcedureFilter" data-cy="filter-by-appeal-procedure">
                                 <option value="all">All</option>
-                                <option value="1">Written</option>
+                                <option value="1">Written representations (Part 2)</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
                             </select>
@@ -1030,7 +1030,7 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
                             <select class="govuk-select" id="appeal-procedure-filter"
                             name="appealProcedureFilter" data-cy="filter-by-appeal-procedure">
                                 <option value="all">All</option>
-                                <option value="1">Written</option>
+                                <option value="1">Written representations (Part 2)</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
                             </select>
@@ -1224,7 +1224,7 @@ exports[`national-list GET / should render national list - no search term - filt
                             <select class="govuk-select" id="appeal-procedure-filter"
                             name="appealProcedureFilter" data-cy="filter-by-appeal-procedure">
                                 <option value="all">All</option>
-                                <option value="1">Written</option>
+                                <option value="1">Written representations (Part 2)</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
                             </select>
@@ -1412,7 +1412,7 @@ exports[`national-list GET / should render national list - search term - filter 
                             <select class="govuk-select" id="appeal-procedure-filter"
                             name="appealProcedureFilter" data-cy="filter-by-appeal-procedure">
                                 <option value="all">All</option>
-                                <option value="1">Written</option>
+                                <option value="1">Written representations (Part 2)</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
                             </select>
@@ -1600,7 +1600,7 @@ exports[`national-list GET / should render national list - search term - no resu
                             <select class="govuk-select" id="appeal-procedure-filter"
                             name="appealProcedureFilter" data-cy="filter-by-appeal-procedure">
                                 <option value="all">All</option>
-                                <option value="1">Written</option>
+                                <option value="1">Written representations (Part 2)</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
                             </select>
@@ -1745,7 +1745,7 @@ exports[`national-list GET / should render national list - search term 1`] = `
                             <select class="govuk-select" id="appeal-procedure-filter"
                             name="appealProcedureFilter" data-cy="filter-by-appeal-procedure">
                                 <option value="all">All</option>
-                                <option value="1">Written</option>
+                                <option value="1">Written representations (Part 2)</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
                             </select>
@@ -1936,7 +1936,7 @@ exports[`national-list GET / should render the header with navigation containing
                             <select class="govuk-select" id="appeal-procedure-filter"
                             name="appealProcedureFilter" data-cy="filter-by-appeal-procedure">
                                 <option value="all">All</option>
-                                <option value="1">Written</option>
+                                <option value="1">Written representations (Part 2)</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
                             </select>
@@ -2127,7 +2127,7 @@ exports[`national-list GET / should show enforcement reference instead of planni
                             <select class="govuk-select" id="appeal-procedure-filter"
                             name="appealProcedureFilter" data-cy="filter-by-appeal-procedure">
                                 <option value="all">All</option>
-                                <option value="1">Written</option>
+                                <option value="1">Written representations (Part 2)</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
                             </select>
@@ -2300,7 +2300,7 @@ exports[`national-list GET / should show enforcement reference instead of planni
                             <select class="govuk-select" id="appeal-procedure-filter"
                             name="appealProcedureFilter" data-cy="filter-by-appeal-procedure">
                                 <option value="all">All</option>
-                                <option value="1">Written</option>
+                                <option value="1">Written representations (Part 2)</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
                             </select>
