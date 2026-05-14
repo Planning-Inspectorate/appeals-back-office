@@ -7,6 +7,7 @@ import { editLink } from '#lib/edit-utilities.js';
 import { detailsComponent } from '#lib/mappers/components/page-components/details.js';
 import { radiosInput } from '#lib/mappers/components/page-components/radio.js';
 import { simpleHtmlComponent, textSummaryListItem } from '#lib/mappers/index.js';
+import { getWrittenProcedureTypeDisplayLabel } from '#lib/procedure-type-display-name-formatter.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { isS78ExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
@@ -153,9 +154,14 @@ export function selectProcedurePage(
 			(!item.featureFlag || featureFlags.isFeatureActive(item.featureFlag)) &&
 			item.appeals.includes(appealType)
 		) {
+			let procedureTypeDisplayText;
+			procedureTypeDisplayText = appealProcedureToLabelText(item.case);
+			procedureTypeDisplayText === 'Part 1' || procedureTypeDisplayText === 'Written'
+				? getWrittenProcedureTypeDisplayLabel(item.case)
+				: procedureTypeDisplayText;
 			radioItems.push({
 				value: item.case,
-				text: appealProcedureToLabelText(item.case),
+				text: procedureTypeDisplayText,
 				checked:
 					storedSessionData?.appealProcedure && storedSessionData?.appealProcedure === item.case
 			});
@@ -215,6 +221,11 @@ export function confirmProcedurePage(
 		APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
 	].includes(appealType);
 
+	let procedureTypeDisplayText = appealProcedureToLabelText(procedureType);
+	procedureTypeDisplayText === 'Part 1' || procedureTypeDisplayText === 'Written'
+		? getWrittenProcedureTypeDisplayLabel(procedureType)
+		: procedureTypeDisplayText;
+
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Check details and start case',
@@ -229,7 +240,7 @@ export function confirmProcedurePage(
 						textSummaryListItem({
 							id: 'appeal-procedure',
 							text: 'Appeal procedure',
-							value: appealProcedureToLabelText(procedureType),
+							value: procedureTypeDisplayText,
 							link: editLink(
 								`/appeals-service/appeal-details/${appealId}/start-case/select-procedure`
 							),
