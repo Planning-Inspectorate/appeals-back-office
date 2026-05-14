@@ -154,19 +154,29 @@ const getRepresentationCounts = async (appealIds, options) => {
 
 /**
  * @param {number} id
- * @param {RepresentationUpdateInput} data
+ * @param {RepresentationUpdateInput & { appealId?: number, representedId?: number }} data
  */
 const updateRepresentationById = (id, data) => {
-	const { status, redactedRepresentation, notes, reviewer, siteVisitRequested } = data;
+	const {
+		status,
+		redactedRepresentation,
+		notes,
+		reviewer,
+		siteVisitRequested,
+		representedId,
+		appealId
+	} = data;
 
 	return databaseConnector.representation.update({
 		where: {
 			id
 		},
 		data: {
+			...(appealId && { appealId }),
 			...(status && { status }),
 			...(redactedRepresentation && { redactedRepresentation }),
 			...(notes && { notes }),
+			...(representedId && { representedId }),
 			reviewer,
 			dateLastUpdated: new Date(),
 			siteVisitRequested
