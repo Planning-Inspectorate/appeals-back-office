@@ -7,26 +7,32 @@ import {
 	addDocumentsToAppeal,
 	getFoldersForAppeal
 } from '#endpoints/documents/documents.service.js';
-import addressRepository from '#repositories/address.repository.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import { getDocumentsInFolder } from '#repositories/document.repository.js';
 import representationRepository from '#repositories/representation.repository.js';
-import serviceUserRepository from '#repositories/service-user.repository.js';
 import transitionState from '#state/transition-state.js';
 import { copyBlobs } from '#utils/blob-copy.js';
 import { currentStatus } from '#utils/current-status.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { getChildAppeals } from '#utils/link-appeals.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_REPRESENTATION_TYPE, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import {
 	CASE_RELATIONSHIP_LINKED,
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { EventType } from '@pins/event-client';
+import { APPEAL_CASE_STATUS, SERVICE_USER_TYPE } from '@planning-inspectorate/data-model';
 import { omit } from 'lodash-es';
 import rhea from 'rhea';
 
 const { generate_uuid } = rhea;
+
+const appellantRepresentationTypes = [
+	APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT,
+	APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT,
+	APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
+];
 
 /**
  * Checks if an appeal is linked to other appeals as a parent.
@@ -113,6 +119,8 @@ export const replaceLeadAppeal = async (currentLead, appealToReplaceLead) => {
 				}
 			}) || [];
 
+	let newServiceUserId;
+
 	await databaseConnector.$transaction(async (tx) => {
 		await tx.appealRelationship.deleteMany({ where: { parentId: currentLead.id } });
 		await Promise.all(
@@ -124,16 +132,27 @@ export const replaceLeadAppeal = async (currentLead, appealToReplaceLead) => {
 		);
 
 		// The current lead is now the child of the new lead. If it has no agent, it needs to be the agent of the new lead.
-		if (!currentLead.agent) {
+		if (!currentLead.agentId) {
 			// eslint-disable-next-line no-unused-vars
 			const data = omit(appealToReplaceLead.agent, 'id', 'addressId', 'address');
 			const { id: agentId } = await tx.serviceUser.create({ data });
+
 			await tx.appeal.update({
 				where: { id: currentLead.id },
 				data: { agentId }
 			});
+			newServiceUserId = agentId;
 		}
 	});
+
+	if (newServiceUserId) {
+		await broadcasters.broadcastServiceUser(
+			newServiceUserId,
+			EventType.Create,
+			SERVICE_USER_TYPE.AGENT,
+			currentLead.reference
+		);
+	}
 };
 
 /**
@@ -148,23 +167,45 @@ export const unlinkChildAppeal = async (appeal) => {
 /**
  * Moves representations from the source appeal to the destination appeal.
  * @param {Appeal | Partial<Appeal> | {id: number, reference: string}} sourceAppeal
- * @param {Appeal | {id: number, reference: string}} destinationAppeal
+ * @param {Appeal | {id: number, reference: string, agentId: number | null, appellantId: number | null}} destinationAppeal
  * @returns {Promise<*>}
  */
 export const moveRepresentations = async (sourceAppeal, destinationAppeal) => {
-	return representationRepository.updateRepresentations(
-		[Number(sourceAppeal.id)],
-		{},
-		{
-			appealId: destinationAppeal.id
-		}
+	// get representations for the source appeal
+	const { comments: representations } = await representationRepository.getRepresentations([
+		Number(sourceAppeal.id)
+	]);
+
+	// iterate through reps to update to destination appeal
+	const movedRepresentations = await Promise.allSettled(
+		representations.map(async (representation) => {
+			let updateData = {
+				appealId: destinationAppeal.id
+			};
+
+			// if appellant representation, update representedId if present
+			if (
+				appellantRepresentationTypes.includes(representation.representationType) &&
+				representation.represented
+			) {
+				//@ts-ignore
+				updateData.representedId = destinationAppeal.agentId || destinationAppeal.appellantId;
+			}
+
+			return await representationRepository.updateRepresentationById(
+				Number(representation.id),
+				updateData
+			);
+		})
 	);
+
+	return movedRepresentations.filter((rep) => rep.status === 'fulfilled').map((rep) => rep.value);
 };
 
 /**
  * Copies representations from the source appeal to the destination appeal.
- * @param {Appeal | {id: number, reference: string}} sourceAppeal
- * @param {Appeal | {id: number, reference: string}} destinationAppeal
+ * @param {Appeal | {id: number, reference: string }} sourceAppeal
+ * @param {Appeal | {id: number, reference: string, agentId: number | null, appellantId: number | null}} destinationAppeal
  * @returns {Promise<*>}
  */
 export const copyRepresentations = async (sourceAppeal, destinationAppeal) => {
@@ -210,16 +251,18 @@ export const copyRepresentations = async (sourceAppeal, destinationAppeal) => {
 					true
 				)
 			]);
-			const address =
-				representation?.represented?.address &&
-				// @ts-ignore
-				(await addressRepository.createAddress(omit(representation.represented.address, 'id')));
-			const represented =
-				representation?.represented &&
-				(await serviceUserRepository.createServiceUser({
-					...omit(representation.represented, 'id', 'address'),
-					addressId: address?.id ?? null
-				}));
+
+			let represented;
+
+			// if representation has a represented field set the serviceUserId on copied rep:
+			// if representation is an appellant representation - use destination agent or appellant
+			// otherwise copy over source rep serviceUserId
+			if (representation?.represented) {
+				represented = appellantRepresentationTypes.includes(representation.representationType)
+					? { id: destinationAppeal.agentId || destinationAppeal.appellantId }
+					: { id: representation.represented.id };
+			}
+
 			const attachments = copyList.map(({ destinationGuid, version }) => ({
 				documentGuid: destinationGuid,
 				version
