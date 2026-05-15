@@ -287,10 +287,14 @@ describe('neighbouring-site-access', () => {
 					`Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/${appealDataFullPlanning.lpaQuestionnaireId}/neighbouring-sites/add/lpa?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Flpa-questionnaire%2F1%2Fneighbouring-site-access%2Fchange`
 				);
 			});
-			it('should call LPA questionnaires PATCH endpoint and redirect to the remove neighbouring site page if "no" was selected and there are lpa neighbouring sites', async () => {
+			it('should call LPA questionnaires PATCH endpoint, delete all lpa neighbouring sites, and redirect to the LPA questionnaire summary page if "no" was selected and there are lpa neighbouring sites', async () => {
 				nock.cleanAll();
 				const mockLPAQPatchEndpoint = nock('http://test/')
 					.patch(`/appeals/1/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
+					.reply(200, {});
+
+				const mockDeleteNeighbouringSiteEndpoint = nock('http://test/')
+					.delete('/appeals/1/neighbouring-sites', { siteId: '1' })
 					.reply(200, {});
 
 				nock('http://test/')
@@ -307,9 +311,10 @@ describe('neighbouring-site-access', () => {
 					});
 
 				expect(mockLPAQPatchEndpoint.isDone()).toBe(true);
+				expect(mockDeleteNeighbouringSiteEndpoint.isDone()).toBe(true);
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toBe(
-					`Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/${appealDataFullPlanning.lpaQuestionnaireId}/neighbouring-sites/remove/site/1?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Flpa-questionnaire%2F1%2Fneighbouring-site-access%2Fchange`
+					`Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/${appealDataFullPlanning.lpaQuestionnaireId}`
 				);
 			});
 

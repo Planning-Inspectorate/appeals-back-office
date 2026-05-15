@@ -1249,6 +1249,7 @@ export {
 	LinkedAppeal,
 	ListedBuildingDetailsResponse,
 	LookupTables,
+	NeighbouringSite,
 	NotifyClient,
 	NotifyTemplate,
 	ReasonOption,
