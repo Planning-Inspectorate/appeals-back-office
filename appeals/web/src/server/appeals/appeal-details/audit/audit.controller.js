@@ -3,8 +3,8 @@ import { getAppealCaseNotes } from '#appeals/appeal-details/case-notes/case-note
 import config from '#environment/config.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate, dateISOStringToDisplayTime12hr } from '#lib/dates.js';
-import { getWrittenProcedureTypeDisplayLabel } from '#lib/procedure-type-display-name-formatter.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { appealProcedureNameToLabelText } from '#lib/procedure-type-display-name-formatter.js';
+import { APPEAL_TYPE, PROCEDURE_TYPE_DISPLAY_NAME } from '@pins/appeals/constants/common.js';
 import { utcToZonedTime } from 'date-fns-tz';
 import * as interestedPartyCommentsService from '../representations/interested-party-comments/interested-party-comments.service.js';
 import { mapMessageContent, tryMapUsers } from './audit.mapper.js';
@@ -90,13 +90,16 @@ export const renderAudit = async (request, response) => {
 				});
 			}
 
-			let writtenDisplayName;
-			if (detailsHtml.includes('Part 1')) {
-				writtenDisplayName = getWrittenProcedureTypeDisplayLabel('Part 1');
-				detailsHtml = detailsHtml.replace('Part 1', writtenDisplayName ?? '');
-			} else if (detailsHtml.includes('written')) {
-				writtenDisplayName = getWrittenProcedureTypeDisplayLabel('Written');
-				detailsHtml = detailsHtml.replace('written', writtenDisplayName ?? '');
+			if (detailsHtml.includes(PROCEDURE_TYPE_DISPLAY_NAME.WRITTEN_PART_1)) {
+				const displayName =
+					appealProcedureNameToLabelText(PROCEDURE_TYPE_DISPLAY_NAME.WRITTEN_PART_1) ||
+					PROCEDURE_TYPE_DISPLAY_NAME.WRITTEN_PART_1;
+				detailsHtml = detailsHtml.replace(PROCEDURE_TYPE_DISPLAY_NAME.WRITTEN_PART_1, displayName);
+			} else if (detailsHtml.includes(PROCEDURE_TYPE_DISPLAY_NAME.WRITTEN_PART_2)) {
+				const displayName =
+					appealProcedureNameToLabelText(PROCEDURE_TYPE_DISPLAY_NAME.WRITTEN_PART_2) ||
+					PROCEDURE_TYPE_DISPLAY_NAME.WRITTEN_PART_2;
+				detailsHtml = detailsHtml.replace(PROCEDURE_TYPE_DISPLAY_NAME.WRITTEN_PART_2, displayName);
 			}
 
 			const loggedDate = utcToZonedTime(audit.loggedDate, 'Europe/London');
