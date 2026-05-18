@@ -2,9 +2,8 @@
 import { mapCaseProcedure } from '#lib/mappers/data/appeal/submappers/case-procedure.mapper.js';
 import { jest } from '@jest/globals';
 import config from '@pins/appeals.web/environment/config.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, PROCEDURE_TYPE_DISPLAY_NAME } from '@pins/appeals/constants/common.js';
 import { DOCUMENT_STATUS_RECEIVED } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 describe('case-procedure.mapper', () => {
 	let params;
@@ -21,7 +20,7 @@ describe('case-procedure.mapper', () => {
 		params = {
 			appealDetails: {
 				startedAt: new Date('2025-01-01'),
-				procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+				procedureType: PROCEDURE_TYPE_DISPLAY_NAME.HEARING,
 				appealTimetable: {},
 				appealType: APPEAL_TYPE.S78,
 				documentationSummary: {
@@ -69,7 +68,7 @@ describe('case-procedure.mapper', () => {
 						text: 'Appeal procedure'
 					},
 					value: {
-						text: 'hearing'
+						text: 'Hearing'
 					}
 				}
 			},
@@ -120,7 +119,7 @@ describe('case-procedure.mapper', () => {
 						text: 'Appeal procedure'
 					},
 					value: {
-						text: 'hearing'
+						text: 'Hearing'
 					}
 				}
 			},
@@ -142,7 +141,7 @@ describe('case-procedure.mapper', () => {
 						text: 'Appeal procedure'
 					},
 					value: {
-						text: 'hearing'
+						text: 'Hearing'
 					}
 				}
 			},

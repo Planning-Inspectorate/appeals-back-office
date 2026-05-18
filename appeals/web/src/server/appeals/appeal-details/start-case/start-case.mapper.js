@@ -7,8 +7,7 @@ import { editLink } from '#lib/edit-utilities.js';
 import { detailsComponent } from '#lib/mappers/components/page-components/details.js';
 import { radiosInput } from '#lib/mappers/components/page-components/radio.js';
 import { simpleHtmlComponent, textSummaryListItem } from '#lib/mappers/index.js';
-import { getWrittenProcedureTypeDisplayLabel } from '#lib/procedure-type-display-name-formatter.js';
-import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { appealProcedureKeyToLabelText } from '#lib/procedure-type-display-name-formatter.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { isS78ExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
@@ -154,14 +153,9 @@ export function selectProcedurePage(
 			(!item.featureFlag || featureFlags.isFeatureActive(item.featureFlag)) &&
 			item.appeals.includes(appealType)
 		) {
-			let procedureTypeDisplayText;
-			procedureTypeDisplayText = appealProcedureToLabelText(item.case);
-			procedureTypeDisplayText === 'Part 1' || procedureTypeDisplayText === 'Written'
-				? getWrittenProcedureTypeDisplayLabel(item.case)
-				: procedureTypeDisplayText;
 			radioItems.push({
 				value: item.case,
-				text: procedureTypeDisplayText,
+				text: appealProcedureKeyToLabelText(item.case),
 				checked:
 					storedSessionData?.appealProcedure && storedSessionData?.appealProcedure === item.case
 			});
@@ -221,11 +215,6 @@ export function confirmProcedurePage(
 		APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
 	].includes(appealType);
 
-	let procedureTypeDisplayText = appealProcedureToLabelText(procedureType);
-	procedureTypeDisplayText === 'Part 1' || procedureTypeDisplayText === 'Written'
-		? getWrittenProcedureTypeDisplayLabel(procedureType)
-		: procedureTypeDisplayText;
-
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Check details and start case',
@@ -240,7 +229,7 @@ export function confirmProcedurePage(
 						textSummaryListItem({
 							id: 'appeal-procedure',
 							text: 'Appeal procedure',
-							value: procedureTypeDisplayText,
+							value: appealProcedureKeyToLabelText(procedureType) || 'No data',
 							link: editLink(
 								`/appeals-service/appeal-details/${appealId}/start-case/select-procedure`
 							),
@@ -262,22 +251,4 @@ export function confirmProcedurePage(
 	};
 
 	return pageContent;
-}
-
-/**
- * @param {string} procedureType
- * @returns {string}
- */
-function appealProcedureToLabelText(procedureType) {
-	switch (procedureType) {
-		case APPEAL_CASE_PROCEDURE.WRITTEN:
-			return 'Written representations';
-		case APPEAL_CASE_PROCEDURE.WRITTEN_PART_1:
-			return 'Part 1';
-		case APPEAL_CASE_PROCEDURE.HEARING:
-		case APPEAL_CASE_PROCEDURE.INQUIRY:
-			return capitalizeFirstLetter(procedureType);
-		default:
-			return '';
-	}
 }

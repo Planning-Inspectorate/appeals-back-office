@@ -404,7 +404,7 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
             </dd>
         </div>
         <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-            <dd class="govuk-summary-list__value">Written representations (Part 2)</dd>
+            <dd class="govuk-summary-list__value">Hearing</dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type"
                 data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>
             </dd>

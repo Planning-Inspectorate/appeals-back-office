@@ -6,7 +6,7 @@ import { addressToString } from '#lib/address-formatter.js';
 import { mapStatusFilterLabel, mapStatusText } from '#lib/appeal-status.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { getWrittenProcedureTypeDisplayLabel } from '#lib/procedure-type-display-name-formatter.js';
+import { appealProcedureNameToLabelText } from '#lib/procedure-type-display-name-formatter.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
@@ -183,10 +183,7 @@ export function nationalListPage(
 		...appealProcedureTypes
 			.filter(({ key }) => enabledAppealProcedures.includes(key))
 			.map(({ name, id }) => ({
-				text:
-					name.includes('Part 1') || name.includes('Written')
-						? getWrittenProcedureTypeDisplayLabel(name)
-						: name,
+				text: appealProcedureNameToLabelText(name),
 				value: id.toString(),
 				selected: appealProcedureFilter === id.toString()
 			}))
