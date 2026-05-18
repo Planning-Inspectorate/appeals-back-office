@@ -18,14 +18,27 @@ import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import {
+	DAYTIME_HOUR,
+	DAYTIME_MINUTE,
+	DEADLINE_HOUR,
+	DEADLINE_MINUTE
+} from '@pins/appeals/constants/dates.js';
+import {
 	AUDIT_TRAIL_LPAQ_INCOMPLETE,
 	ERROR_NO_RECIPIENT_EMAIL,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import { recalculateDateIfNotBusinessDay } from '@pins/appeals/utils/business-days.js';
+import { isS78ExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import {
+	addBankHolidayDays,
+	fetchBankHolidaysForDivision,
+	recalculateDateIfNotBusinessDay,
+	setTimeInTimeZone
+} from '@pins/appeals/utils/business-days.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { addBusinessDays } from 'date-fns';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateLPAQuestionnaireValidationOutcomeParams} UpdateLPAQuestionnaireValidationOutcomeParams */
@@ -251,6 +264,38 @@ async function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddres
 		case APPEAL_TYPE.S78:
 		case APPEAL_TYPE.ENFORCEMENT_NOTICE:
 		case APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING: {
+			if (
+				isS78ExpeditedAppealType(
+					appeal.appealType?.type,
+					appeal.appellantCase?.applicationDate,
+					appeal.appellantCase?.applicationDecision,
+					appeal.appellantCase?.typeOfPlanningApplication
+				)
+			) {
+				const s78ExpeditedTemplate = 'lpaq-complete-s78-expedite-appellant';
+				const initialDate = setTimeInTimeZone(new Date(), DAYTIME_HOUR, DAYTIME_MINUTE);
+				const bankHolidays = await fetchBankHolidaysForDivision();
+				const calculatedDate = addBankHolidayDays(
+					initialDate,
+					addBusinessDays(initialDate, 5),
+					bankHolidays
+				);
+				const deadline = setTimeInTimeZone(calculatedDate, DEADLINE_HOUR, DEADLINE_MINUTE);
+
+				const s78ExpeditedFields = {
+					...fields,
+					due_date: deadline ? formatDate(deadline, false) : undefined
+				};
+				return sendLpaqCompleteEmail(
+					notifyClient,
+					appeal,
+					s78ExpeditedFields,
+					s78ExpeditedTemplate,
+					email,
+					azureAdUserId
+				);
+			}
+
 			const enforcementReference = await getEnforcementReference(appeal);
 
 			if (String(appeal.procedureType) === APPEAL_CASE_PROCEDURE.HEARING) {

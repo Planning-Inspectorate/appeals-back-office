@@ -276,4 +276,10 @@ const calculateTimetable = async (
 	}
 };
 
-export { addDays, calculateTimetable, recalculateDateIfNotBusinessDay, setTimeInTimeZone };
+export {
+	addBankHolidayDays,
+	addDays,
+	calculateTimetable,
+	recalculateDateIfNotBusinessDay,
+	setTimeInTimeZone
+};

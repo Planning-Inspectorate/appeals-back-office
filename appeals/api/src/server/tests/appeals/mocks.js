@@ -632,6 +632,49 @@ export const fullPlanningAppeal = {
 	]
 };
 
+export const fullPlanningS78ExpeditedAppeal = {
+	...householdAppeal,
+	caseCreatedDate: new Date('2026-04-25T23:59:59.999Z'),
+	caseUpdatedDate: new Date('2026-04-25T23:59:59.999Z'),
+	id: 2,
+	appealType: {
+		id: 1,
+		key: APPEAL_CASE_TYPE.W,
+		type: APPEAL_TYPE.S78,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.S78
+	},
+	appellant: {
+		firstName: 'S78 ExpeditedPerson',
+		lastName: 'Smith',
+		email: 'test@136s7.com',
+		phoneNumber: '',
+		organisationName: ''
+	},
+	appellantCase: {
+		...householdAppeal.appellantCase,
+		hasDesignAndAccessStatement: true,
+		hasNewPlansOrDrawings: true,
+		hasOtherTenants: true,
+		hasPlanningObligation: true,
+		hasSeparateOwnershipCertificate: true,
+		hasToldTenants: false,
+		isAgriculturalHolding: true,
+		isAgriculturalHoldingTenant: true,
+		isDevelopmentDescriptionStillCorrect: false,
+		newDevelopmentDescription: 'A new extension has been added at the back',
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL,
+		appellantProcedurePreference: 'hearing',
+		appellantProcedurePreferenceDetails: 'Reason for preference',
+		appellantProcedurePreferenceDuration: 5,
+		appellantProcedurePreferenceWitnessCount: 1,
+		applicationDecisionDate: new Date(2026, 4, 18),
+		caseSubmissionDueDate: new Date(2026, 4, 18),
+		caseSubmittedDate: new Date(2026, 4, 18),
+		applicationDate: new Date(2026, 4, 18)
+	},
+	representations: []
+};
+
 export const listedBuildingAppeal = {
 	...fullPlanningAppeal,
 	id: 3,
