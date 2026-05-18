@@ -1,0 +1,64 @@
+services:
+  api:
+    profiles: ['all']
+    image: node:22-alpine3.20
+    ports:
+      - 3999:3999
+    volumes:
+      - ./:/opt
+    working_dir: /opt/appeals/api
+    depends_on:
+      - pins_azurite
+      - pins_sql_server
+    environment:
+      - SQL_HOST=pins_sql_server:1433
+    command: npm run dev
+
+  web:
+    profiles: ['all']
+    image: node:22-alpine3.20
+    ports:
+      - 8080:8080
+    volumes:
+      - ./:/opt    
+    working_dir: /opt/appeals/web
+    depends_on:
+      - api
+    command: npm run dev
+
+  pdf-service-api:
+    profiles: ['all']
+    # platform required to build chromium on Apple Silicon Macs
+    platform: 'linux/amd64'
+    build:
+      context: .
+      dockerfile: ./appeals/pdf-service-api/Dockerfile
+    ports:
+      - 3998:3000
+
+  pins_azurite:
+    profiles: ['all', 'initial-setup']
+    image: mcr.microsoft.com/azure-storage/azurite
+    ports:
+      - '10000:10000'
+      - '10001:10001'
+      - '10002:10002'
+    volumes:
+      - ./appeals/web/certificate.pem:/workspace/certificate.pem
+      - ./appeals/web/certificate-key.pem:/workspace/certificate-key.pem
+    command: azurite --silent --blobHost 0.0.0.0 --cert /workspace/certificate.pem --key /workspace/certificate-key.pem --oauth basic --skipApiVersionCheck
+
+  pins_sql_server:
+    profiles: ['all', 'initial-setup']
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    platform: 'linux/amd64' # force platform, ARM machines to use emulation
+    container_name: pins_sql_server
+    cap_add: ['SYS_PTRACE']
+    user: root
+    init: true
+    environment:
+      - 'ACCEPT_EULA=1'
+      - 'MSSQL_SA_PASSWORD=<YourStrong@Passw0rd>'
+    ports:
+      - 1434:1433
+    hostname: pins_sql_server

@@ -58,7 +58,7 @@ APPEALS_READERS_GROUP_ID=(retrieved)
 ## HTTP #######################################################################
 
 # The api endpoint
-API_HOST=http://localhost:3000
+API_HOST=http://localhost:3999
 
 # Enable the https protocol for the web server.
 HTTPS_ENABLED=true
