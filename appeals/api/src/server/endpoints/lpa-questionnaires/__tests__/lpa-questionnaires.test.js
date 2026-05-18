@@ -9,6 +9,7 @@ import {
 	enforcementNoticeAppeal,
 	fullPlanningAppeal,
 	fullPlanningAppealLPAQuestionnaireIncomplete,
+	fullPlanningS78ExpeditedAppeal,
 	householdAppeal,
 	householdAppealLPAQuestionnaireComplete,
 	householdAppealLPAQuestionnaireIncomplete,
@@ -361,6 +362,20 @@ describe('lpa questionnaires routes', () => {
 					}
 				],
 				[
+					'fullPlanningExpeditedAppeal',
+					{
+						appeal: fullPlanningS78ExpeditedAppeal,
+						templateName: 'lpaq-complete-s78-expedite-appellant',
+						personalisation: {
+							lpa_reference: fullPlanningS78ExpeditedAppeal.applicationReference,
+							appeal_reference_number: fullPlanningS78ExpeditedAppeal.reference,
+							site_address: `${fullPlanningS78ExpeditedAppeal.address.addressLine1}, ${fullPlanningS78ExpeditedAppeal.address.addressLine2}, ${fullPlanningS78ExpeditedAppeal.address.addressTown}, ${fullPlanningS78ExpeditedAppeal.address.addressCounty}, ${fullPlanningS78ExpeditedAppeal.address.postcode}, ${fullPlanningS78ExpeditedAppeal.address.addressCountry}`,
+							due_date: expect.any(String),
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+						}
+					}
+				],
+				[
 					'listedBuildingAppeal',
 					{
 						appeal: listedBuildingAppeal,
@@ -616,6 +631,78 @@ describe('lpa questionnaires routes', () => {
 					})
 				);
 
+				expect(response.status).toEqual(200);
+			});
+
+			test('updates an lpa questionnaire when the validation outcome is complete for a S78 Expedited appeal', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...fullPlanningS78ExpeditedAppeal,
+					appealStatus: [
+						{
+							status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+							valid: true
+						}
+					]
+				});
+				// @ts-ignore
+				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
+					lpaQuestionnaireValidationOutcomes[0]
+				);
+				// @ts-ignore
+				databaseConnector.lPAQuestionnaireIncompleteReason.findMany.mockResolvedValue(
+					lpaQuestionnaireIncompleteReasons
+				);
+				// @ts-ignore
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+				// @ts-ignore
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ id: 1, key: 'no_redaction_required' }
+				]);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const body = {
+					validationOutcome: 'Complete'
+				};
+				const { id, lpaQuestionnaire } = fullPlanningS78ExpeditedAppeal;
+				const response = await request
+					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
+					data: {
+						lpaQuestionnaireValidationOutcomeId: lpaQuestionnaireValidationOutcomes[0].id
+					},
+					where: {
+						id: fullPlanningS78ExpeditedAppeal.lpaQuestionnaire.id
+					}
+				});
+				expect(databaseConnector.appealStatus.create).toHaveBeenCalledWith({
+					data: {
+						appealId: fullPlanningS78ExpeditedAppeal.id,
+						createdAt: expect.any(Date),
+						status: APPEAL_CASE_STATUS.STATEMENTS,
+						valid: true
+					}
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: fullPlanningS78ExpeditedAppeal.id,
+						details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [
+							APPEAL_CASE_STATUS.STATEMENTS
+						]),
+						loggedAt: expect.any(Date),
+						userId: fullPlanningS78ExpeditedAppeal.caseOfficer.id
+					}
+				});
+				expect(
+					databaseConnector.lPAQuestionnaireIncompleteReasonsSelected.update
+				).not.toHaveBeenCalled();
 				expect(response.status).toEqual(200);
 			});
 
