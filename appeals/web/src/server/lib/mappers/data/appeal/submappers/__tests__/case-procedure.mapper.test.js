@@ -2,7 +2,7 @@
 import { mapCaseProcedure } from '#lib/mappers/data/appeal/submappers/case-procedure.mapper.js';
 import { jest } from '@jest/globals';
 import config from '@pins/appeals.web/environment/config.js';
-import { APPEAL_TYPE, PROCEDURE_TYPE_DISPLAY_NAME } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common.js';
 import { DOCUMENT_STATUS_RECEIVED } from '@pins/appeals/constants/support.js';
 
 describe('case-procedure.mapper', () => {
@@ -20,7 +20,7 @@ describe('case-procedure.mapper', () => {
 		params = {
 			appealDetails: {
 				startedAt: new Date('2025-01-01'),
-				procedureType: PROCEDURE_TYPE_DISPLAY_NAME.HEARING,
+				procedureType: PROCEDURE_TYPE_NAME.HEARING,
 				appealTimetable: {},
 				appealType: APPEAL_TYPE.S78,
 				documentationSummary: {

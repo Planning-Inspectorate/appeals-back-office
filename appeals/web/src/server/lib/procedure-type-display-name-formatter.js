@@ -1,19 +1,19 @@
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
-import { PROCEDURE_TYPE_DISPLAY_NAME } from '@pins/appeals/constants/common.js';
+import { PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /**
- * @param {"Written" | "Part 1" | "Hearing" | "Inquiry" | string} procedureTypeName
+ * @param {string} procedureTypeName
  * @returns string | null
  */
 export function appealProcedureNameToLabelText(procedureTypeName) {
 	switch (procedureTypeName) {
-		case PROCEDURE_TYPE_DISPLAY_NAME.WRITTEN_PART_2:
+		case PROCEDURE_TYPE_NAME.WRITTEN_PART_2:
 			return 'Written representations (Part 2)';
-		case PROCEDURE_TYPE_DISPLAY_NAME.WRITTEN_PART_1:
+		case PROCEDURE_TYPE_NAME.WRITTEN_PART_1:
 			return 'Written representations (Part 1)';
-		case PROCEDURE_TYPE_DISPLAY_NAME.HEARING:
-		case PROCEDURE_TYPE_DISPLAY_NAME.INQUIRY:
+		case PROCEDURE_TYPE_NAME.HEARING:
+		case PROCEDURE_TYPE_NAME.INQUIRY:
 			return procedureTypeName;
 		default:
 			return null;
