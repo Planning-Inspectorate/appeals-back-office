@@ -142,6 +142,36 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/exists": {
+			"get": {
+				"tags": ["Appeal Details"],
+				"description": "Checks if an appeal exists by ID",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}": {
 			"get": {
 				"tags": ["Appeal Details"],

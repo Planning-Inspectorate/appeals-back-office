@@ -2,7 +2,6 @@ import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import { Router } from 'express';
 import appellantStatementRouter from './appellant-statement/appellant-statement.router.js';
 import lpaStatementRouter from './lpa-statement/lpa-statement.router.js';
-import proofOfEvidenceRouter from './proof-of-evidence/proof-of-evidence.router.js';
 import {
 	postShareRepresentations,
 	renderShareRepresentations
@@ -34,8 +33,6 @@ router.use(
 	withSingularRepresentation(APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT),
 	rule6PartyStatementRouter
 );
-
-router.use('/:appealId/proof-of-evidence', proofOfEvidenceRouter);
 
 router
 	.route('/share')

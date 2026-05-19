@@ -32,6 +32,19 @@ export function deprecatedGetAppealDetailsFromId(apiClient, appealId) {
 }
 
 /**
+ *
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @returns {Promise<{appealId: number}>}
+ */
+export function checkAppealExists(apiClient, appealId) {
+	const encodedAppealId = encodeURIComponent(appealId);
+	const url = `appeals/${encodedAppealId}/exists`;
+
+	return apiClient.get(url).json();
+}
+
+/**
  * @param {import('got').Got} apiClient
  * @param {string} appealId
  * @param {boolean} eiaScreeningRequired

@@ -427,6 +427,21 @@ const getAppealById = async (id, includeDetails = true, selectedKeys = [], selec
 };
 
 /**
+ * @param {number} id
+ * @returns {Promise<{id: number} | null>}
+ */
+const checkAppealExistsById = async (id) => {
+	return databaseConnector.appeal.findUnique({
+		where: {
+			id
+		},
+		select: {
+			id: true
+		}
+	});
+};
+
+/**
  * @deprecated too inefficient do not use, use getAppealById with specific includes only
  * @description DO NOT USE. Gets an appeal and all it's related entities
  * @param {number} id
@@ -954,6 +969,7 @@ const getAppealReference = async (appealId) => {
 };
 
 export default {
+	checkAppealExistsById,
 	getLinkedAppeals,
 	getLinkedAppealsById,
 	getAppealById,
