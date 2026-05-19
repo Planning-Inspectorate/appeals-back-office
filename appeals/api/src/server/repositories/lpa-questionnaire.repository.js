@@ -62,6 +62,7 @@ const updateLPAQuestionnaireById = (id, data) => {
 				appealUnderActSection: data.appealUnderActSection,
 				lpaConsiderAppealInvalid: data.lpaConsiderAppealInvalid,
 				lpaAppealInvalidReasons: data.lpaAppealInvalidReasons,
+				listOfDocumentsBeforeDecision: data.listOfDocumentsBeforeDecision,
 				// Enforcement
 				noticeRelatesToBuildingEngineeringMiningOther:
 					data.noticeRelatesToBuildingEngineeringMiningOther,
