@@ -24,7 +24,7 @@ export const reasonForAppealPage = (appealData, appellantCaseData, storedSession
 				parameters: {
 					name: 'reasonForAppealAppellant',
 					id: 'reasonForAppealAppellant',
-					maxlength: 1000,
+					maxlength: 8000,
 					value: storedSessionData ?? appellantCaseData.reasonForAppealAppellant ?? ''
 				}
 			}
