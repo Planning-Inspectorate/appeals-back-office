@@ -53,7 +53,8 @@ export const mapS78ExpeditedLpaQuestionnaire = (data) => {
 			lpaProcedurePreferenceDuration: lpaQuestionnaire.lpaProcedurePreferenceDuration,
 			eiaSensitiveAreaDetails: lpaQuestionnaire.eiaSensitiveAreaDetails,
 			consultedBodiesDetails: lpaQuestionnaire.consultedBodiesDetails,
-			reasonForNeighbourVisits: lpaQuestionnaire.reasonForNeighbourVisits
+			reasonForNeighbourVisits: lpaQuestionnaire.reasonForNeighbourVisits,
+			listOfDocumentsBeforeDecision: lpaQuestionnaire.listOfDocumentsBeforeDecision
 		};
 	}
 };

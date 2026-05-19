@@ -79,6 +79,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			appealUnderActSection,
 			lpaConsiderAppealInvalid,
 			lpaAppealInvalidReasons,
+			listOfDocumentsBeforeDecision,
 			// Enforcement
 			noticeRelatesToBuildingEngineeringMiningOther,
 			siteAreaSquareMetres,
@@ -155,6 +156,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 						appealUnderActSection,
 						lpaConsiderAppealInvalid,
 						lpaAppealInvalidReasons,
+						listOfDocumentsBeforeDecision,
 						// Enforcement
 						noticeRelatesToBuildingEngineeringMiningOther,
 						siteAreaSquareMetres,
@@ -276,7 +278,8 @@ const updateLPAQuestionnaireById = async (req, res) => {
 				relatesToBuildingSingleDwellingHouse,
 				affectedTrunkRoadName,
 				isSiteOnCrownLand,
-				article4AffectedDevelopmentRights
+				article4AffectedDevelopmentRights,
+				listOfDocumentsBeforeDecision
 			};
 
 	return res.send(response);

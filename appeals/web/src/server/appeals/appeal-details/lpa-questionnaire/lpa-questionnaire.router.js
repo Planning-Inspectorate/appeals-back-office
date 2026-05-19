@@ -46,6 +46,7 @@ import isAppealInvalidRouter from './is-appeal-invalid/is-appeal-invalid.router.
 import isGypsyOrTravellerSiteRouter from './is-gypsy-or-traveller-site/is-gypsy-or-traveller-site.router.js';
 import isOnCrownLandRouter from './is-on-crown-land/is-on-crown-land.router.js';
 import appealUnderActSectionRouter from './ldc-type/ldc-type.router.js';
+import listDocumentsBeforeDecisionRouter from './list-of-documents-before-decision/list-of-documents-before-decision.router.js';
 import { validateLpaQuestionnaireId } from './lpa-questionnaire.middleware.js';
 import neighbouringSiteAccessRouter from './neighbouring-site-access/neighbouring-site-access.router.js';
 import notificationMethodsRouter from './notification-methods/notification-methods.router.js';
@@ -59,7 +60,6 @@ import singleDwellingHouseRouter from './single-dwelling-house/single-dwelling-h
 import siteAreaRouter from './site-area/site-area.router.js';
 import specialControlOfAdvertisementRouter from './special-control-of-advertisement/special-control-of-advertisement.router.js';
 import trunkRoadRouter from './trunk-road/trunk-road.router.js';
-
 const router = createRouter({ mergeParams: true });
 router.param('lpaQuestionnaireId', (req, res, next) => {
 	validateLpaQuestionnaireId(req, res, next);
@@ -590,4 +590,10 @@ router.use(
 	isAppealInvalidRouter
 );
 
+router.use(
+	'/:lpaQuestionnaireId/list-of-documents-before-decision',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	listDocumentsBeforeDecisionRouter
+);
 export default router;

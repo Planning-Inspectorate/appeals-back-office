@@ -1663,6 +1663,177 @@ export const lpaQuestionnaireDataNotValidated = {
 	article4AffectedDevelopmentRights: 'article 4 affected development rights'
 };
 
+export const lpaQuestionnaireDataExpeditedNotValidated = {
+	appealId: 1,
+	appealReference: 'APP/Q9999/D/21/30498',
+	appealSite: {
+		addressLine1: '92 Huntsmoor Road',
+		town: 'Tadley',
+		postCode: 'RG26 4BX'
+	},
+	communityInfrastructureLevyAdoptionDate: '2026-05-09T01:00:00.000Z',
+	developmentDescription: '',
+	documents: {
+		conservationMap: {
+			folderId: 1,
+			path: 'lpa-questionnaire/conservationMap',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56a',
+					name: 'conservationAreaMap.docx',
+					folderId: 1,
+					caseId: 1
+				}
+			]
+		},
+		whoNotified: {
+			folderId: 2,
+			path: 'lpa-questionnaire/whoNotified',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56b',
+					name: 'notifyingParties.docx',
+					folderId: 2,
+					caseId: 1
+				}
+			]
+		},
+		otherPartyRepresentations: {
+			folderId: 6,
+			path: 'lpa-questionnaire/otherPartyRepresentations',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56f',
+					name: 'representations.docx',
+					folderId: 6,
+					caseId: 1
+				}
+			]
+		},
+		planningOfficerReport: {
+			folderId: 7,
+			path: 'lpa-questionnaire/planningOfficerReport',
+			documents: [
+				{
+					id: '9635631c-507c-4af2-98a1-da007e8bb56g',
+					name: 'officersReport.docx',
+					folderId: 7,
+					caseId: 1
+				}
+			]
+		},
+		lpaCaseCorrespondence: {
+			folderId: 21,
+			path: 'lpa-questionnaire/lpaCaseCorrespondence',
+			documents: [
+				{
+					...documentFileInfo,
+					name: 'ph0.jpg',
+					folderId: 21,
+					latestDocumentVersion: {
+						...documentFileInfo.latestDocumentVersion,
+						documentType: 'lpaCaseCorrespondence'
+					}
+				},
+				{
+					...documentFileInfo,
+					name: 'ph1.jpg',
+					folderId: 21,
+					latestDocumentVersion: {
+						...documentFileInfo.latestDocumentVersion,
+						documentType: 'lpaCaseCorrespondence'
+					}
+				},
+				{
+					...documentFileInfo,
+					name: 'ph2.jpg',
+					folderId: 21,
+					latestDocumentVersion: {
+						...documentFileInfo.latestDocumentVersion,
+						documentType: 'lpaCaseCorrespondence'
+					}
+				}
+			]
+		}
+	},
+	doesAffectAListedBuilding: true,
+	doesAffectAScheduledMonument: true,
+	doesSiteHaveHealthAndSafetyIssues: true,
+	doesSiteRequireInspectorAccess: true,
+	extraConditions: 'Some extra conditions',
+	hasCommunityInfrastructureLevy: true,
+	hasCompletedAnEnvironmentalStatement: true,
+	hasExtraConditions: true,
+	hasOtherAppeals: null,
+	hasProtectedSpecies: true,
+	hasRepresentationsFromOtherParties: true,
+	hasResponsesOrStandingAdviceToUpload: true,
+	hasStatementOfCase: true,
+	hasStatutoryConsultees: true,
+	hasSupplementaryPlanningDocuments: true,
+	healthAndSafetyDetails: 'There is no mobile signal at the property',
+	inCAOrrelatesToCA: true,
+	includesScreeningOption: true,
+	inquiryDays: 2,
+	inspectorAccessDetails: 'The entrance is at the back of the property',
+	isCommunityInfrastructureLevyFormallyAdopted: true,
+	isCorrectAppealType: true,
+	isEnvironmentalStatementRequired: true,
+	isGypsyOrTravellerSite: true,
+	isListedBuilding: true,
+	isPublicRightOfWay: true,
+	isSensitiveArea: true,
+	isSiteVisible: true,
+	isTheSiteWithinAnAONB: true,
+	listedBuildingDetails: [
+		{
+			listEntry: '123456',
+			affectsListedBuilding: true
+		},
+		{
+			listEntry: '123457',
+			affectsListedBuilding: true
+		}
+	],
+	localPlanningDepartment: 'Dorset Council',
+	lpaNotificationMethods: [
+		{
+			name: 'A site notice'
+		},
+		{
+			name: 'Letter/email to interested parties'
+		}
+	],
+	lpaQuestionnaireId: 2,
+	meetsOrExceedsThresholdOrCriteriaInColumn2: true,
+	otherAppeals: [
+		{
+			appealId: 2,
+			appealReference: 'APP/Q9999/D/21/725284'
+		}
+	],
+	procedureType: 'Written',
+	scheduleType: 'Schedule 2',
+	sensitiveAreaDetails: 'The area is prone to flooding',
+	siteWithinGreenBelt: true,
+	consultedBodiesDetails: 'Some other people need to be consulted',
+	validation: null,
+	noticeRelatesToBuildingEngineeringMiningOther: true,
+	siteAreaSquareMetres: 25,
+	areaOfAllegedBreachInSquareMetres: 25,
+	floorSpaceCreatedByBreachInSquareMetres: 20,
+	changeOfUseRefuseOrWaste: true,
+	changeOfUseMineralExtraction: true,
+	changeOfUseMineralStorage: true,
+	relatesToErectionOfBuildingOrBuildings: true,
+	relatesToBuildingWithAgriculturalPurpose: true,
+	relatesToBuildingSingleDwellingHouse: true,
+	affectedTrunkRoadName: 'trunk road name',
+	isSiteOnCrownLand: true,
+	article4AffectedDevelopmentRights: 'article 4 affected development rights',
+	listOfDocumentsBeforeDecision: 'Blah blah'
+};
+
 export const lpaQuestionnaireDataNotValidatedWithDocuments = {
 	...lpaQuestionnaireDataNotValidated,
 	documents: {

@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`list-of-documents-before-decision GET /change should render the change list of documents before decision page with "listDocumentsBeforeDecisionTextarea" textarea unpopulated if listOfDocumentsBeforeDecision is not populated in the LPA questionnaire data 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="list-documents-before-decision"> What documents and plans did you use to make your decision?</label></h1>
+                            <textarea class="govuk-textarea" id="list-documents-before-decision" name="listDocumentsBeforeDecisionTextarea"
+                            rows="5">Blah blah</textarea>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`list-of-documents-before-decision POST /change should re-render the change list of documents before decision page with the expected error message if "listDocumentsBeforeDecisionTextarea" textarea contains more than 8000 characters 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#list-documents-before-decision-textarea">Text must contain 8000 characters or less</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="list-documents-before-decision"> What documents and plans did you use to make your decision?</label></h1>
+                            <textarea class="govuk-textarea" id="list-documents-before-decision" name="listDocumentsBeforeDecisionTextarea"
+                            rows="5">Blah blah</textarea>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
