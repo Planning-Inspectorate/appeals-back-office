@@ -126,7 +126,6 @@ export const postChangeSignificantChanges = async (request, response) => {
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}/appellant-case`);
 	} catch (error) {
-		console.log(error);
 		logger.error(error);
 	}
 

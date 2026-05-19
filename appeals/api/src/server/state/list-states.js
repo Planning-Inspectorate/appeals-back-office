@@ -25,7 +25,7 @@ function listStates(appealType, procedureType, currentState) {
 	const { states } = stateMachine;
 
 	if (!procedureType) {
-		logger.info('Procedure type not set, defaulting to written');
+		logger.debug('Procedure type not set, defaulting to written');
 	}
 
 	const stateList = Object.keys(states)

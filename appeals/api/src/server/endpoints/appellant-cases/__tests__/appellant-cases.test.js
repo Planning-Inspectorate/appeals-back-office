@@ -1722,8 +1722,6 @@ describe('appellant cases routes', () => {
 					.send(patchBody)
 					.set('azureAdUserId', azureAdUserId);
 
-				console.log(response.error);
-
 				expect(response.status).toEqual(200);
 				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith(
 					expect.objectContaining({
