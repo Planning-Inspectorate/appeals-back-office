@@ -2,8 +2,10 @@ import usersService from '#appeals/appeal-users/users-service.js';
 import { mapStatusText } from '#lib/appeal-status.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import {
+	AUDIT_TRAIL_APPELLANT_IMPORT_MSG,
 	AUDIT_TRAIL_IP_UUID,
 	AUDIT_TRAIL_LPA_UUID,
+	AUDIT_TRAIL_LPAQ_IMPORT_MSG,
 	AUDIT_TRAIL_SYSTEM_UUID,
 	AUDIT_TRIAL_APPELLANT_UUID,
 	AUDIT_TRIAL_AUTOMATIC_EVENT_UUID,
@@ -31,6 +33,9 @@ export const mapMessageContent = async (appeal, log, docInfo, session, apiClient
 	if (log.toLowerCase().indexOf('document') === -1) {
 		result = await tryMapUsers(result, session, apiClient);
 	}
+
+	result = getAppellantCaseLink(appeal, result);
+	result = getLPAQuestionnaireLink(appeal, result);
 
 	result = tryMapDocumentRedactionStatus(result);
 	result = tryMapDocument(appeal.appealId, result, docInfo, appeal?.lpaQuestionnaireId || null);
@@ -77,6 +82,35 @@ export const tryMapUsers = async (log, session, apiClient) => {
 	const user = await usersService.getUserById(uuid[2], session);
 
 	return result.replace(uuid[2], user?.name || 'User not found!');
+};
+
+/**
+ * @param {import('../appeal-details.types.js').WebAppeal} appeal
+ * @param {string} log
+ * @returns {string}
+ */
+export const getAppellantCaseLink = (appeal, log) => {
+	if (log !== AUDIT_TRAIL_APPELLANT_IMPORT_MSG) return log;
+
+	return AUDIT_TRAIL_APPELLANT_IMPORT_MSG.replace(
+		'appellant case',
+		`<a class="govuk-link" href="/appeals-service/appeal-details/${appeal.appealId}/appellant-case/">appellant case</a>`
+	);
+};
+
+/**
+ * @param {import('../appeal-details.types.js').WebAppeal} appeal
+ * @param {string} log
+ * @returns {string}
+ */
+export const getLPAQuestionnaireLink = (appeal, log) => {
+	if (log !== AUDIT_TRAIL_LPAQ_IMPORT_MSG) return log;
+	if (!appeal.lpaQuestionnaireId) return log;
+
+	return AUDIT_TRAIL_LPAQ_IMPORT_MSG.replace(
+		'LPA questionnaire',
+		`<a class="govuk-link" href="/appeals-service/appeal-details/${appeal.appealId}/lpa-questionnaire/${appeal.lpaQuestionnaireId}">LPA questionnaire</a>`
+	);
 };
 
 /**
