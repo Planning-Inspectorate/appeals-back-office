@@ -82,4 +82,15 @@ export class CYASection extends CaseDetailsPage {
 			cy.wrap($el).should('not.have.attr', 'open');
 		});
 	}
+
+	verifyRedactedText(label, redactedWord) {
+		const redactedText = '█'.repeat(redactedWord.length);
+
+		cy.contains('dt.govuk-summary-list__key', label)
+			.parents('.govuk-summary-list__row')
+			.find('dd.govuk-summary-list__value')
+			.invoke('text')
+			.then((t) => t.trim())
+			.should('contain', redactedText);
+	}
 }
