@@ -1378,6 +1378,50 @@ describe('Appeal detail routes', () => {
 			});
 		});
 	});
+
+	describe('/appeals/:appealId/exists', () => {
+		describe('GET', () => {
+			test('checks an appeal exists', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...mocks.householdAppeal,
+					folders
+				});
+
+				const response = await request
+					.get(`/appeals/${mocks.householdAppeal.id}/exists`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({ id: mocks.householdAppeal.id });
+			});
+
+			test('returns an error if appealId is not numeric', async () => {
+				const response = await request
+					.get('/appeals/one/exists')
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						appealId: ERROR_MUST_BE_NUMBER
+					}
+				});
+			});
+
+			test('returns an error if appealId is not found', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+				const response = await request.get('/appeals/3/exists').set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(404);
+				expect(response.body).toEqual({
+					errors: {
+						appealId: ERROR_NOT_FOUND
+					}
+				});
+			});
+		});
+	});
 });
 
 describe('appeals/case-reference/:caseReference', () => {

@@ -83,3 +83,20 @@ export const checkAppealExistsByIdAndAddPartialToRequest =
 		req.appeal = appeal;
 		next();
 	};
+
+/**
+ * @type {import('express').Handler}
+ */
+export const checkAppealExistsById = async (req, res, next) => {
+	const {
+		params: { appealId }
+	} = req;
+
+	const appeal = await appealRepository.checkAppealExistsById(Number(appealId));
+
+	if (!appeal) {
+		return res.status(404).send({ errors: { appealId: ERROR_NOT_FOUND } });
+	}
+
+	next();
+};
