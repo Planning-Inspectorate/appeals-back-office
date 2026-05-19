@@ -5042,8 +5042,18 @@ export const designatedSiteNames = [
 export const caseAuditLog = [
 	{
 		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'The appellant case was received',
+		loggedDate: '2025-05-25T09:55:30.175Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'The LPA questionnaire was received',
+		loggedDate: '2025-05-26T09:55:30.175Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
 		details:
-			"Thise case has over 300 characters in the details field. This is a test to ensure that the system can handle long text entries without issues. Case progressed to awaiting_lpa_questionnaire. There should be over 300 character in this field to test the system's ability to handle long text entries without truncation or errors. - it should show the show more compoonent",
+			"This case has over 300 characters in the details field. This is a test to ensure that the system can handle long text entries without issues. Case progressed to awaiting_lpa_questionnaire. There should be over 300 character in this field to test the system's ability to handle long text entries without truncation or errors. - it should show the show more compoonent",
 		loggedDate: '2025-05-27T09:55:30.175Z'
 	},
 	{
