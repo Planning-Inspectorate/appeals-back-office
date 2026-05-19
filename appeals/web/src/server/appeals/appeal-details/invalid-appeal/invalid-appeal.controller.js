@@ -749,7 +749,6 @@ const renderCheckDetailsAndMarkEnforcementAsInvalid = async (request, response) 
 			outcome.enforcementNoticeInvalid === 'yes' &&
 			currentAppeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE
 		) {
-			console.log('enforcement notice invalid');
 			const { email: assignedTeamEmail } = await getTeamFromAppealId(
 				apiClient,
 				currentAppeal.appealId
