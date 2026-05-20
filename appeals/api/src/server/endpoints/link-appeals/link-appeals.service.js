@@ -212,6 +212,7 @@ export const copyRepresentations = async (sourceAppeal, destinationAppeal) => {
 	const { comments: representations } = await representationRepository.getRepresentations([
 		Number(sourceAppeal.id)
 	]);
+	if (representations.length === 0) return [];
 	const stage = 'representation';
 	const sourceFolders = await getFoldersForAppeal(sourceAppeal.id, stage);
 	const destinationFolders = await getFoldersForAppeal(destinationAppeal.id, stage);
@@ -219,7 +220,7 @@ export const copyRepresentations = async (sourceAppeal, destinationAppeal) => {
 		return;
 	}
 	const documents = await getDocumentsInFolder({ folderId: sourceFolders[0].id });
-	const attachmentsByRepresentedId = {};
+	const representationAttachments = {};
 	const copiedRepresentations = await Promise.allSettled(
 		representations.map(async (representation) => {
 			const copyList = representation.attachments
@@ -267,10 +268,26 @@ export const copyRepresentations = async (sourceAppeal, destinationAppeal) => {
 				documentGuid: destinationGuid,
 				version
 			}));
-			if (represented?.id) {
+
+			//	attachments and rejection reasons cannot be added until the representation itself has
+			// been created and so need to be stored against an appropriate key until reps are created
+			// (see below)
+			//	ip comments will retain the original serviceUser id so this can be the key
+			// appellant and lpa rep types should only appear once per appeal, so the type can be the key
+			if (representation.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT) {
 				// @ts-ignore
-				attachmentsByRepresentedId[represented.id] = attachments;
+				representationAttachments[represented.id] = {
+					attachments,
+					rejectionReasons: representation.representationRejectionReasonsSelected
+				};
+			} else {
+				// @ts-ignore
+				representationAttachments[representation.representationType] = {
+					attachments,
+					rejectionReasons: representation.representationRejectionReasonsSelected
+				};
 			}
+
 			return {
 				appealId: destinationAppeal.id,
 				representedId: represented?.id ?? null,
@@ -284,17 +301,44 @@ export const copyRepresentations = async (sourceAppeal, destinationAppeal) => {
 			};
 		})
 	);
+
 	// @ts-ignore
 	await representationRepository.createRepresentations(
 		copiedRepresentations.filter((rep) => rep.status === 'fulfilled').map((rep) => rep.value)
 	);
+
 	const { comments: representationsInDestinationAppeal } =
 		await representationRepository.getRepresentations([Number(destinationAppeal.id)]);
+
 	await Promise.allSettled(
 		representationsInDestinationAppeal.map(async (representation) => {
-			if (!representation.represented?.id) return;
+			const attachmentsListKey =
+				representation.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
+					? representation.represented?.id
+					: representation.representationType;
+
 			// @ts-ignore
-			const attachments = attachmentsByRepresentedId[representation.represented.id];
+			const { attachments, rejectionReasons } = representationAttachments[attachmentsListKey];
+
+			if (!attachments && !rejectionReasons) return;
+
+			if (rejectionReasons.length > 0) {
+				//@ts-ignore
+				const updateDataArray = rejectionReasons.map((reason) => {
+					//@ts-ignore
+					const textArray = reason.representationRejectionReasonText.map(
+						//@ts-ignore
+						(textObject) => textObject.text
+					);
+					return {
+						id: reason.representationRejectionReason?.id,
+						text: textArray
+					};
+				});
+
+				await representationRepository.updateRejectionReasons(representation.id, updateDataArray);
+			}
+
 			if (attachments)
 				await representationRepository.addAttachments(representation.id, attachments);
 		})

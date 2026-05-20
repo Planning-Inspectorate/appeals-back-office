@@ -1,8 +1,11 @@
 // @ts-nocheck
 import { householdAppeal as appeal } from '#tests/appeals/mocks.js';
+import { jest } from '@jest/globals';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
-import { checkAppealsStatusBeforeLPAQ } from '../link-appeals.service.js';
+import { checkAppealsStatusBeforeLPAQ, copyRepresentations } from '../link-appeals.service.js';
+
+const { databaseConnector } = await import('#utils/database-connector.js');
 
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
@@ -14,6 +17,9 @@ import {
 } from '@pins/appeals/constants/support.js';
 
 describe('Link Appeals Service', () => {
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 	describe('checkAppealsStatusBeforeLPAQ', () => {
 		it('should return true where the linked appeal is the parent and it already has linked children and has status before LPA Questionnaire', () => {
 			const linkedAppeal = structuredClone({
@@ -91,6 +97,45 @@ describe('Link Appeals Service', () => {
 				isCurrentAppealParent
 			);
 			expect(result).toBe(false);
+		});
+	});
+
+	describe('copyRepresentations', () => {
+		it('should return an empty array if there are no representations to copy', async () => {
+			databaseConnector.representation.findMany.mockResolvedValue([]);
+
+			const result = await copyRepresentations({ id: 'testSource' }, { id: 'testDestination' });
+			expect(result).toEqual([]);
+			expect(databaseConnector.representation.findMany).toHaveBeenCalledTimes(1);
+			expect(databaseConnector.folder.findMany).not.toHaveBeenCalled();
+			expect(databaseConnector.document.findMany).not.toHaveBeenCalled();
+			expect(databaseConnector.representation.createMany).not.toHaveBeenCalled();
+		});
+
+		it('should return an array of copied representations if there are representations to copy - no attachments', async () => {
+			const testRepsArray = [
+				{
+					id: 'rep1',
+					attachments: [],
+					representationType: 'testType'
+				},
+				{
+					id: 'rep2',
+					attachments: [],
+					representationType: 'testType'
+				}
+			];
+			databaseConnector.representation.findMany.mockResolvedValue(testRepsArray);
+			databaseConnector.folder.findMany.mockResolvedValue([{ id: 1 }]);
+			databaseConnector.document.findMany.mockResolvedValue([]);
+			databaseConnector.representation.createMany.mockResolvedValue([]);
+
+			const result = await copyRepresentations({ id: 'testSource' }, { id: 'testDestination' });
+			expect(result).toEqual(testRepsArray);
+			expect(databaseConnector.representation.findMany).toHaveBeenCalledTimes(2);
+			expect(databaseConnector.folder.findMany).toHaveBeenCalledTimes(2);
+			expect(databaseConnector.document.findMany).toHaveBeenCalledTimes(1);
+			expect(databaseConnector.representation.createMany).toHaveBeenCalledTimes(1);
 		});
 	});
 });

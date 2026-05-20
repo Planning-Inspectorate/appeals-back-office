@@ -200,6 +200,7 @@ const mockRepresentationRejectionReasonFindMany = jest.fn().mockResolvedValue({}
 const mockRepresentationRejectionReasonsSelectedDeleteMany = jest.fn().mockResolvedValue({});
 const mockRepresentationRejectionReasonTextDeleteMany = jest.fn().mockResolvedValue({});
 const mockRepresentationCreate = jest.fn().mockResolvedValue({});
+const mockRepresentationCreateMany = jest.fn().mockRejectedValue({});
 const mockRepresentationDeleteMany = jest.fn().mockResolvedValue({});
 const mockRepresentationAttachmentDeleteMany = jest.fn().mockResolvedValue({});
 const mockRepresentationAttachmentCreateMany = jest.fn().mockResolvedValue({});
@@ -253,6 +254,7 @@ class MockPrismaClient {
 			updateMany: mockRepUpdateMany,
 			groupBy: mockRepGroupBy,
 			create: mockRepresentationCreate,
+			createMany: mockRepresentationCreateMany,
 			count: mockRepresentationCount,
 			deleteMany: mockRepresentationDeleteMany
 		};
