@@ -152,29 +152,36 @@ export const addDocumentsBulk = async (documents) => {
 			}
 
 			await tx.documentVersion.createMany({
-				data: chunk.map((document) => ({
-					documentGuid: document.guid,
-					version: 1,
-					lastModified: now,
-					documentType: document.documentType,
-					published: false,
-					draft: false,
-					virusCheckStatus:
-						document.virusCheckStatus ??
-						virusCheckStatusByGuid.get(document.guid) ??
-						APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED,
-					originalFilename: document.originalFilename,
-					fileName: document.fileName,
-					mime: document.mime,
-					size: document.size,
-					stage: document.stage,
-					blobStorageContainer: document.blobStorageContainer,
-					blobStoragePath: document.blobStoragePath,
-					documentURI: document.documentURI,
-					dateReceived: document.dateReceived ?? now,
-					isLateEntry: document.isLateEntry,
-					redactionStatusId: document.redactionStatusId ?? null
-				}))
+				data: chunk.map((document) => {
+					let mappedDocumentVersionData = {
+						documentGuid: document.guid,
+						version: 1,
+						lastModified: now,
+						documentType: document.documentType,
+						published: false,
+						draft: false,
+						virusCheckStatus:
+							document.virusCheckStatus ??
+							virusCheckStatusByGuid.get(document.guid) ??
+							APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED,
+						originalFilename: document.originalFilename,
+						fileName: document.fileName,
+						mime: document.mime,
+						size: document.size,
+						stage: document.stage,
+						blobStorageContainer: document.blobStorageContainer,
+						blobStoragePath: document.blobStoragePath,
+						documentURI: document.documentURI,
+						dateReceived: document.dateReceived ?? now,
+						isLateEntry: document.isLateEntry
+					};
+					// redactionStatusId should only be set if it is non-null/non-undefined
+					if (document.redactionStatusId) {
+						//@ts-ignore
+						mappedDocumentVersionData.redactionStatusId = document.redactionStatusId;
+					}
+					return mappedDocumentVersionData;
+				})
 			});
 
 			await tx.document.updateMany({

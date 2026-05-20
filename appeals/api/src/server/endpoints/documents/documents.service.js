@@ -238,6 +238,9 @@ export const getFoldersForStage = (path) => {
 		case 'cancellation': // TODO: use the enum
 			folders = [`cancellation/${APPEAL_DOCUMENT_TYPE.LPA_ENFORCEMENT_NOTICE_WITHDRAWAL}`];
 			break;
+		case 'representation':
+			folders = ['representation/representationAttachments'];
+			break;
 		default:
 			folders = [`${APPEAL_CASE_STAGE.INTERNAL}/${APPEAL_DOCUMENT_TYPE.UNCATEGORISED}`];
 	}
@@ -312,6 +315,7 @@ const addDocumentAndVersion = async (appeal, documents, allowErrors = false) => 
 		documentURI: document.documentURI,
 		dateReceived: document.dateReceived,
 		virusCheckStatus: document.virusCheckStatus,
+		// note - redactionStatusID can be null/undefined here as will be picked up in the addDocumentsBulk call
 		redactionStatusId: document.redactionStatusId,
 		isLateEntry: isLateEntry(document.stage, appeal)
 	}));
