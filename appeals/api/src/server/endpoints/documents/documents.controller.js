@@ -19,6 +19,7 @@ import { sendNewDecisionLetter } from '#endpoints/decision/decision.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import * as documentRepository from '#repositories/document.repository.js';
+import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
@@ -569,8 +570,19 @@ export const updateDocumentVisibilityBooleans = async (
 	const appellantCostApplicationDocument = documentTypes.includes(
 		APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION
 	);
+	const lpaCostApplicationDocument = documentTypes.includes(
+		APPEAL_DOCUMENT_TYPE.LPA_COSTS_APPLICATION
+	);
 
-	if (!(changedDevelopmentDescriptionDocument || appellantCostApplicationDocument)) return;
+	if (
+		!(
+			changedDevelopmentDescriptionDocument ||
+			appellantCostApplicationDocument ||
+			lpaCostApplicationDocument
+		)
+	) {
+		return;
+	}
 
 	if (changedDevelopmentDescriptionDocument) {
 		await setDocumentVisibilityBoolean(
@@ -588,6 +600,12 @@ export const updateDocumentVisibilityBooleans = async (
 			'appellantCostsAppliedFor',
 			visible
 		);
+	}
+
+	if (lpaCostApplicationDocument && appealId) {
+		// if adding or removing an LPA cost document, then set lpaCostsAppliedFor accordingly
+		await lpaQuestionnaireRepository.updateLpaCostsAppliedFor(appealId, visible);
+		await broadcasters.broadcastAppeal(appealId);
 	}
 };
 
