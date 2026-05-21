@@ -2,22 +2,38 @@
 
 import { users } from '../../fixtures/users';
 import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.js';
+import { AddressSectionPage } from '../addressSection.js';
 import { CaseDetailsPage } from '../caseDetailsPage';
 import { DateTimeSection } from '../dateTimeSection.js';
+import { EstimatedDaysSection } from '../estimatedDaysSection.js';
 import { ListCasesPage } from '../listCasesPage';
 
 const listCasesPage = new ListCasesPage();
 const caseDetailsPage = new CaseDetailsPage();
 const caseHistoryPage = new CaseHistoryPage();
 const dateTimeSection = new DateTimeSection();
+const estimatedDaysSection = new EstimatedDaysSection();
+const addressSectionPage = new AddressSectionPage();
 
 export class HearingSectionPage extends CaseDetailsPage {
 	hearingSectionElements = {
 		...this.elements, // Inherit parent elements
+		changeHearingDate: () => cy.getByData('change-date'),
+		changeHearingEstimate: () => cy.get('#addHearingEstimates'),
+		changeHearingAddress: () => cy.getByData('change-whether-the-address-is-known-or-not'),
+		updateAddress: () => cy.getByData('change-address'),
 		changeHearing: () => cy.get('.govuk-summary-list__actions > .govuk-link').last(),
 		keepHearing: () => cy.get('#keepHearing'),
 		cancelHearing: () => cy.get('#cancelHearing')
 	};
+
+	clickChangeHearingDate() {
+		this.hearingSectionElements.changeHearingDate().click();
+	}
+
+	clickChangeHearingEstimates() {
+		this.hearingSectionElements.changeHearingEstimate().click();
+	}
 
 	clickChangeHearing() {
 		this.hearingSectionElements.changeHearing().click();
@@ -31,10 +47,52 @@ export class HearingSectionPage extends CaseDetailsPage {
 		this.hearingSectionElements.keepHearing().click();
 	}
 
+	clearHearingDateAndTime() {
+		dateTimeSection.clearHearingDateAndTime();
+	}
+
 	setUpHearing(date, hour, minute) {
-		dateTimeSection.enterHearingDate(date);
+		if (date) {
+			dateTimeSection.enterHearingDate(date);
+		}
 		dateTimeSection.enterHearingTime(hour, minute);
 		this.clickButtonByText('Continue');
+	}
+
+	setUpHearingWithAddress({ date, estimatedDays = null, address = '' } = {}) {
+		this.setUpHearing(date, date.getHours(), date.getMinutes());
+
+		const estimatedDaysOption = estimatedDays ? 'Yes' : 'No';
+		estimatedDaysSection.selectEstimatedDaysOption(estimatedDaysOption);
+		caseDetailsPage.clickButtonByText('Continue');
+
+		if (estimatedDays) {
+			estimatedDaysSection.enterEstimatedDays(estimatedDays);
+			caseDetailsPage.clickButtonByText('Continue');
+		}
+
+		const addressKnownOption = address ? 'Yes' : 'No';
+		addressSectionPage.selectAddressOption(addressKnownOption);
+
+		caseDetailsPage.clickButtonByText('Continue');
+	}
+
+	changeHearingAddress(address, addressKnown = false) {
+		this.hearingSectionElements.changeHearingAddress().click();
+
+		if (!addressKnown) {
+			addressSectionPage.selectAddressOption('Yes');
+			addressSectionPage.clickButtonByText('Continue');
+		}
+
+		addressSectionPage.enterAddress(address);
+		addressSectionPage.clickButtonByText('Continue');
+	}
+
+	updateHearingAddress(address) {
+		this.hearingSectionElements.updateAddress().click();
+		addressSectionPage.enterAddress(address);
+		addressSectionPage.clickButtonByText('Continue');
 	}
 
 	verifyHearingEstimate(estimateField, value) {
@@ -48,6 +106,24 @@ export class HearingSectionPage extends CaseDetailsPage {
 			.siblings('dd')
 			.should('be.visible')
 			.and('contain.text', expectedText);
+	}
+
+	verifyHearingSectionIsDisplayed() {
+		this.hearingSectionElements.cancelHearing().should('be.visible');
+	}
+
+	verifyHearingIsDisplayed(displayed = true) {
+		// setup hearing button
+		this.hearingSectionElements
+			.caseDetailsHearingSectionButton()
+			.should(displayed ? 'not.exist' : 'be.visible');
+
+		// cancel hearing button
+		this.hearingSectionElements.cancelHearing().should(displayed ? 'be.visible' : 'not.exist');
+	}
+
+	verifyHearingEstimateSectionIsDisplayed() {
+		this.hearingSectionElements.changeHearingEstimate().should('be.visible');
 	}
 
 	verifyHearingValues(hearingField, expectedText, isAddressKnown = false, address = []) {
@@ -112,6 +188,7 @@ export class HearingSectionPage extends CaseDetailsPage {
 	}
 	verifyCaseHistory(hearingInformation) {
 		caseDetailsPage.clickViewCaseHistory();
+
 		hearingInformation.forEach((info) => {
 			caseHistoryPage.verifyCaseHistoryValue(info);
 		});
