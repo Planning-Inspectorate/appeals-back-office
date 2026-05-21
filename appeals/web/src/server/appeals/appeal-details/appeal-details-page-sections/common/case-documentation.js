@@ -1,7 +1,7 @@
 import { APPEAL_CASE_PRE_STATEMENTS_STATUS } from '#appeals/appeal.constants.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { isDefined } from '#lib/ts-utilities.js';
-import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
+import { PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common.js';
 
 /**
  * @param {{appeal: MappedInstructions}} mappedData
@@ -11,8 +11,8 @@ import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 export const getCaseDocumentation = (mappedData, appealDetails) => {
 	const caseStarted = appealDetails.startedAt;
 	const inquiryEventSetUp = appealDetails.inquiry;
-	const isInquiryProcedureType =
-		appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY.toLowerCase();
+	const isInquiryProcedureType = appealDetails.procedureType === PROCEDURE_TYPE_NAME.INQUIRY;
+	const isExpeditedAppealType = appealDetails.procedureType === PROCEDURE_TYPE_NAME.WRITTEN_PART_1;
 	const statementsCompleted = !APPEAL_CASE_PRE_STATEMENTS_STATUS.includes(
 		appealDetails?.appealStatus
 	);
@@ -29,7 +29,7 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 			rows: [
 				mappedData.appeal.appellantCase.display.tableItem,
 				caseStarted ? mappedData.appeal.lpaQuestionnaire.display.tableItem : undefined,
-				...(!isChildAppeal(appealDetails)
+				...(!isChildAppeal(appealDetails) && !isExpeditedAppealType
 					? [
 							caseStarted ? mappedData.appeal.appellantStatement.display.tableItem : undefined,
 							caseStarted ? mappedData.appeal.lpaStatement.display.tableItem : undefined,
