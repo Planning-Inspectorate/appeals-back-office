@@ -730,5 +730,42 @@ describe('appeals documents', () => {
 				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(appealId);
 			}
 		);
+
+		test('sets document visibility for lpa costs', async () => {
+			let appealId = 1;
+			await controller.updateDocumentVisibilityBooleans(
+				[APPEAL_DOCUMENT_TYPE.LPA_COSTS_APPLICATION],
+				appealId,
+				123,
+				true
+			);
+
+			expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
+				data: {
+					lpaCostsAppliedFor: true
+				},
+				where: { appealId }
+			});
+
+			expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(appealId);
+
+			appealId++;
+
+			await controller.updateDocumentVisibilityBooleans(
+				[APPEAL_DOCUMENT_TYPE.LPA_COSTS_APPLICATION],
+				appealId,
+				123,
+				false
+			);
+
+			expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
+				data: {
+					lpaCostsAppliedFor: false
+				},
+				where: { appealId }
+			});
+
+			expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(appealId);
+		});
 	});
 });
