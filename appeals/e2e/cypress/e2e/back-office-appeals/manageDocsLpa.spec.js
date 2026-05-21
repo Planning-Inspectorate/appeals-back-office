@@ -136,7 +136,10 @@ describe('Manage docs on lpa case', () => {
 			happyPathHelper.uploadDocsLpaq();
 			happyPathHelper.uploadDocVersionLpaq();
 			caseDetailsPage.clickManageNotifyingParties();
-			cy.reloadUntilVirusCheckComplete();
+
+			// Simulate the completion of the documents scan
+			cy.simulateDocumentsScanComplete(caseObj);
+
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickButtonByText('Upload a new version');
 			caseDetailsPage.uploadSampleFile(sampleFiles.document3);

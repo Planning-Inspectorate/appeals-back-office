@@ -113,14 +113,19 @@ export const happyPathHelper = {
 		caseDetailsPage.selectRadioButtonByValue(procedureType);
 		caseDetailsPage.clickButtonByText('Continue');
 
-		if (hearingProperties.date) {
-			dateTimeSection.enterHearingDate(hearingProperties.date);
-			dateTimeSection.enterHearingTime(
-				hearingProperties.date.getHours(),
-				hearingProperties.date.getMinutes()
-			);
+		// if hearing date is provided in the properties, use it, otherwise calculate a date 2 business days in the future and use that
+		// we wrap either the provided date or the calculated date in a Cypress promise to ensure that the rest of the code waits for the date
+		// to be available before proceeding
+		const datePromise = hearingProperties.date
+			? cy.wrap(hearingProperties.date)
+			: cy.getBusinessActualDate(new Date(), 2);
+
+		// set hearing date and time
+		datePromise.then((date) => {
+			dateTimeSection.enterHearingDate(date);
+			dateTimeSection.enterHearingTime(date.getHours(), date.getMinutes());
 			caseDetailsPage.clickButtonByText('Continue');
-		}
+		});
 
 		// check if estimated hearing days is known and if so enter estimated hearing days
 		const knowEstimatedDays = hearingProperties.setEstimatedDays ? 'Yes' : 'No';
@@ -166,6 +171,26 @@ export const happyPathHelper = {
 		caseDetailsPage.basePageElements.bannerLink().click();
 		caseDetailsPage.clickButtonByText('Progress case');
 		caseDetailsPage.validateBannerMessage('Success', 'Statements and IP comments shared');
+	},
+
+	validateBackNavigationFlow(navigationConfig) {
+		cy.writeLog(`Validating back navigation flow with config: ${JSON.stringify(navigationConfig)}`);
+
+		// if clickBackFirst is true, it means we need to click back before checking the first header, otherwise we check the first header immediately
+		if (navigationConfig.clickBackFirst) {
+			caseDetailsPage.clickBackLink();
+		}
+
+		navigationConfig?.headers?.forEach((header, index) => {
+			const isLast = index === navigationConfig.headers.length - 1;
+
+			caseDetailsPage.checkHeading(header);
+
+			// if it's not the last header, we click back to navigate to the next header. If it is the last header, we only click back if clickBackLast is true
+			if (!isLast || navigationConfig.clickBackLast) {
+				caseDetailsPage.clickBackLink();
+			}
+		});
 	},
 
 	changeStartDate(caseObj) {

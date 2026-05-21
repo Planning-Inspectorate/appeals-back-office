@@ -1,3 +1,6 @@
+// @ts-nocheck
+/// <reference types="cypress"/>
+
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { ProcedureTypePage } from '../../page_objects/procedureTypePage';

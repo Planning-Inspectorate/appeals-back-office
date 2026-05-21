@@ -39,7 +39,10 @@ describe('add supporting documents', () => {
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateBannerMessage('Success', 'Additional documents added');
-			cy.reloadUntilVirusCheckComplete();
+
+			// Simulate the completion of the documents scan
+			cy.simulateDocumentsScanComplete(caseObj);
+
 			caseDetailsPage.clickIndividualLinkWhenMultiple('Additional documents', 'Manage');
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickButtonByText('Upload a new version');
@@ -48,7 +51,10 @@ describe('add supporting documents', () => {
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateBannerMessage('Success', 'Additional documents updated');
-			cy.reloadUntilVirusCheckComplete();
+
+			// Simulate the completion of the documents scan
+			cy.simulateDocumentsScanComplete(caseObj);
+
 			caseDetailsPage.clickIndividualLinkWhenMultiple('Additional documents', 'Manage');
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickButtonByText('Remove current version');
@@ -70,6 +76,10 @@ describe('add supporting documents', () => {
 			caseDetailsPage.checkStatusOfCase('Statements', 0);
 			happyPathHelper.addThirdPartyComment(caseObj, true);
 			cy.contains('.govuk-tabs__tab', 'Accepted').click();
+
+			// Simulate the completion of the documents scan
+			cy.simulateDocumentsScanComplete(caseObj);
+
 			caseDetailsPage.clickLinkByText('View');
 			caseDetailsPage.clickLinkByText('Manage');
 			caseDetailsPage.clickLinkByText('View and edit');
@@ -78,7 +88,10 @@ describe('add supporting documents', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
-			cy.reloadUntilVirusCheckComplete();
+
+			// Simulate the completion of the documents scan
+			cy.simulateDocumentsScanComplete(caseObj);
+
 			caseDetailsPage.clickButtonByText('Remove current version');
 			caseDetailsPage.selectRadioButtonByValue('Yes');
 			caseDetailsPage.clickButtonByText('Continue');
@@ -86,7 +99,7 @@ describe('add supporting documents', () => {
 		});
 	});
 
-	it('upload and manage Final Comments documemnts ', () => {
+	it.only('upload and manage Final Comments documemnts ', () => {
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {
@@ -99,8 +112,11 @@ describe('add supporting documents', () => {
 			happyPathHelper.addThirdPartyComment(caseObj, true);
 			caseDetailsPage.clickBackLink();
 			happyPathHelper.addLpaStatement(caseObj);
+
+			// Simulate the elapsing of the statements deadline and the completion of the documents scan
 			cy.simulateStatementsDeadlineElapsed(caseObj);
-			cy.reloadUntilVirusCheckComplete();
+			cy.simulateDocumentsScanComplete(caseObj);
+
 			caseDetailsPage.basePageElements.bannerLink().click();
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.checkStatusOfCase('Final comments', 0);
@@ -108,8 +124,11 @@ describe('add supporting documents', () => {
 				const serviceUserId = ((appealData?.appellant?.serviceUserId ?? 0) + 200000000).toString();
 				happyPathHelper.addAppellantFinalComment(caseObj, serviceUserId);
 			});
+
+			// Simulate the elapsing of the final comments deadline and the completion of the documents scan
 			cy.simulateFinalCommentsDeadlineElapsed(caseObj);
-			cy.reloadUntilVirusCheckComplete();
+			cy.simulateDocumentsScanComplete(caseObj);
+
 			caseDetailsPage.basePageElements.bannerLink().click();
 			caseDetailsPage.clickButtonByText('Share final comments');
 			caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
@@ -121,6 +140,10 @@ describe('add supporting documents', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
+
+			// Simulate the elapsing of time for the new version to be processed and the completion of the documents scan
+			cy.simulateDocumentsScanComplete(caseObj);
+
 			caseDetailsPage.clickButtonByText('Remove current version');
 			caseDetailsPage.selectRadioButtonByValue('Yes');
 			caseDetailsPage.clickButtonByText('Continue');

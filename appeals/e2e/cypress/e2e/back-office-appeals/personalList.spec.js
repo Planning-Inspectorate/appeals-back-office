@@ -1,3 +1,6 @@
+// @ts-nocheck
+/// <reference types="cypress"/>
+
 import { users } from '../../fixtures/users';
 import { PersonalListPage } from '../../page_objects/caseDetails/personalListPage';
 import { happyPathHelper } from '../../support/happyPathHelper';
