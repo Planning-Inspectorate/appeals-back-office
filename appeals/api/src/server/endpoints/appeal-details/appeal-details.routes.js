@@ -1,5 +1,6 @@
 import {
 	checkAppealExistsByCaseReferenceAndAddToRequest,
+	checkAppealExistsById,
 	checkAppealExistsByIdAndAddPartialToRequest
 } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
@@ -12,6 +13,40 @@ import {
 } from './appeal-details.validators.js';
 
 const router = createRouter();
+
+router.get(
+	'/:appealId/exists',
+	/*
+		#swagger.tags = ['Appeal Details']
+		#swagger.path = '/appeals/{appealId}/exists'
+		#swagger.description = Checks if an appeal exists by ID
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[200] = {
+			description: '200 if appeal exists'
+			schema: {
+				type: 'object',
+				properties: {
+					id: { type: 'integer', example: 123 }
+				},
+				required: ['id']
+			}
+		}
+		#swagger.responses[400] = {}
+		#swagger.responses[404] = {}
+	 */
+	getAppealValidator,
+	asyncHandler(checkAppealExistsById),
+	/** @type {import("express").RequestHandler} */
+	(req, res) => {
+		return res.status(200).send({
+			id: Number(req.params.appealId)
+		});
+	}
+);
 
 router.get(
 	'/:appealId',
@@ -85,7 +120,19 @@ router.patch(
 		#swagger.responses[500] = {}
 	 */
 	patchAppealValidator,
-	asyncHandler(checkAppealExistsByIdAndAddPartialToRequest([])),
+	asyncHandler(
+		checkAppealExistsByIdAndAddPartialToRequest([
+			'address',
+			'agent',
+			'appealType',
+			'appellant',
+			'appellantCase',
+			'childAppeals',
+			'inspector',
+			'lpa',
+			'parentAppeals'
+		])
+	),
 	asyncHandler(controller.updateAppealById)
 );
 

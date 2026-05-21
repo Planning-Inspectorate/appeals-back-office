@@ -7,5 +7,7 @@ export const mapReasonForAppeal = ({ appellantCaseData, currentRoute, userHasUpd
 		text: 'Why are you appealing?',
 		value: appellantCaseData.reasonForAppealAppellant,
 		link: `${currentRoute}/reason-for-appeal/change`,
-		editable: userHasUpdateCase
+		editable: userHasUpdateCase,
+		withShowMore: true,
+		showMoreLabelText: 'Read more'
 	});

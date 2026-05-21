@@ -85,7 +85,6 @@ describe('appeals generic mappers', () => {
 			: (findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.INVALID) ??
 				findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.READY_TO_START));
 
-		console.log(output);
 		expect(output).toBe('2025-03-18T09:12:33.334Z');
 	});
 

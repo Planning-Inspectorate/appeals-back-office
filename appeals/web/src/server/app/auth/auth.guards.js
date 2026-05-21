@@ -24,7 +24,6 @@ export async function assertIsAuthenticated(request, response, next) {
 	const sessionAccount = authSession.getAccount(request.session);
 
 	if (!sessionAccount) {
-		pino.info(`Unauthenticated user redirected to sign in from '${request.originalUrl}'.`);
 		return response.redirect(`/auth/signin?redirect_to=${request.originalUrl}`);
 	}
 
@@ -40,7 +39,6 @@ export async function assertIsAuthenticated(request, response, next) {
 		);
 
 		if (refreshedAuthenticationResult) {
-			pino.debug('Refreshed MSAL authentication.');
 			authSession.setAccount(request.session, refreshedAuthenticationResult);
 			return next();
 		}

@@ -569,7 +569,7 @@ export const notificationBannerDefinitions = {
 		text: 'Inspector assigned'
 	},
 	appealValidated: {
-		type: 'important',
+		type: 'success',
 		pages: ['appealDetails'],
 		text: 'Appeal validated'
 	},

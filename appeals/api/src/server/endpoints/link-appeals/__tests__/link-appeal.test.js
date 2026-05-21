@@ -495,6 +495,7 @@ describe('appeal linked appeals routes', () => {
 						// @ts-ignore
 						databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
 						databaseConnector.representation.findMany.mockResolvedValue([{ id: 'testId' }]);
+						databaseConnector.representation.update.mockResolvedValue({ id: 'testId' });
 
 						const response = await request
 							.post(`/appeals/${testAppeal.id}/update-linked-appeals`)

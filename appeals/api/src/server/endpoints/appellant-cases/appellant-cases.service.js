@@ -255,7 +255,9 @@ export const updateAppellantCaseValidationOutcome = async (
 		azureAdUserId
 	});
 
-	const updatedAppeal = await appealRepository.getAppealById(Number(appealId));
+	// TODO: performance
+	// is returning all data, return only needed data
+	const updatedAppeal = await appealRepository.deprecatedGetAppealById(Number(appealId));
 
 	if (isOutcomeValid(validationOutcome.name)) {
 		const latestDocumentVersionsUpdated = await documentRepository.setRedactionStatusOnValidation(

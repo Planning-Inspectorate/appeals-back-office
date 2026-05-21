@@ -63,7 +63,6 @@ export const rowBuilders = {
 		text: formatYesNo(data.advertInPosition)
 	}),
 	isGreenBelt: (data) => {
-		console.log(data);
 		return {
 			key: 'Is the appeal site in a green belt?',
 			text: formatYesNo(data.isGreenBelt)

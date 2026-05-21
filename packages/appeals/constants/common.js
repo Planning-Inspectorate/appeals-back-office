@@ -87,6 +87,13 @@ export const PROCEDURE_TYPE_MAP = Object.freeze({
 	inquiry: 'an inquiry'
 });
 
+export const PROCEDURE_TYPE_NAME = Object.freeze({
+	WRITTEN_PART_2: 'Written',
+	WRITTEN_PART_1: 'Part 1',
+	HEARING: 'Hearing',
+	INQUIRY: 'Inquiry'
+});
+
 export const PROCEDURE_TYPE_ID_MAP = Object.freeze({
 	hearing: 1,
 	inquiry: 2,

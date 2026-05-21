@@ -1,6 +1,7 @@
 import featureFlags from '#common/feature-flags.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
 import isLinkedAppeal from '#lib/mappers/utils/is-linked-appeal.js';
+import { appealProcedureNameToLabelText } from '#lib/procedure-type-display-name-formatter.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
 /**
@@ -27,7 +28,7 @@ export const mapCaseProcedure = ({ appealDetails, currentRoute, userHasUpdateCas
 	return textSummaryListItem({
 		id: 'case-procedure',
 		text: 'Appeal procedure',
-		value: appealDetails.procedureType || 'No data',
+		value: appealProcedureNameToLabelText(appealDetails.procedureType || '') || 'No data',
 		link: `${currentRoute}/change-appeal-procedure-type/change-selected-procedure-type`,
 		editable:
 			userHasUpdateCasePermission &&

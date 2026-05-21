@@ -68,7 +68,7 @@ describe('development-description', () => {
 			expect(elementInnerHtml).toContain('Enter reason for appeal</a>');
 		});
 
-		it('should re-render the reason for appeal change page with an error if the field is over 1000 char', async () => {
+		it('should re-render the reason for appeal change page with an error if the field is over 8000 char', async () => {
 			const apiCall = nock('http://test/')
 				.patch(`/appeals/${appealData.appealId}/appellant-cases/${appealData.appellantCaseId}`)
 				.reply(200, {});
@@ -77,7 +77,7 @@ describe('development-description', () => {
 				.reply(200, { appellantCaseDataIncompleteOutcome });
 
 			const invalidData = {
-				reasonForAppealAppellant: `${'a'.repeat(1001)}`
+				reasonForAppealAppellant: `${'a'.repeat(9000)}`
 			};
 
 			const response = await request.post(`${baseUrl}/reason-for-appeal/change`).send(invalidData);
@@ -88,7 +88,7 @@ describe('development-description', () => {
 
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 			expect(elementInnerHtml).toContain('Why are you appealing?</h1>');
-			expect(elementInnerHtml).toContain('Reason for appeal must be 1000 characters or less</a>');
+			expect(elementInnerHtml).toContain('Reason for appeal must be 8000 characters or less</a>');
 		});
 	});
 });

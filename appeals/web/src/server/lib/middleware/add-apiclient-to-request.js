@@ -42,7 +42,6 @@ export const addApiClientToRequest = async (req, res, next) => {
 		return res.status(500).send('Unauthenticated user');
 	}
 
-	pino.info(`Creating API client for user '${user.localAccountId}'`);
 	req.apiClient = getInstance(user.localAccountId);
 	next();
 };
