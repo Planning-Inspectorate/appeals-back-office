@@ -23,6 +23,7 @@ import safetyRisksRouter from '../safety-risks/safety-risks.router.js';
 import affectedListedBuildingsRouter from './affected-listed-buildings/affected-listed-buildings.router.js';
 import affectsScheduledMonumentRouter from './affects-scheduled-monument/affects-scheduled-monument.router.js';
 import allegedBreachCreatesFloorSpaceRouter from './alleged-breach-creates-floor-space/alleged-breach-creates-floor-space.router.js';
+import anySignificantChangesLpaRouter from './any-significant-changes-lpa/any-significant-changes-lpa.router.js';
 import appellantPhotosAndPlansRouter from './appellant-photos-and-plans/appellant-photos-and-plans.router.js';
 import changeOfUseMineralExtractionRouter from './change-of-use-mineral-extraction/change-of-use-mineral-extraction.router.js';
 import changeOfUseMineralStorageRouter from './change-of-use-mineral-storage/change-of-use-mineral-storage.router.js';
@@ -595,5 +596,12 @@ router.use(
 	validateAppealWithInclude(['lpaQuestionnaire']),
 	assertUserHasPermission(permissionNames.updateCase),
 	listDocumentsBeforeDecisionRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/any-significant-changes-lpa',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	anySignificantChangesLpaRouter
 );
 export default router;

@@ -13,6 +13,7 @@ export const mapS78ExpeditedLpaQuestionnaire = (data) => {
 
 	if (lpaQuestionnaire) {
 		return {
+			isGreenBelt: lpaQuestionnaire.isGreenBelt,
 			lpaProcedurePreference: lpaQuestionnaire.lpaProcedurePreference,
 			designatedSiteNames: [
 				...(lpaQuestionnaire.designatedSiteNames ?? []).map((item) => ({
@@ -54,7 +55,16 @@ export const mapS78ExpeditedLpaQuestionnaire = (data) => {
 			eiaSensitiveAreaDetails: lpaQuestionnaire.eiaSensitiveAreaDetails,
 			consultedBodiesDetails: lpaQuestionnaire.consultedBodiesDetails,
 			reasonForNeighbourVisits: lpaQuestionnaire.reasonForNeighbourVisits,
-			listOfDocumentsBeforeDecision: lpaQuestionnaire.listOfDocumentsBeforeDecision
+			listOfDocumentsBeforeDecision: lpaQuestionnaire.listOfDocumentsBeforeDecision,
+			anySignificantChangesLpa: lpaQuestionnaire.anySignificantChangesLpa,
+			anySignificantChangesLpa_localPlanSignificantChanges:
+				lpaQuestionnaire.anySignificantChangesLpa_localPlanSignificantChanges,
+			anySignificantChangesLpa_nationalPolicySignificantChanges:
+				lpaQuestionnaire.anySignificantChangesLpa_nationalPolicySignificantChanges,
+			anySignificantChangesLpa_otherSignificantChanges:
+				lpaQuestionnaire.anySignificantChangesLpa_otherSignificantChanges,
+			anySignificantChangesLpa_courtJudgementSignificantChanges:
+				lpaQuestionnaire.anySignificantChangesLpa_courtJudgementSignificantChanges
 		};
 	}
 };
