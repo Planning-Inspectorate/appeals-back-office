@@ -1721,6 +1721,7 @@ export async function seedTestData(databaseConnector) {
 				where: { appealId: appealId },
 				data: {
 					contactAddressId: address.id,
+					enforcementNotice: true,
 					enforcementNoticeListedBuilding: false,
 					enforcementIssueDate: getPastDate({ days: 10 }),
 					enforcementEffectiveDate: new Date(),

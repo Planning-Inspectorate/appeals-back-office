@@ -4,13 +4,11 @@ import { mapGroundAFeeReceipt } from '#lib/mappers/data/appellant-case/submapper
 import { submaps as enforcementListedSubmaps } from './enforcement-listed.js';
 import { mapOtherAppellants } from './submappers/other-appellants.js';
 import { mapRetrospectiveApplication } from './submappers/retrospective-application.js';
-import { mapWrittenOrVerbalPermission } from './submappers/written-or-verbal-permission.js';
 
 /** @type {Record<string, import('./mapper.js').SubMapper | import('./mapper.js').SubMapperList>} */
 export const submaps = {
 	...enforcementListedSubmaps,
 	otherAppellants: mapOtherAppellants,
-	writtenOrVerbalPermission: mapWrittenOrVerbalPermission,
 	retrospectiveApplication: mapRetrospectiveApplication,
 	groundAFeeReceipt: mapGroundAFeeReceipt,
 	applicationDevelopmentAllOrPart: mapApplicationDevelopmentAllOrPart,

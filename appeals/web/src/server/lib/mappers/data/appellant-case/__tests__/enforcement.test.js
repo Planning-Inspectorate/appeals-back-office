@@ -6,7 +6,6 @@ import { submaps as s78Submaps } from '../s78.js';
 describe('Enforcement vs Enforcement Listed Building (ELB) Submap Architecture', () => {
 	const enforcementSpecificKeys = [
 		'otherAppellants',
-		'writtenOrVerbalPermission',
 		'retrospectiveApplication',
 		'groundAFeeReceipt',
 		'applicationDevelopmentAllOrPart',
@@ -16,6 +15,7 @@ describe('Enforcement vs Enforcement Listed Building (ELB) Submap Architecture',
 	const commonKeys = [
 		'contactAddress',
 		'interestInLand',
+		'writtenOrVerbalPermission',
 		'enforcementNotice',
 		'descriptionOfAllegedBreach'
 	];
