@@ -4,8 +4,7 @@ import { APPEAL_TYPE } from '@pins/appeals/constants/common';
 
 describe.each([
 	['S78', APPEAL_TYPE.S78],
-	['S20', APPEAL_TYPE.PLANNED_LISTED_BUILDING],
-	['Full advertisement', APPEAL_TYPE.ADVERTISEMENT]
+	['S20', APPEAL_TYPE.PLANNED_LISTED_BUILDING]
 ])('lpa-statement-due-date.mapper - %s', (_, appealType) => {
 	let data;
 	beforeEach(() => {
@@ -63,6 +62,7 @@ describe.each([
 });
 
 describe.each([
+	['Full advertisement', APPEAL_TYPE.ADVERTISEMENT],
 	['Enforcement notice', APPEAL_TYPE.ENFORCEMENT_NOTICE],
 	['Enforcement listed building', APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING],
 	['Lawful development certificate', APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE]
