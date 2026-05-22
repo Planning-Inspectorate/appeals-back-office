@@ -25,6 +25,32 @@ export const CASE_HISTORY_STATES = Object.freeze({
 			emailBody: ''
 		}
 	],
+	completedEnforcementSplit: [
+		{
+			detail: 'Appeal decision: {caseRef} sent to LPA',
+			emailLink: 'yes',
+			emailSubject: 'Subject: Appeal decision: {caseRef}',
+			emailBody: 'We have made a decision on this appeal.'
+		},
+		{
+			detail: 'Appeal decision: {caseRef} sent to agent',
+			emailLink: 'yes',
+			emailSubject: 'Subject: Appeal decision: {caseRef}',
+			emailBody: 'We have also informed the local planning authority of the decision'
+		},
+		{
+			detail: 'Case progressed to Complete',
+			emailLink: 'no',
+			emailSubject: '',
+			emailBody: ''
+		},
+		{
+			detail: 'Decision issued: Split decision',
+			emailLink: 'no',
+			emailSubject: '',
+			emailBody: ''
+		}
+	],
 	missedSiteVisit: [
 		{
 			detail: 'Missed site visit: {caseRef} sent to appellant',
