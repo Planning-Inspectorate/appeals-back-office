@@ -36,7 +36,7 @@ export const CASE_HISTORY_STATES = Object.freeze({
 			detail: 'Appeal decision: {caseRef} sent to agent',
 			emailLink: 'yes',
 			emailSubject: 'Subject: Appeal decision: {caseRef}',
-			emailBody: 'We have also informed the local planning authority of the decision.'
+			emailBody: 'We have also informed the local planning authority of the decision'
 		},
 		{
 			detail: 'Case progressed to Complete',
