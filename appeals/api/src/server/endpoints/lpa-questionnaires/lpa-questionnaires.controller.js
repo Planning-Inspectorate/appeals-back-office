@@ -80,6 +80,11 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			lpaConsiderAppealInvalid,
 			lpaAppealInvalidReasons,
 			listOfDocumentsBeforeDecision,
+			anySignificantChangesLpa,
+			anySignificantChangesLpa_localPlanSignificantChanges,
+			anySignificantChangesLpa_nationalPolicySignificantChanges,
+			anySignificantChangesLpa_otherSignificantChanges,
+			anySignificantChangesLpa_courtJudgementSignificantChanges,
 			// Enforcement
 			noticeRelatesToBuildingEngineeringMiningOther,
 			siteAreaSquareMetres,
@@ -104,7 +109,6 @@ const updateLPAQuestionnaireById = async (req, res) => {
 		? formatAddressSingleLine(appeal.address)
 		: 'Address not available';
 	const notifyClient = req.notifyClient;
-
 	try {
 		validationOutcome
 			? (body.lpaQuestionnaireDueDate = await updateLPAQuestionnaireValidationOutcome(
@@ -157,6 +161,11 @@ const updateLPAQuestionnaireById = async (req, res) => {
 						lpaConsiderAppealInvalid,
 						lpaAppealInvalidReasons,
 						listOfDocumentsBeforeDecision,
+						anySignificantChangesLpa,
+						anySignificantChangesLpa_localPlanSignificantChanges,
+						anySignificantChangesLpa_nationalPolicySignificantChanges,
+						anySignificantChangesLpa_otherSignificantChanges,
+						anySignificantChangesLpa_courtJudgementSignificantChanges,
 						// Enforcement
 						noticeRelatesToBuildingEngineeringMiningOther,
 						siteAreaSquareMetres,
