@@ -5,6 +5,8 @@ import {
 	getFileVersionsInfo,
 	getRepresentationAttachments
 } from '#appeals/appeal-documents/appeal.documents.service.js';
+import getActiveDirectoryAccessToken from '#lib/active-directory-token.js';
+import logger from '#lib/logger.js';
 import { camelCaseToWords, toSentenceCase } from '#lib/string-utilities.js';
 import { BlobServiceClient } from '@azure/storage-blob';
 import config from '@pins/appeals.web/environment/config.js';
@@ -12,13 +14,30 @@ import { REP_ATTACHMENT_DOCTYPE } from '@pins/appeals/constants/documents.js';
 import { BlobStorageClient } from '@pins/blob-storage-client';
 import { APPEAL_CASE_STAGE, APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
 import archiver from 'archiver';
-import getActiveDirectoryAccessToken from '../../lib/active-directory-token.js';
+import path from 'node:path';
 
 /** @typedef {import('../auth/auth-session.service').SessionWithAuth} SessionWithAuth */
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.d.ts').WebAppeal} WebAppeal */
 /** @typedef {import('express').Response} Response */
 
 const validScanResult = APPEAL_VIRUS_CHECK_STATUS.SCANNED;
+
+// file types already compressed so no benefit in running through zip compression
+const storeTypes = new Set([
+	'pdf',
+	'docx',
+	'pptx',
+	'xlsx',
+	'jpg',
+	'jpeg',
+	'png',
+	'tif',
+	'tiff',
+	'mpeg',
+	'mp3',
+	'mp4',
+	'mov'
+]);
 
 /**
  * Create a new blob storage client
@@ -237,6 +256,70 @@ const createBlobDownloadStream = async (
 };
 
 /**
+ * @param {import('archiver').Archiver} archive
+ * @param {import('@pins/blob-storage-client').BlobStorageClient} blobStorageClient
+ * @param {Array<{blobStorageContainer: string, blobStoragePath: string, fullName: string}>} bulkFileInfo
+ * @param {string[]} missingFiles
+ */
+const addBlobsToArchive = async (archive, blobStorageClient, bulkFileInfo, missingFiles) => {
+	let nextDownloadPromise = null;
+	for (let i = 0; i < bulkFileInfo.length; i++) {
+		const fileInfo = bulkFileInfo[i];
+
+		let downloadPromise;
+		if (nextDownloadPromise) {
+			downloadPromise = nextDownloadPromise;
+			nextDownloadPromise = null;
+		} else {
+			downloadPromise = createBlobDownloadStream(
+				blobStorageClient,
+				fileInfo.blobStorageContainer,
+				fileInfo.blobStoragePath
+			);
+		}
+
+		// Start next download in background so it has already started when append completes
+		if (i + 1 < bulkFileInfo.length) {
+			const nextInfo = bulkFileInfo[i + 1];
+			nextDownloadPromise = createBlobDownloadStream(
+				blobStorageClient,
+				nextInfo.blobStorageContainer,
+				nextInfo.blobStoragePath
+			);
+		}
+
+		const blobStream = await downloadPromise;
+		if (!blobStream) {
+			missingFiles.push(fileInfo.fullName);
+			continue;
+		}
+
+		// block loop until archive.append completes
+		await new Promise((resolve, reject) => {
+			const onArchiveEntry = () => {
+				// remove error listener to prevent listener leak
+				archive.removeListener('error', onArchiveError);
+				// promise resolves can progress to next file in loop
+				resolve(1);
+			};
+			const onArchiveError = (/** @type {Error} */ err) => {
+				// remove entry listener to prevent listener leak
+				archive.removeListener('entry', onArchiveEntry);
+				reject(err);
+			};
+			// emitted after file has been added to archive
+			archive.once('entry', onArchiveEntry);
+			archive.once('error', onArchiveError);
+
+			// avoid compression on given file types as they get no benefit from compression
+			const ext = path.extname(fileInfo.fullName).slice(1).toLowerCase();
+			const store = storeTypes.has(ext);
+			archive.append(blobStream, { name: fileInfo.fullName, store });
+		});
+	}
+};
+
+/**
  * Build a zipped file and Download
  *
  * @param {{apiClient: import('got').Got, params: {caseId: string, filename?: string, representationType?: string}, session: SessionWithAuth, currentAppeal: WebAppeal}} request
@@ -248,57 +331,64 @@ export const getBulkDocumentDownload = async (
 	response
 ) => {
 	const { filename = '', caseId, representationType = '' } = params;
-	const bulkFileInfo = await getBulkFileInfo(apiClient, caseId, representationType);
 	const zipFileName = buildZipFileName(caseId, filename);
 
+	// avg 61MB total for 52 docs
+	// max 3825MB for 1743 docs
+	const timeoutMs = 2 * 60 * 60 * 1000; // 2 hours
+	response.req.setTimeout(timeoutMs);
 	response.setHeader('content-type', 'application/zip');
 	response.setHeader('content-disposition', `attachment; filename=${zipFileName}`);
 
 	const archive = archiver('zip', {
-		zlib: { level: 9 } // Sets the compression level.
+		zlib: { level: 1 } // compression level 1 to avoid excessive cpu usage
 	});
-
+	archive.on('warning', function (err) {
+		if (err.code === 'ENOENT') {
+			logger.warn(err, 'Archiver warning:');
+		} else {
+			throw err;
+		}
+	});
+	archive.on('error', function (err) {
+		throw err;
+	});
 	archive.pipe(response);
 
-	const /** @type {string[]} */ missingFiles = [];
+	try {
+		const bulkFileInfo = await getBulkFileInfo(apiClient, caseId, representationType);
+		const blobStorageClient = bulkFileInfo?.length ? await createBlobStorageClient(session) : null;
+		const /** @type {string[]} */ missingFiles = [];
 
-	if (!bulkFileInfo?.length) {
-		missingFiles.push('No documents found in this case');
-	} else {
-		const blobStorageClient = await createBlobStorageClient(session);
-		const blobStreams = await Promise.all(
-			// @ts-ignore
-			bulkFileInfo.map((fileInfo) =>
-				createBlobDownloadStream(
-					blobStorageClient,
-					fileInfo.blobStorageContainer,
-					fileInfo.blobStoragePath
-				)
-			)
-		);
+		if (bulkFileInfo?.length) {
+			await addBlobsToArchive(archive, blobStorageClient, bulkFileInfo, missingFiles);
+		} else {
+			missingFiles.push('No documents found in this case');
+		}
 
-		blobStreams.forEach((blobStream, index) => {
-			if (blobStream) {
-				archive.append(blobStream, { name: bulkFileInfo[index].fullName });
-			} else {
-				missingFiles.push(bulkFileInfo[index].fullName);
-			}
-		});
+		// get PDFs
+		if (config.featureFlags.featureFlagPdfDownload) {
+			const successfulPdfs = await generateAllPdfs(currentAppeal, apiClient, representationType);
+			successfulPdfs.forEach((pdf) => {
+				if (!pdf.buffer) return;
+				archive.append(pdf.buffer, { name: pdf.name });
+			});
+		}
+
+		if (missingFiles.length) {
+			archive.append(Buffer.from(JSON.stringify(missingFiles)), { name: 'missing-files.json' });
+		}
+
+		await archive.finalize();
+		return response.status(200).send();
+	} catch (error) {
+		if (archive && !archive.destroyed) {
+			archive.destroy();
+		}
+
+		logger.error(error, 'Error during bulk document download:');
+		return response.destroy();
 	}
-
-	if (config.featureFlags.featureFlagPdfDownload) {
-		const successfulPdfs = await generateAllPdfs(currentAppeal, apiClient, representationType);
-
-		// @ts-ignore
-		successfulPdfs.forEach((pdf) => archive.append(pdf.buffer, { name: pdf.name }));
-	}
-
-	if (missingFiles.length) {
-		archive.append(Buffer.from(JSON.stringify(missingFiles)), { name: 'missing-files.json' });
-	}
-
-	await archive.finalize();
-	return response.status(200);
 };
 
 /**
@@ -306,12 +396,12 @@ export const getBulkDocumentDownload = async (
  *
  * @param {string} caseId
  * @param {string} filename
- * @returns {*}
+ * @returns {string}
  */
-// @ts-ignore
-// @ts-ignore
-// @ts-ignore
 const buildZipFileName = (caseId, filename) => {
+	if (!filename) filename = `${caseId}.zip`;
+	if (!filename.endsWith('.zip')) filename += '.zip';
+
 	const timestampTokens = new Date().toISOString().split('T');
 	const dateString = timestampTokens[0].replaceAll('-', '');
 	const timeString = timestampTokens[1].split('.')[0].replaceAll(':', '');
@@ -401,75 +491,63 @@ export const getBulkFileInfo = async (apiClient, caseId, representationType) => 
 		apiClient,
 		caseId
 	);
-	// @ts-ignore
+
+	/** @type {Array<{path: string, documents: Array<{latestDocumentVersion: {blobStorageContainer: string, blobStoragePath: string, documentURI: string}, name: string, id?: string, guid: string}>}>} */
 	const folders = representationType
 		? await getRepresentationFolder(apiClient, caseId)
 		: await getAllCaseFolders(apiClient, caseId);
 
-	const bulkFileInfo = folders
-		?.filter(
-			// @ts-ignore
-			(folder) => folder.documents?.length && !folder.path.startsWith(APPEAL_CASE_STAGE.INTERNAL)
-		)
-		// @ts-ignore
-		.flatMap((folder) => {
-			const folderPath = folder.path
-				.split('/')
-				// @ts-ignore
-				.map((folderName) => camelCaseToWords(folderName.trim()).replace('Lpa', 'LPA'))
-				.join('/');
+	const bulkFileInfo = folders.flatMap((folder) => {
+		let folderPath = folder.path
+			.split('/')
+			.map((folderName) => camelCaseToWords(folderName.trim()).replace('Lpa', 'LPA'))
+			.map((folderName) =>
+				folderName.toLowerCase() === APPEAL_CASE_STAGE.INTERNAL
+					? 'Case Management (Internal)'
+					: folderName
+			)
+			.join('/');
 
-			return (
-				folder.documents
-					// @ts-ignore
-					.map((document) => {
-						const { blobStorageContainer, blobStoragePath, documentURI } =
-							document.latestDocumentVersion;
+		return folder.documents
+			.map((document) => {
+				const { blobStorageContainer, blobStoragePath, documentURI } =
+					document.latestDocumentVersion;
 
-						const representationAttachmentFullName =
-							representationAttachmentFullNames[document.id || document.guid];
+				const representationAttachmentFullName =
+					representationAttachmentFullNames[document.id || document.guid];
 
-						// If this is in Representation Attachments folder, only include if it's mapped
-						if (folderPath === 'Representation/Representation Attachments') {
-							// @ts-ignore
-							if (representationAttachmentFullName) {
-								// if only ip comments required, only include ip comments
-								if (
-									representationType === 'ip-comments' &&
-									!representationAttachmentFullName?.includes('Interested party comments')
-								) {
-									return null;
-								}
-								return {
-									// @ts-ignore
-									fullName: representationAttachmentFullName,
-									blobStorageContainer,
-									blobStoragePath,
-									documentURI
-								};
-							} else {
-								// Skip unmapped representation attachments
-								// @ts-ignore
-
-								return null;
-							}
-						} else {
-							// For other folders, include all documents
-							return {
-								// @ts-ignore
-								fullName:
-									// @ts-ignore
-									representationAttachmentFullName || `${folderPath}/${document.name}`,
-								blobStorageContainer,
-								blobStoragePath,
-								documentURI
-							};
+				// If this is in Representation Attachments folder, only include if it's mapped
+				if (folderPath === 'Representation/Representation Attachments') {
+					if (representationAttachmentFullName) {
+						// if only ip comments required, only include ip comments
+						if (
+							representationType === 'ip-comments' &&
+							!representationAttachmentFullName?.includes('Interested party comments')
+						) {
+							return null;
 						}
-					})
-					.filter(Boolean)
-			); // Remove null entries
-		});
+						return {
+							fullName: representationAttachmentFullName,
+							blobStorageContainer,
+							blobStoragePath,
+							documentURI
+						};
+					} else {
+						// Skip unmapped representation attachments
+						return null;
+					}
+				} else {
+					// For other folders, include all documents
+					return {
+						fullName: representationAttachmentFullName || `${folderPath}/${document.name}`,
+						blobStorageContainer,
+						blobStoragePath,
+						documentURI
+					};
+				}
+			})
+			.filter(Boolean); // Remove null entries
+	});
 
-	// @ts-ignore
-	return bulkFileInfo.filter((fileInfo) => fileInfo.blobStoragePath && fileInfo.documentURI); // don't fail all files if blob path is null (seeded data in development and testing)
+	return bulkFileInfo.filter((fileInfo) => fileInfo?.blobStoragePath && fileInfo?.documentURI); // don't fail all files if blob path is null (seeded data in development and testing)
 };
