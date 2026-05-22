@@ -26,22 +26,6 @@ export function generateEnforcementListedComponents(
 		userHasUpdateCasePermission
 	);
 
-	const landComponentIndex = pageComponents.findIndex(
-		(component) =>
-			component.type === 'summary-list' && component.parameters.attributes?.id === 'site-details'
-	);
-
-	if (landComponentIndex !== -1) {
-		const rows = pageComponents[landComponentIndex].parameters.rows;
-		const rowIndex = rows.findIndex(
-			(/** @type {{ key: { text: string; }; }} */ row) =>
-				row?.key?.text === 'Do you have written or verbal permission to use the land?'
-		);
-		if (rowIndex !== -1) {
-			rows.splice(rowIndex, 1);
-		}
-	}
-
 	const groundsAndFactsComponentIndex = pageComponents.findIndex(
 		(component) =>
 			component.type === 'summary-list' &&

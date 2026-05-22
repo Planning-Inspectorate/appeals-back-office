@@ -43,6 +43,9 @@ export const mapEnforcementListedAppellantCase = (data) => {
 				: null,
 			reference: hasEnforcementData ? appellantCase?.enforcementReference : null,
 			interestInLand: appellantCase?.interestInLand ?? null,
+			writtenOrVerbalPermission: hasEnforcementData
+				? appellantCase?.writtenOrVerbalPermission
+				: null,
 			descriptionOfAllegedBreach: hasEnforcementData
 				? appellantCase?.descriptionOfAllegedBreach
 				: null,
