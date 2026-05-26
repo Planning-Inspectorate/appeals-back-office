@@ -36,6 +36,16 @@ export function installMockAppealsService() {
 		.reply(200, caseNotes)
 		.persist();
 
+	nock('https://www.gov.uk')
+		.get(`/bank-holidays.json`)
+		.reply(200, {
+			'england-and-wales': {
+				division: 'england-and-wales',
+				events: [{ title: 'New Year’s Day', date: '2019-01-01', notes: '', bunting: true }]
+			}
+		})
+		.persist();
+
 	return {
 		destroy: () => {
 			nock.cleanAll();
