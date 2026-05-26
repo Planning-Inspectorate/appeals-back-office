@@ -35,7 +35,7 @@ describe('Issue decision', () => {
 	const issueDecisionCompleteStatus = ['Allowed', 'Dismissed', 'Split Decision'];
 
 	issueDecisionCompleteStatus.forEach((issueDecision) => {
-		it(`Issue '${issueDecision}' decision`, { tags: tag.smoke }, () => {
+		it(`Issue '${issueDecision}' decision`, () => {
 			cy.get('@caseObjAlias').then((caseObj) => {
 				//Issue decision
 				happyPathHelper.viewCaseDetails(caseObj);

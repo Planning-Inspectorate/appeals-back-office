@@ -10,7 +10,6 @@ import { FileUploaderSection } from '../../page_objects/fileUploadSection.js';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { ReviewEvidenceSection } from '../../page_objects/reviewEvidenceSection.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
-import { tag } from '../../support/tag';
 import { urlPaths } from '../../support/urlPaths.js';
 
 const cyaSection = new CYASection();
@@ -168,7 +167,7 @@ describe('Manage docs on lpa case', () => {
 		});
 	});
 
-	it('can upload lpa proof of evidence and witness to inquiry case', { tags: tag.smoke }, () => {
+	it('can upload lpa proof of evidence and witness to inquiry case', () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 				appeal = caseObj;

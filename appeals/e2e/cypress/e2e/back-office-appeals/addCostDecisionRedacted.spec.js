@@ -7,7 +7,6 @@ import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { CTA_TEXT } from '../../support/consts.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
-import { tag } from '../../support/tag';
 
 const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();
@@ -26,7 +25,7 @@ afterEach(() => {
 describe('add cost decision and redact', () => {
 	let sampleFiles = caseDetailsPage.sampleFiles;
 
-	it('add costs decsion and redact', { tags: tag.smoke }, () => {
+	it('add costs decsion and redact', () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'HAS');
@@ -62,7 +61,7 @@ describe('add cost decision and redact', () => {
 		});
 	});
 
-	it.only('Upload new version and change filename', () => {
+	it('Upload new version and change filename', () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
