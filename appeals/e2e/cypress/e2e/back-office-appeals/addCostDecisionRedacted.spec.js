@@ -5,6 +5,7 @@ import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
+import { CTA_TEXT } from '../../support/consts.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
 import { tag } from '../../support/tag';
 
@@ -48,8 +49,11 @@ describe('add cost decision and redact', () => {
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickManageAppellantCostApplication();
-			cy.reloadUntilVirusCheckComplete();
-			caseDetailsPage.clickLinkByText('View and edit');
+
+			// Simulate the completion of the documents scan
+			cy.simulateDocumentsScanComplete(caseObj);
+
+			caseDetailsPage.clickLinkByText(CTA_TEXT.documents.manageShare);
 			caseDetailsPage.clickChangeRedactionStatus();
 			caseDetailsPage.selectRadioButtonByValue('Unredacted');
 			caseDetailsPage.clickButtonByText('Confirm');
@@ -58,7 +62,7 @@ describe('add cost decision and redact', () => {
 		});
 	});
 
-	it('Upload new version and change filename', () => {
+	it.only('Upload new version and change filename', () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
@@ -69,8 +73,11 @@ describe('add cost decision and redact', () => {
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickManageAppellantCostApplication();
-			cy.reloadUntilVirusCheckComplete();
-			caseDetailsPage.clickLinkByText('View and edit');
+
+			// Simulate the completion of the documents scan
+			cy.simulateDocumentsScanComplete(caseObj);
+
+			caseDetailsPage.clickLinkByText(CTA_TEXT.documents.manageShare);
 			caseDetailsPage.clickButtonByText('Upload a new version');
 			caseDetailsPage.uploadSampleFile(sampleFiles.document2);
 			caseDetailsPage.clickButtonByText('Continue');
@@ -78,8 +85,11 @@ describe('add cost decision and redact', () => {
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickManageAppellantCostApplication();
-			cy.reloadUntilVirusCheckComplete();
-			caseDetailsPage.clickLinkByText('View and edit');
+
+			// Simulate the completion of the documents scan
+			cy.simulateDocumentsScanComplete(caseObj);
+
+			caseDetailsPage.clickLinkByText(CTA_TEXT.documents.manageShare);
 			caseDetailsPage.checkDocVersionNumber('2');
 			caseDetailsPage.clickChangeFileName();
 			caseDetailsPage.updateFileName('sample-file');

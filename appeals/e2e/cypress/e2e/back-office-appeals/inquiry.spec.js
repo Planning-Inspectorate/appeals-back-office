@@ -12,6 +12,7 @@ import { ContactDetailsPage } from '../../page_objects/contactDetailsPage.js';
 import { CYASection } from '../../page_objects/cyaSection.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
+import { CTA_TEXT } from '../../support/consts.js';
 import { happyPathHelper } from '../../support/happyPathHelper';
 import { inquiryTimetableItems, replaceTimetableItem } from '../../support/timetables.js';
 import { urlPaths } from '../../support/urlPaths';
@@ -639,7 +640,7 @@ it('should progress to evidence stage with no statements or IP comments', () => 
 		caseDetailsPage.verifyWarningText(
 			'Do not progress to proof of evidence and witnesses if you are awaiting any late statements or interested party comments.'
 		);
-		caseDetailsPage.clickButtonByText('Progress to proof of evidence and witnesses');
+		caseDetailsPage.clickButtonByText(CTA_TEXT.caseProgression.progressToProofOfEvidence);
 
 		// Verify notification
 		const expectedNotifies = [
@@ -686,7 +687,7 @@ it('should progress to evidence stage after sharing statements and IP comments',
 		// Share statements and transition to evidence stage
 		caseDetailsPage.validateBannerMessage('Important', 'Share IP comments and statements');
 		caseDetailsPage.basePageElements.bannerLink().click();
-		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.clickButtonByText(CTA_TEXT.caseProgression.progressToProofOfEvidence);
 
 		caseDetailsPage.validateBannerMessage('Success', 'Statements and IP comments shared');
 		caseDetailsPage.checkStatusOfCase('Evidence', 0);
@@ -1051,7 +1052,9 @@ it('should display the correct status tags when cancelling inquiry', () => {
 		caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
 		caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
 
-		happyPathHelper.reviewLPaStatement(caseObj);
+		happyPathHelper.reviewLPaStatement(caseObj, {
+			progressText: CTA_TEXT.caseProgression.progressToProofOfEvidence
+		});
 
 		// Verify evidence tag
 		caseDetailsPage.checkStatusOfCase('Evidence', 0);

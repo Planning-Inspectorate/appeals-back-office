@@ -158,7 +158,7 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Start case');
 	},
-	reviewLPaStatement(caseObj) {
+	reviewLPaStatement(caseObj, reviewProperties = { progressText: 'Progress case' }) {
 		happyPathHelper.reviewS78Lpaq(caseObj);
 		caseDetailsPage.checkStatusOfCase('Statements', 0);
 		happyPathHelper.addThirdPartyComment(caseObj, true);
@@ -169,7 +169,7 @@ export const happyPathHelper = {
 		cy.simulateStatementsDeadlineElapsed(caseObj);
 		cy.reload();
 		caseDetailsPage.basePageElements.bannerLink().click();
-		caseDetailsPage.clickButtonByText('Progress case');
+		caseDetailsPage.clickButtonByText(reviewProperties.progressText);
 		caseDetailsPage.validateBannerMessage('Success', 'Statements and IP comments shared');
 	},
 
