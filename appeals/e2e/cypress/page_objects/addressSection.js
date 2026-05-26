@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { CaseDetailsPage } from './caseDetailsPage.js';
 
-export class AddressSectionPage extends CaseDetailsPage {
+export class AddressSection extends CaseDetailsPage {
 	// S E L E C T O R S
 
 	selectors = {};

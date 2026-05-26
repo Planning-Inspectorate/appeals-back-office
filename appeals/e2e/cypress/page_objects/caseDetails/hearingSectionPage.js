@@ -2,7 +2,7 @@
 
 import { users } from '../../fixtures/users';
 import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.js';
-import { AddressSectionPage } from '../addressSection.js';
+import { AddressSection } from '../addressSection.js';
 import { CaseDetailsPage } from '../caseDetailsPage';
 import { DateTimeSection } from '../dateTimeSection.js';
 import { EstimatedDaysSection } from '../estimatedDaysSection.js';
@@ -13,7 +13,7 @@ const caseDetailsPage = new CaseDetailsPage();
 const caseHistoryPage = new CaseHistoryPage();
 const dateTimeSection = new DateTimeSection();
 const estimatedDaysSection = new EstimatedDaysSection();
-const addressSectionPage = new AddressSectionPage();
+const addressSection = new AddressSection();
 
 export class HearingSectionPage extends CaseDetailsPage {
 	hearingSectionElements = {
@@ -72,7 +72,7 @@ export class HearingSectionPage extends CaseDetailsPage {
 		}
 
 		const addressKnownOption = address ? 'Yes' : 'No';
-		addressSectionPage.selectAddressOption(addressKnownOption);
+		addressSection.selectAddressOption(addressKnownOption);
 
 		caseDetailsPage.clickButtonByText('Continue');
 	}
@@ -81,18 +81,18 @@ export class HearingSectionPage extends CaseDetailsPage {
 		this.hearingSectionElements.changeHearingAddress().click();
 
 		if (!addressKnown) {
-			addressSectionPage.selectAddressOption('Yes');
-			addressSectionPage.clickButtonByText('Continue');
+			addressSection.selectAddressOption('Yes');
+			addressSection.clickButtonByText('Continue');
 		}
 
-		addressSectionPage.enterAddress(address);
-		addressSectionPage.clickButtonByText('Continue');
+		addressSection.enterAddress(address);
+		addressSection.clickButtonByText('Continue');
 	}
 
 	updateHearingAddress(address) {
 		this.hearingSectionElements.updateAddress().click();
-		addressSectionPage.enterAddress(address);
-		addressSectionPage.clickButtonByText('Continue');
+		addressSection.enterAddress(address);
+		addressSection.clickButtonByText('Continue');
 	}
 
 	verifyHearingEstimate(estimateField, value) {
