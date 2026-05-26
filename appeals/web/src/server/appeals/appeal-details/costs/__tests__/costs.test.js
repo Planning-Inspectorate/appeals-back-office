@@ -2034,6 +2034,23 @@ describe('costs', () => {
 						expect(unprettifiedElement.innerHTML).toContain('Confirm and share document</button>');
 					});
 
+					it(`should render the invite responses page with pre-selected option`, async () => {
+						await request
+							.post(
+								`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1/invite-responses`
+							)
+							.send({ 'invite-responses': 'yes' });
+						const response = await request.get(
+							`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1/invite-responses`
+						);
+
+						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+						expect(unprettifiedElement.innerHTML).toContain(
+							'name="invite-responses" type="radio" value="yes" checked'
+						);
+					});
+
 					it(`should return a validation error if no option is selected on POST`, async () => {
 						const response = await request
 							.post(
