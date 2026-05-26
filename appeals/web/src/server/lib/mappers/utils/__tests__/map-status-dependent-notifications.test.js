@@ -11,9 +11,22 @@ describe('mapStatusDependentNotifications', () => {
 	};
 	const testCases = [
 		{
+			bannerKey: 'awaitingLinkedAppeal',
+			requiredAction: 'awaitingLinkedAppeal',
+			expectedContainedHtml:
+				'<p class="govuk-notification-banner__heading">Awaiting linked appeal</p>',
+			bannerShouldNotDisplayWhenChildLinkedAppeal: false
+		},
+		{
 			bannerKey: 'appealAwaitingTransfer',
 			requiredAction: 'addHorizonReference',
 			expectedContainedHtml: `<p class="govuk-notification-banner__heading"><a class="govuk-link" data-cy="awaiting-transfer" href="/appeals-service/appeal-details/${mockAppealData.appealId}/change-appeal-type/add-horizon-reference?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Mark as transferred</a></p>`
+		},
+		{
+			bannerKey: 'appealValidated',
+			requiredAction: 'appealValidated',
+			expectedContainedHtml: '<p class="govuk-notification-banner__heading">Appeal valid</p>',
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
 			bannerKey: 'readyForSetUpSiteVisit',
@@ -36,6 +49,32 @@ describe('mapStatusDependentNotifications', () => {
 			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
+			bannerKey: 'issueAppellantCostsDecision',
+			requiredAction: 'issueAppellantCostsDecision',
+			mockData: {
+				appealId: 1,
+				appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+				costsDecision: {
+					awaitingAppellantCostsDecision: true
+				}
+			},
+			expectedContainedHtml: `<a class="govuk-notification-banner__link" data-cy="issue-appellant-costs-decision" href="/appeals-service/appeal-details/${mockAppealData.appealId}/issue-decision/issue-appellant-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Issue appellant costs decision</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
+			bannerKey: 'issueLpaCostsDecision',
+			requiredAction: 'issueLpaCostsDecision',
+			mockData: {
+				appealId: 1,
+				appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+				costsDecision: {
+					awaitingLpaCostsDecision: true
+				}
+			},
+			expectedContainedHtml: `<a class="govuk-notification-banner__link" data-cy="issue-lpa-costs-decision" href="/appeals-service/appeal-details/${mockAppealData.appealId}/issue-decision/issue-lpa-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Issue LPA costs decision</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
 			bannerKey: 'progressFromFinalComments',
 			requiredAction: 'progressFromFinalComments',
 			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}" class="govuk-heading-s govuk-notification-banner__link">Progress case</a>`,
@@ -45,6 +84,42 @@ describe('mapStatusDependentNotifications', () => {
 			bannerKey: 'progressFromStatements',
 			requiredAction: 'progressFromStatements',
 			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}" class="govuk-heading-s govuk-notification-banner__link">Progress to final comments</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
+			bannerKey: 'progressHearingCaseWithNoRepsFromStatements',
+			requiredAction: 'progressHearingCaseWithNoRepsFromStatements',
+			mockData: {
+				appealId: 1,
+				appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+				procedureType: 'Hearing',
+				appealTimetable: {
+					ipCommentsDueDate: '2000-01-01',
+					lpaStatementDueDate: '2000-01-01'
+				},
+				documentationSummary: {}
+			},
+			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F1" class="govuk-heading-s govuk-notification-banner__link">Progress to hearing ready to set up</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
+			bannerKey: 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements',
+			requiredAction: 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements',
+			mockData: {
+				appealId: 1,
+				appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+				procedureType: 'Hearing',
+				hearing: {
+					hearingStartTime: '13:00',
+					addressId: 1
+				},
+				appealTimetable: {
+					ipCommentsDueDate: '2000-01-01',
+					lpaStatementDueDate: '2000-01-01'
+				},
+				documentationSummary: {}
+			},
+			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F1" class="govuk-heading-s govuk-notification-banner__link">Progress to awaiting hearing</a>`,
 			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
@@ -131,12 +206,6 @@ describe('mapStatusDependentNotifications', () => {
 			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
-			bannerKey: 'awaitingLinkedAppeal',
-			requiredAction: 'awaitingLinkedAppeal',
-			expectedContainedHtml:
-				'<p class="govuk-notification-banner__heading">Awaiting linked appeal</p>'
-		},
-		{
 			bannerKey: 'updateLpaStatement',
 			requiredAction: 'updateLpaStatement',
 			expectedContainedHtml:
@@ -148,6 +217,24 @@ describe('mapStatusDependentNotifications', () => {
 			requiredAction: 'updateAppellantStatement',
 			expectedContainedHtml:
 				'<p class="govuk-notification-banner__heading">Appellant statement incomplete</p>',
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
+			bannerKey: 'addHearingAddress',
+			requiredAction: 'addHearingAddress',
+			mockData: {
+				appealId: 1,
+				appealStatus: APPEAL_CASE_STATUS.EVENT,
+				procedureType: 'Hearing',
+				hearing: {}
+			},
+			expectedContainedHtml: `<a class="govuk-link" data-cy="add-hearing-address" href="/appeals-service/appeal-details/${mockAppealData.appealId}/hearing/change/address-details?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Add hearing address</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
+			bannerKey: 'setupHearing',
+			requiredAction: 'setupHearing',
+			expectedContainedHtml: `<a class="govuk-link" data-cy="setup-hearing" href="/appeals-service/appeal-details/${mockAppealData.appealId}/hearing/setup/date?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Set up hearing</a>`,
 			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
@@ -199,16 +286,45 @@ describe('mapStatusDependentNotifications', () => {
 			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
+			bannerKey: 'addInquiryAddress',
+			requiredAction: 'addInquiryAddress',
+			expectedContainedHtml: `<a class="govuk-link" data-cy="add-inquiry-address" href="/appeals-service/appeal-details/${mockAppealData.appealId}/inquiry/change/address-details?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Add inquiry address</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
 			bannerKey: 'setupInquiry',
 			requiredAction: 'setupInquiry',
 			expectedContainedHtml: `<a class="govuk-link" data-cy="setup-inquiry" href="/appeals-service/appeal-details/${mockAppealData.appealId}/inquiry/setup/date?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Set up inquiry</a>`,
-			bannerShouldNotDisplayWhenChildLinkedAppeal: false
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
 			bannerKey: 'addInquiryAddress',
 			requiredAction: 'addInquiryAddress',
 			expectedContainedHtml: `<a class="govuk-link" data-cy="add-inquiry-address" href="/appeals-service/appeal-details/${mockAppealData.appealId}/inquiry/change/address-details?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Add inquiry address</a>`,
-			bannerShouldNotDisplayWhenChildLinkedAppeal: false
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
+			bannerKey: 'addSiteVisitTime',
+			requiredAction: 'addSiteVisitTime',
+			mockData: {
+				appealId: 1,
+				siteVisit: {
+					visitDate: '2026-01-01'
+				}
+			},
+			expectedContainedHtml: `<a class="govuk-heading-s govuk-notification-banner__link" data-cy="add-site-visit-time" href="/appeals-service/appeal-details/${mockAppealData.appealId}/site-visit/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Add site visit time</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
+			bannerKey: 'addSiteVisitDateTime',
+			requiredAction: 'addSiteVisitDateTime',
+			mockData: {
+				appealId: 1,
+				appealStatus: APPEAL_CASE_STATUS.INVALID,
+				siteVisit: {}
+			},
+			expectedContainedHtml: `<a class="govuk-heading-s govuk-notification-banner__link" data-cy="add-site-visit-date-time" href="/appeals-service/appeal-details/${mockAppealData.appealId}/site-visit/schedule/schedule-visit-date?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Add site visit date and time</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
 			bannerKey: 'reviewRule6PartyStatement',
@@ -314,13 +430,12 @@ describe('mapStatusDependentNotifications', () => {
 
 	for (const testCase of testCases) {
 		it(`should return "${testCase.bannerKey}" banner when getRequiredActionsForAppeal returns "${testCase.requiredAction}"`, async () => {
-			const result = mapStatusDependentNotifications(
-				appealDataToGetRequiredActions[testCase.requiredAction],
-				{
-					originalUrl: `/appeals-service/appeal-details/${mockAppealData.appealId}`,
-					session: {}
-				}
-			);
+			const appealData =
+				testCase.mockData || appealDataToGetRequiredActions[testCase.requiredAction];
+			const result = mapStatusDependentNotifications(appealData, {
+				originalUrl: `/appeals-service/appeal-details/${mockAppealData.appealId}`,
+				session: {}
+			});
 
 			expect(Array.isArray(result)).toBe(true);
 			expect(result[0]?.type).toBe('notification-banner');
@@ -333,8 +448,10 @@ describe('mapStatusDependentNotifications', () => {
 		(testCase) => !testCase.bannerShouldNotDisplayWhenChildLinkedAppeal
 	)) {
 		it(`should return "${testCase.bannerKey}" banner when getRequiredActionsForAppeal returns "${testCase.requiredAction} when the appeal is a child linked appeal"`, async () => {
+			const appealData =
+				testCase.mockData || appealDataToGetRequiredActions[testCase.requiredAction];
 			const result = mapStatusDependentNotifications(
-				{ ...appealDataToGetRequiredActions[testCase.requiredAction], isChildAppeal: true },
+				{ ...appealData, isChildAppeal: true },
 				{
 					originalUrl: `/appeals-service/appeal-details/${mockAppealData.appealId}`
 				}
@@ -351,8 +468,10 @@ describe('mapStatusDependentNotifications', () => {
 		(testCase) => testCase.bannerShouldNotDisplayWhenChildLinkedAppeal
 	)) {
 		it(`should not return "${testCase.bannerKey}" banner when getRequiredActionsForAppeal returns "${testCase.requiredAction} when the appeal is a child linked appeal"`, async () => {
+			const appealData =
+				testCase.mockData || appealDataToGetRequiredActions[testCase.requiredAction];
 			const result = mapStatusDependentNotifications(
-				{ ...appealDataToGetRequiredActions[testCase.requiredAction], isChildAppeal: true },
+				{ ...appealData, isChildAppeal: true },
 				{
 					originalUrl: `/appeals-service/appeal-details/${mockAppealData.appealId}`
 				}
