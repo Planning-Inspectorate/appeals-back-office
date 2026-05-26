@@ -48,12 +48,12 @@ describe('Update Decision Letter', () => {
 			//Notify
 			const expectedNotifies = [
 				{
-					template: 'correction-notice-decision',
-					recipient: apiUsers[1].emailAddress
+					template: 'correction-notice-decision-lpa',
+					recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
 				},
 				{
-					template: 'correction-notice-decision',
-					recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+					template: 'correction-notice-decision-appellant',
+					recipient: 'agent@test.com'
 				}
 			];
 

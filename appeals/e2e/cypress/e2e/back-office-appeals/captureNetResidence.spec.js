@@ -25,7 +25,7 @@ describe('Capture Net Residences', () => {
 	const overviewDetails = {
 		appealType: 'Planning appeal',
 		applicationReference: '123',
-		appealProcedure: 'Written',
+		appealProcedure: 'Written representations (Part 2)',
 		allocationLevel: 'No allocation level for this appeal',
 		linkedAppeals: 'No linked appeals',
 		relatedAppeals: '1000000',
