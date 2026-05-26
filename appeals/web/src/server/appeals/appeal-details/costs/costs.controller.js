@@ -601,7 +601,14 @@ export const getInviteResponses = async (request, response) => {
 	const { appealId, folderId, documentId, costsCategory, costsDocumentType } = request.params;
 	const backLinkUrl = `/appeals-service/appeal-details/${appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/${folderId}/${documentId}`;
 
-	const pageContent = inviteResponsesPage(backLinkUrl);
+	if (request.session.appealId && request.session.appealId !== appealId) {
+		delete request.session.appealId;
+		delete request.session.inviteResponses;
+	}
+
+	const inviteResponses =
+		appealId === request.session.appealId ? request.session.inviteResponses : undefined;
+	const pageContent = inviteResponsesPage(backLinkUrl, inviteResponses);
 
 	return response.render('patterns/change-page.pattern.njk', {
 		pageContent,
@@ -623,6 +630,7 @@ export const postInviteResponses = async (request, response) => {
 	}
 
 	request.session.inviteResponses = body['invite-responses'];
+	request.session.appealId = appealId;
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/${folderId}/${documentId}/check-your-answers`
 	);

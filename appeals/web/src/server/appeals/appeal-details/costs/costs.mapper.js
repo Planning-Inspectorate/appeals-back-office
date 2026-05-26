@@ -69,9 +69,10 @@ export function decisionCheckAndConfirmPage(
 
 /**
  * @param {string} backLinkUrl
+ * @param {string} [selectedInviteResponses]
  * @returns {PageContent}
  */
-export function inviteResponsesPage(backLinkUrl) {
+export function inviteResponsesPage(backLinkUrl, selectedInviteResponses) {
 	/** @type {PageContent} */
 	return {
 		title: 'Do you want to invite responses?',
@@ -84,6 +85,7 @@ export function inviteResponsesPage(backLinkUrl) {
 				parameters: {
 					name: 'invite-responses',
 					idPrefix: 'invite-responses',
+					value: selectedInviteResponses || null,
 					items: [
 						{ text: 'Yes', value: 'yes' },
 						{ text: 'No', value: 'no' }
