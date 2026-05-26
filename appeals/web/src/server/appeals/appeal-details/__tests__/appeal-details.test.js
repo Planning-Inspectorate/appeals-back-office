@@ -32,13 +32,18 @@ import {
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
 import config from '@pins/appeals.web/environment/config.js';
-import { APPEAL_REPRESENTATION_STATUS, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_REPRESENTATION_STATUS,
+	APPEAL_TYPE,
+	PROCEDURE_TYPE_NAME
+} from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { addDays } from 'date-fns';
 import { omit } from 'lodash-es';
 import nock from 'nock';
 import supertest from 'supertest';
+import { getCaseDocumentation } from '../appeal-details-page-sections/common/case-documentation.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -156,6 +161,7 @@ describe('appeal-details', () => {
 				expect(element.innerHTML).toContain('Just a name');
 			});
 		});
+
 		describe('Notification banners', () => {
 			const notificationBannerElement = '.govuk-notification-banner';
 
@@ -3936,6 +3942,48 @@ describe('appeal-details', () => {
 		});
 
 		describe('Documentation', () => {
+			describe('Expedited', () => {
+				const mappedData = {
+					appeal: {
+						appellantCase: {
+							display: { tableItem: ['Appeal', 'Submitted', '2026-05-21', 'View'] }
+						},
+						lpaQuestionnaire: {
+							display: { tableItem: ['LPA questionnaire', 'Received', '2026-05-20', 'View'] }
+						},
+						appellantStatement: { display: { tableItem: undefined } },
+						lpaStatement: { display: { tableItem: undefined } },
+						rule6PartyStatements: { display: { tableItems: [] } },
+						ipComments: { display: { tableItem: undefined } },
+						appellantFinalComments: { display: { tableItem: undefined } },
+						lpaFinalComments: { display: { tableItem: undefined } },
+						appellantProofOfEvidence: { display: { tableItem: undefined } },
+						lpaProofOfEvidence: { display: { tableItem: undefined } },
+						rule6PartyProofs: { display: { tableItems: [] } },
+						environmentalAssessment: { display: { tableItem: undefined } }
+					}
+				};
+
+				const appealId = '123';
+				const appealDetails = {
+					...appealData,
+					appealId,
+					procedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1
+				};
+
+				it('should render only "Appeal" and "LPA questionnaire" rows for expedited procedure type', () => {
+					const result = getCaseDocumentation(mappedData, appealDetails);
+					expect(result.parameters.rows.length).toBe(2);
+					const rowTexts = result.parameters.rows.map((row) => row[0]);
+					expect(rowTexts).toContain('Appeal');
+					expect(rowTexts).toContain('LPA questionnaire');
+					expect(rowTexts).not.toContain('Appellant final comments');
+					expect(rowTexts).not.toContain('LPA final comments');
+					expect(rowTexts).not.toContain('LPA statement');
+					expect(rowTexts).not.toContain('Proof of evidence');
+				});
+			});
+
 			describe('LPA Questionnaire', () => {
 				const appealId = 3;
 
@@ -4026,7 +4074,7 @@ describe('appeal-details', () => {
 					const appeal = {
 						...appealDataFullPlanning,
 						appealId,
-						procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+						procedureType: PROCEDURE_TYPE_NAME.INQUIRY,
 						appealRule6Parties: [
 							{
 								id: 1,
@@ -4101,7 +4149,7 @@ describe('appeal-details', () => {
 					const appeal = {
 						...appealDataFullPlanning,
 						appealId,
-						procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+						procedureType: PROCEDURE_TYPE_NAME.INQUIRY,
 						appealRule6Parties: [
 							{
 								id: 1,
@@ -7300,6 +7348,7 @@ describe('appeal-details', () => {
 			});
 		});
 	});
+
 	describe('Site visit section', () => {
 		const appealId = appealData.appealId.toString();
 		const futureDate = addDays(new Date(), 1).toISOString();

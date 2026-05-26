@@ -28,6 +28,7 @@ export const mapLpaStatementDueDate = ({
 	}
 
 	const text =
+		appealDetails.appealType === APPEAL_TYPE.ADVERTISEMENT ||
 		appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ||
 		appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING ||
 		appealDetails.appealType === APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE
