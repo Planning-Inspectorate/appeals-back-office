@@ -94,7 +94,8 @@ apps_config = {
 
   analytics = {
     google_analytics_id   = "dummy-id",
-    google_tag_manager_id = "dummy-tag-manager-id"
+    google_tag_manager_id = "dummy-tag-manager-id",
+    microsoft_clarity_id  = "dummy-id"
   }
 
   logging = {

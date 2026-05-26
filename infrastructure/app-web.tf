@@ -70,6 +70,7 @@ module "app_web" {
     # analytics
     GOOGLE_ANALYTICS_ID   = var.apps_config.analytics.google_analytics_id
     GOOGLE_TAG_MANAGER_ID = var.apps_config.analytics.google_tag_manager_id
+    MICROSOFT_CLARITY_ID  = var.apps_config.analytics.microsoft_clarity_id
 
     # logging
     LOG_LEVEL_FILE   = var.apps_config.logging.level_file
