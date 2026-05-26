@@ -94,7 +94,8 @@ apps_config = {
 
   analytics = {
     google_analytics_id   = "G-8X56B5X9SN",
-    google_tag_manager_id = "GTM-P3SL44C2"
+    google_tag_manager_id = "GTM-P3SL44C2",
+    microsoft_clarity_id  = "wu1g4cpzbg"
   }
 
   logging = {
