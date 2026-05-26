@@ -10,7 +10,6 @@ import { FileUploaderSection } from '../../page_objects/fileUploadSection.js';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { ReviewEvidenceSection } from '../../page_objects/reviewEvidenceSection.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
-import { tag } from '../../support/tag';
 import { urlPaths } from '../../support/urlPaths.js';
 
 const cyaSection = new CYASection();
@@ -171,43 +170,39 @@ describe('manage docs on appellant case', () => {
 		});
 	});
 
-	it(
-		'can upload appellant proof of evidence and witness to inquiry case',
-		{ tags: tag.smoke },
-		() => {
-			cy.createCase({ caseType: 'W' }).then((caseObj) => {
-				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-					appeal = caseObj;
-					// require case to be started as inquiry to access appellant POE evidence
-					setupInquiry(caseObj, inquiryDate);
+	it('can upload appellant proof of evidence and witness to inquiry case', () => {
+		cy.createCase({ caseType: 'W' }).then((caseObj) => {
+			cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+				appeal = caseObj;
+				// require case to be started as inquiry to access appellant POE evidence
+				setupInquiry(caseObj, inquiryDate);
 
-					// find case and open inqiiry section
-					cy.visit(urlPaths.appealsList);
-					listCasesPage.clickAppealByRef(caseObj);
+				// find case and open inqiiry section
+				cy.visit(urlPaths.appealsList);
+				listCasesPage.clickAppealByRef(caseObj);
 
-					// navigate to file upload view, upload file and verify uploaded
-					documentationSectionPage.selectAddDocument('appellant-proofs-evidence');
-					fileUploaderSection.uploadFile(sampleFiles.document);
-					fileUploaderSection.verifyFilesUploaded([sampleFiles.document]);
+				// navigate to file upload view, upload file and verify uploaded
+				documentationSectionPage.selectAddDocument('appellant-proofs-evidence');
+				fileUploaderSection.uploadFile(sampleFiles.document);
+				fileUploaderSection.verifyFilesUploaded([sampleFiles.document]);
 
-					//naviagte to review/confirm page
-					caseDetailsPage.clickButtonByText('Continue');
-					// check for lpa heading
-					caseDetailsPage.validateSectionHeader(
-						'Check details and add appellant proof of evidence and witnesses'
-					);
-					caseDetailsPage.clickButtonByText('Add appellant proof of evidence and witness');
+				//naviagte to review/confirm page
+				caseDetailsPage.clickButtonByText('Continue');
+				// check for lpa heading
+				caseDetailsPage.validateSectionHeader(
+					'Check details and add appellant proof of evidence and witnesses'
+				);
+				caseDetailsPage.clickButtonByText('Add appellant proof of evidence and witness');
 
-					// check page header and success banner
-					caseDetailsPage.validateSectionHeader('Review appellant proof of evidence and witnesses');
-					caseDetailsPage.validateBannerMessage(
-						'Success',
-						'Appellant proof of evidence and witnesses added'
-					);
-				});
+				// check page header and success banner
+				caseDetailsPage.validateSectionHeader('Review appellant proof of evidence and witnesses');
+				caseDetailsPage.validateBannerMessage(
+					'Success',
+					'Appellant proof of evidence and witnesses added'
+				);
 			});
-		}
-	);
+		});
+	});
 
 	it('upload appellant proof of evidence and witness - proceed without uploading file', () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
