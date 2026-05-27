@@ -18,11 +18,11 @@ import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { isDefined } from '#lib/ts-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
 import { APPEAL_TYPE, FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { format } from 'date-fns';
 import { invalidReasonPage, otherLiveAppealsPage } from './cancel-invalid.mapper.js';
 

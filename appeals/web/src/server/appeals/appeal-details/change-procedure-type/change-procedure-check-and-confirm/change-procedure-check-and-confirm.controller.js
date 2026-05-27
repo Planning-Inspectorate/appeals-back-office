@@ -13,7 +13,7 @@ import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-co
 import { simpleHtmlComponent, textSummaryListItem } from '#lib/mappers/index.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { capitalize, kebabCase, pick } from 'lodash-es';
 import { appealProcedureToLabelText } from './change-procedure-check-and-confirm.mapper.js';

@@ -6,8 +6,8 @@ import { permissionNames } from '#environment/permissions.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { textSummaryListItem, userHasPermission } from '#lib/mappers/index.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
-import { toSentenceCase } from '#lib/string-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { toSentenceCase } from '@pins/appeals/utils/string-case.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @type {import('../mapper.js').SubMapper} */

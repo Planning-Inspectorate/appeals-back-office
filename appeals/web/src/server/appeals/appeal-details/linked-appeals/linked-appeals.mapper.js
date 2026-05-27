@@ -2,8 +2,8 @@ import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { mapNotificationBannersFromSession, radiosInput } from '#lib/mappers/index.js';
 import { nameToString } from '#lib/person-name-formatter.js';
-import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { LINK_APPEALS_UNLINK_OPERATION } from '@pins/appeals/constants/support.js';
+import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal

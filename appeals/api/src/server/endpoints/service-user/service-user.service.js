@@ -3,11 +3,11 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import addressRepository from '#repositories/address.repository.js';
 import serviceUserRepository from '#repositories/service-user.repository.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { capitalizeFirstLetter } from '#utils/string-utils.js';
 import {
 	AUDIT_TRAIL_SERVICE_USER_UPDATED,
 	AUDIT_TRAIL_SYSTEM_UUID
 } from '@pins/appeals/constants/support.js';
+import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { EventType } from '@pins/event-client';
 
 /**

@@ -1,7 +1,7 @@
 import config from '#environment/config.js';
 import { listOrOnlyItem } from '#lib/mappers/components/page-components/list-or-only-item.js';
-import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /** @type {import('../mapper.js').SubMapper} */

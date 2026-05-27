@@ -4,7 +4,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { INTEREST_IN_LAND } from '#lib/constants.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { camelCaseToWords, capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { camelCaseToWords, capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 
 /**
  * @param {Appeal} appealData

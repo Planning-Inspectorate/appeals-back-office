@@ -7,10 +7,10 @@ import {
 } from '#appeals/appeal-documents/appeal.documents.service.js';
 import getActiveDirectoryAccessToken from '#lib/active-directory-token.js';
 import logger from '#lib/logger.js';
-import { camelCaseToWords, toSentenceCase } from '#lib/string-utilities.js';
 import { BlobServiceClient } from '@azure/storage-blob';
 import config from '@pins/appeals.web/environment/config.js';
 import { REP_ATTACHMENT_DOCTYPE } from '@pins/appeals/constants/documents.js';
+import { camelCaseToWords, toSentenceCase } from '@pins/appeals/utils/string-case.js';
 import { BlobStorageClient } from '@pins/blob-storage-client';
 import { APPEAL_CASE_STAGE, APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
 import archiver from 'archiver';
