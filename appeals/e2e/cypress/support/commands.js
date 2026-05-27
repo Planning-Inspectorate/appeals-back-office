@@ -307,6 +307,13 @@ Cypress.Commands.add('deleteHearing', (caseObj) => {
 	});
 });
 
+Cypress.Commands.add('getHearingDetails', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		const details = await appealsApiClient.loadCaseDetails(caseObj.reference);
+		return details?.hearing ?? null;
+	});
+});
+
 Cypress.Commands.add('checkNotifySent', (caseObj, expectedNotifies) => {
 	// ensure input is always an array
 	const expected = [].concat(expectedNotifies);

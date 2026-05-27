@@ -77,16 +77,16 @@ export class HearingSectionPage extends CaseDetailsPage {
 		caseDetailsPage.clickButtonByText('Continue');
 	}
 
-	changeHearingAddress(address, addressKnown = false) {
+	changeHearingAddress({ address = {}, addressKnown = true } = {}) {
 		this.hearingSectionElements.changeHearingAddress().click();
 
-		if (!addressKnown) {
-			addressSection.selectAddressOption('Yes');
+		addressSection.selectAddressOption(addressKnown ? 'Yes' : 'No');
+		addressSection.clickButtonByText('Continue');
+
+		if (addressKnown) {
+			addressSection.enterAddress(address);
 			addressSection.clickButtonByText('Continue');
 		}
-
-		addressSection.enterAddress(address);
-		addressSection.clickButtonByText('Continue');
 	}
 
 	updateHearingAddress(address) {
@@ -180,6 +180,7 @@ export class HearingSectionPage extends CaseDetailsPage {
 
 				cy.deleteHearing(caseObj).then((hearingDetails) => {
 					cy.log(`Successfully deleted hearing with id ${hearingDetails.hearingId}`);
+					cy.reload();
 				});
 			} else {
 				cy.log('No hearing exists for this case');
