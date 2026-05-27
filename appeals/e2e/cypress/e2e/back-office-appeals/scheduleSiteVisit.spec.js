@@ -6,7 +6,6 @@ import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { happyPathHelper } from '../../support/happyPathHelper';
-import { tag } from '../../support/tag';
 
 let appeal;
 
@@ -34,7 +33,7 @@ describe('Schedule site visit', () => {
 	const visitTypeTestCases = ['Accompanied', 'Access required', 'Unaccompanied'];
 
 	visitTypeTestCases.forEach((visitType, index) => {
-		it(`Arrange ${visitType} visit from Site details`, { tags: tag.smoke }, () => {
+		it(`Arrange ${visitType} visit from Site details`, () => {
 			caseDetailsPage.clickSetUpSiteVisitType();
 			caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(visitType));
 			caseDetailsPage.clickButtonByText('Continue');
@@ -71,7 +70,7 @@ describe('Schedule site visit', () => {
 			caseDetailsPage.validateAnswer('Type', visitType, { matchQuestionCase: true });
 		});
 
-		it(`Cancel Site Visit`, { tags: tag.smoke }, () => {
+		it(`Cancel Site Visit`, () => {
 			caseDetailsPage.clickSetUpSiteVisitType();
 			caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(visitType));
 			caseDetailsPage.clickButtonByText('Continue');

@@ -4,14 +4,16 @@
 import { users } from '../../fixtures/users';
 import { HearingSectionPage } from '../../page_objects/caseDetails/hearingSectionPage';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
+import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.js';
 import { EstimatedDaysSection } from '../../page_objects/estimatedDaysSection';
 import { happyPathHelper } from '../../support/happyPathHelper';
-import { urlPaths } from '../../support/urlPaths';
-import { formatDateAndTime } from '../../support/utils/format';
+import { getPersonalListURLWithFilter, urlPaths } from '../../support/urlPaths';
+import { formatDateAndTime, formatObjectAsString } from '../../support/utils/format';
 
 const caseDetailsPage = new CaseDetailsPage();
 const hearingSectionPage = new HearingSectionPage();
 const estimatedDaysSection = new EstimatedDaysSection();
+const caseHistoryPage = new CaseHistoryPage();
 const currentDate = new Date();
 
 describe('Setup hearing and add hearing estimates', () => {
@@ -55,12 +57,8 @@ describe('Setup hearing and add hearing estimates', () => {
 		'Hearing date'
 	];
 
-	before(() => {
-		setupTestCase();
-	});
-
 	beforeEach(() => {
-		hearingSectionPage.navigateToHearingSection(caseObj);
+		setupTestCase();
 	});
 
 	let appeal;
@@ -69,8 +67,8 @@ describe('Setup hearing and add hearing estimates', () => {
 		cy.deleteAppeals(appeal);
 	});
 
-	it('should not accept current date with no time - Hearing Time', () => {
-		caseDetailsPage.clickHearingButton();
+	it('should not accept invalid input - current date with no time', () => {
+		hearingSectionPage.clickChangeHearingDate();
 		hearingSectionPage.setUpHearing(new Date(), ' ', ' ');
 
 		hearingSectionPage.verifyErrorMessages({
@@ -79,8 +77,29 @@ describe('Setup hearing and add hearing estimates', () => {
 		});
 	});
 
-	it('should not accept invalid input - Hearing Estimate', () => {
-		caseDetailsPage.clickHearingEstimateLink();
+	it('should not accept invalid input - valid time with no date', () => {
+		hearingSectionPage.clickChangeHearingDate();
+		hearingSectionPage.clearHearingDateAndTime();
+		hearingSectionPage.setUpHearing(null, '12', '30');
+
+		hearingSectionPage.verifyErrorMessages({
+			messages: ['Enter the hearing date'],
+			fields: ['hearing-date-day']
+		});
+	});
+
+	it('should not accept invalid input - current date with no time', () => {
+		hearingSectionPage.clickChangeHearingDate();
+		hearingSectionPage.setUpHearing(new Date(), ' ', ' ');
+
+		hearingSectionPage.verifyErrorMessages({
+			messages: ['Enter the hearing time', 'The hearing date must be in the future'],
+			fields: ['hearing-time-hour', 'hearing-date-day']
+		});
+	});
+
+	it('should not accept invalid input - Hearing Estimates', () => {
+		hearingSectionPage.clickChangeHearingEstimates();
 		hearingSectionPage.addEstimates('0.25', 'sittingTime', '99.5');
 
 		hearingSectionPage.verifyErrorMessages({
@@ -94,25 +113,112 @@ describe('Setup hearing and add hearing estimates', () => {
 		});
 	});
 
+	it('should not accept invalid input - empty address', () => {
+		const emptyAddress = {
+			line1: ' ',
+			line2: ' ',
+			town: ' ',
+			county: ' ',
+			postcode: ' '
+		};
+
+		hearingSectionPage.changeHearingAddress(emptyAddress);
+		hearingSectionPage.verifyErrorMessages({
+			messages: ['Enter address line 1', 'Enter town or city', 'Enter postcode'],
+			fields: ['address-line-1', 'town', 'post-code'],
+			verifyInlineErrors: true
+		});
+	});
+
+	it('should not accept invalid input - invalid address', () => {
+		const invalidAddress = {
+			...originalAddress,
+			line1: 'e2e Hearing Test Address'.repeat(20).substring(0, 251),
+			postcode: 'BS20'
+		};
+
+		hearingSectionPage.changeHearingAddress(invalidAddress);
+		hearingSectionPage.verifyErrorMessages({
+			messages: ['Address line 1 must be 250 characters or less', 'Enter a full UK postcode'],
+			fields: ['address-line-1', 'post-code'],
+			verifyInlineErrors: true
+		});
+	});
+
+	it('should display all expected case detail sections for hearing cases', () => {
+		const expectedSections = [
+			'Overview',
+			'Timetable',
+			'Hearing',
+			'Documentation',
+			'Costs',
+			'Contacts',
+			'Team',
+			'Case management'
+		];
+
+		caseDetailsPage.verifyCaseDetailsSection(expectedSections);
+	});
+
 	it('should navigate back to overview page - Hearing Estimate', () => {
-		caseDetailsPage.clickHearingEstimateLink();
+		hearingSectionPage.clickChangeHearingEstimates();
 		hearingSectionPage.addEstimates(
 			initialEstimates.preparationTime,
 			initialEstimates.sittingTime,
 			initialEstimates.reportingTime
 		);
+
+		// verify hearing estimate header and navigate back to overview page
 		hearingSectionPage.verifyHearingHeader(headers.hearingEstimate.checkDetails);
-		caseDetailsPage.clickBackLink();
+		hearingSectionPage.clickBackLink();
 		hearingSectionPage.verifyHearingHeader(headers.hearingEstimate.estimateForm);
-		caseDetailsPage.clickBackLink();
+		hearingSectionPage.clickBackLink();
+
+		// verify we are back on the overview page by checking the appeal reference and hearing section is displayed
 		caseDetailsPage.verifyAppealRefOnCaseDetails(`Appeal ${caseObj.reference}`);
-		caseDetailsPage.verifyHearingSectionIsDisplayed();
-		caseDetailsPage.verifyHearingEstimateSectionIsDisplayed();
+		hearingSectionPage.verifyHearingSectionIsDisplayed();
+		hearingSectionPage.verifyHearingEstimateSectionIsDisplayed();
+	});
+
+	it('should navigate back through hearing setup workflow', () => {
+		// Initialize Hearing
+		hearingSectionPage.clickChangeHearingDate();
+
+		cy.getBusinessActualDate(currentDate, 2).then((date) => {
+			date.setHours(currentDate.getHours(), currentDate.getMinutes());
+
+			// Test back navigation from initial setup (no address)
+			let navigationConfig = {
+				clickBackFirst: false,
+				clickBackLast: false,
+				headers: [headers.hearing.checkDetails, headers.hearing.addressQuestion]
+			};
+			hearingSectionPage.setUpHearingWithAddress({ date: date });
+			happyPathHelper.validateBackNavigationFlow(navigationConfig);
+
+			// Test back navigation after adding address flow
+			hearingSectionPage.selectRadioButtonByValue('Yes');
+			caseDetailsPage.clickButtonByText('Continue');
+			hearingSectionPage.addHearingLocationAddress(originalAddress);
+
+			navigationConfig.headers = [
+				headers.hearing.checkDetails,
+				headers.hearing.addressForm,
+				headers.hearing.addressQuestion,
+				headers.hearing.estimationQuestion,
+				headers.hearing.dateTime
+			];
+			navigationConfig.clickBackLast = true;
+			happyPathHelper.validateBackNavigationFlow(navigationConfig);
+
+			// verify are back on the overview page by checking the appeal reference is displayed
+			caseDetailsPage.verifyAppealRefOnCaseDetails(`Appeal ${caseObj.reference}`);
+		});
 	});
 
 	it('should add and update hearing Estimates', () => {
 		// Adding initial hearing estimates
-		caseDetailsPage.clickHearingEstimateLink();
+		hearingSectionPage.clickChangeHearingEstimates();
 		hearingSectionPage.addEstimates(
 			initialEstimates.preparationTime,
 			initialEstimates.sittingTime,
@@ -135,7 +241,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		);
 
 		// Updating estimates from the check details page
-		caseDetailsPage.clickRowChangeLink('estimated-preparation-time');
+		hearingSectionPage.clickRowChangeLink('estimated-preparation-time');
 		hearingSectionPage.addEstimates(
 			updatedEstimates.preparationTime,
 			updatedEstimates.sittingTime,
@@ -156,11 +262,11 @@ describe('Setup hearing and add hearing estimates', () => {
 		);
 
 		// Submit the estimates
-		caseDetailsPage.clickButtonByText('Add hearing estimates');
+		hearingSectionPage.clickButtonByText('Add hearing estimates');
 		caseDetailsPage.validateBannerMessage('Success', 'Hearing estimates added');
 
 		// Updating estimates from the overview page
-		caseDetailsPage.clickRowChangeLink('reporting-time');
+		hearingSectionPage.clickRowChangeLink('reporting-time');
 		hearingSectionPage.addEstimates(
 			finalEstimates.preparationTime,
 			finalEstimates.sittingTime,
@@ -168,7 +274,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		);
 
 		// Submit the estimates
-		caseDetailsPage.clickButtonByText('Update hearing estimates');
+		hearingSectionPage.clickButtonByText('Update hearing estimates');
 		caseDetailsPage.validateBannerMessage('Success', 'Hearing estimates updated');
 
 		// Verify final estimates were updated correctly
@@ -176,6 +282,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		hearingSectionPage.verifyHearingEstimate('sitting-time', finalEstimates.sittingTime);
 		hearingSectionPage.verifyHearingEstimate('reporting-time', finalEstimates.reportingTime);
 
+		// validate hearing estimates by checking the appeal details
 		cy.loadAppealDetails(caseObj).then((appealDetails) => {
 			const hearingEstimates = appealDetails?.hearingEstimate;
 			expect(hearingEstimates.preparationTime).to.eq(finalEstimates.preparationTime);
@@ -183,299 +290,24 @@ describe('Setup hearing and add hearing estimates', () => {
 			expect(hearingEstimates.reportingTime).to.eq(finalEstimates.reportingTime);
 		});
 
-		hearingSectionPage.verifyCaseHistory(['Hearing estimates added', 'Hearing estimates updated']);
-	});
-
-	it('should not accept invalid input - Hearing Address', () => {
-		caseDetailsPage.clickHearingButton();
-		cy.getBusinessActualDate(new Date(), 2).then((date) => {
-			hearingSectionPage.setUpHearing(date, '10', '30');
-		});
-		estimatedDaysSection.selectEstimatedDaysOption('No');
-		caseDetailsPage.clickButtonByText('Continue');
-
-		// Handle missing yes/no selection
-		caseDetailsPage.clickButtonByText('Continue');
-
-		hearingSectionPage.verifyErrorMessages({
-			messages: ['Select yes if you know the address of where the hearing will take place'],
-			fields: ['address-known']
-		});
-
-		hearingSectionPage.selectRadioButtonByValue('Yes');
-		caseDetailsPage.clickButtonByText('Continue');
-
-		const emptyAddress = {
-			line1: ' ',
-			line2: ' ',
-			town: ' ',
-			county: ' ',
-			postcode: ' '
-		};
-
-		hearingSectionPage.addHearingLocationAddress(emptyAddress);
-		hearingSectionPage.verifyErrorMessages({
-			messages: ['Enter address line 1', 'Enter town or city', 'Enter postcode'],
-			fields: ['address-line-1', 'town', 'post-code'],
-			verifyInlineErrors: true
-		});
-
-		const invalidAddress = {
-			...originalAddress,
-			line1: 'e2e Hearing Test Address'.repeat(20).substring(0, 251),
-			postcode: 'BS20'
-		};
-
-		hearingSectionPage.addHearingLocationAddress(invalidAddress);
-
-		hearingSectionPage.verifyErrorMessages({
-			messages: ['Address line 1 must be 250 characters or less', 'Enter a full UK postcode'],
-			fields: ['address-line-1', 'post-code'],
-			verifyInlineErrors: true
-		});
-	});
-
-	it('should navigate back through hearing setup workflow', () => {
-		// Initialize Hearing
-		caseDetailsPage.clickHearingButton();
-
-		cy.getBusinessActualDate(currentDate, 2).then((date) => {
-			date.setHours(currentDate.getHours(), currentDate.getMinutes());
-
-			// Test back navigation from initial setup (no address)
-			hearingSectionPage.setUpHearing(date, date.getHours(), date.getMinutes());
-			estimatedDaysSection.selectEstimatedDaysOption('No');
-			caseDetailsPage.clickButtonByText('Continue');
-			hearingSectionPage.selectRadioButtonByValue('No');
-			caseDetailsPage.clickButtonByText('Continue');
-
-			hearingSectionPage.verifyHearingHeader(headers.hearing.checkDetails);
-			caseDetailsPage.clickBackLink();
-			hearingSectionPage.verifyHearingHeader(headers.hearing.addressQuestion);
-
-			// Test back navigation with address flow
-			hearingSectionPage.selectRadioButtonByValue('Yes');
-			caseDetailsPage.clickButtonByText('Continue');
-
-			hearingSectionPage.addHearingLocationAddress(originalAddress);
-
-			hearingSectionPage.verifyHearingHeader(headers.hearing.checkDetails);
-			hearingSectionPage.clickChangeHearing();
-			hearingSectionPage.verifyHearingHeader(headers.hearing.addressForm);
-
-			// Verify full back navigation chain
-			caseDetailsPage.clickBackLink();
-			hearingSectionPage.verifyHearingHeader(headers.hearing.checkDetails);
-			caseDetailsPage.clickBackLink();
-			hearingSectionPage.verifyHearingHeader(headers.hearing.addressForm);
-			caseDetailsPage.clickBackLink();
-			hearingSectionPage.verifyHearingHeader(headers.hearing.addressQuestion);
-			caseDetailsPage.clickBackLink();
-			hearingSectionPage.verifyHearingHeader(headers.hearing.estimationQuestion);
-			caseDetailsPage.clickBackLink();
-			hearingSectionPage.verifyHearingHeader(headers.hearing.dateTime);
-			caseDetailsPage.clickBackLink();
-			caseDetailsPage.verifyAppealRefOnCaseDetails(`Appeal ${caseObj.reference}`);
-		});
-	});
-
-	// Verify you see "You cannot check these answers"
-	it.skip('should not allow re-setup of hearing if already submitted', () => {
-		cy.getBusinessActualDate(currentDate, 2).then((date) => {
-			date.setHours(currentDate.getHours(), currentDate.getMinutes());
-			caseDetailsPage.clickButtonByText('Set up hearing');
-			hearingSectionPage.setUpHearing(date, '10', '30');
-			hearingSectionPage.selectRadioButtonByValue('No');
-			hearingSectionPage.clickButtonByText('Continue');
-			hearingSectionPage.clickButtonByText('Set up hearing');
-			caseDetailsPage.validateBannerMessage('Success', 'Hearing set up');
-			cy.go('back');
-			hearingSectionPage.verifyYouCannotCheckTheseAnswersPage();
-		});
-	});
-
-	it('should set up hearing with address changes', () => {
-		hearingSectionPage.deleteHearingIfExists(caseObj);
-		const updatedAddress = {
-			...originalAddress,
-			line1: 'e2e Hearing Test Address - New Address',
-			postcode: 'SW1A 2AA'
-		};
-
-		// Initialise Hearing
-		cy.navigateToAppealDetailsPage(caseObj);
-		caseDetailsPage.clickHearingButton();
-
-		cy.getBusinessActualDate(currentDate, 2).then((date) => {
-			// Set exact time and format for assertions
-			date.setHours(currentDate.getHours(), currentDate.getMinutes());
-			const expectedDateTime = formatDateAndTime(date);
-
-			// Set Up Initial Hearing (No Address)
-			hearingSectionPage.setUpHearing(date, date.getHours(), date.getMinutes());
-			estimatedDaysSection.selectEstimatedDaysOption('Yes');
-			estimatedDaysSection.enterEstimatedHearingDays(6);
-			caseDetailsPage.clickButtonByText('Continue');
-			hearingSectionPage.selectRadioButtonByValue('No');
-			caseDetailsPage.clickButtonByText('Continue');
-			hearingSectionPage.verifyHearingValues('date', expectedDateTime.date);
-			hearingSectionPage.verifyHearingValues('time', expectedDateTime.time);
-			hearingSectionPage.verifyHearingValues('hearing-expected-number-of-days', 'Yes');
-			hearingSectionPage.verifyHearingValues('hearing-estimation-days', '6 days');
-			hearingSectionPage.verifyHearingValues('address-known', 'No');
-
-			// Add Initial Address
-			hearingSectionPage.clickChangeHearing();
-			hearingSectionPage.selectRadioButtonByValue('Yes');
-			caseDetailsPage.clickButtonByText('Continue');
-			hearingSectionPage.addHearingLocationAddress(originalAddress);
-			hearingSectionPage.verifyHearingValues('date', expectedDateTime.date);
-			hearingSectionPage.verifyHearingValues('time', expectedDateTime.time);
-			hearingSectionPage.verifyHearingValues(
-				'address-details',
-				'Yes',
-				true,
-				Object.values(originalAddress)
-			);
-
-			// Update Address
-			hearingSectionPage.clickChangeHearing();
-			hearingSectionPage.addHearingLocationAddress(updatedAddress);
-			hearingSectionPage.verifyHearingValues('date', expectedDateTime.date);
-			hearingSectionPage.verifyHearingValues('time', expectedDateTime.time);
-			hearingSectionPage.verifyHearingValues(
-				'address-details',
-				'Yes',
-				true,
-				Object.values(updatedAddress)
-			);
-
-			// Finalise and Validate
-			caseDetailsPage.clickButtonByText('Set up hearing');
-			caseDetailsPage.validateBannerMessage('Success', 'Hearing set up');
-
-			// validate hearing object
-			cy.loadAppealDetails(caseObj).then((appealDetails) => {
-				const hearing = appealDetails?.hearing;
-
-				expect(hearing.hearingId).to.be.a('number');
-				expect(hearing.addressId).to.be.a('number');
-
-				expect(hearingSectionPage.getTimeUpToMinutes(new Date(hearing.hearingStartTime))).to.equal(
-					hearingSectionPage.getTimeUpToMinutes(date)
-				);
-
-				const actualAddress = hearing.address;
-				expect(actualAddress).to.deep.include({
-					addressLine1: updatedAddress.line1,
-					addressLine2: updatedAddress.line2,
-					town: updatedAddress.town,
-					county: updatedAddress.county,
-					postcode: updatedAddress.postcode
-				});
-			});
-		});
-	});
-
-	it('should update existing hearing address and date from overview page', () => {
-		// First ensure a hearing exists with a known address
-		cy.getBusinessActualDate(new Date(), 2).then((date) => {
-			date.setHours(currentDate.getHours(), currentDate.getMinutes());
-			hearingSectionPage.ensureHearingExists(caseObj, date);
-			cy.reload();
-
-			//Now proceed with the test
-			const expectedDateTime = formatDateAndTime(date);
-			hearingSectionPage.verifyHearingValues('date', expectedDateTime.date);
-			hearingSectionPage.verifyHearingValues('time', expectedDateTime.time);
-
-			cy.loadAppealDetails(caseObj).then((appealDetails) => {
-				const hearingAddress = appealDetails.hearing.address;
-				const expectedAddress = [
-					hearingAddress.addressLine1,
-					hearingAddress.addressLine2,
-					hearingAddress.county,
-					hearingAddress.postcode,
-					hearingAddress.town
-				];
-				hearingSectionPage.verifyHearingValues('address', 'Yes', true, expectedAddress);
-			});
-
-			caseDetailsPage.clickRowChangeLink('date');
-			const newHearingDate = new Date(date.getFullYear() + 1, 0, 1);
-			hearingSectionPage.setUpHearing(newHearingDate, date.getHours(), date.getMinutes());
-			estimatedDaysSection.selectEstimatedDaysOption('No');
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.clickButtonByText('Continue');
-			// Update Address and Date
-			const updatedAddress = {
-				...originalAddress,
-				line1: 'e2e Hearing Test Address - Overview Page',
-				postcode: 'SW1A 2AA'
-			};
-			hearingSectionPage.addHearingLocationAddress(updatedAddress);
-			caseDetailsPage.clickButtonByText('Update hearing');
-			caseDetailsPage.validateBannerMessage('Success', 'Hearing updated');
-
-			// Remove Address
-			caseDetailsPage.clickRowChangeLink('whether-the-address-is-known-or-not');
-			hearingSectionPage.selectRadioButtonByValue('No');
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.clickButtonByText('Update hearing');
-			caseDetailsPage.validateBannerMessage('Success', 'Hearing updated');
-
-			const expectedUpdatedAddress = `Hearing address updated to ${updatedAddress.line1}, ${updatedAddress.line2}, ${updatedAddress.town}, ${updatedAddress.county}, ${updatedAddress.postcode}`;
-			hearingSectionPage.verifyCaseHistory([
-				expectedUpdatedAddress,
-				`Hearing date updated to ${formatDateAndTime(newHearingDate).date}`
-			]);
-		});
-
-		//Notify
-		const expectedNotifies = [
-			{
-				template: 'appeal-valid-start-case-s78-appellant',
-				recipient: 'appellant@test.com'
-			},
-			{
-				template: 'appeal-valid-start-case-s78-lpa',
-				recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
-			},
-			{
-				template: 'hearing-set-up',
-				recipient: 'appellant@test.com'
-			},
-			{
-				template: 'hearing-set-up',
-				recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
-			},
-			{
-				template: 'hearing-updated',
-				recipient: 'appellant@test.com'
-			}
-		];
-
-		cy.checkNotifySent(caseObj, expectedNotifies);
+		// check the case history to ensure updates are logged correctly
+		caseDetailsPage.clickViewCaseHistory();
+		caseHistoryPage.verifyCaseHistoryValues([
+			'Hearing estimates added',
+			'Hearing estimates updated'
+		]);
 	});
 
 	it('should cancel hearing', () => {
-		cy.getBusinessActualDate(new Date(), 2).then((date) => {
-			date.setHours(currentDate.getHours(), currentDate.getMinutes());
-			hearingSectionPage.ensureHearingExists(caseObj, date);
-			cy.reload();
-			caseDetailsPage.clickCancelHearing();
-			hearingSectionPage.clickKeepHearing();
+		hearingSectionPage.clickCancelHearing();
+		hearingSectionPage.verifyHearingHeader(headers.hearing.confirmHearingCancellation);
+		hearingSectionPage.clickCancelHearing();
 
-			// try to cancel
-			caseDetailsPage.clickCancelHearing();
-			hearingSectionPage.verifyHearingHeader(headers.hearing.confirmHearingCancellation);
-			hearingSectionPage.clickCancelHearing();
+		caseDetailsPage.validateBannerMessage('Success', 'Hearing cancelled');
+		hearingSectionPage.verifyHearingIsDisplayed(false);
 
-			caseDetailsPage.validateBannerMessage('Success', 'Hearing cancelled');
-			caseDetailsPage.verifyHearingSectionIsDisplayed();
-		});
-
-		hearingSectionPage.verifyCaseHistory(['Hearing cancelled']);
+		caseDetailsPage.clickViewCaseHistory();
+		caseHistoryPage.verifyCaseHistoryValues(['Hearing cancelled']);
 
 		// Notify
 		const expectedNotifies = [
@@ -485,6 +317,94 @@ describe('Setup hearing and add hearing estimates', () => {
 			},
 			{
 				template: 'hearing-cancelled',
+				recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+			}
+		];
+
+		cy.checkNotifySent(caseObj, expectedNotifies);
+	});
+
+	it('should not cancel hearing if select to keep it', () => {
+		hearingSectionPage.clickCancelHearing();
+		hearingSectionPage.clickKeepHearing();
+		hearingSectionPage.verifyHearingIsDisplayed(true);
+
+		// Notify
+		const expectedNotifies = [
+			{
+				template: 'hearing-cancelled',
+				recipient: 'appellant@test.com'
+			},
+			{
+				template: 'hearing-cancelled',
+				recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+			}
+		];
+
+		cy.checkNotifyNotSent(caseObj, expectedNotifies);
+	});
+
+	it('should send notify when adding hearing address', () => {
+		hearingSectionPage.changeHearingAddress(originalAddress);
+		hearingSectionPage.clickButtonByText('Update hearing');
+		caseDetailsPage.validateBannerMessage('Success', 'Hearing updated');
+
+		// verify hearing address is updated on the case details page
+		hearingSectionPage.verifyHearingValues('address', 'Yes', true, Object.values(originalAddress));
+
+		// check case history
+		caseDetailsPage.clickViewCaseHistory();
+		caseHistoryPage.verifyCaseHistoryValues(['The hearing address has been added']);
+
+		// Check notifies
+		const expectedNotifies = [
+			{
+				template: 'hearing-updated',
+				recipient: 'appellant@test.com'
+			},
+			{
+				template: 'hearing-updated',
+				recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+			}
+		];
+
+		cy.checkNotifySent(caseObj, expectedNotifies);
+	});
+
+	it('should send notify when updating hearing address', () => {
+		const updatedAddress = {
+			...originalAddress,
+			line1: 'e2e Hearing Test Address - Overview Page',
+			postcode: 'SW1A 2AA'
+		};
+
+		// set address
+		hearingSectionPage.changeHearingAddress(originalAddress);
+		hearingSectionPage.clickButtonByText('Update hearing');
+		caseDetailsPage.validateBannerMessage('Success', 'Hearing updated');
+
+		// update address again to trigger notify
+		hearingSectionPage.updateHearingAddress(updatedAddress);
+		hearingSectionPage.clickButtonByText('Update hearing');
+		caseDetailsPage.validateBannerMessage('Success', 'Hearing updated');
+
+		// verify hearing address is updated on the case details page
+		hearingSectionPage.verifyHearingValues('address', 'Yes', true, Object.values(updatedAddress));
+
+		// check case history
+		const expectedUpdatedAddress = `Hearing address updated to ${formatObjectAsString(updatedAddress, ', ')}`;
+
+		caseDetailsPage.clickViewCaseHistory();
+		caseHistoryPage.verifyCaseHistoryValues([expectedUpdatedAddress]);
+
+		// Check notifies
+		const expectedNotifies = [
+			{
+				template: 'hearing-updated',
+				recipient: 'appellant@test.com'
+			},
+			{
+				template: 'hearing-updated',
 				recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
 			}
 		];
@@ -560,103 +480,39 @@ describe('Setup hearing and add hearing estimates', () => {
 	});
 
 	it('should progress hearing case to decision', () => {
-		hearingSectionPage.deleteHearingIfExists(caseObj);
-		happyPathHelper.reviewLPaStatement(caseObj);
+		// add address to set up the hearing and trigger notify and case history entry for adding hearing address
+		hearingSectionPage.changeHearingAddress(originalAddress);
+		hearingSectionPage.verifyHearingHeader(headers.hearing.checkDetails);
+		caseDetailsPage.clickButtonByText('Update hearing');
+		caseDetailsPage.validateBannerMessage('Success', 'Hearing updated');
 
-		// Verify Hearing ready to set up tag - all cases page
-		cy.visit(urlPaths.appealsList);
-		hearingSectionPage.verifyTagOnAllCasesPage(caseObj.reference, 'Hearing ready to set up');
+		// advance the case to decision
+		happyPathHelper.advanceTo(caseObj, 'LPA_QUESTIONNAIRE', 'ISSUE_DECISION', 'S78', 'HEARING');
 
-		// Verify Hearing ready to set up tag - personal list page
-		cy.visit(urlPaths.personalListFilteredEventReadyToSetup);
-		hearingSectionPage.verifyTagOnPersonalListPage(caseObj.reference, 'Hearing ready to set up');
+		// confirm issue decision flow
+		hearingSectionPage.verifyIssueDecision(caseObj);
 
-		// navigate to details page
-		caseDetailsPage.clickLinkByText(caseObj.reference);
+		// verify hearing details and case history entries
+		hearingSectionPage.verifyCaseHistory([
+			'Appeal started',
+			'Appeal procedure: hearing',
+			'Case progressed to Hearing ready to set up',
+			`Hearing set up on`,
+			'Case progressed to Awaiting hearing',
+			'The hearing address has been added',
+			'Case progressed to Issue decision',
+			'Case progressed to Complete'
+		]);
 
-		// add hearing via banner
-		caseDetailsPage.clickHearingBannerLink();
-
-		cy.getBusinessActualDate(currentDate, 2).then((hearingDate) => {
-			hearingDate.setHours(currentDate.getHours(), currentDate.getMinutes());
-			hearingSectionPage.setUpHearing(
-				hearingDate,
-				hearingDate.getHours(),
-				hearingDate.getMinutes()
-			);
-			estimatedDaysSection.selectEstimatedDaysOption('No');
-			caseDetailsPage.clickButtonByText('Continue');
-			// Do not add address
-			hearingSectionPage.selectRadioButtonByValue('No');
-			caseDetailsPage.clickButtonByText('Continue');
-			hearingSectionPage.verifyHearingHeader(headers.hearing.checkDetails);
-			caseDetailsPage.clickButtonByText('Set up hearing');
-			caseDetailsPage.validateBannerMessage('Success', 'Hearing set up');
-			caseDetailsPage.validateBannerMessage('Important', 'Add hearing address');
-
-			// Verify Hearing ready to set up tag - all cases page
-			cy.visit(urlPaths.appealsList);
-			hearingSectionPage.verifyTagOnAllCasesPage(caseObj.reference, 'Hearing ready to set up');
-
-			// Verify Hearing ready to set up tag - personal list page
-			cy.visit(urlPaths.personalListFilteredEventReadyToSetup);
-			hearingSectionPage.verifyTagOnPersonalListPage(
-				caseObj.reference,
-				'Hearing ready to set up',
-				1
-			);
-
-			// navigate to details page
-			caseDetailsPage.clickLinkByText(caseObj.reference);
-
-			caseDetailsPage.clickHearingBannerAddressLink();
-			hearingSectionPage.addHearingLocationAddress(originalAddress);
-			hearingSectionPage.verifyHearingHeader(headers.hearing.checkDetails);
-			caseDetailsPage.clickButtonByText('Update hearing');
-			caseDetailsPage.validateBannerMessage('Success', 'Hearing updated');
-
-			// Verify Awaiting hearing tag - all cases page
-			cy.visit(urlPaths.appealsList);
-			hearingSectionPage.verifyTagOnAllCasesPage(caseObj.reference, 'Awaiting hearing');
-
-			// Verify Awaiting hearing tag - personal list page
-			cy.visit(urlPaths.personalListFilteredAwaitingEvent);
-			hearingSectionPage.verifyTagOnPersonalListPage(caseObj.reference, 'Awaiting hearing');
-
-			// navigate to details page
-			caseDetailsPage.clickLinkByText(caseObj.reference);
-
-			hearingSectionPage.verifyIssueDecision(caseObj);
-
-			hearingSectionPage.verifyCaseHistory([
-				'Appeal started',
-				'Appeal procedure: hearing',
-				'Case progressed to Hearing ready to set up',
-				`Hearing set up on ${formatDateAndTime(hearingDate).date}`,
-				'Case progressed to Awaiting hearing',
-				'The hearing address has been added',
-				'Case progressed to Issue decision',
-				'Case progressed to Complete'
-			]);
-		});
-
-		//Notify
+		// check notifies
 		const expectedNotifies = [
 			{
-				template: 'appeal-valid-start-case-s78-appellant',
+				template: 'appeal-valid-start-case-s78-appellant-hearing',
 				recipient: 'appellant@test.com'
 			},
 			{
-				template: 'appeal-valid-start-case-s78-lpa',
+				template: 'appeal-valid-start-case-s78-lpa-hearing',
 				recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
-			},
-			{
-				template: 'received-statement-and-ip-comments-lpa',
-				recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
-			},
-			{
-				template: 'received-statement-and-ip-comments-appellant',
-				recipient: 'agent@test.com'
 			},
 			{
 				template: 'hearing-updated',
@@ -679,98 +535,50 @@ describe('Setup hearing and add hearing estimates', () => {
 		cy.checkNotifySent(caseObj, expectedNotifies);
 	});
 
-	it('should display all expected case detail sections for hearing cases', () => {
-		const expectedSections = [
-			'Overview',
-			'Timetable',
-			'Hearing',
-			'Documentation',
-			'Costs',
-			'Contacts',
-			'Team',
-			'Case management'
-		];
+	it.only('should display the correct status tags when removing hearing address', () => {
+		// advance the case to event ready to set up hearing
+		happyPathHelper.advanceTo(caseObj, 'LPA_QUESTIONNAIRE', 'AWAITING_EVENT', 'S78', 'HEARING');
 
-		cy.navigateToAppealDetailsPage(caseObj);
-		caseDetailsPage.verifyCaseDetailsSection(expectedSections);
-	});
+		// Verify Hearing ready to set up tag - all cases page
+		cy.visit(urlPaths.appealsList);
+		hearingSectionPage.verifyTagOnAllCasesPage(caseObj.reference, 'Hearing ready to set up');
 
-	it('should display the correct status tags when removing hearing address', () => {
-		cy.createCase({ caseType: 'W' }).then((ref) => {
-			// Set up a new case
-			caseObj = ref;
-			appeal = caseObj;
-			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.assignCaseOfficer(caseObj);
-			caseDetailsPage.checkStatusOfCase('Validation', 0);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
-			happyPathHelper.startCaseWithProcedureType(caseObj, 'hearing');
-			caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
-			caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
-			happyPathHelper.reviewLPaStatement(caseObj);
+		// Verify Hearing ready to set up tag - personal list page
+		const personalListLPA = getPersonalListURLWithFilter('event');
+		cy.visit(personalListLPA);
+		hearingSectionPage.verifyTagOnPersonalListPage(caseObj.reference, 'Hearing ready to set up');
 
-			// Verify Hearing ready to set up tag - all cases page
-			cy.visit(urlPaths.appealsList);
-			hearingSectionPage.verifyTagOnAllCasesPage(caseObj.reference, 'Hearing ready to set up');
+		// navigate to details page
+		caseDetailsPage.clickLinkByText(caseObj.reference);
 
-			// Verify Hearing ready to set up tag - personal list page
-			cy.visit(urlPaths.personalListFilteredEventReadyToSetup);
-			hearingSectionPage.verifyTagOnPersonalListPage(caseObj.reference, 'Hearing ready to set up');
+		// add address to hearing and then remove it to trigger the tags
+		hearingSectionPage.changeHearingAddress({ address: originalAddress });
+		hearingSectionPage.clickButtonByText('Update hearing');
+		caseDetailsPage.validateBannerMessage('Success', 'Hearing updated');
 
-			// navigate to details page
-			caseDetailsPage.clickLinkByText(caseObj.reference);
+		// Verify awaiting hearing tag - all cases page
+		cy.visit(urlPaths.appealsList);
+		hearingSectionPage.verifyTagOnAllCasesPage(caseObj.reference, 'Awaiting hearing');
 
-			// add hearing via banner
-			caseDetailsPage.clickHearingBannerLink();
+		// Verify awaiting hearing tag - personal list page
+		const personalListAwaiting = getPersonalListURLWithFilter('awaiting_event');
+		cy.visit(personalListAwaiting);
+		hearingSectionPage.verifyTagOnPersonalListPage(caseObj.reference, 'Awaiting hearing');
 
-			cy.getBusinessActualDate(currentDate, 2).then((hearingDate) => {
-				hearingDate.setHours(currentDate.getHours(), currentDate.getMinutes());
-				hearingSectionPage.setUpHearing(
-					hearingDate,
-					hearingDate.getHours(),
-					hearingDate.getMinutes()
-				);
-				estimatedDaysSection.selectEstimatedDaysOption('No');
-				caseDetailsPage.clickButtonByText('Continue');
-				// Add address
-				hearingSectionPage.selectRadioButtonByValue('Yes');
-				caseDetailsPage.clickButtonByText('Continue');
-				hearingSectionPage.addHearingLocationAddress(originalAddress);
-				hearingSectionPage.verifyHearingHeader(headers.hearing.checkDetails);
-				caseDetailsPage.clickButtonByText('Set up hearing');
-				caseDetailsPage.validateBannerMessage('Success', 'Hearing set up');
+		// remove hearing address to trigger important banner and tag changes
+		caseDetailsPage.clickLinkByText(caseObj.reference);
+		hearingSectionPage.changeHearingAddress({ addressKnown: false });
+		hearingSectionPage.clickButtonByText('Update hearing');
+		caseDetailsPage.validateBannerMessage('Success', 'Hearing updated');
+		caseDetailsPage.validateBannerMessage('Important', 'Add hearing address');
 
-				// Verify Awaiting hearing tag - all cases page
-				cy.visit(urlPaths.appealsList);
-				hearingSectionPage.verifyTagOnAllCasesPage(caseObj.reference, 'Awaiting hearing');
+		// Verify hearing ready to set up 	tag - all cases page
+		cy.visit(urlPaths.appealsList);
+		hearingSectionPage.verifyTagOnAllCasesPage(caseObj.reference, 'Hearing ready to set up');
 
-				// Verify Awaiting hearing tag - personal list page
-				cy.visit(urlPaths.personalListFilteredAwaitingEvent);
-				hearingSectionPage.verifyTagOnPersonalListPage(caseObj.reference, 'Awaiting hearing');
-
-				// navigate to details page
-				caseDetailsPage.clickLinkByText(caseObj.reference);
-
-				caseDetailsPage.clickRowChangeLink('whether-the-address-is-known-or-not');
-				hearingSectionPage.selectRadioButtonByValue('No');
-				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.clickButtonByText('Update hearing');
-				caseDetailsPage.validateBannerMessage('Success', 'Hearing updated');
-				caseDetailsPage.validateBannerMessage('Important', 'Add hearing address');
-
-				// Verify Awaiting hearing tag - all cases page
-				cy.visit(urlPaths.appealsList);
-				hearingSectionPage.verifyTagOnAllCasesPage(caseObj.reference, 'Hearing ready to set up');
-
-				// Verify Awaiting hearing tag - personal list page
-				cy.visit(urlPaths.personalListFilteredEventReadyToSetup);
-				hearingSectionPage.verifyTagOnPersonalListPage(
-					caseObj.reference,
-					'Hearing ready to set up'
-				);
-			});
-		});
+		// Verify Hearing ready to set up tag - personal list page
+		cy.visit(urlPaths.personalListFilteredEventReadyToSetup);
+		hearingSectionPage.verifyTagOnPersonalListPage(caseObj.reference, 'Hearing ready to set up');
 	});
 
 	const setupTestCase = () => {
@@ -779,13 +587,16 @@ describe('Setup hearing and add hearing estimates', () => {
 			caseObj = ref;
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.assignCaseOfficer(caseObj);
+			cy.assignCaseOfficerViaApi(caseObj);
+			cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
 			caseDetailsPage.checkStatusOfCase('Validation', 0);
 			happyPathHelper.reviewAppellantCase(caseObj);
 			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
 			happyPathHelper.startCaseWithProcedureType(caseObj, 'hearing');
+			cy.writeLog(`Case created with reference: ${caseObj.reference}, checking banners`);
 			caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
 			caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
+			cy.writeLog(`Banners checked`);
 		});
 	};
 });

@@ -643,7 +643,12 @@ export const happyPathHelper = {
 			},
 			[STATUSES.EVENT_READY_TO_SETUP]: (c) => {
 				if (procedureType == 'HEARING') {
-					cy.setupHearingViaApi(c);
+					// check if hearing already set up (i.e. as part of start case flow), if not set up hearing
+					cy.getHearingDetails(c).then((hearingDetails) => {
+						if (!hearingDetails) {
+							cy.setupHearingViaApi(c);
+						}
+					});
 				} else if (procedureType === 'INQUIRY') {
 					cy.log('Inquiry procedure - skipping as inquiry already set up');
 				} else {
