@@ -66,6 +66,7 @@ export function loadConfig() {
 		FEATURE_FLAG_EXPEDITED_APPEALS_LPAQ,
 		FEATURE_FLAG_MANUALLY_ADD_REP,
 		GOOGLE_ANALYTICS_ID,
+		MICROSOFT_CLARITY_ID,
 		HORIZON_APPEAL_BASE_URL,
 		HTTP_PORT = 8080,
 		HTTPS_ENABLED,
@@ -126,6 +127,7 @@ export function loadConfig() {
 			maxAge: CACHE_CONTROL_MAX_AGE || '1d'
 		},
 		googleAnalyticsId: GOOGLE_ANALYTICS_ID || 'id',
+		microsoftClarityId: MICROSOFT_CLARITY_ID || 'id',
 		horizonAppealBaseUrl: HORIZON_APPEAL_BASE_URL,
 		useBlobEmulator: AZURE_BLOB_USE_EMULATOR === 'true',
 		logLevelStdOut: LOG_LEVEL_STDOUT,
