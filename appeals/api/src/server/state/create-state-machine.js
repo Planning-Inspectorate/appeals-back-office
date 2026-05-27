@@ -16,6 +16,7 @@ import { createMachine } from 'xstate';
 /**
  * @typedef {import('@planning-inspectorate/data-model').APPEAL_CASE_TYPE} AppealType
  * @typedef {import('@planning-inspectorate/data-model').APPEAL_CASE_PROCEDURE} ProcedureType
+ * @typedef {import('@planning-inspectorate/data-model').APPEAL_CASE_STATUS} CaseStatus
  * @typedef {object} AdditionalCheckObject
  * */
 
@@ -25,8 +26,14 @@ import { createMachine } from 'xstate';
  * @param {string} currentState
  * @param {boolean} [eventElapsed]
  */
-const createStateMachine = (appealType, procedureType, currentState, eventElapsed = false) =>
-	createMachine({
+const createStateMachine = (appealType, procedureType, currentState, eventElapsed = false) => {
+	const normalizedProcedureType =
+		procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 ||
+		procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_2
+			? APPEAL_CASE_PROCEDURE.WRITTEN
+			: procedureType;
+
+	return createMachine({
 		id: 'appeals-state-machine',
 		initial: currentState || APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
 		context: {
@@ -104,8 +111,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 			[APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE]: {
 				on: {
 					[VALIDATION_OUTCOME_COMPLETE]: {
-						//@ts-ignore
-						target: targetStateOnLpaqComplete[appealType]
+						target: targetStateOnLpaqComplete(appealType, procedureType)
 					},
 					[VALIDATION_OUTCOME_INCOMPLETE]: undefined,
 					[APPEAL_CASE_STATUS.CLOSED]: { target: APPEAL_CASE_STATUS.CLOSED },
@@ -131,7 +137,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 					//@ts-ignore
 					[VALIDATION_OUTCOME_COMPLETE]: {
 						//@ts-ignore
-						target: targetStateOnStatementsComplete[procedureType],
+						target: targetStateOnStatementsComplete[normalizedProcedureType],
 						cond: isAppealTypeAndProcedureTypeValid
 					},
 					[APPEAL_CASE_STATUS.CLOSED]: {
@@ -364,6 +370,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 			}
 		}
 	});
+};
 
 /**
  * @typedef {{ appealType: string, procedureType: string, eventElapsed: boolean }} Ctx
@@ -381,9 +388,16 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 const isAppealTypeAndProcedureTypeValid = (ctx, _evt, { state }) => {
 	const meta = state.meta[`appeals-state-machine.${state.value}`];
 	const appealType = ctx.appealType;
-	const procedureType = ctx.procedureType;
+	let procedureType = ctx.procedureType;
 
 	if (!appealType || !procedureType || !meta) return false;
+
+	if (
+		procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 ||
+		procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_2
+	) {
+		procedureType = APPEAL_CASE_PROCEDURE.WRITTEN;
+	}
 
 	return (
 		meta.validAppealTypes.includes(appealType) && meta.validProcedureTypes.includes(procedureType)
@@ -420,12 +434,25 @@ const targetStateOnStatementsComplete = {
 const targetStateOnEventCancelled = {
 	[APPEAL_CASE_PROCEDURE.HEARING]: APPEAL_CASE_STATUS.EVENT,
 	[APPEAL_CASE_PROCEDURE.INQUIRY]: APPEAL_CASE_STATUS.EVENT,
-	[APPEAL_CASE_PROCEDURE.WRITTEN]: APPEAL_CASE_STATUS.FINAL_COMMENTS
+	[APPEAL_CASE_PROCEDURE.WRITTEN]: APPEAL_CASE_STATUS.FINAL_COMMENTS,
+	[APPEAL_CASE_PROCEDURE.WRITTEN_PART_1]: APPEAL_CASE_STATUS.EVENT,
+	[APPEAL_CASE_PROCEDURE.WRITTEN_PART_2]: APPEAL_CASE_STATUS.EVENT
 };
 
-const targetStateOnLpaqComplete = {
-	[APPEAL_CASE_TYPE.W]: APPEAL_CASE_STATUS.STATEMENTS,
-	[APPEAL_CASE_TYPE.D]: APPEAL_CASE_STATUS.EVENT
+/**
+ * Determins the next state after the LPAQ is complete based on the appeal type and procedure type.
+ * @param {AppealType} appealType
+ * @param {ProcedureType} procedureType
+ * @returns {CaseStatus}
+ */
+const targetStateOnLpaqComplete = (appealType, procedureType) => {
+	if (appealType === APPEAL_CASE_TYPE.D || procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1) {
+		return APPEAL_CASE_STATUS.EVENT;
+	}
+	if (appealType === APPEAL_CASE_TYPE.W) {
+		return APPEAL_CASE_STATUS.STATEMENTS;
+	}
+	return APPEAL_CASE_STATUS.STATEMENTS;
 };
 
 export default createStateMachine;
