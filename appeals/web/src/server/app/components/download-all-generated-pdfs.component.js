@@ -197,7 +197,7 @@ async function getTasks(currentAppealData, apiClient, representationType) {
  * @param {WebAppeal} currentAppealData
  * @param {import('got').Got} apiClient
  * @param {string | undefined} [representationType]
- * @returns {Promise<*>}
+ * @returns {Promise<{ name: string, buffer: Buffer | null, error: string | null }[]>}
  */
 export async function generateAllPdfs(currentAppealData, apiClient, representationType) {
 	const { appealId } = currentAppealData;
