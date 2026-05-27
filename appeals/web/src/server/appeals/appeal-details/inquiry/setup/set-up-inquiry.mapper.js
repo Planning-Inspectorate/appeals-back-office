@@ -14,8 +14,8 @@ import {
 import { editLink } from '#lib/edit-utilities.js';
 import { detailsComponent } from '#lib/mappers/components/page-components/details.js';
 import { simpleHtmlComponent, textSummaryListItem } from '#lib/mappers/index.js';
-import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { capitalize, pick } from 'lodash-es';
 

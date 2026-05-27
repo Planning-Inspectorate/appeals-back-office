@@ -6,9 +6,9 @@ import { detailsComponent } from '#lib/mappers/components/page-components/detail
 import { yesNoInput } from '#lib/mappers/index.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
-import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { LENGTH_300 } from '@pins/appeals/constants/support.js';
+import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { capitalize } from 'lodash-es';
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal

@@ -19,7 +19,6 @@ import {
 	preRenderPageComponents,
 	renderPageComponentsToHtml
 } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { toSentenceCase } from '#lib/string-utilities.js';
 import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
@@ -27,6 +26,7 @@ import {
 	DECISION_TYPE_LPA_COSTS,
 	LENGTH_300
 } from '@pins/appeals/constants/support.js';
+import { toSentenceCase } from '@pins/appeals/utils/string-case.js';
 import { APPEAL_CASE_DECISION_OUTCOME } from '@planning-inspectorate/data-model';
 
 /**

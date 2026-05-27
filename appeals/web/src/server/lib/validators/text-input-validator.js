@@ -1,7 +1,7 @@
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 
-import { camelCaseToWords } from '#lib/string-utilities.js';
+import { camelCaseToWords } from '@pins/appeals/utils/string-case.js';
 import stringTokenReplacement from '@pins/appeals/utils/string-token-replacement.js';
 import { capitalize } from 'lodash-es';
 

@@ -40,12 +40,7 @@ import {
 } from '#utils/link-appeals.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import {
-	addressToString,
-	camelToScreamingSnake,
-	capitalizeFirstLetter,
-	trimAppealType
-} from '#utils/string-utils.js';
+import { addressToString, trimAppealType } from '#utils/string-utils.js';
 import {
 	APPEAL_DEVELOPMENT_TYPES,
 	PLANNING_OBLIGATION_STATUSES
@@ -56,6 +51,7 @@ import {
 	isEnforcementCaseType
 } from '@pins/appeals/utils/appeal-type-checks.js';
 import formatDate, { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
+import { camelToScreamingSnake, capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { EventType } from '@pins/event-client';
 import { loadEnvironment } from '@pins/platform';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';

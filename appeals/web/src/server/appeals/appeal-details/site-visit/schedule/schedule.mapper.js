@@ -5,12 +5,9 @@ import {
 } from '#lib/dates.js';
 import { timeInput } from '#lib/mappers/components/page-components/time.js';
 import { dateInput, yesNoInput } from '#lib/mappers/index.js';
-import {
-	capitalizeFirstLetter,
-	formatFirstInitialLastName,
-	padNumberWithZero
-} from '#lib/string-utilities.js';
+import { formatFirstInitialLastName, padNumberWithZero } from '#lib/string-utilities.js';
 import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import {
 	mapGetApiVisitTypeToWebVisitType,
 	mapVisitTypeToReadable,

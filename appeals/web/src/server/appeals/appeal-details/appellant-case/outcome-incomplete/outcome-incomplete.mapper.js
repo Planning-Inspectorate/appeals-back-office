@@ -12,9 +12,9 @@ import { detailsComponent } from '#lib/mappers/components/page-components/detail
 import { dateInput } from '#lib/mappers/index.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
-import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { LENGTH_300 } from '@pins/appeals/constants/support.js';
 import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { capitalize } from 'lodash-es';
 
 /**

@@ -3,8 +3,8 @@ import { dateISOStringToDisplayDate, dayMonthYearHourMinuteToISOString } from '#
 import { detailsComponent } from '#lib/mappers/components/page-components/details.js';
 import { dateInput, simpleHtmlComponent, yesNoInput } from '#lib/mappers/index.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { LENGTH_300 } from '@pins/appeals/constants/support.js';
+import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 
 /**
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
