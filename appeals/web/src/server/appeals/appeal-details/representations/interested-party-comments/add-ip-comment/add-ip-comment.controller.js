@@ -1,7 +1,7 @@
 import { createNewDocument } from '#app/components/file-uploader.component.js';
 import { postDocumentUpload } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import { getDocumentRedactionStatuses } from '#appeals/appeal-documents/appeal.documents.service.js';
-import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
+import { addressToMultilineStringHtml, addressToString } from '#lib/address-formatter.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dayMonthYearHourMinuteToDisplayDate } from '#lib/dates.js';
@@ -12,9 +12,14 @@ import { mapFileUploadInfoToMappedDocuments } from '#lib/mappers/utils/file-uplo
 import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
-import { APPEAL_CASE_STATUS, APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_CASE_STATUS,
+	APPEAL_REDACTED_STATUS,
+} from '@planning-inspectorate/data-model';
 import { getAttachmentsFolder } from '../../document-attachments/attachments-service.js';
-import { postRepresentation } from '../../representations.service.js';
+import {
+	postRepresentation,
+} from '../../representations.service.js';
 import {
 	postDateSubmittedFactory,
 	postRedactionStatusFactory,
@@ -33,6 +38,7 @@ import {
 	mapSessionToRepresentationRequest,
 	uploadPage
 } from './add-ip-comment.mapper.js';
+import {generateNotifyPreview} from "#lib/api/notify-preview.api.js";
 
 /** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -369,7 +375,7 @@ export async function postIPComment(request, response) {
 export async function renderCheckYourAnswers(request, response) {
 	const {
 		errors,
-		currentAppeal: { appealReference, appealId } = {},
+		currentAppeal: { appealReference, appealId, appealSite, planningApplicationReference } = {},
 		session: {
 			addIpComment: {
 				[redactionStatusFieldName]: redactionStatus,
@@ -410,6 +416,24 @@ export async function renderCheckYourAnswers(request, response) {
 	clearEdits(request, 'addIpComment');
 
 	const baseUrl = `/appeals-service/appeal-details/${appealId}/interested-party-comments/add`;
+
+	let ipCommentEmailPreview
+	const statementsPassed = isStatePassed(request.currentAppeal, APPEAL_CASE_STATUS.STATEMENTS)
+
+	if(statementsPassed) {
+		let personalisation = {
+			appeal_reference_number: appealReference,
+			//coverage for enforcement appeal type reference required here
+			lpa_reference: planningApplicationReference,
+			site_address: appealSite ? addressToString(appealSite) : 'Address not provided',
+			case_team_email: 'caseofficers@planninginspectorate.gov.uk'
+		};
+		ipCommentEmailPreview = await generateNotifyPreview(
+			request.apiClient,
+			'ip-comment-added.content.md',
+			personalisation
+		);
+	}
 
 	return renderCheckYourAnswersComponent(
 		{
@@ -488,7 +512,47 @@ export async function renderCheckYourAnswers(request, response) {
 						}
 					}
 				}
-			}
+			},
+			...(statementsPassed
+				? {
+						after: [
+							{
+								type: 'details',
+								wrapperHtml: {
+									opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+									closing: '</div></div>'
+								},
+								parameters: {
+									summaryText: `Preview email to appellant`,
+									html: ipCommentEmailPreview.renderedHtml,
+									id: 'appellant-preview'
+								}
+							},
+							{
+								type: 'details',
+								wrapperHtml: {
+									opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+									closing: '</div></div>'
+								},
+								parameters: {
+									summaryText: `Preview email to LPA`,
+									html: ipCommentEmailPreview.renderedHtml,
+									id: 'lpa-preview'
+								}
+							},
+							{
+								type: 'hint',
+								parameters: {
+									html: `
+									<p class="govuk-body">
+										We’ll share your comment with the relevant parties.
+									</p>
+								`
+								}
+							}
+						]
+					}
+				: null)
 		},
 		response,
 		errors
