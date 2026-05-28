@@ -99,7 +99,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
+                                    data-cy="add-application-decision-date">Add<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
@@ -400,7 +400,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
+                                    data-cy="add-application-decision-date">Add<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
@@ -740,7 +740,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
+                                    data-cy="add-application-decision-date">Add<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
@@ -1054,7 +1054,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
+                                    data-cy="add-application-decision-date">Add<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
@@ -1500,7 +1500,7 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
+                                    data-cy="add-application-decision-date">Add<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
@@ -1813,7 +1813,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
+                                    data-cy="add-application-decision-date">Add<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
@@ -2087,7 +2087,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
+                                    data-cy="add-application-decision-date">Add<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
@@ -2346,7 +2346,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
+                                    data-cy="add-application-decision-date">Add<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
@@ -3098,7 +3098,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (3. Grounds and facts)</span></a>
+                                    data-cy="add-application-decision-date">Add<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (3. Grounds and facts)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> When was the appeal decision?</dt>
@@ -3521,7 +3521,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (3. Grounds and facts)</span></a>
+                                    data-cy="add-application-decision-date">Add<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (3. Grounds and facts)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> When was the appeal decision?</dt>
@@ -3751,7 +3751,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
+                                    data-cy="add-application-decision-date">Add<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
@@ -4125,7 +4125,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
+                                    data-cy="add-application-decision-date">Add<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
@@ -4584,7 +4584,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (3. Grounds and facts)</span></a>
+                                    data-cy="add-application-decision-date">Add<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (3. Grounds and facts)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> When was the appeal decision?</dt>
@@ -4853,7 +4853,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
+                                    data-cy="add-application-decision-date">Add<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
@@ -5212,7 +5212,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
+                                    data-cy="add-application-decision-date">Add<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
@@ -5508,7 +5508,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
+                                    data-cy="add-application-decision-date">Add<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
@@ -5816,7 +5816,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
+                                    data-cy="add-application-decision-date">Add<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
@@ -9376,7 +9376,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
+                                    data-cy="add-application-decision-date">Add<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (Before you start)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
