@@ -107,6 +107,7 @@ export const postIssueDecision = async (request, response) => {
 		} else {
 			session.childDecisions.decisions.push({
 				appealId: childAppeal.appealId,
+				appealType: childAppeal.appealType,
 				outcome: body.decision,
 				appealReference: childAppeal.appealReference
 			});

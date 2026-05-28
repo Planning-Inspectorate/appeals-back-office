@@ -38,7 +38,11 @@ import {
 	PROCEDURE_TYPE_NAME
 } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_CASE_DECISION_OUTCOME,
+	APPEAL_CASE_PROCEDURE,
+	APPEAL_CASE_STATUS
+} from '@planning-inspectorate/data-model';
 import { addDays } from 'date-fns';
 import { omit } from 'lodash-es';
 import nock from 'nock';
@@ -2810,6 +2814,64 @@ describe('appeal-details', () => {
 			);
 		});
 
+		it('should render "Listed building consent granted" in the Decision inset panel for ELB appeals', async () => {
+			const appealId = '2';
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, {
+					...appealData,
+					appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+					decision: {
+						outcome: APPEAL_CASE_DECISION_OUTCOME.PLANNING_PERMISSION_GRANTED,
+						letterDate: '2026-01-01T00:00:00.000Z',
+						documentId: 'e1e90a49-fab3-44b8-a21a-bb73af089f6b'
+					},
+					appealStatus: 'complete',
+					completedStateList: ['awaiting_event']
+				});
+			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+			nock('http://test/')
+				.get('/appeals/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
+				.reply(200, documentFileVersionInfo);
+			const response = await request.get(`${baseUrl}/${appealId}`);
+
+			const insetTextElementHTML = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: '.govuk-inset-text'
+			}).innerHTML;
+			expect(insetTextElementHTML).toContain('<li>Decision: Listed building consent granted</li>');
+		});
+
+		it('should render "Planning permission granted" in the Decision inset panel for enforcement notice appeals', async () => {
+			const appealId = '2';
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, {
+					...appealData,
+					appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
+					decision: {
+						outcome: APPEAL_CASE_DECISION_OUTCOME.PLANNING_PERMISSION_GRANTED,
+						letterDate: '2026-01-01T00:00:00.000Z',
+						documentId: 'e1e90a49-fab3-44b8-a21a-bb73af089f6b'
+					},
+					appealStatus: 'complete',
+					completedStateList: ['awaiting_event']
+				});
+			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+			nock('http://test/')
+				.get('/appeals/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
+				.reply(200, documentFileVersionInfo);
+			const response = await request.get(`${baseUrl}/${appealId}`);
+
+			const insetTextElementHTML = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: '.govuk-inset-text'
+			}).innerHTML;
+			expect(insetTextElementHTML).toContain('<li>Decision: Planning permission granted</li>');
+		});
+
 		it('should render the view decision page', async () => {
 			const appealId = '2';
 
@@ -2835,6 +2897,58 @@ describe('appeal-details', () => {
 			expect(innerHTML).toContain(
 				'download href="/documents/1/download/e1e90a49-fab3-44b8-a21a-bb73af089f6b/decision-letter.pdf'
 			);
+		});
+
+		it('should render "Listed building consent granted" on the view decision page for ELB appeals', async () => {
+			const appealId = '2';
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, {
+					...appealData,
+					appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+					decision: {
+						outcome: APPEAL_CASE_DECISION_OUTCOME.PLANNING_PERMISSION_GRANTED,
+						letterDate: '2026-01-01T00:00:00.000Z',
+						documentId: 'e1e90a49-fab3-44b8-a21a-bb73af089f6b'
+					},
+					appealStatus: 'complete',
+					completedStateList: ['awaiting_event']
+				});
+			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+			nock('http://test/')
+				.get('/appeals/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
+				.reply(200, documentFileVersionInfo);
+			const response = await request.get(`${baseUrl}/${appealId}/issue-decision/view-decision`);
+
+			const innerHTML = parseHtml(response.text).innerHTML;
+			expect(innerHTML).toContain('Listed building consent granted');
+		});
+
+		it('should render "Planning permission granted" on the view decision page for enforcement notice appeals', async () => {
+			const appealId = '2';
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, {
+					...appealData,
+					appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
+					decision: {
+						outcome: APPEAL_CASE_DECISION_OUTCOME.PLANNING_PERMISSION_GRANTED,
+						letterDate: '2026-01-01T00:00:00.000Z',
+						documentId: 'e1e90a49-fab3-44b8-a21a-bb73af089f6b'
+					},
+					appealStatus: 'complete',
+					completedStateList: ['awaiting_event']
+				});
+			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+			nock('http://test/')
+				.get('/appeals/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
+				.reply(200, documentFileVersionInfo);
+			const response = await request.get(`${baseUrl}/${appealId}/issue-decision/view-decision`);
+
+			const innerHTML = parseHtml(response.text).innerHTML;
+			expect(innerHTML).toContain('Planning permission granted');
 		});
 
 		it('should render a Decision inset panel when the appealStatus is complete and only one version exists', async () => {
