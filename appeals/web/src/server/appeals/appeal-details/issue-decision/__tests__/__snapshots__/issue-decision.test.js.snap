@@ -250,7 +250,7 @@ exports[`issue-decision GET /decision Linked appeals Linked child appeal should 
                     <form method="POST" novalidate="novalidate">
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant</dt>
-                                <dd class="govuk-summary-list__value">Roger Simmons</dd>
+                                <dd class="govuk-summary-list__value">Fred Simmons</dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                                 <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
@@ -751,7 +751,7 @@ exports[`issue-decision GET /issue-decision/check-your-decision Linked appeals s
 </main>"
 `;
 
-exports[`issue-decision GET /issue-decision/check-your-decision Single appeal should render the check your decision page 1`] = `
+exports[`issue-decision GET /issue-decision/check-your-decision Single appeal - HAS should render the check your decision page with correct text 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
@@ -763,7 +763,98 @@ exports[`issue-decision GET /issue-decision/check-your-decision Single appeal sh
             <form method="POST" novalidate="novalidate">
                 <dl class="govuk-summary-list">
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
-                        <dd class="govuk-summary-list__value">Allowed</dd>
+                        <dd class="govuk-summary-list__value">Planning permission granted</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> decision</span></a>
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
+                        <dd class="govuk-summary-list__value"><a class="govuk-link" download href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.pdf"
+                            target="_blank">test-document.pdf</a>
+                        </dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> decision letter</span></a>
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you want to issue the appellant&#39;s costs decision?</dt>
+                        <dd                         class="govuk-summary-list__value">Yes</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/appellant-costs-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> appellant cost decision</span></a>
+                            </dd>
+                    </div>
+                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant costs decision letter</dt>
+                        <dd                         class="govuk-summary-list__value"><a class="govuk-link" download href="/documents/APP/Q9999/D/21/351062/download-uncommitted/2/test-document-appellant.pdf"
+                            target="_blank">test-document-appellant.pdf</a>
+                            </dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/appellant-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> appellant cost decision letter</span></a>
+                            </dd>
+                    </div>
+                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you want to issue the LPA&#39;s costs decision?</dt>
+                        <dd                         class="govuk-summary-list__value">Yes</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/lpa-costs-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> lpa cost decision</span></a>
+                            </dd>
+                    </div>
+                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA costs decision letter</dt>
+                        <dd                         class="govuk-summary-list__value"><a class="govuk-link" download href="/documents/APP/Q9999/D/21/351062/download-uncommitted/3/test-document-lpa.pdf"
+                            target="_blank">test-document-lpa.pdf</a>
+                            </dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/lpa-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> lpa costs decision letter</span></a>
+                            </dd>
+                    </div>
+                </dl>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-full">
+                        <details class="govuk-details" data-cy="preview-email-to-appellant">
+                            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
+                            </summary>
+                            <div class="govuk-details__text">
+                                <p>Appellant email preview</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-full">
+                        <details class="govuk-details" data-cy="preview-email-to-lpa">
+                            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to LPA</span>
+                            </summary>
+                            <div class="govuk-details__text">
+                                <p>LPA email preview</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-full">
+                        <details class="govuk-details" data-cy="preview-email-to-interested-parties">
+                            <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to interested parties</span>
+                            </summary>
+                            <div class="govuk-details__text">
+                                <p>Interested party email preview</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+                <p class="govuk-body">We'll send an email to the appellant, LPA and any interested parties to
+                    tell them about the decision.</p>
+                <button type="submit" class="govuk-button"
+                data-module="govuk-button">Issue decision</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`issue-decision GET /issue-decision/check-your-decision Single appeal - enforcement listed building should render the check your decision page with correct text 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and issue decision</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <form method="POST" novalidate="novalidate">
+                <dl class="govuk-summary-list">
+                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
+                        <dd class="govuk-summary-list__value">Listed building consent granted</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> decision</span></a>
                         </dd>
                     </div>

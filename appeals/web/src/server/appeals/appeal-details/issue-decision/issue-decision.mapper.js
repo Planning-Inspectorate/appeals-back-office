@@ -26,7 +26,7 @@ import {
 	DECISION_TYPE_LPA_COSTS,
 	LENGTH_300
 } from '@pins/appeals/constants/support.js';
-import { toSentenceCase } from '@pins/appeals/utils/string-case.js';
+import { decisionOutcomeToDisplayText } from '@pins/appeals/utils/decision-outcome-display-text.js';
 import { APPEAL_CASE_DECISION_OUTCOME } from '@planning-inspectorate/data-model';
 
 /**
@@ -37,14 +37,14 @@ import { APPEAL_CASE_DECISION_OUTCOME } from '@planning-inspectorate/data-model'
  * @typedef {import('./issue-decision.types.js').LpaCostsDecisionRequest} LpaCostsDecisionRequest
  * @typedef {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem} FileUploadInfoItem
  * @typedef {import('@pins/express/types/express.js').Request & {specificDecisionType?: string}} Request
- * @typedef {import('@pins/appeals.api').Appeals.RelatedAppeal} RelatedAppeal
+ * @typedef {import('@pins/appeals.api').Appeals.LinkedAppeal} LinkedAppeal
  * @typedef {{ key: { text: string; }; value?: { html: string; text?: undefined; } | { text: any; html?: undefined; }; actions: { items: { text: string; href: string; visuallyHiddenText: string; }[]; }; }} PageRow
  */
 
 /**
  *
  * @param {Appeal} appealDetails
- * @param {RelatedAppeal|undefined} childAppealDetails
+ * @param {LinkedAppeal|undefined} childAppealDetails
  * @param {InspectorDecisionRequest} inspectorDecision
  * @param {string|undefined} backUrl
  * @param {import("@pins/express").ValidationErrors} [errors]
@@ -57,7 +57,8 @@ export function issueDecisionPage(
 	backUrl,
 	errors
 ) {
-	const { appellant } = appealDetails;
+	const currentPageAppealDetails = childAppealDetails ? childAppealDetails : appealDetails;
+	const { appellant } = currentPageAppealDetails;
 
 	const appellantName =
 		!appellant?.firstName && !appellant?.lastName && appellant?.organisationName
@@ -69,7 +70,7 @@ export function issueDecisionPage(
 		type: 'summary-list',
 		parameters: {
 			rows: [
-				...(appealDetails.appellant
+				...(appellant
 					? [
 							{
 								key: {
@@ -102,7 +103,7 @@ export function issueDecisionPage(
 						text: 'Appeal type'
 					},
 					value: {
-						text: childAppealDetails ? childAppealDetails.appealType : appealDetails.appealType
+						text: currentPageAppealDetails.appealType
 					}
 				}
 			]
@@ -111,10 +112,7 @@ export function issueDecisionPage(
 
 	const fieldName = 'decision';
 
-	const shortAppealReference = appealShortReference(appealDetails.appealReference);
-	const decisionAppealReference = childAppealDetails
-		? childAppealDetails.appealReference
-		: shortAppealReference;
+	const decisionAppealReference = appealShortReference(currentPageAppealDetails.appealReference);
 	const linkType = childAppealDetails ? 'child' : isParentAppeal(appealDetails) ? 'lead' : '';
 
 	const heading = linkType ? `Decision for ${linkType} appeal ${decisionAppealReference}` : '';
@@ -131,8 +129,8 @@ export function issueDecisionPage(
 	} = APPEAL_CASE_DECISION_OUTCOME;
 
 	const decisionTypes =
-		appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ||
-		appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
+		currentPageAppealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ||
+		currentPageAppealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
 			? [
 					NOTICE_UPHELD,
 					NOTICE_VARIED_AND_UPHELD,
@@ -145,14 +143,9 @@ export function issueDecisionPage(
 
 	const items = decisionTypes.map((decisionType) => ({
 		value: decisionType,
-		text: toSentenceCase(decisionType),
+		text: decisionOutcomeToDisplayText(decisionType, currentPageAppealDetails.appealType),
 		checked: inspectorDecision?.outcome === decisionType
 	}));
-
-	if (appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING) {
-		items.filter((item) => item.value === 'planning_permission_granted')[0].text =
-			'Listed building consent granted';
-	}
 
 	if (
 		!isLinkedAppeal(appealDetails) &&
@@ -210,7 +203,7 @@ export function issueDecisionPage(
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: heading || `Decision - ${shortAppealReference}`,
+		title: heading || `Decision - ${decisionAppealReference}`,
 		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: preHeadingText(appealDetails, 'issue decision'),
 		heading: heading || 'Decision',
@@ -412,7 +405,10 @@ function checkAndConfirmPageRows(appealData, request) {
 
 	if (inspectorDecision) {
 		if (inspectorDecision.outcome) {
-			let outcomeHtml = toSentenceCase(inspectorDecision.outcome);
+			let outcomeHtml = decisionOutcomeToDisplayText(
+				inspectorDecision.outcome,
+				appealData.appealType
+			);
 			if (!isFeatureActive(FEATURE_FLAG_NAMES.INVALID_DECISION_LETTER)) {
 				let invalidReasonHtml = inspectorDecision.invalidReason ? `Reason: ` : '';
 				if (invalidReasonHtml) {
@@ -452,7 +448,7 @@ function checkAndConfirmPageRows(appealData, request) {
 				childDecisions.decisions.forEach((childDecision) => {
 					rows.push({
 						key: `Decision for child appeal ${childDecision.appealReference}`,
-						html: toSentenceCase(childDecision.outcome),
+						html: decisionOutcomeToDisplayText(childDecision.outcome, childDecision.appealType),
 						actions: [
 							{
 								text: 'Change',
@@ -682,7 +678,7 @@ export function checkAndConfirmPage(appealData, request, emailPreviewComponents 
  * @returns {PageRow}[]
  */
 export function viewDecisionPageRows(appealData, request, latestDecsionDocumentText) {
-	const { appealId, decision, costs } = appealData || {};
+	const { appealId, decision, costs, appealType } = appealData || {};
 	const appellantCostsDecision = costs.appellantDecisionFolder?.documents[0];
 	const lpaCostsDecision = costs.lpaDecisionFolder?.documents[0];
 
@@ -691,7 +687,7 @@ export function viewDecisionPageRows(appealData, request, latestDecsionDocumentT
 	if (decision) {
 		const { outcome, documentId, documentName, letterDate, invalidReason } = decision;
 		// @ts-ignore
-		const decisionOutcome = toSentenceCase(outcome);
+		const decisionOutcome = decisionOutcomeToDisplayText(outcome, appealType);
 		let invalidReasonHtml = invalidReason ? `Reason: ` : '';
 		if (invalidReasonHtml) {
 			invalidReasonHtml = renderPageComponentsToHtml([
@@ -714,9 +710,7 @@ export function viewDecisionPageRows(appealData, request, latestDecsionDocumentT
 							appealData.isParentAppeal ? 'lead' : 'child'
 						} appeal ${appealShortReference(appealData.appealReference)}`
 					: 'Decision',
-				html: `${toSentenceCase(decisionOutcome)}${
-					invalidReasonHtml ? `<br><br>${invalidReasonHtml}` : ''
-				}`
+				html: `${decisionOutcome}${invalidReasonHtml ? `<br><br>${invalidReasonHtml}` : ''}`
 			});
 		}
 		if (appealData.isParentAppeal && appealData.linkedAppeals?.length) {
@@ -726,7 +720,10 @@ export function viewDecisionPageRows(appealData, request, latestDecsionDocumentT
 						key: `Decision for ${linkedAppeal.isParentAppeal ? 'lead' : 'child'} appeal ${
 							linkedAppeal.appealReference
 						}`,
-						html: toSentenceCase(linkedAppeal.inspectorDecision)
+						html: decisionOutcomeToDisplayText(
+							linkedAppeal.inspectorDecision,
+							linkedAppeal.appealType
+						)
 					});
 				}
 			});

@@ -4,7 +4,7 @@ import { dateISOStringToDisplayDate, getOriginalAndLatestLetterDatesObject } fro
 import { isLinkedAppealsActive } from '#lib/mappers/utils/is-linked-appeal.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
-import { toSentenceCase } from '@pins/appeals/utils/string-case.js';
+import { decisionOutcomeToDisplayText } from '@pins/appeals/utils/decision-outcome-display-text.js';
 import { APPEAL_CASE_STATUS, APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
 import { getAppealTypesFromId } from '../change-appeal-type/change-appeal-type.service.js';
 import { getInvalidStatusCreatedDate } from '../invalid-appeal/invalid-appeal.service.js';
@@ -75,7 +75,9 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 		const insetTextRows = [];
 
 		if (appealDetails.decision?.outcome) {
-			insetTextRows.push(`Decision: ${toSentenceCase(appealDetails.decision.outcome)}`);
+			insetTextRows.push(
+				`Decision: ${decisionOutcomeToDisplayText(appealDetails.decision.outcome, appealDetails.appealType)}`
+			);
 			insetTextRows.push(
 				letterDateObject.latestFileVersion && letterDateObject.latestFileVersion?.version > 1
 					? `Decision issued on ${letterDateObject.originalLetterDate} (updated on ${letterDateObject.latestLetterDate})`

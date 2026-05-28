@@ -27,6 +27,7 @@ import {
 	ERROR_NO_RECIPIENT_EMAIL
 } from '@pins/appeals/constants/support.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
+import { decisionOutcomeToDisplayText } from '@pins/appeals/utils/decision-outcome-display-text.js';
 import { loadEnvironment } from '@pins/platform';
 import {
 	APPEAL_CASE_DECISION_OUTCOME,
@@ -35,7 +36,6 @@ import {
 	APPEAL_CASE_TYPE,
 	APPEAL_DOCUMENT_TYPE
 } from '@planning-inspectorate/data-model';
-import { capitalize } from 'lodash-es';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.InspectorDecision} Decision */
@@ -59,11 +59,12 @@ const hasCostsDocument = (appeal, appealDocumentType) => {
 /**
  *
  * @param {string} outcome
+ * @param {string | undefined} appealType
  * @param {string|null} [invalidDecisionReason]
  * @returns {string}
  */
-const formatIssueDecisionAuditTrail = (outcome, invalidDecisionReason) => {
-	const outcomeFormatted = capitalize(outcome.replaceAll('_', ' '));
+const formatIssueDecisionAuditTrail = (outcome, appealType, invalidDecisionReason) => {
+	const outcomeFormatted = decisionOutcomeToDisplayText(outcome, appealType);
 	return stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
 		`${outcomeFormatted}${
 			invalidDecisionReason && isFeatureActive(FEATURE_FLAG_NAMES.INVALID_DECISION_LETTER)
@@ -298,7 +299,7 @@ export const publishDecision = async (
 	await createAuditTrail({
 		appealId: appeal.id,
 		azureAdUserId: azureAdUserId,
-		details: formatIssueDecisionAuditTrail(outcome, invalidDecisionReason)
+		details: formatIssueDecisionAuditTrail(outcome, type, invalidDecisionReason)
 	});
 
 	await transitionState(appeal.id, azureAdUserId, nextState);
@@ -337,7 +338,7 @@ export const publishChildDecision = async (
 		await createAuditTrail({
 			appealId,
 			azureAdUserId: azureAdUserId,
-			details: formatIssueDecisionAuditTrail(outcome)
+			details: formatIssueDecisionAuditTrail(outcome, childAppeal.appealType?.type)
 		});
 
 		await transitionState(appealId, azureAdUserId, APPEAL_CASE_STATUS.COMPLETE);

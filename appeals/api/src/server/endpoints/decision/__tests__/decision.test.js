@@ -256,6 +256,14 @@ describe('decision routes', () => {
 				'invalid'
 			],
 			[
+				'enforcementNoticeAppeal',
+				'planning_permission_granted',
+				'Because it is.',
+				enforcementNoticeAppeal,
+				FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE,
+				'Enforcement notice'
+			],
+			[
 				'ldcAppeal',
 				'allowed',
 				'',
@@ -306,6 +314,16 @@ describe('decision routes', () => {
 				FEEDBACK_FORM_LINKS.ENFORCEMENT_LISTED_BUILDING,
 				'Enforcement listed building and conservation area',
 				'invalid'
+			],
+			[
+				'appealEnforcementListed',
+				'planning_permission_granted',
+				'Because it is.',
+				appealEnforcementListed,
+				FEEDBACK_FORM_LINKS.ENFORCEMENT_LISTED_BUILDING,
+				'Enforcement listed building and conservation area',
+				'complete',
+				'Listed building consent granted'
 			]
 		])(
 			'returns 200 when all good, appeal type: %s, outcome: %s, reason: %s',
@@ -316,7 +334,8 @@ describe('decision routes', () => {
 				appeal,
 				expectedFeedbackLink,
 				formattedAppealType,
-				nextState = 'complete'
+				nextState = 'complete',
+				overwriteExpectedOutcomeDisplayString = undefined
 			) => {
 				const correctAppealState = {
 					...appeal,
@@ -421,8 +440,12 @@ describe('decision routes', () => {
 
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(4);
 
+				const expectedOutcomeDisplayString = overwriteExpectedOutcomeDisplayString
+					? overwriteExpectedOutcomeDisplayString
+					: capitalize(outcome.replaceAll('_', ' '));
+
 				let details = stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
-					capitalize(outcome.replaceAll('_', ' '))
+					expectedOutcomeDisplayString
 				]);
 
 				if (invalidReason) {
