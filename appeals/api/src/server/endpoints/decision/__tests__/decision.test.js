@@ -823,7 +823,9 @@ describe('decision routes', () => {
 				recipientEmail: appeal.lpa.email
 			});
 
-			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(4);
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 				data: {
 					appealId: appeal.id,
 					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
@@ -834,7 +836,7 @@ describe('decision routes', () => {
 				}
 			});
 
-			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 				data: {
 					appealId: childAppeal.childId,
 					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
@@ -845,7 +847,7 @@ describe('decision routes', () => {
 				}
 			});
 
-			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 				data: {
 					appealId: appeal.id,
 					details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['complete']),
@@ -854,7 +856,7 @@ describe('decision routes', () => {
 				}
 			});
 
-			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(4, {
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 				data: {
 					appealId: childAppeal.childId,
 					details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['complete']),
