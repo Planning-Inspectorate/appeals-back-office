@@ -560,6 +560,24 @@ export const happyPathHelper = {
 		basePage.validateBannerMessage('Success', 'Number of residential units added');
 	},
 
+	unlinkLeadEnforcementAppeal(caseObj, childAppeal) {
+		caseDetailsPage.clickManageLinkedAppeal();
+		caseDetailsPage.clickUnlinkLeadAppeal(caseObj);
+		caseDetailsPage.selectRadioButtonByValue(childAppeal);
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Unlink lead appeal');
+		basePage.validateBannerMessage('Success', 'Appeal unlinked');
+	},
+
+	changeEnforcementLeadAppeal(caseObj) {
+		caseDetailsPage.clickManageLinkedAppeal();
+		caseDetailsPage.clickLinkByText('Change lead appeal');
+		caseDetailsPage.selectRadioButtonByValue(caseObj);
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Update lead appeal');
+		basePage.validateBannerMessage('Success', 'Lead appeal changed');
+	},
+
 	/**
 	 * @param {*} caseObj
 	 * @param {import('./flows').Status} currentStatus
