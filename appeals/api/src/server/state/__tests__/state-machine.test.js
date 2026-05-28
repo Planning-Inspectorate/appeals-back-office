@@ -740,4 +740,91 @@ describe('State Machine Transitions', () => {
 			).toBe(APPEAL_CASE_STATUS.TRANSFERRED);
 		});
 	});
+
+	describe('Expedited (WR Part 1) transitions', () => {
+		/**
+		 * @param {string} initial
+		 * @param {string} event
+		 * @param {boolean} [siteVisitElapsed]
+		 * @return {import('xstate').StateValue}
+		 */
+		const nextStateExpedited = (initial, event, siteVisitElapsed = false) => {
+			const machine = createStateMachine(
+				APPEAL_CASE_TYPE.W,
+				APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
+				initial,
+				siteVisitElapsed
+			);
+			const service = interpret(machine).start();
+
+			service.send(event);
+			return service.state.value;
+		};
+
+		test('transitions from LPA_QUESTIONNAIRE to EVENT on VALIDATION_OUTCOME_COMPLETE', () => {
+			expect(
+				nextStateExpedited(APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, VALIDATION_OUTCOME_COMPLETE)
+			).toBe(APPEAL_CASE_STATUS.EVENT);
+		});
+
+		test('transitions from LPA_QUESTIONNAIRE to closed and withdrawn states', () => {
+			expect(
+				nextStateExpedited(APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, APPEAL_CASE_STATUS.CLOSED)
+			).toBe(APPEAL_CASE_STATUS.CLOSED);
+			expect(
+				nextStateExpedited(APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, APPEAL_CASE_STATUS.WITHDRAWN)
+			).toBe(APPEAL_CASE_STATUS.WITHDRAWN);
+			expect(
+				nextStateExpedited(APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, VALIDATION_OUTCOME_INVALID)
+			).toBe(APPEAL_CASE_STATUS.INVALID);
+		});
+
+		test('transitions from AWAITING_EVENT to EVENT on VALIDATION_OUTCOME_CANCEL', () => {
+			expect(nextStateExpedited(APPEAL_CASE_STATUS.AWAITING_EVENT, VALIDATION_OUTCOME_CANCEL)).toBe(
+				APPEAL_CASE_STATUS.EVENT
+			);
+		});
+
+		test('transitions from AWAITING_EVENT to closed and withdrawn states', () => {
+			expect(nextStateExpedited(APPEAL_CASE_STATUS.AWAITING_EVENT, APPEAL_CASE_STATUS.CLOSED)).toBe(
+				APPEAL_CASE_STATUS.CLOSED
+			);
+			expect(
+				nextStateExpedited(APPEAL_CASE_STATUS.AWAITING_EVENT, APPEAL_CASE_STATUS.WITHDRAWN)
+			).toBe(APPEAL_CASE_STATUS.WITHDRAWN);
+		});
+
+		test('validates and maps procedure types using isAppealTypeAndProcedureTypeValid guard', () => {
+			expect(nextStateExpedited(APPEAL_CASE_STATUS.STATEMENTS, VALIDATION_OUTCOME_COMPLETE)).toBe(
+				APPEAL_CASE_STATUS.FINAL_COMMENTS
+			);
+		});
+	});
+
+	describe('Expedited (WR Part 2) transitions', () => {
+		/**
+		 * @param {string} initial
+		 * @param {string} event
+		 * @param {boolean} [siteVisitElapsed]
+		 * @return {import('xstate').StateValue}
+		 */
+		const nextStateExpeditedPart2 = (initial, event, siteVisitElapsed = false) => {
+			const machine = createStateMachine(
+				APPEAL_CASE_TYPE.W,
+				APPEAL_CASE_PROCEDURE.WRITTEN_PART_2,
+				initial,
+				siteVisitElapsed
+			);
+			const service = interpret(machine).start();
+
+			service.send(event);
+			return service.state.value;
+		};
+
+		test('validates and maps procedure types using isAppealTypeAndProcedureTypeValid guard', () => {
+			expect(
+				nextStateExpeditedPart2(APPEAL_CASE_STATUS.STATEMENTS, VALIDATION_OUTCOME_COMPLETE)
+			).toBe(APPEAL_CASE_STATUS.FINAL_COMMENTS);
+		});
+	});
 });

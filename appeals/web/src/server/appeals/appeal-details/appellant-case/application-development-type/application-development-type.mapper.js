@@ -2,8 +2,8 @@
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
  */
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { APPEAL_DEVELOPMENT_TYPES } from '@pins/appeals/constants/appellant-cases.constants.js';
+import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 
 /**
  * @param {Appeal} appealData

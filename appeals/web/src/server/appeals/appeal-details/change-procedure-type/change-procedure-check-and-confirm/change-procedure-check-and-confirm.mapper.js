@@ -1,7 +1,7 @@
 import { getAvailableProcedureTypesForAppealType } from '#appeals/appeal-details/change-procedure-type/change-procedure-type.utils.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { radiosInput } from '#lib/mappers/index.js';
-import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /**

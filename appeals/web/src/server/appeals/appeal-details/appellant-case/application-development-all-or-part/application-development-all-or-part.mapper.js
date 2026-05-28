@@ -2,7 +2,7 @@
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
  */
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { toSentenceCase } from '#lib/string-utilities.js';
+import { toSentenceCase } from '@pins/appeals/utils/string-case.js';
 
 const ALL_OF_THE_DEVELOPMENT = 'all-of-the-development';
 const PART_OF_THE_DEVELOPMENT = 'part-of-the-development';

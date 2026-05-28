@@ -72,6 +72,7 @@ export class CaseDetailsPage extends Page {
 		addNetResidence: 'add-net-residence-change',
 		documentationTable: '#case-documentation-table',
 		documentationRowHeader: '#case-documentation-table th',
+		manageEnforcementLinkedAppeal: 'manage-linked-appeals',
 		documentationCells: '#case-documentation-table td'
 	};
 
@@ -256,6 +257,8 @@ export class CaseDetailsPage extends Page {
 		addAppellantComments: () => cy.getByData(this._cyDataSelectors.addAppellantComments),
 		addLpaWithdrawal: () => cy.getByData(this._cyDataSelectors.addLpaWithdrawal),
 		addNetResidence: () => cy.getByData(this._cyDataSelectors.addNetResidence),
+		manageEnforcementLinkedAppeal: () =>
+			cy.getByData(this._cyDataSelectors.manageEnforcementLinkedAppeal),
 		contactSection: () => cy.get('.govuk-summary-list__key'),
 		rule6PartyName: 'Rule 6 party name'
 	};
@@ -1035,5 +1038,9 @@ export class CaseDetailsPage extends Page {
 		cy.get(config.selector).within(() => {
 			cy.contains('tr', documentName).should('not.exist');
 		});
+	}
+
+	clickManageLinkedAppeal() {
+		this.elements.manageEnforcementLinkedAppeal().click();
 	}
 }

@@ -25,7 +25,7 @@ import {
 import logger from '#lib/logger.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { capitalize, upperCase } from 'lodash-es';
 
 import {

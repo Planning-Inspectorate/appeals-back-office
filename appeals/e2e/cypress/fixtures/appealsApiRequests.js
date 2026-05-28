@@ -406,7 +406,20 @@ const appealsApiRequests = {
 					factsForGround: 'I like Christmas'
 				}
 			],
-					namedIndividuals: [
+				namedIndividuals: [
+			{
+				firstName: 'Jack',
+				lastName: 'Jackerson',
+				interestInLand: 'owner',
+				writtenOrVerbalPermission: 'yes'
+			}, 
+			{
+				firstName: 'Nilay',
+				lastName: 'Nilayerson',
+				interestInLand: 'owner',
+				writtenOrVerbalPermission: 'yes'
+			}, 
+			
 			{
 				firstName: 'Bob',
 				lastName: 'Bobberson',

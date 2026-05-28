@@ -1,4 +1,4 @@
-import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 
 /**
  * Maps appealStatus values to status-tag text labels

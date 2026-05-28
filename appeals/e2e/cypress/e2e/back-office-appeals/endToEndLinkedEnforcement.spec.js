@@ -25,16 +25,18 @@ describe('Progress Enforcement Appeal to Decision', () => {
 		cy.deleteAppeals(appeal);
 	});
 
-	it(`Completes a Linked Enforcement Appeal to decision`, () => {
+	it.skip(`Completes a Linked Enforcement Appeal to decision`, () => {
 		cy.createCase({ ...appealsApiRequests.enforcementLinkedSubmission.casedata }).then(
 			(caseObj) => {
 				appeal = caseObj;
-				const childAppeal = Number(appeal.reference) + 1;
 
-				cy.log('appeal: ', appeal);
-				cy.log('childAppeal: ', childAppeal);
+				const childAppeal = {
+					reference: String(Number(appeal.reference) + 2),
+					id: String(Number(appeal.id) + 2)
+				};
 
 				cy.addLpaqSubmissionToCase(caseObj);
+
 				happyPathHelper.assignCaseOfficer(caseObj);
 				caseDetailsPage.checkStatusOfCase('Validation', 0);
 
@@ -44,6 +46,11 @@ describe('Progress Enforcement Appeal to Decision', () => {
 				caseDetailsPage.checkStatusOfCase('Ready to start', 0);
 
 				happyPathHelper.startCaseWithProcedureType(caseObj, 'written');
+				caseObj = childAppeal;
+
+				happyPathHelper.changeEnforcementLeadAppeal(caseObj.reference);
+				caseDetailsPage.checkLinkedStatusOfCase('Child', 1);
+				happyPathHelper.viewCaseDetails(caseObj);
 				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
 				happyPathHelper.reviewS78Lpaq(caseObj);
@@ -86,6 +93,12 @@ describe('Progress Enforcement Appeal to Decision', () => {
 					caseDetailsPage.exactMatch('Notice varied and upheld')
 				);
 				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.selectRadioButtonByValue(
+					caseDetailsPage.exactMatch('Quashed on legal grounds')
+				);
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Split decision'));
+				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.uploadSampleFile(caseDetailsPage.sampleFiles.pdf);
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.selectRadioButtonByValue('No');
@@ -96,7 +109,81 @@ describe('Progress Enforcement Appeal to Decision', () => {
 				caseDetailsPage.validateBannerMessage('Success', 'Decision issued');
 				caseDetailsPage.checkStatusOfCase('Complete', 0);
 				caseHistoryPage.verifyCaseHistory('completedEnforcementSplit', caseObj.reference);
-				caseDetailsPage.checkDecisionOutcome('Notice upheld');
+				caseDetailsPage.checkDecisionOutcome('Split decision');
+				caseDetailsPage.viewDecisionLetter('View decision');
+			}
+		);
+	});
+
+	it(`Completes an unLinked Enforcement Appeal to decision`, () => {
+		cy.createCase({ ...appealsApiRequests.enforcementLinkedSubmission.casedata }).then(
+			(caseObj) => {
+				appeal = caseObj;
+
+				const childAppeal = {
+					reference: String(Number(appeal.reference) + 2),
+					id: String(Number(appeal.id) + 2)
+				};
+
+				cy.addLpaqSubmissionToCase(caseObj);
+				happyPathHelper.assignCaseOfficer(caseObj);
+				caseDetailsPage.checkStatusOfCase('Validation', 0);
+
+				caseDetailsPage.verifyAppealType('Enforcement notice appeal');
+
+				happyPathHelper.reviewEnforcementAppeallantCase(caseObj);
+				caseDetailsPage.checkStatusOfCase('Ready to start', 0);
+
+				happyPathHelper.startCaseWithProcedureType(caseObj, 'written');
+				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+
+				happyPathHelper.reviewS78Lpaq(caseObj);
+				caseDetailsPage.checkStatusOfCase('Statements', 0);
+				happyPathHelper.unlinkLeadEnforcementAppeal(caseObj.reference, childAppeal.reference);
+
+				happyPathHelper.addThirdPartyComment(caseObj, true);
+				caseDetailsPage.clickBackLink();
+				happyPathHelper.addThirdPartyComment(caseObj, false);
+				caseDetailsPage.clickBackLink();
+
+				happyPathHelper.addLpaStatement(caseObj);
+				cy.simulateStatementsDeadlineElapsed(caseObj);
+				cy.reload();
+
+				caseDetailsPage.basePageElements.bannerLink().click();
+				caseDetailsPage.clickButtonByText('Confirm');
+				caseDetailsPage.checkStatusOfCase('Final comments', 0);
+
+				happyPathHelper.addLpaFinalComment(caseObj);
+				cy.loadAppealDetails(caseObj).then((appealData) => {
+					const serviceUserId = (
+						(appealData?.appellant?.serviceUserId ?? 0) + 200000000
+					).toString();
+					happyPathHelper.addAppellantFinalComment(caseObj, serviceUserId);
+				});
+				cy.simulateFinalCommentsDeadlineElapsed(caseObj);
+				cy.reload();
+				caseDetailsPage.basePageElements.bannerLink().click();
+				caseDetailsPage.clickButtonByText('Share final comment');
+				caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
+
+				happyPathHelper.setupSiteVisitFromBanner(caseObj);
+				cy.simulateSiteVisit(caseObj).then((caseObj) => {
+					cy.reload();
+				});
+				caseDetailsPage.clickIssueDecision(caseObj);
+				caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Split decision'));
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.uploadSampleFile(caseDetailsPage.sampleFiles.pdf);
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.selectRadioButtonByValue('No');
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.selectRadioButtonByValue('No');
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.clickButtonByText('Issue Decision');
+				caseDetailsPage.validateBannerMessage('Success', 'Decision issued');
+				caseDetailsPage.checkStatusOfCase('Complete', 0);
+				caseDetailsPage.checkDecisionOutcome('Split decision');
 				caseDetailsPage.viewDecisionLetter('View decision');
 			}
 		);

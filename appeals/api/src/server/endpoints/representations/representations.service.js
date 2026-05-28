@@ -17,7 +17,6 @@ import { isFeatureActive } from '#utils/feature-flags.js';
 import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { camelToScreamingSnake } from '#utils/string-utils.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE,
@@ -35,6 +34,7 @@ import formatDate, {
 	dateISOStringToDisplayDate,
 	formatTime12h
 } from '@pins/appeals/utils/date-formatter.js';
+import { camelToScreamingSnake } from '@pins/appeals/utils/string-case.js';
 import { EventType } from '@pins/event-client';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 

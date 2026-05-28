@@ -1,5 +1,5 @@
-import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common.js';
+import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /**
