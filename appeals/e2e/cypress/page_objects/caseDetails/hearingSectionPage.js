@@ -77,6 +77,10 @@ export class HearingSectionPage extends CaseDetailsPage {
 		caseDetailsPage.clickButtonByText('Continue');
 	}
 
+	/**
+	 * Change whether hearing address is known or not and set address if known
+	 * @param {object} properties of the hearing address to change - address (object), addressKnown (boolean)
+	 */
 	changeHearingAddress({ address = {}, addressKnown = true } = {}) {
 		this.hearingSectionElements.changeHearingAddress().click();
 
@@ -89,6 +93,10 @@ export class HearingSectionPage extends CaseDetailsPage {
 		}
 	}
 
+	/**
+	 * Update existing hearing address with the provided address details
+	 * @param {string} address
+	 */
 	updateHearingAddress(address) {
 		this.hearingSectionElements.updateAddress().click();
 		addressSection.enterAddress(address);

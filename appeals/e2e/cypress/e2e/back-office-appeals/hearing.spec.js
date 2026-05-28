@@ -122,7 +122,7 @@ describe('Setup hearing and add hearing estimates', () => {
 			postcode: ' '
 		};
 
-		hearingSectionPage.changeHearingAddress(emptyAddress);
+		hearingSectionPage.changeHearingAddress({ address: emptyAddress });
 		hearingSectionPage.verifyErrorMessages({
 			messages: ['Enter address line 1', 'Enter town or city', 'Enter postcode'],
 			fields: ['address-line-1', 'town', 'post-code'],
@@ -137,7 +137,7 @@ describe('Setup hearing and add hearing estimates', () => {
 			postcode: 'BS20'
 		};
 
-		hearingSectionPage.changeHearingAddress(invalidAddress);
+		hearingSectionPage.changeHearingAddress({ address: invalidAddress });
 		hearingSectionPage.verifyErrorMessages({
 			messages: ['Address line 1 must be 250 characters or less', 'Enter a full UK postcode'],
 			fields: ['address-line-1', 'post-code'],
@@ -345,7 +345,7 @@ describe('Setup hearing and add hearing estimates', () => {
 	});
 
 	it('should send notify when adding hearing address', () => {
-		hearingSectionPage.changeHearingAddress(originalAddress);
+		hearingSectionPage.changeHearingAddress({ address: originalAddress });
 		hearingSectionPage.clickButtonByText('Update hearing');
 		caseDetailsPage.validateBannerMessage('Success', 'Hearing updated');
 
@@ -379,7 +379,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		};
 
 		// set address
-		hearingSectionPage.changeHearingAddress(originalAddress);
+		hearingSectionPage.changeHearingAddress({ address: originalAddress });
 		hearingSectionPage.clickButtonByText('Update hearing');
 		caseDetailsPage.validateBannerMessage('Success', 'Hearing updated');
 
@@ -481,7 +481,7 @@ describe('Setup hearing and add hearing estimates', () => {
 
 	it('should progress hearing case to decision', () => {
 		// add address to set up the hearing and trigger notify and case history entry for adding hearing address
-		hearingSectionPage.changeHearingAddress(originalAddress);
+		hearingSectionPage.changeHearingAddress({ address: originalAddress });
 		hearingSectionPage.verifyHearingHeader(headers.hearing.checkDetails);
 		caseDetailsPage.clickButtonByText('Update hearing');
 		caseDetailsPage.validateBannerMessage('Success', 'Hearing updated');
@@ -535,7 +535,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		cy.checkNotifySent(caseObj, expectedNotifies);
 	});
 
-	it.only('should display the correct status tags when removing hearing address', () => {
+	it('should display the correct status tags when removing hearing address', () => {
 		// advance the case to event ready to set up hearing
 		happyPathHelper.advanceTo(caseObj, 'LPA_QUESTIONNAIRE', 'AWAITING_EVENT', 'S78', 'HEARING');
 
@@ -586,17 +586,25 @@ describe('Setup hearing and add hearing estimates', () => {
 		cy.createCase({ caseType: 'W' }).then((ref) => {
 			caseObj = ref;
 			appeal = caseObj;
-			cy.addLpaqSubmissionToCase(caseObj);
-			cy.assignCaseOfficerViaApi(caseObj);
-			cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
-			caseDetailsPage.checkStatusOfCase('Validation', 0);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
-			happyPathHelper.startCaseWithProcedureType(caseObj, 'hearing');
+
+			// advance the case to the lpaq questionnaire status which is the starting point for these tests
+			happyPathHelper.advanceTo(
+				caseObj,
+				'ASSIGN_CASE_OFFICER',
+				'LPA_QUESTIONNAIRE',
+				'S78',
+				'HEARING',
+				false
+			);
+
+			// confirm we are on the case details page and the expected banners are displayed before proceeding with the tests,
 			cy.writeLog(`Case created with reference: ${caseObj.reference}, checking banners`);
 			caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
 			caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
 			cy.writeLog(`Banners checked`);
+
+			// add LPA questionnaire submission
+			cy.addLpaqSubmissionToCase(caseObj);
 		});
 	};
 });

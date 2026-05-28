@@ -609,9 +609,20 @@ export const happyPathHelper = {
 	 * @param {import('./flows').Status} targetStatus
 	 * @param {import('./flows').AppealType} appealType
 	 * @param {import('./flows').ProcedureType} procedureType
+	 * @param {boolean} [loadCaseDetails=true] whether or not to load case details page after advancing to a status
 	 */
 
-	advanceTo(caseObj, currentStatus, targetStatus, appealType, procedureType = 'WRITTEN') {
+	advanceTo(
+		caseObj,
+		currentStatus,
+		targetStatus,
+		appealType,
+		procedureType = 'WRITTEN',
+		loadCaseDetails = true
+	) {
+		// define the base actions for each status that can be used to advance the case to the next status in the flow.
+		// These are the common actions that are used across different flows, but some flows might have additional actions
+		// that are specific to that flow and those will be defined in the FLOWS object in the flows.js file
 		const baseActions = {
 			[STATUSES.ASSIGN_CASE_OFFICER]: (c) => cy.assignCaseOfficerViaApi(c),
 			[STATUSES.VALIDATION]: (c) =>
@@ -685,6 +696,10 @@ export const happyPathHelper = {
 			[STATUSES.ISSUE_DECISION]: (c) => cy.issueDecisionViaApi(c)
 		};
 
+		// fetch the flow for the given appeal type and find the index of the current status and target status in that flow.
+		// Then we can loop through the flow from the current status to the target status and execute the corresponding action
+		// for each status using the baseActions object defined above.
+		// If there is no action defined for a particular status, we log that information and continue with the next status.
 		const flow = FLOWS[appealType];
 		if (!flow) {
 			throw new Error(
@@ -700,6 +715,12 @@ export const happyPathHelper = {
 			if (fn) fn(caseObj, appealType, procedureType);
 			else cy.log(`No action defined for ${current}`);
 		}
-		this.viewCaseDetails(caseObj);
+
+		// after advancing through the statuses, if loadCaseDetails is true, navigate to the case details page
+		// in some scenarios we might want to advance the case to a certain status but not load the case details page, so we make this optional
+		// for example if we want to validate some part of the page first (e.g. banner messages)
+		if (loadCaseDetails) {
+			this.viewCaseDetails(caseObj);
+		}
 	}
 };
