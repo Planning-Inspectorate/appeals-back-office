@@ -3,6 +3,7 @@ import config from '#environment/config.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import { SHOW_MORE_MAXIMUM_ROWS_BEFORE_HIDING } from '#lib/constants.js';
 import logger from '#lib/logger.js';
+import { MAX_VISIBLE_DOCUMENTS_IN_SUMMARY } from '@pins/appeals/constants/common.js';
 import { appealSiteToMultilineAddressStringHtml } from './address-formatter.js';
 import { appealShortReference } from './nunjucks-filters/appeals.js';
 
@@ -186,8 +187,12 @@ const formatDocumentValuesAsList = ({ appealId, documents, isAdditionalDocuments
 	};
 
 	if (documents.length > 0) {
-		for (let i = 0; i < documents.length; i++) {
-			const document = documents[i];
+		const visibleDocs = documents.slice(0, MAX_VISIBLE_DOCUMENTS_IN_SUMMARY);
+		const hasMore = documents.length > MAX_VISIBLE_DOCUMENTS_IN_SUMMARY;
+		const moreCount = documents.length - MAX_VISIBLE_DOCUMENTS_IN_SUMMARY;
+
+		for (let i = 0; i < visibleDocs.length; i++) {
+			const document = visibleDocs[i];
 			const virusCheckStatus = mapDocumentInfoVirusCheckStatus(document);
 
 			/** @type {PageComponent[]} */
@@ -231,7 +236,7 @@ const formatDocumentValuesAsList = ({ appealId, documents, isAdditionalDocuments
 				});
 			}
 
-			if (isAdditionalDocuments && document.latestDocumentVersion.isLateEntry) {
+			if (isAdditionalDocuments && document.latestDocumentVersion?.isLateEntry) {
 				documentPageComponents.push({
 					type: 'status-tag',
 					parameters: {
@@ -246,7 +251,7 @@ const formatDocumentValuesAsList = ({ appealId, documents, isAdditionalDocuments
 						isAdditionalDocuments
 							? ` class="govuk-!-margin-bottom-0${
 									i > 0 ? ' govuk-!-padding-top-2' : ''
-								} govuk-!-padding-bottom-2${i < documents.length - 1 ? ' pins-border-bottom' : ''}"`
+								} govuk-!-padding-bottom-2${i < visibleDocs.length - 1 ? ' pins-border-bottom' : ''}"`
 							: ''
 					}><span>`,
 					closing: '</span></li>'
@@ -255,6 +260,19 @@ const formatDocumentValuesAsList = ({ appealId, documents, isAdditionalDocuments
 				parameters: {
 					html: '',
 					pageComponents: documentPageComponents
+				}
+			});
+		}
+
+		if (hasMore) {
+			htmlProperty.pageComponents.push({
+				wrapperHtml: {
+					opening: `<li class="govuk-!-margin-top-1"><span>`,
+					closing: '</span></li>'
+				},
+				type: 'html',
+				parameters: {
+					html: `<span class="govuk-body govuk-!-font-weight-bold">... and ${moreCount} more document${moreCount === 1 ? '' : 's'}</span>`
 				}
 			});
 		}
