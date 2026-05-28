@@ -134,7 +134,7 @@ export const getDocumentVersionUpload = async (request, response) => {
 			costsCategory === 'decision'
 				? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/add-document-details/${currentFolder.folderId}/${documentId}`
 				: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/add-document-details/${currentFolder.folderId}/${documentId}`,
-		allowMultipleFiles: false,
+		allowMultipleFiles: true,
 		allowedTypes: allowedType ? [allowedType] : undefined,
 		...(pageHeading &&
 			uploadContainerHeading && {

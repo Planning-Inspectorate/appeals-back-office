@@ -44,7 +44,7 @@ export const renderDocumentUpload = async (request, response) => {
 		nextPageUrl: `${baseUrl}/redaction-status`,
 		pageHeadingTextOverride:
 			pageContent?.addDocument?.pageHeadingTextOverride || 'Upload supporting document',
-		allowMultipleFiles: false,
+		allowMultipleFiles: true,
 		documentType: session.costsDocumentType,
 		preHeadingTextOverride: pageContent?.pageHeadingTextOverride,
 		uploadContainerHeadingTextOverride:
