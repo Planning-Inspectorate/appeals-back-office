@@ -30,7 +30,7 @@ export const CASE_HISTORY_STATES = Object.freeze({
 			detail: 'Appeal decision: {caseRef} sent to LPA',
 			emailLink: 'yes',
 			emailSubject: 'Subject: Appeal decision: {caseRef}',
-			emailBody: 'We have made a decision on this appeal.'
+			emailBody: 'We have made a decision on the following appeals:'
 		},
 		{
 			detail: 'Appeal decision: {caseRef} sent to agent',
