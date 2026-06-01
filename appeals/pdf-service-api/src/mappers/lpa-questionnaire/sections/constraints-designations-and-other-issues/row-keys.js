@@ -72,5 +72,18 @@ export const rowKeys = {
 		'treePreservationPlan',
 		'isGypsyOrTravellerSite',
 		'definitiveMapStatement'
+	],
+	[APPEAL_TYPE.S78_EXPEDITED]: [
+		'changesListedBuilding',
+		'affectsListedBuilding',
+		'affectsScheduledMonument',
+		'conservationMap',
+		'hasProtectedSpecies',
+		'isGreenBelt',
+		'isAonbNationalLandscape',
+		'designatedSiteNames',
+		'treePreservationPlan',
+		'isGypsyOrTravellerSite',
+		'definitiveMapStatement'
 	]
 };

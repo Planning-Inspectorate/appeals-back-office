@@ -13,5 +13,10 @@ export const rowKeys = {
 		'otherPartyRepresentations',
 		'consultationResponses',
 		'consultedBodiesDetails'
+	],
+	[APPEAL_TYPE.S78_EXPEDITED]: [
+		'otherPartyRepresentations',
+		'consultationResponses',
+		'consultedBodiesDetails'
 	]
 };

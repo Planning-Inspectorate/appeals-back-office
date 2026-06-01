@@ -502,7 +502,6 @@ exports[`mapLpaQuestionnaireData should map advert LPA questionnaire data correc
         },
       ],
     },
-    undefined,
     {
       "heading": "Notifying relevant parties",
       "items": [
@@ -1134,7 +1133,6 @@ exports[`mapLpaQuestionnaireData should map cas advert LPA questionnaire data co
         },
       ],
     },
-    undefined,
     {
       "heading": "Notifying relevant parties",
       "items": [
@@ -1721,7 +1719,6 @@ exports[`mapLpaQuestionnaireData should map householder LPA questionnaire data c
         },
       ],
     },
-    undefined,
     {
       "heading": "Notifying relevant parties",
       "items": [
@@ -2561,6 +2558,39 @@ exports[`mapLpaQuestionnaireData should map s20 LPA questionnaire data correctly
       ],
     },
     {
+      "heading": "Original evidence",
+      "items": [
+        {
+          "html": "No",
+          "key": "Did the applicant submit a design and access statement with their application?",
+        },
+        {
+          "html": "No documents",
+          "key": "Design and access statement",
+        },
+        {
+          "html": "No",
+          "key": "Did the applicant submit plans and drawings with the application?",
+        },
+        {
+          "html": "No documents",
+          "key": "Plans and drawings",
+        },
+        {
+          "html": "No",
+          "key": "Did the applicant submit any other documents with the application?",
+        },
+        {
+          "html": "No documents",
+          "key": "Any other documents submitted with the application",
+        },
+        {
+          "key": "What documents and plans did you use to make your decision?",
+          "text": "Not provided",
+        },
+      ],
+    },
+    {
       "heading": "Additional documents (LPA case correspondence)",
       "items": [
         {
@@ -3293,6 +3323,39 @@ exports[`mapLpaQuestionnaireData should map s78 LPA questionnaire data correctly
         {
           "html": "No",
           "key": "Are there any new conditions?",
+        },
+      ],
+    },
+    {
+      "heading": "Original evidence",
+      "items": [
+        {
+          "html": "No",
+          "key": "Did the applicant submit a design and access statement with their application?",
+        },
+        {
+          "html": "No documents",
+          "key": "Design and access statement",
+        },
+        {
+          "html": "No",
+          "key": "Did the applicant submit plans and drawings with the application?",
+        },
+        {
+          "html": "No documents",
+          "key": "Plans and drawings",
+        },
+        {
+          "html": "No",
+          "key": "Did the applicant submit any other documents with the application?",
+        },
+        {
+          "html": "No documents",
+          "key": "Any other documents submitted with the application",
+        },
+        {
+          "key": "What documents and plans did you use to make your decision?",
+          "text": "Not provided",
         },
       ],
     },
