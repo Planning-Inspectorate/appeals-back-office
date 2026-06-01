@@ -30,6 +30,14 @@ export const rowKeys = {
 		'otherAppeals',
 		'hasExtraConditions'
 	],
+	[APPEAL_TYPE.S78_EXPEDITED]: [
+		'lpaProcedurePreference',
+		'lpaProcedurePreferenceDetails',
+		'lpaProcedurePreferenceDuration',
+		'anySignificantChangesLpa',
+		'otherAppeals',
+		'hasExtraConditions'
+	],
 	[APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE]: [
 		'lpaProcedurePreference',
 		'lpaProcedurePreferenceDetails',
