@@ -6,6 +6,7 @@ describe('mapAppellantCaseData', () => {
 		it.each([
 			['householder', mockAppellantCaseData.appellantCaseDataHouseholder],
 			['s78', mockAppellantCaseData.appellantCaseDataS78],
+			['s78 expedited', mockAppellantCaseData.appellantCaseDataS78Expedited],
 			['s20', mockAppellantCaseData.appellantCaseDataS20],
 			['cas advert', mockAppellantCaseData.appellantCaseDataCasAdvert],
 			['advert', mockAppellantCaseData.appellantCaseDataAdvert],

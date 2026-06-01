@@ -38,6 +38,12 @@ export const rowKeys = {
 		'otherAppealsList',
 		'developmentType'
 	],
+	[APPEAL_TYPE.S78_EXPEDITED]: [
+		'applicationDate',
+		'developmentDescription',
+		'otherAppealsList',
+		'developmentType'
+	],
 	[APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE]: [
 		'applicationDate',
 		'siteUseAtTimeOfApplication',

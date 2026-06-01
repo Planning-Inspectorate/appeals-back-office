@@ -45,6 +45,30 @@ function formatOwnsAllLand(siteOwnership) {
 	return 'Not owned';
 }
 
+function formatAnySignificantChanges(
+	anySignificantChanges,
+	anySignificantChanges_otherSignificantChanges,
+	anySignificantChanges_localPlanSignificantChanges,
+	anySignificantChanges_nationalPolicySignificantChanges,
+	anySignificantChanges_courtJudgementSignificantChanges
+) {
+	const details = [];
+
+	if (anySignificantChanges_localPlanSignificantChanges) {
+		details.push(`Local plan: ${anySignificantChanges_localPlanSignificantChanges}`);
+	}
+	if (anySignificantChanges_nationalPolicySignificantChanges) {
+		details.push(`National policy: ${anySignificantChanges_nationalPolicySignificantChanges}`);
+	}
+	if (anySignificantChanges_courtJudgementSignificantChanges) {
+		details.push(`Court judgment: ${anySignificantChanges_courtJudgementSignificantChanges}`);
+	}
+	if (anySignificantChanges_otherSignificantChanges) {
+		details.push(`Other: ${anySignificantChanges_otherSignificantChanges}`);
+	}
+	return anySignificantChanges ? formatYesNoDetails(details) : 'No';
+}
+
 export const rowBuilders = {
 	appealSite: (data) => ({
 		key: 'What is the address of the appeal site?',
@@ -99,5 +123,15 @@ export const rowBuilders = {
 	healthAndSafety: (data) => ({
 		key: 'Are there any health and safety issues on the appeal site?',
 		html: formatHealthAndSafetyDetails(data.healthAndSafety)
+	}),
+	anySignificantChanges: (data) => ({
+		key: 'Have there been any significant changes to the appeal site?',
+		html: formatAnySignificantChanges(
+			data.anySignificantChanges,
+			data.anySignificantChanges_otherSignificantChanges,
+			data.anySignificantChanges_localPlanSignificantChanges,
+			data.anySignificantChanges_nationalPolicySignificantChanges,
+			data.anySignificantChanges_courtJudgementSignificantChanges
+		)
 	})
 };
