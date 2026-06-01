@@ -480,7 +480,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'R4408',
 		name: 'Barnsley Borough Council',
 		email: 'developmentcontrol@example.gov.uk',
-		teamId: 16 // North2
+		teamId: 18 // North4
 	},
 	{
 		lpaCode: 'A3010',
@@ -1050,7 +1050,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'A2470',
 		name: 'Rutland County Council',
 		email: 'planningappeals@example.gov.uk',
-		teamId: 17 // North3
+		teamId: 18 // North4
 	},
 	{
 		lpaCode: 'M4320',
@@ -1836,7 +1836,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'U4230',
 		name: 'Salford City Council',
 		email: 'planning.contact@example.gov.uk',
-		teamId: 15 // North1
+		teamId: 18 // North4
 	},
 	{
 		lpaCode: 'J4423',
