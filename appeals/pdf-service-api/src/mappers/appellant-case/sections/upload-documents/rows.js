@@ -5,6 +5,14 @@ export const rowBuilders = {
 		key: 'Application form',
 		html: formatDocumentData(data.documents.originalApplicationForm)
 	}),
+	didYouSubmitEnvironmentalStatement: (data) => ({
+		key: 'Did you submit an environmental statement with your application?',
+		text: formatSentenceCase(data.screeningOpinionIndicatesEiaRequired, 'Not answered')
+	}),
+	environmentalStatement: (data) => ({
+		key: 'Environmental statement',
+		html: formatDocumentData(data.documents.eiaEnvironmentalStatementAppellant)
+	}),
 	changedDescription: (data) => ({
 		key: 'Agreement to change the description of development',
 		html: formatDocumentData(data.documents.changedDescription)

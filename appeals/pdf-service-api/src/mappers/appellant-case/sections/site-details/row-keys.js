@@ -61,6 +61,19 @@ export const rowKeys = {
 		'siteAccessRequired',
 		'healthAndSafety'
 	],
+	[APPEAL_TYPE.S78_EXPEDITED]: [
+		'appealSite',
+		'siteAreaSquareMetres',
+		'isGreenBelt',
+		'ownsAllLand',
+		'knowsOtherLandowners',
+		'isPartOfAgriculturalHolding',
+		'isTenant',
+		'hasOtherTenants',
+		'siteAccessRequired',
+		'healthAndSafety',
+		'anySignificantChanges'
+	],
 	[APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE]: [
 		'appealSite',
 		'isGreenBelt',
