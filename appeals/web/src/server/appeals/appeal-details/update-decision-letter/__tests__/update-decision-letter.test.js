@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -195,6 +196,11 @@ describe('update-decision-letter', () => {
 	describe('GET /issue-decision/check-your-decision', () => {
 		let issueDecisionAppealData = appealDataIssuedDecision;
 
+		beforeEach(() => {
+			jest.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate', 'performance'] });
+			jest.setSystemTime(new Date('2026-01-02T00:00:00.000Z'));
+		});
+
 		beforeEach(async () => {
 			nock.cleanAll();
 			nock('http://test/')
@@ -244,7 +250,7 @@ describe('update-decision-letter', () => {
 				});
 		});
 
-		afterEach(teardown);
+		afterEach(teardown); // this includes jest.useRealTimers();
 
 		it('should render the check your details page', async () => {
 			nock('http://test/')
@@ -275,7 +281,7 @@ describe('update-decision-letter', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Update decision letter');
 		});
 
-		it('should use the original decision letterDate in the email preview, not the upload date', async () => {
+		it('should use the new file upload date in the notifies', async () => {
 			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
 			expect(correctionNoticeResponse.statusCode).toBe(302);
 
@@ -317,10 +323,10 @@ describe('update-decision-letter', () => {
 
 			await request.get(`${baseUrl}/1/update-decision-letter/check-details`);
 
-			expect(capturedPreviewBody.decision_date).toBe('25 December 2023');
+			expect(capturedPreviewBody.decision_date).toBe('2 January 2026');
 		});
 
-		it('should submit the original decision letterDate as receivedDate, not the upload date', async () => {
+		it('should submit the upload date as receivedDate', async () => {
 			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
 			expect(correctionNoticeResponse.statusCode).toBe(302);
 
@@ -337,7 +343,7 @@ describe('update-decision-letter', () => {
 				.send({});
 
 			expect(response.statusCode).toBe(302);
-			expect(capturedApiBody.document.receivedDate).toBe('2023-12-25T00:00:00.000Z');
+			expect(capturedApiBody.document.receivedDate).toBe('2026-01-02T00:00:00.000Z');
 		});
 
 		it('should render the view-decision page after submit', async () => {

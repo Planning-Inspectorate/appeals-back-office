@@ -85,7 +85,7 @@ export const renderUpdateDocumentCheckDetails = async (request, response) => {
 		site_address: appealSiteToAddressString(appealSite),
 		lpa_reference: planningApplicationReference,
 		correction_notice_reason: correctionNotice,
-		decision_date: dateISOStringToDisplayDate(decision.letterDate || file.receivedDate),
+		decision_date: dateISOStringToDisplayDate(file.receivedDate),
 		team_email_address: assignedTeamEmail,
 		feedback_link: getFeedbackLinkFromAppealTypeName(appealType)
 	};
@@ -237,7 +237,7 @@ export const postUpdateDocumentCheckDetails = async (request, response) => {
 				stage: uploadInfo.stage,
 				folderId: inspectorDecision.folderId,
 				GUID: uploadInfo.GUID,
-				receivedDate: currentDecision.letterDate || uploadInfo.receivedDate,
+				receivedDate: uploadInfo.receivedDate,
 				redactionStatusId: notRedactedStatusID,
 				blobStoragePath: uploadInfo.blobStoreUrl
 			},
