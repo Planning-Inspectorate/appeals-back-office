@@ -25,7 +25,7 @@ exports[`start-case GET /start-case/select-procedure should render the select pr
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure-2" name="appealProcedure"
                                         type="radio" value="written">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure-2">Written representations (Part 2)</label>
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure-2">Written representations</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure-3" name="appealProcedure"
@@ -64,7 +64,7 @@ exports[`start-case GET /start-case/select-procedure/check-and-confirm should re
                     <form method="POST" novalidate="novalidate">
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-                                <dd class="govuk-summary-list__value">Written representations (Part 2)</dd>
+                                <dd class="govuk-summary-list__value">Written representations</dd>
                             </div>
                         </dl>
                         <p class="govuk-body">We’ll start the timetable now and send emails to the relevant parties.</p>
@@ -110,7 +110,7 @@ exports[`start-case GET /start-case/select-procedure/check-and-confirm should re
                     <form method="POST" novalidate="novalidate">
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-                                <dd class="govuk-summary-list__value">Written representations (Part 2)</dd>
+                                <dd class="govuk-summary-list__value">Written representations</dd>
                             </div>
                         </dl>
                         <p class="govuk-body">We’ll start the timetable now and send emails to the relevant parties.</p>
@@ -208,7 +208,7 @@ exports[`start-case POST /start-case/select-procedure should re-render the selec
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure" name="appealProcedure"
                                         type="radio" value="written">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure">Written representations (Part 2)</label>
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure">Written representations</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure-2" name="appealProcedure"
