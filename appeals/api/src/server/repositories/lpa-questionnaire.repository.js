@@ -116,10 +116,11 @@ const updateLPAQuestionnaireById = (id, data) => {
 /**
  * @param {number} appealId
  * @param {boolean} visible
- * @returns {Promise<object>}
+ * @returns {Promise<{count: number}>}
  */
 const updateLpaCostsAppliedFor = (appealId, visible) => {
-	return databaseConnector.lPAQuestionnaire.update({
+	// use updateMany to avoid errors if there is no LPAQ for this appeal
+	return databaseConnector.lPAQuestionnaire.updateMany({
 		where: { appealId },
 		data: {
 			lpaCostsAppliedFor: visible

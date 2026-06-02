@@ -604,8 +604,14 @@ export const updateDocumentVisibilityBooleans = async (
 
 	if (lpaCostApplicationDocument && appealId) {
 		// if adding or removing an LPA cost document, then set lpaCostsAppliedFor accordingly
-		await lpaQuestionnaireRepository.updateLpaCostsAppliedFor(appealId, visible);
-		await broadcasters.broadcastAppeal(appealId);
+		const { count } = await lpaQuestionnaireRepository.updateLpaCostsAppliedFor(appealId, visible);
+		if (count) {
+			logger.info(`LPAQ for ${appealId} updated, with lpaCostsAppliedFor=${visible}`);
+			await broadcasters.broadcastAppeal(appealId);
+		} else {
+			// don't error if there isn't an LPAQ
+			logger.warn(`no LPAQ for ${appealId}, lpaCostsAppliedFor not updated`);
+		}
 	}
 };
 

@@ -698,6 +698,7 @@ describe('appeals documents', () => {
 			jest.clearAllMocks();
 			jest.resetAllMocks();
 			databaseConnector.appellantCase.update = jest.fn().mockResolvedValue({});
+			databaseConnector.lPAQuestionnaire.updateMany.mockResolvedValue({ count: 1 });
 		});
 
 		test.each([
@@ -740,7 +741,7 @@ describe('appeals documents', () => {
 				true
 			);
 
-			expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
+			expect(databaseConnector.lPAQuestionnaire.updateMany).toHaveBeenCalledWith({
 				data: {
 					lpaCostsAppliedFor: true
 				},
@@ -758,7 +759,7 @@ describe('appeals documents', () => {
 				false
 			);
 
-			expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
+			expect(databaseConnector.lPAQuestionnaire.updateMany).toHaveBeenCalledWith({
 				data: {
 					lpaCostsAppliedFor: false
 				},
