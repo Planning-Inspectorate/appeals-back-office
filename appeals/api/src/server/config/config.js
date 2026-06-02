@@ -110,7 +110,10 @@ const { value, error } = schema.validate({
 			environment.FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED === 'true',
 		featureFlagEnforcementChangeProcedureLinked:
 			environment.FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED &&
-			environment.FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED === 'true'
+			environment.FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED === 'true',
+		featureFlagNewBeforeYouStart:
+			environment.FEATURE_FLAG_NEW_BEFORE_YOU_START &&
+			environment.FEATURE_FLAG_NEW_BEFORE_YOU_START === 'true'
 	},
 	serviceBusEnabled: environment.SERVICE_BUS_ENABLED && environment.SERVICE_BUS_ENABLED === 'true',
 	enableTestEndpoints:

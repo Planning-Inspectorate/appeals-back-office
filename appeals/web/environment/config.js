@@ -107,7 +107,8 @@ export function loadConfig() {
 		FEATURE_FLAG_ENFORCEMENT_HEARING_LINKED,
 		FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED,
 		FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED,
-		FEATURE_FLAG_SHARE_COSTS
+		FEATURE_FLAG_SHARE_COSTS,
+		FEATURE_FLAG_NEW_BEFORE_YOU_START
 	} = environment;
 
 	const config = {
@@ -203,7 +204,8 @@ export function loadConfig() {
 			featureFlagEnforcementInquiryLinked: FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED === 'true',
 			featureFlagEnforcementChangeProcedureLinked:
 				FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED === 'true',
-			featureFlagShareCosts: FEATURE_FLAG_SHARE_COSTS === 'true'
+			featureFlagShareCosts: FEATURE_FLAG_SHARE_COSTS === 'true',
+			featureFlagNewBeforeYouStart: FEATURE_FLAG_NEW_BEFORE_YOU_START === 'true'
 		},
 		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
 		pdfServiceHost: PDF_SERVICE_HOST
