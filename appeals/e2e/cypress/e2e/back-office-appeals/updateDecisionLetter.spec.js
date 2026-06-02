@@ -63,7 +63,7 @@ describe('Update Decision Letter', () => {
 			caseDetailsPage.verifyCheckYourAnswers('Decision issue date', formattedDate.date);
 			caseDetailsPage.clickBackLink();
 			caseDetailsPage.checkDecisionOutcome(
-				`Decision issued on ${formattedDate.date} (updated on ${formattedDate.date})`
+				`Decision issued on ${formattedDate.date} (reissued on ${formattedDate.date})`
 			);
 			//verify Case History
 			caseDetailsPage.clickViewCaseHistory();
