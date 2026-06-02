@@ -3,11 +3,7 @@ import { isNetResidencesAppealType } from '#common/net-residences-appeal-types.j
 import config from '#environment/config.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
-import {
-	canStartAppeal,
-	isAwaitingLinkedAppeal,
-	isChildAppeal
-} from '#lib/mappers/utils/is-linked-appeal.js';
+import { isAwaitingLinkedAppeal, isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import {
 	APPEAL_PROOF_OF_EVIDENCE_STATUS,
 	APPEAL_REPRESENTATION_STATUS,
@@ -71,9 +67,6 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				!featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS_LPAQ)
 			) {
 				actions.push('appealValidated');
-				break;
-			}
-			if (!canStartAppeal(appealDetails)) {
 				break;
 			}
 			if (isAwaitingLinkedAppeal(appealDetails)) {
