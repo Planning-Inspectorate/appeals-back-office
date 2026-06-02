@@ -25,7 +25,8 @@ const LOCAL_LISTED_BUILDINGS = [
 ];
 
 // Set to true if running in an Azure pipeline
-const loadAllListedBuildings = process.env.TF_BUILD === 'True';
+const loadAllListedBuildings =
+	process.env.TF_BUILD === 'True' && process.env.CI_E2E_TEST_SEED !== 'True';
 
 /**
  *
