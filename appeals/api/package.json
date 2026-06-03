@@ -15,6 +15,7 @@
 		"test": "npm run prisma-generate && cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest --logHeapUsage --ci",
 		"test:updateSnapshot": "npm run prisma-generate && cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest --logHeapUsage --updateSnapshot",
 		"test:cov": "npm run prisma-generate && cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest --forceExit --logHeapUsage --ci --coverage",
+		"test:stored-procedures": "npm run prisma-generate && cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest --config jest.stored-procedures.config.js --runInBand",
 		"test:watch": "npm run test -- --watch",
 		"dev": "npm run prisma-generate && nodemon --experimental-json-modules -e js ./src/server.js",
 		"start": "node ./src/server.js",
@@ -96,6 +97,7 @@
 		"stream-chain": "^3.4.0",
 		"stream-json": "^1.9.1",
 		"supertest": "7.0.0",
+		"testcontainers": "^11.7.3",
 		"swagger-autogen": "^2.21.4",
 		"swagger-typescript-api": "^13.2.16"
 	},
