@@ -1,9 +1,14 @@
 import {
+	APPEAL_CASE_PROCEDURE,
 	APPEAL_CASE_TYPE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from '@planning-inspectorate/data-model';
 import { APPEAL_TYPE } from '../../constants/common';
-import { isExpeditedAppealType, isS78ExpeditedAppealType } from '../appeal-type-checks';
+import {
+	isExpeditedAppealType,
+	isS78ExpeditedAppealType,
+	normalizeProcedureType
+} from '../appeal-type-checks';
 
 describe('isExpeditedAppealType', () => {
 	it('returns true for HAS appealType', () => {
@@ -158,5 +163,33 @@ describe('isS78ExpeditedAppealType', () => {
 				APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
 			)
 		).toBe(false);
+	});
+});
+
+describe('normalizeProcedureType', () => {
+	it('normalizes WRITTEN_PART_1 to WRITTEN', () => {
+		expect(normalizeProcedureType(APPEAL_CASE_PROCEDURE.WRITTEN_PART_1)).toBe(
+			APPEAL_CASE_PROCEDURE.WRITTEN
+		);
+	});
+
+	it('normalizes WRITTEN_PART_2 to WRITTEN', () => {
+		expect(normalizeProcedureType(APPEAL_CASE_PROCEDURE.WRITTEN_PART_2)).toBe(
+			APPEAL_CASE_PROCEDURE.WRITTEN
+		);
+	});
+
+	it('returns the procedure type unchanged if it is not WRITTEN_PART_1 or WRITTEN_PART_2', () => {
+		expect(normalizeProcedureType(APPEAL_CASE_PROCEDURE.HEARING)).toBe(
+			APPEAL_CASE_PROCEDURE.HEARING
+		);
+		expect(normalizeProcedureType(APPEAL_CASE_PROCEDURE.INQUIRY)).toBe(
+			APPEAL_CASE_PROCEDURE.INQUIRY
+		);
+		expect(normalizeProcedureType(APPEAL_CASE_PROCEDURE.WRITTEN)).toBe(
+			APPEAL_CASE_PROCEDURE.WRITTEN
+		);
+		expect(normalizeProcedureType(null)).toBe(null);
+		expect(normalizeProcedureType(undefined)).toBe(undefined);
 	});
 });

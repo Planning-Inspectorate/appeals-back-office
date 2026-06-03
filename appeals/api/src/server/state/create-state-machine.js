@@ -6,6 +6,7 @@ import {
 	VALIDATION_OUTCOME_INVALID,
 	VALIDATION_OUTCOME_VALID
 } from '@pins/appeals/constants/support.js';
+import { normalizeProcedureType } from '@pins/appeals/utils/appeal-type-checks.js';
 import {
 	APPEAL_CASE_PROCEDURE,
 	APPEAL_CASE_STATUS,
@@ -27,11 +28,7 @@ import { createMachine } from 'xstate';
  * @param {boolean} [eventElapsed]
  */
 const createStateMachine = (appealType, procedureType, currentState, eventElapsed = false) => {
-	const normalizedProcedureType =
-		procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 ||
-		procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_2
-			? APPEAL_CASE_PROCEDURE.WRITTEN
-			: procedureType;
+	const normalizedProcedureType = normalizeProcedureType(procedureType);
 
 	return createMachine({
 		id: 'appeals-state-machine',
@@ -392,12 +389,7 @@ const isAppealTypeAndProcedureTypeValid = (ctx, _evt, { state }) => {
 
 	if (!appealType || !procedureType || !meta) return false;
 
-	if (
-		procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 ||
-		procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_2
-	) {
-		procedureType = APPEAL_CASE_PROCEDURE.WRITTEN;
-	}
+	procedureType = normalizeProcedureType(procedureType);
 
 	return (
 		meta.validAppealTypes.includes(appealType) && meta.validProcedureTypes.includes(procedureType)
