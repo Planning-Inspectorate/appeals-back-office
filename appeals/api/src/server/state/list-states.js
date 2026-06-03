@@ -1,5 +1,8 @@
 import logger from '#utils/logger.js';
-import { isExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import {
+	isExpeditedAppealType,
+	normalizeProcedureType
+} from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import createStateMachine from './create-state-machine.js';
 
@@ -37,8 +40,10 @@ function listStates(appealType, procedureType, currentState) {
 				return validAppealTypes.includes(appealTypeKey);
 			}
 
+			const procedureTypeKey = normalizeProcedureType(procedureType.key);
+
 			return (
-				validAppealTypes.includes(appealTypeKey) && validProcedureTypes.includes(procedureType.key)
+				validAppealTypes.includes(appealTypeKey) && validProcedureTypes.includes(procedureTypeKey)
 			);
 		})
 		.sort((a, b) => states[a].order - states[b].order);

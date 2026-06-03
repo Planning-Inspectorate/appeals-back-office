@@ -1,5 +1,6 @@
 import {
 	APPEAL_APPLICATION_DECISION,
+	APPEAL_CASE_PROCEDURE,
 	APPEAL_CASE_TYPE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from '@planning-inspectorate/data-model';
@@ -102,3 +103,17 @@ export const isLdcOrDiscontinuanceOrEnforcementCaseType = (caseType) =>
 	caseType === APPEAL_CASE_TYPE.X ||
 	caseType === APPEAL_CASE_TYPE.G ||
 	isEnforcementCaseType(caseType);
+
+/**
+ * @param {string | null | undefined} procedureType
+ * @returns {string | null | undefined}
+ */
+export const normalizeProcedureType = (procedureType) => {
+	if (
+		procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 ||
+		procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_2
+	) {
+		return APPEAL_CASE_PROCEDURE.WRITTEN;
+	}
+	return procedureType;
+};

@@ -3,6 +3,7 @@ import appealRepository from '#repositories/appeal.repository.js';
 import { jest } from '@jest/globals';
 import {
 	CASE_RELATIONSHIP_LINKED,
+	VALIDATION_OUTCOME_COMPLETE,
 	VALIDATION_OUTCOME_INCOMPLETE,
 	VALIDATION_OUTCOME_VALID
 } from '@pins/appeals/constants/support.js';
@@ -151,6 +152,43 @@ describe('transitionState', () => {
 				await transitionState(11, 'user-123', VALIDATION_OUTCOME_VALID);
 
 				expect(appealStatusRepository.updateAppealStatusByAppealId).toHaveBeenCalled();
+			});
+
+			test('transitions a WRITTEN_PART_1 appeal with arranged site visit from event to awaiting_event', async () => {
+				const expeditedAppeal = {
+					...appealFixture,
+					appealStatus: [{ status: 'lpa_questionnaire', valid: true }],
+					appealType: { key: APPEAL_CASE_TYPE.D },
+					procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 },
+					siteVisit: {
+						visitDate: new Date(Date.now() + 86400000).toISOString()
+					}
+				};
+
+				let callCount = 0;
+				databaseConnector.appeal.findUnique.mockImplementation(() => {
+					callCount++;
+					if (callCount === 1) {
+						return Promise.resolve(expeditedAppeal);
+					}
+					return Promise.resolve({
+						...expeditedAppeal,
+						appealStatus: [{ status: 'event', valid: true }]
+					});
+				});
+
+				await transitionState(11, 'user-123', VALIDATION_OUTCOME_COMPLETE);
+
+				expect(appealStatusRepository.updateAppealStatusByAppealId).toHaveBeenNthCalledWith(
+					1,
+					11,
+					'event'
+				);
+				expect(appealStatusRepository.updateAppealStatusByAppealId).toHaveBeenNthCalledWith(
+					2,
+					11,
+					'awaiting_event'
+				);
 			});
 		});
 
