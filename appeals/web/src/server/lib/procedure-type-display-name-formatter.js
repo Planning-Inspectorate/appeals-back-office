@@ -28,7 +28,7 @@ export function appealProcedureNameToLabelText(procedureTypeName) {
 export function appealProcedureKeyToLabelText(procedureTypeKey, appealType) {
 	switch (procedureTypeKey) {
 		case APPEAL_CASE_PROCEDURE.WRITTEN:
-			return appealType !== APPEAL_TYPE.S78 || appealType !== APPEAL_TYPE.S78_EXPEDITED
+			return appealType !== APPEAL_TYPE.S78 && appealType !== APPEAL_TYPE.S78_EXPEDITED
 				? 'Written representations'
 				: 'Written representations (Part 2)';
 		case APPEAL_CASE_PROCEDURE.WRITTEN_PART_1:
