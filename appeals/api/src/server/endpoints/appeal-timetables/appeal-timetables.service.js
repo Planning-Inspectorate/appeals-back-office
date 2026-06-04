@@ -15,7 +15,12 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { trimAppealType } from '#utils/string-utils.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
 import { PROCEDURE_TYPE_ID_MAP, PROCEDURE_TYPE_MAP } from '@pins/appeals/constants/common.js';
-import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
+import {
+	DAYTIME_HOUR,
+	DAYTIME_MINUTE,
+	DEADLINE_HOUR,
+	DEADLINE_MINUTE
+} from '@pins/appeals/constants/dates.js';
 import {
 	AUDIT_TRAIL_CASE_STARTED,
 	AUDIT_TRAIL_CASE_TIMELINE_CREATED,
@@ -430,7 +435,7 @@ const startCase = async (
 			null,
 			isS78Expedited
 		);
-		const startDateWithTimeCorrection = setTimeInTimeZone(startedAt, 0, 0);
+		const startDateWithTimeCorrection = setTimeInTimeZone(startedAt, DAYTIME_HOUR, DAYTIME_MINUTE);
 
 		const procedureTypeId = procedureType && PROCEDURE_TYPE_ID_MAP[procedureType];
 
@@ -462,6 +467,7 @@ const startCase = async (
 				appealId: appeal.id,
 				azureAdUserId,
 				details: stringTokenReplacement(AUDIT_TRAIL_CASE_STARTED, [
+					startDateWithTimeCorrection.toISOString(),
 					mapProcedureTypeForAudit(procedureType)
 				])
 			});

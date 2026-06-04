@@ -1286,7 +1286,8 @@ describe('appeal timetables routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: id,
-						details: 'Appeal started\nAppeal procedure: Part 1',
+						details:
+							'Appeal started with caseStartedDate of 2024-06-05T09:00:00.000Z\nAppeal procedure: Part 1',
 						loggedAt: expect.any(Date),
 						userId: 1
 					}
@@ -1425,7 +1426,10 @@ describe('appeal timetables routes', () => {
 
 						const auditDetails =
 							appealType === 'fullPlanning'
-								? ['The case timeline was created', 'Appeal started\nAppeal procedure: hearing']
+								? [
+										'The case timeline was created',
+										'Appeal started with caseStartedDate of 2024-06-05T09:00:00.000Z\nAppeal procedure: hearing'
+									]
 								: ['The case timeline was created'];
 
 						auditDetails.forEach((details) => {
@@ -1553,7 +1557,7 @@ describe('appeal timetables routes', () => {
 						expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
 							where: { id },
 							data: {
-								caseStartedDate: '2024-06-04T23:00:00.000Z',
+								caseStartedDate: '2024-06-05T09:00:00.000Z',
 								caseUpdatedDate: new Date('2024-06-05T22:50:00.000Z'),
 								hearing: {
 									upsert: {
@@ -1580,7 +1584,10 @@ describe('appeal timetables routes', () => {
 
 						const auditDetails =
 							appealType === 'fullPlanning'
-								? ['The case timeline was created', 'Appeal started\nAppeal procedure: hearing']
+								? [
+										'The case timeline was created',
+										'Appeal started with caseStartedDate of 2024-06-05T09:00:00.000Z\nAppeal procedure: hearing'
+									]
 								: ['The case timeline was created'];
 
 						auditDetails.forEach((details) => {
@@ -1709,7 +1716,7 @@ describe('appeal timetables routes', () => {
 						expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
 							where: { id },
 							data: {
-								caseStartedDate: '2024-06-04T23:00:00.000Z',
+								caseStartedDate: '2024-06-05T09:00:00.000Z',
 								caseUpdatedDate: new Date('2024-06-05T22:50:00.000Z'),
 								hearing: {
 									upsert: {
@@ -1764,7 +1771,10 @@ describe('appeal timetables routes', () => {
 
 						const auditDetails =
 							appealType === 'fullPlanning'
-								? ['The case timeline was created', 'Appeal started\nAppeal procedure: hearing']
+								? [
+										'The case timeline was created',
+										'Appeal started with caseStartedDate of 2024-06-05T09:00:00.000Z\nAppeal procedure: hearing'
+									]
 								: ['The case timeline was created'];
 
 						auditDetails.forEach((details) => {
@@ -1893,7 +1903,10 @@ describe('appeal timetables routes', () => {
 
 						const auditDetails =
 							appealType === 'fullPlanning'
-								? ['The case timeline was created', 'Appeal started\nAppeal procedure: hearing']
+								? [
+										'The case timeline was created',
+										'Appeal started with caseStartedDate of 2024-06-05T09:00:00.000Z\nAppeal procedure: hearing'
+									]
 								: ['The case timeline was created'];
 
 						auditDetails.forEach((details) => {
@@ -2087,7 +2100,7 @@ describe('appeal timetables routes', () => {
 
 					const auditDetails = [
 						'The case timeline was created',
-						'Appeal started\nAppeal procedure: written'
+						'Appeal started with caseStartedDate of 2024-06-05T09:00:00.000Z\nAppeal procedure: written'
 					];
 
 					auditDetails.forEach((details) => {
@@ -2242,7 +2255,7 @@ describe('appeal timetables routes', () => {
 
 					const auditDetails = [
 						'The case timeline was created',
-						'Appeal started\nAppeal procedure: written'
+						'Appeal started with caseStartedDate of 2024-06-05T09:00:00.000Z\nAppeal procedure: written'
 					];
 
 					auditDetails.forEach((details) => {
@@ -2380,7 +2393,7 @@ describe('appeal timetables routes', () => {
 
 					const auditDetails = [
 						'The case timeline was created',
-						'Appeal started\nAppeal procedure: written'
+						'Appeal started with caseStartedDate of 2024-06-05T09:00:00.000Z\nAppeal procedure: written'
 					];
 
 					auditDetails.forEach((details) => {
@@ -2530,7 +2543,7 @@ describe('appeal timetables routes', () => {
 
 					const auditDetails = [
 						'The case timeline was created',
-						'Appeal started\nAppeal procedure: written'
+						'Appeal started with caseStartedDate of 2024-06-05T09:00:00.000Z\nAppeal procedure: written'
 					];
 
 					auditDetails.forEach((details) => {
@@ -2659,7 +2672,7 @@ describe('appeal timetables routes', () => {
 
 					const auditDetails = [
 						'The case timeline was created',
-						'Appeal started\nAppeal procedure: written'
+						'Appeal started with caseStartedDate of 2024-06-05T09:00:00.000Z\nAppeal procedure: written'
 					];
 
 					auditDetails.forEach((details) => {
