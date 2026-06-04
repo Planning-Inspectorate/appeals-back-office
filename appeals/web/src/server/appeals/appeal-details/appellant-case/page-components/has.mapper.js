@@ -6,6 +6,7 @@ import {
 } from '#lib/mappers/data/appellant-case/common.js';
 import { removeSummaryListActions } from '#lib/mappers/index.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
+import { beforeExpeditedOriginalApplicationCutOff } from '@pins/appeals/utils/appeal-type-checks.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse
@@ -174,7 +175,10 @@ export function generateHASComponents(
 			rows: [
 				mappedAppellantCaseData.applicationForm.display.summaryListItem,
 				mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
-				mappedAppellantCaseData.appealStatement.display.summaryListItem,
+				// we want to hide the appeal statement for appeals submitted 1st April 2026 onwards
+				...(beforeExpeditedOriginalApplicationCutOff(appellantCaseData.applicationDate)
+					? [mappedAppellantCaseData.appealStatement.display.summaryListItem]
+					: []),
 				mappedAppellantCaseData.costsDocument.display.summaryListItem
 			]
 		}
