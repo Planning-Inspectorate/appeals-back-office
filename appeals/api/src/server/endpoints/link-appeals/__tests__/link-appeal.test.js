@@ -489,13 +489,20 @@ describe('appeal linked appeals routes', () => {
 							}
 						];
 						testAppeal.appellantCase.appellantCaseValidationOutcome = { id: 1, name: 'Valid' };
-						databaseConnector.folder.findMany.mockResolvedValue([]);
+						databaseConnector.folder.findMany.mockResolvedValue([{ id: 1 }]);
 						databaseConnector.appealRelationship.deleteMany.mockResolvedValue({});
 						databaseConnector.appealRelationship.create.mockResolvedValue({});
 						// @ts-ignore
 						databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
 						databaseConnector.representation.findMany.mockResolvedValue([{ id: 'testId' }]);
 						databaseConnector.representation.update.mockResolvedValue({ id: 'testId' });
+						databaseConnector.representationAttachment.findMany.mockResolvedValue([
+							{ documentGuid: 'testDocGuid' }
+						]);
+						databaseConnector.document.updateMany.mockResolvedValue([]);
+						databaseConnector.document.findMany.mockResolvedValue([
+							{ guid: 'testDocGuid', latestVersionId: 1 }
+						]);
 
 						const response = await request
 							.post(`/appeals/${testAppeal.id}/update-linked-appeals`)
@@ -505,7 +512,23 @@ describe('appeal linked appeals routes', () => {
 							})
 							.set('azureAdUserId', azureAdUserId);
 
-						expect(databaseConnector.folder.findMany).toHaveBeenCalledTimes(2);
+						expect(databaseConnector.folder.findMany).toHaveBeenCalledTimes(3);
+
+						//move and update representation attachments / documents
+						expect(databaseConnector.representationAttachment.findMany).toHaveBeenCalledWith({
+							where: {
+								representationId: 'testId'
+							}
+						});
+						expect(databaseConnector.document.updateMany).toHaveBeenCalledWith({
+							where: {
+								guid: { in: ['testDocGuid'] }
+							},
+							data: {
+								caseId: mockAppealA.id,
+								folderId: 1
+							}
+						});
 
 						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledTimes(1);
 						expect(databaseConnector.appealRelationship.deleteMany).toHaveBeenCalledWith({
@@ -535,6 +558,12 @@ describe('appeal linked appeals routes', () => {
 						});
 
 						expect(mockBroadcasters.broadcastRepresentation).toHaveBeenCalledTimes(1);
+						expect(mockBroadcasters.broadcastDocument).toHaveBeenCalledTimes(1);
+						expect(mockBroadcasters.broadcastDocument).toHaveBeenCalledWith(
+							'testDocGuid',
+							1,
+							EventType.Update
+						);
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledTimes(3);
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(testAppeal.id);
 						expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(mockAppealA.id);
