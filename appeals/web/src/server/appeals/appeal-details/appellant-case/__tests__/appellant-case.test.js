@@ -167,6 +167,62 @@ describe('appellant-case', () => {
 			);
 		});
 
+		it.each([
+			['Householder', appealData],
+			['CAS planning', appealDataCasPlanning],
+			['CAS advert', appealDataCasAdvert]
+		])(
+			'should show Appeal statement in Upload documents for %s appeals submitted before 1 April 2026',
+			async (_, testAppealData) => {
+				nock('http://test/')
+					.get('/appeals/2?include=all')
+					.reply(200, {
+						...testAppealData,
+						appealId: 2
+					});
+				nock('http://test/')
+					.get('/appeals/2/appellant-cases/0')
+					.reply(200, {
+						...appellantCaseDataNotValidated,
+						applicationDate: '2026-03-31T12:00:00.000Z'
+					});
+
+				const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('4. Upload documents</h2>');
+				expect(unprettifiedElement.innerHTML).toContain('Appeal statement');
+			}
+		);
+
+		it.each([
+			['Householder', appealData],
+			['CAS planning', appealDataCasPlanning],
+			['CAS advert', appealDataCasAdvert]
+		])(
+			'should not show Appeal statement in Upload documents for %s appeals submitted from 1 April 2026 onwards',
+			async (_, testAppealData) => {
+				nock('http://test/')
+					.get('/appeals/2?include=all')
+					.reply(200, {
+						...testAppealData,
+						appealId: 2
+					});
+				nock('http://test/')
+					.get('/appeals/2/appellant-cases/0')
+					.reply(200, {
+						...appellantCaseDataNotValidated,
+						applicationDate: '2026-04-01T00:00:00.000Z'
+					});
+
+				const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('4. Upload documents</h2>');
+				expect(unprettifiedElement.innerHTML).not.toContain('Appeal statement');
+			}
+		);
+
 		it('should render the appellant case page with the expected content (Full planning appeal / S78)', async () => {
 			nock('http://test/')
 				.get('/appeals/2?include=all')
