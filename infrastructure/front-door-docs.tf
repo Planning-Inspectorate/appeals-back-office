@@ -41,8 +41,12 @@ resource "azurerm_cdn_frontdoor_custom_domain" "docs" {
   provider                 = azurerm.front_door
 
   tls {
-    certificate_type    = "ManagedCertificate"
-    minimum_tls_version = "TLS12"
+    certificate_type = "ManagedCertificate"
+    minimum_version  = "TLS12"
+
+    cipher_suite {
+      type = "TLS12_2023"
+    }
   }
 }
 
