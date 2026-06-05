@@ -21,7 +21,7 @@ module "function_doc_processing" {
   # networking
   integration_subnet_id      = azurerm_subnet.apps.id
   outbound_vnet_connectivity = true
-  inbound_vnet_connectivity  = true
+  inbound_vnet_connectivity  = false # publicly open - not working as intended when set to true, needs further investigation.
   private_endpoint = {
     private_dns_zone_id = data.azurerm_private_dns_zone.app_service.id
     subnet_id           = azurerm_subnet.main.id
