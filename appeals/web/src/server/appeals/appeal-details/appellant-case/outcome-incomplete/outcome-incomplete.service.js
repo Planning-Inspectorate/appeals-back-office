@@ -2,7 +2,7 @@ import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import {
-	isAnyEnforcementAppealType,
+	beforeExpeditedOriginalApplicationCutOff,
 	isS78ExpeditedAppealType
 } from '@pins/appeals/utils/appeal-type-checks.js';
 
@@ -125,31 +125,44 @@ export async function setReviewOutcomeForEnforcementNoticeAppellantCase(
 /**
  * @param {Array<{id: number, name: string, hasText: Boolean}>} incompleteReasonOptions
  * @param {string} appealType
- * @param {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} [appellantCase]
+ * @param {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse | undefined} appellantCase
  * @returns {Array<{id: number, name: string, hasText: Boolean}>}
  */
 export function getFilteredReasons(incompleteReasonOptions, appealType, appellantCase) {
-	if (isAnyEnforcementAppealType(appealType)) {
-		if (appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING) {
+	let isExpedited;
+	switch (appealType) {
+		case APPEAL_TYPE.S78:
+		case APPEAL_TYPE.S78_EXPEDITED:
+			isExpedited = isS78ExpeditedAppealType(
+				appealType,
+				appellantCase?.applicationDate,
+				appellantCase?.applicationDecision,
+				appellantCase?.typeOfPlanningApplication
+			);
+			if (isExpedited) {
+				return incompleteReasonOptions.filter(
+					(reason) => (reason.id !== 2 && reason.id <= 10) || reason.id === 11
+				);
+			} else {
+				return incompleteReasonOptions.filter((reason) => reason.id <= 10 || reason.id === 11);
+			}
+		case APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING:
 			return incompleteReasonOptions.filter(
 				(reason) => reason.id > 9 && reason.id !== 11 && reason.id !== 14
 			);
-		} else {
+		case APPEAL_TYPE.ENFORCEMENT_NOTICE:
 			return incompleteReasonOptions.filter((reason) => reason.id > 9 && reason.id !== 11);
-		}
-	} else {
-		const isExpedited = isS78ExpeditedAppealType(
-			appealType,
-			appellantCase?.applicationDate,
-			appellantCase?.applicationDecision,
-			appellantCase?.typeOfPlanningApplication
-		);
-		if (isExpedited) {
-			return incompleteReasonOptions.filter(
-				(reason) => (reason.id !== 2 && reason.id <= 10) || reason.id === 11
-			);
-		} else {
+		case APPEAL_TYPE.CAS_ADVERTISEMENT:
+		case APPEAL_TYPE.CAS_PLANNING:
+		case APPEAL_TYPE.HOUSEHOLDER:
+			if (beforeExpeditedOriginalApplicationCutOff(appellantCase?.applicationDate)) {
+				return incompleteReasonOptions.filter((reason) => reason.id <= 10 || reason.id === 11);
+			} else {
+				return incompleteReasonOptions.filter(
+					(reason) => (reason.id <= 10 || reason.id === 11) && reason.id !== 9 && reason.id !== 2
+				);
+			}
+		default:
 			return incompleteReasonOptions.filter((reason) => reason.id <= 10 || reason.id === 11);
-		}
 	}
 }
