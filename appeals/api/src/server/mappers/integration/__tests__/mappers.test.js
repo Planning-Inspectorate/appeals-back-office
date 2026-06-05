@@ -422,7 +422,8 @@ describe('mapAppellantCaseIn', () => {
 					ownersInformed: true,
 					isGreenBelt: true,
 					typeOfPlanningApplication: 'full',
-					numberOfResidencesNetChange: 123
+					numberOfResidencesNetChange: 123,
+					reasonForAppealAppellant: 'My reason for appeal'
 				}
 			},
 			expected: {
@@ -445,6 +446,7 @@ describe('mapAppellantCaseIn', () => {
 				isGreenBelt: true,
 				typeOfPlanningApplication: 'full',
 				numberOfResidencesNetChange: 123,
+				reasonForAppealAppellant: 'My reason for appeal',
 				siteAccessDetails: null,
 				siteSafetyDetails: null
 			}
