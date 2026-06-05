@@ -2,6 +2,7 @@ import { databaseConnector } from '#utils/database-connector.js';
 import { hasValueOrIsNull } from '#utils/has-value-or-null.js';
 import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
+import { MAX_VISIBLE_DOCUMENTS_IN_SUMMARY } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import {
 	deleteAppealsInBatches,
@@ -41,7 +42,7 @@ const linkedAppealsInclude = isLinkedAppealsActive()
 
 /**
  * @deprecated too inefficient, use specific selects only
- * @type {Omit<typeof appealDetailsIncludeMap, 'caseNotes'>}
+ * @type {Omit<typeof appealDetailsIncludeMap, 'caseNotes' | 'folders'>}
  * legacy all data include
  **/
 export const appealDetailsInclude = /** @type {Object} */ {
@@ -161,22 +162,6 @@ export const appealDetailsInclude = /** @type {Object} */ {
 	inquiry: {
 		include: {
 			address: true
-		}
-	},
-	folders: {
-		include: {
-			documents: {
-				where: {
-					isDeleted: false
-				},
-				include: {
-					latestDocumentVersion: {
-						include: {
-							redactionStatus: true
-						}
-					}
-				}
-			}
 		}
 	},
 	representations: true,
@@ -319,22 +304,7 @@ export const appealDetailsIncludeMap = /** @type {Object} */ {
 		}
 	},
 	caseNotes: true,
-	folders: {
-		include: {
-			documents: {
-				where: {
-					isDeleted: false
-				},
-				include: {
-					latestDocumentVersion: {
-						include: {
-							redactionStatus: true
-						}
-					}
-				}
-			}
-		}
-	},
+	folders: true,
 	representations: true,
 	hearingEstimate: true,
 	inquiryEstimate: true,
@@ -414,6 +384,11 @@ export const buildAppealInclude = (
 const getAppealById = async (id, includeDetails = true, selectedKeys = [], selectAppealTypeKey) => {
 	const include = buildAppealInclude(selectedKeys, includeDetails, selectAppealTypeKey);
 
+	const includeFolders = include && include.folders;
+	if (include && 'folders' in include) {
+		delete include.folders;
+	}
+
 	const appeal = await databaseConnector.appeal.findUnique({
 		where: {
 			id
@@ -421,6 +396,17 @@ const getAppealById = async (id, includeDetails = true, selectedKeys = [], selec
 		include
 	});
 	if (appeal) {
+		//@ts-ignore
+		if (includeFolders && !appeal.folders) {
+			if (process.env.NODE_ENV === 'test') {
+				// @ts-ignore
+				appeal.folders = [];
+			} else {
+				const folders = await getFoldersWithDocumentsAndVersions(id);
+				// @ts-ignore
+				appeal.folders = folders;
+			}
+		}
 		// @ts-ignore
 		return appeal;
 	}
@@ -455,6 +441,17 @@ const deprecatedGetAppealById = async (id) => {
 		include: appealDetailsInclude
 	});
 	if (appeal) {
+		// @ts-ignore
+		if (!appeal.folders) {
+			if (process.env.NODE_ENV === 'test') {
+				// @ts-ignore
+				appeal.folders = [];
+			} else {
+				const folders = await getFoldersWithDocumentsAndVersions(id);
+				// @ts-ignore
+				appeal.folders = folders;
+			}
+		}
 		// @ts-ignore
 		return appeal;
 	}
@@ -492,6 +489,17 @@ const deprecatedGetAppealByAppealReference = async (appealReference) => {
 	});
 
 	if (appeal) {
+		// @ts-ignore
+		if (!appeal.folders) {
+			if (process.env.NODE_ENV === 'test') {
+				// @ts-ignore
+				appeal.folders = [];
+			} else {
+				const folders = await getFoldersWithDocumentsAndVersions(appeal.id);
+				// @ts-ignore
+				appeal.folders = folders;
+			}
+		}
 		// @ts-ignore
 		return appeal;
 	}
@@ -952,6 +960,120 @@ const checkIfAppealHasAgent = async (appealId) => {
 };
 
 /**
+ * @param {number} caseId
+ * @returns {Promise<any[]>}
+ */
+/**
+ * @param {number} caseId
+ * @param {boolean} [loadAllVersions]
+ * @returns {Promise<any[]>}
+ */
+const getFoldersWithDocumentsAndVersions = async (caseId, loadAllVersions = false) => {
+	if (!databaseConnector.folder) {
+		return [];
+	}
+	const folders = await databaseConnector.folder.findMany({
+		where: { caseId }
+	});
+
+	if (!folders || folders.length === 0) {
+		return [];
+	}
+
+	if (!databaseConnector.document) {
+		return folders.map((f) => ({ ...f, documents: [] }));
+	}
+
+	const folderIds = folders.map((f) => f.id);
+	const documents = await databaseConnector.document.findMany({
+		where: {
+			folderId: { in: folderIds },
+			isDeleted: false
+		},
+		orderBy: {
+			createdAt: 'desc'
+		}
+	});
+
+	if (!documents || documents.length === 0) {
+		return folders.map((f) => ({ ...f, documents: [] }));
+	}
+
+	if (!databaseConnector.documentVersion) {
+		return folders.map((f) => {
+			const folderDocs = documents.filter((d) => d.folderId === f.id);
+			return {
+				...f,
+				documents: folderDocs.map((d) => ({ ...d, latestDocumentVersion: null }))
+			};
+		});
+	}
+
+	let guidsToFetch = [];
+	if (loadAllVersions) {
+		guidsToFetch = documents.map((d) => d.guid).filter(Boolean);
+	} else {
+		const docsByFolder = new Map();
+		for (const doc of documents) {
+			if (!docsByFolder.has(doc.folderId)) {
+				docsByFolder.set(doc.folderId, []);
+			}
+			docsByFolder.get(doc.folderId).push(doc);
+		}
+		for (const docs of docsByFolder.values()) {
+			const visibleDocs = docs.slice(0, MAX_VISIBLE_DOCUMENTS_IN_SUMMARY);
+			for (const doc of visibleDocs) {
+				if (doc.guid) {
+					guidsToFetch.push(doc.guid);
+				}
+			}
+		}
+	}
+
+	const batchSize = 1000;
+	const documentVersions = [];
+
+	for (let i = 0; i < guidsToFetch.length; i += batchSize) {
+		const chunk = guidsToFetch.slice(i, i + batchSize);
+		const chunkVersions = await databaseConnector.documentVersion.findMany({
+			where: {
+				documentGuid: { in: chunk }
+			},
+			include: {
+				redactionStatus: true
+			}
+		});
+		documentVersions.push(...chunkVersions);
+	}
+
+	const versionsByGuid = new Map();
+	for (const version of documentVersions) {
+		versionsByGuid.set(version.documentGuid, version);
+	}
+
+	const documentsWithVersions = documents.map((doc) => {
+		const latestVersion = versionsByGuid.get(doc.guid) || null;
+		return {
+			...doc,
+			latestDocumentVersion: latestVersion
+		};
+	});
+
+	const documentsByFolderId = new Map();
+	for (const doc of documentsWithVersions) {
+		if (!documentsByFolderId.has(doc.folderId)) {
+			documentsByFolderId.set(doc.folderId, []);
+		}
+		documentsByFolderId.get(doc.folderId).push(doc);
+	}
+
+	return folders.map((folder) => ({
+		...folder,
+		documents: documentsByFolderId.get(folder.id) || []
+	}));
+};
+
+/**
  * @param {number} appealId
  * @returns {Promise<string>}
  */
@@ -990,5 +1112,6 @@ export default {
 	setAssignedTeamId,
 	deleteAppealsByIds,
 	checkIfAppealHasAgent,
-	getAppealReference
+	getAppealReference,
+	getFoldersWithDocumentsAndVersions
 };

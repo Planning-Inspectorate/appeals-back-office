@@ -309,6 +309,42 @@ const addAttachments = async (repId, attachments) => {
 
 /**
  * @param {number} repId
+ * @param {number} destinationAppealId
+ * @param {number} destinationFolderId
+ */
+const moveRepresentationAttachmentDocuments = async (
+	repId,
+	destinationAppealId,
+	destinationFolderId
+) => {
+	const attachmentsToUpdate = await databaseConnector.representationAttachment.findMany({
+		where: { representationId: repId }
+	});
+
+	const attachmentDocumentGuidArray = attachmentsToUpdate.map(
+		(attachment) => attachment.documentGuid
+	);
+
+	// returns a count rather than an array of documents
+	await databaseConnector.document.updateMany({
+		where: {
+			guid: { in: attachmentDocumentGuidArray }
+		},
+		data: {
+			caseId: destinationAppealId,
+			folderId: destinationFolderId
+		}
+	});
+
+	return databaseConnector.document.findMany({
+		where: {
+			guid: { in: attachmentDocumentGuidArray }
+		}
+	});
+};
+
+/**
+ * @param {number} repId
  * @param {Array<{ id: number, text: string[] }>} rejectionReasons
  */
 const updateRejectionReasons = async (repId, rejectionReasons) => {
@@ -354,5 +390,6 @@ export default {
 	createRepresentation,
 	createRepresentations,
 	addAttachments,
+	moveRepresentationAttachmentDocuments,
 	updateRejectionReasons
 };
