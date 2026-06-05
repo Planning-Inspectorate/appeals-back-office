@@ -91,6 +91,7 @@ export const mapAppellantCaseIn = (command) => {
 		originalDevelopmentDescription: casedata.originalDevelopmentDescription,
 		changedDevelopmentDescription: casedata.changedDevelopmentDescription,
 		ownersInformed: casedata.ownersInformed,
+		reasonForAppealAppellant: casedata.reasonForAppealAppellant,
 		...(knowsAllOwners && { knowsAllOwners }),
 		...(knowsOtherOwners && { knowsOtherOwners }),
 		isGreenBelt: casedata.isGreenBelt,

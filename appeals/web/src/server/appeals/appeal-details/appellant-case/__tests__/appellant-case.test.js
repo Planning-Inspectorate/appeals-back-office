@@ -218,7 +218,7 @@ describe('appellant-case', () => {
 				const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('4. Upload documents</h2>');
+				expect(unprettifiedElement.innerHTML).toContain('5. Upload documents</h2>');
 				expect(unprettifiedElement.innerHTML).not.toContain('Appeal statement');
 			}
 		);

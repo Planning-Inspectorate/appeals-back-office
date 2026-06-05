@@ -1,5 +1,6 @@
 // @ts-nocheck
 import {
+	appealData,
 	appealDataFullPlanning,
 	appellantCaseDataNotValidated
 } from '#testing/app/fixtures/referencedata.js';
@@ -64,5 +65,81 @@ describe('appellant-case-expedited', () => {
 			'Did you submit a separate ownership certificate and agricultural land declaration with your application?'
 		);
 		expect(element.innerHTML).toContain('Yes');
+	});
+
+	it('should render the appellant case page with expedited fields when present (Householder)', async () => {
+		const expeditedAppellantCaseData = {
+			...appellantCaseDataNotValidated,
+			applicationDate: '2026-04-01T00:00:00.000Z',
+			reasonForAppealAppellant: 'My reason for Householder appeal'
+		};
+
+		nock('http://test/')
+			.get('/appeals/1?include=all')
+			.reply(200, {
+				...appealData,
+				appealId: 1
+			});
+		nock('http://test/').get('/appeals/1/appellant-cases/0').reply(200, expeditedAppellantCaseData);
+
+		const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+		const element = parseHtml(response.text, { skipPrettyPrint: true });
+
+		expect(element.innerHTML).toContain('Why are you appealing?');
+		expect(element.innerHTML).toContain('My reason for Householder appeal');
+		expect(element.innerHTML).toContain('4. Appeal details</h2>');
+		expect(element.innerHTML).toContain('5. Upload documents</h2>');
+	});
+
+	it('should render the appellant case page with expedited fields when present (CAS planning)', async () => {
+		const expeditedAppellantCaseData = {
+			...appellantCaseDataNotValidated,
+			applicationDate: '2026-04-01T00:00:00.000Z',
+			reasonForAppealAppellant: 'My reason for CAS planning appeal',
+			typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.MINOR_COMMERCIAL_DEVELOPMENT
+		};
+
+		nock('http://test/')
+			.get('/appeals/1?include=all')
+			.reply(200, {
+				...appealData,
+				appealId: 1,
+				appealType: 'CAS planning'
+			});
+		nock('http://test/').get('/appeals/1/appellant-cases/0').reply(200, expeditedAppellantCaseData);
+
+		const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+		const element = parseHtml(response.text, { skipPrettyPrint: true });
+
+		expect(element.innerHTML).toContain('Why are you appealing?');
+		expect(element.innerHTML).toContain('My reason for CAS planning appeal');
+		expect(element.innerHTML).toContain('4. Appeal details</h2>');
+		expect(element.innerHTML).toContain('5. Upload documents</h2>');
+	});
+
+	it('should render the appellant case page with expedited fields when present (CAS advert)', async () => {
+		const expeditedAppellantCaseData = {
+			...appellantCaseDataNotValidated,
+			applicationDate: '2026-04-01T00:00:00.000Z',
+			reasonForAppealAppellant: 'My reason for CAS advert appeal',
+			typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.ADVERTISEMENT
+		};
+
+		nock('http://test/')
+			.get('/appeals/1?include=all')
+			.reply(200, {
+				...appealData,
+				appealId: 1,
+				appealType: 'CAS advert'
+			});
+		nock('http://test/').get('/appeals/1/appellant-cases/0').reply(200, expeditedAppellantCaseData);
+
+		const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+		const element = parseHtml(response.text, { skipPrettyPrint: true });
+
+		expect(element.innerHTML).toContain('Why are you appealing?');
+		expect(element.innerHTML).toContain('My reason for CAS advert appeal');
+		expect(element.innerHTML).toContain('4. Appeal details</h2>');
+		expect(element.innerHTML).toContain('5. Upload documents</h2>');
 	});
 });
