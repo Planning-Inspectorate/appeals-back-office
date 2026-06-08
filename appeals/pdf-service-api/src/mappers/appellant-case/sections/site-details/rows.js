@@ -5,20 +5,36 @@ import {
 	formatYesNoDetails
 } from '../../../../lib/nunjucks-filters/index.js';
 
+/**
+ * @param {any} area
+ * @returns {any}
+ */
 function formatArea(area) {
 	return area ? `${area} m²` : 'N/A';
 }
 
+/**
+ * @param {any} siteAccessRequired
+ * @returns {any}
+ */
 function formatSiteAccessDetails(siteAccessRequired) {
 	const { isRequired, details } = siteAccessRequired;
 	return isRequired ? formatYesNoDetails(details) : 'No';
 }
 
+/**
+ * @param {any} healthAndSafety
+ * @returns {any}
+ */
 function formatHealthAndSafetyDetails(healthAndSafety) {
 	const { hasIssues, details } = healthAndSafety;
 	return hasIssues ? formatYesNoDetails(details) : 'No';
 }
 
+/**
+ * @param {any} siteOwnership
+ * @returns {any}
+ */
 function formatKnowsOtherLandowners(siteOwnership) {
 	const knowsOwners = siteOwnership.ownsSomeLand
 		? siteOwnership.knowsOtherLandowners
@@ -37,6 +53,10 @@ function formatKnowsOtherLandowners(siteOwnership) {
 	}
 }
 
+/**
+ * @param {any} siteOwnership
+ * @returns {any}
+ */
 function formatOwnsAllLand(siteOwnership) {
 	if (siteOwnership.ownsAllLand) return 'Fully owned';
 
@@ -45,6 +65,14 @@ function formatOwnsAllLand(siteOwnership) {
 	return 'Not owned';
 }
 
+/**
+ * @param {any} anySignificantChanges
+ * @param {any} anySignificantChanges_otherSignificantChanges
+ * @param {any} anySignificantChanges_localPlanSignificantChanges
+ * @param {any} anySignificantChanges_nationalPolicySignificantChanges
+ * @param {any} anySignificantChanges_courtJudgementSignificantChanges
+ * @returns {any}
+ */
 function formatAnySignificantChanges(
 	anySignificantChanges,
 	anySignificantChanges_otherSignificantChanges,
@@ -69,6 +97,7 @@ function formatAnySignificantChanges(
 	return anySignificantChanges ? formatYesNoDetails(details) : 'No';
 }
 
+/** @type {Record<string, (data: any) => any>} */
 export const rowBuilders = {
 	appealSite: (data) => ({
 		key: 'What is the address of the appeal site?',
@@ -125,7 +154,7 @@ export const rowBuilders = {
 		html: formatHealthAndSafetyDetails(data.healthAndSafety)
 	}),
 	anySignificantChanges: (data) => ({
-		key: 'Have there been any significant changes to the appeal site?',
+		key: 'Have there been any significant changes that would affect the application?',
 		html: formatAnySignificantChanges(
 			data.anySignificantChanges,
 			data.anySignificantChanges_otherSignificantChanges,

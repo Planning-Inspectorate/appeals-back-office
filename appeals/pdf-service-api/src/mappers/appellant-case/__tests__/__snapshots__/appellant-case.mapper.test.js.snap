@@ -1177,7 +1177,7 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         },
         {
           "html": "No",
-          "key": "Have there been any significant changes to the appeal site?",
+          "key": "Have there been any significant changes that would affect the application?",
         },
       ],
     },
@@ -1202,31 +1202,7 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         },
       ],
     },
-    {
-      "heading": "Appeal details",
-      "items": [
-        {
-          "key": "How would you prefer us to decide your appeal?",
-          "text": "Hearing",
-        },
-        {
-          "key": "Why would you prefer this appeal procedure?",
-          "text": "Need for a detailed examination",
-        },
-        {
-          "key": "How many days would you expect the inquiry to last?",
-          "text": "1",
-        },
-        {
-          "key": "How many witnesses would you expect to give evidence at the inquiry?",
-          "text": "1",
-        },
-        {
-          "key": "Why are you appealing?",
-          "text": "Not provided",
-        },
-      ],
-    },
+    undefined,
     {
       "heading": "Upload documents",
       "items": [
@@ -1235,16 +1211,24 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
           "key": "Application form",
         },
         {
-          "key": "Did you submit an environmental statement with your application?",
+          "key": "Did you submit an environmental statement with the application?",
           "text": "Not answered",
         },
         {
           "html": "No documents",
-          "key": "Environmental statement",
+          "key": "Upload your environmental statement",
+        },
+        {
+          "key": "Did the local planning authority change the description of development?",
+          "text": "No",
         },
         {
           "html": "No documents",
           "key": "Agreement to change the description of development",
+        },
+        {
+          "key": "Why are you appealing?",
+          "text": "Not provided",
         },
         {
           "html": "No documents",
