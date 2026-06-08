@@ -379,9 +379,14 @@ export const updateDocumentFileName = async (req, res) => {
 	try {
 		const latestDocument = await documentRepository.getDocumentById(documentId);
 
-		if (latestDocument && latestDocument.name && latestDocument.latestDocumentVersion) {
-			await documentRepository.updateDocumentById(latestDocument.guid, document);
-			if (document.fileName && document.fileName !== latestDocument.name) {
+		if (latestDocument?.name && latestDocument.latestDocumentVersion) {
+			await documentRepository.updateDocument(latestDocument, document);
+
+			const nameHasChanged = document.fileName && document.fileName !== latestDocument.name;
+			const isSharingDocument =
+				document.isShared && !latestDocument.latestDocumentVersion.published;
+
+			if (nameHasChanged) {
 				const nameChangedMessage = stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_NAME_CHANGED, [
 					latestDocument.name,
 					document.fileName
@@ -395,7 +400,9 @@ export const updateDocumentFileName = async (req, res) => {
 					appeal.id,
 					latestDocument.guid
 				);
+			}
 
+			if (nameHasChanged || isSharingDocument) {
 				await broadcasters.broadcastDocument(
 					latestDocument.guid,
 					latestDocument.latestDocumentVersion.version,
