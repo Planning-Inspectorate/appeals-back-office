@@ -380,8 +380,37 @@ const updateRejectionReasons = async (repId, rejectionReasons) => {
 	});
 };
 
+/**
+ * @param {number[]} appealIds
+ * @returns {Promise<string[]>}
+ */
+const getInterestedPartyEmails = async (appealIds) => {
+	if (appealIds.length === 0) {
+		return [];
+	}
+
+	const ipReps = await databaseConnector.representation.findMany({
+		where: {
+			appealId: { in: appealIds },
+			representationType: APPEAL_REPRESENTATION_TYPE.COMMENT
+		},
+		select: {
+			represented: {
+				select: {
+					email: true
+				}
+			}
+		}
+	});
+
+	return ipReps
+		.map((comment) => comment.represented?.email)
+		.filter((email) => email !== undefined && email !== null);
+};
+
 export default {
 	getById,
+	getInterestedPartyEmails,
 	getRepresentations,
 	getRepresentationCounts,
 	updateRepresentationById,
