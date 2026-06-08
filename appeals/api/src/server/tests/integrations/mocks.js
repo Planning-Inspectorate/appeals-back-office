@@ -826,7 +826,12 @@ export const appealIngestionInput = {
 					key: 'Some'
 				}
 			},
-			isGreenBelt: false
+			isGreenBelt: false,
+			anySignificantChanges: 'No',
+			anySignificantChanges_otherSignificantChanges: null,
+			anySignificantChanges_localPlanSignificantChanges: null,
+			anySignificantChanges_nationalPolicySignificantChanges: null,
+			anySignificantChanges_courtJudgementSignificantChanges: null
 		}
 	},
 	neighbouringSites: {
@@ -836,6 +841,22 @@ export const appealIngestionInput = {
 		create: FOLDERS.map((/** @type {{ path: string; }} */ f) => {
 			return { path: f };
 		})
+	}
+};
+
+export const appealIngestionInputHouseholder = {
+	...appealIngestionInput,
+	appellantCase: {
+		...appealIngestionInput.appellantCase,
+		create: {
+			...appealIngestionInput.appellantCase.create,
+			anySignificantChanges: 'No',
+			anySignificantChanges_otherSignificantChanges: null,
+			anySignificantChanges_localPlanSignificantChanges: null,
+			anySignificantChanges_nationalPolicySignificantChanges: null,
+			anySignificantChanges_courtJudgementSignificantChanges: null,
+			reasonForAppealAppellant: undefined
+		}
 	}
 };
 
@@ -912,7 +933,12 @@ export const appealIngestionInputAdverts = {
 					key: 'Some'
 				}
 			},
-			isGreenBelt: false
+			isGreenBelt: false,
+			anySignificantChanges: 'No',
+			anySignificantChanges_otherSignificantChanges: null,
+			anySignificantChanges_localPlanSignificantChanges: null,
+			anySignificantChanges_nationalPolicySignificantChanges: null,
+			anySignificantChanges_courtJudgementSignificantChanges: null
 		}
 	},
 	neighbouringSites: {
@@ -994,7 +1020,13 @@ export const appealIngestionInputCasAdverts = {
 					key: 'Some'
 				}
 			},
-			isGreenBelt: false
+			isGreenBelt: false,
+			anySignificantChanges: 'No',
+			anySignificantChanges_otherSignificantChanges: null,
+			anySignificantChanges_localPlanSignificantChanges: null,
+			anySignificantChanges_nationalPolicySignificantChanges: null,
+			anySignificantChanges_courtJudgementSignificantChanges: null,
+			reasonForAppealAppellant: undefined
 		}
 	},
 	neighbouringSites: {
@@ -1072,7 +1104,13 @@ export const appealIngestionInputCasPlanning = {
 					key: 'Some'
 				}
 			},
-			isGreenBelt: false
+			isGreenBelt: false,
+			anySignificantChanges: 'No',
+			anySignificantChanges_otherSignificantChanges: null,
+			anySignificantChanges_localPlanSignificantChanges: null,
+			anySignificantChanges_nationalPolicySignificantChanges: null,
+			anySignificantChanges_courtJudgementSignificantChanges: null,
+			reasonForAppealAppellant: undefined
 		}
 	},
 	neighbouringSites: {
