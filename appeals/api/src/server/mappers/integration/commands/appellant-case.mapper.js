@@ -91,11 +91,21 @@ export const mapAppellantCaseIn = (command) => {
 		originalDevelopmentDescription: casedata.originalDevelopmentDescription,
 		changedDevelopmentDescription: casedata.changedDevelopmentDescription,
 		ownersInformed: casedata.ownersInformed,
-		reasonForAppealAppellant: casedata.reasonForAppealAppellant,
 		...(knowsAllOwners && { knowsAllOwners }),
 		...(knowsOtherOwners && { knowsOtherOwners }),
 		isGreenBelt: casedata.isGreenBelt,
 		typeOfPlanningApplication: casedata.typeOfPlanningApplication,
+		reasonForAppealAppellant: casedata.reasonForAppealAppellant,
+		anySignificantChanges: sharedFields.anySignificantChanges,
+		anySignificantChanges_otherSignificantChanges:
+			sharedFields.anySignificantChanges_otherSignificantChanges,
+		anySignificantChanges_localPlanSignificantChanges:
+			sharedFields.anySignificantChanges_localPlanSignificantChanges,
+		anySignificantChanges_nationalPolicySignificantChanges:
+			sharedFields.anySignificantChanges_nationalPolicySignificantChanges,
+		anySignificantChanges_courtJudgementSignificantChanges:
+			sharedFields.anySignificantChanges_courtJudgementSignificantChanges,
+
 		...(isS20 && { ...sharedFields }),
 		...(isS78 && {
 			...sharedFields,
