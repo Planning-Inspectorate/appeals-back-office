@@ -1,3 +1,4 @@
+import config from '#environment/config.js';
 import { textSummaryListItem } from '#lib/mappers/components/index.js';
 import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { APPEAL_TYPE_OF_PLANNING_APPLICATION } from '@planning-inspectorate/data-model';
@@ -26,7 +27,9 @@ const applicationTypeText = (typeOfPlanningApplication) => {
 export const mapApplicationType = ({ appellantCaseData, currentRoute }) =>
 	textSummaryListItem({
 		id: 'appeal-type',
-		text: 'What type of application is your appeal about?',
+		text: config.featureFlags.featureFlagNewBeforeYouStart
+			? 'What is your appeal about?'
+			: 'What type of application is your appeal about?',
 		value: applicationTypeText(appellantCaseData.typeOfPlanningApplication),
 		link: `${currentRoute}/#`,
 		editable: false
