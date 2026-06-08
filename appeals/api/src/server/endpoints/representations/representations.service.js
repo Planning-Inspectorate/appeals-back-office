@@ -77,6 +77,14 @@ export const getRepresentations = async (
 
 /**
  * @param {number[]} appealIds
+ * @returns {Promise<string[]>}
+ */
+export const getInterestedPartyEmails = async (appealIds) => {
+	return representationRepository.getInterestedPartyEmails(appealIds);
+};
+
+/**
+ * @param {number[]} appealIds
  * @param {{ status?: string }} [options]
  * */
 export const getRepresentationCounts = async (appealIds, options = {}) => {
