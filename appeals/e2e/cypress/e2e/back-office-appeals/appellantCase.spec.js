@@ -110,10 +110,7 @@ describe('Managing Appellant Case Details', () => {
 			);
 
 			// 3 Appeal details
-			appellantCasePage.assertFieldLabelAndValue(
-				'What type of application is your appeal about?',
-				'Full planning'
-			);
+			appellantCasePage.assertFieldLabelAndValue('What is your appeal about?', 'Full planning');
 
 			// 4 Upload docs
 			appellantCasePage.assertFieldLabelAndValue('Application form', '');
@@ -342,7 +339,7 @@ describe('Managing Appellant Case Details', () => {
 
 			// Appeal details
 			appellantCasePage.assertFieldLabelAndValue(
-				'What type of application is your appeal about?',
+				'What is your appeal about?',
 				'Displaying an advertisement'
 			);
 
@@ -412,10 +409,7 @@ describe('Managing Appellant Case Details', () => {
 			);
 
 			// 3 Appeal details
-			appellantCasePage.assertFieldLabelAndValue(
-				'What type of application is your appeal about?',
-				'Full planning'
-			);
+			appellantCasePage.assertFieldLabelAndValue('What is your appeal about?', 'Full planning');
 
 			// 4 Upload docs
 			appellantCasePage.assertFieldLabelAndValue('Application form', 'No documents');
@@ -471,7 +465,7 @@ describe('Managing Appellant Case Details', () => {
 
 			// Appeal details
 			appellantCasePage.assertFieldLabelAndValue(
-				'What type of application is your appeal about?',
+				'What is your appeal about?',
 				'Displaying an advertisement'
 			);
 

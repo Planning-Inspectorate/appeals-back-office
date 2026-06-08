@@ -73,9 +73,7 @@ describe('appellant-case-main', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('Appellant case</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('Before you start</h2>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'What type of application is your appeal about?'
-			);
+			expect(unprettifiedElement.innerHTML).toContain('What is your appeal about?');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Which local planning authority (LPA) do you want to appeal against?'
 			);

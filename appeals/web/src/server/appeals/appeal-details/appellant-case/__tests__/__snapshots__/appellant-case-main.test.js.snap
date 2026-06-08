@@ -87,7 +87,7 @@ exports[`appellant-case-main GET /appellant-case notification banners should ren
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Householder planning</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -388,7 +388,7 @@ exports[`appellant-case-main GET /appellant-case notification banners should ren
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Householder planning</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -728,7 +728,7 @@ exports[`appellant-case-main GET /appellant-case notification banners should ren
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Householder planning</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -1042,7 +1042,7 @@ exports[`appellant-case-main GET /appellant-case notification banners should ren
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Householder planning</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -1488,7 +1488,7 @@ exports[`appellant-case-main GET /appellant-case should render review outcome fo
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Householder planning</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -1801,7 +1801,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Householder planning</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -2075,7 +2075,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Displaying an advertisement</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -2334,7 +2334,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Minor commercial development</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -3739,7 +3739,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Full planning</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -4113,7 +4113,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Householder planning</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -4841,7 +4841,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Listed building</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -5200,7 +5200,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Displaying an advertisement</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -5496,7 +5496,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Lawful development certificate</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -5804,7 +5804,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Displaying an advertisement</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -6105,7 +6105,7 @@ exports[`appellant-case-main POST /appellant-case should re-render the appellant
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Householder planning</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
