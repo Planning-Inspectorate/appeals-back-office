@@ -1485,7 +1485,7 @@ describe('costs', () => {
 
 				const unsharedDocumentFolder = structuredClone(costsFolderInfoAppellantApplication);
 				unsharedDocumentFolder.documents.forEach((doc) => {
-					doc.isShared = false;
+					doc.latestDocumentVersion.published = false;
 				});
 
 				nock('http://test/')
@@ -1509,7 +1509,7 @@ describe('costs', () => {
 
 				const sharedDocumentFolder = structuredClone(costsFolderInfoAppellantApplication);
 				sharedDocumentFolder.documents.forEach((doc) => {
-					doc.isShared = true;
+					doc.latestDocumentVersion.published = true;
 				});
 
 				nock('http://test/').get('/appeals/1/document-folders/1').reply(200, sharedDocumentFolder);
@@ -1700,9 +1700,9 @@ describe('costs', () => {
 						nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 
 						const sharedDocumentVersionsInfo = structuredClone(documentFileVersionsInfoChecked);
-						sharedDocumentVersionsInfo.isShared = true;
+						sharedDocumentVersionsInfo.latestDocumentVersion.published = true;
 						sharedDocumentVersionsInfo.allVersions.forEach((version) => {
-							version.isShared = true;
+							version.published = true;
 						});
 
 						nock('http://test/')
@@ -1738,7 +1738,7 @@ describe('costs', () => {
 						nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 
 						const unsharedDocumentVersionsInfo = structuredClone(documentFileVersionsInfoChecked);
-						unsharedDocumentVersionsInfo.isShared = false;
+						unsharedDocumentVersionsInfo.latestDocumentVersion.published = false;
 
 						nock('http://test/')
 							.get('/appeals/documents/1/versions')

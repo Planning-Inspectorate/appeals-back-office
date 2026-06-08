@@ -120,28 +120,77 @@ describe('/appeals/documents/:documentId', () => {
 
 describe('/appeals/:appealId/documents/:documentId', () => {
 	describe('PATCH', () => {
-		databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-		databaseConnector.user.upsert.mockResolvedValue({
-			id: 1,
-			azureAdUserId
+		beforeEach(() => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue(
+				documentRedactionStatuses
+			);
 		});
-		databaseConnector.document.update = jest.fn().mockResolvedValue(null);
 
-		const requestBody = {
-			document: {
-				id: '8b107895-b8c9-467f-aad0-c09daafeaaad',
-				fileName: 'new_filename.txt'
-			}
-		};
+		afterEach(() => {
+			jest.clearAllMocks();
+		});
 
 		test('updates filename in document', async () => {
 			const response = await request
 				.patch(`/appeals/${householdAppeal.id}/documents/${documentCreated.guid}`)
-				.send(requestBody)
+				.send({ document: { id: documentCreated.guid, fileName: 'new_filename.txt' } })
 				.set('azureAdUserId', azureAdUserId);
 
 			expect(databaseConnector.document.update).toHaveBeenCalledTimes(1);
 			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+			expect(response.status).toEqual(200);
+		});
+
+		test('shares a document and broadcasts when isShared is true and not yet published', async () => {
+			databaseConnector.document.findUnique.mockResolvedValue({
+				...documentCreated,
+				latestDocumentVersion: {
+					...documentCreated.latestDocumentVersion,
+					published: false,
+					redactionStatusId: 1
+				}
+			});
+
+			const response = await request
+				.patch(`/appeals/${householdAppeal.id}/documents/${documentCreated.guid}`)
+				.send({ document: { id: documentCreated.guid, isShared: true } })
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.document.update).toHaveBeenCalledTimes(1);
+			expect(databaseConnector.documentVersion.update).toHaveBeenCalledTimes(1);
+			expect(databaseConnector.documentVersion.update).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({ published: true })
+				})
+			);
+			expect(mockBroadcasters.broadcastDocument).toHaveBeenCalledWith(
+				documentCreated.guid,
+				documentCreated.latestDocumentVersion.version,
+				'Update'
+			);
+			expect(databaseConnector.auditTrail.create).not.toHaveBeenCalled();
+			expect(response.status).toEqual(200);
+		});
+
+		test('does not re-publish document when already published', async () => {
+			databaseConnector.document.findUnique.mockResolvedValue({
+				...documentCreated,
+				latestDocumentVersion: {
+					...documentCreated.latestDocumentVersion,
+					published: true
+				}
+			});
+
+			const response = await request
+				.patch(`/appeals/${householdAppeal.id}/documents/${documentCreated.guid}`)
+				.send({ document: { id: documentCreated.guid, isShared: true } })
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.documentVersion.update).not.toHaveBeenCalled();
+			expect(mockBroadcasters.broadcastDocument).not.toHaveBeenCalled();
 			expect(response.status).toEqual(200);
 		});
 	});
@@ -155,6 +204,7 @@ describe('/appeals/:appealId/documents', () => {
 			documents: [
 				{
 					id: '987e66e0-1db4-404b-8213-8082919159e9',
+					GUID: '987e66e0-1db4-404b-8213-8082919159e9',
 					receivedDate: '2023-09-22',
 					latestVersion: 1,
 					redactionStatus: 1,
@@ -162,6 +212,7 @@ describe('/appeals/:appealId/documents', () => {
 				},
 				{
 					id: '8b107895-b8c9-467f-aad0-c09daafeaaad',
+					GUID: '8b107895-b8c9-467f-aad0-c09daafeaaad',
 					receivedDate: '2023-09-23',
 					latestVersion: 1,
 					redactionStatus: 2,
@@ -220,7 +271,7 @@ describe('/appeals/:appealId/documents', () => {
 				.set('azureAdUserId', azureAdUserId);
 
 			expect(databaseConnector.$transaction).toHaveBeenCalledTimes(1);
-			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
 			expect(response.status).toEqual(201);
 		});
 	});
@@ -232,6 +283,7 @@ describe('/appeals/:appealId/documents', () => {
 			id: 1,
 			azureAdUserId
 		});
+		databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
 		databaseConnector.documentVersion.update = jest.fn().mockResolvedValue(null);
 
 		const requestBody = {
