@@ -1,18 +1,23 @@
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { appealTypeToAppealCaseTypeMapper } from '@pins/appeals/utils/appeal-type-case.mapper.js';
 import { isExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { formatSentenceCase } from '../../../lib/nunjucks-filters/index.js';
 
+/**
+ * @param {any} templateData
+ */
 export function appealDetailsSection(templateData) {
 	const {
 		appellantProcedurePreference,
 		appellantProcedurePreferenceDetails,
 		appellantProcedurePreferenceDuration,
 		appellantProcedurePreferenceWitnessCount,
-		appealType,
-		isS78Expedited
+		appealType
 	} = templateData;
 
-	const isExpeditedAppeal = isExpeditedAppealType(appealTypeToAppealCaseTypeMapper(appealType));
+	const isExpeditedAppeal =
+		isExpeditedAppealType(appealTypeToAppealCaseTypeMapper(appealType)) ||
+		appealType === APPEAL_TYPE.S78_EXPEDITED;
 
 	if (isExpeditedAppeal) return;
 	const itemsList = [
@@ -33,12 +38,6 @@ export function appealDetailsSection(templateData) {
 			text: formatSentenceCase(appellantProcedurePreferenceWitnessCount?.toString(), 'Not provided')
 		}
 	];
-	isS78Expedited
-		? itemsList.push({
-				key: 'Why are you appealing?',
-				text: formatSentenceCase(templateData.reasonForAppealAppellant, 'Not provided')
-			})
-		: null;
 	return {
 		heading: 'Appeal details',
 		items: itemsList
