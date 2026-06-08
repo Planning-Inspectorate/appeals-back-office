@@ -284,9 +284,10 @@ export function generateHASComponents(
 						text: 'Appeal details'
 					}
 				},
-				rows: [mappedAppellantCaseData.reasonForAppealAppellant?.display?.summaryListItem].filter(
-					Boolean
-				)
+				rows: [
+					mappedAppellantCaseData.reasonForAppealAppellant?.display?.summaryListItem,
+					mappedAppellantCaseData.anySignificantChanges?.display?.summaryListItem
+				].filter(Boolean)
 			}
 		});
 	}

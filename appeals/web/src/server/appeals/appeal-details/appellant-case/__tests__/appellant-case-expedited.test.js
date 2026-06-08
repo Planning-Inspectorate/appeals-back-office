@@ -67,79 +67,53 @@ describe('appellant-case-expedited', () => {
 		expect(element.innerHTML).toContain('Yes');
 	});
 
-	it('should render the appellant case page with expedited fields when present (Householder)', async () => {
-		const expeditedAppellantCaseData = {
-			...appellantCaseDataNotValidated,
-			applicationDate: '2026-04-01T00:00:00.000Z',
-			reasonForAppealAppellant: 'My reason for Householder appeal'
-		};
+	it.each([
+		{
+			type: 'Householder',
+			appealType: undefined,
+			typeOfPlanningApplication: undefined,
+			reason: 'My reason for Householder appeal'
+		},
+		{
+			type: 'CAS planning',
+			appealType: 'CAS planning',
+			typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.MINOR_COMMERCIAL_DEVELOPMENT,
+			reason: 'My reason for CAS planning appeal'
+		},
+		{
+			type: 'CAS advert',
+			appealType: 'CAS advert',
+			typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.ADVERTISEMENT,
+			reason: 'My reason for CAS advert appeal'
+		}
+	])(
+		'should render the appellant case page with expedited fields when present ($type)',
+		async ({ appealType, typeOfPlanningApplication, reason }) => {
+			const expeditedAppellantCaseData = {
+				...appellantCaseDataNotValidated,
+				applicationDate: '2026-04-01T00:00:00.000Z',
+				reasonForAppealAppellant: reason,
+				...(typeOfPlanningApplication && { typeOfPlanningApplication })
+			};
 
-		nock('http://test/')
-			.get('/appeals/1?include=all')
-			.reply(200, {
-				...appealData,
-				appealId: 1
-			});
-		nock('http://test/').get('/appeals/1/appellant-cases/0').reply(200, expeditedAppellantCaseData);
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, {
+					...appealData,
+					appealId: 1,
+					...(appealType && { appealType })
+				});
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, expeditedAppellantCaseData);
 
-		const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
-		const element = parseHtml(response.text, { skipPrettyPrint: true });
+			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
+			const element = parseHtml(response.text, { skipPrettyPrint: true });
 
-		expect(element.innerHTML).toContain('Why are you appealing?');
-		expect(element.innerHTML).toContain('My reason for Householder appeal');
-		expect(element.innerHTML).toContain('4. Appeal details</h2>');
-		expect(element.innerHTML).toContain('5. Upload documents</h2>');
-	});
-
-	it('should render the appellant case page with expedited fields when present (CAS planning)', async () => {
-		const expeditedAppellantCaseData = {
-			...appellantCaseDataNotValidated,
-			applicationDate: '2026-04-01T00:00:00.000Z',
-			reasonForAppealAppellant: 'My reason for CAS planning appeal',
-			typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.MINOR_COMMERCIAL_DEVELOPMENT
-		};
-
-		nock('http://test/')
-			.get('/appeals/1?include=all')
-			.reply(200, {
-				...appealData,
-				appealId: 1,
-				appealType: 'CAS planning'
-			});
-		nock('http://test/').get('/appeals/1/appellant-cases/0').reply(200, expeditedAppellantCaseData);
-
-		const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
-		const element = parseHtml(response.text, { skipPrettyPrint: true });
-
-		expect(element.innerHTML).toContain('Why are you appealing?');
-		expect(element.innerHTML).toContain('My reason for CAS planning appeal');
-		expect(element.innerHTML).toContain('4. Appeal details</h2>');
-		expect(element.innerHTML).toContain('5. Upload documents</h2>');
-	});
-
-	it('should render the appellant case page with expedited fields when present (CAS advert)', async () => {
-		const expeditedAppellantCaseData = {
-			...appellantCaseDataNotValidated,
-			applicationDate: '2026-04-01T00:00:00.000Z',
-			reasonForAppealAppellant: 'My reason for CAS advert appeal',
-			typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.ADVERTISEMENT
-		};
-
-		nock('http://test/')
-			.get('/appeals/1?include=all')
-			.reply(200, {
-				...appealData,
-				appealId: 1,
-				appealType: 'CAS advert'
-			});
-		nock('http://test/').get('/appeals/1/appellant-cases/0').reply(200, expeditedAppellantCaseData);
-
-		const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
-		const element = parseHtml(response.text, { skipPrettyPrint: true });
-
-		expect(element.innerHTML).toContain('Why are you appealing?');
-		expect(element.innerHTML).toContain('My reason for CAS advert appeal');
-		expect(element.innerHTML).toContain('4. Appeal details</h2>');
-		expect(element.innerHTML).toContain('5. Upload documents</h2>');
-	});
+			expect(element.innerHTML).toContain('Why are you appealing?');
+			expect(element.innerHTML).toContain(reason);
+			expect(element.innerHTML).toContain('4. Appeal details</h2>');
+			expect(element.innerHTML).toContain('5. Upload documents</h2>');
+		}
+	);
 });

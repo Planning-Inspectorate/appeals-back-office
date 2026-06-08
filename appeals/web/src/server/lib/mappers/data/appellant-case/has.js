@@ -20,6 +20,7 @@ import { mapOwnersKnown } from './submappers/owners-known.js';
 import { mapReasonForAppeal } from './submappers/reason-for-appeal.js';
 import { mapRelatedAppeals } from './submappers/related-appeals.js';
 import { mapReviewOutcome } from './submappers/review-outcome.js';
+import { mapSignificantChanges } from './submappers/significant-changes.js';
 import { mapSiteAddress } from './submappers/site-address.js';
 import { mapSiteArea } from './submappers/site-area.js';
 import { mapSiteOwnership } from './submappers/site-ownership.js';
@@ -51,5 +52,6 @@ export const submaps = {
 	reviewOutcome: mapReviewOutcome,
 	relatedAppeals: mapRelatedAppeals,
 	statementCommonGround: mapStatementCommonGroundDocument,
-	reasonForAppealAppellant: mapReasonForAppeal
+	reasonForAppealAppellant: mapReasonForAppeal,
+	anySignificantChanges: mapSignificantChanges
 };
