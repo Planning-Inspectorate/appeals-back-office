@@ -881,10 +881,11 @@ export const postInquiryCheckDetails = async (request, response) => {
 		const inquiryRequest = {
 			...buildInquiryRequest(inquiry, appellantCase?.planningObligation?.hasObligation),
 			startDate: getTodaysISOString(),
-			isStartCase
+			isStartCase,
+			inspectorName: inspector
+				? await getInspectorFormattedEmailName(inspector, request)
+				: undefined
 		};
-
-		request.currentAppeal.inspectorName = await getInspectorFormattedEmailName(inspector, request);
 
 		//Create Inquiry
 		await createInquiry(request, inquiryRequest);
