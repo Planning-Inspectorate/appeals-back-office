@@ -2583,14 +2583,11 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="before-you-start">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have you received an enforcement notice?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is your enforcement notice about a listed building?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
+                            <dd                             class="govuk-summary-list__value">Enforcement listed building and conservation area</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the issue date on your enforcement notice?</dt>
                             <dd                             class="govuk-summary-list__value">1 January 2021</dd>
@@ -2895,21 +2892,14 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="before-you-start">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have you received an enforcement notice?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/enforcement-notice/change">Change<span class="govuk-visually-hidden"> Have you received an enforcement notice? (Before you start)</span></a>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Local planning authority (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is your enforcement notice about a listed building?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/enforcement-notice-listed-building/change">Change<span class="govuk-visually-hidden"> Is your enforcement notice about a listed building? (Before you start)</span></a>
-                                </dd>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
+                            <dd                             class="govuk-summary-list__value">Enforcement listed building and conservation area</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the issue date on your enforcement notice?</dt>
                             <dd                             class="govuk-summary-list__value">1 January 2021</dd>
@@ -3349,17 +3339,14 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="before-you-start">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have you received an enforcement notice?</dt>
-                            <dd                             class="govuk-summary-list__value">No data</dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Local planning authority (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is your enforcement notice about a listed building?</dt>
-                            <dd                             class="govuk-summary-list__value">No data</dd>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
+                            <dd                             class="govuk-summary-list__value">Full planning</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the issue date on your enforcement notice?</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
@@ -4381,21 +4368,14 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="before-you-start">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have you received an enforcement notice?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/enforcement-notice/change">Change<span class="govuk-visually-hidden"> Have you received an enforcement notice? (Before you start)</span></a>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Local planning authority (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is your enforcement notice about a listed building?</dt>
-                            <dd                             class="govuk-summary-list__value">Yes</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/enforcement-notice-listed-building/change">Change<span class="govuk-visually-hidden"> Is your enforcement notice about a listed building? (Before you start)</span></a>
-                                </dd>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
+                            <dd                             class="govuk-summary-list__value">Enforcement listed building and conservation area</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the issue date on your enforcement notice?</dt>
                             <dd                             class="govuk-summary-list__value">1 January 2021</dd>

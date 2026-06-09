@@ -36,6 +36,10 @@ const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 const appellantCasePagePath = '/appellant-case';
 const notificationBannerElement = '.govuk-notification-banner';
+const appellantCaseDataNotValidatedNoEnforcementNotice = {
+	...JSON.parse(JSON.stringify(appellantCaseDataNotValidated)),
+	enforcementNotice: { isReceived: false, isListedBuilding: false }
+};
 
 describe('appellant-case-main', () => {
 	beforeEach(installMockApi);
@@ -50,7 +54,7 @@ describe('appellant-case-main', () => {
 		beforeEach(() => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
-				.reply(200, appellantCaseDataNotValidated);
+				.reply(200, appellantCaseDataNotValidatedNoEnforcementNotice);
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
@@ -62,7 +66,7 @@ describe('appellant-case-main', () => {
 		it('should render the appellant case page with the expected common Before you start content', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
-				.reply(200, appellantCaseDataNotValidated);
+				.reply(200, appellantCaseDataNotValidatedNoEnforcementNotice);
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
 			const element = parseHtml(response.text);
@@ -87,7 +91,7 @@ describe('appellant-case-main', () => {
 		it('should render the appellant case page with the expected content (Householder)', async () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
-				.reply(200, appellantCaseDataNotValidated);
+				.reply(200, appellantCaseDataNotValidatedNoEnforcementNotice);
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
 			const element = parseHtml(response.text);
@@ -136,7 +140,7 @@ describe('appellant-case-main', () => {
 				nock('http://test/')
 					.get('/appeals/2/appellant-cases/0')
 					.reply(200, {
-						...appellantCaseDataNotValidated,
+						...appellantCaseDataNotValidatedNoEnforcementNotice,
 						applicationDate: '2026-03-31T12:00:00.000Z'
 					});
 
@@ -164,7 +168,7 @@ describe('appellant-case-main', () => {
 				nock('http://test/')
 					.get('/appeals/2/appellant-cases/0')
 					.reply(200, {
-						...appellantCaseDataNotValidated,
+						...appellantCaseDataNotValidatedNoEnforcementNotice,
 						applicationDate: '2026-04-01T00:00:00.000Z'
 					});
 
@@ -186,7 +190,7 @@ describe('appellant-case-main', () => {
 			nock('http://test/')
 				.get('/appeals/2/appellant-cases/0')
 				.reply(200, {
-					...appellantCaseDataNotValidated,
+					...appellantCaseDataNotValidatedNoEnforcementNotice,
 					typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
 				});
 
@@ -242,7 +246,7 @@ describe('appellant-case-main', () => {
 			nock('http://test/')
 				.get('/appeals/3/appellant-cases/0')
 				.reply(200, {
-					...appellantCaseDataNotValidated,
+					...appellantCaseDataNotValidatedNoEnforcementNotice,
 					typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.LISTED_BUILDING
 				});
 
@@ -296,7 +300,7 @@ describe('appellant-case-main', () => {
 			nock('http://test/')
 				.get('/appeals/2/appellant-cases/0')
 				.reply(200, {
-					...appellantCaseDataNotValidated,
+					...appellantCaseDataNotValidatedNoEnforcementNotice,
 					typeOfPlanningApplication:
 						APPEAL_TYPE_OF_PLANNING_APPLICATION.MINOR_COMMERCIAL_DEVELOPMENT
 				});
@@ -345,7 +349,7 @@ describe('appellant-case-main', () => {
 			nock('http://test/')
 				.get('/appeals/2/appellant-cases/0')
 				.reply(200, {
-					...appellantCaseDataNotValidated,
+					...appellantCaseDataNotValidatedNoEnforcementNotice,
 					typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.ADVERTISEMENT
 				});
 
@@ -407,7 +411,7 @@ describe('appellant-case-main', () => {
 			nock('http://test/')
 				.get('/appeals/2/appellant-cases/0')
 				.reply(200, {
-					...appellantCaseDataNotValidated,
+					...appellantCaseDataNotValidatedNoEnforcementNotice,
 					typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.ADVERTISEMENT
 				});
 
@@ -482,7 +486,7 @@ describe('appellant-case-main', () => {
 			nock('http://test/')
 				.get('/appeals/2/appellant-cases/0')
 				.reply(200, {
-					...appellantCaseDataNotValidated,
+					...appellantCaseDataNotValidatedNoEnforcementNotice,
 					typeOfPlanningApplication:
 						APPEAL_TYPE_OF_PLANNING_APPLICATION.LAWFUL_DEVELOPMENT_CERTIFICATE
 				});
@@ -568,7 +572,7 @@ describe('appellant-case-main', () => {
 				});
 			nock('http://test/')
 				.get('/appeals/2/appellant-cases/0')
-				.reply(200, appellantCaseDataNotValidated);
+				.reply(200, appellantCaseDataNotValidatedNoEnforcementNotice);
 
 			const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
 			const element = parseHtml(response.text);
@@ -607,7 +611,7 @@ describe('appellant-case-main', () => {
 					});
 				nock('http://test/')
 					.get('/appeals/2/appellant-cases/0')
-					.reply(200, appellantCaseDataNotValidated);
+					.reply(200, appellantCaseDataNotValidatedNoEnforcementNotice);
 
 				const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
@@ -639,7 +643,7 @@ describe('appellant-case-main', () => {
 			nock('http://test/')
 				.get('/appeals/2/appellant-cases/0')
 				.reply(200, {
-					...appellantCaseDataNotValidated,
+					...appellantCaseDataNotValidatedNoEnforcementNotice,
 					enforcementNotice: {
 						isReceived: true,
 						isListedBuilding: true,
@@ -743,7 +747,7 @@ describe('appellant-case-main', () => {
 			nock('http://test/')
 				.get('/appeals/2/appellant-cases/0')
 				.reply(200, {
-					...appellantCaseDataNotValidated,
+					...appellantCaseDataNotValidatedNoEnforcementNotice,
 					enforcementNotice: {
 						isReceived: true,
 						isListedBuilding: true,
@@ -846,7 +850,7 @@ describe('appellant-case-main', () => {
 			nock('http://test/')
 				.get('/appeals/2/appellant-cases/0')
 				.reply(200, {
-					...appellantCaseDataNotValidated,
+					...appellantCaseDataNotValidatedNoEnforcementNotice,
 					enforcementNotice: {
 						isReceived: true,
 						isListedBuilding: true,
@@ -947,7 +951,7 @@ describe('appellant-case-main', () => {
 			nock('http://test/')
 				.get('/appeals/2/appellant-cases/0')
 				.reply(200, {
-					...appellantCaseDataNotValidated,
+					...appellantCaseDataNotValidatedNoEnforcementNotice,
 					enforcementNotice: {
 						isReceived: null,
 						isListedBuilding: null,
@@ -1094,7 +1098,7 @@ describe('appellant-case-main', () => {
 				});
 				nock('http://test/')
 					.get('/appeals/1/appellant-cases/0')
-					.reply(200, appellantCaseDataNotValidated);
+					.reply(200, appellantCaseDataNotValidatedNoEnforcementNotice);
 				nock('http://test/')
 					.get('/appeals/document-redaction-statuses')
 					.reply(200, documentRedactionStatuses);
@@ -1752,7 +1756,7 @@ describe('appellant-case-main', () => {
 						.persist();
 					nock('http://test/')
 						.get(`/appeals/${appealId}/appellant-cases/0`)
-						.reply(200, appellantCaseDataNotValidated);
+						.reply(200, appellantCaseDataNotValidatedNoEnforcementNotice);
 					nock('http://test/')
 						.get('/appeals/document-redaction-statuses')
 						.reply(200, documentRedactionStatuses)
@@ -1856,7 +1860,7 @@ describe('appellant-case-main', () => {
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/3')
 						.reply(200, {
-							...appellantCaseDataNotValidated,
+							...appellantCaseDataNotValidatedNoEnforcementNotice,
 							siteAccessRequired: {
 								isRequired: true,
 								details: text300Characters
@@ -1885,7 +1889,7 @@ describe('appellant-case-main', () => {
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/3')
 						.reply(200, {
-							...appellantCaseDataNotValidated,
+							...appellantCaseDataNotValidatedNoEnforcementNotice,
 							siteAccessRequired: {
 								isRequired: true,
 								details: text301Characters
@@ -1916,7 +1920,7 @@ describe('appellant-case-main', () => {
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/3')
 						.reply(200, {
-							...appellantCaseDataNotValidated,
+							...appellantCaseDataNotValidatedNoEnforcementNotice,
 							healthAndSafety: {
 								hasIssues: true,
 								details: text300Characters
@@ -1945,7 +1949,7 @@ describe('appellant-case-main', () => {
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/3')
 						.reply(200, {
-							...appellantCaseDataNotValidated,
+							...appellantCaseDataNotValidatedNoEnforcementNotice,
 							healthAndSafety: {
 								hasIssues: true,
 								details: text301Characters
@@ -1976,7 +1980,7 @@ describe('appellant-case-main', () => {
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/3')
 						.reply(200, {
-							...appellantCaseDataNotValidated,
+							...appellantCaseDataNotValidatedNoEnforcementNotice,
 							developmentDescription: {
 								details: text300Characters
 							}
@@ -2004,7 +2008,7 @@ describe('appellant-case-main', () => {
 					nock('http://test/')
 						.get('/appeals/1/appellant-cases/3')
 						.reply(200, {
-							...appellantCaseDataNotValidated,
+							...appellantCaseDataNotValidatedNoEnforcementNotice,
 							developmentDescription: {
 								details: text301Characters
 							}
@@ -2035,7 +2039,7 @@ describe('appellant-case-main', () => {
 					nock('http://test/')
 						.get('/appeals/2/appellant-cases/0')
 						.reply(200, {
-							...appellantCaseDataNotValidated,
+							...appellantCaseDataNotValidatedNoEnforcementNotice,
 							appellantProcedurePreferenceDetails: text300Characters
 						});
 
@@ -2062,7 +2066,7 @@ describe('appellant-case-main', () => {
 					nock('http://test/')
 						.get('/appeals/2/appellant-cases/0')
 						.reply(200, {
-							...appellantCaseDataNotValidated,
+							...appellantCaseDataNotValidatedNoEnforcementNotice,
 							appellantProcedurePreferenceDetails: text301Characters
 						});
 
@@ -2091,7 +2095,7 @@ describe('appellant-case-main', () => {
 					nock('http://test/')
 						.get('/appeals/2/appellant-cases/0')
 						.reply(200, {
-							...appellantCaseDataNotValidated,
+							...appellantCaseDataNotValidatedNoEnforcementNotice,
 							enforcementNotice: {
 								isReceived: true
 							},
@@ -2131,13 +2135,15 @@ describe('appellant-case-main', () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, {
-					...appellantCaseDataNotValidated,
+					...appellantCaseDataNotValidatedNoEnforcementNotice,
 					documents: {
-						...appellantCaseDataNotValidated.documents,
+						...appellantCaseDataNotValidatedNoEnforcementNotice.documents,
 						appellantCaseCorrespondence: {
-							...appellantCaseDataNotValidated.documents.appellantCaseCorrespondence,
+							...appellantCaseDataNotValidatedNoEnforcementNotice.documents
+								.appellantCaseCorrespondence,
 							documents: [
-								...appellantCaseDataNotValidated.documents.appellantCaseCorrespondence.documents,
+								...appellantCaseDataNotValidatedNoEnforcementNotice.documents
+									.appellantCaseCorrespondence.documents,
 								{
 									id: 'a78446aa-167a-4bef-89b7-18bcb0da11c2',
 									name: 'test-doc.jpeg',
@@ -2145,8 +2151,8 @@ describe('appellant-case-main', () => {
 									caseId: 111,
 									isLateEntry: false,
 									latestDocumentVersion: {
-										...appellantCaseDataNotValidated.documents.appellantCaseCorrespondence
-											.documents[0].latestDocumentVersion,
+										...appellantCaseDataNotValidatedNoEnforcementNotice.documents
+											.appellantCaseCorrespondence.documents[0].latestDocumentVersion,
 										virusCheckStatus: 'not_scanned'
 									}
 								}
@@ -2170,13 +2176,15 @@ describe('appellant-case-main', () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, {
-					...appellantCaseDataNotValidated,
+					...appellantCaseDataNotValidatedNoEnforcementNotice,
 					documents: {
-						...appellantCaseDataNotValidated.documents,
+						...appellantCaseDataNotValidatedNoEnforcementNotice.documents,
 						appellantCaseCorrespondence: {
-							...appellantCaseDataNotValidated.documents.appellantCaseCorrespondence,
+							...appellantCaseDataNotValidatedNoEnforcementNotice.documents
+								.appellantCaseCorrespondence,
 							documents: [
-								...appellantCaseDataNotValidated.documents.appellantCaseCorrespondence.documents,
+								...appellantCaseDataNotValidatedNoEnforcementNotice.documents
+									.appellantCaseCorrespondence.documents,
 								{
 									id: 'a78446aa-167a-4bef-89b7-18bcb0da11c2',
 									name: 'test-doc.jpeg',
@@ -2184,8 +2192,8 @@ describe('appellant-case-main', () => {
 									caseId: 111,
 									isLateEntry: false,
 									latestDocumentVersion: {
-										...appellantCaseDataNotValidated.documents.appellantCaseCorrespondence
-											.documents[0].latestDocumentVersion,
+										...appellantCaseDataNotValidatedNoEnforcementNotice.documents
+											.appellantCaseCorrespondence.documents[0].latestDocumentVersion,
 										virusCheckStatus: 'affected'
 									}
 								}
@@ -2216,7 +2224,7 @@ describe('appellant-case-main', () => {
 		beforeEach(() => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
-				.reply(200, appellantCaseDataNotValidated);
+				.reply(200, appellantCaseDataNotValidatedNoEnforcementNotice);
 		});
 
 		afterEach(() => {
