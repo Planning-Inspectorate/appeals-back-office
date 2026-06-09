@@ -86,7 +86,7 @@ apps_config = {
     featureFlagEnforcementInquiryLinked         = false
     featureFlagEnforcementChangeProcedureLinked = false
     featureFlagShareCosts                       = false
-    featureFlagExpeditedAppealsLpaq             = false
+    featureFlagExpeditedAppealsLpaq             = true
     featureFlagNewBeforeYouStart                = false
   }
 
