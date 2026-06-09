@@ -22,6 +22,7 @@ import {
 	AUDIT_TRIAL_RULE_6_PARTY_ID
 } from '@pins/appeals/constants/support.js';
 import { parseHtml } from '@pins/platform';
+import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import nock from 'nock';
 import supertest from 'supertest';
 
@@ -112,6 +113,22 @@ describe('audit', () => {
 		it('should include the redaction status in the audit log display text for a supporting document', async () => {
 			const result = await tryMapDocument(1, auditTrailEntryText, docInfo, null);
 			expect(result).toMatch(/unredacted|no redaction required|redacted/);
+		});
+
+		it('should return audit trail entry with download link for enforcement notice withdrawal', async () => {
+			const auditTrailEntryText = `Document enforcementNoticeWithdrawal.docx uploaded (version 1, ${randomRedactStatus})`;
+			const docInfo = {
+				name: 'enforcementNoticeWithdrawal.docx',
+				documentGuid: 'efac1b7f-71c6-4780-bf22-edd0b0531914',
+				stage: 'cancellation',
+				folderId: 61306,
+				documentType: APPEAL_DOCUMENT_TYPE.LPA_ENFORCEMENT_NOTICE_WITHDRAWAL
+			};
+
+			const result = await tryMapDocument(1, auditTrailEntryText, docInfo, null);
+			expect(result).toEqual(
+				`Document <a class="govuk-link" href="/documents/1/download/${docInfo.documentGuid}/${docInfo.name}">${docInfo.name}</a> uploaded (version 1, ${randomRedactStatus})`
+			);
 		});
 	});
 
