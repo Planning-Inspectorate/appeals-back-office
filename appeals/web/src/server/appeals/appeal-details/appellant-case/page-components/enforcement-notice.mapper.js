@@ -1,3 +1,4 @@
+import config from '#environment/config.js';
 import { generateS20Components } from './s20.mapper.js';
 
 /**
@@ -36,9 +37,13 @@ export function generateEnforcementNoticeComponents(
 	const beforeYouStartComponents = getComponentParameters('before-you-start', pageComponents);
 	if (beforeYouStartComponents) {
 		beforeYouStartComponents.parameters.rows = [
-			mappedAppellantCaseData.enforcementNotice.display.summaryListItem,
+			!config.featureFlags.featureFlagNewBeforeYouStart &&
+				mappedAppellantCaseData.enforcementNotice.display.summaryListItem,
 			mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem,
-			mappedAppellantCaseData.enforcementNoticeListedBuilding.display.summaryListItem,
+			config.featureFlags.featureFlagNewBeforeYouStart &&
+				mappedAppellantCaseData.applicationType.display.summaryListItem,
+			!config.featureFlags.featureFlagNewBeforeYouStart &&
+				mappedAppellantCaseData.enforcementNoticeListedBuilding.display.summaryListItem,
 			mappedAppellantCaseData.enforcementIssueDate.display.summaryListItem,
 			mappedAppellantCaseData.enforcementEffectiveDate.display.summaryListItem,
 			mappedAppellantCaseData.contactPlanningInspectorateDate.display.summaryListItem,
