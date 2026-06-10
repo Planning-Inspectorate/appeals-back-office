@@ -107,10 +107,14 @@ export const happyPathHelper = {
 			startCase: true
 		}
 	) {
-		// proceed to setup hearing
+		// proceed to setup hrearing
 		happyPathHelper.viewCaseDetails(caseObj);
 		caseDetailsPage.clickReadyToStartCase();
 		caseDetailsPage.selectRadioButtonByValue(procedureType);
+
+		// check if date is known and if so enter date and time
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue(hearingProperties.date ? 'yes' : 'no');
 		caseDetailsPage.clickButtonByText('Continue');
 
 		// if hearing date is provided in the properties, use it, otherwise calculate a date 2 business days in the future and use that

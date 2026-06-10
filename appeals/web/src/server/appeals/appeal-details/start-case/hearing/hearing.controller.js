@@ -24,7 +24,7 @@ import { preserveQueryString } from '#lib/url-utilities.js';
 import { capitalize } from 'lodash-es';
 import * as startCaseService from '../start-case.service.js';
 import { getStartCaseNotifyPreviews } from '../start-case.service.js';
-import { estimationPage } from './hearing.mapper.js';
+import { dateKnownPage, estimationPage } from './hearing.mapper.js';
 
 /** @typedef {import('@pins/express').ValidationErrors} ValidationErrors */
 
@@ -36,6 +36,59 @@ import { estimationPage } from './hearing.mapper.js';
 const getBackLinkUrl = (request, prevPagePath) => {
 	const baseUrl = `/appeals-service/appeal-details/${request.currentAppeal.appealId}/start-case`;
 	return isAtEditEntrypoint(request) ? `${baseUrl}/hearing/confirm` : `${baseUrl}/${prevPagePath}`;
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getHearingDateKnown = async (request, response) => {
+	return renderHearingDateKnown(request, response);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const renderHearingDateKnown = async (request, response) => {
+	const { errors } = request;
+
+	const appealDetails = request.currentAppeal;
+	const backLinkUrl = getBackLinkUrl(request, 'select-procedure');
+	const sessionValues = getSessionValuesForAppeal(
+		request,
+		'startCaseAppealProcedure',
+		appealDetails.appealId
+	);
+
+	const mappedPageContent = dateKnownPage(appealDetails, backLinkUrl, sessionValues);
+
+	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postHearingDateKnown = async (request, response) => {
+	if (request.errors) {
+		return renderHearingDateKnown(request, response);
+	}
+
+	const { appealId } = request.currentAppeal;
+
+	const baseUrl = `/appeals-service/appeal-details/${appealId}/start-case/hearing`;
+
+	if (request.body.dateKnown === 'yes') {
+		// Answer was yes so we progress to the next page
+		return response.redirect(preserveQueryString(request, `${baseUrl}/date`));
+	}
+
+	// Answer was no so we skip date and proceed to estimation
+	return response.redirect(preserveQueryString(request, `${baseUrl}/estimation`));
 };
 
 /**
@@ -54,7 +107,7 @@ export const renderHearingDate = async (request, response) => {
 	const { errors } = request;
 
 	const appealDetails = request.currentAppeal;
-	const backLinkUrl = getBackLinkUrl(request, 'select-procedure');
+	const backLinkUrl = getBackLinkUrl(request, 'hearing');
 	const sessionValues = getSessionValuesForAppeal(
 		request,
 		'startCaseAppealProcedure',
@@ -115,7 +168,10 @@ export const renderHearingEstimation = async (request, response) => {
 		'startCaseAppealProcedure',
 		appealDetails.appealId
 	);
-	const backLinkUrl = getBackLinkUrl(request, 'hearing/date');
+	const backLinkUrl = getBackLinkUrl(
+		request,
+		sessionValues?.dateKnown === 'yes' ? 'hearing/date' : 'hearing'
+	);
 
 	const mappedPageContent = estimationPage(appealDetails, backLinkUrl, errors, sessionValues || {});
 
@@ -167,6 +223,7 @@ export const getHearingConfirm = async (request, response) => {
 		'startCaseAppealProcedure',
 		currentAppeal.appealId
 	);
+	const dateKnown = sessionValues?.dateKnown === 'yes';
 	const hearingEstimationYesNo = sessionValues?.hearingEstimationYesNo;
 	const hearingEstimationDays = sessionValues?.hearingEstimationDays;
 	const baseUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/start-case`;
@@ -189,7 +246,7 @@ export const getHearingConfirm = async (request, response) => {
 			currentAppeal.appealId,
 			undefined,
 			sessionValues?.appealProcedure,
-			hearingStartTime,
+			dateKnown ? hearingStartTime : undefined,
 			hearingEstimatedDays,
 			null,
 			inspectorName
@@ -220,31 +277,46 @@ export const getHearingConfirm = async (request, response) => {
 						}
 					}
 				},
-				'Hearing date': {
-					value: dateISOStringToDisplayDate(hearingStartTime),
+				'Do you know the date and time of the hearing?': {
+					value: dateKnown ? 'Yes' : 'No',
 					actions: {
 						Change: {
-							href: editLink(baseUrl, 'hearing/date'),
-							visuallyHiddenText: 'Hearing date',
+							href: editLink(baseUrl, 'hearing'),
+							visuallyHiddenText: 'Do you know the date and time of the hearing?',
 							attributes: {
-								'data-cy': 'change-hearing-date'
+								'data-cy': 'change-date-known'
 							}
 						}
 					}
 				},
-				'Hearing time': {
-					value: dateISOStringToDisplayTime12hr(hearingStartTime),
-					actions: {
-						Change: {
-							href: editLink(baseUrl, 'hearing/date'),
-							visuallyHiddenText: 'Hearing time',
-							attributes: {
-								'data-cy': 'change-hearing-time'
+				...(dateKnown
+					? {
+							'Hearing date': {
+								value: dateISOStringToDisplayDate(hearingStartTime),
+								actions: {
+									Change: {
+										href: editLink(baseUrl, 'hearing/date'),
+										visuallyHiddenText: 'Hearing date',
+										attributes: {
+											'data-cy': 'change-hearing-date'
+										}
+									}
+								}
+							},
+							'Hearing time': {
+								value: dateISOStringToDisplayTime12hr(hearingStartTime),
+								actions: {
+									Change: {
+										href: editLink(baseUrl, 'hearing/date'),
+										visuallyHiddenText: 'Hearing time',
+										attributes: {
+											'data-cy': 'change-hearing-time'
+										}
+									}
+								}
 							}
 						}
-					}
-				},
-
+					: {}),
 				'Do you know the expected number of days to carry out the hearing?': {
 					value: capitalize(hearingEstimationYesNo || ''),
 					actions: {
@@ -319,7 +391,8 @@ export const postHearingConfirm = async (request, response) => {
 				? sessionValues?.hearingEstimationDays
 				: undefined;
 
-		const hearingStartTime = hearingStartTimeFromSession(sessionValues);
+		const hearingStartTime =
+			sessionValues?.dateKnown === 'yes' ? hearingStartTimeFromSession(sessionValues) : undefined;
 
 		const inspectorName = await getInspectorFormattedEmailName(inspector, request);
 
