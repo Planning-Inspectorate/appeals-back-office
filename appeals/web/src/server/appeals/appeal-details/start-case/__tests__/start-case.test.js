@@ -535,7 +535,7 @@ describe('start-case', () => {
 
 		[
 			['false', 'select-procedure/check-and-confirm'],
-			['true', 'hearing/date']
+			['true', 'hearing']
 		].forEach(([featureFlag, redirectPath]) => {
 			describe(`with featureFlagHearingPostMvp set to ${featureFlag}`, () => {
 				it('should render the select procedure page with the expected radio option preselected if an appeal procedure is found in the session', async () => {
@@ -987,7 +987,7 @@ describe('start-case', () => {
 
 		[
 			['false', 'select-procedure/check-and-confirm'],
-			['true', 'hearing/date']
+			['true', 'hearing']
 		].forEach(([featureFlag, redirectPath]) => {
 			describe(`with featureFlagHearingPostMvp set to ${featureFlag}`, () => {
 				it(`should redirect to ${redirectPath} if a radio option was selected`, async () => {
