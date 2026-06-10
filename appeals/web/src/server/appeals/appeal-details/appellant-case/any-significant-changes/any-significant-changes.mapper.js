@@ -7,7 +7,7 @@ import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page
 
 /**
  * @param {Appeal} appealData
- * @param {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} appellantCaseData
+ * @param {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse & { anySignificantChangesReasonCheckboxes?: string | string[] }} appellantCaseData
  * @param {string} backLinkUrl
  * @param {import("@pins/express").ValidationErrors | undefined} [errors]
  * @returns {PageContent}
@@ -19,6 +19,23 @@ export const manageSignificantChangesPage = (
 	errors
 ) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
+
+	const reasonsSelected = appellantCaseData?.anySignificantChangesReasonCheckboxes
+		? Array.isArray(appellantCaseData.anySignificantChangesReasonCheckboxes)
+			? appellantCaseData.anySignificantChangesReasonCheckboxes
+			: [appellantCaseData.anySignificantChangesReasonCheckboxes]
+		: [];
+
+	/**
+	 * @param {string} value
+	 * @param {any} text
+	 */
+	const isOptionChecked = (value, text) => {
+		if (errors) {
+			return reasonsSelected.includes(value);
+		}
+		return !!text;
+	};
 
 	const anySignificantChangesOptions = [
 		{
@@ -54,7 +71,7 @@ export const manageSignificantChangesPage = (
 		return {
 			value: options.value,
 			text: options.label,
-			checked: options.text,
+			checked: isOptionChecked(options.value, options.text),
 			conditional: options.hasText
 				? {
 						html: renderPageComponentsToHtml([
@@ -94,6 +111,9 @@ export const manageSignificantChangesPage = (
 					{
 						text: 'There have been no significant changes',
 						value: 'none',
+						checked: errors
+							? reasonsSelected.includes('none')
+							: appellantCaseData?.anySignificantChanges === 'No',
 						behaviour: 'exclusive'
 					}
 				],
