@@ -43,6 +43,163 @@ describe('start case hearing flow', () => {
 		jest.useRealTimers();
 	});
 
+	const editEntrypoint = encodeURIComponent(`${baseUrl}/1/start-case/hearing`);
+	describe('GET /start-case/hearing', () => {
+		it('should render the date known page', async () => {
+			const response = await request.get(`${baseUrl}/1/start-case/hearing`);
+			expect(response.statusCode).toBe(200);
+
+			const mainHtml = parseHtml(response.text).innerHTML;
+			expect(mainHtml).toMatchSnapshot();
+
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+			expect(pageHtml.querySelector('.govuk-caption-l')?.innerHTML.trim()).toBe(
+				'Appeal 351062 - start case'
+			);
+			expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe(
+				'Do you know the date and time of the hearing?'
+			);
+			expect(pageHtml.querySelector('input#date-known')).not.toBeNull();
+			expect(pageHtml.querySelector('button:contains("Continue")')).not.toBeNull();
+			expect(pageHtml.querySelector('a.govuk-back-link')?.getAttribute('href')).toBe(
+				`${baseUrl}/1/start-case/select-procedure`
+			);
+		});
+
+		it('should preselect a previously entered value', async () => {
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			await request.post(`${baseUrl}/1/start-case/hearing`).send({ dateKnown: 'yes' });
+
+			const response = await request.get(`${baseUrl}/1/start-case/hearing`);
+			expect(response.statusCode).toBe(200);
+
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+			expect(
+				pageHtml.querySelector('input[name="dateKnown"][value="yes"]')?.getAttribute('checked')
+			).toBeDefined();
+		});
+
+		it('should not preselect a previously entered value for a different appeal', async () => {
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+			nock('http://test/')
+				.get('/appeals/2?include=all')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			await request.post(`${baseUrl}/2/start-case/hearing`).send({ dateKnown: 'yes' });
+
+			const response = await request.get(`${baseUrl}/1/start-case/hearing`);
+			expect(response.statusCode).toBe(200);
+
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+			expect(
+				pageHtml.querySelector('input[name="dateKnown"][value="yes"]')?.getAttribute('checked')
+			).toBeUndefined();
+		});
+
+		it('should render an edited value', async () => {
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.twice()
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			await request.post(`${baseUrl}/1/start-case/hearing`).send({ dateKnown: 'no' });
+			await request
+				.post(`${baseUrl}/1/start-case/hearing?editEntrypoint=${editEntrypoint}`)
+				.send({ dateKnown: 'yes' });
+
+			const response = await request.get(
+				`${baseUrl}/1/start-case/hearing?editEntrypoint=${editEntrypoint}`
+			);
+			expect(response.statusCode).toBe(200);
+
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+			expect(
+				pageHtml.querySelector('input[name="dateKnown"][value="yes"]')?.getAttribute('checked')
+			).toBeDefined();
+		});
+
+		it('should have a back link to the CYA page when editing', async () => {
+			const response = await request.get(
+				`${baseUrl}/1/start-case/hearing?editEntrypoint=${editEntrypoint}`
+			);
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+			expect(pageHtml.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+				`${baseUrl}/1/start-case/hearing/confirm`
+			);
+		});
+	});
+
+	describe('POST /start-case/hearing', () => {
+		it('should redirect to the date page when the date is known', async () => {
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			const response = await request
+				.post(`${baseUrl}/1/start-case/hearing`)
+				.send({ dateKnown: 'yes' });
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toBe(`${baseUrl}/1/start-case/hearing/date`);
+		});
+
+		it('should redirect to the estimation page when the date is not known', async () => {
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			const response = await request
+				.post(`${baseUrl}/1/start-case/hearing`)
+				.send({ dateKnown: 'no' });
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toBe(`${baseUrl}/1/start-case/hearing/estimation`);
+		});
+
+		it('should return 400 on missing dateKnown with appropriate error message', async () => {
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			const response = await request.post(`${baseUrl}/1/start-case/hearing`).send({});
+			expect(response.statusCode).toBe(400);
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			});
+
+			expect(errorSummaryHtml.querySelector('h2')?.innerHTML.trim()).toBe('There is a problem');
+			expect(errorSummaryHtml.querySelector('.govuk-error-summary li')?.innerHTML.trim()).toContain(
+				'Select yes if you know the date and time the hearing will take place'
+			);
+		});
+	});
+
 	describe('GET /start-case/hearing/date', () => {
 		const editEntrypoint = encodeURIComponent(`${baseUrl}/1/start-case/hearing/date`);
 
@@ -65,7 +222,7 @@ describe('start case hearing flow', () => {
 			expect(pageHtml.querySelector('input#hearing-time-minute')).not.toBeNull();
 			expect(pageHtml.querySelector('button:contains("Continue")')).not.toBeNull();
 			expect(pageHtml.querySelector('a.govuk-back-link')?.getAttribute('href')).toBe(
-				`${baseUrl}/1/start-case/select-procedure`
+				`${baseUrl}/1/start-case/hearing`
 			);
 		});
 
@@ -133,6 +290,18 @@ describe('start case hearing flow', () => {
 			expect(pageHtml.querySelector('input#hearing-date-year')?.getAttribute('value')).toBe('3025');
 			expect(pageHtml.querySelector('input#hearing-time-hour')?.getAttribute('value')).toBe('13');
 			expect(pageHtml.querySelector('input#hearing-time-minute')?.getAttribute('value')).toBe('00');
+		});
+
+		it('should have a back link to the CYA page when editing', async () => {
+			const response = await request.get(
+				`${baseUrl}/1/start-case/hearing/date?editEntrypoint=${editEntrypoint}`
+			);
+			expect(response.statusCode).toBe(200);
+
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+			expect(pageHtml.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+				`${baseUrl}/1/start-case/hearing/confirm`
+			);
 		});
 	});
 
@@ -266,7 +435,7 @@ describe('start case hearing flow', () => {
 			expect(pageHtml.querySelector('button:contains("Continue")')).not.toBeNull();
 		});
 
-		it('should have a back link to hearing date', async () => {
+		it('should have a back link to hearing date when date is known', async () => {
 			nock('http://test/')
 				.get('/appeals/1?include=all')
 				.reply(200, {
@@ -274,19 +443,31 @@ describe('start case hearing flow', () => {
 					appealType: 'Planning appeal'
 				});
 
-			await request.post(`${baseUrl}/1/start-case/hearing/date`).send({
-				'hearing-date-day': '01',
-				'hearing-date-month': '02',
-				'hearing-date-year': '3025',
-				'hearing-time-hour': '12',
-				'hearing-time-minute': '00'
-			});
+			await request.post(`${baseUrl}/1/start-case/hearing`).send({ dateKnown: 'yes' });
 			const response = await request.get(`${baseUrl}/1/start-case/hearing/estimation`);
 			expect(response.statusCode).toBe(200);
 
 			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
 			expect(pageHtml.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
 				`${baseUrl}/1/start-case/hearing/date`
+			);
+		});
+
+		it('should have a back link to hearing known page when date is not known', async () => {
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			await request.post(`${baseUrl}/1/start-case/hearing`).send({ dateKnown: 'no' });
+			const response = await request.get(`${baseUrl}/1/start-case/hearing/estimation`);
+			expect(response.statusCode).toBe(200);
+
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+			expect(pageHtml.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+				`${baseUrl}/1/start-case/hearing`
 			);
 		});
 
@@ -373,7 +554,7 @@ describe('start case hearing flow', () => {
 	});
 
 	describe('GET /start-case/hearing/confirm', () => {
-		it('should render the confirm page', async () => {
+		it('should render the confirm page when date is known', async () => {
 			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
 				id: 1,
 				email: 'caseofficers@planninginspectorate.gov.uk',
@@ -400,6 +581,7 @@ describe('start case hearing flow', () => {
 			await request
 				.post(`${baseUrl}/1/start-case/select-procedure`)
 				.send({ appealProcedure: 'hearing' });
+			await request.post(`${baseUrl}/1/start-case/hearing`).send({ dateKnown: 'yes' });
 			await request.post(`${baseUrl}/1/start-case/hearing/date`).send({
 				'hearing-date-day': '01',
 				'hearing-date-month': '02',
@@ -427,6 +609,9 @@ describe('start case hearing flow', () => {
 			).toBe(
 				`${baseUrl}/1/start-case/select-procedure?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fstart-case%2Fselect-procedure`
 			);
+			expect(pageHtml.querySelector('a[data-cy="change-date-known"]')?.getAttribute('href')).toBe(
+				`${baseUrl}/1/start-case/hearing?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fstart-case%2Fhearing`
+			);
 			expect(pageHtml.querySelector('a[data-cy="change-hearing-date"]')?.getAttribute('href')).toBe(
 				`${baseUrl}/1/start-case/hearing/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fstart-case%2Fhearing%2Fdate`
 			);
@@ -443,6 +628,83 @@ describe('start case hearing flow', () => {
 			).toBe(
 				`${baseUrl}/1/start-case/hearing/estimation?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fstart-case%2Fhearing%2Festimation`
 			);
+			expect(pageHtml.innerHTML).toContain(
+				'We’ll start the timetable now and send emails to the relevant parties.'
+			);
+			expect(pageHtml.querySelector('button:contains("Start case")')).not.toBeNull();
+
+			expect(
+				pageHtml.querySelector('details[data-cy="preview-email-to-appellant"]')
+			).not.toBeNull();
+			expect(pageHtml.querySelector('details[data-cy="preview-email-to-lpa"]')).not.toBeNull();
+
+			const appellantPreview = pageHtml.querySelector(
+				'details[data-cy="preview-email-to-appellant"] .govuk-details__text'
+			)?.innerHTML;
+			const lpaPreview = pageHtml.querySelector(
+				'details[data-cy="preview-email-to-lpa"] .govuk-details__text'
+			)?.innerHTML;
+			expect(appellantPreview).toContain('Rendered HTML for appellant preview');
+			expect(lpaPreview).toContain('Rendered HTML for LPA preview');
+		});
+
+		it('should render the confirm page when date is not known', async () => {
+			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				id: 1,
+				email: 'caseofficers@planninginspectorate.gov.uk',
+				name: 'standard email'
+			});
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.times(4)
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+			nock('http://test/')
+				.post('/appeals/1/appeal-timetables/notify-preview', {
+					procedureType: 'hearing'
+				})
+				.reply(200, {
+					appellant: 'Rendered HTML for appellant preview',
+					lpa: 'Rendered HTML for LPA preview'
+				});
+
+			// Set up the session values
+			await request
+				.post(`${baseUrl}/1/start-case/select-procedure`)
+				.send({ appealProcedure: 'hearing' });
+			await request.post(`${baseUrl}/1/start-case/hearing`).send({ dateKnown: 'no' });
+			await request
+				.post(`${baseUrl}/1/start-case/hearing/estimation`)
+				.send({ hearingEstimationYesNo: 'no' });
+			const response = await request.get(`${baseUrl}/1/start-case/hearing/confirm`);
+
+			expect(response.statusCode).toBe(200);
+			const mainHtml = parseHtml(response.text).innerHTML;
+			expect(mainHtml).toMatchSnapshot();
+
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+			expect(pageHtml.querySelector('.govuk-caption-l')?.innerHTML.trim()).toBe('Appeal 351062');
+			expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe(
+				'Check details and start case'
+			);
+			expect(
+				pageHtml.querySelector('a[data-cy="change-appeal-procedure"]')?.getAttribute('href')
+			).toBe(
+				`${baseUrl}/1/start-case/select-procedure?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fstart-case%2Fselect-procedure`
+			);
+			expect(pageHtml.querySelector('a[data-cy="change-date-known"]')?.getAttribute('href')).toBe(
+				`${baseUrl}/1/start-case/hearing?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fstart-case%2Fhearing`
+			);
+			expect(pageHtml.querySelector('a[data-cy="change-hearing-date"]')).toBeNull();
+			expect(pageHtml.querySelector('a[data-cy="change-hearing-time"]')).toBeNull();
+			expect(
+				pageHtml.querySelector('a[data-cy="change-hearing-estimation-known"]')?.getAttribute('href')
+			).toBe(
+				`${baseUrl}/1/start-case/hearing/estimation?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fstart-case%2Fhearing%2Festimation`
+			);
+			expect(pageHtml.querySelector('a[data-cy="change-hearing-estimation-days"]')).toBeNull();
 			expect(pageHtml.innerHTML).toContain(
 				'We’ll start the timetable now and send emails to the relevant parties.'
 			);
@@ -515,13 +777,7 @@ describe('start case hearing flow', () => {
 			await request
 				.post(`${baseUrl}/1/start-case/select-procedure`)
 				.send({ appealProcedure: 'hearing' });
-			await request.post(`${baseUrl}/1/start-case/hearing/date`).send({
-				'hearing-date-day': '01',
-				'hearing-date-month': '02',
-				'hearing-date-year': '3025',
-				'hearing-time-hour': '12',
-				'hearing-time-minute': '00'
-			});
+			await request.post(`${baseUrl}/1/start-case/hearing`).send({ dateKnown: 'no' });
 			await request
 				.post(`${baseUrl}/1/start-case/hearing/estimation`)
 				.send({ hearingEstimationYesNo: 'no' });
@@ -592,6 +848,7 @@ describe('start case hearing flow', () => {
 			await request
 				.post(`${baseUrl}/1/start-case/select-procedure`)
 				.send({ appealProcedure: 'hearing' });
+			await request.post(`${baseUrl}/1/start-case/hearing`).send({ dateKnown: 'yes' });
 			await request.post(`${baseUrl}/1/start-case/hearing/date`).send({
 				'hearing-date-day': '01',
 				'hearing-date-month': '02',

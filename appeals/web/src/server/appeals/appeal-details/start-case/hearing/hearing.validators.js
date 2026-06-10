@@ -3,6 +3,13 @@ import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 import { capitalize } from 'lodash-es';
 
+export const validateDateKnown = createValidator(
+	createYesNoRadioValidator(
+		'dateKnown',
+		'Select yes if you know the date and time the hearing will take place'
+	)
+);
+
 export const validateEstimationYesNo = createValidator(
 	createYesNoRadioValidator(
 		'hearingEstimationYesNo',
