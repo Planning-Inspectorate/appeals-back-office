@@ -30,6 +30,29 @@ export const mapAppellantCaseSharedFields = (data) => {
 		// @ts-ignore
 		typeOfPlanningApplication: casedata?.typeOfPlanningApplication,
 		//TODO:
-		designAccessStatementProvided: null
+		designAccessStatementProvided: null,
+		reasonForAppealAppellant: casedata?.reasonForAppealAppellant ?? null,
+		/** @type {any[]} */
+		significantChangesAffectingApplicationAppellant:
+			casedata?.anySignificantChanges === 'Yes'
+				? [
+						{
+							value: 'adopted-a-new-local-plan',
+							comment: casedata?.anySignificantChanges_localPlanSignificantChanges ?? null
+						},
+						{
+							value: 'national-policy-change',
+							comment: casedata?.anySignificantChanges_nationalPolicySignificantChanges ?? null
+						},
+						{
+							value: 'court-judgement',
+							comment: casedata?.anySignificantChanges_courtJudgementSignificantChanges ?? null
+						},
+						{
+							value: 'other',
+							comment: casedata?.anySignificantChanges_otherSignificantChanges ?? null
+						}
+					].filter((c) => c.comment !== null)
+				: []
 	};
 };
