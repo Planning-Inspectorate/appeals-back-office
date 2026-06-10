@@ -720,12 +720,12 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 				existingAppealProcedure: 'hearing',
 				appealProcedure: 'inquiry',
 				eventDate: '3025-02-01T12:00:00.000Z',
-				lpaQuestionnaireDueDate: '2023-10-11T01:00:00.000Z',
-				ipCommentsDueDate: '2023-10-13T01:00:00.000Z',
-				lpaStatementDueDate: '2023-10-14T01:00:00.000Z',
-				finalCommentsDueDate: '2023-10-12T01:00:00.000Z',
-				statementOfCommonGroundDueDate: '2023-10-15T01:00:00.000Z',
-				planningObligationDueDate: '2023-10-16T01:00:00.000Z',
+				lpaQuestionnaireDueDate: '2023-10-11T22:59:00.000Z',
+				ipCommentsDueDate: '2023-10-13T22:59:00.000Z',
+				lpaStatementDueDate: '2023-10-14T22:59:00.000Z',
+				finalCommentsDueDate: '2023-10-12T22:59:00.000Z',
+				statementOfCommonGroundDueDate: '2023-10-15T22:59:00.000Z',
+				planningObligationDueDate: '2023-10-16T22:59:00.000Z',
 				proofOfEvidenceAndWitnessesDueDate: '',
 				caseManagementConferenceDueDate: ''
 			});
