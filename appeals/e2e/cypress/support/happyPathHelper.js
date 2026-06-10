@@ -259,6 +259,10 @@ export const happyPathHelper = {
 
 	uploadDocVersionLpaq(caseObj) {
 		caseDetailsPage.clickManageNotifyingParties();
+
+		// Simulate the completion of the documents scan
+		cy.simulateDocumentsScanComplete(caseObj);
+
 		caseDetailsPage.clickLinkByText('View and edit');
 		caseDetailsPage.clickButtonByText('Upload a new version');
 		fileUploader.uploadFiles(sampleFiles.document2);
@@ -273,6 +277,10 @@ export const happyPathHelper = {
 
 	removeDocLpaq(caseObj) {
 		caseDetailsPage.clickManageNotifyingParties();
+
+		// Simulate the completion of the documents scan
+		cy.simulateDocumentsScanComplete(caseObj);
+
 		caseDetailsPage.clickLinkByText('View and edit');
 		caseDetailsPage.clickButtonByText('Remove current version');
 		caseDetailsPage.selectRadioButtonByValue('Yes');

@@ -4,7 +4,9 @@ import { users } from '../../fixtures/users';
 import { NetResidencePage } from '../../page_objects/caseDetails/netResidencePage.js';
 import { OverviewSectionPage } from '../../page_objects/caseDetails/overviewSectionPage.js';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
+import { PROCEDURE_TYPES } from '../../support/consts.js';
 import { happyPathHelper } from '../../support/happyPathHelper';
+
 const caseDetailsPage = new CaseDetailsPage();
 const netResidencePage = new NetResidencePage();
 const overviewSectionPage = new OverviewSectionPage();
@@ -25,7 +27,7 @@ describe('Capture Net Residences', () => {
 	const overviewDetails = {
 		appealType: 'Planning appeal',
 		applicationReference: '123',
-		appealProcedure: 'Written representations (Part 2)',
+		appealProcedure: PROCEDURE_TYPES.writtenPart2,
 		allocationLevel: 'No allocation level for this appeal',
 		linkedAppeals: 'No linked appeals',
 		relatedAppeals: '1000000',

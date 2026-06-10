@@ -133,7 +133,7 @@ describe('Manage docs on lpa case', () => {
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
 			happyPathHelper.uploadDocsLpaq();
-			happyPathHelper.uploadDocVersionLpaq();
+			happyPathHelper.uploadDocVersionLpaq(caseObj);
 			caseDetailsPage.clickManageNotifyingParties();
 
 			// Simulate the completion of the documents scan
@@ -149,7 +149,7 @@ describe('Manage docs on lpa case', () => {
 				'Success',
 				'Who was notified about the application updated'
 			);
-			happyPathHelper.removeDocLpaq();
+			happyPathHelper.removeDocLpaq(caseObj);
 		});
 	});
 
@@ -159,7 +159,7 @@ describe('Manage docs on lpa case', () => {
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
 			happyPathHelper.uploadDocsLpaq();
-			happyPathHelper.removeDocLpaq();
+			happyPathHelper.removeDocLpaq(caseObj);
 			caseDetailsPage.checkAnswerNotifyingParties(
 				"List of neighbours' addresses that you notified about the application",
 				'No documents'
