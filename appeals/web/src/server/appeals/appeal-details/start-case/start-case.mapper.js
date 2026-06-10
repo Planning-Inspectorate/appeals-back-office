@@ -155,7 +155,7 @@ export function selectProcedurePage(
 		) {
 			radioItems.push({
 				value: item.case,
-				text: appealProcedureKeyToLabelText(item.case, appealType),
+				text: appealProcedureKeyToLabelText(item.case, appealType, showPart1),
 				checked:
 					storedSessionData?.appealProcedure && storedSessionData?.appealProcedure === item.case
 			});
@@ -215,6 +215,8 @@ export function confirmProcedurePage(
 		APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
 	].includes(appealType);
 
+	const showPart1 = procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1;
+
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Check details and start case',
@@ -229,7 +231,8 @@ export function confirmProcedurePage(
 						textSummaryListItem({
 							id: 'appeal-procedure',
 							text: 'Appeal procedure',
-							value: appealProcedureKeyToLabelText(procedureType, appealType) || 'No data',
+							value:
+								appealProcedureKeyToLabelText(procedureType, appealType, showPart1) || 'No data',
 							link: editLink(
 								`/appeals-service/appeal-details/${appealId}/start-case/select-procedure`
 							),
