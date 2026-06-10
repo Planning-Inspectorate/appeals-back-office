@@ -64,7 +64,7 @@ extends:
             parameters:
                 nodeVersion: 22
                 script: npm run format-check
-      
+
       - name: Run Web Tests
         variables:
         - name: test-script
@@ -102,7 +102,7 @@ extends:
                 TURBO_TEAM: $(TURBO_TEAM)
                 TURBO_API: $(TURBO_API)
                 TURBO_TOKEN: $(TURBO_TOKEN)
-      
+
       - name: Run Api Tests
         variables:
         - name: test-script
@@ -123,7 +123,7 @@ extends:
               nodeVersion: 22
               script: npm ci
               environmentVariables:
-                npm_config_cache: $(npm_config_cache)          
+                npm_config_cache: $(npm_config_cache)
           - template: ../steps/node_script.yml
             parameters:
               script: $(test-script)
@@ -132,7 +132,7 @@ extends:
                 TURBO_TEAM: $(TURBO_TEAM)
                 TURBO_API: $(TURBO_API)
                 TURBO_TOKEN: $(TURBO_TOKEN)
-      
+
       - name: Run Other Tests
         variables:
         - name: test-script
@@ -153,7 +153,7 @@ extends:
               nodeVersion: 22
               script: npm ci
               environmentVariables:
-                npm_config_cache: $(npm_config_cache)          
+                npm_config_cache: $(npm_config_cache)
           - template: ../steps/node_script.yml
             parameters:
               script: $(test-script)
@@ -264,6 +264,7 @@ extends:
               environmentVariables:
                 NODE_ENV: development
                 DATABASE_URL: "sqlserver://127.0.0.1:1433;database=pins_development;user=sa;password=SqlServer01;trustServerCertificate=true"
+                CI_E2E_TEST_SEED: true # don't seed all listed building for E2E tests
               condition: eq(variables['runE2E'], 'true')
           - script: curl -v http://localhost:3000/health
             displayName: "Api healthcheck"
@@ -297,7 +298,7 @@ extends:
                 APP: appeals
                 AZURE_TENANT_ID: $(AZURE_TENANT_ID)
                 NODE_EXTRA_CA_CERTS: $(Build.SourcesDirectory)/certificate.pem
-                TZ: Europe/London 
+                TZ: Europe/London
               condition: eq(variables['runE2E'], 'true')
           - task: PublishBuildArtifacts@1
             condition: failed()

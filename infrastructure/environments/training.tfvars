@@ -54,7 +54,6 @@ apps_config = {
     featureFlagNotifyCaseHistory                = true
     featureFlagSimplifyTeamAssignment           = true
     featureFlagPdfDownload                      = true
-    featureFlagNetResidence                     = true
     featureFlagNetResidenceS20                  = true
     featureFlagCancelCase                       = true
     featureFlagChangeProcedureType              = true
@@ -87,7 +86,8 @@ apps_config = {
     featureFlagEnforcementInquiryLinked         = false
     featureFlagEnforcementChangeProcedureLinked = false
     featureFlagShareCosts                       = false
-    featureFlagExpeditedAppealsLpaq             = false
+    featureFlagExpeditedAppealsLpaq             = true
+    featureFlagNewBeforeYouStart                = false
   }
 
   use_system_test_bc_for_change_lpa = false

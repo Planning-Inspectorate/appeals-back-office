@@ -1,9 +1,11 @@
 import {
 	APPEAL_APPLICATION_DECISION,
+	APPEAL_CASE_PROCEDURE,
 	APPEAL_CASE_TYPE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from '@planning-inspectorate/data-model';
 import { APPEAL_TYPE } from '../constants/common.js';
+import { EXPEDITED_ORIGINAL_APPLICATION_CUTOFF } from '../constants/dates.js';
 
 /**
  *
@@ -13,6 +15,19 @@ import { APPEAL_TYPE } from '../constants/common.js';
  */
 export const dateIsAfterDate = (date, afterDate) => {
 	return date.getTime() >= afterDate.getTime();
+};
+
+/**
+ * Returns true if the original application was submitted before the expedited process start date
+ * of 1st April 2026, or if the application date is null or undefined
+ * @param {string | null | undefined} applicationDate
+ * @returns {boolean}
+ */
+export const beforeExpeditedOriginalApplicationCutOff = (applicationDate) => {
+	return (
+		!applicationDate ||
+		!dateIsAfterDate(new Date(applicationDate), EXPEDITED_ORIGINAL_APPLICATION_CUTOFF)
+	);
 };
 
 /**
@@ -102,3 +117,17 @@ export const isLdcOrDiscontinuanceOrEnforcementCaseType = (caseType) =>
 	caseType === APPEAL_CASE_TYPE.X ||
 	caseType === APPEAL_CASE_TYPE.G ||
 	isEnforcementCaseType(caseType);
+
+/**
+ * @param {string | null | undefined} procedureType
+ * @returns {string | null | undefined}
+ */
+export const normalizeProcedureType = (procedureType) => {
+	if (
+		procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 ||
+		procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_2
+	) {
+		return APPEAL_CASE_PROCEDURE.WRITTEN;
+	}
+	return procedureType;
+};

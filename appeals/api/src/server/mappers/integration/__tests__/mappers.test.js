@@ -422,7 +422,11 @@ describe('mapAppellantCaseIn', () => {
 					ownersInformed: true,
 					isGreenBelt: true,
 					typeOfPlanningApplication: 'full',
-					numberOfResidencesNetChange: 123
+					numberOfResidencesNetChange: 123,
+					reasonForAppealAppellant: 'My reason for appeal',
+					significantChangesAffectingApplicationAppellant: [
+						{ value: 'adopted-a-new-local-plan', comment: 'local plan' }
+					]
 				}
 			},
 			expected: {
@@ -445,6 +449,12 @@ describe('mapAppellantCaseIn', () => {
 				isGreenBelt: true,
 				typeOfPlanningApplication: 'full',
 				numberOfResidencesNetChange: 123,
+				reasonForAppealAppellant: 'My reason for appeal',
+				anySignificantChanges: 'Yes',
+				anySignificantChanges_localPlanSignificantChanges: 'local plan',
+				anySignificantChanges_nationalPolicySignificantChanges: null,
+				anySignificantChanges_courtJudgementSignificantChanges: null,
+				anySignificantChanges_otherSignificantChanges: null,
 				siteAccessDetails: null,
 				siteSafetyDetails: null
 			}
@@ -561,7 +571,11 @@ describe('mapAppellantCaseIn', () => {
 							isSiteOnHighwayLand: false
 						}
 					],
-					hasLandownersPermission: true
+					hasLandownersPermission: true,
+					reasonForAppealAppellant: 'Adverts reason',
+					significantChangesAffectingApplicationAppellant: [
+						{ value: 'national-policy-change', comment: 'national policy change' }
+					]
 				}
 			},
 			expected: expect.objectContaining({
@@ -575,7 +589,10 @@ describe('mapAppellantCaseIn', () => {
 						]
 					}
 				},
-				landownerPermission: true
+				landownerPermission: true,
+				reasonForAppealAppellant: 'Adverts reason',
+				anySignificantChanges: 'Yes',
+				anySignificantChanges_nationalPolicySignificantChanges: 'national policy change'
 			})
 		},
 		{

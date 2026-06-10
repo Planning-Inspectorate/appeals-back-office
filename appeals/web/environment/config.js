@@ -59,7 +59,6 @@ export function loadConfig() {
 		FEATURE_FLAG_NOTIFY_CASE_HISTORY,
 		FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT,
 		FEATURE_FLAG_PDF_DOWNLOAD,
-		FEATURE_FLAG_NET_RESIDENCE,
 		FEATURE_FLAG_NET_RESIDENCE_S20,
 		FEATURE_FLAG_HEARING_POST_MVP,
 		FEATURE_FLAG_EXPEDITED_APPEALS,
@@ -87,7 +86,6 @@ export function loadConfig() {
 		FEATURE_FLAG_SEARCH_CASE_OFFICER,
 		FEATURE_FLAG_ENFORCEMENT_NOTICE,
 		FEATURE_FLAG_ENFORCEMENT_LINKED,
-		FEATURE_FLAG_ENFORCEMENT_LEAD_CAN_START,
 		FEATURE_FLAG_ENFORCEMENT_CANCEL,
 		FEATURE_FLAG_INVALID_DECISION_LETTER,
 		FEATURE_FLAG_RULE_6_MVP,
@@ -107,7 +105,8 @@ export function loadConfig() {
 		FEATURE_FLAG_ENFORCEMENT_HEARING_LINKED,
 		FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED,
 		FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED,
-		FEATURE_FLAG_SHARE_COSTS
+		FEATURE_FLAG_SHARE_COSTS,
+		FEATURE_FLAG_NEW_BEFORE_YOU_START
 	} = environment;
 
 	const config = {
@@ -171,7 +170,6 @@ export function loadConfig() {
 			featureFlagNotifyCaseHistory: FEATURE_FLAG_NOTIFY_CASE_HISTORY === 'true',
 			featureFlagSimplifyTeamAssignment: FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT === 'true',
 			featureFlagPdfDownload: FEATURE_FLAG_PDF_DOWNLOAD === 'true',
-			featureFlagNetResidence: FEATURE_FLAG_NET_RESIDENCE === 'true',
 			featureFlagNetResidenceS20: FEATURE_FLAG_NET_RESIDENCE_S20 === 'true',
 			featureFlagChangeProcedureType: FEATURE_FLAG_CHANGE_PROCEDURE_TYPE === 'true',
 			featureFlagHearingPostMvp: FEATURE_FLAG_HEARING_POST_MVP === 'true',
@@ -179,7 +177,6 @@ export function loadConfig() {
 			featureFlagSearchCaseOfficer: FEATURE_FLAG_SEARCH_CASE_OFFICER === 'true',
 			featureFlagEnforcementNotice: FEATURE_FLAG_ENFORCEMENT_NOTICE === 'true',
 			featureFlagEnforcementLinked: FEATURE_FLAG_ENFORCEMENT_LINKED === 'true',
-			featureFlagEnforcementLeadCanStart: FEATURE_FLAG_ENFORCEMENT_LEAD_CAN_START === 'true',
 			featureFlagEnforcementCancel: FEATURE_FLAG_ENFORCEMENT_CANCEL === 'true',
 			featureFlagInvalidDecisionLetter: FEATURE_FLAG_INVALID_DECISION_LETTER === 'true',
 			featureFlagRule6Mvp: FEATURE_FLAG_RULE_6_MVP === 'true',
@@ -203,7 +200,8 @@ export function loadConfig() {
 			featureFlagEnforcementInquiryLinked: FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED === 'true',
 			featureFlagEnforcementChangeProcedureLinked:
 				FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED === 'true',
-			featureFlagShareCosts: FEATURE_FLAG_SHARE_COSTS === 'true'
+			featureFlagShareCosts: FEATURE_FLAG_SHARE_COSTS === 'true',
+			featureFlagNewBeforeYouStart: FEATURE_FLAG_NEW_BEFORE_YOU_START === 'true'
 		},
 		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
 		pdfServiceHost: PDF_SERVICE_HOST

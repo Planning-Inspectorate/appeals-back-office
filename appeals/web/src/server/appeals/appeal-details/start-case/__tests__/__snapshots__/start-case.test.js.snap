@@ -64,7 +64,7 @@ exports[`start-case GET /start-case/select-procedure/check-and-confirm should re
                     <form method="POST" novalidate="novalidate">
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-                                <dd class="govuk-summary-list__value">Written representations (Part 2)</dd>
+                                <dd class="govuk-summary-list__value">Written representations</dd>
                             </div>
                         </dl>
                         <p class="govuk-body">We’ll start the timetable now and send emails to the relevant parties.</p>
@@ -110,7 +110,7 @@ exports[`start-case GET /start-case/select-procedure/check-and-confirm should re
                     <form method="POST" novalidate="novalidate">
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-                                <dd class="govuk-summary-list__value">Written representations (Part 2)</dd>
+                                <dd class="govuk-summary-list__value">Written representations</dd>
                             </div>
                         </dl>
                         <p class="govuk-body">We’ll start the timetable now and send emails to the relevant parties.</p>

@@ -80,7 +80,7 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 			);
 			insetTextRows.push(
 				letterDateObject.latestFileVersion && letterDateObject.latestFileVersion?.version > 1
-					? `Decision issued on ${letterDateObject.originalLetterDate} (updated on ${letterDateObject.latestLetterDate})`
+					? `Decision issued on ${letterDateObject.originalLetterDate} (reissued on ${letterDateObject.latestLetterDate})`
 					: `Decision issued on ${letterDateObject.latestLetterDate}`
 			);
 		} else if (isAppealInvalid) {

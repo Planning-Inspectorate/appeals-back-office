@@ -56,6 +56,20 @@ export const rowKeys = {
 		'newPlansDrawings',
 		'otherNewDocuments'
 	],
+	[APPEAL_TYPE.S78_EXPEDITED]: [
+		'originalApplicationForm',
+		'didYouSubmitEnvironmentalStatement',
+		'environmentalStatement',
+		'changedDevelopmentDescription',
+		'changedDescription',
+		'reasonForAppealAppellant',
+		'applicationDecisionLetter',
+		'appellantStatement',
+		'planningObligation',
+		'statementCommonGround',
+		'ownershipCertificate',
+		'appellantApplicationFolder'
+	],
 	[APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE]: [
 		'originalApplicationForm',
 		'appellantStatement',

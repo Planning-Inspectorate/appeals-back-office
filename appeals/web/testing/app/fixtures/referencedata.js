@@ -552,6 +552,7 @@ export const appealDataEnforcementListedBuilding = {
 
 export const appellantCaseDataNotValidated = {
 	appealId: 1,
+	applicationDate: '',
 	appealReference: 'TEST/919276',
 	typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.HOUSEHOLDER_PLANNING,
 	appealSite: {

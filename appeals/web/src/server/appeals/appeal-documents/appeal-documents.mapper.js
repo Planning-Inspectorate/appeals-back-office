@@ -811,7 +811,7 @@ export function mapFolderDocumentInformationHtmlProperty(folder, document, isCos
 		pageComponents: []
 	};
 
-	const isShared = /** @type {any} */ (document).isShared;
+	const isShared = document?.latestDocumentVersion?.published;
 	const sharedTagHtml =
 		isCosts && isShared
 			? `<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong>`
@@ -894,7 +894,7 @@ export function mapFolderDocumentActionsHtmlProperty(
 		const virusCheckStatus = mapDocumentInfoVirusCheckStatus(document);
 
 		let actionText = virusCheckStatus.manageFolderPageActionText;
-		const isShared = /** @type {any} */ (document).isShared;
+		const isShared = document.latestDocumentVersion?.published;
 
 		if (isCosts && virusCheckStatus.safe) {
 			actionText =
@@ -1154,7 +1154,7 @@ function mapDocumentNameHtmlProperty(document, documentVersion, isCosts = false)
 		closing: '</div>'
 	};
 
-	const isShared = /** @type {any} */ (documentVersion).isShared;
+	const isShared = documentVersion.published;
 	const sharedTagHtml =
 		isCosts && isShared
 			? `<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong>`
@@ -1315,7 +1315,7 @@ export async function manageDocumentPage({
 		pageComponents.push(errorSummaryComponent);
 	}
 
-	const isShared = /** @type {any} */ (document).isShared;
+	const isShared = latestVersion?.published;
 
 	if (isFeatureActive(FEATURE_FLAG_NAMES.SHARE_COSTS) && isCosts && !isShared) {
 		const { costsDocumentType } = request.params;

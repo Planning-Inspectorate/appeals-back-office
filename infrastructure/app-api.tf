@@ -77,7 +77,6 @@ module "app_api" {
     FEATURE_FLAG_S20_INQUIRY                         = var.apps_config.featureFlags.featureFlagS20Inquiry
     FEATURE_FLAG_LINKED_APPEALS                      = var.apps_config.featureFlags.featureFlagLinkedAppeals
     FEATURE_FLAG_LINKED_APPEALS_UNLINK               = var.apps_config.featureFlags.featureFlagLinkedAppealsUnlink
-    FEATURE_FLAG_NET_RESIDENCE                       = var.apps_config.featureFlags.featureFlagNetResidence
     FEATURE_FLAG_NET_RESIDENCE_S20                   = var.apps_config.featureFlags.featureFlagNetResidenceS20
     FEATURE_FLAG_HEARING_POST_MVP                    = var.apps_config.featureFlags.featureFlagHearingPostMvp
     FEATURE_FLAG_SEARCH_CASE_OFFICER                 = var.apps_config.featureFlags.featureFlagSearchCaseOfficer
@@ -95,6 +94,7 @@ module "app_api" {
     FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED          = var.apps_config.featureFlags.featureFlagEnforcementInquiryLinked
     FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED = var.apps_config.featureFlags.featureFlagEnforcementChangeProcedureLinked
     FEATURE_FLAG_EXPEDITED_APPEALS_LPAQ              = var.apps_config.featureFlags.featureFlagExpeditedAppealsLpaq
+    FEATURE_FLAG_NEW_BEFORE_YOU_START                = var.apps_config.featureFlags.featureFlagNewBeforeYouStart
 
 
 

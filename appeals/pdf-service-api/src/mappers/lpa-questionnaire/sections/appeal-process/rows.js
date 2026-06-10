@@ -27,6 +27,45 @@ export const rowBuilders = {
 		text: formatSentenceCase(data.lpaProcedurePreferenceDuration?.toString(), 'N/A')
 	}),
 
+	anySignificantChangesLpa: (data) => {
+		if (data.anySignificantChangesLpa !== 'Yes') {
+			return {
+				key: 'Have there been any significant changes that would affect the application?',
+				html: 'No'
+			};
+		}
+
+		const details = [];
+		if (data.anySignificantChangesLpa_localPlanSignificantChanges) {
+			details.push(`Local plan: ${data.anySignificantChangesLpa_localPlanSignificantChanges}`);
+		}
+		if (data.anySignificantChangesLpa_nationalPolicySignificantChanges) {
+			details.push(
+				`National policy: ${data.anySignificantChangesLpa_nationalPolicySignificantChanges}`
+			);
+		}
+		if (data.anySignificantChangesLpa_courtJudgementSignificantChanges) {
+			details.push(
+				`Court judgment: ${data.anySignificantChangesLpa_courtJudgementSignificantChanges}`
+			);
+		}
+		if (data.anySignificantChangesLpa_otherSignificantChanges) {
+			details.push(`Other: ${data.anySignificantChangesLpa_otherSignificantChanges}`);
+		}
+
+		if (details.length === 0) {
+			return {
+				key: 'Have there been any significant changes that would affect the application?',
+				html: 'Yes'
+			};
+		}
+
+		return {
+			key: 'Have there been any significant changes that would affect the application?',
+			html: formatYesNoDetails(details)
+		};
+	},
+
 	otherAppeals: (data) => ({
 		key: 'Are there any other ongoing appeals next to, or close to the site?',
 		html: formatOngoingAppeals(data.otherAppeals || [])

@@ -199,7 +199,29 @@ export const moveRepresentations = async (sourceAppeal, destinationAppeal) => {
 		})
 	);
 
-	return movedRepresentations.filter((rep) => rep.status === 'fulfilled').map((rep) => rep.value);
+	const successfullyMovedRepresentations = movedRepresentations
+		.filter((rep) => rep.status === 'fulfilled')
+		.map((rep) => rep.value);
+
+	const destinationFolders = await getFoldersForAppeal(destinationAppeal.id, 'representation');
+
+	const movedRepresentationAttachmentDocuments = await Promise.allSettled(
+		successfullyMovedRepresentations.map(async (movedRepresentation) => {
+			return await representationRepository.moveRepresentationAttachmentDocuments(
+				movedRepresentation.id,
+				destinationAppeal.id,
+				destinationFolders[0].id
+			);
+		})
+	);
+
+	return {
+		movedRepresentations: successfullyMovedRepresentations,
+		movedDocuments: movedRepresentationAttachmentDocuments
+			.filter((rep) => rep.status === 'fulfilled')
+			.map((rep) => rep.value)
+			.flat()
+	};
 };
 
 /**

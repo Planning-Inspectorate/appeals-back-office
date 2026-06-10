@@ -1,4 +1,4 @@
-import { PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common.js';
 import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
@@ -22,12 +22,15 @@ export function appealProcedureNameToLabelText(procedureTypeName) {
 
 /**
  * @param {string} procedureTypeKey
+ * @param {string} appealType
  * @returns string
  */
-export function appealProcedureKeyToLabelText(procedureTypeKey) {
+export function appealProcedureKeyToLabelText(procedureTypeKey, appealType) {
 	switch (procedureTypeKey) {
 		case APPEAL_CASE_PROCEDURE.WRITTEN:
-			return 'Written representations (Part 2)';
+			return appealType !== APPEAL_TYPE.S78 && appealType !== APPEAL_TYPE.S78_EXPEDITED
+				? 'Written representations'
+				: 'Written representations (Part 2)';
 		case APPEAL_CASE_PROCEDURE.WRITTEN_PART_1:
 			return 'Written representations (Part 1)';
 		case APPEAL_CASE_PROCEDURE.HEARING:

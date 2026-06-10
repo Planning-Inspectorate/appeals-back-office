@@ -64,7 +64,6 @@ variable "apps_config" {
       featureFlagNotifyCaseHistory                = bool
       featureFlagSimplifyTeamAssignment           = bool
       featureFlagPdfDownload                      = bool
-      featureFlagNetResidence                     = bool
       featureFlagNetResidenceS20                  = bool
       featureFlagCancelCase                       = bool
       featureFlagChangeProcedureType              = bool
@@ -98,6 +97,7 @@ variable "apps_config" {
       featureFlagEnforcementChangeProcedureLinked = bool
       featureFlagShareCosts                       = bool
       featureFlagExpeditedAppealsLpaq             = bool
+      featureFlagNewBeforeYouStart                = bool
     })
 
     analytics = object({

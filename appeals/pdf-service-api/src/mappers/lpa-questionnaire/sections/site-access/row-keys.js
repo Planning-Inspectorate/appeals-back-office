@@ -26,6 +26,12 @@ export const rowKeys = {
 		'neighbouringSites',
 		'healthAndSafety'
 	],
+	[APPEAL_TYPE.S78_EXPEDITED]: [
+		'siteAccessRequired',
+		'reasonForNeighbourVisits',
+		'neighbouringSites',
+		'healthAndSafety'
+	],
 	[APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE]: [
 		'siteAccessRequired',
 		'reasonForNeighbourVisits',

@@ -309,6 +309,42 @@ const addAttachments = async (repId, attachments) => {
 
 /**
  * @param {number} repId
+ * @param {number} destinationAppealId
+ * @param {number} destinationFolderId
+ */
+const moveRepresentationAttachmentDocuments = async (
+	repId,
+	destinationAppealId,
+	destinationFolderId
+) => {
+	const attachmentsToUpdate = await databaseConnector.representationAttachment.findMany({
+		where: { representationId: repId }
+	});
+
+	const attachmentDocumentGuidArray = attachmentsToUpdate.map(
+		(attachment) => attachment.documentGuid
+	);
+
+	// returns a count rather than an array of documents
+	await databaseConnector.document.updateMany({
+		where: {
+			guid: { in: attachmentDocumentGuidArray }
+		},
+		data: {
+			caseId: destinationAppealId,
+			folderId: destinationFolderId
+		}
+	});
+
+	return databaseConnector.document.findMany({
+		where: {
+			guid: { in: attachmentDocumentGuidArray }
+		}
+	});
+};
+
+/**
+ * @param {number} repId
  * @param {Array<{ id: number, text: string[] }>} rejectionReasons
  */
 const updateRejectionReasons = async (repId, rejectionReasons) => {
@@ -344,8 +380,37 @@ const updateRejectionReasons = async (repId, rejectionReasons) => {
 	});
 };
 
+/**
+ * @param {number[]} appealIds
+ * @returns {Promise<string[]>}
+ */
+const getInterestedPartyEmails = async (appealIds) => {
+	if (appealIds.length === 0) {
+		return [];
+	}
+
+	const ipReps = await databaseConnector.representation.findMany({
+		where: {
+			appealId: { in: appealIds },
+			representationType: APPEAL_REPRESENTATION_TYPE.COMMENT
+		},
+		select: {
+			represented: {
+				select: {
+					email: true
+				}
+			}
+		}
+	});
+
+	return ipReps
+		.map((comment) => comment.represented?.email)
+		.filter((email) => email !== undefined && email !== null);
+};
+
 export default {
 	getById,
+	getInterestedPartyEmails,
 	getRepresentations,
 	getRepresentationCounts,
 	updateRepresentationById,
@@ -354,5 +419,6 @@ export default {
 	createRepresentation,
 	createRepresentations,
 	addAttachments,
+	moveRepresentationAttachmentDocuments,
 	updateRejectionReasons
 };

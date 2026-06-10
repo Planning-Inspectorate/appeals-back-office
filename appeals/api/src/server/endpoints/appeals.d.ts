@@ -787,6 +787,7 @@ interface DocumentVersionInfo {
 	blobStoragePath: string;
 	documentURI: string;
 	dateReceived: string;
+	published: boolean;
 	redactionStatus: string;
 	virusCheckStatus: string;
 	size: string;

@@ -63,8 +63,6 @@ const { value, error } = schema.validate({
 		featureFlagLinkedAppealsUnlink:
 			environment.FEATURE_FLAG_LINKED_APPEALS_UNLINK &&
 			environment.FEATURE_FLAG_LINKED_APPEALS_UNLINK === 'true',
-		featureFlagNetResidence:
-			environment.FEATURE_FLAG_NET_RESIDENCE && environment.FEATURE_FLAG_NET_RESIDENCE === 'true',
 		featureFlagNetResidenceS20:
 			environment.FEATURE_FLAG_NET_RESIDENCE_S20 &&
 			environment.FEATURE_FLAG_NET_RESIDENCE_S20 === 'true',
@@ -110,7 +108,10 @@ const { value, error } = schema.validate({
 			environment.FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED === 'true',
 		featureFlagEnforcementChangeProcedureLinked:
 			environment.FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED &&
-			environment.FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED === 'true'
+			environment.FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED === 'true',
+		featureFlagNewBeforeYouStart:
+			environment.FEATURE_FLAG_NEW_BEFORE_YOU_START &&
+			environment.FEATURE_FLAG_NEW_BEFORE_YOU_START === 'true'
 	},
 	serviceBusEnabled: environment.SERVICE_BUS_ENABLED && environment.SERVICE_BUS_ENABLED === 'true',
 	enableTestEndpoints:

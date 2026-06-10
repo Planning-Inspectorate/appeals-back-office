@@ -10,7 +10,6 @@ export const EVENT_TYPE = Object.freeze({
 export const FEATURE_FLAG_NAMES = Object.freeze({
 	SECTION_78: 'featureFlagS78Written',
 	SECTION_78_INQUIRY: 'featureFlagS78Inquiry',
-	NET_RESIDENCE: 'featureFlagNetResidence',
 	NET_RESIDENCE_S20: 'featureFlagNetResidenceS20',
 	LINKED_APPEALS: 'featureFlagLinkedAppeals',
 	LINKED_APPEALS_UNLINK: 'featureFlagLinkedAppealsUnlink',
@@ -19,7 +18,6 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	SEARCH_CASE_OFFICER: 'featureFlagSearchCaseOfficer',
 	ENFORCEMENT_NOTICE: 'featureFlagEnforcementNotice',
 	ENFORCEMENT_LINKED: 'featureFlagEnforcementLinked',
-	ENFORCEMENT_LEAD_CAN_START: 'featureFlagEnforcementLeadCanStart',
 	ENFORCEMENT_CANCEL: 'featureFlagEnforcementCancel',
 	INVALID_DECISION_LETTER: 'featureFlagInvalidDecisionLetter',
 	RULE_6_PARTIES_MVP: 'featureFlagRule6Mvp',
@@ -195,3 +193,5 @@ export const FEEDBACK_FORM_LINKS = Object.freeze({
 });
 
 export const REPRESENTATION_ADDED_AS_DOCUMENT = 'Added as a document';
+
+export const MAX_VISIBLE_DOCUMENTS_IN_SUMMARY = 30;

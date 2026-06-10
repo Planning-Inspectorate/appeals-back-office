@@ -114,6 +114,21 @@ const updateLPAQuestionnaireById = (id, data) => {
 };
 
 /**
+ * @param {number} appealId
+ * @param {boolean} visible
+ * @returns {Promise<{count: number}>}
+ */
+const updateLpaCostsAppliedFor = (appealId, visible) => {
+	// use updateMany to avoid errors if there is no LPAQ for this appeal
+	return databaseConnector.lPAQuestionnaire.updateMany({
+		where: { appealId },
+		data: {
+			lpaCostsAppliedFor: visible
+		}
+	});
+};
+
+/**
  * @param {number} id
  * @param {LpaQuestionnaireUpdateRequest} data
  * @param {any[]} transaction
@@ -185,4 +200,4 @@ function processDesignatedSites(id, data, transaction) {
 	}
 }
 
-export default { updateLPAQuestionnaireById };
+export default { updateLPAQuestionnaireById, updateLpaCostsAppliedFor };

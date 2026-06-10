@@ -19,6 +19,7 @@ import { sendNewDecisionLetter } from '#endpoints/decision/decision.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import * as documentRepository from '#repositories/document.repository.js';
+import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
@@ -378,9 +379,14 @@ export const updateDocumentFileName = async (req, res) => {
 	try {
 		const latestDocument = await documentRepository.getDocumentById(documentId);
 
-		if (latestDocument && latestDocument.name && latestDocument.latestDocumentVersion) {
-			await documentRepository.updateDocumentById(latestDocument.guid, document);
-			if (document.fileName && document.fileName !== latestDocument.name) {
+		if (latestDocument?.name && latestDocument.latestDocumentVersion) {
+			await documentRepository.updateDocument(latestDocument, document);
+
+			const nameHasChanged = document.fileName && document.fileName !== latestDocument.name;
+			const isSharingDocument =
+				document.isShared && !latestDocument.latestDocumentVersion.published;
+
+			if (nameHasChanged) {
 				const nameChangedMessage = stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_NAME_CHANGED, [
 					latestDocument.name,
 					document.fileName
@@ -394,7 +400,9 @@ export const updateDocumentFileName = async (req, res) => {
 					appeal.id,
 					latestDocument.guid
 				);
+			}
 
+			if (nameHasChanged || isSharingDocument) {
 				await broadcasters.broadcastDocument(
 					latestDocument.guid,
 					latestDocument.latestDocumentVersion.version,
@@ -569,8 +577,19 @@ export const updateDocumentVisibilityBooleans = async (
 	const appellantCostApplicationDocument = documentTypes.includes(
 		APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION
 	);
+	const lpaCostApplicationDocument = documentTypes.includes(
+		APPEAL_DOCUMENT_TYPE.LPA_COSTS_APPLICATION
+	);
 
-	if (!(changedDevelopmentDescriptionDocument || appellantCostApplicationDocument)) return;
+	if (
+		!(
+			changedDevelopmentDescriptionDocument ||
+			appellantCostApplicationDocument ||
+			lpaCostApplicationDocument
+		)
+	) {
+		return;
+	}
 
 	if (changedDevelopmentDescriptionDocument) {
 		await setDocumentVisibilityBoolean(
@@ -588,6 +607,18 @@ export const updateDocumentVisibilityBooleans = async (
 			'appellantCostsAppliedFor',
 			visible
 		);
+	}
+
+	if (lpaCostApplicationDocument && appealId) {
+		// if adding or removing an LPA cost document, then set lpaCostsAppliedFor accordingly
+		const { count } = await lpaQuestionnaireRepository.updateLpaCostsAppliedFor(appealId, visible);
+		if (count) {
+			logger.info(`LPAQ for ${appealId} updated, with lpaCostsAppliedFor=${visible}`);
+			await broadcasters.broadcastAppeal(appealId);
+		} else {
+			// don't error if there isn't an LPAQ
+			logger.warn(`no LPAQ for ${appealId}, lpaCostsAppliedFor not updated`);
+		}
 	}
 };
 

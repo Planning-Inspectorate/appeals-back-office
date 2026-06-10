@@ -18,7 +18,10 @@ import {
 	CASE_RELATIONSHIP_LINKED,
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
-import { isExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import {
+	isExpeditedAppealType,
+	normalizeProcedureType
+} from '@pins/appeals/utils/appeal-type-checks.js';
 import {
 	APPEAL_CASE_PROCEDURE,
 	APPEAL_CASE_STATUS,
@@ -63,11 +66,12 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 	}
 
 	const procedureKey = procedureType?.key ?? APPEAL_CASE_PROCEDURE.WRITTEN;
+	const normalizedProcedureKey = normalizeProcedureType(procedureKey);
 	const appealTypeKey = !isExpeditedAppealType(appealType.key)
 		? APPEAL_CASE_TYPE.W
 		: APPEAL_CASE_TYPE.D;
 
-	const eventElapsed = getEventElapsed(appeal, appealType, procedureKey);
+	const eventElapsed = getEventElapsed(appeal, appealType, normalizedProcedureKey);
 
 	const stateMachine = createStateMachine(appealTypeKey, procedureKey, currentState, eventElapsed);
 	const stateMachineService = interpret(stateMachine);
@@ -107,11 +111,11 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 	if (
 		newState === APPEAL_CASE_STATUS.EVENT &&
 		[APPEAL_CASE_TYPE.D, APPEAL_CASE_TYPE.W].includes(appealTypeKey) &&
-		((procedureKey === APPEAL_CASE_PROCEDURE.WRITTEN && appeal.siteVisit) ||
-			(procedureKey === APPEAL_CASE_PROCEDURE.HEARING &&
+		((normalizedProcedureKey === APPEAL_CASE_PROCEDURE.WRITTEN && appeal.siteVisit) ||
+			(normalizedProcedureKey === APPEAL_CASE_PROCEDURE.HEARING &&
 				appeal.hearing &&
 				appeal.hearing?.addressId) ||
-			(procedureKey === APPEAL_CASE_PROCEDURE.INQUIRY &&
+			(normalizedProcedureKey === APPEAL_CASE_PROCEDURE.INQUIRY &&
 				appeal.inquiry &&
 				appeal.inquiry?.addressId))
 	) {

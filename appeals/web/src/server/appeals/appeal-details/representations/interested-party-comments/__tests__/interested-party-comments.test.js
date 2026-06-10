@@ -206,7 +206,7 @@ describe('interested-party-comments', () => {
 			expect(awaitingMessage?.textContent?.trim()).toBe('Awaiting comments');
 		});
 
-		it('should render interestedPartyComments page with "No valid comments" message when no valid data', async () => {
+		it('should render interestedPartyComments page with "No accepted comments" message when no valid data', async () => {
 			const response = await request.get(`${baseUrl}/2/interested-party-comments`);
 
 			expect(response.statusCode).toBe(200);
@@ -217,10 +217,10 @@ describe('interested-party-comments', () => {
 
 			const validMessage = validTable?.querySelector('p');
 			expect(validMessage).not.toBeNull();
-			expect(validMessage?.textContent?.trim()).toBe('No valid comments');
+			expect(validMessage?.textContent?.trim()).toBe('No accepted comments');
 		});
 
-		it('should render interestedPartyComments page with "No invalid comments" message when no invalid data', async () => {
+		it('should render interestedPartyComments page with "No rejected comments" message when no invalid data', async () => {
 			const response = await request.get(`${baseUrl}/2/interested-party-comments`);
 
 			expect(response.statusCode).toBe(200);
@@ -231,7 +231,7 @@ describe('interested-party-comments', () => {
 
 			const invalidMessage = invalidTable?.querySelector('p');
 			expect(invalidMessage).not.toBeNull();
-			expect(invalidMessage?.textContent?.trim()).toBe('No invalid comments');
+			expect(invalidMessage?.textContent?.trim()).toBe('No rejected comments');
 		});
 	});
 
