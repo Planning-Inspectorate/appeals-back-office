@@ -3,20 +3,20 @@ import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 /**
  * Map appeal type to template value
  * @param {string | undefined | null} appealType
- * @returns {string}
+ * @returns {string | null}
  */
 export const appealTypeMap = (appealType) => {
 	switch (appealType) {
 		case APPEAL_CASE_TYPE.W:
 		case APPEAL_CASE_TYPE.Y:
-			return '-s78-';
+			return 's78';
 		case APPEAL_CASE_TYPE.H:
 		case APPEAL_CASE_TYPE.X:
-			return '-advertisement-';
+			return 'advertisement';
 		case APPEAL_CASE_TYPE.C:
 		case APPEAL_CASE_TYPE.F:
-			return '-enforcement-';
+			return 'enforcement';
 		default:
-			return '-';
+			return '';
 	}
 };

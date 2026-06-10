@@ -1,4 +1,6 @@
+import { PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common.js';
 import {
+	APPEAL_CASE_PROCEDURE,
 	APPEAL_CASE_TYPE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from '@planning-inspectorate/data-model';
@@ -8,7 +10,7 @@ export default {
 	reference: '6000002',
 	submissionId: null,
 	appealTypeId: 2,
-	procedureTypeId: 3,
+	procedureTypeId: 4,
 	addressId: 1,
 	lpaId: 1,
 	applicationReference: '38699/APP/0/694045',
@@ -37,9 +39,9 @@ export default {
 		addressCountry: null
 	},
 	procedureType: {
-		id: 3,
-		name: 'Written',
-		key: 'written'
+		id: 4,
+		name: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
+		key: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1
 	},
 	parentAppeals: [],
 	childAppeals: [],
