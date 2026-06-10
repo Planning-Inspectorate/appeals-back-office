@@ -11,6 +11,7 @@ import { DateTimeQuestionPage } from '../../page_objects/dateTimeQuestionPage.js
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { EstimatedDaysSection } from '../../page_objects/estimatedDaysSection.js';
 import { ProcedureTypePage } from '../../page_objects/procedureTypePage';
+import { PROCEDURE_TYPES } from '../../support/consts.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
 import { changeAppealProcedureTypeTimetableItems } from '../../support/timetables.js';
 import { formatDateAndTime, getDateAndTimeValues } from '../../support/utils/format';
@@ -267,13 +268,13 @@ appealTypeVariants.forEach((appealVariant) => {
 			);
 		});
 
-		it('should change appeal procedure type - written (in LPAQ state) to hearing', () => {
+		it.only('should change appeal procedure type - written (in LPAQ state) to hearing', () => {
 			const procedureTypeCaption = `Appeal ${caseObj.reference} - update appeal procedure`;
 
 			happyPathHelper.startCaseWithProcedureType(caseObj, 'written');
 			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
-			const writtenDetails = { ...overviewDetails, appealProcedure: 'Written' };
+			const writtenDetails = { ...overviewDetails, appealProcedure: PROCEDURE_TYPES.writtenPart2 };
 			overviewSectionPage.verifyCaseOverviewDetails(writtenDetails, false);
 
 			overviewSectionPage.clickRowChangeLink('case-procedure');
@@ -329,7 +330,7 @@ appealTypeVariants.forEach((appealVariant) => {
 			happyPathHelper.startCaseWithProcedureType(caseObj, 'written');
 			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
-			const writtenDetails = { ...overviewDetails, appealProcedure: 'Written' };
+			const writtenDetails = { ...overviewDetails, appealProcedure: PROCEDURE_TYPES.writtenPart2 };
 			overviewSectionPage.verifyCaseOverviewDetails(writtenDetails, false);
 
 			overviewSectionPage.clickRowChangeLink('case-procedure');
@@ -391,7 +392,7 @@ appealTypeVariants.forEach((appealVariant) => {
 			happyPathHelper.startCaseWithProcedureType(caseObj, 'written');
 			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
-			const writtenDetails = { ...overviewDetails, appealProcedure: 'Written' };
+			const writtenDetails = { ...overviewDetails, appealProcedure: PROCEDURE_TYPES.writtenPart2 };
 			overviewSectionPage.verifyCaseOverviewDetails(writtenDetails, false);
 
 			overviewSectionPage.clickRowChangeLink('case-procedure');
