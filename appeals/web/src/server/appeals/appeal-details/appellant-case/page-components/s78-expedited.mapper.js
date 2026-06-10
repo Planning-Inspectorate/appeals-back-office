@@ -146,7 +146,9 @@ export function generateS78ExpeditedComponents(
 					mappedAppellantCaseData.decisionLetter.display.summaryListItem,
 					mappedAppellantCaseData.appealStatement.display.summaryListItem,
 					mappedAppellantCaseData.planningObligation.display.summaryListItem,
-					mappedAppellantCaseData.statementCommonGround.display.summaryListItem,
+					...(mappedAppellantCaseData.statementCommonGround
+						? [mappedAppellantCaseData.statementCommonGround.display.summaryListItem]
+						: []),
 					mappedAppellantCaseData.ownershipCertificate.display.summaryListItem,
 					...(isExpeditedAppealsActive
 						? [mappedAppellantCaseData.ownershipCertificateExpedited.display.summaryListItem]
