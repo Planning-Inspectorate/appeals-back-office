@@ -4,7 +4,6 @@ import { addressToString } from '#lib/address-formatter.js';
 import {
 	dateISOStringToDisplayDate,
 	dateISOStringToDisplayTime12hr,
-	dateStringToISOString,
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
 import { clearEditsForAppeal, editLink, getSessionValuesForAppeal } from '#lib/edit-utilities.js';
@@ -13,6 +12,8 @@ import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-co
 import { simpleHtmlComponent, textSummaryListItem } from '#lib/mappers/index.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
+import { setTimeInTimeZone } from '@pins/appeals/utils/business-days.js';
 import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { capitalize, kebabCase, pick } from 'lodash-es';
@@ -376,6 +377,17 @@ const mapSessionValuesForRequest = (values) => {
 	};
 	const includeAddress = address && Object.keys(address.address).length > 0 ? address : {};
 
+	const {
+		lpaQuestionnaireDueDate,
+		ipCommentsDueDate,
+		lpaStatementDueDate,
+		finalCommentsDueDate,
+		statementOfCommonGroundDueDate,
+		planningObligationDueDate,
+		proofOfEvidenceAndWitnessesDueDate,
+		caseManagementConferenceDueDate
+	} = values.appealTimetable;
+
 	/**@type {ChangeProcedureTypeRequest} */
 	return {
 		existingAppealProcedure: values.existingAppealProcedure,
@@ -383,25 +395,35 @@ const mapSessionValuesForRequest = (values) => {
 		eventDate,
 		...includeAddress,
 		estimationDays: values.estimationDays,
-		lpaQuestionnaireDueDate: dateStringToISOString(values.appealTimetable.lpaQuestionnaireDueDate),
-		ipCommentsDueDate: dateStringToISOString(values.appealTimetable.ipCommentsDueDate),
-		lpaStatementDueDate: dateStringToISOString(values.appealTimetable.lpaStatementDueDate),
-		finalCommentsDueDate: dateStringToISOString(values.appealTimetable.finalCommentsDueDate),
-		statementOfCommonGroundDueDate: dateStringToISOString(
-			values.appealTimetable.statementOfCommonGroundDueDate
-		),
-		...(values.appealTimetable.planningObligationDueDate
+		lpaQuestionnaireDueDate: lpaQuestionnaireDueDate
+			? setTimeInTimeZone(lpaQuestionnaireDueDate, DEADLINE_HOUR, DEADLINE_MINUTE)
+			: '',
+		ipCommentsDueDate: ipCommentsDueDate
+			? setTimeInTimeZone(ipCommentsDueDate, DEADLINE_HOUR, DEADLINE_MINUTE)
+			: '',
+		lpaStatementDueDate: lpaStatementDueDate
+			? setTimeInTimeZone(lpaStatementDueDate, DEADLINE_HOUR, DEADLINE_MINUTE)
+			: '',
+		finalCommentsDueDate: finalCommentsDueDate
+			? setTimeInTimeZone(finalCommentsDueDate, DEADLINE_HOUR, DEADLINE_MINUTE)
+			: '',
+		statementOfCommonGroundDueDate: statementOfCommonGroundDueDate
+			? setTimeInTimeZone(statementOfCommonGroundDueDate, DEADLINE_HOUR, DEADLINE_MINUTE)
+			: '',
+		...(planningObligationDueDate
 			? {
-					planningObligationDueDate: dateStringToISOString(
-						values.appealTimetable.planningObligationDueDate
+					planningObligationDueDate: setTimeInTimeZone(
+						planningObligationDueDate,
+						DEADLINE_HOUR,
+						DEADLINE_MINUTE
 					)
 				}
 			: {}),
-		proofOfEvidenceAndWitnessesDueDate: dateStringToISOString(
-			values.appealTimetable.proofOfEvidenceAndWitnessesDueDate
-		),
-		caseManagementConferenceDueDate: dateStringToISOString(
-			values.appealTimetable.caseManagementConferenceDueDate
-		)
+		proofOfEvidenceAndWitnessesDueDate: proofOfEvidenceAndWitnessesDueDate
+			? setTimeInTimeZone(proofOfEvidenceAndWitnessesDueDate, DEADLINE_HOUR, DEADLINE_MINUTE)
+			: '',
+		caseManagementConferenceDueDate: caseManagementConferenceDueDate
+			? setTimeInTimeZone(caseManagementConferenceDueDate, DEADLINE_HOUR, DEADLINE_MINUTE)
+			: ''
 	};
 };
