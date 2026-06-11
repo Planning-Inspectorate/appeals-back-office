@@ -247,7 +247,10 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 			[APPEAL_CASE_STATUS.AWAITING_EVENT]: {
 				on: {
 					//@ts-ignore
-					[VALIDATION_OUTCOME_COMPLETE]: { target: APPEAL_CASE_STATUS.ISSUE_DETERMINATION },
+					[VALIDATION_OUTCOME_COMPLETE]: {
+						target: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						cond: isEventElapsedAndValid
+					},
 					[VALIDATION_OUTCOME_INCOMPLETE]: { target: APPEAL_CASE_STATUS.EVENT },
 					//@ts-ignore
 					[VALIDATION_OUTCOME_CANCEL]: { target: targetStateOnEventCancelled[procedureType] },
