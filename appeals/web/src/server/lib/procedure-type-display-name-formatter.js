@@ -4,12 +4,13 @@ import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /**
  * @param {string} procedureTypeName
+ * @param {Boolean} showPart2
  * @returns string | null
  */
-export function appealProcedureNameToLabelText(procedureTypeName) {
+export function appealProcedureNameToLabelText(procedureTypeName, showPart2 = false) {
 	switch (procedureTypeName) {
 		case PROCEDURE_TYPE_NAME.WRITTEN_PART_2:
-			return 'Written representations (Part 2)';
+			return showPart2 ? 'Written representations (Part 2)' : 'Written representations';
 		case PROCEDURE_TYPE_NAME.WRITTEN_PART_1:
 			return 'Written representations (Part 1)';
 		case PROCEDURE_TYPE_NAME.HEARING:
