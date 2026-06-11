@@ -951,126 +951,6 @@ function generateCaseTypeSpecificComponents(
 }
 
 /**
- * @param {import('@pins/appeals.api').Appeals.FolderInfo} folder
- * @returns {string | undefined}
- */
-export function getPageHeadingTextOverrideForFolder(folder) {
-	switch (folder.path.split('/')[1]) {
-		case APPEAL_DOCUMENT_TYPE.PLANS_DRAWINGS:
-			return 'Plans, drawings and list of plans';
-		case APPEAL_DOCUMENT_TYPE.NEW_PLANS_DRAWINGS:
-			return 'new plans or drawings';
-		case APPEAL_DOCUMENT_TYPE.DESIGN_ACCESS_STATEMENT:
-			return 'design and access statement';
-		case APPEAL_DOCUMENT_TYPE.OWNERSHIP_CERTIFICATE:
-			return 'Separate ownership certificate and agricultural land declaration';
-		case APPEAL_DOCUMENT_TYPE.APPLICATION_DECISION_LETTER:
-			return 'Decision letter from the local planning authority';
-		case APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS:
-			return 'Other new supporting documents';
-		case APPEAL_DOCUMENT_TYPE.PRIOR_CORRESPONDENCE_WITH_PINS:
-			return 'communication with the Planning Inspectorate';
-		case APPEAL_DOCUMENT_TYPE.GROUND_A_SUPPORTING:
-			return 'Ground (a) supporting documents';
-		case APPEAL_DOCUMENT_TYPE.GROUND_B_SUPPORTING:
-			return 'Ground (b) supporting documents';
-		case APPEAL_DOCUMENT_TYPE.GROUND_C_SUPPORTING:
-			return 'Ground (c) supporting documents';
-		case APPEAL_DOCUMENT_TYPE.GROUND_D_SUPPORTING:
-			return 'Ground (d) supporting documents';
-		case APPEAL_DOCUMENT_TYPE.GROUND_E_SUPPORTING:
-			return 'Ground (e) supporting documents';
-		case APPEAL_DOCUMENT_TYPE.GROUND_F_SUPPORTING:
-			return 'Ground (f) supporting documents';
-		case APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING:
-			return 'Ground (g) supporting documents';
-		case APPEAL_DOCUMENT_TYPE.GROUND_H_SUPPORTING:
-			return 'Ground (h) supporting documents';
-		case APPEAL_DOCUMENT_TYPE.GROUND_I_SUPPORTING:
-			return 'Ground (i) supporting documents';
-		case APPEAL_DOCUMENT_TYPE.GROUND_J_SUPPORTING:
-			return 'Ground (j) supporting documents';
-		case APPEAL_DOCUMENT_TYPE.GROUND_K_SUPPORTING:
-			return 'Ground (k) supporting documents';
-		case APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT:
-			return 'Ground (a) fee receipt';
-		case APPEAL_DOCUMENT_TYPE.EIA_ENVIRONMENTAL_STATEMENT_APPELLANT:
-			return 'Environmental statement';
-		default:
-			return;
-	}
-}
-
-/**
- * @param {import('@pins/appeals.api').Appeals.FolderInfo} folder
- * @param {string} appealType
- * @returns {string | undefined}
- */
-export function getPageHeadingTextOverrideForAddDocuments(folder, appealType) {
-	switch (folder.path.split('/')[1]) {
-		case APPEAL_DOCUMENT_TYPE.APPLICATION_DECISION_LETTER:
-			return 'Upload the decision letter from the local planning authority';
-		case APPEAL_DOCUMENT_TYPE.PLANS_DRAWINGS:
-			return 'Upload plans, drawings and list of plans';
-		case APPEAL_DOCUMENT_TYPE.ORIGINAL_APPLICATION_FORM:
-			return 'Upload your application form';
-		case APPEAL_DOCUMENT_TYPE.CHANGED_DESCRIPTION:
-			return appealType === APPEAL_TYPE.CAS_ADVERTISEMENT ||
-				appealType === APPEAL_TYPE.ADVERTISEMENT
-				? 'Upload evidence of your agreement to change the description of the advertisement'
-				: 'Upload evidence of your agreement to change the description of development';
-		case APPEAL_DOCUMENT_TYPE.APPELLANT_STATEMENT:
-			return 'Upload your appeal statement';
-		case APPEAL_DOCUMENT_TYPE.PLANNING_OBLIGATION:
-			return 'Upload your planning obligation';
-		case APPEAL_DOCUMENT_TYPE.OWNERSHIP_CERTIFICATE:
-			return 'Upload your separate ownership certificate and agricultural land declaration';
-		case APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION:
-			return 'Upload your application for an award of appeal costs';
-		case APPEAL_DOCUMENT_TYPE.DESIGN_ACCESS_STATEMENT:
-			return 'Upload your design and access statement';
-		case APPEAL_DOCUMENT_TYPE.NEW_PLANS_DRAWINGS:
-			return 'Upload your new plans or drawings';
-		case APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS:
-			return 'Upload your other new supporting documents';
-		case APPEAL_DOCUMENT_TYPE.PRIOR_CORRESPONDENCE_WITH_PINS:
-			return 'Upload your communication with the Planning Inspectorate';
-		case APPEAL_DOCUMENT_TYPE.ENFORCEMENT_NOTICE:
-			return 'Upload your enforcement notice';
-		case APPEAL_DOCUMENT_TYPE.ENFORCEMENT_NOTICE_PLAN:
-			return 'Upload your enforcement notice plan';
-		case APPEAL_DOCUMENT_TYPE.GROUND_A_SUPPORTING:
-			return 'Upload your ground (a) supporting documents';
-		case APPEAL_DOCUMENT_TYPE.GROUND_B_SUPPORTING:
-			return 'Upload your ground (b) supporting documents';
-		case APPEAL_DOCUMENT_TYPE.GROUND_C_SUPPORTING:
-			return 'Upload your ground (c) supporting documents';
-		case APPEAL_DOCUMENT_TYPE.GROUND_D_SUPPORTING:
-			return 'Upload your ground (d) supporting documents';
-		case APPEAL_DOCUMENT_TYPE.GROUND_E_SUPPORTING:
-			return 'Upload your ground (e) supporting documents';
-		case APPEAL_DOCUMENT_TYPE.GROUND_F_SUPPORTING:
-			return 'Upload your ground (f) supporting documents';
-		case APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING:
-			return 'Upload your ground (g) supporting documents';
-		case APPEAL_DOCUMENT_TYPE.GROUND_H_SUPPORTING:
-			return 'Upload your ground (h) supporting documents';
-		case APPEAL_DOCUMENT_TYPE.GROUND_I_SUPPORTING:
-			return 'Upload your ground (i) supporting documents';
-		case APPEAL_DOCUMENT_TYPE.GROUND_J_SUPPORTING:
-			return 'Upload your ground (j) supporting documents';
-		case APPEAL_DOCUMENT_TYPE.GROUND_K_SUPPORTING:
-			return 'Upload your ground (k) supporting documents';
-		case APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT:
-			return 'Upload your ground (a) fee receipt';
-		case 'eiaEnvironmentalStatementAppellant':
-			return 'Upload your environmental statement';
-		default:
-			break;
-	}
-}
-
-/**
  * @param {string} folderPath
  * @returns {string | undefined}
  */
@@ -1124,7 +1004,7 @@ export function getDocumentNameFromFolder(folderPath) {
 			return 'ground (k) supporting documents';
 		case APPEAL_DOCUMENT_TYPE.GROUND_A_FEE_RECEIPT:
 			return 'ground (a) fee receipt';
-		case 'eiaEnvironmentalStatementAppellant':
+		case APPEAL_DOCUMENT_TYPE.EIA_ENVIRONMENTAL_STATEMENT_APPELLANT:
 			return 'environmental statement';
 	}
 }

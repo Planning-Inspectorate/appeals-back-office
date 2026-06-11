@@ -155,7 +155,8 @@ export const DOCUMENT_FOLDER_DISPLAY_LABELS = Object.freeze({
 	[APPEAL_DOCUMENT_TYPE.EIA_SCOPING_OPINION]: 'Scoping opinion documents',
 	[APPEAL_DOCUMENT_TYPE.LPA_CASE_CORRESPONDENCE]: 'Additional documents',
 	[APPEAL_DOCUMENT_TYPE.OTHER_RELEVANT_POLICIES]: 'Other relevant policies',
-	[APPEAL_DOCUMENT_TYPE.APPEAL_NOTIFICATION]: 'Appeal notification letter',
+	[APPEAL_DOCUMENT_TYPE.APPEAL_NOTIFICATION]:
+		'Appeal notification letter and the list of people that you notified',
 	[APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION]: 'Appellant costs application',
 	[APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_WITHDRAWAL]: 'Appellant costs withdrawal',
 	[APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_CORRESPONDENCE]: 'Appellant costs correspondence',

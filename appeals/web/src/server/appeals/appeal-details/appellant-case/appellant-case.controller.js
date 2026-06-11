@@ -3,7 +3,11 @@ import { addressToString } from '#lib/address-formatter.js';
 import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import { getFeedbackLinkFromAppealTypeName } from '#lib/feedback-form-link.js';
 import logger from '#lib/logger.js';
-import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
+import {
+	getPageHeadingTextOverrideForAddDocuments,
+	getPageHeadingTextOverrideForFolder,
+	mapFolderNameToDisplayLabel
+} from '#lib/mappers/utils/documents-and-folders.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
@@ -36,8 +40,6 @@ import {
 	appellantCasePage,
 	checkAndConfirmPage,
 	getDocumentNameFromFolder,
-	getPageHeadingTextOverrideForAddDocuments,
-	getPageHeadingTextOverrideForFolder,
 	getValidationOutcomeFromAppellantCase,
 	mapWebReviewOutcomeToApiReviewOutcome
 } from './appellant-case.mapper.js';

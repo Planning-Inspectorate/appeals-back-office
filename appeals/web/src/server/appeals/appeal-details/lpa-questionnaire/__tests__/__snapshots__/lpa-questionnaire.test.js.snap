@@ -147,9 +147,9 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification">Add<span class="govuk-visually-hidden"> Press advertisement (2. Notifying relevant parties)</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter and the list of people that you notified</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter">Add<span class="govuk-visually-hidden"> Appeal notification letter (2. Notifying relevant parties)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter">Add<span class="govuk-visually-hidden"> Appeal notification letter and the list of people that you notified (2. Notifying relevant parties)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -521,9 +521,9 @@ exports[`LPA Questionnaire review GET / should render the CAS planning LPA Quest
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification">Add<span class="govuk-visually-hidden"> Press advertisement (2. Notifying relevant parties)</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter and the list of people that you notified</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter">Add<span class="govuk-visually-hidden"> Appeal notification letter (2. Notifying relevant parties)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter">Add<span class="govuk-visually-hidden"> Appeal notification letter and the list of people that you notified (2. Notifying relevant parties)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -887,9 +887,9 @@ exports[`LPA Questionnaire review GET / should render the Cas Advert LPA Questio
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification">Add<span class="govuk-visually-hidden"> Press advertisement (2. Notifying relevant parties)</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter and the list of people that you notified</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter">Add<span class="govuk-visually-hidden"> Appeal notification letter (2. Notifying relevant parties)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter">Add<span class="govuk-visually-hidden"> Appeal notification letter and the list of people that you notified (2. Notifying relevant parties)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -1274,9 +1274,9 @@ exports[`LPA Questionnaire review GET / should render the Householder LPA Questi
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification">Add<span class="govuk-visually-hidden"> Press advertisement (2. Notifying relevant parties)</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter and the list of people that you notified</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter">Add<span class="govuk-visually-hidden"> Appeal notification letter (2. Notifying relevant parties)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter">Add<span class="govuk-visually-hidden"> Appeal notification letter and the list of people that you notified (2. Notifying relevant parties)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -1960,9 +1960,9 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification">Add<span class="govuk-visually-hidden"> Press advertisement (3. Notifying relevant parties)</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter and the list of people that you notified</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter">Add<span class="govuk-visually-hidden"> Appeal notification letter (3. Notifying relevant parties)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter">Add<span class="govuk-visually-hidden"> Appeal notification letter and the list of people that you notified (3. Notifying relevant parties)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -2438,9 +2438,9 @@ exports[`LPA Questionnaire review GET / should render the advert LPA Questionnai
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification">Add<span class="govuk-visually-hidden"> Press advertisement (2. Notifying relevant parties)</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter and the list of people that you notified</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter">Add<span class="govuk-visually-hidden"> Appeal notification letter (2. Notifying relevant parties)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter">Add<span class="govuk-visually-hidden"> Appeal notification letter and the list of people that you notified (2. Notifying relevant parties)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -2878,9 +2878,9 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification">Add<span class="govuk-visually-hidden"> Press advertisement (2. Notifying relevant parties)</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter and the list of people that you notified</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter">Add<span class="govuk-visually-hidden"> Appeal notification letter (2. Notifying relevant parties)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter">Add<span class="govuk-visually-hidden"> Appeal notification letter and the list of people that you notified (2. Notifying relevant parties)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -3234,9 +3234,9 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification">Add<span class="govuk-visually-hidden"> Press advertisement (2. Notifying relevant parties)</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter and the list of people that you notified</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter">Add<span class="govuk-visually-hidden"> Appeal notification letter (2. Notifying relevant parties)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter">Add<span class="govuk-visually-hidden"> Appeal notification letter and the list of people that you notified (2. Notifying relevant parties)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -3742,7 +3742,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/add-documents/:folder
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/lpa-questionnaire/1/undefined/add-document-details/2864"
             data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
-            data-folder-id="2864" data-document-type="changedDescription" data-document-stage="appellant-case"
+            data-folder-id="2864" data-document-type="testDocument" data-document-stage="testFolder"
             data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
             data-allowed-types="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
             data-formatted-allowed-types="PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF">
@@ -6402,9 +6402,9 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-press-advert-notification">Add<span class="govuk-visually-hidden"> Press advertisement (2. Notifying relevant parties)</span></a>
                             </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal notification letter and the list of people that you notified</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter">Add<span class="govuk-visually-hidden"> Appeal notification letter (2. Notifying relevant parties)</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-appeal-notification-letter">Add<span class="govuk-visually-hidden"> Appeal notification letter and the list of people that you notified (2. Notifying relevant parties)</span></a>
                                 </dd>
                         </div>
                     </dl>
