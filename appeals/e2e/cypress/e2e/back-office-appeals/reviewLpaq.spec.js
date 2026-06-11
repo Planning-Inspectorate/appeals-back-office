@@ -119,7 +119,10 @@ describe('Review LPAQ', () => {
 			lpaqPage.assertFieldLabelAndValue('Site notice', 'No documents');
 			lpaqPage.assertFieldLabelAndValue('Letter or email notification', 'No documents');
 			lpaqPage.assertFieldLabelAndValue('Press advertisement', 'No documents');
-			lpaqPage.assertFieldLabelAndValue('Appeal notification letter', 'No documents');
+			lpaqPage.assertFieldLabelAndValue(
+				'Appeal notification letter and the list of people that you notified',
+				'No documents'
+			);
 
 			// Section 3 – Representations
 			lpaqPage.assertFieldLabelAndValue(
@@ -212,7 +215,10 @@ describe('Review LPAQ', () => {
 			lpaqPage.assertFieldLabelAndValue('Site notice', 'No documents');
 			lpaqPage.assertFieldLabelAndValue('Letter or email notification', 'No documents');
 			lpaqPage.assertFieldLabelAndValue('Press advertisement', 'No documents');
-			lpaqPage.assertFieldLabelAndValue('Appeal notification letter', 'No documents');
+			lpaqPage.assertFieldLabelAndValue(
+				'Appeal notification letter and the list of people that you notified',
+				'No documents'
+			);
 
 			// Section 4 – Representations
 			lpaqPage.assertFieldLabelAndValue(
@@ -322,7 +328,10 @@ describe('Review LPAQ', () => {
 			lpaqPage.assertFieldLabelAndValue('Site notice', 'No documents');
 			lpaqPage.assertFieldLabelAndValue('Letter or email notification', 'No documents');
 			lpaqPage.assertFieldLabelAndValue('Press advertisement', 'No documents');
-			lpaqPage.assertFieldLabelAndValue('Appeal notification letter', 'No documents');
+			lpaqPage.assertFieldLabelAndValue(
+				'Appeal notification letter and the list of people that you notified',
+				'No documents'
+			);
 
 			// Section 4 – Representations
 			lpaqPage.assertFieldLabelAndValue(
@@ -428,7 +437,10 @@ describe('Review LPAQ', () => {
 			lpaqPage.assertFieldLabelAndValue('Site notice', 'No documents');
 			lpaqPage.assertFieldLabelAndValue('Letter or email notification', 'No documents');
 			lpaqPage.assertFieldLabelAndValue('Press advertisement', 'No documents');
-			lpaqPage.assertFieldLabelAndValue('Appeal notification letter', 'No documents');
+			lpaqPage.assertFieldLabelAndValue(
+				'Appeal notification letter and the list of people that you notified',
+				'No documents'
+			);
 
 			// Section 3 – Representations
 			lpaqPage.assertFieldLabelAndValue(
@@ -524,7 +536,10 @@ describe('Review LPAQ', () => {
 			lpaqPage.assertFieldLabelAndValue('Site notice', 'No documents');
 			lpaqPage.assertFieldLabelAndValue('Letter or email notification', 'No documents');
 			lpaqPage.assertFieldLabelAndValue('Press advertisement', 'No documents');
-			lpaqPage.assertFieldLabelAndValue('Appeal notification letter', 'No documents');
+			lpaqPage.assertFieldLabelAndValue(
+				'Appeal notification letter and the list of people that you notified',
+				'No documents'
+			);
 
 			// Section 3 – Representations
 			lpaqPage.assertFieldLabelAndValue(
@@ -617,7 +632,10 @@ describe('Review LPAQ', () => {
 			lpaqPage.assertFieldLabelAndValue('Site notice', 'No documents');
 			lpaqPage.assertFieldLabelAndValue('Letter or email notification', 'No documents');
 			lpaqPage.assertFieldLabelAndValue('Press advertisement', 'No documents');
-			lpaqPage.assertFieldLabelAndValue('Appeal notification letter', 'No documents');
+			lpaqPage.assertFieldLabelAndValue(
+				'Appeal notification letter and the list of people that you notified',
+				'No documents'
+			);
 
 			// Section 3 – Representations
 			lpaqPage.assertFieldLabelAndValue(

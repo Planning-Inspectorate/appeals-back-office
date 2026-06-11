@@ -527,7 +527,7 @@ exports[`mapLpaQuestionnaireData should map advert LPA questionnaire data correc
         },
         {
           "html": "No documents",
-          "key": "Appeal notification letter",
+          "key": "Appeal notification letter and the list of people that you notified",
         },
       ],
     },
@@ -1158,7 +1158,7 @@ exports[`mapLpaQuestionnaireData should map cas advert LPA questionnaire data co
         },
         {
           "html": "No documents",
-          "key": "Appeal notification letter",
+          "key": "Appeal notification letter and the list of people that you notified",
         },
       ],
     },
@@ -1744,7 +1744,7 @@ exports[`mapLpaQuestionnaireData should map householder LPA questionnaire data c
         },
         {
           "html": "No documents",
-          "key": "Appeal notification letter",
+          "key": "Appeal notification letter and the list of people that you notified",
         },
       ],
     },
@@ -2445,7 +2445,7 @@ exports[`mapLpaQuestionnaireData should map s20 LPA questionnaire data correctly
         },
         {
           "html": "No documents",
-          "key": "Appeal notification letter",
+          "key": "Appeal notification letter and the list of people that you notified",
         },
       ],
     },
@@ -3214,7 +3214,7 @@ exports[`mapLpaQuestionnaireData should map s78 LPA questionnaire data correctly
         },
         {
           "html": "No documents",
-          "key": "Appeal notification letter",
+          "key": "Appeal notification letter and the list of people that you notified",
         },
       ],
     },
