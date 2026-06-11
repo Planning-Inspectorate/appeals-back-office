@@ -613,21 +613,32 @@ describe('Appellant Case Valid Flow', () => {
 				);
 			});
 			it('should handle posting environmental services review details', async () => {
-				nock('http://test/').patch(`/appeals/${appealId}/appellant-cases/0`).reply(200);
-				nock('http://test/').get(`/appeals/${appealId}/appellant-cases/0`).reply(200, {
-					screeningOpinionIndicatesEiaRequired: true,
-					applicationDate: '2026-05-01',
-					applicationDecision: 'refused',
-					typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+				nock('http://test/')
+					.patch(`/appeals/${appealId}/appellant-cases/0`, {
+						validationOutcome: 'valid',
+						validAt: '2025-01-01T00:00:00.000Z'
+					})
+					.reply(200);
+				nock('http://test/')
+					.get(`/appeals/${appealId}/appellant-cases/0`)
+					.reply(200, {
+						screeningOpinionIndicatesEiaRequired: true,
+						applicationDate: '2026-05-01',
+						applicationDecision: 'refused',
+						typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+					})
+					.persist();
+
+				// Post valid date first to store it in session
+				await request.post(`${baseUrl}/${appealId}/appellant-case/valid/date`).send({
+					'valid-date-day': '1',
+					'valid-date-month': 'Jan',
+					'valid-date-year': '2025'
 				});
 
-				const response = await request
-					.post(`${baseUrl}/${appealId}/appellant-case/valid/environmental-services-review`)
-					.send({
-						day: '1',
-						month: 'Jan',
-						year: '2025'
-					});
+				const response = await request.post(
+					`${baseUrl}/${appealId}/appellant-case/valid/environmental-services-review`
+				);
 
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toBe(

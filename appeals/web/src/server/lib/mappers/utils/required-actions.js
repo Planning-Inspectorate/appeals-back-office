@@ -15,7 +15,10 @@ import {
 	DOCUMENT_STATUS_RECEIVED,
 	VALIDATION_OUTCOME_INCOMPLETE
 } from '@pins/appeals/constants/support.js';
-import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import {
+	isAnyEnforcementAppealType,
+	normalizeProcedureType
+} from '@pins/appeals/utils/appeal-type-checks.js';
 import isAppellantStatementAppealType from '@pins/appeals/utils/is-appellant-statement-appeal-type.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
@@ -57,6 +60,8 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 	/** @type {AppealRequiredAction[]} */
 	const actions = [];
 
+	const procedureType = normalizeProcedureType(appealDetails.procedureType);
+
 	switch (appealDetails.appealStatus) {
 		case APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER:
 			actions.push('assignCaseOfficer');
@@ -85,16 +90,14 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			// appeal types that can't have hearings/inquiries have no procedure type set
 			// i.e. HAS is null, S20 before feature flag is turned on is null etc.
 			if (
-				!appealDetails.procedureType ||
-				appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN.toLowerCase()
+				!procedureType ||
+				procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN.toLowerCase()
 			) {
 				actions.push('arrangeSiteVisit');
 				break;
 			}
 
-			if (
-				appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING.toLowerCase()
-			) {
+			if (procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING.toLowerCase()) {
 				if (
 					// @ts-ignore
 					(view === 'detail' && !appealDetails.hearing) ||
@@ -121,9 +124,7 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				}
 			}
 
-			if (
-				appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY.toLowerCase()
-			) {
+			if (procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY.toLowerCase()) {
 				if (
 					// @ts-ignore
 					(view === 'detail' && !appealDetails.inquiry) ||
@@ -307,16 +308,16 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 					actions.push('shareIpCommentsAndLpaStatement');
 				} else if (
 					// @ts-ignore
-					appealDetails.procedureType === 'Hearing' &&
+					procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING &&
 					// @ts-ignore
 					appealDetails.hearing?.hearingStartTime &&
 					// @ts-ignore
 					appealDetails.hearing?.addressId
 				) {
 					actions.push('progressHearingCaseWithNoRepsAndHearingSetUpFromStatements');
-				} else if (appealDetails.procedureType === 'Hearing') {
+				} else if (procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING) {
 					actions.push('progressHearingCaseWithNoRepsFromStatements');
-				} else if (appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY) {
+				} else if (procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY) {
 					actions.push('progressToProofOfEvidenceAndWitnesses');
 				} else {
 					actions.push('progressFromStatements');
