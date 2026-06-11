@@ -566,16 +566,21 @@ export const postEnvironmentalServicesReview = async (request, response) => {
 		currentAppeal: { appealId, appellantCaseId },
 		session
 	} = request;
+
+	const { day, month, year } = session.updatedValidDate || {};
+
 	await setReviewOutcomeValidForAppellantCase(
 		request.apiClient,
 		appealId,
 		appellantCaseId,
 		dayMonthYearHourMinuteToISOString({
-			day: session.day,
-			month: session.month,
-			year: session.year
+			day,
+			month,
+			year
 		})
 	);
+
+	delete session.updatedValidDate;
 
 	addNotificationBannerToSession({
 		session,

@@ -3,7 +3,7 @@ import {
 	APPEAL_CASE_TYPE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from '@planning-inspectorate/data-model';
-import { APPEAL_TYPE } from '../../constants/common';
+import { APPEAL_TYPE, PROCEDURE_TYPE_NAME } from '../../constants/common';
 import {
 	isExpeditedAppealType,
 	isS78ExpeditedAppealType,
@@ -175,6 +175,18 @@ describe('normalizeProcedureType', () => {
 
 	it('normalizes WRITTEN_PART_2 to WRITTEN', () => {
 		expect(normalizeProcedureType(APPEAL_CASE_PROCEDURE.WRITTEN_PART_2)).toBe(
+			APPEAL_CASE_PROCEDURE.WRITTEN
+		);
+	});
+
+	it('normalizes PROCEDURE_TYPE_NAME.WRITTEN_PART_1 display name to WRITTEN key', () => {
+		expect(normalizeProcedureType(PROCEDURE_TYPE_NAME.WRITTEN_PART_1)).toBe(
+			APPEAL_CASE_PROCEDURE.WRITTEN
+		);
+	});
+
+	it('normalizes PROCEDURE_TYPE_NAME.WRITTEN_PART_2 display name to WRITTEN key', () => {
+		expect(normalizeProcedureType(PROCEDURE_TYPE_NAME.WRITTEN_PART_2)).toBe(
 			APPEAL_CASE_PROCEDURE.WRITTEN
 		);
 	});

@@ -151,6 +151,34 @@ describe('required actions', () => {
 			).toEqual(['arrangeSiteVisit']);
 		});
 
+		it('should return "arrangeSiteVisit" if appeal procedure is "writtenPart1", appeal status is "EVENT" and no siteVisit exists', () => {
+			expect(
+				getRequiredActionsForAppeal(
+					{
+						...appealData,
+						procedureType: 'writtenPart1',
+						siteVisit: undefined,
+						appealStatus: APPEAL_CASE_STATUS.EVENT
+					},
+					'detail'
+				)
+			).toEqual(['arrangeSiteVisit']);
+		});
+
+		it('should return "arrangeSiteVisit" if appeal procedure is "writtenPart2", appeal status is "EVENT" and no siteVisit exists', () => {
+			expect(
+				getRequiredActionsForAppeal(
+					{
+						...appealData,
+						procedureType: 'writtenPart2',
+						siteVisit: undefined,
+						appealStatus: APPEAL_CASE_STATUS.EVENT
+					},
+					'detail'
+				)
+			).toEqual(['arrangeSiteVisit']);
+		});
+
 		it('should return "issueDecision" if appeal status is "ISSUE_DETERMINATION"', () => {
 			expect(
 				getRequiredActionsForAppeal(
