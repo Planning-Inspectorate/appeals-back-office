@@ -1298,7 +1298,7 @@ describe('appeal timetables routes', () => {
 					expect.objectContaining({
 						templateName: 'appeal-valid-start-case-s78-appellant',
 						personalisation: expect.objectContaining({
-							procedure_type: 'Part 1',
+							procedure_type: 'written representations',
 							site_visit: true,
 							costs_info: true
 						})
@@ -1309,7 +1309,7 @@ describe('appeal timetables routes', () => {
 					expect.objectContaining({
 						templateName: 'appeal-valid-start-case-s78-lpa',
 						personalisation: expect.objectContaining({
-							procedure_type: 'Part 1'
+							procedure_type: 'written representations'
 						})
 					})
 				);
@@ -2831,7 +2831,6 @@ describe('appeal timetables routes', () => {
 
 				expect(response.status).toEqual(201);
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
-
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
