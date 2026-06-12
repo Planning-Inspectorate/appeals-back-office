@@ -141,11 +141,14 @@ export function issueDecisionPage(
 				]
 			: [ALLOWED, DISMISSED, SPLIT_DECISION, INVALID];
 
-	const items = decisionTypes.map((decisionType) => ({
-		value: decisionType,
-		text: decisionOutcomeToDisplayText(decisionType, currentPageAppealDetails.appealType),
-		checked: inspectorDecision?.outcome === decisionType
-	}));
+	// filter out INVALID as an option for linked appeals before mapping
+	const items = decisionTypes
+		.filter((decisionType) => !isLinkedAppeal(appealDetails) || decisionType !== INVALID)
+		.map((decisionType) => ({
+			value: decisionType,
+			text: decisionOutcomeToDisplayText(decisionType, currentPageAppealDetails.appealType),
+			checked: inspectorDecision?.outcome === decisionType
+		}));
 
 	if (
 		!isLinkedAppeal(appealDetails) &&

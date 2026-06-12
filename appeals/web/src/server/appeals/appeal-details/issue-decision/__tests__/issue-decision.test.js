@@ -235,6 +235,9 @@ describe('issue-decision', () => {
 					expect(unprettifiedElement.innerHTML).toContain(
 						'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="split_decision">'
 					);
+					expect(unprettifiedElement.innerHTML).not.toContain(
+						'<input class="govuk-radios__input" id="decision-4" name="decision" type="radio" value="invalid">'
+					);
 				});
 			});
 
@@ -266,6 +269,9 @@ describe('issue-decision', () => {
 					);
 					expect(unprettifiedElement.innerHTML).toContain(
 						'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="split_decision">'
+					);
+					expect(unprettifiedElement.innerHTML).not.toContain(
+						'<input class="govuk-radios__input" id="decision-4" name="decision" type="radio" value="invalid">'
 					);
 				});
 			});
