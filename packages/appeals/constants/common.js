@@ -81,7 +81,7 @@ export const APPEAL_TYPE_CHANGE_APPEALS = Object.freeze({
 /** @type {Object<string, string>} */
 export const PROCEDURE_TYPE_MAP = Object.freeze({
 	written: 'written representations',
-	writtenPart1: 'Part 1',
+	writtenPart1: 'written representations',
 	hearing: 'a hearing',
 	inquiry: 'an inquiry'
 });
