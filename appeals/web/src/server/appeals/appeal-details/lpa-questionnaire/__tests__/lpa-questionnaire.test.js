@@ -758,7 +758,7 @@ describe('LPA Questionnaire review', () => {
 				},
 				{
 					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.APPEAL_NOTIFICATION}`,
-					label: 'Appeal notification letter'
+					label: 'Appeal notification letter and the list of people that you notified'
 				}
 			];
 
@@ -1056,7 +1056,9 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain('Site notice</dt>');
 			expect(element.innerHTML).toContain('Letter or email notification</dt>');
 			expect(element.innerHTML).toContain('Press advertisement</dt>');
-			expect(element.innerHTML).toContain('Appeal notification letter</dt>');
+			expect(element.innerHTML).toContain(
+				'Appeal notification letter and the list of people that you notified</dt>'
+			);
 
 			expect(element.innerHTML).toContain('3. Consultation responses and representations</h2>');
 			expect(element.innerHTML).toContain(
@@ -1157,7 +1159,9 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain('Site notice</dt>');
 			expect(element.innerHTML).toContain('Letter or email notification</dt>');
 			expect(element.innerHTML).toContain('Press advertisement</dt>');
-			expect(element.innerHTML).toContain('Appeal notification letter</dt>');
+			expect(element.innerHTML).toContain(
+				'Appeal notification letter and the list of people that you notified</dt>'
+			);
 
 			expect(element.innerHTML).toContain('3. Consultation responses and representations</h2>');
 			expect(element.innerHTML).toContain(
@@ -1238,7 +1242,9 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain('Site notice</dt>');
 			expect(element.innerHTML).toContain('Letter or email notification</dt>');
 			expect(element.innerHTML).toContain('Press advertisement</dt>');
-			expect(element.innerHTML).toContain('Appeal notification letter</dt>');
+			expect(element.innerHTML).toContain(
+				'Appeal notification letter and the list of people that you notified</dt>'
+			);
 
 			expect(element.innerHTML).toContain('3. Consultation responses and representations</h2>');
 			expect(element.innerHTML).toContain(
@@ -1415,7 +1421,9 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain('Site notice</dt>');
 			expect(element.innerHTML).toContain('Letter or email notification</dt>');
 			expect(element.innerHTML).toContain('Press advertisement</dt>');
-			expect(element.innerHTML).toContain('Appeal notification letter</dt>');
+			expect(element.innerHTML).toContain(
+				'Appeal notification letter and the list of people that you notified</dt>'
+			);
 
 			expect(element.innerHTML).toContain('3. Consultation responses and representations</h2>');
 			expect(element.innerHTML).toContain(
@@ -2812,10 +2820,13 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should render document upload page with a file upload component, and no late entry status tag and associated details component, and no additional documents warning text, if the folder is not additional documents', async () => {
+			const mockFolderInfo = structuredClone(documentFolderInfo);
+			mockFolderInfo.path = 'testFolder/testDocument';
+
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataNotValidated);
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
+			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, mockFolderInfo);
 
 			const response = await request.get(
 				`/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/1`

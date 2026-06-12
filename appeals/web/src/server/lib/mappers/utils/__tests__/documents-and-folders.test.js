@@ -139,7 +139,7 @@ describe('documents and folders', () => {
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.APPEAL_NOTIFICATION,
-				label: 'Appeal notification letter'
+				label: 'Appeal notification letter and the list of people that you notified'
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION,
