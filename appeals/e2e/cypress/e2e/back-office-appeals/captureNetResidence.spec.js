@@ -21,13 +21,13 @@ describe('Capture Net Residences', () => {
 	let appeal;
 
 	afterEach(() => {
-		cy.deleteAppeals(appeal);
+		//cy.deleteAppeals(appeal);
 	});
 
 	const overviewDetails = {
 		appealType: 'Planning appeal',
 		applicationReference: '123',
-		appealProcedure: PROCEDURE_TYPES.writtenPart2,
+		appealProcedure: PROCEDURE_TYPES.written,
 		allocationLevel: 'No allocation level for this appeal',
 		linkedAppeals: 'No linked appeals',
 		relatedAppeals: '1000000',
