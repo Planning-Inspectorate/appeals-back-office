@@ -11,5 +11,6 @@ export const CTA_TEXT = {
 export const PROCEDURE_TYPES = {
 	hearing: 'Hearing',
 	inquiry: 'Inquiry',
+	written: 'Written representations',
 	writtenPart2: 'Written representations (Part 2)'
 };
