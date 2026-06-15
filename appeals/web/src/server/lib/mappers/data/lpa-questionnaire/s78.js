@@ -25,7 +25,6 @@ import { mapInfrastructureLevyExpectedDate } from './submappers/map-infrastructu
 import { mapIsAonbNationalLandscape } from './submappers/map-is-aonb-national-landscape.js';
 import { mapIsGypsyOrTravellerSite } from './submappers/map-is-gypsy-or-traveller-site.js';
 import { mapIsInfrastructureLevyFormallyAdopted } from './submappers/map-is-infrastructure-levy-formally-adopted.js';
-import { mapListOfDocumentsBeforeDecision } from './submappers/map-list-of-documents-before-decision.js';
 import { mapOtherRelevantPolicies } from './submappers/map-other-relevant-policies.js';
 import { mapPlansDrawingsLpa } from './submappers/map-plans-drawings-lpa.js';
 import { mapProcedurePreferenceDetails } from './submappers/map-procedure-preference-details.js';
@@ -68,6 +67,5 @@ export const submaps = {
 	designAccessStatementLpa: mapDesignAccessStatementLpa,
 	plansDrawingsLpa: mapPlansDrawingsLpa,
 	additionalDocumentsLpa: mapAdditionalDocumentsLpa,
-	listOfDocumentsBeforeDecision: mapListOfDocumentsBeforeDecision,
 	anySignificantChangesLpa: mapAnySignificantChangesLpa
 };

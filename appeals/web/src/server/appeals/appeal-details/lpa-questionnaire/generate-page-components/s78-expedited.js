@@ -11,7 +11,7 @@ import { generateSharedS78S20LpaQuestionnaireComponents } from './shared-s78-s20
  * @param {{lpaq: MappedInstructions}} mappedLPAQData
  * @returns {PageComponent[]}
  */
-export const generateS78LpaQuestionnaireComponents = (appealDetails, mappedLPAQData) => {
+export const generateS78ExpeditedLpaQuestionnaireComponents = (appealDetails, mappedLPAQData) => {
 	/** @type {PageComponent[]} */
 	const pageComponents = [];
 
@@ -49,5 +49,28 @@ export const generateS78LpaQuestionnaireComponents = (appealDetails, mappedLPAQD
 	});
 
 	pageComponents.push(...generateSharedS78S20LpaQuestionnaireComponents(mappedLPAQData));
+
+	pageComponents.push({
+		/** @type {'summary-list'} */
+		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
+		parameters: {
+			card: {
+				title: {
+					text: '8. Original Evidence'
+				}
+			},
+			rows: [
+				mappedLPAQData.lpaq?.designAccessStatementLpa?.display.summaryListItem,
+				mappedLPAQData.lpaq?.plansDrawingsLpa?.display.summaryListItem,
+				mappedLPAQData.lpaq?.additionalDocumentsLpa?.display.summaryListItem,
+				mappedLPAQData.lpaq?.listOfDocumentsBeforeDecision?.display.summaryListItem
+			].filter(isDefined)
+		}
+	});
+
 	return pageComponents;
 };
