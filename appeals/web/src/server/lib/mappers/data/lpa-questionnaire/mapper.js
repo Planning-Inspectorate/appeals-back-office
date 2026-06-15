@@ -9,6 +9,7 @@ import { submaps as enforcementSubmaps } from './enforcement.js';
 import { submaps as hasSubmaps } from './has.js';
 import { submaps as ldcSubmaps } from './ldc.js';
 import { submaps as s20Submaps } from './s20.js';
+import { submaps as s78ExpeditedSubmaps } from './s78-expedited.js';
 import { submaps as s78Submaps } from './s78.js';
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal
@@ -70,7 +71,10 @@ export function initialiseAndMapLPAQData(
 	/** @type {{lpaq: MappedInstructions}} */
 	const mappedData = { lpaq: {} };
 
-	const submappers = submaps[appealDetails.appealType];
+	let submappers = submaps[appealDetails.appealType];
+	if (appealDetails.appealType === APPEAL_TYPE.S78 && appealDetails.isS78Expedited) {
+		submappers = s78ExpeditedSubmaps;
+	}
 
 	if (!submappers) {
 		console.error(`[LPAQ Mapper] No submapper found for appeal type: ${appealDetails.appealType}`);

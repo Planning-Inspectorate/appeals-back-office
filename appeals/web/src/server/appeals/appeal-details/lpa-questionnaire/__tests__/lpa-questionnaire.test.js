@@ -1121,6 +1121,42 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain('Additional documents</h2>');
 		}, 10000);
 
+		it('should render the S78 expedited LPA Questionnaire page with the expected content', async () => {
+			nock('http://test/')
+				.get('/appeals/2?include=all')
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId: 2,
+					isS78Expedited: true
+				});
+			nock('http://test/')
+				.get('/appeals/2/lpa-questionnaires/1')
+				.reply(200, {
+					...lpaQuestionnaireDataNotValidated,
+					lpaQuestionnaireId: 1
+				});
+
+			const response = await request.get('/appeals-service/appeal-details/2/lpa-questionnaire/1');
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('LPA questionnaire</h1>');
+			expect(element.innerHTML).toContain('1. Constraints, designations and other issues</h2>');
+			expect(element.innerHTML).toContain('2. Environmental impact assessment</h2>');
+			expect(element.innerHTML).toContain('3. Notifying relevant parties</h2>');
+			expect(element.innerHTML).toContain('4. Consultation responses and representations</h2>');
+			expect(element.innerHTML).toContain(
+				'5. Planning officer’s report and supplementary documents</h2>'
+			);
+			expect(element.innerHTML).toContain('6. Site access</h2>');
+			expect(element.innerHTML).toContain('7. Appeal process</h2>');
+			expect(element.innerHTML).toContain('Original Evidence</h2>');
+			expect(element.innerHTML).toContain(
+				'What documents and plans did you use to make your decision?</dt>'
+			);
+			expect(element.innerHTML).toContain('Additional documents</h2>');
+		}, 10000);
+
 		it('should render the CAS planning LPA Questionnaire page with the expected content', async () => {
 			nock('http://test/')
 				.get('/appeals/3?include=all')
