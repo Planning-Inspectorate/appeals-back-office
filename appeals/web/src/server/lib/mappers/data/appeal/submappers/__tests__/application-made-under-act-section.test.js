@@ -2,12 +2,12 @@ import { mapApplicationMadeUnderActSection } from '../application-made-under-act
 
 describe('mapApplicationMadeUnderActSection', () => {
 	it.each([
-		['existing-development', 'Existing development (section 191)'],
+		['existing-development', 'Existing development or use of a site (section 191)'],
 		[
 			'proposed-changes-to-a-listed-building',
 			'Proposed changes to a listed building (section 26H)'
 		],
-		['proposed-use-of-a-development', 'Proposed use of a development (section 192)']
+		['proposed-use-of-a-development', 'Proposed development or use of a site (section 192)']
 	])(
 		'should return a summary list item with the correct values when applicationMadeUnderActSection is valid',
 		(value, expectedText) => {

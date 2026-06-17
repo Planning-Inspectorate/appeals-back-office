@@ -20,7 +20,7 @@ exports[`interest-in-land GET /change should render the ldc type page 1`] = `
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="application-made-under-act-section"
                                         name="applicationMadeUnderActSection" type="radio" value="existing-development">
-                                        <label class="govuk-label govuk-radios__label" for="application-made-under-act-section">Existing development (section 191)</label>
+                                        <label class="govuk-label govuk-radios__label" for="application-made-under-act-section">Existing development or use of a site (section 191)</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="application-made-under-act-section-2"
@@ -30,7 +30,7 @@ exports[`interest-in-land GET /change should render the ldc type page 1`] = `
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="application-made-under-act-section-3"
                                         name="applicationMadeUnderActSection" type="radio" value="proposed-use-of-a-development">
-                                        <label class="govuk-label govuk-radios__label" for="application-made-under-act-section-3">Proposed use of a development (section 192)</label>
+                                        <label class="govuk-label govuk-radios__label" for="application-made-under-act-section-3">Proposed development or use of a site (section 192)</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -80,7 +80,7 @@ exports[`interest-in-land POST /change should re-render the page with an error i
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="application-made-under-act-section"
                                         name="applicationMadeUnderActSection" type="radio" value="existing-development">
-                                        <label class="govuk-label govuk-radios__label" for="application-made-under-act-section">Existing development (section 191)</label>
+                                        <label class="govuk-label govuk-radios__label" for="application-made-under-act-section">Existing development or use of a site (section 191)</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="application-made-under-act-section-2"
@@ -90,7 +90,7 @@ exports[`interest-in-land POST /change should re-render the page with an error i
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="application-made-under-act-section-3"
                                         name="applicationMadeUnderActSection" type="radio" value="proposed-use-of-a-development">
-                                        <label class="govuk-label govuk-radios__label" for="application-made-under-act-section-3">Proposed use of a development (section 192)</label>
+                                        <label class="govuk-label govuk-radios__label" for="application-made-under-act-section-3">Proposed development or use of a site (section 192)</label>
                                     </div>
                                 </div>
                             </fieldset>
