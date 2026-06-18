@@ -15,8 +15,10 @@ import {
 } from '@pins/appeals/constants/support.js';
 
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { sendNewDecisionLetter } from '#endpoints/decision/decision.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { notifySend } from '#notify/notify-send.js';
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
@@ -25,6 +27,7 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
 import { EventType } from '@pins/event-client';
 import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
+import { addWeeks, format } from 'date-fns';
 import { formatDocument } from './documents.formatter.js';
 import * as service from './documents.service.js';
 
@@ -373,9 +376,8 @@ export const updateDocuments = async (req, res) => {
  */
 export const updateDocumentFileName = async (req, res) => {
 	const { body, appeal, params } = req;
-	const { document } = body;
+	const { document, inviteResponses, costsDocumentType } = body;
 	const { documentId } = params;
-
 	try {
 		const latestDocument = await documentRepository.getDocumentById(documentId);
 
@@ -403,6 +405,48 @@ export const updateDocumentFileName = async (req, res) => {
 			}
 
 			if (nameHasChanged || isSharingDocument) {
+				const email = await getTeamEmailFromAppealId(appeal.id);
+				const deadline = format(addWeeks(new Date(), 1), 'd MMMM yyyy');
+				const notifyTemplateName =
+					costsDocumentType === 'withdrawal'
+						? 'shared-cost-application-withdrawal'
+						: costsDocumentType === 'application'
+							? 'shared-cost-application'
+							: 'shared-cost-application-comment';
+
+				const personalisation = {
+					appeal_reference_number: appeal?.reference || '',
+					site_address: appeal?.address || '',
+					lpa_reference: appeal?.applicationReference || '',
+					enforcement_reference: appeal?.appellantCase?.enforcementReference || '',
+					contact_email: email || '',
+					deadline: deadline,
+					responses_invited: Boolean(inviteResponses)
+				};
+
+				const appellantEmail = appeal.agent?.email ?? appeal.appellant?.email;
+				const lpaEmail = appeal.lpa?.email;
+
+				if (appellantEmail) {
+					await notifySend({
+						templateName: notifyTemplateName,
+						// @ts-ignore
+						notifyClient: req.notifyClient,
+						recipientEmail: appellantEmail,
+						personalisation: { dashboard_link: 'appeal', ...personalisation }
+					});
+				}
+
+				if (lpaEmail) {
+					await notifySend({
+						templateName: notifyTemplateName,
+						// @ts-ignore
+						notifyClient: req.notifyClient,
+						recipientEmail: appellantEmail,
+						personalisation: { dashboard_link: 'manage-appeals', ...personalisation }
+					});
+				}
+
 				await broadcasters.broadcastDocument(
 					latestDocument.guid,
 					latestDocument.latestDocumentVersion.version,

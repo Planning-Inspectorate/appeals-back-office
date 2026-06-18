@@ -229,7 +229,13 @@ router.patch(
 		#swagger.responses[404] = {}
 	 */
 	patchDocumentFileNameValidator,
-	checkAppealExistsByIdAndAddPartialToRequest([]),
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'address',
+		'agent',
+		'appellant',
+		'lpa',
+		'appellantCase'
+	]),
 	asyncHandler(controller.updateDocumentFileName)
 );
 
