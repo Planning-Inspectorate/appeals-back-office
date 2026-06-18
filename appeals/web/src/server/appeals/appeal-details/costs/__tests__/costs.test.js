@@ -2091,6 +2091,13 @@ describe('costs', () => {
 
 				describe(`Testing Share CYA for ${costsCategory} ${costsDocumentType}`, () => {
 					beforeEach(() => {
+						const templateName =
+							costsDocumentType === 'withdrawal'
+								? 'shared-cost-application-withdrawal.content.md'
+								: costsDocumentType === 'application'
+									? 'shared-cost-application.content.md'
+									: 'shared-cost-application-comment.content.md';
+
 						nock.cleanAll();
 						nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 						nock('http://test/')
@@ -2100,6 +2107,14 @@ describe('costs', () => {
 						nock('http://test/')
 							.get('/appeals/documents/1/versions')
 							.reply(200, documentFileVersionsInfoChecked)
+							.persist();
+						nock('http://test/')
+							.get('/appeals/1/case-team-email')
+							.reply(200, { email: 'test@example.com' })
+							.persist();
+						nock('http://test/')
+							.post(`/appeals/notify-preview/${templateName}`)
+							.reply(200, { renderedHtml: '<p>Test notification</p>' })
 							.persist();
 					});
 
