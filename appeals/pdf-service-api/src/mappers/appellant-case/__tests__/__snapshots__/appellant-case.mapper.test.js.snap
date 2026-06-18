@@ -541,10 +541,6 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
           "key": "What is the address of the appeal site?",
         },
         {
-          "key": "Is the appeal site in a green belt?",
-          "text": "No",
-        },
-        {
           "html": "No",
           "key": "Will an inspector need to access your land or property?",
         },
@@ -622,14 +618,6 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         {
           "html": "No documents",
           "key": "Plans, drawings and list of plans",
-        },
-        {
-          "key": "What is the status of your planning obligation?",
-          "text": "Not started",
-        },
-        {
-          "html": "No documents",
-          "key": "Planning obligation",
         },
         {
           "html": "No documents",

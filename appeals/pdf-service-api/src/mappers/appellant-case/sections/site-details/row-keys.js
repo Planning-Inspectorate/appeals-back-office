@@ -76,7 +76,6 @@ export const rowKeys = {
 	],
 	[APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE]: [
 		'appealSite',
-		'isGreenBelt',
 		'siteAccessRequired',
 		'healthAndSafety'
 	]

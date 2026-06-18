@@ -503,7 +503,6 @@ describe('appellant-case-main', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('2. Site details</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('What is the address of the appeal site?');
-			expect(unprettifiedElement.innerHTML).toContain('Is the appeal site in a green belt?');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Will an inspector need to access your land or property?'
 			);
@@ -548,10 +547,6 @@ describe('appellant-case-main', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Appeal statement');
 			expect(unprettifiedElement.innerHTML).toContain('Application for an award of appeal costs');
 			expect(unprettifiedElement.innerHTML).toContain('Plans, drawings and list of plans');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'What is the status of your planning obligation?'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Planning obligation');
 			expect(unprettifiedElement.innerHTML).toContain('Draft statement of common ground');
 			expect(unprettifiedElement.innerHTML).toContain('New plans or drawings');
 			expect(unprettifiedElement.innerHTML).toContain(

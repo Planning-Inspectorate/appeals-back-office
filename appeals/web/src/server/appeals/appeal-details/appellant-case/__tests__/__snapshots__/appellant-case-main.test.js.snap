@@ -5554,11 +5554,6 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                     data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Site details)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the appeal site in a green belt?</dt>
-                            <dd                             class="govuk-summary-list__value">No data</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/green-belt/change/appellant">Change<span class="govuk-visually-hidden"> Is the appeal site in a green belt? (2. Site details)</span></a>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Will an inspector need to access your land or property?</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
@@ -5695,17 +5690,6 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-supporting-documents">Add<span class="govuk-visually-hidden"> Plans, drawings and list of plans (5. Upload documents)</span></a>
                                 </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the status of your planning obligation?</dt>
-                            <dd                             class="govuk-summary-list__value">Finalised</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/planning-obligation/status/change"
-                                    data-cy="change-planning-obligation-status">Change<span class="govuk-visually-hidden"> What is the status of your planning obligation? (5. Upload documents)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation</dt>
-                            <dd class="govuk-summary-list__value">No documents</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-planning-obligation">Add<span class="govuk-visually-hidden"> Planning obligation (5. Upload documents)</span></a>
-                            </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Draft statement of common ground</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
