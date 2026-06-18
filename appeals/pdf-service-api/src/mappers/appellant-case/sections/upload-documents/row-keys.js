@@ -75,8 +75,6 @@ export const rowKeys = {
 		'appellantStatement',
 		'appellantApplicationFolder',
 		'plansDrawings',
-		'planningObligationStatus',
-		'planningObligation',
 		'statementCommonGround',
 		'newPlansDrawings',
 		'applicationDecisionLetter',
