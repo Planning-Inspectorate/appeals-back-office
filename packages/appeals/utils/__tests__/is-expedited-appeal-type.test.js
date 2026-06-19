@@ -164,6 +164,50 @@ describe('isS78ExpeditedAppealType', () => {
 			)
 		).toBe(false);
 	});
+
+	it('returns true if appealType is S78, planning application is MINOR_COMMERCIAL_DEVELOPMENT, and decision is granted', () => {
+		expect(
+			isS78ExpeditedAppealType(
+				APPEAL_TYPE.S78,
+				'2026-04-02',
+				'granted',
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.MINOR_COMMERCIAL_DEVELOPMENT
+			)
+		).toBe(true);
+	});
+
+	it('returns false if appealType is S78, planning application is MINOR_COMMERCIAL_DEVELOPMENT, and decision is refused', () => {
+		expect(
+			isS78ExpeditedAppealType(
+				APPEAL_TYPE.S78,
+				'2026-04-02',
+				'refused',
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.MINOR_COMMERCIAL_DEVELOPMENT
+			)
+		).toBe(false);
+	});
+
+	it('returns true if appealType is S78, planning application is HOUSEHOLDER_PLANNING, and decision is granted', () => {
+		expect(
+			isS78ExpeditedAppealType(
+				APPEAL_TYPE.S78,
+				'2026-04-02',
+				'granted',
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.HOUSEHOLDER_PLANNING
+			)
+		).toBe(true);
+	});
+
+	it('returns false if appealType is S78, planning application is HOUSEHOLDER_PLANNING, and decision is refused', () => {
+		expect(
+			isS78ExpeditedAppealType(
+				APPEAL_TYPE.S78,
+				'2026-04-02',
+				'refused',
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.HOUSEHOLDER_PLANNING
+			)
+		).toBe(false);
+	});
 });
 
 describe('normalizeProcedureType', () => {
