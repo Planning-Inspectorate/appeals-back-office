@@ -268,9 +268,12 @@ const renderCancelSiteVisit = async (request, response) => {
 		appealDetails.appealId
 	);
 
+	const enforcementReference = appealDetails.enforcementNotice?.appellantCase?.reference;
+
 	const personalisation = {
 		appeal_reference_number: appealDetails.appealReference,
 		site_address: appealSiteToAddressString(appealDetails.appealSite),
+		...(enforcementReference && { enforcement_reference: enforcementReference }),
 		lpa_reference: appealDetails.planningApplicationReference,
 		team_email_address: assignedTeamEmail
 	};
