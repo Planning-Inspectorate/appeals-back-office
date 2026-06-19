@@ -76,19 +76,37 @@ export const isS78ExpeditedAppealType = (
 	applicationDecision,
 	typeOfPlanningApplication
 ) => {
-	if (!appealType) return false;
-	if (
-		(appealType === APPEAL_CASE_TYPE.W || appealType === APPEAL_TYPE.S78) &&
-		dateIsAfterDate(new Date(caseSubmissionDate), new Date(2026, 3, 1)) &&
-		(applicationDecision === APPEAL_APPLICATION_DECISION.REFUSED ||
-			applicationDecision === APPEAL_APPLICATION_DECISION.GRANTED) &&
-		(typeOfPlanningApplication === APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL ||
-			typeOfPlanningApplication === APPEAL_TYPE_OF_PLANNING_APPLICATION.OUTLINE_PLANNING ||
-			typeOfPlanningApplication === APPEAL_TYPE_OF_PLANNING_APPLICATION.RESERVED_MATTERS)
-	) {
-		return true;
+	if (!appealType || !caseSubmissionDate) return false;
+
+	const isS78 = appealType === APPEAL_CASE_TYPE.W || appealType === APPEAL_TYPE.S78;
+	const isAfterCutoff = dateIsAfterDate(
+		new Date(caseSubmissionDate),
+		EXPEDITED_ORIGINAL_APPLICATION_CUTOFF
+	);
+
+	if (!isS78 || !isAfterCutoff) {
+		return false;
 	}
-	return false;
+
+	const isHasOrCas =
+		typeOfPlanningApplication ===
+			APPEAL_TYPE_OF_PLANNING_APPLICATION.MINOR_COMMERCIAL_DEVELOPMENT ||
+		typeOfPlanningApplication === APPEAL_TYPE_OF_PLANNING_APPLICATION.HOUSEHOLDER_PLANNING;
+
+	if (isHasOrCas) {
+		return applicationDecision === APPEAL_APPLICATION_DECISION.GRANTED;
+	}
+
+	const isEligibleDecision =
+		applicationDecision === APPEAL_APPLICATION_DECISION.REFUSED ||
+		applicationDecision === APPEAL_APPLICATION_DECISION.GRANTED;
+
+	const isEligiblePlanningApplication =
+		typeOfPlanningApplication === APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL ||
+		typeOfPlanningApplication === APPEAL_TYPE_OF_PLANNING_APPLICATION.OUTLINE_PLANNING ||
+		typeOfPlanningApplication === APPEAL_TYPE_OF_PLANNING_APPLICATION.RESERVED_MATTERS;
+
+	return isEligibleDecision && isEligiblePlanningApplication;
 };
 
 /**
