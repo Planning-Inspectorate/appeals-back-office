@@ -2000,7 +2000,7 @@ export const localPlanningDepartmentList = [
 		teamId: 16 // North2
 	},
 	{
-		lpaCode: 'J1155 ',
+		lpaCode: 'J1155',
 		name: 'Devon County Council',
 		email: 'planning@devon.gov.uk',
 		teamId: 9 // West3
