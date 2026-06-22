@@ -22,6 +22,7 @@ import {
 	isExpeditedAppealType,
 	normalizeProcedureType
 } from '@pins/appeals/utils/appeal-type-checks.js';
+import { nextUKDay } from '@pins/appeals/utils/date-utils.js';
 import {
 	APPEAL_CASE_PROCEDURE,
 	APPEAL_CASE_STATUS,
@@ -38,6 +39,7 @@ import createStateMachine from './create-state-machine.js';
  * @param {number} appealId
  * @param {string} azureAdUserId
  * @param {string} trigger
+ * @returns {Promise<boolean>} true if the state was transitioned
  */
 const transitionState = async (appealId, azureAdUserId, trigger) => {
 	const appeal = await appealRepository.getAppealById(appealId, true, [
@@ -91,7 +93,7 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 		if (!isChildAppeal(appeal)) {
 			await updatePersonalList(appealId);
 		}
-		return;
+		return false;
 	}
 
 	if (isStatePassed(appeal, newState)) {
@@ -158,6 +160,7 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 	}
 
 	stateMachineService.stop();
+	return true;
 };
 
 /**
@@ -165,9 +168,11 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
  * @param {Appeal} appeal
  * @param {string} azureAdUserId
  * @param {string} trigger
- * @returns {Promise<void>}
+ * @returns {Promise<number[]>} IDs of child appeals that were transitioned
  */
 async function transitionLinkedChildAppealsState(appeal, azureAdUserId, trigger) {
+	/** @type {number[]} */
+	const updatedChildren = [];
 	if (appeal.childAppeals?.length) {
 		await Promise.all(
 			appeal.childAppeals
@@ -177,12 +182,16 @@ async function transitionLinkedChildAppealsState(appeal, azureAdUserId, trigger)
 						childAppeal.child &&
 						currentStatus(childAppeal.child) === currentStatus(appeal)
 				)
-				.map((childAppeal) =>
+				.map(async (childAppeal) => {
 					// @ts-ignore
-					transitionState(childAppeal.childId, azureAdUserId, trigger)
-				)
+					const result = await transitionState(childAppeal.childId, azureAdUserId, trigger);
+					if (result && childAppeal.childId) {
+						updatedChildren.push(childAppeal.childId);
+					}
+				})
 		);
 	}
+	return updatedChildren;
 }
 
 /**
@@ -202,19 +211,39 @@ export const isStatePassed = (appeal, newState) => {
  * @param {AppealType} appealType
  * @param {string} procedureType
  */
-const getEventElapsed = (appeal, appealType, procedureType) => {
+export const getEventElapsed = (appeal, appealType, procedureType) => {
 	if (appealType) {
 		switch (procedureType) {
 			case APPEAL_CASE_PROCEDURE.HEARING:
-				//TODO: different behaviour for hearings
+				if (!appeal.hearing) {
+					return false;
+				}
+
+				if (appeal.hearing.hearingEndTime) {
+					return appeal.hearing.hearingEndTime < new Date();
+				}
+
+				if (appeal.hearing.hearingStartTime) {
+					return nextUKDay(appeal.hearing.hearingStartTime) < new Date();
+				}
 				break;
 			case APPEAL_CASE_PROCEDURE.INQUIRY:
-				//TODO: different behaviour for inquiry
+				if (!appeal.inquiry) {
+					return false;
+				}
+
+				if (appeal.inquiry.inquiryEndTime) {
+					return appeal.inquiry.inquiryEndTime < new Date();
+				}
+
+				if (appeal.inquiry.inquiryStartTime) {
+					return nextUKDay(appeal.inquiry.inquiryStartTime) < new Date();
+				}
 				break;
 			case APPEAL_CASE_PROCEDURE.WRITTEN:
 			default:
 				return appeal.siteVisit?.visitDate
-					? new Date(appeal.siteVisit?.visitDate) < new Date()
+					? nextUKDay(appeal.siteVisit?.visitDate) < new Date()
 					: false;
 		}
 	}
