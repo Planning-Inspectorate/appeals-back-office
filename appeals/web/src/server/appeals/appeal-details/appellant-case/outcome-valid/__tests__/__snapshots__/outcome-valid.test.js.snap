@@ -71,27 +71,27 @@ exports[`Appellant Case Valid Flow Enforcement Appeals GET /enforcement/date sho
                                     <div class="govuk-form-group">
                                         <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                        id="valid-date-day" name="valid-date-day" type="text" inputmode="numeric">
+                                        id="valid-date-day" name="valid-date-day" type="text" value="21" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
                                     <div class="govuk-form-group">
                                         <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                        id="valid-date-month" name="valid-date-month" type="text" inputmode="numeric">
+                                        id="valid-date-month" name="valid-date-month" type="text" value="5" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
                                     <div class="govuk-form-group">
                                         <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
-                                        id="valid-date-year" name="valid-date-year" type="text" inputmode="numeric">
+                                        id="valid-date-year" name="valid-date-year" type="text" value="2023" inputmode="numeric">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Confirm</button>
+                        data-module="govuk-button">Continue</button>
                     </form>
                 </div>
             </div>
@@ -185,6 +185,77 @@ exports[`Appellant Case Valid Flow Enforcement Appeals GET /enforcement/other-in
 </main>"
 `;
 
+exports[`Appellant Case Valid Flow Enforcement Appeals POST /enforcement/date should re-render the 'Valid date' screen if the date is before the date case was received 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#valid-date-day">The valid date must be on or after the date the case was received.</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Valid date</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <p class="govuk-body">This is the date all case documentation was received and the appeal was
+                            valid.</p>
+                        <label class="govuk-label govuk-label--m">Enter valid date for case</label>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <div id="valid-date-hint" class="govuk-hint">
+                                <div class="govuk-hint">For example, 31 3 2025</div>
+                            </div>
+                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The valid date must be
+                                on or after the date the case was received.</p>
+                            <div class="govuk-date-input"
+                            id="valid-date">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-day" name="valid-date-day" type="text" value="1" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-month" name="valid-date-month" type="text" value="1" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-year" name="valid-date-year" type="text" value="2023" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`Appellant Case Valid Flow Enforcement Appeals POST /enforcement/date should re-render the 'Valid date' screen if the date is in the future 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
@@ -246,7 +317,7 @@ exports[`Appellant Case Valid Flow Enforcement Appeals POST /enforcement/date sh
                             </div>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Confirm</button>
+                        data-module="govuk-button">Continue</button>
                     </form>
                 </div>
             </div>
@@ -295,27 +366,27 @@ exports[`Appellant Case Valid Flow Enforcement Appeals POST /enforcement/date sh
                                     <div class="govuk-form-group">
                                         <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
-                                        id="valid-date-day" name="valid-date-day" type="text" inputmode="numeric">
+                                        id="valid-date-day" name="valid-date-day" type="text" value="21" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
                                     <div class="govuk-form-group">
                                         <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
-                                        id="valid-date-month" name="valid-date-month" type="text" inputmode="numeric">
+                                        id="valid-date-month" name="valid-date-month" type="text" value="5" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
                                     <div class="govuk-form-group">
                                         <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
-                                        id="valid-date-year" name="valid-date-year" type="text" inputmode="numeric">
+                                        id="valid-date-year" name="valid-date-year" type="text" value="2023" inputmode="numeric">
                                     </div>
                                 </div>
                         </div>
                 </div>
                 <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Confirm</button>
+                data-module="govuk-button">Continue</button>
                 </form>
             </div>
         </div>

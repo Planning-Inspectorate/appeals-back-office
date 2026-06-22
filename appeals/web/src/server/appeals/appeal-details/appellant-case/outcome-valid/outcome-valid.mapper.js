@@ -219,7 +219,7 @@ export function updateEnforcementValidDatePage(
 		backLinkUrl: `/appeals-service/appeal-details/${appealId}/appellant-case/valid/enforcement/other-information`,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
 		backLinkText: 'Back',
-		submitButtonText: 'Confirm',
+		submitButtonText: 'Continue',
 		pageComponents: [descriptiveHtml, selectDateComponent]
 	};
 
