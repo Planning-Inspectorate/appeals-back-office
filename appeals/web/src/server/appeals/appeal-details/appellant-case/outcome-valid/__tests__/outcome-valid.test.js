@@ -159,15 +159,15 @@ describe('Appellant Case Valid Flow', () => {
 					'This is the date all case documentation was received and the appeal was valid.</p>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'name="valid-date-day" type="text" inputmode="numeric">'
+					'name="valid-date-day" type="text" value="21" inputmode="numeric">'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'name="valid-date-month" type="text" inputmode="numeric">'
+					'name="valid-date-month" type="text" value="5" inputmode="numeric">'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'name="valid-date-year" type="text" inputmode="numeric">'
+					'name="valid-date-year" type="text" value="2023" inputmode="numeric">'
 				);
-				expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
+				expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 			});
 		});
 
@@ -195,6 +195,35 @@ describe('Appellant Case Valid Flow', () => {
 
 				expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 				expect(unprettifiedErrorSummaryHtml).toContain('Enter the valid date');
+			});
+
+			it(`should re-render the 'Valid date' screen if the date is before the date case was received`, async () => {
+				const response = await request
+					.post(`${baseUrl}/${appealId}/appellant-case/valid/enforcement/date`)
+					.send({
+						'valid-date-day': '1',
+						'valid-date-month': '1',
+						'valid-date-year': '2023'
+					});
+
+				expect(response.statusCode).toBe(200);
+
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain(
+					'The valid date must be on or after the date the case was received.</a>'
+				);
+
+				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+				expect(unprettifiedErrorSummaryHtml).toContain(
+					'The valid date must be on or after the date the case was received.'
+				);
 			});
 
 			it(`should re-render the 'Valid date' screen if the date is in the future`, async () => {
@@ -612,6 +641,7 @@ describe('Appellant Case Valid Flow', () => {
 					`Found. Redirecting to /appeals-service/appeal-details/${appealId}/appellant-case/valid/environmental-services-review`
 				);
 			});
+
 			it('should handle posting environmental services review details', async () => {
 				nock('http://test/')
 					.patch(`/appeals/${appealId}/appellant-cases/0`, {
