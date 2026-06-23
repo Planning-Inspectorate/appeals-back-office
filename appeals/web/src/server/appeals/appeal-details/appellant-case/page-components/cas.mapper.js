@@ -60,7 +60,7 @@ export function generateCASComponents(
 						? [mappedAppellantCaseData.appealStatement.display.summaryListItem]
 						: []),
 					mappedAppellantCaseData.costsDocument.display.summaryListItem,
-					mappedAppellantCaseData.designAndAccessStatement.display.summaryListItem,
+
 					mappedAppellantCaseData.supportingDocuments.display.summaryListItem
 				]
 			}
