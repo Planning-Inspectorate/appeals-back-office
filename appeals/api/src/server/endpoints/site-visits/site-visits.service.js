@@ -579,12 +579,25 @@ const recordMissedSiteVisit = async (
 	whoMissedSiteVisit,
 	appealIdsToUpdate
 ) => {
+	const siteVisits = await siteVisitRepository.getSiteVisitByAppealId(appealIdsToUpdate);
 	const result = await siteVisitRepository.updateMultiSiteVisitByAppealId(appealIdsToUpdate, {
 		whoMissedSiteVisit
 	});
 	if (!result) {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
+
+	await Promise.allSettled(
+		siteVisits.map((siteVisit) =>
+			broadcasters.broadcastEvent(
+				siteVisit.id,
+				EVENT_TYPE.SITE_VISIT,
+				EventType.Delete,
+				// @ts-ignore
+				siteVisit
+			)
+		)
+	);
 
 	const siteAddress = appeal.address
 		? formatAddressSingleLine(appeal.address)
