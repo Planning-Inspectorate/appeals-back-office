@@ -104,7 +104,8 @@ export const isS78ExpeditedAppealType = (
 	const isEligiblePlanningApplication =
 		typeOfPlanningApplication === APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL ||
 		typeOfPlanningApplication === APPEAL_TYPE_OF_PLANNING_APPLICATION.OUTLINE_PLANNING ||
-		typeOfPlanningApplication === APPEAL_TYPE_OF_PLANNING_APPLICATION.RESERVED_MATTERS;
+		typeOfPlanningApplication === APPEAL_TYPE_OF_PLANNING_APPLICATION.RESERVED_MATTERS ||
+		typeOfPlanningApplication === APPEAL_TYPE_OF_PLANNING_APPLICATION.PRIOR_APPROVAL;
 
 	return isEligibleDecision && isEligiblePlanningApplication;
 };

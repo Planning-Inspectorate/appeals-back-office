@@ -208,6 +208,41 @@ describe('isS78ExpeditedAppealType', () => {
 			)
 		).toBe(false);
 	});
+
+	describe('prior-approval', () => {
+		it('returns true when decision is GRANTED and date is on/after cutoff', () => {
+			expect(
+				isS78ExpeditedAppealType(
+					APPEAL_TYPE.S78,
+					'2026-04-02',
+					'granted',
+					APPEAL_TYPE_OF_PLANNING_APPLICATION.PRIOR_APPROVAL
+				)
+			).toBe(true);
+		});
+
+		it('returns true when decision is REFUSED and date is on/after cutoff', () => {
+			expect(
+				isS78ExpeditedAppealType(
+					APPEAL_TYPE.S78,
+					'2026-04-02',
+					'refused',
+					APPEAL_TYPE_OF_PLANNING_APPLICATION.PRIOR_APPROVAL
+				)
+			).toBe(true);
+		});
+
+		it('returns false when decision is not granted or refused', () => {
+			expect(
+				isS78ExpeditedAppealType(
+					APPEAL_TYPE.S78,
+					'2026-04-02',
+					'not_decided',
+					APPEAL_TYPE_OF_PLANNING_APPLICATION.PRIOR_APPROVAL
+				)
+			).toBe(false);
+		});
+	});
 });
 
 describe('normalizeProcedureType', () => {
