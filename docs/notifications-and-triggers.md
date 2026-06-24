@@ -189,6 +189,25 @@ these [Notify Templates](../appeals/api/src/server/notify/templates):
   ** [lpa-statement-incomplete](../appeals/api/src/server/notify/templates/lpa-statement-incomplete.content.md)
 - **Trigger:** Review a lpa statement and mark it as incomplete by selecting "Incomplete" and continue
 
+//Further appeal type clarification may be required here
+### Lpa statement added after due date
+
+- **Appeal type:** s78, s20
+- **Notify Template:** [lpa-statement-added](../appeals/api/src/server/notify/templates/lpa-statement-added.content.md)
+- **Trigger:** Add an LPA statement after the statements due date and confirm 
+
+### Appellant final comment added after due date
+
+- **Appeal type:** s78, s20
+- **Notify Template:** [appellant-final-comment-added](../appeals/api/src/server/notify/templates/appellant-final-comment-added.content.md)
+- **Trigger:** Add a final comment after the final comment due date and confirm
+
+### Ip comment added after due date
+
+- **Appeal type:** s78, s20
+- **Notify Template:** [ip-comment-added](../appeals/api/src/server/notify/templates/ip-comment-added.content.md)
+- **Trigger:** Add an IP comment after the statements due date and confirm 
+
 ### Ip comment rejected
 
 - **Appeal type:** s78, s20

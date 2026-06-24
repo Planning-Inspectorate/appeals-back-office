@@ -14,11 +14,15 @@ import { mapFileUploadInfoToMappedDocuments } from '#lib/mappers/utils/file-uplo
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import {
 	APPEAL_REPRESENTATION_TYPE,
-	REPRESENTATION_ADDED_AS_DOCUMENT
+	REPRESENTATION_ADDED_AS_DOCUMENT,
 } from '@pins/appeals/constants/common.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@planning-inspectorate/data-model';
 import { patchRepresentationAttachments } from '../../document-attachments/attachments-service.js';
 import { postRepresentation } from '../../representations.service.js';
+import { isStatePassed } from '#lib/appeal-status.js';
+import { addressToString } from '#lib/address-formatter.js';
+import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('#appeals/appeal-details/representations/types.js').RepresentationRequest} RepresentationRequest */
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.js').AppealRule6Party} AppealRule6Party */
@@ -27,30 +31,68 @@ import { postRepresentation } from '../../representations.service.js';
  * @param {import('@pins/express').Request} request
  * @param {import('express').Response} response
  */
-export const renderCheckYourAnswers = (request, response) => {
+export const renderCheckYourAnswers = async (request, response) => {
 	const {
 		errors,
-		currentAppeal: { appealReference },
+		currentAppeal: { appealReference, planningApplicationReference, appealSite },
 		session: {
 			fileUploadInfo: {
 				files: [{ name, blobStoreUrl }]
 			},
-			addDocument
+			addDocument,
+			currentRepresentation
 		},
 		locals: { pageContent }
 	} = request;
 
+	let ipCommentEmailPreview;
 	const redactionStatus = addDocument[redactionStatusFieldName];
 	const day = addDocument['date-day'];
 	const month = addDocument['date-month'];
 	const year = addDocument['date-year'];
 	const baseUrl = request.baseUrl;
+	const statementsPassed = isStatePassed(request.currentAppeal, APPEAL_CASE_STATUS.STATEMENTS);
+	const finalCommentsPassed = isStatePassed(
+		request.currentAppeal,
+		APPEAL_CASE_STATUS.FINAL_COMMENTS
+	);
+	const representationType =
+		currentRepresentation?.representationType ?? getRepresentationType(request.baseUrl);
 
 	if (!isValidRedactionStatus(redactionStatus)) {
 		throw new Error('Received invalid redaction status');
 	}
 
 	clearEdits(request, 'addDocument');
+
+	//Should this code be contained here (in CYA as opposed to the final comments and statements controllers)?
+	if (statementsPassed && representationType === 'lpa_statement') {
+		let personalisation = {
+			appeal_reference_number: appealReference,
+			//coverage for enforcement appeal type reference required here
+			lpa_reference: planningApplicationReference,
+			site_address: appealSite ? addressToString(appealSite) : 'Address not provided',
+			case_team_email: request.currentAppeal.assignedTeam.email
+		};
+		ipCommentEmailPreview = await generateNotifyPreview(
+			request.apiClient,
+			'lpa-statement-added.content.md',
+			personalisation
+		);
+	} else if (finalCommentsPassed && representationType === 'appellant_final_comment') {
+		let personalisation = {
+			appeal_reference_number: appealReference,
+			//coverage for enforcement appeal type reference required here
+			lpa_reference: planningApplicationReference,
+			site_address: appealSite ? addressToString(appealSite) : 'Address not provided',
+			case_team_email: request.currentAppeal.assignedTeam.email
+		};
+		ipCommentEmailPreview = await generateNotifyPreview(
+			request.apiClient,
+			'appellant-final-comment-added.content.md',
+			personalisation
+		);
+	}
 
 	return renderCheckYourAnswersComponent(
 		{
@@ -90,7 +132,49 @@ export const renderCheckYourAnswers = (request, response) => {
 						}
 					}
 				}
-			}
+			},
+			...(statementsPassed || finalCommentsPassed &&
+				representationType === 'lpa_statement' ||
+					representationType === 'appellant_final_comment'
+				? {
+						after: [
+							{
+								type: 'details',
+								wrapperHtml: {
+									opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+									closing: '</div></div>'
+								},
+								parameters: {
+									summaryText: `Preview email to appellant`,
+									html: ipCommentEmailPreview.renderedHtml,
+									id: 'appellant-preview'
+								}
+							},
+							{
+								type: 'details',
+								wrapperHtml: {
+									opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+									closing: '</div></div>'
+								},
+								parameters: {
+									summaryText: `Preview email to LPA`,
+									html: ipCommentEmailPreview.renderedHtml,
+									id: 'lpa-preview'
+								}
+							},
+							{
+								type: 'hint',
+								parameters: {
+									html: `
+									<p class="govuk-body">
+										We’ll share your ${representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT ? 'statement' : 'comment'} with the relevant parties
+									</p>
+								`
+								}
+							}
+						]
+					}
+				: null)
 		},
 		response,
 		errors
