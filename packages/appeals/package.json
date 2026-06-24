@@ -15,6 +15,7 @@
     "tscheck": "npx tsc -p jsconfig.json --maxNodeModuleJsDepth 0"
   },
   "dependencies": {
+    "@planning-inspectorate/data-model": "^2.44.0",
     "date-fns": "^2.28.0",
     "date-fns-tz": "^2.0.0",
     "node-cache": "^5.1.2",

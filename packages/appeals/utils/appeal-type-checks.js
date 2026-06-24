@@ -132,9 +132,14 @@ export const isAnyEnforcementAppealType = (appealType) =>
  * @returns {boolean}
  */
 export const isLdcOrDiscontinuanceOrEnforcementCaseType = (caseType) =>
-	caseType === APPEAL_CASE_TYPE.X ||
-	caseType === APPEAL_CASE_TYPE.G ||
-	isEnforcementCaseType(caseType);
+	isLdcCaseType(caseType) || caseType === APPEAL_CASE_TYPE.G || isEnforcementCaseType(caseType);
+
+/**
+ *
+ * @param {string|undefined} caseType
+ * @returns {boolean}
+ */
+export const isLdcCaseType = (caseType) => caseType === APPEAL_CASE_TYPE.X;
 
 /**
  * Normalizes a procedure type value to the canonical data-model key.

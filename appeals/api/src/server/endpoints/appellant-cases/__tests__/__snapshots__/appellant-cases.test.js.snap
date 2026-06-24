@@ -1519,6 +1519,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDate": "2022-03-18T00:00:00.000Z",
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "applicationMadeUnderActSection": "existing-development",
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
@@ -1607,6 +1608,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDate": "2022-03-18T00:00:00.000Z",
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "applicationMadeUnderActSection": "existing-development",
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
@@ -1692,6 +1694,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDate": "2022-03-18T00:00:00.000Z",
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "applicationMadeUnderActSection": "existing-development",
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
@@ -1796,6 +1799,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDate": "2022-03-18T00:00:00.000Z",
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "applicationMadeUnderActSection": "existing-development",
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
