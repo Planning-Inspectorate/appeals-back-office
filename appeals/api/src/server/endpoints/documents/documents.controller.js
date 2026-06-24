@@ -14,6 +14,7 @@ import {
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
 
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { sendNewDecisionLetter } from '#endpoints/decision/decision.service.js';
@@ -414,9 +415,13 @@ export const updateDocumentFileName = async (req, res) => {
 							? 'shared-cost-application'
 							: 'shared-cost-application-comment';
 
+				const siteAddress = appeal.address
+					? formatAddressSingleLine(appeal.address)
+					: 'Address not available';
+
 				const personalisation = {
 					appeal_reference_number: appeal?.reference || '',
-					site_address: appeal?.address || '',
+					site_address: siteAddress,
 					lpa_reference: appeal?.applicationReference || '',
 					enforcement_reference: appeal?.appellantCase?.enforcementReference || '',
 					contact_email: email || '',
@@ -442,7 +447,7 @@ export const updateDocumentFileName = async (req, res) => {
 						templateName: notifyTemplateName,
 						// @ts-ignore
 						notifyClient: req.notifyClient,
-						recipientEmail: appellantEmail,
+						recipientEmail: lpaEmail,
 						personalisation: { dashboard_link: 'manage-appeals', ...personalisation }
 					});
 				}

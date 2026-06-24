@@ -607,6 +607,7 @@ export const getInviteResponses = async (request, response) => {
 	if (request.session.appealId && request.session.appealId !== appealId) {
 		delete request.session.appealId;
 		delete request.session.inviteResponses;
+		delete request.session.costsDocumentType;
 	}
 
 	const inviteResponses =
@@ -634,6 +635,8 @@ export const postInviteResponses = async (request, response) => {
 
 	request.session.inviteResponses = body['invite-responses'];
 	request.session.appealId = appealId;
+	request.session.costsDocumentType = costsDocumentType;
+
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/${folderId}/${documentId}/check-your-answers`
 	);
@@ -749,7 +752,8 @@ export const postShareDocumentCheckAndConfirm = async (request, response) => {
 				id: documentId,
 				isShared: true
 			},
-			inviteResponses: request.session?.inviteResponses
+			inviteResponses: request.session?.inviteResponses,
+			costsDocumentType: request.session?.costsDocumentType
 		};
 
 		await updateDocument(request.apiClient, appealId, apiRequest);
@@ -763,6 +767,7 @@ export const postShareDocumentCheckAndConfirm = async (request, response) => {
 	}
 
 	delete request.session.inviteResponses;
+	delete request.session.costsDocumentTypes;
 
 	addNotificationBannerToSession({
 		session: request.session,
