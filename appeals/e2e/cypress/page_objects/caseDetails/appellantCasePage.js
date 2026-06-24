@@ -38,7 +38,7 @@ export class AppellantCasePage extends Page {
 	 *********************************************************/
 
 	navigateToAppellantCase(caseObj) {
-		caseDetailsPage.navigateToAppealsService();
+		caseDetailsPage.navigateToAppealsList();
 		listCasesPage.clickAppealByRef(caseObj);
 		caseDetailsPage.clickReviewAppellantCase();
 	}

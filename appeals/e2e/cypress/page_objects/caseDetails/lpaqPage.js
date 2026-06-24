@@ -27,7 +27,7 @@ export class LpaqPage extends Page {
 	 *********************************************************/
 
 	navigateToLpaq(caseObj) {
-		caseDetailsPage.navigateToAppealsService();
+		caseDetailsPage.navigateToAppealsList();
 		listCasesPage.clickAppealByRef(caseObj);
 		caseDetailsPage.clickReviewLpaQuestionnaire(); // Assuming this exists
 	}
