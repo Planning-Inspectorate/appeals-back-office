@@ -46,11 +46,11 @@ describe('Start case', () => {
 		],
 		PlanningAppealHearing: [
 			{
-				template: 'appeal-valid-start-case-s78-appellant-hearing',
+				template: 'appeal-valid-start-case-s78-hearing-appellant',
 				recipient: 'appellant@test.com'
 			},
 			{
-				template: 'appeal-valid-start-case-s78-lpa-hearing',
+				template: 'appeal-valid-start-case-s78-hearing-lpa',
 				recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
 			}
 		]
