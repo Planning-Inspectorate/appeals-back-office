@@ -14,7 +14,7 @@ describe('shared-cost-application.md', () => {
 				appeal_reference_number: '134526',
 				site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 				lpa_reference: '48269/APP/2021/1482',
-				front_office_url: '/mock-front-office-url',
+				front_office_url: '/mock-front-office-url/',
 				contact_email: 'appeals@planninginspectorate.gov.uk',
 				dashboard_link: 'appeals'
 			}
@@ -65,7 +65,7 @@ describe('shared-cost-application.md', () => {
 				appeal_reference_number: '134526',
 				site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 				lpa_reference: '48269/APP/2021/1482',
-				front_office_url: '/mock-front-office-url',
+				front_office_url: '/mock-front-office-url/',
 				contact_email: 'appeals@planninginspectorate.gov.uk',
 				responses_invited: true,
 				deadline: '24 June 2026',
@@ -88,7 +88,7 @@ describe('shared-cost-application.md', () => {
 			'',
 			'',
 			'Send an email to appeals@planninginspectorate.gov.uk by 24 June 2026 if you want to respond to this comment. ',
-			'[You can view all comments in the appeals service.](/mock-front-office-url/appeals/134526).',
+			'[You can view all comments in the appeals service.](/mock-front-office-url/appeals/134526)',
 			'',
 			'',
 			'',

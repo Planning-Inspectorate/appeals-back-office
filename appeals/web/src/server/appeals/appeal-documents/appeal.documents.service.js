@@ -144,7 +144,7 @@ export const updateDocument = async (apiClient, appealId, documentDetail) => {
 			.patch(`appeals/${appealId}/documents/${documentDetail.document.id}`, {
 				json: {
 					document: documentDetail.document,
-					costDocumentType: documentDetail.costsDocumentType,
+					costsDocumentType: documentDetail.costsDocumentType,
 					inviteResponses: documentDetail.inviteResponses
 				}
 			})
