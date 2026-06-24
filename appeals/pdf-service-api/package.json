@@ -14,7 +14,7 @@
 		"start:dev": "nodemon -e .js,.json,.yml,.yaml ./ | pino-pretty -tlc",
 		"test": "cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest --logHeapUsage --ci",
 		"test:cov": "cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest --logHeapUsage --ci --coverage",
-    	"test:update": "cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest -u --logHeapUsage --ci",
+		"test:update": "cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest -u --logHeapUsage --ci",
 		"test:watch": "jest --watchAll --runInBand"
 	},
 	"dependencies": {
@@ -27,7 +27,7 @@
 		"dotenv": "16.0.3",
 		"express": "*",
 		"govuk-frontend": "^5.4.0",
-		"multer": "*",
+		"multer": "^2.2.0",
 		"nunjucks": "^3.2.4",
 		"pino": "*",
 		"puppeteer-core": "*"
