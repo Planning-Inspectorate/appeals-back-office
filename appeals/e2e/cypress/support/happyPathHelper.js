@@ -42,7 +42,9 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Confirm');
 		cy.wait('@confirmValidDate');
 	},
-	reviewEnforcementAppeallantCase(caseObj) {
+	reviewEnforcementAppellantCase(caseObj) {
+		let dueDate = new Date();
+
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
 		caseDetailsPage.clickReviewAppellantCase();
 		caseDetailsPage.selectRadioButtonByValue('Valid');
@@ -51,21 +53,17 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.selectRadioButtonByValue('No');
 		caseDetailsPage.clickButtonByText('Continue');
-		dateTimeSection.enterValidDate(happyPathHelper.getYesterday());
-		caseDetailsPage.clickButtonByText('Confirm');
+		dateTimeSection.enterValidDate(dueDate);
+		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Mark appeal as valid');
 	},
 	reviewLpaq(caseObj, state = 'Complete') {
-		let dueDate = new Date();
-
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
 		caseDetailsPage.clickReviewLpaq();
 		caseDetailsPage.selectRadioButtonByValue(state);
 		caseDetailsPage.clickButtonByText('Confirm');
 	},
 	reviewS78Lpaq(caseObj, state = 'Complete') {
-		let dueDate = new Date();
-
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
 		caseDetailsPage.clickReviewLpaq();
 		caseDetailsPage.selectRadioButtonByValue(state);
@@ -107,7 +105,7 @@ export const happyPathHelper = {
 			startCase: true
 		}
 	) {
-		// proceed to setup hrearing
+		// proceed to setup hearing
 		happyPathHelper.viewCaseDetails(caseObj);
 		caseDetailsPage.clickReadyToStartCase();
 		caseDetailsPage.selectRadioButtonByValue(procedureType);

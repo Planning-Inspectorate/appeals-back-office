@@ -34,7 +34,7 @@ describe('Progress Enforcement Appeal to Decision', () => {
 
 			caseDetailsPage.verifyAppealType('Enforcement notice appeal');
 
-			happyPathHelper.reviewEnforcementAppeallantCase(caseObj);
+			happyPathHelper.reviewEnforcementAppellantCase(caseObj);
 			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
 
 			happyPathHelper.startCaseWithProcedureType(caseObj, 'written');
@@ -100,7 +100,7 @@ describe('Progress Enforcement Appeal to Decision', () => {
 					'Enforcement listed building and conservation area appeal'
 				);
 
-				happyPathHelper.reviewEnforcementAppeallantCase(caseObj);
+				happyPathHelper.reviewEnforcementAppellantCase(caseObj);
 				caseDetailsPage.checkStatusOfCase('Ready to start', 0);
 
 				happyPathHelper.startCaseWithProcedureType(caseObj, 'written');
