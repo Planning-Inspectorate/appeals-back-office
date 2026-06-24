@@ -19,6 +19,7 @@ import {
 	CASE_RELATIONSHIP_RELATED
 } from '@pins/appeals/constants/support.js';
 import {
+	APPEAL_APPEAL_UNDER_ACT_SECTION,
 	APPEAL_CASE_STATUS,
 	APPEAL_CASE_TYPE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
@@ -922,7 +923,8 @@ export const ldcAppeal = {
 	},
 	appellantCase: {
 		...fullPlanningAppeal.appellantCase,
-		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.LAWFUL_DEVELOPMENT_CERTIFICATE
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.LAWFUL_DEVELOPMENT_CERTIFICATE,
+		applicationMadeUnderActSection: APPEAL_APPEAL_UNDER_ACT_SECTION.EXISTING_DEVELOPMENT
 	},
 	representations: []
 };

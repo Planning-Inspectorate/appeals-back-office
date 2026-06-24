@@ -42,7 +42,7 @@ import {
 import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { jest } from '@jest/globals';
-import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import {
 	AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED,
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
@@ -989,7 +989,7 @@ describe('appellant cases routes', () => {
 				['ldc', ldcAppeal, FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE]
 			])(
 				'updates appellant case and sends a notify email when the validation outcome is Valid for %s appeal',
-				async (_, appeal, expectedFeedbackLink) => {
+				async (type, appeal, expectedFeedbackLink) => {
 					// Mock DB responses
 					// @ts-ignore
 					databaseConnector.appeal.findUnique.mockResolvedValue({
@@ -1035,13 +1035,21 @@ describe('appellant cases routes', () => {
 						}
 					});
 
-					expect(mockNotifySend).toHaveBeenCalledTimes(1);
+					const sendsLPAConfirmation = ['ldc'].includes(type);
 
-					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					expect(mockNotifySend).toHaveBeenCalledTimes(sendsLPAConfirmation ? 2 : 1);
+
+					expect(mockNotifySend).toHaveBeenCalledWith({
 						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
+							appeal_type: expect.any(String),
+							ldc_type:
+								appeal.appealType.type === APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE
+									? //eslint-disable-next-line jest/no-conditional-expect
+										expect.any(String)
+									: undefined,
 							lpa_reference: appeal.applicationReference,
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							feedback_link: expectedFeedbackLink,
@@ -1050,6 +1058,32 @@ describe('appellant cases routes', () => {
 						recipientEmail: appeal.agent.email,
 						templateName: 'appeal-confirmed'
 					});
+
+					if (sendsLPAConfirmation) {
+						console.log(appeal.appealType.type);
+						console.log(APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE);
+
+						/* eslint-disable jest/no-conditional-expect */
+						expect(mockNotifySend).toHaveBeenCalledWith({
+							azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+							notifyClient: expect.anything(),
+							personalisation: {
+								appeal_reference_number: appeal.reference,
+								appeal_type: expect.any(String),
+								lpa_reference: appeal.applicationReference,
+								site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+								team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+								agent_contact_details: expect.stringContaining(appeal.agent.email),
+								appellant_contact_details: expect.stringContaining(appeal.appellant.email),
+								ldc_type:
+									appeal.appealType.type === APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE
+										? 'Existing development or use of a site (section 191)'
+										: undefined
+							},
+							recipientEmail: appeal.lpa.email,
+							templateName: 'appeal-confirmed-lpa'
+						});
+					}
 
 					expect(response.status).toEqual(200);
 				}

@@ -10,6 +10,7 @@ import {
 	AUDIT_TRAIL_ENFORCEMENT_NOTICE_CONTACT_ADDRESS,
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
 	AUDIT_TRAIL_SUBMISSION_INVALID,
+	ENFORCEMENT_APPEAL_INVALID_GROUND_A_FEE_NOT_PAID,
 	ERROR_NO_RECIPIENT_EMAIL,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
@@ -45,11 +46,12 @@ import {
 	APPEAL_DEVELOPMENT_TYPES,
 	PLANNING_OBLIGATION_STATUSES
 } from '@pins/appeals/constants/appellant-cases.constants.js';
-import { ENFORCEMENT_APPEAL_INVALID_GROUND_A_FEE_NOT_PAID } from '@pins/appeals/constants/support.js';
 import {
 	isAnyEnforcementAppealType,
-	isEnforcementCaseType
+	isEnforcementCaseType,
+	isLdcCaseType
 } from '@pins/appeals/utils/appeal-type-checks.js';
+import { formatAppealUnderActSection } from '@pins/appeals/utils/appellant-case-mappers.js';
 import formatDate, { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
 import { camelToScreamingSnake, capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { EventType } from '@pins/event-client';
@@ -272,6 +274,7 @@ export const updateAppellantCaseValidationOutcome = async (
 			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 		}
 		const isEnforcement = isEnforcementCaseType(appeal.appealType.key);
+		const isLdc = isLdcCaseType(appeal.appealType.key);
 		const childEnforcementWithGrounds = await getChildEnforcementsWithGrounds(appeal);
 
 		const personalisation = {
@@ -279,9 +282,9 @@ export const updateAppellantCaseValidationOutcome = async (
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
 			team_email_address: teamEmail,
+			appeal_type: trimAppealType(appeal.appealType.type),
 			...(isEnforcement && {
 				local_planning_authority: updatedAppeal?.lpa?.name || '',
-				appeal_type: trimAppealType(appeal.appealType.type),
 				enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
 				appeal_grounds:
 					updatedAppeal?.appealGrounds?.map((ground) => ground.ground?.groundRef || '').sort() ||
@@ -291,6 +294,11 @@ export const updateAppellantCaseValidationOutcome = async (
 				}),
 				ground_a_barred: groundABarred || false,
 				other_info: otherInformation || ''
+			}),
+			...(isLdc && {
+				ldc_type: formatAppealUnderActSection(
+					updatedAppeal?.appellantCase?.applicationMadeUnderActSection
+				)
 			})
 		};
 		await notifySend({
@@ -303,11 +311,11 @@ export const updateAppellantCaseValidationOutcome = async (
 				feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key)
 			}
 		});
-		if (isEnforcement) {
+		if (isEnforcement || isLdc) {
 			const { agent, appellant } = updatedAppeal || {};
 			await notifySend({
 				azureAdUserId,
-				templateName: 'appeal-confirmed-enforcement-lpa',
+				templateName: isEnforcement ? 'appeal-confirmed-enforcement-lpa' : 'appeal-confirmed-lpa',
 				notifyClient,
 				recipientEmail: updatedAppeal?.lpa?.email,
 				personalisation: {
