@@ -18,8 +18,7 @@ const nunjucksEnvironments = nunjucks.configure(
 		trimBlocks: true,
 		// automatically remove leading whitespace from a block/tag
 		lstripBlocks: true,
-		// never use a cache and recompile templates each time
-		noCache: true
+		noCache: false
 	}
 );
 
