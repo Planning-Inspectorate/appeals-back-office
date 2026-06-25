@@ -1224,10 +1224,6 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         },
         {
           "html": "No documents",
-          "key": "Appeal statement",
-        },
-        {
-          "html": "No documents",
           "key": "Planning obligation",
         },
         {
