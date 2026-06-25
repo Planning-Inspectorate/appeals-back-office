@@ -180,6 +180,32 @@ describe('appellant-case-main', () => {
 			}
 		);
 
+		it.each([
+			['CAS planning', appealDataCasPlanning],
+			['CAS advert', appealDataCasAdvert]
+		])(
+			'should not show Plans, drawings and list of plans in Upload documents for %s appeals submitted from 1 April 2026 onwards',
+			async (_, testAppealData) => {
+				nock('http://test/')
+					.get('/appeals/2?include=all')
+					.reply(200, {
+						...testAppealData,
+						appealId: 2
+					});
+				nock('http://test/')
+					.get('/appeals/2/appellant-cases/0')
+					.reply(200, {
+						...appellantCaseDataNotValidatedNoEnforcementNotice,
+						applicationDate: '2026-04-01T00:00:00.000Z'
+					});
+
+				const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).not.toContain('Plans, drawings and list of plans');
+			}
+		);
+
 		it('should render the appellant case page with the expected content (Full planning appeal / S78)', async () => {
 			nock('http://test/')
 				.get('/appeals/2?include=all')
@@ -397,7 +423,6 @@ describe('appellant-case-main', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Appeal statement');
 			expect(unprettifiedElement.innerHTML).toContain('Application for an award of appeal costs');
 			expect(unprettifiedElement.innerHTML).toContain('Plans, drawings and list of plans');
-
 			expect(unprettifiedElement.innerHTML).not.toContain('Additional documents</h2>');
 		});
 
@@ -472,7 +497,6 @@ describe('appellant-case-main', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Appeal statement');
 			expect(unprettifiedElement.innerHTML).toContain('Application for an award of appeal costs');
 			expect(unprettifiedElement.innerHTML).toContain('Plans, drawings and list of plans');
-
 			expect(unprettifiedElement.innerHTML).not.toContain('Additional documents</h2>');
 		});
 
@@ -1073,7 +1097,6 @@ describe('appellant-case-main', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Appeal statement');
 			expect(unprettifiedElement.innerHTML).toContain('Application for an award of appeal costs');
 			expect(unprettifiedElement.innerHTML).toContain('Plans, drawings and list of plans');
-
 			expect(unprettifiedElement.innerHTML).not.toContain('Additional documents</h2>');
 		});
 
