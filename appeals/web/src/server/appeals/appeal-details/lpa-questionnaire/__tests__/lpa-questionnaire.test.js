@@ -157,6 +157,12 @@ describe('LPA Questionnaire review', () => {
 		expect(response.text).toContain('Is enforcement notice appeal the correct type of appeal?');
 		expect(response.text).toContain('What is the area of the appeal site?');
 		expect(response.text).not.toContain('Is householder the correct type of appeal?');
+		expect(response.text).toContain('Enforcement notice');
+		expect(response.text).toContain('Enforcement notice plan');
+		expect(response.text).toContain('List of people that you served the enforcement notice to');
+		expect(response.text).toContain(
+			'Appeal notification letter and the list of people that you notified'
+		);
 	});
 
 	it('should render Enforcement section 5', async () => {
@@ -193,6 +199,47 @@ describe('LPA Questionnaire review', () => {
 		);
 		expect(response.text).toContain('Address of the neighbour’s land or property');
 		expect(response.text).toContain('Are there any potential safety risks?');
+	});
+
+	it('should render Enforcement Listed sections 1 and 3 in the correct order', async () => {
+		const appealId = 101;
+		const lpaqId = 201;
+
+		nock('http://test/')
+			.get(new RegExp(`/appeals/${appealId}/lpa-questionnaires/${lpaqId}`))
+			.reply(200, {
+				...lpaQuestionnaireData,
+				appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+				siteAreaSquareMetres: 500,
+				isSiteOnCrownLand: true
+			});
+
+		nock('http://test/')
+			.get(new RegExp(`/appeals/${appealId}`))
+			.reply(200, {
+				...lpaqAppealData,
+				appealId,
+				appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
+			})
+			.persist();
+
+		const response = await request.get(
+			`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaqId}`
+		);
+
+		expect(response.text).toContain('1. Constraints, designations and other issues');
+		expect(response.text).toContain('3. Notifying relevant parties');
+		expect(response.text).toContain(
+			'Is enforcement listed building and conservation area appeal the correct type of appeal?'
+		);
+		expect(response.text).toContain('What is the area of the appeal site?');
+		expect(response.text).not.toContain('Is householder the correct type of appeal?');
+		expect(response.text).toContain('Enforcement notice');
+		expect(response.text).toContain('Enforcement notice plan');
+		expect(response.text).toContain('List of people that you served the enforcement notice to');
+		expect(response.text).toContain(
+			'Appeal notification letter and the list of people that you notified'
+		);
 	});
 
 	describe('Notification banners', () => {
