@@ -61,7 +61,9 @@ export function generateCASComponents(
 						: []),
 					mappedAppellantCaseData.costsDocument.display.summaryListItem,
 					mappedAppellantCaseData.designAndAccessStatement.display.summaryListItem,
-					mappedAppellantCaseData.supportingDocuments.display.summaryListItem
+					...(beforeExpeditedOriginalApplicationCutOff(appellantCaseData.applicationDate)
+						? [mappedAppellantCaseData.supportingDocuments.display.summaryListItem]
+						: [])
 				]
 			}
 		};
