@@ -377,6 +377,16 @@ describe('map-document-entity', () => {
 			expectedDocumentType: APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_CORRESPONDENCE,
 			expectedCaseStage: APPEAL_CASE_STAGE.COSTS,
 			expectedPublishedDocumentUri: null
+		},
+		{
+			desc: 'appellant case cost unpublished - still broadcast as published',
+			documentType: APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_CORRESPONDENCE,
+			representationType: null,
+			caseStage: APPEAL_CASE_STAGE.APPELLANT_CASE,
+			isPublished: false,
+			expectedDocumentType: APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_CORRESPONDENCE,
+			expectedCaseStage: APPEAL_CASE_STAGE.APPELLANT_CASE,
+			expectedPublishedDocumentUri: testUri
 		}
 	])(
 		'handles document type: $desc',

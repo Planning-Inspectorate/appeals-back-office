@@ -126,9 +126,11 @@ const mapPublishedFields = (documentVersion) => {
 	}
 
 	// only costs docs currently use internally managed published statuses
+	// the costs application from the appellant case works as a standard appellant case doc
 	if (
 		documentVersion.documentType &&
-		documentTypesWithManagedPublishedStatuses.has(documentVersion.documentType)
+		documentTypesWithManagedPublishedStatuses.has(documentVersion.documentType) &&
+		documentVersion.stage !== APPEAL_CASE_STAGE.APPELLANT_CASE
 	) {
 		const isPublished = documentVersion.published;
 		return {
