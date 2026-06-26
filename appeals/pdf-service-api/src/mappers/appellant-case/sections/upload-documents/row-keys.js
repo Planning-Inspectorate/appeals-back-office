@@ -65,7 +65,6 @@ export const rowKeys = {
 		'reasonForAppealAppellant',
 		'applicationDecisionLetter',
 		'planningObligation',
-		'statementCommonGround',
 		'ownershipCertificate',
 		'appellantApplicationFolder'
 	],
