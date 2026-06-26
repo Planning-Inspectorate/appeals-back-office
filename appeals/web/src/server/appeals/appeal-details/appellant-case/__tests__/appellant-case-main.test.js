@@ -203,6 +203,7 @@ describe('appellant-case-main', () => {
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).not.toContain('Plans, drawings and list of plans');
+				expect(unprettifiedElement.innerHTML).not.toContain('Design and access statement');
 			}
 		);
 
