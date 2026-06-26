@@ -22,6 +22,8 @@ describe('appellant-case-expedited', () => {
 	it('should render the appellant case page with expedited fields when present (S78)', async () => {
 		const expeditedAppellantCaseData = {
 			...appellantCaseDataNotValidated,
+			applicationDate: '2026-04-02T00:00:00.000Z',
+			applicationDecision: 'refused',
 			typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL,
 			reasonForAppealAppellant: 'My reason for appeal',
 			anySignificantChanges: 'Yes',
@@ -65,6 +67,8 @@ describe('appellant-case-expedited', () => {
 			'Did you submit a separate ownership certificate and agricultural land declaration with your application?'
 		);
 		expect(element.innerHTML).toContain('Yes');
+
+		expect(element.innerHTML).not.toContain('Draft statement of common ground');
 	});
 
 	it.each([

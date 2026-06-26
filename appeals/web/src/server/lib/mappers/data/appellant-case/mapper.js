@@ -2,7 +2,6 @@ import { isFeatureActive } from '#common/feature-flags.js';
 import { permissionNames } from '#environment/permissions.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { isS78ExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
-import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { userHasPermission } from '../../utils/permissions.mapper.js';
 import { submaps as advertSubmaps } from './advert.js';
 import { submaps as casAdvertSubmaps } from './cas-advert.js';
@@ -106,11 +105,7 @@ export function initialiseAndMapData(
 		throw new Error(`No submappers found for appeal type ${appealType}`);
 	}
 
-	if (
-		appealType === APPEAL_TYPE.S78_EXPEDITED &&
-		(appellantCaseData.appellantProcedurePreference === APPEAL_CASE_PROCEDURE.INQUIRY ||
-			appellantCaseData.appellantProcedurePreference === APPEAL_CASE_PROCEDURE.HEARING)
-	) {
+	if (appealType === APPEAL_TYPE.S78_EXPEDITED) {
 		delete submappers.statementCommonGround;
 	}
 
