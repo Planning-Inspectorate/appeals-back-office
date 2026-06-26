@@ -1,4 +1,5 @@
-import dotenv from 'dotenv';
+import { loadEnvFile } from 'node:process';
+import path from 'node:path';
 
 /**
  * @typedef {{database: {connectionString: string}, schedule: {updateBankHolidays: string}, logLevel: (string), NODE_ENV: (string)}} Config
@@ -11,7 +12,11 @@ import dotenv from 'dotenv';
 
 export function loadConfig() {
 	// load configuration from .env file into process.env
-	dotenv.config();
+	try {
+		loadEnvFile(path.join(rootDir, sourceFile));
+	} catch {
+		/* ignore errors*/
+	}
 
 	// get values from the environment
 	const { UPDATE_BANK_HOLIDAYS_SCHEDULE, NODE_ENV, SQL_CONNECTION_STRING } = process.env;

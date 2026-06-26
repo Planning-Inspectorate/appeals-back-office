@@ -1,5 +1,6 @@
-import dotenv from 'dotenv';
-dotenv.config();
+import { loadEnvFile } from 'node:process';
+// prettier-ignore
+try { loadEnvFile(); } catch {/* ignore errors*/}
 
 import { createPrismaClient } from './create-client.js';
 

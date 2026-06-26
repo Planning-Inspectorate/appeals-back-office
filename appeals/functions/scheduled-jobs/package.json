@@ -13,7 +13,6 @@
     "@pins/blob-storage-client": "^0.0.0",
     "@pins/event-client": "^0.0.0",
     "@pins/platform": "^0.0.0",
-    "dotenv": "*",
     "got": "*",
     "joi": "*",
     "mssql": "^12.2.0"
