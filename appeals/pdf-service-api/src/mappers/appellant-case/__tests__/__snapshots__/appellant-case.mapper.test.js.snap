@@ -1228,10 +1228,6 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         },
         {
           "html": "No documents",
-          "key": "Draft statement of common ground",
-        },
-        {
-          "html": "No documents",
           "key": "Separate ownership certificate and agricultural land declaration",
         },
         {
