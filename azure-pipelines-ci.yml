@@ -71,9 +71,9 @@ extends:
         variables:
         - name: test-script
           ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/gh-readonly-queue') }}:
-            value: npx turbo run test --filter=./appeals/web
+            value: npx turbo run test --filter=./appeals/web --no-cache
           ${{ else }}:
-            value: npx turbo run test:cov --filter=./appeals/web
+            value: npx turbo run test:cov --filter=./appeals/web --no-cache
         steps:
           - task: Cache@2
             inputs:
@@ -109,9 +109,9 @@ extends:
         variables:
         - name: test-script
           ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/gh-readonly-queue') }}:
-            value: npx turbo run test --filter=./appeals/api
+            value: npx turbo run test --filter=./appeals/api --no-cache
           ${{ else }}:
-            value: npx turbo run test:cov --filter=./appeals/api
+            value: npx turbo run test:cov --filter=./appeals/api --no-cache
         steps:
           - task: Cache@2
             inputs:
@@ -139,9 +139,9 @@ extends:
         variables:
         - name: test-script
           ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/gh-readonly-queue') }}:
-            value: npx turbo run test --filter=./appeals/functions/* --filter=./appeals/pdf-service-api --filter=./packages/*
+            value: npx turbo run test --filter=./appeals/functions/* --filter=./appeals/pdf-service-api --filter=./packages/* --no-cache
           ${{ else }}:
-            value: npx turbo run test:cov --filter=./appeals/functions/* --filter=./appeals/pdf-service-api --filter=./packages/*
+            value: npx turbo run test:cov --filter=./appeals/functions/* --filter=./appeals/pdf-service-api --filter=./packages/* --no-cache
         steps:
           - task: Cache@2
             inputs:
