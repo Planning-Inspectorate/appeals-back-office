@@ -26,7 +26,7 @@ schedules:
 jobs:
   - job: Run_Cypress_Tests_For_Appeals
     timeoutInMinutes: 180
-    pool: pins-odt-agent-pool-tests
+    pool: pins-odt-agent-pool-spec-1
 
     strategy:
       ${{ if eq(parameters.RunParallel, true) }}:
@@ -91,7 +91,7 @@ jobs:
         inputs:
           versionSpec: "22.x"
         displayName: "Install Node.js"
-        
+
       - task: ShellScript@2
         inputs:
           scriptPath: 'appeals/e2e/install-chromium.sh'
@@ -109,7 +109,7 @@ jobs:
           CLEAN_SPEC="cypress/e2e/back-office-appeals/$CLEAN_SPEC"
           echo "Running: $CLEAN_SPEC"
           npx cypress run --spec "$CLEAN_SPEC"
-        workingDirectory: $(System.DefaultWorkingDirectory)/appeals/e2e        
+        workingDirectory: $(System.DefaultWorkingDirectory)/appeals/e2e
         env:
           TZ: 'Europe/London'
           BASE_URL: $(APPEALS_BASE_URL)
