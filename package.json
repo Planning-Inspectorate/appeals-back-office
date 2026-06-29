@@ -37,7 +37,7 @@
 		"@planning-inspectorate/data-model": "^2.40.0",
 		"cypress": "15.3.0",
 		"got": "^12.5.2",
-		"joi": "^17.7.0",
+		"joi": "^18.2.1",
 		"node-cache": "^5.1.2",
 		"nodemon": "3.0.3",
 		"turbo": "1.2.14"
