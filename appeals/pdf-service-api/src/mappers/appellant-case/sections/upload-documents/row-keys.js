@@ -13,10 +13,27 @@ export const rowKeys = {
 	[APPEAL_TYPE.CAS_PLANNING]: [
 		'originalApplicationForm',
 		'changedDescription',
-		'appellantStatement',
+		{
+			key: 'reasonForAppealAppellant',
+			condition: (/** @type {{ applicationDate: string | null | undefined; }} */ data) =>
+				!beforeExpeditedOriginalApplicationCutOff(data.applicationDate)
+		},
+		{
+			key: 'appellantStatement',
+			condition: (/** @type {{ applicationDate: string | null | undefined; }} */ data) =>
+				beforeExpeditedOriginalApplicationCutOff(data.applicationDate)
+		},
 		'appellantApplicationFolder',
-		'designAccessStatement',
-		'plansDrawings'
+		{
+			key: 'designAccessStatement',
+			condition: (/** @type {{ applicationDate: string | null | undefined; }} */ data) =>
+				beforeExpeditedOriginalApplicationCutOff(data.applicationDate)
+		},
+		{
+			key: 'plansDrawings',
+			condition: (/** @type {{ applicationDate: string | null | undefined; }} */ data) =>
+				beforeExpeditedOriginalApplicationCutOff(data.applicationDate)
+		}
 	],
 	[APPEAL_TYPE.CAS_ADVERTISEMENT]: [
 		'originalApplicationForm',

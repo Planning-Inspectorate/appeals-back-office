@@ -19,7 +19,17 @@ export function appealDetailsSection(templateData) {
 		isExpeditedAppealType(appealTypeToAppealCaseTypeMapper(appealType)) ||
 		appealType === APPEAL_TYPE.S78_EXPEDITED;
 
-	if (isExpeditedAppeal) return;
+	if (isExpeditedAppeal)
+		return {
+			heading: 'Appeal details',
+			items: [
+				{
+					key: 'Reason for appeal',
+					text: formatSentenceCase(templateData.reasonForAppealAppellant, 'Not provided')
+				}
+			]
+		};
+
 	const itemsList = [
 		{
 			key: 'How would you prefer us to decide your appeal?',
@@ -36,6 +46,10 @@ export function appealDetailsSection(templateData) {
 		{
 			key: 'How many witnesses would you expect to give evidence at the inquiry?',
 			text: formatSentenceCase(appellantProcedurePreferenceWitnessCount?.toString(), 'Not provided')
+		},
+		{
+			key: 'Reason for appeal',
+			text: formatSentenceCase(templateData.reasonForAppealAppellant, 'Not provided')
 		}
 	];
 	return {
