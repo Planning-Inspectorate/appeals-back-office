@@ -419,6 +419,8 @@ export const updateDocumentFileName = async (req, res) => {
 					? formatAddressSingleLine(appeal.address)
 					: 'Address not available';
 
+				const responsesInvited = inviteResponses?.toLowerCase() === 'yes';
+
 				const personalisation = {
 					appeal_reference_number: appeal?.reference || '',
 					site_address: siteAddress,
@@ -426,7 +428,7 @@ export const updateDocumentFileName = async (req, res) => {
 					enforcement_reference: appeal?.appellantCase?.enforcementReference || '',
 					contact_email: email || '',
 					deadline: deadline,
-					responses_invited: Boolean(inviteResponses)
+					responses_invited: responsesInvited
 				};
 
 				const appellantEmail = appeal.agent?.email ?? appeal.appellant?.email;
@@ -438,7 +440,7 @@ export const updateDocumentFileName = async (req, res) => {
 						// @ts-ignore
 						notifyClient: req.notifyClient,
 						recipientEmail: appellantEmail,
-						personalisation: { dashboard_link: 'appeal', ...personalisation }
+						personalisation: { dashboard_link: 'appeals', ...personalisation }
 					});
 				}
 

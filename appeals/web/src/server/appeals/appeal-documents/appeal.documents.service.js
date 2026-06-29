@@ -123,7 +123,7 @@ export const getDocumentRedactionStatuses = async (apiClient) => {
  * @typedef {Object} DocumentDetailAPIPatchRequest
  * @property {DocumentDetailAPIDocument} document
  * @property {string} [costsDocumentType]
- * @property {string} [inviteResponses]
+ * @property {boolean} [inviteResponses]
  * */
 
 /**

@@ -31,7 +31,7 @@ describe('shared-cost-application-comment.md', () => {
 			'Planning application reference: 48269/APP/2021/1482',
 			'',
 			'# What happens next',
-			'[View all comments in the appeals service](/mock-front-office-url/appeals/134526).',
+			'[View all comments in the appeals service.](/mock-front-office-url/appeals/134526)',
 			'Send an email to appeals@planninginspectorate.gov.uk by 24 June 2026 if you want to respond to this comment. ',
 			'',
 			'Planning Inspectorate ',
