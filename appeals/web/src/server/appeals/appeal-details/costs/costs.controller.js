@@ -715,6 +715,8 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
 				? 'shared-cost-application.content.md'
 				: 'shared-cost-application-comment.content.md';
 
+	const inviteResponses = session?.inviteResponses?.toLowerCase() === 'yes';
+
 	const notifyPreview = await generateNotifyPreview(request.apiClient, notifyTemplate, {
 		appeal_reference_number: currentAppeal?.appealReference,
 		site_address: address || '',
@@ -722,7 +724,7 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
 		enforcement_reference: currentAppeal.enforcementNotice?.appellantCase?.reference || '',
 		contact_email: email || '',
 		deadline: deadline,
-		responses_invited: session.inviteResponses,
+		responses_invited: inviteResponses,
 		dashboard_link: 'appeals'
 	});
 
