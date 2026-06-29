@@ -38,7 +38,12 @@ export const rowKeys = {
 		'knowsOtherLandowners',
 		'siteAccessRequired',
 		'landownerPermission',
-		'healthAndSafety'
+		'healthAndSafety',
+		{
+			key: 'anySignificantChanges',
+			condition: (/** @type {{ applicationDate: string | null | undefined; }} */ data) =>
+				!beforeExpeditedOriginalApplicationCutOff(data.applicationDate)
+		}
 	],
 	[APPEAL_TYPE.ADVERTISEMENT]: [
 		'appealSite',

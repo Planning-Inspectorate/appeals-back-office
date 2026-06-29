@@ -202,6 +202,12 @@ exports[`appellant-case-main GET /appellant-case notification banners should ren
                                     data-cy="change-appellant-case-health-and-safety">Change<span class="govuk-visually-hidden"> Are there any health and safety issues on the appeal site? (2. Site details)</span></a>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have there been any significant changes that would affect the application?</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/any-significant-changes/change">Change<span class="govuk-visually-hidden"> Have there been any significant changes that would affect the application? (2. Site details)</span></a>
+                                </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -501,6 +507,12 @@ exports[`appellant-case-main GET /appellant-case notification banners should ren
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
                                     data-cy="change-appellant-case-health-and-safety">Change<span class="govuk-visually-hidden"> Are there any health and safety issues on the appeal site? (2. Site details)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have there been any significant changes that would affect the application?</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/any-significant-changes/change">Change<span class="govuk-visually-hidden"> Have there been any significant changes that would affect the application? (2. Site details)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -843,6 +855,12 @@ exports[`appellant-case-main GET /appellant-case notification banners should ren
                                     data-cy="change-appellant-case-health-and-safety">Change<span class="govuk-visually-hidden"> Are there any health and safety issues on the appeal site? (2. Site details)</span></a>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have there been any significant changes that would affect the application?</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/any-significant-changes/change">Change<span class="govuk-visually-hidden"> Have there been any significant changes that would affect the application? (2. Site details)</span></a>
+                                </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -1155,6 +1173,12 @@ exports[`appellant-case-main GET /appellant-case notification banners should ren
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
                                     data-cy="change-appellant-case-health-and-safety">Change<span class="govuk-visually-hidden"> Are there any health and safety issues on the appeal site? (2. Site details)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have there been any significant changes that would affect the application?</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/any-significant-changes/change">Change<span class="govuk-visually-hidden"> Have there been any significant changes that would affect the application? (2. Site details)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -1603,6 +1627,12 @@ exports[`appellant-case-main GET /appellant-case should render review outcome fo
                                     data-cy="change-appellant-case-health-and-safety">Change<span class="govuk-visually-hidden"> Are there any health and safety issues on the appeal site? (2. Site details)</span></a>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have there been any significant changes that would affect the application?</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/any-significant-changes/change">Change<span class="govuk-visually-hidden"> Have there been any significant changes that would affect the application? (2. Site details)</span></a>
+                                </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -1916,6 +1946,12 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                     data-cy="change-appellant-case-health-and-safety">Change<span class="govuk-visually-hidden"> Are there any health and safety issues on the appeal site? (2. Site details)</span></a>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have there been any significant changes that would affect the application?</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/any-significant-changes/change">Change<span class="govuk-visually-hidden"> Have there been any significant changes that would affect the application? (2. Site details)</span></a>
+                                </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -2187,16 +2223,22 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                     data-cy="change-inspector-access">Change<span class="govuk-visually-hidden"> Will an inspector need to access your land or property? (2. Site details)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you have the landowner&#39;s permission?</dt>
-                            <dd                             class="govuk-summary-list__value">Not answered</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/landowner-permission/change">Change<span class="govuk-visually-hidden"> Do you have the landowner&#39;s permission? (2. Site details)</span></a>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Are there any health and safety issues on the appeal site?</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/safety-risks/change/appellant"
                                     data-cy="change-appellant-case-health-and-safety">Change<span class="govuk-visually-hidden"> Are there any health and safety issues on the appeal site? (2. Site details)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you have the landowner&#39;s permission?</dt>
+                            <dd                             class="govuk-summary-list__value">Not answered</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/landowner-permission/change">Change<span class="govuk-visually-hidden"> Do you have the landowner&#39;s permission? (2. Site details)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have there been any significant changes that would affect the application?</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/any-significant-changes/change">Change<span class="govuk-visually-hidden"> Have there been any significant changes that would affect the application? (2. Site details)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -2447,6 +2489,12 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/safety-risks/change/appellant"
                                     data-cy="change-appellant-case-health-and-safety">Change<span class="govuk-visually-hidden"> Are there any health and safety issues on the appeal site? (2. Site details)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have there been any significant changes that would affect the application?</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/any-significant-changes/change">Change<span class="govuk-visually-hidden"> Have there been any significant changes that would affect the application? (2. Site details)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -4215,6 +4263,12 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                     data-cy="change-appellant-case-health-and-safety">Change<span class="govuk-visually-hidden"> Are there any health and safety issues on the appeal site? (2. Site details)</span></a>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have there been any significant changes that would affect the application?</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/any-significant-changes/change">Change<span class="govuk-visually-hidden"> Have there been any significant changes that would affect the application? (2. Site details)</span></a>
+                                </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -5292,16 +5346,22 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                     data-cy="change-inspector-access">Change<span class="govuk-visually-hidden"> Will an inspector need to access your land or property? (2. Site details)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you have the landowner&#39;s permission?</dt>
-                            <dd                             class="govuk-summary-list__value">Not answered</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/landowner-permission/change">Change<span class="govuk-visually-hidden"> Do you have the landowner&#39;s permission? (2. Site details)</span></a>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Are there any health and safety issues on the appeal site?</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/safety-risks/change/appellant"
                                     data-cy="change-appellant-case-health-and-safety">Change<span class="govuk-visually-hidden"> Are there any health and safety issues on the appeal site? (2. Site details)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you have the landowner&#39;s permission?</dt>
+                            <dd                             class="govuk-summary-list__value">Not answered</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/landowner-permission/change">Change<span class="govuk-visually-hidden"> Do you have the landowner&#39;s permission? (2. Site details)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have there been any significant changes that would affect the application?</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/any-significant-changes/change">Change<span class="govuk-visually-hidden"> Have there been any significant changes that would affect the application? (2. Site details)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -5880,16 +5940,22 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                     data-cy="change-inspector-access">Change<span class="govuk-visually-hidden"> Will an inspector need to access your land or property? (2. Site details)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you have the landowner&#39;s permission?</dt>
-                            <dd                             class="govuk-summary-list__value">No data</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/landowner-permission/change">Change<span class="govuk-visually-hidden"> Do you have the landowner&#39;s permission? (2. Site details)</span></a>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Are there any health and safety issues on the appeal site?</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/safety-risks/change/appellant"
                                     data-cy="change-appellant-case-health-and-safety">Change<span class="govuk-visually-hidden"> Are there any health and safety issues on the appeal site? (2. Site details)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you have the landowner&#39;s permission?</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/landowner-permission/change">Change<span class="govuk-visually-hidden"> Do you have the landowner&#39;s permission? (2. Site details)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have there been any significant changes that would affect the application?</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/any-significant-changes/change">Change<span class="govuk-visually-hidden"> Have there been any significant changes that would affect the application? (2. Site details)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -6182,6 +6248,12 @@ exports[`appellant-case-main POST /appellant-case should re-render the appellant
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/safety-risks/change/appellant"
                                     data-cy="change-appellant-case-health-and-safety">Change<span class="govuk-visually-hidden"> Are there any health and safety issues on the appeal site? (2. Site details)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have there been any significant changes that would affect the application?</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/any-significant-changes/change">Change<span class="govuk-visually-hidden"> Have there been any significant changes that would affect the application? (2. Site details)</span></a>
                                 </dd>
                         </div>
                     </dl>
