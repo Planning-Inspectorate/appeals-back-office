@@ -1,4 +1,5 @@
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { beforeExpeditedOriginalApplicationCutOff } from '@pins/appeals/utils/appeal-type-checks.js';
 export const rowKeys = {
 	[APPEAL_TYPE.HOUSEHOLDER]: [
 		'appealSite',
@@ -27,7 +28,12 @@ export const rowKeys = {
 		'knowsOtherLandowners',
 		'siteAccessRequired',
 		'landownerPermission',
-		'healthAndSafety'
+		'healthAndSafety',
+		{
+			key: 'anySignificantChanges',
+			condition: (/** @type {{ applicationDate: string | null | undefined; }} */ data) =>
+				!beforeExpeditedOriginalApplicationCutOff(data.applicationDate)
+		}
 	],
 	[APPEAL_TYPE.ADVERTISEMENT]: [
 		'appealSite',
