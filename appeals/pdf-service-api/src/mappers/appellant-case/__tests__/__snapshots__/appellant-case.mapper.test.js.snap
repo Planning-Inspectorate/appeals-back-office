@@ -478,6 +478,155 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
 }
 `;
 
+exports[`mapAppellantCaseData appellantCase should map appellant case data for a householder submitted after cutoff appeal 1`] = `
+{
+  "details": {
+    "appealReference": "6000073",
+    "appealSite": {
+      "addressId": 72,
+      "addressLine1": "Copthalls",
+      "addressLine2": "Clevedon Road",
+      "postCode": "BS48 1PN",
+      "town": "West Hill",
+    },
+    "localPlanningDepartment": "Maidstone Borough Council",
+  },
+  "sections": [
+    {
+      "heading": "Before you start",
+      "items": [
+        {
+          "html": "Maidstone Borough Council",
+          "key": "Local planning authority",
+        },
+        {
+          "key": "What type of application is your appeal about?",
+          "text": "Householder appeal",
+        },
+        {
+          "key": "Was your application granted or refused?",
+          "text": "Refused",
+        },
+        {
+          "key": "What’s the date on the decision letter from the local planning authority?",
+          "text": "3 June 2025",
+        },
+        {
+          "key": "Are you claiming costs as part of your appeal?",
+          "text": "Not answered",
+        },
+        {
+          "key": "What is the application reference number?",
+          "text": "44377/APP/3/218453",
+        },
+      ],
+    },
+    {
+      "heading": "Appellant details",
+      "items": [
+        {
+          "html": "Sophie Skinner<br />test4@example.com",
+          "key": "Appellant details",
+        },
+        {
+          "html": "Lee Thornton<br />Lee Thornton Ltd<br />test1@example.com",
+          "key": "Agent details",
+        },
+      ],
+    },
+    {
+      "heading": "Site details",
+      "items": [
+        {
+          "html": "Copthalls, Clevedon Road, West Hill, BS48 1PN",
+          "key": "What is the address of the appeal site?",
+        },
+        {
+          "key": "What is the area of the appeal site?",
+          "text": "30.9 m²",
+        },
+        {
+          "key": "Is the appeal site in a green belt?",
+          "text": "No",
+        },
+        {
+          "key": "Does the appellant own all of the land involved in the appeal?",
+          "text": "Fully owned",
+        },
+        {
+          "key": "Does the appellant know who owns the land involved in the appeal?",
+          "text": "No data",
+        },
+        {
+          "html": "No",
+          "key": "Will an inspector need to access your land or property?",
+        },
+        {
+          "html": "No",
+          "key": "Are there any health and safety issues on the appeal site?",
+        },
+        {
+          "html": "Yes<br>Other: Other changes",
+          "key": "Have there been any significant changes that would affect the application?",
+        },
+      ],
+    },
+    {
+      "heading": "Application details",
+      "items": [
+        {
+          "key": "What date did you submit your application?",
+          "text": "1 April 2026",
+        },
+        {
+          "key": "Enter the description of development that you submitted in your application",
+          "text": "Lorem ipsum",
+        },
+        {
+          "html": "No",
+          "key": "Are there other appeals linked to your development?",
+        },
+        {
+          "html": "No documents",
+          "key": "Decision letter from the local planning authority",
+        },
+        {
+          "key": "Why are you appealing?",
+          "text": "My reason for appeal",
+        },
+      ],
+    },
+    undefined,
+    {
+      "heading": "Upload documents",
+      "items": [
+        {
+          "html": "No documents",
+          "key": "Application form",
+        },
+        {
+          "html": "No documents",
+          "key": "Agreement to change the description of development",
+        },
+        {
+          "html": "No documents",
+          "key": "Application for an award of appeal costs",
+        },
+      ],
+    },
+    {
+      "heading": "Additional documents",
+      "items": [
+        {
+          "html": "No documents",
+          "key": "",
+        },
+      ],
+    },
+  ],
+}
+`;
+
 exports[`mapAppellantCaseData appellantCase should map appellant case data for a ldc appeal 1`] = `
 {
   "details": {
@@ -1213,10 +1362,6 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         {
           "html": "No documents",
           "key": "Agreement to change the description of development",
-        },
-        {
-          "key": "Why are you appealing?",
-          "text": "Not provided",
         },
         {
           "html": "No documents",
