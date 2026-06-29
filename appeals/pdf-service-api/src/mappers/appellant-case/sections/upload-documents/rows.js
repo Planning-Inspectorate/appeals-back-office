@@ -32,10 +32,6 @@ export const rowBuilders = {
 		key: 'Agreement to change the description of development',
 		html: formatDocumentData(data.documents.changedDescription)
 	}),
-	reasonForAppealAppellant: (data) => ({
-		key: 'Why are you appealing?',
-		text: formatSentenceCase(data.reasonForAppealAppellant, 'Not provided')
-	}),
 	applicationDecisionLetter: (data) => ({
 		key: 'Decision letter from the local planning authority',
 		html: formatDocumentData(data.documents.applicationDecisionLetter)
