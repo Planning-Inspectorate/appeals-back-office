@@ -22,7 +22,12 @@ export const rowKeys = {
 		'ownsAllLand',
 		'knowsOtherLandowners',
 		'siteAccessRequired',
-		'healthAndSafety'
+		'healthAndSafety',
+		{
+			key: 'anySignificantChanges',
+			condition: (/** @type {{ applicationDate: string | null | undefined; }} */ data) =>
+				!beforeExpeditedOriginalApplicationCutOff(data.applicationDate)
+		}
 	],
 	[APPEAL_TYPE.CAS_ADVERTISEMENT]: [
 		'appealSite',
