@@ -56,6 +56,13 @@ const displayProcedureChangeLink = (appealDetails) => {
 		return false;
 	}
 
+	if (
+		appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
+		!featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_CHANGE_PROCEDURE)
+	) {
+		return false;
+	}
+
 	const { representationStatus: lpaStatementrepresentationStatus } =
 		appealDetails.documentationSummary?.lpaStatement ?? {};
 	const { representationStatus: ipCommentsrepresentationStatus } =
