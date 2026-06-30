@@ -2,7 +2,6 @@ import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatte
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import { duplicateFiles } from '#endpoints/link-appeals/link-appeals.service.js';
 import { getInterestedPartyEmails } from '#endpoints/representations/representations.service.js';
 import { generateNotifyPreview } from '#notify/emulate-notify.js';
 import { notifySend, renderTemplate } from '#notify/notify-send.js';
@@ -331,18 +330,12 @@ export const publishDecision = async (
  * @param {string} outcome
  * @param {Date} documentDate
  * @param {string} azureAdUserId
- * @param {Appeal} leadAppeal
  * @returns
  */
-export const publishChildDecision = async (
-	childAppeal,
-	outcome,
-	documentDate,
-	azureAdUserId,
-	leadAppeal
-) => {
+export const publishChildDecision = async (childAppeal, outcome, documentDate, azureAdUserId) => {
 	const { id: appealId } = childAppeal;
 
+	// note that the decision letter is copied on unlinking and then added to the appeal decision
 	const result = await appealRepository.setAppealDecision(appealId, {
 		documentDate,
 		version: 1,
@@ -350,8 +343,6 @@ export const publishChildDecision = async (
 	});
 
 	if (result) {
-		await duplicateFiles(leadAppeal, childAppeal, APPEAL_CASE_STAGE.APPEAL_DECISION);
-
 		await createAuditTrail({
 			appealId,
 			azureAdUserId: azureAdUserId,

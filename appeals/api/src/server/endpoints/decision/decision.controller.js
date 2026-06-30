@@ -91,13 +91,7 @@ export const postInspectorDecision = async (req, res) => {
 							);
 
 							if (childAppeal) {
-								return publishChildDecision(
-									childAppeal,
-									outcome,
-									documentDate,
-									azureAdUserId,
-									appeal
-								);
+								return publishChildDecision(childAppeal, outcome, documentDate, azureAdUserId);
 							}
 						}
 						return publishDecision(

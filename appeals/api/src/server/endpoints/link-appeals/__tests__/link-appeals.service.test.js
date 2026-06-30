@@ -1,9 +1,13 @@
 // @ts-nocheck
 import { householdAppeal as appeal } from '#tests/appeals/mocks.js';
 import { jest } from '@jest/globals';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_STATUS, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 
-import { checkAppealsStatusBeforeLPAQ, copyRepresentations } from '../link-appeals.service.js';
+import {
+	checkAppealsStatusBeforeLPAQ,
+	copyRepresentations,
+	duplicateFiles
+} from '../link-appeals.service.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -136,6 +140,82 @@ describe('Link Appeals Service', () => {
 			expect(databaseConnector.folder.findMany).toHaveBeenCalledTimes(2);
 			expect(databaseConnector.document.findMany).toHaveBeenCalledTimes(1);
 			expect(databaseConnector.representation.createMany).toHaveBeenCalledTimes(1);
+		});
+	});
+
+	describe('duplicateFiles', () => {
+		it('calls updateAppealDecisionLetter with destination appeal id and copied decision letter guid', async () => {
+			const sourceAppeal = { id: 100, reference: 'SRC-REF' };
+			const destinationAppeal = { id: 200, reference: 'DST-REF' };
+			databaseConnector.documentVersion.createMany.mockResolvedValue([]);
+
+			databaseConnector.folder.findMany.mockResolvedValueOnce([
+				{
+					id: 1,
+					path: 'appeal-decision/caseDecisionLetter',
+					documents: [
+						{
+							name: 'decision-letter.pdf',
+							guid: 'source-guid',
+							isDeleted: false,
+							latestDocumentVersion: {
+								blobStoragePath: 'appeal/SRC-REF/source-guid/v1/decision-letter.pdf',
+								mime: 'application/pdf',
+								documentType: APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER,
+								size: 123,
+								stage: 'appeal-decision',
+								virusCheckStatus: 'clean',
+								redactionStatusId: 1,
+								dateReceived: new Date('2026-01-01T00:00:00.000Z'),
+								version: 1
+							}
+						}
+					]
+				}
+			]);
+
+			await duplicateFiles(sourceAppeal, destinationAppeal, null);
+
+			expect(databaseConnector.inspectorDecision.update).toHaveBeenCalledTimes(1);
+			expect(databaseConnector.inspectorDecision.update).toHaveBeenCalledWith({
+				where: { appealId: destinationAppeal.id },
+				data: { decisionLetterGuid: 'mock-uuid' }
+			});
+		});
+
+		it('does not call updateAppealDecisionLetter when no decision letter is copied', async () => {
+			const sourceAppeal = { id: 100, reference: 'SRC-REF' };
+			const destinationAppeal = { id: 200, reference: 'DST-REF' };
+			databaseConnector.documentVersion.createMany.mockResolvedValue([]);
+
+			databaseConnector.folder.findMany.mockResolvedValueOnce([
+				{
+					id: 1,
+					path: 'costs/appellantCostsCorrespondence',
+					documents: [
+						{
+							name: 'supporting-note.pdf',
+							guid: 'source-guid-2',
+							isDeleted: false,
+							latestDocumentVersion: {
+								blobStoragePath: 'appeal/SRC-REF/source-guid-2/v1/supporting-note.pdf',
+								mime: 'application/pdf',
+								documentType: APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_CORRESPONDENCE,
+								size: 123,
+								stage: 'costs',
+								virusCheckStatus: 'clean',
+								redactionStatusId: 1,
+								dateReceived: new Date('2026-01-01T00:00:00.000Z'),
+								version: 1
+							}
+						}
+					]
+				}
+			]);
+
+			await duplicateFiles(sourceAppeal, destinationAppeal, null);
+
+			expect(databaseConnector.inspectorDecision.update).not.toHaveBeenCalled();
 		});
 	});
 });
