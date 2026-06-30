@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /**
  * @param {import('got').Got} apiClient
  * @returns {Promise<import('@pins/appeals.api').Api.AllLPANotificationMethodsResponse>}
@@ -20,7 +21,8 @@ export function changeNotificationMethods(
 	lpaQuestionnaireId,
 	updatedNotificationMethods
 ) {
-	return apiClient.patch(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`, {
+	const ids = assertValidNumericIds({ appealId, lpaQuestionnaireId });
+	return apiClient.patch(`appeals/${ids.appealId}/lpa-questionnaires/${ids.lpaQuestionnaireId}`, {
 		json: {
 			lpaNotificationMethods: updatedNotificationMethods
 		}

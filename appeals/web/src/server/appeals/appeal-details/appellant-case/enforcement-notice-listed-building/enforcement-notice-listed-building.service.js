@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /**
  *
  * @param {import('got').Got} apiClient
@@ -12,7 +13,8 @@ export function changeEnforcementNoticeListedBuilding(
 	appellantCaseId,
 	enforcementNoticeListedBuilding
 ) {
-	return apiClient.patch(`appeals/${appealId}/appellant-cases/${appellantCaseId}`, {
+	const ids = assertValidNumericIds({ appealId, appellantCaseId });
+	return apiClient.patch(`appeals/${ids.appealId}/appellant-cases/${ids.appellantCaseId}`, {
 		json: {
 			enforcementNoticeListedBuilding
 		}

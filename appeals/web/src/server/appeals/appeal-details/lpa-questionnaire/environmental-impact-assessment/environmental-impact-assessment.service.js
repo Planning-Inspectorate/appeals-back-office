@@ -1,4 +1,5 @@
 import { convertFromYesNoToBoolean } from '#lib/boolean-formatter.js';
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 
 /**
  * @param {import('got').Got} apiClient
@@ -8,7 +9,8 @@ import { convertFromYesNoToBoolean } from '#lib/boolean-formatter.js';
  * @returns {Promise<{}>}
  */
 export function changeEiaColumnTwoThreshold(apiClient, appealId, lpaQuestionnaireId, updatedData) {
-	return apiClient.patch(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`, {
+	const ids = assertValidNumericIds({ appealId, lpaQuestionnaireId });
+	return apiClient.patch(`appeals/${ids.appealId}/lpa-questionnaires/${ids.lpaQuestionnaireId}`, {
 		json: {
 			eiaColumnTwoThreshold: convertFromYesNoToBoolean(updatedData)
 		}
@@ -28,7 +30,8 @@ export function changeEiaRequiresEnvironmentalStatement(
 	lpaQuestionnaireId,
 	updatedData
 ) {
-	return apiClient.patch(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`, {
+	const ids = assertValidNumericIds({ appealId, lpaQuestionnaireId });
+	return apiClient.patch(`appeals/${ids.appealId}/lpa-questionnaires/${ids.lpaQuestionnaireId}`, {
 		json: {
 			eiaRequiresEnvironmentalStatement: convertFromYesNoToBoolean(updatedData)
 		}
@@ -56,7 +59,8 @@ export function changeEiaSensitiveAreaDetails(
 		eiaSensitiveAreaDetails = null;
 	}
 
-	return apiClient.patch(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`, {
+	const ids = assertValidNumericIds({ appealId, lpaQuestionnaireId });
+	return apiClient.patch(`appeals/${ids.appealId}/lpa-questionnaires/${ids.lpaQuestionnaireId}`, {
 		json: {
 			eiaSensitiveAreaDetails
 		}
@@ -84,7 +88,8 @@ export function changeEiaConsultedBodiesDetails(
 		consultedBodiesDetails = null;
 	}
 
-	return apiClient.patch(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`, {
+	const ids = assertValidNumericIds({ appealId, lpaQuestionnaireId });
+	return apiClient.patch(`appeals/${ids.appealId}/lpa-questionnaires/${ids.lpaQuestionnaireId}`, {
 		json: {
 			consultedBodiesDetails
 		}

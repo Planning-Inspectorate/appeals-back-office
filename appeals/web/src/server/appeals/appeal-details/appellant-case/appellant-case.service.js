@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /**
  * @typedef {import('@pins/appeals.api').Appeals.ReasonOption} ReasonOption
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse
@@ -10,7 +11,8 @@
  * @param {number|string} appellantCaseId
  */
 export function getAppellantCaseFromAppealId(apiClient, appealId, appellantCaseId) {
-	return apiClient.get(`appeals/${appealId}/appellant-cases/${appellantCaseId}`).json();
+	const ids = assertValidNumericIds({ appealId, appellantCaseId });
+	return apiClient.get(`appeals/${ids.appealId}/appellant-cases/${ids.appellantCaseId}`).json();
 }
 
 /**
@@ -26,8 +28,9 @@ export async function setReviewOutcomeForAppellantCase(
 	appellantCaseId,
 	reviewOutcome
 ) {
+	const ids = assertValidNumericIds({ appealId, appellantCaseId });
 	return apiClient
-		.patch(`appeals/${appealId}/appellant-cases/${appellantCaseId}`, {
+		.patch(`appeals/${ids.appealId}/appellant-cases/${ids.appellantCaseId}`, {
 			json: reviewOutcome
 		})
 		.json();

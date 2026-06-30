@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /**
  *
  * @param {import('got').Got} apiClient
@@ -7,7 +8,8 @@
  * @returns {Promise<{}>}
  */
 export function changeSiteArea(apiClient, appealId, lpaQuestionnaireId, updatedSiteArea) {
-	return apiClient.patch(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`, {
+	const ids = assertValidNumericIds({ appealId, lpaQuestionnaireId });
+	return apiClient.patch(`appeals/${ids.appealId}/lpa-questionnaires/${ids.lpaQuestionnaireId}`, {
 		json: {
 			siteAreaSquareMetres: updatedSiteArea
 		}
