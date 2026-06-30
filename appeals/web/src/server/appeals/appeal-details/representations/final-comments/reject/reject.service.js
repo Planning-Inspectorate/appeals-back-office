@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 
 /**
@@ -17,14 +18,16 @@ export async function getRepresentationRejectionReasonOptions(apiClient, finalCo
  * @param {string} commentId
  * @param {import('#appeals/appeal-details/representations/types.js').RejectionReasonUpdateInput[]} rejectionReasons
  * */
-export const updateRejectionReasons = (apiClient, appealId, commentId, rejectionReasons) =>
-	apiClient
-		.patch(`appeals/${appealId}/reps/${commentId}/rejection-reasons`, {
+export const updateRejectionReasons = (apiClient, appealId, commentId, rejectionReasons) => {
+	const ids = assertValidNumericIds({ appealId, commentId });
+	return apiClient
+		.patch(`appeals/${ids.appealId}/reps/${commentId}/rejection-reasons`, {
 			json: {
 				rejectionReasons: rejectionReasons
 			}
 		})
 		.json();
+};
 
 /**
  * @param {import('got').Got} apiClient
@@ -32,10 +35,12 @@ export const updateRejectionReasons = (apiClient, appealId, commentId, rejection
  * @param {number} commentId
  * @param {import('#appeals/appeal-details/representations/types.js').RejectionReasonUpdateInput[]} rejectionReasons
  * */
-export const rejectFinalComment = (apiClient, appealId, commentId, rejectionReasons) =>
-	apiClient.patch(`appeals/${appealId}/reps/${commentId}`, {
+export const rejectFinalComment = (apiClient, appealId, commentId, rejectionReasons) => {
+	const ids = assertValidNumericIds({ appealId, commentId });
+	return apiClient.patch(`appeals/${ids.appealId}/reps/${ids.commentId}`, {
 		json: {
 			rejectionReasons,
 			status: COMMENT_STATUS.INVALID
 		}
 	});
+};

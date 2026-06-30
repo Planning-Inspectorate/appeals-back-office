@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} LpaQuestionnaire
  */
@@ -9,7 +10,10 @@
  * @returns {Promise<LpaQuestionnaire>}
  */
 export function getLpaQuestionnaireFromId(apiClient, appealId, lpaQuestionnaireId) {
-	return apiClient.get(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`).json();
+	const ids = assertValidNumericIds({ appealId, lpaQuestionnaireId });
+	return apiClient
+		.get(`appeals/${ids.appealId}/lpa-questionnaires/${ids.lpaQuestionnaireId}`)
+		.json();
 }
 
 /**
@@ -25,8 +29,9 @@ export function setReviewOutcomeForLpaQuestionnaire(
 	lpaQuestionnaireId,
 	reviewOutcome
 ) {
+	const ids = assertValidNumericIds({ appealId, lpaQuestionnaireId });
 	return apiClient
-		.patch(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`, {
+		.patch(`appeals/${ids.appealId}/lpa-questionnaires/${ids.lpaQuestionnaireId}`, {
 			json: { ...reviewOutcome }
 		})
 		.json();

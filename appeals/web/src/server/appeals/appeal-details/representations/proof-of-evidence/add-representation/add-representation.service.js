@@ -1,4 +1,5 @@
 import logger from '#lib/logger.js';
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 
 /**
  * Map an incoming proofOfEvidenceType string to a trusted representation type path segment.
@@ -44,9 +45,13 @@ export async function postRepresentationProofOfEvidence(
 	try {
 		const repType = mapProofOfEvidenceTypeToRepType(proofOfEvidenceType);
 
-		const response = await apiClient.post(`appeals/${appealId}/reps/${repType}/proof-of-evidence`, {
-			json: payload
-		});
+		const ids = assertValidNumericIds({ appealId });
+		const response = await apiClient.post(
+			`appeals/${ids.appealId}/reps/${repType}/proof-of-evidence`,
+			{
+				json: payload
+			}
+		);
 		return response.body;
 	} catch (error) {
 		logger.error('Error posting proof of evidence:', error);
@@ -62,8 +67,9 @@ export async function postRepresentationProofOfEvidence(
  * @returns {Promise<import('@pins/appeals.api').Appeals.FolderInfo>}
  * */
 export const patchRepresentationAttachments = async (apiClient, appealId, repId, documentGUIDs) => {
+	const ids = assertValidNumericIds({ appealId, repId });
 	return apiClient
-		.patch(`appeals/${appealId}/reps/${repId}/attachments`, {
+		.patch(`appeals/${ids.appealId}/reps/${repId}/attachments`, {
 			json: {
 				attachments: documentGUIDs
 			}

@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /**
  * @typedef {Object} UpdateOrCreateSiteVisitParameters
  * @property {number} appealIdNumber
@@ -29,8 +30,9 @@ export async function createSiteVisit(
 	inspectorName,
 	knowDateTime
 ) {
+	const ids = assertValidNumericIds({ appealId });
 	return apiClient
-		.post(`appeals/${appealId}/site-visits`, {
+		.post(`appeals/${ids.appealId}/site-visits`, {
 			json: {
 				visitDate,
 				visitType,
@@ -50,8 +52,9 @@ export async function createSiteVisit(
  * @param {string} whoMissedSiteVisit
  */
 export async function recordMissedSiteVisit(apiClient, appealId, siteVisitId, whoMissedSiteVisit) {
+	const ids = assertValidNumericIds({ appealId, siteVisitId });
 	return apiClient
-		.post(`appeals/${appealId}/site-visits/${siteVisitId}/missed`, {
+		.post(`appeals/${ids.appealId}/site-visits/${siteVisitId}/missed`, {
 			json: {
 				whoMissedSiteVisit
 			}
@@ -82,8 +85,9 @@ export async function updateSiteVisit(
 	inspectorName,
 	siteVisitChangeType
 ) {
+	const ids = assertValidNumericIds({ appealId, siteVisitId });
 	return apiClient
-		.patch(`appeals/${appealId}/site-visits/${siteVisitId}`, {
+		.patch(`appeals/${ids.appealId}/site-visits/${siteVisitId}`, {
 			json: {
 				visitType,
 				...(visitDate && { visitDate }),
@@ -104,7 +108,8 @@ export async function updateSiteVisit(
  * @returns {Promise<import('@pins/appeals.api/src/server/endpoints/appeals.js').SingleSiteVisitDetailsResponse>}
  */
 export async function getSiteVisit(apiClient, appealId, siteVisitId) {
-	return apiClient.get(`appeals/${appealId}/site-visits/${siteVisitId}`).json();
+	const ids = assertValidNumericIds({ appealId, siteVisitId });
+	return apiClient.get(`appeals/${ids.appealId}/site-visits/${ids.siteVisitId}`).json();
 }
 /**
  * @param {import('got').Got} apiClient
@@ -113,5 +118,6 @@ export async function getSiteVisit(apiClient, appealId, siteVisitId) {
  * @returns {Promise<import('@pins/appeals.api/src/server/endpoints/appeals.js').SingleSiteVisitDetailsResponse>}
  */
 export async function cancelSiteVisit(apiClient, appealId, siteVisitId) {
-	return apiClient.delete(`appeals/${appealId}/site-visits/${siteVisitId}`).json();
+	const ids = assertValidNumericIds({ appealId, siteVisitId });
+	return apiClient.delete(`appeals/${ids.appealId}/site-visits/${ids.siteVisitId}`).json();
 }

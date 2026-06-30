@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /** @typedef {import('@pins/appeals.api/src/server/endpoints/appeals').GetAuditTrailsResponse} GetAuditTrailsResponse */
 /** @typedef {import('@pins/appeals.api/src/server/openapi-types.js').AuditNotifications} AuditNotifications */
 
@@ -7,8 +8,10 @@
  * @param {string} appealId
  * @returns {Promise<GetAuditTrailsResponse>}
  */
-export const getAppealAudit = (apiClient, appealId) =>
-	apiClient.get(`appeals/${appealId}/audit-trails`).json();
+export const getAppealAudit = (apiClient, appealId) => {
+	const ids = assertValidNumericIds({ appealId });
+	return apiClient.get(`appeals/${ids.appealId}/audit-trails`).json();
+};
 
 /**
  *
@@ -16,5 +19,7 @@ export const getAppealAudit = (apiClient, appealId) =>
  * @param {string} appealId
  * @returns {Promise<AuditNotifications>}
  */
-export const getAppealAuditNotifications = (apiClient, appealId) =>
-	apiClient.get(`appeals/${appealId}/audit-notifications`).json();
+export const getAppealAuditNotifications = (apiClient, appealId) => {
+	const ids = assertValidNumericIds({ appealId });
+	return apiClient.get(`appeals/${ids.appealId}/audit-notifications`).json();
+};

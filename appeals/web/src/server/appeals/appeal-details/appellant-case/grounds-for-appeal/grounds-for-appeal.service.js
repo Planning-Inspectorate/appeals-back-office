@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /** @typedef {import('@pins/appeals.api').Schema.Ground} Ground */
 
 /**
@@ -8,7 +9,8 @@
  * @returns {Promise<{}>}
  */
 export function changeGroundsForAppeal(apiClient, appealId, appellantCaseId, groundsForAppeal) {
-	return apiClient.patch(`appeals/${appealId}/grounds-for-appeal`, {
+	const ids = assertValidNumericIds({ appealId });
+	return apiClient.patch(`appeals/${ids.appealId}/grounds-for-appeal`, {
 		json: {
 			groundsForAppeal
 		}

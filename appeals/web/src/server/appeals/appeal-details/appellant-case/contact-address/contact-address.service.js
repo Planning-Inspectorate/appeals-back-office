@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 import { manageContactAddressPage } from './contact-address.mapper.js';
 
 /**
@@ -28,15 +29,19 @@ export const renderManageContactAddress = async (request, response) => {
  * @param {*} contactAddress
  */
 export const addContactAddress = async (apiClient, appealId, appellantCaseId, contactAddress) => {
-	return apiClient.post(`appeals/${appealId}/appellant-cases/${appellantCaseId}/contact-address`, {
-		json: {
-			addressLine1: contactAddress.addressLine1,
-			addressLine2: contactAddress.addressLine2,
-			addressTown: contactAddress.town,
-			addressCounty: contactAddress.county,
-			postcode: contactAddress.postCode
+	const ids = assertValidNumericIds({ appealId, appellantCaseId });
+	return apiClient.post(
+		`appeals/${ids.appealId}/appellant-cases/${ids.appellantCaseId}/contact-address`,
+		{
+			json: {
+				addressLine1: contactAddress.addressLine1,
+				addressLine2: contactAddress.addressLine2,
+				addressTown: contactAddress.town,
+				addressCounty: contactAddress.county,
+				postcode: contactAddress.postCode
+			}
 		}
-	});
+	);
 };
 
 /**
@@ -53,8 +58,9 @@ export const updateContactAddress = async (
 	contactAddressId,
 	contactAddress
 ) => {
+	const ids = assertValidNumericIds({ appealId, appellantCaseId, contactAddressId });
 	return apiClient.patch(
-		`appeals/${appealId}/appellant-cases/${appellantCaseId}/contact-address/${contactAddressId}`,
+		`appeals/${ids.appealId}/appellant-cases/${ids.appellantCaseId}/contact-address/${contactAddressId}`,
 		{
 			json: {
 				addressLine1: contactAddress.addressLine1,
