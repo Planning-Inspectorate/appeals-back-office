@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /**
  *
  * @param {import('got').Got} apiClient
@@ -15,7 +16,8 @@ export function changeSiteAddress(apiClient, appealId, siteAddress, addressId) {
 		town: siteAddress.town
 	};
 
-	return apiClient.patch(`appeals/${appealId}/addresses/${addressId}`, {
+	const ids = assertValidNumericIds({ appealId, addressId });
+	return apiClient.patch(`appeals/${ids.appealId}/addresses/${ids.addressId}`, {
 		json: {
 			...formattedSiteAddress
 		}

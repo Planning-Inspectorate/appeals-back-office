@@ -1,4 +1,5 @@
 import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import {
@@ -98,8 +99,9 @@ export async function setReviewOutcomeForEnforcementNoticeAppellantCase(
 	appellantCaseId,
 	reviewOutcome
 ) {
+	const ids = assertValidNumericIds({ appealId, appellantCaseId });
 	return apiClient
-		.patch(`appeals/${appealId}/appellant-cases/${appellantCaseId}`, {
+		.patch(`appeals/${ids.appealId}/appellant-cases/${ids.appellantCaseId}`, {
 			json: {
 				validationOutcome: reviewOutcome.validationOutcome,
 				enforcementNoticeInvalid: reviewOutcome.enforcementNoticeInvalid,

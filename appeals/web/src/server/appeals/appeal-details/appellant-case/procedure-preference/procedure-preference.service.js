@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /**
  * @param {import('got').Got} apiClient
  * @param {string} appealId
@@ -6,7 +7,8 @@
  * @returns {Promise<{}>}
  */
 export function changeProcedurePreference(apiClient, appealId, appellantCaseId, updatedValue) {
-	return apiClient.patch(`appeals/${appealId}/appellant-cases/${appellantCaseId}`, {
+	const ids = assertValidNumericIds({ appealId, appellantCaseId });
+	return apiClient.patch(`appeals/${ids.appealId}/appellant-cases/${ids.appellantCaseId}`, {
 		json: {
 			appellantProcedurePreference: updatedValue
 		}
@@ -26,7 +28,8 @@ export function changeProcedurePreferenceDetails(
 	appellantCaseId,
 	updatedValue
 ) {
-	return apiClient.patch(`appeals/${appealId}/appellant-cases/${appellantCaseId}`, {
+	const ids = assertValidNumericIds({ appealId, appellantCaseId });
+	return apiClient.patch(`appeals/${ids.appealId}/appellant-cases/${ids.appellantCaseId}`, {
 		json: {
 			appellantProcedurePreferenceDetails: updatedValue
 		}
@@ -46,7 +49,8 @@ export function changeProcedurePreferenceDuration(
 	appellantCaseId,
 	updatedValue
 ) {
-	return apiClient.patch(`appeals/${appealId}/appellant-cases/${appellantCaseId}`, {
+	const ids = assertValidNumericIds({ appealId, appellantCaseId });
+	return apiClient.patch(`appeals/${ids.appealId}/appellant-cases/${ids.appellantCaseId}`, {
 		json: {
 			appellantProcedurePreferenceDuration: updatedValue
 		}
@@ -61,7 +65,8 @@ export function changeProcedurePreferenceDuration(
  * @returns {Promise<{}>}
  */
 export function changeInquiryNumberOfWitnesses(apiClient, appealId, appellantCaseId, updatedValue) {
-	return apiClient.patch(`appeals/${appealId}/appellant-cases/${appellantCaseId}`, {
+	const ids = assertValidNumericIds({ appealId, appellantCaseId });
+	return apiClient.patch(`appeals/${ids.appealId}/appellant-cases/${ids.appellantCaseId}`, {
 		json: {
 			appellantProcedurePreferenceWitnessCount: updatedValue
 		}

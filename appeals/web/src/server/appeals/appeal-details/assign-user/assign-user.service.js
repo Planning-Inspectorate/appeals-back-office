@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /** @typedef {import('../appeal-details.types.js').WebAppeal} Appeal */
 /**
  * @typedef {Object} User
@@ -33,7 +34,8 @@ export async function setAppealAssignee(apiClient, appealId, assigneeUser, isIns
 	} else {
 		userJson = { caseOfficerId: assigneeUserId, caseOfficerName: assigneeUser.name };
 	}
-	return apiClient.patch(`appeals/${appealId}`, { json: userJson }).json();
+	const ids = assertValidNumericIds({ appealId });
+	return apiClient.patch(`appeals/${ids.appealId}`, { json: userJson }).json();
 }
 
 /**

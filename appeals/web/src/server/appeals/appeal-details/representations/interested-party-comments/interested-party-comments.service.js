@@ -1,4 +1,5 @@
 import { paginationDefaultSettings } from '#appeals/appeal.constants.js';
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} IPComments */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').RepresentationList} IPCommentsList */
@@ -20,7 +21,8 @@ export const getInterestedPartyComments = (
 	pageNumber = paginationDefaultSettings.firstPageNumber,
 	pageSize = paginationDefaultSettings.pageSize
 ) => {
-	let url = `appeals/${appealId}/reps?type=comment&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+	const ids = assertValidNumericIds({ appealId });
+	let url = `appeals/${ids.appealId}/reps?type=comment&pageNumber=${pageNumber}&pageSize=${pageSize}`;
 
 	if (statusFilter && statusFilter !== 'all') {
 		url += `&status=${encodeURIComponent(statusFilter)}`;
@@ -34,5 +36,7 @@ export const getInterestedPartyComments = (
  * @param {string} appealId
  * @param {string} commentId
  * */
-export const getInterestedPartyComment = (apiClient, appealId, commentId) =>
-	apiClient.get(`appeals/${appealId}/reps/${commentId}`).json();
+export const getInterestedPartyComment = (apiClient, appealId, commentId) => {
+	const ids = assertValidNumericIds({ appealId, commentId });
+	return apiClient.get(`appeals/${ids.appealId}/reps/${ids.commentId}`).json();
+};

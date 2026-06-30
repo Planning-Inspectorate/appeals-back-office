@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /**
  * @param {import('got').Got} apiClient
  * @param {string} appealId
@@ -6,7 +7,8 @@
  * @returns {Promise<{}>}
  */
 export function changeProcedurePreference(apiClient, appealId, lpaQuestionnaireId, updatedValue) {
-	return apiClient.patch(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`, {
+	const ids = assertValidNumericIds({ appealId, lpaQuestionnaireId });
+	return apiClient.patch(`appeals/${ids.appealId}/lpa-questionnaires/${ids.lpaQuestionnaireId}`, {
 		json: {
 			lpaProcedurePreference: updatedValue
 		}
@@ -26,7 +28,8 @@ export function changeProcedurePreferenceDetails(
 	lpaQuestionnaireId,
 	updatedValue
 ) {
-	return apiClient.patch(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`, {
+	const ids = assertValidNumericIds({ appealId, lpaQuestionnaireId });
+	return apiClient.patch(`appeals/${ids.appealId}/lpa-questionnaires/${ids.lpaQuestionnaireId}`, {
 		json: {
 			lpaProcedurePreferenceDetails: updatedValue
 		}
@@ -46,7 +49,8 @@ export function changeProcedurePreferenceDuration(
 	lpaQuestionnaireId,
 	updatedValue
 ) {
-	return apiClient.patch(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`, {
+	const ids = assertValidNumericIds({ appealId, lpaQuestionnaireId });
+	return apiClient.patch(`appeals/${ids.appealId}/lpa-questionnaires/${ids.lpaQuestionnaireId}`, {
 		json: {
 			lpaProcedurePreferenceDuration: updatedValue
 		}

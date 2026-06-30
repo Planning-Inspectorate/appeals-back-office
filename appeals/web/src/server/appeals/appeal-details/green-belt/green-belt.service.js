@@ -1,4 +1,5 @@
 import { convertFromYesNoToBoolean } from '#lib/boolean-formatter.js';
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 
 /**
  *
@@ -11,7 +12,8 @@ import { convertFromYesNoToBoolean } from '#lib/boolean-formatter.js';
 export function changeGreenBeltAppellant(apiClient, appealId, appellantCaseId, updatedGreenBelt) {
 	const formattedGreenBelt = convertFromYesNoToBoolean(updatedGreenBelt);
 
-	return apiClient.patch(`appeals/${appealId}/appellant-cases/${appellantCaseId}`, {
+	const ids = assertValidNumericIds({ appealId, appellantCaseId });
+	return apiClient.patch(`appeals/${ids.appealId}/appellant-cases/${ids.appellantCaseId}`, {
 		json: {
 			isGreenBelt: formattedGreenBelt
 		}
@@ -29,7 +31,8 @@ export function changeGreenBeltAppellant(apiClient, appealId, appellantCaseId, u
 export function changeGreenBeltLPA(apiClient, appealId, lpaQuestionnaireId, updatedGreenBelt) {
 	const formattedGreenBelt = convertFromYesNoToBoolean(updatedGreenBelt);
 
-	return apiClient.patch(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`, {
+	const ids = assertValidNumericIds({ appealId, lpaQuestionnaireId });
+	return apiClient.patch(`appeals/${ids.appealId}/lpa-questionnaires/${ids.lpaQuestionnaireId}`, {
 		json: {
 			isGreenBelt: formattedGreenBelt
 		}

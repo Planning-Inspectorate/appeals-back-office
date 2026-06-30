@@ -1,3 +1,5 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
+
 /**
  *
  * @param {import('got').Got} apiClient
@@ -10,7 +12,8 @@ export function getAppealDetailsFromId(apiClient, appealId, include) {
 		throw new Error('include=all is not allowed, select only the keys needed');
 	}
 
-	const encodedAppealId = encodeURIComponent(appealId);
+	const ids = assertValidNumericIds({ appealId });
+	const encodedAppealId = encodeURIComponent(ids.appealId);
 	const url = include
 		? `appeals/${encodedAppealId}?include=${include}`
 		: `appeals/${encodedAppealId}`;
@@ -25,7 +28,8 @@ export function getAppealDetailsFromId(apiClient, appealId, include) {
  * @returns {Promise<import('./appeal-details.types.js').WebAppeal>}
  */
 export function deprecatedGetAppealDetailsFromId(apiClient, appealId) {
-	const encodedAppealId = encodeURIComponent(appealId);
+	const ids = assertValidNumericIds({ appealId });
+	const encodedAppealId = encodeURIComponent(ids.appealId);
 	const url = `appeals/${encodedAppealId}?include=all`;
 
 	return apiClient.get(url).json();
@@ -38,7 +42,8 @@ export function deprecatedGetAppealDetailsFromId(apiClient, appealId) {
  * @returns {Promise<{appealId: number}>}
  */
 export function checkAppealExists(apiClient, appealId) {
-	const encodedAppealId = encodeURIComponent(appealId);
+	const ids = assertValidNumericIds({ appealId });
+	const encodedAppealId = encodeURIComponent(ids.appealId);
 	const url = `appeals/${encodedAppealId}/exists`;
 
 	return apiClient.get(url).json();
@@ -55,7 +60,8 @@ export function setEnvironmentalImpactAssessmentScreening(
 	appealId,
 	eiaScreeningRequired
 ) {
-	const encodedAppealId = encodeURIComponent(appealId);
+	const ids = assertValidNumericIds({ appealId });
+	const encodedAppealId = encodeURIComponent(ids.appealId);
 	return apiClient
 		.patch(`appeals/${encodedAppealId}/eia-screening-required`, {
 			json: { eiaScreeningRequired }

@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /**
  *
  * @param {import('got').Got} apiClient
@@ -15,7 +16,8 @@ export function addNeighbouringSite(apiClient, appealId, source, neighbouringSit
 		postcode: neighbouringSite.postCode,
 		town: neighbouringSite.town
 	};
-	return apiClient.post(`appeals/${appealId}/neighbouring-sites`, {
+	const ids = assertValidNumericIds({ appealId });
+	return apiClient.post(`appeals/${ids.appealId}/neighbouring-sites`, {
 		json: {
 			...formattedNeighbouringSite
 		}
@@ -42,7 +44,8 @@ export function changeNeighbouringSite(apiClient, appealId, neighbouringSite, si
 		}
 	};
 
-	return apiClient.patch(`appeals/${appealId}/neighbouring-sites`, {
+	const ids = assertValidNumericIds({ appealId });
+	return apiClient.patch(`appeals/${ids.appealId}/neighbouring-sites`, {
 		json: {
 			...formattedNeighbouringSite
 		}
@@ -61,7 +64,8 @@ export function removeNeighbouringSite(apiClient, appealId, siteId) {
 		siteId: siteId
 	};
 
-	return apiClient.delete(`appeals/${appealId}/neighbouring-sites`, {
+	const ids = assertValidNumericIds({ appealId });
+	return apiClient.delete(`appeals/${ids.appealId}/neighbouring-sites`, {
 		json: {
 			...formattedSiteId
 		}

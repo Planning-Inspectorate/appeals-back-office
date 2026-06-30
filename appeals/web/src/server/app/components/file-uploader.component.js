@@ -1,4 +1,5 @@
 import logger from '#lib/logger.js';
+import { assertValidIds, assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 
 /** @typedef {import('@pins/appeals/index.js').AddDocumentsRequest} AddDocumentsRequest */
 /** @typedef {import('@pins/appeals/index.js').AddDocumentVersionRequest} AddDocumentVersionRequest */
@@ -12,7 +13,10 @@ import logger from '#lib/logger.js';
  */
 export const createNewDocument = async (apiClient, caseId, payload) => {
 	try {
-		const result = await apiClient.post(`appeals/${caseId}/documents`, { json: payload }).json();
+		const ids = assertValidNumericIds({ caseId });
+		const result = await apiClient
+			.post(`appeals/${ids.caseId}/documents`, { json: payload })
+			.json();
 		return result;
 	} catch (error) {
 		logger.error(
@@ -33,8 +37,10 @@ export const createNewDocument = async (apiClient, caseId, payload) => {
  * @returns {Promise<AddDocumentsResponse>}
  */
 export const createNewDocumentVersion = async (apiClient, caseId, documentId, payload) => {
+	const ids = assertValidNumericIds({ caseId });
+	const guids = assertValidIds({ documentId });
 	const result = apiClient
-		.post(`appeals/${caseId}/documents/${documentId}`, { json: payload })
+		.post(`appeals/${ids.caseId}/documents/${guids.documentId}`, { json: payload })
 		.json();
 	return result;
 };
