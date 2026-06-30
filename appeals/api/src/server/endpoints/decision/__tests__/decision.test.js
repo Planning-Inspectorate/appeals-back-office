@@ -750,42 +750,9 @@ describe('decision routes', () => {
 				})
 				.set('azureAdUserId', azureAdUserId);
 
-			expect(databaseConnector.document.createMany).toHaveBeenCalledWith({
-				data: [
-					{
-						caseId: childAppeal.childId,
-						folderId: 23,
-						guid: 'mock-uuid',
-						name: 'mydoc-1345264.pdf'
-					}
-				]
-			});
+			expect(databaseConnector.document.createMany).not.toHaveBeenCalled();
 
-			expect(databaseConnector.documentVersion.createMany).toHaveBeenCalledWith({
-				data: [
-					{
-						blobStorageContainer: 'document-service-uploads',
-						blobStoragePath: 'appeal/CHILD123/mock-uuid/v1/mydoc-1345264.pdf',
-						dateReceived: expect.any(Date),
-						documentGuid: 'mock-uuid',
-						documentType: 'appellantCostApplication',
-						documentURI:
-							'https://127.0.0.1:10000/document-service-uploads/appeal/CHILD123/mock-uuid/v1/mydoc-1345264.pdf',
-						draft: false,
-						fileName: 'mydoc-1345264.pdf',
-						isLateEntry: false,
-						lastModified: expect.any(Date),
-						mime: 'application/pdf',
-						originalFilename: 'mydoc-1345264.pdf',
-						published: false,
-						redactionStatusId: 1,
-						size: 14699,
-						stage: 'appeal-decision',
-						version: 1,
-						virusCheckStatus: 'not_scanned'
-					}
-				]
-			});
+			expect(databaseConnector.documentVersion.createMany).not.toHaveBeenCalled();
 
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 

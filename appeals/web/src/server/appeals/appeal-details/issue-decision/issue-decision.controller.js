@@ -895,10 +895,10 @@ export const renderViewDecision = async (request, response) => {
 		currentAppeal.decision.documentId || '',
 		currentAppeal
 	);
-	let latestDecsionDocumentText;
+	let latestDecisionDocumentText;
 
 	if (currentAppeal.decision?.outcome) {
-		latestDecsionDocumentText =
+		latestDecisionDocumentText =
 			letterDateObject.latestFileVersion && letterDateObject.latestFileVersion?.version > 1
 				? `${letterDateObject.originalLetterDate} (reissued on ${letterDateObject.latestLetterDate})`
 				: `${letterDateObject.originalLetterDate}`;
@@ -916,7 +916,7 @@ export const renderViewDecision = async (request, response) => {
 		);
 	}
 
-	const mappedPageContent = viewDecisionPage(currentAppeal, request, latestDecsionDocumentText);
+	const mappedPageContent = viewDecisionPage(currentAppeal, request, latestDecisionDocumentText);
 
 	return response.status(200).render('appeals/appeal/issue-decision.njk', {
 		pageContent: mappedPageContent,
