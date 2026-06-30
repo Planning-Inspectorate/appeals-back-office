@@ -132,6 +132,7 @@ module "app_web" {
     FEATURE_FLAG_EXPEDITED_APPEALS_LPAQ              = var.apps_config.featureFlags.featureFlagExpeditedAppealsLpaq
     FEATURE_FLAG_SHARE_COSTS                         = var.apps_config.featureFlags.featureFlagShareCosts
     FEATURE_FLAG_NEW_BEFORE_YOU_START                = var.apps_config.featureFlags.featureFlagNewBeforeYouStart
+    FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE        = var.apps_config.featureFlags.featureFlagEnforcementChangeProcedure
 
 
     #change LPA
