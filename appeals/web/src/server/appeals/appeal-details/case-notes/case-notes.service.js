@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /** @typedef {import('@pins/appeals.api/src/server/endpoints/appeals').GetCaseNotesResponse} GetCaseNotesResponse */
 /** @typedef {import('@pins/appeals.api/src/server/endpoints/appeals').GetCaseNoteResponse} GetCaseNoteResponse */
 /**
@@ -7,7 +8,8 @@
  * @returns {Promise<GetCaseNotesResponse>}
  */
 export async function getAppealCaseNotes(apiClient, appealId) {
-	return await apiClient.get(`appeals/${appealId}/case-notes`).json();
+	const ids = assertValidNumericIds({ appealId });
+	return await apiClient.get(`appeals/${ids.appealId}/case-notes`).json();
 }
 
 /**
@@ -17,8 +19,9 @@ export async function getAppealCaseNotes(apiClient, appealId) {
  * @param {string} comment
  */
 export async function postAppealCaseNote(apiClient, appealId, comment) {
+	const ids = assertValidNumericIds({ appealId });
 	return apiClient
-		.post(`appeals/${appealId}/case-notes`, {
+		.post(`appeals/${ids.appealId}/case-notes`, {
 			json: {
 				comment
 			}

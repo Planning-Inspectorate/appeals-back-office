@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /**
  * @typedef {import('../change-procedure-type.controller.js').ChangeProcedureTypeRequest} ChangeProcedureTypeRequest
  */
@@ -9,7 +10,8 @@
  * @returns {Promise<*>}
  */
 export const postProcedureChangeRequest = async (apiClient, appealId, data) => {
-	return await apiClient.post(`appeals/${appealId}/procedure-type-change-request`, {
+	const ids = assertValidNumericIds({ appealId });
+	return await apiClient.post(`appeals/${ids.appealId}/procedure-type-change-request`, {
 		json: data
 	});
 };

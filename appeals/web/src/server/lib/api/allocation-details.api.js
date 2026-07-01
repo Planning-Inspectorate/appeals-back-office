@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /**
  * @typedef {Object} AllocationDetailsLevel
  * @property {string} level
@@ -38,5 +39,9 @@ export const getAllocationDetailsSpecialisms = (apiClient) =>
  * @param {AllocationDetails} allocationDetails
  * @returns {Promise<AllocationDetails>}
  */
-export const setAllocationDetails = (apiClient, appealId, allocationDetails) =>
-	apiClient.patch(`appeals/${appealId}/appeal-allocation`, { json: allocationDetails }).json();
+export const setAllocationDetails = (apiClient, appealId, allocationDetails) => {
+	const ids = assertValidNumericIds({ appealId });
+	return apiClient
+		.patch(`appeals/${ids.appealId}/appeal-allocation`, { json: allocationDetails })
+		.json();
+};

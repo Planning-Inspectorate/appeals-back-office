@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /**
  * @param {import('got').Got} apiClient
  * @param {string} appealId
@@ -5,7 +6,8 @@
  * @param {{ siteGridReferenceEasting?: number | string, siteGridReferenceNorthing?: number | string }} gridRef
  */
 export function changeSiteGridReference(apiClient, appealId, appellantCaseId, gridRef) {
-	return apiClient.patch(`appeals/${appealId}/appellant-cases/${appellantCaseId}`, {
+	const ids = assertValidNumericIds({ appealId, appellantCaseId });
+	return apiClient.patch(`appeals/${ids.appealId}/appellant-cases/${ids.appellantCaseId}`, {
 		json: {
 			siteGridReferenceEasting: gridRef.siteGridReferenceEasting,
 			siteGridReferenceNorthing: gridRef.siteGridReferenceNorthing

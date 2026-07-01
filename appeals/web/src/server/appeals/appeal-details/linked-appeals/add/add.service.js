@@ -1,10 +1,12 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /**
  * @param {import('got').Got} apiClient
  * @param {string} appealReference
  * @returns {Promise<import('@pins/appeals.api').Appeals.LinkableAppealSummary>}
  */
 export async function getLinkableAppealByReference(apiClient, appealReference) {
-	return apiClient.get(`appeals/linkable-appeal/${appealReference}/linked`).json();
+	const ids = assertValidNumericIds({ appealReference });
+	return apiClient.get(`appeals/linkable-appeal/${ids.appealReference}/linked`).json();
 }
 
 /**
@@ -20,8 +22,9 @@ export async function linkAppealToBackOfficeAppeal(
 	linkedAppealId,
 	targetAppealIsParent = false
 ) {
+	const ids = assertValidNumericIds({ appealId });
 	return apiClient
-		.post(`appeals/${appealId}/link-appeal`, {
+		.post(`appeals/${ids.appealId}/link-appeal`, {
 			json: {
 				linkedAppealId,
 				isCurrentAppealParent: !targetAppealIsParent
@@ -43,8 +46,9 @@ export async function linkAppealToLegacyAppeal(
 	linkedAppealReference,
 	targetAppealIsParent = false
 ) {
+	const ids = assertValidNumericIds({ appealId });
 	return apiClient
-		.post(`appeals/${appealId}/link-legacy-appeal`, {
+		.post(`appeals/${ids.appealId}/link-legacy-appeal`, {
 			json: {
 				linkedAppealReference,
 				isCurrentAppealParent: targetAppealIsParent

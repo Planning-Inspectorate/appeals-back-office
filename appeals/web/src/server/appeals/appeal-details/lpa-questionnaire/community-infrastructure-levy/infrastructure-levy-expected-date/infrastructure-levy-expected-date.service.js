@@ -1,4 +1,5 @@
 import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 
 /**
  *
@@ -16,7 +17,8 @@ export function changeInfrastructureLevyExpectedDate(
 ) {
 	const formattedValue = dayMonthYearHourMinuteToISOString(inputData);
 
-	return apiClient.patch(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`, {
+	const ids = assertValidNumericIds({ appealId, lpaQuestionnaireId });
+	return apiClient.patch(`appeals/${ids.appealId}/lpa-questionnaires/${ids.lpaQuestionnaireId}`, {
 		json: {
 			infrastructureLevyExpectedDate: formattedValue
 		}

@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /**
  *
  * @param {import('got').Got} apiClient
@@ -5,7 +6,8 @@
  * @returns {Promise<import('@pins/appeals.api').Appeals.LinkableAppealSummary>}
  */
 export function getLinkableAppealSummaryFromReference(apiClient, appealReference) {
-	return apiClient.get(`appeals/linkable-appeal/${appealReference}/related`).json();
+	const ids = assertValidNumericIds({ appealReference });
+	return apiClient.get(`appeals/linkable-appeal/${ids.appealReference}/related`).json();
 }
 
 /**
@@ -16,8 +18,9 @@ export function getLinkableAppealSummaryFromReference(apiClient, appealReference
  * @returns {Promise<import('../appeal-details.types.js').WebAppeal>}
  */
 export function postAssociateAppeal(apiClient, appealId, otherAppealId) {
+	const ids = assertValidNumericIds({ appealId });
 	return apiClient
-		.post(`appeals/${appealId}/associate-appeal`, {
+		.post(`appeals/${ids.appealId}/associate-appeal`, {
 			json: {
 				linkedAppealId: otherAppealId
 			}
@@ -33,8 +36,9 @@ export function postAssociateAppeal(apiClient, appealId, otherAppealId) {
  * @returns {Promise<import('../appeal-details.types.js').WebAppeal>}
  */
 export function postAssociateLegacyAppeal(apiClient, appealId, otherAppealReference) {
+	const ids = assertValidNumericIds({ appealId });
 	return apiClient
-		.post(`appeals/${appealId}/associate-legacy-appeal`, {
+		.post(`appeals/${ids.appealId}/associate-legacy-appeal`, {
 			json: {
 				linkedAppealReference: otherAppealReference
 			}
@@ -50,6 +54,7 @@ export function postAssociateLegacyAppeal(apiClient, appealId, otherAppealRefere
  * @returns {Promise<{}>}
  */
 export function postUnrelateRequest(apiClient, appealId, relationshipId) {
+	assertValidNumericIds({ appealId });
 	const appealIdNumber = parseInt(appealId, 10);
 	return apiClient
 		.delete(`appeals/${appealIdNumber}/unlink-appeal`, {

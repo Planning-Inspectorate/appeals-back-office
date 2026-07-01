@@ -2,6 +2,7 @@
 /** @typedef {import('#appeals/appeal-details/representations/types.js').RepresentationRequest} RepresentationRequest */
 
 import logger from '#lib/logger.js';
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 
 /**
  * Fetch unique representations (eg final comments) based on appeal id and representation type
@@ -12,7 +13,8 @@ import logger from '#lib/logger.js';
  * @returns {Promise<Representation>}
  */
 export const getSingularRepresentationByType = async (apiClient, appealId, type) => {
-	const url = `appeals/${appealId}/reps?type=${type}`;
+	const ids = assertValidNumericIds({ appealId });
+	const url = `appeals/${ids.appealId}/reps?type=${type}`;
 	const apiResponse = await apiClient.get(url).json();
 
 	if (apiResponse.itemCount > 1) {
@@ -34,7 +36,8 @@ export const getSingularRepresentationByType = async (apiClient, appealId, type)
  * @param {string} types
  */
 export const getRepresentationsByTypes = async (apiClient, appealId, types) => {
-	const url = `appeals/${appealId}/reps?type=${types}`;
+	const ids = assertValidNumericIds({ appealId });
+	const url = `appeals/${ids.appealId}/reps?type=${types}`;
 	const apiResponse = await apiClient.get(url).json();
 	if (apiResponse.itemCount === 0) {
 		return {};
@@ -73,7 +76,8 @@ export const getRepresentationsByTypes = async (apiClient, appealId, types) => {
  * @returns {Promise<Representation[]>}
  */
 export const getAllRepresentationsByType = async (apiClient, appealId, type) => {
-	const apiResponse = await apiClient.get(`appeals/${appealId}/reps?type=${type}`).json();
+	const ids = assertValidNumericIds({ appealId });
+	const apiResponse = await apiClient.get(`appeals/${ids.appealId}/reps?type=${type}`).json();
 	return apiResponse.items;
 };
 
@@ -84,8 +88,10 @@ export const getAllRepresentationsByType = async (apiClient, appealId, type) => 
  * @param {string} status
  * @returns {Promise<Representation>}
  * */
-export const setRepresentationStatus = (apiClient, appealId, repId, status) =>
-	apiClient.patch(`appeals/${appealId}/reps/${repId}`, { json: { status } }).json();
+export const setRepresentationStatus = (apiClient, appealId, repId, status) => {
+	const ids = assertValidNumericIds({ appealId, repId });
+	return apiClient.patch(`appeals/${ids.appealId}/reps/${repId}`, { json: { status } }).json();
+};
 
 /**
  * @param {import('got').Got} apiClient
@@ -94,15 +100,17 @@ export const setRepresentationStatus = (apiClient, appealId, repId, status) =>
  * @param {string} redactedRepresentation
  * @returns {Promise<Representation>}
  * */
-export const redactAndAccept = (apiClient, appealId, repId, redactedRepresentation) =>
-	apiClient
-		.patch(`appeals/${appealId}/reps/${repId}`, {
+export const redactAndAccept = (apiClient, appealId, repId, redactedRepresentation) => {
+	const ids = assertValidNumericIds({ appealId, repId });
+	return apiClient
+		.patch(`appeals/${ids.appealId}/reps/${repId}`, {
 			json: {
 				status: 'valid',
 				redactedRepresentation
 			}
 		})
 		.json();
+};
 
 /**
  * @param {import('got').Got} apiClient
@@ -110,12 +118,14 @@ export const redactAndAccept = (apiClient, appealId, repId, redactedRepresentati
  * @param {number} repId
  * @returns {Promise<Representation>}
  * */
-export const acceptRepresentation = (apiClient, appealId, repId) =>
-	apiClient
-		.patch(`appeals/${appealId}/reps/${repId}`, {
+export const acceptRepresentation = (apiClient, appealId, repId) => {
+	const ids = assertValidNumericIds({ appealId, repId });
+	return apiClient
+		.patch(`appeals/${ids.appealId}/reps/${repId}`, {
 			json: { status: 'valid' }
 		})
 		.json();
+};
 
 /**
  * @param {import('got').Got} apiClient
@@ -124,12 +134,14 @@ export const acceptRepresentation = (apiClient, appealId, repId) =>
  * @param {{ allowResubmit: boolean }} data
  * @returns {Promise<Representation>}
  * */
-export const representationIncomplete = (apiClient, appealId, repId, { allowResubmit }) =>
-	apiClient
-		.patch(`appeals/${appealId}/reps/${repId}`, {
+export const representationIncomplete = (apiClient, appealId, repId, { allowResubmit }) => {
+	const ids = assertValidNumericIds({ appealId, repId });
+	return apiClient
+		.patch(`appeals/${ids.appealId}/reps/${repId}`, {
 			json: { status: 'incomplete', allowResubmit }
 		})
 		.json();
+};
 
 /**
  * @param {import('got').Got} apiClient
@@ -148,20 +160,24 @@ export async function getRepresentationRejectionReasonOptions(apiClient, represe
  * @param {string} commentId
  * @param {import('#appeals/appeal-details/representations/types.js').RejectionReasonUpdateInput[]} rejectionReasons
  * */
-export const updateRejectionReasons = (apiClient, appealId, commentId, rejectionReasons) =>
-	apiClient
-		.patch(`appeals/${appealId}/reps/${commentId}/rejection-reasons`, {
+export const updateRejectionReasons = (apiClient, appealId, commentId, rejectionReasons) => {
+	const ids = assertValidNumericIds({ appealId, commentId });
+	return apiClient
+		.patch(`appeals/${ids.appealId}/reps/${commentId}/rejection-reasons`, {
 			json: { rejectionReasons }
 		})
 		.json();
+};
 
 /**
  * @param {import('got').Got} apiClient
  * @param {number} appealId
  * @returns {Promise<any>}
  * */
-export const publishRepresentations = (apiClient, appealId) =>
-	apiClient.post(`appeals/${appealId}/reps/publish`).json();
+export const publishRepresentations = (apiClient, appealId) => {
+	const ids = assertValidNumericIds({ appealId });
+	return apiClient.post(`appeals/${ids.appealId}/reps/publish`).json();
+};
 
 /**
  * @param {import('got').Got} apiClient
@@ -172,8 +188,9 @@ export const publishRepresentations = (apiClient, appealId) =>
  */
 export async function postRepresentation(apiClient, appealId, payload, representationType) {
 	try {
+		const ids = assertValidNumericIds({ appealId });
 		const response = await apiClient
-			.post(`appeals/${appealId}/reps/${representationType}`, {
+			.post(`appeals/${ids.appealId}/reps/${representationType}`, {
 				json: payload
 			})
 			.json();

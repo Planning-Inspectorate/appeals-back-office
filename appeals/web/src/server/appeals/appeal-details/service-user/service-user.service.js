@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /** @typedef {{firstName: string; lastName: string; organisationName: string | null | undefined; email: string | null | undefined; phoneNumber: string | null | undefined;}} WebServiceUser*/
 /**
  *
@@ -7,8 +8,9 @@
  * @param {WebServiceUser} data
  * @returns {Promise<{}>}
  */
-export const assignServiceUser = (apiClient, appealId, userType, data) =>
-	apiClient.patch(`appeals/${appealId}?include=childAppeals`, {
+export const assignServiceUser = (apiClient, appealId, userType, data) => {
+	const ids = assertValidNumericIds({ appealId });
+	return apiClient.patch(`appeals/${ids.appealId}?include=childAppeals`, {
 		json: {
 			[userType]: {
 				firstName: data.firstName,
@@ -19,6 +21,7 @@ export const assignServiceUser = (apiClient, appealId, userType, data) =>
 			}
 		}
 	});
+};
 
 /**
  *
@@ -29,8 +32,9 @@ export const assignServiceUser = (apiClient, appealId, userType, data) =>
  * @param {WebServiceUser} data
  * @returns {Promise<{}>}
  */
-export const updateServiceUser = (apiClient, appealId, serviceUserId, userType, data) =>
-	apiClient.patch(`appeals/${appealId}/service-user`, {
+export const updateServiceUser = (apiClient, appealId, serviceUserId, userType, data) => {
+	const ids = assertValidNumericIds({ appealId });
+	return apiClient.patch(`appeals/${ids.appealId}/service-user`, {
 		json: {
 			serviceUser: {
 				serviceUserId,
@@ -43,6 +47,7 @@ export const updateServiceUser = (apiClient, appealId, serviceUserId, userType, 
 			}
 		}
 	});
+};
 
 /**
  *
@@ -52,10 +57,12 @@ export const updateServiceUser = (apiClient, appealId, serviceUserId, userType, 
  * @param {string} userType
  * @returns {Promise<{}>}
  */
-export const removeServiceUser = (apiClient, appealId, serviceUserId, userType) =>
-	apiClient.delete(`appeals/${appealId}/service-user`, {
+export const removeServiceUser = (apiClient, appealId, serviceUserId, userType) => {
+	const ids = assertValidNumericIds({ appealId });
+	return apiClient.delete(`appeals/${ids.appealId}/service-user`, {
 		json: {
 			serviceUserId,
 			userType
 		}
 	});
+};

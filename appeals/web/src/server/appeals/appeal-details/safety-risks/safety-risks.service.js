@@ -1,4 +1,5 @@
 import { convertFromYesNoToBoolean } from '#lib/boolean-formatter.js';
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 
 /**
  *
@@ -21,7 +22,8 @@ export function changeLpaSafetyRisks(
 		siteSafetyDetails = null;
 	}
 
-	return apiClient.patch(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`, {
+	const ids = assertValidNumericIds({ appealId, lpaQuestionnaireId });
+	return apiClient.patch(`appeals/${ids.appealId}/lpa-questionnaires/${ids.lpaQuestionnaireId}`, {
 		json: {
 			siteSafetyDetails
 		}
@@ -49,7 +51,8 @@ export function changeAppellantSafetyRisks(
 		siteSafetyDetails = null;
 	}
 
-	return apiClient.patch(`appeals/${appealId}/appellant-cases/${appellantCaseId}`, {
+	const ids = assertValidNumericIds({ appealId, appellantCaseId });
+	return apiClient.patch(`appeals/${ids.appealId}/appellant-cases/${ids.appellantCaseId}`, {
 		json: {
 			siteSafetyDetails
 		}

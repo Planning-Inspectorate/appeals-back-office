@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /**
  *
  * @param {import('got').Got} apiClient
@@ -17,7 +18,8 @@ export function addChangedListedBuilding(
 		listEntry: affectedListedBuilding,
 		affectsListedBuilding: false
 	};
-	return apiClient.post(`appeals/${appealId}/listed-buildings`, {
+	const ids = assertValidNumericIds({ appealId });
+	return apiClient.post(`appeals/${ids.appealId}/listed-buildings`, {
 		json: {
 			...formattedData
 		}
@@ -38,7 +40,8 @@ export function changeChangedListedBuilding(
 	listedBuildingId,
 	affectedListedBuilding
 ) {
-	return apiClient.patch(`appeals/${appealId}/listed-buildings/${listedBuildingId}`, {
+	const ids = assertValidNumericIds({ appealId, listedBuildingId });
+	return apiClient.patch(`appeals/${ids.appealId}/listed-buildings/${ids.listedBuildingId}`, {
 		json: {
 			listEntry: affectedListedBuilding,
 			affectsListedBuilding: false
@@ -54,7 +57,8 @@ export function changeChangedListedBuilding(
  * @returns {Promise<{}>}
  */
 export function removeChangedListedBuilding(apiClient, appealId, listedBuildingId) {
-	return apiClient.delete(`appeals/${appealId}/listed-buildings`, {
+	const ids = assertValidNumericIds({ appealId });
+	return apiClient.delete(`appeals/${ids.appealId}/listed-buildings`, {
 		json: {
 			listedBuildingId
 		}
@@ -68,5 +72,6 @@ export function removeChangedListedBuilding(apiClient, appealId, listedBuildingI
  * @returns {Promise<{}>}
  */
 export function getChangedListedBuilding(apiClient, listedBuildingId) {
-	return apiClient.get(`appeals/listed-buildings/${listedBuildingId}`);
+	const ids = assertValidNumericIds({ listedBuildingId });
+	return apiClient.get(`appeals/listed-buildings/${ids.listedBuildingId}`);
 }
