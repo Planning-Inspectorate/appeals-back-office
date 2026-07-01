@@ -1,9 +1,13 @@
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { beforeExpeditedOriginalApplicationCutOff } from '@pins/appeals/utils/appeal-type-checks.js';
 export const rowKeys = {
 	[APPEAL_TYPE.HOUSEHOLDER]: [
 		'originalApplicationForm',
 		'changedDescription',
-		'appellantStatement',
+		{
+			key: 'appellantStatement',
+			condition: (data) => beforeExpeditedOriginalApplicationCutOff(data.applicationDate)
+		},
 		'appellantApplicationFolder'
 	],
 	[APPEAL_TYPE.CAS_PLANNING]: [
@@ -62,7 +66,6 @@ export const rowKeys = {
 		'environmentalStatement',
 		'changedDevelopmentDescription',
 		'changedDescription',
-		'reasonForAppealAppellant',
 		'applicationDecisionLetter',
 		'planningObligation',
 		'ownershipCertificate',

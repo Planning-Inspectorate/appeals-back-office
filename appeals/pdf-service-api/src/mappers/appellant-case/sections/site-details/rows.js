@@ -4,6 +4,7 @@ import {
 	formatYesNo,
 	formatYesNoDetails
 } from '../../../../lib/nunjucks-filters/index.js';
+import formatAnySignificantChanges from '../../../../lib/utils/format-significant-changes.js';
 
 /**
  * @param {any} area
@@ -63,38 +64,6 @@ function formatOwnsAllLand(siteOwnership) {
 	if (siteOwnership.ownsSomeLand) return 'Partially owned';
 
 	return 'Not owned';
-}
-
-/**
- * @param {any} anySignificantChanges
- * @param {any} anySignificantChanges_otherSignificantChanges
- * @param {any} anySignificantChanges_localPlanSignificantChanges
- * @param {any} anySignificantChanges_nationalPolicySignificantChanges
- * @param {any} anySignificantChanges_courtJudgementSignificantChanges
- * @returns {any}
- */
-function formatAnySignificantChanges(
-	anySignificantChanges,
-	anySignificantChanges_otherSignificantChanges,
-	anySignificantChanges_localPlanSignificantChanges,
-	anySignificantChanges_nationalPolicySignificantChanges,
-	anySignificantChanges_courtJudgementSignificantChanges
-) {
-	const details = [];
-
-	if (anySignificantChanges_localPlanSignificantChanges) {
-		details.push(`Local plan: ${anySignificantChanges_localPlanSignificantChanges}`);
-	}
-	if (anySignificantChanges_nationalPolicySignificantChanges) {
-		details.push(`National policy: ${anySignificantChanges_nationalPolicySignificantChanges}`);
-	}
-	if (anySignificantChanges_courtJudgementSignificantChanges) {
-		details.push(`Court judgment: ${anySignificantChanges_courtJudgementSignificantChanges}`);
-	}
-	if (anySignificantChanges_otherSignificantChanges) {
-		details.push(`Other: ${anySignificantChanges_otherSignificantChanges}`);
-	}
-	return anySignificantChanges ? formatYesNoDetails(details) : 'No';
 }
 
 /** @type {Record<string, (data: any) => any>} */
