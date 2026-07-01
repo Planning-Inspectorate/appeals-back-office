@@ -635,7 +635,6 @@ export const postInviteResponses = async (request, response) => {
 
 	request.session.inviteResponses = body['invite-responses'];
 	request.session.appealId = appealId;
-	request.session.costsDocumentType = costsDocumentType;
 
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/${folderId}/${documentId}/check-your-answers`
@@ -708,16 +707,23 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
 	const { email } = await getTeamFromAppealId(request.apiClient, appealId);
 	const address = appealSiteToAddressString(currentAppeal?.appealSite);
 	const deadline = format(addWeeks(new Date(), 1), 'd MMMM yyyy');
-	const notifyTemplate =
-		costsDocumentType === 'withdrawal'
-			? 'shared-cost-application-withdrawal.content.md'
-			: costsDocumentType === 'application'
-				? 'shared-cost-application.content.md'
-				: 'shared-cost-application-comment.content.md';
+	let notifyTemplateName = '';
+
+	switch (costsDocumentType) {
+		case 'application':
+			notifyTemplateName = 'shared-cost-application.content.md';
+			break;
+		case 'correspondence':
+			notifyTemplateName = 'shared-cost-application-comment.content.md';
+			break;
+		case 'withdrawal':
+			notifyTemplateName = 'shared-cost-application-withdrawal.content.md';
+			break;
+	}
 
 	const inviteResponses = session?.inviteResponses?.toLowerCase() === 'yes';
 
-	const notifyPreview = await generateNotifyPreview(request.apiClient, notifyTemplate, {
+	const notifyPreview = await generateNotifyPreview(request.apiClient, notifyTemplateName, {
 		appeal_reference_number: currentAppeal?.appealReference,
 		site_address: address || '',
 		lpa_reference: currentAppeal?.planningApplicationReference || '',
@@ -746,7 +752,7 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postShareDocumentCheckAndConfirm = async (request, response) => {
-	const { appealId, documentId } = request.params;
+	const { appealId, documentId, costsDocumentType } = request.params;
 	try {
 		/** @type {import('#appeals/appeal-documents/appeal.documents.service.js').DocumentDetailAPIPatchRequest} */
 		const apiRequest = {
@@ -754,8 +760,8 @@ export const postShareDocumentCheckAndConfirm = async (request, response) => {
 				id: documentId,
 				isShared: true
 			},
-			inviteResponses: request.session?.inviteResponses,
-			costsDocumentType: request.session?.costsDocumentType
+			inviteResponses: request.session?.inviteResponses === 'yes',
+			sharingDocumentType: `costs-${costsDocumentType}`
 		};
 
 		await updateDocument(request.apiClient, appealId, apiRequest);

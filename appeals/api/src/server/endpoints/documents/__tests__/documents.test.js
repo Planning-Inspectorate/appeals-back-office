@@ -20,6 +20,7 @@ import * as controller from '../documents.controller.js';
 import * as mappers from '../documents.mapper.js';
 import * as service from '../documents.service.js';
 
+const { notifySend } = await import('#notify/notify-send.js');
 const { databaseConnector } = await import('#utils/database-connector.js');
 const { default: got } = await import('got');
 
@@ -156,7 +157,10 @@ describe('/appeals/:appealId/documents/:documentId', () => {
 
 			const response = await request
 				.patch(`/appeals/${householdAppeal.id}/documents/${documentCreated.guid}`)
-				.send({ document: { id: documentCreated.guid, isShared: true } })
+				.send({
+					document: { id: documentCreated.guid, isShared: true },
+					sharingDocumentType: 'costs-withdrawal'
+				})
 				.set('azureAdUserId', azureAdUserId);
 
 			expect(databaseConnector.document.update).toHaveBeenCalledTimes(1);
@@ -166,6 +170,7 @@ describe('/appeals/:appealId/documents/:documentId', () => {
 					data: expect.objectContaining({ published: true })
 				})
 			);
+			expect(notifySend).toHaveBeenCalledTimes(2);
 			expect(mockBroadcasters.broadcastDocument).toHaveBeenCalledWith(
 				documentCreated.guid,
 				documentCreated.latestDocumentVersion.version,
@@ -173,6 +178,91 @@ describe('/appeals/:appealId/documents/:documentId', () => {
 			);
 			expect(databaseConnector.auditTrail.create).not.toHaveBeenCalled();
 			expect(response.status).toEqual(200);
+		});
+
+		test('should not send notify for a document when no sharingDocumentType is provided', async () => {
+			databaseConnector.document.findUnique.mockResolvedValue({
+				...documentCreated,
+				latestDocumentVersion: {
+					...documentCreated.latestDocumentVersion,
+					published: false,
+					redactionStatusId: 1
+				}
+			});
+
+			await request
+				.patch(`/appeals/${householdAppeal.id}/documents/${documentCreated.guid}`)
+				.send({
+					document: { id: documentCreated.guid, isShared: true }
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(notifySend).not.toHaveBeenCalled();
+		});
+
+		const sharingDocumentTypes = [
+			{
+				type: 'costs-application',
+				expectedTemplate: 'shared-cost-application',
+				inviteResponses: true
+			},
+			{
+				type: 'costs-application',
+				expectedTemplate: 'shared-cost-application',
+				inviteResponses: false
+			},
+			{
+				type: 'costs-correspondence',
+				expectedTemplate: 'shared-cost-application-comment',
+				inviteResponses: true
+			},
+			{
+				type: 'costs-correspondence',
+				expectedTemplate: 'shared-cost-application-comment',
+				inviteResponses: false
+			},
+			{
+				type: 'costs-withdrawal',
+				expectedTemplate: 'shared-cost-application-withdrawal',
+				inviteResponses: true
+			},
+			{
+				type: 'costs-withdrawal',
+				expectedTemplate: 'shared-cost-application-withdrawal',
+				inviteResponses: false
+			}
+		];
+
+		sharingDocumentTypes.forEach(({ type, expectedTemplate, inviteResponses }) => {
+			test(`sharing a document sends notify for: ${type}`, async () => {
+				databaseConnector.document.findUnique.mockResolvedValue({
+					...documentCreated,
+					latestDocumentVersion: {
+						...documentCreated.latestDocumentVersion,
+						published: false,
+						redactionStatusId: 1
+					}
+				});
+
+				await request
+					.patch(`/appeals/${householdAppeal.id}/documents/${documentCreated.guid}`)
+					.send({
+						document: { id: documentCreated.guid, isShared: true },
+						sharingDocumentType: type,
+						inviteResponses: inviteResponses ? true : undefined
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(notifySend).toHaveBeenCalledTimes(2);
+				expect(notifySend).toHaveBeenCalledWith(
+					expect.objectContaining({
+						templateName: expectedTemplate,
+						personalisation: expect.objectContaining({
+							responses_invited: inviteResponses
+						})
+					})
+				);
+			});
 		});
 
 		test('does not re-publish document when already published', async () => {

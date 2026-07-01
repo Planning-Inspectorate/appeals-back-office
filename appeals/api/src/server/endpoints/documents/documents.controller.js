@@ -375,9 +375,9 @@ export const updateDocuments = async (req, res) => {
  * @param {Request} req
  * @param {Response} res
  */
-export const updateDocumentFileName = async (req, res) => {
+export const updateDocument = async (req, res) => {
 	const { body, appeal, params } = req;
-	const { document, inviteResponses, costsDocumentType } = body;
+	const { document, inviteResponses, sharingDocumentType } = body;
 	const { documentId } = params;
 	try {
 		const latestDocument = await documentRepository.getDocumentById(documentId);
@@ -405,55 +405,32 @@ export const updateDocumentFileName = async (req, res) => {
 				);
 			}
 
+			if (isSharingDocument && sharingDocumentType) {
+				let notifyTemplateName = '';
+
+				switch (sharingDocumentType) {
+					case 'costs-application':
+						notifyTemplateName = 'shared-cost-application';
+						break;
+					case 'costs-correspondence':
+						notifyTemplateName = 'shared-cost-application-comment';
+						break;
+					case 'costs-withdrawal':
+						notifyTemplateName = 'shared-cost-application-withdrawal';
+						break;
+				}
+
+				if (notifyTemplateName) {
+					await sendShareDocumentEmails(
+						req.notifyClient,
+						appeal,
+						notifyTemplateName,
+						inviteResponses
+					);
+				}
+			}
+
 			if (nameHasChanged || isSharingDocument) {
-				const email = await getTeamEmailFromAppealId(appeal.id);
-				const deadline = format(addWeeks(new Date(), 1), 'd MMMM yyyy');
-				const notifyTemplateName =
-					costsDocumentType === 'withdrawal'
-						? 'shared-cost-application-withdrawal'
-						: costsDocumentType === 'application'
-							? 'shared-cost-application'
-							: 'shared-cost-application-comment';
-
-				const siteAddress = appeal.address
-					? formatAddressSingleLine(appeal.address)
-					: 'Address not available';
-
-				const responsesInvited = inviteResponses?.toLowerCase() === 'yes';
-
-				const personalisation = {
-					appeal_reference_number: appeal?.reference || '',
-					site_address: siteAddress,
-					lpa_reference: appeal?.applicationReference || '',
-					enforcement_reference: appeal?.appellantCase?.enforcementReference || '',
-					contact_email: email || '',
-					deadline: deadline,
-					responses_invited: responsesInvited
-				};
-
-				const appellantEmail = appeal.agent?.email ?? appeal.appellant?.email;
-				const lpaEmail = appeal.lpa?.email;
-
-				if (appellantEmail) {
-					await notifySend({
-						templateName: notifyTemplateName,
-						// @ts-ignore
-						notifyClient: req.notifyClient,
-						recipientEmail: appellantEmail,
-						personalisation: { dashboard_link: 'appeals', ...personalisation }
-					});
-				}
-
-				if (lpaEmail) {
-					await notifySend({
-						templateName: notifyTemplateName,
-						// @ts-ignore
-						notifyClient: req.notifyClient,
-						recipientEmail: lpaEmail,
-						personalisation: { dashboard_link: 'manage-appeals', ...personalisation }
-					});
-				}
-
 				await broadcasters.broadcastDocument(
 					latestDocument.guid,
 					latestDocument.latestDocumentVersion.version,
@@ -469,6 +446,56 @@ export const updateDocumentFileName = async (req, res) => {
 	}
 
 	res.send({ document });
+};
+
+/**
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {import('@pins/appeals.api').Schema.Appeal} appeal
+ * @param {string} notifyTemplateName
+ * @param {boolean} inviteResponses
+ */
+const sendShareDocumentEmails = async (
+	notifyClient,
+	appeal,
+	notifyTemplateName,
+	inviteResponses
+) => {
+	const teamEmail = await getTeamEmailFromAppealId(appeal.id);
+	const deadline = format(addWeeks(new Date(), 1), 'd MMMM yyyy');
+	const siteAddress = appeal.address
+		? formatAddressSingleLine(appeal.address)
+		: 'Address not available';
+
+	const personalisation = {
+		appeal_reference_number: appeal?.reference || '',
+		site_address: siteAddress,
+		lpa_reference: appeal?.applicationReference || '',
+		enforcement_reference: appeal?.appellantCase?.enforcementReference || '',
+		contact_email: teamEmail || '',
+		deadline: deadline,
+		responses_invited: !!inviteResponses
+	};
+
+	const appellantEmail = appeal.agent?.email ?? appeal.appellant?.email;
+	const lpaEmail = appeal.lpa?.email;
+
+	if (appellantEmail) {
+		await notifySend({
+			templateName: notifyTemplateName,
+			notifyClient: notifyClient,
+			recipientEmail: appellantEmail,
+			personalisation: { dashboard_link: 'appeals', ...personalisation }
+		});
+	}
+
+	if (lpaEmail) {
+		await notifySend({
+			templateName: notifyTemplateName,
+			notifyClient: notifyClient,
+			recipientEmail: lpaEmail,
+			personalisation: { dashboard_link: 'manage-appeals', ...personalisation }
+		});
+	}
 };
 
 /**

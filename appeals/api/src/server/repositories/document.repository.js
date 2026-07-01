@@ -12,7 +12,7 @@ import {
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentsRequest} UpdateDocumentsRequest */
-/** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentFileNameRequest} UpdateDocumentFileNameRequest */
+/** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentRequest} UpdateDocumentRequest */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentAvCheckRequest} UpdateDocumentAvCheckRequest */
 
 /**
@@ -168,7 +168,7 @@ export const updateDocuments = (data) => {
 
 /**
  * @param {Document} latestDocument
- * @param {UpdateDocumentFileNameRequest & { isShared: boolean }} document
+ * @param {UpdateDocumentRequest['document']} document
  * @returns {Promise<Document>}
  */
 export const updateDocument = (latestDocument, document) => {
