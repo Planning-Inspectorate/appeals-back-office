@@ -7,15 +7,7 @@ import {
 import { APPEAL_TYPE, PROCEDURE_TYPE_NAME } from '../constants/common.js';
 import { EXPEDITED_ORIGINAL_APPLICATION_CUTOFF } from '../constants/dates.js';
 
-/**
- *
- * @param {Date} date
- * @param {Date} afterDate
- * @returns {boolean}
- */
-export const dateIsAfterDate = (date, afterDate) => {
-	return date.getTime() >= afterDate.getTime();
-};
+import { dateIsOnOrAfterDate } from './date-utils.js';
 
 /**
  * Returns true if the original application was submitted before the expedited process start date
@@ -26,7 +18,7 @@ export const dateIsAfterDate = (date, afterDate) => {
 export const beforeExpeditedOriginalApplicationCutOff = (applicationDate) => {
 	return (
 		!applicationDate ||
-		!dateIsAfterDate(new Date(applicationDate), EXPEDITED_ORIGINAL_APPLICATION_CUTOFF)
+		!dateIsOnOrAfterDate(new Date(applicationDate), EXPEDITED_ORIGINAL_APPLICATION_CUTOFF)
 	);
 };
 
@@ -79,10 +71,7 @@ export const isS78ExpeditedAppealType = (
 	if (!appealType || !caseSubmissionDate) return false;
 
 	const isS78 = appealType === APPEAL_CASE_TYPE.W || appealType === APPEAL_TYPE.S78;
-	const isAfterCutoff = dateIsAfterDate(
-		new Date(caseSubmissionDate),
-		EXPEDITED_ORIGINAL_APPLICATION_CUTOFF
-	);
+	const isAfterCutoff = !beforeExpeditedOriginalApplicationCutOff(caseSubmissionDate);
 
 	if (!isS78 || !isAfterCutoff) {
 		return false;
