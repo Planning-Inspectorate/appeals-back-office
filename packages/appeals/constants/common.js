@@ -39,7 +39,8 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	ENFORCEMENT_HEARING_LINKED: 'featureFlagEnforcementHearingLinked',
 	ENFORCEMENT_INQUIRY_LINKED: 'featureFlagEnforcementInquiryLinked',
 	ENFORCEMENT_CHANGE_PROCEDURE_LINKED: 'featureFlagEnforcementChangeProcedureLinked',
-	SHARE_COSTS: 'featureFlagShareCosts'
+	SHARE_COSTS: 'featureFlagShareCosts',
+	ENFORCEMENT_CHANGE_PROCEDURE: 'featureFlagEnforcementChangeProcedure'
 });
 
 export const APPEAL_TYPE = Object.freeze({

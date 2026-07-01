@@ -98,6 +98,7 @@ variable "apps_config" {
       featureFlagShareCosts                       = bool
       featureFlagExpeditedAppealsLpaq             = bool
       featureFlagNewBeforeYouStart                = bool
+      featureFlagEnforcementChangeProcedure       = bool
     })
 
     analytics = object({
