@@ -237,6 +237,98 @@ describe('transitionState', () => {
 				);
 				expect(result).toEqual(true);
 			});
+
+			test.each([
+				{
+					type: APPEAL_CASE_TYPE.W,
+					procedure: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
+					description: 'S78 expedited (W + WRITTEN_PART_1)'
+				},
+				{
+					type: APPEAL_CASE_TYPE.D,
+					procedure: APPEAL_CASE_PROCEDURE.WRITTEN,
+					description: 'HAS (D + WRITTEN)'
+				},
+				{
+					type: APPEAL_CASE_TYPE.ZA,
+					procedure: APPEAL_CASE_PROCEDURE.WRITTEN,
+					description: 'CAS Advert (ZA + WRITTEN)'
+				},
+				{
+					type: APPEAL_CASE_TYPE.ZP,
+					procedure: APPEAL_CASE_PROCEDURE.WRITTEN,
+					description: 'CAS Planning (ZP + WRITTEN)'
+				}
+			])(
+				'transitions a $description appeal with arranged site visit in the past from lpaq to issue_determination',
+				async ({ type, procedure }) => {
+					const expeditedAppeal = {
+						...appealFixture,
+						appealStatus: [{ status: 'lpa_questionnaire', valid: true }],
+						appealType: { key: type },
+						procedureType: { key: procedure },
+						siteVisit: {
+							visitDate: new Date(Date.now() - oneDayinMS).toISOString()
+						}
+					};
+
+					databaseConnector.appeal.findUnique.mockResolvedValue(expeditedAppeal);
+
+					const result = await transitionState(11, 'user-123', VALIDATION_OUTCOME_COMPLETE);
+
+					expect(appealStatusRepository.updateAppealStatusByAppealId).toHaveBeenCalledWith(
+						11,
+						'issue_determination'
+					);
+					expect(appealStatusRepository.updateAppealStatusByAppealId).toHaveBeenCalledTimes(1);
+					expect(result).toEqual(true);
+				}
+			);
+
+			test.each([
+				{
+					type: APPEAL_CASE_TYPE.W,
+					procedure: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
+					description: 'S78 expedited (W + WRITTEN_PART_1)'
+				},
+				{
+					type: APPEAL_CASE_TYPE.D,
+					procedure: APPEAL_CASE_PROCEDURE.WRITTEN,
+					description: 'HAS (D + WRITTEN)'
+				},
+				{
+					type: APPEAL_CASE_TYPE.ZA,
+					procedure: APPEAL_CASE_PROCEDURE.WRITTEN,
+					description: 'CAS Advert (ZA + WRITTEN)'
+				},
+				{
+					type: APPEAL_CASE_TYPE.ZP,
+					procedure: APPEAL_CASE_PROCEDURE.WRITTEN,
+					description: 'CAS Planning (ZP + WRITTEN)'
+				}
+			])(
+				'transitions a $description appeal from lpaq to event if site visit is not scheduled',
+				async ({ type, procedure }) => {
+					const expeditedAppeal = {
+						...appealFixture,
+						appealStatus: [{ status: 'lpa_questionnaire', valid: true }],
+						appealType: { key: type },
+						procedureType: { key: procedure },
+						siteVisit: null
+					};
+
+					databaseConnector.appeal.findUnique.mockResolvedValue(expeditedAppeal);
+
+					const result = await transitionState(11, 'user-123', VALIDATION_OUTCOME_COMPLETE);
+
+					expect(appealStatusRepository.updateAppealStatusByAppealId).toHaveBeenCalledWith(
+						11,
+						'event'
+					);
+					expect(appealStatusRepository.updateAppealStatusByAppealId).toHaveBeenCalledTimes(1);
+					expect(result).toEqual(true);
+				}
+			);
 		});
 
 		describe('Error Handling', () => {
