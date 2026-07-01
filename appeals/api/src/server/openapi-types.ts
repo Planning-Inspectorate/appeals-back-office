@@ -2754,14 +2754,22 @@ export interface UpdateDocumentsResponse {
 	}[];
 }
 
-export interface UpdateDocumentFileNameRequest {
-	/** @example "987e66e0-1db4-404b-8213-8082919159e9" */
-	id?: string;
-	/** @example "renamed-document.pdf" */
-	fileName?: string;
+export interface UpdateDocumentRequest {
+	document?: {
+		/** @example "987e66e0-1db4-404b-8213-8082919159e9" */
+		id?: string;
+		/** @example "renamed-document.pdf" */
+		fileName?: string;
+		/** @example true */
+		isShared?: boolean;
+	};
+	/** @example true */
+	inviteResponses?: boolean;
+	/** @example "costs-application" */
+	sharingDocumentType?: string;
 }
 
-export interface UpdateDocumentFileNameResponse {
+export interface UpdateDocumentResponse {
 	/** @example "987e66e0-1db4-404b-8213-8082919159e9" */
 	id?: string;
 	/** @example "renamed-document.pdf" */

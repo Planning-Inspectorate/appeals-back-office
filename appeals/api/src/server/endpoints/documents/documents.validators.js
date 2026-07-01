@@ -1,3 +1,4 @@
+import { validateBooleanParameter } from '#common/validators/boolean-parameter.js';
 import validateDateParameter from '#common/validators/date-parameter.js';
 import { validateFileNameParameter } from '#common/validators/filename-parameter.js';
 import validateIdParameter from '#common/validators/id-parameter.js';
@@ -107,10 +108,13 @@ const patchDocumentsValidator = composeMiddleware(
 	validationErrorHandler
 );
 
-const patchDocumentFileNameValidator = composeMiddleware(
+const patchDocumentValidator = composeMiddleware(
 	validateIdParameter('appealId'),
-	validateUuidParameter({ parameterName: 'documents.*.id', parameterType: body }),
-	validateFileNameParameter('documents.*.fileName'),
+	validateUuidParameter({ parameterName: 'document.id', parameterType: body }),
+	validateFileNameParameter('document.fileName'),
+	validateBooleanParameter('document.isShared'),
+	validateBooleanParameter('inviteResponses'),
+	validateStringParameter('sharingDocumentType'),
 	validationErrorHandler
 );
 
@@ -128,7 +132,7 @@ export {
 	getDocumentsValidator,
 	getDocumentValidator,
 	getFolderIdValidator,
-	patchDocumentFileNameValidator,
 	patchDocumentsAvCheckValidator,
-	patchDocumentsValidator
+	patchDocumentsValidator,
+	patchDocumentValidator
 };
