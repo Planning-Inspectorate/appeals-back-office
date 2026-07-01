@@ -7,6 +7,7 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { APPEAL_TYPE, PROCEDURE_TYPE_ID_MAP } from '@pins/appeals/constants/common.js';
 import { isS78ExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { isBefore } from 'date-fns';
+import { setEnvironmentalImpactAssessmentScreening } from '../../appeal-details.service.js';
 import * as appellantCaseService from '../appellant-case.service.js';
 import {
 	checkAndConfirmEnforcementPage,
@@ -618,6 +619,8 @@ export const postEnvironmentalServicesReview = async (request, response) => {
 			year
 		})
 	);
+
+	await setEnvironmentalImpactAssessmentScreening(request.apiClient, appealId, true);
 
 	delete session.updatedValidDate;
 

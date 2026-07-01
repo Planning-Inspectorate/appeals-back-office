@@ -650,12 +650,18 @@ describe('Appellant Case Valid Flow', () => {
 					})
 					.reply(200);
 				nock('http://test/')
+					.patch(`/appeals/${appealId}/eia-screening-required`, {
+						eiaScreeningRequired: true
+					})
+					.reply(200);
+				nock('http://test/')
 					.get(`/appeals/${appealId}/appellant-cases/0`)
 					.reply(200, {
 						screeningOpinionIndicatesEiaRequired: true,
 						applicationDate: '2026-05-01',
 						applicationDecision: 'refused',
-						typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+						typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL,
+						documents: {}
 					})
 					.persist();
 
