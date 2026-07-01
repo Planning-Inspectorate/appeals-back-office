@@ -110,7 +110,10 @@ export const postLpaQuestionnaire = async (request, response) => {
 		request.session.reviewOutcome = reviewOutcome;
 
 		if (reviewOutcome === 'complete') {
-			if (askEnvironmentServiceTeamReviewQuestion(currentAppeal.appealType)) {
+			if (
+				askEnvironmentServiceTeamReviewQuestion(currentAppeal.appealType) &&
+				!currentAppeal?.eiaScreeningRequired
+			) {
 				return response.redirect(
 					`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/environment-service-team-review-case`
 				);

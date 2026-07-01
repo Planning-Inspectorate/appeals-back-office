@@ -2115,11 +2115,79 @@ describe('LPA Questionnaire review', () => {
 			['enforcement', APPEAL_TYPE.ENFORCEMENT_NOTICE]
 			//['enforcement listed building', APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING_NOTICE]
 		])(
-			'should redirect to the environmental services page if no errors are present and posted outcome is "complete" for appeal type: %s',
+			'should redirect to the environmental services page if no errors are present and posted outcome is "complete" for appeal type: %s (when eiaScreeningRequired is not set)',
 			async (_, appealType) => {
 				nock('http://test/')
 					.get(`/appeals/2?include=all`)
 					.reply(200, { ...lpaqAppealData, appealType: appealType, appealId: 2 })
+					.persist();
+				nock('http://test/')
+					.get('/appeals/2/lpa-questionnaires/2')
+					.reply(200, lpaQuestionnaireDataIncompleteOutcome)
+					.patch('/appeals/2/lpa-questionnaires/2')
+					.reply(200, { validationOutcome: 'complete' });
+
+				const response = await request
+					.post('/appeals-service/appeal-details/2/lpa-questionnaire/2')
+					.send({
+						'review-outcome': 'complete'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/2/lpa-questionnaire/2/environment-service-team-review-case'
+				);
+			}
+		);
+
+		it.each([
+			['S78', APPEAL_TYPE.S78],
+			['S20', APPEAL_TYPE.PLANNED_LISTED_BUILDING],
+			['enforcement', APPEAL_TYPE.ENFORCEMENT_NOTICE]
+		])(
+			'should redirect to the case details page (NOT environment services page) if eiaScreeningRequired is true for appeal type: %s',
+			async (_, appealType) => {
+				nock('http://test/')
+					.get(`/appeals/2?include=all`)
+					.reply(200, {
+						...lpaqAppealData,
+						appealType: appealType,
+						appealId: 2,
+						eiaScreeningRequired: true
+					})
+					.persist();
+				nock('http://test/')
+					.get('/appeals/2/lpa-questionnaires/2')
+					.reply(200, lpaQuestionnaireDataIncompleteOutcome)
+					.patch('/appeals/2/lpa-questionnaires/2')
+					.reply(200, { validationOutcome: 'complete' });
+
+				const response = await request
+					.post('/appeals-service/appeal-details/2/lpa-questionnaire/2')
+					.send({
+						'review-outcome': 'complete'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/2');
+			}
+		);
+
+		it.each([
+			['S78', APPEAL_TYPE.S78],
+			['S20', APPEAL_TYPE.PLANNED_LISTED_BUILDING],
+			['enforcement', APPEAL_TYPE.ENFORCEMENT_NOTICE]
+		])(
+			'should redirect to the environmental services page if eiaScreeningRequired is false for appeal type: %s',
+			async (_, appealType) => {
+				nock('http://test/')
+					.get(`/appeals/2?include=all`)
+					.reply(200, {
+						...lpaqAppealData,
+						appealType: appealType,
+						appealId: 2,
+						eiaScreeningRequired: false
+					})
 					.persist();
 				nock('http://test/')
 					.get('/appeals/2/lpa-questionnaires/2')
