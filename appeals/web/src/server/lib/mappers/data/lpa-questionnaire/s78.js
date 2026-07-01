@@ -2,7 +2,6 @@ import { mapLpaNeighbouringSitesLpaqAdapter } from '../appeal/submappers/lpa-nei
 import { submaps as hasSubmaps } from './has.js';
 import { mapAdditionalDocumentsLpa } from './submappers/map-additional-documents-lpa.js';
 import { mapAffectsScheduledMonument } from './submappers/map-affects-scheduled-monument.js';
-import { mapAnySignificantChangesLpa } from './submappers/map-any-significant-changes-lpa.js';
 import { mapChangedListedBuildingDetails } from './submappers/map-changed-listed-building-details.js';
 import { mapCommunityInfrastructureLevy } from './submappers/map-community-infrastructure-levy.js';
 import { mapConsultationResponses } from './submappers/map-consultation-responses.js';
@@ -66,6 +65,5 @@ export const submaps = {
 	changedListedBuildingDetails: mapChangedListedBuildingDetails,
 	designAccessStatementLpa: mapDesignAccessStatementLpa,
 	plansDrawingsLpa: mapPlansDrawingsLpa,
-	additionalDocumentsLpa: mapAdditionalDocumentsLpa,
-	anySignificantChangesLpa: mapAnySignificantChangesLpa
+	additionalDocumentsLpa: mapAdditionalDocumentsLpa
 };
