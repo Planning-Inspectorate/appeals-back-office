@@ -33,14 +33,14 @@
 		"c4": "docker pull structurizr/lite && docker run -it --rm -p 8082:8080 -v $PWD:/usr/local/structurizr structurizr/lite"
 	},
 	"dependencies": {
-		"@badeball/cypress-cucumber-preprocessor": "23.2.0",
+		"@badeball/cypress-cucumber-preprocessor": "24.0.1",
 		"@planning-inspectorate/data-model": "^2.44.0",
-		"cypress": "15.3.0",
-		"got": "^12.5.2",
-		"joi": "^17.7.0",
+		"cypress": "15.18.0",
+		"got": "^15.0.6",
+		"joi": "^18.2.3",
 		"node-cache": "^5.1.2",
-		"nodemon": "3.0.3",
-		"turbo": "1.2.14"
+		"nodemon": "3.1.14",
+		"turbo": "2.9.18"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "20.4.2",
