@@ -28,16 +28,16 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"nodemon": "3.0.3"
+		"nodemon": "3.1.14"
 	},
 	"devDependencies": {
-		"@badeball/cypress-cucumber-preprocessor": "^23.2.0",
+		"@badeball/cypress-cucumber-preprocessor": "^24.0.1",
 		"@bahmutov/cypress-esbuild-preprocessor": "^2.1.5",
 		"@cypress/grep": "^4.1.0",
 		"@cypress/webpack-preprocessor": "^5.16.1",
-		"@faker-js/faker": "^7.6.0",
-		"cypress": "^15.3.0",
-		"dotenv": "^16.0.3",
+		"@faker-js/faker": "^10.5.0",
+		"cypress": "^15.18.0",
+		"dotenv": "^17.4.2",
 		"eslint-plugin-cypress": "^4.3.0",
 		"fs-extra": "^11.2.0",
 		"puppeteer": "^24.3.0"
