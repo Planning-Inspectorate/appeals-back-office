@@ -108,7 +108,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 			[APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE]: {
 				on: {
 					[VALIDATION_OUTCOME_COMPLETE]: {
-						target: targetStateOnLpaqComplete(appealType, procedureType)
+						target: targetStateOnLpaqComplete(appealType, procedureType, eventElapsed)
 					},
 					[VALIDATION_OUTCOME_INCOMPLETE]: undefined,
 					[APPEAL_CASE_STATUS.CLOSED]: { target: APPEAL_CASE_STATUS.CLOSED },
@@ -435,17 +435,15 @@ const targetStateOnEventCancelled = {
 };
 
 /**
- * Determins the next state after the LPAQ is complete based on the appeal type and procedure type.
+ * Determines the next state after the LPAQ is complete based on the appeal type and procedure type.
  * @param {AppealType} appealType
  * @param {ProcedureType} procedureType
+ * @param {boolean} [eventElapsed]
  * @returns {CaseStatus}
  */
-const targetStateOnLpaqComplete = (appealType, procedureType) => {
+const targetStateOnLpaqComplete = (appealType, procedureType, eventElapsed = false) => {
 	if (appealType === APPEAL_CASE_TYPE.D || procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1) {
-		return APPEAL_CASE_STATUS.EVENT;
-	}
-	if (appealType === APPEAL_CASE_TYPE.W) {
-		return APPEAL_CASE_STATUS.STATEMENTS;
+		return eventElapsed ? APPEAL_CASE_STATUS.ISSUE_DETERMINATION : APPEAL_CASE_STATUS.EVENT;
 	}
 	return APPEAL_CASE_STATUS.STATEMENTS;
 };
