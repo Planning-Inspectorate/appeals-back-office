@@ -2160,12 +2160,6 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                                     data-cy="change-procedure-preference-duration">Change<span class="govuk-visually-hidden"> How many days would you expect the inquiry to last? (7. Appeal process)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have there been any significant changes that would affect the application?</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No</span>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/any-significant-changes-lpa/change">Change<span class="govuk-visually-hidden"> Have there been any significant changes that would affect the application? (7. Appeal process)</span></a>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Are there any other ongoing appeals next to, or close to the site?</dt>
                             <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
