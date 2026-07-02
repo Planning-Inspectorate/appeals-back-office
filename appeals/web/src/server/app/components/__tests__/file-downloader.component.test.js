@@ -6,6 +6,7 @@ const mockArchive = {
 	append: jest.fn(),
 	finalize: jest.fn().mockResolvedValue(),
 	on: jest.fn(),
+	once: jest.fn(),
 	destroyed: false,
 	destroy: jest.fn()
 };
@@ -67,7 +68,8 @@ describe('getBulkDocumentDownload', () => {
 			setHeader: jest.fn(),
 			status: jest.fn().mockReturnThis(),
 			send: jest.fn().mockReturnThis(),
-			destroy: jest.fn()
+			destroy: jest.fn(),
+			once: jest.fn()
 		};
 		mockGenerateAllPdfs.mockReset();
 		mockArchive.pipe.mockClear();
@@ -75,6 +77,7 @@ describe('getBulkDocumentDownload', () => {
 		mockArchive.finalize.mockClear();
 		mockArchive.destroy.mockClear();
 		mockArchive.on.mockClear();
+		mockArchive.once.mockClear();
 		mockArchive.destroyed = false;
 		mockConfig.featureFlags.featureFlagPdfDownload = false;
 	});
@@ -119,7 +122,7 @@ describe('getBulkDocumentDownload', () => {
 		expect(mockArchive.pipe).toHaveBeenCalledWith(mockResponse);
 		expect(mockArchive.finalize).toHaveBeenCalled();
 		expect(mockResponse.status).toHaveBeenCalledWith(200);
-		expect(mockResponse.send).toHaveBeenCalled();
+		expect(mockResponse.send).not.toHaveBeenCalled();
 	});
 
 	it('downloads files and appends pdfs if feature flag enabled', async () => {
@@ -162,7 +165,7 @@ describe('getBulkDocumentDownload', () => {
 		expect(mockArchive.append).toHaveBeenCalledWith(expect.any(Buffer), { name: 'foo.pdf' });
 		expect(mockArchive.finalize).toHaveBeenCalled();
 		expect(mockResponse.status).toHaveBeenCalledWith(200);
-		expect(mockResponse.send).toHaveBeenCalled();
+		expect(mockResponse.send).not.toHaveBeenCalled();
 	});
 
 	it('handles no files found', async () => {
@@ -183,7 +186,7 @@ describe('getBulkDocumentDownload', () => {
 		});
 		expect(mockArchive.finalize).toHaveBeenCalled();
 		expect(mockResponse.status).toHaveBeenCalledWith(200);
-		expect(mockResponse.send).toHaveBeenCalled();
+		expect(mockResponse.send).not.toHaveBeenCalled();
 	});
 
 	it('handles error and destroys archive/response', async () => {
