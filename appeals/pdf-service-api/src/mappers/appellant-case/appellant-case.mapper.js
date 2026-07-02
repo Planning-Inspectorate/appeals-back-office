@@ -1,6 +1,8 @@
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { additionalDocumentsSection } from './sections/additional-documents.section.js';
-import { appealDetailsSection } from './sections/appeal-details.section.js';
+import { appealDetailsSection } from './sections/appeal-details/index.js';
+
+// import { appealDetailsSection } from './sections/appeal-details.section.js';
 import { appellantDetailsSection } from './sections/appellant-details.section.js';
 import { applicationDetailsSection } from './sections/application-details/index.js';
 import { beforeYouStartSection } from './sections/before-you-start.section.js';

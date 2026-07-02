@@ -130,12 +130,12 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
           "text": "Not answered",
         },
         {
+          "html": "Not provided",
           "key": "Why would you prefer this appeal procedure?",
-          "text": "Not provided",
         },
         {
+          "html": "Not provided",
           "key": "How many days would you expect the inquiry to last?",
-          "text": "Not provided",
         },
         {
           "key": "How many witnesses would you expect to give evidence at the inquiry?",
@@ -298,7 +298,10 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         },
       ],
     },
-    undefined,
+    {
+      "heading": "Appeal details",
+      "items": [],
+    },
     {
       "heading": "Upload documents",
       "items": [
@@ -443,7 +446,10 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         },
       ],
     },
-    undefined,
+    {
+      "heading": "Appeal details",
+      "items": [],
+    },
     {
       "heading": "Upload documents",
       "items": [
@@ -587,12 +593,12 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
           "text": "Not answered",
         },
         {
+          "html": "Not provided",
           "key": "Why would you prefer this appeal procedure?",
-          "text": "Not provided",
         },
         {
+          "html": "2",
           "key": "How many days would you expect the inquiry to last?",
-          "text": "2",
         },
         {
           "key": "How many witnesses would you expect to give evidence at the inquiry?",
@@ -768,12 +774,12 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
           "text": "Hearing",
         },
         {
+          "html": "Need for a detailed examination",
           "key": "Why would you prefer this appeal procedure?",
-          "text": "Need for a detailed examination",
         },
         {
+          "html": "1",
           "key": "How many days would you expect the inquiry to last?",
-          "text": "1",
         },
         {
           "key": "How many witnesses would you expect to give evidence at the inquiry?",
@@ -981,12 +987,12 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
           "text": "Hearing",
         },
         {
+          "html": "Need for a detailed examination",
           "key": "Why would you prefer this appeal procedure?",
-          "text": "Need for a detailed examination",
         },
         {
+          "html": "1",
           "key": "How many days would you expect the inquiry to last?",
-          "text": "1",
         },
         {
           "key": "How many witnesses would you expect to give evidence at the inquiry?",
@@ -1190,7 +1196,10 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         },
       ],
     },
-    undefined,
+    {
+      "heading": "Appeal details",
+      "items": [],
+    },
     {
       "heading": "Upload documents",
       "items": [
