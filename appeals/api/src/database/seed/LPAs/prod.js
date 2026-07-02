@@ -1888,7 +1888,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'H0738',
 		name: 'Stockton-on-Tees Borough Council',
-		email: 'planning.administration@stockton.gov.uk',
+		email: 'planningdevelopmentservices@stockton.gov.uk',
 		teamId: 16 // North2
 	},
 	{
