@@ -1,8 +1,6 @@
 import appealRepository from '#repositories/appeal.repository.js';
 import { databaseConnector } from '#utils/database-connector.js';
-import { isFeatureActive } from '#utils/feature-flags.js';
 import logger from '#utils/logger.js';
-import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
 /**
  * Updates the PersonalList for the specified appeal
@@ -14,38 +12,19 @@ export const updatePersonalList = async (appealId) => {
 };
 
 /**
- * @param {string | null | undefined} appealType
- * @returns {boolean}
- */
-const isNetResidencesAppealType = (appealType) => {
-	return (
-		(isFeatureActive(FEATURE_FLAG_NAMES.NET_RESIDENCE) && appealType === APPEAL_TYPE.S78) ||
-		(isFeatureActive(FEATURE_FLAG_NAMES.NET_RESIDENCE_S20) &&
-			appealType === APPEAL_TYPE.PLANNED_LISTED_BUILDING)
-	);
-};
-
-/**
  * Executes the spSetPersonalList stored procedure.
- * @param {{appealId?: number | null, isNetResidentsAppealType?: boolean}} [options]
+ * @param {{appealId?: number | null}} [options]
  * @returns {Promise<void>}
  */
-export const setPersonalList = async ({ appealId = null, isNetResidentsAppealType } = {}) => {
+export const setPersonalList = async ({ appealId = null } = {}) => {
 	const parsedAppealId = appealId === null ? null : Number(appealId);
 
 	if (appealId !== null && Number.isNaN(parsedAppealId)) {
 		throw new Error(`spSetPersonalList appealId must be numeric. Received: ${appealId}`);
 	}
 
-	let resolvedIsNetResidentsAppealType = Boolean(isNetResidentsAppealType);
-
-	if (typeof isNetResidentsAppealType === 'undefined' && parsedAppealId !== null) {
-		const appealType = await appealRepository.getAppealTypeById(parsedAppealId);
-		resolvedIsNetResidentsAppealType = isNetResidencesAppealType(appealType?.type);
-	}
-
 	await databaseConnector.$executeRawUnsafe(
-		`EXEC dbo.spSetPersonalList @appealId = ${parsedAppealId === null ? 'NULL' : parsedAppealId}, @isNetResidentsAppealType = ${resolvedIsNetResidentsAppealType ? 1 : 0};`
+		`EXEC dbo.spSetPersonalList @appealId = ${parsedAppealId === null ? 'NULL' : parsedAppealId};`
 	);
 };
 
