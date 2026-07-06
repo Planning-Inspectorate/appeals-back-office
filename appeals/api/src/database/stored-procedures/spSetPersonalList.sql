@@ -1,8 +1,8 @@
 -- Populates the PersonalList for all appeals or a specific one.
 CREATE OR ALTER PROCEDURE dbo.spSetPersonalList
-(
-	@appealId                       AS INT = NULL
-)
+	(
+                @appealId                       AS INT = NULL
+    )
 AS
 BEGIN
 	SET NOCOUNT ON;
