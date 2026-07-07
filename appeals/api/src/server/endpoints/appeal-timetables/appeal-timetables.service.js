@@ -655,7 +655,7 @@ const updateAppealTimetable = async (
 	);
 
 	if (result) {
-		await updatePersonalList(appeal.id);
+		await setPersonalList(appeal.id);
 
 		if (!isChildAppeal) {
 			let details = 'Timetable updated:';
