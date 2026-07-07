@@ -17,11 +17,11 @@ import createStateMachine from './create-state-machine.js';
  * @returns {StateStub[]}
  * */
 function listStates(appealType, procedureType, currentState) {
-	const appealTypeKey = !isExpeditedAppealType(appealType.key)
+	const normalizedAppealTypeKey = !isExpeditedAppealType(appealType.key)
 		? APPEAL_CASE_TYPE.W
 		: APPEAL_CASE_TYPE.D;
 	const stateMachine = createStateMachine(
-		appealTypeKey,
+		normalizedAppealTypeKey,
 		procedureType?.key || APPEAL_CASE_PROCEDURE.WRITTEN,
 		currentState
 	);
@@ -37,13 +37,14 @@ function listStates(appealType, procedureType, currentState) {
 			const { validAppealTypes, validProcedureTypes } = state.meta;
 
 			if (!procedureType) {
-				return validAppealTypes.includes(appealTypeKey);
+				return validAppealTypes.includes(normalizedAppealTypeKey);
 			}
 
 			const procedureTypeKey = normalizeProcedureType(procedureType.key);
 
 			return (
-				validAppealTypes.includes(appealTypeKey) && validProcedureTypes.includes(procedureTypeKey)
+				validAppealTypes.includes(normalizedAppealTypeKey) &&
+				validProcedureTypes.includes(procedureTypeKey)
 			);
 		})
 		.sort((a, b) => states[a].order - states[b].order);
