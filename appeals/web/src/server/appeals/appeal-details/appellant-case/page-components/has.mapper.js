@@ -1,5 +1,4 @@
 import { isFeatureActive } from '#common/feature-flags.js';
-import { convertFromBooleanToYesNo } from '#lib/boolean-formatter.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import {
 	documentUploadUrlTemplate,
@@ -63,12 +62,6 @@ export function generateHASComponents(
 				removeSummaryListActions(mappedAppellantCaseData.applicationType.display.summaryListItem),
 				mappedAppellantCaseData.applicationDecision.display.summaryListItem,
 				mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
-				{
-					key: { text: 'Are you claiming costs as part of your appeal?' },
-					value: {
-						text: convertFromBooleanToYesNo(appellantCaseData.appellantCostsAppliedFor, 'No data')
-					}
-				},
 				mappedAppellantCaseData.applicationReference.display.summaryListItem
 			]
 		}
