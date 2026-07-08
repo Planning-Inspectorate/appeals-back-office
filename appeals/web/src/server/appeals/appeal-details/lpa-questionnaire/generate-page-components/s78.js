@@ -2,11 +2,16 @@ import { isDefined } from '#lib/ts-utilities.js';
 import { generateSharedS78S20LpaQuestionnaireComponents } from './shared-s78-s20.js';
 
 /**
+ * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} Appeal
+ */
+
+/**
  *
+ * @param {Appeal} appealDetails
  * @param {{lpaq: MappedInstructions}} mappedLPAQData
  * @returns {PageComponent[]}
  */
-export const generateS78LpaQuestionnaireComponents = (mappedLPAQData) => {
+export const generateS78LpaQuestionnaireComponents = (appealDetails, mappedLPAQData) => {
 	/** @type {PageComponent[]} */
 	const pageComponents = [];
 

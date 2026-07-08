@@ -18,7 +18,6 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	SEARCH_CASE_OFFICER: 'featureFlagSearchCaseOfficer',
 	ENFORCEMENT_NOTICE: 'featureFlagEnforcementNotice',
 	ENFORCEMENT_LINKED: 'featureFlagEnforcementLinked',
-	ENFORCEMENT_LEAD_CAN_START: 'featureFlagEnforcementLeadCanStart',
 	ENFORCEMENT_CANCEL: 'featureFlagEnforcementCancel',
 	INVALID_DECISION_LETTER: 'featureFlagInvalidDecisionLetter',
 	RULE_6_PARTIES_MVP: 'featureFlagRule6Mvp',
@@ -40,7 +39,8 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	ENFORCEMENT_HEARING_LINKED: 'featureFlagEnforcementHearingLinked',
 	ENFORCEMENT_INQUIRY_LINKED: 'featureFlagEnforcementInquiryLinked',
 	ENFORCEMENT_CHANGE_PROCEDURE_LINKED: 'featureFlagEnforcementChangeProcedureLinked',
-	SHARE_COSTS: 'featureFlagShareCosts'
+	SHARE_COSTS: 'featureFlagShareCosts',
+	ENFORCEMENT_CHANGE_PROCEDURE: 'featureFlagEnforcementChangeProcedure'
 });
 
 export const APPEAL_TYPE = Object.freeze({
@@ -81,9 +81,16 @@ export const APPEAL_TYPE_CHANGE_APPEALS = Object.freeze({
 /** @type {Object<string, string>} */
 export const PROCEDURE_TYPE_MAP = Object.freeze({
 	written: 'written representations',
-	writtenPart1: 'Part 1',
+	writtenPart1: 'written representations',
 	hearing: 'a hearing',
 	inquiry: 'an inquiry'
+});
+
+export const PROCEDURE_TYPE_KEY = Object.freeze({
+	WRITTEN_PART_2: 'written',
+	WRITTEN_PART_1: 'writtenPart1',
+	HEARING: 'hearing',
+	INQUIRY: 'inquiry'
 });
 
 export const PROCEDURE_TYPE_NAME = Object.freeze({
@@ -194,3 +201,5 @@ export const FEEDBACK_FORM_LINKS = Object.freeze({
 });
 
 export const REPRESENTATION_ADDED_AS_DOCUMENT = 'Added as a document';
+
+export const MAX_VISIBLE_DOCUMENTS_IN_SUMMARY = 30;

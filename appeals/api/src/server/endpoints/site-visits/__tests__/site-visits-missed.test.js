@@ -86,6 +86,10 @@ describe('POST /:appealId/site-visits/:siteVisitId/missed', () => {
 					...appeal.siteVisit,
 					appeal: appeal
 				});
+				// @ts-ignore
+				databaseConnector.siteVisit.findMany.mockResolvedValue(
+					idsOfLinkedGroup.map((id) => ({ id }))
+				);
 
 				// mock appealStatus.findFirst to give the correct statuses in the right order (each linked child then the lead)
 				for (const childAppeal of appeal.childAppeals) {
@@ -129,6 +133,7 @@ describe('POST /:appealId/site-visits/:siteVisitId/missed', () => {
 			afterEach(() => {
 				// reset the mocks
 				databaseConnector.appeal.findUnique.mockReset();
+				databaseConnector.siteVisit.findMany.mockReset();
 				databaseConnector.appealStatus.findFirst.mockReset();
 				databaseConnector.user.upsert.mockReset();
 				databaseConnector.appealStatus.deleteMany.mockReset();
@@ -183,6 +188,8 @@ describe('POST /:appealId/site-visits/:siteVisitId/missed', () => {
 
 				expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledTimes(sizeOfLinkedGroup);
 				expect(databaseConnector.appealStatus.update).toHaveBeenCalledTimes(sizeOfLinkedGroup);
+
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledTimes(sizeOfLinkedGroup);
 
 				for (const id of idsOfLinkedGroup) {
 					expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledWith({
@@ -264,6 +271,8 @@ describe('POST /:appealId/site-visits/:siteVisitId/missed', () => {
 				expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledTimes(sizeOfLinkedGroup);
 				expect(databaseConnector.appealStatus.update).toHaveBeenCalledTimes(sizeOfLinkedGroup);
 
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledTimes(sizeOfLinkedGroup);
+
 				for (const id of idsOfLinkedGroup) {
 					expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledWith({
 						where: {
@@ -309,6 +318,8 @@ describe('POST /:appealId/site-visits/:siteVisitId/missed', () => {
 					data: { whoMissedSiteVisit: 'lpa' }
 				});
 
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledTimes(sizeOfLinkedGroup);
+
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 				expect(mockNotifySend).toHaveBeenCalledWith({
@@ -338,6 +349,8 @@ describe('POST /:appealId/site-visits/:siteVisitId/missed', () => {
 					data: { whoMissedSiteVisit: 'lpa' }
 				});
 
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledTimes(sizeOfLinkedGroup);
+
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 				expect(mockNotifySend).toHaveBeenCalledWith({
@@ -364,6 +377,8 @@ describe('POST /:appealId/site-visits/:siteVisitId/missed', () => {
 					data: { whoMissedSiteVisit: 'inspector' }
 				});
 
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledTimes(sizeOfLinkedGroup);
+
 				expect(mockNotifySend).not.toHaveBeenCalled();
 
 				expect(response.status).toBe(200);
@@ -373,10 +388,12 @@ describe('POST /:appealId/site-visits/:siteVisitId/missed', () => {
 		describe('current status is before the event set up', () => {
 			let appeal;
 			let idsOfLinkedGroup;
+			let sizeOfLinkedGroup;
 
 			beforeEach(() => {
 				appeal = getAppeal();
 				idsOfLinkedGroup = getIdsOfLinkedGroup(appeal);
+				sizeOfLinkedGroup = idsOfLinkedGroup.length;
 
 				appeal.appealStatus = [
 					{
@@ -396,6 +413,10 @@ describe('POST /:appealId/site-visits/:siteVisitId/missed', () => {
 				databaseConnector.appeal.findUnique
 					.mockImplementationOnce(mockAppealFindUnique(appeal))
 					.mockImplementation(mockAppealFindUnique({ ...appeal, siteVisit: null }));
+				// @ts-ignore
+				databaseConnector.siteVisit.findMany.mockResolvedValue(
+					idsOfLinkedGroup.map((id) => ({ id }))
+				);
 
 				// mock appealStatus.findFirst to give the correct statuses in the right order (each linked child then the lead)
 				for (const childAppeal of appeal.childAppeals) {
@@ -435,6 +456,7 @@ describe('POST /:appealId/site-visits/:siteVisitId/missed', () => {
 			afterEach(() => {
 				// reset the mocks
 				databaseConnector.appeal.findUnique.mockReset();
+				databaseConnector.siteVisit.findMany.mockReset();
 				databaseConnector.appealStatus.findFirst.mockReset();
 				databaseConnector.user.upsert.mockReset();
 				databaseConnector.appealStatus.deleteMany.mockReset();
@@ -481,6 +503,8 @@ describe('POST /:appealId/site-visits/:siteVisitId/missed', () => {
 
 				expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledTimes(0);
 				expect(databaseConnector.appealStatus.update).toHaveBeenCalledTimes(0);
+
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledTimes(sizeOfLinkedGroup);
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
@@ -533,6 +557,8 @@ describe('POST /:appealId/site-visits/:siteVisitId/missed', () => {
 
 				expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledTimes(0);
 				expect(databaseConnector.appealStatus.update).toHaveBeenCalledTimes(0);
+
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledTimes(sizeOfLinkedGroup);
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
@@ -596,6 +622,10 @@ describe('POST /:appealId/site-visits/:siteVisitId/missed', () => {
 				databaseConnector.appeal.findUnique
 					.mockImplementationOnce(mockAppealFindUnique(appeal))
 					.mockImplementation(mockAppealFindUnique({ ...appeal, siteVisit: null }));
+				// @ts-ignore
+				databaseConnector.siteVisit.findMany.mockResolvedValue(
+					idsOfLinkedGroup.map((id) => ({ id }))
+				);
 
 				// mock appealStatus.findFirst to give the correct statuses in the right order (each linked child then the lead)
 				for (const childAppeal of appeal.childAppeals) {
@@ -644,6 +674,7 @@ describe('POST /:appealId/site-visits/:siteVisitId/missed', () => {
 			afterEach(() => {
 				// reset the mocks
 				databaseConnector.appeal.findUnique.mockReset();
+				databaseConnector.siteVisit.findMany.mockReset();
 				databaseConnector.appealStatus.findFirst.mockReset();
 				databaseConnector.user.upsert.mockReset();
 				databaseConnector.appealStatus.deleteMany.mockReset();
@@ -717,6 +748,8 @@ describe('POST /:appealId/site-visits/:siteVisitId/missed', () => {
 						data: { valid: true }
 					});
 				}
+
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledTimes(sizeOfLinkedGroup);
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
@@ -797,6 +830,8 @@ describe('POST /:appealId/site-visits/:siteVisitId/missed', () => {
 						data: { valid: true }
 					});
 				}
+
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledTimes(sizeOfLinkedGroup);
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 

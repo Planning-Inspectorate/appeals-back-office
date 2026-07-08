@@ -1485,7 +1485,7 @@ describe('costs', () => {
 
 				const unsharedDocumentFolder = structuredClone(costsFolderInfoAppellantApplication);
 				unsharedDocumentFolder.documents.forEach((doc) => {
-					doc.isShared = false;
+					doc.latestDocumentVersion.published = false;
 				});
 
 				nock('http://test/')
@@ -1509,7 +1509,7 @@ describe('costs', () => {
 
 				const sharedDocumentFolder = structuredClone(costsFolderInfoAppellantApplication);
 				sharedDocumentFolder.documents.forEach((doc) => {
-					doc.isShared = true;
+					doc.latestDocumentVersion.published = true;
 				});
 
 				nock('http://test/').get('/appeals/1/document-folders/1').reply(200, sharedDocumentFolder);
@@ -1700,9 +1700,9 @@ describe('costs', () => {
 						nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 
 						const sharedDocumentVersionsInfo = structuredClone(documentFileVersionsInfoChecked);
-						sharedDocumentVersionsInfo.isShared = true;
+						sharedDocumentVersionsInfo.latestDocumentVersion.published = true;
 						sharedDocumentVersionsInfo.allVersions.forEach((version) => {
-							version.isShared = true;
+							version.published = true;
 						});
 
 						nock('http://test/')
@@ -1738,7 +1738,7 @@ describe('costs', () => {
 						nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 
 						const unsharedDocumentVersionsInfo = structuredClone(documentFileVersionsInfoChecked);
-						unsharedDocumentVersionsInfo.isShared = false;
+						unsharedDocumentVersionsInfo.latestDocumentVersion.published = false;
 
 						nock('http://test/')
 							.get('/appeals/documents/1/versions')
@@ -2034,6 +2034,23 @@ describe('costs', () => {
 						expect(unprettifiedElement.innerHTML).toContain('Confirm and share document</button>');
 					});
 
+					it(`should render the invite responses page with pre-selected option`, async () => {
+						await request
+							.post(
+								`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1/invite-responses`
+							)
+							.send({ 'invite-responses': 'yes' });
+						const response = await request.get(
+							`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/manage-documents/${costsFolder.folderId}/1/invite-responses`
+						);
+
+						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+						expect(unprettifiedElement.innerHTML).toContain(
+							'name="invite-responses" type="radio" value="yes" checked'
+						);
+					});
+
 					it(`should return a validation error if no option is selected on POST`, async () => {
 						const response = await request
 							.post(
@@ -2074,6 +2091,13 @@ describe('costs', () => {
 
 				describe(`Testing Share CYA for ${costsCategory} ${costsDocumentType}`, () => {
 					beforeEach(() => {
+						const templateName =
+							costsDocumentType === 'withdrawal'
+								? 'shared-cost-application-withdrawal.content.md'
+								: costsDocumentType === 'application'
+									? 'shared-cost-application.content.md'
+									: 'shared-cost-application-comment.content.md';
+
 						nock.cleanAll();
 						nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 						nock('http://test/')
@@ -2083,6 +2107,14 @@ describe('costs', () => {
 						nock('http://test/')
 							.get('/appeals/documents/1/versions')
 							.reply(200, documentFileVersionsInfoChecked)
+							.persist();
+						nock('http://test/')
+							.get('/appeals/1/case-team-email')
+							.reply(200, { email: 'test@example.com' })
+							.persist();
+						nock('http://test/')
+							.post(`/appeals/notify-preview/${templateName}`)
+							.reply(200, { renderedHtml: '<p>Test notification</p>' })
 							.persist();
 					});
 

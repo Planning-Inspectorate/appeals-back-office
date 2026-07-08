@@ -1,3 +1,4 @@
+import { getTeamFromAppealId } from '#appeals/appeal-details/update-case-team/update-case-team.service.js';
 import {
 	postChangeDocumentDetails,
 	postChangeDocumentFileName,
@@ -22,12 +23,14 @@ import {
 	getFileVersionsInfo,
 	updateDocument
 } from '#appeals/appeal-documents/appeal.documents.service.js';
+import { appealSiteToAddressString } from '#lib/address-formatter.js';
+import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import logger from '#lib/logger.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
+import { addWeeks, format } from 'date-fns';
 import { capitalize, upperCase } from 'lodash-es';
-
 import {
 	decisionCheckAndConfirmPage,
 	inviteResponsesPage,
@@ -601,7 +604,15 @@ export const getInviteResponses = async (request, response) => {
 	const { appealId, folderId, documentId, costsCategory, costsDocumentType } = request.params;
 	const backLinkUrl = `/appeals-service/appeal-details/${appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/${folderId}/${documentId}`;
 
-	const pageContent = inviteResponsesPage(backLinkUrl);
+	if (request.session.appealId && request.session.appealId !== appealId) {
+		delete request.session.appealId;
+		delete request.session.inviteResponses;
+		delete request.session.costsDocumentType;
+	}
+
+	const inviteResponses =
+		appealId === request.session.appealId ? request.session.inviteResponses : undefined;
+	const pageContent = inviteResponsesPage(backLinkUrl, inviteResponses);
 
 	return response.render('patterns/change-page.pattern.njk', {
 		pageContent,
@@ -623,6 +634,8 @@ export const postInviteResponses = async (request, response) => {
 	}
 
 	request.session.inviteResponses = body['invite-responses'];
+	request.session.appealId = appealId;
+
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/${folderId}/${documentId}/check-your-answers`
 	);
@@ -680,7 +693,7 @@ export const postDecisionCheckAndConfirm = async (request, response) => {
 export const getShareDocumentCheckAndConfirm = async (request, response) => {
 	const { appealId, folderId, documentId, costsCategory, costsDocumentType } = request.params;
 	const session = request.session;
-
+	const { currentAppeal } = request;
 	const documentInfo = await getFileVersionsInfo(request.apiClient, documentId);
 	if (!documentInfo || !documentInfo.latestDocumentVersion) {
 		return response.status(404).render('app/404.njk');
@@ -691,9 +704,40 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
 			? `/appeals-service/appeal-details/${appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/${folderId}/${documentId}`
 			: `/appeals-service/appeal-details/${appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/${folderId}/${documentId}/invite-responses`;
 
+	const { email } = await getTeamFromAppealId(request.apiClient, appealId);
+	const address = appealSiteToAddressString(currentAppeal?.appealSite);
+	const deadline = format(addWeeks(new Date(), 1), 'd MMMM yyyy');
+	let notifyTemplateName = '';
+
+	switch (costsDocumentType) {
+		case 'application':
+			notifyTemplateName = 'shared-cost-application.content.md';
+			break;
+		case 'correspondence':
+			notifyTemplateName = 'shared-cost-application-comment.content.md';
+			break;
+		case 'withdrawal':
+			notifyTemplateName = 'shared-cost-application-withdrawal.content.md';
+			break;
+	}
+
+	const inviteResponses = session?.inviteResponses?.toLowerCase() === 'yes';
+
+	const notifyPreview = await generateNotifyPreview(request.apiClient, notifyTemplateName, {
+		appeal_reference_number: currentAppeal?.appealReference,
+		site_address: address || '',
+		lpa_reference: currentAppeal?.planningApplicationReference || '',
+		enforcement_reference: currentAppeal.enforcementNotice?.appellantCase?.reference || '',
+		contact_email: email || '',
+		deadline: deadline,
+		responses_invited: inviteResponses,
+		dashboard_link: 'appeals'
+	});
+
 	const pageContent = shareDocumentCheckAndConfirmPage(
 		backLinkUrl,
 		documentInfo.latestDocumentVersion,
+		notifyPreview,
 		session.inviteResponses
 	);
 
@@ -708,15 +752,16 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postShareDocumentCheckAndConfirm = async (request, response) => {
-	const { appealId, documentId } = request.params;
-
+	const { appealId, documentId, costsDocumentType } = request.params;
 	try {
 		/** @type {import('#appeals/appeal-documents/appeal.documents.service.js').DocumentDetailAPIPatchRequest} */
 		const apiRequest = {
 			document: {
 				id: documentId,
 				isShared: true
-			}
+			},
+			inviteResponses: request.session?.inviteResponses === 'yes',
+			sharingDocumentType: `costs-${costsDocumentType}`
 		};
 
 		await updateDocument(request.apiClient, appealId, apiRequest);
@@ -730,6 +775,7 @@ export const postShareDocumentCheckAndConfirm = async (request, response) => {
 	}
 
 	delete request.session.inviteResponses;
+	delete request.session.costsDocumentTypes;
 
 	addNotificationBannerToSession({
 		session: request.session,

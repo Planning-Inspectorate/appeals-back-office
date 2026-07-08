@@ -8,6 +8,7 @@ import { generateEnforcementLpaQuestionnaireComponents } from './enforcement.js'
 import { generateHASLpaQuestionnaireComponents } from './has.js';
 import { generateLdcLpaQuestionnaireComponents } from './ldc.js';
 import { generateS20LpaQuestionnaireComponents } from './s20.js';
+import { generateS78ExpeditedLpaQuestionnaireComponents } from './s78-expedited.js';
 import { generateS78LpaQuestionnaireComponents } from './s78.js';
 
 /**
@@ -48,7 +49,10 @@ export function generateCaseTypeSpecificComponents(appealDetails, mappedLPAQData
 			throw new Error('Enforcement feature flag is disabled');
 		case APPEAL_TYPE.S78:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
-				return generateS78LpaQuestionnaireComponents(mappedLPAQData);
+				if (appealDetails.isS78Expedited) {
+					return generateS78ExpeditedLpaQuestionnaireComponents(appealDetails, mappedLPAQData);
+				}
+				return generateS78LpaQuestionnaireComponents(appealDetails, mappedLPAQData);
 			} else {
 				throw new Error('Feature flag inactive for S78');
 			}

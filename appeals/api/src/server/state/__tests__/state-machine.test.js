@@ -571,15 +571,31 @@ describe('State Machine Transitions', () => {
 	});
 
 	describe('Awaiting event transitions', () => {
+		test('should transition to AWAITING_EVENT if site visit has NOT elapsed', () => {
+			const initialState = APPEAL_CASE_STATUS.AWAITING_EVENT;
+			const event = VALIDATION_OUTCOME_COMPLETE;
+			const procedure = APPEAL_CASE_PROCEDURE.WRITTEN;
+			const siteVisitElapsed = false;
+
+			const expectedState = APPEAL_CASE_STATUS.AWAITING_EVENT;
+
+			expect(nextStateFPA(initialState, event, procedure, siteVisitElapsed)).toBe(expectedState);
+			expect(nextStateHAS(initialState, event, siteVisitElapsed)).toBe(expectedState);
+		});
+
+		test('should transition to ISSUE_DETERMINATION if site visit HAS elapsed', () => {
+			const initialState = APPEAL_CASE_STATUS.AWAITING_EVENT;
+			const event = VALIDATION_OUTCOME_COMPLETE;
+			const procedure = APPEAL_CASE_PROCEDURE.WRITTEN;
+			const siteVisitElapsed = true;
+
+			const expectedState = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
+
+			expect(nextStateFPA(initialState, event, procedure, siteVisitElapsed)).toBe(expectedState);
+			expect(nextStateHAS(initialState, event, siteVisitElapsed)).toBe(expectedState);
+		});
+
 		test.each([
-			[
-				APPEAL_CASE_STATUS.AWAITING_EVENT,
-				VALIDATION_OUTCOME_COMPLETE,
-				APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
-				APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
-				APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
-				APPEAL_CASE_STATUS.ISSUE_DETERMINATION
-			],
 			[
 				APPEAL_CASE_STATUS.AWAITING_EVENT,
 				VALIDATION_OUTCOME_INCOMPLETE,
@@ -761,10 +777,16 @@ describe('State Machine Transitions', () => {
 			return service.state.value;
 		};
 
-		test('transitions from LPA_QUESTIONNAIRE to EVENT on VALIDATION_OUTCOME_COMPLETE', () => {
+		test('transitions from LPA_QUESTIONNAIRE to EVENT on VALIDATION_OUTCOME_COMPLETE if site visit has NOT elapsed', () => {
 			expect(
-				nextStateExpedited(APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, VALIDATION_OUTCOME_COMPLETE)
+				nextStateExpedited(APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, VALIDATION_OUTCOME_COMPLETE, false)
 			).toBe(APPEAL_CASE_STATUS.EVENT);
+		});
+
+		test('transitions from LPA_QUESTIONNAIRE to ISSUE_DETERMINATION on VALIDATION_OUTCOME_COMPLETE if site visit HAS elapsed', () => {
+			expect(
+				nextStateExpedited(APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, VALIDATION_OUTCOME_COMPLETE, true)
+			).toBe(APPEAL_CASE_STATUS.ISSUE_DETERMINATION);
 		});
 
 		test('transitions from LPA_QUESTIONNAIRE to closed and withdrawn states', () => {
@@ -792,6 +814,27 @@ describe('State Machine Transitions', () => {
 			expect(
 				nextStateExpedited(APPEAL_CASE_STATUS.AWAITING_EVENT, APPEAL_CASE_STATUS.WITHDRAWN)
 			).toBe(APPEAL_CASE_STATUS.WITHDRAWN);
+		});
+
+		test('transitions from AWAITING_EVENT to AWAITING_EVENT on VALIDATION_OUTCOME_COMPLETE if site visit has NOT elapsed', () => {
+			expect(
+				nextStateExpedited(APPEAL_CASE_STATUS.AWAITING_EVENT, VALIDATION_OUTCOME_COMPLETE, false)
+			).toBe(APPEAL_CASE_STATUS.AWAITING_EVENT);
+		});
+
+		test('transitions from AWAITING_EVENT to ISSUE_DETERMINATION on VALIDATION_OUTCOME_COMPLETE if site visit HAS elapsed', () => {
+			expect(
+				nextStateExpedited(APPEAL_CASE_STATUS.AWAITING_EVENT, VALIDATION_OUTCOME_COMPLETE, true)
+			).toBe(APPEAL_CASE_STATUS.ISSUE_DETERMINATION);
+		});
+
+		test('transitions from EVENT to AWAITING_EVENT on VALIDATION_OUTCOME_COMPLETE unconditionally', () => {
+			expect(nextStateExpedited(APPEAL_CASE_STATUS.EVENT, VALIDATION_OUTCOME_COMPLETE, false)).toBe(
+				APPEAL_CASE_STATUS.AWAITING_EVENT
+			);
+			expect(nextStateExpedited(APPEAL_CASE_STATUS.EVENT, VALIDATION_OUTCOME_COMPLETE, true)).toBe(
+				APPEAL_CASE_STATUS.AWAITING_EVENT
+			);
 		});
 
 		test('validates and maps procedure types using isAppealTypeAndProcedureTypeValid guard', () => {

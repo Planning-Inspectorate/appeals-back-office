@@ -1296,9 +1296,9 @@ describe('appeal timetables routes', () => {
 				expect(mockNotifySend).toHaveBeenNthCalledWith(
 					1,
 					expect.objectContaining({
-						templateName: 'appeal-valid-start-case-s78-appellant',
+						templateName: 'appeal-valid-start-case-s78-expedited-appellant',
 						personalisation: expect.objectContaining({
-							procedure_type: 'Part 1',
+							procedure_type: 'written representations',
 							site_visit: true,
 							costs_info: true
 						})
@@ -1307,9 +1307,9 @@ describe('appeal timetables routes', () => {
 				expect(mockNotifySend).toHaveBeenNthCalledWith(
 					2,
 					expect.objectContaining({
-						templateName: 'appeal-valid-start-case-s78-lpa',
+						templateName: 'appeal-valid-start-case-s78-expedited-lpa',
 						personalisation: expect.objectContaining({
-							procedure_type: 'Part 1'
+							procedure_type: 'written representations'
 						})
 					})
 				);
@@ -1330,8 +1330,8 @@ describe('appeal timetables routes', () => {
 					{ statement_of_common_ground_deadline: '10 July 2024', planning_obligation_deadline: '' },
 					'appeal-valid-start-case-s78-appellant',
 					'appeal-valid-start-case-s78-lpa',
-					'appeal-valid-start-case-s78-appellant-hearing',
-					'appeal-valid-start-case-s78-lpa-hearing'
+					'appeal-valid-start-case-s78-hearing-appellant',
+					'appeal-valid-start-case-s78-hearing-lpa'
 				],
 				[
 					'listedBuilding',
@@ -1347,8 +1347,8 @@ describe('appeal timetables routes', () => {
 					{},
 					'appeal-valid-start-case-s78-appellant',
 					'appeal-valid-start-case-s78-lpa',
-					'appeal-valid-start-case-s78-appellant-hearing',
-					'appeal-valid-start-case-s78-lpa-hearing'
+					'appeal-valid-start-case-s78-hearing-appellant',
+					'appeal-valid-start-case-s78-hearing-lpa'
 				],
 				[
 					'advertisementAppeal',
@@ -1364,8 +1364,8 @@ describe('appeal timetables routes', () => {
 					{},
 					'appeal-valid-start-case-advertisement-appellant',
 					'appeal-valid-start-case-advertisement-lpa',
-					'appeal-valid-start-case-advertisement-appellant-hearing',
-					'appeal-valid-start-case-advertisement-lpa-hearing'
+					'appeal-valid-start-case-advertisement-hearing-appellant',
+					'appeal-valid-start-case-advertisement-hearing-lpa'
 				],
 				[
 					'ldcAppeal',
@@ -1381,8 +1381,8 @@ describe('appeal timetables routes', () => {
 					{},
 					'appeal-valid-start-case-advertisement-appellant',
 					'appeal-valid-start-case-advertisement-lpa',
-					'appeal-valid-start-case-advertisement-appellant-hearing',
-					'appeal-valid-start-case-advertisement-lpa-hearing'
+					'appeal-valid-start-case-advertisement-hearing-appellant',
+					'appeal-valid-start-case-advertisement-hearing-lpa'
 				]
 			])(
 				'for a %s appeal',
@@ -2831,7 +2831,6 @@ describe('appeal timetables routes', () => {
 
 				expect(response.status).toEqual(201);
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
-
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),

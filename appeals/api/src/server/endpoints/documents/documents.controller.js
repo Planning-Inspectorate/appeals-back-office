@@ -14,9 +14,12 @@ import {
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
 
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { sendNewDecisionLetter } from '#endpoints/decision/decision.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { notifySend } from '#notify/notify-send.js';
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
@@ -25,6 +28,7 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
 import { EventType } from '@pins/event-client';
 import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
+import { addWeeks, format } from 'date-fns';
 import { formatDocument } from './documents.formatter.js';
 import * as service from './documents.service.js';
 
@@ -371,17 +375,21 @@ export const updateDocuments = async (req, res) => {
  * @param {Request} req
  * @param {Response} res
  */
-export const updateDocumentFileName = async (req, res) => {
+export const updateDocument = async (req, res) => {
 	const { body, appeal, params } = req;
-	const { document } = body;
+	const { document, inviteResponses, sharingDocumentType } = body;
 	const { documentId } = params;
-
 	try {
 		const latestDocument = await documentRepository.getDocumentById(documentId);
 
-		if (latestDocument && latestDocument.name && latestDocument.latestDocumentVersion) {
-			await documentRepository.updateDocumentById(latestDocument.guid, document);
-			if (document.fileName && document.fileName !== latestDocument.name) {
+		if (latestDocument?.name && latestDocument.latestDocumentVersion) {
+			await documentRepository.updateDocument(latestDocument, document);
+
+			const nameHasChanged = document.fileName && document.fileName !== latestDocument.name;
+			const isSharingDocument =
+				document.isShared && !latestDocument.latestDocumentVersion.published;
+
+			if (nameHasChanged) {
 				const nameChangedMessage = stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_NAME_CHANGED, [
 					latestDocument.name,
 					document.fileName
@@ -395,7 +403,34 @@ export const updateDocumentFileName = async (req, res) => {
 					appeal.id,
 					latestDocument.guid
 				);
+			}
 
+			if (isSharingDocument && sharingDocumentType) {
+				let notifyTemplateName = '';
+
+				switch (sharingDocumentType) {
+					case 'costs-application':
+						notifyTemplateName = 'shared-cost-application';
+						break;
+					case 'costs-correspondence':
+						notifyTemplateName = 'shared-cost-application-comment';
+						break;
+					case 'costs-withdrawal':
+						notifyTemplateName = 'shared-cost-application-withdrawal';
+						break;
+				}
+
+				if (notifyTemplateName) {
+					await sendShareDocumentEmails(
+						req.notifyClient,
+						appeal,
+						notifyTemplateName,
+						inviteResponses
+					);
+				}
+			}
+
+			if (nameHasChanged || isSharingDocument) {
 				await broadcasters.broadcastDocument(
 					latestDocument.guid,
 					latestDocument.latestDocumentVersion.version,
@@ -411,6 +446,56 @@ export const updateDocumentFileName = async (req, res) => {
 	}
 
 	res.send({ document });
+};
+
+/**
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {import('@pins/appeals.api').Schema.Appeal} appeal
+ * @param {string} notifyTemplateName
+ * @param {boolean} inviteResponses
+ */
+const sendShareDocumentEmails = async (
+	notifyClient,
+	appeal,
+	notifyTemplateName,
+	inviteResponses
+) => {
+	const teamEmail = await getTeamEmailFromAppealId(appeal.id);
+	const deadline = format(addWeeks(new Date(), 1), 'd MMMM yyyy');
+	const siteAddress = appeal.address
+		? formatAddressSingleLine(appeal.address)
+		: 'Address not available';
+
+	const personalisation = {
+		appeal_reference_number: appeal?.reference || '',
+		site_address: siteAddress,
+		lpa_reference: appeal?.applicationReference || '',
+		enforcement_reference: appeal?.appellantCase?.enforcementReference || '',
+		contact_email: teamEmail || '',
+		deadline: deadline,
+		responses_invited: !!inviteResponses
+	};
+
+	const appellantEmail = appeal.agent?.email ?? appeal.appellant?.email;
+	const lpaEmail = appeal.lpa?.email;
+
+	if (appellantEmail) {
+		await notifySend({
+			templateName: notifyTemplateName,
+			notifyClient: notifyClient,
+			recipientEmail: appellantEmail,
+			personalisation: { dashboard_link: 'appeals', ...personalisation }
+		});
+	}
+
+	if (lpaEmail) {
+		await notifySend({
+			templateName: notifyTemplateName,
+			notifyClient: notifyClient,
+			recipientEmail: lpaEmail,
+			personalisation: { dashboard_link: 'manage-appeals', ...personalisation }
+		});
+	}
 };
 
 /**

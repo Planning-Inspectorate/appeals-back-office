@@ -58,8 +58,10 @@ export const submaps = {
 	// Inherited from S78
 
 	// Section 3:
-	appealNotification: mapAppealNotification,
+	lpaEnforcementNotice: mapEnforcementNotice,
+	lpaEnforcementNoticePlan: mapEnforcementNoticePlan,
 	enforcementList: mapEnforcementList,
+	appealNotification: mapAppealNotification,
 
 	// Section 4:
 	communityInfrastructureLevy: mapCommunityInfrastructureLevy,
@@ -68,8 +70,6 @@ export const submaps = {
 	infrastructureLevyExpectedDate: mapInfrastructureLevyExpectedDate,
 	localDevelopmentOrder: mapLocalDevelopmentOrder,
 	planningPermission: mapPlanningPermission,
-	lpaEnforcementNotice: mapEnforcementNotice,
-	lpaEnforcementNoticePlan: mapEnforcementNoticePlan,
 	planningContraventionNotice: mapPlanningContraventionNotice
 
 	// Section 5:

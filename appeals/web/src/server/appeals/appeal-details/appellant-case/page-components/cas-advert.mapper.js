@@ -111,7 +111,9 @@ export function generateCASAdvertComponents(
 						? [mappedAppellantCaseData.appealStatement.display.summaryListItem]
 						: []),
 					mappedAppellantCaseData.costsDocument.display.summaryListItem,
-					mappedAppellantCaseData.supportingDocuments.display.summaryListItem
+					...(beforeExpeditedOriginalApplicationCutOff(appellantCaseData.applicationDate)
+						? [mappedAppellantCaseData.supportingDocuments.display.summaryListItem]
+						: [])
 				]
 			}
 		};

@@ -7,6 +7,7 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { APPEAL_TYPE, PROCEDURE_TYPE_ID_MAP } from '@pins/appeals/constants/common.js';
 import { isS78ExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { isBefore } from 'date-fns';
+import { setEnvironmentalImpactAssessmentScreening } from '../../appeal-details.service.js';
 import * as appellantCaseService from '../appellant-case.service.js';
 import {
 	checkAndConfirmEnforcementPage,
@@ -362,6 +363,38 @@ export const postEnforcementValidDate = async (request, response) => {
 			return renderEnforcementValidDate(request, response, errorMessage);
 		}
 
+		const { createdAt } = currentAppeal;
+		const validDateISOString = dayMonthYearHourMinuteToISOString({
+			year: updatedValidDateYear,
+			month: updatedValidDateMonth,
+			day: updatedValidDateDay
+		});
+
+		const {
+			day: createdAtDay,
+			month: createdAtMonth,
+			year: createdAtYear
+		} = dateISOStringToDayMonthYearHourMinute(createdAt);
+		const createdAtDateAtMidnight = dayMonthYearHourMinuteToISOString({
+			day: createdAtDay,
+			month: createdAtMonth,
+			year: createdAtYear
+		});
+
+		if (isBefore(new Date(validDateISOString), new Date(createdAtDateAtMidnight))) {
+			const /** @type {import('@pins/express').ValidationErrors} */ errorMessage = {
+					'valid-date-day': {
+						location: 'body',
+						path: 'all-fields',
+						value: '',
+						type: 'field',
+						msg: 'The valid date must be on or after the date the case was received.'
+					}
+				};
+
+			return renderEnforcementValidDate(request, response, errorMessage);
+		}
+
 		session.webAppellantCaseReviewOutcome = {
 			...session.webAppellantCaseReviewOutcome,
 			updatedValidDateDay,
@@ -393,16 +426,23 @@ export const postEnforcementValidDate = async (request, response) => {
  */
 const renderEnforcementValidDate = async (request, response, apiErrors) => {
 	const {
-		currentAppeal: { appealId, appealReference },
+		currentAppeal: { appealId, appealReference, createdAt },
 		session: { webAppellantCaseReviewOutcome }
 	} = request;
+	const createdDayMonthYear = dateISOStringToDayMonthYearHourMinute(createdAt);
 
 	const dateValidDay =
-		request.body['valid-date-day'] || webAppellantCaseReviewOutcome?.updatedValidDateDay;
+		request.body['valid-date-day'] ||
+		webAppellantCaseReviewOutcome?.updatedValidDateDay ||
+		createdDayMonthYear.day;
 	const dateValidMonth =
-		request.body['valid-date-month'] || webAppellantCaseReviewOutcome?.updatedValidDateMonth;
+		request.body['valid-date-month'] ||
+		webAppellantCaseReviewOutcome?.updatedValidDateMonth ||
+		createdDayMonthYear.month;
 	const dateValidYear =
-		request.body['valid-date-year'] || webAppellantCaseReviewOutcome?.updatedValidDateYear;
+		request.body['valid-date-year'] ||
+		webAppellantCaseReviewOutcome?.updatedValidDateYear ||
+		createdDayMonthYear.year;
 
 	let errors = request.errors || apiErrors;
 
@@ -566,16 +606,23 @@ export const postEnvironmentalServicesReview = async (request, response) => {
 		currentAppeal: { appealId, appellantCaseId },
 		session
 	} = request;
+
+	const { day, month, year } = session.updatedValidDate || {};
+
 	await setReviewOutcomeValidForAppellantCase(
 		request.apiClient,
 		appealId,
 		appellantCaseId,
 		dayMonthYearHourMinuteToISOString({
-			day: session.day,
-			month: session.month,
-			year: session.year
+			day,
+			month,
+			year
 		})
 	);
+
+	await setEnvironmentalImpactAssessmentScreening(request.apiClient, appealId, true);
+
+	delete session.updatedValidDate;
 
 	addNotificationBannerToSession({
 		session,

@@ -64,14 +64,14 @@
             label: "Accepted",
             id: "valid",
             panel: {
-              html: govukTable(pageContent.validTable) | safe if pageContent.validTable | length else '<p class="govuk-body">No valid comments</p>'
+              html: govukTable(pageContent.validTable) | safe if pageContent.validTable | length else '<p class="govuk-body">No accepted comments</p>'
             }
           },
           {
             label: "Rejected",
             id: "invalid",
             panel: {
-              html: govukTable(pageContent.invalidTable) | safe if pageContent.invalidTable | length else '<p class="govuk-body">No invalid comments</p>'
+              html: govukTable(pageContent.invalidTable) | safe if pageContent.invalidTable | length else '<p class="govuk-body">No rejected comments</p>'
             }
           }
         ]

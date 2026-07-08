@@ -1,12 +1,26 @@
+import config from '#environment/config.js';
 import { textSummaryListItem } from '#lib/mappers/components/index.js';
+import { APPEAL_TYPE_CHANGE_APPEALS } from '@pins/appeals/constants/common.js';
 import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { APPEAL_TYPE_OF_PLANNING_APPLICATION } from '@planning-inspectorate/data-model';
 
 /**
  * @param {string | null | undefined } typeOfPlanningApplication
+ * @param {boolean | null | undefined } isEnforcementNotice
+ * @param {boolean | null | undefined } isEnforcementListedBuilding
  * @returns {string}
  */
-const applicationTypeText = (typeOfPlanningApplication) => {
+const applicationTypeText = (
+	typeOfPlanningApplication,
+	isEnforcementNotice,
+	isEnforcementListedBuilding
+) => {
+	if (isEnforcementNotice && config.featureFlags.featureFlagNewBeforeYouStart) {
+		return isEnforcementListedBuilding
+			? APPEAL_TYPE_CHANGE_APPEALS.ENFORCEMENT_LISTED_BUILDING
+			: APPEAL_TYPE_CHANGE_APPEALS.ENFORCEMENT_NOTICE;
+	}
+
 	if (!typeOfPlanningApplication) {
 		return '';
 	}
@@ -26,8 +40,14 @@ const applicationTypeText = (typeOfPlanningApplication) => {
 export const mapApplicationType = ({ appellantCaseData, currentRoute }) =>
 	textSummaryListItem({
 		id: 'appeal-type',
-		text: 'What type of application is your appeal about?',
-		value: applicationTypeText(appellantCaseData.typeOfPlanningApplication),
+		text: config.featureFlags.featureFlagNewBeforeYouStart
+			? 'What is your appeal about?'
+			: 'What type of application is your appeal about?',
+		value: applicationTypeText(
+			appellantCaseData.typeOfPlanningApplication,
+			appellantCaseData.enforcementNotice?.isReceived,
+			appellantCaseData.enforcementNotice?.isListedBuilding
+		),
 		link: `${currentRoute}/#`,
 		editable: false
 	});

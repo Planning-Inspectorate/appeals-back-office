@@ -1888,7 +1888,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'H0738',
 		name: 'Stockton-on-Tees Borough Council',
-		email: 'planning.administration@stockton.gov.uk',
+		email: 'planningdevelopmentservices@stockton.gov.uk',
 		teamId: 16 // North2
 	},
 	{
@@ -2000,7 +2000,7 @@ export const localPlanningDepartmentList = [
 		teamId: 16 // North2
 	},
 	{
-		lpaCode: 'J1155 ',
+		lpaCode: 'J1155',
 		name: 'Devon County Council',
 		email: 'planning@devon.gov.uk',
 		teamId: 9 // West3

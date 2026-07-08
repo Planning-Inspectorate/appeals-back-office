@@ -8,11 +8,15 @@ import {
 	VALIDATION_OUTCOME_VALID
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
-import transitionState, { transitionLinkedChildAppealsState } from '../transition-state.js';
+import transitionState, {
+	getEventElapsed,
+	transitionLinkedChildAppealsState
+} from '../transition-state.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
 const appealStatusRepository = (await import('#repositories/appeal-status.repository.js')).default;
 const representationRepository = (await import('#repositories/representation.repository.js'))
 	.default;
+const oneDayinMS = 90000000; // 25 hours
 
 describe('transitionState', () => {
 	const stateList = [
@@ -69,7 +73,7 @@ describe('transitionState', () => {
 			databaseConnector.appealStatus.update.mockResolvedValue({});
 		});
 		test('updates state to ready_to_start and updates personal list', async () => {
-			await transitionState(11, 'user-123', VALIDATION_OUTCOME_VALID);
+			const result = await transitionState(11, 'user-123', VALIDATION_OUTCOME_VALID);
 			expect(databaseConnector.appealStatus.updateMany).toHaveBeenCalledWith({
 				where: { appealId: 11 },
 				data: { valid: false }
@@ -81,6 +85,7 @@ describe('transitionState', () => {
 					valid: true
 				})
 			});
+			expect(result).toEqual(true);
 		});
 
 		test.each(stateList)(
@@ -94,7 +99,7 @@ describe('transitionState', () => {
 				representationRepository.getRepresentations = jest.fn();
 				databaseConnector.appeal.findUnique.mockResolvedValue(dynamicFixture);
 
-				await transitionState(11, 'user-123', VALIDATION_OUTCOME_VALID);
+				const result = await transitionState(11, 'user-123', VALIDATION_OUTCOME_VALID);
 
 				expect(databaseConnector.appealStatus.updateMany).toHaveBeenCalledTimes(
 					expectUpdate ? 1 : 0
@@ -103,6 +108,7 @@ describe('transitionState', () => {
 				expect(databaseConnector.appealStatus.create).toHaveBeenCalledTimes(expectCreate ? 1 : 0);
 
 				expect(databaseConnector.personalList.upsert).toHaveBeenCalledTimes(1);
+				expect(result).toEqual(expectUpdate);
 			}
 		);
 	});
@@ -134,10 +140,11 @@ describe('transitionState', () => {
 			databaseConnector.personalList.upsert = jest.fn().mockResolvedValue({});
 		});
 		test('does not update status but updates personal list', async () => {
-			await transitionState(22, 'user-xyz', VALIDATION_OUTCOME_INCOMPLETE);
+			const result = await transitionState(22, 'user-xyz', VALIDATION_OUTCOME_INCOMPLETE);
 			expect(appealStatusRepository.updateAppealStatusByAppealId).not.toHaveBeenCalled();
 			expect(appealStatusRepository.rollBackAppealStatusTo).not.toHaveBeenCalled();
 			expect(databaseConnector.personalList.upsert).toHaveBeenCalled();
+			expect(result).toEqual(false);
 		});
 
 		describe('Expedited Appeals (HAS)', () => {
@@ -149,9 +156,10 @@ describe('transitionState', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(hasAppeal);
 
-				await transitionState(11, 'user-123', VALIDATION_OUTCOME_VALID);
+				const result = await transitionState(11, 'user-123', VALIDATION_OUTCOME_VALID);
 
 				expect(appealStatusRepository.updateAppealStatusByAppealId).toHaveBeenCalled();
+				expect(result).toEqual(true);
 			});
 
 			test('transitions a WRITTEN_PART_1 appeal with arranged site visit from event to awaiting_event', async () => {
@@ -161,7 +169,7 @@ describe('transitionState', () => {
 					appealType: { key: APPEAL_CASE_TYPE.D },
 					procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 },
 					siteVisit: {
-						visitDate: new Date(Date.now() + 86400000).toISOString()
+						visitDate: new Date(Date.now() + oneDayinMS).toISOString()
 					}
 				};
 
@@ -177,7 +185,7 @@ describe('transitionState', () => {
 					});
 				});
 
-				await transitionState(11, 'user-123', VALIDATION_OUTCOME_COMPLETE);
+				const result = await transitionState(11, 'user-123', VALIDATION_OUTCOME_COMPLETE);
 
 				expect(appealStatusRepository.updateAppealStatusByAppealId).toHaveBeenNthCalledWith(
 					1,
@@ -189,7 +197,138 @@ describe('transitionState', () => {
 					11,
 					'awaiting_event'
 				);
+				expect(result).toEqual(true);
 			});
+
+			test('transitions a S78 expedited (W + WRITTEN_PART_1) appeal with arranged site visit from event to awaiting_event', async () => {
+				const expeditedAppeal = {
+					...appealFixture,
+					appealStatus: [{ status: 'lpa_questionnaire', valid: true }],
+					appealType: { key: APPEAL_CASE_TYPE.W },
+					procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 },
+					siteVisit: {
+						visitDate: new Date(Date.now() + oneDayinMS).toISOString()
+					}
+				};
+
+				let callCount = 0;
+				databaseConnector.appeal.findUnique.mockImplementation(() => {
+					callCount++;
+					if (callCount === 1) {
+						return Promise.resolve(expeditedAppeal);
+					}
+					return Promise.resolve({
+						...expeditedAppeal,
+						appealStatus: [{ status: 'event', valid: true }]
+					});
+				});
+
+				const result = await transitionState(11, 'user-123', VALIDATION_OUTCOME_COMPLETE);
+
+				expect(appealStatusRepository.updateAppealStatusByAppealId).toHaveBeenNthCalledWith(
+					1,
+					11,
+					'event'
+				);
+				expect(appealStatusRepository.updateAppealStatusByAppealId).toHaveBeenNthCalledWith(
+					2,
+					11,
+					'awaiting_event'
+				);
+				expect(result).toEqual(true);
+			});
+
+			test.each([
+				{
+					type: APPEAL_CASE_TYPE.W,
+					procedure: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
+					description: 'S78 expedited (W + WRITTEN_PART_1)'
+				},
+				{
+					type: APPEAL_CASE_TYPE.D,
+					procedure: APPEAL_CASE_PROCEDURE.WRITTEN,
+					description: 'HAS (D + WRITTEN)'
+				},
+				{
+					type: APPEAL_CASE_TYPE.ZA,
+					procedure: APPEAL_CASE_PROCEDURE.WRITTEN,
+					description: 'CAS Advert (ZA + WRITTEN)'
+				},
+				{
+					type: APPEAL_CASE_TYPE.ZP,
+					procedure: APPEAL_CASE_PROCEDURE.WRITTEN,
+					description: 'CAS Planning (ZP + WRITTEN)'
+				}
+			])(
+				'transitions a $description appeal with arranged site visit in the past from lpaq to issue_determination',
+				async ({ type, procedure }) => {
+					const expeditedAppeal = {
+						...appealFixture,
+						appealStatus: [{ status: 'lpa_questionnaire', valid: true }],
+						appealType: { key: type },
+						procedureType: { key: procedure },
+						siteVisit: {
+							visitDate: new Date(Date.now() - oneDayinMS).toISOString()
+						}
+					};
+
+					databaseConnector.appeal.findUnique.mockResolvedValue(expeditedAppeal);
+
+					const result = await transitionState(11, 'user-123', VALIDATION_OUTCOME_COMPLETE);
+
+					expect(appealStatusRepository.updateAppealStatusByAppealId).toHaveBeenCalledWith(
+						11,
+						'issue_determination'
+					);
+					expect(appealStatusRepository.updateAppealStatusByAppealId).toHaveBeenCalledTimes(1);
+					expect(result).toEqual(true);
+				}
+			);
+
+			test.each([
+				{
+					type: APPEAL_CASE_TYPE.W,
+					procedure: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
+					description: 'S78 expedited (W + WRITTEN_PART_1)'
+				},
+				{
+					type: APPEAL_CASE_TYPE.D,
+					procedure: APPEAL_CASE_PROCEDURE.WRITTEN,
+					description: 'HAS (D + WRITTEN)'
+				},
+				{
+					type: APPEAL_CASE_TYPE.ZA,
+					procedure: APPEAL_CASE_PROCEDURE.WRITTEN,
+					description: 'CAS Advert (ZA + WRITTEN)'
+				},
+				{
+					type: APPEAL_CASE_TYPE.ZP,
+					procedure: APPEAL_CASE_PROCEDURE.WRITTEN,
+					description: 'CAS Planning (ZP + WRITTEN)'
+				}
+			])(
+				'transitions a $description appeal from lpaq to event if site visit is not scheduled',
+				async ({ type, procedure }) => {
+					const expeditedAppeal = {
+						...appealFixture,
+						appealStatus: [{ status: 'lpa_questionnaire', valid: true }],
+						appealType: { key: type },
+						procedureType: { key: procedure },
+						siteVisit: null
+					};
+
+					databaseConnector.appeal.findUnique.mockResolvedValue(expeditedAppeal);
+
+					const result = await transitionState(11, 'user-123', VALIDATION_OUTCOME_COMPLETE);
+
+					expect(appealStatusRepository.updateAppealStatusByAppealId).toHaveBeenCalledWith(
+						11,
+						'event'
+					);
+					expect(appealStatusRepository.updateAppealStatusByAppealId).toHaveBeenCalledTimes(1);
+					expect(result).toEqual(true);
+				}
+			);
 		});
 
 		describe('Error Handling', () => {
@@ -251,15 +390,17 @@ describe('transitionState', () => {
 					}
 				]);
 
-				await transitionState(11, 'user-123', VALIDATION_OUTCOME_VALID);
+				const result = await transitionState(11, 'user-123', VALIDATION_OUTCOME_VALID);
 
 				expect(databaseConnector.personalList.upsert).not.toHaveBeenCalled();
+				expect(result).toEqual(true);
 			});
 
 			test('updates personal list for non-child appeals', async () => {
-				await transitionState(11, 'user-123', VALIDATION_OUTCOME_VALID);
+				const result = await transitionState(11, 'user-123', VALIDATION_OUTCOME_VALID);
 
 				expect(databaseConnector.personalList.upsert).toHaveBeenCalled();
+				expect(result).toEqual(true);
 			});
 		});
 
@@ -282,13 +423,18 @@ describe('transitionState', () => {
 					]
 				};
 
-				await transitionLinkedChildAppealsState(parentAppeal, 'user-123', VALIDATION_OUTCOME_VALID);
+				const result = await transitionLinkedChildAppealsState(
+					parentAppeal,
+					'user-123',
+					VALIDATION_OUTCOME_VALID
+				);
 
 				expect(databaseConnector.appeal.findUnique).toHaveBeenCalledWith(
 					expect.objectContaining({
 						where: { id: 11 }
 					})
 				);
+				expect(result).toEqual(parentAppeal.childAppeals.map((child) => child.childId));
 			});
 
 			test('does not transition child appeals with different status', async () => {
@@ -310,9 +456,14 @@ describe('transitionState', () => {
 					]
 				};
 
-				await transitionLinkedChildAppealsState(parentAppeal, 'user-123', VALIDATION_OUTCOME_VALID);
+				const result = await transitionLinkedChildAppealsState(
+					parentAppeal,
+					'user-123',
+					VALIDATION_OUTCOME_VALID
+				);
 
 				expect(databaseConnector.appeal.findUnique).not.toHaveBeenCalled();
+				expect(result).toEqual([]);
 			});
 		});
 	});
@@ -324,7 +475,7 @@ describe('transitionState', () => {
 		});
 
 		test('calls getAppealById with only required fields', async () => {
-			await transitionState(11, 'user-123', VALIDATION_OUTCOME_VALID);
+			const result = await transitionState(11, 'user-123', VALIDATION_OUTCOME_VALID);
 			expect(appealRepository.getAppealById).toHaveBeenCalledWith(11, true, [
 				'appealStatus',
 				'appealType',
@@ -334,6 +485,196 @@ describe('transitionState', () => {
 				'inquiry',
 				'childAppeals'
 			]);
+			expect(result).toEqual(true);
 		});
+	});
+});
+
+describe('getEventElapsed', () => {
+	const validAppealTypes = Object.keys(APPEAL_CASE_TYPE);
+	const testCases = validAppealTypes.flatMap((appealTypeKey) => {
+		return [
+			{
+				description: 'returns true if hearing has ended',
+				appeal: {
+					hearing: {
+						hearingEndTime: new Date(Date.now() - oneDayinMS)
+					}
+				},
+				appealType: { key: appealTypeKey },
+				procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+				expected: true
+			},
+			{
+				description: 'returns false if hearing has not ended',
+				appeal: {
+					hearing: {
+						hearingEndTime: new Date(Date.now() + oneDayinMS)
+					}
+				},
+				appealType: { key: appealTypeKey },
+				procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+				expected: false
+			},
+			{
+				description: 'returns true if hearing with no end time is in the past',
+				appeal: {
+					hearing: {
+						hearingEndTime: null,
+						hearingStartTime: new Date(Date.now() - oneDayinMS)
+					}
+				},
+				appealType: { key: appealTypeKey },
+				procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+				expected: true
+			},
+			{
+				description: 'returns false if hearing with no end time is today',
+				appeal: {
+					hearing: {
+						hearingEndTime: null,
+						hearingStartTime: new Date(Date.now())
+					}
+				},
+				appealType: { key: appealTypeKey },
+				procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+				expected: false
+			},
+			{
+				description: 'returns false if hearing with no end time is in the future',
+				appeal: {
+					hearing: {
+						hearingEndTime: null,
+						hearingStartTime: new Date(Date.now() + oneDayinMS)
+					}
+				},
+				appealType: { key: appealTypeKey },
+				procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+				expected: false
+			},
+
+			{
+				description: 'returns true if inquiry has ended',
+				appeal: {
+					inquiry: {
+						inquiryEndTime: new Date(Date.now() - oneDayinMS)
+					}
+				},
+				appealType: { key: appealTypeKey },
+				procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+				expected: true
+			},
+			{
+				description: 'returns false if inquiry has not ended',
+				appeal: {
+					inquiry: {
+						inquiryEndTime: new Date(Date.now() + oneDayinMS)
+					}
+				},
+				appealType: { key: appealTypeKey },
+				procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+				expected: false
+			},
+			{
+				description: 'returns true if inquiry with no end time is in the past',
+				appeal: {
+					inquiry: {
+						inquiryEndTime: null,
+						inquiryStartTime: new Date(Date.now() - oneDayinMS)
+					}
+				},
+				appealType: { key: appealTypeKey },
+				procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+				expected: true
+			},
+			{
+				description: 'returns false if inquiry with no end time is today',
+				appeal: {
+					inquiry: {
+						inquiryEndTime: null,
+						inquiryStartTime: new Date(Date.now())
+					}
+				},
+				appealType: { key: appealTypeKey },
+				procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+				expected: false
+			},
+			{
+				description: 'returns false if inquiry with no end time is in the future',
+				appeal: {
+					inquiry: {
+						inquiryEndTime: null,
+						inquiryStartTime: new Date(Date.now() + oneDayinMS)
+					}
+				},
+				appealType: { key: appealTypeKey },
+				procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+				expected: false
+			},
+
+			{
+				description: 'returns false if written and visit date is in the future',
+				appeal: {
+					siteVisit: {
+						visitDate: new Date(Date.now() + oneDayinMS)
+					}
+				},
+				appealType: { key: appealTypeKey },
+				procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+				expected: false
+			},
+			{
+				description: 'returns false if written and visit date is now',
+				appeal: {
+					siteVisit: {
+						visitDate: new Date(Date.now())
+					}
+				},
+				appealType: { key: appealTypeKey },
+				procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+				expected: false
+			},
+			{
+				description: 'returns true if written and visit date is in the past',
+				appeal: {
+					siteVisit: {
+						visitDate: new Date(Date.now() - oneDayinMS)
+					}
+				},
+				appealType: { key: appealTypeKey },
+				procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+				expected: true
+			},
+			{
+				description: 'returns false if written and no visit date',
+				appeal: {
+					siteVisit: null
+				},
+				appealType: { key: appealTypeKey },
+				procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+				expected: false
+			}
+		];
+	});
+
+	testCases.push(
+		{
+			description: 'returns false if unknown procedure type',
+			appeal: {},
+			appealType: { key: APPEAL_CASE_TYPE.W },
+			procedureType: 'unknown',
+			expected: false
+		},
+		{
+			description: 'returns false no case type',
+			appeal: {},
+			appealType: null,
+			procedureType: 'unknown',
+			expected: false
+		}
+	);
+	test.each(testCases)('$description', ({ appeal, appealType, procedureType, expected }) => {
+		const result = getEventElapsed(appeal, appealType, procedureType);
+		expect(result).toEqual(expected);
 	});
 });

@@ -12,7 +12,7 @@ import {
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentsRequest} UpdateDocumentsRequest */
-/** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentFileNameRequest} UpdateDocumentFileNameRequest */
+/** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentRequest} UpdateDocumentRequest */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentAvCheckRequest} UpdateDocumentAvCheckRequest */
 
 /**
@@ -167,16 +167,51 @@ export const updateDocuments = (data) => {
 };
 
 /**
- * @param {string} documentId
- * @param {UpdateDocumentFileNameRequest} document
- * @returns
+ * @param {Document} latestDocument
+ * @param {UpdateDocumentRequest['document']} document
+ * @returns {Promise<Document>}
  */
-export const updateDocumentById = (documentId, document) => {
-	return databaseConnector.document.update({
-		data: { name: document.fileName },
-		where: {
-			guid: documentId
+export const updateDocument = (latestDocument, document) => {
+	const { guid, latestDocumentVersion } = latestDocument;
+
+	return databaseConnector.$transaction(async (tx) => {
+		const documentResult = await tx.document.update({
+			data: { name: document.fileName },
+			where: {
+				guid: guid
+			}
+		});
+
+		// publish doc if isShared and not already published
+		if (document.isShared && latestDocumentVersion && !latestDocumentVersion.published) {
+			const redactionStatuses =
+				await documentRedactionStatusRepository.getAllDocumentRedactionStatuses();
+			const noRedactionRequiredStatus = redactionStatuses.find(
+				(redaction) => redaction.key === APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED
+			);
+
+			/** @type {import('#db-client/client.ts').Prisma.DocumentVersionUpdateInput} */
+			const update = {
+				published: true,
+				datePublished: new Date()
+			};
+
+			if (latestDocumentVersion.redactionStatusId === null) {
+				update.redactionStatus = { connect: { id: noRedactionRequiredStatus?.id } };
+			}
+
+			await tx.documentVersion.update({
+				data: update,
+				where: {
+					documentGuid_version: {
+						documentGuid: guid,
+						version: latestDocumentVersion.version
+					}
+				}
+			});
 		}
+
+		return documentResult;
 	});
 };
 

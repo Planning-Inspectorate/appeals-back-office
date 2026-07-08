@@ -49,8 +49,15 @@ describe('broadcastAppeal', () => {
 		jest.clearAllMocks();
 	});
 
-	const expeditedCaseTypes = caseTypes.filter((c) => c.type === APPEAL_CASE_TYPE.W);
-	const standardCaseTypes = caseTypes.filter((c) => c.type !== APPEAL_CASE_TYPE.W);
+	const expeditedCaseTypes = caseTypes.filter((c) =>
+		[APPEAL_CASE_TYPE.D, APPEAL_CASE_TYPE.ZP, APPEAL_CASE_TYPE.ZA].includes(c.type)
+	);
+	const standardCaseTypes = caseTypes.filter(
+		(c) =>
+			![APPEAL_CASE_TYPE.W, APPEAL_CASE_TYPE.D, APPEAL_CASE_TYPE.ZP, APPEAL_CASE_TYPE.ZA].includes(
+				c.type
+			)
+	);
 
 	it.each(expeditedCaseTypes)(
 		'broadcasts correct schema and topic for expedited appeal type %s',
@@ -59,11 +66,9 @@ describe('broadcastAppeal', () => {
 			// @ts-ignore
 			testCase.appealType = { key: type };
 
-			testCase.appellantCase.reasonForAppealAppellant = 'S78 reason';
+			testCase.appellantCase.reasonForAppealAppellant = 'Some reason';
 			testCase.appellantCase.anySignificantChanges = 'Yes';
 			testCase.appellantCase.anySignificantChanges_localPlanSignificantChanges = 'lp changes';
-			testCase.appellantCase.screeningOpinionIndicatesEiaRequired = true;
-			testCase.appellantCase.ownershipCertificate = true;
 
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(testCase);
@@ -72,8 +77,6 @@ describe('broadcastAppeal', () => {
 
 			const expectedFields = {
 				reasonForAppealAppellant: expect.any(String),
-				screeningOpinionIndicatesEiaRequired: expect.any(Boolean),
-				ownershipCertificate: expect.any(Boolean),
 				significantChangesAffectingApplicationAppellant: expect.any(Array)
 			};
 
@@ -86,6 +89,39 @@ describe('broadcastAppeal', () => {
 			);
 		}
 	);
+
+	it('broadcasts correct schema and topic for expedited appeal type W (S78)', async () => {
+		const config = caseTypes.find((c) => c.type === APPEAL_CASE_TYPE.W);
+		const testCase = structuredClone(config.mockAppeal);
+		// @ts-ignore
+		testCase.appealType = { key: APPEAL_CASE_TYPE.W };
+
+		testCase.appellantCase.reasonForAppealAppellant = 'Some reason';
+		testCase.appellantCase.anySignificantChanges = 'Yes';
+		testCase.appellantCase.anySignificantChanges_localPlanSignificantChanges = 'lp changes';
+		testCase.appellantCase.screeningOpinionIndicatesEiaRequired = true;
+		testCase.appellantCase.ownershipCertificate = true;
+
+		// @ts-ignore
+		databaseConnector.appeal.findUnique.mockResolvedValue(testCase);
+
+		await broadcastAppeal(123);
+
+		const expectedFields = {
+			reasonForAppealAppellant: expect.any(String),
+			significantChangesAffectingApplicationAppellant: expect.any(Array),
+			screeningOpinionIndicatesEiaRequired: expect.any(Boolean),
+			ownershipCertificate: expect.any(Boolean)
+		};
+
+		// @ts-ignore
+		expect(global.mockSendEvents).toHaveBeenCalledWith(
+			config.expectedTopic,
+			expect.arrayContaining([expect.objectContaining(expectedFields)]),
+			expect.any(String),
+			expect.any(Object)
+		);
+	});
 
 	it.each(standardCaseTypes)(
 		'broadcasts correct schema and topic for appeal type %s',
@@ -110,10 +146,8 @@ describe('broadcastAppeal', () => {
 			// @ts-ignore
 			const sentEvent = global.mockSendEvents.mock.calls[0][1][0];
 
-			expect(sentEvent).not.toHaveProperty('reasonForAppealAppellant');
 			expect(sentEvent).not.toHaveProperty('screeningOpinionIndicatesEiaRequired');
 			expect(sentEvent).not.toHaveProperty('ownershipCertificate');
-			expect(sentEvent).not.toHaveProperty('significantChangesAffectingApplicationAppellant');
 		}
 	);
 

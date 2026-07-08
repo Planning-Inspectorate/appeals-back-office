@@ -3,7 +3,7 @@ import {
 	APPEAL_CASE_TYPE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from '@planning-inspectorate/data-model';
-import { APPEAL_TYPE } from '../../constants/common';
+import { APPEAL_TYPE, PROCEDURE_TYPE_NAME } from '../../constants/common';
 import {
 	isExpeditedAppealType,
 	isS78ExpeditedAppealType,
@@ -164,6 +164,85 @@ describe('isS78ExpeditedAppealType', () => {
 			)
 		).toBe(false);
 	});
+
+	it('returns true if appealType is S78, planning application is MINOR_COMMERCIAL_DEVELOPMENT, and decision is granted', () => {
+		expect(
+			isS78ExpeditedAppealType(
+				APPEAL_TYPE.S78,
+				'2026-04-02',
+				'granted',
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.MINOR_COMMERCIAL_DEVELOPMENT
+			)
+		).toBe(true);
+	});
+
+	it('returns false if appealType is S78, planning application is MINOR_COMMERCIAL_DEVELOPMENT, and decision is refused', () => {
+		expect(
+			isS78ExpeditedAppealType(
+				APPEAL_TYPE.S78,
+				'2026-04-02',
+				'refused',
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.MINOR_COMMERCIAL_DEVELOPMENT
+			)
+		).toBe(false);
+	});
+
+	it('returns true if appealType is S78, planning application is HOUSEHOLDER_PLANNING, and decision is granted', () => {
+		expect(
+			isS78ExpeditedAppealType(
+				APPEAL_TYPE.S78,
+				'2026-04-02',
+				'granted',
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.HOUSEHOLDER_PLANNING
+			)
+		).toBe(true);
+	});
+
+	it('returns false if appealType is S78, planning application is HOUSEHOLDER_PLANNING, and decision is refused', () => {
+		expect(
+			isS78ExpeditedAppealType(
+				APPEAL_TYPE.S78,
+				'2026-04-02',
+				'refused',
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.HOUSEHOLDER_PLANNING
+			)
+		).toBe(false);
+	});
+
+	describe('prior-approval', () => {
+		it('returns true when decision is GRANTED and date is on/after cutoff', () => {
+			expect(
+				isS78ExpeditedAppealType(
+					APPEAL_TYPE.S78,
+					'2026-04-02',
+					'granted',
+					APPEAL_TYPE_OF_PLANNING_APPLICATION.PRIOR_APPROVAL
+				)
+			).toBe(true);
+		});
+
+		it('returns true when decision is REFUSED and date is on/after cutoff', () => {
+			expect(
+				isS78ExpeditedAppealType(
+					APPEAL_TYPE.S78,
+					'2026-04-02',
+					'refused',
+					APPEAL_TYPE_OF_PLANNING_APPLICATION.PRIOR_APPROVAL
+				)
+			).toBe(true);
+		});
+
+		it('returns false when decision is not granted or refused', () => {
+			expect(
+				isS78ExpeditedAppealType(
+					APPEAL_TYPE.S78,
+					'2026-04-02',
+					'not_decided',
+					APPEAL_TYPE_OF_PLANNING_APPLICATION.PRIOR_APPROVAL
+				)
+			).toBe(false);
+		});
+	});
 });
 
 describe('normalizeProcedureType', () => {
@@ -175,6 +254,18 @@ describe('normalizeProcedureType', () => {
 
 	it('normalizes WRITTEN_PART_2 to WRITTEN', () => {
 		expect(normalizeProcedureType(APPEAL_CASE_PROCEDURE.WRITTEN_PART_2)).toBe(
+			APPEAL_CASE_PROCEDURE.WRITTEN
+		);
+	});
+
+	it('normalizes PROCEDURE_TYPE_NAME.WRITTEN_PART_1 display name to WRITTEN key', () => {
+		expect(normalizeProcedureType(PROCEDURE_TYPE_NAME.WRITTEN_PART_1)).toBe(
+			APPEAL_CASE_PROCEDURE.WRITTEN
+		);
+	});
+
+	it('normalizes PROCEDURE_TYPE_NAME.WRITTEN_PART_2 display name to WRITTEN key', () => {
+		expect(normalizeProcedureType(PROCEDURE_TYPE_NAME.WRITTEN_PART_2)).toBe(
 			APPEAL_CASE_PROCEDURE.WRITTEN
 		);
 	});

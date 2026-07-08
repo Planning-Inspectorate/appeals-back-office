@@ -122,7 +122,9 @@ export const getDocumentRedactionStatuses = async (apiClient) => {
 /**
  * @typedef {Object} DocumentDetailAPIPatchRequest
  * @property {DocumentDetailAPIDocument} document
- */
+ * @property {string} [sharingDocumentType]
+ * @property {boolean} [inviteResponses]
+ * */
 
 /**
  * @typedef {Object} DocumentDetailAPIPatchResponse
@@ -141,7 +143,9 @@ export const updateDocument = async (apiClient, appealId, documentDetail) => {
 		return await apiClient
 			.patch(`appeals/${appealId}/documents/${documentDetail.document.id}`, {
 				json: {
-					document: documentDetail.document
+					document: documentDetail.document,
+					sharingDocumentType: documentDetail.sharingDocumentType,
+					inviteResponses: documentDetail.inviteResponses
 				}
 			})
 			.json();

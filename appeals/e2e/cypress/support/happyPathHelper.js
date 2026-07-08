@@ -42,7 +42,9 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Confirm');
 		cy.wait('@confirmValidDate');
 	},
-	reviewEnforcementAppeallantCase(caseObj) {
+	reviewEnforcementAppellantCase(caseObj) {
+		let dueDate = new Date();
+
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
 		caseDetailsPage.clickReviewAppellantCase();
 		caseDetailsPage.selectRadioButtonByValue('Valid');
@@ -51,21 +53,17 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.selectRadioButtonByValue('No');
 		caseDetailsPage.clickButtonByText('Continue');
-		dateTimeSection.enterValidDate(happyPathHelper.getYesterday());
-		caseDetailsPage.clickButtonByText('Confirm');
+		dateTimeSection.enterValidDate(dueDate);
+		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Mark appeal as valid');
 	},
 	reviewLpaq(caseObj, state = 'Complete') {
-		let dueDate = new Date();
-
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
 		caseDetailsPage.clickReviewLpaq();
 		caseDetailsPage.selectRadioButtonByValue(state);
 		caseDetailsPage.clickButtonByText('Confirm');
 	},
 	reviewS78Lpaq(caseObj, state = 'Complete') {
-		let dueDate = new Date();
-
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
 		caseDetailsPage.clickReviewLpaq();
 		caseDetailsPage.selectRadioButtonByValue(state);
@@ -111,6 +109,10 @@ export const happyPathHelper = {
 		happyPathHelper.viewCaseDetails(caseObj);
 		caseDetailsPage.clickReadyToStartCase();
 		caseDetailsPage.selectRadioButtonByValue(procedureType);
+
+		// check if date is known and if so enter date and time
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue(hearingProperties.date ? 'yes' : 'no');
 		caseDetailsPage.clickButtonByText('Continue');
 
 		// if hearing date is provided in the properties, use it, otherwise calculate a date 2 business days in the future and use that
@@ -259,6 +261,10 @@ export const happyPathHelper = {
 
 	uploadDocVersionLpaq(caseObj) {
 		caseDetailsPage.clickManageNotifyingParties();
+
+		// Simulate the completion of the documents scan
+		cy.simulateDocumentsScanComplete(caseObj);
+
 		caseDetailsPage.clickLinkByText('View and edit');
 		caseDetailsPage.clickButtonByText('Upload a new version');
 		fileUploader.uploadFiles(sampleFiles.document2);
@@ -273,6 +279,10 @@ export const happyPathHelper = {
 
 	removeDocLpaq(caseObj) {
 		caseDetailsPage.clickManageNotifyingParties();
+
+		// Simulate the completion of the documents scan
+		cy.simulateDocumentsScanComplete(caseObj);
+
 		caseDetailsPage.clickLinkByText('View and edit');
 		caseDetailsPage.clickButtonByText('Remove current version');
 		caseDetailsPage.selectRadioButtonByValue('Yes');

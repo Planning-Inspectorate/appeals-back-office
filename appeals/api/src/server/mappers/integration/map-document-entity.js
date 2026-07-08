@@ -43,7 +43,7 @@ export const mapDocumentEntity = (data) => {
 		return null;
 	}
 
-	const isPublished = mapPublishingStatus(documentInput.latestDocumentVersion);
+	const publishedFields = mapPublishedFields(documentInput.latestDocumentVersion);
 	const virusCheckStatus = mapVirusCheckStatus(documentInput.latestDocumentVersion);
 	const redactedStatus = mapRedactionStatus(
 		documentInput.latestDocumentVersion.redactionStatus || null,
@@ -60,12 +60,10 @@ export const mapDocumentEntity = (data) => {
 		size: documentInput.latestDocumentVersion.size ?? 0,
 		mime: documentInput.latestDocumentVersion.mime || '',
 		documentURI: documentInput.latestDocumentVersion.documentURI || '',
-		publishedDocumentURI: isPublished ? documentInput.latestDocumentVersion.documentURI : null,
 		virusCheckStatus,
 		fileMD5: documentInput.latestDocumentVersion.fileMD5,
 		dateCreated: mapDate(documentInput.latestDocumentVersion.dateCreated) ?? '',
 		dateReceived: mapDate(documentInput.latestDocumentVersion.dateReceived) ?? '',
-		datePublished: isPublished ? mapDate(documentInput.latestDocumentVersion.dateCreated) : null,
 		lastModified: mapDate(
 			documentInput.latestDocumentVersion.lastModified ||
 				documentInput.latestDocumentVersion.dateCreated
@@ -81,7 +79,8 @@ export const mapDocumentEntity = (data) => {
 		author: null,
 		description: null,
 		caseStage: mapStage(documentInput.latestDocumentVersion),
-		horizonFolderId: null
+		horizonFolderId: null,
+		...publishedFields
 	};
 
 	// @ts-ignore
@@ -102,13 +101,49 @@ const mapVirusCheckStatus = (documentVersion) => {
 	return 'not_scanned';
 };
 
+/** @type {Set<string>} */
+const documentTypesWithManagedPublishedStatuses = new Set([
+	APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION,
+	APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_CORRESPONDENCE,
+	APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_WITHDRAWAL,
+	APPEAL_DOCUMENT_TYPE.LPA_COSTS_APPLICATION,
+	APPEAL_DOCUMENT_TYPE.LPA_COSTS_CORRESPONDENCE,
+	APPEAL_DOCUMENT_TYPE.LPA_COSTS_WITHDRAWAL
+]);
+
 /**
  *
  * @param {DocumentVersion} documentVersion
- * @returns {boolean}
+ * @returns {{publishedDocumentURI: string | null, datePublished: string | null}}
  */
-const mapPublishingStatus = (documentVersion) => {
-	return documentVersion.stage !== APPEAL_CASE_STAGE.INTERNAL;
+const mapPublishedFields = (documentVersion) => {
+	// internal only docs are never meant to be marked published
+	if (documentVersion.stage === APPEAL_CASE_STAGE.INTERNAL) {
+		return {
+			publishedDocumentURI: null,
+			datePublished: null
+		};
+	}
+
+	// only costs docs currently use internally managed published statuses
+	// the costs application from the appellant case works as a standard appellant case doc
+	if (
+		documentVersion.documentType &&
+		documentTypesWithManagedPublishedStatuses.has(documentVersion.documentType) &&
+		documentVersion.stage !== APPEAL_CASE_STAGE.APPELLANT_CASE
+	) {
+		const isPublished = documentVersion.published;
+		return {
+			publishedDocumentURI: isPublished ? documentVersion.documentURI : null,
+			datePublished: isPublished ? mapDate(documentVersion.datePublished) : null
+		};
+	}
+
+	// all other docs are marked as published by default
+	return {
+		publishedDocumentURI: documentVersion.documentURI,
+		datePublished: mapDate(documentVersion.dateCreated)
+	};
 };
 
 /**

@@ -86,7 +86,6 @@ export function loadConfig() {
 		FEATURE_FLAG_SEARCH_CASE_OFFICER,
 		FEATURE_FLAG_ENFORCEMENT_NOTICE,
 		FEATURE_FLAG_ENFORCEMENT_LINKED,
-		FEATURE_FLAG_ENFORCEMENT_LEAD_CAN_START,
 		FEATURE_FLAG_ENFORCEMENT_CANCEL,
 		FEATURE_FLAG_INVALID_DECISION_LETTER,
 		FEATURE_FLAG_RULE_6_MVP,
@@ -107,7 +106,8 @@ export function loadConfig() {
 		FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED,
 		FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED,
 		FEATURE_FLAG_SHARE_COSTS,
-		FEATURE_FLAG_NEW_BEFORE_YOU_START
+		FEATURE_FLAG_NEW_BEFORE_YOU_START,
+		FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE
 	} = environment;
 
 	const config = {
@@ -178,7 +178,6 @@ export function loadConfig() {
 			featureFlagSearchCaseOfficer: FEATURE_FLAG_SEARCH_CASE_OFFICER === 'true',
 			featureFlagEnforcementNotice: FEATURE_FLAG_ENFORCEMENT_NOTICE === 'true',
 			featureFlagEnforcementLinked: FEATURE_FLAG_ENFORCEMENT_LINKED === 'true',
-			featureFlagEnforcementLeadCanStart: FEATURE_FLAG_ENFORCEMENT_LEAD_CAN_START === 'true',
 			featureFlagEnforcementCancel: FEATURE_FLAG_ENFORCEMENT_CANCEL === 'true',
 			featureFlagInvalidDecisionLetter: FEATURE_FLAG_INVALID_DECISION_LETTER === 'true',
 			featureFlagRule6Mvp: FEATURE_FLAG_RULE_6_MVP === 'true',
@@ -203,7 +202,8 @@ export function loadConfig() {
 			featureFlagEnforcementChangeProcedureLinked:
 				FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED === 'true',
 			featureFlagShareCosts: FEATURE_FLAG_SHARE_COSTS === 'true',
-			featureFlagNewBeforeYouStart: FEATURE_FLAG_NEW_BEFORE_YOU_START === 'true'
+			featureFlagNewBeforeYouStart: FEATURE_FLAG_NEW_BEFORE_YOU_START === 'true',
+			featureFlagEnforcementChangeProcedure: FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE === 'true'
 		},
 		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
 		pdfServiceHost: PDF_SERVICE_HOST

@@ -750,42 +750,9 @@ describe('decision routes', () => {
 				})
 				.set('azureAdUserId', azureAdUserId);
 
-			expect(databaseConnector.document.createMany).toHaveBeenCalledWith({
-				data: [
-					{
-						caseId: childAppeal.childId,
-						folderId: 23,
-						guid: 'mock-uuid',
-						name: 'mydoc-1345264.pdf'
-					}
-				]
-			});
+			expect(databaseConnector.document.createMany).not.toHaveBeenCalled();
 
-			expect(databaseConnector.documentVersion.createMany).toHaveBeenCalledWith({
-				data: [
-					{
-						blobStorageContainer: 'document-service-uploads',
-						blobStoragePath: 'appeal/CHILD123/mock-uuid/v1/mydoc-1345264.pdf',
-						dateReceived: expect.any(Date),
-						documentGuid: 'mock-uuid',
-						documentType: 'appellantCostApplication',
-						documentURI:
-							'https://127.0.0.1:10000/document-service-uploads/appeal/CHILD123/mock-uuid/v1/mydoc-1345264.pdf',
-						draft: false,
-						fileName: 'mydoc-1345264.pdf',
-						isLateEntry: false,
-						lastModified: expect.any(Date),
-						mime: 'application/pdf',
-						originalFilename: 'mydoc-1345264.pdf',
-						published: false,
-						redactionStatusId: 1,
-						size: 14699,
-						stage: 'appeal-decision',
-						version: 1,
-						virusCheckStatus: 'not_scanned'
-					}
-				]
-			});
+			expect(databaseConnector.documentVersion.createMany).not.toHaveBeenCalled();
 
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
@@ -823,7 +790,9 @@ describe('decision routes', () => {
 				recipientEmail: appeal.lpa.email
 			});
 
-			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(4);
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 				data: {
 					appealId: appeal.id,
 					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
@@ -834,7 +803,7 @@ describe('decision routes', () => {
 				}
 			});
 
-			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 				data: {
 					appealId: childAppeal.childId,
 					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
@@ -845,7 +814,7 @@ describe('decision routes', () => {
 				}
 			});
 
-			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 				data: {
 					appealId: appeal.id,
 					details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['complete']),
@@ -854,7 +823,7 @@ describe('decision routes', () => {
 				}
 			});
 
-			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(4, {
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 				data: {
 					appealId: childAppeal.childId,
 					details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['complete']),
@@ -1195,6 +1164,141 @@ describe('decision routes', () => {
 
 			expect(response.status).toEqual(201);
 		});
+
+		test('de-dupes exact duplicate commenter emails', async () => {
+			const appeal = {
+				...fullPlanningAppeal,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						valid: true
+					}
+				]
+			};
+
+			const outcome = 'allowed';
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			databaseConnector.inspectorDecision.create.mockResolvedValue({});
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{ represented: { email: 'dup@test.com' } },
+				{ represented: { email: 'dup@test.com' } }
+			]);
+
+			await request
+				.post(`/appeals/${appeal.id}/decision`)
+				.send({
+					decisions: [
+						{
+							decisionType: DECISION_TYPE_INSPECTOR,
+							outcome,
+							documentDate: new Date().toISOString(),
+							documentGuid: documentCreated.guid
+						}
+					]
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			const recipients = mockNotifySend.mock.calls.map(([arg]) => arg.recipientEmail);
+			expect(recipients.filter((e) => e === 'dup@test.com')).toHaveLength(1);
+		});
+
+		test('trims and normalizes commenter emails before de-duping', async () => {
+			const appeal = {
+				...fullPlanningAppeal,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						valid: true
+					}
+				]
+			};
+
+			const outcome = 'allowed';
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			databaseConnector.inspectorDecision.create.mockResolvedValue({});
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{ represented: { email: ' Dup@Test.com ' } },
+				{ represented: { email: 'dup@test.com' } },
+				{ represented: { email: 'DUP@test.com' } }
+			]);
+
+			await request
+				.post(`/appeals/${appeal.id}/decision`)
+				.send({
+					decisions: [
+						{
+							decisionType: DECISION_TYPE_INSPECTOR,
+							outcome,
+							documentDate: new Date().toISOString(),
+							documentGuid: documentCreated.guid
+						}
+					]
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			const recipients = mockNotifySend.mock.calls.map(([arg]) => arg.recipientEmail);
+			expect(recipients.filter((e) => e === 'dup@test.com')).toHaveLength(1);
+			expect(recipients).not.toContain(' Dup@Test.com ');
+			expect(recipients).not.toContain('DUP@test.com');
+		});
+
+		test('handles error from notify for interested party', async () => {
+			const appeal = {
+				...fullPlanningAppeal,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						valid: true
+					}
+				]
+			};
+
+			const outcome = 'allowed';
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			databaseConnector.inspectorDecision.create.mockResolvedValue({});
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{ represented: { email: 'a@test.com' } },
+				{ represented: { email: 'b@test.com' } },
+				{ represented: { email: 'c@test.com' } }
+			]);
+
+			mockNotifySend.mockImplementation(({ recipientEmail }) => {
+				if (recipientEmail === 'a@test.com' || recipientEmail === 'b@test.com') {
+					return Promise.reject(new Error('Notify error'));
+				}
+
+				return Promise.resolve({});
+			});
+
+			await request
+				.post(`/appeals/${appeal.id}/decision`)
+				.send({
+					decisions: [
+						{
+							decisionType: DECISION_TYPE_INSPECTOR,
+							outcome,
+							documentDate: new Date().toISOString(),
+							documentGuid: documentCreated.guid
+						}
+					]
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(5);
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({
+						appealId: appeal.id,
+						details: expect.stringContaining(
+							`Failed to send decision email to the following interested parties: a@test.com, b@test.com`
+						)
+					})
+				})
+			);
+		});
 	});
 
 	describe('sendNewDecisionLetter', () => {
@@ -1354,6 +1458,65 @@ describe('decision routes', () => {
 			expect(recipients.filter((e) => e === 'dup@test.com')).toHaveLength(1);
 		});
 
+		test('trims and normalizes commenter emails before de-duping', async () => {
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{ represented: { email: ' Dup@Test.com ' } },
+				{ represented: { email: 'dup@test.com' } },
+				{ represented: { email: 'DUP@test.com' } }
+			]);
+
+			await sendNewDecisionLetter(
+				correctAppealState,
+				correctionNotice,
+				azureAdUserId,
+				mockNotifyClient,
+				decisionDate
+			);
+
+			const recipients = mockNotifySend.mock.calls.map(([arg]) => arg.recipientEmail);
+			expect(recipients.filter((e) => e === 'dup@test.com')).toHaveLength(1);
+			expect(recipients).not.toContain(' Dup@Test.com ');
+			expect(recipients).not.toContain('DUP@test.com');
+		});
+
+		test('handles error from notify for interested party', async () => {
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{ represented: { email: 'a@test.com' } },
+				{ represented: { email: 'b@test.com' } },
+				{ represented: { email: 'c@test.com' } }
+			]);
+
+			mockNotifySend.mockImplementation(({ recipientEmail }) => {
+				if (recipientEmail === 'a@test.com' || recipientEmail === 'b@test.com') {
+					return Promise.reject(new Error('Notify error'));
+				}
+
+				return Promise.resolve({});
+			});
+
+			await expect(
+				sendNewDecisionLetter(
+					correctAppealState,
+					correctionNotice,
+					azureAdUserId,
+					mockNotifyClient,
+					decisionDate
+				)
+			).resolves.not.toThrow();
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(5);
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({
+						appealId: correctAppealState.id,
+						details: expect.stringContaining(
+							`Failed to send correction notice email to the following interested parties: a@test.com, b@test.com`
+						)
+					})
+				})
+			);
+		});
+
 		test('falls back to inspectorDecision date when decisionDate is missing', async () => {
 			const caseDecisionOutcomeDate = new Date('2024-06-15');
 			correctAppealState.inspectorDecision = { caseDecisionOutcomeDate };
@@ -1412,12 +1575,14 @@ describe('decision routes', () => {
 				decisionDate
 			);
 
-			expect(databaseConnector.representation.count).toHaveBeenCalledWith({
-				where: {
-					appealId: { in: [appealWithMissingEmails.id, ...childAppeals.map((a) => a.childId)] },
-					representationType: { in: ['comment'] }
-				}
-			});
+			expect(databaseConnector.representation.findMany).toHaveBeenCalledWith(
+				expect.objectContaining({
+					where: {
+						appealId: { in: [appealWithMissingEmails.id, ...childAppeals.map((a) => a.childId)] },
+						representationType: 'comment'
+					}
+				})
+			);
 		});
 	});
 });

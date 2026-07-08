@@ -14,7 +14,11 @@ import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { trimAppealType } from '#utils/string-utils.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
-import { PROCEDURE_TYPE_ID_MAP, PROCEDURE_TYPE_MAP } from '@pins/appeals/constants/common.js';
+import {
+	PROCEDURE_TYPE_ID_MAP,
+	PROCEDURE_TYPE_KEY,
+	PROCEDURE_TYPE_MAP
+} from '@pins/appeals/constants/common.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import {
 	AUDIT_TRAIL_CASE_STARTED,
@@ -114,32 +118,42 @@ const getStartCaseNotifyParams = async ({
 	inquiry,
 	inspectorName = null
 }) => {
-	const hearingSuffix = hearingStartTime ? '-hearing' : '';
-	const inquirySuffix =
-		appeal.procedureType?.key === APPEAL_CASE_PROCEDURE.INQUIRY ||
-		(inquiry && inquiry.inquiryStartTime)
-			? 'inquiry'
-			: '';
 	const { type = '', key: appealTypeKey = APPEAL_CASE_TYPE.D } = appeal.appealType || {};
 	const appealType = trimAppealType(type);
+	const caseIsStarted = appeal.caseStartedDate;
+	const appealTypeNotifyTemplate = appealTypeMap(appealTypeKey);
+	let formattedLPATemplate;
+	let formattedAppellantTemplate;
+	let baseTemplate = caseIsStarted
+		? 'appeal-start-date-change-'
+		: `appeal-valid-start-case-${appealTypeNotifyTemplate}${appealTypeNotifyTemplate ? '-' : ''}`;
 
-	const isS78Expedited = isS78ExpeditedAppealType(
-		appeal.appealType?.type,
-		appeal.appellantCase?.applicationDate,
-		appeal.appellantCase?.applicationDecision,
-		appeal.appellantCase?.typeOfPlanningApplication
-	);
-
-	const appellantTemplate = appeal.caseStartedDate
-		? inquirySuffix
-			? 'appeal-start-date-change-inquiry'
-			: 'appeal-start-date-change-appellant'
-		: `appeal-valid-start-case${[appealTypeMap(appealTypeKey)]}${isS78Expedited ? `expedited-` : ''}${hearingSuffix ? `appellant${hearingSuffix}` : inquirySuffix ? inquirySuffix : 'appellant'}`;
-	const lpaTemplate = appeal.caseStartedDate
-		? inquirySuffix
-			? 'appeal-start-date-change-inquiry'
-			: 'appeal-start-date-change-lpa'
-		: `appeal-valid-start-case${[appealTypeMap(appealTypeKey)]}${isS78Expedited ? `expedited-` : ''}${hearingSuffix ? `lpa${hearingSuffix}` : inquirySuffix ? inquirySuffix : 'lpa'}`;
+	switch (procedureType) {
+		case APPEAL_CASE_PROCEDURE.INQUIRY:
+			formattedLPATemplate = `${baseTemplate}${APPEAL_CASE_PROCEDURE.INQUIRY}`;
+			formattedAppellantTemplate = `${baseTemplate}${APPEAL_CASE_PROCEDURE.INQUIRY}`;
+			break;
+		case APPEAL_CASE_PROCEDURE.HEARING:
+			if (caseIsStarted) {
+				formattedLPATemplate = `${baseTemplate}lpa`;
+				formattedAppellantTemplate = `${baseTemplate}appellant`;
+			} else {
+				formattedLPATemplate = `${baseTemplate}${hearingStartTime ? 'hearing-' : ''}lpa`;
+				formattedAppellantTemplate = `${baseTemplate}${hearingStartTime ? 'hearing-' : ''}appellant`;
+			}
+			break;
+		case APPEAL_CASE_PROCEDURE.WRITTEN_PART_1:
+		case PROCEDURE_TYPE_KEY.WRITTEN_PART_1:
+			formattedLPATemplate = `${baseTemplate}expedited-lpa`;
+			formattedAppellantTemplate = `${baseTemplate}expedited-appellant`;
+			break;
+		case APPEAL_CASE_PROCEDURE.WRITTEN_PART_2:
+		case PROCEDURE_TYPE_KEY.WRITTEN_PART_2:
+		default:
+			formattedLPATemplate = `${baseTemplate}lpa`;
+			formattedAppellantTemplate = `${baseTemplate}appellant`;
+			break;
+	}
 
 	const appellantEmail = appeal.appellant?.email || appeal.agent?.email;
 	const lpaEmail = appeal.lpa?.email || '';
@@ -218,7 +232,7 @@ const getStartCaseNotifyParams = async ({
 		...(appellantEmail && {
 			appellant: {
 				azureAdUserId,
-				templateName: appellantTemplate,
+				templateName: formattedAppellantTemplate,
 				notifyClient,
 				recipientEmail: appellantEmail,
 				personalisation: {
@@ -245,7 +259,7 @@ const getStartCaseNotifyParams = async ({
 		...(lpaEmail && {
 			lpa: {
 				azureAdUserId,
-				templateName: lpaTemplate,
+				templateName: formattedLPATemplate,
 				notifyClient,
 				recipientEmail: lpaEmail,
 				personalisation: {

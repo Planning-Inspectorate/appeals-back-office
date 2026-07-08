@@ -2,8 +2,7 @@ import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatte
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import { duplicateFiles } from '#endpoints/link-appeals/link-appeals.service.js';
-import { getRepresentations } from '#endpoints/representations/representations.service.js';
+import { getInterestedPartyEmails } from '#endpoints/representations/representations.service.js';
 import { generateNotifyPreview } from '#notify/emulate-notify.js';
 import { notifySend, renderTemplate } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
@@ -12,6 +11,7 @@ import transitionState from '#state/transition-state.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import { getFeedbackLinkFromAppealTypeKey } from '#utils/feedback-form-link.js';
 import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
+import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { trimAppealType } from '#utils/string-utils.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
@@ -42,6 +42,14 @@ import {
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
 
 const environment = loadEnvironment(process.env.NODE_ENV);
+
+const INTERESTED_PARTY_NOTIFY_BATCH_SIZE = 20;
+const INTERESTED_PARTY_NOTIFY_BATCH_DELAY_MS = 250;
+/**
+ * @param {number} ms
+ * @returns {Promise<void>}
+ */
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 /**
  *
@@ -199,12 +207,7 @@ export const publishDecision = async (
 
 	const lpaEmail = appeal.lpa?.email || '';
 
-	const representations = await getRepresentations([appeal.id], 1, 1000, {
-		representationType: ['comment']
-	});
-	const interestedPartyEmails = representations?.comments
-		.map((comment) => comment.represented?.email)
-		.filter(Boolean);
+	const interestedPartyEmails = await getInterestedPartyEmails([appeal.id]);
 
 	const nextState =
 		outcome === APPEAL_CASE_DECISION_OUTCOME.INVALID
@@ -278,24 +281,6 @@ export const publishDecision = async (
 		}
 	}
 
-	if (interestedPartyEmails.length > 0) {
-		for (const email of interestedPartyEmails) {
-			await notifySend({
-				azureAdUserId,
-				templateName: invalidDecisionReason
-					? 'decision-is-invalid-interested-party'
-					: 'decision-is-allowed-split-dismissed-interested-party',
-				notifyClient,
-				recipientEmail: email,
-				personalisation: {
-					...personalisation,
-					feedback_link: feedbackLinkForInterestedParty,
-					case_team_email_address: caseTeamEmail
-				}
-			});
-		}
-	}
-
 	await createAuditTrail({
 		appealId: appeal.id,
 		azureAdUserId: azureAdUserId,
@@ -304,6 +289,37 @@ export const publishDecision = async (
 
 	await transitionState(appeal.id, azureAdUserId, nextState);
 	await broadcasters.broadcastAppeal(appeal.id);
+
+	/** @type {string[]} */
+	if (interestedPartyEmails.length > 0) {
+		try {
+			await batchSendNotifyToInterestedParties(
+				interestedPartyEmails,
+				(email) =>
+					notifySend({
+						azureAdUserId,
+						templateName: invalidDecisionReason
+							? 'decision-is-invalid-interested-party'
+							: 'decision-is-allowed-split-dismissed-interested-party',
+						notifyClient,
+						recipientEmail: email,
+						personalisation: {
+							...personalisation,
+							feedback_link: feedbackLinkForInterestedParty,
+							case_team_email_address: caseTeamEmail
+						}
+					}),
+				appeal.id,
+				azureAdUserId,
+				'decision'
+			);
+		} catch (err) {
+			logger.error(
+				err,
+				`Error sending decision email to interested parties on appeal: ${appeal.id}`
+			);
+		}
+	}
 
 	return result;
 };
@@ -314,18 +330,12 @@ export const publishDecision = async (
  * @param {string} outcome
  * @param {Date} documentDate
  * @param {string} azureAdUserId
- * @param {Appeal} leadAppeal
  * @returns
  */
-export const publishChildDecision = async (
-	childAppeal,
-	outcome,
-	documentDate,
-	azureAdUserId,
-	leadAppeal
-) => {
+export const publishChildDecision = async (childAppeal, outcome, documentDate, azureAdUserId) => {
 	const { id: appealId } = childAppeal;
 
+	// note that the decision letter is copied on unlinking and then added to the appeal decision
 	const result = await appealRepository.setAppealDecision(appealId, {
 		documentDate,
 		version: 1,
@@ -333,8 +343,6 @@ export const publishChildDecision = async (
 	});
 
 	if (result) {
-		await duplicateFiles(leadAppeal, childAppeal, APPEAL_CASE_STAGE.APPEAL_DECISION);
-
 		await createAuditTrail({
 			appealId,
 			azureAdUserId: azureAdUserId,
@@ -481,15 +489,7 @@ export const sendNewDecisionLetter = async (
 		Number(appeal.id),
 		...childAppeals.map((childAppeal) => Number(childAppeal?.childId))
 	];
-	const representations = await getRepresentations(appealIds, 1, 1000, {
-		representationType: ['comment']
-	});
-
-	const interestedPartyEmails = [
-		...new Set(
-			representations.comments.map((comment) => comment.represented?.email).filter(Boolean)
-		)
-	];
+	const interestedPartyEmails = await getInterestedPartyEmails(appealIds);
 
 	const lpaEmail = appeal.lpa?.email;
 
@@ -544,24 +544,6 @@ export const sendNewDecisionLetter = async (
 		});
 	}
 
-	if (interestedPartyEmails.length > 0) {
-		const interestedParyPersonalisation = {
-			...personalisation,
-			feedback_link: FEEDBACK_FORM_LINKS.COMMENT_ON_APPEAL
-		};
-		await Promise.all(
-			interestedPartyEmails.map(async (email) => {
-				await notifySend({
-					azureAdUserId,
-					templateName: 'correction-notice-decision-interested-party',
-					notifyClient,
-					recipientEmail: email,
-					personalisation: interestedParyPersonalisation
-				});
-			})
-		);
-	}
-
 	await createAuditTrail({
 		appealId: appeal.id,
 		azureAdUserId,
@@ -569,4 +551,89 @@ export const sendNewDecisionLetter = async (
 	});
 
 	await broadcasters.broadcastAppeal(appeal.id);
+
+	/** @type {string[]} */
+	if (interestedPartyEmails.length > 0) {
+		try {
+			const interestedPartyPersonalisation = {
+				...personalisation,
+				feedback_link: FEEDBACK_FORM_LINKS.COMMENT_ON_APPEAL
+			};
+			await batchSendNotifyToInterestedParties(
+				interestedPartyEmails,
+				(email) =>
+					notifySend({
+						azureAdUserId,
+						templateName: 'correction-notice-decision-interested-party',
+						notifyClient,
+						recipientEmail: email,
+						personalisation: interestedPartyPersonalisation
+					}),
+				appeal.id,
+				azureAdUserId,
+				'correction notice'
+			);
+		} catch (err) {
+			logger.error(
+				err,
+				`Error sending correction notice email to interested parties on appeal: ${appeal.id}`
+			);
+		}
+	}
+};
+
+/**
+ * @param {string[]} emails
+ * @param {function(string): Promise<void>} notifyFunction
+ * @param {number} appealId
+ * @param {string} azureAdUserId
+ * @param {string} emailTypeLabel
+ */
+const batchSendNotifyToInterestedParties = async (
+	emails,
+	notifyFunction,
+	appealId,
+	azureAdUserId,
+	emailTypeLabel
+) => {
+	if (emails.length === 0) {
+		return;
+	}
+
+	const uniqueEmails = [
+		...new Set(emails.map((email) => email.trim().toLowerCase()).filter(Boolean))
+	];
+
+	/** @type {string[]} */
+	const failedEmails = [];
+	for (let i = 0; i < uniqueEmails.length; i += INTERESTED_PARTY_NOTIFY_BATCH_SIZE) {
+		const emailBatch = uniqueEmails.slice(i, i + INTERESTED_PARTY_NOTIFY_BATCH_SIZE);
+
+		const results = await Promise.allSettled(emailBatch.map((email) => notifyFunction(email)));
+
+		results.forEach((res, index) => {
+			if (res.status === 'rejected') {
+				const email = emailBatch[index];
+				logger.error(
+					res.reason,
+					`Error sending ${emailTypeLabel} email to interested party email: ${email}`
+				);
+				failedEmails.push(email);
+			}
+		});
+
+		if (i + INTERESTED_PARTY_NOTIFY_BATCH_SIZE < uniqueEmails.length) {
+			await delay(INTERESTED_PARTY_NOTIFY_BATCH_DELAY_MS);
+		}
+	}
+
+	if (failedEmails.length > 0) {
+		await createAuditTrail({
+			appealId: appealId,
+			azureAdUserId: azureAdUserId,
+			details:
+				`Failed to send ${emailTypeLabel} email to the following interested parties: ` +
+				failedEmails.join(', ')
+		});
+	}
 };

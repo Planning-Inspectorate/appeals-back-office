@@ -159,15 +159,15 @@ describe('Appellant Case Valid Flow', () => {
 					'This is the date all case documentation was received and the appeal was valid.</p>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'name="valid-date-day" type="text" inputmode="numeric">'
+					'name="valid-date-day" type="text" value="21" inputmode="numeric">'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'name="valid-date-month" type="text" inputmode="numeric">'
+					'name="valid-date-month" type="text" value="5" inputmode="numeric">'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'name="valid-date-year" type="text" inputmode="numeric">'
+					'name="valid-date-year" type="text" value="2023" inputmode="numeric">'
 				);
-				expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
+				expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 			});
 		});
 
@@ -195,6 +195,35 @@ describe('Appellant Case Valid Flow', () => {
 
 				expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 				expect(unprettifiedErrorSummaryHtml).toContain('Enter the valid date');
+			});
+
+			it(`should re-render the 'Valid date' screen if the date is before the date case was received`, async () => {
+				const response = await request
+					.post(`${baseUrl}/${appealId}/appellant-case/valid/enforcement/date`)
+					.send({
+						'valid-date-day': '1',
+						'valid-date-month': '1',
+						'valid-date-year': '2023'
+					});
+
+				expect(response.statusCode).toBe(200);
+
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain(
+					'The valid date must be on or after the date the case was received.</a>'
+				);
+
+				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+				expect(unprettifiedErrorSummaryHtml).toContain(
+					'The valid date must be on or after the date the case was received.'
+				);
 			});
 
 			it(`should re-render the 'Valid date' screen if the date is in the future`, async () => {
@@ -612,22 +641,40 @@ describe('Appellant Case Valid Flow', () => {
 					`Found. Redirecting to /appeals-service/appeal-details/${appealId}/appellant-case/valid/environmental-services-review`
 				);
 			});
+
 			it('should handle posting environmental services review details', async () => {
-				nock('http://test/').patch(`/appeals/${appealId}/appellant-cases/0`).reply(200);
-				nock('http://test/').get(`/appeals/${appealId}/appellant-cases/0`).reply(200, {
-					screeningOpinionIndicatesEiaRequired: true,
-					applicationDate: '2026-05-01',
-					applicationDecision: 'refused',
-					typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+				nock('http://test/')
+					.patch(`/appeals/${appealId}/appellant-cases/0`, {
+						validationOutcome: 'valid',
+						validAt: '2025-01-01T00:00:00.000Z'
+					})
+					.reply(200);
+				nock('http://test/')
+					.patch(`/appeals/${appealId}/eia-screening-required`, {
+						eiaScreeningRequired: true
+					})
+					.reply(200);
+				nock('http://test/')
+					.get(`/appeals/${appealId}/appellant-cases/0`)
+					.reply(200, {
+						screeningOpinionIndicatesEiaRequired: true,
+						applicationDate: '2026-05-01',
+						applicationDecision: 'refused',
+						typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL,
+						documents: {}
+					})
+					.persist();
+
+				// Post valid date first to store it in session
+				await request.post(`${baseUrl}/${appealId}/appellant-case/valid/date`).send({
+					'valid-date-day': '1',
+					'valid-date-month': 'Jan',
+					'valid-date-year': '2025'
 				});
 
-				const response = await request
-					.post(`${baseUrl}/${appealId}/appellant-case/valid/environmental-services-review`)
-					.send({
-						day: '1',
-						month: 'Jan',
-						year: '2025'
-					});
+				const response = await request.post(
+					`${baseUrl}/${appealId}/appellant-case/valid/environmental-services-review`
+				);
 
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toBe(

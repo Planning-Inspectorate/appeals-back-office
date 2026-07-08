@@ -18,6 +18,7 @@ const mockAppealRelationshipFindMany = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipFindFirst = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipCreateMany = jest.fn().mockResolvedValue({});
 const mockAppealDecision = jest.fn().mockResolvedValue({});
+const mockAppealDecisionUpdate = jest.fn().mockResolvedValue({});
 const mockAppealDecisionDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppealFindUnique = jest.fn().mockResolvedValue({});
 const mockAppealCreate = jest.fn().mockResolvedValue({});
@@ -205,6 +206,7 @@ const mockRepresentationCreateMany = jest.fn().mockRejectedValue({});
 const mockRepresentationDeleteMany = jest.fn().mockResolvedValue({});
 const mockRepresentationAttachmentDeleteMany = jest.fn().mockResolvedValue({});
 const mockRepresentationAttachmentCreateMany = jest.fn().mockResolvedValue({});
+const mockRepresentationAttachmentFindMany = jest.fn().mockRejectedValue([]);
 const mockRepresentationCount = jest.fn().mockResolvedValue({});
 const mockLpaFindMany = jest.fn().mockResolvedValue({});
 const mockLpaFindUnique = jest.fn().mockResolvedValue({});
@@ -264,7 +266,8 @@ class MockPrismaClient {
 		return {
 			create: mockRepresentationCreate,
 			createMany: mockRepresentationAttachmentCreateMany,
-			deleteMany: mockRepresentationAttachmentDeleteMany
+			deleteMany: mockRepresentationAttachmentDeleteMany,
+			findMany: mockRepresentationAttachmentFindMany
 		};
 	}
 
@@ -714,6 +717,7 @@ class MockPrismaClient {
 	get inspectorDecision() {
 		return {
 			create: mockAppealDecision,
+			update: mockAppealDecisionUpdate,
 			deleteMany: mockAppealDecisionDeleteMany
 		};
 	}

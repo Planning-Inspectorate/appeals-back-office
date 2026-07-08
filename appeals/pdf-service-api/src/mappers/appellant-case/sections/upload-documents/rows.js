@@ -1,17 +1,32 @@
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { formatDocumentData, formatSentenceCase } from '../../../../lib/nunjucks-filters/index.js';
 
+/** @type {Record<string, (data: any) => any>} */
 export const rowBuilders = {
 	originalApplicationForm: (data) => ({
 		key: 'Application form',
 		html: formatDocumentData(data.documents.originalApplicationForm)
 	}),
 	didYouSubmitEnvironmentalStatement: (data) => ({
-		key: 'Did you submit an environmental statement with your application?',
-		text: formatSentenceCase(data.screeningOpinionIndicatesEiaRequired, 'Not answered')
+		key:
+			data.appealType === APPEAL_TYPE.S78_EXPEDITED
+				? 'Did you submit an environmental statement with the application?'
+				: 'Did you submit an environmental statement with your application?',
+		text:
+			data.screeningOpinionIndicatesEiaRequired == null
+				? 'Not answered'
+				: formatSentenceCase(data.screeningOpinionIndicatesEiaRequired ? 'Yes' : 'No')
 	}),
 	environmentalStatement: (data) => ({
-		key: 'Environmental statement',
+		key:
+			data.appealType === APPEAL_TYPE.S78_EXPEDITED
+				? 'Upload your environmental statement'
+				: 'Environmental statement',
 		html: formatDocumentData(data.documents.eiaEnvironmentalStatementAppellant)
+	}),
+	changedDevelopmentDescription: (data) => ({
+		key: 'Did the local planning authority change the description of development?',
+		text: data.developmentDescription?.isChanged === true ? 'Yes' : 'No'
 	}),
 	changedDescription: (data) => ({
 		key: 'Agreement to change the description of development',

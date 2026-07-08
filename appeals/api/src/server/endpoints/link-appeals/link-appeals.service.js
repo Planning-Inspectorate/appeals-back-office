@@ -3,12 +3,14 @@
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 
+import config from '#config/config.js';
 import {
 	addDocumentsToAppeal,
 	getFoldersForAppeal
 } from '#endpoints/documents/documents.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import appealRepository from '#repositories/appeal.repository.js';
+import { updateAppealDecisionLetter } from '#repositories/decision.repository.js';
 import { getDocumentsInFolder } from '#repositories/document.repository.js';
 import representationRepository from '#repositories/representation.repository.js';
 import transitionState from '#state/transition-state.js';
@@ -22,7 +24,11 @@ import {
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
 import { EventType } from '@pins/event-client';
-import { APPEAL_CASE_STATUS, SERVICE_USER_TYPE } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_CASE_STATUS,
+	APPEAL_DOCUMENT_TYPE,
+	SERVICE_USER_TYPE
+} from '@planning-inspectorate/data-model';
 import { omit } from 'lodash-es';
 import rhea from 'rhea';
 
@@ -199,7 +205,29 @@ export const moveRepresentations = async (sourceAppeal, destinationAppeal) => {
 		})
 	);
 
-	return movedRepresentations.filter((rep) => rep.status === 'fulfilled').map((rep) => rep.value);
+	const successfullyMovedRepresentations = movedRepresentations
+		.filter((rep) => rep.status === 'fulfilled')
+		.map((rep) => rep.value);
+
+	const destinationFolders = await getFoldersForAppeal(destinationAppeal.id, 'representation');
+
+	const movedRepresentationAttachmentDocuments = await Promise.allSettled(
+		successfullyMovedRepresentations.map(async (movedRepresentation) => {
+			return await representationRepository.moveRepresentationAttachmentDocuments(
+				movedRepresentation.id,
+				destinationAppeal.id,
+				destinationFolders[0].id
+			);
+		})
+	);
+
+	return {
+		movedRepresentations: successfullyMovedRepresentations,
+		movedDocuments: movedRepresentationAttachmentDocuments
+			.filter((rep) => rep.status === 'fulfilled')
+			.map((rep) => rep.value)
+			.flat()
+	};
 };
 
 /**
@@ -245,10 +273,11 @@ export const copyRepresentations = async (sourceAppeal, destinationAppeal) => {
 				copyBlobs(copyBlobList),
 				addDocumentsToAppeal(
 					{
-						// @ts-ignore
+						blobStorageHost: config.BO_BLOB_STORAGE_ACCOUNT,
+						blobStorageContainer: config.BO_BLOB_CONTAINER,
 						documents: copyList.map((copyDetails) => copyDetails.destinationDocument)
 					},
-					destinationAppeal,
+					/** @type {Appeal} */ (destinationAppeal),
 					true
 				)
 			]);
@@ -365,7 +394,7 @@ export const duplicateAllFiles = async (sourceAppeal, destinationAppeal, options
  * @param {Appeal | {id: number, reference: string}} sourceAppeal
  * @param {string[]} [existingDocuments]
  * @param {string | null} [stage]
- * @returns {{sourceBlobName: string, destinationBlobName: string, destinationDocument: Partial<Document>, sourceGuid: string, destinationGuid: string, version: number} | undefined}
+ * @returns {{sourceBlobName: string, destinationBlobName: string, destinationDocument: MappedDocument, sourceGuid: string, destinationGuid: string, version: number} | undefined}
  */
 export const buildFileCopyDetails = (
 	sourceDocument,
@@ -451,6 +480,21 @@ export const duplicateFiles = async (sourceAppeal, destinationAppeal, stage, opt
 				.filter((copyDetails) => copyDetails != undefined);
 		})
 		.flat();
+
+	// we need to add the new case decision letter guid to the decision on the destination appeal
+	const caseDecisionLetter = copyList.find((copyDetails) => {
+		return (
+			copyDetails.destinationDocument.documentType === APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER
+		);
+	});
+
+	if (caseDecisionLetter?.destinationDocument?.GUID) {
+		await updateAppealDecisionLetter(
+			destinationAppeal.id,
+			caseDecisionLetter.destinationDocument.GUID
+		);
+	}
+
 	const copyBlobList = copyList.map(({ sourceBlobName, destinationBlobName }) => ({
 		sourceBlobName,
 		destinationBlobName
@@ -459,10 +503,11 @@ export const duplicateFiles = async (sourceAppeal, destinationAppeal, stage, opt
 		copyBlobs(copyBlobList),
 		addDocumentsToAppeal(
 			{
-				// @ts-ignore
+				blobStorageHost: config.BO_BLOB_STORAGE_ACCOUNT,
+				blobStorageContainer: config.BO_BLOB_CONTAINER,
 				documents: copyList.map((copyDetails) => copyDetails.destinationDocument)
 			},
-			destinationAppeal,
+			/** @type {Appeal} */ (destinationAppeal),
 			true
 		)
 	]);

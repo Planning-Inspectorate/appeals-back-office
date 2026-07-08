@@ -7,3 +7,9 @@ export const CTA_TEXT = {
 		progressToProofOfEvidence: 'Progress to proof of evidence and witnesses'
 	}
 };
+
+export const PROCEDURE_TYPES = {
+	hearing: 'Hearing',
+	inquiry: 'Inquiry',
+	writtenPart2: 'Written representations (Part 2)'
+};

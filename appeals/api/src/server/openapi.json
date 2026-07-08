@@ -3806,7 +3806,7 @@
 			},
 			"patch": {
 				"tags": ["Documents"],
-				"description": "Updates document file name",
+				"description": "Updates document",
 				"parameters": [
 					{
 						"name": "appealId",
@@ -3836,16 +3836,16 @@
 				],
 				"responses": {
 					"200": {
-						"description": "Document to update filename",
+						"description": "Document updated",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/UpdateDocumentFileNameResponse"
+									"$ref": "#/components/schemas/UpdateDocumentResponse"
 								}
 							},
 							"application/xml": {
 								"schema": {
-									"$ref": "#/components/schemas/UpdateDocumentFileNameResponse"
+									"$ref": "#/components/schemas/UpdateDocumentResponse"
 								}
 							}
 						}
@@ -3859,17 +3859,17 @@
 				},
 				"requestBody": {
 					"in": "body",
-					"description": "Document to update file name",
+					"description": "Document to update",
 					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/UpdateDocumentFileNameRequest"
+								"$ref": "#/components/schemas/UpdateDocumentRequest"
 							}
 						},
 						"application/xml": {
 							"schema": {
-								"$ref": "#/components/schemas/UpdateDocumentFileNameRequest"
+								"$ref": "#/components/schemas/UpdateDocumentRequest"
 							}
 						}
 					}
@@ -14749,23 +14749,40 @@
 					"name": "UpdateDocumentsResponse"
 				}
 			},
-			"UpdateDocumentFileNameRequest": {
+			"UpdateDocumentRequest": {
 				"type": "object",
 				"properties": {
-					"id": {
-						"type": "string",
-						"example": "987e66e0-1db4-404b-8213-8082919159e9"
+					"document": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "string",
+								"example": "987e66e0-1db4-404b-8213-8082919159e9"
+							},
+							"fileName": {
+								"type": "string",
+								"example": "renamed-document.pdf"
+							},
+							"isShared": {
+								"type": "boolean",
+								"example": true
+							}
+						}
 					},
-					"fileName": {
+					"inviteResponses": {
+						"type": "boolean",
+						"example": true
+					},
+					"sharingDocumentType": {
 						"type": "string",
-						"example": "renamed-document.pdf"
+						"example": "costs-application"
 					}
 				},
 				"xml": {
-					"name": "UpdateDocumentFileNameRequest"
+					"name": "UpdateDocumentRequest"
 				}
 			},
-			"UpdateDocumentFileNameResponse": {
+			"UpdateDocumentResponse": {
 				"type": "object",
 				"properties": {
 					"id": {
@@ -14778,7 +14795,7 @@
 					}
 				},
 				"xml": {
-					"name": "UpdateDocumentFileNameResponse"
+					"name": "UpdateDocumentResponse"
 				}
 			},
 			"UpdateDocumentsAvCheckRequest": {

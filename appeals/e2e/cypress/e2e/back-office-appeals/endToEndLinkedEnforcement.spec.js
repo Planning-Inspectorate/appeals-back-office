@@ -42,7 +42,7 @@ describe('Progress Enforcement Appeal to Decision', () => {
 
 				caseDetailsPage.verifyAppealType('Enforcement notice appeal');
 
-				happyPathHelper.reviewEnforcementAppeallantCase(caseObj);
+				happyPathHelper.reviewEnforcementAppellantCase(caseObj);
 				caseDetailsPage.checkStatusOfCase('Ready to start', 0);
 
 				happyPathHelper.startCaseWithProcedureType(caseObj, 'written');
@@ -131,7 +131,7 @@ describe('Progress Enforcement Appeal to Decision', () => {
 
 				caseDetailsPage.verifyAppealType('Enforcement notice appeal');
 
-				happyPathHelper.reviewEnforcementAppeallantCase(caseObj);
+				happyPathHelper.reviewEnforcementAppellantCase(caseObj);
 				caseDetailsPage.checkStatusOfCase('Ready to start', 0);
 
 				happyPathHelper.startCaseWithProcedureType(caseObj, 'written');

@@ -99,10 +99,14 @@ export function initialiseAndMapData(
 	}
 
 	/** @type {Record<string, SubMapper | SubMapperList>} */
-	const submappers = submaps[appealType];
+	let submappers = { ...submaps[appealType] };
 
 	if (!submappers) {
 		throw new Error(`No submappers found for appeal type ${appealType}`);
+	}
+
+	if (appealType === APPEAL_TYPE.S78_EXPEDITED) {
+		delete submappers.statementCommonGround;
 	}
 
 	/** @type {MappedInstructions} */

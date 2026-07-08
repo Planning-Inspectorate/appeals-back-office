@@ -1,12 +1,12 @@
 // @ts-nocheck
 import { request } from '#server/app-test.js';
 import {
-	appealIngestionInput,
 	appealIngestionInputAdverts,
 	appealIngestionInputCasAdverts,
 	appealIngestionInputCasPlanning,
 	appealIngestionInputEnforcementListedBuilding,
 	appealIngestionInputEnforcementNotice,
+	appealIngestionInputHouseholder,
 	appealIngestionInputS20,
 	appealIngestionInputS20Written,
 	appealIngestionInputS78,
@@ -136,7 +136,7 @@ describe('/appeals/case-submission', () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue({});
 		});
 		test.each([
-			['HAS', appealIngestionInput, validAppellantCase, { id: 1 }],
+			['HAS', appealIngestionInputHouseholder, validAppellantCase, { id: 1 }],
 			['CAS_PLANNING', appealIngestionInputCasPlanning, validAppellantCaseCasPlanning, { id: 1 }],
 			['S78', appealIngestionInputS78, validAppellantCaseS78, { name: 'Major Casework Officer' }],
 			['S20', appealIngestionInputS20, validAppellantCaseS20, { name: 'Major Casework Officer' }],

@@ -441,7 +441,9 @@ export const updateLinkedAppeals = async (req, res) => {
 			`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_D_SUPPORTING}`,
 			`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_E_SUPPORTING}`,
 			`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_F_SUPPORTING}`,
-			`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING}`
+			`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING}`,
+			// representation docs are accounted for in moveRepresentations/copyRepresentations
+			`representation/representationAttachments`
 		];
 
 		const options = { omitFolders };
@@ -449,6 +451,7 @@ export const updateLinkedAppeals = async (req, res) => {
 		let appealToUnlink;
 		let appealsToBroadcast;
 		let representationsToBroadcast;
+		let documentsToBroadcast;
 		// @ts-ignore
 		let representationBroadcastAction;
 
@@ -463,7 +466,11 @@ export const updateLinkedAppeals = async (req, res) => {
 					replaceLeadAppeal(currentLead, appealToReplaceLead)
 				]);
 				// @ts-ignore
-				representationsToBroadcast = results[0].value;
+				const { movedRepresentations, movedDocuments } = results[0].value;
+				// @ts-ignore
+				representationsToBroadcast = movedRepresentations;
+				// @ts-ignore
+				documentsToBroadcast = movedDocuments;
 				// @ts-ignore
 				representationBroadcastAction = EventType.Update;
 				break;
@@ -570,6 +577,24 @@ export const updateLinkedAppeals = async (req, res) => {
 					.map((representation) =>
 						// @ts-ignore
 						broadcasters.broadcastRepresentation(representation.id, representationBroadcastAction)
+					)
+			);
+		}
+
+		// will broadcast updated documents when reps moved
+		// newly created docs from copy etc are broadcast as part of the copyReps / duplicateFiles
+		if (documentsToBroadcast) {
+			await Promise.allSettled(
+				documentsToBroadcast
+					// @ts-ignore
+					.filter((document) => document.guid !== undefined)
+					// @ts-ignore
+					.map((document) =>
+						broadcasters.broadcastDocument(
+							document.guid,
+							document.latestVersionId,
+							EventType.Update
+						)
 					)
 			);
 		}

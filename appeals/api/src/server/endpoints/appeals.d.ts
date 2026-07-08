@@ -787,6 +787,7 @@ interface DocumentVersionInfo {
 	blobStoragePath: string;
 	documentURI: string;
 	dateReceived: string;
+	published: boolean;
 	redactionStatus: string;
 	virusCheckStatus: string;
 	size: string;
@@ -1088,9 +1089,14 @@ type GetAuditTrailsResponse = {
 		| undefined;
 }[];
 
-type UpdateDocumentFileNameRequest = {
-	id: string;
-	fileName: string;
+type UpdateDocumentRequest = {
+	document: {
+		id?: string;
+		fileName?: string;
+		isShared?: boolean;
+	};
+	inviteResponses?: boolean;
+	sharingDocumentType?: string;
 };
 
 type UpdateDocumentsRequest = {
@@ -1274,7 +1280,7 @@ export {
 	UpdateAsssignedTeamRequest,
 	UpdateAsssignedTeamResponse,
 	UpdateDocumentAvCheckRequest,
-	UpdateDocumentFileNameRequest,
+	UpdateDocumentRequest,
 	UpdateDocumentsRequest,
 	UpdateHearing,
 	UpdateInquiry,

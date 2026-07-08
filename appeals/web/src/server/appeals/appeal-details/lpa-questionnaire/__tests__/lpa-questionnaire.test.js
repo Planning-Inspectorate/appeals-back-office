@@ -157,6 +157,12 @@ describe('LPA Questionnaire review', () => {
 		expect(response.text).toContain('Is enforcement notice appeal the correct type of appeal?');
 		expect(response.text).toContain('What is the area of the appeal site?');
 		expect(response.text).not.toContain('Is householder the correct type of appeal?');
+		expect(response.text).toContain('Enforcement notice');
+		expect(response.text).toContain('Enforcement notice plan');
+		expect(response.text).toContain('List of people that you served the enforcement notice to');
+		expect(response.text).toContain(
+			'Appeal notification letter and the list of people that you notified'
+		);
 	});
 
 	it('should render Enforcement section 5', async () => {
@@ -193,6 +199,47 @@ describe('LPA Questionnaire review', () => {
 		);
 		expect(response.text).toContain('Address of the neighbour’s land or property');
 		expect(response.text).toContain('Are there any potential safety risks?');
+	});
+
+	it('should render Enforcement Listed sections 1 and 3 in the correct order', async () => {
+		const appealId = 101;
+		const lpaqId = 201;
+
+		nock('http://test/')
+			.get(new RegExp(`/appeals/${appealId}/lpa-questionnaires/${lpaqId}`))
+			.reply(200, {
+				...lpaQuestionnaireData,
+				appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+				siteAreaSquareMetres: 500,
+				isSiteOnCrownLand: true
+			});
+
+		nock('http://test/')
+			.get(new RegExp(`/appeals/${appealId}`))
+			.reply(200, {
+				...lpaqAppealData,
+				appealId,
+				appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
+			})
+			.persist();
+
+		const response = await request.get(
+			`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaqId}`
+		);
+
+		expect(response.text).toContain('1. Constraints, designations and other issues');
+		expect(response.text).toContain('3. Notifying relevant parties');
+		expect(response.text).toContain(
+			'Is enforcement listed building and conservation area appeal the correct type of appeal?'
+		);
+		expect(response.text).toContain('What is the area of the appeal site?');
+		expect(response.text).not.toContain('Is householder the correct type of appeal?');
+		expect(response.text).toContain('Enforcement notice');
+		expect(response.text).toContain('Enforcement notice plan');
+		expect(response.text).toContain('List of people that you served the enforcement notice to');
+		expect(response.text).toContain(
+			'Appeal notification letter and the list of people that you notified'
+		);
 	});
 
 	describe('Notification banners', () => {
@@ -758,7 +805,7 @@ describe('LPA Questionnaire review', () => {
 				},
 				{
 					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.APPEAL_NOTIFICATION}`,
-					label: 'Appeal notification letter'
+					label: 'Appeal notification letter and the list of people that you notified'
 				}
 			];
 
@@ -1056,7 +1103,9 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain('Site notice</dt>');
 			expect(element.innerHTML).toContain('Letter or email notification</dt>');
 			expect(element.innerHTML).toContain('Press advertisement</dt>');
-			expect(element.innerHTML).toContain('Appeal notification letter</dt>');
+			expect(element.innerHTML).toContain(
+				'Appeal notification letter and the list of people that you notified</dt>'
+			);
 
 			expect(element.innerHTML).toContain('3. Consultation responses and representations</h2>');
 			expect(element.innerHTML).toContain(
@@ -1119,6 +1168,42 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain('Additional documents</h2>');
 		}, 10000);
 
+		it('should render the S78 expedited LPA Questionnaire page with the expected content', async () => {
+			nock('http://test/')
+				.get('/appeals/2?include=all')
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId: 2,
+					isS78Expedited: true
+				});
+			nock('http://test/')
+				.get('/appeals/2/lpa-questionnaires/1')
+				.reply(200, {
+					...lpaQuestionnaireDataNotValidated,
+					lpaQuestionnaireId: 1
+				});
+
+			const response = await request.get('/appeals-service/appeal-details/2/lpa-questionnaire/1');
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('LPA questionnaire</h1>');
+			expect(element.innerHTML).toContain('1. Constraints, designations and other issues</h2>');
+			expect(element.innerHTML).toContain('2. Environmental impact assessment</h2>');
+			expect(element.innerHTML).toContain('3. Notifying relevant parties</h2>');
+			expect(element.innerHTML).toContain('4. Consultation responses and representations</h2>');
+			expect(element.innerHTML).toContain(
+				'5. Planning officer’s report and supplementary documents</h2>'
+			);
+			expect(element.innerHTML).toContain('6. Site access</h2>');
+			expect(element.innerHTML).toContain('7. Appeal process</h2>');
+			expect(element.innerHTML).toContain('Original Evidence</h2>');
+			expect(element.innerHTML).toContain(
+				'What documents and plans did you use to make your decision?</dt>'
+			);
+			expect(element.innerHTML).toContain('Additional documents</h2>');
+		}, 10000);
+
 		it('should render the CAS planning LPA Questionnaire page with the expected content', async () => {
 			nock('http://test/')
 				.get('/appeals/3?include=all')
@@ -1157,7 +1242,9 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain('Site notice</dt>');
 			expect(element.innerHTML).toContain('Letter or email notification</dt>');
 			expect(element.innerHTML).toContain('Press advertisement</dt>');
-			expect(element.innerHTML).toContain('Appeal notification letter</dt>');
+			expect(element.innerHTML).toContain(
+				'Appeal notification letter and the list of people that you notified</dt>'
+			);
 
 			expect(element.innerHTML).toContain('3. Consultation responses and representations</h2>');
 			expect(element.innerHTML).toContain(
@@ -1238,7 +1325,9 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain('Site notice</dt>');
 			expect(element.innerHTML).toContain('Letter or email notification</dt>');
 			expect(element.innerHTML).toContain('Press advertisement</dt>');
-			expect(element.innerHTML).toContain('Appeal notification letter</dt>');
+			expect(element.innerHTML).toContain(
+				'Appeal notification letter and the list of people that you notified</dt>'
+			);
 
 			expect(element.innerHTML).toContain('3. Consultation responses and representations</h2>');
 			expect(element.innerHTML).toContain(
@@ -1415,7 +1504,9 @@ describe('LPA Questionnaire review', () => {
 			expect(element.innerHTML).toContain('Site notice</dt>');
 			expect(element.innerHTML).toContain('Letter or email notification</dt>');
 			expect(element.innerHTML).toContain('Press advertisement</dt>');
-			expect(element.innerHTML).toContain('Appeal notification letter</dt>');
+			expect(element.innerHTML).toContain(
+				'Appeal notification letter and the list of people that you notified</dt>'
+			);
 
 			expect(element.innerHTML).toContain('3. Consultation responses and representations</h2>');
 			expect(element.innerHTML).toContain(
@@ -2024,11 +2115,79 @@ describe('LPA Questionnaire review', () => {
 			['enforcement', APPEAL_TYPE.ENFORCEMENT_NOTICE]
 			//['enforcement listed building', APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING_NOTICE]
 		])(
-			'should redirect to the environmental services page if no errors are present and posted outcome is "complete" for appeal type: %s',
+			'should redirect to the environmental services page if no errors are present and posted outcome is "complete" for appeal type: %s (when eiaScreeningRequired is not set)',
 			async (_, appealType) => {
 				nock('http://test/')
 					.get(`/appeals/2?include=all`)
 					.reply(200, { ...lpaqAppealData, appealType: appealType, appealId: 2 })
+					.persist();
+				nock('http://test/')
+					.get('/appeals/2/lpa-questionnaires/2')
+					.reply(200, lpaQuestionnaireDataIncompleteOutcome)
+					.patch('/appeals/2/lpa-questionnaires/2')
+					.reply(200, { validationOutcome: 'complete' });
+
+				const response = await request
+					.post('/appeals-service/appeal-details/2/lpa-questionnaire/2')
+					.send({
+						'review-outcome': 'complete'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/2/lpa-questionnaire/2/environment-service-team-review-case'
+				);
+			}
+		);
+
+		it.each([
+			['S78', APPEAL_TYPE.S78],
+			['S20', APPEAL_TYPE.PLANNED_LISTED_BUILDING],
+			['enforcement', APPEAL_TYPE.ENFORCEMENT_NOTICE]
+		])(
+			'should redirect to the case details page (NOT environment services page) if eiaScreeningRequired is true for appeal type: %s',
+			async (_, appealType) => {
+				nock('http://test/')
+					.get(`/appeals/2?include=all`)
+					.reply(200, {
+						...lpaqAppealData,
+						appealType: appealType,
+						appealId: 2,
+						eiaScreeningRequired: true
+					})
+					.persist();
+				nock('http://test/')
+					.get('/appeals/2/lpa-questionnaires/2')
+					.reply(200, lpaQuestionnaireDataIncompleteOutcome)
+					.patch('/appeals/2/lpa-questionnaires/2')
+					.reply(200, { validationOutcome: 'complete' });
+
+				const response = await request
+					.post('/appeals-service/appeal-details/2/lpa-questionnaire/2')
+					.send({
+						'review-outcome': 'complete'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/2');
+			}
+		);
+
+		it.each([
+			['S78', APPEAL_TYPE.S78],
+			['S20', APPEAL_TYPE.PLANNED_LISTED_BUILDING],
+			['enforcement', APPEAL_TYPE.ENFORCEMENT_NOTICE]
+		])(
+			'should redirect to the environmental services page if eiaScreeningRequired is false for appeal type: %s',
+			async (_, appealType) => {
+				nock('http://test/')
+					.get(`/appeals/2?include=all`)
+					.reply(200, {
+						...lpaqAppealData,
+						appealType: appealType,
+						appealId: 2,
+						eiaScreeningRequired: false
+					})
 					.persist();
 				nock('http://test/')
 					.get('/appeals/2/lpa-questionnaires/2')
@@ -2812,10 +2971,13 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should render document upload page with a file upload component, and no late entry status tag and associated details component, and no additional documents warning text, if the folder is not additional documents', async () => {
+			const mockFolderInfo = structuredClone(documentFolderInfo);
+			mockFolderInfo.path = 'testFolder/testDocument';
+
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataNotValidated);
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
+			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, mockFolderInfo);
 
 			const response = await request.get(
 				`/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/1`

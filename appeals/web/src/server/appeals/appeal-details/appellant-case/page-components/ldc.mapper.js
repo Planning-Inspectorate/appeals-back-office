@@ -104,7 +104,6 @@ export function generateLdcComponents(appealDetails, appellantCaseData, mappedAp
 			},
 			rows: [
 				mappedAppellantCaseData.siteAddress.display.summaryListItem,
-				mappedAppellantCaseData.inGreenBelt.display.summaryListItem,
 				mappedAppellantCaseData.inspectorAccess.display.summaryListItem,
 				mappedAppellantCaseData.healthAndSafetyIssues.display.summaryListItem
 			]
@@ -187,8 +186,6 @@ export function generateLdcComponents(appealDetails, appellantCaseData, mappedAp
 				mappedAppellantCaseData.appealStatement.display.summaryListItem,
 				mappedAppellantCaseData.costsDocument.display.summaryListItem,
 				mappedAppellantCaseData.supportingDocuments.display.summaryListItem,
-				mappedAppellantCaseData.statusPlanningObligation.display.summaryListItem,
-				mappedAppellantCaseData.planningObligation.display.summaryListItem,
 				mappedAppellantCaseData.statementCommonGround.display.summaryListItem,
 				mappedAppellantCaseData.newPlansDrawings.display.summaryListItem,
 				mappedAppellantCaseData.decisionLetter.display.summaryListItem,

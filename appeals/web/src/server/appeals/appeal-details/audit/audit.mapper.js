@@ -203,6 +203,10 @@ export const tryMapDocument = (appealId, log, docInfo, lpaqId) => {
 			const repAuditDisplayName = name.replace(/[a-f\d-]{36}_/, '');
 			return log.replace(name, `<a class="govuk-link" href="#">${repAuditDisplayName}</a>`);
 		}
+		case APPEAL_CASE_STAGE.CANCELLATION: {
+			const url = `/documents/${appealId}/download/${documentGuid}/${name}`;
+			return log.replace(name, `<a class="govuk-link" href="${url}">${name}</a>`);
+		}
 	}
 
 	return log;

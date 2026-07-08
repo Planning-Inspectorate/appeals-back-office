@@ -2103,6 +2103,8 @@ describe('updateCompletedEvents', () => {
 			}
 		});
 
+		expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledTimes(2);
+
 		expect(response.status).toEqual(204);
 	});
 });
