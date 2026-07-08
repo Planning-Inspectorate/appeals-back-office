@@ -326,7 +326,7 @@ export const getDueDateFieldNameAndID = (dateField) => {
 		case 'caseManagementConferenceDueDate':
 			return {
 				id: 'case-management-conference-due-date',
-				name: 'Case management conference due date'
+				name: 'Case management conference date'
 			};
 		default:
 			return undefined;
