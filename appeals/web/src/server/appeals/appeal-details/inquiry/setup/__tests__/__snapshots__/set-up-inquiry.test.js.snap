@@ -726,7 +726,7 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                         </div>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="case-management-conference-due-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Case management conference due date</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Case management conference date</legend>
                                 <div id="case-management-conference-due-date-hint"
                                 class="govuk-hint">
                                     <div class="govuk-hint">For example, 31 3 2025</div>
