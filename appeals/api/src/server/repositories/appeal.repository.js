@@ -422,7 +422,8 @@ const checkAppealExistsById = async (id) => {
 			id
 		},
 		select: {
-			id: true
+			id: true,
+			reference: true
 		}
 	});
 };

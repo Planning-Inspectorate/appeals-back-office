@@ -26,14 +26,8 @@ router.get(
 			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 		}
 		#swagger.responses[200] = {
-			description: '200 if appeal exists'
-			schema: {
-				type: 'object',
-				properties: {
-					id: { type: 'integer', example: 123 }
-				},
-				required: ['id']
-			}
+			description: '200 if appeal exists',
+			schema: { $ref: '#/components/schemas/AppealExistsResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
@@ -43,7 +37,9 @@ router.get(
 	/** @type {import("express").RequestHandler} */
 	(req, res) => {
 		return res.status(200).send({
-			id: Number(req.params.appealId)
+			id: Number(req.params.appealId),
+			appealId: Number(req.params.appealId),
+			appealReference: req.appeal.reference
 		});
 	}
 );

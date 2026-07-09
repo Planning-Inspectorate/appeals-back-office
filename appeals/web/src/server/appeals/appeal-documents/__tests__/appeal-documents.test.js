@@ -32,12 +32,23 @@ const getControllerEndpoint = (
 	return baseUrl;
 };
 
+const existsResponse = { id: 1, appealId: 1, appealReference: '1' };
+
+/**
+ * @param {number} appealId
+ * @param {number} folderId
+ * @returns {string}
+ */
+const getFolderApiUrl = (appealId, folderId) =>
+	`/appeals/${appealId}/document-folders/${folderId}?pageNumber=1&pageSize=100`;
+
 describe('appeal-documents', () => {
 	beforeEach(() => {
 		installMockApi();
 		nock('http://test/')
 			.get('/appeals/1/appellant-cases/0')
 			.reply(200, appellantCaseDataNotValidated);
+		nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse);
 	});
 
 	afterEach(() => {
@@ -52,8 +63,10 @@ describe('appeal-documents', () => {
 		});
 
 		it('should return 404 if appeal ID is not found', async () => {
-			nock('http://test/').get(`/appeals/${invalidAppealId}?include=all`).reply(404);
-			nock('http://test/').get(`/appeals/${invalidAppealId}/document-folders/1`).reply(404);
+			nock('http://test/')
+				.get(`/appeals/${invalidAppealId}?include=appealType,appellantCase`)
+				.reply(404);
+			nock('http://test/').get(getFolderApiUrl(invalidAppealId, 1)).reply(404);
 
 			const response = await request.get(getControllerEndpoint(invalidAppealId, invalidFolderId));
 
@@ -62,11 +75,9 @@ describe('appeal-documents', () => {
 
 		it('should return 404 if folder ID is not found', async () => {
 			nock('http://test/')
-				.get(`/appeals/${validAppealId}?include=all`)
-				.reply(200, { id: validAppealId });
-			nock('http://test/')
-				.get(`/appeals/${validAppealId}/document-folders/1`)
-				.reply(200, validFolders);
+				.get(`/appeals/${validAppealId}?include=appealType,appellantCase`)
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/').get(getFolderApiUrl(validAppealId, 1)).reply(200, validFolders);
 
 			const response = await request.get(getControllerEndpoint(validAppealId, invalidFolderId));
 			expect(response.status).toBe(404);
@@ -74,11 +85,9 @@ describe('appeal-documents', () => {
 
 		it('should return 404 if document ID is not found', async () => {
 			nock('http://test/')
-				.get(`/appeals/${validAppealId}?include=all`)
-				.reply(200, { id: validAppealId });
-			nock('http://test/')
-				.get(`/appeals/${validAppealId}/document-folders/1`)
-				.reply(200, validFolders[0]);
+				.get(`/appeals/${validAppealId}?include=appealType,appellantCase`)
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/').get(getFolderApiUrl(validAppealId, 1)).reply(200, validFolders[0]);
 			nock('http://test/').get(`/appeals/documents/${documentId}`).reply(404);
 
 			const response = await request.get(
@@ -89,11 +98,9 @@ describe('appeal-documents', () => {
 
 		it('should render upload form if appeal ID and folder ID are found', async () => {
 			nock('http://test/')
-				.get(`/appeals/${validAppealId}?include=all`)
-				.reply(200, { id: validAppealId });
-			nock('http://test/')
-				.get(`/appeals/${validAppealId}/document-folders/1`)
-				.reply(200, validFolders[0]);
+				.get(`/appeals/${validAppealId}?include=appealType,appellantCase`)
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/').get(getFolderApiUrl(validAppealId, 1)).reply(200, validFolders[0]);
 
 			const response = await request.get(getControllerEndpoint(validAppealId, validFolderId));
 			expect(response.status).toBe(200);
@@ -111,11 +118,9 @@ describe('appeal-documents', () => {
 
 		it('should render upload form if appeal ID, folder ID and document ID are found', async () => {
 			nock('http://test/')
-				.get(`/appeals/${validAppealId}?include=all`)
-				.reply(200, { id: validAppealId });
-			nock('http://test/')
-				.get(`/appeals/${validAppealId}/document-folders/1`)
-				.reply(200, validFolders[0]);
+				.get(`/appeals/${validAppealId}?include=appealType,appellantCase`)
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/').get(getFolderApiUrl(validAppealId, 1)).reply(200, validFolders[0]);
 			nock('http://test/')
 				.get(`/appeals/documents/${documentId}`)
 				.reply(200, {
@@ -150,11 +155,9 @@ describe('appeal-documents', () => {
 
 		it('should render appeal ID and folder ID as data attributes', async () => {
 			nock('http://test/')
-				.get(`/appeals/${validAppealId}?include=all`)
-				.reply(200, { id: validAppealId });
-			nock('http://test/')
-				.get(`/appeals/${validAppealId}/document-folders/1`)
-				.reply(200, validFolders[0]);
+				.get(`/appeals/${validAppealId}?include=appealType,appellantCase`)
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/').get(getFolderApiUrl(validAppealId, 1)).reply(200, validFolders[0]);
 
 			const response = await request.get(getControllerEndpoint(validAppealId, validFolderId));
 			const html = parseHtml(response.text);
@@ -170,11 +173,9 @@ describe('appeal-documents', () => {
 
 		it('should render all necessary metadata attributes', async () => {
 			nock('http://test/')
-				.get(`/appeals/${validAppealId}?include=all`)
-				.reply(200, { id: validAppealId });
-			nock('http://test/')
-				.get(`/appeals/${validAppealId}/document-folders/1`)
-				.reply(200, validFolders[0]);
+				.get(`/appeals/${validAppealId}?include=appealType,appellantCase`)
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/').get(getFolderApiUrl(validAppealId, 1)).reply(200, validFolders[0]);
 			nock('http://test/')
 				.get(`/appeals/documents/${documentId}`)
 				.reply(200, { latestDocumentVersion: {} });
@@ -202,11 +203,9 @@ describe('appeal-documents', () => {
 
 		it('should render blob host and container', async () => {
 			nock('http://test/')
-				.get(`/appeals/${validAppealId}?include=all`)
-				.reply(200, { id: validAppealId });
-			nock('http://test/')
-				.get(`/appeals/${validAppealId}/document-folders/1`)
-				.reply(200, validFolders[0]);
+				.get(`/appeals/${validAppealId}?include=appealType,appellantCase`)
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/').get(getFolderApiUrl(validAppealId, 1)).reply(200, validFolders[0]);
 
 			const response = await request.get(getControllerEndpoint(validAppealId, validFolderId));
 			const html = parseHtml(response.text);
@@ -241,9 +240,9 @@ describe('appeal-documents', () => {
 
 		beforeEach(() => {
 			nock('http://test/')
-				.get(`/appeals/${validAppealId}?include=all`)
-				.reply(200, { id: validAppealId });
-			nock('http://test/').get(`/appeals/${validAppealId}/document-folders/1`).reply(200, folder);
+				.get(`/appeals/${validAppealId}?include=appealType,appellantCase`)
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/').get(getFolderApiUrl(validAppealId, 1)).reply(200, folder);
 			nock('http://test/').get(`/appeals/documents/${documentId}`).reply(200, fileInfo);
 			nock('http://test/').get('/appeals/document-redaction-statuses').reply(200, []);
 			nock('http://test/')

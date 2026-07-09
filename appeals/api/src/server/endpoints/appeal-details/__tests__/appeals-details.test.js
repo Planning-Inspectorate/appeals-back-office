@@ -1392,7 +1392,11 @@ describe('Appeal detail routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({ id: mocks.householdAppeal.id });
+				expect(response.body).toEqual({
+					id: mocks.householdAppeal.id,
+					appealId: mocks.householdAppeal.id,
+					appealReference: mocks.householdAppeal.reference
+				});
 			});
 
 			test('returns an error if appealId is not numeric', async () => {

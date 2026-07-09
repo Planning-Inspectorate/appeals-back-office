@@ -98,5 +98,10 @@ export const checkAppealExistsById = async (req, res, next) => {
 		return res.status(404).send({ errors: { appealId: ERROR_NOT_FOUND } });
 	}
 
+	if (!req.appeal) {
+		//@ts-expect-error
+		req.appeal = { id: appeal.id, reference: appeal.reference };
+	}
+
 	next();
 };

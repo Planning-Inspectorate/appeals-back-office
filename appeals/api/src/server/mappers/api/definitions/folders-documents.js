@@ -150,7 +150,22 @@ const folder = {
 	}
 };
 
+const pagedFolder = {
+	...folder,
+	required: [...folder.required, 'pageCount', 'totalFolderSize'],
+	properties: {
+		...folder.properties,
+		pageCount: {
+			type: 'number'
+		},
+		totalFolderSize: {
+			type: 'number'
+		}
+	}
+};
+
 export const Folder = folder;
+export const PagedFolder = pagedFolder;
 export const Document = document;
 export const DocumentVersion = documentVersion;
 export const DocumentLog = documentLog;

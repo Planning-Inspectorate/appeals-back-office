@@ -1,5 +1,4 @@
 export const SHOW_MORE_MAXIMUM_CHARACTERS_BEFORE_HIDING = 300;
-export const SHOW_MORE_MAXIMUM_ROWS_BEFORE_HIDING = 3;
 
 /**
  * @type {string[]}

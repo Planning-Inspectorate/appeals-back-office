@@ -7,8 +7,8 @@ router.post(
 	'/notify-preview/:templateName',
 	/*
 		#swagger.tags = ['Documents']
-		#swagger.path = '/appeals/{appealId}/document-folders/{folderId}'
-		#swagger.description = Returns the contents of a single appeal folder, by id
+		#swagger.path = '/notify-preview/{templateName}'
+		#swagger.description = Returns the contents of a notify template preview
 		#swagger.parameters['azureAdUserId'] = {
 			in: 'header',
 			required: true,
@@ -20,8 +20,8 @@ router.post(
 			example: 1,
 		}
 		#swagger.responses[200] = {
-			description: 'Returns the contents of a single appeal folder, by id',
-			schema: { $ref: '#/components/schemas/Folder' }
+			description: 'Returns the contents of a notify template preview',
+			schema: { $ref: '#/components/schemas/NotifyTemplate' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}

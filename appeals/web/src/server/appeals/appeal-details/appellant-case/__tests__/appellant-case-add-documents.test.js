@@ -26,6 +26,14 @@ const baseUrl = '/appeals-service/appeal-details';
 const appellantCasePagePath = '/appellant-case';
 const notificationBannerElement = '.govuk-notification-banner';
 
+const existsResponse = { id: 1, appealId: 1, appealReference: appealData.appealReference };
+
+/**
+ * @param {number} folderId
+ * @returns {string}
+ */
+const getFolderApiUrl = (folderId) =>
+	`/appeals/1/document-folders/${folderId}?pageNumber=1&pageSize=100`;
 describe('appellant-case documents', () => {
 	afterAll(() => {
 		nock.cleanAll();
@@ -39,6 +47,9 @@ describe('appellant-case documents', () => {
 		beforeEach(() => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
+			nock('http://test/')
+				.get('/appeals/1?include=appealType,appellantCase')
+				.reply(200, appealData);
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
@@ -86,12 +97,15 @@ describe('appellant-case documents', () => {
 					.get('/appeals/1?include=all')
 					.reply(200, { ...appealData, appealType: appealType });
 				nock('http://test/')
+					.get('/appeals/1?include=appealType,appellantCase')
+					.reply(200, { ...appealData, appealType: appealType });
+				nock('http://test/')
 					.get('/appeals/document-redaction-statuses')
 					.reply(200, documentRedactionStatuses);
 				nock('http://test/')
 					.get('/appeals/1/appellant-cases/0')
 					.reply(200, appellantCaseDataNotValidated);
-				nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
+				nock('http://test/').get(getFolderApiUrl(1)).reply(200, documentFolderInfo);
 				nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 
 				const response = await request.get(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`);
@@ -123,9 +137,7 @@ describe('appellant-case documents', () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, additionalDocumentsFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1)).reply(200, additionalDocumentsFolderInfo);
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`);
 			const element = parseHtml(response.text);
@@ -154,9 +166,7 @@ describe('appellant-case documents', () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataInvalidOutcome);
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, additionalDocumentsFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1)).reply(200, additionalDocumentsFolderInfo);
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`);
 			const element = parseHtml(response.text);
@@ -185,9 +195,7 @@ describe('appellant-case documents', () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataIncompleteOutcome);
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, additionalDocumentsFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1)).reply(200, additionalDocumentsFolderInfo);
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`);
 			const element = parseHtml(response.text);
@@ -216,9 +224,7 @@ describe('appellant-case documents', () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataValidOutcome);
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, additionalDocumentsFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1)).reply(200, additionalDocumentsFolderInfo);
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}/add-documents/1`);
 			const element = parseHtml(response.text);
@@ -247,7 +253,9 @@ describe('appellant-case documents', () => {
 	describe('GET /appellant-case/add-documents/:folderId/:documentId', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
+			nock('http://test/')
+				.get('/appeals/1?include=appealType,appellantCase')
+				.reply(200, appealData);
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
@@ -264,7 +272,7 @@ describe('appellant-case documents', () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1)).reply(200, documentFolderInfo);
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}/add-documents/1/1`);
 			const element = parseHtml(response.text);
@@ -295,9 +303,7 @@ describe('appellant-case documents', () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, additionalDocumentsFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1)).reply(200, additionalDocumentsFolderInfo);
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}/add-documents/1/1`);
 			const element = parseHtml(response.text);
@@ -326,9 +332,7 @@ describe('appellant-case documents', () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataInvalidOutcome);
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, additionalDocumentsFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1)).reply(200, additionalDocumentsFolderInfo);
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}/add-documents/1/1`);
 			const element = parseHtml(response.text);
@@ -357,9 +361,7 @@ describe('appellant-case documents', () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataIncompleteOutcome);
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, additionalDocumentsFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1)).reply(200, additionalDocumentsFolderInfo);
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}/add-documents/1/1`);
 			const element = parseHtml(response.text);
@@ -388,9 +390,7 @@ describe('appellant-case documents', () => {
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataValidOutcome);
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, additionalDocumentsFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1)).reply(200, additionalDocumentsFolderInfo);
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}/add-documents/1/1`);
 			const element = parseHtml(response.text);
@@ -419,11 +419,11 @@ describe('appellant-case documents', () => {
 	describe('POST /appellant-case/add-documents/:folderId/', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
+			nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse);
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1)).reply(200, documentFolderInfo);
 		});
 		afterEach(() => {
 			nock.cleanAll();
@@ -480,11 +480,11 @@ describe('appellant-case documents', () => {
 	describe('POST /appellant-case/add-documents/:folderId/:documentId', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
+			nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse);
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1)).reply(200, documentFolderInfo);
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(() => {
@@ -542,11 +542,14 @@ describe('appellant-case documents', () => {
 	describe('GET /appellant-case/add-documents/:folderId/check-your-answers', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1/exists').reply(200, appealData).persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, documentFolderInfo)
+				.get(`/appeals/1?include=appellantCase`)
+				.reply(200, {
+					...appealData
+				})
 				.persist();
+			nock('http://test/').get(getFolderApiUrl(1)).reply(200, documentFolderInfo).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -615,9 +618,13 @@ describe('appellant-case documents', () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, documentFolderInfo)
+				.get(`/appeals/1?include=appellantCase`)
+				.reply(200, {
+					...appealData
+				})
 				.persist();
+			nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse).persist();
+			nock('http://test/').get(getFolderApiUrl(1)).reply(200, documentFolderInfo).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -703,11 +710,8 @@ describe('appellant-case documents', () => {
 	describe('GET /appellant-case/add-documents/:folderId/:documentId/check-your-answers', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, documentFolderInfo)
-				.persist();
+			nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse).persist();
+			nock('http://test/').get(getFolderApiUrl(1)).reply(200, documentFolderInfo).persist();
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
@@ -776,10 +780,9 @@ describe('appellant-case documents', () => {
 		beforeEach(() => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, documentFolderInfo)
-				.persist();
+
+			nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse).persist();
+			nock('http://test/').get(getFolderApiUrl(1)).reply(200, documentFolderInfo).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)

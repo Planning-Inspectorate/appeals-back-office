@@ -11,7 +11,13 @@ import { AssignedTeam } from './assigned-team.js';
 import { AuditNotifications } from './audit-notification.js';
 import { DesignatedSiteName } from './designated-site-name.js';
 import { DocumentationSummary } from './documentation-summary.js';
-import { Document, DocumentLog, DocumentVersion, Folder } from './folders-documents.js';
+import {
+	Document,
+	DocumentLog,
+	DocumentVersion,
+	Folder,
+	PagedFolder
+} from './folders-documents.js';
 import { InvalidIncompleteReason } from './invalid-incomplete.js';
 import { ListedBuilding } from './listed-building.js';
 import { LpaQuestionnaire, LpaQuestionnaireUpdateRequest } from './lpa-questionnaire.js';
@@ -42,6 +48,7 @@ const partials = {
 	AppealCancellation,
 	AppealRelationship,
 	Folder,
+	PagedFolder,
 	Document,
 	DocumentVersion,
 	DocumentLog,
