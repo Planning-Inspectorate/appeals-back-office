@@ -109,37 +109,34 @@ export const happyPathHelper = {
 		happyPathHelper.viewCaseDetails(caseObj);
 		caseDetailsPage.clickReadyToStartCase();
 		caseDetailsPage.selectRadioButtonByValue(procedureType);
-
-		// check if date is known and if so enter date and time
 		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.selectRadioButtonByValue(hearingProperties.date ? 'yes' : 'no');
+
+		// As CO user will normally enter a date (even if estimate), set date and time known as yes
+		// then use either suplied date if exists or generate a date from api
+		const dateTimeKnown = 'yes';
+
+		// Is date and time known question
+		caseDetailsPage.selectRadioButtonByValue(dateTimeKnown);
 		caseDetailsPage.clickButtonByText('Continue');
 
 		// if hearing date is provided in the properties, use it, otherwise calculate a date 2 business days in the future and use that
 		// we wrap either the provided date or the calculated date in a Cypress promise to ensure that the rest of the code waits for the date
 		// to be available before proceeding
-		/*const datePromise = hearingProperties.date
+		const datePromise = hearingProperties.date
 			? cy.wrap(hearingProperties.date)
-			: cy.getBusinessActualDate(new Date(), 2);*/
+			: cy.getBusinessActualDate(new Date(), 2);
 
-		// set hearing date and time if provided
-		if (hearingProperties.date) {
-			dateTimeSection.enterHearingDate(hearingProperties.date);
-			dateTimeSection.enterHearingTime(
-				hearingProperties.date.getHours(),
-				hearingProperties.date.getMinutes()
-			);
+		// set hearing date and time
+		datePromise.then((date) => {
+			dateTimeSection.enterHearingDate(date);
+			dateTimeSection.enterHearingTime(date.getHours(), date.getMinutes());
 			caseDetailsPage.clickButtonByText('Continue');
-		}
-
-		// if both date and estimated days are unknown, use default value for estimated days (1) and proceed to next step
-		const useDefaultEstimatedDays = !hearingProperties.date && !hearingProperties.setEstimatedDays;
-		const shouldSetEstimatedDays = hearingProperties.setEstimatedDays || useDefaultEstimatedDays;
+		});
 
 		// check if estimated hearing days is known and if so enter estimated hearing days
-		const knowEstimatedDays = shouldSetEstimatedDays ? 'Yes' : 'No';
+		const knowEstimatedDays = hearingProperties.setEstimatedDays ? 'Yes' : 'No';
 		caseDetailsPage.selectRadioButtonByValue(knowEstimatedDays);
-		if (shouldSetEstimatedDays) {
+		if (hearingProperties.setEstimatedDays) {
 			cy.get('#hearing-estimation-days').clear().type(hearingProperties.estimatedDays.toString());
 		}
 		caseDetailsPage.clickButtonByText('Continue');
@@ -670,8 +667,7 @@ export const happyPathHelper = {
 						cy.addInquiryViaApi(caseObj, inquiryDate);
 					});
 				} else {
-					//cy.startAppeal(c);
-					happyPathHelper.startS78WrittenCase(c, procedureType);
+					cy.startAppeal(c);
 				}
 			},
 			[STATUSES.LPA_QUESTIONNAIRE]: (c) => {
