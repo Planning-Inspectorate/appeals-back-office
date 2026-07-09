@@ -18,13 +18,27 @@ describe('Change start date', () => {
 		cy.deleteAppeals(appeal);
 	});
 
-	it('Change Start date', () => {
+	it('Change Start date - HAS written representations', () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
 			happyPathHelper.changeStartDate(caseObj);
 			let dueDate = new Date();
 			caseDetailsPage.verifyDateChanges('start-date', dueDate);
+
+			//Notify
+			const expectedNotifies = [
+				{
+					template: 'appeal-start-date-change-appellant',
+					recipient: 'appellant@test.com'
+				},
+				{
+					template: 'appeal-start-date-change-lpa',
+					recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+				}
+			];
+
+			cy.checkNotifySent(caseObj, expectedNotifies);
 		});
 	});
 

@@ -268,13 +268,13 @@ appealTypeVariants.forEach((appealVariant) => {
 			);
 		});
 
-		it.only('should change appeal procedure type - written (in LPAQ state) to hearing', () => {
+		it('should change appeal procedure type - written (in LPAQ state) to hearing', () => {
 			const procedureTypeCaption = `Appeal ${caseObj.reference} - update appeal procedure`;
 
 			happyPathHelper.startCaseWithProcedureType(caseObj, 'written');
 			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
-			const writtenDetails = { ...overviewDetails, appealProcedure: PROCEDURE_TYPES.writtenPart2 };
+			const writtenDetails = { ...overviewDetails, appealProcedure: PROCEDURE_TYPES.written };
 			overviewSectionPage.verifyCaseOverviewDetails(writtenDetails, false);
 
 			overviewSectionPage.clickRowChangeLink('case-procedure');
@@ -330,7 +330,7 @@ appealTypeVariants.forEach((appealVariant) => {
 			happyPathHelper.startCaseWithProcedureType(caseObj, 'written');
 			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
-			const writtenDetails = { ...overviewDetails, appealProcedure: PROCEDURE_TYPES.writtenPart2 };
+			const writtenDetails = { ...overviewDetails, appealProcedure: PROCEDURE_TYPES.written };
 			overviewSectionPage.verifyCaseOverviewDetails(writtenDetails, false);
 
 			overviewSectionPage.clickRowChangeLink('case-procedure');
@@ -392,7 +392,7 @@ appealTypeVariants.forEach((appealVariant) => {
 			happyPathHelper.startCaseWithProcedureType(caseObj, 'written');
 			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
-			const writtenDetails = { ...overviewDetails, appealProcedure: PROCEDURE_TYPES.writtenPart2 };
+			const writtenDetails = { ...overviewDetails, appealProcedure: PROCEDURE_TYPES.written };
 			overviewSectionPage.verifyCaseOverviewDetails(writtenDetails, false);
 
 			overviewSectionPage.clickRowChangeLink('case-procedure');
