@@ -3,7 +3,7 @@ import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 /**
  *
- * @param {string} appealType
+ * @param {string | undefined} appealType
  * @returns string
  */
 export const appealTypeToAppealCaseTypeMapper = (appealType) => {

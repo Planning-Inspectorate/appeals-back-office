@@ -1,7 +1,10 @@
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
-import { isS78ExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import {
+	isLdcOrDiscontinuanceOrEnforcementAppealType,
+	isS78ExpeditedAppealType
+} from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /** @type {import('../mapper.js').SubMapper} */
@@ -21,7 +24,9 @@ export const mapStatementOfCommonGroundDueDate = ({
 			appellantCase?.applicationDate,
 			appellantCase?.applicationDecision,
 			appellantCase?.typeOfPlanningApplication
-		)
+		) ||
+		(appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING &&
+			isLdcOrDiscontinuanceOrEnforcementAppealType(appealDetails.appealType))
 	) {
 		return { id, display: {} };
 	}

@@ -7,6 +7,7 @@ import {
 import { APPEAL_TYPE, PROCEDURE_TYPE_NAME } from '../constants/common.js';
 import { EXPEDITED_ORIGINAL_APPLICATION_CUTOFF } from '../constants/dates.js';
 
+import { appealTypeToAppealCaseTypeMapper } from './appeal-type-case.mapper.js';
 import { dateIsOnOrAfterDate } from './date-utils.js';
 
 /**
@@ -113,8 +114,7 @@ export const isEnforcementCaseType = (caseType) =>
  * @returns {boolean}
  */
 export const isAnyEnforcementAppealType = (appealType) =>
-	appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ||
-	appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING;
+	isEnforcementCaseType(appealTypeToAppealCaseTypeMapper(appealType));
 
 /**
  *
@@ -122,9 +122,7 @@ export const isAnyEnforcementAppealType = (appealType) =>
  * @returns {boolean}
  */
 export const isLdcOrDiscontinuanceOrEnforcementAppealType = (appealType) =>
-	appealType === APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE ||
-	appealType === APPEAL_TYPE.DISCONTINUANCE_NOTICE ||
-	isAnyEnforcementAppealType(appealType);
+	isLdcOrDiscontinuanceOrEnforcementCaseType(appealTypeToAppealCaseTypeMapper(appealType));
 
 /**
  *

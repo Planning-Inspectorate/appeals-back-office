@@ -370,54 +370,57 @@ describe('Timetable', () => {
 			}
 		);
 
-		describe.each([APPEAL_TYPE.ENFORCEMENT_NOTICE, APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE])(
-			'Enforcement and LDC',
-			(appealType) => {
-				it(`should render correct "Timetable due dates" page for ${appealType} type inquiry appeal`, async () => {
-					const appealData = {
-						...baseAppealData,
-						appealStatus: 'lpa_questionnaire',
-						appealTimetable: {
-							appealTimetableId: 1
-						},
-						appealType: appealType,
-						procedureType: 'Inquiry'
-					};
+		describe.each([
+			APPEAL_TYPE.ENFORCEMENT_NOTICE,
+			APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+			// APPEAL_TYPE.DISCONTINUANCE_NOTICE, // discontinuance has not been added yet
+			APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE
+		])('Enforcement, ELB, discontinuance and LDC', (appealType) => {
+			it(`should render correct "Timetable due dates" page for ${appealType} type inquiry appeal`, async () => {
+				const appealData = {
+					...baseAppealData,
+					appealStatus: 'lpa_questionnaire',
+					appealTimetable: {
+						appealTimetableId: 1
+					},
+					appealType: appealType,
+					procedureType: 'Inquiry'
+				};
 
-					nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
-					nock('http://test/')
-						.get('/appeals/1/appellant-cases/0')
-						.reply(200, { planningObligation: { hasObligation: false } });
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
+				nock('http://test/')
+					.get('/appeals/1/appellant-cases/0')
+					.reply(200, { planningObligation: { hasObligation: false } });
 
-					const response = await request.get(`${baseUrl}/edit`);
-					const element = parseHtml(response.text);
+				const response = await request.get(`${baseUrl}/edit`);
+				const element = parseHtml(response.text);
 
-					expect(element.innerHTML).toContain('name="final-comments-due-date-day"');
-				});
+				expect(element.innerHTML).toContain('name="final-comments-due-date-day"');
+			});
 
-				it(`should render correct "Timetable due dates" page for ${appealType} type hearing appeal`, async () => {
-					const appealData = {
-						...baseAppealData,
-						appealStatus: 'lpa_questionnaire',
-						appealTimetable: {
-							appealTimetableId: 1
-						},
-						appealType: appealType,
-						procedureType: 'Hearing'
-					};
+			it(`should render correct "Timetable due dates" page for ${appealType} type hearing appeal`, async () => {
+				const appealData = {
+					...baseAppealData,
+					appealStatus: 'lpa_questionnaire',
+					appealTimetable: {
+						appealTimetableId: 1
+					},
+					appealType: appealType,
+					procedureType: 'Hearing'
+				};
 
-					nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
-					nock('http://test/')
-						.get('/appeals/1/appellant-cases/0')
-						.reply(200, { planningObligation: { hasObligation: false } });
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
+				nock('http://test/')
+					.get('/appeals/1/appellant-cases/0')
+					.reply(200, { planningObligation: { hasObligation: false } });
 
-					const response = await request.get(`${baseUrl}/edit`);
-					const element = parseHtml(response.text);
+				const response = await request.get(`${baseUrl}/edit`);
+				const element = parseHtml(response.text);
 
-					expect(element.innerHTML).toContain('name="final-comments-due-date-day"');
-				});
-			}
-		);
+				expect(element.innerHTML).toContain('name="final-comments-due-date-day"');
+				expect(element.innerHTML).not.toContain('name="statement-of-common-ground-due-date-day"');
+			});
+		});
 	});
 
 	describe('POST /edit', () => {

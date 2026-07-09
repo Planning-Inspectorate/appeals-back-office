@@ -56,9 +56,9 @@ export function generateAppealDetailsPageComponents(appealDetails, mappedData, s
 								mappedData.appeal.planningObligationDueDate.display.summaryListItem,
 								mappedData.appeal.proofOfEvidenceAndWitnessesDueDate.display.summaryListItem,
 								mappedData.appeal.caseManagementConferenceDueDate.display.summaryListItem,
+								mappedData.appeal.finalCommentDueDate.display.summaryListItem,
 								mappedData.appeal.hearingDate.display.summaryListItem,
-								mappedData.appeal.inquiryDate.display.summaryListItem,
-								mappedData.appeal.finalCommentDueDate.display.summaryListItem
+								mappedData.appeal.inquiryDate.display.summaryListItem
 							]
 						: [])
 				].filter(isDefined)
