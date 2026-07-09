@@ -1,11 +1,12 @@
 {% from 'macros/create-grounds-list.md' import create_grounds_list %}
 
-You have a new {{appeal_type | lower}} appeal against {{enforcement_reference}}.
+We have reviewed your appeal and supporting documents.
 
-We will decide the appeal by {{procedure_type}}. You can tell us if you think a different procedure is more appropriate in the questionnaire.
+Your appeal started on {{start_date}}. The timetable for the appeal begins from this date.
+
+Your appeal procedure is a hearing.
 
 {% include 'parts/appeal-details.md' %}
-Start date: {{start_date}}
 
 {% if other_appeals_grounds_group.length -%}
 # Grounds of appeal
@@ -38,8 +39,8 @@ The timetable is the same for the linked appeal {{child_appeals[0]}}.
 The timetable is the same for the following linked appeals:
 {%- for child_appeal in child_appeals %}
 - {{ child_appeal }}
-{%- endfor %}
-{%- endif %}
+  {%- endfor %}
+  {%- endif %}
 
 ## Local planning authority questionnaire
 
@@ -53,31 +54,43 @@ Due by {{lpa_statement_deadline}}.
 
 Due by {{ip_comments_deadline}}.
 
+{% if planning_obligation_deadline -%}
+## Planning obligation
+
+Send to {{team_email_address}} by {{planning_obligation_deadline}}.
+
+[Find out more about planning obligations](https://www.gov.uk/government/publications/planning-appeals-procedural-guide/procedural-guide-planning-appeals-england#planning-obligations).
+
+{% endif -%}
+
 ## Final comments
 
 Due by {{final_comments_deadline}}.
 
-{% if statement_of_common_ground_deadline -%}
-## Statement of common ground
+# Hearing details
 
-Due by {{statement_of_common_ground_deadline}}.
-
+^Date: {{hearing_date}}
+Time: {{hearing_time}}
+{% if hearing_expected_days -%}
+Expected days: {{hearing_expected_days}}
 {% endif -%}
+{% if inspector_name -%}
+Inspector: {{inspector_name}}
+{% endif %}
+
+We will contact you if we make any changes to the hearing.
 
 # What happens next
 
-[Submit your questionnaire and other documents]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}), including your appeal notification letter and a list of those notified by {{questionnaire_due_date}}.
+You need to [submit your statement]({{front_office_url}}) by {{lpa_statement_deadline}}.
 
-{% if procedure_type == 'a hearing' -%}
+We will send you an email when you can view information from other parties in the appeals service.
+
+{% if not hearing_date -%}
 We will send you another email when we set up the hearing.
+{% endif %}
 
-{% endif -%}
-
-[Find out your responsibilities in the appeal process](https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide).
-
-# Notifications
-
-You must [notify anyone you served the enforcement notice to](https://www.gov.uk/government/publications/model-notification-letter-for-enforcement-appeals) about the appeal.
+[Find out more about the enforcement appeal process](https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide).
 
 # Appeal costs
 

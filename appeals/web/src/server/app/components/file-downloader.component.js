@@ -324,7 +324,7 @@ const addBlobsToArchive = async (archive, blobStorageClient, bulkFileInfo, missi
  *
  * @param {{apiClient: import('got').Got, params: {caseId: string, filename?: string, representationType?: string}, session: SessionWithAuth, currentAppeal: WebAppeal}} request
  * @param {Response} response
- * @returns {Promise<Response>}
+ * @returns {Promise<void>}
  */
 export const getBulkDocumentDownload = async (
 	{ apiClient, params, session, currentAppeal },
@@ -343,16 +343,53 @@ export const getBulkDocumentDownload = async (
 	const archive = archiver('zip', {
 		zlib: { level: 1 } // compression level 1 to avoid excessive cpu usage
 	});
-	archive.on('warning', function (err) {
+
+	let hasEnded = false;
+	const handleUnexpectedClose = () => {
+		if (hasEnded) return;
+		hasEnded = true;
+
+		try {
+			if (!archive.destroyed) archive.destroy();
+		} catch (err) {
+			logger.error(err, 'Error destroying archive');
+		}
+		try {
+			if (!response.headersSent) response.status(500);
+			if (!response.destroyed) {
+				response.destroy();
+			}
+		} catch (err) {
+			logger.error(err, 'Error destroying response');
+		}
+	};
+
+	/** @param {unknown} err */
+	const handleError = (err) => {
+		logger.error(err, 'getBulkDocumentDownload error:');
+		handleUnexpectedClose();
+	};
+
+	/** @param {import('archiver').ArchiverError} err */
+	const handleWarning = (err) => {
 		if (err.code === 'ENOENT') {
 			logger.warn(err, 'Archiver warning:');
 		} else {
-			throw err;
+			logger.warn(err, 'Archiver warning:');
+			archive.emit('error', err);
+		}
+	};
+
+	response.once('close', () => {
+		if (!response.writableFinished) {
+			logger.warn('getBulkDocumentDownload aborted');
+			return handleUnexpectedClose();
 		}
 	});
-	archive.on('error', function (err) {
-		throw err;
-	});
+	archive.on('warning', handleWarning);
+	archive.once('error', handleError);
+
+	response.status(200);
 	archive.pipe(response);
 
 	try {
@@ -379,15 +416,11 @@ export const getBulkDocumentDownload = async (
 			archive.append(Buffer.from(JSON.stringify(missingFiles)), { name: 'missing-files.json' });
 		}
 
-		await archive.finalize();
-		return response.status(200).send();
+		// Avoid awaiting finalize despite it being a promise https://github.com/archiverjs/node-archiver/issues/772
+		// avoid calling send on response as it will end the stream potentially before archiver has finalised
+		archive.finalize().catch(handleError);
 	} catch (error) {
-		if (archive && !archive.destroyed) {
-			archive.destroy();
-		}
-
-		logger.error(error, 'Error during bulk document download:');
-		return response.destroy();
+		handleError(error);
 	}
 };
 

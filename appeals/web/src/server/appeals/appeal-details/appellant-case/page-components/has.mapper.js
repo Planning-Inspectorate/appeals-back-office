@@ -124,8 +124,9 @@ export function generateHASComponents(
 				mappedAppellantCaseData.siteOwnership.display.summaryListItem,
 				mappedAppellantCaseData.ownersKnown.display.summaryListItem,
 				mappedAppellantCaseData.inspectorAccess.display.summaryListItem,
-				mappedAppellantCaseData.healthAndSafetyIssues.display.summaryListItem
-			]
+				mappedAppellantCaseData.healthAndSafetyIssues.display.summaryListItem,
+				mappedAppellantCaseData.anySignificantChanges?.display?.summaryListItem
+			].filter(Boolean)
 		}
 	};
 
@@ -152,7 +153,7 @@ export function generateHASComponents(
 				mappedAppellantCaseData.developmentDescription.display.summaryListItem,
 				mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
 				mappedAppellantCaseData.decisionLetter.display.summaryListItem
-			]
+			].filter(Boolean)
 		}
 	};
 
@@ -284,10 +285,9 @@ export function generateHASComponents(
 						text: 'Appeal details'
 					}
 				},
-				rows: [
-					mappedAppellantCaseData.reasonForAppealAppellant?.display?.summaryListItem,
-					mappedAppellantCaseData.anySignificantChanges?.display?.summaryListItem
-				].filter(Boolean)
+				rows: [mappedAppellantCaseData.reasonForAppealAppellant.display.summaryListItem].filter(
+					Boolean
+				)
 			}
 		});
 	}

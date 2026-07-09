@@ -67,18 +67,20 @@ Send to {{team_email_address}} by {{planning_obligation_deadline}}.
 
 {% endif -%}
 
-{% if procedure_type == 'written representations' -%}
 ## Final comments
 
 Due by {{final_comments_deadline}}.
-
-{% endif -%}
 
 # What happens next
 
 You need to [submit your statement]({{front_office_url}}) by {{lpa_statement_deadline}}.
 
 We will send you an email when you can view information from other parties in the appeals service.
+
+{% if procedure_type == 'a hearing' -%}
+We will send you another email when we set up the hearing.
+
+{% endif -%}
 
 [Find out more about the enforcement appeal process](https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide).
 
@@ -92,5 +94,5 @@ You may have to pay costs if you:
 
 [Find out more about appeal costs](https://www.gov.uk/claim-planning-appeal-costs).
 
-The Planning Inspectorate
+Planning Inspectorate
 {{team_email_address}}
