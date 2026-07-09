@@ -32,6 +32,15 @@ const baseUrl = '/appeals-service/appeal-details';
 const costsCategoriesNotIncludingDecision = ['appellant', 'lpa'];
 const costsDocumentTypes = ['application', 'withdrawal', 'correspondence'];
 
+const getFolderApiUrl = (folderId) =>
+	`/appeals/1/document-folders/${folderId}?pageNumber=1&pageSize=100`;
+
+const existsResponse = {
+	id: appealData.appealId,
+	appealId: appealData.appealId,
+	appealReference: appealData.appealReference
+};
+
 describe('costs', () => {
 	afterAll(() => {
 		nock.cleanAll();
@@ -45,38 +54,34 @@ describe('costs', () => {
 	beforeEach(() => {
 		installMockApi();
 		nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
+		nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse).persist();
+
 		nock('http://test/')
 			.get('/appeals/document-redaction-statuses')
 			.reply(200, documentRedactionStatuses)
 			.persist();
 		nock('http://test/')
-			.get('/appeals/1/document-folders/1')
+			.get(getFolderApiUrl(1))
 			.reply(200, costsFolderInfoAppellantApplication)
 			.persist();
 		nock('http://test/')
-			.get('/appeals/1/document-folders/2')
+			.get(getFolderApiUrl(2))
 			.reply(200, costsFolderInfoAppellantWithdrawal)
 			.persist();
 		nock('http://test/')
-			.get('/appeals/1/document-folders/3')
+			.get(getFolderApiUrl(3))
 			.reply(200, costsFolderInfoAppellantCorrespondence)
 			.persist();
 		nock('http://test/')
-			.get('/appeals/1/document-folders/4')
+			.get(getFolderApiUrl(4))
 			.reply(200, costsFolderInfoLpaApplication)
 			.persist();
+		nock('http://test/').get(getFolderApiUrl(5)).reply(200, costsFolderInfoLpaWithdrawal).persist();
 		nock('http://test/')
-			.get('/appeals/1/document-folders/5')
-			.reply(200, costsFolderInfoLpaWithdrawal)
-			.persist();
-		nock('http://test/')
-			.get('/appeals/1/document-folders/6')
+			.get(getFolderApiUrl(6))
 			.reply(200, costsFolderInfoLpaCorrespondence)
 			.persist();
-		nock('http://test/')
-			.get('/appeals/1/document-folders/7')
-			.reply(200, costsFolderInfoDecision)
-			.persist();
+		nock('http://test/').get(getFolderApiUrl(7)).reply(200, costsFolderInfoDecision).persist();
 		nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		nock('http://test/').post('/appeals/validate-business-date').reply(200, true).persist();
 	});
@@ -1488,9 +1493,7 @@ describe('costs', () => {
 					doc.latestDocumentVersion.published = false;
 				});
 
-				nock('http://test/')
-					.get('/appeals/1/document-folders/1')
-					.reply(200, unsharedDocumentFolder);
+				nock('http://test/').get(getFolderApiUrl(1)).reply(200, unsharedDocumentFolder);
 
 				const response = await request.get(
 					`${baseUrl}/1/costs/appellant/application/manage-documents/1`
@@ -1512,7 +1515,7 @@ describe('costs', () => {
 					doc.latestDocumentVersion.published = true;
 				});
 
-				nock('http://test/').get('/appeals/1/document-folders/1').reply(200, sharedDocumentFolder);
+				nock('http://test/').get(getFolderApiUrl(1)).reply(200, sharedDocumentFolder);
 
 				const response = await request.get(
 					`${baseUrl}/1/costs/appellant/application/manage-documents/1`
@@ -1694,9 +1697,7 @@ describe('costs', () => {
 							.get('/appeals/document-redaction-statuses')
 							.reply(200, documentRedactionStatuses)
 							.persist();
-						nock('http://test/')
-							.get(`/appeals/1/document-folders/${costsFolder.folderId}`)
-							.reply(200, costsFolder);
+						nock('http://test/').get(getFolderApiUrl(costsFolder.folderId)).reply(200, costsFolder);
 						nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 
 						const sharedDocumentVersionsInfo = structuredClone(documentFileVersionsInfoChecked);
@@ -1731,9 +1732,7 @@ describe('costs', () => {
 							.reply(200, documentRedactionStatuses)
 							.persist();
 
-						nock('http://test/')
-							.get(`/appeals/1/document-folders/${costsFolder.folderId}`)
-							.reply(200, costsFolder);
+						nock('http://test/').get(getFolderApiUrl(costsFolder.folderId)).reply(200, costsFolder);
 
 						nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 
@@ -2009,7 +2008,7 @@ describe('costs', () => {
 						nock.cleanAll();
 						nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 						nock('http://test/')
-							.get(`/appeals/1/document-folders/${costsFolder.folderId}`)
+							.get(getFolderApiUrl(costsFolder.folderId))
 							.reply(200, costsFolder)
 							.persist();
 					});
@@ -2101,7 +2100,7 @@ describe('costs', () => {
 						nock.cleanAll();
 						nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 						nock('http://test/')
-							.get(`/appeals/1/document-folders/${costsFolder.folderId}`)
+							.get(getFolderApiUrl(costsFolder.folderId))
 							.reply(200, costsFolder)
 							.persist();
 						nock('http://test/')

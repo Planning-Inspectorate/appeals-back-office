@@ -425,6 +425,11 @@ export const spec = {
 				}
 			}
 		},
+		AppealExistsResponse: {
+			id: 118,
+			appealId: 118,
+			appealReference: '6000118'
+		},
 		SingleAppellantCaseResponse: {
 			agriculturalHolding: {
 				isPartOfAgriculturalHolding: true,

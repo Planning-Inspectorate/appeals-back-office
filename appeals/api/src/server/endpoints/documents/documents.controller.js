@@ -23,6 +23,7 @@ import { notifySend } from '#notify/notify-send.js';
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
+import { getPageCount } from '#utils/database-pagination.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
@@ -45,8 +46,25 @@ import * as service from './documents.service.js';
 export const getFolder = async (req, res) => {
 	const { appeal } = req;
 	const { folderId } = req.params;
-	const repId = Number(req.query.repId) || null;
-	const folder = await service.getFolderForAppeal(appeal.id, folderId, repId);
+	const repId = req.query.repId ? Number(req.query.repId) : null;
+	const pageNumber = Number(req.query.pageNumber) || 1;
+	const pageSize = Number(req.query.pageSize) || 5;
+	const folder = await service.getFolderForAppeal(
+		appeal.id,
+		Number(folderId),
+		pageNumber,
+		pageSize,
+		repId
+	);
+
+	if (folder) {
+		const documentCount = await service.getFolderDocumentCount(Number(folderId), repId);
+		const pageCount = getPageCount(documentCount, pageSize);
+		// @ts-expect-error
+		folder.totalFolderSize = documentCount;
+		// @ts-expect-error
+		folder.pageCount = pageCount;
+	}
 
 	return res.send(folder);
 };

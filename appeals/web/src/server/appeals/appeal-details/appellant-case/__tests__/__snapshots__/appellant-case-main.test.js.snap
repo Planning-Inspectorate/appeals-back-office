@@ -87,7 +87,7 @@ exports[`appellant-case-main GET /appellant-case notification banners should ren
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Householder planning</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -291,7 +291,7 @@ exports[`appellant-case-main GET /appellant-case notification banners should ren
                 <div class="govuk-summary-card__title-wrapper">
                     <h2 class="govuk-summary-card__title"> Additional documents</h2>
                     <ul class="govuk-summary-card__actions">
-                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Change<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
+                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Manage<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
                         <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70461">Add<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
@@ -301,12 +301,14 @@ exports[`appellant-case-main GET /appellant-case notification banners should ren
                     <dl class="govuk-summary-list pins-summary-list--fullwidth-value" id="additional-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
-                                <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
-                                    </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
-                                    </li>
-                                </ol>
+                                <div class="full-width">
+                                    <ul class="govuk-list govuk-list--bullet pins-file-list">
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
+                                        </li>
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
+                                        </li>
+                                    </ul>
+                                </div>
                                 </dd>
                         </div>
                     </dl>
@@ -391,7 +393,7 @@ exports[`appellant-case-main GET /appellant-case notification banners should ren
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Householder planning</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -595,7 +597,7 @@ exports[`appellant-case-main GET /appellant-case notification banners should ren
                 <div class="govuk-summary-card__title-wrapper">
                     <h2 class="govuk-summary-card__title"> Additional documents</h2>
                     <ul class="govuk-summary-card__actions">
-                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Change<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
+                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Manage<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
                         <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70461">Add<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
@@ -605,12 +607,14 @@ exports[`appellant-case-main GET /appellant-case notification banners should ren
                     <dl class="govuk-summary-list pins-summary-list--fullwidth-value" id="additional-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
-                                <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
-                                    </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
-                                    </li>
-                                </ol>
+                                <div class="full-width">
+                                    <ul class="govuk-list govuk-list--bullet pins-file-list">
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
+                                        </li>
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
+                                        </li>
+                                    </ul>
+                                </div>
                                 </dd>
                         </div>
                     </dl>
@@ -734,7 +738,7 @@ exports[`appellant-case-main GET /appellant-case notification banners should ren
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Householder planning</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -938,7 +942,7 @@ exports[`appellant-case-main GET /appellant-case notification banners should ren
                 <div class="govuk-summary-card__title-wrapper">
                     <h2 class="govuk-summary-card__title"> Additional documents</h2>
                     <ul class="govuk-summary-card__actions">
-                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Change<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
+                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Manage<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
                         <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70461">Add<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
@@ -948,12 +952,14 @@ exports[`appellant-case-main GET /appellant-case notification banners should ren
                     <dl class="govuk-summary-list pins-summary-list--fullwidth-value" id="additional-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
-                                <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
-                                    </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
-                                    </li>
-                                </ol>
+                                <div class="full-width">
+                                    <ul class="govuk-list govuk-list--bullet pins-file-list">
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
+                                        </li>
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
+                                        </li>
+                                    </ul>
+                                </div>
                                 </dd>
                         </div>
                     </dl>
@@ -1051,7 +1057,7 @@ exports[`appellant-case-main GET /appellant-case notification banners should ren
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Householder planning</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -1255,7 +1261,7 @@ exports[`appellant-case-main GET /appellant-case notification banners should ren
                 <div class="govuk-summary-card__title-wrapper">
                     <h2 class="govuk-summary-card__title"> Additional documents</h2>
                     <ul class="govuk-summary-card__actions">
-                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Change<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
+                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Manage<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
                         <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70461">Add<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
@@ -1265,12 +1271,14 @@ exports[`appellant-case-main GET /appellant-case notification banners should ren
                     <dl class="govuk-summary-list pins-summary-list--fullwidth-value" id="additional-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
-                                <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
-                                    </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
-                                    </li>
-                                </ol>
+                                <div class="full-width">
+                                    <ul class="govuk-list govuk-list--bullet pins-file-list">
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
+                                        </li>
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
+                                        </li>
+                                    </ul>
+                                </div>
                                 </dd>
                         </div>
                     </dl>
@@ -1500,7 +1508,7 @@ exports[`appellant-case-main GET /appellant-case should render review outcome fo
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Householder planning</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -1704,7 +1712,7 @@ exports[`appellant-case-main GET /appellant-case should render review outcome fo
                 <div class="govuk-summary-card__title-wrapper">
                     <h2 class="govuk-summary-card__title"> Additional documents</h2>
                     <ul class="govuk-summary-card__actions">
-                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Change<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
+                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Manage<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
                         <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70461">Add<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
@@ -1714,12 +1722,14 @@ exports[`appellant-case-main GET /appellant-case should render review outcome fo
                     <dl class="govuk-summary-list pins-summary-list--fullwidth-value" id="additional-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
-                                <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
-                                    </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
-                                    </li>
-                                </ol>
+                                <div class="full-width">
+                                    <ul class="govuk-list govuk-list--bullet pins-file-list">
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
+                                        </li>
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
+                                        </li>
+                                    </ul>
+                                </div>
                                 </dd>
                         </div>
                     </dl>
@@ -1816,7 +1826,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Householder planning</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -2020,7 +2030,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                 <div class="govuk-summary-card__title-wrapper">
                     <h2 class="govuk-summary-card__title"> Additional documents</h2>
                     <ul class="govuk-summary-card__actions">
-                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Change<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
+                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Manage<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
                         <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70461">Add<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
@@ -2030,12 +2040,14 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                     <dl class="govuk-summary-list pins-summary-list--fullwidth-value" id="additional-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
-                                <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
-                                    </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
-                                    </li>
-                                </ol>
+                                <div class="full-width">
+                                    <ul class="govuk-list govuk-list--bullet pins-file-list">
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
+                                        </li>
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
+                                        </li>
+                                    </ul>
+                                </div>
                                 </dd>
                         </div>
                     </dl>
@@ -2093,7 +2105,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Displaying an advertisement</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -2355,7 +2367,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Minor commercial development</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -2852,19 +2864,21 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
                     <h2 class="govuk-summary-card__title"> Additional documents</h2>
-                    <div class="govuk-summary-card__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Change<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
+                    <div class="govuk-summary-card__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Manage<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                     </div>
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list pins-summary-list--fullwidth-value" id="additional-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
-                                <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
-                                    </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
-                                    </li>
-                                </ol>
+                                <div class="full-width">
+                                    <ul class="govuk-list govuk-list--bullet pins-file-list">
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
+                                        </li>
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
+                                        </li>
+                                    </ul>
+                                </div>
                                 </dd>
                         </div>
                     </dl>
@@ -3257,7 +3271,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                 <div class="govuk-summary-card__title-wrapper">
                     <h2 class="govuk-summary-card__title"> Additional documents</h2>
                     <ul class="govuk-summary-card__actions">
-                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Change<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
+                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Manage<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
                         <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70461">Add<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
@@ -3267,12 +3281,14 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                     <dl class="govuk-summary-list pins-summary-list--fullwidth-value" id="additional-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
-                                <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
-                                    </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
-                                    </li>
-                                </ol>
+                                <div class="full-width">
+                                    <ul class="govuk-list govuk-list--bullet pins-file-list">
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
+                                        </li>
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
+                                        </li>
+                                    </ul>
+                                </div>
                                 </dd>
                         </div>
                     </dl>
@@ -3677,7 +3693,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                 <div class="govuk-summary-card__title-wrapper">
                     <h2 class="govuk-summary-card__title"> Additional documents</h2>
                     <ul class="govuk-summary-card__actions">
-                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Change<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
+                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Manage<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
                         <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70461">Add<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
@@ -3687,12 +3703,14 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                     <dl class="govuk-summary-list pins-summary-list--fullwidth-value" id="additional-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
-                                <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
-                                    </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
-                                    </li>
-                                </ol>
+                                <div class="full-width">
+                                    <ul class="govuk-list govuk-list--bullet pins-file-list">
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
+                                        </li>
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
+                                        </li>
+                                    </ul>
+                                </div>
                                 </dd>
                         </div>
                     </dl>
@@ -3750,7 +3768,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Full planning</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -4048,7 +4066,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                 <div class="govuk-summary-card__title-wrapper">
                     <h2 class="govuk-summary-card__title"> Additional documents</h2>
                     <ul class="govuk-summary-card__actions">
-                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Change<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
+                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Manage<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
                         <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70461">Add<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
@@ -4058,12 +4076,14 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                     <dl class="govuk-summary-list pins-summary-list--fullwidth-value" id="additional-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
-                                <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
-                                    </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
-                                    </li>
-                                </ol>
+                                <div class="full-width">
+                                    <ul class="govuk-list govuk-list--bullet pins-file-list">
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
+                                        </li>
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
+                                        </li>
+                                    </ul>
+                                </div>
                                 </dd>
                         </div>
                     </dl>
@@ -4121,7 +4141,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Householder planning</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -4325,7 +4345,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                 <div class="govuk-summary-card__title-wrapper">
                     <h2 class="govuk-summary-card__title"> Additional documents</h2>
                     <ul class="govuk-summary-card__actions">
-                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Change<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
+                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Manage<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
                         <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70461">Add<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
@@ -4335,12 +4355,14 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                     <dl class="govuk-summary-list pins-summary-list--fullwidth-value" id="additional-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
-                                <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
-                                    </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
-                                    </li>
-                                </ol>
+                                <div class="full-width">
+                                    <ul class="govuk-list govuk-list--bullet pins-file-list">
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
+                                        </li>
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
+                                        </li>
+                                    </ul>
+                                </div>
                                 </dd>
                         </div>
                     </dl>
@@ -4733,7 +4755,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                 <div class="govuk-summary-card__title-wrapper">
                     <h2 class="govuk-summary-card__title"> Additional documents</h2>
                     <ul class="govuk-summary-card__actions">
-                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Change<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
+                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Manage<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
                         <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70461">Add<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
@@ -4743,12 +4765,14 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                     <dl class="govuk-summary-list pins-summary-list--fullwidth-value" id="additional-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
-                                <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
-                                    </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
-                                    </li>
-                                </ol>
+                                <div class="full-width">
+                                    <ul class="govuk-list govuk-list--bullet pins-file-list">
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
+                                        </li>
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
+                                        </li>
+                                    </ul>
+                                </div>
                                 </dd>
                         </div>
                     </dl>
@@ -4845,7 +4869,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Listed building</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -5128,7 +5152,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                 <div class="govuk-summary-card__title-wrapper">
                     <h2 class="govuk-summary-card__title"> Additional documents</h2>
                     <ul class="govuk-summary-card__actions">
-                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Change<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
+                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Manage<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
                         <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70461">Add<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
@@ -5138,12 +5162,14 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                     <dl class="govuk-summary-list pins-summary-list--fullwidth-value" id="additional-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
-                                <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
-                                    </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
-                                    </li>
-                                </ol>
+                                <div class="full-width">
+                                    <ul class="govuk-list govuk-list--bullet pins-file-list">
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
+                                        </li>
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
+                                        </li>
+                                    </ul>
+                                </div>
                                 </dd>
                         </div>
                     </dl>
@@ -5201,7 +5227,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Displaying an advertisement</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -5500,7 +5526,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Lawful development certificate</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -5789,7 +5815,7 @@ exports[`appellant-case-main GET /appellant-case should render the appellant cas
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Displaying an advertisement</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -6093,7 +6119,7 @@ exports[`appellant-case-main POST /appellant-case should re-render the appellant
                                     data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is your appeal about?</dt>
                             <dd                             class="govuk-summary-list__value">Householder planning</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
@@ -6297,7 +6323,7 @@ exports[`appellant-case-main POST /appellant-case should re-render the appellant
                 <div class="govuk-summary-card__title-wrapper">
                     <h2 class="govuk-summary-card__title"> Additional documents</h2>
                     <ul class="govuk-summary-card__actions">
-                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Change<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
+                        <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/manage-documents/70461/">Manage<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
                         <li class="govuk-summary-card__action"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70461">Add<span class="govuk-visually-hidden"> additional documents (Additional documents)</span></a>
                         </li>
@@ -6307,12 +6333,14 @@ exports[`appellant-case-main POST /appellant-case should re-render the appellant
                     <dl class="govuk-summary-list pins-summary-list--fullwidth-value" id="additional-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key govuk-visually-hidden"> Additional documents</dt>
                             <dd                             class="govuk-summary-list__value">
-                                <ol class="govuk-list govuk-list--number pins-file-list">
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
-                                    </li>
-                                    <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
-                                    </li>
-                                </ol>
+                                <div class="full-width">
+                                    <ul class="govuk-list govuk-list--bullet pins-file-list">
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-bottom-2 pins-border-bottom"><span><a href='/documents/1/download/00c43c8c-829a-4aa8-883a-fd6fc1f52c3d/ph1.jpeg' data-cy='document-00c43c8c-829a-4aa8-883a-fd6fc1f52c3d' target="_blank" class="govuk-link">ph1.jpeg</a></span>
+                                        </li>
+                                        <li class="govuk-!-margin-bottom-0 govuk-!-padding-top-2 govuk-!-padding-bottom-2"><span><a href='/documents/1/download/a78446aa-167a-4bef-89b7-18bcb0da11c1/ph0.jpeg' data-cy='document-a78446aa-167a-4bef-89b7-18bcb0da11c1' target="_blank" class="govuk-link">ph0.jpeg</a></span>
+                                        </li>
+                                    </ul>
+                                </div>
                                 </dd>
                         </div>
                     </dl>

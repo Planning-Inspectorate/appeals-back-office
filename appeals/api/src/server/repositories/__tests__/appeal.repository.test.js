@@ -57,7 +57,7 @@ describe('getFoldersWithDocumentsAndVersions', () => {
 		jest.clearAllMocks();
 	});
 
-	it('limits version fetching to 30 visible documents when loadAllVersions = false', async () => {
+	it('limits version fetching to 5 visible documents when loadAllVersions = false', async () => {
 		const mockFolders = [{ id: 1, caseId: 2, path: 'lpa-questionnaire' }];
 		const mockDocs = [];
 		for (let i = 0; i < 50; i++) {
@@ -70,11 +70,11 @@ describe('getFoldersWithDocumentsAndVersions', () => {
 
 		await appealRepository.getFoldersWithDocumentsAndVersions(2, false);
 
-		// Assert version lookups are limited to the top 30 visible docs
+		// Assert version lookups are limited to the top 5 visible docs
 		expect(databaseConnector.documentVersion.findMany).toHaveBeenCalledTimes(1);
 		const callArgs = databaseConnector.documentVersion.findMany.mock.calls[0][0];
-		expect(callArgs.where.documentGuid.in.length).toBe(30);
-		expect(callArgs.where.documentGuid.in).toEqual(mockDocs.slice(0, 30).map((d) => d.guid));
+		expect(callArgs.where.documentGuid.in.length).toBe(5);
+		expect(callArgs.where.documentGuid.in).toEqual(mockDocs.slice(0, 5).map((d) => d.guid));
 	});
 
 	it('fetches all versions in batches when loadAllVersions = true', async () => {

@@ -41,6 +41,21 @@ const appellantCaseDataNotValidatedNoEnforcementNotice = {
 	enforcementNotice: { isReceived: false, isListedBuilding: false }
 };
 
+/**
+ * @param {number} appealId
+ * @param {number} folderId
+ * @returns {string}
+ */
+const getFolderApiUrl = (appealId, folderId) =>
+	`/appeals/${appealId}/document-folders/${folderId}?pageNumber=1&pageSize=100`;
+
+//@ts-ignore
+const mapExistsFromAppeal = (appeal) => ({
+	id: appeal.appealId,
+	appealId: appeal.appealId,
+	appealReference: appeal.appealReference
+});
+
 describe('appellant-case-main', () => {
 	beforeEach(installMockApi);
 	afterEach(teardown);
@@ -52,6 +67,10 @@ describe('appellant-case-main', () => {
 
 	describe('GET /appellant-case', () => {
 		beforeEach(() => {
+			nock('http://test/')
+				.get('/appeals/1/exists')
+				.reply(200, mapExistsFromAppeal(appellantCaseDataNotValidatedNoEnforcementNotice))
+				.persist();
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidatedNoEnforcementNotice);
@@ -1106,6 +1125,11 @@ describe('appellant-case-main', () => {
 				const appealId = appealData.appealId.toString();
 				nock.cleanAll();
 				nock('http://test/')
+					.get('/appeals/1/exists')
+					.reply(200, mapExistsFromAppeal(appealData))
+					.persist();
+
+				nock('http://test/')
 					.get(`/appeals/${appealId}?include=all`)
 					.reply(200, {
 						...appealData,
@@ -1351,6 +1375,11 @@ describe('appellant-case-main', () => {
 
 			it('should render an "Appeal is invalid" notification banner with the expected content when the appellant case has been reviewed with an outcome of "invalid"', async () => {
 				nock.cleanAll();
+				nock('http://test/')
+					.get('/appeals/1/exists')
+					.reply(200, mapExistsFromAppeal(appealData))
+					.persist();
+
 				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 				nock('http://test/')
 					.get('/appeals/1/appellant-cases/0')
@@ -1388,6 +1417,11 @@ describe('appellant-case-main', () => {
 
 			it('should render an "Appeal is incomplete" notification banner with the expected content when the appellant case has been reviewed with an outcome of "incomplete"', async () => {
 				nock.cleanAll();
+				nock('http://test/')
+					.get('/appeals/1/exists')
+					.reply(200, mapExistsFromAppeal(appealData))
+					.persist();
+
 				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 				nock('http://test/')
 					.get('/appeals/1/appellant-cases/0')
@@ -1427,6 +1461,11 @@ describe('appellant-case-main', () => {
 
 			it('should not render an "Appeal is incomplete" notification banner when the appellant case has been reviewed with an outcome of "incomplete" and then re-reviewed with an outcome of "valid"', async () => {
 				nock.cleanAll();
+				nock('http://test/')
+					.get('/appeals/1/exists')
+					.reply(200, mapExistsFromAppeal(appealData))
+					.persist();
+
 				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 				nock('http://test/')
 					.get('/appeals/1/appellant-cases/0')
@@ -1442,6 +1481,10 @@ describe('appellant-case-main', () => {
 				expect(unprettifiedNotificationBannerHTML).toContain('Appeal is incomplete</h3>');
 
 				nock.cleanAll();
+				nock('http://test/')
+					.get('/appeals/1/exists')
+					.reply(200, mapExistsFromAppeal(appealData))
+					.persist();
 				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 				nock('http://test/')
 					.get('/appeals/1/appellant-cases/0')
@@ -1552,6 +1595,11 @@ describe('appellant-case-main', () => {
 				const appellantCaseUrl = `/appeals-service/appeal-details/${appealId}/appellant-case`;
 
 				nock.cleanAll();
+				nock('http://test/')
+					.get('/appeals/1/exists')
+					.reply(200, mapExistsFromAppeal(appealData))
+					.persist();
+
 				nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appealData);
 				nock('http://test/')
 					.get(`/appeals/${appealId}/appellant-cases/0`)
@@ -1594,6 +1642,11 @@ describe('appellant-case-main', () => {
 			it('should render an "Appeal is incomplete" banner where the enforcement notice appeal is incomplete with "Missing information"', async () => {
 				nock.cleanAll();
 				nock('http://test/')
+					.get('/appeals/1/exists')
+					.reply(200, mapExistsFromAppeal(appealDataEnforcementNotice))
+					.persist();
+
+				nock('http://test/')
 					.get('/appeals/5623?include=all')
 					.reply(200, appealDataEnforcementNotice);
 				nock('http://test/')
@@ -1622,6 +1675,11 @@ describe('appellant-case-main', () => {
 
 			it('should render an "Appeal is incomplete" banner where the enforcement notice appeal is incomplete with "Ground (a) fee receipt due"', async () => {
 				nock.cleanAll();
+				nock('http://test/')
+					.get('/appeals/1/exists')
+					.reply(200, mapExistsFromAppeal(appealDataEnforcementNotice))
+					.persist();
+
 				nock('http://test/')
 					.get('/appeals/5623?include=all')
 					.reply(200, {
@@ -1664,6 +1722,11 @@ describe('appellant-case-main', () => {
 
 			it('should render both "Appeal is incomplete" banners where the enforcement notice appeal is incomplete with "Missing information" and "Ground (a) fee receipt due"', async () => {
 				nock.cleanAll();
+				nock('http://test/')
+					.get('/appeals/1/exists')
+					.reply(200, mapExistsFromAppeal(appealDataEnforcementNotice))
+					.persist();
+
 				nock('http://test/')
 					.get('/appeals/5623?include=all')
 					.reply(200, appealDataEnforcementNotice);
@@ -1767,7 +1830,21 @@ describe('appellant-case-main', () => {
 				beforeEach(() => {
 					nock.cleanAll();
 					nock('http://test/')
+						.get(`/appeals/${appealId}/exists`)
+						.reply(200, {
+							id: appealId,
+							appealId: appealId,
+							appealReference: appealData.appealReference
+						})
+						.persist();
+					nock('http://test/')
 						.get(`/appeals/${appealId}?include=all`)
+						.reply(200, {
+							...appealData,
+							appealId
+						});
+					nock('http://test/')
+						.get(`/appeals/${appealId}?include=appellantCase`)
 						.reply(200, {
 							...appealData,
 							appealId
@@ -1786,7 +1863,7 @@ describe('appellant-case-main', () => {
 				for (const testCase of testCases) {
 					it(`should render a "${testCase.label} added" success banner when uploading a document in the "${testCase.folderPath}" folder to the appellant case`, async () => {
 						nock('http://test/')
-							.get(`/appeals/${appealId}/document-folders/1`)
+							.get(getFolderApiUrl(appealId, folderId))
 							.reply(200, {
 								caseId: appealId,
 								documents: [],
@@ -1827,7 +1904,7 @@ describe('appellant-case-main', () => {
 
 				it('should render a fallback "Documents added" success banner when uploading a document in an unhandled folder to the appellant case', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}/document-folders/1`)
+						.get(getFolderApiUrl(appealId, 1))
 						.reply(200, {
 							caseId: appealId,
 							documents: [],
@@ -2141,6 +2218,11 @@ describe('appellant-case-main', () => {
 	describe('GET /appellant-case with unchecked documents', () => {
 		beforeEach(() => {
 			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1/exists')
+				.reply(200, mapExistsFromAppeal(appealData))
+				.persist();
+
 			nock('http://test/')
 				.get(`/appeals/${appealData.appealId}?include=all`)
 				.reply(200, appealData)

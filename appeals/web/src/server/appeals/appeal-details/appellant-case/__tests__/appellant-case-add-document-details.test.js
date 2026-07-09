@@ -5,7 +5,6 @@ import {
 	appellantCaseDataInvalidOutcome,
 	appellantCaseDataNotValidated,
 	appellantCaseDataValidOutcome,
-	documentFileInfo,
 	documentFolderInfo,
 	documentRedactionStatuses,
 	fileUploadInfo
@@ -23,6 +22,19 @@ const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 const appellantCasePagePath = '/appellant-case';
 
+const existsResponse = {
+	id: appellantCaseDataNotValidated.appealId,
+	appealId: appellantCaseDataNotValidated.appealId,
+	appealReference: appellantCaseDataNotValidated.appealReference
+};
+
+/**
+ * @param {number} folderId
+ * @returns {string}
+ */
+const getFolderApiUrl = (folderId) =>
+	`/appeals/1/document-folders/${folderId}?pageNumber=1&pageSize=100`;
+
 describe('appellant-case add-document-details', () => {
 	afterAll(() => {
 		nock.cleanAll();
@@ -35,7 +47,7 @@ describe('appellant-case add-document-details', () => {
 	describe('GET /appellant-case/add-document-details/:folderId/', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -47,11 +59,14 @@ describe('appellant-case add-document-details', () => {
 
 		it('should render a 500 error page if fileUploadInfo is not present in the session', async () => {
 			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
+				.get('/appeals/1?include=appealType,appellantCase')
 				.reply(200, appellantCaseDataNotValidated);
 			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, documentFolderInfo)
+				.get('/appeals/1/appellant-cases/1')
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/')
+				.get(getFolderApiUrl(1))
+				.reply(200, additionalDocumentsFolderInfo)
 				.persist();
 
 			const response = await request.get(
@@ -71,10 +86,13 @@ describe('appellant-case add-document-details', () => {
 
 		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is not additional documents or changedDescription', async () => {
 			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
+				.get('/appeals/1/appellant-cases/1')
 				.reply(200, appellantCaseDataNotValidated);
 			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
+				.get('/appeals/1?include=appealType,appellantCase')
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/')
+				.get(getFolderApiUrl(1))
 				.reply(200, { ...documentFolderInfo, path: 'appellant-case/appellantStatement' })
 				.persist();
 
@@ -137,10 +155,10 @@ describe('appellant-case add-document-details', () => {
 			'should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is changedDescription and appeal type is %s',
 			async (_, appealType, expectedText) => {
 				nock.cleanAll(); // need to remove the nocks so we can change the appeal type
+				nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse).persist();
 				nock('http://test/')
-					.get('/appeals/1?include=all')
-					.reply(200, { ...appealData, appealType: appealType })
-					.persist();
+					.get('/appeals/1?include=appealType,appellantCase')
+					.reply(200, { ...appealData, appealType: appealType });
 				nock('http://test/')
 					.get('/appeals/document-redaction-statuses')
 					.reply(200, documentRedactionStatuses)
@@ -149,7 +167,7 @@ describe('appellant-case add-document-details', () => {
 					.get('/appeals/1/appellant-cases/0')
 					.reply(200, appellantCaseDataNotValidated);
 				nock('http://test/')
-					.get('/appeals/1/document-folders/1')
+					.get(getFolderApiUrl(1))
 					.reply(200, { ...documentFolderInfo, path: 'appellant-case/changedDescription' })
 					.persist();
 
@@ -184,10 +202,13 @@ describe('appellant-case add-document-details', () => {
 
 		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has no validation outcome', async () => {
 			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
+				.get('/appeals/1?include=appealType,appellantCase')
 				.reply(200, appellantCaseDataNotValidated);
 			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
+				.get('/appeals/1/appellant-cases/1')
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/')
+				.get(getFolderApiUrl(1))
 				.reply(200, additionalDocumentsFolderInfo)
 				.persist();
 
@@ -221,10 +242,13 @@ describe('appellant-case add-document-details', () => {
 
 		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of invalid', async () => {
 			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
+				.get('/appeals/1?include=appealType,appellantCase')
 				.reply(200, appellantCaseDataInvalidOutcome);
 			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
+				.get('/appeals/1/appellant-cases/1')
+				.reply(200, appellantCaseDataInvalidOutcome);
+			nock('http://test/')
+				.get(getFolderApiUrl(1))
 				.reply(200, additionalDocumentsFolderInfo)
 				.persist();
 
@@ -258,10 +282,13 @@ describe('appellant-case add-document-details', () => {
 
 		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of incomplete', async () => {
 			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
+				.get('/appeals/1?include=appealType,appellantCase')
 				.reply(200, appellantCaseDataIncompleteOutcome);
 			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
+				.get('/appeals/1/appellant-cases/1')
+				.reply(200, appellantCaseDataIncompleteOutcome);
+			nock('http://test/')
+				.get(getFolderApiUrl(1))
 				.reply(200, additionalDocumentsFolderInfo)
 				.persist();
 
@@ -295,10 +322,13 @@ describe('appellant-case add-document-details', () => {
 
 		it('should render the add document details page with one item per uploaded document, and with a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of valid', async () => {
 			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
+				.get('/appeals/1?include=appealType,appellantCase')
 				.reply(200, appellantCaseDataValidOutcome);
 			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
+				.get('/appeals/1/appellant-cases/1')
+				.reply(200, appellantCaseDataValidOutcome);
+			nock('http://test/')
+				.get(getFolderApiUrl(1))
 				.reply(200, additionalDocumentsFolderInfo)
 				.persist();
 
@@ -338,14 +368,13 @@ describe('appellant-case add-document-details', () => {
 		let addDocumentsResponse;
 
 		beforeEach(async () => {
+			nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse).persist();
+
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
 				.persist();
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, documentFolderInfo)
-				.persist();
+			nock('http://test/').get(getFolderApiUrl(1)).reply(200, documentFolderInfo).persist();
 			nock('http://test/')
 				.patch('/appeals/1/documents')
 				.reply(200, {
@@ -756,16 +785,12 @@ describe('appellant-case add-document-details', () => {
 	describe('GET /appellant-case/add-document-details/:folderId/:documentId', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+
+			nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
 				.persist();
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, { ...documentFolderInfo, path: 'appellant-case/appellantStatement' })
-				.persist();
-			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(() => {
 			nock.cleanAll();
@@ -773,9 +798,12 @@ describe('appellant-case add-document-details', () => {
 
 		it('should render a 500 error page if fileUploadInfo is not present in the session', async () => {
 			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
+				.get('/appeals/1?include=appealType,appellantCase')
 				.reply(200, appellantCaseDataNotValidated);
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/1')
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/').get(getFolderApiUrl(1)).reply(200, documentFolderInfo).persist();
 
 			const response = await request.get(
 				`${baseUrl}/1${appellantCasePagePath}/add-document-details/1/1`
@@ -794,8 +822,15 @@ describe('appellant-case add-document-details', () => {
 
 		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is not additional documents or changed description', async () => {
 			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
+				.get('/appeals/1?include=appealType,appellantCase')
 				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/1')
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/')
+				.get(getFolderApiUrl(1))
+				.reply(200, { ...documentFolderInfo, path: 'appellant-case/appellantStatement' })
+				.persist();
 
 			const addDocumentsResponse = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}/add-documents/1/1`)
@@ -827,10 +862,13 @@ describe('appellant-case add-document-details', () => {
 
 		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has no validation outcome', async () => {
 			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
+				.get('/appeals/1?include=appealType,appellantCase')
 				.reply(200, appellantCaseDataNotValidated);
 			nock('http://test/')
-				.get('/appeals/1/document-folders/2')
+				.get('/appeals/1/appellant-cases/1')
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/')
+				.get(getFolderApiUrl(2))
 				.reply(200, additionalDocumentsFolderInfo)
 				.persist();
 
@@ -864,10 +902,13 @@ describe('appellant-case add-document-details', () => {
 
 		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of invalid', async () => {
 			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
+				.get('/appeals/1?include=appealType,appellantCase')
 				.reply(200, appellantCaseDataInvalidOutcome);
 			nock('http://test/')
-				.get('/appeals/1/document-folders/2')
+				.get('/appeals/1/appellant-cases/1')
+				.reply(200, appellantCaseDataInvalidOutcome);
+			nock('http://test/')
+				.get(getFolderApiUrl(2))
 				.reply(200, additionalDocumentsFolderInfo)
 				.persist();
 
@@ -901,10 +942,13 @@ describe('appellant-case add-document-details', () => {
 
 		it('should render the add document details page with one item per uploaded document, and without a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of incomplete', async () => {
 			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
+				.get('/appeals/1?include=appealType,appellantCase')
 				.reply(200, appellantCaseDataIncompleteOutcome);
 			nock('http://test/')
-				.get('/appeals/1/document-folders/2')
+				.get('/appeals/1/appellant-cases/1')
+				.reply(200, appellantCaseDataIncompleteOutcome);
+			nock('http://test/')
+				.get(getFolderApiUrl(2))
 				.reply(200, additionalDocumentsFolderInfo)
 				.persist();
 
@@ -938,10 +982,13 @@ describe('appellant-case add-document-details', () => {
 
 		it('should render the add document details page with one item per uploaded document, and with a late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of valid', async () => {
 			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
+				.get('/appeals/1?include=appealType,appellantCase')
 				.reply(200, appellantCaseDataValidOutcome);
 			nock('http://test/')
-				.get('/appeals/1/document-folders/2')
+				.get('/appeals/1/appellant-cases/1')
+				.reply(200, appellantCaseDataValidOutcome);
+			nock('http://test/')
+				.get(getFolderApiUrl(2))
 				.reply(200, additionalDocumentsFolderInfo)
 				.persist();
 
@@ -981,15 +1028,13 @@ describe('appellant-case add-document-details', () => {
 		let addDocumentsResponse;
 
 		beforeEach(async () => {
+			nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse).persist();
+
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
 				.persist();
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, documentFolderInfo)
-				.persist();
-			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').get(getFolderApiUrl(1)).reply(200, documentFolderInfo).persist();
 			nock('http://test/')
 				.patch('/appeals/1/documents')
 				.reply(200, {

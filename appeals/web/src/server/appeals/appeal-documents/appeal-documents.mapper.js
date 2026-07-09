@@ -18,7 +18,11 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
 import { redactionStatusIdToName } from '#lib/redaction-statuses.js';
 import config from '@pins/appeals.web/environment/config.js';
-import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_TYPE,
+	DOCUMENTS_PAGE_SIZE,
+	FEATURE_FLAG_NAMES
+} from '@pins/appeals/constants/common.js';
 import {
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_REDACTED_STATUS,
@@ -29,8 +33,11 @@ import { capitalize } from 'lodash-es';
 /**
  * @typedef {import('../appeal-details/appeal-details.types.js').WebAppeal} Appeal
  * @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo
+ * @typedef {import('@pins/appeals.api').Appeals.PagedFolderInfo} PagedFolderInfo
  * @typedef {import('@pins/appeals.api').Appeals.DocumentInfo} DocumentInfo
+ * @typedef {import('@pins/appeals.api').Appeals.PagedDocumentInfo} PagedDocumentInfo
  * @typedef {import('@pins/appeals.api').Appeals.DocumentVersionInfo} DocumentVersionInfo
+ * @typedef {import('@pins/appeals.api').Appeals.PagedDocumentVersionInfo} PagedDocumentVersionInfo
  * @typedef {import('#lib/nunjucks-template-builders/tag-builders.js').HtmlLink} HtmlLink
  * @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} RedactionStatus
  * @typedef {import('@pins/appeals.api').Api.DocumentVersionAuditEntry} DocumentVersionAuditEntry
@@ -167,20 +174,6 @@ export const mapUncommittedDocumentDownloadUrl = (
 };
 
 /**
- * @param {string|null|undefined} fileName
- * @returns {string}
- */
-const mapDocumentFileNameToFileExtension = (fileName) => {
-	if (!fileName) {
-		return '';
-	}
-
-	const nameFragments = fileName.split('.');
-
-	return nameFragments[nameFragments.length - 1].toUpperCase();
-};
-
-/**
  * @param {number|null|undefined} fileSize
  * @returns {string}
  */
@@ -198,21 +191,6 @@ const mapDocumentSizeToFileSizeString = (fileSize) => {
 	} else {
 		return `${(fileSize / gigabyte).toFixed(2)} GB`;
 	}
-};
-
-/**
- *
- * @param {DocumentInfo|undefined} document
- * @returns {string}
- */
-const mapDocumentFileTypeAndSize = (document) => {
-	if (!document?.latestDocumentVersion) {
-		return '';
-	}
-
-	return `${mapDocumentFileNameToFileExtension(document.name)}, ${mapDocumentSizeToFileSizeString(
-		Number(document.latestDocumentVersion?.size)
-	)}`;
 };
 
 /**
@@ -256,7 +234,7 @@ export function mapVirusCheckStatus(virusCheckStatus) {
 }
 
 /**
- * @param {DocumentInfo} document
+ * @param {DocumentInfo|PagedDocumentInfo} document
  * @returns {DocumentVirusCheckStatus}
  */
 export function mapDocumentInfoVirusCheckStatus(document) {
@@ -267,7 +245,7 @@ export function mapDocumentInfoVirusCheckStatus(document) {
 }
 
 /**
- * @param {DocumentVersionInfo|undefined} document
+ * @param {DocumentVersionInfo|PagedDocumentVersionInfo|undefined} document
  * @returns {DocumentVirusCheckStatus}
  */
 export function mapDocumentVersionDetailsVirusCheckStatus(document) {
@@ -799,12 +777,20 @@ export function addDocumentsCheckAndConfirmPage({
 }
 
 /**
- * @param {FolderInfo} folder
- * @param {DocumentInfo} document
+ * @param {FolderInfo|PagedFolderInfo} folder
+ * @param {DocumentInfo|PagedDocumentInfo} document
+ * @param {number} index
+ * @param {number} totalDocuments
  * @param {boolean} [isCosts]
  * @returns {HtmlProperty & ClassesProperty}
  */
-export function mapFolderDocumentInformationHtmlProperty(folder, document, isCosts = false) {
+export function mapFolderDocumentInformationHtmlProperty(
+	folder,
+	document,
+	index,
+	totalDocuments,
+	isCosts = false
+) {
 	/** @type {HtmlProperty} */
 	const htmlProperty = {
 		html: '',
@@ -818,42 +804,30 @@ export function mapFolderDocumentInformationHtmlProperty(folder, document, isCos
 			: '';
 
 	if (document?.id) {
-		const linkWrapperHtml = {
-			opening: '<div class="govuk-!-margin-bottom-4">',
-			closing: '</div>'
-		};
 		const virusCheckStatus = mapDocumentInfoVirusCheckStatus(document);
-
+		const fileSizeString = document.latestDocumentVersion?.size
+			? `(${mapDocumentSizeToFileSizeString(Number(document.latestDocumentVersion?.size))})`
+			: '';
+		const indexString = totalDocuments > 1 ? `${index + 1}.` : '';
 		if (virusCheckStatus.checked && virusCheckStatus.safe) {
 			htmlProperty.pageComponents.push({
 				type: 'html',
-				wrapperHtml: linkWrapperHtml,
 				parameters: {
-					html: `${sharedTagHtml}<a class="govuk-link" href="${mapDocumentDownloadUrl(
+					html: `${indexString} ${sharedTagHtml}<a class="govuk-link" href="${mapDocumentDownloadUrl(
 						folder.caseId,
 						document.id,
 						document.name
-					)}" target="_blank">${document.name || ''}</a>`.trim()
+					)}" target="_blank">${document.name || ''}</a> ${fileSizeString}`.trim()
 				}
 			});
 		} else {
 			htmlProperty.pageComponents.push({
 				type: 'html',
-				wrapperHtml: linkWrapperHtml,
 				parameters: {
-					html: `${sharedTagHtml}<span class="govuk-body">${document.name || ''}</span>`.trim()
+					html: `${indexString} ${sharedTagHtml}<span class="govuk-body">${document.name || ''}</span> ${fileSizeString}`.trim()
 				}
 			});
 		}
-
-		htmlProperty.pageComponents.push({
-			type: 'html',
-			parameters: {
-				html: `<dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt><dd>${mapDocumentFileTypeAndSize(
-					document
-				)}</dd></dl>`.trim()
-			}
-		});
 
 		if (!virusCheckStatus.safe) {
 			htmlProperty.pageComponents.push({
@@ -873,8 +847,8 @@ export function mapFolderDocumentInformationHtmlProperty(folder, document, isCos
 }
 
 /**
- * @param {FolderInfo} folder
- * @param {DocumentInfo} document
+ * @param {FolderInfo|PagedFolderInfo} folder
+ * @param {DocumentInfo|PagedDocumentInfo} document
  * @param {string} viewAndEditUrl
  * @param {boolean} [isCosts]
  * @returns {HtmlProperty & ClassesProperty}
@@ -918,13 +892,15 @@ export function mapFolderDocumentActionsHtmlProperty(
  * @param {string} params.backLinkUrl
  * @param {string} params.viewAndEditUrl
  * @param {string} params.addButtonUrl
- * @param {FolderInfo} params.folder - API type needs to be updated (should be Folder, but there are worse problems with that type)
+ * @param {PagedFolderInfo} params.folder - API type needs to be updated (should be Folder, but there are worse problems with that type)
  * @param {import('@pins/express/types/express.js').Request} params.request
  * @param {string} [params.pageHeadingTextOverride]
  * @param {string} [params.addButtonTextOverride]
  * @param {string} [params.dateColumnLabelTextOverride]
  * @param {string} [params.preHeadingTextOverride]
  * @param {boolean} [params.isCosts]
+ * @param {boolean} [params.editable]
+ * @param {number} params.currentPageNumber
  * @returns {PageContent}
  */
 export function manageFolderPage({
@@ -937,6 +913,8 @@ export function manageFolderPage({
 	addButtonTextOverride,
 	dateColumnLabelTextOverride,
 	preHeadingTextOverride,
+	editable = true,
+	currentPageNumber,
 	isCosts = false
 }) {
 	const appealType = request.currentAppeal?.appealType;
@@ -983,6 +961,26 @@ export function manageFolderPage({
 			classes: 'govuk-button--secondary'
 		}
 	};
+	const tableHead = [
+		{
+			text: 'Name'
+		},
+		{
+			text: dateColumnLabelTextOverride || 'Date received'
+		},
+		{
+			text: 'Redaction status'
+		},
+		...(editable
+			? [
+					{
+						text: 'Actions'
+					}
+				]
+			: [])
+	];
+
+	const docStartCount = (currentPageNumber - 1) * DOCUMENTS_PAGE_SIZE;
 
 	/** @type {PageContent} */
 	const pageContent = {
@@ -994,7 +992,7 @@ export function manageFolderPage({
 		pageComponents: [
 			...notificationBanners,
 			...errorSummaryPageComponents,
-			buttonComponent,
+			...(editable ? [buttonComponent] : []),
 			{
 				type: 'table',
 				wrapperHtml: {
@@ -1002,25 +1000,18 @@ export function manageFolderPage({
 					closing: '</div></div>'
 				},
 				parameters: {
-					head: [
-						{
-							text: 'Name'
-						},
-						{
-							text: dateColumnLabelTextOverride || 'Date received'
-						},
-						{
-							text: 'Redaction status'
-						},
-						{
-							text: 'Actions'
-						}
-					],
+					head: tableHead,
 					attributes: {
 						id: 'documents-table'
 					},
-					rows: (folder?.documents || []).map((document) => [
-						mapFolderDocumentInformationHtmlProperty(folder, document, isCosts),
+					rows: (folder?.documents || []).map((document, index) => [
+						mapFolderDocumentInformationHtmlProperty(
+							folder,
+							document,
+							docStartCount + index,
+							folder.totalFolderSize,
+							isCosts
+						),
 						folderIsAdditionalDocuments(folder.path) && document?.latestDocumentVersion?.isLateEntry
 							? {
 									html: '',
@@ -1055,7 +1046,9 @@ export function manageFolderPage({
 						{
 							text: document?.latestDocumentVersion?.redactionStatus
 						},
-						mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEditUrl, isCosts)
+						...(editable
+							? [mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEditUrl, isCosts)]
+							: [])
 					])
 				}
 			}
@@ -1603,7 +1596,7 @@ export async function manageDocumentPage({
  * @param {string} backLinkUrl
  * @param {RedactionStatus[]} redactionStatuses
  * @param {DocumentInfo} document
- * @param {FolderInfo} folder - API type needs to be updated here (should be Folder, but there are worse problems with that type)
+ * @param {number} folderId
  * @param {string} versionId
  * @param {import("@pins/express/types/express.js").ValidationErrors | undefined} errors
  * @returns {Promise<PageContent>}
@@ -1612,7 +1605,7 @@ export async function deleteDocumentPage(
 	backLinkUrl,
 	redactionStatuses,
 	document,
-	folder,
+	folderId,
 	versionId,
 	errors
 ) {
@@ -1644,7 +1637,7 @@ export async function deleteDocumentPage(
 		title: 'Remove document',
 		backLinkText: 'Back',
 		backLinkUrl: backLinkUrl
-			?.replace('{{folderId}}', folder.folderId.toString())
+			?.replace('{{folderId}}', folderId.toString())
 			.replace('{{documentId}}', document.id || ''),
 		preHeading: 'Manage versions',
 		heading: 'Are you sure you want to remove this version?',
@@ -2002,9 +1995,9 @@ export function changeDocumentDetailsPage(backLinkUrl, folder, file, redactionSt
 
 /**
  *
- * @param {FolderInfo} folder
+ * @param {FolderInfo|PagedFolderInfo} folder
  * @param {string} virusStatus
- * @returns {DocumentInfo[]}
+ * @returns {DocumentInfo[]|PagedDocumentInfo[]}
  */
 export function getDocumentsForVirusStatus(folder, virusStatus) {
 	let matchingDocuments = [];
