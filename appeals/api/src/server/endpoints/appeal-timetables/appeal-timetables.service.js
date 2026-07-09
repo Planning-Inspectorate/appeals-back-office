@@ -880,6 +880,7 @@ const getTimetableUpdatedTemplateName = (appealTypeKey, procedureType) => {
 export {
 	calculateAppealTimetable,
 	checkAppealTimetableExists,
+	getStartCaseNotifyParams,
 	getStartCaseNotifyPreviews,
 	startCase,
 	updateAppealTimetable

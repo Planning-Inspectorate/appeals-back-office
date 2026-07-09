@@ -130,20 +130,16 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
           "text": "Not answered",
         },
         {
+          "html": "Not provided",
           "key": "Why would you prefer this appeal procedure?",
-          "text": "Not provided",
         },
         {
+          "html": "Not provided",
           "key": "How many days would you expect the inquiry to last?",
-          "text": "Not provided",
         },
         {
           "key": "How many witnesses would you expect to give evidence at the inquiry?",
           "text": "1",
-        },
-        {
-          "key": "Reason for appeal",
-          "text": "Not provided",
         },
       ],
     },
@@ -304,12 +300,7 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
     },
     {
       "heading": "Appeal details",
-      "items": [
-        {
-          "key": "Reason for appeal",
-          "text": "Not provided",
-        },
-      ],
+      "items": [],
     },
     {
       "heading": "Upload documents",
@@ -457,12 +448,7 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
     },
     {
       "heading": "Appeal details",
-      "items": [
-        {
-          "key": "Reason for appeal",
-          "text": "Not provided",
-        },
-      ],
+      "items": [],
     },
     {
       "heading": "Upload documents",
@@ -620,8 +606,8 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
       "heading": "Appeal details",
       "items": [
         {
-          "key": "Reason for appeal",
-          "text": "My reason for appeal",
+          "html": "My reason for appeal",
+          "key": "Why are you appealing?",
         },
       ],
     },
@@ -764,20 +750,16 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
           "text": "Not answered",
         },
         {
+          "html": "Not provided",
           "key": "Why would you prefer this appeal procedure?",
-          "text": "Not provided",
         },
         {
+          "html": "2",
           "key": "How many days would you expect the inquiry to last?",
-          "text": "2",
         },
         {
           "key": "How many witnesses would you expect to give evidence at the inquiry?",
           "text": "1",
-        },
-        {
-          "key": "Reason for appeal",
-          "text": "Not provided",
         },
       ],
     },
@@ -949,20 +931,16 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
           "text": "Hearing",
         },
         {
+          "html": "Need for a detailed examination",
           "key": "Why would you prefer this appeal procedure?",
-          "text": "Need for a detailed examination",
         },
         {
+          "html": "1",
           "key": "How many days would you expect the inquiry to last?",
-          "text": "1",
         },
         {
           "key": "How many witnesses would you expect to give evidence at the inquiry?",
           "text": "1",
-        },
-        {
-          "key": "Reason for appeal",
-          "text": "Not provided",
         },
       ],
     },
@@ -1166,20 +1144,16 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
           "text": "Hearing",
         },
         {
+          "html": "Need for a detailed examination",
           "key": "Why would you prefer this appeal procedure?",
-          "text": "Need for a detailed examination",
         },
         {
+          "html": "1",
           "key": "How many days would you expect the inquiry to last?",
-          "text": "1",
         },
         {
           "key": "How many witnesses would you expect to give evidence at the inquiry?",
           "text": "1",
-        },
-        {
-          "key": "Reason for appeal",
-          "text": "Not provided",
         },
       ],
     },
@@ -1383,8 +1357,8 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
       "heading": "Appeal details",
       "items": [
         {
-          "key": "Reason for appeal",
-          "text": "Not provided",
+          "html": "Not provided",
+          "key": "Why are you appealing?",
         },
       ],
     },

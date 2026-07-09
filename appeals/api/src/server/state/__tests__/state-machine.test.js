@@ -17,15 +17,15 @@ import createStateMachine from '../create-state-machine';
  * Function to get the next state for HAS appeals based on the initial state and event.
  * @param {string} initial - The initial state of the appeal.
  * @param {string} event - The event that triggers the state transition.
- * @param {boolean} [siteVisitElapsed] - Whether the site visit has elapsed.
+ * @param {boolean} [eventElapsed] - Whether the event has elapsed.
  * @return {import('xstate').StateValue} - The next state of the appeal.
  **/
-const nextStateHAS = (initial, event, siteVisitElapsed = false) => {
+const nextStateHAS = (initial, event, eventElapsed = false) => {
 	const machine = createStateMachine(
 		APPEAL_CASE_TYPE.D,
 		APPEAL_CASE_PROCEDURE.WRITTEN,
 		initial,
-		siteVisitElapsed
+		eventElapsed
 	);
 	const service = interpret(machine).start();
 
@@ -38,11 +38,24 @@ const nextStateHAS = (initial, event, siteVisitElapsed = false) => {
  * @param {string} initial - The initial state of the appeal.
  * @param {string} event - The event that triggers the state transition.
  * @param {string} procedureType - The event that triggers the state transition.
- * @param {boolean} [siteVisitElapsed] - Whether the site visit has elapsed.
+ * @param {boolean} [eventElapsed] - Whether the event has elapsed.
+ * @param {boolean} [ldcEnforcementDiscontinuance] - Whether the case type is ldc, enforcement, elb or discontinuance
  * @return {import('xstate').StateValue} - The next state of the appeal.
  **/
-const nextStateFPA = (initial, event, procedureType, siteVisitElapsed = false) => {
-	const machine = createStateMachine(APPEAL_CASE_TYPE.W, procedureType, initial, siteVisitElapsed);
+const nextStateFPA = (
+	initial,
+	event,
+	procedureType,
+	eventElapsed = false,
+	ldcEnforcementDiscontinuance = false
+) => {
+	const machine = createStateMachine(
+		APPEAL_CASE_TYPE.W,
+		procedureType,
+		initial,
+		eventElapsed,
+		ldcEnforcementDiscontinuance
+	);
 	const service = interpret(machine).start();
 
 	service.send(event);
@@ -324,7 +337,7 @@ describe('State Machine Transitions', () => {
 				APPEAL_CASE_STATUS.INVALID
 			]
 		])(
-			'correctly transitions from %s state on %s event to %s state for FPA',
+			'correctly transitions from %s state on %s event to %s state for FPA - non ldcEnfDiscontinuance',
 			(initial, event, expectedFPAWritten, expectedFPAHearing, expectedFPAInquiry) => {
 				expect(nextStateFPA(initial, event, APPEAL_CASE_PROCEDURE.WRITTEN)).toBe(
 					expectedFPAWritten
@@ -337,6 +350,58 @@ describe('State Machine Transitions', () => {
 				);
 			}
 		);
+
+		test.each([
+			[
+				APPEAL_CASE_STATUS.STATEMENTS,
+				VALIDATION_OUTCOME_COMPLETE,
+				APPEAL_CASE_STATUS.FINAL_COMMENTS,
+				APPEAL_CASE_STATUS.FINAL_COMMENTS,
+				APPEAL_CASE_STATUS.FINAL_COMMENTS
+			],
+			[
+				APPEAL_CASE_STATUS.STATEMENTS,
+				APPEAL_CASE_STATUS.CLOSED,
+				APPEAL_CASE_STATUS.CLOSED,
+				APPEAL_CASE_STATUS.CLOSED,
+				APPEAL_CASE_STATUS.CLOSED
+			],
+			[
+				APPEAL_CASE_STATUS.STATEMENTS,
+				APPEAL_CASE_STATUS.AWAITING_TRANSFER,
+				APPEAL_CASE_STATUS.AWAITING_TRANSFER,
+				APPEAL_CASE_STATUS.AWAITING_TRANSFER,
+				APPEAL_CASE_STATUS.AWAITING_TRANSFER
+			],
+			[
+				APPEAL_CASE_STATUS.STATEMENTS,
+				APPEAL_CASE_STATUS.WITHDRAWN,
+				APPEAL_CASE_STATUS.WITHDRAWN,
+				APPEAL_CASE_STATUS.WITHDRAWN,
+				APPEAL_CASE_STATUS.WITHDRAWN
+			],
+			[
+				APPEAL_CASE_STATUS.STATEMENTS,
+				VALIDATION_OUTCOME_INVALID,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID
+			]
+		])(
+			'correctly transitions from %s state on %s event to %s state for FPA - ldcEnfDiscontinuance',
+			(initial, event, expectedFPAWritten, expectedFPAHearing, expectedFPAInquiry) => {
+				expect(nextStateFPA(initial, event, APPEAL_CASE_PROCEDURE.WRITTEN, false, true)).toBe(
+					expectedFPAWritten
+				);
+				expect(nextStateFPA(initial, event, APPEAL_CASE_PROCEDURE.HEARING, false, true)).toBe(
+					expectedFPAHearing
+				);
+				expect(nextStateFPA(initial, event, APPEAL_CASE_PROCEDURE.INQUIRY, false, true)).toBe(
+					expectedFPAInquiry
+				);
+			}
+		);
+
 		test.each([
 			[APPEAL_CASE_STATUS.STATEMENTS, VALIDATION_OUTCOME_COMPLETE, APPEAL_CASE_STATUS.STATEMENTS],
 			[APPEAL_CASE_STATUS.STATEMENTS, APPEAL_CASE_STATUS.CLOSED, APPEAL_CASE_STATUS.STATEMENTS],
@@ -373,7 +438,33 @@ describe('State Machine Transitions', () => {
 				);
 			}
 		);
-		test('should transition to AWAITING_EVENT if site visit has NOT elapsed', () => {
+
+		test.each([
+			[APPEAL_CASE_STATUS.FINAL_COMMENTS, VALIDATION_OUTCOME_COMPLETE, APPEAL_CASE_STATUS.EVENT],
+			[APPEAL_CASE_STATUS.FINAL_COMMENTS, APPEAL_CASE_STATUS.CLOSED, APPEAL_CASE_STATUS.CLOSED],
+			[
+				APPEAL_CASE_STATUS.FINAL_COMMENTS,
+				APPEAL_CASE_STATUS.AWAITING_TRANSFER,
+				APPEAL_CASE_STATUS.AWAITING_TRANSFER
+			],
+			[
+				APPEAL_CASE_STATUS.FINAL_COMMENTS,
+				APPEAL_CASE_STATUS.WITHDRAWN,
+				APPEAL_CASE_STATUS.WITHDRAWN
+			]
+		])(
+			'correctly transitions from %s state on %s event to %s state for FPA - hearing and inquiry ldcEnfDisc',
+			(initial, event, expectedFPAHearingInquiry) => {
+				expect(nextStateFPA(initial, event, APPEAL_CASE_PROCEDURE.HEARING, false, true)).toBe(
+					expectedFPAHearingInquiry
+				);
+				expect(nextStateFPA(initial, event, APPEAL_CASE_PROCEDURE.INQUIRY, false, true)).toBe(
+					expectedFPAHearingInquiry
+				);
+			}
+		);
+
+		test('should transition to EVENT if site visit has NOT elapsed - written', () => {
 			const initialState = APPEAL_CASE_STATUS.FINAL_COMMENTS;
 			const event = VALIDATION_OUTCOME_COMPLETE;
 			const procedure = APPEAL_CASE_PROCEDURE.WRITTEN;
@@ -384,7 +475,25 @@ describe('State Machine Transitions', () => {
 			expect(nextStateFPA(initialState, event, procedure, siteVisitElapsed)).toBe(expectedState);
 		});
 
-		test('should transition to ISSUE_DETERMINATION if site visit HAS elapsed', () => {
+		test('should transition to EVENT if event has NOT elapsed - hearing and inquiry ldcEnfDisc', () => {
+			const initialState = APPEAL_CASE_STATUS.FINAL_COMMENTS;
+			const event = VALIDATION_OUTCOME_COMPLETE;
+			const hearing = APPEAL_CASE_PROCEDURE.HEARING;
+			const inquiry = APPEAL_CASE_PROCEDURE.INQUIRY;
+			const eventElapsed = false;
+			const isLdcEnfDisc = true;
+
+			const expectedState = APPEAL_CASE_STATUS.EVENT;
+
+			expect(nextStateFPA(initialState, event, hearing, eventElapsed, isLdcEnfDisc)).toBe(
+				expectedState
+			);
+			expect(nextStateFPA(initialState, event, inquiry, eventElapsed, isLdcEnfDisc)).toBe(
+				expectedState
+			);
+		});
+
+		test('should transition to ISSUE_DETERMINATION if site visit HAS elapsed - written', () => {
 			const initialState = APPEAL_CASE_STATUS.FINAL_COMMENTS;
 			const event = VALIDATION_OUTCOME_COMPLETE;
 			const procedure = APPEAL_CASE_PROCEDURE.WRITTEN;
@@ -393,6 +502,24 @@ describe('State Machine Transitions', () => {
 			const expectedState = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
 
 			expect(nextStateFPA(initialState, event, procedure, siteVisitElapsed)).toBe(expectedState);
+		});
+
+		test('should transition to ISSUE_DETERMINATION if event HAS elapsed - hearing and inquiry ldcEnfDisc', () => {
+			const initialState = APPEAL_CASE_STATUS.FINAL_COMMENTS;
+			const event = VALIDATION_OUTCOME_COMPLETE;
+			const hearing = APPEAL_CASE_PROCEDURE.HEARING;
+			const inquiry = APPEAL_CASE_PROCEDURE.INQUIRY;
+			const eventElapsed = true;
+			const isLdcEnfDisc = true;
+
+			const expectedState = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
+
+			expect(nextStateFPA(initialState, event, hearing, eventElapsed, isLdcEnfDisc)).toBe(
+				expectedState
+			);
+			expect(nextStateFPA(initialState, event, inquiry, eventElapsed, isLdcEnfDisc)).toBe(
+				expectedState
+			);
 		});
 
 		test.each([
@@ -432,7 +559,7 @@ describe('State Machine Transitions', () => {
 				APPEAL_CASE_STATUS.INVALID
 			]
 		])(
-			'correctly remains at %s state for HAS and FPA - hearing and inquiry',
+			'correctly remains at %s state for HAS and FPA - hearing and inquiry (non-ldcEnfDisc)',
 			(initial, event, expectedHAS, expectedFPAHearing, expectedFPAInquiry) => {
 				expect(nextStateHAS(initial, event)).toBe(expectedHAS);
 				expect(nextStateFPA(initial, event, APPEAL_CASE_PROCEDURE.HEARING)).toBe(

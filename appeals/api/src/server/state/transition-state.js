@@ -20,6 +20,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import {
 	isExpeditedAppealType,
+	isLdcOrDiscontinuanceOrEnforcementCaseType,
 	normalizeProcedureType
 } from '@pins/appeals/utils/appeal-type-checks.js';
 import { nextUKDay } from '@pins/appeals/utils/date-utils.js';
@@ -69,13 +70,22 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 
 	const procedureKey = procedureType?.key ?? APPEAL_CASE_PROCEDURE.WRITTEN;
 	const normalizedProcedureKey = normalizeProcedureType(procedureKey);
-	const appealTypeKey = !isExpeditedAppealType(appealType.key)
+	const normalizedAppealTypeKey = !isExpeditedAppealType(appealType.key)
 		? APPEAL_CASE_TYPE.W
 		: APPEAL_CASE_TYPE.D;
+	const isLdcOrDiscontinuanceOrEnforcement = isLdcOrDiscontinuanceOrEnforcementCaseType(
+		appealType.key
+	);
 
 	const eventElapsed = getEventElapsed(appeal, appealType, normalizedProcedureKey);
 
-	const stateMachine = createStateMachine(appealTypeKey, procedureKey, currentState, eventElapsed);
+	const stateMachine = createStateMachine(
+		normalizedAppealTypeKey,
+		procedureKey,
+		currentState,
+		eventElapsed,
+		isLdcOrDiscontinuanceOrEnforcement
+	);
 	const stateMachineService = interpret(stateMachine);
 
 	stateMachineService.onTransition((/** @type {{value: StateValue}} */ state) => {
@@ -112,7 +122,7 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 
 	if (
 		newState === APPEAL_CASE_STATUS.EVENT &&
-		[APPEAL_CASE_TYPE.D, APPEAL_CASE_TYPE.W].includes(appealTypeKey) &&
+		[APPEAL_CASE_TYPE.D, APPEAL_CASE_TYPE.W].includes(normalizedAppealTypeKey) &&
 		((normalizedProcedureKey === APPEAL_CASE_PROCEDURE.WRITTEN && appeal.siteVisit) ||
 			(normalizedProcedureKey === APPEAL_CASE_PROCEDURE.HEARING &&
 				appeal.hearing &&
@@ -127,7 +137,7 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 	if (
 		newState === APPEAL_CASE_STATUS.EVIDENCE &&
 		//@ts-ignore
-		[APPEAL_CASE_TYPE.W].includes(appealTypeKey) &&
+		[APPEAL_CASE_TYPE.W].includes(normalizedAppealTypeKey) &&
 		procedureKey === APPEAL_CASE_PROCEDURE.INQUIRY
 	) {
 		const evidenceRepresentations = await representationRepository.getRepresentations([appealId], {

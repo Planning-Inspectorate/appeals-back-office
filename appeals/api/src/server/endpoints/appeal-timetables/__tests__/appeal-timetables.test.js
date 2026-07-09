@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { getStartCaseNotifyParams } from '#endpoints/appeal-timetables/appeal-timetables.service.js';
 import {
 	advertisementAppeal,
 	appealEnforcementListed,
@@ -42,6 +43,7 @@ import {
 	setTimeInTimeZone
 } from '@pins/appeals/utils/business-days.js';
 import { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { add } from 'date-fns';
 import { mapValues } from 'lodash-es';
 import { request } from '../../../app-test.js';
@@ -3161,6 +3163,209 @@ describe('appeal timetables routes', () => {
 			expect(lpaPreview).not.toContain(
 				'You have a new planning appeal against the application 48269/APP/2021/1482.'
 			);
+		});
+	});
+
+	describe('getStartCaseNotifyParams', () => {
+		const startDate = '2024-06-12T22:59:00.000Z';
+		const siteAddress = '123 Test Street, London';
+		const timetable = {
+			lpaQuestionnaireDueDate: '2024-06-19T22:59:00.000Z',
+			lpaStatementDueDate: '2024-07-17T22:59:00.000Z',
+			ipCommentsDueDate: '2024-07-17T22:59:00.000Z',
+			finalCommentsDueDate: '2024-07-31T22:59:00.000Z',
+			statementOfCommonGroundDueDate: '2024-07-17T22:59:00.000Z',
+			commentDeadline: '2024-07-17T22:59:00.000Z',
+			planningObligationDueDate: '2024-07-14T22:59:00.000Z',
+			proofOfEvidenceAndWitnessesDueDate: '2024-05-13T00:00:00.000Z',
+			caseManagementConferenceDueDate: '2024-05-15T00:00:00.000Z'
+		};
+		const notifyClient = {};
+		const inquiry = {
+			inquiryStartTime: '2024-06-12T12:00:00.000Z',
+			inquiryAddress: '123 Inquiry Place, London',
+			inquiryEstimationDays: 5,
+			timetable
+		};
+
+		const testCases = [
+			// HAS- only has written
+			{
+				appealTypeName: 'HAS',
+				appealType: { key: APPEAL_CASE_TYPE.D, type: 'D' },
+				procedureType: APPEAL_CASE_PROCEDURE.WRITTEN_PART_2,
+				expectedTemplatePrefix: 'appeal-valid-start-case'
+			},
+			// S78 appeal types
+			{
+				appealTypeName: 'S78',
+				appealType: { key: APPEAL_CASE_TYPE.W, type: 'W' },
+				procedureType: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
+				expectedTemplatePrefix: 'appeal-valid-start-case-s78-expedited'
+			},
+			{
+				appealTypeName: 'S78',
+				appealType: { key: APPEAL_CASE_TYPE.W, type: 'W' },
+				procedureType: APPEAL_CASE_PROCEDURE.WRITTEN_PART_2,
+				expectedTemplatePrefix: 'appeal-valid-start-case-s78'
+			},
+			{
+				appealTypeName: 'S78',
+				appealType: { key: APPEAL_CASE_TYPE.W, type: 'W' },
+				procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+				expectedTemplatePrefix: 'appeal-valid-start-case-s78'
+			},
+			{
+				appealTypeName: 'S78',
+				appealType: { key: APPEAL_CASE_TYPE.W, type: 'W' },
+				procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+				expectedTemplatePrefix: 'appeal-valid-start-case-s78-hearing',
+				hearingStartTime: futureDate
+			},
+			{
+				appealTypeName: 'S78',
+				appealType: { key: APPEAL_CASE_TYPE.W, type: 'W' },
+				procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+				expectedTemplatePrefix: 'appeal-valid-start-case-s78-inquiry'
+			},
+			{
+				appealTypeName: 'S20',
+				appealType: { key: APPEAL_CASE_TYPE.Y, type: 'Y' },
+				procedureType: APPEAL_CASE_PROCEDURE.WRITTEN_PART_2,
+				expectedTemplatePrefix: 'appeal-valid-start-case-s78'
+			},
+			{
+				appealTypeName: 'S20',
+				appealType: { key: APPEAL_CASE_TYPE.Y, type: 'Y' },
+				procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+				expectedTemplatePrefix: 'appeal-valid-start-case-s78'
+			},
+			{
+				appealTypeName: 'S20',
+				appealType: { key: APPEAL_CASE_TYPE.Y, type: 'Y' },
+				procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+				expectedTemplatePrefix: 'appeal-valid-start-case-s78-hearing',
+				hearingStartTime: futureDate
+			},
+			{
+				appealTypeName: 'S20',
+				appealType: { key: APPEAL_CASE_TYPE.Y, type: 'Y' },
+				procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+				expectedTemplatePrefix: 'appeal-valid-start-case-s78-inquiry'
+			},
+			// Advertisement appeal types
+			{
+				appealTypeName: 'Advertisement',
+				appealType: { key: APPEAL_CASE_TYPE.H, type: 'H' },
+				procedureType: APPEAL_CASE_PROCEDURE.WRITTEN_PART_2,
+				expectedTemplatePrefix: 'appeal-valid-start-case-advertisement'
+			},
+			{
+				appealTypeName: 'Advertisement',
+				appealType: { key: APPEAL_CASE_TYPE.H, type: 'H' },
+				procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+				expectedTemplatePrefix: 'appeal-valid-start-case-advertisement'
+			},
+			{
+				appealTypeName: 'Advertisement',
+				appealType: { key: APPEAL_CASE_TYPE.H, type: 'H' },
+				procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+				expectedTemplatePrefix: 'appeal-valid-start-case-advertisement-hearing',
+				hearingStartTime: futureDate
+			},
+			{
+				appealTypeName: 'LDC',
+				appealType: { key: APPEAL_CASE_TYPE.X, type: 'X' },
+				procedureType: APPEAL_CASE_PROCEDURE.WRITTEN_PART_2,
+				expectedTemplatePrefix: 'appeal-valid-start-case-advertisement'
+			},
+			{
+				appealTypeName: 'LDC',
+				appealType: { key: APPEAL_CASE_TYPE.X, type: 'X' },
+				procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+				expectedTemplatePrefix: 'appeal-valid-start-case-advertisement'
+			},
+			{
+				appealTypeName: 'LDC',
+				appealType: { key: APPEAL_CASE_TYPE.X, type: 'X' },
+				procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+				expectedTemplatePrefix: 'appeal-valid-start-case-advertisement-hearing',
+				hearingStartTime: futureDate
+			},
+			// Enforcement appeal types
+			{
+				appealTypeName: 'Enforcement',
+				appealType: { key: APPEAL_CASE_TYPE.C, type: 'C' },
+				procedureType: APPEAL_CASE_PROCEDURE.WRITTEN_PART_2,
+				expectedTemplatePrefix: 'appeal-valid-start-case-enforcement'
+			},
+			{
+				appealTypeName: 'Enforcement',
+				appealType: { key: APPEAL_CASE_TYPE.C, type: 'C' },
+				procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+				expectedTemplatePrefix: 'appeal-valid-start-case-enforcement'
+			},
+			{
+				appealTypeName: 'Enforcement',
+				appealType: { key: APPEAL_CASE_TYPE.C, type: 'C' },
+				procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+				expectedTemplatePrefix: 'appeal-valid-start-case-enforcement-hearing',
+				hearingStartTime: futureDate
+			},
+			{
+				appealTypeName: 'ELB',
+				appealType: { key: APPEAL_CASE_TYPE.F, type: 'F' },
+				procedureType: APPEAL_CASE_PROCEDURE.WRITTEN_PART_2,
+				expectedTemplatePrefix: 'appeal-valid-start-case-enforcement'
+			},
+			{
+				appealTypeName: 'ELB',
+				appealType: { key: APPEAL_CASE_TYPE.F, type: 'F' },
+				procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+				expectedTemplatePrefix: 'appeal-valid-start-case-enforcement'
+			},
+			{
+				appealTypeName: 'ELB',
+				appealType: { key: APPEAL_CASE_TYPE.F, type: 'F' },
+				procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+				expectedTemplatePrefix: 'appeal-valid-start-case-enforcement-hearing',
+				hearingStartTime: futureDate
+			}
+		];
+
+		testCases.forEach((testCase) => {
+			test(`returns correct templates for ${testCase.appealTypeName} with procedure type ${testCase.procedureType}`, async () => {
+				const appeal = {
+					...fullPlanningAppeal,
+					appealType: testCase.appealType,
+					appellant: { email: 'appellant@test.com' },
+					lpa: { email: 'lpa@test.com' }
+				};
+
+				const result = await getStartCaseNotifyParams({
+					appeal,
+					startDate,
+					notifyClient,
+					siteAddress,
+					azureAdUserId,
+					timetable,
+					procedureType: testCase.procedureType,
+					hearingStartTime: testCase.hearingStartTime ? testCase.hearingStartTime : null,
+					...(testCase.procedureType === APPEAL_CASE_PROCEDURE.INQUIRY && { inquiry })
+				});
+
+				expect(result).toHaveProperty('appellant');
+				expect(result).toHaveProperty('lpa');
+
+				let expectedAppellantTemplate = testCase.expectedTemplatePrefix;
+				let expectedLpaTemplate = testCase.expectedTemplatePrefix;
+				if (testCase.procedureType !== APPEAL_CASE_PROCEDURE.INQUIRY) {
+					expectedAppellantTemplate += '-appellant';
+					expectedLpaTemplate += '-lpa';
+				}
+				expect(result.appellant.templateName).toBe(expectedAppellantTemplate);
+				expect(result.lpa.templateName).toBe(expectedLpaTemplate);
+			});
 		});
 	});
 });

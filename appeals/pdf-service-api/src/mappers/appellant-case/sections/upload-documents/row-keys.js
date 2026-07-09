@@ -37,9 +37,22 @@ export const rowKeys = {
 	],
 	[APPEAL_TYPE.CAS_ADVERTISEMENT]: [
 		'originalApplicationForm',
-		'appellantStatement',
+		{
+			key: 'reasonForAppealAppellant',
+			condition: (/** @type {{ applicationDate: string | null | undefined; }} */ data) =>
+				!beforeExpeditedOriginalApplicationCutOff(data.applicationDate)
+		},
+		{
+			key: 'appellantStatement',
+			condition: (/** @type {{ applicationDate: string | null | undefined; }} */ data) =>
+				beforeExpeditedOriginalApplicationCutOff(data.applicationDate)
+		},
 		'appellantApplicationFolder',
-		'plansDrawings'
+		{
+			key: 'plansDrawings',
+			condition: (/** @type {{ applicationDate: string | null | undefined; }} */ data) =>
+				beforeExpeditedOriginalApplicationCutOff(data.applicationDate)
+		}
 	],
 	[APPEAL_TYPE.ADVERTISEMENT]: [
 		'originalApplicationForm',
