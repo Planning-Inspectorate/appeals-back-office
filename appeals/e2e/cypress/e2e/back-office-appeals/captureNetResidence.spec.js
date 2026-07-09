@@ -21,7 +21,7 @@ describe('Capture Net Residences', () => {
 	let appeal;
 
 	afterEach(() => {
-		//cy.deleteAppeals(appeal);
+		cy.deleteAppeals(appeal);
 	});
 
 	const overviewDetails = {

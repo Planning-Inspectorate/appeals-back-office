@@ -158,17 +158,6 @@ export const happyPathHelper = {
 		//caseDetailsPage.clickButtonByText('Continue');
 	},
 
-	startS78WrittenCase(caseObj, procedureType) {
-		// navigate to case details page and start the case with the given procedure type
-		happyPathHelper.viewCaseDetails(caseObj);
-		caseDetailsPage.clickReadyToStartCase();
-		caseDetailsPage.selectRadioButtonByValue(procedureType);
-
-		// start the case by clicking continue and then start case
-		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.clickButtonByText('Start case');
-	},
-
 	startS78Part1Case(caseObj, procedureType) {
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
 		caseDetailsPage.clickReadyToStartCase();
@@ -646,6 +635,8 @@ export const happyPathHelper = {
 		procedureType = 'WRITTEN',
 		loadCaseDetails = true
 	) {
+		cy.writeLog(`**Advancing case ${caseObj.id} from ${currentStatus} to ${targetStatus}`);
+
 		// define the base actions for each status that can be used to advance the case to the next status in the flow.
 		// These are the common actions that are used across different flows, but some flows might have additional actions
 		// that are specific to that flow and those will be defined in the FLOWS object in the flows.js file
@@ -659,7 +650,6 @@ export const happyPathHelper = {
 					});
 				}),
 			[STATUSES.READY_TO_START]: (c, appealType, procedureType) => {
-				cy.writeLog('**Starting case via API');
 				if (procedureType === 'HEARING') {
 					happyPathHelper.startS78HearingCase(c, 'hearing');
 				} else if (procedureType === 'INQUIRY') {
@@ -671,7 +661,6 @@ export const happyPathHelper = {
 				}
 			},
 			[STATUSES.LPA_QUESTIONNAIRE]: (c) => {
-				cy.writeLog('**Adding LPA questionnaire response via API');
 				cy.addLpaqSubmissionToCase(c);
 				cy.reviewLpaqSubmission(c);
 			},
