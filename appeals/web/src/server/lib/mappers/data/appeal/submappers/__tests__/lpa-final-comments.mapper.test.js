@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { mapLPAFinalComments } from '#lib/mappers/data/appeal/submappers/lpa-final-comments.mapper.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 describe('lpa-final-comments.mapper', () => {
 	const mockRequest = {
@@ -51,9 +52,37 @@ describe('lpa-final-comments.mapper', () => {
 		});
 	});
 
-	it('should not display lpa final comments row if the procedure type is hearing', () => {
+	it('should not display lpa final comments row if the procedure type is hearing - non ldcEnfDisc', () => {
 		data.appealDetails.procedureType = 'Hearing';
 		const result = mapLPAFinalComments(data);
 		expect(result).toEqual({ id: 'start-case-date', display: {} });
 	});
+
+	test.each([
+		[APPEAL_TYPE.ENFORCEMENT_NOTICE],
+		[APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING],
+		[APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE],
+		[APPEAL_TYPE.DISCONTINUANCE_NOTICE]
+	])(
+		`should display appellant final comments row if the procedure type is hearing - %s`,
+		(appealType) => {
+			data.appealDetails.procedureType = 'Hearing';
+			data.appealDetails.appealType = appealType;
+			const result = mapLPAFinalComments(data);
+			expect(result).toEqual({
+				display: {
+					tableItem: [
+						{ text: 'LPA final comments' },
+						{ text: 'Awaiting final comments' },
+						{ text: 'Due by ' },
+						{
+							classes: 'govuk-!-text-align-right',
+							html: ''
+						}
+					]
+				},
+				id: 'lpa-final-comments'
+			});
+		}
+	);
 });

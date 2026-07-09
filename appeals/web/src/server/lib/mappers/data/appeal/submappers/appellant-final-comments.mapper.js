@@ -9,7 +9,11 @@ import {
 	mapRepresentationDocumentSummaryActionLink
 } from '#lib/representation-utilities.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
-import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
+import { doNotDisplayFinalComments } from '../common.js';
+
+/**
+ * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal
+ */
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapAppellantFinalComments = ({ appealDetails, currentRoute, request }) => {
@@ -55,7 +59,7 @@ export const mapAppellantFinalComments = ({ appealDetails, currentRoute, request
 		return dateISOStringToDisplayDate(receivedAt);
 	})();
 
-	if (appealDetails?.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING) {
+	if (doNotDisplayFinalComments(appealDetails)) {
 		const id = 'start-case-date';
 		return { id, display: {} };
 	} else {

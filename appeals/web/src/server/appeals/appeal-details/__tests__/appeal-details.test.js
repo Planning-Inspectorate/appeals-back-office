@@ -6751,6 +6751,41 @@ describe('appeal-details', () => {
 					`<dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/hearing/estimates/change"`
 				);
 			});
+
+			it('should not render appellantFinalComments and lpaFinalComments rows in documentation table when procedureType is "hearing" - non ldcEnfDisc appeal types', async () => {
+				const appealId = '123';
+				const appealDetails = { ...appealData, appealId, procedureType: 'hearing' };
+
+				nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appealDetails);
+				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+
+				const response = await request.get(`/appeals-service/appeal-details/${appealId}`);
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).not.toContain('Appellant final comments');
+				expect(unprettifiedHTML).not.toContain('LPA final comments');
+			});
+
+			test.each([
+				[APPEAL_TYPE.ENFORCEMENT_NOTICE, appealDataEnforcementNotice],
+				[APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING, appealDataEnforcementListedBuilding],
+				[APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE, appealDataLdc]
+			])(
+				`should render appellantFinalComments and lpaFinalComments rows in documentation table when procedureType is "hearing" - %s appeal type`,
+				async (_, ldcEnfDiscAppealTypeData) => {
+					const appealId = '123';
+					const appealDetails = { ...ldcEnfDiscAppealTypeData, appealId, procedureType: 'hearing' };
+
+					nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appealDetails);
+					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+
+					const response = await request.get(`/appeals-service/appeal-details/${appealId}`);
+					const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+					expect(unprettifiedHTML).toContain('Appellant final comments');
+					expect(unprettifiedHTML).toContain('LPA final comments');
+				}
+			);
 		});
 
 		describe('Costs', () => {

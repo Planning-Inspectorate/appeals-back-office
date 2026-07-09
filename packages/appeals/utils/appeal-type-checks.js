@@ -118,6 +118,16 @@ export const isAnyEnforcementAppealType = (appealType) =>
 
 /**
  *
+ * @param {string|undefined} appealType
+ * @returns {boolean}
+ */
+export const isLdcOrDiscontinuanceOrEnforcementAppealType = (appealType) =>
+	appealType === APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE ||
+	appealType === APPEAL_TYPE.DISCONTINUANCE_NOTICE ||
+	isAnyEnforcementAppealType(appealType);
+
+/**
+ *
  * @param {string|undefined} caseType
  * @returns {boolean}
  */
