@@ -11,11 +11,7 @@ import {
 	APPEAL_PROOF_OF_EVIDENCE_STATUS,
 	APPEAL_REPRESENTATION_STATUS
 } from '@pins/appeals/constants/common.js';
-import { isLdcOrDiscontinuanceOrEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
-import {
-	APPEAL_CASE_PROCEDURE,
-	APPEAL_VIRUS_CHECK_STATUS
-} from '@planning-inspectorate/data-model';
+import { APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal
  */
@@ -160,11 +156,3 @@ export const proofsReceivedText = (statusText, receivedAt) => {
 		receivedAt instanceof Date ? receivedAt.toDateString() : receivedAt
 	);
 };
-
-/**
- * @param {WebAppeal} appealDetails
- * @returns {boolean}
- */
-export const doNotDisplayFinalComments = (appealDetails) =>
-	appealDetails?.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING &&
-	!isLdcOrDiscontinuanceOrEnforcementAppealType(appealDetails?.appealType);

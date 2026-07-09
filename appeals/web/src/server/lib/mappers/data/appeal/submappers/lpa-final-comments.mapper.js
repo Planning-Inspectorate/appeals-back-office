@@ -9,7 +9,7 @@ import {
 	mapRepresentationDocumentSummaryActionLink
 } from '#lib/representation-utilities.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
-import { doNotDisplayFinalComments } from '../common.js';
+import { displayFinalComments } from '@pins/appeals/utils/business-rules.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapLPAFinalComments = ({ appealDetails, currentRoute, request }) => {
@@ -55,7 +55,12 @@ export const mapLPAFinalComments = ({ appealDetails, currentRoute, request }) =>
 		return dateISOStringToDisplayDate(receivedAt);
 	})();
 
-	if (doNotDisplayFinalComments(appealDetails)) {
+	if (
+		!displayFinalComments(
+			appealDetails.appealType ?? undefined,
+			appealDetails.procedureType ?? undefined
+		)
+	) {
 		const id = 'start-case-date';
 		return { id, display: {} };
 	} else {

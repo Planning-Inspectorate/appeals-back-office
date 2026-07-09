@@ -626,10 +626,7 @@ export const CONFIG_APPEAL_TIMETABLE = {
 	[APPEAL_CASE_TYPE.C]: {
 		[APPEAL_CASE_PROCEDURE.WRITTEN]: { ...enforcementNoticeTimetable },
 		[APPEAL_CASE_PROCEDURE.HEARING]: {
-			...enforcementNoticeTimetable,
-			statementOfCommonGroundDueDate: {
-				daysFromStartDate: 25
-			}
+			...enforcementNoticeTimetable
 		},
 		[APPEAL_CASE_PROCEDURE.INQUIRY]: {
 			...enforcementInquiryTimetable
