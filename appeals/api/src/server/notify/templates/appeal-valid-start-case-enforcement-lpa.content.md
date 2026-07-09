@@ -83,8 +83,8 @@ You must [notify anyone you served the enforcement notice to](https://www.gov.uk
 
 You may have to pay costs if you:
 
-- behave unreasonably during your own appeal
-- withdraw your appeal without good reason
+- behave unreasonably during the appeal
+- withdraw your enforcement notice without good reason
 - submit late evidence
 
 [Find out more about appeal costs](https://www.gov.uk/claim-planning-appeal-costs).
