@@ -17,7 +17,6 @@ export const viewAppealDetails = async (request, response) => {
 	if (!currentAppeal) {
 		return response.status(404).render('app/404.njk');
 	}
-	session.currentAppeal = currentAppeal;
 	delete session.reviewOutcome;
 	delete session.changeAppealType;
 
