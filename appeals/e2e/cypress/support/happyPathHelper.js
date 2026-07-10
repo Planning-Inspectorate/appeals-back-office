@@ -20,6 +20,14 @@ const procedureTypePage = new ProcedureTypePage();
 let sampleFiles = fileUploader.sampleFiles;
 let pdf = sampleFiles.pdf;
 
+const defaultHearingProperties = {
+	date: null,
+	setDate: true, // As CO user will normally enter a date (even if estimate), default to true
+	setEstimatedDays: false,
+	estimatedDays: 1,
+	startCase: true
+};
+
 export const happyPathHelper = {
 	viewCaseDetails(caseObj) {
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
@@ -100,38 +108,47 @@ export const happyPathHelper = {
 		procedureType,
 		hearingProperties = {
 			date: null,
+			setDate: true,
 			setEstimatedDays: false,
 			estimatedDays: 1,
 			startCase: true
 		}
 	) {
+		// merge hearingProperties with defaultHearingProperties to get default values plus any overrides
+		hearingProperties = {
+			...defaultHearingProperties,
+			...hearingProperties
+		};
+
+		cy.writeLog(`Starting S78 hearing case with properties: ${JSON.stringify(hearingProperties)}`);
+
 		// proceed to setup hearing
 		happyPathHelper.viewCaseDetails(caseObj);
 		caseDetailsPage.clickReadyToStartCase();
 		caseDetailsPage.selectRadioButtonByValue(procedureType);
 		caseDetailsPage.clickButtonByText('Continue');
 
-		// As CO user will normally enter a date (even if estimate), set date and time known as yes
-		// then use either suplied date if exists or generate a date from api
-		const dateTimeKnown = 'yes';
-
-		// Is date and time known question
+		// select whether the date and time of the hearing is known or not based on the hearingProperties
+		const dateTimeKnown = hearingProperties.setDate ? 'yes' : 'no';
 		caseDetailsPage.selectRadioButtonByValue(dateTimeKnown);
 		caseDetailsPage.clickButtonByText('Continue');
 
+		// set date if set to true in hearing properties, otherwise skip to estimated days question
 		// if hearing date is provided in the properties, use it, otherwise calculate a date 2 business days in the future and use that
 		// we wrap either the provided date or the calculated date in a Cypress promise to ensure that the rest of the code waits for the date
 		// to be available before proceeding
-		const datePromise = hearingProperties.date
-			? cy.wrap(hearingProperties.date)
-			: cy.getBusinessActualDate(new Date(), 2);
+		if (hearingProperties.setDate) {
+			const datePromise = hearingProperties.date
+				? cy.wrap(hearingProperties.date)
+				: cy.getBusinessActualDate(new Date(), 2);
 
-		// set hearing date and time
-		datePromise.then((date) => {
-			dateTimeSection.enterHearingDate(date);
-			dateTimeSection.enterHearingTime(date.getHours(), date.getMinutes());
-			caseDetailsPage.clickButtonByText('Continue');
-		});
+			// set hearing date and time
+			datePromise.then((date) => {
+				dateTimeSection.enterHearingDate(date);
+				dateTimeSection.enterHearingTime(date.getHours(), date.getMinutes());
+				caseDetailsPage.clickButtonByText('Continue');
+			});
+		}
 
 		// check if estimated hearing days is known and if so enter estimated hearing days
 		const knowEstimatedDays = hearingProperties.setEstimatedDays ? 'Yes' : 'No';

@@ -224,7 +224,6 @@ describe('Start case', () => {
 				cy.getBusinessActualDate(new Date(), 2).then((date) => {
 					happyPathHelper.startS78HearingCase(caseObj, 'hearing', {
 						date,
-						setEstimatedDays: false,
 						startCase: false
 					});
 
