@@ -65,6 +65,8 @@ Due by {{statement_of_common_ground_deadline}}.
 
 Send to {{team_email_address}} by {{planning_obligation_deadline}}.
 
+[Find out more about planning obligations](https://www.gov.uk/government/publications/planning-appeals-procedural-guide/procedural-guide-planning-appeals-england#planning-obligations).
+
 {% endif -%}
 
 ## Final comments
