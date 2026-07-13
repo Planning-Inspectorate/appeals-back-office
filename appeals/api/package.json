@@ -69,7 +69,7 @@
 		"node-cache": "^5.1.2",
 		"node-fetch": "^3.3.2",
 		"notifications-node-client": "^8.2.1",
-		"npm": "^11.6.0",
+		"npm": "^11.17.0",
 		"nunjucks": "^3.2.4",
 		"pino": "^8.1.0",
 		"pino-http": "^8.1.0",
