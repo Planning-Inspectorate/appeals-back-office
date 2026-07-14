@@ -26,7 +26,7 @@ describe('appeal-confirmed-lpa.md', () => {
 		const expectedContent = [
 			`You have a new ${notifySendData.personalisation.appeal_type.toLowerCase()} against the application ${notifySendData.personalisation.lpa_reference}`,
 			'',
-			'You can view the appeal in the appeals service.',
+			`[You can view the appeal in the appeals service](/mock-front-office-url/manage-appeals/${notifySendData.personalisation.appeal_reference_number}).`,
 			'',
 			'# Appeal details',
 			'',
