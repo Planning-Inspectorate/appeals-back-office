@@ -1,6 +1,6 @@
 You have a new {{appeal_type | lower}} against the application {{lpa_reference}}
 
-You can view the appeal in the appeals service.
+[You can view the appeal in the appeals service]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}).
 
 # Appeal details
 
