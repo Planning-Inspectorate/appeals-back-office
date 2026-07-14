@@ -53,6 +53,9 @@ module "app_api" {
     DB_CONNECTION_LIMIT = var.apps_config.db_connection_limit
     QUERY_BATCH_SIZE    = 2000
 
+    # cache
+    REDIS_CONNECTION_STRING = local.key_vault_refs["redis-connection-string"]
+
     # integrations
     GOV_NOTIFY_API_KEY    = local.key_vault_refs["appeals-bo-gov-notify-api-key"]
     MOCK_HORIZON          = var.apps_config.integrations.horizon_mock

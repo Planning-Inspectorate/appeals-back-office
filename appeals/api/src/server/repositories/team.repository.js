@@ -1,4 +1,6 @@
+import redisClient from '#infrastructure/redis.js';
 import { databaseConnector } from '#utils/database-connector.js';
+import logger from '#utils/logger.js';
 
 /**
  *
@@ -56,14 +58,25 @@ export const getAssignedTeam = (teamId) => {
  *
  * @returns {Promise<{id: Number, name: string, email: string| null}[]>}
  */
-export const getCaseTeams = () => {
-	return databaseConnector.team.findMany({
-		select: {
-			id: true,
-			name: true,
-			email: true
-		}
-	});
+export const getCaseTeams = async () => {
+	const cacheTimeInSeconds = 600;
+	const cacheKey = 'getCaseTeams';
+
+	const getTeams = async () =>
+		databaseConnector.team.findMany({
+			select: {
+				id: true,
+				name: true,
+				email: true
+			}
+		});
+
+	if (!redisClient) {
+		logger.info('getCaseTeams no redis client');
+		return getTeams();
+	}
+
+	return redisClient.getOrSet('getCaseTeams', cacheKey, cacheTimeInSeconds, getTeams);
 };
 
 /**

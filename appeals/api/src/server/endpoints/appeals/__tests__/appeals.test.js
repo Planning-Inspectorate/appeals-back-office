@@ -16,7 +16,6 @@ import {
 	ERROR_PAGENUMBER_AND_PAGESIZE_ARE_REQUIRED
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
-import { omit } from 'lodash-es';
 import { request } from '../../../app-test.js';
 import { mapAppealStatuses } from '../appeals.service.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
@@ -309,7 +308,16 @@ describe('appeals list routes', () => {
 
 				databaseConnector.appeal.findMany
 					.mockResolvedValueOnce([fullPlanningAppeal])
-					.mockResolvedValueOnce(allAppeals);
+					.mockResolvedValueOnce(
+						allAppeals.map((appeal) => {
+							return {
+								caseOfficerUserId: appeal.caseOfficerUserId,
+								inspectorUserId: appeal.inspectorUserId,
+								lpaId: appeal.lpaId,
+								padsInspectorUserId: appeal.padsInspectorUserId
+							};
+						})
+					);
 				databaseConnector.appeal.count.mockResolvedValue(2);
 
 				const response = await request
@@ -318,10 +326,15 @@ describe('appeals list routes', () => {
 
 				expect(databaseConnector.appeal.findMany).toHaveBeenCalledTimes(2);
 				expect(databaseConnector.appeal.findMany).toHaveBeenNthCalledWith(1, expectedQuery);
-				expect(databaseConnector.appeal.findMany).toHaveBeenNthCalledWith(
-					2,
-					omit(expectedQuery, 'include', 'orderBy', 'skip', 'take')
-				);
+				expect(databaseConnector.appeal.findMany).toHaveBeenNthCalledWith(2, {
+					where: expectedQuery.where,
+					select: {
+						caseOfficerUserId: true,
+						inspectorUserId: true,
+						lpaId: true,
+						padsInspectorUserId: true
+					}
+				});
 				expect(databaseConnector.appeal.count).toHaveBeenCalledTimes(1);
 				expect(databaseConnector.appeal.count).toHaveBeenNthCalledWith(1, {
 					where: expectedQuery.where

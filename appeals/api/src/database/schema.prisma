@@ -82,6 +82,8 @@ model Appeal {
   @@index([caseOfficerUserId])
   @@index([inspectorUserId])
   @@index([applicationReference])
+  @@index([padsInspectorUserId])
+  @@index([assignedTeamId])
 }
 
 /// AppealRelationship model

@@ -42,6 +42,7 @@
 		"@pins/event-client": "^0.0.0",
 		"@pins/express": "^0.0.0",
 		"@pins/platform": "^0.0.0",
+		"@pins/redis": "^0.0.0",
 		"@planning-inspectorate/data-model": "^2.44.0",
 		"@prisma/adapter-mssql": "^7.4.2",
 		"@prisma/client": "^7.5.0",
