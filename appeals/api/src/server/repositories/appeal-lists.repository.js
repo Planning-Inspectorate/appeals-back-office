@@ -1,3 +1,4 @@
+import redisClient from '#infrastructure/redis.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { getSkipValue } from '#utils/database-pagination.js';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
@@ -203,10 +204,45 @@ const getAppealsWithoutIncludes = async (
 		appellantProcedurePreferencePreFilter
 	);
 
-	// TODO: performance
-	// gets all appeals, performance will get worse over time
-	// only used for filtering the filters
-	return databaseConnector.appeal.findMany({ where });
+	const cacheTimeInSeconds = 120;
+	const cacheKey =
+		'getAppealsWithoutIncludes-' +
+		JSON.stringify({
+			searchTerm,
+			status,
+			hasInspector,
+			lpaCode,
+			inspectorId,
+			caseOfficerId,
+			padsInspectorId,
+			isGreenBelt,
+			appealTypeId,
+			assignedTeamId,
+			procedureTypeId,
+			appellantProcedurePreferencePreFilter
+		});
+
+	const getAppeals = async () =>
+		databaseConnector.appeal.findMany({
+			where,
+			select: {
+				lpaId: true,
+				inspectorUserId: true,
+				caseOfficerUserId: true,
+				padsInspectorUserId: true
+			}
+		});
+
+	if (!redisClient) {
+		return getAppeals();
+	}
+
+	return redisClient.getOrSet(
+		'getAppealsWithoutIncludes',
+		cacheKey,
+		cacheTimeInSeconds,
+		getAppeals
+	);
 };
 
 /**

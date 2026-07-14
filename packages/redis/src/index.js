@@ -43,9 +43,6 @@ export class RedisClient {
 		//@ts-ignore
 		this.store = new RedisStore({ client: this.client });
 
-		this.get = this.client.get;
-		this.set = this.client.set;
-
 		this.clientWrapper = new MSALCacheClient(this.client);
 	}
 
@@ -59,5 +56,32 @@ export class RedisClient {
 			this.clientWrapper,
 			/** @type {import('@azure/msal-node').IPartitionManager} */ (partitionManager)
 		);
+	}
+
+	/**
+	 * @template T
+	 * @param {string} loggingName
+	 * @param {string} cacheKey
+	 * @param {number} cacheTimeInSeconds
+	 * @param {function(): Promise<T>} fetchDataCallback
+	 * @returns {Promise<T>}
+	 */
+	async getOrSet(loggingName, cacheKey, cacheTimeInSeconds, fetchDataCallback) {
+		try {
+			const cachedData = await this.client.get(cacheKey);
+			if (cachedData) {
+				return JSON.parse(cachedData);
+			}
+		} catch (err) {
+			this.logger.error(err, `Error retrieving ${loggingName} data from Redis:`);
+		}
+
+		const data = await fetchDataCallback();
+
+		this.client.set(cacheKey, JSON.stringify(data), { EX: cacheTimeInSeconds }).catch((err) => {
+			this.logger.error(err, `Error caching ${loggingName} data in Redis:`);
+		});
+
+		return data;
 	}
 }

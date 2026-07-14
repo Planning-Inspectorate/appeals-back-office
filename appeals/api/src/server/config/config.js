@@ -151,7 +151,9 @@ const { value, error } = schema.validate({
 	frontOffice: {
 		url: environment.FRONT_OFFICE_URL || '/mock-front-office-url'
 	},
-	requestSizeLimit: environment.REQUEST_SIZE_LIMIT || '1mb'
+	requestSizeLimit: environment.REQUEST_SIZE_LIMIT || '1mb',
+	redisConnectionString: environment.REDIS_CONNECTION_STRING || undefined,
+	disableRedis: environment.DISABLE_REDIS && environment.DISABLE_REDIS === 'true'
 });
 
 if (error) {
