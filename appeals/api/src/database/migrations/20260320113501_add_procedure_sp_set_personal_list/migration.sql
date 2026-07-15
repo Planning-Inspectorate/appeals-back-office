@@ -40,6 +40,10 @@ BEGIN
 		@STATUS_VALIDATION NVARCHAR(1000) = 'validation',
 		@STATUS_WITHDRAWN NVARCHAR(1000) = 'withdrawn';
 
+	DECLARE @VALIDATION_OUTCOME_VALID INT =  (SELECT id FROM AppellantCaseValidationOutcome WHERE name='Valid'),
+		@VALIDATION_OUTCOME_INVALID INT =  (SELECT id FROM AppellantCaseValidationOutcome WHERE name='Invalid'),
+		@VALIDATION_OUTCOME_INCOMPLETE INT =  (SELECT id FROM AppellantCaseValidationOutcome WHERE name='Incomplete');
+
 
 	-- Create temp table to store the data we need to create the personal list table
 	CREATE TABLE #personal
@@ -63,8 +67,8 @@ BEGIN
 		dueDate                             DATETIME2       NULL,
 
 		-- appellantCase
-		appellantCaseValidationOutcomeName  BIT             NOT NULL        DEFAULT 0,
-		numberOfResidencesNetChange         INT             NOT NULL        DEFAULT 0,
+		appellantCaseValidationOutcomeId	INT             NULL,
+		numberOfResidencesNetChange         INT             NULL,
 
 		-- appealTimetable
 		lpaQuestionnaireDueDate             DATETIME2       NULL,
@@ -112,14 +116,14 @@ BEGIN
 			INSERT INTO #personal (appealId, caseCreatedDate, caseExtensionDate, procedureTypeKey, appealTypeId )
 			SELECT  ap.id, ap.caseCreatedDate, ap.caseExtensionDate, pt.[key], ap.appealTypeId
 			FROM    Appeal ap
-						LEFT OUTER JOIN ProcedureType pt ON ap.procedureTypeId = pt.id;
+					LEFT OUTER JOIN ProcedureType pt ON ap.procedureTypeId = pt.id;
 		END
 	ELSE
 		BEGIN
 			-- Change: the procedure now accepts Appeal.id directly, so linked lookups use parentId/childId instead of parentRef/childRef.
 			-- only get type linked appeals (not related)
 			SELECT  @parentId = parentId FROM AppealRelationship WHERE (parentId = @appealId OR childId = @appealId)
-			                                                       AND type = 'linked';
+					AND type = 'linked';
 
 			IF @parentId IS NULL
 				BEGIN
@@ -127,7 +131,7 @@ BEGIN
 					INSERT INTO #personal (appealId, caseCreatedDate, caseExtensionDate, procedureTypeKey, appealTypeId )
 					SELECT  ap.id, ap.caseCreatedDate, ap.caseExtensionDate, pt.[key], ap.appealTypeId
 					FROM    Appeal ap
-								LEFT OUTER JOIN ProcedureType pt ON ap.procedureTypeId = pt.id
+							LEFT OUTER JOIN ProcedureType pt ON ap.procedureTypeId = pt.id
 					WHERE   ap.id = @appealId;
 				END
 			ELSE
@@ -136,13 +140,13 @@ BEGIN
 					INSERT INTO #personal (appealId, caseCreatedDate, caseExtensionDate, procedureTypeKey, appealTypeId )
 					SELECT  ap.id, ap.caseCreatedDate, ap.caseExtensionDate, pt.[key], ap.appealTypeId
 					FROM    Appeal ap
-								LEFT OUTER JOIN ProcedureType pt ON ap.procedureTypeId = pt.id
+							LEFT OUTER JOIN ProcedureType pt ON ap.procedureTypeId = pt.id
 					WHERE   ap.id = @parentId
 					UNION ALL
 					SELECT  ap.id, ap.caseCreatedDate, ap.caseExtensionDate, pt.[key], ap.appealTypeId
 					FROM    Appeal ap
-								LEFT OUTER JOIN ProcedureType pt ON ap.procedureTypeId = pt.id
-						        INNER JOIN AppealRelationship ar ON ap.id = ar.childId AND parentId = @parentId;
+							LEFT OUTER JOIN ProcedureType pt ON ap.procedureTypeId = pt.id
+						    INNER JOIN AppealRelationship ar ON ap.id = ar.childId AND parentId = @parentId;
 				END
 		END;
 
@@ -151,7 +155,7 @@ BEGIN
 	SET     status = st.status,
 	        statusCreatedAt = st.createdAt
 	FROM    #personal p
-				INNER JOIN AppealStatus st ON p.appealId = st.appealId AND valid = 1;
+			INNER JOIN AppealStatus st ON p.appealId = st.appealId AND valid = 1;
 
 	-- Set the complete / withdrawn flag
 	UPDATE  #personal
@@ -163,15 +167,15 @@ BEGIN
 	        isParentAppeal = art.parentAppeal,
 	        isChildAppeal = art.childAppeal
 	FROM    #personal p
-				INNER JOIN (
-		SELECT DISTINCT p.appealId,
-		                CASE WHEN p.appealId = ar.parentId THEN 1 ELSE 0 END as parentAppeal,
-		                CASE WHEN p.appealId = ar.childId THEN 1 ELSE 0 END AS childAppeal,
-		                CASE WHEN p.appealId = ar.childId THEN ar.parentId ELSE ar.parentId END AS parentAppealId
-		FROM    AppealRelationship ar
-					INNER JOIN #personal p ON p.appealId = ar.parentId OR p.appealId = ar.childId
-		WHERE   ar.type = 'linked'
-	) art ON  p.appealId = art.appealId;
+			INNER JOIN (
+				SELECT DISTINCT p.appealId,
+								CASE WHEN p.appealId = ar.parentId THEN 1 ELSE 0 END as parentAppeal,
+								CASE WHEN p.appealId = ar.childId THEN 1 ELSE 0 END AS childAppeal,
+								CASE WHEN p.appealId = ar.childId THEN ar.parentId ELSE ar.parentId END AS parentAppealId
+				FROM    AppealRelationship ar
+						INNER JOIN #personal p ON p.appealId = ar.parentId OR p.appealId = ar.childId
+				WHERE   ar.type = 'linked'
+			) art ON  p.appealId = art.appealId;
 
 	-- Timetables
 	UPDATE  #personal
@@ -182,43 +186,41 @@ BEGIN
 	        finalCommentsDueDate                = tm.finalCommentsDueDate,
 	        lpaStatementDueDate					= tm.lpaStatementDueDate
 	FROM    #personal p
-				INNER JOIN AppealTimetable tm ON p.appealId = tm.appealId;
+			INNER JOIN AppealTimetable tm ON p.appealId = tm.appealId;
 
 	-- AppellantCase
 	UPDATE  #personal
-	SET     appellantCaseValidationOutcomeName  = 1,
-	        numberOfResidencesNetChange = ISNULL(ac.numberOfResidencesNetChange, 0)
+	SET     appellantCaseValidationOutcomeId  = ac.appellantCaseValidationOutcomeId,
+	        numberOfResidencesNetChange = ac.numberOfResidencesNetChange
 	FROM    #personal p
-				INNER JOIN AppellantCase ac ON p.appealId = ac.appealId
-		        INNER JOIN appellantCaseValidationOutcome acvo  ON      ac.appellantCaseValidationOutcomeId = acvo.id
-		AND     acvo.name = 'invalid';
+			INNER JOIN AppellantCase ac ON p.appealId = ac.appealId;
 
 	-- SiteVisit
 	UPDATE  #personal
 	SET     siteVisitEndTime             = sv.visitEndTime,
 	        siteVisitDate                = sv.visitDate
 	FROM    #personal p
-				INNER JOIN SiteVisit sv ON p.appealId = sv.appealId;
+			INNER JOIN SiteVisit sv ON p.appealId = sv.appealId;
 
 	-- Hearing
 	UPDATE  #personal
 	SET     hearingStartTime             = h.hearingStartTime
 	FROM    #personal p
-				INNER JOIN Hearing h ON p.appealId = h.appealId;
+			INNER JOIN Hearing h ON p.appealId = h.appealId;
 
 	-- Inquiry
 	UPDATE  #personal
 	SET     inquiryStartTime             = i.inquiryStartTime,
 	        estimatedDays                = i.estimatedDays
 	FROM    #personal p
-				INNER JOIN Inquiry i ON p.appealId = i.appealId;
+			INNER JOIN Inquiry i ON p.appealId = i.appealId;
 
 
 	-- Enforcement only - ground A Due Date
 	UPDATE  #personal
 	SET     groundAFeeReceiptDueDate     = enao.groundAFeeReceiptDueDate
 	FROM    #personal p
-				INNER JOIN EnforcementNoticeAppealOutcome enao ON enao.appealId = p.appealId
+			INNER JOIN EnforcementNoticeAppealOutcome enao ON enao.appealId = p.appealId
 	WHERE enao.groundAFeeReceiptDueDate IS NOT NULL
 	;
 
@@ -234,24 +236,24 @@ BEGIN
 	        appellantCostsDecisionLetter = appellantCostsDecisionLetter + fd.ctr_appellantCostsDecisionLetter,
 	        lpaCostsDecisionLetter       = lpaCostsDecisionLetter       + fd.ctr_lpaCostsDecisionLetter
 	FROM    #personal p
-				INNER JOIN (
-		SELECT  f.caseId,
-		        SUM(CASE WHEN f.path = 'costs/appellantCostsApplication'    THEN dc.documentCount ELSE 0 END) AS ctr_appellantCostsApplication,
-		        SUM(CASE WHEN f.path = 'costs/appellantCostsWithdrawal'     THEN dc.documentCount ELSE 0 END) AS ctr_appellantCostsWithdrawal,
-		        SUM(CASE WHEN f.path = 'costs/lpaCostsApplication'          THEN dc.documentCount ELSE 0 END) AS ctr_lpaCostsApplication,
-		        SUM(CASE WHEN f.path = 'costs/lpaCostsWithdrawal'           THEN dc.documentCount ELSE 0 END) AS ctr_lpaCostsWithdrawal,
-		        SUM(CASE WHEN f.path = 'costs/appellantCostsDecisionLetter' THEN dc.documentCount ELSE 0 END) AS ctr_appellantCostsDecisionLetter,
-		        SUM(CASE WHEN f.path = 'costs/lpaCostsDecisionLetter'       THEN dc.documentCount ELSE 0 END) AS ctr_lpaCostsDecisionLetter
-		FROM    Folder AS f
-					LEFT JOIN (
-			SELECT  folderId, COUNT(guid) AS documentCount
-			FROM    Document
-			WHERE   isDeleted = 0
-			GROUP BY folderId
-		) dc ON dc.folderId = f.id
-		WHERE   f.path LIKE 'costs/%'
-		GROUP BY f.caseId
-	) fd ON p.appealId = fd.caseId;
+			INNER JOIN (
+				SELECT  f.caseId,
+						SUM(CASE WHEN f.path = 'costs/appellantCostsApplication'    THEN dc.documentCount ELSE 0 END) AS ctr_appellantCostsApplication,
+						SUM(CASE WHEN f.path = 'costs/appellantCostsWithdrawal'     THEN dc.documentCount ELSE 0 END) AS ctr_appellantCostsWithdrawal,
+						SUM(CASE WHEN f.path = 'costs/lpaCostsApplication'          THEN dc.documentCount ELSE 0 END) AS ctr_lpaCostsApplication,
+						SUM(CASE WHEN f.path = 'costs/lpaCostsWithdrawal'           THEN dc.documentCount ELSE 0 END) AS ctr_lpaCostsWithdrawal,
+						SUM(CASE WHEN f.path = 'costs/appellantCostsDecisionLetter' THEN dc.documentCount ELSE 0 END) AS ctr_appellantCostsDecisionLetter,
+						SUM(CASE WHEN f.path = 'costs/lpaCostsDecisionLetter'       THEN dc.documentCount ELSE 0 END) AS ctr_lpaCostsDecisionLetter
+				FROM    Folder AS f
+						LEFT JOIN (
+							SELECT  folderId, COUNT(guid) AS documentCount
+							FROM    Document
+							WHERE   isDeleted = 0
+							GROUP BY folderId
+						) dc ON dc.folderId = f.id
+				WHERE   f.path LIKE 'costs/%'
+				GROUP BY f.caseId
+			) fd ON p.appealId = fd.caseId;
 
 	UPDATE  #personal
 	SET     awaitingAppellantCostsDecision = CASE WHEN appellantCostsDecisionLetter = 0 AND appellantCostsApplication > appellantCostsWithdrawal THEN 1 ELSE 0 END,
@@ -263,15 +265,15 @@ BEGIN
 
 	-- ready to start
 	UPDATE  #personal
-	SET     dueDate = CASE  WHEN appellantCaseValidationOutcomeName = 1 AND caseExtensionDate IS NOT NULL
-								THEN caseExtensionDate
+	SET     dueDate = CASE  WHEN appellantCaseValidationOutcomeId = @VALIDATION_OUTCOME_INCOMPLETE AND caseExtensionDate IS NOT NULL
+							THEN caseExtensionDate
 	                        ELSE DATEADD(day, @STATE_TARGET_READY_TO_START, caseCreatedDate) END
 	WHERE   status = @STATUS_READY_TO_START;
 
 	-- lpa questionnaire
 	UPDATE  #personal
 	SET     dueDate = CASE  WHEN lpaQuestionnaireDueDate IS NOT NULL
-								THEN lpaQuestionnaireDueDate
+							THEN lpaQuestionnaireDueDate
 	                        ELSE DATEADD(day, @STATE_TARGET_LPA_QUESTIONNAIRE_DUE, caseCreatedDate) END
 	WHERE   status = @STATUS_LPA_QUESTIONNAIRE;
 
@@ -283,9 +285,9 @@ BEGIN
 	-- validation
 	UPDATE  #personal
 	SET     dueDate = CASE	WHEN appealTypeId = @APPEAL_TYPE_ENFORCEMENT AND groundAFeeReceiptDueDate IS NOT NULL AND caseExtensionDate IS NOT NULL THEN
-								  CASE WHEN groundAFeeReceiptDueDate < caseExtensionDate THEN groundAFeeReceiptDueDate ELSE caseExtensionDate END
-	                          WHEN caseExtensionDate IS NULL THEN caseCreatedDate
-	                          ELSE caseExtensionDate END
+								CASE WHEN groundAFeeReceiptDueDate < caseExtensionDate THEN groundAFeeReceiptDueDate ELSE caseExtensionDate END
+	                        WHEN caseExtensionDate IS NULL THEN caseCreatedDate
+	                        ELSE caseExtensionDate END
 	WHERE   status = @STATUS_VALIDATION;
 
 
@@ -293,10 +295,10 @@ BEGIN
 	-- Note that businessDate is a date field with no time element, so we need to add the time part from the relevant visit date
 	UPDATE  #personal
 	SET     dueDate = CASE  WHEN siteVisitDate IS NOT NULL AND siteVisitEndTime IS NOT NULL THEN (
-		SELECT DATEADD(MILLISECOND, DATEDIFF(MILLISECOND, CAST(CAST(siteVisitEndTime AS DATE) AS DATETIME2), siteVisitEndTime), CAST(businessDate AS DATETIME2))
-		FROM NextBusinessDate
-		WHERE currentDate = CONVERT(DATE, siteVisitEndTime) AND noBusinessDays = @STATE_TARGET_ISSUE_DETERMINATION_AFTER_SITE_VISIT
-	)
+								SELECT DATEADD(MILLISECOND, DATEDIFF(MILLISECOND, CAST(CAST(siteVisitEndTime AS DATE) AS DATETIME2), siteVisitEndTime), CAST(businessDate AS DATETIME2))
+								FROM NextBusinessDate
+								WHERE currentDate = CONVERT(DATE, siteVisitEndTime) AND noBusinessDays = @STATE_TARGET_ISSUE_DETERMINATION_AFTER_SITE_VISIT
+							)
 	                        WHEN siteVisitDate IS NOT NULL THEN (
 								SELECT DATEADD(MILLISECOND, DATEDIFF(MILLISECOND, CAST(CAST(siteVisitDate AS DATE) AS DATETIME2), siteVisitDate), CAST(businessDate AS DATETIME2))
 		                        FROM NextBusinessDate
@@ -307,7 +309,7 @@ BEGIN
 		                        FROM NextBusinessDate
 		                        WHERE currentDate = CONVERT(DATE, caseCreatedDate) AND noBusinessDays = @STATE_TARGET_ISSUE_DETERMINATION
 							)
-		END
+					END
 	WHERE   status = @STATUS_ISSUE_DETERMINATION;
 
 
@@ -315,12 +317,12 @@ BEGIN
 	-- Note that businessDate is a date field with no time element, so we need to add the time part from the statusCreatedAt date
 	UPDATE  #personal
 	SET     dueDate = CASE  WHEN awaitingAppellantCostsDecision =1 OR awaitingLpaCostsDecision =1 THEN (
-		SELECT DATEADD(MILLISECOND, DATEDIFF(MILLISECOND, CAST(CAST(statusCreatedAt AS DATE) AS DATETIME2), statusCreatedAt), CAST(businessDate AS DATETIME2))
-		FROM NextBusinessDate
-		WHERE currentDate = CONVERT(DATE, statusCreatedAt) AND noBusinessDays = @STATE_TARGET_5_BUSINESS_DAYS )
-	                        WHEN numberOfResidencesNetChange =0 AND appealTypeId IN (@APPEAL_TYPE_S78, @APPEAL_TYPE_PLANNED_LISTED_BUILDING) AND isChildAppeal = 0 THEN GETDATE()
-	                        ELSE NULL
-		END
+								SELECT DATEADD(MILLISECOND, DATEDIFF(MILLISECOND, CAST(CAST(statusCreatedAt AS DATE) AS DATETIME2), statusCreatedAt), CAST(businessDate AS DATETIME2))
+								FROM NextBusinessDate
+								WHERE currentDate = CONVERT(DATE, statusCreatedAt) AND noBusinessDays = @STATE_TARGET_5_BUSINESS_DAYS )
+							WHEN numberOfResidencesNetChange IS NULL AND appealTypeId IN (@APPEAL_TYPE_S78, @APPEAL_TYPE_PLANNED_LISTED_BUILDING) AND isChildAppeal = 0 THEN GETDATE()
+							ELSE NULL
+					END
 	WHERE   status = @STATUS_COMPLETE;
 
 	-- statements
@@ -342,7 +344,7 @@ BEGIN
 	-- final comments
 	UPDATE  #personal
 	SET     dueDate = CASE  WHEN finalCommentsDueDate IS NOT NULL
-								THEN finalCommentsDueDate
+							THEN finalCommentsDueDate
 	                        ELSE DATEADD(day, @STATE_TARGET_FINAL_COMMENT_REVIEW, caseCreatedDate) END
 	WHERE   status = @STATUS_FINAL_COMMENTS;
 
@@ -367,44 +369,44 @@ BEGIN
 	                   FROM NextBusinessDate
 	                   WHERE currentDate = CONVERT(DATE, statusCreatedAt) AND noBusinessDays = @STATE_TARGET_5_BUSINESS_DAYS )
 	WHERE   status = @STATUS_AWAITING_TRANSFER
-	  AND     statusCreatedAt IS NOT NULL;
+	AND     statusCreatedAt IS NOT NULL;
 
 	-- withdrawn - add 5 business days
 	UPDATE  #personal
 	SET     dueDate = CASE  WHEN awaitingAppellantCostsDecision =1 OR awaitingLpaCostsDecision =1 THEN (
-		SELECT DATEADD(MILLISECOND, DATEDIFF(MILLISECOND, CAST(CAST(statusCreatedAt AS DATE) AS DATETIME2), statusCreatedAt), CAST(businessDate AS DATETIME2))
-		FROM NextBusinessDate
-		WHERE currentDate = CONVERT(DATE, statusCreatedAt) AND noBusinessDays = @STATE_TARGET_5_BUSINESS_DAYS )
-	                        ELSE NULL
-		END
+								SELECT DATEADD(MILLISECOND, DATEDIFF(MILLISECOND, CAST(CAST(statusCreatedAt AS DATE) AS DATETIME2), statusCreatedAt), CAST(businessDate AS DATETIME2))
+								FROM NextBusinessDate
+								WHERE currentDate = CONVERT(DATE, statusCreatedAt) AND noBusinessDays = @STATE_TARGET_5_BUSINESS_DAYS )
+							ELSE NULL
+							END
 	WHERE   status = @STATUS_WITHDRAWN;
 
 	-- Finally update the PersonalList table
 	UPDATE  p1
 	SET     dueDate = p2.dueDate
 	FROM    #personal p1
-				INNER JOIN #personal p2 ON p2.isParentAppeal = 1 AND p1.parentAppealId = p2.appealId;
+			INNER JOIN #personal p2 ON p2.isParentAppeal = 1 AND p1.parentAppealId = p2.appealId;
 
 	;WITH SourceData AS
-		(
+	(
 		SELECT	appealId,
-		          CASE WHEN isParentAppeal = 1 THEN 'parent'
-		               WHEN isChildAppeal = 1 THEN 'child'
-		               ELSE NULL
-					  END AS linkType,
-		          parentAppealId AS leadAppealId,
-		          duedate
+			CASE WHEN isParentAppeal = 1 THEN 'parent'
+					WHEN isChildAppeal = 1 THEN 'child'
+					ELSE NULL
+			END AS linkType,
+			parentAppealId AS leadAppealId,
+			duedate
 		FROM	#personal
-		)
+	)
 
-		MERGE PersonalList AS target
+	MERGE PersonalList AS target
 	USING SourceData AS source
-	ON target.appealId = source.appealId
+		ON target.appealId = source.appealId
 	WHEN MATCHED THEN
 		UPDATE SET
-				   target.linkType     = source.linkType,
-			       target.leadAppealId = source.leadAppealId,
-			       target.dueDate      = source.dueDate
+			target.linkType     = source.linkType,
+			target.leadAppealId = source.leadAppealId,
+			target.dueDate      = source.dueDate
 	WHEN NOT MATCHED BY TARGET THEN
 		INSERT (appealId, linkType, leadAppealId, dueDate)
 		VALUES (source.appealId, source.linkType, source.leadAppealId, source.dueDate);
