@@ -224,6 +224,10 @@ describe('appeals api mappers', () => {
 			...mocks.s78ExpediteAppeal,
 			folders: []
 		};
+		const appealCASPlanning = {
+			...mocks.casPlanningAppeal,
+			folders: []
+		};
 
 		const appealCASAdvertExpedite = {
 			...mocks.casAdvertExpediteAppeal,
@@ -237,6 +241,12 @@ describe('appeals api mappers', () => {
 		const s78ExpediteAppCaseOutput = mapCase({
 			// @ts-ignore
 			appeal: appealS78Expedite,
+			context: contextEnum.appellantCase
+		});
+
+		const casPlanningExpediteAppCaseOutput = mapCase({
+			// @ts-ignore
+			appeal: appealCASPlanning,
 			context: contextEnum.appellantCase
 		});
 
@@ -269,6 +279,20 @@ describe('appeals api mappers', () => {
 		expect(s78AppCaseOutput).not.toHaveProperty('enforcementNotice');
 
 		expect(s78ExpediteAppCaseOutput).toHaveProperty('planningObligation');
+
+		expect(casPlanningExpediteAppCaseOutput).toHaveProperty('anySignificantChanges');
+		expect(casPlanningExpediteAppCaseOutput).toHaveProperty(
+			'anySignificantChanges_courtJudgementSignificantChanges'
+		);
+		expect(casPlanningExpediteAppCaseOutput).toHaveProperty(
+			'anySignificantChanges_localPlanSignificantChanges'
+		);
+		expect(casPlanningExpediteAppCaseOutput).toHaveProperty(
+			'anySignificantChanges_nationalPolicySignificantChanges'
+		);
+		expect(casPlanningExpediteAppCaseOutput).toHaveProperty(
+			'anySignificantChanges_otherSignificantChanges'
+		);
 
 		expect(casAdvertExpediteAppCaseOutput).toHaveProperty('anySignificantChanges');
 		expect(casAdvertExpediteAppCaseOutput).toHaveProperty(
@@ -374,6 +398,73 @@ describe('appeals integration mappers', () => {
 		// Enforcement specific
 		expect(elbLpaqOutput).not.toHaveProperty('isSiteOnCrownLand');
 		expect(elbLpaqOutput).not.toHaveProperty('changeOfUseRefuseOrWaste');
+	});
+
+	test('should only map the lpaq fields for CAS planning expedite', async () => {
+		const appealCASPlanningExpedite = {
+			...mocks.casPlanningExpediteAppeal,
+			appealType: {
+				key: APPEAL_CASE_TYPE.ZP,
+				type: 'CAS planning'
+			},
+			folders: []
+		};
+
+		const casPlanningExpediteLpaqOutput = mapCase({
+			// @ts-ignore
+			appeal: appealCASPlanningExpedite,
+			context: contextEnum.lpaQuestionnaire
+		});
+		// CAS Planning Expedite
+		expect(casPlanningExpediteLpaqOutput).toHaveProperty(
+			'listOfDocumentsBeforeDecision',
+			'hoi oyf yrtd ytrtt ulliyuyg utg uyg ugyuo utyu uyg ouyg ouyg ouyg ouyg jhk bhm jvuhguyg oyg uygg ouy gouy uy uy oguy ouygo blargo'
+		);
+		expect(casPlanningExpediteLpaqOutput).toHaveProperty('anySignificantChangesLpa', true);
+		expect(casPlanningExpediteLpaqOutput).toHaveProperty(
+			'anySignificantChangesLpa_courtJudgementSignificantChanges',
+			'100'
+		);
+		expect(casPlanningExpediteLpaqOutput).toHaveProperty(
+			'anySignificantChangesLpa_courtJudgementSignificantChanges',
+			'100'
+		);
+		expect(casPlanningExpediteLpaqOutput).toHaveProperty(
+			'anySignificantChangesLpa_courtJudgementSignificantChanges',
+			'100'
+		);
+	});
+	test('should only map the lpaq fields for CAS planning', async () => {
+		const appealCASAdvert = {
+			...mocks.casPlanningAppeal,
+			appealType: {
+				key: APPEAL_CASE_TYPE.ZP,
+				type: 'CAS planning'
+			},
+			folders: []
+		};
+
+		const casPlanningLpaqOutput = mapCase({
+			// @ts-ignore
+			appeal: appealCASAdvert,
+			context: contextEnum.lpaQuestionnaire
+		});
+		// CAS Advert
+		expect(casPlanningLpaqOutput).not.toHaveProperty(
+			'listOfDocumentsBeforeDecision',
+			'hoi oyf yrtd ytrtt ulliyuyg utg uyg ugyuo utyu uyg ouyg ouyg ouyg ouyg jhk bhm jvuhguyg oyg uygg ouy gouy uy uy oguy ouygo blargo'
+		);
+
+		expect(casPlanningLpaqOutput).not.toHaveProperty('anySignificantChangesLpa');
+		expect(casPlanningLpaqOutput).not.toHaveProperty(
+			'anySignificantChangesLpa_courtJudgementSignificantChanges'
+		);
+		expect(casPlanningLpaqOutput).not.toHaveProperty(
+			'anySignificantChangesLpa_courtJudgementSignificantChanges'
+		);
+		expect(casPlanningLpaqOutput).not.toHaveProperty(
+			'anySignificantChangesLpa_courtJudgementSignificantChanges'
+		);
 	});
 
 	test('should only map the lpaq fields for CAS adverts expedite', async () => {

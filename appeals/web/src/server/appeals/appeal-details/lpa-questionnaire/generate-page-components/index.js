@@ -19,17 +19,17 @@ import { generateS78LpaQuestionnaireComponents } from './s78.js';
  *
  * @param {Appeal} appealDetails
  * @param {{lpaq: MappedInstructions}} mappedLPAQData
- * @param {String|undefined|null} submittedDate
+ * @param {String|undefined|null} applicationDate
  * @returns {PageComponent[]}
  */
-export function generateCaseTypeSpecificComponents(appealDetails, mappedLPAQData, submittedDate) {
+export function generateCaseTypeSpecificComponents(appealDetails, mappedLPAQData, applicationDate) {
 	switch (appealDetails.appealType) {
 		case APPEAL_TYPE.HOUSEHOLDER:
 			return generateHASLpaQuestionnaireComponents(mappedLPAQData);
 		case APPEAL_TYPE.CAS_PLANNING:
-			return generateCasPlanningLpaQuestionnaireComponents(mappedLPAQData);
+			return generateCasPlanningLpaQuestionnaireComponents(mappedLPAQData, applicationDate || null);
 		case APPEAL_TYPE.CAS_ADVERTISEMENT:
-			return generateCasAdvertLpaQuestionnaireComponents(mappedLPAQData, submittedDate || null);
+			return generateCasAdvertLpaQuestionnaireComponents(mappedLPAQData, applicationDate || null);
 		case APPEAL_TYPE.ADVERTISEMENT:
 			return generateAdvertLpaQuestionnaireComponents(mappedLPAQData);
 		case APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE:

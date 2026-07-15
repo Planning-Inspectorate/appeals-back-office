@@ -48,7 +48,7 @@ import { generateCaseTypeSpecificComponents } from './generate-page-components/i
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {string|undefined} backUrl
- * @param {String|undefined} caseSubmissionDate
+ * @param {String|undefined} applicationDate
  * @returns {Promise<PageContent>}
  */
 export async function lpaQuestionnairePage(
@@ -58,7 +58,7 @@ export async function lpaQuestionnairePage(
 	session,
 	request,
 	backUrl,
-	caseSubmissionDate
+	applicationDate
 ) {
 	const mappedLpaqDetails = initialiseAndMapLPAQData(
 		lpaqDetails,
@@ -83,7 +83,7 @@ export async function lpaQuestionnairePage(
 	let appealTypeSpecificPageComponents = generateCaseTypeSpecificComponents(
 		appealDetails,
 		mappedLpaqDetails,
-		caseSubmissionDate
+		applicationDate
 	);
 
 	/**

@@ -4,12 +4,12 @@ import { beforeExpeditedOriginalApplicationCutOff } from '@pins/appeals/utils/ap
 /**
  *
  * @param {{lpaq: MappedInstructions}} mappedLPAQData
- * @param {String|undefined|null} submissionDate
+ * @param {String|undefined|null} applicationDate
  * @returns {PageComponent[]}
  */
 export const generateCasAdvertLpaQuestionnaireComponents = (
 	mappedLPAQData,
-	submissionDate = ''
+	applicationDate = ''
 ) => {
 	/** @type {PageComponent[]} */
 	const pageComponents = [];
@@ -153,7 +153,7 @@ export const generateCasAdvertLpaQuestionnaireComponents = (
 				mappedLPAQData.lpaq?.procedurePreferenceDetails?.display.summaryListItem,
 				mappedLPAQData.lpaq?.procedurePreferenceDuration?.display.summaryListItem,
 				mappedLPAQData.lpaq?.otherAppeals?.display.summaryListItem,
-				!beforeExpeditedOriginalApplicationCutOff(submissionDate) && submissionDate
+				!beforeExpeditedOriginalApplicationCutOff(applicationDate) && applicationDate
 					? mappedLPAQData.lpaq?.anySignificantChangesLpa?.display.summaryListItem
 					: undefined,
 				mappedLPAQData.lpaq?.extraConditions?.display.summaryListItem
@@ -161,7 +161,7 @@ export const generateCasAdvertLpaQuestionnaireComponents = (
 		}
 	});
 
-	if (!beforeExpeditedOriginalApplicationCutOff(submissionDate) && submissionDate) {
+	if (!beforeExpeditedOriginalApplicationCutOff(applicationDate) && applicationDate) {
 		pageComponents.push({
 			/** @type {'summary-list'} */
 			type: 'summary-list',
