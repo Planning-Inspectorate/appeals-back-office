@@ -8,7 +8,11 @@ import { CASE_RELATIONSHIP_RELATED } from '@pins/appeals/constants/support.js';
 import { isLdcOrDiscontinuanceOrEnforcementCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_STATUS, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { getAppealTypeByTypeId } from './appeal-type.repository.js';
-import { getTeamIdFromLpaCode, getTeamIdFromName } from './team.repository.js';
+import {
+	getEnforcementTeamIdFromLpaCode,
+	getTeamIdFromLpaCode,
+	getTeamIdFromName
+} from './team.repository.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
@@ -57,8 +61,11 @@ export const createAppeal = async (
 			const appealType = await getAppealTypeByTypeId(Number(appeal.appealTypeId));
 
 			let teamId;
-			if (isLdcOrDiscontinuanceOrEnforcementCaseType(appealType?.key)) {
-				teamId = await getTeamIdFromName(TEAM_NAME_MAP.ENFORCEMENT_APPEALS_TEAM);
+			const caseType = appealType?.key;
+			if (isLdcOrDiscontinuanceOrEnforcementCaseType(caseType)) {
+				teamId =
+					(await getEnforcementTeamIdFromLpaCode(data.lpa.connect?.lpaCode || '')) ||
+					(await getTeamIdFromLpaCode(data.lpa.connect?.lpaCode || ''));
 			} else if (appellantSelectedProcedureType === inquiryProcedureTypeId) {
 				teamId = await getTeamIdFromName(TEAM_NAME_MAP.MAJOR_CASEWORK);
 			} else {

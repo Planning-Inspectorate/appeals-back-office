@@ -30,6 +30,13 @@ describe('local-planning-authorities', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
 	});
+	afterAll(() => {
+		databaseConnector.appeal.findUnique.mockResolvedValue({});
+		databaseConnector.appeal.update.mockResolvedValue({});
+		databaseConnector.lPA.findMany.mockResolvedValue([]);
+		databaseConnector.lPA.findUnique.mockResolvedValue({});
+		databaseConnector.user.upsert.mockResolvedValue({});
+	});
 	describe('GET /local-planning-authorities', () => {
 		test('returns 200 when getting list of LPAs', async () => {
 			// @ts-ignore
@@ -263,6 +270,46 @@ describe('local-planning-authorities', () => {
 			});
 			expect(response.status).toEqual(200);
 		}, 30000);
+
+		test('updates assignedTeamId to new LPA enforcementTeamId if appeal is enforcement type', async () => {
+			const enforcementAppeal = {
+				...householdAppeal,
+				appealType: { key: 'C' }
+			};
+			const newLpaWithTeam = {
+				...newLPA,
+				teamId: 10,
+				enforcementTeamId: 20
+			};
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(enforcementAppeal);
+			// @ts-ignore
+			databaseConnector.lPA.findMany.mockResolvedValue([validLPA, newLpaWithTeam]);
+			// @ts-ignore
+			databaseConnector.lPA.findUnique.mockResolvedValue(newLpaWithTeam);
+			// @ts-ignore
+			databaseConnector.user.upsert.mockResolvedValue({
+				id: 1,
+				azureAdUserId
+			});
+
+			const response = await request
+				.post(`/appeals/${enforcementAppeal.id}/lpa`)
+				.send({
+					newLpaId: 48
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+				data: {
+					assignedTeamId: 20
+				},
+				where: {
+					id: enforcementAppeal.id
+				}
+			});
+			expect(response.status).toEqual(200);
+		});
 
 		test('returns 400 if invalid request', async () => {
 			// @ts-ignore
