@@ -558,10 +558,13 @@ export const happyPathHelper = {
 	},
 
 	addLpaCostWithdrawal() {
+		cy.intercept('POST', '**/costs/lpa/withdrawal/check-your-answers/**').as('submitWithdrawal');
+
 		caseDetailsPage.clickAddLpaWithdrawal();
 		fileUploader.uploadFiles(pdf);
 		fileUploader.clickButtonByText('Continue');
 		fileUploader.clickButtonByText('Confirm');
+		cy.wait(5000);
 		fileUploader.clickButtonByText('Confirm');
 	},
 
@@ -668,7 +671,16 @@ export const happyPathHelper = {
 				}),
 			[STATUSES.READY_TO_START]: (c, appealType, procedureType) => {
 				if (procedureType === 'HEARING') {
-					happyPathHelper.startS78HearingCase(c, 'hearing');
+					cy.getBusinessActualDate(new Date(), 2).then((date) => {
+						const estimatedDays = 6;
+
+						happyPathHelper.startS78HearingCase(caseObj, 'hearing', {
+							date,
+							setEstimatedDays: true,
+							estimatedDays,
+							startCase: true
+						});
+					});
 				} else if (procedureType === 'INQUIRY') {
 					cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 						cy.addInquiryViaApi(caseObj, inquiryDate);
