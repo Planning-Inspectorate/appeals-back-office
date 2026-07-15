@@ -223,24 +223,35 @@ BEGIN
 	;
 
 	-- COSTS
+	-- Note: Use conditional aggregation inside the subquery so there is exactly one row per caseId with 6 separate columns:
+	--		 This avoids the JOIN table to multiple rows in a SQL Server UPDATE, only one of the matching rows is applied (the "last one wins" — but which row is picked is non-deterministic).
+	--		 This method ensures that all 6 values correctly get totalled
 	UPDATE  #personal
-	SET     appellantCostsApplication    = appellantCostsApplication    + CASE WHEN fd.costsType = 'appellantCostsApplication' THEN fd.documentCount ELSE 0 END,
-	        appellantCostsWithdrawal     = appellantCostsWithdrawal     + CASE WHEN fd.costsType = 'appellantCostsWithdrawal' THEN fd.documentCount ELSE 0 END,
-	        lpaCostsApplication          = lpaCostsApplication          + CASE WHEN fd.costsType = 'lpaCostsApplication' THEN fd.documentCount ELSE 0 END,
-	        lpaCostsWithdrawal           = lpaCostsWithdrawal           + CASE WHEN fd.costsType = 'lpaCostsWithdrawal' THEN fd.documentCount ELSE 0 END,
-	        appellantCostsDecisionLetter = appellantCostsDecisionLetter + CASE WHEN fd.costsType = 'appellantCostsDecisionLetter' THEN fd.documentCount ELSE 0 END,
-	        lpaCostsDecisionLetter       = lpaCostsDecisionLetter       + CASE WHEN fd.costsType = 'lpaCostsDecisionLetter' THEN fd.documentCount ELSE 0 END
+	SET     appellantCostsApplication    = appellantCostsApplication    + fd.ctr_appellantCostsApplication,
+	        appellantCostsWithdrawal     = appellantCostsWithdrawal     + fd.ctr_appellantCostsWithdrawal,
+	        lpaCostsApplication          = lpaCostsApplication          + fd.ctr_lpaCostsApplication,
+	        lpaCostsWithdrawal           = lpaCostsWithdrawal           + fd.ctr_lpaCostsWithdrawal,
+	        appellantCostsDecisionLetter = appellantCostsDecisionLetter + fd.ctr_appellantCostsDecisionLetter,
+	        lpaCostsDecisionLetter       = lpaCostsDecisionLetter       + fd.ctr_lpaCostsDecisionLetter
 	FROM    #personal p
 				INNER JOIN (
 		SELECT  f.caseId,
-		        REPLACE(f.path, 'costs/', '') AS costsType,
-		        COUNT(d.guid) AS documentCount
+		        SUM(CASE WHEN f.path = 'costs/appellantCostsApplication'    THEN dc.documentCount ELSE 0 END) AS ctr_appellantCostsApplication,
+		        SUM(CASE WHEN f.path = 'costs/appellantCostsWithdrawal'     THEN dc.documentCount ELSE 0 END) AS ctr_appellantCostsWithdrawal,
+		        SUM(CASE WHEN f.path = 'costs/lpaCostsApplication'          THEN dc.documentCount ELSE 0 END) AS ctr_lpaCostsApplication,
+		        SUM(CASE WHEN f.path = 'costs/lpaCostsWithdrawal'           THEN dc.documentCount ELSE 0 END) AS ctr_lpaCostsWithdrawal,
+		        SUM(CASE WHEN f.path = 'costs/appellantCostsDecisionLetter' THEN dc.documentCount ELSE 0 END) AS ctr_appellantCostsDecisionLetter,
+		        SUM(CASE WHEN f.path = 'costs/lpaCostsDecisionLetter'       THEN dc.documentCount ELSE 0 END) AS ctr_lpaCostsDecisionLetter
 		FROM    Folder AS f
-					LEFT JOIN Document AS d ON  d.folderId = f.id
-			AND d.isDeleted = 0
-		WHERE   f.path LIKE 'costs/%'        -- only folders under 'costs/'
-		GROUP BY f.caseId, f.path
-	) fd ON  p.appealId = fd.caseId;
+					LEFT JOIN (
+			SELECT  folderId, COUNT(guid) AS documentCount
+			FROM    Document
+			WHERE   isDeleted = 0
+			GROUP BY folderId
+		) dc ON dc.folderId = f.id
+		WHERE   f.path LIKE 'costs/%'
+		GROUP BY f.caseId
+	) fd ON p.appealId = fd.caseId;
 
 	UPDATE  #personal
 	SET     awaitingAppellantCostsDecision = CASE WHEN appellantCostsDecisionLetter = 0 AND appellantCostsApplication > appellantCostsWithdrawal THEN 1 ELSE 0 END,

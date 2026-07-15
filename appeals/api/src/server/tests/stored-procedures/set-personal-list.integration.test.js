@@ -3,7 +3,7 @@ import {
 	executeSpSetPersonalList
 } from '#tests/stored-procedures/test-database.js';
 
-describe.skip('spSetPersonalList stored procedure', () => {
+describe('spSetPersonalList stored procedure', () => {
 	const testLpaCode = 'SPT1';
 	const invalidOutcomeName = 'Invalid';
 
