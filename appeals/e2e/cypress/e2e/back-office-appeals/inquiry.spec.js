@@ -618,7 +618,8 @@ it('should show business day validation errors for all timetable fields', () => 
 	});
 });
 
-it('should progress to evidence stage with no statements or IP comments', () => {
+//blocked waiting for https://pins-ds.atlassian.net/browse/A2-8740
+it.skip('should progress to evidence stage with no statements or IP comments', () => {
 	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseObj);
@@ -665,8 +666,8 @@ it('should progress to evidence stage with no statements or IP comments', () => 
 		inquirySectionPage.verifyTagOnPersonalListPage(caseObj.reference, 'Evidence');
 	});
 });
-
-it('should progress to evidence stage after sharing statements and IP comments', () => {
+//blocked waiting for https://pins-ds.atlassian.net/browse/A2-8740
+it.skip('should progress to evidence stage after sharing statements and IP comments', () => {
 	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseObj);

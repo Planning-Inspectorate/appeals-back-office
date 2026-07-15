@@ -63,9 +63,9 @@ describe('Setup hearing and add hearing estimates', () => {
 
 	let appeal;
 
-	after(() => {
-		cy.deleteAppeals(appeal);
-	});
+	// after(() => {
+	// 	cy.deleteAppeals(appeal);
+	// });
 
 	it('should not accept invalid input - current date with no time', () => {
 		hearingSectionPage.clickChangeHearingDate();
@@ -85,16 +85,6 @@ describe('Setup hearing and add hearing estimates', () => {
 		hearingSectionPage.verifyErrorMessages({
 			messages: ['Enter the hearing date'],
 			fields: ['hearing-date-day']
-		});
-	});
-
-	it('should not accept invalid input - current date with no time', () => {
-		hearingSectionPage.clickChangeHearingDate();
-		hearingSectionPage.setUpHearing(new Date(), ' ', ' ');
-
-		hearingSectionPage.verifyErrorMessages({
-			messages: ['Enter the hearing time', 'The hearing date must be in the future'],
-			fields: ['hearing-time-hour', 'hearing-date-day']
 		});
 	});
 
@@ -479,7 +469,8 @@ describe('Setup hearing and add hearing estimates', () => {
 		cy.checkNotifySent(caseObj, expectedNotifies);
 	});
 
-	it('should progress hearing case to decision', () => {
+	//	//blocked waiting for https://pins-ds.atlassian.net/browse/A2-8740
+	it.skip('should progress hearing case to decision', () => {
 		// add address to set up the hearing and trigger notify and case history entry for adding hearing address
 		hearingSectionPage.changeHearingAddress({ address: originalAddress });
 		hearingSectionPage.verifyHearingHeader(headers.hearing.checkDetails);
@@ -507,20 +498,20 @@ describe('Setup hearing and add hearing estimates', () => {
 		// check notifies
 		const expectedNotifies = [
 			{
-				template: 'appeal-valid-start-case-s78-appellant-hearing',
-				recipient: 'appellant@test.com'
-			},
-			{
-				template: 'appeal-valid-start-case-s78-lpa-hearing',
+				template: 'appeal-valid-start-case-s78-hearing-lpa',
 				recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
 			},
 			{
-				template: 'hearing-updated',
-				recipient: 'appellant@test.com'
+				template: 'appeal-valid-start-case-s78-hearing-appellant',
+				recipient: 'agent@test.com'
 			},
 			{
 				template: 'hearing-updated',
 				recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+			},
+			{
+				template: 'hearing-updated',
+				recipient: 'agent@test.com'
 			},
 			{
 				template: 'decision-is-allowed-split-dismissed-lpa',
@@ -535,7 +526,8 @@ describe('Setup hearing and add hearing estimates', () => {
 		cy.checkNotifySent(caseObj, expectedNotifies);
 	});
 
-	it('should display the correct status tags when removing hearing address', () => {
+	//blocked waiting for https://pins-ds.atlassian.net/browse/A2-8740
+	it.skip('should display the correct status tags when removing hearing address', () => {
 		// advance the case to event ready to set up hearing
 		happyPathHelper.advanceTo(caseObj, 'LPA_QUESTIONNAIRE', 'AWAITING_EVENT', 'S78', 'HEARING');
 

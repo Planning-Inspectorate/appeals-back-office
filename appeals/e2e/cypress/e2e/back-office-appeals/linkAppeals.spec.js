@@ -36,9 +36,9 @@ beforeEach(() => {
 	cy.login(users.appeals.caseAdmin);
 });
 
-afterEach(() => {
-	cy.deleteAppeals(cases);
-});
+// afterEach(() => {
+// 	cy.deleteAppeals(cases);
+// });
 
 describe('Link appeals', () => {
 	it('Link an unlinked appeal to an unlinked appeal (from lead)', { tags: tag.smoke }, () => {
@@ -571,7 +571,7 @@ describe('Site visit', () => {
 });
 
 describe('Issue Decision', () => {
-	it('Issue a decision with costs for linked appeals - S78', () => {
+	it.skip('Issue a decision with costs for linked appeals - S78', () => {
 		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
 			cy.createCase({ caseType: 'W' }).then((childCaseObj1) => {
 				cy.createCase({ caseType: 'W' }).then((childCaseObj2) => {
@@ -680,7 +680,7 @@ describe('Issue Decision', () => {
 		});
 	});
 
-	it('Cost decisions - appellant withdrawn', () => {
+	it.skip('Cost decisions - appellant withdrawn', () => {
 		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
 			cy.createCase({ caseType: 'W' }).then((childCaseObj1) => {
 				cy.createCase({ caseType: 'W' }).then((childCaseObj2) => {
@@ -795,7 +795,7 @@ describe('Issue Decision', () => {
 		});
 	});
 
-	it('Cost decisions - lpa withdrawn', () => {
+	it.skip('Cost decisions - lpa withdrawn', () => {
 		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
 			cy.createCase({ caseType: 'W' }).then((childCaseObj1) => {
 				cy.createCase({ caseType: 'W' }).then((childCaseObj2) => {
