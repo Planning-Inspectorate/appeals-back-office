@@ -569,7 +569,7 @@ describe('Site visit', () => {
 		});
 	});
 });
-
+//skipped for now as linked appeals does not apply to s78
 describe('Issue Decision', () => {
 	it.skip('Issue a decision with costs for linked appeals - S78', () => {
 		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
