@@ -27,9 +27,9 @@ beforeEach(() => {
 	});
 });
 
-// afterEach(() => {
-// 	cy.deleteAppeals(appeal);
-// });
+afterEach(() => {
+	cy.deleteAppeals(appeal);
+});
 
 describe('Issue decision', () => {
 	const issueDecisionCompleteStatus = ['Allowed', 'Dismissed', 'Split Decision'];

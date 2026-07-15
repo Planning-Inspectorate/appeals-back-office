@@ -63,9 +63,9 @@ describe('Setup hearing and add hearing estimates', () => {
 
 	let appeal;
 
-	// after(() => {
-	// 	cy.deleteAppeals(appeal);
-	// });
+	after(() => {
+		cy.deleteAppeals(appeal);
+	});
 
 	it('should not accept invalid input - current date with no time', () => {
 		hearingSectionPage.clickChangeHearingDate();
