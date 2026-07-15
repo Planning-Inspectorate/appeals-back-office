@@ -33,12 +33,18 @@ export const mapQuestionnaireIn = (command, designatedSites, applicationDate) =>
 
 	switch (casedata.caseType) {
 		case APPEAL_CASE_TYPE.D: // HAS - schema includes common and has fields
-		case APPEAL_CASE_TYPE.ZP: // CAS_PLANNING - schema includes common and has fields
 			return {
 				...generateCommonSchemaFields(casedata),
 				...generateHasSchemaFields(casedata, listedBuildingsData)
 			};
-
+		case APPEAL_CASE_TYPE.ZP: // CAS_PLANNING - schema includes common and has fields
+			return {
+				...generateCommonSchemaFields(casedata),
+				...generateHasSchemaFields(casedata, listedBuildingsData),
+				...(!beforeExpeditedOriginalApplicationCutOff(applicationDate)
+					? generateExpediteSchemaFields(casedata)
+					: [])
+			};
 		case APPEAL_CASE_TYPE.W: // S78 - schema includes common, has and s78 fields
 			return {
 				...generateCommonSchemaFields(casedata),

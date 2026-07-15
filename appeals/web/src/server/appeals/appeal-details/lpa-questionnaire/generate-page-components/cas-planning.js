@@ -1,11 +1,16 @@
 import { isDefined } from '#lib/ts-utilities.js';
+import { beforeExpeditedOriginalApplicationCutOff } from '@pins/appeals/utils/appeal-type-checks.js';
 
 /**
  *
  * @param {{lpaq: MappedInstructions}} mappedLPAQData
+ * @param {String |undefined | null} applicationDate
  * @returns {PageComponent[]}
  */
-export const generateCasPlanningLpaQuestionnaireComponents = (mappedLPAQData) => {
+export const generateCasPlanningLpaQuestionnaireComponents = (
+	mappedLPAQData,
+	applicationDate = ''
+) => {
 	/** @type {PageComponent[]} */
 	const pageComponents = [];
 
@@ -148,10 +153,36 @@ export const generateCasPlanningLpaQuestionnaireComponents = (mappedLPAQData) =>
 			},
 			rows: [
 				mappedLPAQData.lpaq?.otherAppeals?.display.summaryListItem,
+				!beforeExpeditedOriginalApplicationCutOff(applicationDate) && applicationDate
+					? mappedLPAQData.lpaq?.anySignificantChangesLpa?.display.summaryListItem
+					: undefined,
 				mappedLPAQData.lpaq?.extraConditions?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});
 
+	if (!beforeExpeditedOriginalApplicationCutOff(applicationDate) && applicationDate) {
+		pageComponents.push({
+			/** @type {'summary-list'} */
+			type: 'summary-list',
+			wrapperHtml: {
+				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+				closing: '</div></div>'
+			},
+			parameters: {
+				card: {
+					title: {
+						text: '8. Original Evidence'
+					}
+				},
+				rows: [
+					mappedLPAQData.lpaq?.designAccessStatementLpa?.display.summaryListItem,
+					mappedLPAQData.lpaq?.plansDrawingsLpa?.display.summaryListItem,
+					mappedLPAQData.lpaq?.additionalDocumentsLpa?.display.summaryListItem,
+					mappedLPAQData.lpaq?.listOfDocumentsBeforeDecision?.display.summaryListItem
+				].filter(isDefined)
+			}
+		});
+	}
 	return pageComponents;
 };

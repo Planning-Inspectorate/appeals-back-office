@@ -15,7 +15,6 @@ import { mapAppellantCaseIn } from '../commands/appellant-case.mapper.js';
 import { mapDesignatedSiteNames, mapQuestionnaireIn } from '../commands/questionnaire.mapper.js';
 import { mapDocumentEntity } from '../map-document-entity.js';
 import { mapCaseDates } from '../shared/s20s78/map-case-dates.js';
-
 describe('appeals generic mappers', () => {
 	test('map case validation date on invalid appeal', async () => {
 		const input = {
@@ -1099,6 +1098,71 @@ describe('mapQuestionnaireIn', () => {
 				areaOfAllegedBreachInSquareMetres: 50,
 				preserveGrantLoan: true,
 				historicEnglandConsultation: true
+			})
+		},
+		{
+			desc: 'CAS Planning Expedite',
+			input: {
+				casedata: {
+					caseType: APPEAL_CASE_TYPE.ZP,
+					lpaQuestionnaireSubmittedDate: '2026-10-22',
+					inConservationArea: true,
+					isCorrectAppealType: true,
+					isGreenBelt: false,
+					siteAccessDetails: ['access1'],
+					siteSafetyDetails: ['safety1'],
+					notificationMethod: ['post'],
+					affectedListedBuildingNumbers: ['LB1'],
+					designatedSitesNames: ['siteA'],
+					hasProtectedSpecies: true,
+					isAonbNationalLandscape: true,
+					hasStatutoryConsultees: true,
+					consultedBodiesDetails: 'details',
+					hasEmergingPlan: true,
+					lpaProcedurePreference: 'written',
+					lpaProcedurePreferenceDetails: 'preference details',
+					lpaProcedurePreferenceDuration: 12,
+					lpaStatement: 'statement',
+					newConditionDetails: 'details',
+					reasonForNeighbourVisits: 'visit',
+					siteWithinSSSI: true,
+					isSiteInAreaOfSpecialControlAdverts: true,
+					wasApplicationRefusedDueToHighwayOrTraffic: true,
+					didAppellantSubmitCompletePhotosAndPlans: true,
+					significantChangesAffectingApplicationLpa: [
+						{ value: 'adopted-a-new-local-plan', comment: 'lp' },
+						{ value: 'national-policy-change', comment: 'np' },
+						{ value: 'court-judgement', comment: 'cj' },
+						{ value: 'other', comment: 'o' }
+					],
+					listOfDocumentsBeforeDecision: 'docs'
+				},
+				appeal: {
+					appellantCase: {
+						applicationDate: '2026-10-22'
+					}
+				}
+			},
+			expected: expect.objectContaining({
+				lpaQuestionnaireSubmittedDate: '2026-10-22',
+				siteAccessDetails: 'access1',
+				siteSafetyDetails: 'safety1',
+				listedBuildingDetails: { create: [{ listEntry: 'LB1', affectsListedBuilding: true }] },
+				lpaNotificationMethods: {
+					create: [{ lpaNotificationMethod: { connect: { key: 'post' } } }]
+				},
+				anySignificantChangesLpa: 'Yes',
+				anySignificantChangesLpa_otherSignificantChanges: 'o',
+				anySignificantChangesLpa_localPlanSignificantChanges: 'lp',
+				anySignificantChangesLpa_nationalPolicySignificantChanges: 'np',
+				anySignificantChangesLpa_courtJudgementSignificantChanges: 'cj',
+				listOfDocumentsBeforeDecision: 'docs',
+				inConservationArea: true,
+				isCorrectAppealType: true,
+				isGreenBelt: false,
+				lpaStatement: 'statement',
+				newConditionDetails: 'details',
+				reasonForNeighbourVisits: 'visit'
 			})
 		}
 	])('mapQuestionnaireIn: $desc', ({ input, expected }) => {

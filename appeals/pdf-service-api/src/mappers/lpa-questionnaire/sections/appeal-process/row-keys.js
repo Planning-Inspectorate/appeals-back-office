@@ -9,7 +9,14 @@ export const rowKeys = {
 		'otherAppeals',
 		'hasExtraConditions'
 	],
-	[APPEAL_TYPE.CAS_PLANNING]: ['otherAppeals', 'hasExtraConditions'],
+	[APPEAL_TYPE.CAS_PLANNING]: [
+		'otherAppeals',
+		'hasExtraConditions',
+		{
+			key: 'anySignificantChangesLpa',
+			condition: (data) => !beforeExpeditedOriginalApplicationCutOff(data.applicationDate)
+		}
+	],
 	[APPEAL_TYPE.CAS_ADVERTISEMENT]: [
 		'lpaProcedurePreference',
 		'lpaProcedurePreferenceDetails',

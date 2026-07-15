@@ -1,19 +1,24 @@
 import { mapLpaNeighbouringSitesLpaqAdapter } from '../appeal/submappers/lpa-neighbouring-sites.mapper.js';
 import { mapAdditionalDocumentsContents } from './submappers/map-additional-documents-contents.js';
+import { mapAdditionalDocumentsLpa } from './submappers/map-additional-documents-lpa.js';
 import { mapAdditionalDocuments } from './submappers/map-additional-documents.js';
 import { mapAffectsListedBuildingDetails } from './submappers/map-affects-listed-building-details.js';
+import { mapAnySignificantChangesLpa } from './submappers/map-any-significant-changes-lpa.js';
 import { mapAppealNotification } from './submappers/map-appeal-notification.js';
 import { mapConservationAreaMap } from './submappers/map-conservation-area-map.js';
+import { mapDesignAccessStatementLpa } from './submappers/map-design-access-statement-lpa.js';
 import { mapDevelopmentPlanPolicies } from './submappers/map-development-plan-policies.js';
 import { mapEmergingPlan } from './submappers/map-emerging-plan.js';
 import { mapExtraConditions } from './submappers/map-extra-conditions.js';
 import { mapIsCorrectAppealType } from './submappers/map-is-correct-appeal-type.js';
 import { mapLettersToNeighbours } from './submappers/map-letters-to-neighbours.js';
+import { mapListOfDocumentsBeforeDecision } from './submappers/map-list-of-documents-before-decision.js';
 import { mapLpaHealthAndSafety } from './submappers/map-lpa-health-and-safety.js';
 import { mapNotificationMethods } from './submappers/map-notification-methods.js';
 import { mapNotifyingParties } from './submappers/map-notify-parties.js';
 import { mapOfficersReport } from './submappers/map-officers-report.js';
 import { mapOtherAppeals } from './submappers/map-other-appeals.js';
+import { mapPlansDrawingsLpa } from './submappers/map-plans-drawings-lpa.js';
 import { mapPressAdvert } from './submappers/map-press-advert.js';
 import { mapRepresentations } from './submappers/map-representations.js';
 import { mapReviewOutcome } from './submappers/map-review-outcome.js';
@@ -45,5 +50,10 @@ export const submaps = {
 	otherAppeals: mapOtherAppeals,
 	additionalDocumentsContents: mapAdditionalDocumentsContents,
 	additionalDocuments: mapAdditionalDocuments,
-	reviewOutcome: mapReviewOutcome
+	reviewOutcome: mapReviewOutcome,
+	listOfDocumentsBeforeDecision: mapListOfDocumentsBeforeDecision,
+	anySignificantChangesLpa: mapAnySignificantChangesLpa,
+	designAccessStatementLpa: mapDesignAccessStatementLpa,
+	plansDrawingsLpa: mapPlansDrawingsLpa,
+	additionalDocumentsLpa: mapAdditionalDocumentsLpa
 };
