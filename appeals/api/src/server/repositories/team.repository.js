@@ -22,6 +22,24 @@ export const getTeamIdFromLpaCode = async (lpaCode) => {
 
 /**
  *
+ * @param {string} lpaCode
+ * @returns {Promise< number | null>}
+ */
+export const getEnforcementTeamIdFromLpaCode = async (lpaCode) => {
+	const team = await databaseConnector.lPA.findUnique({
+		where: { lpaCode },
+		select: { enforcementTeamId: true }
+	});
+
+	if (!team) {
+		return null;
+	}
+
+	return team.enforcementTeamId;
+};
+
+/**
+ *
  * @param {string} name
  * @returns {Promise< number | null>}
  */
