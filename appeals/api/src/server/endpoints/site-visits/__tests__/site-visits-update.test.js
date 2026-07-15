@@ -2,6 +2,8 @@
 import { jest } from '@jest/globals';
 import {
 	AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
+	CASE_RELATIONSHIP_LINKED,
+	CASE_RELATIONSHIP_RELATED,
 	ERROR_INVALID_SITE_VISIT_TYPE,
 	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
 	ERROR_MUST_BE_NUMBER,
@@ -12,6 +14,7 @@ import {
 	SITE_VISIT_TYPE_ACCOMPANIED,
 	SITE_VISIT_TYPE_UNACCOMPANIED
 } from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { request } from '../../../app-test.js';
 
 import {
@@ -1105,6 +1108,118 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			});
 		});
 
+		test('updates a site visit and transitions appeal status to awaiting_event when in event status', async () => {
+			const appeal = getAppeal();
+			const { siteVisit } = appeal;
+
+			appeal.appealStatus[0].status = 'event';
+			appeal.procedureType = { key: 'written' };
+			addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
+			// @ts-ignore
+			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			// @ts-ignore
+			databaseConnector.user.upsert.mockResolvedValue({
+				id: 1,
+				azureAdUserId
+			});
+			databaseConnector.appealStatus.create.mockResolvedValue({});
+			databaseConnector.appealStatus.updateMany.mockResolvedValue({});
+
+			const response = await request
+				.patch(`/appeals/${appeal.id}/site-visits/${siteVisit.id}`)
+				.send({
+					visitDate: siteVisit.visitDate,
+					visitEndTime: siteVisit.visitEndTime,
+					visitStartTime: siteVisit.visitStartTime,
+					visitType: siteVisit.siteVisitType.name,
+					previousVisitType: 'Accompanied'
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+			expect(databaseConnector.appealStatus.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({
+						appealId: appeal.id,
+						status: 'awaiting_event',
+						valid: true
+					})
+				})
+			);
+		});
+
+		test('updates a site visit and does not transition appeal status when not in event status', async () => {
+			const appeal = getAppeal();
+			const { siteVisit } = appeal;
+
+			appeal.appealStatus[0].status = 'final_comments';
+			appeal.procedureType = { key: 'written' };
+			addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
+			// @ts-ignore
+			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			// @ts-ignore
+			databaseConnector.user.upsert.mockResolvedValue({
+				id: 1,
+				azureAdUserId
+			});
+			databaseConnector.appealStatus.create.mockResolvedValue({});
+			databaseConnector.appealStatus.updateMany.mockResolvedValue({});
+
+			const response = await request
+				.patch(`/appeals/${appeal.id}/site-visits/${siteVisit.id}`)
+				.send({
+					visitDate: siteVisit.visitDate,
+					visitEndTime: siteVisit.visitEndTime,
+					visitStartTime: siteVisit.visitStartTime,
+					visitType: siteVisit.siteVisitType.name,
+					previousVisitType: 'Accompanied'
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+			expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
+		});
+
+		test('updates a site visit and does not transition appeal status when visitDate is not provided', async () => {
+			const appeal = getAppeal();
+			const { siteVisit } = appeal;
+
+			appeal.appealStatus[0].status = 'event';
+			appeal.procedureType = { key: 'written' };
+			addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
+			// @ts-ignore
+			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			// @ts-ignore
+			databaseConnector.user.upsert.mockResolvedValue({
+				id: 1,
+				azureAdUserId
+			});
+			databaseConnector.appealStatus.create.mockResolvedValue({});
+			databaseConnector.appealStatus.updateMany.mockResolvedValue({});
+
+			const response = await request
+				.patch(`/appeals/${appeal.id}/site-visits/${siteVisit.id}`)
+				.send({
+					visitEndTime: siteVisit.visitEndTime,
+					visitStartTime: siteVisit.visitStartTime,
+					visitType: siteVisit.siteVisitType.name,
+					previousVisitType: 'Accompanied'
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+			expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
+		});
+
 		test('updates an Unaccompanied site visit without time fields', async () => {
 			const appeal = getAppeal();
 			const { siteVisit } = appeal;
@@ -1614,6 +1729,240 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			});
 
 			expect(mockNotifySend).not.toHaveBeenCalled();
+		});
+	});
+
+	describe('linked appeal site visit updates', () => {
+		const getLinkedLeadAppeal = () =>
+			JSON.parse(
+				JSON.stringify({ ...enforcementNoticeAppeal, childAppeals: childAppealsEnforcementBase })
+			);
+
+		test('transitions status for both lead and linked child appeals when lead is in event status', async () => {
+			const appeal = getLinkedLeadAppeal();
+			const { siteVisit } = appeal;
+
+			appeal.appealStatus[0].status = APPEAL_CASE_STATUS.EVENT;
+			appeal.procedureType = { key: 'written' };
+			addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
+			// @ts-ignore
+			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			// @ts-ignore
+			databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
+			databaseConnector.appealStatus.create.mockResolvedValue({});
+			databaseConnector.appealStatus.updateMany.mockResolvedValue({});
+
+			const response = await request
+				.patch(`/appeals/${appeal.id}/site-visits/${siteVisit.id}`)
+				.send({
+					visitDate: siteVisit.visitDate,
+					visitEndTime: siteVisit.visitEndTime,
+					visitStartTime: siteVisit.visitStartTime,
+					visitType: siteVisit.siteVisitType.name,
+					previousVisitType: SITE_VISIT_TYPE_ACCOMPANIED
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+
+			// Lead appeal should be transitioned
+			expect(databaseConnector.appealStatus.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({
+						appealId: appeal.id,
+						status: APPEAL_CASE_STATUS.AWAITING_EVENT,
+						valid: true
+					})
+				})
+			);
+
+			// Linked child appeals (type === 'linked') should also be transitioned
+			const linkedChildren = appeal.childAppeals.filter((c) => c.type === CASE_RELATIONSHIP_LINKED);
+			for (const child of linkedChildren) {
+				expect(databaseConnector.appealStatus.create).toHaveBeenCalledWith(
+					expect.objectContaining({
+						data: expect.objectContaining({
+							appealId: child.childId,
+							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
+							valid: true
+						})
+					})
+				);
+			}
+		});
+
+		test('does not transition child appeal status when child appeal is in a different status to lead', async () => {
+			const appeal = getLinkedLeadAppeal();
+			const { siteVisit } = appeal;
+
+			appeal.appealStatus[0].status = APPEAL_CASE_STATUS.EVENT;
+			appeal.procedureType = { key: 'written' };
+			// Give the child appeals a different status to the lead
+			const childStatus = [
+				{ ...appeal.appealStatus[0], status: APPEAL_CASE_STATUS.FINAL_COMMENTS }
+			];
+			addStatusesToLinkedAppeals(appeal, childStatus);
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
+			// @ts-ignore
+			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			// @ts-ignore
+			databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
+			databaseConnector.appealStatus.create.mockResolvedValue({});
+			databaseConnector.appealStatus.updateMany.mockResolvedValue({});
+
+			const response = await request
+				.patch(`/appeals/${appeal.id}/site-visits/${siteVisit.id}`)
+				.send({
+					visitDate: siteVisit.visitDate,
+					visitEndTime: siteVisit.visitEndTime,
+					visitStartTime: siteVisit.visitStartTime,
+					visitType: siteVisit.siteVisitType.name,
+					previousVisitType: SITE_VISIT_TYPE_ACCOMPANIED
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+
+			// Lead should still transition
+			expect(databaseConnector.appealStatus.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({
+						appealId: appeal.id,
+						status: APPEAL_CASE_STATUS.AWAITING_EVENT,
+						valid: true
+					})
+				})
+			);
+
+			// Child appeals should NOT be transitioned (they are in a different status)
+			const linkedChildren = appeal.childAppeals.filter((c) => c.type === CASE_RELATIONSHIP_LINKED);
+			for (const child of linkedChildren) {
+				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalledWith(
+					expect.objectContaining({
+						data: expect.objectContaining({
+							appealId: child.childId,
+							status: APPEAL_CASE_STATUS.AWAITING_EVENT
+						})
+					})
+				);
+			}
+		});
+
+		test('does not transition any status when lead linked appeal is not in event status', async () => {
+			const appeal = getLinkedLeadAppeal();
+			const { siteVisit } = appeal;
+
+			appeal.appealStatus[0].status = APPEAL_CASE_STATUS.FINAL_COMMENTS;
+			appeal.procedureType = { key: 'written' };
+			addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
+			// @ts-ignore
+			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			// @ts-ignore
+			databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
+			databaseConnector.appealStatus.create.mockResolvedValue({});
+			databaseConnector.appealStatus.updateMany.mockResolvedValue({});
+
+			const response = await request
+				.patch(`/appeals/${appeal.id}/site-visits/${siteVisit.id}`)
+				.send({
+					visitDate: siteVisit.visitDate,
+					visitEndTime: siteVisit.visitEndTime,
+					visitStartTime: siteVisit.visitStartTime,
+					visitType: siteVisit.siteVisitType.name,
+					previousVisitType: SITE_VISIT_TYPE_ACCOMPANIED
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+			expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
+		});
+
+		test('updates site visit for all linked appeals in group (lead + linked children)', async () => {
+			const appeal = getLinkedLeadAppeal();
+			const { siteVisit } = appeal;
+			const idsOfLinkedGroup = getIdsOfLinkedGroup(appeal);
+
+			appeal.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
+			addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
+			// @ts-ignore
+			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			// @ts-ignore
+			databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
+
+			const response = await request
+				.patch(`/appeals/${appeal.id}/site-visits/${siteVisit.id}`)
+				.send({
+					visitDate: siteVisit.visitDate,
+					visitEndTime: siteVisit.visitEndTime,
+					visitStartTime: siteVisit.visitStartTime,
+					visitType: siteVisit.siteVisitType.name,
+					previousVisitType: SITE_VISIT_TYPE_ACCOMPANIED
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+			// The updateMany should include all linked appeal IDs (lead + linked children)
+			expect(databaseConnector.siteVisit.updateMany).toHaveBeenCalledWith({
+				where: { appealId: { in: idsOfLinkedGroup } },
+				data: {
+					visitDate: new Date(siteVisit.visitDate),
+					visitEndTime: new Date(siteVisit.visitEndTime),
+					visitStartTime: new Date(siteVisit.visitStartTime),
+					siteVisitTypeId: siteVisit.siteVisitType.id
+				}
+			});
+		});
+
+		test('does not update related (non-linked) child appeal site visits', async () => {
+			const appeal = getLinkedLeadAppeal();
+			const { siteVisit } = appeal;
+
+			appeal.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
+			addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
+			// @ts-ignore
+			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			// @ts-ignore
+			databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
+
+			const response = await request
+				.patch(`/appeals/${appeal.id}/site-visits/${siteVisit.id}`)
+				.send({
+					visitDate: siteVisit.visitDate,
+					visitEndTime: siteVisit.visitEndTime,
+					visitStartTime: siteVisit.visitStartTime,
+					visitType: siteVisit.siteVisitType.name,
+					previousVisitType: SITE_VISIT_TYPE_ACCOMPANIED
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+
+			// The 'related' child (childAppealsEnforcementBase[1], id 102) should NOT be in the updateMany
+			const relatedChildId = appeal.childAppeals.find(
+				(c) => c.type === CASE_RELATIONSHIP_RELATED
+			)?.childId;
+			expect(relatedChildId).toBeDefined();
+			expect(databaseConnector.siteVisit.updateMany).not.toHaveBeenCalledWith(
+				expect.objectContaining({
+					where: expect.objectContaining({
+						appealId: expect.objectContaining({ in: expect.arrayContaining([relatedChildId]) })
+					})
+				})
+			);
 		});
 	});
 });

@@ -182,6 +182,13 @@ const rearrangeSiteVisit = async (req, res) => {
 		// @ts-ignore
 		await updateSiteVisit(azureAdUserId, updateSiteVisitData, notifyClient, appealsToUpdate);
 
+		if (visitDate && arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT)) {
+			if (isLinkedAppealsActive(appeal)) {
+				await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+			}
+			await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+		}
+
 		return res.send({
 			visitDate,
 			visitEndTime,

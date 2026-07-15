@@ -2,12 +2,20 @@
 import appealRepository from '#repositories/appeal.repository.js';
 import { jest } from '@jest/globals';
 import {
+	APPEAL_REPRESENTATION_STATUS,
+	APPEAL_REPRESENTATION_TYPE
+} from '@pins/appeals/constants/common.js';
+import {
 	CASE_RELATIONSHIP_LINKED,
 	VALIDATION_OUTCOME_COMPLETE,
 	VALIDATION_OUTCOME_INCOMPLETE,
 	VALIDATION_OUTCOME_VALID
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_CASE_PROCEDURE,
+	APPEAL_CASE_STATUS,
+	APPEAL_CASE_TYPE
+} from '@planning-inspectorate/data-model';
 import transitionState, {
 	getEventElapsed,
 	transitionLinkedChildAppealsState
@@ -19,6 +27,10 @@ const representationRepository = (await import('#repositories/representation.rep
 const oneDayinMS = 90000000; // 25 hours
 
 describe('transitionState', () => {
+	afterEach(() => {
+		jest.restoreAllMocks();
+	});
+
 	const stateList = [
 		{
 			status: 'validation',
@@ -96,7 +108,7 @@ describe('transitionState', () => {
 					appealStatus: [{ status, valid: true }]
 				};
 
-				representationRepository.getRepresentations = jest.fn();
+				jest.spyOn(representationRepository, 'getRepresentations').mockImplementation(jest.fn());
 				databaseConnector.appeal.findUnique.mockResolvedValue(dynamicFixture);
 
 				const result = await transitionState(11, 'user-123', VALIDATION_OUTCOME_VALID);
@@ -132,12 +144,11 @@ describe('transitionState', () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(
 				appealFixtureIncompleteDoesNotTransition
 			);
-			// @ts-ignore
-			appealStatusRepository.updateAppealStatusByAppealId = jest.fn();
-			// @ts-ignore
-			appealStatusRepository.rollBackAppealStatusTo = jest.fn();
-			// @ts-ignore
-			databaseConnector.personalList.upsert = jest.fn().mockResolvedValue({});
+			jest
+				.spyOn(appealStatusRepository, 'updateAppealStatusByAppealId')
+				.mockImplementation(jest.fn());
+			jest.spyOn(appealStatusRepository, 'rollBackAppealStatusTo').mockImplementation(jest.fn());
+			databaseConnector.personalList.upsert.mockResolvedValue({});
 		});
 		test('does not update status but updates personal list', async () => {
 			const result = await transitionState(22, 'user-xyz', VALIDATION_OUTCOME_INCOMPLETE);
@@ -487,6 +498,271 @@ describe('transitionState', () => {
 			]);
 			expect(result).toEqual(true);
 		});
+	});
+
+	describe('Transition to EVENT / AWAITING_EVENT / ISSUE_DETERMINATION from preceding states', () => {
+		const runTransitionTest = async (mockAppeal, mockRepresentations) => {
+			const currentAppeal = { ...mockAppeal };
+			currentAppeal.appealStatus = mockAppeal.appealStatus.map((s) => ({ ...s }));
+
+			jest.spyOn(appealRepository, 'getAppealById').mockImplementation(() => {
+				return Promise.resolve(currentAppeal);
+			});
+
+			const appealStatusCreateMock = jest.fn().mockImplementation(({ data }) => {
+				currentAppeal.appealStatus = currentAppeal.appealStatus.map((s) => ({
+					...s,
+					valid: false
+				}));
+				currentAppeal.appealStatus.push({ status: data.status, valid: true });
+				return Promise.resolve({});
+			});
+
+			Object.defineProperty(databaseConnector, 'appealStatus', {
+				get: () => ({
+					updateMany: jest.fn().mockResolvedValue({}),
+					create: appealStatusCreateMock
+				}),
+				configurable: true
+			});
+
+			if (mockRepresentations) {
+				jest
+					.spyOn(representationRepository, 'getRepresentations')
+					.mockResolvedValue(mockRepresentations);
+			}
+
+			await transitionState(mockAppeal.id, 'user-123', VALIDATION_OUTCOME_COMPLETE);
+			return appealStatusCreateMock;
+		};
+
+		afterEach(() => {
+			// @ts-ignore
+			delete databaseConnector.appealStatus;
+		});
+
+		const futureDate = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000);
+		const pastDate = new Date(Date.now() - 2 * 24 * 60 * 60 * 1000);
+		const standardRepresentations = {
+			comments: [
+				{
+					representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
+					status: APPEAL_REPRESENTATION_STATUS.VALID
+				},
+				{
+					representationType: APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
+					status: APPEAL_REPRESENTATION_STATUS.VALID
+				}
+			]
+		};
+
+		const testCases = [
+			{
+				description: 'transitions from final_comments to event when no site visit exists (written)',
+				expectedStatus: APPEAL_CASE_STATUS.EVENT,
+				appeal: {
+					id: 100,
+					appealStatus: [{ status: APPEAL_CASE_STATUS.FINAL_COMMENTS, valid: true }],
+					appealType: { key: APPEAL_CASE_TYPE.W },
+					procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN },
+					siteVisit: null
+				}
+			},
+			{
+				description:
+					'transitions from final_comments to event when site visit exists with null date (written)',
+				expectedStatus: APPEAL_CASE_STATUS.EVENT,
+				appeal: {
+					id: 101,
+					appealStatus: [{ status: APPEAL_CASE_STATUS.FINAL_COMMENTS, valid: true }],
+					appealType: { key: APPEAL_CASE_TYPE.W },
+					procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN },
+					siteVisit: { visitDate: null }
+				}
+			},
+			{
+				description:
+					'transitions from final_comments to awaiting_event when site visit exists with future date (written)',
+				expectedStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
+				appeal: {
+					id: 102,
+					appealStatus: [{ status: APPEAL_CASE_STATUS.FINAL_COMMENTS, valid: true }],
+					appealType: { key: APPEAL_CASE_TYPE.W },
+					procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN },
+					siteVisit: { visitDate: futureDate }
+				}
+			},
+			{
+				description:
+					'transitions from final_comments directly to issue_determination when site visit is in the past (written)',
+				expectedStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+				appeal: {
+					id: 103,
+					appealStatus: [{ status: APPEAL_CASE_STATUS.FINAL_COMMENTS, valid: true }],
+					appealType: { key: APPEAL_CASE_TYPE.W },
+					procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN },
+					siteVisit: { visitDate: pastDate }
+				}
+			},
+			{
+				description: 'transitions from statements to event when no hearing exists (hearing)',
+				expectedStatus: APPEAL_CASE_STATUS.EVENT,
+				appeal: {
+					id: 200,
+					appealStatus: [{ status: APPEAL_CASE_STATUS.STATEMENTS, valid: true }],
+					appealType: { key: APPEAL_CASE_TYPE.W },
+					procedureType: { key: APPEAL_CASE_PROCEDURE.HEARING },
+					hearing: null
+				}
+			},
+			{
+				description:
+					'transitions from statements to awaiting_event when hearing has address and future date',
+				expectedStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
+				appeal: {
+					id: 201,
+					appealStatus: [{ status: APPEAL_CASE_STATUS.STATEMENTS, valid: true }],
+					appealType: { key: APPEAL_CASE_TYPE.W },
+					procedureType: { key: APPEAL_CASE_PROCEDURE.HEARING },
+					hearing: { addressId: 1, hearingStartTime: futureDate }
+				}
+			},
+			{
+				description: 'transitions from statements to awaiting_event when hearing is in the past',
+				expectedStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
+				appeal: {
+					id: 202,
+					appealStatus: [{ status: APPEAL_CASE_STATUS.STATEMENTS, valid: true }],
+					appealType: { key: APPEAL_CASE_TYPE.W },
+					procedureType: { key: APPEAL_CASE_PROCEDURE.HEARING },
+					hearing: { addressId: 1, hearingStartTime: pastDate }
+				}
+			},
+			{
+				description:
+					'transitions from lpa_questionnaire to event when no site visit exists (HAS / written)',
+				expectedStatus: APPEAL_CASE_STATUS.EVENT,
+				appeal: {
+					id: 300,
+					appealStatus: [{ status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, valid: true }],
+					appealType: { key: APPEAL_CASE_TYPE.D },
+					procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN },
+					siteVisit: null
+				}
+			},
+			{
+				description:
+					'transitions from lpa_questionnaire to event when site visit exists with null date (HAS / written)',
+				expectedStatus: APPEAL_CASE_STATUS.EVENT,
+				appeal: {
+					id: 301,
+					appealStatus: [{ status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, valid: true }],
+					appealType: { key: APPEAL_CASE_TYPE.D },
+					procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN },
+					siteVisit: { visitDate: null }
+				}
+			},
+			{
+				description:
+					'transitions from lpa_questionnaire to awaiting_event when site visit exists with future date (HAS / written)',
+				expectedStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
+				appeal: {
+					id: 302,
+					appealStatus: [{ status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, valid: true }],
+					appealType: { key: APPEAL_CASE_TYPE.D },
+					procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN },
+					siteVisit: { visitDate: futureDate }
+				}
+			},
+			{
+				description:
+					'transitions from lpa_questionnaire directly to issue_determination when site visit is in the past (HAS / written)',
+				expectedStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+				appeal: {
+					id: 303,
+					appealStatus: [{ status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, valid: true }],
+					appealType: { key: APPEAL_CASE_TYPE.D },
+					procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN },
+					siteVisit: { visitDate: pastDate }
+				}
+			},
+			{
+				description: 'transitions from evidence to event when no inquiry exists (inquiry)',
+				expectedStatus: APPEAL_CASE_STATUS.EVENT,
+				mockRepresentations: standardRepresentations,
+				appeal: {
+					id: 400,
+					appealStatus: [{ status: APPEAL_CASE_STATUS.EVIDENCE, valid: true }],
+					appealType: { key: APPEAL_CASE_TYPE.W },
+					procedureType: { key: APPEAL_CASE_PROCEDURE.INQUIRY },
+					inquiry: null
+				}
+			},
+			{
+				description:
+					'transitions from evidence to awaiting_event when inquiry has address and future date',
+				expectedStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
+				mockRepresentations: standardRepresentations,
+				appeal: {
+					id: 401,
+					appealStatus: [{ status: APPEAL_CASE_STATUS.EVIDENCE, valid: true }],
+					appealType: { key: APPEAL_CASE_TYPE.W },
+					procedureType: { key: APPEAL_CASE_PROCEDURE.INQUIRY },
+					inquiry: { addressId: 1, inquiryStartTime: futureDate }
+				}
+			},
+			{
+				description: 'transitions from evidence to awaiting_event when inquiry is in the past',
+				expectedStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
+				mockRepresentations: standardRepresentations,
+				appeal: {
+					id: 402,
+					appealStatus: [{ status: APPEAL_CASE_STATUS.EVIDENCE, valid: true }],
+					appealType: { key: APPEAL_CASE_TYPE.W },
+					procedureType: { key: APPEAL_CASE_PROCEDURE.INQUIRY },
+					inquiry: { addressId: 1, inquiryStartTime: pastDate }
+				}
+			},
+			{
+				description:
+					'transitions from statements to event when hearing exists but has no addressId (hearing)',
+				expectedStatus: APPEAL_CASE_STATUS.EVENT,
+				appeal: {
+					id: 203,
+					appealStatus: [{ status: APPEAL_CASE_STATUS.STATEMENTS, valid: true }],
+					appealType: { key: APPEAL_CASE_TYPE.W },
+					procedureType: { key: APPEAL_CASE_PROCEDURE.HEARING },
+					hearing: { addressId: null, hearingStartTime: futureDate }
+				}
+			},
+			{
+				description:
+					'transitions from evidence to event when inquiry exists but has no addressId (inquiry)',
+				expectedStatus: APPEAL_CASE_STATUS.EVENT,
+				mockRepresentations: standardRepresentations,
+				appeal: {
+					id: 403,
+					appealStatus: [{ status: APPEAL_CASE_STATUS.EVIDENCE, valid: true }],
+					appealType: { key: APPEAL_CASE_TYPE.W },
+					procedureType: { key: APPEAL_CASE_PROCEDURE.INQUIRY },
+					inquiry: { addressId: null, inquiryStartTime: futureDate }
+				}
+			}
+		];
+
+		test.each(testCases)(
+			'$description',
+			async ({ appeal, expectedStatus, mockRepresentations }) => {
+				const createMock = await runTransitionTest(appeal, mockRepresentations);
+				expect(createMock).toHaveBeenCalledWith({
+					data: expect.objectContaining({
+						appealId: appeal.id,
+						status: expectedStatus,
+						valid: true
+					})
+				});
+			}
+		);
 	});
 });
 

@@ -115,6 +115,16 @@ describe('calculateDueDate Tests', () => {
 		expect(dueDate).toEqual(createdAtPlusFortyBusinessDays);
 	});
 
+	test('maps STATE_TARGET_ISSUE_DETERMINATION to caseCreatedDate fallback when site visit exists but has no visitDate', async () => {
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
+		mockAppeal.siteVisit = { visitDate: null };
+		mockAppeal.caseCreatedDate = new Date('2023-01-01T00:00:00.000Z');
+		const expectedCreatedAtPlusThirtyBusinessDays = new Date('2023-02-10T00:00:00.000Z');
+		// @ts-ignore
+		const dueDate = await calculateDueDate(mockAppeal, '');
+		expect(dueDate).toEqual(expectedCreatedAtPlusThirtyBusinessDays);
+	});
+
 	test('maps STATE_TARGET_ISSUE_DETERMINATION when site visit not available', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
 
@@ -192,6 +202,18 @@ describe('calculateDueDate Tests', () => {
 		// @ts-ignore
 		const dueDate = await calculateDueDate(mockAppeal, '');
 		expect(dueDate).toEqual(mockAppeal.siteVisit.visitDate);
+	});
+
+	test('handles STATE_TARGET_AWAITING_SITE_VISIT when site visit exists but has no visitDate', async () => {
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.AWAITING_EVENT;
+		mockAppeal.siteVisit = { visitDate: null };
+		mockAppeal.procedureType = {
+			key: APPEAL_CASE_PROCEDURE.WRITTEN
+		};
+
+		// @ts-ignore
+		const dueDate = await calculateDueDate(mockAppeal, '');
+		expect(dueDate).toBeUndefined();
 	});
 
 	test('handles STATE_TARGET_AWAITING_HEARING', async () => {

@@ -123,7 +123,7 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 	if (
 		newState === APPEAL_CASE_STATUS.EVENT &&
 		[APPEAL_CASE_TYPE.D, APPEAL_CASE_TYPE.W].includes(normalizedAppealTypeKey) &&
-		((normalizedProcedureKey === APPEAL_CASE_PROCEDURE.WRITTEN && appeal.siteVisit) ||
+		((normalizedProcedureKey === APPEAL_CASE_PROCEDURE.WRITTEN && appeal.siteVisit?.visitDate) ||
 			(normalizedProcedureKey === APPEAL_CASE_PROCEDURE.HEARING &&
 				appeal.hearing &&
 				appeal.hearing?.addressId) ||
