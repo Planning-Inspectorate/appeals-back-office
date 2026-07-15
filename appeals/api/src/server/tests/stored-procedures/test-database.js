@@ -289,12 +289,9 @@ export const createStoredProcedureTestPrismaClient = () => {
 
 /**
  * @param {PrismaClient} prisma
- * @param {{appealId?: number | null, isNetResidentsAppealType?: boolean}} [options]
+ * @param {{appealId?: number | null}} [options]
  */
-export const executeSpSetPersonalList = async (
-	prisma,
-	{ appealId = null, isNetResidentsAppealType = false } = {}
-) => {
+export const executeSpSetPersonalList = async (prisma, { appealId = null } = {}) => {
 	const parsedAppealId = appealId === null ? null : Number(appealId);
 
 	if (appealId !== null && Number.isNaN(parsedAppealId)) {
@@ -302,6 +299,6 @@ export const executeSpSetPersonalList = async (
 	}
 
 	return prisma.$queryRawUnsafe(
-		`EXEC dbo.spSetPersonalList @appealId = ${parsedAppealId === null ? 'NULL' : parsedAppealId}, @isNetResidentsAppealType = ${isNetResidentsAppealType ? 1 : 0};`
+		`EXEC dbo.spSetPersonalList @appealId = ${parsedAppealId === null ? 'NULL' : parsedAppealId};`
 	);
 };
