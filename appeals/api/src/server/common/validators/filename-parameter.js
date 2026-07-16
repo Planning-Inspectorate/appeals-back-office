@@ -11,5 +11,5 @@ export const validateFileNameParameter = (parameterName) =>
 	body(parameterName)
 		.optional({ checkFalsy: true })
 		// Filename must only contain alphanumeric characters, underscores, hyphens and one period followed by a suffix
-		.matches('^[a-zA-Z0-9_-]+\\.[a-zA-Z0-9_-]+$')
+		.matches('^[a-zA-Z0-9_ -]+\\.[a-zA-Z0-9_-]+$')
 		.withMessage(ERROR_INVALID_FILENAME);
