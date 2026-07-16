@@ -93,7 +93,10 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				!procedureType ||
 				procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN.toLowerCase()
 			) {
-				actions.push('arrangeSiteVisit');
+				// @ts-ignore
+				if (!appealDetails.siteVisit?.visitType) {
+					actions.push('arrangeSiteVisit');
+				}
 				break;
 			}
 

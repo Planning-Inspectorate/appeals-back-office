@@ -1585,6 +1585,7 @@ describe('required actions', () => {
 					getRequiredActionsForAppeal(
 						{
 							...appealData,
+							siteVisit: undefined,
 							appealStatus: APPEAL_CASE_STATUS.EVENT
 						},
 						'detail'
