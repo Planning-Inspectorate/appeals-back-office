@@ -89,9 +89,9 @@ export const calculateDueDate = async (appeal, costsDecision) => {
 			}
 			return new Date(appeal.caseExtensionDate ? appeal.caseExtensionDate : appeal.caseCreatedDate);
 		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION: {
-			if (appeal.siteVisit) {
+			if (appeal.siteVisit?.visitDate) {
 				return await calculateIssueDecisionDeadline(
-					new Date(appeal.siteVisit.visitEndTime || appeal.siteVisit.visitDate || 0),
+					new Date(appeal.siteVisit.visitEndTime || appeal.siteVisit.visitDate),
 					approxStageCompletion.STATE_TARGET_ISSUE_DETERMINATION_AFTER_SITE_VISIT
 				);
 			}
@@ -167,7 +167,7 @@ export const calculateDueDate = async (appeal, costsDecision) => {
 				}
 				return date;
 			}
-			return appeal.siteVisit ? new Date(appeal.siteVisit?.visitDate || 0) : undefined;
+			return appeal.siteVisit?.visitDate ? new Date(appeal.siteVisit.visitDate) : undefined;
 		}
 		case APPEAL_CASE_STATUS.EVENT: {
 			return new Date(
