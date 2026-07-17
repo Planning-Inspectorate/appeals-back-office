@@ -1,6 +1,7 @@
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import transitionState, { transitionLinkedChildAppealsState } from '#state/transition-state.js';
 import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
+import { currentStatus } from '#utils/current-status.js';
 import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
@@ -305,7 +306,8 @@ const cancelSiteVisit = async (req, res) => {
 		}
 		await deleteSiteVisit(appeal, notifyClient, String(azureAdUserId), appealsToUpdate);
 
-		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.AWAITING_EVENT)) {
+		const currentAppealStatus = currentStatus(appeal);
+		if (currentAppealStatus === APPEAL_CASE_STATUS.AWAITING_EVENT) {
 			if (isLinkedAppealsActive(appeal)) {
 				await transitionLinkedChildAppealsState(
 					appeal,
@@ -363,7 +365,11 @@ const postSiteVisitMissed = async (req, res) => {
 			return res.status(404).send({ errors: { body: 'Record missed site visit failed' } });
 		}
 
-		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.AWAITING_EVENT)) {
+		const currentAppealStatus = currentStatus(appeal);
+		if (
+			currentAppealStatus === APPEAL_CASE_STATUS.AWAITING_EVENT ||
+			currentAppealStatus === APPEAL_CASE_STATUS.ISSUE_DETERMINATION
+		) {
 			if (isLinkedAppealsActive(appeal)) {
 				await transitionLinkedChildAppealsState(
 					appeal,
