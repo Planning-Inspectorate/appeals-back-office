@@ -35,6 +35,14 @@ const setupJSDOMGlobals = () => {
 	global.Node = window.Node;
 	global.Element = window.Element;
 
+	// JSDOM does not implement innerText (a rendered-text feature); delegate to textContent
+	Object.defineProperty(window.HTMLElement.prototype, 'innerText', {
+		configurable: true,
+		get() {
+			return this.textContent;
+		}
+	});
+
 	return () => {
 		Object.keys(originalGlobals).forEach((key) => {
 			if (originalGlobals[key] === undefined) {
@@ -377,6 +385,19 @@ describe('initRedactButtons (Integration Tests)', () => {
 
 		revertButton.onclick(mockEvent);
 		expect(textarea.value).toBe(originalText);
+		expect(mockEvent.preventDefault).toHaveBeenCalled();
+	});
+
+	it('should preserve line breaks when reverting to the original comment', () => {
+		const originalText = 'Line one\nLine two';
+		setupTestDOM({ originalText: originalText, textareaText: 'Changed text' });
+		const revertButton = document.querySelector(SELECTORS.REVERT_BUTTON);
+		const textarea = document.querySelector(SELECTORS.TEXTAREA_IDENTIFIER);
+
+		initRedactButtons();
+		revertButton.onclick(mockEvent);
+
+		expect(textarea.value).toBe('Line one\nLine two');
 		expect(mockEvent.preventDefault).toHaveBeenCalled();
 	});
 

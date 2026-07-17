@@ -18,14 +18,15 @@ import {
 import { serviceUserIdStartRange } from './map-service-user-entity.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
-/** @typedef {import('@pins/appeals.api').Schema.Representation & { appeal?: Appeal }} RepresentationWithAppeal */
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealRepresentation} AppealRepresentation */
 /** @typedef {'Contains links to web pages'|'Duplicated or repeated comment'|'Includes inflammatory content'|'Includes personal or medical information'|'No list of suggested conditions'|'Not relevant to this appeal'|'Received after deadline'|'other_reason'} RejectionReason*/
+/** @typedef {import('#db-client/models.ts').RepresentationModel} Representation */
+/** @typedef {typeof import('#endpoints/integrations/integrations.broadcasters/representation.js').broadcastRepSelect} RepresentationBroadcaster */
+/** @typedef {import('#db-client/models.ts').RepresentationGetPayload<{ select: RepresentationBroadcaster }>} RepresentationBroadcastData */
 
 /**
- *
- * @param {RepresentationWithAppeal} data
- * @returns {AppealRepresentation | undefined}
+ * @param {RepresentationBroadcastData|null} data
+ * @returns {import('@planning-inspectorate/data-model').Schemas.AppealRepresentation|undefined}
  */
 export const mapRepresentationEntity = (data) => {
 	if (data && data.appeal) {
@@ -56,8 +57,8 @@ const mapRepresentationUserId = (id) => (id ? (serviceUserIdStartRange + id).toS
 
 /**
  *
- * @param {Appeal} appeal
- * @returns {{ caseId: number, caseReference: string }}}
+ * @param {{id: Appeal['id'], reference: Appeal['reference']}} appeal
+ * @returns {{ caseId: number, caseReference: string }}
  */
 const mapAppealInfo = (appeal) => {
 	return {
@@ -68,7 +69,7 @@ const mapAppealInfo = (appeal) => {
 
 /**
  *
- * @param {string} type
+ * @param {Representation['representationType']} type
  * @returns {'comment' | 'final_comment' | 'proofs_evidence' | 'statement' | null}
  */
 const mapRepresentationType = (type) => {
@@ -77,7 +78,7 @@ const mapRepresentationType = (type) => {
 };
 
 /**
- * @param {string} status
+ * @param {Representation['status']} status
  * @returns {'archived' | 'awaiting_review' | 'draft' | 'invalid' | 'invalid_incomplete' | 'published' | 'referred' | 'valid' | 'withdrawn' | null}
  */
 const mapRepresentationStatus = (status) => {
@@ -87,7 +88,7 @@ const mapRepresentationStatus = (status) => {
 
 /**
  *
- * @param {RepresentationWithAppeal} data
+ * @param {{lpa: Object|null, source: Representation['source']}} data
  * @returns {'lpa' | 'citizen' | null}
  */
 const mapSource = (data) => {
@@ -104,7 +105,7 @@ const mapSource = (data) => {
 
 /**
  *
- * @param {RepresentationWithAppeal} data
+ * @param {RepresentationBroadcastData} data
  * @returns {{invalidOrIncompleteDetails: RejectionReason[], otherInvalidOrIncompleteDetails: string[]}}
  */
 const mapReasons = (data) => {
