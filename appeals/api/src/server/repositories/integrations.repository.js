@@ -176,7 +176,6 @@ export const createOrUpdateLpaQuestionnaire = async (
  * @param {Appeal} appeal
  * @param {Omit<import('#db-client/models.ts').RepresentationCreateInput, 'appeal'>} data
  * @param {import('#db-client/models.ts').DocumentVersionCreateInput[]} attachments
- * @returns {Promise<{rep: Representation, documentVersions: DocumentVersion[]}>}
  */
 export const createRepresentation = async (appeal, data, attachments) => {
 	const transaction = await databaseConnector.$transaction(async (tx) => {

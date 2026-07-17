@@ -326,12 +326,12 @@ export const copyRepresentations = async (sourceAppeal, destinationAppeal) => {
 				status: representation.status ?? null,
 				lpaCode: representation.lpa?.lpaCode ?? null,
 				originalRepresentation: representation.originalRepresentation ?? null,
-				redactedRepresentation: representation.redactedRepresentation ?? null
+				redactedRepresentation: representation.redactedRepresentation ?? null,
+				isRedacted: representation.isRedacted ?? false
 			};
 		})
 	);
 
-	// @ts-ignore
 	await representationRepository.createRepresentations(
 		copiedRepresentations.filter((rep) => rep.status === 'fulfilled').map((rep) => rep.value)
 	);

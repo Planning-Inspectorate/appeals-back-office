@@ -382,6 +382,7 @@ model AppealGround {
   isDeleted      Boolean @default(false)
 
   @@unique([groundId, appealId])
+  @@index([appealId, isDeleted])
 }
 
 /// AppellantCaseValidationOutcome model
@@ -744,6 +745,7 @@ model LPANotificationMethodsSelected {
   lpaQuestionnaireId    Int
 
   @@id([notificationMethodId, lpaQuestionnaireId])
+  @@index([lpaQuestionnaireId])
 }
 
 /// DesignatedSite model
@@ -947,6 +949,7 @@ model Representation {
   dateLastUpdated                        DateTime                                 @default(now())
   originalRepresentation                 String?                                  @db.NVarChar(Max)
   redactedRepresentation                 String?                                  @db.NVarChar(Max)
+  isRedacted                             Boolean                                  @default(false)
   represented                            ServiceUser?                             @relation("represented", fields: [representedId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   representedId                          Int?
   representative                         ServiceUser?                             @relation("representative", fields: [representativeId], references: [id], onDelete: NoAction, onUpdate: NoAction)

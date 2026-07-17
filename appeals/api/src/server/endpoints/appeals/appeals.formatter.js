@@ -193,32 +193,32 @@ const formatDocumentationSummary = (appeal) => {
 		ipComments: {
 			status: ipComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
 			counts: countBy(ipComments, 'status'),
-			isRedacted: ipComments.some((comment) => Boolean(comment.redactedRepresentation))
+			isRedacted: ipComments.some((comment) => comment?.isRedacted ?? false)
 		},
 		lpaStatement: {
 			status: formatRepresentationStatus(lpaStatement ?? null),
 			representationStatus: lpaStatement?.status ?? null,
 			receivedAt: lpaStatement?.dateCreated,
-			isRedacted: Boolean(lpaStatement?.redactedRepresentation)
+			isRedacted: lpaStatement?.isRedacted ?? false
 		},
 		lpaFinalComments: {
 			status: formatRepresentationStatus(lpaFinalComment ?? null),
 			representationStatus: lpaFinalComment?.status ?? null,
 			receivedAt: lpaFinalComment?.dateCreated,
-			isRedacted: Boolean(lpaFinalComment?.redactedRepresentation)
+			isRedacted: lpaFinalComment?.isRedacted ?? false
 		},
 		appellantFinalComments: {
 			status: formatRepresentationStatus(appellantFinalComment ?? null),
 			representationStatus: appellantFinalComment?.status ?? null,
 			receivedAt: appellantFinalComment?.dateCreated,
-			isRedacted: Boolean(appellantFinalComment?.redactedRepresentation)
+			isRedacted: appellantFinalComment?.isRedacted ?? false
 		},
 		lpaProofOfEvidence: {
 			status:
 				lpaProofOfEvidence.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
 			representationStatus: lpaProofOfEvidence[0]?.status ?? null,
 			receivedAt: lpaProofOfEvidence[0]?.dateCreated,
-			isRedacted: Boolean(lpaProofOfEvidence[0]?.redactedRepresentation)
+			isRedacted: lpaProofOfEvidence[0]?.isRedacted ?? false
 		},
 		appellantProofOfEvidence: {
 			status:
@@ -227,14 +227,14 @@ const formatDocumentationSummary = (appeal) => {
 					: DOCUMENT_STATUS_NOT_RECEIVED,
 			representationStatus: appellantProofOfEvidence[0]?.status ?? null,
 			receivedAt: appellantProofOfEvidence[0]?.dateCreated,
-			isRedacted: Boolean(appellantProofOfEvidence[0]?.redactedRepresentation)
+			isRedacted: appellantProofOfEvidence[0]?.isRedacted ?? false
 		},
 		appellantStatement: {
 			status:
 				appellantStatement.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
 			representationStatus: appellantStatement[0]?.status ?? null,
 			receivedAt: appellantStatement[0]?.dateCreated,
-			isRedacted: Boolean(appellantStatement[0]?.redactedRepresentation)
+			isRedacted: appellantStatement[0]?.isRedacted ?? false
 		},
 		rule6PartyProofs:
 			(appeal.appealRule6Parties || []).reduce((/** @type {Object<string, any>} */ acc, party) => {
@@ -249,7 +249,7 @@ const formatDocumentationSummary = (appeal) => {
 						status: DOCUMENT_STATUS_RECEIVED,
 						representationStatus: rule6RepFromParty[0].status,
 						receivedAt: rule6RepFromParty[0].dateCreated,
-						isRedacted: Boolean(rule6RepFromParty[0].redactedRepresentation),
+						isRedacted: rule6RepFromParty[0].isRedacted ?? false,
 						organisationName: party.serviceUser?.organisationName,
 						rule6PartyId: party.id
 					};
@@ -278,7 +278,7 @@ const formatDocumentationSummary = (appeal) => {
 						status: DOCUMENT_STATUS_RECEIVED,
 						representationStatus: rule6RepFromParty[0].status,
 						receivedAt: rule6RepFromParty[0].dateCreated,
-						isRedacted: Boolean(rule6RepFromParty[0].redactedRepresentation),
+						isRedacted: rule6RepFromParty[0].isRedacted ?? false,
 						organisationName: party.serviceUser?.organisationName,
 						rule6PartyId: party.id
 					};

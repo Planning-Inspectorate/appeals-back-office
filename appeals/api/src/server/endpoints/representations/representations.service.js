@@ -380,12 +380,17 @@ export const updateAttachments = async (repId, attachments) => {
 /**
  * @param {number} repId
  * @param {import('express').Request['body']} payload
+ * @param {import('#db-client/models.ts').RepresentationModel} existingRep
  * */
-export async function updateRepresentation(repId, payload) {
+export async function updateRepresentation(repId, payload, existingRep) {
 	if (payload.rejectionReasons) {
 		await representationRepository.updateRejectionReasons(repId, payload.rejectionReasons);
 	}
-	const updatedRep = await representationRepository.updateRepresentationById(repId, payload);
+	const updatedRep = await representationRepository.updateRepresentationById(
+		repId,
+		payload,
+		existingRep
+	);
 
 	if (!updatedRep.represented?.addressId) {
 		return updatedRep;
