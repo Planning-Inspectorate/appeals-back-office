@@ -1,6 +1,7 @@
 import redisClient from '#infrastructure/redis.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import logger from '#utils/logger.js';
+import { TEAM_NAME_MAP } from '@pins/appeals/constants/common.js';
 
 /**
  *
@@ -82,6 +83,11 @@ export const getCaseTeams = async () => {
 
 	const getTeams = async () =>
 		databaseConnector.team.findMany({
+			where: {
+				NOT: {
+					name: TEAM_NAME_MAP.ENFORCEMENT_APPEALS_TEAM
+				}
+			},
 			select: {
 				id: true,
 				name: true,
