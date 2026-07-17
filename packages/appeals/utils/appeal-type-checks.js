@@ -1,10 +1,9 @@
 import {
 	APPEAL_APPLICATION_DECISION,
-	APPEAL_CASE_PROCEDURE,
 	APPEAL_CASE_TYPE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from '@planning-inspectorate/data-model';
-import { APPEAL_TYPE, PROCEDURE_TYPE_NAME } from '../constants/common.js';
+import { APPEAL_TYPE } from '../constants/common.js';
 import { EXPEDITED_ORIGINAL_APPLICATION_CUTOFF } from '../constants/dates.js';
 
 import { appealTypeToAppealCaseTypeMapper } from './appeal-type-case.mapper.js';
@@ -138,22 +137,3 @@ export const isLdcOrDiscontinuanceOrEnforcementCaseType = (caseType) =>
  * @returns {boolean}
  */
 export const isLdcCaseType = (caseType) => caseType === APPEAL_CASE_TYPE.X;
-
-/**
- * Normalizes a procedure type value to the canonical data-model key.
- * Handles both data-model keys (e.g. 'writtenPart1') and display names
- * (e.g. 'Part 1') that the API formatter sends to the web layer.
- * @param {string | null | undefined} procedureType
- * @returns {string | null | undefined}
- */
-export const normalizeProcedureType = (procedureType) => {
-	if (
-		procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 ||
-		procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_2 ||
-		procedureType === PROCEDURE_TYPE_NAME.WRITTEN_PART_1 ||
-		procedureType === PROCEDURE_TYPE_NAME.WRITTEN_PART_2
-	) {
-		return APPEAL_CASE_PROCEDURE.WRITTEN;
-	}
-	return procedureType;
-};

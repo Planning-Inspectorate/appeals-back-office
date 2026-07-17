@@ -19,8 +19,9 @@ import {
 } from '@pins/appeals/constants/support.js';
 import {
 	isAnyEnforcementAppealType,
-	normalizeProcedureType
+	isLdcOrDiscontinuanceOrEnforcementAppealType
 } from '@pins/appeals/utils/appeal-type-checks.js';
+import { normaliseProcedureType } from '@pins/appeals/utils/procedure-type.js'
 import isAppellantStatementAppealType from '@pins/appeals/utils/is-appellant-statement-appeal-type.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
@@ -62,7 +63,7 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 	/** @type {AppealRequiredAction[]} */
 	const actions = [];
 
-	const procedureType = normalizeProcedureType(appealDetails.procedureType);
+	const procedureType = normaliseProcedureType(appealDetails.procedureType);
 
 	switch (appealDetails.appealStatus) {
 		case APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER:
@@ -308,19 +309,6 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			if (ipCommentsDueDatePassed && statementsDueDatePassed && allReviewsCompleted) {
 				if (hasItemsToShare) {
 					actions.push('shareIpCommentsAndLpaStatement');
-				} else if (
-					// @ts-ignore
-					procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING &&
-					// @ts-ignore
-					appealDetails.hearing?.hearingStartTime &&
-					// @ts-ignore
-					appealDetails.hearing?.addressId
-				) {
-					actions.push('progressHearingCaseWithNoRepsAndHearingSetUpFromStatements');
-				} else if (procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING) {
-					actions.push('progressHearingCaseWithNoRepsFromStatements');
-				} else if (procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY) {
-					actions.push('progressToProofOfEvidenceAndWitnesses');
 				} else {
 					actions.push('progressFromStatements');
 				}

@@ -4584,6 +4584,7 @@ export const appealDataToGetRequiredActions = {
 			ipCommentsDueDate: pastDate,
 			lpaStatementDueDate: pastDate
 		},
+		procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
 		documentationSummary: {
 			ipComments: {
 				status: DOCUMENT_STATUS_NOT_RECEIVED,

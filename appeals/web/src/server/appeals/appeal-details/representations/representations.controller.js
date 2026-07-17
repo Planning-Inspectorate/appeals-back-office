@@ -9,6 +9,11 @@ import {
 	statementAndCommentsSharePage
 } from './representations.mapper.js';
 import { publishRepresentations } from './representations.service.js';
+import {
+	getNextStateOnStatementsComplete,
+	targetStateOnStatementsComplete
+} from '@pins/appeals/utils/business-rules.js';
+import { normaliseProcedureType } from '@pins/appeals/utils/procedure-type.js';
 
 /** @type {import('@pins/express').RequestHandler<{}>} */
 export function renderShareRepresentations(request, response) {
@@ -55,24 +60,37 @@ export async function postShareRepresentations(request, response) {
 
 	const publishedReps = await publishRepresentations(apiClient, currentAppeal.appealId);
 
+	const hearingIsSetUp = Boolean(currentAppeal.hearing?.hearingStartTime && currentAppeal.hearing.address);
+	const normalisedProcedureType = normaliseProcedureType(currentAppeal.procedureType);
+	const eventualState = getNextStateOnStatementsComplete(currentAppeal.appealType, normalisedProcedureType, hearingIsSetUp);
+
 	const bannerDefinitionKey = (() => {
 		switch (currentAppeal.appealStatus) {
 			case APPEAL_CASE_STATUS.STATEMENTS:
-				if (publishedReps.length === 0 && currentAppeal.procedureType === 'Hearing') {
-					const hearingIsSetUp = Boolean(
-						currentAppeal.hearing?.hearingStartTime && currentAppeal.hearing.address
-					);
-					return hearingIsSetUp ? 'progressedToAwaitingHearing' : 'progressedToHearingReadyToSetUp';
-				} else if (
-					publishedReps.length === 0 &&
-					currentAppeal.procedureType.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY
-				) {
-					return 'progressedToProofOfEvidenceAndWitnesses';
-				} else if (publishedReps.length > 0) {
-					return 'commentsAndLpaStatementShared';
-				} else {
-					return 'progressedToFinalComments';
-				}
+				if (publishedReps.length === 0) {
+					switch (eventualState) {
+						case APPEAL_CASE_STATUS.AWAITING_EVENT:
+							if (normalisedProcedureType === APPEAL_CASE_PROCEDURE.HEARING) {
+								return 'progressedToAwaitingHearing';
+							}
+							return 'progressedToAwaitingEvent';
+						case APPEAL_CASE_STATUS.EVENT:
+							if (normalisedProcedureType === APPEAL_CASE_PROCEDURE.HEARING) {
+								return 'progressedToHearingReadyToSetUp';
+							}
+							return 'progressedToEventReadyToSetUp';
+						case APPEAL_CASE_STATUS.FINAL_COMMENTS:
+							return 'progressedToFinalComments';
+						case APPEAL_CASE_STATUS.EVIDENCE:
+							return 'progressedToProofOfEvidenceAndWitnesses';
+						default:
+							throw new Error(
+								`Unexpected eventual state ${eventualState} for appeal type ${currentAppeal.appealType} and procedure type ${normalisedProcedureType}`
+							);
+					};
+				} else { //publishedReps.length > 0
+					return 'commentsAndLpaStatementShared'
+				};
 			case APPEAL_CASE_STATUS.FINAL_COMMENTS:
 				return publishedReps.filter(
 					(/** @type {{ representationType: any; }} */ rep) =>

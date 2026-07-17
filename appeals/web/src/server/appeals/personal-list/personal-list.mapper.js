@@ -1,7 +1,7 @@
 import featureFlags from '#common/feature-flags.js';
 import config from '#environment/config.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
-import { mapStatusFilterLabel, mapStatusText } from '#lib/appeal-status.js';
+import { mapStatusFilterLabel, mapStatusText, getNextStateDisplayTextOnStatementsComplete } from '#lib/appeal-status.js';
 import { appealShortReference, linkedAppealStatus } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { canDisplayAction, removeSummaryListActions } from '#lib/mappers/index.js';
@@ -54,6 +54,8 @@ export function personalListPage(
 		request,
 		'personal-list/search-case-officer'
 	);
+
+	console.log('############### appealsAssignedToCurrentUser', appealsAssignedToCurrentUser);
 	const filterItemsArray = ['all', ...(appealsAssignedToCurrentUser?.statuses || [])]
 		.map((appealStatus) => ({
 			text: mapStatusFilterLabel(appealStatus),
@@ -304,6 +306,7 @@ export function personalListPage(
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {string} procedureType
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebDocumentationSummary} documentationSummary
+ * @param {boolean} isHearingSetUp
  * @returns {string|undefined}
  */
 function mapRequiredActionToPersonalListActionHtml(
@@ -315,7 +318,8 @@ function mapRequiredActionToPersonalListActionHtml(
 	lpaQuestionnaireId,
 	request,
 	procedureType,
-	documentationSummary
+	documentationSummary,
+	isHearingSetUp
 ) {
 	switch (action) {
 		case 'addHorizonReference': {
@@ -422,7 +426,7 @@ function mapRequiredActionToPersonalListActionHtml(
 			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 				request,
 				`/appeals-service/appeal-details/${appealId}/share`
-			)}">Progress to final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+			)}">Progress to ${getNextStateDisplayTextOnStatementsComplete(appealType, procedureType, isHearingSetUp)}<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'reviewAppellantCase': {
 			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
@@ -673,7 +677,8 @@ export function mapActionLinksForAppeal(appeal, isCaseOfficer, request) {
 				lpaQuestionnaireId,
 				request,
 				procedureType ?? '',
-				appeal.documentationSummary
+				appeal.documentationSummary,
+				appeal.isHearingSetUp
 			);
 		})
 		.filter((action) => action?.trim())

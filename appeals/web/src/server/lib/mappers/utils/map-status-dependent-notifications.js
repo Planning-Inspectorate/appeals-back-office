@@ -9,6 +9,7 @@ import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js'
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import config from '../../../../../environment/config.js';
 import { getRequiredActionsForAppeal } from './required-actions.js';
+import { getNextStateDisplayTextOnStatementsComplete } from '#lib/appeal-status.js'
 
 /** @typedef {import('./required-actions.js').AppealRequiredAction} AppealRequiredAction */
 /** @typedef {import('../components/index.js').NotificationBannerDefinitionKey} NotificationBannerDefinitionKey */
@@ -48,6 +49,7 @@ export function mapStatusDependentNotifications(appealDetails, request) {
  * @returns {PageComponent|PageComponent[]|undefined}
  */
 function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, request) {
+	const hearingIsSetUp = Boolean(appealDetails.hearing?.hearingStartTime && appealDetails.hearing?.address);
 	switch (bannerDefinitionKey) {
 		case 'awaitingLinkedAppeal':
 			return createNotificationBanner({
@@ -124,23 +126,7 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 				html: `<a href="${addBackLinkQueryToUrl(
 					request,
 					`/appeals-service/appeal-details/${appealDetails.appealId}/share`
-				)}" class="govuk-heading-s govuk-notification-banner__link">Progress to final comments</a>`
-			});
-		case 'progressHearingCaseWithNoRepsFromStatements':
-			return createNotificationBanner({
-				bannerDefinitionKey,
-				html: `<a href="${addBackLinkQueryToUrl(
-					request,
-					`/appeals-service/appeal-details/${appealDetails.appealId}/share`
-				)}" class="govuk-heading-s govuk-notification-banner__link">Progress to hearing ready to set up</a>`
-			});
-		case 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements':
-			return createNotificationBanner({
-				bannerDefinitionKey,
-				html: `<a href="${addBackLinkQueryToUrl(
-					request,
-					`/appeals-service/appeal-details/${appealDetails.appealId}/share`
-				)}" class="govuk-heading-s govuk-notification-banner__link">Progress to awaiting hearing</a>`
+				)}" class="govuk-heading-s govuk-notification-banner__link">Progress to ${getNextStateDisplayTextOnStatementsComplete(appealDetails.appealType, appealDetails.procedureType, hearingIsSetUp)}</a>`
 			});
 		case 'readyForValidation':
 			return createNotificationBanner({
