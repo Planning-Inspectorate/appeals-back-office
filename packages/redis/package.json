@@ -16,9 +16,9 @@
   },
   "dependencies": {
     "connect-redis": "^9.0.0",
-    "redis": "^4.6.10",
+    "redis": "^6.1.0",
     "@pins/platform": "^0.0.0",
-    "@azure/msal-node": "^5.0.5"
+    "@azure/msal-node": "^5.4.0"
   },
   "devDependencies": {
     "jest": "^30.2.0"

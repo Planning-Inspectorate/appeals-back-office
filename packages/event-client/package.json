@@ -16,6 +16,6 @@
     "dependencies": {
         "@azure/identity": "4.13.1",
         "@azure/service-bus": "^7.9.5",
-        "@planning-inspectorate/data-model": "^2.44.0"
+        "@planning-inspectorate/data-model": "^2.45.0"
     }
 }
