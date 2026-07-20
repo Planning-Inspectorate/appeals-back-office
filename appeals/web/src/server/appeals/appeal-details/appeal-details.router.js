@@ -9,7 +9,11 @@ import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import allocationDetailsRouter from './allocation-details/allocation-details.router.js';
 import * as controller from './appeal-details.controller.js';
-import { validateAppeal, validateAppealWithInclude } from './appeal-details.middleware.js';
+import {
+	validateAppeal,
+	validateAppealForAppealDetailsPage,
+	validateAppealWithInclude
+} from './appeal-details.middleware.js';
 import siteAddressRouter from './appellant-case/address/address.router.js';
 import appellantCaseRouter from './appellant-case/appellant-case.router.js';
 import assignUserRouter from './assign-user/assign-user.router.js';
@@ -51,7 +55,7 @@ router
 	.route('/:appealId')
 	.get(
 		saveBackUrl('appeals-detail'),
-		validateAppeal,
+		validateAppealForAppealDetailsPage,
 		clearSessionData,
 		assertUserHasPermission(
 			permissionNames.viewCaseDetails,
@@ -59,7 +63,7 @@ router
 		),
 		asyncHandler(controller.viewAppealDetails)
 	)
-	.post(validateAppeal, validateCaseNoteTextArea, asyncHandler(postCaseNote));
+	.post(validateAppealForAppealDetailsPage, validateCaseNoteTextArea, asyncHandler(postCaseNote));
 
 router.use(
 	'/:appealId/start-case',

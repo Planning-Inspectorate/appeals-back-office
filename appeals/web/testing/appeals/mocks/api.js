@@ -8,28 +8,27 @@ export function installMockAppealsService() {
 	// national list
 	nock('http://test/').get('/appeals/').reply(200, appealsNationalList).persist();
 
-	// appeal details
+	// appeal details (matches any query params including include=all, include=specific, or none)
 	nock('http://test/')
 		.get(`/appeals/${appealData.appealId}`)
-		.query((actualQueryObject) => {
-			return Object.prototype.hasOwnProperty.call(actualQueryObject, 'include');
-		})
+		.query(true)
 		.reply(200, appealData)
 		.persist();
 
-	// appeal details with appellant case
+	// appeal details page (optimized endpoint for the main appeal details page)
 	nock('http://test/')
-		.get(`/appeals/${appealData.appealId}?include=appellantCase`)
+		.get(`/appeals/${appealData.appealId}/page-details`)
 		.reply(200, appealData)
 		.persist();
 
-	// appeal details with appellant case and appeal grounds
+	// appeal exists check (for checkAppealExists / validateAppealExists middleware)
 	nock('http://test/')
-		.get(`/appeals/${appealData.appealId}?include=appellantCase,appealGrounds`)
-		.reply(200, appealData)
+		.get(`/appeals/${appealData.appealId}/exists`)
+		.reply(200, { id: appealData.appealId })
 		.persist();
 
 	nock('http://test/').get('/appeals/0').reply(500).persist();
+	nock('http://test/').get('/appeals/0/exists').reply(404).persist();
 
 	nock('http://test/')
 		.get(`/appeals/${appealData.appealId}/case-notes`)

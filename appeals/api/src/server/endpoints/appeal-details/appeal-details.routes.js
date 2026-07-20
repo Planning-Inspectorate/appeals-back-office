@@ -1,7 +1,8 @@
 import {
 	checkAppealExistsByCaseReferenceAndAddToRequest,
 	checkAppealExistsById,
-	checkAppealExistsByIdAndAddPartialToRequest
+	checkAppealExistsByIdAndAddPartialToRequest,
+	checkAppealExistsByIdForPageDisplayAndAddToRequest
 } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
@@ -64,6 +65,29 @@ router.get(
 	 */
 	getAppealValidator,
 	asyncHandler(checkAppealExistsByIdAndAddPartialToRequest([])),
+	asyncHandler(controller.getAppeal)
+);
+
+router.get(
+	'/:appealId/page-details',
+	/*
+		#swagger.tags = ['Appeal Details']
+		#swagger.path = '/appeals/{appealId}/page-details'
+		#swagger.description = Gets a single appeal by ID with optimized includes for the page display
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[200] = {
+			description: 'Gets a single appeal by ID optimized for page display',
+			schema: { $ref: '#/components/schemas/Appeal' }
+		}
+		#swagger.responses[400] = {}
+		#swagger.responses[404] = {}
+	 */
+	getAppealValidator,
+	asyncHandler(checkAppealExistsByIdForPageDisplayAndAddToRequest),
 	asyncHandler(controller.getAppeal)
 );
 

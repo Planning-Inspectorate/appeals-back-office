@@ -817,6 +817,14 @@ describe('start case hearing flow', () => {
 					procedureType: 'Hearing'
 				});
 			nock('http://test/')
+				.get('/appeals/1/page-details')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal',
+					completedStateList: ['lpa_questionnaire'],
+					procedureType: 'Hearing'
+				});
+			nock('http://test/')
 				.post('/appeals/1/appeal-timetables', {
 					startDate: '2025-09-18T23:00:00.000Z',
 					procedureType: 'hearing',

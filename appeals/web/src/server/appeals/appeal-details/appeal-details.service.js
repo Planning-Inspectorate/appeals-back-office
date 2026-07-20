@@ -19,6 +19,18 @@ export function getAppealDetailsFromId(apiClient, appealId, include) {
 }
 
 /**
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @returns {Promise<import('./appeal-details.types.js').WebAppeal>}
+ */
+export function getAppealDetailsPageFromId(apiClient, appealId) {
+	const encodedAppealId = encodeURIComponent(appealId);
+	const url = `appeals/${encodedAppealId}/page-details`;
+
+	return apiClient.get(url).json();
+}
+
+/**
  * @deprecated Inefficient use getAppealDetailsFromId and select only the data needed
  * @param {import('got').Got} apiClient
  * @param {string} appealId
@@ -35,7 +47,7 @@ export function deprecatedGetAppealDetailsFromId(apiClient, appealId) {
  *
  * @param {import('got').Got} apiClient
  * @param {string} appealId
- * @returns {Promise<{appealId: number}>}
+ * @returns {Promise<{id: number}>}
  */
 export function checkAppealExists(apiClient, appealId) {
 	const encodedAppealId = encodeURIComponent(appealId);

@@ -36,20 +36,27 @@ describe('proof-of-evidence', () => {
 			})
 			.persist();
 
-		nock('http://test/').get('/appeals/2/case-notes').reply(200, []).persist();
-
-		nock('http://test/').get('/appeals/2/appellant-cases/0').reply(200, {}).persist();
-
 		nock('http://test/')
-			.get('/appeals/2/reps?type=appellant_final_comment,lpa_final_comment')
-			.reply(200, { items: [], itemCount: 0 })
-			.persist();
-
-		nock('http://test/')
-			.get(
-				'/appeals/2/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence'
-			)
-			.reply(200, { items: [], itemCount: 0 })
+			.get('/appeals/2/page-details')
+			.reply(200, {
+				...appealDataFullPlanning,
+				appealId: 2,
+				appealStatus: 'appellant_proofs_evidence',
+				procedureType: 'inquiry',
+				inquiry: {},
+				caseNotes: [],
+				appealRule6Parties: [
+					{
+						id: 3670,
+						serviceUserId: 3838,
+						partyName: 'Test Rule 6 Party',
+						serviceUser: {
+							organisationName: 'Test Rule 6 Party'
+						}
+					}
+				],
+				rule6PartyId: 3670
+			})
 			.persist();
 	});
 
@@ -148,7 +155,11 @@ describe('proof-of-evidence', () => {
 				items: [
 					{
 						...proofOfEvidenceForReviewWithAttachments.items[0],
-						representationType: 'rule_6_party_proofs_evidence'
+						representationType: 'rule_6_party_proofs_evidence',
+						represented: {
+							id: 3838,
+							name: 'Test Rule 6 Party'
+						}
 					}
 				]
 			};
