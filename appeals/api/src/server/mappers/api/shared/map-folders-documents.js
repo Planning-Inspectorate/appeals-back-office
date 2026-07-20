@@ -99,6 +99,10 @@ export const mapAppealFolders = (data) => {
 				caseId: folder.caseId,
 				folderId: folder.id,
 				path: folder.path,
+				documentCount:
+					/** @type {Object<string, any>} */ (folder)._count?.documents ??
+					folder.documents?.length ??
+					0,
 				documents: mapDocuments(folder.documents)
 			};
 		});

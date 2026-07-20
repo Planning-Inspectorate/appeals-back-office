@@ -112,7 +112,7 @@ describe('appeal-details', () => {
 			it('should render the case-team section for appeal with team name and email displayed"', async () => {
 				const appealId = 2;
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealData,
 						appealId,
@@ -132,7 +132,7 @@ describe('appeal-details', () => {
 			it('should render the case-team section for appeal with not assigned displayed when no team is assigned"', async () => {
 				const appealId = 2;
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealData,
 						appealId,
@@ -151,7 +151,7 @@ describe('appeal-details', () => {
 			it('should render the case-team section for appeal with not assigned displayed when only team name exists"', async () => {
 				const appealId = 2;
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealData,
 						appealId,
@@ -176,7 +176,7 @@ describe('appeal-details', () => {
 				it('should render a "Appeal ready to be assigned to case officer" important notification banner with a link to assign case officer when status is "Assign case officer"', async () => {
 					const appealId = 2;
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, { ...appealData, appealId, appealStatus: 'assign_case_officer' });
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 
@@ -221,7 +221,7 @@ describe('appeal-details', () => {
 						.reply(200, appealData)
 						.persist();
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, appealData)
 						.persist();
 					nock('http://test/')
@@ -263,7 +263,7 @@ describe('appeal-details', () => {
 						.reply(200, appealData)
 						.persist();
 					nock('http://test/')
-						.get(`/appeals/${appealData.appealId}?include=all`)
+						.get(`/appeals/${appealData.appealId}/page-details`)
 						.reply(200, appealData)
 						.persist();
 					nock('http://test/')
@@ -303,7 +303,7 @@ describe('appeal-details', () => {
 						.get(`/appeals/${appealData.appealId}?include=neighbouringSites`)
 						.reply(200, appealData);
 					nock('http://test/')
-						.get(`/appeals/${appealData.appealId}?include=all`)
+						.get(`/appeals/${appealData.appealId}/page-details`)
 						.reply(200, appealData)
 						.persist();
 					nock('http://test/')
@@ -332,10 +332,15 @@ describe('appeal-details', () => {
 
 					nock.cleanAll();
 					nock('http://test/')
+						.get(`/appeals/${appealData.appealId}`)
+						.query(true)
+						.reply(200, appealData)
+						.persist();
+					nock('http://test/')
 						.get(`/appeals/linkable-appeal/${appealReference}/linked`)
 						.reply(200, linkableAppealSummaryBackOffice);
 					nock('http://test/')
-						.get(`/appeals/${appealData.appealId}?include=all`)
+						.get(`/appeals/${appealData.appealId}/page-details`)
 						.reply(200, appealData)
 						.persist();
 					nock('http://test/').post(`/appeals/${appealData.appealId}/link-appeal`).reply(200, {
@@ -375,10 +380,15 @@ describe('appeal-details', () => {
 
 					nock.cleanAll();
 					nock('http://test/')
+						.get(`/appeals/${appealData.appealId}`)
+						.query(true)
+						.reply(200, appealData)
+						.persist();
+					nock('http://test/')
 						.get(`/appeals/linkable-appeal/${appealReference}/linked`)
 						.reply(200, linkableAppealSummaryHorizon);
 					nock('http://test/')
-						.get(`/appeals/${appealData.appealId}?include=all`)
+						.get(`/appeals/${appealData.appealId}/page-details`)
 						.reply(200, appealData)
 						.persist();
 					nock('http://test/')
@@ -420,7 +430,7 @@ describe('appeal-details', () => {
 
 				it('should render a success notification banner when a user was successfully assigned as case officer', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealData.appealId}?include=all`)
+						.get(`/appeals/${appealData.appealId}/page-details`)
 						.reply(200, appealData)
 						.persist();
 					nock('http://test/')
@@ -461,7 +471,7 @@ describe('appeal-details', () => {
 
 				it('should render a success notification banner when a user was successfully assigned as inspector', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealData.appealId}?include=all`)
+						.get(`/appeals/${appealData.appealId}/page-details`)
 						.reply(200, appealData)
 						.persist();
 					nock('http://test/')
@@ -815,7 +825,7 @@ describe('appeal-details', () => {
 				});
 
 				it('should render a success notification banner when a agent was updated', async () => {
-					nock('http://test/').get(`/appeals/1?include=all`).reply(200, appealData).persist();
+					nock('http://test/').get(`/appeals/1/page-details`).reply(200, appealData).persist();
 					nock('http://test/').patch(`/appeals/1/service-user`).reply(200, {
 						serviceUserId: 1
 					});
@@ -841,7 +851,7 @@ describe('appeal-details', () => {
 				});
 
 				it('should render a success notification banner when an appellant was updated', async () => {
-					nock('http://test/').get(`/appeals/1?include=all`).reply(200, appealData).persist();
+					nock('http://test/').get(`/appeals/1/page-details`).reply(200, appealData).persist();
 					nock('http://test/').patch(`/appeals/1/service-user`).reply(200, {
 						serviceUserId: 1
 					});
@@ -870,7 +880,12 @@ describe('appeal-details', () => {
 					const appealId = appealData.appealId.toString();
 					nock.cleanAll();
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}`)
+						.query(true)
+						.reply(200, { ...appealData, lpaQuestionnaireId: undefined })
+						.persist();
+					nock('http://test/')
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, { ...appealData, lpaQuestionnaireId: undefined })
 						.persist();
 					nock('http://test/')
@@ -1096,7 +1111,7 @@ describe('appeal-details', () => {
 							inspectorName: null
 						})
 						.reply(201, { hearingId: 1 });
-					nock('http://test/').get(`/appeals/1?include=all`).reply(200, appealData).persist();
+					nock('http://test/').get(`/appeals/1/page-details`).reply(200, appealData).persist();
 
 					// set session data with post requests to previous pages
 					await request.post(`${baseUrl}/${appealId}/hearing/setup/date`).send(dateValues);
@@ -1150,7 +1165,7 @@ describe('appeal-details', () => {
 							inspectorName: null
 						})
 						.reply(201, { hearingId: 1 });
-					nock('http://test/').get(`/appeals/1?include=all`).reply(200, appealData).persist();
+					nock('http://test/').get(`/appeals/1/page-details`).reply(200, appealData).persist();
 
 					// set session data with post requests to previous pages
 					await request.post(`${baseUrl}/${appealId}/hearing/change/date`).send(dateValues);
@@ -1187,7 +1202,7 @@ describe('appeal-details', () => {
 					const appealId = 2;
 
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, { ...appealData, appealId, appealStatus: 'awaiting_transfer' });
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 
@@ -1216,7 +1231,7 @@ describe('appeal-details', () => {
 							]
 						});
 					nock('http://test/')
-						.get('/appeals/2?include=all')
+						.get('/appeals/2/page-details')
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId: 2,
@@ -1280,7 +1295,7 @@ describe('appeal-details', () => {
 							]
 						});
 					nock('http://test/')
-						.get('/appeals/2?include=all')
+						.get('/appeals/2/page-details')
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId: 2,
@@ -1344,7 +1359,7 @@ describe('appeal-details', () => {
 							]
 						});
 					nock('http://test/')
-						.get('/appeals/2?include=all')
+						.get('/appeals/2/page-details')
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId: 2,
@@ -1402,7 +1417,7 @@ describe('appeal-details', () => {
 					const appealId = 2;
 
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
@@ -1440,7 +1455,7 @@ describe('appeal-details', () => {
 					const lpaQuestionnaireId = 123;
 
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
@@ -1480,7 +1495,7 @@ describe('appeal-details', () => {
 					const appealId = 2;
 
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
@@ -1499,7 +1514,7 @@ describe('appeal-details', () => {
 					const appealId = 2;
 
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
@@ -1528,7 +1543,7 @@ describe('appeal-details', () => {
 					const appealId = '2';
 
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealStatus: 'issue_determination',
@@ -1554,14 +1569,14 @@ describe('appeal-details', () => {
 					const appealId = 2;
 					const resetMocks = () => {
 						nock.cleanAll();
-						nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 						nock('http://test/')
 							.get(`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment`)
-							.reply(200, {
-								itemCount: 2,
-								items: [...finalCommentsForReview.items, ...lpaFinalCommentsAwaitingReview.items]
-							})
+							.reply(200, { itemCount: 0, items: [] })
 							.persist();
+						nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+						nock('http://test/')
+							.get(/appeals\/\d+\/appellant-cases\/\d+/)
+							.reply(200, { planningObligation: { hasObligation: false } });
 					};
 
 					beforeEach(() => {
@@ -1572,7 +1587,7 @@ describe('appeal-details', () => {
 						'should render a "Add number of residential units" important notification banner a link to add residential units when numberOfResidencesNetChange has not been added for %s',
 						async (appealType) => {
 							nock('http://test/')
-								.get(`/appeals/${appealId}?include=all`)
+								.get(`/appeals/${appealId}/page-details`)
 								.reply(200, {
 									...appealData,
 									appealId,
@@ -1610,7 +1625,7 @@ describe('appeal-details', () => {
 						'should render a "Add number of residential units" important notification banner even when case is complete if numberOfResidencesNetChange has not been added for %s',
 						async (appealType) => {
 							nock('http://test/')
-								.get(`/appeals/${appealId}?include=all`)
+								.get(`/appeals/${appealId}/page-details`)
 								.reply(200, {
 									...appealData,
 									appealId,
@@ -1624,6 +1639,7 @@ describe('appeal-details', () => {
 									planningObligation: { hasObligation: false },
 									numberOfResidencesNetChange: null
 								});
+							nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 
 							const response = await request.get(`${baseUrl}/${appealId}`);
 
@@ -1648,7 +1664,7 @@ describe('appeal-details', () => {
 					it('should not render a "Add number of residential units" important notification banner when appeal type is not S78', async () => {
 						nock.cleanAll();
 						nock('http://test/')
-							.get(`/appeals/${appealId}?include=all`)
+							.get(`/appeals/${appealId}/page-details`)
 							.reply(200, {
 								...appealData,
 								appealId,
@@ -1677,7 +1693,7 @@ describe('appeal-details', () => {
 					it('should not render a "Add number of residential units" important notification banner if numberOfResidencesNetChange has been added', async () => {
 						nock.cleanAll();
 						nock('http://test/')
-							.get(`/appeals/${appealId}?include=all`)
+							.get(`/appeals/${appealId}/page-details`)
 							.reply(200, {
 								...appealData,
 								appealId,
@@ -1706,7 +1722,7 @@ describe('appeal-details', () => {
 					it('should not render a "Add number of residential units" important notification banner if numberOfResidencesNetChange has been added and set to 0', async () => {
 						nock.cleanAll();
 						nock('http://test/')
-							.get(`/appeals/${appealId}?include=all`)
+							.get(`/appeals/${appealId}/page-details`)
 							.reply(200, {
 								...appealData,
 								appealId,
@@ -1760,6 +1776,7 @@ describe('appeal-details', () => {
 
 				const resetMocks = () => {
 					nock.cleanAll();
+					nock('http://test/').get(`/appeals/${appealId}/exists`).reply(200, { id: appealId });
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 					nock('http://test/')
 						.get(/appeals\/\d+\/appellant-cases\/\d+/)
@@ -1780,7 +1797,7 @@ describe('appeal-details', () => {
 							})
 							.persist();
 						nock('http://test/')
-							.get(`/appeals/${appealId}?include=all`)
+							.get(`/appeals/${appealId}/page-details`)
 							.reply(200, {
 								...appealDataFullPlanning,
 								appealId,
@@ -1885,7 +1902,7 @@ describe('appeal-details', () => {
 							})
 							.persist();
 						nock('http://test/')
-							.get(`/appeals/${appealId}?include=all`)
+							.get(`/appeals/${appealId}/page-details`)
 							.reply(200, {
 								...appealDataFullPlanning,
 								appealId,
@@ -1948,6 +1965,9 @@ describe('appeal-details', () => {
 							caseOfficer: 'updatedCaseOfficerId'
 						});
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+					nock('http://test/')
+						.get(`/appeals/${appealId}/page-details`)
+						.reply(200, appealInValidationStatus);
 
 					await request
 						.post(`${baseUrl}/${appealId}/assign-case-officer/search-case-officer`)
@@ -1982,7 +2002,7 @@ describe('appeal-details', () => {
 		describe('Case notes', () => {
 			it('should render the case note details', async () => {
 				const appealId = appealData.appealId.toString();
-				nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appealData);
+				nock('http://test/').get(`/appeals/${appealId}/page-details`).reply(200, appealData);
 				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 				const response = await request.get(`${baseUrl}/${appealId}`);
 
@@ -1996,12 +2016,13 @@ describe('appeal-details', () => {
 			});
 			it('should submit a new case note and re-render case details', async () => {
 				nock.cleanAll();
+				nock('http://test/').get(`/appeals/${appealId}/exists`).reply(200, { id: appealId });
 				const appealId = appealData.appealId.toString();
 				const caseNotesResponse = [...caseNotes];
 				const comment = 'This is a new comment';
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
-					.reply(200, appealData)
+					.get(`/appeals/${appealId}/page-details`)
+					.reply(200, () => appealData)
 					.persist();
 				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotesResponse);
 				nock('http://test/')
@@ -2029,8 +2050,10 @@ describe('appeal-details', () => {
 					comment,
 					azureAdUserId: '923ac03b-9031-4cf4-8b17-348c274321f9'
 				});
+				appealData.caseNotes = caseNotesResponse;
 				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotesResponse);
 				const renderResponse = await request.get(`${baseUrl}/${appealId}?include=all`);
+				appealData.caseNotes = caseNotes;
 				expect(renderResponse.statusCode).toBe(200);
 				expect(submitRequest.isDone()).toBe(true);
 
@@ -2043,11 +2066,12 @@ describe('appeal-details', () => {
 			});
 			it('should not submit and  re-render case details with an error if the string is empty', async () => {
 				nock.cleanAll();
+				nock('http://test/').get(`/appeals/${appealId}/exists`).reply(200, { id: appealId });
 				const appealId = appealData.appealId.toString();
 				const caseNotesResponse = [...caseNotes];
 				const comment = '';
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, appealData)
 					.persist();
 				nock('http://test/')
@@ -2086,12 +2110,13 @@ describe('appeal-details', () => {
 			});
 			it('should not submit and re-render case details with an error if the comment exceeds the character limit', async () => {
 				nock.cleanAll();
+				nock('http://test/').get(`/appeals/${appealId}/exists`).reply(200, { id: appealId });
 				const appealId = appealData.appealId.toString();
 				const caseNotesResponse = [...caseNotes];
 				const comment = 'a'.repeat(501);
 
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, appealData)
 					.persist();
 				nock('http://test/')
@@ -2115,7 +2140,7 @@ describe('appeal-details', () => {
 					.post(`/appeals/${appealId}/case-notes`)
 					.reply(200, {});
 
-				await request.get(`${baseUrl}/${appealId}?include=all`);
+				await request.get(`${baseUrl}/${appealId}`);
 
 				const response = await request.post(`${baseUrl}/${appealId}`).send({ comment: comment });
 				expect(response.statusCode).toBe(200);
@@ -2138,7 +2163,7 @@ describe('appeal-details', () => {
 		describe('Case download', () => {
 			it('should render the case download link', async () => {
 				const appealId = appealData.appealId.toString();
-				nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appealData);
+				nock('http://test/').get(`/appeals/${appealId}/page-details`).reply(200, appealData);
 				const response = await request.get(`${baseUrl}/${appealId}`);
 
 				const element = parseHtml(response.text, {
@@ -2236,7 +2261,7 @@ describe('appeal-details', () => {
 					const appealId = 2;
 
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
@@ -2263,7 +2288,7 @@ describe('appeal-details', () => {
 			it('should render the received appeal details for a valid appealId with no linked/other appeals', async () => {
 				const appealId = appealData.appealId.toString();
 
-				nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, undefined);
+				nock('http://test/').get(`/appeals/${appealId}/page-details`).reply(200, undefined);
 				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 				const response = await request.get(`${baseUrl}/${appealId}`);
 				const element = parseHtml(response.text);
@@ -2294,7 +2319,7 @@ describe('appeal-details', () => {
 			it('should render an action link to the manage linked appeals page, if there are linked appeals, the status is not past LPA Questionnaire, all the linked appeals are children and internal', async () => {
 				nock.cleanAll();
 				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}?include=all`)
+					.get(`/appeals/${appealData.appealId}/page-details`)
 					.reply(200, {
 						...appealData,
 						appealStatus: 'lpa_questionnaire',
@@ -2332,7 +2357,7 @@ describe('appeal-details', () => {
 			it('should render an action link to the add linked appeals page, if the appeal is a lead appeal in a state before STATEMENTS', async () => {
 				nock.cleanAll();
 				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}?include=all`)
+					.get(`/appeals/${appealData.appealId}/page-details`)
 					.reply(200, {
 						...appealData,
 						isParentAppeal: true,
@@ -2371,7 +2396,7 @@ describe('appeal-details', () => {
 			it('should not render action links to the manage linked appeals page or the add linked appeal page in the linked appeals row, if the appeal is linked as a child of an external lead appeal', async () => {
 				nock.cleanAll();
 				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}?include=all`)
+					.get(`/appeals/${appealData.appealId}/page-details`)
 					.reply(200, {
 						...appealData,
 						completedStateList: ['ready_to_start'],
@@ -2413,7 +2438,7 @@ describe('appeal-details', () => {
 			it('should render the case reference for each linked appeal in the linked appeals row, with each internal linked appeal item linking to the respective case details page, if there are linked appeals', async () => {
 				nock.cleanAll();
 				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}?include=all`)
+					.get(`/appeals/${appealData.appealId}/page-details`)
 					.reply(200, {
 						...appealData,
 						completedStateList: ['ready_to_start'],
@@ -2469,7 +2494,7 @@ describe('appeal-details', () => {
 				const appealId = '2';
 
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealData,
 						completedStateList: ['ready_to_start'],
@@ -2507,7 +2532,7 @@ describe('appeal-details', () => {
 				const appealId = '3';
 
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealData,
 						completedStateList: ['ready_to_start'],
@@ -2552,7 +2577,7 @@ describe('appeal-details', () => {
 			it('should render the lead or child status after the case reference link of each linked appeal in the linked appeals row, if there are linked appeals', async () => {
 				nock.cleanAll();
 				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}?include=all`)
+					.get(`/appeals/${appealData.appealId}/page-details`)
 					.reply(200, {
 						...appealData,
 						completedStateList: ['ready_to_start'],
@@ -2593,7 +2618,7 @@ describe('appeal-details', () => {
 			it('should render a lead tag next to the appeal status tag if the appeal is a parent', async () => {
 				nock.cleanAll();
 				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}?include=all`)
+					.get(`/appeals/${appealData.appealId}/page-details`)
 					.reply(200, {
 						...appealData,
 						completedStateList: ['ready_to_start'],
@@ -2626,7 +2651,7 @@ describe('appeal-details', () => {
 			it('should render a child tag next to the appeal status tag if the appeal is a child', async () => {
 				nock.cleanAll();
 				nock('http://test/')
-					.get(`/appeals/${appealData.appealId}?include=all`)
+					.get(`/appeals/${appealData.appealId}/page-details`)
 					.reply(200, {
 						...appealData,
 						completedStateList: ['ready_to_start'],
@@ -2660,7 +2685,7 @@ describe('appeal-details', () => {
 			it('should not render a "Appeal valid" notification banner when status is "READY_TO_START" and appeal is a linked child appeal', async () => {
 				const appealId = 2;
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealData,
 						appealId,
@@ -2682,9 +2707,10 @@ describe('appeal-details', () => {
 			nock.cleanAll();
 			const appealId = appealData.appealId;
 			const comment = 'This is a new comment';
-			nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appealData).persist();
-			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
-
+			nock('http://test/')
+				.get(`/appeals/${appealId}/page-details`)
+				.reply(200, appealData)
+				.persist();
 			nock('http://test/')
 				.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
 				.reply(200, appellantFinalCommentsAwaitingReview);
@@ -2693,7 +2719,7 @@ describe('appeal-details', () => {
 				.reply(200, lpaFinalCommentsAwaitingReview);
 
 			const submitRequest = nock('http://test/').post(`/appeals/${appealId}/case-notes`).reply(500);
-			await request.get(`${baseUrl}/${appealId}?include=all`);
+			await request.get(`${baseUrl}/${appealId}/page-details`);
 
 			const response = await request.post(`${baseUrl}/${appealId}`).send({ comment: comment });
 			expect(response.statusCode).toBe(500);
@@ -2703,8 +2729,7 @@ describe('appeal-details', () => {
 		it('should render the header with navigation containing links to the personal list, national list, and sign out route, without any active modifier classes', async () => {
 			const appealId = appealData.appealId.toString();
 
-			nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, undefined);
-			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+			nock('http://test/').get(`/appeals/${appealId}/page-details`).reply(200, appealData);
 			const response = await request.get(`${baseUrl}/${appealId}`);
 			const element = parseHtml(response.text, { rootElement: 'header' });
 
@@ -2724,7 +2749,7 @@ describe('appeal-details', () => {
 			const appealId = '2';
 
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=all`)
+				.get(`/appeals/${appealId}/page-details`)
 				.reply(200, { ...appealData, startedAt: null });
 			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 			const response = await request.get(`${baseUrl}/${appealId}`);
@@ -2742,7 +2767,7 @@ describe('appeal-details', () => {
 		it('should render a page not found when the appealId is not valid/does not exist', async () => {
 			const appealIdThatDoesNotExist = 999;
 
-			nock('http://test/').get(`/appeals/${appealIdThatDoesNotExist}?include=all`).reply(404);
+			nock('http://test/').get(`/appeals/${appealIdThatDoesNotExist}/page-details`).reply(404);
 			const response = await request.get(`${baseUrl}/${appealIdThatDoesNotExist}`);
 
 			expect(response.statusCode).toBe(404);
@@ -2757,7 +2782,7 @@ describe('appeal-details', () => {
 			const appealId = '2';
 
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=all`)
+				.get(`/appeals/${appealId}/page-details`)
 				.reply(200, {
 					...appealData,
 					appealStatus: 'complete',
@@ -2789,7 +2814,7 @@ describe('appeal-details', () => {
 			const appealId = '2';
 
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=all`)
+				.get(`/appeals/${appealId}/page-details`)
 				.reply(200, {
 					...appealData,
 					appealStatus: 'complete',
@@ -2821,7 +2846,7 @@ describe('appeal-details', () => {
 			const appealId = '2';
 
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=all`)
+				.get(`/appeals/${appealId}/page-details`)
 				.reply(200, {
 					...appealData,
 					appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
@@ -2850,7 +2875,7 @@ describe('appeal-details', () => {
 			const appealId = '2';
 
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=all`)
+				.get(`/appeals/${appealId}/page-details`)
 				.reply(200, {
 					...appealData,
 					appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
@@ -2958,7 +2983,7 @@ describe('appeal-details', () => {
 			const appealId = '2';
 
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=all`)
+				.get(`/appeals/${appealId}/page-details`)
 				.reply(200, {
 					...appealData,
 					appealStatus: 'complete',
@@ -2988,7 +3013,7 @@ describe('appeal-details', () => {
 			const appealId = '2';
 
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=all`)
+				.get(`/appeals/${appealId}/page-details`)
 				.reply(200, {
 					...appealData,
 					decision: {
@@ -3021,7 +3046,7 @@ describe('appeal-details', () => {
 			const appealId = '2';
 
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=all`)
+				.get(`/appeals/${appealId}/page-details`)
 				.reply(200, {
 					...appealData,
 					appealStatus: 'validation',
@@ -3054,7 +3079,7 @@ describe('appeal-details', () => {
 			const today = new Date();
 
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=all`)
+				.get(`/appeals/${appealId}/page-details`)
 				.reply(200, {
 					...appealData,
 					appealStatus: 'validation',
@@ -3066,9 +3091,8 @@ describe('appeal-details', () => {
 					}
 				});
 			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
-			const response = await request.get(`${baseUrl}/${appealId}`);
-
 			jest.useRealTimers();
+			const response = await request.get(`${baseUrl}/${appealId}`);
 
 			expect(response.statusCode).toBe(200);
 			const element = parseHtml(response.text);
@@ -3083,7 +3107,7 @@ describe('appeal-details', () => {
 		it('should render a "Appeal valid" notification banner with a link to start case when status is "READY_TO_START"', async () => {
 			const appealId = 2;
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=all`)
+				.get(`/appeals/${appealId}/page-details`)
 				.reply(200, { ...appealData, appealId, appealStatus: 'ready_to_start' });
 			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 			const response = await request.get(`${baseUrl}/${appealId}`);
@@ -3197,7 +3221,7 @@ describe('appeal-details', () => {
 			for (const testCase of testCases) {
 				it(`should render a "${testCase.bannerText}" important banner with the link to progress case from final comments with the expected content when Final Comments Due Date has passed and ${testCase.conditionName}.`, async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...testCase.appealData
 						})
@@ -3253,7 +3277,7 @@ describe('appeal-details', () => {
 				async (appealType) => {
 					const appealId = 2;
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
@@ -3282,7 +3306,7 @@ describe('appeal-details', () => {
 
 			it('should not render a "Is there a net gain or loss of residential units?" row in the overview accordion if a S78 linked child appeal', async () => {
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealData,
 						appealId,
@@ -3303,7 +3327,7 @@ describe('appeal-details', () => {
 
 			it('should not render a "Is there a net gain or loss of residential units?" row in the overview accordion if not S78 appeal', async () => {
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealData,
 						appealId,
@@ -3327,11 +3351,14 @@ describe('appeal-details', () => {
 				async (appealType) => {
 					const appealId = 2;
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
-							appealType: appealType
+							appealType: appealType,
+							appellantCase: {
+								numberOfResidencesNetChange: 1
+							}
 						});
 					nock('http://test/')
 						.get(/appeals\/\d+\/appellant-cases\/\d+/)
@@ -3358,11 +3385,14 @@ describe('appeal-details', () => {
 				async (appealType) => {
 					const appealId = 2;
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
-							appealType: appealType
+							appealType: appealType,
+							appellantCase: {
+								numberOfResidencesNetChange: -1
+							}
 						});
 					nock('http://test/')
 						.get(/appeals\/\d+\/appellant-cases\/\d+/)
@@ -3389,11 +3419,14 @@ describe('appeal-details', () => {
 				async (appealType) => {
 					const appealId = 2;
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
-							appealType: appealType
+							appealType: appealType,
+							appellantCase: {
+								numberOfResidencesNetChange: 0
+							}
 						});
 					nock('http://test/')
 						.get(/appeals\/\d+\/appellant-cases\/\d+/)
@@ -3413,7 +3446,7 @@ describe('appeal-details', () => {
 				async (appealType) => {
 					const appealId = 2;
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
@@ -3435,7 +3468,7 @@ describe('appeal-details', () => {
 			it('should not render net-residence-gain-or-loss row in the overview accordion if appeal type is not S78', async () => {
 				const appealId = 2;
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealData,
 						appealId,
@@ -3456,7 +3489,7 @@ describe('appeal-details', () => {
 			it('Should display procedure type change link because type is S78 and lpastatement status is not received', async () => {
 				const appealId = 2;
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealData,
 						appealId,
@@ -3495,7 +3528,7 @@ describe('appeal-details', () => {
 				try {
 					const appealId = 2;
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
@@ -3541,7 +3574,7 @@ describe('appeal-details', () => {
 				try {
 					const appealId = 2;
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
@@ -3587,7 +3620,7 @@ describe('appeal-details', () => {
 				try {
 					const appealId = 2;
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
@@ -3633,7 +3666,7 @@ describe('appeal-details', () => {
 				try {
 					const appealId = 2;
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
@@ -3682,7 +3715,7 @@ describe('appeal-details', () => {
 				try {
 					const appealId = 2;
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
@@ -3731,7 +3764,7 @@ describe('appeal-details', () => {
 				try {
 					const appealId = 2;
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
@@ -3780,7 +3813,7 @@ describe('appeal-details', () => {
 				try {
 					const appealId = 2;
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
@@ -3829,7 +3862,7 @@ describe('appeal-details', () => {
 				try {
 					const appealId = 2;
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
@@ -3878,7 +3911,7 @@ describe('appeal-details', () => {
 				try {
 					const appealId = 2;
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
@@ -3927,7 +3960,7 @@ describe('appeal-details', () => {
 				try {
 					const appealId = 2;
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
@@ -3976,7 +4009,7 @@ describe('appeal-details', () => {
 				try {
 					const appealId = 2;
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
@@ -4025,7 +4058,7 @@ describe('appeal-details', () => {
 				try {
 					const appealId = 2;
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
@@ -4074,7 +4107,7 @@ describe('appeal-details', () => {
 				try {
 					const appealId = 2;
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
@@ -4106,7 +4139,7 @@ describe('appeal-details', () => {
 			it('Should not display procedure type change link because type is S78 and lpastatement status is received', async () => {
 				const appealId = 2;
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealData,
 						appealId,
@@ -4135,7 +4168,7 @@ describe('appeal-details', () => {
 			it('Should not display procedure type change link because type is S78 and lpastatement due date has elapsed', async () => {
 				const appealId = 2;
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealData,
 						appealId,
@@ -4167,7 +4200,7 @@ describe('appeal-details', () => {
 			it('Should not display case proceudre change link because appeal type is not S78', async () => {
 				const appealId = 2;
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealData,
 						appealId,
@@ -4196,10 +4229,15 @@ describe('appeal-details', () => {
 			it('Should display enforcement notice reference instead of LPA reference if appeal type is enforcement notice', async () => {
 				const appealId = 2;
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealDataEnforcementNotice,
-						appealId
+						appealId,
+						appellantCase: {
+							enforcementNotice: {
+								reference: 'ENF-123456789'
+							}
+						}
 					});
 				nock('http://test/')
 					.get(/appeals\/\d+\/appellant-cases\/\d+/)
@@ -4292,7 +4330,7 @@ describe('appeal-details', () => {
 
 				it('should render an "LPA Questionnaire" row with a status of "Incomplete" if the LPA questionnaire status is Incomplete and the due date has not yet passed', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId,
@@ -4323,7 +4361,7 @@ describe('appeal-details', () => {
 
 				it('should render an "LPA Questionnaire" row with a status of "Overdue" if the LPA questionnaire status is Incomplete and the due date has passed', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId,
@@ -4367,7 +4405,7 @@ describe('appeal-details', () => {
 							}
 						]
 					};
-					nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appeal);
+					nock('http://test/').get(`/appeals/${appealId}/page-details`).reply(200, appeal);
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 					nock('http://test/')
 						.get(
@@ -4458,7 +4496,7 @@ describe('appeal-details', () => {
 							}
 						}
 					};
-					nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appeal);
+					nock('http://test/').get(`/appeals/${appealId}/page-details`).reply(200, appeal);
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 					nock('http://test/')
 						.get(
@@ -4533,7 +4571,7 @@ describe('appeal-details', () => {
 						},
 						appealStatus: APPEAL_CASE_STATUS.STATEMENTS
 					};
-					nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appeal);
+					nock('http://test/').get(`/appeals/${appealId}/page-details`).reply(200, appeal);
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 					nock('http://test/')
 						.get(
@@ -4585,7 +4623,7 @@ describe('appeal-details', () => {
 							}
 						}
 					};
-					nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appeal);
+					nock('http://test/').get(`/appeals/${appealId}/page-details`).reply(200, appeal);
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 					nock('http://test/')
 						.get(
@@ -4641,7 +4679,7 @@ describe('appeal-details', () => {
 						}
 					};
 
-					nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appeal);
+					nock('http://test/').get(`/appeals/${appealId}/page-details`).reply(200, appeal);
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 					nock('http://test/')
 						.get(
@@ -4710,7 +4748,7 @@ describe('appeal-details', () => {
 				for (const testCase of testCases) {
 					it(`should not render an "${testCase.rowLabel}" row, if the appeal type is "householder" (HAS)`, async () => {
 						nock('http://test/')
-							.get(`/appeals/${appealId}?include=all`)
+							.get(`/appeals/${appealId}/page-details`)
 							.reply(200, {
 								...appealData,
 								appealId
@@ -4728,7 +4766,7 @@ describe('appeal-details', () => {
 
 					it(`should not render an "${testCase.rowLabel}" row, if the appeal is a child linked appeal`, async () => {
 						nock('http://test/')
-							.get(`/appeals/${appealId}?include=all`)
+							.get(`/appeals/${appealId}/page-details`)
 							.reply(200, {
 								...appealDataFullPlanning,
 								isChildAppeal: true,
@@ -4747,7 +4785,7 @@ describe('appeal-details', () => {
 
 					it(`should render an "${testCase.rowLabel}" row with a status of "Not received" and nothing in the "Received" column, and no action link, if the appeal type is "planning appeal", and the appeal does not have ${testCase.name} final comments awaiting review`, async () => {
 						nock('http://test/')
-							.get(`/appeals/${appealId}?include=all`)
+							.get(`/appeals/${appealId}/page-details`)
 							.reply(200, {
 								...appealDataFullPlanning,
 								appealId,
@@ -4775,7 +4813,7 @@ describe('appeal-details', () => {
 
 					it(`should render an "${testCase.rowLabel}" row with a status of "Ready to review", and the expected date in the "Received" column, and a "Review" action link with the expected URL, if the appeal type is "planning appeal", and the appeal has ${testCase.name} final comments awaiting review`, async () => {
 						nock('http://test/')
-							.get(`/appeals/${appealId}?include=all`)
+							.get(`/appeals/${appealId}/page-details`)
 							.reply(200, {
 								...appealDataFullPlanning,
 								appealId,
@@ -4803,7 +4841,7 @@ describe('appeal-details', () => {
 
 					it(`should render an "${testCase.rowLabel}" row with a status of "Accepted", and the expected date in the "Received" column, and a "View" action link with the expected URL, if the appeal type is "planning appeal", and the appeal has valid/accepted ${testCase.name} final comments`, async () => {
 						nock('http://test/')
-							.get(`/appeals/${appealId}?include=all`)
+							.get(`/appeals/${appealId}/page-details`)
 							.reply(200, {
 								...appealDataFullPlanning,
 								appealId,
@@ -4831,7 +4869,7 @@ describe('appeal-details', () => {
 
 					it(`should render an "${testCase.rowLabel}" row with a status of "Rejected", and the expected date in the "Received" column, and a "Add | View" action link with the expected URL, if the appeal type is "planning appeal", and the appeal has invalid ${testCase.name} final comments`, async () => {
 						nock('http://test/')
-							.get(`/appeals/${appealId}?include=all`)
+							.get(`/appeals/${appealId}/page-details`)
 							.reply(200, {
 								...appealDataFullPlanning,
 								appealId,
@@ -4888,7 +4926,7 @@ describe('appeal-details', () => {
 
 				it('should not render an "Interested party comments" row if the appeal type is "Householder" (HAS)', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
@@ -4907,7 +4945,7 @@ describe('appeal-details', () => {
 
 				it('should render an "Interested party comments" row with a status of "No interested party comments received", and an "Add" action link to the first page of the add IP comment flow, if the appeal type is "planning appeal", and the appeal does not have IP comments awaiting review, and the statements due date has elapsed', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							appealId,
@@ -4978,7 +5016,7 @@ describe('appeal-details', () => {
 
 				it('should not render an "Environmental services team review" row if the review is not required', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId,
@@ -5005,7 +5043,7 @@ describe('appeal-details', () => {
 
 				it('should render exactly one "Environmental services team review" row if the review is required', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId,
@@ -5098,7 +5136,7 @@ describe('appeal-details', () => {
 
 				it('should render a "Timetable" with only a Valid date row with no date and no action link', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							validAt: null,
@@ -5130,7 +5168,7 @@ describe('appeal-details', () => {
 
 				it('should render a "Timetable" with only a Valid date row with no date and a validate action link', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							validAt: null,
@@ -5163,7 +5201,7 @@ describe('appeal-details', () => {
 
 				it('should render a "Timetable" with a Valid date row and a Start date row including no date and start action link', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							startedAt: null,
@@ -5204,7 +5242,7 @@ describe('appeal-details', () => {
 
 				it('should render a "Timetable" with all rows with the Start & IP comments due date rows, both including a date and change action link', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							caseOfficer: '2cb7735e-c4cf-410b-b773-5ec4cf110b87',
@@ -5269,7 +5307,7 @@ describe('appeal-details', () => {
 
 				it('should render a "Timetable" with all rows with the IP comments due date and change link displaying when published IP comments count equals zero', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							caseOfficer: '2cb7735e-c4cf-410b-b773-5ec4cf110b87',
@@ -5312,7 +5350,7 @@ describe('appeal-details', () => {
 					};
 
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							documentationSummary: testDocumentationSummary,
@@ -5389,7 +5427,7 @@ describe('appeal-details', () => {
 						});
 
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId,
@@ -5477,7 +5515,7 @@ describe('appeal-details', () => {
 
 				it('should render the correct rows when case has started and has no planning obligation', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId,
@@ -5531,7 +5569,7 @@ describe('appeal-details', () => {
 
 				it('should render the correct rows when case has started and has planning obligation', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId,
@@ -5539,6 +5577,9 @@ describe('appeal-details', () => {
 							startedAt: '2025-01-01T00:00:00.000Z',
 							procedureType: APPEAL_CASE_PROCEDURE.HEARING,
 							hearing: null,
+							appellantCase: {
+								planningObligation: { hasObligation: true }
+							},
 							appealTimetable: {
 								validAt: '2025-01-01T00:00:00.000Z',
 								startedAt: '2025-01-01T00:00:00.000Z',
@@ -5590,7 +5631,7 @@ describe('appeal-details', () => {
 
 				it('should render the correct rows when case has started and planning obligation date has been set', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId,
@@ -5598,6 +5639,9 @@ describe('appeal-details', () => {
 							startedAt: '2025-01-01T00:00:00.000Z',
 							procedureType: APPEAL_CASE_PROCEDURE.HEARING,
 							hearing: null,
+							appellantCase: {
+								planningObligation: { hasObligation: true }
+							},
 							appealTimetable: {
 								validAt: '2025-01-01T00:00:00.000Z',
 								startedAt: '2025-01-01T00:00:00.000Z',
@@ -5650,7 +5694,7 @@ describe('appeal-details', () => {
 
 				it('should render the correct rows when case has started and hearing has been set up', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId,
@@ -5659,6 +5703,9 @@ describe('appeal-details', () => {
 							procedureType: APPEAL_CASE_PROCEDURE.HEARING,
 							hearing: {
 								hearingStartTime: '2025-01-08T10:00:00.000Z'
+							},
+							appellantCase: {
+								planningObligation: { hasObligation: true }
 							},
 							appealTimetable: {
 								validAt: '2025-01-01T00:00:00.000Z',
@@ -5721,7 +5768,7 @@ describe('appeal-details', () => {
 
 				it('should render the correct rows when case started and has no planning obligation', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId,
@@ -5778,7 +5825,7 @@ describe('appeal-details', () => {
 
 				it('should render the correct rows when case has started and has planning obligation', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId,
@@ -5787,6 +5834,9 @@ describe('appeal-details', () => {
 							procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
 							inquiry: {
 								inquiryStartTime: '2025-02-01T10:00:00.000Z'
+							},
+							appellantCase: {
+								planningObligation: { hasObligation: true }
 							},
 							appealTimetable: {
 								validAt: '2025-01-01T00:00:00.000Z',
@@ -5850,7 +5900,7 @@ describe('appeal-details', () => {
 
 				it('should render the correct rows when case has started and has no planning obligation', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataEnforcementNotice,
 							appealId,
@@ -5900,7 +5950,7 @@ describe('appeal-details', () => {
 
 				it('should render the correct rows when case has started and has planning obligation', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataEnforcementNotice,
 							appealId,
@@ -5908,6 +5958,9 @@ describe('appeal-details', () => {
 							startedAt: '2025-01-01T00:00:00.000Z',
 							procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
 							hearing: null,
+							appellantCase: {
+								planningObligation: { hasObligation: true }
+							},
 							appealTimetable: {
 								validAt: '2025-01-01T00:00:00.000Z',
 								startedAt: '2025-01-01T00:00:00.000Z',
@@ -5955,7 +6008,7 @@ describe('appeal-details', () => {
 
 				it('should render the correct rows when case has started and planning obligation date has been set', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataEnforcementNotice,
 							appealId,
@@ -5963,6 +6016,9 @@ describe('appeal-details', () => {
 							startedAt: '2025-01-01T00:00:00.000Z',
 							procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
 							hearing: null,
+							appellantCase: {
+								planningObligation: { hasObligation: true }
+							},
 							appealTimetable: {
 								validAt: '2025-01-01T00:00:00.000Z',
 								startedAt: '2025-01-01T00:00:00.000Z',
@@ -6022,7 +6078,7 @@ describe('appeal-details', () => {
 
 				it('should not contain any change action links', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId,
@@ -6080,7 +6136,7 @@ describe('appeal-details', () => {
 
 			it('should not render the Hearing accordion for HAS cases', async () => {
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealData,
 						appealId
@@ -6114,7 +6170,7 @@ describe('appeal-details', () => {
 					config.isChildAppeal ? 'not ' : ''
 				}render the site accordion for HAS cases when ${config.title}`, async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
 							...config,
@@ -6151,7 +6207,7 @@ describe('appeal-details', () => {
 							});
 					}
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId,
@@ -6187,7 +6243,7 @@ describe('appeal-details', () => {
 					config.isChildAppeal ? 'not ' : ''
 				}render the site accordion for S78 Written cases when ${config.title}`, async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							...config,
@@ -6226,7 +6282,7 @@ describe('appeal-details', () => {
 					}
 
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId,
@@ -6247,7 +6303,7 @@ describe('appeal-details', () => {
 
 			it('should render the Hearing accordion with the expected content for s78 cases with a procedureType of "Hearing"', async () => {
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealDataFullPlanning,
 						appealId,
@@ -6292,7 +6348,7 @@ describe('appeal-details', () => {
 
 			it('should not render the Hearing accordion for enforcement notice child cases with a procedureType of "Hearing"', async () => {
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealDataEnforcementNotice,
 						appealId,
@@ -6315,7 +6371,7 @@ describe('appeal-details', () => {
 
 			it('should render empty states for Hearing accordion when hearing is not set up and user is read only', async () => {
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealDataFullPlanning,
 						appealId,
@@ -6363,7 +6419,7 @@ describe('appeal-details', () => {
 
 			it('should render no change links for Hearing accordion when hearing is set up and user is read only', async () => {
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealDataFullPlanning,
 						appealId,
@@ -6497,13 +6553,13 @@ describe('appeal-details', () => {
 
 			it('should render the hearing details summary list when hearing is present with address', async () => {
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealDataFullPlanning,
 						appealId,
 						procedureType: APPEAL_CASE_PROCEDURE.HEARING,
 						hearing: {
-							hearingId: '123',
+							hearingId: 123,
 							hearingStartTime: '2025-05-15T12:00:00.000Z',
 							estimatedDays: 6,
 							address: {
@@ -6608,7 +6664,7 @@ describe('appeal-details', () => {
 
 			it('should render the hearing details summary list when hearing is present with no address', async () => {
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealDataFullPlanning,
 						appealId,
@@ -6667,7 +6723,7 @@ describe('appeal-details', () => {
 
 			it('should render the cancel hearing link when hearing is present and in the future', async () => {
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealDataFullPlanning,
 						appealId,
@@ -6706,7 +6762,7 @@ describe('appeal-details', () => {
 
 			it('should render the Hearing estimates summary list when estimates are present', async () => {
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealDataFullPlanning,
 						appealId,
@@ -6759,7 +6815,7 @@ describe('appeal-details', () => {
 				const appealId = '123';
 				const appealDetails = { ...appealData, appealId, procedureType: 'hearing' };
 
-				nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appealDetails);
+				nock('http://test/').get(`/appeals/${appealId}/page-details`).reply(200, appealDetails);
 				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 
 				const response = await request.get(`/appeals-service/appeal-details/${appealId}`);
@@ -6779,7 +6835,7 @@ describe('appeal-details', () => {
 					const appealId = '123';
 					const appealDetails = { ...ldcEnfDiscAppealTypeData, appealId, procedureType: 'hearing' };
 
-					nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appealDetails);
+					nock('http://test/').get(`/appeals/${appealId}/page-details`).reply(200, appealDetails);
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 
 					const response = await request.get(`/appeals-service/appeal-details/${appealId}`);
@@ -6795,7 +6851,7 @@ describe('appeal-details', () => {
 			it('should render a "Appellant application" row in the costs accordion', async () => {
 				const appealId = 2;
 
-				nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appealData);
+				nock('http://test/').get(`/appeals/${appealId}/page-details`).reply(200, appealData);
 				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 
 				const response = await request.get(`${baseUrl}/${appealId}`);
@@ -6834,7 +6890,7 @@ describe('appeal-details', () => {
 							}
 						]
 					};
-					nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appeal);
+					nock('http://test/').get(`/appeals/${appealId}/page-details`).reply(200, appeal);
 					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 					nock('http://test/')
 						.get(
@@ -6889,7 +6945,7 @@ describe('appeal-details', () => {
 				const appealId = 2;
 
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealData,
 						appealId,
@@ -6922,7 +6978,7 @@ describe('appeal-details', () => {
 						const appealId = 2;
 
 						nock('http://test/')
-							.get(`/appeals/${appealId}?include=all`)
+							.get(`/appeals/${appealId}/page-details`)
 							.reply(200, {
 								...appealData,
 								appealId,
@@ -6949,7 +7005,7 @@ describe('appeal-details', () => {
 						const appealId = 2;
 
 						nock('http://test/')
-							.get(`/appeals/${appealId}?include=all`)
+							.get(`/appeals/${appealId}/page-details`)
 							.reply(200, {
 								...appealData,
 								appealId,
@@ -6990,7 +7046,7 @@ describe('appeal-details', () => {
 						const appealId = 2;
 
 						nock('http://test/')
-							.get(`/appeals/${appealId}?include=all`)
+							.get(`/appeals/${appealId}/page-details`)
 							.reply(200, {
 								...appealData,
 								appealId,
@@ -7021,7 +7077,7 @@ describe('appeal-details', () => {
 						const appealId = 2;
 
 						nock('http://test/')
-							.get(`/appeals/${appealId}?include=all`)
+							.get(`/appeals/${appealId}/page-details`)
 							.reply(200, {
 								...appealData,
 								appealId,
@@ -7062,7 +7118,7 @@ describe('appeal-details', () => {
 						const appealId = 2;
 
 						nock('http://test/')
-							.get(`/appeals/${appealId}?include=all`)
+							.get(`/appeals/${appealId}/page-details`)
 							.reply(200, {
 								...appealData,
 								appealId,
@@ -7107,7 +7163,7 @@ describe('appeal-details', () => {
 
 			it('should not render the Inquiry accordion for HAS cases', async () => {
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealData,
 						appealId,
@@ -7129,7 +7185,7 @@ describe('appeal-details', () => {
 				const appealId = '123';
 				const appealDetails = { ...appealData, appealId, procedureType: 'inquiry' };
 
-				nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appealDetails);
+				nock('http://test/').get(`/appeals/${appealId}/page-details`).reply(200, appealDetails);
 				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 
 				const response = await request.get(`/appeals-service/appeal-details/${appealId}`);
@@ -7141,7 +7197,7 @@ describe('appeal-details', () => {
 
 			it('should render the Site accordion for HAS cases', async () => {
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealData,
 						completedStateList: ['ready_to_start'],
@@ -7162,7 +7218,7 @@ describe('appeal-details', () => {
 			for (const procedureType of [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.HEARING]) {
 				it(`should not render the Inquiry accordion for s78 cases with a procedureType of ${procedureType}`, async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId,
@@ -7194,7 +7250,7 @@ describe('appeal-details', () => {
 			for (const procedureType of [APPEAL_CASE_PROCEDURE.HEARING, APPEAL_CASE_PROCEDURE.INQUIRY]) {
 				it(`should not render the site accordion for s78 cases with a procedureType of ${procedureType}`, async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							appealId,
@@ -7225,7 +7281,7 @@ describe('appeal-details', () => {
 
 			it('should render the Inquiry accordion with the expected content for s78 cases with a procedureType of "Inquiry"', async () => {
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealDataFullPlanning,
 						appealId,
@@ -7261,7 +7317,7 @@ describe('appeal-details', () => {
 
 			it('should not render the Inquiry accordion for enforcement notice child cases with a procedureType of "Inquiry"', async () => {
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealDataEnforcementNotice,
 						appealId,
@@ -7282,6 +7338,7 @@ describe('appeal-details', () => {
 			});
 
 			it('should render the inquiry details summary list when inquiry is present with address', async () => {
+				const appealId = 3;
 				nock('http://test/')
 					.get(
 						`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence`
@@ -7295,7 +7352,7 @@ describe('appeal-details', () => {
 					});
 
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealDataFullPlanning,
 						appealId,
@@ -7418,7 +7475,7 @@ describe('appeal-details', () => {
 					});
 
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealDataFullPlanning,
 						appealId,
@@ -7495,7 +7552,7 @@ describe('appeal-details', () => {
 					});
 
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealDataFullPlanning,
 						appealId,
@@ -7546,7 +7603,7 @@ describe('appeal-details', () => {
 
 			it('should render the inquiry details summary list with cancel inquiry when inquiry date is in the future', async () => {
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealDataFullPlanning,
 						appealId,
@@ -7584,7 +7641,7 @@ describe('appeal-details', () => {
 			});
 			it('should render the inquiry details summary list with setup inquiry when there is no inquiry', async () => {
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, {
 						...appealDataFullPlanning,
 						appealId,
@@ -7624,7 +7681,7 @@ describe('appeal-details', () => {
 
 			it('should render the cancel appeal section if appeal status is not withdrawn or invalid', async () => {
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, { ...appealData, appealStatus: APPEAL_CASE_STATUS.VALIDATION });
 				const response = await request.get(`${baseUrl}/${appealId}?backUrl=/some-back-link`);
 
@@ -7641,7 +7698,7 @@ describe('appeal-details', () => {
 			it('should not render the cancel appeal section if appeal status is withdrawn', async () => {
 				const appealId = appealData.appealId.toString();
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, { ...appealData, appealStatus: APPEAL_CASE_STATUS.WITHDRAWN });
 				const response = await request.get(`${baseUrl}/${appealId}`);
 
@@ -7654,7 +7711,7 @@ describe('appeal-details', () => {
 			it('should not render the cancel appeal section if appeal status is invalid', async () => {
 				const appealId = appealData.appealId.toString();
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
+					.get(`/appeals/${appealId}/page-details`)
 					.reply(200, { ...appealData, appealStatus: APPEAL_CASE_STATUS.INVALID });
 				const response = await request.get(`${baseUrl}/${appealId}`);
 
@@ -7680,7 +7737,7 @@ describe('appeal-details', () => {
 
 		it('should render the site visit section with correct link after site visit data has passed and decision has not been issued', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=all`)
+				.get(`/appeals/${appealId}/page-details`)
 				.reply(200, { ...appealData, completedStateList: [APPEAL_CASE_STATUS.READY_TO_START] });
 			const response = await request.get(`${baseUrl}/${appealId}`);
 
@@ -7693,7 +7750,7 @@ describe('appeal-details', () => {
 		});
 		it('should render the site visit section with no links after site visit data has passed and decision has been issued', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=all`)
+				.get(`/appeals/${appealId}/page-details`)
 				.reply(200, {
 					...appealData,
 					completedStateList: ['ready_to_start', 'issue_determination']
@@ -7711,7 +7768,7 @@ describe('appeal-details', () => {
 
 		it('should render the site visit section with correct link before site visit', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=all`)
+				.get(`/appeals/${appealId}/page-details`)
 				.reply(200, {
 					...appealData,
 					completedStateList: ['ready_to_start'],
@@ -7741,7 +7798,7 @@ describe('appeal-details', () => {
 			const siteVisitStartTime = new Date('2025-06-04T07:00:00Z');
 			const siteVisitEndTime = new Date('2025-06-04T09:00:00Z');
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=all`)
+				.get(`/appeals/${appealId}/page-details`)
 				.reply(200, {
 					...appealData,
 					completedStateList: ['ready_to_start'],
@@ -7773,7 +7830,7 @@ describe('appeal-details', () => {
 			const siteVisitStartTime = new Date('2025-12-04T08:00:00Z');
 			const siteVisitEndTime = new Date('2025-12-04T10:00:00Z');
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=all`)
+				.get(`/appeals/${appealId}/page-details`)
 				.reply(200, {
 					...appealData,
 					completedStateList: ['ready_to_start'],
@@ -7799,7 +7856,7 @@ describe('appeal-details', () => {
 
 		it('should render no links when site visit is not set up', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=all`)
+				.get(`/appeals/${appealId}/page-details`)
 				.reply(200, {
 					...appealData,
 					completedStateList: ['ready_to_start'],
@@ -7827,7 +7884,7 @@ describe('appeal-details', () => {
 				`should not render the site visit section for %s cases with a procedureType of ${procedureType}`,
 				async (_, specificAppealTypeData) => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
+						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...specificAppealTypeData,
 							procedureType: procedureType,
@@ -7870,7 +7927,7 @@ describe('appeal-details', () => {
 
 		it('should render the site visit section when the appeal has procedure type: undefined (and so is written)', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=all`)
+				.get(`/appeals/${appealId}/page-details`)
 				.reply(200, {
 					...appealData,
 					procedureType: undefined,
@@ -7890,7 +7947,7 @@ describe('appeal-details', () => {
 		it('should render the correct rows', async () => {
 			const appealId = 2;
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=all`)
+				.get(`/appeals/${appealId}/page-details`)
 				.reply(200, {
 					...appealData,
 					appealId
@@ -7961,7 +8018,7 @@ describe('appeal-details', () => {
 		it('should render the correct rows for an inquiry appeal', async () => {
 			const appealId = 2;
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=all`)
+				.get(`/appeals/${appealId}/page-details`)
 				.reply(200, {
 					...appealDataFullPlanning,
 					appealId,
@@ -8064,7 +8121,7 @@ describe('appeal-details', () => {
 		const appealId = '2';
 
 		nock('http://test/')
-			.get(`/appeals/${appealId}?include=all`)
+			.get(`/appeals/${appealId}/page-details`)
 			.reply(200, {
 				...appealData,
 				appealId

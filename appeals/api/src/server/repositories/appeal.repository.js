@@ -1076,11 +1076,381 @@ const getAppealReference = async (appealId) => {
 	return appeal?.reference ?? '';
 };
 
+/**
+ * @type {import('#db-client/models.ts').AppealSelect}
+ **/
+export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
+	id: true,
+	reference: true,
+	currentStatus: true,
+	applicationReference: true,
+	caseCreatedDate: true,
+	caseValidDate: true,
+	caseExtensionDate: true,
+	caseStartedDate: true,
+	withdrawalRequestDate: true,
+	caseResubmittedTypeId: true,
+	caseTransferredId: true,
+	eiaScreeningRequired: true,
+	padsInspectorUserId: true,
+	address: true,
+	procedureType: {
+		select: {
+			name: true
+		}
+	},
+	parentAppeals: {
+		select: {
+			type: true,
+			linkingDate: true,
+			parent: {
+				select: {
+					id: true,
+					reference: true
+				}
+			}
+		}
+	},
+	childAppeals: {
+		select: {
+			type: true,
+			linkingDate: true,
+			child: {
+				select: {
+					id: true,
+					reference: true
+				}
+			}
+		}
+	},
+	neighbouringSites: {
+		select: {
+			id: true,
+			source: true,
+			address: {
+				select: {
+					addressLine1: true,
+					addressLine2: true,
+					addressTown: true,
+					addressCounty: true,
+					postcode: true
+				}
+			}
+		}
+	},
+	allocation: {
+		select: {
+			level: true,
+			band: true
+		}
+	},
+	specialisms: {
+		select: {
+			specialism: {
+				select: {
+					name: true
+				}
+			}
+		}
+	},
+	appellantCase: {
+		select: {
+			id: true,
+			appellantCaseValidationOutcome: true,
+			knowsOtherOwners: true,
+			knowsAllOwners: true,
+			appellantCaseAdvertDetails: true,
+			contactAddress: true,
+			siteSafetyDetails: true,
+			numberOfResidencesNetChange: true,
+			screeningOpinionIndicatesEiaRequired: true,
+			applicationMadeUnderActSection: true,
+			planningObligation: true,
+			statusPlanningObligation: true,
+			enforcementReference: true
+		}
+	},
+	appellant: {
+		select: {
+			id: true,
+			firstName: true,
+			lastName: true,
+			organisationName: true,
+			email: true,
+			phoneNumber: true
+		}
+	},
+	agent: {
+		select: {
+			id: true,
+			firstName: true,
+			lastName: true,
+			organisationName: true,
+			email: true,
+			phoneNumber: true
+		}
+	},
+	lpa: {
+		select: {
+			name: true,
+			email: true
+		}
+	},
+	appealStatus: {
+		select: {
+			status: true,
+			valid: true,
+			createdAt: true
+		}
+	},
+	appealTimetable: {
+		select: {
+			id: true,
+			lpaQuestionnaireDueDate: true,
+			caseResubmissionDueDate: true,
+			ipCommentsDueDate: true,
+			lpaStatementDueDate: true,
+			finalCommentsDueDate: true,
+			s106ObligationDueDate: true,
+			issueDeterminationDate: true,
+			proofOfEvidenceAndWitnessesDueDate: true,
+			caseManagementConferenceDueDate: true,
+			planningObligationDueDate: true,
+			statementOfCommonGroundDueDate: true
+		}
+	},
+	appealType: {
+		select: {
+			id: true,
+			type: true,
+			key: true
+		}
+	},
+	assignedTeam: {
+		select: {
+			id: true,
+			name: true,
+			email: true
+		}
+	},
+	caseOfficer: {
+		select: {
+			azureAdUserId: true
+		}
+	},
+	inspector: {
+		select: {
+			azureAdUserId: true
+		}
+	},
+	inspectorDecision: {
+		select: {
+			outcome: true,
+			decisionLetterGuid: true,
+			caseDecisionOutcomeDate: true,
+			invalidDecisionReason: true
+		}
+	},
+	lpaQuestionnaire: {
+		select: {
+			id: true,
+			lpaqCreatedDate: true,
+			lpaQuestionnaireValidationOutcome: {
+				select: {
+					name: true
+				}
+			},
+			siteSafetyDetails: true
+		}
+	},
+	siteVisit: {
+		where: {
+			whoMissedSiteVisit: null
+		},
+		select: {
+			id: true,
+			visitDate: true,
+			visitStartTime: true,
+			visitEndTime: true,
+			siteVisitType: {
+				select: {
+					name: true
+				}
+			}
+		}
+	},
+	hearing: {
+		select: {
+			id: true,
+			hearingStartTime: true,
+			hearingEndTime: true,
+			estimatedDays: true,
+			addressId: true,
+			address: {
+				select: {
+					addressLine1: true,
+					addressLine2: true,
+					addressTown: true,
+					addressCounty: true,
+					postcode: true
+				}
+			}
+		}
+	},
+	inquiry: {
+		select: {
+			id: true,
+			inquiryStartTime: true,
+			inquiryEndTime: true,
+			addressId: true,
+			estimatedDays: true,
+			address: {
+				select: {
+					addressLine1: true,
+					addressLine2: true,
+					addressTown: true,
+					addressCounty: true,
+					postcode: true
+				}
+			}
+		}
+	},
+	representations: {
+		select: {
+			id: true,
+			representationType: true,
+			dateCreated: true,
+			isRedacted: true,
+			representedId: true,
+			status: true
+		}
+	},
+	hearingEstimate: {
+		select: {
+			id: true,
+			preparationTime: true,
+			sittingTime: true,
+			reportingTime: true
+		}
+	},
+	inquiryEstimate: {
+		select: {
+			id: true,
+			preparationTime: true,
+			sittingTime: true,
+			reportingTime: true
+		}
+	},
+	appealGrounds: {
+		where: {
+			isDeleted: false
+		},
+		select: {
+			factsForGround: true,
+			isDeleted: true,
+			ground: {
+				select: {
+					groundRef: true,
+					groundDescription: true
+				}
+			}
+		}
+	},
+	appealRule6Parties: {
+		select: {
+			id: true,
+			serviceUser: {
+				select: {
+					id: true,
+					organisationName: true,
+					email: true
+				}
+			}
+		}
+	},
+	enforcementNoticeAppealOutcome: {
+		select: {
+			id: true,
+			groundABarred: true,
+			otherInformation: true,
+			enforcementNoticeInvalid: true,
+			otherLiveAppeals: true,
+			groundAFeeReceiptDueDate: true
+		}
+	},
+	folders: {
+		select: {
+			id: true,
+			path: true,
+			caseId: true,
+			_count: {
+				select: {
+					documents: {
+						where: {
+							isDeleted: false
+						}
+					}
+				}
+			},
+			documents: {
+				where: {
+					isDeleted: false
+				},
+				orderBy: {
+					createdAt: 'desc'
+				},
+				take: 1,
+				select: {
+					guid: true,
+					name: true,
+					isDeleted: true,
+					latestDocumentVersion: {
+						select: {
+							documentGuid: true,
+							dateReceived: true,
+							isDeleted: true,
+							stage: true,
+							documentType: true
+						}
+					}
+				}
+			}
+		}
+	},
+	caseNotes: {
+		include: {
+			user: true
+		},
+		orderBy: {
+			createdAt: 'desc'
+		}
+	}
+};
+
+/**
+ * @param {number} id
+ * @returns {Promise<Appeal|undefined>}
+ */
+const getAppealByIdForPageDisplay = async (id) => {
+	const appeal = await databaseConnector.appeal.findUnique({
+		where: {
+			id
+		},
+		select: appealDetailsPageDisplaySelect
+	});
+
+	if (appeal) {
+		// @ts-ignore
+		return appeal;
+	}
+};
+
 export default {
 	checkAppealExistsById,
 	getLinkedAppeals,
 	getLinkedAppealsById,
 	getAppealById,
+	getAppealByIdForPageDisplay,
 	deprecatedGetAppealById,
 	getAppealTypeById,
 	deprecatedGetAppealByAppealReference,

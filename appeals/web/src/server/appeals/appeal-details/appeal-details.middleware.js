@@ -2,7 +2,8 @@ import { areIdParamsValid } from '#lib/validators/id-param.validator.js';
 import {
 	checkAppealExists,
 	deprecatedGetAppealDetailsFromId,
-	getAppealDetailsFromId
+	getAppealDetailsFromId,
+	getAppealDetailsPageFromId
 } from './appeal-details.service.js';
 
 /**
@@ -77,6 +78,37 @@ export const validateAppealWithInclude =
 			}
 		}
 	};
+
+/**
+ * @type {import("express").RequestHandler}
+ */
+export const validateAppealForAppealDetailsPage = async (req, res, next) => {
+	const { appealId, caseId } = req.params;
+
+	if (!areIdParamsValid(appealId || caseId)) {
+		return res.status(400).render('app/400.njk');
+	}
+
+	if (req.currentAppeal) {
+		throw new Error('validateAppealForAppealDetailsPage should only be called once per request');
+	}
+
+	try {
+		const appeal = await getAppealDetailsPageFromId(req.apiClient, appealId || caseId);
+		if (!appeal) {
+			return res.status(404).render('app/404.njk');
+		}
+		req.currentAppeal = appeal;
+		next();
+	} catch (/** @type {any} */ error) {
+		switch (error?.response?.statusCode) {
+			case 404:
+				return res.status(404).render('app/404.njk');
+			default:
+				return res.status(500).render('app/500.njk');
+		}
+	}
+};
 
 /**
  * @type {import("express").RequestHandler}

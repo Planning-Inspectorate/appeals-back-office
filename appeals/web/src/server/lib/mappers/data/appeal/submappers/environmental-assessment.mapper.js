@@ -40,12 +40,13 @@ export const mapEnvironmentalAssessment = (data) => {
 	return documentationFolderTableItem({
 		id,
 		text,
-		statusText: documents?.length
-			? `${documents?.length} document${documents.length === 1 ? '' : 's'}`
+		statusText: environmentalAssessment.documentCount
+			? `${environmentalAssessment.documentCount} document${environmentalAssessment.documentCount === 1 ? '' : 's'}`
 			: 'No documents',
-		receivedText: documents?.length
-			? dateISOStringToDisplayDate(latestReceivedDocument?.latestDocumentVersion.dateReceived)
-			: 'Not applicable',
+		receivedText:
+			documents?.length && latestReceivedDocument?.latestDocumentVersion?.dateReceived
+				? dateISOStringToDisplayDate(latestReceivedDocument.latestDocumentVersion.dateReceived)
+				: 'Not applicable',
 		actionHtml: actionsHtml({
 			id,
 			text,
