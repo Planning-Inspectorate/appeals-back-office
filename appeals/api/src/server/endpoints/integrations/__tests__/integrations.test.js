@@ -136,32 +136,59 @@ describe('/appeals/case-submission', () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue({});
 		});
 		test.each([
-			['HAS', appealIngestionInputHouseholder, validAppellantCase, { id: 1 }],
-			['CAS_PLANNING', appealIngestionInputCasPlanning, validAppellantCaseCasPlanning, { id: 1 }],
-			['S78', appealIngestionInputS78, validAppellantCaseS78, { name: 'Major Casework Officer' }],
-			['S20', appealIngestionInputS20, validAppellantCaseS20, { name: 'Major Casework Officer' }],
+			['HAS', appealIngestionInputHouseholder, validAppellantCase, { id: 1 }, 1],
+			[
+				'CAS_PLANNING',
+				appealIngestionInputCasPlanning,
+				validAppellantCaseCasPlanning,
+				{ id: 1 },
+				1
+			],
+			[
+				'S78',
+				appealIngestionInputS78,
+				validAppellantCaseS78,
+				{ name: 'Major Casework Officer' },
+				1
+			],
+			[
+				'S20',
+				appealIngestionInputS20,
+				validAppellantCaseS20,
+				{ name: 'Major Casework Officer' },
+				1
+			],
 			[
 				'CAS_ADVERTISEMENT',
 				appealIngestionInputCasAdverts,
 				validAppellantCaseCasAdverts,
-				{ id: 1 }
+				{ id: 1 },
+				1
 			],
-			['ADVERTISEMENT', appealIngestionInputAdverts, validAppellantCaseAdverts, { id: 1 }],
+			['ADVERTISEMENT', appealIngestionInputAdverts, validAppellantCaseAdverts, { id: 1 }, 1],
 			[
 				'ENFORCEMENT_NOTICE',
 				appealIngestionInputEnforcementNotice,
 				validAppellantCaseEnforcementNotice,
-				{ id: 1 }
+				{ id: 2 },
+				2
 			],
 			[
 				'ENFORCEMENT_LISTED_BUILDING',
 				appealIngestionInputEnforcementListedBuilding,
 				validAppellantCaseEnforcementListedBuilding,
-				{ id: 1 }
+				{ id: 2 },
+				2
 			]
 		])(
 			'POST valid %s appellant case payload and create appeal',
-			async (appealType, appealIngestionInput, validAppellantCase, expectedTeamQueryParam) => {
+			async (
+				appealType,
+				appealIngestionInput,
+				validAppellantCase,
+				expectedTeamQueryParam,
+				expectedAssignedTeamId
+			) => {
 				const result = createIntegrationMocks(appealIngestionInput);
 				const payload = validAppellantCase;
 				const response = await request.post('/appeals/case-submission').send(payload);
@@ -183,7 +210,7 @@ describe('/appeals/case-submission', () => {
 								createdAt: expect.any(String)
 							}
 						},
-						assignedTeamId: 1
+						assignedTeamId: expectedAssignedTeamId
 					}
 				});
 				expect(databaseConnector.team.findUnique).toHaveBeenCalledWith(
@@ -1288,10 +1315,12 @@ describe('/appeals/representation-submission', () => {
  * @returns {{id: number, reference: string, assignedTeamId: number}}
  */
 const createIntegrationMocks = (/** @type {*} */ appealIngestionInput) => {
+	const caseType = appealIngestionInput.appealType?.connect?.key;
+	const isEnforcementOrLdc = caseType === 'C' || caseType === 'F' || caseType === 'X';
 	const appealCreatedResult = {
 		id: 100,
 		reference: '6000100',
-		assignedTeamId: 1
+		assignedTeamId: isEnforcementOrLdc ? 2 : 1
 	};
 
 	// @ts-ignore
@@ -1303,7 +1332,10 @@ const createIntegrationMocks = (/** @type {*} */ appealIngestionInput) => {
 	// @ts-ignore
 	databaseConnector.appeal.findMany.mockResolvedValue([]);
 	// @ts-ignore
-	databaseConnector.appeal.create.mockResolvedValue({ id: appealCreatedResult.id });
+	databaseConnector.appeal.create.mockResolvedValue({
+		id: appealCreatedResult.id,
+		appealTypeId: 1
+	});
 	// @ts-ignore
 	databaseConnector.appeal.update.mockResolvedValue(appealCreatedResult);
 	// @ts-ignore
@@ -1350,7 +1382,8 @@ const createIntegrationMocks = (/** @type {*} */ appealIngestionInput) => {
 	databaseConnector.user.upsert.mockResolvedValue({ id: 1 });
 	// @ts-ignore
 	databaseConnector.lPA.findUnique.mockResolvedValue({
-		teamId: 1
+		teamId: 1,
+		enforcementTeamId: 2
 	});
 	// @ts-ignore
 	databaseConnector.folder.findMany.mockResolvedValue(
@@ -1375,9 +1408,9 @@ const createIntegrationMocks = (/** @type {*} */ appealIngestionInput) => {
 		{ key: APPEAL_REDACTED_STATUS.NOT_REDACTED }
 	]);
 
-	databaseConnector.appealType.findFirst.mockResolvedValue({
-		appealType: appealIngestionInput.appealType?.connect
-	});
+	databaseConnector.appealType.findFirst.mockResolvedValue(
+		appealIngestionInput.appealType?.connect
+	);
 
 	return appealCreatedResult;
 };

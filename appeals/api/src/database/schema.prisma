@@ -204,14 +204,16 @@ model ProcedureType {
 /// LPA model
 /// Contains information about the Local Planning Authority in the appeal site.
 model LPA {
-  id              Int              @id @default(autoincrement())
-  name            String
-  lpaCode         String           @unique
-  email           String?
-  appeals         Appeal[]
-  representations Representation[] @relation("lpaRepresentation")
-  team            Team?            @relation("team", fields: [teamId], references: [id])
-  teamId          Int?
+  id                Int              @id @default(autoincrement())
+  name              String
+  lpaCode           String           @unique
+  email             String?
+  appeals           Appeal[]
+  representations   Representation[] @relation("lpaRepresentation")
+  team              Team?            @relation("team", fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  teamId            Int?
+  enforcementTeam   Team?            @relation("enforcementTeam", fields: [enforcementTeamId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  enforcementTeamId Int?
 }
 
 /// ServiceUser model
@@ -384,6 +386,7 @@ model AppealGround {
   isDeleted      Boolean @default(false)
 
   @@unique([groundId, appealId])
+  @@index([appealId, isDeleted])
 }
 
 /// AppellantCaseValidationOutcome model
@@ -746,6 +749,7 @@ model LPANotificationMethodsSelected {
   lpaQuestionnaireId    Int
 
   @@id([notificationMethodId, lpaQuestionnaireId])
+  @@index([lpaQuestionnaireId])
 }
 
 /// DesignatedSite model
@@ -949,6 +953,7 @@ model Representation {
   dateLastUpdated                        DateTime                                 @default(now())
   originalRepresentation                 String?                                  @db.NVarChar(Max)
   redactedRepresentation                 String?                                  @db.NVarChar(Max)
+  isRedacted                             Boolean                                  @default(false)
   represented                            ServiceUser?                             @relation("represented", fields: [representedId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   representedId                          Int?
   representative                         ServiceUser?                             @relation("representative", fields: [representativeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -1112,8 +1117,9 @@ model Team {
   name  String  @unique
   email String?
 
-  lpas   LPA[]    @relation("team")
-  Appeal Appeal[]
+  lpas            LPA[]    @relation("team")
+  enforcementLpas LPA[]    @relation("enforcementTeam")
+  Appeal          Appeal[]
 }
 
 /// PersonalList model

@@ -69,10 +69,6 @@ export const mapDocumentationSummary = (data) => {
 
 	const mostRecentIpComment = maxBy(ipComments, (comment) => new Date(comment.dateCreated));
 
-	const redactLPAStatementMatching = checkRedactedText(
-		lpaStatement?.redactedRepresentation || '',
-		lpaStatement?.originalRepresentation || ''
-	);
 	return {
 		appellantCase: {
 			status: formatAppellantCaseDocumentationStatus(appeal),
@@ -93,13 +89,13 @@ export const mapDocumentationSummary = (data) => {
 				status: ipComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
 				receivedAt: mostRecentIpComment?.dateCreated.toISOString() ?? null,
 				counts: countBy(ipComments, 'status'),
-				isRedacted: ipComments.some((comment) => Boolean(comment.redactedRepresentation))
+				isRedacted: ipComments.some((comment) => comment.isRedacted)
 			},
 			lpaStatement: {
 				status: lpaStatement ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
 				receivedAt: lpaStatement?.dateCreated.toISOString() ?? null,
 				representationStatus: lpaStatement?.status ?? null,
-				isRedacted: Boolean(lpaStatement?.redactedRepresentation && redactLPAStatementMatching)
+				isRedacted: lpaStatement?.isRedacted ?? false
 			},
 			rule6PartyStatements: reduce(
 				appeal.appealRule6Parties,
@@ -111,13 +107,7 @@ export const mapDocumentationSummary = (data) => {
 						status: statement ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
 						receivedAt: statement?.dateCreated.toISOString() ?? null,
 						representationStatus: statement?.status ?? null,
-						isRedacted: Boolean(
-							statement?.redactedRepresentation &&
-							checkRedactedText(
-								statement?.originalRepresentation || '',
-								statement?.redactedRepresentation || ''
-							)
-						),
+						isRedacted: statement?.isRedacted ?? false,
 						organisationName: rule6Party?.serviceUser?.organisationName,
 						rule6PartyId: rule6Party?.id
 					};
@@ -161,13 +151,7 @@ export const mapDocumentationSummary = (data) => {
 						status: proof ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
 						receivedAt: proof?.dateCreated.toISOString() ?? null,
 						representationStatus: proof?.status ?? null,
-						isRedacted: Boolean(
-							proof?.redactedRepresentation &&
-							checkRedactedText(
-								proof?.originalRepresentation || '',
-								proof?.redactedRepresentation || ''
-							)
-						),
+						isRedacted: proof?.isRedacted ?? false,
 						organisationName: rule6Party?.serviceUser?.organisationName,
 						rule6PartyId: rule6Party?.id
 					};

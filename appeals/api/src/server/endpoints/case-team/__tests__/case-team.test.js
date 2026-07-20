@@ -5,6 +5,7 @@ import { mocks } from '#tests/appeals/index.js';
 import { caseTeams } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { jest } from '@jest/globals';
+import { TEAM_NAME_MAP } from '@pins/appeals/constants/common.js';
 import { getTeamEmailFromAppealId } from '../case-team.service.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
 const householdAppeal = mocks.householdAppeal;
@@ -40,6 +41,25 @@ describe('case team routes', () => {
 
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual(caseTeams);
+			});
+
+			it('should exclude Enforcement Appeals Team when querying database', async () => {
+				databaseConnector.team.findMany.mockResolvedValue([]);
+
+				await request.get(`/appeals/case-teams`).set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.team.findMany).toHaveBeenCalledWith({
+					where: {
+						NOT: {
+							name: TEAM_NAME_MAP.ENFORCEMENT_APPEALS_TEAM
+						}
+					},
+					select: {
+						id: true,
+						name: true,
+						email: true
+					}
+				});
 			});
 		});
 	});

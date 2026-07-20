@@ -2,7 +2,6 @@ import { Prisma } from '#db-client/client.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { sendRepresentationReceivedNotifications } from '#endpoints/integrations/integrations.controller.js';
-import representationRepository from '#repositories/representation.repository.js';
 import { isStatePassed } from '#state/transition-state.js';
 import BackOfficeAppError from '#utils/app-error.js';
 import { currentStatus } from '#utils/current-status.js';
@@ -130,31 +129,6 @@ export const getRepresentation = async (req, res) => {
 };
 
 /**
- * @param {Request} req
- * @param {Response} res
- * @returns {Promise<Response>}
- */
-export const addRedactedRepresentation = async (req, res) => {
-	const { repId } = req.params;
-	const { redactedRepresentation } = req.body;
-
-	const rep = await representationRepository.updateRepresentationById(Number(repId), {
-		redactedRepresentation
-	});
-
-	if (!rep) {
-		return res.status(404).send({
-			errors: {
-				repId: ERROR_NOT_FOUND
-			}
-		});
-	}
-
-	await broadcasters.broadcastRepresentation(rep.id, EventType.Update);
-	return res.send(formatRepresentation(rep));
-};
-
-/**
  * @param {Request} request
  * @param {Response} response
  * @returns {Promise<Response>}
@@ -198,7 +172,8 @@ export async function updateRepresentation(request, response) {
 
 	const updatedRep = await representationService.updateRepresentation(
 		parseInt(repId),
-		status === APPEAL_REPRESENTATION_STATUS.PUBLISHED ? { ...request.body, status } : request.body
+		status === APPEAL_REPRESENTATION_STATUS.PUBLISHED ? { ...request.body, status } : request.body,
+		existingRep
 	);
 
 	if (status !== existingRep.status) {
@@ -284,7 +259,7 @@ export const createRepresentation = () => async (req, res) => {
 	}
 
 	const rep = await representationService.createRepresentation(
-		parseInt(appealId),
+		Number.parseInt(appealId, 10),
 		String(req.get('azureAdUserId')),
 		shouldAutoPublish,
 		req.appeal.appealStatus.find((item) => item.valid === true)?.status ?? '',
