@@ -66,6 +66,11 @@ describe('validateFileNameParameter', () => {
 			const result = await runValidation(validator, { document: { fileName: 'file.tar-gz' } });
 			expect(result.isEmpty()).toBe(true);
 		});
+
+		test('accepts filename with parentheses brackets', async () => {
+			const result = await runValidation(validator, { document: { fileName: 'file (1).pdf' } });
+			expect(result.isEmpty()).toBe(true);
+		});
 	});
 
 	describe('optional field handling', () => {
