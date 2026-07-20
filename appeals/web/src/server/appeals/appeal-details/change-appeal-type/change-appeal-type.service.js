@@ -1,5 +1,6 @@
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 import { formatAppealTypeForNotify } from '@pins/appeals/utils/change-appeal-type.js';
 import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
 
@@ -25,7 +26,8 @@ export function getAppealTypes(apiClient, filterEnabled = false) {
  * @returns {Promise<import('#appeals/appeals.types.js').AppealType[]>}
  */
 export function getAppealTypesFromId(apiClient, appealId) {
-	return apiClient.get(`appeals/${appealId}/appeal-types`).json();
+	const ids = assertValidNumericIds({ appealId });
+	return apiClient.get(`appeals/${ids.appealId}/appeal-types`).json();
 }
 
 /**
@@ -42,8 +44,9 @@ export async function postAppealChangeRequest(
 	appealTypeId,
 	appealTypeFinalDate
 ) {
+	const ids = assertValidNumericIds({ appealId });
 	return await apiClient
-		.post(`appeals/${appealId}/appeal-change-request`, {
+		.post(`appeals/${ids.appealId}/appeal-change-request`, {
 			json: { newAppealTypeId: appealTypeId, newAppealTypeFinalDate: appealTypeFinalDate }
 		})
 		.json();
@@ -65,8 +68,9 @@ export async function postAppealResubmitMarkInvalidRequest(
 	appealTypeId,
 	appealTypeFinalDate
 ) {
+	const ids = assertValidNumericIds({ appealId });
 	return await apiClient
-		.post(`appeals/${appealId}/appeal-resubmit-mark-invalid`, {
+		.post(`appeals/${ids.appealId}/appeal-resubmit-mark-invalid`, {
 			json: {
 				newAppealTypeId: appealTypeId,
 				newAppealTypeFinalDate: appealTypeFinalDate,
@@ -84,8 +88,9 @@ export async function postAppealResubmitMarkInvalidRequest(
  * @returns {Promise<import('./change-appeal-type.types.js').ChangeAppealTypeRequest>}
  */
 export async function postAppealTransferRequest(apiClient, appealId, appealTypeId) {
+	const ids = assertValidNumericIds({ appealId });
 	return await apiClient
-		.post(`appeals/${appealId}/appeal-transfer-request`, {
+		.post(`appeals/${ids.appealId}/appeal-transfer-request`, {
 			json: { newAppealTypeId: appealTypeId }
 		})
 		.json();
@@ -103,8 +108,9 @@ export async function postAppealTransferConfirmation(
 	appealId,
 	transferredAppealHorizonReference
 ) {
+	const ids = assertValidNumericIds({ appealId });
 	return await apiClient
-		.post(`appeals/${appealId}/appeal-transfer-confirmation`, {
+		.post(`appeals/${ids.appealId}/appeal-transfer-confirmation`, {
 			json: { newAppealReference: transferredAppealHorizonReference }
 		})
 		.json();
@@ -201,8 +207,9 @@ export async function getUpdateAppealRequest(apiClient, appeal, changeAppealType
  * @returns {Promise<void>}
  */
 export async function postAppealUpdateRequest(apiClient, appealId, appealTypeId) {
+	const ids = assertValidNumericIds({ appealId });
 	return await apiClient
-		.post(`appeals/${appealId}/appeal-update-request`, {
+		.post(`appeals/${ids.appealId}/appeal-update-request`, {
 			json: { newAppealTypeId: appealTypeId }
 		})
 		.json();

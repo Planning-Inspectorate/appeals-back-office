@@ -1,5 +1,6 @@
 import logger from '#lib/logger.js';
 import { fileType } from '#lib/nunjucks-filters/mime-type.js';
+import { assertValidIds, assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo */
 /** @typedef {import('@pins/appeals.api').Appeals.DocumentInfo} DocumentInfo */
@@ -12,7 +13,8 @@ import { fileType } from '#lib/nunjucks-filters/mime-type.js';
  */
 export const getAllCaseFolders = async (apiClient, appealId) => {
 	try {
-		const bulkLocationInfo = await apiClient.get(`appeals/${appealId}/document-folders`).json();
+		const ids = assertValidNumericIds({ appealId });
+		const bulkLocationInfo = await apiClient.get(`appeals/${ids.appealId}/document-folders`).json();
 		return bulkLocationInfo;
 	} catch {
 		return undefined;
@@ -28,8 +30,9 @@ export const getAllCaseFolders = async (apiClient, appealId) => {
  */
 export const getFolder = async (apiClient, appealId, folderId, repId) => {
 	try {
+		const ids = assertValidNumericIds({ appealId, folderId });
 		const query = repId ? `?repId=${repId}` : '';
-		const url = `appeals/${appealId}/document-folders/${folderId}${query}`;
+		const url = `appeals/${ids.appealId}/document-folders/${folderId}${query}`;
 
 		const locationInfo = await apiClient.get(url).json();
 		return locationInfo;
@@ -45,8 +48,9 @@ export const getFolder = async (apiClient, appealId, folderId, repId) => {
  * @returns {Promise<FolderInfo|undefined>}
  * */
 export const getAttachmentsFolder = async (apiClient, appealId, folderPath) => {
+	const ids = assertValidNumericIds({ appealId });
 	const folders = await apiClient
-		.get(`appeals/${appealId}/document-folders?path=${folderPath}`)
+		.get(`appeals/${ids.appealId}/document-folders?path=${folderPath}`)
 		.json();
 	if (!(folders && folders.length > 0)) {
 		throw new Error(`failed to find folder for appeal ID ${appealId}`);
@@ -62,7 +66,8 @@ export const getAttachmentsFolder = async (apiClient, appealId, folderPath) => {
  */
 export const getFileInfo = async (apiClient, fileGuid) => {
 	try {
-		return await apiClient.get(`appeals/documents/${fileGuid}`).json();
+		const ids = assertValidIds({ fileGuid });
+		return await apiClient.get(`appeals/documents/${ids.fileGuid}`).json();
 	} catch {
 		return undefined;
 	}
@@ -75,7 +80,8 @@ export const getFileInfo = async (apiClient, fileGuid) => {
  */
 export const getFileVersionsInfo = async (apiClient, fileGuid) => {
 	try {
-		return await apiClient.get(`appeals/documents/${fileGuid}/versions`).json();
+		const ids = assertValidIds({ fileGuid });
+		return await apiClient.get(`appeals/documents/${ids.fileGuid}/versions`).json();
 	} catch {
 		return undefined;
 	}
@@ -140,8 +146,10 @@ export const getDocumentRedactionStatuses = async (apiClient) => {
 
 export const updateDocument = async (apiClient, appealId, documentDetail) => {
 	try {
+		const ids = assertValidNumericIds({ appealId });
+		assertValidIds({ id: documentDetail.document.id });
 		return await apiClient
-			.patch(`appeals/${appealId}/documents/${documentDetail.document.id}`, {
+			.patch(`appeals/${ids.appealId}/documents/${documentDetail.document.id}`, {
 				json: {
 					document: documentDetail.document,
 					sharingDocumentType: documentDetail.sharingDocumentType,
@@ -184,8 +192,9 @@ export const updateDocument = async (apiClient, appealId, documentDetail) => {
  */
 export const updateDocuments = async (apiClient, appealId, documentDetails) => {
 	try {
+		const ids = assertValidNumericIds({ appealId });
 		return await apiClient
-			.patch(`appeals/${appealId}/documents`, {
+			.patch(`appeals/${ids.appealId}/documents`, {
 				json: documentDetails
 			})
 			.json();
@@ -208,6 +217,7 @@ export const updateDocuments = async (apiClient, appealId, documentDetails) => {
  */
 export const deleteDocument = async (apiClient, documentId, versionId, appellantCaseId) => {
 	try {
+		assertValidIds({ documentId, versionId });
 		return await apiClient
 			.delete(`appeals/documents/${documentId}/${versionId}`, {
 				json: { appellantCaseId }
@@ -230,7 +240,8 @@ export const deleteDocument = async (apiClient, documentId, versionId, appellant
  */
 export const getRepresentationAttachments = async (apiClient, appealId) => {
 	try {
-		return await apiClient.get(`appeals/${appealId}/reps`).json();
+		const ids = assertValidNumericIds({ appealId });
+		return await apiClient.get(`appeals/${ids.appealId}/reps`).json();
 	} catch (error) {
 		logger.error(
 			error,

@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /**
  * @param {import('got').Got} apiClient
  * @param {string} appealId
@@ -11,7 +12,8 @@ export function changeWrittenOrVerbalPermission(
 	appellantCaseId,
 	updatedValue
 ) {
-	return apiClient.patch(`appeals/${appealId}/appellant-cases/${appellantCaseId}`, {
+	const ids = assertValidNumericIds({ appealId, appellantCaseId });
+	return apiClient.patch(`appeals/${ids.appealId}/appellant-cases/${ids.appellantCaseId}`, {
 		json: {
 			writtenOrVerbalPermission: updatedValue
 		}

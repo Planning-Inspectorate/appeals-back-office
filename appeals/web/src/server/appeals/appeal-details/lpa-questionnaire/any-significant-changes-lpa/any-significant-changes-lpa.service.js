@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /**
  * @param {import('got').Got} apiClient
  * @param {string} appealId
@@ -11,7 +12,8 @@ export function changeSignificantChangesLpa(
 	lpaQuestionnaireId,
 	updatedValues
 ) {
-	return apiClient.patch(`appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`, {
+	const ids = assertValidNumericIds({ appealId, lpaQuestionnaireId });
+	return apiClient.patch(`appeals/${ids.appealId}/lpa-questionnaires/${ids.lpaQuestionnaireId}`, {
 		json: {
 			anySignificantChangesLpa: updatedValues.anySignificantChangesLpa,
 			anySignificantChangesLpa_localPlanSignificantChanges:

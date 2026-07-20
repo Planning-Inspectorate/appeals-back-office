@@ -3,6 +3,7 @@ import {
 	getSingularRepresentationByType
 } from '#appeals/appeal-details/representations/representations.service.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import { formatProofOfEvidenceTypeText } from './view-and-review/view-and-review.mapper.js';
 
@@ -105,7 +106,8 @@ export const withRule6PartyRepresentation = async (req, res, next) => {
 			return res.status(404).render('app/404.njk');
 		}
 
-		const url = `appeals/${appealId}/reps?type=${APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE}`;
+		const ids = assertValidNumericIds({ appealId });
+		const url = `appeals/${ids.appealId}/reps?type=${APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE}`;
 		const apiResponse = await apiClient.get(url).json();
 		const representation = apiResponse.items?.find(
 			(/** @type {any} */ rep) => rep.representedId === currentRule6Party.serviceUserId

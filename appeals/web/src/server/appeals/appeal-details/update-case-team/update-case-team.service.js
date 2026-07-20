@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /**
  * @param {import('got').Got} apiClient
  * @returns {Promise<(import('@pins/appeals.api').Api.CaseTeams)>}
@@ -13,7 +14,8 @@ export async function getTeamList(apiClient) {
  * @returns {Promise<{}>}
  */
 export async function postUpdateTeam(apiClient, appealId, teamId) {
-	return apiClient.patch(`appeals/${appealId}/case-team`, {
+	const ids = assertValidNumericIds({ appealId });
+	return apiClient.patch(`appeals/${ids.appealId}/case-team`, {
 		json: {
 			teamId: teamId
 		}
@@ -26,5 +28,6 @@ export async function postUpdateTeam(apiClient, appealId, teamId) {
  * @returns {Promise<{email:string}>}
  */
 export async function getTeamFromAppealId(apiClient, appealId) {
-	return apiClient.get(`appeals/${appealId}/case-team-email`).json();
+	const ids = assertValidNumericIds({ appealId });
+	return apiClient.get(`appeals/${ids.appealId}/case-team-email`).json();
 }
