@@ -27,7 +27,6 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	MANUALLY_ADD_REPS: 'featureFlagManuallyAddReps',
 	APPELLANT_STATEMENT: 'featureFlagAppellantStatement',
 	RULE_6_STATEMENT: 'featureFlagRule6Statement',
-	LDC: 'featureFlagLDC',
 	S20_HEARING: 'featureFlagS20Hearing',
 	S20_INQUIRY: 'featureFlagS20Inquiry',
 	ENFORCEMENT_HEARING: 'featureFlagEnforcementNoticeHearing',

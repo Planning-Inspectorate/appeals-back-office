@@ -102,9 +102,6 @@ function createDataMap(mappingRequest) {
 			return mergeMaps(caseData, enforcement);
 		}
 		case APPEAL_CASE_TYPE.X: {
-			if (!isFeatureActive(FEATURE_FLAG_NAMES.LDC)) {
-				return caseData;
-			}
 			const ldc = createMap(apiMappers.apiLdcMappers, mappingRequest);
 			return mergeMaps(caseData, ldc);
 		}
@@ -164,9 +161,6 @@ function createIntegrationMap(mappingRequest) {
 			return mergeMaps(caseData, enforcement);
 		}
 		case APPEAL_CASE_TYPE.X: {
-			if (!isFeatureActive(FEATURE_FLAG_NAMES.LDC)) {
-				return caseData;
-			}
 			const ldc = createMap(integrationMappers.integrationLDCMappers, mappingRequest);
 			return mergeMaps(caseData, ldc);
 		}
