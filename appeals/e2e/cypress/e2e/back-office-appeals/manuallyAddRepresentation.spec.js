@@ -51,7 +51,7 @@ describe('Manually Add a rep', () => {
 				'LPA statement',
 				'Accepted'
 			);
-			caseDetailsPage.shareIpAndLpaComments();
+			caseDetailsPage.shareStatements();
 			caseDetailsPage.verifyDocumentationValue(
 				'documentation',
 				'Status',

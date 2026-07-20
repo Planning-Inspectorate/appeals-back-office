@@ -485,8 +485,7 @@ describe('Site visit', () => {
 				cy.simulateStatementsDeadlineElapsed(leadCaseObj);
 				cy.reload();
 
-				caseDetailsPage.basePageElements.bannerLink().click();
-				caseDetailsPage.clickButtonByText('Confirm');
+				caseDetailsPage.shareCommentsAndStatements();
 				caseDetailsPage.checkStatusOfCase('Final comments', 0);
 
 				//add final comments
@@ -623,8 +622,7 @@ describe('Issue Decision', () => {
 					cy.simulateStatementsDeadlineElapsed(leadCaseObj);
 					cy.reload();
 
-					caseDetailsPage.basePageElements.bannerLink().click();
-					caseDetailsPage.clickButtonByText('Confirm');
+					caseDetailsPage.shareCommentsAndStatements();
 					caseDetailsPage.checkStatusOfCase('Final comments', 0);
 
 					//add final comments
@@ -732,8 +730,7 @@ describe('Issue Decision', () => {
 					cy.simulateStatementsDeadlineElapsed(leadCaseObj);
 					cy.reload();
 
-					caseDetailsPage.basePageElements.bannerLink().click();
-					caseDetailsPage.clickButtonByText('Confirm');
+					caseDetailsPage.shareCommentsAndStatements();
 					caseDetailsPage.checkStatusOfCase('Final comments', 0);
 
 					//add final comments
@@ -847,8 +844,7 @@ describe('Issue Decision', () => {
 					cy.simulateStatementsDeadlineElapsed(leadCaseObj);
 					cy.reload();
 
-					caseDetailsPage.basePageElements.bannerLink().click();
-					caseDetailsPage.clickButtonByText('Confirm');
+					caseDetailsPage.shareCommentsAndStatements();
 					caseDetailsPage.checkStatusOfCase('Final comments', 0);
 
 					//add final comments

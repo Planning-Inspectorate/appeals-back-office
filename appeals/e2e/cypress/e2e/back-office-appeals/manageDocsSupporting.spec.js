@@ -117,8 +117,7 @@ describe('add supporting documents', () => {
 			cy.simulateStatementsDeadlineElapsed(caseObj);
 			cy.simulateDocumentsScanComplete(caseObj);
 
-			caseDetailsPage.basePageElements.bannerLink().click();
-			caseDetailsPage.clickButtonByText('Confirm');
+			caseDetailsPage.shareCommentsAndStatements();
 			caseDetailsPage.checkStatusOfCase('Final comments', 0);
 			cy.loadAppealDetails(caseObj).then((appealData) => {
 				const serviceUserId = ((appealData?.appellant?.serviceUserId ?? 0) + 200000000).toString();
@@ -129,8 +128,7 @@ describe('add supporting documents', () => {
 			cy.simulateFinalCommentsDeadlineElapsed(caseObj);
 			cy.simulateDocumentsScanComplete(caseObj);
 
-			caseDetailsPage.basePageElements.bannerLink().click();
-			caseDetailsPage.clickButtonByText('Share final comments');
+			caseDetailsPage.shareFinalComments();
 			caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
 			caseDetailsPage.clickIndividualLinkWhenMultipleTable('Appellant final comments', 'View');
 			caseDetailsPage.clickLinkByText('Manage');
