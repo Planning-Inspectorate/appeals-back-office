@@ -1,11 +1,16 @@
 import { isDefined } from '#lib/ts-utilities.js';
+import { beforeExpeditedOriginalApplicationCutOff } from '@pins/appeals/utils/appeal-type-checks.js';
 
 /**
  *
  * @param {{lpaq: MappedInstructions}} mappedLPAQData
+ * @param {String|undefined|null} submissionDate
  * @returns {PageComponent[]}
  */
-export const generateCasAdvertLpaQuestionnaireComponents = (mappedLPAQData) => {
+export const generateCasAdvertLpaQuestionnaireComponents = (
+	mappedLPAQData,
+	submissionDate = ''
+) => {
 	/** @type {PageComponent[]} */
 	const pageComponents = [];
 
@@ -148,10 +153,37 @@ export const generateCasAdvertLpaQuestionnaireComponents = (mappedLPAQData) => {
 				mappedLPAQData.lpaq?.procedurePreferenceDetails?.display.summaryListItem,
 				mappedLPAQData.lpaq?.procedurePreferenceDuration?.display.summaryListItem,
 				mappedLPAQData.lpaq?.otherAppeals?.display.summaryListItem,
+				!beforeExpeditedOriginalApplicationCutOff(submissionDate) && submissionDate
+					? mappedLPAQData.lpaq?.anySignificantChangesLpa?.display.summaryListItem
+					: undefined,
 				mappedLPAQData.lpaq?.extraConditions?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});
+
+	if (!beforeExpeditedOriginalApplicationCutOff(submissionDate) && submissionDate) {
+		pageComponents.push({
+			/** @type {'summary-list'} */
+			type: 'summary-list',
+			wrapperHtml: {
+				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+				closing: '</div></div>'
+			},
+			parameters: {
+				card: {
+					title: {
+						text: '8. Original Evidence'
+					}
+				},
+				rows: [
+					mappedLPAQData.lpaq?.designAccessStatementLpa?.display.summaryListItem,
+					mappedLPAQData.lpaq?.plansDrawingsLpa?.display.summaryListItem,
+					mappedLPAQData.lpaq?.additionalDocumentsLpa?.display.summaryListItem,
+					mappedLPAQData.lpaq?.listOfDocumentsBeforeDecision?.display.summaryListItem
+				].filter(isDefined)
+			}
+		});
+	}
 
 	return pageComponents;
 };

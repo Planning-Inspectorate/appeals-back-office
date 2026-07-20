@@ -54,6 +54,8 @@ try {
 const mapTemplateDataForView = (templateName, templateData) => {
 	switch (templateName) {
 		case 'lpa-questionnaire-pdf':
+			templateData.lpaQuestionnaireData.applicationDate =
+				templateData?.appellantCaseData?.applicationDate;
 			return mapQuestionnaireData(templateData.lpaQuestionnaireData);
 		case 'appellant-case-pdf':
 			return mapAppellantCaseData(templateData.appellantCaseData);

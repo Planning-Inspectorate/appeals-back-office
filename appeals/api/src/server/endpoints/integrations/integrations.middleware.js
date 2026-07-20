@@ -225,7 +225,12 @@ const loadReferenceData = async (reference, useLeadAppealIfLinked = false) => {
 				},
 				inquiry: true,
 				appealTimetable: true,
-				address: true
+				address: true,
+				appellantCase: {
+					select: {
+						applicationDate: true
+					}
+				}
 			}
 		});
 

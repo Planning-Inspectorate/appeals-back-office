@@ -912,6 +912,75 @@ describe('mapQuestionnaireIn', () => {
 			})
 		},
 		{
+			desc: 'CAS adverts case expedited(ZA)',
+			input: {
+				casedata: {
+					caseType: APPEAL_CASE_TYPE.ZA,
+					lpaQuestionnaireSubmittedDate: '2026-10-22',
+					siteAccessDetails: ['access1'],
+					siteSafetyDetails: ['safety1'],
+					notificationMethod: ['post'],
+					affectedListedBuildingNumbers: ['LB1'],
+					designatedSitesNames: ['siteA'],
+					affectsScheduledMonument: true,
+					hasProtectedSpecies: true,
+					isAonbNationalLandscape: true,
+					hasStatutoryConsultees: true,
+					consultedBodiesDetails: 'details',
+					hasEmergingPlan: true,
+					lpaProcedurePreference: 'written',
+					lpaProcedurePreferenceDetails: 'preference details',
+					lpaProcedurePreferenceDuration: 12,
+					siteWithinSSSI: true,
+					isSiteInAreaOfSpecialControlAdverts: true,
+					wasApplicationRefusedDueToHighwayOrTraffic: true,
+					didAppellantSubmitCompletePhotosAndPlans: true,
+					significantChangesAffectingApplicationLpa: [
+						{ value: 'adopted-a-new-local-plan', comment: 'lp' },
+						{ value: 'national-policy-change', comment: 'np' },
+						{ value: 'court-judgement', comment: 'cj' },
+						{ value: 'other', comment: 'o' }
+					],
+					listOfDocumentsBeforeDecision: 'docs'
+				},
+				appeal: {
+					appellantCase: {
+						applicationDate: '2026-10-22'
+					}
+				}
+			},
+			expected: expect.objectContaining({
+				lpaQuestionnaireSubmittedDate: '2026-10-22',
+				siteAccessDetails: 'access1',
+				siteSafetyDetails: 'safety1',
+				listedBuildingDetails: { create: [{ listEntry: 'LB1', affectsListedBuilding: true }] },
+				lpaNotificationMethods: {
+					create: [{ lpaNotificationMethod: { connect: { key: 'post' } } }]
+				},
+				designatedSiteNames: {
+					create: [{ designatedSite: { connect: { key: 'siteA' } } }]
+				},
+				affectsScheduledMonument: true,
+				hasProtectedSpecies: true,
+				isAonbNationalLandscape: true,
+				hasStatutoryConsultees: true,
+				consultedBodiesDetails: 'details',
+				hasEmergingPlan: true,
+				lpaProcedurePreference: 'written',
+				lpaProcedurePreferenceDetails: 'preference details',
+				lpaProcedurePreferenceDuration: 12,
+				isSiteInAreaOfSpecialControlAdverts: true,
+				wasApplicationRefusedDueToHighwayOrTraffic: true,
+				didAppellantSubmitCompletePhotosAndPlans: true,
+				anySignificantChangesLpa: 'Yes',
+				anySignificantChangesLpa_otherSignificantChanges: 'o',
+				anySignificantChangesLpa_localPlanSignificantChanges: 'lp',
+				anySignificantChangesLpa_nationalPolicySignificantChanges: 'np',
+				anySignificantChangesLpa_courtJudgementSignificantChanges: 'cj',
+				listOfDocumentsBeforeDecision: 'docs'
+			})
+		},
+		{
 			desc: 'CAS adverts case (H)',
 			input: {
 				casedata: {
@@ -1033,7 +1102,11 @@ describe('mapQuestionnaireIn', () => {
 			})
 		}
 	])('mapQuestionnaireIn: $desc', ({ input, expected }) => {
-		const result = mapQuestionnaireIn(input, designatedSites);
+		const result = mapQuestionnaireIn(
+			input,
+			designatedSites,
+			input.appeal?.appellantCase?.applicationDate || null
+		);
 		expect(result).toMatchObject(expected);
 	});
 });
