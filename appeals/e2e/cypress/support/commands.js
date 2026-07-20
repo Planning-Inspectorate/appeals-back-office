@@ -200,6 +200,14 @@ Cypress.Commands.add('simulateFinalCommentsDeadlineElapsed', (caseObj) => {
 	});
 });
 
+Cypress.Commands.add('rollbackToValidation', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		await appealsApiClient.rollbackToValidation(caseObj.id);
+		cy.log('Rollback to validation endpoint called for ' + caseObj.reference);
+		cy.reload();
+	});
+});
+
 Cypress.Commands.add('simulateDocumentsScanComplete', (caseObj) => {
 	return cy.wrap(null).then(async () => {
 		await appealsApiClient.simulateDocumentScanComplete(caseObj.reference);

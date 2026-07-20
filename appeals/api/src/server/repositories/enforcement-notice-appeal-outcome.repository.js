@@ -19,6 +19,15 @@ const upsertEnforcementNoticeAppealOutcome = (where, data) => {
 	});
 };
 
+/**
+ * @param {number} appealId
+ */
+const deleteEnforcementNoticeAppealOutcomeByAppealId = (appealId) => {
+	return databaseConnector.enforcementNoticeAppealOutcome.deleteMany({ where: {appealId}	});
+};
+
+
 export default {
-	upsertEnforcementNoticeAppealOutcome
+	upsertEnforcementNoticeAppealOutcome,
+	deleteEnforcementNoticeAppealOutcomeByAppealId
 };

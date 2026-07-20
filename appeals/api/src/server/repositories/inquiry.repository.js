@@ -201,4 +201,11 @@ const deleteInquiryById = (id) => {
 	return databaseConnector.inquiry.delete({ where: { id } });
 };
 
-export default { getInquiryById, createInquiryById, updateInquiryById, deleteInquiryById };
+/**
+ * @param {number} appealId
+ */
+const deleteInquiryByAppealId = (appealId) => {
+	return databaseConnector.inquiry.deleteMany({ where: { appealId } });
+};
+
+export default { getInquiryById, createInquiryById, updateInquiryById, deleteInquiryById, deleteInquiryByAppealId };

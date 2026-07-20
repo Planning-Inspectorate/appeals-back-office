@@ -32,6 +32,25 @@ const getAppellantCaseByAppealId = async (appealId) => {
 };
 
 /**
+ *
+ * @param {number} appealId
+ * @returns {Promise<number|undefined|null>}
+ */
+const getAppellantCaseIdByAppealId = async (appealId) => {
+	const appellantCaseId = await databaseConnector.appellantCase.findUnique({
+		where: {
+			appealId
+		},
+		select: { id: true }
+	});
+
+	if (appellantCaseId) {
+		// @ts-ignore
+		return appellantCaseId.id;
+	}
+};
+
+/**
  * @param {number} id
  * @param {AppellantCaseUpdateRequest} data
  * @returns {Promise<PrismaPromise<object>>}
@@ -280,8 +299,108 @@ const updateAppellantCaseValidationOutcome = ({
 	return tx;
 };
 
+/**
+ * @param {number} appealId
+ * @param {number} appellantCaseValidationOutcomeId
+ * @returns {PrismaPromise<AppellantCase|undefined|null>}
+ */
+const updateAppellantCaseValidationOutcomeIdByAppealId = (appealId, appellantCaseValidationOutcomeId) => {
+	return databaseConnector.appellantCase.update({
+		data: {
+			appellantCaseValidationOutcomeId
+		},
+		where: {
+			appealId
+		}
+	});
+};
+
+
+/**
+ * @param {number} appellantCaseId
+ */
+const deleteInvalidReasonTextByAppellantCaseId = (appellantCaseId) => {
+	return databaseConnector.appellantCaseInvalidReasonText.deleteMany({ where: { appellantCaseId } });
+};
+
+/**
+ * @param {number} appellantCaseId
+ */
+const deleteInvalidReasonsSelectedByAppellantCaseId = (appellantCaseId) => {
+	return databaseConnector.appellantCaseInvalidReasonsSelected.deleteMany({ where: { appellantCaseId } });
+};
+
+/**
+ * @param {number} appellantCaseId
+ */
+const deleteEnforcementInvalidReasonsSelectedByAppellantCaseId = (appellantCaseId) => {
+	return databaseConnector.appellantCaseEnforcementInvalidReasonsSelected.deleteMany({ where: { appellantCaseId } });
+};
+
+/**
+ * @param {number} appellantCaseId
+ */
+const deleteEnforcementInvalidReasonTextByAppellantCaseId = (appellantCaseId) => {
+	return databaseConnector.appellantCaseEnforcementInvalidReasonText.deleteMany({ where: { appellantCaseId } });
+};
+
+/**
+ * @param {number} appellantCaseId
+ */
+const deleteEnforcementGroundsMismatchFactsSelectedByAppellantCaseId = (appellantCaseId) => {
+	return databaseConnector.appellantCaseEnforcementGroundsMismatchFactsSelected.deleteMany({ where: { appellantCaseId } });
+};
+
+/**
+ * @param {number} appellantCaseId
+ */
+const deleteEnforcementGroundsMismatchFactsTextByAppellantCaseId = (appellantCaseId) => {
+		return databaseConnector.appellantCaseEnforcementGroundsMismatchFactsText.deleteMany({ where: { appellantCaseId } });
+};
+
+/**
+ * @param {number} appellantCaseId
+ */
+const deleteEnforcementMissingDocumentsSelectedByAppellantCaseId = (appellantCaseId) => {
+	return databaseConnector.appellantCaseEnforcementMissingDocumentsSelected.deleteMany({ where: { appellantCaseId } });
+};
+
+/**
+ * @param {number} appellantCaseId
+ */
+const deleteEnforcementMissingDocumentTextByAppellantCaseId = (appellantCaseId) => {
+	return databaseConnector.appellantCaseEnforcementMissingDocumentText.deleteMany({ where: { appellantCaseId } });
+};
+
+/**
+ * @param {number} appellantCaseId
+ */
+const deleteIncompleteReasonsSelectedByAppellantCaseId = (appellantCaseId) => {
+	return databaseConnector.appellantCaseIncompleteReasonsSelected.deleteMany({ where: { appellantCaseId } });
+};
+
+/**
+ * @param {number} appellantCaseId
+ */
+const deleteIncompleteReasonTextByAppellantCaseId = (appellantCaseId) => {
+	return databaseConnector.appellantCaseIncompleteReasonText.deleteMany({ where: { appellantCaseId } });
+};
+
+
 export default {
 	getAppellantCaseByAppealId,
+	getAppellantCaseIdByAppealId,
 	updateAppellantCaseById,
-	updateAppellantCaseValidationOutcome
+	updateAppellantCaseValidationOutcome,
+	updateAppellantCaseValidationOutcomeIdByAppealId,
+	deleteInvalidReasonTextByAppellantCaseId,
+	deleteInvalidReasonsSelectedByAppellantCaseId,
+	deleteEnforcementInvalidReasonsSelectedByAppellantCaseId,
+	deleteEnforcementInvalidReasonTextByAppellantCaseId,
+	deleteEnforcementGroundsMismatchFactsSelectedByAppellantCaseId,
+	deleteEnforcementGroundsMismatchFactsTextByAppellantCaseId,
+	deleteEnforcementMissingDocumentsSelectedByAppellantCaseId,
+	deleteEnforcementMissingDocumentTextByAppellantCaseId,
+	deleteIncompleteReasonsSelectedByAppellantCaseId,
+	deleteIncompleteReasonTextByAppellantCaseId
 };

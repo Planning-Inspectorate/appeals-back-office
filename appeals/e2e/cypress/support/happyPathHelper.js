@@ -50,6 +50,18 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Confirm');
 		cy.wait('@confirmValidDate');
 	},
+	reviewAppellantCaseAsInvalid(caseObj) {
+		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
+		caseDetailsPage.clickReviewAppellantCase();
+		caseDetailsPage.selectRadioButtonByValue('Invalid');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.chooseCheckboxByText('Appeal has not been submitted on time');
+		caseDetailsPage.chooseCheckboxByText('Documents have not been submitted on time');
+		caseDetailsPage.chooseCheckboxByText('The appellant does not have the right to appeal');
+		// caseDetailsPage.chooseCheckboxByText('Other reason');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Confirm');
+	},
 	reviewEnforcementAppellantCase(caseObj) {
 		let dueDate = new Date();
 
@@ -64,6 +76,22 @@ export const happyPathHelper = {
 		dateTimeSection.enterValidDate(dueDate);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Mark appeal as valid');
+	},
+	reviewEnforcementAppellantCaseAsInvalid(caseObj) {
+		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
+		caseDetailsPage.clickReviewAppellantCase();
+		caseDetailsPage.selectRadioButtonByValue('Invalid');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue('No');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.chooseCheckboxByText('Appeal has not been submitted on time');
+		caseDetailsPage.chooseCheckboxByText('Documents have not been submitted on time');
+		caseDetailsPage.chooseCheckboxByText('The appellant does not have the right to appeal');
+		// caseDetailsPage.chooseCheckboxByText('Other reason');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue('No');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Mark appeal as invalid');
 	},
 	reviewLpaq(caseObj, state = 'Complete') {
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);

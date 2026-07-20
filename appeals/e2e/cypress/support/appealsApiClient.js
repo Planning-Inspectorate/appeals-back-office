@@ -429,6 +429,28 @@ export const appealsApiClient = {
 			return false;
 		}
 	},
+	async rollbackToValidation(appealId) {
+		try {
+			const url = `${baseUrl}appeals/${appealId}/appeal-status/roll-back-to-validation`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+
+			expect(response.status).eq(200);
+
+			const responseBody = await response.json();
+			expect(responseBody).to.be.true;
+
+			return responseBody;
+		} catch (error) {
+			cy.writeLog(`Error rolling back to validation for ${appealId}: ${error}`);
+			return false;
+		}
+	},
 	async loadCaseDetails(reference) {
 		try {
 			const url = `${baseUrl}appeals/case-reference/${reference}`;

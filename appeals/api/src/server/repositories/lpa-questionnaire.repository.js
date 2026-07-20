@@ -9,6 +9,25 @@ import commonRepository from './common.repository.js';
  */
 
 /**
+ * @param {number} appealId
+ * @returns {Promise<number|null>}
+ */
+const getLPAQuestionnaireIdByAppealId = async (appealId) => {
+	const lpaQuestionnaire = await databaseConnector.lPAQuestionnaire.findUnique({
+		where: { appealId },
+		select: {
+			id: true
+		}
+	});
+
+	if (lpaQuestionnaire) {
+		return lpaQuestionnaire.id;
+	}
+	return null;
+};
+
+
+/**
  * @param {number} id
  * @param {LpaQuestionnaireUpdateRequest} data
  * @returns {Promise<object>}
@@ -200,4 +219,13 @@ function processDesignatedSites(id, data, transaction) {
 	}
 }
 
-export default { updateLPAQuestionnaireById, updateLpaCostsAppliedFor };
+/**
+ * @param {number} appealId
+ * @returns {PrismaPromise<LPAQuestionnaire>}
+ */
+const deleteLPAQuestionnaireByAppealId = (appealId) =>
+	databaseConnector.lPAQuestionnaire.deleteMany({
+		where: { appealId }
+	});
+
+export default { updateLPAQuestionnaireById, updateLpaCostsAppliedFor, getLPAQuestionnaireIdByAppealId, deleteLPAQuestionnaireByAppealId };

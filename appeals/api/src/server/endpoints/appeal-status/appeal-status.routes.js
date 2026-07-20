@@ -4,7 +4,8 @@ import { Router as createRouter } from 'express';
 import * as controller from './appeal-status.controller.js';
 import {
 	getAppealStatusDateValidator,
-	validateAppealStatusRollBackRequest
+	validateAppealStatusRollBackRequest,
+	validateAppealStatusRollBackToValidationRequest
 } from './appeal-status.validators.js';
 
 const router = createRouter();
@@ -28,9 +29,27 @@ router.post(
         }
         #swagger.responses[400] = {}
 	*/
-	checkAppealExistsByIdAndAddPartialToRequest([]),
+	checkAppealExistsByIdAndAddPartialToRequest(['appealStatus', 'lpaQuestionnaire']),
 	validateAppealStatusRollBackRequest,
 	asyncHandler(controller.rollBackAppealStatus)
+);
+
+router.post(
+	'/:appealId/appeal-status/roll-back-to-validation',
+	/*
+        #swagger.tags = ['Production support']
+        #swagger.path = '/appeals/{appealId}/appeal-status/roll-back-to-validation'
+        #swagger.description = 'Roll back appeal status to validation'
+        #swagger.parameters['azureAdUserId'] = {
+            in: 'header',
+            required: true,
+            example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+        }
+        #swagger.responses[400] = {}
+	*/
+	checkAppealExistsByIdAndAddPartialToRequest(['appealStatus']),
+	validateAppealStatusRollBackToValidationRequest,
+	asyncHandler(controller.rollBackAppealStatusToValidation)
 );
 
 router.get(

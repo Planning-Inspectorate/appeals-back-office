@@ -48,8 +48,18 @@ const updateAppealTimetableByAppealId = (appealId, data) =>
 		data
 	});
 
+/**
+ * @param {number} appealId
+ * @returns {PrismaPromise<AppealTimetable>}
+ */
+const deleteAppealTimetableByAppealId = (appealId) =>
+	databaseConnector.appealTimetable.deleteMany({
+		where: { appealId }
+	});
+
 export default {
 	updateAppealTimetableById,
 	upsertAppealTimetableById,
-	updateAppealTimetableByAppealId
+	updateAppealTimetableByAppealId,
+	deleteAppealTimetableByAppealId
 };

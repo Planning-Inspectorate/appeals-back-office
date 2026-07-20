@@ -7,6 +7,10 @@ import supertest from 'supertest';
 import { app } from '../../../app-test.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
+const appealStatusRepository = (await import('#repositories/appeal-status.repository.js')).default;
+const enforcementNoticeAppealOutcomeRepository = (
+	await import('#repositories/enforcement-notice-appeal-outcome.repository.js')
+).default;
 const request = supertest(app);
 
 describe('appeal status routes', () => {
@@ -145,6 +149,179 @@ describe('appeal status routes', () => {
 					.send({ status });
 
 				expect(response.status).toEqual(400);
+			});
+		});
+	});
+
+	describe('/appeals/:appealId/appeal-status/roll-back-to-validation', () => {
+		describe('POST', () => {
+			const appealId = 1;
+
+			test('returns 400 when the current status is not invalid', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...householdAppeal,
+					appealStatus: [{ status: APPEAL_CASE_STATUS.READY_TO_START, valid: true }]
+				});
+
+				const response = await request
+					.post(`/appeals/${appealId}/appeal-status/roll-back-to-validation`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					error: `The endpoint currently only supports rolling back to validation from invalid, ${appealId} is at ${APPEAL_CASE_STATUS.READY_TO_START}`
+				});
+			});
+
+			test('successfully rolls back invalid appeals to validation and clears invalid data', async () => {
+				const appellantCaseId = 42;
+				// TODO: THIS WAS WRITTEN BY AI AND FAILS- FIX IT!
+				const prevValidationStatus = {
+					id: 7,
+					appealId,
+					status: APPEAL_CASE_STATUS.VALIDATION,
+					createdAt: new Date('2024-02-01T00:00:00.000Z')
+				};
+				const invalidAppeal = {
+					...householdAppeal,
+					appealStatus: [
+						{
+							id: 1315,
+							status: 'assign_case_officer',
+							createdAt: '2026-07-29T09:10:15.331Z',
+							valid: false,
+							appealId: appealId,
+							subStateMachineName: null,
+							compoundStateName: null
+						},
+						{
+							id: 2347,
+							status: 'validation',
+							createdAt: '2026-07-31T13:22:50.655Z',
+							valid: false,
+							appealId: appealId,
+							subStateMachineName: null,
+							compoundStateName: null
+						},
+						{
+							id: 2348,
+							status: 'invalid',
+							createdAt: '2026-07-31T13:23:23.404Z',
+							valid: true,
+							appealId: appealId,
+							subStateMachineName: null,
+							compoundStateName: null
+						}
+					]
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(invalidAppeal);
+				databaseConnector.appellantCase.findUnique.mockResolvedValue({ id: appellantCaseId });
+
+				databaseConnector.appellantCaseInvalidReasonText.deleteMany.mockResolvedValue({});
+				databaseConnector.appellantCaseInvalidReasonsSelected.deleteMany.mockResolvedValue({});
+				databaseConnector.appellantCaseEnforcementInvalidReasonText.deleteMany.mockResolvedValue({});
+				databaseConnector.appellantCaseEnforcementInvalidReasonsSelected.deleteMany.mockResolvedValue({});
+				databaseConnector.appellantCaseEnforcementMissingDocumentText.deleteMany.mockResolvedValue({});
+				databaseConnector.appellantCaseEnforcementMissingDocumentsSelected.deleteMany.mockResolvedValue({});
+				databaseConnector.appellantCaseEnforcementGroundsMismatchFactsText.deleteMany.mockResolvedValue({});
+				databaseConnector.appellantCaseEnforcementGroundsMismatchFactsSelected.deleteMany.mockResolvedValue({});
+				databaseConnector.appeal.update.mockResolvedValue({});
+				databaseConnector.appellantCase.update.mockResolvedValue({});
+				jest.spyOn(
+					enforcementNoticeAppealOutcomeRepository,
+					'deleteEnforcementNoticeAppealOutcomeByAppealId'
+				).mockResolvedValue({});
+
+				const mockTx = {
+					appealStatus: {
+						findFirst: jest.fn().mockResolvedValue(prevValidationStatus),
+						deleteMany: jest.fn().mockResolvedValue({ count: 1 }),
+						update: jest.fn().mockResolvedValue({
+							...prevValidationStatus,
+							valid: true
+						})
+					}
+				};
+				jest.spyOn(appealStatusRepository, 'rollBackAppealStatusTo').mockResolvedValue({
+					...prevValidationStatus,
+					valid: true,
+					createdAt: prevValidationStatus.createdAt.toISOString()
+				});
+
+				databaseConnector.$transaction = jest.fn().mockImplementation(async (operationsOrCallback) => {
+					if (Array.isArray(operationsOrCallback)) {
+						return true;
+					}
+
+					if (typeof operationsOrCallback === 'function') {
+						return await operationsOrCallback(mockTx);
+					}
+
+					return true;
+				});
+
+				const response = await request
+					.post(`/appeals/${appealId}/appeal-status/roll-back-to-validation`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					...prevValidationStatus,
+					valid: true,
+					createdAt: '2024-02-01T00:00:00.000Z'
+				});
+
+				expect(databaseConnector.appellantCase.findUnique).toHaveBeenCalledWith({
+					where: { appealId },
+					select: { id: true }
+				});
+				expect(databaseConnector.appellantCaseInvalidReasonText.deleteMany).toHaveBeenCalledWith({
+					where: { appellantCaseId }
+				});
+				expect(databaseConnector.appellantCaseInvalidReasonsSelected.deleteMany).toHaveBeenCalledWith({
+					where: { appellantCaseId }
+				});
+				expect(databaseConnector.appellantCaseEnforcementInvalidReasonText.deleteMany).toHaveBeenCalledWith({
+					where: { appellantCaseId }
+				});
+				expect(databaseConnector.appellantCaseEnforcementInvalidReasonsSelected.deleteMany).toHaveBeenCalledWith({
+					where: { appellantCaseId }
+				});
+				expect(databaseConnector.appellantCaseEnforcementMissingDocumentText.deleteMany).toHaveBeenCalledWith({
+					where: { appellantCaseId }
+				});
+				expect(databaseConnector.appellantCaseEnforcementMissingDocumentsSelected.deleteMany).toHaveBeenCalledWith({
+					where: { appellantCaseId }
+				});
+				expect(databaseConnector.appellantCaseEnforcementGroundsMismatchFactsText.deleteMany).toHaveBeenCalledWith({
+					where: { appellantCaseId }
+				});
+				expect(databaseConnector.appellantCaseEnforcementGroundsMismatchFactsSelected.deleteMany).toHaveBeenCalledWith({
+					where: { appellantCaseId }
+				});
+				expect(databaseConnector.enforcementNoticeAppealOutcome.deleteMany).toHaveBeenCalledWith({
+					where: { appealId }
+				});
+				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+					where: { id: appealId },
+					data: {
+						caseValidDate: null,
+						withdrawalRequestDate: null,
+						caseExtensionDate: null
+					}
+				});
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { appealId },
+					data: { appellantCaseValidationOutcomeId: null }
+				});
+
+				expect(databaseConnector.$transaction).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.$transaction.mock.calls[0][0]).toHaveLength(11);
+				expect(appealStatusRepository.rollBackAppealStatusTo).toHaveBeenCalledWith(
+					appealId,
+					'validation'
+				);
 			});
 		});
 	});

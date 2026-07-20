@@ -530,8 +530,8 @@ const updateAppealById = (
 		where: { id },
 		data: {
 			...(caseExtensionDate && { caseExtensionDate }),
-			...(caseStartedDate && { caseStartedDate }),
-			...(caseValidDate && { caseValidDate }),
+			...(hasValueOrIsNull(caseStartedDate) && { caseStartedDate }),
+			...(hasValueOrIsNull(caseValidDate) && { caseValidDate }),
 			...(applicationReference && { applicationReference }),
 			...(hasValueOrIsNull(caseOfficer) && { caseOfficerUserId: caseOfficer }),
 			...(hasValueOrIsNull(inspector) && { inspectorUserId: inspector }),

@@ -11,6 +11,11 @@ export const validateAppealStatusRollBackRequest = composeMiddleware(
 	validationErrorHandler
 );
 
+export const validateAppealStatusRollBackToValidationRequest = composeMiddleware(
+	validateIdParameter('appealId'),
+	validationErrorHandler
+);
+
 export const getAppealStatusDateValidator = composeMiddleware(
 	validateIdParameter('appealId'),
 	validateEnumParameterPath('status', Object.values(APPEAL_CASE_STATUS), false),

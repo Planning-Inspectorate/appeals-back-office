@@ -132,4 +132,11 @@ const deleteHearingById = (id) => {
 	return databaseConnector.hearing.delete({ where: { id } });
 };
 
-export default { getHearingById, createHearingById, updateHearingById, deleteHearingById };
+/**
+ * @param {number} appealId
+ */
+const deleteHearingByAppealId = (appealId) => {
+	return databaseConnector.hearing.deleteMany({ where: { appealId } });
+};
+
+export default { getHearingById, createHearingById, updateHearingById, deleteHearingById, deleteHearingByAppealId };
