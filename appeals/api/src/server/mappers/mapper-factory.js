@@ -12,6 +12,7 @@ import { contextEnum } from './context-enum.js';
 import { integrationMappers } from './integration/index.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {Appeal & { caseNotes?: (import('@pins/appeals.api').Schema.CaseNote & { user: import('@pins/appeals.api').Schema.User })[], appealStatus?: import('@pins/appeals.api').Schema.AppealStatus[] }} AppealWithRelations */
 /** @typedef {import('@pins/appeals.api').Schema.AppealType} AppealType */
 /** @typedef {import('@pins/appeals.api').Api.Appeal} AppealDTO */
 /** @typedef {import('@pins/appeals.api').Api.AppellantCase} AppellantCaseDto */
@@ -21,7 +22,7 @@ import { integrationMappers } from './integration/index.js';
 /** @typedef {AppealDTO|AppellantCaseDto|LpaQuestionnaireDTO|AppealHASCase|AppealS78Case} MapResult */
 /** @typedef {import('@pins/appeals.api').Api.Folder} Folder */
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
-/** @typedef {{ appeal: Appeal, appealTypes?: AppealType[]|undefined, linkedAppeals?: *[]|undefined, costsDecision?: CostsDecision|undefined, context?: keyof contextEnum }} MappingRequest */
+/** @typedef {{ appeal: AppealWithRelations, appealTypes?: AppealType[]|undefined, linkedAppeals?: *[]|undefined, costsDecision?: CostsDecision|undefined, context?: keyof contextEnum }} MappingRequest */
 
 /**
  *
@@ -188,7 +189,7 @@ const createMap = (mappers, mappingRequest) =>
  * @param {MappingRequest} mappingRequest
  */
 function createDataLayout(caseMap, mappingRequest) {
-	const { context, appeal } = mappingRequest;
+	const { context, appeal, appealTypes } = mappingRequest;
 
 	if (context === contextEnum.broadcast) {
 		return Array.from(caseMap.values()).reduce((acc, val) => ({ ...acc, ...val }), {});
@@ -244,6 +245,51 @@ function createDataLayout(caseMap, mappingRequest) {
 				...appealDetails,
 				appellantCaseId: appeal.appellantCase?.id,
 				lpaQuestionnaireId: appeal.lpaQuestionnaire?.id,
+				appellantCase: {
+					numberOfResidencesNetChange: appeal.appellantCase?.numberOfResidencesNetChange ?? null,
+					screeningOpinionIndicatesEiaRequired:
+						appeal.appellantCase?.screeningOpinionIndicatesEiaRequired ?? null,
+					applicationMadeUnderActSection:
+						appeal.appellantCase?.applicationMadeUnderActSection ?? null,
+					isEnforcementChild: appellantCase?.isEnforcementChild ?? false,
+					planningObligation:
+						appeal.appellantCase?.planningObligation !== undefined
+							? {
+									hasObligation: appeal.appellantCase.planningObligation,
+									status: appeal.appellantCase.statusPlanningObligation ?? null
+								}
+							: null,
+					enforcementNotice:
+						appeal.appellantCase?.enforcementNotice || appeal.appellantCase?.enforcementReference
+							? {
+									reference: appeal.appellantCase.enforcementReference ?? null
+								}
+							: null
+				},
+				resubmitTypeId: appeal.caseResubmittedTypeId,
+				resubmitType:
+					appeal.caseResubmittedTypeId && appealTypes
+						? (() => {
+								const found = appealTypes.find((t) => t.id === appeal.caseResubmittedTypeId);
+								return found ? { id: found.id, key: found.key, type: found.type } : null;
+							})()
+						: null,
+				caseNotes: appeal.caseNotes
+					? appeal.caseNotes
+							.filter((caseNote) => !caseNote.archived)
+							.map((caseNote) => ({
+								id: caseNote.id,
+								comment: caseNote.comment,
+								createdAt: caseNote.createdAt.toISOString(),
+								azureAdUserId: caseNote.user?.azureAdUserId
+							}))
+					: [],
+				appealStatusHistory: appeal.appealStatus
+					? appeal.appealStatus.map((s) => ({
+							status: s.status,
+							createdAt: s.createdAt.toISOString()
+						}))
+					: [],
 				healthAndSafety: {
 					appellantCase: { ...appellantCase?.healthAndSafety },
 					lpaQuestionnaire: { ...(lpaQuestionnaire?.healthAndSafety ?? null) }

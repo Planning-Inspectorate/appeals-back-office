@@ -55,6 +55,7 @@ describe('environmental-assessment.mapper', () => {
 	});
 
 	it('should contain tableItem with one documents', () => {
+		data.appealDetails.environmentalAssessment.documentCount = 1;
 		data.appealDetails.environmentalAssessment.documents = [
 			{
 				latestDocumentVersion: { dateReceived: new Date('2025-02-01') }
@@ -84,6 +85,7 @@ describe('environmental-assessment.mapper', () => {
 	});
 
 	it('should contain tableItem with three documents', () => {
+		data.appealDetails.environmentalAssessment.documentCount = 3;
 		data.appealDetails.environmentalAssessment.documents = [
 			{
 				latestDocumentVersion: { dateReceived: new Date('2025-02-01') }

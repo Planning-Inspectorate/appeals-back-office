@@ -9,8 +9,8 @@ export function validateReadyToShare(request, response, next) {
 	const { currentAppeal } = request;
 
 	switch (currentAppeal.appealStatus) {
-		case APPEAL_REPRESENTATION_STATUS.STATEMENTS: {
-			const { representationStatus, status } =
+		case APPEAL_CASE_STATUS.STATEMENTS: {
+			const { representationStatus, status = 'not_received' } =
 				currentAppeal.documentationSummary?.lpaStatement || {};
 			const isValid =
 				representationStatus === APPEAL_REPRESENTATION_STATUS.VALID || status === 'not_received';

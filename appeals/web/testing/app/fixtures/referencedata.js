@@ -3,7 +3,6 @@ import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
 	DOCUMENT_STATUS_RECEIVED,
 	VALIDATION_OUTCOME_INCOMPLETE
-	// @ts-ignore
 } from '@pins/appeals/constants/support.js';
 import {
 	APPEAL_CASE_PROCEDURE,
@@ -209,7 +208,7 @@ export const appealsNationalList = {
 };
 
 /**
- * @type {import('../../../src/server/appeals/appeal-details/appeal-details.types.d').WebAppeal}
+ * @type {import('../../../src/server/appeals/appeal-details/appeal-details.types.d').WebAppeal & { caseNotes?: any, appellantCase?: any }}
  */
 export const appealData = {
 	allocationDetails: {
@@ -5446,3 +5445,26 @@ export const enforcementGroundsMismatchFacts = [
 	{ name: 'j', id: 10, hasText: true },
 	{ name: 'k', id: 11, hasText: true }
 ];
+
+appealData.caseNotes = caseNotes;
+appealDataEnforcementListedBuilding.caseNotes = caseNotes;
+appealDataEnforcementNotice.caseNotes = caseNotes;
+appealDataFullPlanning.caseNotes = caseNotes;
+appealDataLdc.caseNotes = caseNotes;
+appealDataListedBuilding.caseNotes = caseNotes;
+
+appealData.appellantCase = {
+	numberOfResidencesNetChange: null,
+	screeningOpinionIndicatesEiaRequired: null,
+	applicationMadeUnderActSection: null,
+	isEnforcementChild: false,
+	planningObligation: {
+		hasObligation: false,
+		status: null
+	}
+};
+appealDataEnforcementListedBuilding.appellantCase = { ...appealData.appellantCase };
+appealDataEnforcementNotice.appellantCase = { ...appealData.appellantCase };
+appealDataFullPlanning.appellantCase = { ...appealData.appellantCase };
+appealDataLdc.appellantCase = { ...appealData.appellantCase };
+appealDataListedBuilding.appellantCase = { ...appealData.appellantCase };

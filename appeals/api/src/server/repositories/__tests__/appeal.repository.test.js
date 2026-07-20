@@ -3,7 +3,7 @@
 import { databaseConnector } from '#utils/database-connector.js';
 import { jest } from '@jest/globals';
 import appealRepository, {
-	appealDetailsInclude,
+	appealDetailsIncludeMap,
 	buildAppealInclude
 } from '../appeal.repository.js';
 
@@ -36,7 +36,7 @@ describe('buildAppealInclude', () => {
 
 		expect(result).not.toBeNull();
 		expect(Object.keys(result)).toEqual(['lpaQuestionnaire']);
-		expect(result.lpaQuestionnaire).toEqual(appealDetailsInclude.lpaQuestionnaire);
+		expect(result.lpaQuestionnaire).toEqual(appealDetailsIncludeMap.lpaQuestionnaire);
 	});
 
 	it('returns null when selectedKeys is not empty and includeDetails = false', () => {

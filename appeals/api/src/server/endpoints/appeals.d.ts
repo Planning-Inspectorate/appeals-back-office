@@ -763,6 +763,7 @@ interface FolderInfo {
 	folderId: number;
 	caseId: string;
 	path: string;
+	documentCount?: number;
 	documents: DocumentInfo[];
 }
 

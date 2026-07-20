@@ -157,19 +157,39 @@ export const formatListOfListedBuildingNumbers = (listOfListedBuildingNumbers) =
  * @param {import('@pins/appeals.api/src/server/endpoints/appeals.js').DocumentInfo[]} options.documents
  * @param {import('#appeals/appeals.types.js').DocumentRowDisplayMode} [options.displayMode]
  * @param {boolean} [options.isAdditionalDocuments]
+ * @param {number} [options.documentCount]
  * @returns {TextProperty & ClassesProperty | HtmlProperty & ClassesProperty}
  */
-export function formatDocumentValues({ appealId, documents, displayMode, isAdditionalDocuments }) {
+export function formatDocumentValues({
+	appealId,
+	documents,
+	displayMode,
+	isAdditionalDocuments,
+	documentCount
+}) {
 	switch (displayMode) {
 		case 'none':
 			return { text: '' };
 		case 'number':
-			return formatDocumentValuesAsNumber({ documents });
+			return formatDocumentValuesAsNumber({ documents, documentCount });
 		case 'list':
 		default:
 			return formatDocumentValuesAsList({ appealId, documents, isAdditionalDocuments });
 	}
 }
+
+/**
+ * @param {Object} options
+ * @param {import('@pins/appeals.api/src/server/endpoints/appeals.js').DocumentInfo[]} options.documents
+ * @param {number} [options.documentCount]
+ * @returns {TextProperty & ClassesProperty}
+ */
+const formatDocumentValuesAsNumber = ({ documents, documentCount }) => {
+	const count = typeof documentCount === 'number' ? documentCount : documents.length;
+	return {
+		html: `${count > 0 ? count : 'No'} document${count === 1 ? '' : 's'}`
+	};
+};
 
 /**
  * @param {Object} options
@@ -306,19 +326,6 @@ const formatDocumentValuesAsList = ({ appealId, documents, isAdditionalDocuments
 	}
 
 	return htmlProperty;
-};
-
-/**
- * @param {Object} options
- * @param {import('@pins/appeals.api/src/server/endpoints/appeals.js').DocumentInfo[]} options.documents
- * @returns {TextProperty & ClassesProperty}
- */
-const formatDocumentValuesAsNumber = ({ documents }) => {
-	return {
-		html: `${documents.length > 0 ? documents.length : 'No'} document${
-			documents.length === 1 ? '' : 's'
-		}`
-	};
 };
 
 /**

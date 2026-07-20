@@ -128,7 +128,25 @@ const householdAppealDto = {
 	startedAt: householdAppeal.caseStartedDate?.toISOString(),
 	validAt: householdAppeal.caseValidDate?.toISOString(),
 	enforcementNotice: { appellantCase: {}, appealOutcome: {} },
-	appealRule6Parties: {}
+	appealRule6Parties: {},
+	appellantCase: {
+		numberOfResidencesNetChange: null,
+		screeningOpinionIndicatesEiaRequired: null,
+		applicationMadeUnderActSection: null,
+		isEnforcementChild: false,
+		planningObligation: {
+			hasObligation: true,
+			status: 'not_started'
+		},
+		enforcementNotice: null
+	},
+	resubmitTypeId: null,
+	resubmitType: null,
+	caseNotes: [],
+	appealStatusHistory: householdAppeal.appealStatus.map((s) => ({
+		status: s.status,
+		createdAt: s.createdAt.toISOString()
+	}))
 };
 
 const s78AppealDto = {
@@ -279,7 +297,28 @@ const s78AppealDto = {
 	createdAt: fullPlanningAppeal.caseCreatedDate.toISOString(),
 	startedAt: fullPlanningAppeal.caseStartedDate?.toISOString(),
 	validAt: fullPlanningAppeal.caseValidDate?.toISOString(),
-	enforcementNotice: { appellantCase: {}, appealOutcome: {} }
+	enforcementNotice: { appellantCase: {}, appealOutcome: {} },
+	appellantCase: {
+		numberOfResidencesNetChange: null,
+		screeningOpinionIndicatesEiaRequired: null,
+		applicationMadeUnderActSection: null,
+		isEnforcementChild: false,
+		planningObligation:
+			fullPlanningAppeal.appellantCase.planningObligation !== undefined
+				? {
+						hasObligation: fullPlanningAppeal.appellantCase.planningObligation,
+						status: fullPlanningAppeal.appellantCase.statusPlanningObligation
+					}
+				: null,
+		enforcementNotice: null
+	},
+	resubmitTypeId: null,
+	resubmitType: null,
+	caseNotes: [],
+	appealStatusHistory: fullPlanningAppeal.appealStatus.map((s) => ({
+		status: s.status,
+		createdAt: s.createdAt.toISOString()
+	}))
 };
 
 const folders = [
