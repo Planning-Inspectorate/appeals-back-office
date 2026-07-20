@@ -32,11 +32,7 @@ export function generateCaseTypeSpecificComponents(appealDetails, mappedLPAQData
 		case APPEAL_TYPE.ADVERTISEMENT:
 			return generateAdvertLpaQuestionnaireComponents(mappedLPAQData);
 		case APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE:
-			if (isFeatureActive(FEATURE_FLAG_NAMES.LDC)) {
-				return generateLdcLpaQuestionnaireComponents(mappedLPAQData);
-			} else {
-				throw new Error('Feature flag inactive for Ldc');
-			}
+			return generateLdcLpaQuestionnaireComponents(mappedLPAQData);
 		case APPEAL_TYPE.ENFORCEMENT_NOTICE:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE)) {
 				return generateEnforcementLpaQuestionnaireComponents(mappedLPAQData);
