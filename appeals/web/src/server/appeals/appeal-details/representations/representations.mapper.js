@@ -1,12 +1,9 @@
 import config from '#environment/config.js';
+import { getNextStateDisplayTextOnStatementsComplete } from '#lib/appeal-status.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { ensureArray } from '#lib/array-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
-import {
-	APPEAL_REPRESENTATION_STATUS,
-	APPEAL_TYPE,
-	COMMENT_STATUS
-} from '@pins/appeals/constants/common.js';
+import { APPEAL_REPRESENTATION_STATUS, COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import isAppellantStatementAppealType from '@pins/appeals/utils/is-appellant-statement-appeal-type.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
@@ -201,8 +198,17 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 	const totalRule6Statements = rule6StatementTexts?.length ?? 0;
 	const totalStatementsCount = totalLpaStatements + totalAppellantStatements + totalRule6Statements;
 	const hasIpCommentsAndStatements = numIpComments > 0 && totalStatementsCount > 0;
+	const hasOnlyIpComments = numIpComments > 0 && totalStatementsCount === 0;
+	const hasOnlyStatements = totalStatementsCount > 0 && numIpComments === 0;
 	const totalShareCount =
 		numIpComments + totalLpaStatements + totalAppellantStatements + totalRule6Statements;
+
+	const hearingIsSetUp = Boolean(appeal.hearing?.hearingStartTime && appeal.hearing?.address);
+	const nextStateDisplayText = getNextStateDisplayTextOnStatementsComplete(
+		/** @type {string} */ (appeal.appealType),
+		/** @type {string} */ (appeal.procedureType),
+		hearingIsSetUp
+	);
 
 	/** @type {PageComponent} */
 	const textComponent =
@@ -230,7 +236,10 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 			? {
 					type: 'warning-text',
 					parameters: {
-						text: 'Do not progress to proof of evidence and witnesses if you are awaiting any late statements or interested party comments.'
+						text:
+							'Do not progress to ' +
+							nextStateDisplayText +
+							' if you are awaiting any late statements or interested party comments.'
 					}
 				}
 			: {
@@ -242,35 +251,18 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 
 	let heading;
 	let confirm;
-	const hearingIsSetUp = Boolean(appeal.hearing?.hearingStartTime && appeal.hearing?.address);
 
-	if (appeal.procedureType === 'Hearing' && hearingIsSetUp) {
-		heading = 'Progress to awaiting hearing';
-		confirm = 'Progress case';
-	} else if (appeal.procedureType === 'Hearing') {
-		heading = 'Progress to hearing ready to set up';
-		confirm = 'Progress case';
-	} else if (appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY) {
-		heading = 'Progress to proof of evidence and witnesses';
-		confirm = 'Progress to proof of evidence and witnesses';
-	} else if (
-		valueTexts.length > 0 &&
-		appeal.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING &&
-		hasIpCommentsAndStatements
-	) {
-		heading = 'Check details and share interested party comments and statements';
-		confirm = 'Share interested party comments and statements';
-	} else if (
-		valueTexts.length > 0 &&
-		appeal.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
-	) {
-		heading = 'Check details and share statements';
+	if (valueTexts.length > 0 && hasIpCommentsAndStatements) {
+		heading = 'Check and share comments and statements';
+		confirm = 'Share comments and statements';
+	} else if (valueTexts.length > 0 && hasOnlyIpComments) {
+		heading = 'Check and share comments';
+		confirm = 'Share comments';
+	} else if (valueTexts.length > 0 && hasOnlyStatements) {
+		heading = 'Check and share statements';
 		confirm = 'Share statements';
-	} else if (valueTexts.length > 0) {
-		heading = 'Share IP comments and statements';
-		confirm = 'Confirm';
 	} else {
-		heading = 'Progress to final comments';
+		heading = 'Progress to ' + nextStateDisplayText;
 		confirm = 'Progress case';
 	}
 

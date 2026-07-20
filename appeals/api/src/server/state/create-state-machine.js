@@ -6,7 +6,12 @@ import {
 	VALIDATION_OUTCOME_INVALID,
 	VALIDATION_OUTCOME_VALID
 } from '@pins/appeals/constants/support.js';
-import { normalizeProcedureType } from '@pins/appeals/utils/appeal-type-checks.js';
+import {
+	targetStateOnEventCancelled,
+	targetStateOnLpaqComplete,
+	targetStateOnStatementsComplete
+} from '@pins/appeals/utils/business-rules.js';
+import { normaliseProcedureType } from '@pins/appeals/utils/procedure-type.js';
 import {
 	APPEAL_CASE_PROCEDURE,
 	APPEAL_CASE_STATUS,
@@ -35,7 +40,7 @@ const createStateMachine = (
 	eventElapsed = false,
 	isLdcOrDiscontinuanceOrEnforcementCaseType = false
 ) => {
-	const normalizedProcedureType = normalizeProcedureType(procedureType);
+	const normalisedProcedureType = normaliseProcedureType(procedureType);
 
 	return createMachine({
 		id: 'appeals-state-machine',
@@ -143,7 +148,7 @@ const createStateMachine = (
 						//@ts-ignore
 						target: targetStateOnStatementsComplete(
 							isLdcOrDiscontinuanceOrEnforcementCaseType,
-							normalizedProcedureType
+							normalisedProcedureType
 						),
 						cond: isAppealTypeAndProcedureTypeValid
 					},
@@ -404,7 +409,7 @@ const isAppealTypeAndProcedureTypeValid = (ctx, _evt, { state }) => {
 
 	if (!appealType || !procedureType || !meta) return false;
 
-	procedureType = normalizeProcedureType(procedureType);
+	procedureType = /** @type {string} */ (normaliseProcedureType(procedureType));
 
 	return (
 		meta.validAppealTypes.includes(appealType) && meta.validProcedureTypes.includes(procedureType)
@@ -430,54 +435,6 @@ const isEventElapsed = (ctx) => {
  */
 const isEventElapsedAndValid = (ctx, _evt, meta) => {
 	return isAppealTypeAndProcedureTypeValid(ctx, _evt, meta) && isEventElapsed(ctx);
-};
-
-const targetStateOnEventCancelled = {
-	[APPEAL_CASE_PROCEDURE.HEARING]: APPEAL_CASE_STATUS.EVENT,
-	[APPEAL_CASE_PROCEDURE.INQUIRY]: APPEAL_CASE_STATUS.EVENT,
-	[APPEAL_CASE_PROCEDURE.WRITTEN]: APPEAL_CASE_STATUS.FINAL_COMMENTS,
-	[APPEAL_CASE_PROCEDURE.WRITTEN_PART_1]: APPEAL_CASE_STATUS.EVENT,
-	[APPEAL_CASE_PROCEDURE.WRITTEN_PART_2]: APPEAL_CASE_STATUS.EVENT
-};
-
-/**
- * Determines the next state after the LPAQ is complete based on the appeal type and procedure type.
- * @param {AppealTypeKey} appealTypeKey
- * @param {ProcedureType} procedureType
- * @param {boolean} [eventElapsed]
- * @returns {CaseStatus}
- */
-const targetStateOnLpaqComplete = (appealTypeKey, procedureType, eventElapsed = false) => {
-	if (
-		appealTypeKey === APPEAL_CASE_TYPE.D ||
-		procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1
-	) {
-		return eventElapsed ? APPEAL_CASE_STATUS.ISSUE_DETERMINATION : APPEAL_CASE_STATUS.EVENT;
-	}
-	return APPEAL_CASE_STATUS.STATEMENTS;
-};
-
-const nonLdcEnfDiscStatementsTargetState = {
-	[APPEAL_CASE_PROCEDURE.WRITTEN]: APPEAL_CASE_STATUS.FINAL_COMMENTS,
-	[APPEAL_CASE_PROCEDURE.HEARING]: APPEAL_CASE_STATUS.EVENT,
-	[APPEAL_CASE_PROCEDURE.INQUIRY]: APPEAL_CASE_STATUS.EVIDENCE
-};
-
-/**
- * Determines the next state after statements are complete based on the appeal type and procedure type.
- * @param {boolean} isLdcOrDiscontinuanceOrEnforcementCaseType
- * @param {ProcedureType} procedureType
- * @returns {CaseStatus}
- */
-const targetStateOnStatementsComplete = (
-	isLdcOrDiscontinuanceOrEnforcementCaseType,
-	procedureType
-) => {
-	return isLdcOrDiscontinuanceOrEnforcementCaseType
-		? //@ts-ignore
-			APPEAL_CASE_STATUS.FINAL_COMMENTS
-		: //@ts-ignore
-			nonLdcEnfDiscStatementsTargetState[procedureType];
 };
 
 /**
