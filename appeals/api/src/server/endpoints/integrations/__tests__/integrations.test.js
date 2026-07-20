@@ -445,7 +445,12 @@ describe('/appeals/lpaq-submission', () => {
 						appealType: true,
 						appellant: true,
 						inquiry: true,
-						lpa: true
+						lpa: true,
+						appellantCase: {
+							select: {
+								applicationDate: true
+							}
+						}
 					},
 					where: {
 						reference: '6000000'
@@ -763,7 +768,12 @@ describe('/appeals/representation-submission', () => {
 							appealType: true,
 							appellant: true,
 							inquiry: true,
-							lpa: true
+							lpa: true,
+							appellantCase: {
+								select: {
+									applicationDate: true
+								}
+							}
 						}
 					});
 					expect(databaseConnector.representation.create).toHaveBeenCalled();
@@ -859,7 +869,12 @@ describe('/appeals/representation-submission', () => {
 							appealType: true,
 							appellant: true,
 							inquiry: true,
-							lpa: true
+							lpa: true,
+							appellantCase: {
+								select: {
+									applicationDate: true
+								}
+							}
 						}
 					});
 					expect(databaseConnector.representation.create).toHaveBeenCalled();

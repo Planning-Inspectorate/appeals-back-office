@@ -31,6 +31,7 @@ import {
 	renderManageFolder,
 	renderUploadDocumentsCheckAndConfirm
 } from '../../appeal-documents/appeal-documents.controller.js';
+import * as appellantCaseService from '../appellant-case/appellant-case.service.js';
 import {
 	checkAndConfirmPage,
 	environmentServiceTeamReviewCasePage,
@@ -63,17 +64,27 @@ const renderLpaQuestionnaire = async (request, response, errors = null) => {
 		currentAppeal.appealId,
 		lpaQuestionnaireId
 	);
+	const appellantCaseResponse = await appellantCaseService
+		.getAppellantCaseFromAppealId(
+			request.apiClient,
+			currentAppeal.appealId,
+			currentAppeal.appellantCaseId
+		)
+		.catch((error) => {
+			return logger.error(error);
+		});
+
 	if (!lpaQuestionnaire) {
 		return response.status(404).render('app/404.njk');
 	}
-
 	const mappedPageContent = await lpaQuestionnairePage(
 		lpaQuestionnaire,
 		currentAppeal,
 		stripQueryString(request.originalUrl),
 		session,
 		request,
-		getBackLinkUrlFromQuery(request)
+		getBackLinkUrlFromQuery(request),
+		appellantCaseResponse?.applicationDate
 	);
 
 	return response.status(200).render('patterns/display-page.pattern.njk', {

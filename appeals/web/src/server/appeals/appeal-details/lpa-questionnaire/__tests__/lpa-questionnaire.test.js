@@ -86,6 +86,7 @@ const appealDataCasAdvert = {
 	...lpaqAppealData,
 	appealType: 'CAS advert'
 };
+
 const appealDataAdvert = {
 	...lpaqAppealData,
 	appealType: 'Advertisement'
@@ -1400,6 +1401,129 @@ describe('LPA Questionnaire review', () => {
 				'Are there any other ongoing appeals next to, or close to the site?</dt>'
 			);
 			expect(element.innerHTML).toContain('Are there any new conditions?</dt>');
+
+			expect(element.innerHTML).toContain('Additional documents</h2>');
+		}, 10000);
+
+		it('should render the Cas Advert expedite LPA Questionnaire page with the expected content', async () => {
+			nock('http://test/')
+				.get('/appeals/4?include=all')
+				.reply(200, {
+					...appealDataCasAdvert,
+					appealId: 4
+				});
+
+			const expeditedAppellantCaseData = {
+				applicationDate: '2026-04-02T00:00:00.000Z'
+			};
+
+			nock('http://test/')
+				.get('/appeals/4/appellant-cases/0')
+				.reply(200, expeditedAppellantCaseData);
+
+			nock('http://test/')
+				.get('/appeals/4/lpa-questionnaires/1')
+				.reply(200, {
+					...lpaQuestionnaireDataNotValidated,
+					lpaQuestionnaireId: 1
+				});
+
+			const response = await request.get('/appeals-service/appeal-details/4/lpa-questionnaire/1');
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('LPA questionnaire</h1>');
+
+			expect(element.innerHTML).toContain('1. Constraints, designations and other issues</h2>');
+			expect(element.innerHTML).toContain('Is CAS advert the correct type of appeal?</dt>');
+			expect(element.innerHTML).toContain(
+				'Does the development affect the setting of listed buildings?</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'Would the development affect a scheduled monument?</dt>'
+			);
+			expect(element.innerHTML).toContain('Conservation area map and guidance</dt>');
+			expect(element.innerHTML).toContain('Would the development affect a protected species?</dt>');
+			expect(element.innerHTML).toContain(
+				'Is the site in an area of special control of advertisements?</dt>'
+			);
+			expect(element.innerHTML).toContain('Green belt</dt>');
+			expect(element.innerHTML).toContain('Is the site in a national landscape?</dt>');
+			expect(element.innerHTML).toContain(
+				'Is the development in, near or likely to affect any designated sites?</dt>'
+			);
+
+			expect(element.innerHTML).toContain('2. Notifying relevant parties</h2>');
+			expect(element.innerHTML).toContain(
+				'List of neighbours&#39; addresses that you notified about the application</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'How did you notify relevant parties about this application?</dt>'
+			);
+			expect(element.innerHTML).toContain('Site notice</dt>');
+			expect(element.innerHTML).toContain('Letter or email notification</dt>');
+			expect(element.innerHTML).toContain('Press advertisement</dt>');
+			expect(element.innerHTML).toContain(
+				'Appeal notification letter and the list of people that you notified</dt>'
+			);
+
+			expect(element.innerHTML).toContain('3. Consultation responses and representations</h2>');
+			expect(element.innerHTML).toContain(
+				'Representations from members of the public or other parties</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'Did you consult all the relevant statutory consultees about the development?</dt>'
+			);
+
+			expect(element.innerHTML).toContain(
+				'4. Planning officer’s report and supplementary documents</h2>'
+			);
+			expect(element.innerHTML).toContain('Planning officer’s report</dt>');
+			expect(element.innerHTML).toContain(
+				'Did you refuse the application because of highway or traffic public safety?</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'Did the appellant submit complete and accurate photographs and plans?</dt>'
+			);
+			expect(element.innerHTML).toContain('Relevant policies from statutory development plan</dt>');
+			expect(element.innerHTML).toContain('Supplementary planning documents</dt>');
+			expect(element.innerHTML).toContain('Emerging plan relevant to appeal</dt>');
+			expect(element.innerHTML).toContain('Other relevant policies</dt>');
+
+			expect(element.innerHTML).toContain('5. Site access</h2>');
+			expect(element.innerHTML).toContain(
+				'Will the inspector need access to the appellant’s land or property?</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'Will the inspector need to enter a neighbour’s land or property?</dt>'
+			);
+			expect(element.innerHTML).toContain('Address of the neighbour’s land or property</dt>');
+			expect(element.innerHTML).toContain('Are there any potential safety risks?</dt>');
+
+			expect(element.innerHTML).toContain('6. Appeal process</h2>');
+			expect(element.innerHTML).toContain(
+				'Which procedure do you think is most appropriate for this appeal?</dt>'
+			);
+			expect(element.innerHTML).toContain('Why would you prefer this procedure?</dt>');
+			expect(element.innerHTML).toContain(
+				'How many days would you expect the inquiry to last?</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'Are there any other ongoing appeals next to, or close to the site?</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'Have there been any significant changes that would affect the application?'
+			);
+			expect(element.innerHTML).toContain('Are there any new conditions?</dt>');
+			expect(element.innerHTML).toContain('Original Evidence</h2>');
+			expect(element.innerHTML).toContain('Design and access statement</dt>');
+			expect(element.innerHTML).toContain('Plans and drawings</dt>');
+			expect(element.innerHTML).toContain(
+				'Any other documents submitted with the application</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'What documents and plans did you use to make your decision?</dt>'
+			);
 
 			expect(element.innerHTML).toContain('Additional documents</h2>');
 		}, 10000);

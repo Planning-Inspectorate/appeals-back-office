@@ -2,16 +2,20 @@
 /** @typedef {import('@pins/appeals.api').Schema.DesignatedSite} DesignatedSite */
 
 import { extractSignificantChangeValue } from '#utils/mapping/map-significant-changes.js';
-import { isEnforcementCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
+import {
+	beforeExpeditedOriginalApplicationCutOff,
+	isEnforcementCaseType
+} from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 /**
  *
  * @param {Pick<LPAQuestionnaireCommand, 'casedata'>} command
  * @param {DesignatedSite[]} designatedSites
+ * @param {Date|null} applicationDate
  * @returns {Omit<import('#db-client/models.ts').LPAQuestionnaireCreateInput, 'appeal'>}
  */
-export const mapQuestionnaireIn = (command, designatedSites) => {
+export const mapQuestionnaireIn = (command, designatedSites, applicationDate) => {
 	const casedata = command.casedata;
 
 	const isS20 = casedata.caseType === APPEAL_CASE_TYPE.Y;
@@ -57,7 +61,10 @@ export const mapQuestionnaireIn = (command, designatedSites) => {
 				...generateCommonSchemaFields(casedata),
 				...generateHasSchemaFields(casedata, listedBuildingsData),
 				//@ts-ignore
-				...generateCasAdvertSchemaFields(casedata, designatedSites)
+				...generateCasAdvertSchemaFields(casedata, designatedSites),
+				...(!beforeExpeditedOriginalApplicationCutOff(applicationDate)
+					? generateExpediteSchemaFields(casedata)
+					: [])
 			};
 		case APPEAL_CASE_TYPE.C: // ENFORCEMENT
 			return {
@@ -92,6 +99,37 @@ export const mapQuestionnaireIn = (command, designatedSites) => {
 		default:
 			throw new Error(`Unsupported case type '${casedata.caseType}'`);
 	}
+};
+
+/**
+ *
+ * @param { LPAQSubmissionCaseData } casedata
+ * @returns
+ */
+const generateExpediteSchemaFields = (casedata) => {
+	const significantChanges = /** @type {{value: string, comment: string}[] | undefined} */ (
+		casedata.significantChangesAffectingApplicationLpa
+	);
+	return {
+		anySignificantChangesLpa: (significantChanges?.length ?? 0) > 0 ? 'Yes' : 'No',
+		anySignificantChangesLpa_otherSignificantChanges: extractSignificantChangeValue(
+			significantChanges,
+			'Other'
+		),
+		anySignificantChangesLpa_localPlanSignificantChanges: extractSignificantChangeValue(
+			significantChanges,
+			'Local plan'
+		),
+		anySignificantChangesLpa_nationalPolicySignificantChanges: extractSignificantChangeValue(
+			significantChanges,
+			'National policy'
+		),
+		anySignificantChangesLpa_courtJudgementSignificantChanges: extractSignificantChangeValue(
+			significantChanges,
+			'Court judgment'
+		),
+		listOfDocumentsBeforeDecision: casedata.listOfDocumentsBeforeDecision
+	};
 };
 
 /**

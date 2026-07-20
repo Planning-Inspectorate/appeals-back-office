@@ -1,4 +1,5 @@
 import { integrationAdvertMappers } from './advert/index.js';
+import { integrationCasAdvertExpeditedMappers } from './cas-advert-expedited/index.js';
 import { integrationCasAdvertMappers } from './cas-advert/index.js';
 import { integrationEnforcementListedMappers } from './enforcement-listed/index.js';
 import { integrationEnforcementMappers } from './enforcement/index.js';
@@ -10,6 +11,7 @@ import { integrationSharedMappers } from './shared/index.js';
 export const integrationMappers = {
 	integrationAdvertMappers,
 	integrationCasAdvertMappers,
+	integrationCasAdvertExpeditedMappers,
 	integrationEnforcementMappers,
 	integrationEnforcementListedMappers,
 	integrationLDCMappers,
