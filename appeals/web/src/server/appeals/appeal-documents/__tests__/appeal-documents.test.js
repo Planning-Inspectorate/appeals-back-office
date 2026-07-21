@@ -272,6 +272,16 @@ describe('appeal-documents', () => {
 			);
 		});
 
+		it('should redirect to manage documents page when filename contains parentheses', async () => {
+			const response = await request
+				.post(fullUrl)
+				.send({ fileName: 'valid-fileName_(123)', documentId });
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toContain(
+				`Found. Redirecting to ${fullUrl.replace('change-document-name', 'manage-documents')}`
+			);
+		});
+
 		it('should render change filename page with blank filename error', async () => {
 			const response = await request.post(fullUrl).send({});
 			expect(response.statusCode).toBe(200);
@@ -292,7 +302,7 @@ describe('appeal-documents', () => {
 			}).innerHTML;
 
 			expect(element).toContain(
-				'>File name must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and underscores'
+				'>File name must only include letters a to z, numbers 0 to 9, spaces and special characters such as hyphens, underscores, and parentheses'
 			);
 		});
 
@@ -306,7 +316,7 @@ describe('appeal-documents', () => {
 			}).innerHTML;
 
 			expect(element).toContain(
-				'>File name must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and underscores'
+				'>File name must only include letters a to z, numbers 0 to 9, spaces and special characters such as hyphens, underscores, and parentheses'
 			);
 		});
 
