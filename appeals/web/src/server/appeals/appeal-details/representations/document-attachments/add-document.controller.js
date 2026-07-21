@@ -5,6 +5,7 @@ import {
 import { isAtEditEntrypoint } from '#lib/edit-utilities.js';
 import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
+import { REP_ATTACHMENT_DOCTYPE } from '@pins/appeals/constants/documents.js';
 
 /**
  *
@@ -41,11 +42,56 @@ export const renderDocumentUpload = async (request, response) => {
 		response,
 		appealDetails: currentAppeal,
 		backButtonUrl,
-		nextPageUrl: `${baseUrl}/redaction-status`,
+		nextPageUrl: `${baseUrl}/add-document-details`,
 		pageHeadingTextOverride:
-			pageContent?.addDocument?.pageHeadingTextOverride || 'Upload supporting document',
-		allowMultipleFiles: true,
-		documentType: session.costsDocumentType,
+			pageContent?.addDocument?.pageHeadingTextOverride || 'Upload supporting documents',
+		documentType: REP_ATTACHMENT_DOCTYPE,
+		preHeadingTextOverride: pageContent?.pageHeadingTextOverride,
+		uploadContainerHeadingTextOverride:
+			pageContent?.addDocument?.uploadContainerHeadingTextOverride,
+		documentTitle: pageContent?.addDocument?.documentTitle
+	});
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const renderDocumentDetails = async (request, response) => {
+	const {
+		currentAppeal,
+		session,
+		query,
+		locals: { pageContent }
+	} = request;
+
+	const baseUrl = request.baseUrl;
+	const representationBaseUrl = request.baseUrl.replace('/add-document', '');
+
+	let backButtonUrl =
+		isAtEditEntrypoint(request) || query.change
+			? preserveQueryString(request, `${baseUrl}/check-your-answers`, {
+					exclude: ['editEntrypoint', 'change']
+				})
+			: query.backUrl
+				? constructUrl(String(query.backUrl), currentAppeal.appealId)
+				: representationBaseUrl;
+
+	if (session.createNewRepresentation && !backButtonUrl.includes('check-your-answers')) {
+		const appealDetailsUrlPattern = /^(\/appeals-service\/appeal-details\/[^/]+).*$/;
+		backButtonUrl = request.baseUrl.replace(appealDetailsUrlPattern, '$1');
+	}
+
+	return renderDocumentUploadHelper({
+		request,
+		response,
+		appealDetails: currentAppeal,
+		backButtonUrl,
+		nextPageUrl: `${baseUrl}/add-document-details`,
+		pageHeadingTextOverride:
+			pageContent?.addDocument?.pageHeadingTextOverride || 'Upload supporting documents',
+		documentType: REP_ATTACHMENT_DOCTYPE,
 		preHeadingTextOverride: pageContent?.pageHeadingTextOverride,
 		uploadContainerHeadingTextOverride:
 			pageContent?.addDocument?.uploadContainerHeadingTextOverride,
@@ -62,7 +108,7 @@ export const postDocumentUpload = async (request, response) => {
 	await postDocumentUploadHelper({
 		request,
 		response,
-		nextPageUrl: `${baseUrl}/redaction-status`
+		nextPageUrl: `${baseUrl}/add-document-details`
 	});
 };
 

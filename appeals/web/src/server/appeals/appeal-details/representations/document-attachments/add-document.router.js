@@ -10,9 +10,11 @@ import { Router as createRouter } from 'express';
 import { validateRedactionStatus } from '../representations.validators.js';
 import {
 	postDateSubmitted,
+	// postDocumentDetails,
 	postDocumentUpload,
 	postRedactionStatus,
 	renderDateSubmitted,
+	// renderDocumentDetails,
 	renderDocumentUpload,
 	renderRedactionStatus
 } from './add-document.controller.js';
@@ -22,6 +24,9 @@ const router = createRouter({ mergeParams: true });
 
 router.get('/', asyncHandler(renderDocumentUpload));
 router.post('/', asyncHandler(postDocumentUpload));
+
+// router.get('/add-document-details', asyncHandler(renderDocumentDetails));
+// router.post('/add-document-details', asyncHandler(postDocumentDetails));
 
 router.get('/redaction-status', asyncHandler(renderRedactionStatus));
 router.post(
