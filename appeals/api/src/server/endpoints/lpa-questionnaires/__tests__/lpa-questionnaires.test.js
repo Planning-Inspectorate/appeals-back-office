@@ -169,6 +169,7 @@ describe('lpa questionnaires routes', () => {
 				databaseConnector.appeal.findUnique
 					.mockResolvedValueOnce({
 						...householdAppeal,
+						currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 						appealStatus: [
 							{
 								status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
@@ -178,6 +179,7 @@ describe('lpa questionnaires routes', () => {
 					})
 					.mockResolvedValueOnce({
 						...householdAppeal,
+						currentStatus: APPEAL_CASE_STATUS.EVENT,
 						appealStatus: [
 							{
 								status: APPEAL_CASE_STATUS.EVENT,
@@ -429,6 +431,7 @@ describe('lpa questionnaires routes', () => {
 					databaseConnector.appeal.findUnique
 						.mockResolvedValueOnce({
 							...test.appeal,
+							currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 							appealStatus: [
 								{
 									status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
@@ -438,6 +441,7 @@ describe('lpa questionnaires routes', () => {
 						})
 						.mockResolvedValue({
 							...test.appeal,
+							currentStatus: APPEAL_CASE_STATUS.EVENT,
 							appealStatus: [
 								{
 									status: APPEAL_CASE_STATUS.EVENT,
@@ -508,6 +512,7 @@ describe('lpa questionnaires routes', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
+					currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
@@ -580,6 +585,7 @@ describe('lpa questionnaires routes', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
+					currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 					appealRule6Parties: [
 						{
 							serviceUser: {
@@ -638,6 +644,7 @@ describe('lpa questionnaires routes', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningS78ExpeditedAppeal,
+					currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
@@ -1251,6 +1258,7 @@ describe('lpa questionnaires routes', () => {
 				async (_, appealLPAQIncomplete) => {
 					const appeal = {
 						...appealLPAQIncomplete,
+						currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 						appealStatus: [
 							{
 								status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,

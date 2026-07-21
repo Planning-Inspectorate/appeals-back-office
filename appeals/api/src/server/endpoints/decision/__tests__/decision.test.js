@@ -339,6 +339,7 @@ describe('decision routes', () => {
 			) => {
 				const correctAppealState = {
 					...appeal,
+					currentStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
@@ -510,6 +511,7 @@ describe('decision routes', () => {
 			async (appealType, appeal, expectedFeedbackLink) => {
 				const correctAppealState = {
 					...appeal,
+					currentStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
@@ -596,6 +598,7 @@ describe('decision routes', () => {
 			const appeal = structuredClone(householdAppeal);
 			const correctAppealState = {
 				...appeal,
+				currentStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
 				appealStatus: [
 					{
 						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
@@ -685,6 +688,7 @@ describe('decision routes', () => {
 			const appeal = {
 				...fullPlanningAppeal,
 				isChildAppeal: true,
+				currentStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
 				appealStatus: [
 					{
 						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
@@ -838,6 +842,7 @@ describe('decision routes', () => {
 		test('returns 200 and sends emails to rule 6 parties when confirmed', async () => {
 			const appeal = {
 				...fullPlanningAppeal,
+				currentStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
 				appealStatus: [
 					{
 						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
@@ -931,6 +936,7 @@ describe('decision routes', () => {
 		test('returns 200 and sends emails to rule 6 parties when sending appellant cost decision', async () => {
 			const appeal = {
 				...fullPlanningAppeal,
+				currentStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
 				appealStatus: [
 					{
 						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
@@ -1019,6 +1025,7 @@ describe('decision routes', () => {
 		test('returns 200 and sends emails to rule 6 parties when sending lpa cost decision', async () => {
 			const appeal = {
 				...fullPlanningAppeal,
+				currentStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
 				appealStatus: [
 					{
 						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
@@ -1109,6 +1116,7 @@ describe('decision routes', () => {
 		test('returns 200 and sends emails to interested parties when decision is published', async () => {
 			const appeal = {
 				...fullPlanningAppeal,
+				currentStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
 				appealStatus: [
 					{
 						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
@@ -1168,6 +1176,7 @@ describe('decision routes', () => {
 		test('de-dupes exact duplicate commenter emails', async () => {
 			const appeal = {
 				...fullPlanningAppeal,
+				currentStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
 				appealStatus: [
 					{
 						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
@@ -1206,6 +1215,7 @@ describe('decision routes', () => {
 		test('trims and normalizes commenter emails before de-duping', async () => {
 			const appeal = {
 				...fullPlanningAppeal,
+				currentStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
 				appealStatus: [
 					{
 						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
@@ -1247,6 +1257,7 @@ describe('decision routes', () => {
 		test('handles error from notify for interested party', async () => {
 			const appeal = {
 				...fullPlanningAppeal,
+				currentStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
 				appealStatus: [
 					{
 						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
@@ -1315,6 +1326,7 @@ describe('decision routes', () => {
 
 			correctAppealState = {
 				...householdAppeal,
+				currentStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
 				appealStatus: [
 					{
 						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
