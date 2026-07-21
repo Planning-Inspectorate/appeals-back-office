@@ -35,6 +35,10 @@ parameters:
     displayName: Deploy apps to slot
     type: boolean
     default: true
+  - name: runE2eTests
+    displayName: Run E2E Tests
+    type: boolean
+    default: true
 
 pr: none
 trigger: none
@@ -263,5 +267,68 @@ extends:
                   appResourceGroup: $(resourceGroup)
                   appStagingSlotName: staging
                   appTargetSlotName: production
+          - name: Run E2E Tests
+            condition: and(succeeded(), eq(${{ parameters.runE2eTests }}, true))
+            dependsOn:
+              - Release Appeals PDF
+              - Release Appeals Web
+              - Release Appeals API
+            steps:
+              - checkout: self
+              - script: |
+                  contains_value() {
+                    local list="$1"
+                    local value="$2"
+
+                    IFS=',' read -r -a array <<< "$list"
+
+                    for item in "${array[@]}"; do
+                      if [[ "$(echo "$item" | xargs)" == "$value" ]]; then
+                        return 0
+                      fi
+                    done
+
+                    return 1
+                  }
+
+                  echo "Allowed list: $ALLOWED_ENVIRONMENTS"
+                  echo "Target value: $TARGET_ENVIRONMENT"
+
+                  if contains_value "$ALLOWED_ENVIRONMENTS" "$TARGET_ENVIRONMENT" && [ "$ENABLED" = "true" ]; then
+                      echo "Run e2e tests"
+                      echo "##vso[task.setvariable variable=runE2E]true"
+                  else
+                      echo "Do not run e2e tests"
+                  fi
+                env:
+                  ALLOWED_ENVIRONMENTS: $(ALLOWED-ENVIRONMENTS)
+                  TARGET_ENVIRONMENT: $(ENVIRONMENT)
+                  ENABLED: $(ENABLED)
+                displayName: Check if e2e enabled
+              - template: ../steps/node_script.yml
+                parameters:
+                  nodeVersion: 22
+                  script: npm install
+                  workingDirectory: $(Build.Repository.LocalPath)/appeals/e2e
+                  condition: eq(variables['runE2E'], 'true')
+              - template: ../steps/node_script.yml
+                parameters:
+                  nodeVersion: 22
+                  script: |
+                    cd appeals/e2e
+                    npx cypress run --env grepTags="$(E2E-TEST-FLAG)"
+                  environmentVariables:
+                    BASE_URL: $(APPEALS_BASE_URL)
+                    CASE_TEAM_EMAIL: $(CASE_TEAM_APPEALS_EMAIL)
+                    CASE_ADMIN_EMAIL: $(CASE_ADMIN_APPEALS_EMAIL)
+                    INSPECTOR_EMAIL: $(INSPECTOR_APPEALS_EMAIL)
+                    VALIDATION_OFFICER_EMAIL: $(VALIDATION_OFFICER_EMAIL)
+                    USER_PASSWORD: $(USER_PASSWORD)
+                    HAPPY_PATH_EMAIL: $(HAPPY_PATH_EMAIL)
+                    APP: appeals
+                    TZ: Europe/London
+                  condition: eq(variables['runE2E'], 'true')
+
     globalVariables:
       - template: azure-pipelines-variables.yml@self
+      - group: cd_e2e-deploy
