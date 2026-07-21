@@ -1,3 +1,4 @@
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import {
 	allocationDetailsData,
 	appealDataFullPlanning,
@@ -44,7 +45,7 @@ describe('rule 6 party statement - add document', () => {
 
 		nock('http://test/')
 			.get('/appeals/2/document-folders?path=representation/representationAttachments')
-			.reply(200, [{ folderId: 1234, path: 'representation/attachments' }])
+			.reply(200, [{ folderId: 1234, path: 'representation/representationAttachments' }])
 			.persist();
 
 		nock('http://test/')
@@ -113,7 +114,41 @@ describe('rule 6 party statement - add document', () => {
 	});
 
 	describe('POST /add-document', () => {
-		it('should redirect to the redaction status page after document upload', async () => {
+		it(`should render a 500 error page if upload-info is not present in the request body`, async () => {
+			const response = await request
+				.post(`${baseUrl}/2/rule-6-party-statement/1/add-document`)
+				.send({});
+
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
+		});
+
+		it(`should render a 500 error page if request body upload-info is in an incorrect format`, async () => {
+			const response = await request
+				.post(`${baseUrl}/2/rule-6-party-statement/1/add-document`)
+				.send({
+					'upload-info': ''
+				});
+
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
+		});
+
+		it('should redirect to the add document details page after document upload', async () => {
 			const response = await request
 				.post(`${baseUrl}/2/rule-6-party-statement/1/add-document`)
 				.send({
@@ -122,73 +157,304 @@ describe('rule 6 party statement - add document', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
-				`Found. Redirecting to /appeals-service/appeal-details/2/rule-6-party-statement/1/add-document/redaction-status`
+				`Found. Redirecting to /appeals-service/appeal-details/2/rule-6-party-statement/1/add-document/add-document-details`
 			);
 		});
 	});
 
-	describe('GET /add-document/redaction-status', () => {
-		it('should render the redaction status page', async () => {
+	describe('GET /add-document/add-document-details', () => {
+		it(`should render a 500 error page if fileUploadInfo is not present in the session`, async () => {
 			const response = await request.get(
-				`${baseUrl}/2/rule-6-party-statement/1/add-document/redaction-status`
+				`${baseUrl}/2/rule-6-party-statement/1/add-document/add-document-details`
 			);
 
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
+		});
+
+		it('should render the add documents details page', async () => {
+			await request.post(`${baseUrl}/2/rule-6-party-statement/1/add-document`).send({
+				'upload-info': fileUploadInfo
+			});
+
+			const response = await request.get(
+				`${baseUrl}/2/rule-6-party-statement/1/add-document/add-document-details`
+			);
 			expect(response.statusCode).toBe(200);
-
-			const unprettifiedHTML = parseHtml(response.text, {
-				skipPrettyPrint: true,
-				rootElement: 'body'
-			}).innerHTML;
-
-			expect(unprettifiedHTML).toContain('Redaction status</h1>');
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain('Add document details</span');
+			expect(unprettifiedElement.innerHTML).toContain(`Representation attachment documents</h1>`);
 		});
 	});
 
-	describe('POST /add-document/redaction-status', () => {
-		it('should redirect to the date submitted page after selecting redaction status', async () => {
+	describe('POST /add-document/add-document-details', () => {
+		beforeEach(async () => {
+			await request.post(`${baseUrl}/2/rule-6-party-statement/1/add-document`).send({
+				'upload-info': fileUploadInfo
+			});
+		});
+
+		it(`should re-render add documents details page if the request body is in an incorrect format`, async () => {
 			const response = await request
-				.post(`${baseUrl}/2/rule-6-party-statement/1/add-document/redaction-status`)
+				.post(`${baseUrl}/2/rule-6-party-statement/1/add-document/add-document-details`)
+				.send({});
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain(`Representation attachment documents</h1>`);
+
+			const errorSummaryElement = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary'
+			});
+
+			expect(errorSummaryElement.innerHTML).toContain('There is a problem with the service');
+		});
+
+		it(`should re-render the document details page with the expected error message if receivedDate day is an invalid value`, async () => {
+			const testCases = [
+				{
+					value: '',
+					expectedError: `Supporting document date must include a day`
+				},
+				{
+					value: 'a',
+					expectedError: `Supporting document date day must be a number`
+				},
+				{
+					value: '0',
+					expectedError: `Supporting document date day must be between 1 and 31`
+				},
+				{
+					value: '32',
+					expectedError: `Supporting document date day must be between 1 and 31`
+				}
+			];
+
+			for (const testCase of testCases) {
+				const response = await request
+					.post(`${baseUrl}/2/rule-6-party-statement/1/add-document/add-document-details`)
+					.send({
+						items: [
+							{
+								documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+								receivedDate: {
+									day: testCase.value,
+									month: '2',
+									year: '2030'
+								},
+								redactionStatus: 3
+							}
+						]
+					});
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(`Representation attachment documents</h1>`);
+
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
+
+				expect(errorSummaryElement.innerHTML).toContain(testCase.expectedError);
+			}
+		});
+
+		it(`should re-render the document details page with the expected error message if receivedDate month is an invalid value`, async () => {
+			const testCases = [
+				{
+					value: '',
+					expectedError: `Supporting document date must include a month`
+				},
+				{
+					value: 'a',
+					expectedError: `Supporting document date must be a real date`
+				},
+				{
+					value: '0',
+					expectedError: `Supporting document date month must be between 1 and 12`
+				},
+				{
+					value: '13',
+					expectedError: `Supporting document date month must be between 1 and 12`
+				}
+			];
+
+			for (const testCase of testCases) {
+				const response = await request
+					.post(`${baseUrl}/2/rule-6-party-statement/1/add-document/add-document-details`)
+					.send({
+						items: [
+							{
+								documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+								receivedDate: {
+									day: '1',
+									month: testCase.value,
+									year: '2030'
+								},
+								redactionStatus: 3
+							}
+						]
+					});
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(`Representation attachment documents</h1>`);
+
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
+
+				expect(errorSummaryElement.innerHTML).toContain(testCase.expectedError);
+			}
+		});
+
+		it(`should re-render the document details page with the expected error message if receivedDate year is an invalid value`, async () => {
+			const testCases = [
+				{
+					value: '',
+					expectedError: `Supporting document date must include a year`
+				},
+				{
+					value: 'a',
+					expectedError: `Supporting document date year must be a number`
+				},
+				{
+					value: '202',
+					expectedError: `Supporting document date year must be 4 digits`
+				}
+			];
+
+			for (const testCase of testCases) {
+				const response = await request
+					.post(`${baseUrl}/2/rule-6-party-statement/1/add-document/add-document-details`)
+					.send({
+						items: [
+							{
+								documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+								receivedDate: {
+									day: '1',
+									month: '2',
+									year: testCase.value
+								},
+								redactionStatus: 3
+							}
+						]
+					});
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(`Representation attachment documents</h1>`);
+
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
+
+				expect(errorSummaryElement.innerHTML).toContain(testCase.expectedError);
+			}
+		});
+
+		it(`should re-render add documents details page if receivedDate is not a valid date`, async () => {
+			const testCases = [
+				{
+					value: {
+						day: '29',
+						month: '2',
+						year: 2023
+					},
+					expectedError: `Supporting document date must be a real date`
+				},
+				{
+					value: {
+						day: '',
+						month: '',
+						year: ''
+					},
+					expectedError: `Enter the date you received the supporting document`
+				},
+				{
+					value: {
+						day: '2',
+						month: '',
+						year: ''
+					},
+					expectedError: `Supporting document date must include a month and year`
+				},
+				{
+					value: {
+						day: '',
+						month: '2',
+						year: ''
+					},
+					expectedError: `Supporting document date must include a day and year`
+				},
+				{
+					value: {
+						day: '',
+						month: '',
+						year: '2025'
+					},
+					expectedError: `Supporting document date must include a day and month`
+				}
+			];
+
+			for (const testCase of testCases) {
+				const response = await request
+					.post(`${baseUrl}/2/rule-6-party-statement/1/add-document/add-document-details`)
+					.send({
+						items: [
+							{
+								documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+								receivedDate: testCase.value,
+								redactionStatus: 3
+							}
+						]
+					});
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(`Representation attachment documents</h1>`);
+
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
+
+				expect(errorSummaryElement.innerHTML).toContain(testCase.expectedError);
+			}
+		});
+
+		it(`should redirect to check your answers if valid details posted`, async () => {
+			const response = await request
+				.post(`${baseUrl}/2/rule-6-party-statement/1/add-document/add-document-details`)
 				.send({
-					redactionStatus: 'no_redaction_required'
+					items: [
+						{
+							documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+							receivedDate: {
+								day: '1',
+								month: '2',
+								year: '2023'
+							},
+							redactionStatus: 3
+						}
+					]
 				});
 
 			expect(response.statusCode).toBe(302);
+
 			expect(response.text).toBe(
-				`Found. Redirecting to /appeals-service/appeal-details/2/rule-6-party-statement/1/add-document/date-submitted`
-			);
-		});
-	});
-
-	describe('GET /add-document/date-submitted', () => {
-		it('should render the date submitted page', async () => {
-			const response = await request.get(
-				`${baseUrl}/2/rule-6-party-statement/1/add-document/date-submitted`
-			);
-
-			expect(response.statusCode).toBe(200);
-
-			const unprettifiedHTML = parseHtml(response.text, {
-				skipPrettyPrint: true,
-				rootElement: 'body'
-			}).innerHTML;
-
-			expect(unprettifiedHTML).toContain('When was the supporting document submitted?</h1>');
-		});
-	});
-
-	describe('POST /add-document/date-submitted', () => {
-		it('should redirect to the check your answers page after entering a valid date', async () => {
-			const response = await request
-				.post(`${baseUrl}/2/rule-6-party-statement/1/add-document/date-submitted`)
-				.send({
-					'date-day': '15',
-					'date-month': '12',
-					'date-year': '2024'
-				});
-
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				`Found. Redirecting to /appeals-service/appeal-details/2/rule-6-party-statement/1/add-document/check-your-answers`
+				`Found. Redirecting to ${baseUrl}/2/rule-6-party-statement/1/add-document/check-your-answers`
 			);
 		});
 	});
@@ -203,20 +469,21 @@ describe('rule 6 party statement - add document', () => {
 			expect(response1.statusCode).toBe(302);
 
 			const response2 = await request
-				.post(`${baseUrl}/2/rule-6-party-statement/1/add-document/redaction-status`)
+				.post(`${baseUrl}/2/rule-6-party-statement/1/add-document/add-document-details`)
 				.send({
-					redactionStatus: 'no_redaction_required'
+					items: [
+						{
+							documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+							receivedDate: {
+								day: '1',
+								month: '2',
+								year: '2023'
+							},
+							redactionStatus: 3
+						}
+					]
 				});
 			expect(response2.statusCode).toBe(302);
-
-			const response3 = await request
-				.post(`${baseUrl}/2/rule-6-party-statement/1/add-document/date-submitted`)
-				.send({
-					'date-day': '15',
-					'date-month': '12',
-					'date-year': '2024'
-				});
-			expect(response3.statusCode).toBe(302);
 
 			const response = await request.get(
 				`${baseUrl}/2/rule-6-party-statement/1/add-document/check-your-answers`
@@ -224,16 +491,27 @@ describe('rule 6 party statement - add document', () => {
 
 			expect(response.statusCode).toBe(200);
 
-			const unprettifiedHTML = parseHtml(response.text, {
-				skipPrettyPrint: true,
-				rootElement: 'body'
-			}).innerHTML;
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedHTML).toContain('Check details and add document</h1>');
-			expect(unprettifiedHTML).toContain('Appeal 351062</span>');
-			expect(unprettifiedHTML).toContain('test-document.txt</a>');
-			expect(unprettifiedHTML).toContain('Redaction status</dt>');
-			expect(unprettifiedHTML).toContain('Date submitted</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Appeal 351062</span');
+			expect(unprettifiedElement.innerHTML).toContain(`Check your answers</h1>`);
+			expect(unprettifiedElement.innerHTML).toContain('File</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt" target="_blank">test-document.txt</a></dd>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-party-statement/1/add-document">Change<span class="govuk-visually-hidden"> file test-document.txt</span></a></dd>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				`${dateISOStringToDisplayDate(new Date().toISOString())}</dd>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('No redaction required</dd>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a class="govuk-link" href="/appeals-service/appeal-details/2/rule-6-party-statement/1/add-document/add-document-details">Change<span class="govuk-visually-hidden"> test-document.txt date received</span></a></dd>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
 	});
 
@@ -244,16 +522,20 @@ describe('rule 6 party statement - add document', () => {
 			});
 
 			await request
-				.post(`${baseUrl}/2/rule-6-party-statement/1/add-document/redaction-status`)
+				.post(`${baseUrl}/2/rule-6-party-statement/1/add-document/add-document-details`)
 				.send({
-					redactionStatus: 'no_redaction_required'
+					items: [
+						{
+							documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+							receivedDate: {
+								day: '1',
+								month: '2',
+								year: '2023'
+							},
+							redactionStatus: 3
+						}
+					]
 				});
-
-			await request.post(`${baseUrl}/2/rule-6-party-statement/1/add-document/date-submitted`).send({
-				'date-day': '15',
-				'date-month': '12',
-				'date-year': '2024'
-			});
 
 			const mockedPostRepresentationEndpoint = nock('http://test/')
 				.post('/appeals/2/reps/rule_6_party_statement')
@@ -308,23 +590,6 @@ describe('rule 6 party statement - add document', () => {
 
 			expect(notificationBannerHtml).toContain('Success</h3>');
 			expect(notificationBannerHtml).toContain('Test Rule 6 Party statement added</p>');
-		});
-	});
-
-	describe('POST /add-document/redaction-status (edit)', () => {
-		it('should redirect to the date submitted page when changing from check your answers', async () => {
-			const response = await request
-				.post(
-					`${baseUrl}/2/rule-6-party-statement/1/add-document/redaction-status?editEntrypoint=${baseUrl}/2/rule-6-party-statement/1/add-document/redaction-status`
-				)
-				.send({
-					redactionStatus: 'no_redaction_required'
-				});
-
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				`Found. Redirecting to /appeals-service/appeal-details/2/rule-6-party-statement/1/add-document/date-submitted?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Frule-6-party-statement%2F1%2Fadd-document%2Fredaction-status`
-			);
 		});
 	});
 });
