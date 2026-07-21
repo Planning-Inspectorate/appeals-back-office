@@ -653,6 +653,7 @@ describe('appeal linked appeals routes', () => {
 
 					test('returns 200 and creates audit trails when the appeal is a child and appealRefToReplaceLead is not set', async () => {
 						const testAppeal = structuredClone(enforcementNoticeAppeal);
+						testAppeal.currentStatus = APPEAL_CASE_STATUS.VALIDATION;
 						testAppeal.appealStatus = [{ valid: true, status: APPEAL_CASE_STATUS.VALIDATION }];
 						testAppeal.parentAppeals = [
 							{
@@ -721,6 +722,7 @@ describe('appeal linked appeals routes', () => {
 
 					test('returns 200 when the appeal is a parent and appealRefToReplaceLead is a child of this parent', async () => {
 						const testAppeal = structuredClone(enforcementNoticeAppeal);
+						testAppeal.currentStatus = APPEAL_CASE_STATUS.VALIDATION;
 						testAppeal.appealStatus = [{ valid: true, status: APPEAL_CASE_STATUS.VALIDATION }];
 						testAppeal.childAppeals = [
 							{

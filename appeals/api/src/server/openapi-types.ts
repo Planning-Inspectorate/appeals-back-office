@@ -1003,6 +1003,102 @@ export interface AllAppeals {
 	pageSize?: number;
 }
 
+export interface PersonalList {
+	/** @example 57 */
+	itemCount?: number;
+	items?: {
+		/** @example 1 */
+		appealId?: number;
+		/** @example "APP/Q9999/D/21/235348" */
+		appealReference?: string;
+		/** @example "awaiting_lpa_questionnaire" */
+		appealStatus?: string;
+		/** @example ["awaiting_event"] */
+		completedStateList?: string[];
+		/** @example "household" */
+		appealType?: string;
+		/** @example "Written" */
+		procedureType?: string;
+		/** @example 1 */
+		lpaQuestionnaireId?: number;
+		documentationSummary?: {
+			appellantCase?: {
+				/** @example "received" */
+				status?: string;
+				dueDate?: any;
+				/** @example "2024-06-26T11:57:39.953Z" */
+				receivedAt?: string;
+			};
+			lpaQuestionnaire?: {
+				/** @example "not_received" */
+				status?: string;
+			};
+		};
+		appealTimetable?: {
+			/** @example 1 */
+			appealTimetableId?: number;
+			/** @example "2024-06-18T00:00:00.000Z" */
+			caseResubmissionDueDate?: string;
+			/** @example "2024-06-18T00:00:00.000Z" */
+			lpaQuestionnaireDueDate?: string;
+			/** @example "2024-06-18T00:00:00.000Z" */
+			ipCommentsDueDate?: string;
+			/** @example "2024-06-18T00:00:00.000Z" */
+			lpaStatementDueDate?: string;
+			/** @example "2024-06-18T00:00:00.000Z" */
+			finalCommentsDueDate?: string;
+			/** @example "2024-06-18T00:00:00.000Z" */
+			s106ObligationDueDate?: string;
+			/** @example "2024-06-18T00:00:00.000Z" */
+			issueDeterminationDate?: string;
+			/** @example "2024-06-18T00:00:00.000Z" */
+			statementOfCommonGroundDueDate?: string;
+			/** @example "2024-06-18T00:00:00.000Z" */
+			planningObligationDueDate?: string;
+			/** @example "2024-06-18T00:00:00.000Z" */
+			proofOfEvidenceAndWitnessesDueDate?: string;
+			/** @example "2024-06-18T00:00:00.000Z" */
+			caseManagementConferenceDueDate?: string;
+		};
+		/** @example "2024-06-18T00:00:00.000Z" */
+		dueDate?: string;
+		/** @example false */
+		isParentAppeal?: boolean;
+		/** @example false */
+		isChildAppeal?: boolean;
+		/** @example false */
+		isHearingSetup?: boolean;
+		/** @example false */
+		hasHearingAddress?: boolean;
+		/** @example false */
+		awaitingLinkedAppeal?: boolean;
+		costsDecision?: {
+			/** @example false */
+			awaitingAppellantCostsDecision?: boolean;
+			/** @example false */
+			awaitingLpaCostsDecision?: boolean;
+		};
+		/** @example 2 */
+		numberOfResidencesNetChange?: number;
+		/** @example false */
+		isInquirySetup?: boolean;
+		/** @example false */
+		hasInquiryAddress?: boolean;
+		/** @example "invalid reason" */
+		enforcementNoticeInvalid?: string;
+		/** @example false */
+		isS78Expedited?: boolean;
+	}[];
+	/** @example ["lpa_questionnaire"] */
+	statuses?: string[];
+	/** @example 1 */
+	page?: number;
+	/** @example 27 */
+	pageCount?: number;
+	/** @example 30 */
+	pageSize?: number;
+}
+
 export interface ManyAppeals {
 	/** @example 57 */
 	itemCount?: number;

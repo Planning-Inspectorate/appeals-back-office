@@ -10867,6 +10867,214 @@
 					"name": "AllAppeals"
 				}
 			},
+			"PersonalList": {
+				"type": "object",
+				"properties": {
+					"itemCount": {
+						"type": "number",
+						"example": 57
+					},
+					"items": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"appealId": {
+									"type": "number",
+									"example": 1
+								},
+								"appealReference": {
+									"type": "string",
+									"example": "APP/Q9999/D/21/235348"
+								},
+								"appealStatus": {
+									"type": "string",
+									"example": "awaiting_lpa_questionnaire"
+								},
+								"completedStateList": {
+									"type": "array",
+									"example": ["awaiting_event"],
+									"items": {
+										"type": "string"
+									}
+								},
+								"appealType": {
+									"type": "string",
+									"example": "household"
+								},
+								"procedureType": {
+									"type": "string",
+									"example": "Written"
+								},
+								"lpaQuestionnaireId": {
+									"type": "number",
+									"example": 1
+								},
+								"documentationSummary": {
+									"type": "object",
+									"properties": {
+										"appellantCase": {
+											"type": "object",
+											"properties": {
+												"status": {
+													"type": "string",
+													"example": "received"
+												},
+												"dueDate": {},
+												"receivedAt": {
+													"type": "string",
+													"example": "2024-06-26T11:57:39.953Z"
+												}
+											}
+										},
+										"lpaQuestionnaire": {
+											"type": "object",
+											"properties": {
+												"status": {
+													"type": "string",
+													"example": "not_received"
+												}
+											}
+										}
+									}
+								},
+								"appealTimetable": {
+									"type": "object",
+									"properties": {
+										"appealTimetableId": {
+											"type": "number",
+											"example": 1
+										},
+										"caseResubmissionDueDate": {
+											"type": "string",
+											"example": "2024-06-18T00:00:00.000Z"
+										},
+										"lpaQuestionnaireDueDate": {
+											"type": "string",
+											"example": "2024-06-18T00:00:00.000Z"
+										},
+										"ipCommentsDueDate": {
+											"type": "string",
+											"example": "2024-06-18T00:00:00.000Z"
+										},
+										"lpaStatementDueDate": {
+											"type": "string",
+											"example": "2024-06-18T00:00:00.000Z"
+										},
+										"finalCommentsDueDate": {
+											"type": "string",
+											"example": "2024-06-18T00:00:00.000Z"
+										},
+										"s106ObligationDueDate": {
+											"type": "string",
+											"example": "2024-06-18T00:00:00.000Z"
+										},
+										"issueDeterminationDate": {
+											"type": "string",
+											"example": "2024-06-18T00:00:00.000Z"
+										},
+										"statementOfCommonGroundDueDate": {
+											"type": "string",
+											"example": "2024-06-18T00:00:00.000Z"
+										},
+										"planningObligationDueDate": {
+											"type": "string",
+											"example": "2024-06-18T00:00:00.000Z"
+										},
+										"proofOfEvidenceAndWitnessesDueDate": {
+											"type": "string",
+											"example": "2024-06-18T00:00:00.000Z"
+										},
+										"caseManagementConferenceDueDate": {
+											"type": "string",
+											"example": "2024-06-18T00:00:00.000Z"
+										}
+									}
+								},
+								"dueDate": {
+									"type": "string",
+									"example": "2024-06-18T00:00:00.000Z"
+								},
+								"isParentAppeal": {
+									"type": "boolean",
+									"example": false
+								},
+								"isChildAppeal": {
+									"type": "boolean",
+									"example": false
+								},
+								"isHearingSetup": {
+									"type": "boolean",
+									"example": false
+								},
+								"hasHearingAddress": {
+									"type": "boolean",
+									"example": false
+								},
+								"awaitingLinkedAppeal": {
+									"type": "boolean",
+									"example": false
+								},
+								"costsDecision": {
+									"type": "object",
+									"properties": {
+										"awaitingAppellantCostsDecision": {
+											"type": "boolean",
+											"example": false
+										},
+										"awaitingLpaCostsDecision": {
+											"type": "boolean",
+											"example": false
+										}
+									}
+								},
+								"numberOfResidencesNetChange": {
+									"type": "number",
+									"example": 2
+								},
+								"isInquirySetup": {
+									"type": "boolean",
+									"example": false
+								},
+								"hasInquiryAddress": {
+									"type": "boolean",
+									"example": false
+								},
+								"enforcementNoticeInvalid": {
+									"type": "string",
+									"example": "invalid reason"
+								},
+								"isS78Expedited": {
+									"type": "boolean",
+									"example": false
+								}
+							}
+						}
+					},
+					"statuses": {
+						"type": "array",
+						"example": ["lpa_questionnaire"],
+						"items": {
+							"type": "string"
+						}
+					},
+					"page": {
+						"type": "number",
+						"example": 1
+					},
+					"pageCount": {
+						"type": "number",
+						"example": 27
+					},
+					"pageSize": {
+						"type": "number",
+						"example": 30
+					}
+				},
+				"xml": {
+					"name": "PersonalList"
+				}
+			},
 			"ManyAppeals": {
 				"type": "object",
 				"properties": {

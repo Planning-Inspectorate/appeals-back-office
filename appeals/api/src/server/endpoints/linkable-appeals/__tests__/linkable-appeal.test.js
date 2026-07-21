@@ -107,6 +107,7 @@ describe('/appeals/linkable-appeal/:appealReference/:linkableType', () => {
 		test('responds with a 432 if the linked cases cannot be linked as the case status is statements or beyond', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValueOnce({
 				...householdAppeal,
+				currentStatus: 'statements',
 				appealStatus: [{ status: 'statements' }],
 				parentAppeals: [],
 				childAppeals: []

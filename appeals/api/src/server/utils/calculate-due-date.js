@@ -8,8 +8,6 @@ import { add, addBusinessDays } from 'date-fns';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
-/** @typedef {import('#repositories/appeal-lists.repository.js').DBAppeals} DBAppeals */
-/** @typedef {DBAppeals[0]} DBAppeal */
 /** @typedef {import('#repositories/appeal-lists.repository.js').DBUserAppeal} DBUserAppeal */
 
 const approxStageCompletion = {
@@ -37,7 +35,7 @@ const isNetResidencesAppealType = (appealType) => {
 
 /**
  * Map each appeal to include a due date.
- * @param {DBAppeal | DBUserAppeal | Appeal} appeal
+ * @param {DBUserAppeal | Appeal} appeal
  * @param {CostsDecision | null} [costsDecision]
  * @returns {Promise<Date | null | undefined>}
  */

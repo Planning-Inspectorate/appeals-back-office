@@ -52,11 +52,12 @@ describe('DELETE /:appealId/site-visits/:siteVisitId', () => {
 		['linked appeals- enforcement multiple appellants', getEnforcementLeadAppeal]
 	])('%s', (_, getAppeal) => {
 		test('deletes a site visit and moves the status back if the status is awaiting_event', async () => {
-			const appeal = getAppeal();
+			const appeal = structuredClone(getAppeal());
 
 			const idsOfLinkedGroup = getIdsOfLinkedGroup(appeal);
 			const sizeOfLinkedGroup = idsOfLinkedGroup.length;
 
+			appeal.currentStatus = 'awaiting_event';
 			appeal.appealStatus = [
 				{
 					id: 1,
@@ -178,6 +179,7 @@ describe('DELETE /:appealId/site-visits/:siteVisitId', () => {
 
 			const idsOfLinkedGroup = getIdsOfLinkedGroup(appeal);
 
+			appeal.currentStatus = 'lpa_questionnaire';
 			appeal.appealStatus[0] = 'lpa_questionnaire';
 			addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
 

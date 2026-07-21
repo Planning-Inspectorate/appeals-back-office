@@ -39,6 +39,7 @@ export const addStatusesToLinkedAppeals = (leadAppeal, statusArray) => {
 							...childAppeal,
 							child: {
 								...childAppeal.child,
+								currentStatus: statusArray.find((status) => status.valid)?.status || '',
 								appealStatus: convertStatusArrayToNewAppealId(statusArray, childAppeal.child?.id)
 							}
 						}

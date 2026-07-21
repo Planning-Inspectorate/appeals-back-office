@@ -1392,6 +1392,7 @@ describe('/appeals/:id/reps', () => {
 			const appealNotInStatements = {
 				...householdAppeal,
 				id: 1,
+				currentStatus: 'statements',
 				appealStatus: [{ status: 'statements', valid: true }]
 			};
 			databaseConnector.appeal.findUnique.mockResolvedValue(appealNotInStatements);
@@ -1618,6 +1619,7 @@ describe('/appeals/:id/reps', () => {
 		test('200 and auto-publishes for lpa_final_comment rep_type when appeal has PASSED final_comments state', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...householdAppeal,
+				currentStatus: 'final_comments',
 				appealStatus: [{ valid: false, status: 'final_comments' }]
 			});
 			databaseConnector.representation.create.mockResolvedValue({
@@ -1653,6 +1655,7 @@ describe('/appeals/:id/reps', () => {
 		test('200 and does not auto-publish for lpa_final_comment rep_type when appeal is NOT yet passed final_comments state', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...householdAppeal,
+				currentStatus: 'statements',
 				appealStatus: [{ valid: true, status: 'statements' }]
 			});
 			databaseConnector.representation.create.mockResolvedValue({
@@ -1688,6 +1691,7 @@ describe('/appeals/:id/reps', () => {
 		test('200 and does not auto-publish for lpa_final_comment rep_type when appeal is CURRENTLY in final_comments state', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...householdAppeal,
+				currentStatus: 'final_comments',
 				appealStatus: [{ valid: true, status: 'final_comments' }]
 			});
 			databaseConnector.representation.create.mockResolvedValue({
@@ -1722,6 +1726,7 @@ describe('/appeals/:id/reps', () => {
 		test('200 and should not auto-publishe for lpa_final_comment rep_type when appeal is in final_comments state', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...householdAppeal,
+				currentStatus: 'final_comments',
 				appealStatus: [
 					{ valid: true, status: 'final_comments' },
 					{ valid: false, status: 'statements' }
@@ -1762,6 +1767,7 @@ describe('/appeals/:id/reps', () => {
 				appealTimetable: {
 					lpaStatementDueDate: new Date('2024-05-23')
 				},
+				currentStatus: 'statements',
 				appealStatus: [{ valid: false, status: 'statements' }]
 			});
 			databaseConnector.representation.create.mockResolvedValue({
@@ -1800,6 +1806,7 @@ describe('/appeals/:id/reps', () => {
 				appealTimetable: {
 					proofOfEvidenceAndWitnessesDueDate: new Date('2024-05-23')
 				},
+				currentStatus: 'evidence',
 				appealStatus: [{ valid: false, status: 'evidence' }]
 			});
 			databaseConnector.representation.create.mockResolvedValue({
@@ -1838,6 +1845,7 @@ describe('/appeals/:id/reps', () => {
 				appealTimetable: {
 					lpaStatementDueDate: addDays(new Date(), 7)
 				},
+				currentStatus: 'statements',
 				appealStatus: [{ valid: false, status: 'statements' }]
 			});
 			databaseConnector.representation.create.mockResolvedValue({
@@ -1873,6 +1881,7 @@ describe('/appeals/:id/reps', () => {
 		test('201 and sets status to awaiting_review for comment rep_type when appeal is in statements state', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...householdAppeal,
+				currentStatus: 'statements',
 				appealStatus: [{ valid: true, status: 'statements' }]
 			});
 
@@ -1899,6 +1908,7 @@ describe('/appeals/:id/reps', () => {
 		test('201 and sets status to valid for lpa_statement rep_type when appeal is in statements state', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...householdAppeal,
+				currentStatus: 'statements',
 				appealStatus: [{ valid: true, status: 'statements' }]
 			});
 
@@ -2312,14 +2322,14 @@ describe('/appeals/:id/reps', () => {
 
 		describe('publish LPA statements', () => {
 			beforeEach(() => {
-				mockAdvertAppeal.appealStatus[0].status = 'statements';
-				mockLdcAppeal.appealStatus[0].status = 'statements';
-				mockS78Appeal.appealStatus[0].status = 'statements';
-				mockS20Appeal.appealStatus[0].status = 'statements';
+				mockAdvertAppeal.currentStatus = 'statements';
+				mockLdcAppeal.currentStatus = 'statements';
+				mockS78Appeal.currentStatus = 'statements';
+				mockS20Appeal.currentStatus = 'statements';
 			});
 
 			test('409 if case is not in STATEMENTS state', async () => {
-				mockS78Appeal.appealStatus[0].status = 'lpa_questionnaire';
+				mockS78Appeal.currentStatus = 'lpa_questionnaire';
 				databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
 
 				const response = await request
@@ -2510,6 +2520,7 @@ describe('/appeals/:id/reps', () => {
 						key: 'inquiry',
 						name: 'Inquiry'
 					},
+					currentStatus: 'statements',
 					appealStatus: [
 						{
 							status: 'statements',
@@ -2734,17 +2745,26 @@ describe('/appeals/:id/reps', () => {
 					{
 						type: CASE_RELATIONSHIP_LINKED,
 						childId: 100,
-						child: { appealStatus: mockS78Appeal.appealStatus }
+						child: {
+							currentStatus: mockS78Appeal.currentStatus,
+							appealStatus: mockS78Appeal.appealStatus
+						}
 					},
 					{
 						type: CASE_RELATIONSHIP_RELATED,
 						childId: 200,
-						child: { appealStatus: mockS78Appeal.appealStatus }
+						child: {
+							currentStatus: mockS78Appeal.currentStatus,
+							appealStatus: mockS78Appeal.appealStatus
+						}
 					},
 					{
 						type: CASE_RELATIONSHIP_LINKED,
 						childId: 300,
-						child: { appealStatus: mockS78Appeal.appealStatus }
+						child: {
+							currentStatus: mockS78Appeal.currentStatus,
+							appealStatus: mockS78Appeal.appealStatus
+						}
 					}
 				];
 
@@ -2864,6 +2884,7 @@ describe('/appeals/:id/reps', () => {
 
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...mockEnforcementNoticeAppeal,
+					currentStatus: 'statements',
 					appealStatus: [
 						{
 							status: 'statements',
@@ -2955,6 +2976,7 @@ describe('/appeals/:id/reps', () => {
 
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...mockEnforcementListedAppeal,
+					currentStatus: 'statements',
 					appealStatus: [
 						{
 							status: 'statements',
@@ -3868,14 +3890,14 @@ describe('/appeals/:id/reps', () => {
 
 		describe('publish final comments', () => {
 			beforeEach(() => {
-				mockAdvertAppeal.appealStatus[0].status = 'final_comments';
-				mockLdcAppeal.appealStatus[0].status = 'final_comments';
-				mockS78Appeal.appealStatus[0].status = 'final_comments';
-				mockS20Appeal.appealStatus[0].status = 'final_comments';
+				mockAdvertAppeal.currentStatus = 'final_comments';
+				mockLdcAppeal.currentStatus = 'final_comments';
+				mockS78Appeal.currentStatus = 'final_comments';
+				mockS20Appeal.currentStatus = 'final_comments';
 			});
 
 			test('409 if case is not in FINAL_COMMENTS state', async () => {
-				mockS78Appeal.appealStatus[0].status = 'lpa_questionnaire';
+				mockS78Appeal.currentStatus = 'lpa_questionnaire';
 				databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
 
 				const response = await request
@@ -4022,17 +4044,26 @@ describe('/appeals/:id/reps', () => {
 					{
 						type: CASE_RELATIONSHIP_LINKED,
 						childId: 100,
-						child: { appealStatus: mockS78Appeal.appealStatus }
+						child: {
+							currentStatus: mockS78Appeal.currentStatus,
+							appealStatus: mockS78Appeal.appealStatus
+						}
 					},
 					{
 						type: CASE_RELATIONSHIP_RELATED,
 						childId: 200,
-						child: { appealStatus: mockS78Appeal.appealStatus }
+						child: {
+							currentStatus: mockS78Appeal.currentStatus,
+							appealStatus: mockS78Appeal.appealStatus
+						}
 					},
 					{
 						type: CASE_RELATIONSHIP_LINKED,
 						childId: 300,
-						child: { appealStatus: mockS78Appeal.appealStatus }
+						child: {
+							currentStatus: mockS78Appeal.currentStatus,
+							appealStatus: mockS78Appeal.appealStatus
+						}
 					}
 				];
 
@@ -4439,6 +4470,7 @@ describe('/appeals/:id/reps', () => {
 					user_type: ''
 				};
 
+				mockEnforcementListedAppeal.currentStatus = 'final_comments';
 				mockEnforcementListedAppeal.appealStatus = [{ status: 'final_comments', valid: true }];
 
 				mockEnforcementListedAppeal.appealTimetable = {
@@ -4723,12 +4755,12 @@ describe('/appeals/:id/reps', () => {
 
 		describe('publish proof of evidence', () => {
 			beforeEach(() => {
-				mockS78Appeal.appealStatus[0].status = 'evidence';
-				mockS20Appeal.appealStatus[0].status = 'evidence';
+				mockS78Appeal.currentStatus = 'evidence';
+				mockS20Appeal.currentStatus = 'evidence';
 			});
 
 			test('409 if case is not in EVIDENCE state', async () => {
-				mockS78Appeal.appealStatus[0].status = 'lpa_questionnaire';
+				mockS78Appeal.currentStatus = 'lpa_questionnaire';
 				databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
 
 				const response = await request
@@ -5398,6 +5430,7 @@ describe('/appeals/:id/reps', () => {
 						}
 					}
 				],
+				currentStatus: APPEAL_CASE_STATUS.STATEMENTS,
 				appealStatus: [{ status: APPEAL_CASE_STATUS.STATEMENTS, valid: true }],
 				childAppeals: [],
 				lpa: { email: 'lpa@example.com' },

@@ -1,4 +1,4 @@
-import { completedStateList, currentStatus } from '#utils/current-status.js';
+import { completedStateList } from '#utils/current-status.js';
 import formatAddress from '#utils/format-address.js';
 import { formatCostsDecision } from '#utils/format-costs-decision.js';
 import {
@@ -19,20 +19,19 @@ import { getSingularRepresentation } from '@pins/appeals/utils/representations.j
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { countBy } from 'lodash-es';
 
-/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
-/** @typedef {import('@pins/appeals.api').Schema.Folder} Folder */
-/** @typedef {import('@pins/appeals.api').Schema.AppealRelationship} AppealRelationship */
-/** @typedef {import('@pins/appeals.api').Schema.AppealType} AppealType */
-/** @typedef {import('@pins/appeals.api').Appeals.AppealListResponse} AppealListResponse */
-/** @typedef {import('@pins/appeals.api').Appeals.AppealTimetable} AppealTimetable */
-/** @typedef {import('@pins/appeals.api').Appeals.SingleAppealDetailsResponse} SingleAppealDetailsResponse */
-/** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
-/** @typedef {import('#endpoints/appeals').DocumentationSummary} DocumentationSummary */
-/** @typedef {import('#db-client/client.ts').AppealStatus} AppealStatus */
-/** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
 /** @typedef {import('#repositories/appeal-lists.repository.js').DBAppeals} DBAppeals */
 /** @typedef {DBAppeals[0]} DBAppeal */
-/** @typedef {import('#repositories/appeal-lists.repository.js').DBUserAppeal} DBUserAppeal */
+/** @typedef {import('@pins/appeals.api').Schema.AppealRelationship} AppealRelationship */
+/** @typedef {import('@pins/appeals.api').Appeals.AppealListResponse} AppealListResponse */
+
+/** @typedef {import('@pins/appeals.api').Appeals.PersonalListResponse} PersonalListResponse */
+/** @typedef {import('#repositories/personal-list.repository.js').PersonalListSelected} PersonalListSelected */
+/** @typedef {import('#repositories/personal-list.repository.js').getPersonalListRepoResponse} GetPersonalListRepoResponse */
+/** @typedef {GetPersonalListRepoResponse['personalList'][0]['appeal']} PersonalListAppeal */
+
+/** @typedef {import('@pins/appeals.api').Appeals.AppealTimetable} AppealTimetable */
+/** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
+/** @typedef {import('#endpoints/appeals').DocumentationSummary} DocumentationSummary */
 
 /**
  * @param {DBAppeal & {costsDecision?: CostsDecision}} appeal
@@ -44,8 +43,7 @@ const formatAppeal = (appeal, linkedAppeals) => {
 		appealId: appeal.id,
 		appealReference: appeal.reference,
 		appealSite: formatAddress(appeal.address),
-		appealStatus: currentStatus(appeal),
-		completedStateList: completedStateList(appeal),
+		appealStatus: appeal.currentStatus,
 		appealType: appeal.appealType?.type,
 		procedureType: appeal.procedureType?.name,
 		createdAt: appeal.caseCreatedDate,
@@ -53,8 +51,8 @@ const formatAppeal = (appeal, linkedAppeals) => {
 		dueDate: null,
 		documentationSummary: formatDocumentationSummary(appeal),
 		appealTimetable: formatAppealTimetable(appeal),
-		isParentAppeal: linkedAppeals.filter((link) => link.parentRef === appeal.reference).length > 0,
-		isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0,
+		isParentAppeal: linkedAppeals.some((link) => link.parentRef === appeal.reference),
+		isChildAppeal: linkedAppeals.some((link) => link.childRef === appeal.reference),
 		planningApplicationReference: appeal.applicationReference,
 		isHearingSetup: !!appeal.hearing,
 		hasHearingAddress: !!appeal.hearing?.addressId,
@@ -74,13 +72,8 @@ const formatAppeal = (appeal, linkedAppeals) => {
 
 /**
  *
- * @param {Object} options
- * @param {number} options.appealId
- * @param {DBUserAppeal} options.appeal
- * @param {Date} options.dueDate
- * @param {String} options.linkType
- * @param {Boolean} [options.awaitingLinkedAppeal]
- * @returns {Promise<AppealListResponse>}
+ * @param {PersonalListSelected & { awaitingLinkedAppeal?: boolean }} options
+ * @returns {Promise<PersonalListResponse>}
  */
 const formatPersonalListItem = async ({
 	appealId,
@@ -98,27 +91,23 @@ const formatPersonalListItem = async ({
 		appealType,
 		inquiry
 	} = appeal;
-	const appealStatus = currentStatus(appeal);
+	const appealStatus = appeal.currentStatus;
 	const appealIsCompleteOrWithdrawn =
 		appealStatus === APPEAL_CASE_STATUS.COMPLETE || appealStatus === APPEAL_CASE_STATUS.WITHDRAWN;
 
 	return {
 		appealId,
 		appealReference: reference,
-		appealSite: formatAddress(appeal.address),
 		appealStatus,
 		completedStateList: completedStateList(appeal),
 		appealType: appealType?.type,
 		procedureType: procedureType?.name,
-		createdAt: appeal.caseCreatedDate,
-		localPlanningDepartment: appeal.lpa?.name || '',
 		lpaQuestionnaireId: lpaQuestionnaire?.id ?? null,
 		documentationSummary: formatDocumentationSummary(appeal),
 		dueDate,
 		appealTimetable: formatAppealTimetable(appeal),
 		isParentAppeal: linkType === 'parent',
 		isChildAppeal: linkType === 'child',
-		planningApplicationReference: appeal.applicationReference,
 		isHearingSetup: !!hearing,
 		hasHearingAddress: !!hearing?.addressId,
 		awaitingLinkedAppeal,
@@ -128,8 +117,6 @@ const formatPersonalListItem = async ({
 		hasInquiryAddress: !!inquiry?.addressId,
 		enforcementNoticeInvalid:
 			appeal.enforcementNoticeAppealOutcome?.enforcementNoticeInvalid || null,
-		enforcementNoticeGroundAFeeReceiptDueDate:
-			appeal.enforcementNoticeAppealOutcome?.groundAFeeReceiptDueDate || null,
 		isS78Expedited: isS78ExpeditedAppealType(
 			appealType?.type,
 			appellantCase?.applicationDate,
@@ -140,7 +127,7 @@ const formatPersonalListItem = async ({
 };
 
 /**
- * @param {DBAppeal | DBUserAppeal} appeal
+ * @param {DBAppeal|PersonalListAppeal} appeal
  * @returns {DocumentationSummary}
  * */
 const formatDocumentationSummary = (appeal) => {
@@ -298,7 +285,7 @@ const formatDocumentationSummary = (appeal) => {
 };
 
 /**
- * @param {DBAppeal | DBUserAppeal} appeal
+ * @param {{appealTimetable?: PersonalListAppeal['appealTimetable']|DBAppeal['appealTimetable'], appealType?: { key?: string } | null}} appeal
  * @returns {AppealTimetable | undefined}
  * */
 function formatAppealTimetable(appeal) {
@@ -334,18 +321,18 @@ const getIdsOfReferencedAppeals = (otherAppeals, currentAppealRef) => {
 	 * @type {number[]}
 	 */
 	const relevantIds = [];
-	otherAppeals.map((relation) => {
+	otherAppeals.forEach((relation) => {
 		if (
 			relation.childRef === currentAppealRef &&
 			relation.parentId &&
-			relevantIds.indexOf(relation.parentId) === -1
+			!relevantIds.includes(relation.parentId)
 		) {
 			relevantIds.push(relation.parentId);
 		}
 		if (
 			relation.parentRef === currentAppealRef &&
 			relation.childId &&
-			relevantIds.indexOf(relation.childId) === -1
+			!relevantIds.includes(relation.childId)
 		) {
 			relevantIds.push(relation.childId);
 		}

@@ -233,6 +233,63 @@ export const spec = {
 			pageCount: 27,
 			pageSize: 30
 		},
+		PersonalList: {
+			itemCount: 57,
+			items: [
+				{
+					appealId: 1,
+					appealReference: 'APP/Q9999/D/21/235348',
+					appealStatus: 'awaiting_lpa_questionnaire',
+					completedStateList: ['awaiting_event'],
+					appealType: 'household',
+					procedureType: 'Written',
+					lpaQuestionnaireId: 1,
+					documentationSummary: {
+						appellantCase: {
+							status: 'received',
+							dueDate: null,
+							receivedAt: '2024-06-26T11:57:39.953Z'
+						},
+						lpaQuestionnaire: {
+							status: 'not_received'
+						}
+					},
+					appealTimetable: {
+						appealTimetableId: 1,
+						caseResubmissionDueDate: '2024-06-18T00:00:00.000Z',
+						lpaQuestionnaireDueDate: '2024-06-18T00:00:00.000Z',
+						ipCommentsDueDate: '2024-06-18T00:00:00.000Z',
+						lpaStatementDueDate: '2024-06-18T00:00:00.000Z',
+						finalCommentsDueDate: '2024-06-18T00:00:00.000Z',
+						s106ObligationDueDate: '2024-06-18T00:00:00.000Z',
+						issueDeterminationDate: '2024-06-18T00:00:00.000Z',
+						statementOfCommonGroundDueDate: '2024-06-18T00:00:00.000Z',
+						planningObligationDueDate: '2024-06-18T00:00:00.000Z',
+						proofOfEvidenceAndWitnessesDueDate: '2024-06-18T00:00:00.000Z',
+						caseManagementConferenceDueDate: '2024-06-18T00:00:00.000Z'
+					},
+					dueDate: '2024-06-18T00:00:00.000Z',
+					isParentAppeal: false,
+					isChildAppeal: false,
+					isHearingSetup: false,
+					hasHearingAddress: false,
+					awaitingLinkedAppeal: false,
+					costsDecision: {
+						awaitingAppellantCostsDecision: false,
+						awaitingLpaCostsDecision: false
+					},
+					numberOfResidencesNetChange: 2,
+					isInquirySetup: false,
+					hasInquiryAddress: false,
+					enforcementNoticeInvalid: 'invalid reason',
+					isS78Expedited: false
+				}
+			],
+			statuses: ['lpa_questionnaire'],
+			page: 1,
+			pageCount: 27,
+			pageSize: 30
+		},
 		ManyAppeals: {
 			itemCount: 57,
 			items: [

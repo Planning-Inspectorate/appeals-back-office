@@ -24,6 +24,7 @@ export default {
 	agentId: 2,
 	caseOfficerUserId: 1,
 	inspectorUserId: null,
+	currentStatus: 'lpa_questionnaire',
 	address: {
 		id: 1,
 		addressLine1: 'FOR TRAINERS ONLY',

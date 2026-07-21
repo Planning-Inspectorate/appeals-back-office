@@ -26,10 +26,10 @@ import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorat
 
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal */
-/** @typedef {import('#appeals/personal-list/personal-list.mapper').PersonalListAppeal} PersonalListAppeal */
+/** @typedef {import('#appeals/personal-list/personal-list.mapper').PersonalListItem} PersonalListItem */
 
 /**
- * @param {PersonalListAppeal | WebAppeal} appeal
+ * @param {PersonalListItem | WebAppeal} appeal
  * @return {boolean}
  */
 export function canDisplayAction(appeal) {
@@ -52,7 +52,7 @@ export function canDisplayAction(appeal) {
 
 /**
  * This logic is documented in `docs/reference/appeal-action-required-logic.md`. Please ensure this document is kept updated to reflect any changes made in this function.
- * @param {WebAppeal|PersonalListAppeal} appealDetails
+ * @param {WebAppeal|PersonalListItem} appealDetails
  * @param { 'summary'|'detail' } view
  * @returns {AppealRequiredAction[]}
  */
