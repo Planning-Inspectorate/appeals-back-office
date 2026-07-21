@@ -1,4 +1,5 @@
 import usersService from '#appeals/appeal-users/users-service.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import {
 	activeDirectoryUsersData,
 	allocationDetailsData,
@@ -8,6 +9,7 @@ import {
 	documentFileVersionsInfo,
 	documentFolderInfo,
 	documentRedactionStatuses,
+	fileUploadInfo,
 	finalCommentsForReview,
 	getAppealRepsResponse,
 	interestedPartyCommentForReview,
@@ -35,6 +37,16 @@ const getFolderApiUrl = (appealId, folderId, repId) => {
 };
 
 describe('lpa-statements', () => {
+	afterAll(() => {
+		nock.cleanAll();
+		nock.restore();
+		jest.clearAllMocks();
+	});
+
+	beforeAll(() => {
+		jest.clearAllMocks();
+	});
+
 	beforeEach(() => {
 		installMockApi();
 		// Common nock setup
@@ -49,7 +61,8 @@ describe('lpa-statements', () => {
 		nock('http://test/')
 			.get('/appeals/2/document-folders')
 			.query({ path: 'representation/representationAttachments' })
-			.reply(200, [{ folderId: 1234, path: 'representation/attachments' }]);
+			.reply(200, [{ folderId: 1234, path: 'representation/representationAttachments' }])
+			.persist();
 
 		nock('http://test/')
 			.get('/appeals/2/reps?type=lpa_statement')
@@ -58,7 +71,12 @@ describe('lpa-statements', () => {
 
 		nock('http://test/')
 			.get('/appeals/2/document-folders?path=representation/representationAttachments')
-			.reply(200, [{ folderId: 1234, path: 'representation/attachments' }]);
+			.reply(200, [{ folderId: 1234, path: 'representation/representationAttachments' }]);
+
+		nock('http://test/')
+			.get('/appeals/document-redaction-statuses')
+			.reply(200, documentRedactionStatuses)
+			.persist();
 	});
 
 	afterEach(teardown);
@@ -831,45 +849,516 @@ describe('lpa-statements', () => {
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
 		});
+	});
 
-		describe('GET /add-document', () => {
-			beforeEach(() => {
-				nock('http://test/').get('/appeals/2/reps').reply(200, interestedPartyCommentForReview); // TODO: this should be LPA statement data, not final comment data
+	describe('GET /add-document', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/2/reps').reply(200, lpaStatementAwaitingReview);
 
-				nock('http://test/')
-					.get('/appeals/3619/reps?type=lpa_statement')
-					.reply(200, lpaStatementAwaitingReview);
+			nock('http://test/')
+				.get('/appeals/3619/reps?type=lpa_statement')
+				.reply(200, lpaStatementAwaitingReview);
+		});
+
+		it('should render the add document page', async () => {
+			const response = await request.get(`${baseUrl}/2/lpa-statement/add-document`);
+			expect(response.statusCode).toBe(200);
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain('Upload supporting documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'data-document-title="LPA statement supporting document"'
+			);
+		});
+	});
+
+	describe('POST /add-document', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/2/reps').reply(200, lpaStatementAwaitingReview);
+		});
+
+		it(`should render a 500 error page if upload-info is not present in the request body`, async () => {
+			const response = await request.post(`${baseUrl}/2/lpa-statement/add-document`).send({});
+
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
+		});
+
+		it(`should render a 500 error page if request body upload-info is in an incorrect format`, async () => {
+			const response = await request.post(`${baseUrl}/2/lpa-statement/add-document`).send({
+				'upload-info': ''
 			});
 
-			it('should render the add document details page', async () => {
-				const response = await request.get(`${baseUrl}/2/lpa-statement/add-document`);
-				expect(response.statusCode).toBe(200);
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
+		});
+
+		it('should redirect to the add document details page if upload info is present and in the correct format', async () => {
+			const response = await request.post(`${baseUrl}/2/lpa-statement/add-document`).send({
+				'upload-info': fileUploadInfo
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				`Found. Redirecting to ${baseUrl}/2/lpa-statement/add-document/add-document-details`
+			);
+		});
+	});
+
+	describe('GET /add-document/add-document-details', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/2/reps').reply(200, lpaStatementAwaitingReview);
+
+			nock('http://test/')
+				.get('/appeals/2?include=all')
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId: 2,
+					appealStatus: 'statements'
+				});
+		});
+
+		it(`should render a 500 error page if fileUploadInfo is not present in the session`, async () => {
+			const response = await request.get(
+				`${baseUrl}/2/lpa-statement/add-document/add-document-details`
+			);
+
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
+		});
+
+		it('should render the add documents details page', async () => {
+			await request.post(`${baseUrl}/2/lpa-statement/add-document`).send({
+				'upload-info': fileUploadInfo
+			});
+
+			const response = await request.get(
+				`${baseUrl}/2/lpa-statement/add-document/add-document-details`
+			);
+			expect(response.statusCode).toBe(200);
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain('Add document details</span');
+			expect(unprettifiedElement.innerHTML).toContain(`Representation attachment documents</h1>`);
+		});
+	});
+
+	describe('POST /add-document/add-document-details', () => {
+		beforeEach(async () => {
+			nock('http://test/').get('/appeals/2/reps').reply(200, lpaStatementAwaitingReview).persist();
+
+			nock('http://test/')
+				.get('/appeals/2?include=all')
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId: 2,
+					appealStatus: 'statements'
+				})
+				.persist();
+
+			await request.post(`${baseUrl}/2/lpa-statement/add-document`).send({
+				'upload-info': fileUploadInfo
+			});
+		});
+
+		it(`should re-render add documents details page if the request body is in an incorrect format`, async () => {
+			const response = await request
+				.post(`${baseUrl}/2/lpa-statement/add-document/add-document-details`)
+				.send({});
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain(`Representation attachment documents</h1>`);
+
+			const errorSummaryElement = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary'
+			});
+
+			expect(errorSummaryElement.innerHTML).toContain('There is a problem with the service');
+		});
+
+		it(`should re-render the document details page with the expected error message if receivedDate day is an invalid value`, async () => {
+			const testCases = [
+				{
+					value: '',
+					expectedError: `Supporting document date must include a day`
+				},
+				{
+					value: 'a',
+					expectedError: `Supporting document date day must be a number`
+				},
+				{
+					value: '0',
+					expectedError: `Supporting document date day must be between 1 and 31`
+				},
+				{
+					value: '32',
+					expectedError: `Supporting document date day must be between 1 and 31`
+				}
+			];
+
+			for (const testCase of testCases) {
+				const response = await request
+					.post(`${baseUrl}/2/lpa-statement/add-document/add-document-details`)
+					.send({
+						items: [
+							{
+								documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+								receivedDate: {
+									day: testCase.value,
+									month: '2',
+									year: '2030'
+								},
+								redactionStatus: 3
+							}
+						]
+					});
+
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-				expect(unprettifiedElement.innerHTML).toContain('Upload supporting document</h1>');
-				expect(unprettifiedElement.innerHTML).toContain(
-					'data-document-title="LPA statement supporting document"'
-				);
+
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(`Representation attachment documents</h1>`);
+
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
+
+				expect(errorSummaryElement.innerHTML).toContain(testCase.expectedError);
+			}
+		});
+
+		it(`should re-render the document details page with the expected error message if receivedDate month is an invalid value`, async () => {
+			const testCases = [
+				{
+					value: '',
+					expectedError: `Supporting document date must include a month`
+				},
+				{
+					value: 'a',
+					expectedError: `Supporting document date must be a real date`
+				},
+				{
+					value: '0',
+					expectedError: `Supporting document date month must be between 1 and 12`
+				},
+				{
+					value: '13',
+					expectedError: `Supporting document date month must be between 1 and 12`
+				}
+			];
+
+			for (const testCase of testCases) {
+				const response = await request
+					.post(`${baseUrl}/2/lpa-statement/add-document/add-document-details`)
+					.send({
+						items: [
+							{
+								documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+								receivedDate: {
+									day: '1',
+									month: testCase.value,
+									year: '2030'
+								},
+								redactionStatus: 3
+							}
+						]
+					});
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(`Representation attachment documents</h1>`);
+
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
+
+				expect(errorSummaryElement.innerHTML).toContain(testCase.expectedError);
+			}
+		});
+
+		it(`should re-render the document details page with the expected error message if receivedDate year is an invalid value`, async () => {
+			const testCases = [
+				{
+					value: '',
+					expectedError: `Supporting document date must include a year`
+				},
+				{
+					value: 'a',
+					expectedError: `Supporting document date year must be a number`
+				},
+				{
+					value: '202',
+					expectedError: `Supporting document date year must be 4 digits`
+				}
+			];
+
+			for (const testCase of testCases) {
+				const response = await request
+					.post(`${baseUrl}/2/lpa-statement/add-document/add-document-details`)
+					.send({
+						items: [
+							{
+								documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+								receivedDate: {
+									day: '1',
+									month: '2',
+									year: testCase.value
+								},
+								redactionStatus: 3
+							}
+						]
+					});
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(`Representation attachment documents</h1>`);
+
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
+
+				expect(errorSummaryElement.innerHTML).toContain(testCase.expectedError);
+			}
+		});
+
+		it(`should re-render add documents details page if receivedDate is not a valid date`, async () => {
+			const testCases = [
+				{
+					value: {
+						day: '29',
+						month: '2',
+						year: 2023
+					},
+					expectedError: `Supporting document date must be a real date`
+				},
+				{
+					value: {
+						day: '',
+						month: '',
+						year: ''
+					},
+					expectedError: `Enter the date you received the supporting document`
+				},
+				{
+					value: {
+						day: '2',
+						month: '',
+						year: ''
+					},
+					expectedError: `Supporting document date must include a month and year`
+				},
+				{
+					value: {
+						day: '',
+						month: '2',
+						year: ''
+					},
+					expectedError: `Supporting document date must include a day and year`
+				},
+				{
+					value: {
+						day: '',
+						month: '',
+						year: '2025'
+					},
+					expectedError: `Supporting document date must include a day and month`
+				}
+			];
+
+			for (const testCase of testCases) {
+				const response = await request
+					.post(`${baseUrl}/2/lpa-statement/add-document/add-document-details`)
+					.send({
+						items: [
+							{
+								documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+								receivedDate: testCase.value,
+								redactionStatus: 3
+							}
+						]
+					});
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(`Representation attachment documents</h1>`);
+
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
+
+				expect(errorSummaryElement.innerHTML).toContain(testCase.expectedError);
+			}
+		});
+
+		it(`should redirect to check your answers if valid details posted`, async () => {
+			const response = await request
+				.post(`${baseUrl}/2/lpa-statement/add-document/add-document-details`)
+				.send({
+					items: [
+						{
+							documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+							receivedDate: {
+								day: '1',
+								month: '2',
+								year: '2023'
+							},
+							redactionStatus: 3
+						}
+					]
+				});
+
+			expect(response.statusCode).toBe(302);
+
+			expect(response.text).toBe(
+				`Found. Redirecting to ${baseUrl}/2/lpa-statement/add-document/check-your-answers`
+			);
+		});
+	});
+
+	describe('GET /add-document/check-your-answers', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/2/reps').reply(200, lpaStatementAwaitingReview).persist();
+
+			nock('http://test/')
+				.get('/appeals/2?include=all')
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId: 2,
+					appealStatus: 'statements'
+				})
+				.persist();
+
+			nock('http://test/')
+				.get('/appeals/2/document-folders?path=representation/representationAttachments')
+				.reply(200, [{ folderId: 1234, path: 'representation/attachments' }])
+				.persist();
+		});
+
+		it(`should render check your answers page with correct content`, async () => {
+			const response1 = await request.post(`${baseUrl}/2/lpa-statement/add-document`).send({
+				'upload-info': fileUploadInfo
+			});
+			expect(response1.statusCode).toBe(302);
+
+			const response2 = await request
+				.post(`${baseUrl}/2/lpa-statement/add-document/add-document-details`)
+				.send({
+					items: [
+						{
+							documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+							receivedDate: {
+								day: '1',
+								month: '2',
+								year: '2023'
+							},
+							redactionStatus: 3
+						}
+					]
+				});
+			expect(response2.statusCode).toBe(302);
+
+			const response = await request.get(
+				`${baseUrl}/2/lpa-statement/add-document/check-your-answers`
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appeal 351062</span');
+			expect(unprettifiedElement.innerHTML).toContain(`Check your answers</h1>`);
+			expect(unprettifiedElement.innerHTML).toContain('File</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt" target="_blank">test-document.txt</a></dd>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-statement/add-document">Change<span class="govuk-visually-hidden"> file test-document.txt</span></a></dd>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				`${dateISOStringToDisplayDate(new Date().toISOString())}</dd>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('No redaction required</dd>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-statement/add-document/add-document-details">Change<span class="govuk-visually-hidden"> test-document.txt date received</span></a></dd>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
+		});
+	});
+
+	describe('POST /add-document/check-your-answers', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/2/reps').reply(200, lpaStatementAwaitingReview).persist();
+
+			nock('http://test/')
+				.get('/appeals/2?include=all')
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId: 2,
+					appealStatus: 'statements'
+				})
+				.persist();
+
+			nock('http://test/')
+				.get('/appeals/2/document-folders?path=representation/representationAttachments')
+				.reply(200, [{ folderId: 1234, path: 'representation/attachments' }])
+				.persist();
+
+			nock('http://test/').post('/appeals/2/documents').reply(200, {}).persist();
+
+			nock('http://test/').patch('/appeals/2/reps/3670/attachments').reply(200, {}).persist();
+		});
+
+		it(`should redirect to lpa statement page`, async () => {
+			await request.post(`${baseUrl}/2/lpa-statement/add-document`).send({
+				'upload-info': fileUploadInfo
 			});
 
-			it('should render the redaction status page', async () => {
-				const response = await request.get(
-					`${baseUrl}/2/lpa-statement/add-document/redaction-status`
-				);
-				expect(response.statusCode).toBe(200);
-				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-				expect(unprettifiedElement.innerHTML).toContain('Redaction status</h1');
+			await request.post(`${baseUrl}/2/lpa-statement/add-document/add-document-details`).send({
+				items: [
+					{
+						documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+						receivedDate: {
+							day: '1',
+							month: '2',
+							year: '2023'
+						},
+						redactionStatus: 3
+					}
+				]
 			});
 
-			it('should render the date submitted page', async () => {
-				const response = await request.get(
-					`${baseUrl}/2/lpa-statement/add-document/date-submitted`
-				);
-				expect(response.statusCode).toBe(200);
-				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-				expect(unprettifiedElement.innerHTML).toContain(
-					'When was the supporting document submitted?</h1'
-				);
-			});
+			const response = await request
+				.post(`${baseUrl}/2/lpa-statement/add-document/check-your-answers`)
+				.send({});
+
+			expect(response.statusCode).toBe(302);
+
+			expect(response.text).toBe(`Found. Redirecting to ${baseUrl}/2/lpa-statement`);
 		});
 	});
 });

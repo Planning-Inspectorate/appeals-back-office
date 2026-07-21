@@ -8,9 +8,9 @@ import {
 	buildPayload,
 	getRepresentationType,
 	onlySingularRepresentationAllowed
-} from '../check-your-answers.js';
+} from '../add-document.controller.js';
 
-describe('check-your-answers controller utilities', () => {
+describe('representations add documents controller utilities', () => {
 	describe('buildPayload', () => {
 		const documentGuid = 'test-guid';
 		const redactionStatus = 'redacted';
