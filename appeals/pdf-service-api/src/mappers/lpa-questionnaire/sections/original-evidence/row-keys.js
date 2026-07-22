@@ -2,6 +2,20 @@ import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { beforeExpeditedOriginalApplicationCutOff } from '@pins/appeals/utils/appeal-type-checks.js';
 
 export const rowKeys = {
+	[APPEAL_TYPE.HOUSEHOLDER]: [
+		{
+			key: 'didSubmitDesignAccessStatementLPA',
+			condition: (data) => !beforeExpeditedOriginalApplicationCutOff(data?.applicationDate)
+		},
+		{
+			key: 'designAccessStatementLPA',
+			condition: (data) => !beforeExpeditedOriginalApplicationCutOff(data?.applicationDate)
+		},
+		{
+			key: 'listOfDocumentsBeforeDecision',
+			condition: (data) => !beforeExpeditedOriginalApplicationCutOff(data?.applicationDate)
+		}
+	],
 	[APPEAL_TYPE.S78_EXPEDITED]: [
 		'didSubmitDesignAccessStatementLPA',
 		'designAccessStatementLPA',

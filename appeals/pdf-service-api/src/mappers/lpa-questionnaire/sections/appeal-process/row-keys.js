@@ -1,7 +1,14 @@
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { beforeExpeditedOriginalApplicationCutOff } from '@pins/appeals/utils/appeal-type-checks.js';
 export const rowKeys = {
-	[APPEAL_TYPE.HOUSEHOLDER]: ['otherAppeals', 'hasExtraConditions'],
+	[APPEAL_TYPE.HOUSEHOLDER]: [
+		{
+			key: 'anySignificantChangesLpa',
+			condition: (data) => !beforeExpeditedOriginalApplicationCutOff(data?.applicationDate)
+		},
+		'otherAppeals',
+		'hasExtraConditions'
+	],
 	[APPEAL_TYPE.CAS_PLANNING]: ['otherAppeals', 'hasExtraConditions'],
 	[APPEAL_TYPE.CAS_ADVERTISEMENT]: [
 		'lpaProcedurePreference',
