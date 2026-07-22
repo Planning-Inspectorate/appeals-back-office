@@ -1,5 +1,11 @@
 import { ServiceUser } from '#server/openapi-types';
-import { Address, ContactAddress } from '@pins/appeals';
+import {
+	Address,
+	AppealTimetable,
+	ContactAddress,
+	CostsDecision,
+	DocumentationSummary
+} from '@pins/appeals';
 import { Schema } from 'index';
 import { AppealGround, Ground } from '../../database/schema';
 
@@ -663,21 +669,6 @@ interface InquiryEstimate {
 	reportingTime?: number;
 }
 
-interface AppealTimetable {
-	appealTimetableId: number;
-	caseResubmissionDueDate?: string | null;
-	lpaQuestionnaireDueDate?: string | null;
-	ipCommentsDueDate?: string | null;
-	lpaStatementDueDate?: string | null;
-	finalCommentsDueDate?: string | null;
-	s106ObligationDueDate?: string | null;
-	issueDeterminationDate?: string | null;
-	statementOfCommonGroundDueDate?: string | null;
-	planningObligationDueDate?: string | null;
-	proofOfEvidenceAndWitnessesDueDate?: string | null;
-	caseManagementConferenceDueDate?: string | null;
-}
-
 interface UpdateTimetableRequest {
 	finalCommentReviewDate?: Date;
 	issueDeterminationDate?: Date;
@@ -697,88 +688,6 @@ interface ValidationOutcomeResponse {
 	outcome: string | null;
 	incompleteReasons?: IncompleteInvalidReasonsResponse[];
 	invalidReasons?: IncompleteInvalidReasonsResponse[];
-}
-
-interface AppealListResponse {
-	appealId: number;
-	appealReference: string;
-	appealSite: AppealSite;
-	appealStatus: string;
-	appealType?: string;
-	procedureType?: string;
-	createdAt: Date;
-	localPlanningDepartment: string;
-	dueDate: Date | undefined | null;
-	lpaQuestionnaireId?: number | null;
-	appealTimetable?: AppealTimetable;
-	documentationSummary: DocumentationSummary;
-	isParentAppeal: boolean | null;
-	isChildAppeal: boolean | null;
-	planningApplicationReference: string | null;
-	isHearingSetup: boolean | null;
-	hasHearingAddress: boolean | null;
-	awaitingLinkedAppeal: boolean | null;
-	costsDecision?: CostsDecision;
-	numberOfResidencesNetChange: number | null;
-	highwayLand?: boolean | null;
-	advertInPosition?: boolean | null;
-	landownerPermission?: boolean | null;
-	siteGridReferenceEasting?: string | null;
-	siteGridReferenceNorthing?: string | null;
-	isInquirySetup: boolean | null;
-	hasInquiryAddress: boolean | null;
-	enforcementReference?: string | null;
-	enforcementNoticeInvalid?: string | null;
-	isS78Expedited?: boolean;
-}
-
-interface PersonalListResponse {
-	appealId: number;
-	appealReference: string;
-	appealStatus: string;
-	completedStateList: string[];
-	appealType?: string;
-	procedureType?: string;
-	lpaQuestionnaireId?: number | null;
-	documentationSummary: DocumentationSummary;
-	dueDate: Date | undefined | null;
-	appealTimetable?: AppealTimetable;
-	isParentAppeal: boolean | null;
-	isChildAppeal: boolean | null;
-	isHearingSetup: boolean | null;
-	hasHearingAddress: boolean | null;
-	awaitingLinkedAppeal: boolean | null;
-	costsDecision?: CostsDecision;
-	numberOfResidencesNetChange: number | null;
-	isInquirySetup: boolean | null;
-	hasInquiryAddress: boolean | null;
-	enforcementNoticeInvalid?: string | null;
-	isS78Expedited?: boolean;
-}
-
-interface DocumentationSummary {
-	appellantCase?: DocumentationSummaryEntry;
-	lpaQuestionnaire?: DocumentationSummaryEntry;
-	ipComments?: DocumentationSummaryEntry;
-	lpaStatement?: DocumentationSummaryEntry;
-	rule6PartyStatements?: { [serviceUserId: string]: DocumentationSummaryEntry };
-	lpaFinalComments?: DocumentationSummaryEntry;
-	appellantFinalComments?: DocumentationSummaryEntry;
-	lpaProofOfEvidence?: DocumentationSummaryEntry;
-	appellantProofOfEvidence?: DocumentationSummaryEntry;
-	rule6PartyProofs?: { [serviceUserId: string]: DocumentationSummaryEntry };
-	appellantStatement?: DocumentationSummaryEntry;
-}
-
-interface DocumentationSummaryEntry {
-	status: string;
-	dueDate?: Date | string | undefined | null;
-	receivedAt?: Date | string | undefined | null;
-	representationStatus?: string | undefined | null;
-	counts?: Record<string, number>;
-	isRedacted?: boolean;
-	organisationName?: string;
-	rule6PartyId?: number;
 }
 
 interface FolderInfo {
@@ -1278,7 +1187,6 @@ type BankHolidayFeedDivisions =
 	| 'united-kingdom';
 
 export {
-	AppealListResponse,
 	AppealRelationshipRequest,
 	AppealSite,
 	AppealTimetable,
@@ -1298,11 +1206,9 @@ export {
 	GetAuditTrailsResponse,
 	GetCaseNoteResponse,
 	GetCaseNotesResponse,
-	HearingAddress,
 	HearingResponse,
 	IncompleteInvalidReasons,
 	IncompleteInvalidReasonsResponse,
-	InquiryAddress,
 	InquiryResponse,
 	LinkableAppealSummary,
 	LinkedAppeal,
@@ -1313,7 +1219,6 @@ export {
 	PagedDocumentInfo,
 	PagedDocumentVersionInfo,
 	PagedFolderInfo,
-	PersonalListResponse,
 	ReasonOption,
 	RelatedAppeal,
 	ServiceUserResponse,
@@ -1328,7 +1233,6 @@ export {
 	StateStub,
 	TimetableDeadlineDate,
 	UpdateAddressRequest,
-	UpdateAppealDecisionRequest,
 	UpdateAppealRequest,
 	UpdateAppellantCaseRequest,
 	UpdateAppellantCaseValidationOutcome,
