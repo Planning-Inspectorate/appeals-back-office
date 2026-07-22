@@ -113,7 +113,10 @@ const { value, error } = schema.validate({
 			environment.FEATURE_FLAG_NEW_BEFORE_YOU_START === 'true',
 		featureFlagEnforcementChangeProcedure:
 			environment.FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE &&
-			environment.FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE === 'true'
+			environment.FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE === 'true',
+		featureFlagSharingHearingDocuments:
+			environment.FEATURE_FLAG_SHARING_HEARING_DOCUMENTS &&
+			environment.FEATURE_FLAG_SHARING_HEARING_DOCUMENTS === 'true'
 	},
 	serviceBusEnabled: environment.SERVICE_BUS_ENABLED && environment.SERVICE_BUS_ENABLED === 'true',
 	enableTestEndpoints:
