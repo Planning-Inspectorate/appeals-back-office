@@ -89,6 +89,7 @@ apps_config = {
     featureFlagExpeditedAppealsLpaq             = true
     featureFlagNewBeforeYouStart                = true
     featureFlagEnforcementChangeProcedure       = true
+    featureFlagSharingHearingDocuments          = true
   }
 
   use_system_test_bc_for_change_lpa = true

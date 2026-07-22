@@ -99,6 +99,7 @@ variable "apps_config" {
       featureFlagExpeditedAppealsLpaq             = bool
       featureFlagNewBeforeYouStart                = bool
       featureFlagEnforcementChangeProcedure       = bool
+      featureFlagSharingHearingDocuments          = bool
     })
 
     analytics = object({
