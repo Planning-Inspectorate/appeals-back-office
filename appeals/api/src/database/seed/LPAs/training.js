@@ -605,7 +605,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'H1515',
 		name: 'Brentwood Borough Council',
-		email: 'planning@example.gov.uk',
+		email: 'appeals@example.gov.uk',
 		teamId: 11, // East1
 		enforcementTeamId: 4 // Enforcement Appeals Team - Team 2
 	},
