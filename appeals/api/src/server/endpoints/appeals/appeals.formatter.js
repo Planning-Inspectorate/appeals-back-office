@@ -20,26 +20,25 @@ import { getSingularRepresentation } from '@pins/appeals/utils/representations.j
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { countBy } from 'lodash-es';
 
-/** @typedef {import('#repositories/appeal-lists.repository.js').DBAppeals} DBAppeals */
-/** @typedef {DBAppeals[0]} DBAppeal */
 /** @typedef {import('@pins/appeals.api').Schema.AppealRelationship} AppealRelationship */
-/** @typedef {import('@pins/appeals.api').Appeals.AppealListResponse} AppealListResponse */
 
-/** @typedef {import('@pins/appeals.api').Appeals.PersonalListResponse} PersonalListResponse */
+/** @typedef {import('#repositories/appeal-lists.repository.js').AppealListSelected} AppealListSelected */
+/** @typedef {import('@pins/appeals').AppealListItem} AppealListItem */
+
+/** @typedef {import('@pins/appeals').PersonalListItem} PersonalListItem */
 /** @typedef {import('#repositories/personal-list.repository.js').PersonalListSelected} PersonalListSelected */
 /** @typedef {import('#repositories/personal-list.repository.js').getPersonalListRepoResponse} GetPersonalListRepoResponse */
 /** @typedef {GetPersonalListRepoResponse['personalList'][0]['appeal']} PersonalListAppeal */
 
-/** @typedef {import('@pins/appeals.api').Appeals.AppealTimetable} AppealTimetable */
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
-/** @typedef {import('#endpoints/appeals').DocumentationSummary} DocumentationSummary */
+/** @typedef {import('@pins/appeals').AppealTimetable} AppealTimetable */
+/** @typedef {import('@pins/appeals').DocumentationSummary} DocumentationSummary */
 
 /**
- * @param {DBAppeal & {costsDecision?: CostsDecision}} appeal
- * @param {AppealRelationship[]} linkedAppeals
- * @returns {AppealListResponse}
+ * @param {AppealListSelected} appeal
+ * @returns {AppealListItem}
  */
-const formatAppeal = (appeal, linkedAppeals) => {
+const formatAppeal = (appeal) => {
 	return {
 		appealId: appeal.id,
 		appealReference: appeal.reference,
@@ -49,15 +48,11 @@ const formatAppeal = (appeal, linkedAppeals) => {
 		procedureType: appeal.procedureType?.name,
 		createdAt: appeal.caseCreatedDate,
 		localPlanningDepartment: appeal.lpa?.name || '',
-		dueDate: null,
 		documentationSummary: formatDocumentationSummary(appeal),
 		appealTimetable: formatAppealTimetable(appeal),
-		isParentAppeal: linkedAppeals.some((link) => link.parentRef === appeal.reference),
-		isChildAppeal: linkedAppeals.some((link) => link.childRef === appeal.reference),
 		planningApplicationReference: appeal.applicationReference,
 		isHearingSetup: !!appeal.hearing,
 		hasHearingAddress: !!appeal.hearing?.addressId,
-		awaitingLinkedAppeal: null,
 		numberOfResidencesNetChange: appeal.appellantCase?.numberOfResidencesNetChange || null,
 		isInquirySetup: !!appeal.inquiry,
 		hasInquiryAddress: !!appeal.inquiry?.addressId,
@@ -74,7 +69,7 @@ const formatAppeal = (appeal, linkedAppeals) => {
 /**
  *
  * @param {PersonalListSelected & { awaitingLinkedAppeal?: boolean }} options
- * @returns {Promise<PersonalListResponse>}
+ * @returns {Promise<PersonalListItem>}
  */
 const formatPersonalListItem = async ({
 	appealId,
@@ -105,7 +100,7 @@ const formatPersonalListItem = async ({
 		procedureType: mapProcedureType({ appeal: { procedureType: procedureType } }),
 		lpaQuestionnaireId: lpaQuestionnaire?.id ?? null,
 		documentationSummary: formatDocumentationSummary(appeal),
-		dueDate,
+		dueDate: dueDate?.toISOString(),
 		appealTimetable: formatAppealTimetable(appeal),
 		isParentAppeal: linkType === 'parent',
 		isChildAppeal: linkType === 'child',
@@ -128,7 +123,7 @@ const formatPersonalListItem = async ({
 };
 
 /**
- * @param {DBAppeal|PersonalListAppeal} appeal
+ * @param {AppealListSelected|PersonalListAppeal} appeal
  * @returns {DocumentationSummary}
  * */
 const formatDocumentationSummary = (appeal) => {
@@ -205,7 +200,7 @@ const formatDocumentationSummary = (appeal) => {
 			status:
 				lpaProofOfEvidence.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
 			representationStatus: lpaProofOfEvidence[0]?.status ?? null,
-			receivedAt: lpaProofOfEvidence[0]?.dateCreated,
+			receivedAt: lpaProofOfEvidence[0]?.dateCreated.toISOString(),
 			isRedacted: lpaProofOfEvidence[0]?.isRedacted ?? false
 		},
 		appellantProofOfEvidence: {
@@ -214,14 +209,14 @@ const formatDocumentationSummary = (appeal) => {
 					? DOCUMENT_STATUS_RECEIVED
 					: DOCUMENT_STATUS_NOT_RECEIVED,
 			representationStatus: appellantProofOfEvidence[0]?.status ?? null,
-			receivedAt: appellantProofOfEvidence[0]?.dateCreated,
+			receivedAt: appellantProofOfEvidence[0]?.dateCreated.toISOString(),
 			isRedacted: appellantProofOfEvidence[0]?.isRedacted ?? false
 		},
 		appellantStatement: {
 			status:
 				appellantStatement.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
 			representationStatus: appellantStatement[0]?.status ?? null,
-			receivedAt: appellantStatement[0]?.dateCreated,
+			receivedAt: appellantStatement[0]?.dateCreated.toISOString(),
 			isRedacted: appellantStatement[0]?.isRedacted ?? false
 		},
 		rule6PartyProofs:
@@ -286,7 +281,7 @@ const formatDocumentationSummary = (appeal) => {
 };
 
 /**
- * @param {{appealTimetable?: PersonalListAppeal['appealTimetable']|DBAppeal['appealTimetable'], appealType?: { key?: string } | null}} appeal
+ * @param {{appealTimetable?: PersonalListAppeal['appealTimetable']|AppealListSelected['appealTimetable'], appealType?: PersonalListAppeal['appealType']|AppealListSelected['appealType']}} appeal
  * @returns {AppealTimetable | undefined}
  * */
 function formatAppealTimetable(appeal) {

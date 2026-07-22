@@ -210,3 +210,27 @@ export const getByCaseIdAndPaths = async (caseId, paths) => {
 	await batchLoadDocumentVersions(folders);
 	return folders;
 };
+
+/**
+ * @param {number} caseId
+ * @param {string[]} paths
+ * @returns {Promise<{ path: string, _count: { documents: number } }[]>}
+ */
+export const getDocumentCountsByFolder = async (caseId, paths) => {
+	return await databaseConnector.folder.findMany({
+		where: {
+			caseId,
+			path: { in: paths }
+		},
+		select: {
+			path: true,
+			_count: {
+				select: {
+					documents: {
+						where: { isDeleted: false }
+					}
+				}
+			}
+		}
+	});
+};

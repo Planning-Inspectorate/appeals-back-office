@@ -79,7 +79,7 @@ export const getAssignedTeam = (teamId) => {
  */
 export const getCaseTeams = async () => {
 	const cacheTimeInSeconds = 600;
-	const cacheKey = 'getCaseTeams';
+	const cacheKey = 'lookup-team';
 
 	const getTeams = async () =>
 		databaseConnector.team.findMany({

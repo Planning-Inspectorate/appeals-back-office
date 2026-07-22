@@ -72,11 +72,6 @@ describe('appellant cases routes', () => {
 			.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
 			.setSystemTime(new Date('2026-01-27'));
 		databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
-		databaseConnector.team.findUnique.mockResolvedValue({
-			id: 1,
-			name: 'Case Team',
-			email: 'caseofficers@planninginspectorate.gov.uk'
-		});
 	});
 	afterEach(() => {
 		jest.resetAllMocks();
@@ -301,8 +296,8 @@ describe('appellant cases routes', () => {
 					id: 1,
 					azureAdUserId
 				});
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[0]
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
 				);
 				databaseConnector.appellantCaseIncompleteReason.findMany.mockResolvedValue(
 					appellantCaseIncompleteReasons
@@ -372,8 +367,8 @@ describe('appellant cases routes', () => {
 					azureAdUserId
 				});
 				// @ts-ignore
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[0]
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
 				);
 				// @ts-ignore
 				databaseConnector.appellantCaseIncompleteReason.findMany.mockResolvedValue(
@@ -450,8 +445,8 @@ describe('appellant cases routes', () => {
 					householdAppealAppellantCaseIncomplete
 				);
 				// @ts-ignore
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[0]
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
 				);
 				// @ts-ignore
 				databaseConnector.appellantCaseIncompleteReason.findMany.mockResolvedValue(
@@ -550,8 +545,8 @@ describe('appellant cases routes', () => {
 					householdAppealAppellantCaseIncomplete
 				);
 				// @ts-ignore
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[0]
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
 				);
 				// @ts-ignore
 				databaseConnector.appellantCaseIncompleteReason.findMany.mockResolvedValue(
@@ -639,8 +634,8 @@ describe('appellant cases routes', () => {
 						azureAdUserId
 					});
 					// @ts-ignore
-					databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-						appellantCaseValidationOutcomes[0]
+					databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+						appellantCaseValidationOutcomes
 					);
 					// @ts-ignore
 					databaseConnector.appellantCaseIncompleteReason.findMany.mockResolvedValue(
@@ -686,8 +681,8 @@ describe('appellant cases routes', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppealAppellantCaseInvalid);
 				// @ts-ignore
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[1]
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
 				);
 				// @ts-ignore
 				databaseConnector.appellantCaseInvalidReason.findMany.mockResolvedValue(
@@ -763,8 +758,8 @@ describe('appellant cases routes', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppealAppellantCaseInvalid);
 				// @ts-ignore
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[1]
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
 				);
 				// @ts-ignore
 				databaseConnector.appellantCaseInvalidReason.findMany.mockResolvedValue(
@@ -840,8 +835,8 @@ describe('appellant cases routes', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppealAppellantCaseInvalid);
 				// @ts-ignore
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[1]
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
 				);
 				// @ts-ignore
 				databaseConnector.appellantCaseInvalidReason.findMany.mockResolvedValue(
@@ -915,8 +910,8 @@ describe('appellant cases routes', () => {
 					// @ts-ignore
 					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
 					// @ts-ignore
-					databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-						appellantCaseValidationOutcomes[1]
+					databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+						appellantCaseValidationOutcomes
 					);
 					// @ts-ignore
 					databaseConnector.appellantCaseInvalidReason.findMany.mockResolvedValue(
@@ -1004,8 +999,8 @@ describe('appellant cases routes', () => {
 						appealStatus: [{ status: APPEAL_CASE_STATUS.VALIDATION, valid: true }]
 					});
 					// @ts-ignore
-					databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-						appellantCaseValidationOutcomes[2]
+					databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+						appellantCaseValidationOutcomes
 					);
 					// @ts-ignore
 					databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
@@ -1148,8 +1143,8 @@ describe('appellant cases routes', () => {
 						}
 					]
 				});
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[2]
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
 				);
 				databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
 				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
@@ -1263,8 +1258,8 @@ describe('appellant cases routes', () => {
 					],
 					childAppeals
 				});
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[2]
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
 				);
 				databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
 				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
@@ -1390,8 +1385,8 @@ describe('appellant cases routes', () => {
 					],
 					childAppeals
 				});
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[2]
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
 				);
 				databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
 				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
@@ -1495,8 +1490,8 @@ describe('appellant cases routes', () => {
 						}
 					]
 				});
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[2]
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
 				);
 				databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
 				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
@@ -1864,8 +1859,8 @@ describe('appellant cases routes', () => {
 					appealStatus: [{ status: 'validation', valid: true }]
 				});
 				// @ts-ignore
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[2]
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
 				);
 				// @ts-ignore
 				databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
@@ -1978,8 +1973,8 @@ describe('appellant cases routes', () => {
 						}
 					}
 				});
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[1]
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
 				);
 				databaseConnector.appellantCaseInvalidReason.findMany.mockResolvedValue(
 					appellantCaseInvalidReasons
@@ -2097,8 +2092,8 @@ describe('appellant cases routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(
 					enforcementNoticeAppealAppellantCaseInvalid
 				);
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[1]
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
 				);
 				databaseConnector.appellantCaseEnforcementInvalidReasonsSelected.deleteMany.mockResolvedValue(
 					true
@@ -2207,8 +2202,8 @@ describe('appellant cases routes', () => {
 			});
 
 			test('updates the appellant case for invalid enforcement appeal with ground (a) fee not paid', async () => {
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[1]
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
 				);
 				databaseConnector.appellantCaseInvalidReason.findMany.mockResolvedValue([
 					{
@@ -2237,8 +2232,8 @@ describe('appellant cases routes', () => {
 						]
 					}
 				});
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[1]
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
 				);
 				databaseConnector.appellantCaseInvalidReasonText.deleteMany.mockResolvedValue(true);
 				databaseConnector.appellantCaseInvalidReasonText.createMany.mockResolvedValue(true);
@@ -2334,8 +2329,8 @@ describe('appellant cases routes', () => {
 						appellantCaseValidationOutcome: { name: 'Invalid' }
 					}
 				});
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[1]
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
 				);
 				databaseConnector.appellantCaseInvalidReason.findMany.mockResolvedValue(
 					appellantCaseInvalidReasons
@@ -2401,8 +2396,8 @@ describe('appellant cases routes', () => {
 					...enforcementNoticeAppealAppellantCaseInvalid,
 					caseExtensionDate: '2035-07-14T00:00:00.000Z'
 				});
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[0]
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
 				);
 				databaseConnector.appellantCaseEnforcementInvalidReasonsSelected.deleteMany.mockResolvedValue(
 					true
@@ -2563,8 +2558,8 @@ describe('appellant cases routes', () => {
 						groundAFeeReceiptDueDate: '2035-08-14T00:00:00.000Z'
 					}
 				});
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[0]
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
 				);
 				databaseConnector.appellantCaseIncompleteReasonsSelected.deleteMany.mockResolvedValue(true);
 				databaseConnector.appellantCaseIncompleteReasonsSelected.createMany.mockResolvedValue(true);
@@ -2695,8 +2690,8 @@ describe('appellant cases routes', () => {
 						groundAFeeReceiptDueDate: null
 					}
 				});
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[0]
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
 				);
 				databaseConnector.appellantCaseIncompleteReasonsSelected.deleteMany.mockResolvedValue(true);
 				databaseConnector.appellantCaseIncompleteReasonsSelected.createMany.mockResolvedValue(true);
@@ -2833,8 +2828,8 @@ describe('appellant cases routes', () => {
 						groundAFeeReceiptDueDate: '2099-07-14T00:00:00.000Z'
 					}
 				});
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[0]
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
 				);
 				databaseConnector.appellantCaseIncompleteReasonsSelected.deleteMany.mockResolvedValue(true);
 				databaseConnector.appellantCaseIncompleteReasonsSelected.createMany.mockResolvedValue(true);
@@ -2937,8 +2932,8 @@ describe('appellant cases routes', () => {
 					...enforcementListedAppealAppellantCaseIncomplete,
 					caseExtensionDate: '2035-07-14T00:00:00.000Z'
 				});
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[0]
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
 				);
 				databaseConnector.appellantCaseEnforcementInvalidReasonsSelected.deleteMany.mockResolvedValue(
 					true

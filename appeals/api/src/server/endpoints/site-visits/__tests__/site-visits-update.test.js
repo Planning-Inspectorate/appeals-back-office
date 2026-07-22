@@ -77,7 +77,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
@@ -153,7 +153,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
@@ -249,7 +249,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
@@ -326,7 +326,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
@@ -422,7 +422,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
@@ -518,7 +518,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
@@ -614,7 +614,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
@@ -711,7 +711,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
@@ -807,7 +807,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
@@ -883,7 +883,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
@@ -963,7 +963,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
@@ -1010,7 +1010,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 				appeal: appeal
 			});
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
@@ -1061,7 +1061,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
@@ -1120,7 +1120,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
@@ -1164,7 +1164,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
@@ -1200,7 +1200,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
@@ -1233,7 +1233,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
@@ -1286,7 +1286,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
@@ -1552,7 +1552,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
 
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
@@ -1753,7 +1753,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
 			databaseConnector.appealStatus.create.mockResolvedValue({});
@@ -1814,7 +1814,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
 			databaseConnector.appealStatus.create.mockResolvedValue({});
@@ -1870,7 +1870,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
 			databaseConnector.appealStatus.create.mockResolvedValue({});
@@ -1903,7 +1903,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
 
@@ -1942,7 +1942,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
 
