@@ -169,6 +169,7 @@ it('Can update inquiry date', () => {
 
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
+		cy.wait(3000); // Wait for the page to load completely before proceeding
 		listCasesPage.clickAppealByRef(caseObj);
 
 		// generate new date and update it in inquiry
@@ -1261,6 +1262,7 @@ it('should progress to inquiry with only complete LPA POE (no appellant POE)', (
 		);
 		caseDetailsPage.clickButtonByText('Share proof of evidence and witnesses');
 		caseDetailsPage.validateBannerMessage('Success', 'Progressed to inquiry');
+		cy.wait(3000); //Adding wait to resolve timeout issue on pipeline.
 		caseDetailsPage.checkStatusOfCase('Awaiting inquiry', 0);
 	});
 });

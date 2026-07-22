@@ -38,6 +38,7 @@ describe('Issue decision', () => {
 		it(`Issue '${issueDecision}' decision`, () => {
 			cy.get('@caseObjAlias').then((caseObj) => {
 				//Issue decision
+				cy.wait(3000); // Wait for the page to load completely before proceeding
 				happyPathHelper.viewCaseDetails(caseObj);
 				happyPathHelper.issueDecision(issueDecision, 'both costs');
 

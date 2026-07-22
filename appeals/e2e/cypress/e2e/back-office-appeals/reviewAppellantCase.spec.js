@@ -91,6 +91,7 @@ describe('Review appellant case', () => {
 			happyPathHelper.viewCaseDetails(caseObj);
 			caseDetailsPage.clickReviewAppellantCase();
 			caseDetailsPage.selectRadioButtonByValue('Incomplete');
+			cy.wait(3000); // Wait 3 seconds - timoeout error on pipelines
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.chooseCheckboxByText("LPA's decision notice is incorrect or incomplete");
 			caseDetailsPage.fillInput('Hello here is some extra info, have a nice day 7384!', 1);
