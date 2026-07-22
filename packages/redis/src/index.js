@@ -10,8 +10,9 @@ export class RedisClient {
 	/**
      @param {string} connString - Redis connection string
      @param {import('./types').Logger} logger
+     @param {string[]} [invalidateKeys]
    **/
-	constructor(connString, logger) {
+	constructor(connString, logger, invalidateKeys = []) {
 		this.logger = logger;
 
 		const redisParams = parseRedisConnectionString(connString);
@@ -31,7 +32,10 @@ export class RedisClient {
 			logger.error(`Could not establish a connection with redis server: ${err}`);
 
 		this.client.on('connect', () => logger.info('Initiating connection to redis server...'));
-		this.client.on('ready', () => logger.info('Connected to redis server successfully...'));
+		this.client.on('ready', async () => {
+			logger.info('Connected to redis server successfully...');
+			await Promise.allSettled(invalidateKeys.map((key) => this.invalidate(key)));
+		});
 		this.client.on('end', () => logger.info('Disconnected from redis server...'));
 		this.client.on('error', onError);
 		this.client.on('reconnecting', () => logger.info('Reconnecting to redis server...'));
@@ -83,5 +87,16 @@ export class RedisClient {
 		});
 
 		return data;
+	}
+
+	/**
+	 * @param {string} cacheKey
+	 */
+	async invalidate(cacheKey) {
+		const result = await this.client.del(cacheKey);
+
+		if (result > 0) {
+			this.logger.info(`Invalidated cache for key: ${cacheKey}`);
+		}
 	}
 }
