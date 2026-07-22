@@ -50,9 +50,9 @@ describe('POST /:appealId/site-visits (rearrange site visit)', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
 				databaseConnector.siteVisit.findFirst.mockResolvedValue(appeal.siteVisit);
-				databaseConnector.siteVisitType.findUnique.mockResolvedValue(
+				databaseConnector.siteVisitType.findMany.mockResolvedValue([
 					appeal.siteVisit.siteVisitType
-				);
+				]);
 				databaseConnector.appealStatus.updateMany.mockResolvedValue();
 				databaseConnector.appealStatus.create.mockResolvedValue();
 				databaseConnector.user.upsert.mockResolvedValue({
@@ -63,7 +63,7 @@ describe('POST /:appealId/site-visits (rearrange site visit)', () => {
 			afterEach(() => {
 				databaseConnector.appeal.findUnique.mockClear();
 				databaseConnector.siteVisit.findFirst.mockClear();
-				databaseConnector.siteVisitType.findUnique.mockClear();
+				databaseConnector.siteVisitType.findMany.mockClear();
 				databaseConnector.appealStatus.updateMany.mockClear();
 				databaseConnector.appealStatus.create.mockClear();
 				databaseConnector.user.upsert.mockClear();
@@ -188,7 +188,7 @@ describe('POST /:appealId/site-visits (rearrange site visit)', () => {
 				appeal.appealStatus[0].status = 'event';
 				addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
 
-				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisitType);
+				databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisitType]);
 
 				const response = await request
 					.post(`/appeals/${appeal.id}/site-visits`)
@@ -244,7 +244,7 @@ describe('POST /:appealId/site-visits (rearrange site visit)', () => {
 				appeal.appealStatus[0].status = 'event';
 				addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
 
-				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisitType);
+				databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisitType]);
 
 				const response = await request
 					.post(`/appeals/${appeal.id}/site-visits`)
@@ -308,7 +308,7 @@ describe('POST /:appealId/site-visits (rearrange site visit)', () => {
 				appeal.appealStatus[0].status = 'event';
 				addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
 
-				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisitType);
+				databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisitType]);
 
 				const response = await request
 					.post(`/appeals/${appeal.id}/site-visits`)

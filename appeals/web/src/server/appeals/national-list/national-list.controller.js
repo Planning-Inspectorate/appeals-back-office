@@ -57,27 +57,30 @@ export const viewNationalList = async (request, response) => {
 			'Appeal reference, planning application or enforcement reference, or postcode must be between 2 and 50 characters';
 	}
 
-	const appealTypes = await getAppealTypes(request.apiClient);
-	const appealProcedureTypes = await getAppealProcedureTypes(request.apiClient);
-
 	const urlWithoutQuery = stripQueryString(originalUrl);
 	const paginationParameters = getPaginationParametersFromQuery(query);
-	const appeals = await getAppeals(
-		request.apiClient,
-		searchTerm,
-		appealStatusFilter,
-		inspectorStatusFilter,
-		localPlanningAuthorityFilter,
-		caseOfficerFilter,
-		inspectorFilter,
-		greenBeltFilter,
-		appealTypeFilter,
-		caseTeamFilter,
-		appealProcedureFilter,
-		appellantProcedurePreferenceFilter,
-		paginationParameters.pageNumber,
-		paginationParameters.pageSize
-	).catch((error) => logger.error(error));
+
+	const [appealTypes, appealProcedureTypes, caseTeams, appeals] = await Promise.all([
+		getAppealTypes(request.apiClient),
+		getAppealProcedureTypes(request.apiClient),
+		getTeamList(request.apiClient),
+		getAppeals(
+			request.apiClient,
+			searchTerm,
+			appealStatusFilter,
+			inspectorStatusFilter,
+			localPlanningAuthorityFilter,
+			caseOfficerFilter,
+			inspectorFilter,
+			greenBeltFilter,
+			appealTypeFilter,
+			caseTeamFilter,
+			appealProcedureFilter,
+			appellantProcedurePreferenceFilter,
+			paginationParameters.pageNumber,
+			paginationParameters.pageSize
+		).catch((error) => logger.error(error))
+	]);
 
 	if (!appeals) {
 		return response.status(404).render('app/404.njk');
@@ -94,7 +97,7 @@ export const viewNationalList = async (request, response) => {
 		})
 	);
 	const padsUsers = [...appeals.padsInspectors];
-	const caseTeams = await getTeamList(request.apiClient);
+
 	const mappedPageContent = nationalListPage(
 		users,
 		appeals,
