@@ -10,7 +10,7 @@ describe('folder.repository', () => {
 	});
 
 	describe('getById', () => {
-		it('retrieves high-volume folder and sequential batch loads latest document versions in chunks of 1000', async () => {
+		it('retrieves paged results', async () => {
 			const totalDocsCount = 2200;
 			const mockDocuments = [];
 			for (let i = 0; i < totalDocsCount; i++) {
@@ -27,45 +27,70 @@ describe('folder.repository', () => {
 			};
 
 			databaseConnector.folder.findUnique.mockResolvedValue(mockFolder);
-			databaseConnector.documentVersion.findMany.mockImplementation(({ where }) => {
-				const chunkGuids = where.documentGuid.in;
-				return Promise.resolve(
-					chunkGuids.map((guid) => ({
-						id: 999,
-						documentGuid: guid,
-						version: 2
-					}))
-				);
-			});
 
-			const result = await folderRepository.getById(1);
+			const result = await folderRepository.getById(1, 1, 100, null);
+			const query = databaseConnector.folder.findUnique.mock.calls[0][0];
 
 			expect(result).toEqual(mockFolder);
 			expect(databaseConnector.folder.findUnique).toHaveBeenCalledTimes(1);
+			expect(query).toEqual(
+				expect.objectContaining({
+					select: expect.objectContaining({
+						documents: expect.objectContaining({
+							orderBy: { createdAt: 'desc' },
+							skip: 0,
+							take: 100,
+							where: { isDeleted: false }
+						})
+					}),
+					where: { id: 1 }
+				})
+			);
+			expect(query.select.documents.select.latestDocumentVersion.select).toEqual(
+				expect.objectContaining({
+					documentGuid: true,
+					version: true,
+					published: true,
+					virusCheckStatus: true,
+					size: true,
+					redactionStatus: true,
+					dateReceived: true,
+					isLateEntry: true,
+					isDeleted: true,
+					documentType: true,
+					stage: true,
+					representation: {
+						select: {
+							representationId: true
+						}
+					}
+				})
+			);
+		});
+	});
 
-			// Assert findMany called exactly 3 times (1000 + 1000 + 200 = 2200)
-			expect(databaseConnector.documentVersion.findMany).toHaveBeenCalledTimes(3);
+	describe('getRepresentationFolderSizeById', () => {
+		it('counts documents in a folder for a specific representation', async () => {
+			databaseConnector.document.count.mockResolvedValue(7);
 
-			// Verify chunks
-			expect(databaseConnector.documentVersion.findMany).toHaveBeenNthCalledWith(1, {
-				where: { documentGuid: { in: mockDocuments.slice(0, 1000).map((d) => d.guid) } },
-				include: { redactionStatus: true, representation: true }
-			});
-			expect(databaseConnector.documentVersion.findMany).toHaveBeenNthCalledWith(2, {
-				where: { documentGuid: { in: mockDocuments.slice(1000, 2000).map((d) => d.guid) } },
-				include: { redactionStatus: true, representation: true }
-			});
-			expect(databaseConnector.documentVersion.findMany).toHaveBeenNthCalledWith(3, {
-				where: { documentGuid: { in: mockDocuments.slice(2000, 2200).map((d) => d.guid) } },
-				include: { redactionStatus: true, representation: true }
-			});
+			const result = await folderRepository.getRepresentationFolderSizeById(12, 34);
 
-			// Verify mapping of all documents
-			for (let i = 0; i < totalDocsCount; i++) {
-				expect(mockFolder.documents[i].latestDocumentVersion).not.toBeNull();
-				expect(mockFolder.documents[i].latestDocumentVersion.documentGuid).toBe(`doc-guid-${i}`);
-				expect(mockFolder.documents[i].latestDocumentVersion.version).toBe(2);
-			}
+			expect(result).toBe(7);
+			expect(databaseConnector.document.count).toHaveBeenCalledWith({
+				where: {
+					isDeleted: false,
+					folderId: 12,
+					latestDocumentVersion: {
+						is: {
+							representation: {
+								is: {
+									representationId: 34
+								}
+							}
+						}
+					}
+				}
+			});
 		});
 	});
 });

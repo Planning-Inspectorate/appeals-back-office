@@ -205,7 +205,7 @@ export function generateHASComponents(
 						appellantCaseData.documents?.appellantCaseCorrespondence?.documents.length > 0
 							? [
 									{
-										text: 'Change',
+										text: 'Manage',
 										visuallyHiddenText: 'additional documents',
 										href: mapDocumentManageUrl(
 											appellantCaseData.appealId,

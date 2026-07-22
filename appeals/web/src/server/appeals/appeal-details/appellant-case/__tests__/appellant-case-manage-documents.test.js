@@ -26,6 +26,18 @@ const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 const appellantCasePagePath = '/appellant-case';
 
+const existsResponse = {
+	id: appealData.appealId,
+	appealId: appealData.appealId,
+	appealReference: appealData.appealReference
+};
+
+/**
+ * @param {number} folderId
+ */
+const getFolderApiUrl = (folderId) =>
+	`/appeals/1/document-folders/${folderId}?pageNumber=1&pageSize=100`;
+
 describe('appellant-case manage-documents', () => {
 	afterAll(() => {
 		nock.cleanAll();
@@ -41,6 +53,7 @@ describe('appellant-case manage-documents', () => {
 			// @ts-ignore
 			usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
 			nock('http://test/').get('/appeals/1?include=appealType').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -51,7 +64,7 @@ describe('appellant-case manage-documents', () => {
 		});
 
 		it('should render a 404 error page if the folderId is not valid', async () => {
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1)).reply(200, documentFolderInfo);
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 
 			const response = await request.get(
@@ -69,7 +82,7 @@ describe('appellant-case manage-documents', () => {
 
 		it('should render the manage documents listing page with one document item for each document present in the folder, if the folderId is valid', async () => {
 			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
+				.get(getFolderApiUrl(1))
 				.reply(200, { ...documentFolderInfo, path: 'appellant-case/appellantStatement' });
 
 			const response = await request.get(
@@ -96,10 +109,36 @@ describe('appellant-case manage-documents', () => {
 			);
 		});
 
+		it('should hide the add document button and actions column when the user cannot update the case', async () => {
+			const { app: readOnlyApp, teardown: readOnlyTeardown } = createTestEnvironment({
+				groups: []
+			});
+			const readOnlyRequest = supertest(readOnlyApp);
+
+			try {
+				nock('http://test/')
+					.get(getFolderApiUrl(1))
+					.reply(200, { ...documentFolderInfo, path: 'appellant-case/appellantStatement' });
+
+				const response = await readOnlyRequest.get(
+					`${baseUrl}/1${appellantCasePagePath}/manage-documents/1/`
+				);
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Name</th>');
+				expect(unprettifiedElement.innerHTML).toContain('Date received</th>');
+				expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
+				expect(unprettifiedElement.innerHTML).not.toContain('Actions</th>');
+				expect(unprettifiedElement.innerHTML).not.toContain('Add document</a>');
+			} finally {
+				readOnlyTeardown();
+			}
+		});
+
 		it('should render the manage documents listing page with the expected heading, if the folderId is valid, and the folder is additional documents', async () => {
-			nock('http://test/')
-				.get('/appeals/1/document-folders/2')
-				.reply(200, additionalDocumentsFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(2)).reply(200, additionalDocumentsFolderInfo);
 
 			const response = await request.get(
 				`${baseUrl}/1${appellantCasePagePath}/manage-documents/2/`
@@ -147,6 +186,8 @@ describe('appellant-case manage-documents', () => {
 				nock.cleanAll(); // need to remove the nocks so we can change the appeal type
 				// @ts-ignore
 				usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
+				nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse).persist();
+
 				nock('http://test/')
 					.get('/appeals/document-redaction-statuses')
 					.reply(200, documentRedactionStatuses);
@@ -154,7 +195,7 @@ describe('appellant-case manage-documents', () => {
 					.get('/appeals/1?include=appealType')
 					.reply(200, { appealType: appealType })
 					.persist();
-				nock('http://test/').get('/appeals/1/document-folders/3').reply(200, documentFolderInfo);
+				nock('http://test/').get(getFolderApiUrl(3)).reply(200, documentFolderInfo);
 
 				const response = await request.get(
 					`${baseUrl}/1${appellantCasePagePath}/manage-documents/3/`
@@ -180,13 +221,11 @@ describe('appellant-case manage-documents', () => {
 			// @ts-ignore
 			usersService.getUserById = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
 
+			nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, documentFolderInfo)
-				.persist();
+			nock('http://test/').get(getFolderApiUrl(1)).reply(200, documentFolderInfo).persist();
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo).persist();
 		});
 
@@ -387,10 +426,11 @@ describe('appellant-case manage-documents', () => {
 
 	describe('GET /appellant-case/manage-documents/:folderId/:documentId/:versionId/delete', () => {
 		beforeEach(() => {
+			nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1)).reply(200, documentFolderInfo);
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 

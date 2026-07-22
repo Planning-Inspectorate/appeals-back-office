@@ -39,15 +39,18 @@ describe('/appeals/:appealId/document-folders/:folderId', () => {
 		test('gets a single document folder', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 			databaseConnector.folder.findUnique.mockResolvedValue(savedFolder);
+			databaseConnector.document.count.mockResolvedValue(10);
 
 			const response = await request
-				.get(`/appeals/${householdAppeal.id}/document-folders/${savedFolder.id}`)
+				.get(`/appeals/${householdAppeal.id}/document-folders/${savedFolder.id}?pageSize=10`)
 				.set('azureAdUserId', azureAdUserId);
 
 			expect(response.status).toEqual(200);
 
 			expect(response.body).toEqual({
 				folderId: savedFolder.id,
+				pageCount: 1,
+				totalFolderSize: 10,
 				path: savedFolder.path,
 				caseId: savedFolder.caseId.toString(),
 				documents: [
@@ -77,6 +80,27 @@ describe('/appeals/:appealId/document-folders/:folderId', () => {
 					}
 				]
 			});
+		});
+
+		test('gets a paged results', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			databaseConnector.folder.findUnique.mockResolvedValue(savedFolder);
+			databaseConnector.document.count.mockResolvedValue(10);
+
+			const response = await request
+				.get(
+					`/appeals/${householdAppeal.id}/document-folders/${savedFolder.id}?pageSize=1&pageNumber=2`
+				)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+
+			expect(response.body).toEqual(
+				expect.objectContaining({
+					pageCount: 10,
+					totalFolderSize: 10
+				})
+			);
 		});
 	});
 });

@@ -315,6 +315,14 @@ const renderKnowDateTimePage = async (request, response, apiErrors) => {
  */
 const renderScheduleVisitDatePage = async (request, response, apiErrors) => {
 	const { session, currentAppeal, body } = request;
+
+	if (!session.visitType) {
+		const visitType = currentAppeal?.siteVisit?.visitType;
+		if (visitType) {
+			session.visitType = visitType;
+		}
+	}
+
 	const errors = request.errors || apiErrors;
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: scheduleVisitDateTimePage(

@@ -798,6 +798,37 @@ interface DocumentVersionInfo {
 	documentType: string;
 }
 
+interface PagedFolderInfo {
+	folderId: number;
+	caseId: string;
+	path: string;
+	totalFolderSize: number;
+	pageCount: number;
+	documents: PagedDocumentInfo[];
+}
+
+interface PagedDocumentInfo {
+	id: string;
+	name: string;
+	createdAt: string;
+	isDeleted?: boolean | null;
+	latestDocumentVersion: PagedDocumentVersionInfo;
+}
+
+interface PagedDocumentVersionInfo {
+	documentId: string;
+	version: number;
+	published: boolean;
+	virusCheckStatus: string;
+	size: string;
+	redactionStatus: string;
+	dateReceived: string;
+	isLateEntry?: boolean | null;
+	isDeleted?: boolean | null;
+	documentType: string;
+	stage: string;
+}
+
 interface SingleSiteVisitDetailsResponse {
 	appealId: number;
 	visitDate: Date | null;
@@ -1257,6 +1288,9 @@ export {
 	LookupTables,
 	NotifyClient,
 	NotifyTemplate,
+	PagedDocumentInfo,
+	PagedDocumentVersionInfo,
+	PagedFolderInfo,
 	ReasonOption,
 	RelatedAppeal,
 	ServiceUserResponse,

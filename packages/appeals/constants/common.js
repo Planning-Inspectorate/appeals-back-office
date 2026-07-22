@@ -201,4 +201,5 @@ export const FEEDBACK_FORM_LINKS = Object.freeze({
 
 export const REPRESENTATION_ADDED_AS_DOCUMENT = 'Added as a document';
 
-export const MAX_VISIBLE_DOCUMENTS_IN_SUMMARY = 30;
+export const MAX_VISIBLE_DOCUMENTS_IN_SUMMARY = 5;
+export const DOCUMENTS_PAGE_SIZE = 100;

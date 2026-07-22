@@ -1,4 +1,5 @@
 import { databaseConnector } from '#utils/database-connector.js';
+import { getSkipValue } from '#utils/database-pagination.js';
 
 /**
  * @typedef {import('#db-client/client.ts').Prisma.PrismaPromise<T>} PrismaPromise
@@ -57,19 +58,73 @@ const batchLoadDocumentVersions = async (folders) => {
 };
 
 /**
+ * @param {number|null} repId
+ */
+const documentRepWhere = (repId) => {
+	if (!repId) {
+		return undefined;
+	}
+	return {
+		is: {
+			representation: {
+				is: {
+					representationId: repId
+				}
+			}
+		}
+	};
+};
+
+/**
  * @param {number} id
+ * @param {number} pageNumber
+ * @param {number} pageSize
+ * @param {number|null} repId
  * @returns {Promise<Folder|null>}
  */
-export const getById = async (id) => {
-	// @ts-ignore
+export const getById = async (id, pageNumber, pageSize, repId) => {
 	const folder = await databaseConnector.folder.findUnique({
 		where: { id },
-		include: {
+		select: {
+			id: true,
+			caseId: true,
+			path: true,
 			documents: {
-				where: { isDeleted: false },
+				select: {
+					guid: true,
+					name: true,
+					createdAt: true,
+					isDeleted: true,
+					latestDocumentVersion: {
+						select: {
+							documentGuid: true,
+							version: true,
+							published: true,
+							virusCheckStatus: true,
+							size: true,
+							redactionStatus: true,
+							dateReceived: true,
+							isLateEntry: true,
+							isDeleted: true,
+							documentType: true,
+							stage: true,
+							representation: {
+								select: {
+									representationId: true
+								}
+							}
+						}
+					}
+				},
+				where: {
+					isDeleted: false,
+					...(repId ? { latestDocumentVersion: documentRepWhere(repId) } : {})
+				},
 				orderBy: {
 					createdAt: 'desc'
-				}
+				},
+				take: pageSize,
+				skip: getSkipValue(pageNumber, pageSize)
 			}
 		}
 	});
@@ -78,8 +133,32 @@ export const getById = async (id) => {
 		return null;
 	}
 
-	await batchLoadDocumentVersions([folder]);
+	// @ts-ignore
 	return folder;
+};
+
+/**
+ * @param {number} id
+ * @returns {Promise<number>}
+ */
+export const getFolderSizeById = async (id) =>
+	databaseConnector.document.count({
+		where: { isDeleted: false, folderId: id }
+	});
+
+/**
+ * @param {number} id
+ * @param {number} repId
+ * @returns {Promise<number>}
+ */
+export const getRepresentationFolderSizeById = async (id, repId) => {
+	return databaseConnector.document.count({
+		where: {
+			isDeleted: false,
+			folderId: id,
+			latestDocumentVersion: documentRepWhere(repId)
+		}
+	});
 };
 
 /**

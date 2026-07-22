@@ -1,5 +1,5 @@
 /**
- * Clone the object (shallow) and remove any 'actions' properties that are present
+ * Clone the object (shallow) and remove any 'actions' properties that are present, unless they have a 'needsPermissions' property set to false.
  * @param {Object|null|undefined} value
  * @returns {any|undefined}
  */
@@ -8,13 +8,20 @@ export function removeSummaryListActions(value) {
 		return;
 	}
 
-	const clonedObject = { ...value };
+	// @ts-expect-error
+	const actions = value.actions;
+	if (!actions || !Array.isArray(actions.items)) {
+		return { ...value };
+	}
 
-	Object.keys(clonedObject).forEach((key) => {
-		if (key === 'actions') {
-			Reflect.deleteProperty(clonedObject, key);
+	return {
+		...value,
+		actions: {
+			...actions,
+			items: actions.items.filter(
+				/**@param {{needsPermissions?: boolean}} action */ (action) =>
+					action?.needsPermissions === false
+			)
 		}
-	});
-
-	return clonedObject;
+	};
 }

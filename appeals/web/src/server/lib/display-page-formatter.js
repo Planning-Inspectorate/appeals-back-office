@@ -1,7 +1,6 @@
 import { mapDocumentInfoVirusCheckStatus } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import config from '#environment/config.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
-import { SHOW_MORE_MAXIMUM_ROWS_BEFORE_HIDING } from '#lib/constants.js';
 import logger from '#lib/logger.js';
 import { MAX_VISIBLE_DOCUMENTS_IN_SUMMARY } from '@pins/appeals/constants/common.js';
 import { appealSiteToMultilineAddressStringHtml } from './address-formatter.js';
@@ -189,7 +188,33 @@ const formatDocumentValuesAsList = ({ appealId, documents, isAdditionalDocuments
 	if (documents.length > 0) {
 		const visibleDocs = documents.slice(0, MAX_VISIBLE_DOCUMENTS_IN_SUMMARY);
 		const hasMore = documents.length > MAX_VISIBLE_DOCUMENTS_IN_SUMMARY;
-		const moreCount = documents.length - MAX_VISIBLE_DOCUMENTS_IN_SUMMARY;
+
+		htmlProperty.wrapperHtml = {
+			opening: '<div class="full-width">',
+			closing: '</div>'
+		};
+
+		if (hasMore) {
+			htmlProperty.pageComponents.push({
+				type: 'html',
+				parameters: {
+					html: isAdditionalDocuments
+						? `<p class="govuk-body">Showing ${MAX_VISIBLE_DOCUMENTS_IN_SUMMARY} of ${documents.length} documents</p>`
+						: `<span class="govuk-body">Showing ${MAX_VISIBLE_DOCUMENTS_IN_SUMMARY} of ${documents.length} documents</span>`
+				}
+			});
+		}
+
+		htmlProperty.pageComponents.push({
+			type: 'html',
+			parameters: {
+				// hides list styling if only 1 doc
+				html:
+					documents.length > 1
+						? `<ul class="govuk-list govuk-list--bullet pins-file-list">`
+						: `<ul class="govuk-list pins-file-list">`
+			}
+		});
 
 		for (let i = 0; i < visibleDocs.length; i++) {
 			const document = visibleDocs[i];
@@ -264,30 +289,12 @@ const formatDocumentValuesAsList = ({ appealId, documents, isAdditionalDocuments
 			});
 		}
 
-		if (hasMore) {
-			htmlProperty.pageComponents.push({
-				wrapperHtml: {
-					opening: `<li class="govuk-!-margin-top-1"><span>`,
-					closing: '</span></li>'
-				},
-				type: 'html',
-				parameters: {
-					html: `<span class="govuk-body govuk-!-font-weight-bold">... and ${moreCount} more document${moreCount === 1 ? '' : 's'}</span>`
-				}
-			});
-		}
-
-		if (htmlProperty.pageComponents.length > 1) {
-			htmlProperty.wrapperHtml = {
-				opening: '<ol class="govuk-list govuk-list--number pins-file-list">',
-				closing: '</ol>'
-			};
-		} else if (htmlProperty.pageComponents.length > 0) {
-			htmlProperty.wrapperHtml = {
-				opening: '<ul class="govuk-list pins-file-list">',
-				closing: '</ul>'
-			};
-		}
+		htmlProperty.pageComponents.push({
+			type: 'html',
+			parameters: {
+				html: `</ul>`
+			}
+		});
 	} else {
 		htmlProperty.pageComponents.push({
 			type: 'html',
@@ -296,32 +303,6 @@ const formatDocumentValuesAsList = ({ appealId, documents, isAdditionalDocuments
 			}
 		});
 		logger.debug('No documents in this folder');
-	}
-
-	if (documents.length > SHOW_MORE_MAXIMUM_ROWS_BEFORE_HIDING && isAdditionalDocuments) {
-		htmlProperty.pageComponents = [
-			{
-				type: 'show-more',
-				parameters: {
-					labelText: 'additional documents',
-					html: '',
-					contentRowSelector: 'li',
-					toggleTextCollapsed: 'View all',
-					pageComponents: [
-						{
-							type: 'html',
-							wrapperHtml: htmlProperty.wrapperHtml,
-							parameters: {
-								html: '',
-								pageComponents: htmlProperty.pageComponents
-							}
-						}
-					]
-				}
-			}
-		];
-
-		delete htmlProperty.wrapperHtml;
 	}
 
 	return htmlProperty;

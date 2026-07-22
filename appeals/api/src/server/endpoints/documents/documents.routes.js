@@ -1,5 +1,8 @@
 import { getAppealValidator } from '#endpoints/appeal-details/appeal-details.validators.js';
-import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import {
+	checkAppealExistsById,
+	checkAppealExistsByIdAndAddPartialToRequest
+} from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as controller from './documents.controller.js';
@@ -28,14 +31,14 @@ router.get(
 			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 		}
 		#swagger.responses[200] = {
-			description: 'Returns the contents of a single appeal folder, by id',
+			description: 'Returns the contents of a group of folders',
 			schema: { $ref: '#/components/schemas/Folder' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
 	 */
 	getAppealValidator,
-	checkAppealExistsByIdAndAddPartialToRequest([]),
+	checkAppealExistsById,
 	controller.getFolders
 );
 
@@ -44,7 +47,7 @@ router.get(
 	/*
 		#swagger.tags = ['Documents']
 		#swagger.path = '/appeals/{appealId}/document-folders/{folderId}'
-		#swagger.description = Returns the contents of a single appeal folder, by id
+		#swagger.description = Returns the contents of a single appeal folder, by id, paged
 		#swagger.parameters['azureAdUserId'] = {
 			in: 'header',
 			required: true,
@@ -56,14 +59,14 @@ router.get(
 			example: 1,
 		}
 		#swagger.responses[200] = {
-			description: 'Returns the contents of a single appeal folder, by id',
-			schema: { $ref: '#/components/schemas/Folder' }
+			description: 'Returns the contents of a single appeal folder, by id, paged',
+			schema: { $ref: '#/components/schemas/PagedFolder' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
 	 */
 	getAppealValidator,
-	checkAppealExistsByIdAndAddPartialToRequest([]),
+	checkAppealExistsById,
 	getFolderIdValidator,
 	asyncHandler(controller.getFolder)
 );
@@ -200,7 +203,7 @@ router.patch(
 		#swagger.responses[404] = {}
 	 */
 	patchDocumentsValidator,
-	checkAppealExistsByIdAndAddPartialToRequest([]),
+	checkAppealExistsById,
 	asyncHandler(controller.updateDocuments)
 );
 

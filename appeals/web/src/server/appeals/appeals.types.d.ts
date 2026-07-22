@@ -54,7 +54,8 @@ export interface AppealProcedureType {
 declare global {
 	namespace Express {
 		interface Request {
-			currentFolder: Schema.Folder;
+			currentFolder: Schema.Folder | Schema.PagedFolder;
+			currentPageNumber: number;
 			currentAppeal: Appeal;
 			currentRepresentation: Representation;
 			currentRule6Party: import('./appeal-details/appeal-details.types').AppealRule6Party;

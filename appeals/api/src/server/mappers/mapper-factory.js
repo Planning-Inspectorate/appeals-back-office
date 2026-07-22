@@ -1,7 +1,10 @@
 import { isFeatureActive } from '#utils/feature-flags.js';
 import mergeMaps from '#utils/merge-maps.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
-import { isS78ExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import {
+	beforeExpeditedOriginalApplicationCutOff,
+	isS78ExpeditedAppealType
+} from '@pins/appeals/utils/appeal-type-checks.js';
 import {
 	APPEAL_CASE_STAGE,
 	APPEAL_CASE_TYPE,
@@ -79,8 +82,13 @@ function createDataMap(mappingRequest) {
 			}
 		}
 		case APPEAL_CASE_TYPE.ZA: {
-			const casAdvert = createMap(apiMappers.apiCasAdvertMappers, mappingRequest);
-			return mergeMaps(caseData, casAdvert);
+			if (!beforeExpeditedOriginalApplicationCutOff(appeal.appellantCase?.applicationDate)) {
+				const casAdvert = createMap(apiMappers.apiCasAdvertExpeditedMappers, mappingRequest);
+				return mergeMaps(caseData, casAdvert);
+			} else {
+				const casAdvert = createMap(apiMappers.apiCasAdvertMappers, mappingRequest);
+				return mergeMaps(caseData, casAdvert);
+			}
 		}
 		case APPEAL_CASE_TYPE.H: {
 			const advert = createMap(apiMappers.apiAdvertMappers, mappingRequest);
@@ -127,8 +135,16 @@ function createIntegrationMap(mappingRequest) {
 			return mergeMaps(caseData, s20);
 		}
 		case APPEAL_CASE_TYPE.ZA: {
-			const casAdvert = createMap(integrationMappers.integrationCasAdvertMappers, mappingRequest);
-			return mergeMaps(caseData, casAdvert);
+			if (!beforeExpeditedOriginalApplicationCutOff(appeal.appellantCase?.applicationDate)) {
+				const casAdvert = createMap(integrationMappers.integrationCasAdvertMappers, mappingRequest);
+				return mergeMaps(caseData, casAdvert);
+			} else {
+				const casAdvert = createMap(
+					integrationMappers.integrationCasAdvertExpeditedMappers,
+					mappingRequest
+				);
+				return mergeMaps(caseData, casAdvert);
+			}
 		}
 		case APPEAL_CASE_TYPE.H: {
 			const advert = createMap(integrationMappers.integrationAdvertMappers, mappingRequest);

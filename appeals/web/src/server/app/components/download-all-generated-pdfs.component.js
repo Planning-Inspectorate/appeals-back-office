@@ -105,9 +105,14 @@ async function getTasks(currentAppealData, apiClient, representationType) {
 			templateName: 'lpa-questionnaire-pdf',
 			async fetchData() {
 				logger.debug('[DownloadAll] Fetching data for: LPA Questionnaire');
+				const appellantCaseId = currentAppealData.appellantCaseId;
 				const lpaQuestionnaireId = currentAppealData.lpaQuestionnaireId;
 				if (!lpaQuestionnaireId) return null;
-
+				const rawAppellantData = await getAppellantCaseFromAppealId(
+					apiClient,
+					appealId,
+					appellantCaseId
+				);
 				const rawData = await getLpaQuestionnaireFromId(
 					apiClient,
 					appealId,
@@ -121,7 +126,12 @@ async function getTasks(currentAppealData, apiClient, representationType) {
 					);
 				}
 
-				return rawData ? { lpaQuestionnaireData: { ...currentAppealData, ...rawData } } : null;
+				return rawData
+					? {
+							appellantCaseData: { ...rawAppellantData },
+							lpaQuestionnaireData: { ...currentAppealData, ...rawData }
+						}
+					: null;
 			}
 		},
 		{

@@ -1,3 +1,5 @@
+import casAdvertExpedite from './advert-expedite.js';
+import advert from './advert.js';
 import enforcementListed from './enforcement-listed.js';
 import enforcement from './enforcement.js';
 import has from './has.js';
@@ -13,5 +15,7 @@ export const mocks = {
 	s20Appeal: s20,
 	enforcementAppeal: enforcement,
 	ldcAppeal: ldc,
-	enforcementListedAppeal: enforcementListed
+	enforcementListedAppeal: enforcementListed,
+	advertAppeal: advert,
+	casAdvertExpediteAppeal: casAdvertExpedite
 };
