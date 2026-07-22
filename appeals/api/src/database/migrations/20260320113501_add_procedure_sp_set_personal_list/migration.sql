@@ -171,7 +171,7 @@ BEGIN
 				SELECT DISTINCT p.appealId,
 								CASE WHEN p.appealId = ar.parentId THEN 1 ELSE 0 END as parentAppeal,
 								CASE WHEN p.appealId = ar.childId THEN 1 ELSE 0 END AS childAppeal,
-								CASE WHEN p.appealId = ar.childId THEN ar.parentId ELSE ar.parentId END AS parentAppealId
+								ar.parentId AS parentAppealId
 				FROM    AppealRelationship ar
 						INNER JOIN #personal p ON p.appealId = ar.parentId OR p.appealId = ar.childId
 				WHERE   ar.type = 'linked'
