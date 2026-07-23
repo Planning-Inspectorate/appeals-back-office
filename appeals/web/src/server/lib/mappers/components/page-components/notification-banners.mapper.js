@@ -83,6 +83,9 @@ export const notificationBannerDefinitions = {
 			'appellantCase',
 			'lpaQuestionnaire',
 			'manageDocuments',
+			'lpaStatement',
+			'ipComments',
+			'appellantStatement',
 			'viewFinalComments'
 		],
 		text: 'Document added'
