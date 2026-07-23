@@ -90,6 +90,7 @@ apps_config = {
     featureFlagNewBeforeYouStart                = true
     featureFlagEnforcementChangeProcedure       = false
     featureFlagSharingHearingDocuments          = false
+    featureFlagSharingInquiryEventDocuments     = false
   }
 
   use_system_test_bc_for_change_lpa = true

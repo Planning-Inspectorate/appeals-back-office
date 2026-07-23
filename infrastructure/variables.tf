@@ -100,6 +100,7 @@ variable "apps_config" {
       featureFlagNewBeforeYouStart                = bool
       featureFlagEnforcementChangeProcedure       = bool
       featureFlagSharingHearingDocuments          = bool
+      featureFlagSharingInquiryEventDocuments     = bool
     })
 
     analytics = object({
