@@ -877,26 +877,31 @@ describe('representations', () => {
 
 			for (const testCase of testCases) {
 				it(`should call the publish representations API endpoint, redirect to the case details page, and render a "Final comments shared" success banner, if ${testCase.name} final comments were shared`, async () => {
+					const appealDetailsResponse = {
+						...appealData,
+						appealType: 'Planning appeal',
+						appealId,
+						appealStatus: 'final_comments',
+						documentationSummary: {
+							appellantFinalComments: {
+								receivedAt: '2025-01-29T10:19:47.259Z',
+								representationStatus: 'valid',
+								status: 'received'
+							},
+							lpaFinalComments: {
+								receivedAt: '2025-01-29T10:19:47.259Z',
+								representationStatus: 'valid',
+								status: 'received'
+							}
+						}
+					};
 					nock('http://test/')
 						.get(`/appeals/${appealId}?include=all`)
-						.reply(200, {
-							...appealData,
-							appealType: 'Planning appeal',
-							appealId,
-							appealStatus: 'final_comments',
-							documentationSummary: {
-								appellantFinalComments: {
-									receivedAt: '2025-01-29T10:19:47.259Z',
-									representationStatus: 'valid',
-									status: 'received'
-								},
-								lpaFinalComments: {
-									receivedAt: '2025-01-29T10:19:47.259Z',
-									representationStatus: 'valid',
-									status: 'received'
-								}
-							}
-						})
+						.reply(200, appealDetailsResponse)
+						.persist();
+					nock('http://test/')
+						.get(`/appeals/${appealId}/page-details`)
+						.reply(200, appealDetailsResponse)
 						.persist();
 					const mockShareRepsEndpoint = nock('http://test/')
 						.post(`/appeals/${appealId}/reps/publish`)
@@ -930,26 +935,31 @@ describe('representations', () => {
 			}
 
 			it('should call the publish representations API endpoint, redirect to the case details page, and render a "Case progressed" success banner, if no final comments were shared', async () => {
+				const appealDetailsResponse = {
+					...appealData,
+					appealType: 'Planning appeal',
+					appealId,
+					appealStatus: 'final_comments',
+					documentationSummary: {
+						appellantFinalComments: {
+							receivedAt: null,
+							representationStatus: null,
+							status: 'not_received'
+						},
+						lpaFinalComments: {
+							receivedAt: null,
+							representationStatus: null,
+							status: 'not_received'
+						}
+					}
+				};
 				nock('http://test/')
 					.get(`/appeals/${appealId}?include=all`)
-					.reply(200, {
-						...appealData,
-						appealType: 'Planning appeal',
-						appealId,
-						appealStatus: 'final_comments',
-						documentationSummary: {
-							appellantFinalComments: {
-								receivedAt: null,
-								representationStatus: null,
-								status: 'not_received'
-							},
-							lpaFinalComments: {
-								receivedAt: null,
-								representationStatus: null,
-								status: 'not_received'
-							}
-						}
-					})
+					.reply(200, appealDetailsResponse)
+					.persist();
+				nock('http://test/')
+					.get(`/appeals/${appealId}/page-details`)
+					.reply(200, appealDetailsResponse)
 					.persist();
 				const mockShareRepsEndpoint = nock('http://test/')
 					.post(`/appeals/${appealId}/reps/publish`)

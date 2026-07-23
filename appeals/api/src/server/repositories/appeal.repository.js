@@ -1091,11 +1091,271 @@ const getAppealReference = async (appealId) => {
 	return appeal?.reference ?? '';
 };
 
+/**
+ * @type {import('#db-client/models.ts').AppealInclude}
+ **/
+export const appealDetailsPageDisplayInclude = /** @type {Object} */ {
+	address: true,
+	procedureType: {
+		select: {
+			id: true,
+			name: true
+		}
+	},
+	parentAppeals: {
+		include: {
+			parent: {
+				include: linkedAppealsInclude
+			}
+		}
+	},
+	childAppeals: {
+		include: {
+			child: {
+				include: linkedAppealsInclude
+			}
+		}
+	},
+	neighbouringSites: {
+		include: { address: true }
+	},
+	allocation: true,
+	specialisms: {
+		include: {
+			specialism: true
+		}
+	},
+	appellantCase: {
+		select: {
+			id: true,
+			appellantCaseValidationOutcome: true,
+			knowsOtherOwners: true,
+			knowsAllOwners: true,
+			appellantCaseAdvertDetails: true,
+			contactAddress: true,
+			siteSafetyDetails: true,
+			numberOfResidencesNetChange: true,
+			screeningOpinionIndicatesEiaRequired: true,
+			applicationMadeUnderActSection: true,
+			planningObligation: true,
+			statusPlanningObligation: true,
+			enforcementReference: true
+		}
+	},
+	appellant: {
+		select: {
+			id: true,
+			firstName: true,
+			lastName: true,
+			organisationName: true,
+			email: true,
+			phoneNumber: true
+		}
+	},
+	agent: {
+		select: {
+			id: true,
+			firstName: true,
+			lastName: true,
+			organisationName: true,
+			email: true,
+			phoneNumber: true
+		}
+	},
+	lpa: true,
+	appealStatus: {
+		select: {
+			status: true,
+			valid: true,
+			createdAt: true
+		}
+	},
+	appealTimetable: {
+		select: {
+			id: true,
+			lpaQuestionnaireDueDate: true,
+			caseResubmissionDueDate: true,
+			ipCommentsDueDate: true,
+			lpaStatementDueDate: true,
+			finalCommentsDueDate: true,
+			s106ObligationDueDate: true,
+			issueDeterminationDate: true,
+			proofOfEvidenceAndWitnessesDueDate: true,
+			caseManagementConferenceDueDate: true
+		}
+	},
+	appealType: {
+		select: {
+			id: true,
+			type: true,
+			key: true
+		}
+	},
+	assignedTeam: {
+		select: {
+			id: true,
+			name: true,
+			email: true
+		}
+	},
+	caseOfficer: {
+		select: {
+			azureAdUserId: true
+		}
+	},
+	inspector: {
+		select: {
+			azureAdUserId: true
+		}
+	},
+	inspectorDecision: true,
+	lpaQuestionnaire: {
+		select: {
+			id: true,
+			lpaqCreatedDate: true,
+			lpaQuestionnaireValidationOutcome: {
+				select: {
+					name: true
+				}
+			},
+			siteSafetyDetails: true
+		}
+	},
+	siteVisit: {
+		where: {
+			whoMissedSiteVisit: null
+		},
+		include: {
+			siteVisitType: true
+		}
+	},
+	hearing: {
+		include: {
+			address: true
+		}
+	},
+	inquiry: {
+		include: {
+			address: true
+		}
+	},
+	representations: {
+		select: {
+			id: true,
+			representationType: true,
+			dateCreated: true,
+			isRedacted: true,
+			representedId: true,
+			status: true
+		}
+	},
+	hearingEstimate: true,
+	inquiryEstimate: true,
+	appealGrounds: {
+		where: {
+			isDeleted: false
+		},
+		include: {
+			ground: true
+		}
+	},
+	appealRule6Parties: {
+		include: {
+			serviceUser: true
+		}
+	},
+	enforcementNoticeAppealOutcome: true,
+	folders: {
+		select: {
+			id: true,
+			path: true,
+			caseId: true,
+			_count: {
+				select: {
+					documents: {
+						where: {
+							isDeleted: false
+						}
+					}
+				}
+			},
+			documents: {
+				where: {
+					isDeleted: false
+				},
+				orderBy: {
+					createdAt: 'desc'
+				},
+				take: 1,
+				select: {
+					guid: true,
+					name: true,
+					folderId: true,
+					caseId: true,
+					isDeleted: true,
+					createdAt: true,
+					latestDocumentVersion: {
+						select: {
+							documentGuid: true,
+							version: true,
+							fileName: true,
+							originalFilename: true,
+							dateReceived: true,
+							virusCheckStatus: true,
+							isDeleted: true,
+							stage: true,
+							documentType: true,
+							size: true,
+							mime: true,
+							isLateEntry: true,
+							documentURI: true,
+							redactionStatus: {
+								select: {
+									id: true,
+									key: true,
+									name: true
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	caseNotes: {
+		include: {
+			user: true
+		},
+		orderBy: {
+			createdAt: 'desc'
+		}
+	}
+};
+
+/**
+ * @param {number} id
+ * @returns {Promise<Appeal|undefined>}
+ */
+const getAppealByIdForPageDisplay = async (id) => {
+	const appeal = await databaseConnector.appeal.findUnique({
+		where: {
+			id
+		},
+		include: appealDetailsPageDisplayInclude
+	});
+
+	if (appeal) {
+		// @ts-ignore
+		return appeal;
+	}
+};
+
 export default {
 	checkAppealExistsById,
 	getLinkedAppeals,
 	getLinkedAppealsById,
 	getAppealById,
+	getAppealByIdForPageDisplay,
 	deprecatedGetAppealById,
 	getAppealTypeById,
 	deprecatedGetAppealByAppealReference,

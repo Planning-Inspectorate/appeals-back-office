@@ -53,7 +53,12 @@ export function documentSummaryListItem({
 		display: {
 			summaryListItem: {
 				key: { text },
-				value: formatDocumentValues({ appealId, documents, displayMode }),
+				value: formatDocumentValues({
+					appealId,
+					documents,
+					displayMode,
+					documentCount: isFolderInfo(folderInfo) ? folderInfo.documentCount : undefined
+				}),
 				actions: { items: actions }
 			}
 		}

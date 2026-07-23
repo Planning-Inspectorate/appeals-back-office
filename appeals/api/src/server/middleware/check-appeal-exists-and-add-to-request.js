@@ -87,6 +87,24 @@ export const checkAppealExistsByIdAndAddPartialToRequest =
 /**
  * @type {import('express').Handler}
  */
+export const checkAppealExistsByIdForPageDisplayAndAddToRequest = async (req, res, next) => {
+	const {
+		params: { appealId }
+	} = req;
+
+	const appeal = await appealRepository.getAppealByIdForPageDisplay(Number(appealId));
+
+	if (!appeal || !isAppealTypeEnabled(appeal.appealType?.key || '')) {
+		return res.status(404).send({ errors: { appealId: ERROR_NOT_FOUND } });
+	}
+
+	req.appeal = appeal;
+	next();
+};
+
+/**
+ * @type {import('express').Handler}
+ */
 export const checkAppealExistsById = async (req, res, next) => {
 	const {
 		params: { appealId }

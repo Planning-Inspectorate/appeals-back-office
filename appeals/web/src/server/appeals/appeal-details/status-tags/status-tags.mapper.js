@@ -6,8 +6,6 @@ import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { decisionOutcomeToDisplayText } from '@pins/appeals/utils/decision-outcome-display-text.js';
 import { APPEAL_CASE_STATUS, APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
-import { getAppealTypesFromId } from '../change-appeal-type/change-appeal-type.service.js';
-import { getInvalidStatusCreatedDate } from '../invalid-appeal/invalid-appeal.service.js';
 
 /**
  * @param {{ appeal: MappedInstructions }} mappedData
@@ -84,13 +82,14 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 					: `Decision issued on ${letterDateObject.latestLetterDate}`
 			);
 		} else if (isAppealInvalid) {
-			const invalidDate = await getInvalidStatusCreatedDate(
-				request.apiClient,
-				appealDetails.appealId
+			// @ts-ignore
+			const invalidStatusObj = appealDetails.appealStatusHistory?.find(
+				(/** @type {any} */ s) => s.status === 'invalid'
 			);
-			insetTextRows.push(
-				`Marked as invalid on ${dateISOStringToDisplayDate(invalidDate.createdDate)}`
-			);
+			const invalidDate = invalidStatusObj?.createdAt;
+			if (invalidDate) {
+				insetTextRows.push(`Marked as invalid on ${dateISOStringToDisplayDate(invalidDate)}`);
+			}
 			insetTextRows.push(getViewInvalidAppealLink(appealDetails.appealId));
 		}
 
@@ -155,14 +154,10 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 		appealDetails.resubmitTypeId &&
 		appealDetails.appealTimetable?.caseResubmissionDueDate
 	) {
-		const appealTypesFromId = await getAppealTypesFromId(request.apiClient, appealDetails.appealId);
-		const appealTypeById = appealTypesFromId?.find(
-			(appealType) => appealType.id === appealDetails.resubmitTypeId
-		);
+		// @ts-ignore
+		const resubmitType = appealDetails.resubmitType;
 		const appealTypeText =
-			appealTypeById?.key && appealTypeById?.type
-				? `${appealTypeById.type} (${appealTypeById.key})`
-				: '';
+			resubmitType?.key && resubmitType?.type ? `${resubmitType.type} (${resubmitType.key})` : '';
 		const caseResubmissionDueDate = dateISOStringToDisplayDate(
 			appealDetails.appealTimetable.caseResubmissionDueDate
 		);

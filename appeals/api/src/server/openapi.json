@@ -301,6 +301,54 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/page-details": {
+			"get": {
+				"tags": ["Appeal Details"],
+				"description": "Gets a single appeal by ID with optimized includes for the page display",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Gets a single appeal by ID optimized for page display",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Appeal"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Appeal"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
 		"/appeals/case-reference/{caseReference}": {
 			"get": {
 				"tags": ["Appeal Details"],
