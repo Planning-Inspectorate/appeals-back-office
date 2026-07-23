@@ -203,7 +203,9 @@ export function loadConfig() {
 			featureFlagNewBeforeYouStart: FEATURE_FLAG_NEW_BEFORE_YOU_START === 'true',
 			featureFlagEnforcementChangeProcedure: FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE === 'true',
 			featureFlagSharingHearingDocuments:
-				environment.FEATURE_FLAG_SHARING_HEARING_DOCUMENTS === 'true'
+				environment.FEATURE_FLAG_SHARING_HEARING_DOCUMENTS === 'true',
+			featureFlagSharingInquiryEventDocuments:
+				environment.FEATURE_FLAG_SHARING_INQUIRY_EVENT_DOCUMENTS === 'true'
 		},
 		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
 		pdfServiceHost: PDF_SERVICE_HOST
