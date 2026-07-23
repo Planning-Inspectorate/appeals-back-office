@@ -428,7 +428,7 @@ describe('Rename file with valid name', { testIsolation: false }, () => {
 	});
 
 	validFileNameVariants.forEach((fileVariant) => {
-		it.only(`can rename a file with valid name: ${fileVariant.type}`, () => {
+		it(`can rename a file with valid name: ${fileVariant.type}`, () => {
 			fileDetailsPage.changeFileName();
 			fileDetailsPage.enterFileName(fileVariant.name);
 			fileDetailsPage.clickButtonByText('Confirm');
@@ -456,7 +456,7 @@ describe('Rename file with invalid name', { testIsolation: false }, () => {
 	});
 
 	invalidFileNameVariants.forEach((invalidFileVariant) => {
-		it.only(`cannot rename a file with invalid name: ${invalidFileVariant.type}`, () => {
+		it(`cannot rename a file with invalid name: ${invalidFileVariant.type}`, () => {
 			fileDetailsPage.enterFileName(invalidFileVariant.name);
 			fileDetailsPage.clickButtonByText('Confirm');
 			fileDetailsPage.verifyErrorMessages({

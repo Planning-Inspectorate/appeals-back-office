@@ -15,6 +15,7 @@ export class FileDetailsPage extends CaseDetailsPage {
 
 	confirmFileRenamed(filename) {
 		this.validateBannerMessage(BANNER_TYPES.success, SUCCESS_MESSAGES.filenameUpdated);
+		this.checkHeading(filename);
 	}
 
 	enterFileName(filename) {
