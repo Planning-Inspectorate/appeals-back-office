@@ -81,7 +81,7 @@ describe('transitionState', () => {
 			// @ts-ignore
 			databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
 			// @ts-ignore
-			databaseConnector.personalList.upsert.mockResolvedValue({});
+			databaseConnector.$executeRawUnsafe.mockResolvedValue({});
 			// @ts-ignore
 			databaseConnector.appealStatus.update.mockResolvedValue({});
 		});
@@ -121,7 +121,10 @@ describe('transitionState', () => {
 
 				expect(databaseConnector.appealStatus.create).toHaveBeenCalledTimes(expectCreate ? 1 : 0);
 
-				expect(databaseConnector.personalList.upsert).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledWith(
+					expect.stringContaining('EXEC dbo.spSetPersonalList')
+				);
 				expect(result).toEqual(expectUpdate);
 			}
 		);
@@ -151,13 +154,17 @@ describe('transitionState', () => {
 				.spyOn(appealStatusRepository, 'updateAppealStatusByAppealId')
 				.mockImplementation(jest.fn());
 			jest.spyOn(appealStatusRepository, 'rollBackAppealStatusTo').mockImplementation(jest.fn());
-			databaseConnector.personalList.upsert.mockResolvedValue({});
+			// @ts-ignore
+			databaseConnector.$executeRawUnsafe = jest.fn().mockResolvedValue({});
 		});
 		test('does not update status but updates personal list', async () => {
 			const result = await transitionState(22, 'user-xyz', VALIDATION_OUTCOME_INCOMPLETE);
 			expect(appealStatusRepository.updateAppealStatusByAppealId).not.toHaveBeenCalled();
 			expect(appealStatusRepository.rollBackAppealStatusTo).not.toHaveBeenCalled();
-			expect(databaseConnector.personalList.upsert).toHaveBeenCalled();
+			expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalled();
+			expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledWith(
+				expect.stringContaining('EXEC dbo.spSetPersonalList')
+			);
 			expect(result).toEqual(false);
 		});
 
@@ -413,14 +420,17 @@ describe('transitionState', () => {
 
 				const result = await transitionState(11, 'user-123', VALIDATION_OUTCOME_VALID);
 
-				expect(databaseConnector.personalList.upsert).not.toHaveBeenCalled();
+				expect(databaseConnector.$executeRawUnsafe).not.toHaveBeenCalled();
 				expect(result).toEqual(true);
 			});
 
 			test('updates personal list for non-child appeals', async () => {
 				const result = await transitionState(11, 'user-123', VALIDATION_OUTCOME_VALID);
 
-				expect(databaseConnector.personalList.upsert).toHaveBeenCalled();
+				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalled();
+				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledWith(
+					expect.stringContaining('EXEC dbo.spSetPersonalList')
+				);
 				expect(result).toEqual(true);
 			});
 		});

@@ -26,7 +26,7 @@ import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.reposito
 import { getPageCount } from '#utils/database-pagination.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { updatePersonalList } from '#utils/update-personal-list.js';
+import { setPersonalList } from '#utils/update-personal-list.js';
 import { EventType } from '@pins/event-client';
 import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { addWeeks, format } from 'date-fns';
@@ -140,7 +140,7 @@ export const addDocuments = async (req, res) => {
 			);
 		}
 
-		await updatePersonalList(appeal.id);
+		await setPersonalList({ appealId: appeal.id });
 
 		const auditTrails = await Promise.all(
 			documentInfo.documents.filter(Boolean).map(async (document) => {
