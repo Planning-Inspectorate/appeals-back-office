@@ -40,7 +40,7 @@ export const mapMessageContent = async (appeal, log, docInfo, session, apiClient
 	result = tryMapDocumentRedactionStatus(result);
 	result = tryMapDocument(appeal.appealId, result, docInfo, appeal?.lpaQuestionnaireId || null);
 
-	result = tryMapRepresentationType(result);
+	result = tryMapRepresentationType(appeal.appealId, result);
 	result = tryMapStatus(result, appeal.appealType, appeal.procedureType);
 
 	result = result.replace(/\n/g, '<br>');
@@ -255,15 +255,40 @@ const tryMapStatus = (log, appealType, appealProcedureType) => {
 
 /**
  *
+ * @param {number} appealId
  * @param {string} log
  * @returns {string}
  */
-const tryMapRepresentationType = (log) =>
+export const tryMapRepresentationType = (appealId, log) =>
 	log
-		.replace('ip_comment', 'An interested party comment')
-		.replace('lpa_statement', 'The LPA statement')
-		.replace('lpa_final_comment', 'The LPA final comment')
-		.replace('appellant_final_comment', 'The appellant final comment');
+		.replace(
+			'ip_comment',
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/interested-party-comments">Interested party comment</a>`
+		)
+		.replace(
+			'lpa_statement',
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-statement">LPA statement</a>`
+		)
+		.replace(
+			'appellant_statement',
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-statement">Appellant statement</a>`
+		)
+		.replace(
+			'lpa_final_comment',
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/final-comments/lpa">LPA final comment</a>`
+		)
+		.replace(
+			'appellant_final_comment',
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/final-comments/appellant">Appellant final comment</a>`
+		)
+		.replace(
+			'appellant_proofs_evidence',
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/proof-of-evidence/appellant/manage-documents">Appellant proof of evidence and witnesses</a>`
+		)
+		.replace(
+			'lpa_proofs_evidence',
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/proof-of-evidence/lpa/manage-documents">LPA proof of evidence and witnesses</a>`
+		);
 
 /**
  *
