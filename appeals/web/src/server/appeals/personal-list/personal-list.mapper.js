@@ -1,7 +1,11 @@
 import featureFlags from '#common/feature-flags.js';
 import config from '#environment/config.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
-import { mapStatusFilterLabel, mapStatusText } from '#lib/appeal-status.js';
+import {
+	getNextStateDisplayTextOnStatementsComplete,
+	mapStatusFilterLabel,
+	mapStatusText
+} from '#lib/appeal-status.js';
 import { appealShortReference, linkedAppealStatus } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { canDisplayAction, removeSummaryListActions } from '#lib/mappers/index.js';
@@ -21,15 +25,12 @@ import { DOCUMENT_STATUS_NOT_RECEIVED } from '@pins/appeals/constants/support.js
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import * as authSession from '../../app/auth/auth-session.service.js';
 
-/** @typedef {import('@pins/appeals').AppealSummary} AppealSummary */
-/** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
-/** @typedef {import('@pins/appeals').AppealList} AppealList */
-/** @typedef {import('@pins/appeals').Pagination} Pagination */
+/** @typedef {import('@pins/appeals').PersonalList} PersonalList */
+/** @typedef {import('@pins/appeals').PersonalListItem} PersonalListItem */
 /** @typedef {import('../../app/auth/auth.service').AccountInfo} AccountInfo */
-/** @typedef {Partial<AppealSummary & { appealTimetable: Record<string,string>, awaitingLinkedAppeal: boolean, costsDecision?: CostsDecision, isS78Expedited?: boolean}>} PersonalListAppeal */
 
 /**
- * @param {AppealList|void} appealsAssignedToCurrentUser
+ * @param {PersonalList|void} appealsAssignedToCurrentUser
  * @param {string} urlWithoutQuery
  * @param {string|undefined} appealStatusFilter
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
@@ -304,6 +305,7 @@ export function personalListPage(
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {string} procedureType
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebDocumentationSummary} documentationSummary
+ * @param {boolean} isHearingSetup
  * @returns {string|undefined}
  */
 function mapRequiredActionToPersonalListActionHtml(
@@ -315,7 +317,8 @@ function mapRequiredActionToPersonalListActionHtml(
 	lpaQuestionnaireId,
 	request,
 	procedureType,
-	documentationSummary
+	documentationSummary,
+	isHearingSetup
 ) {
 	switch (action) {
 		case 'addHorizonReference': {
@@ -422,7 +425,7 @@ function mapRequiredActionToPersonalListActionHtml(
 			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 				request,
 				`/appeals-service/appeal-details/${appealId}/share`
-			)}">Progress to final comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+			)}">Progress to ${getNextStateDisplayTextOnStatementsComplete(/** @type {string} */ (appealType), procedureType, isHearingSetup)}<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'reviewAppellantCase': {
 			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
@@ -638,7 +641,7 @@ function mapRequiredActionToPersonalListActionHtml(
 }
 
 /**
- * @param {PersonalListAppeal} appeal
+ * @param {PersonalListItem} appeal
  * @param {boolean} isCaseOfficer
  * @param {import('@pins/express/types/express.js').Request} request
  * @returns {string}
@@ -673,7 +676,8 @@ export function mapActionLinksForAppeal(appeal, isCaseOfficer, request) {
 				lpaQuestionnaireId,
 				request,
 				procedureType ?? '',
-				appeal.documentationSummary
+				appeal.documentationSummary,
+				appeal.isHearingSetup ?? false
 			);
 		})
 		.filter((action) => action?.trim())

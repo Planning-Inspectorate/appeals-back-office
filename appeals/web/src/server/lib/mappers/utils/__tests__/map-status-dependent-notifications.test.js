@@ -8,7 +8,7 @@ import {
 	SITE_VISIT_TYPE_UNACCOMPANIED,
 	VALIDATION_OUTCOME_INCOMPLETE
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 describe('mapStatusDependentNotifications', () => {
 	const mockAppealData = {
 		appealId: 1
@@ -88,42 +88,6 @@ describe('mapStatusDependentNotifications', () => {
 			bannerKey: 'progressFromStatements',
 			requiredAction: 'progressFromStatements',
 			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}" class="govuk-heading-s govuk-notification-banner__link">Progress to final comments</a>`,
-			bannerShouldNotDisplayWhenChildLinkedAppeal: true
-		},
-		{
-			bannerKey: 'progressHearingCaseWithNoRepsFromStatements',
-			requiredAction: 'progressHearingCaseWithNoRepsFromStatements',
-			mockData: {
-				appealId: 1,
-				appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
-				procedureType: 'Hearing',
-				appealTimetable: {
-					ipCommentsDueDate: '2000-01-01',
-					lpaStatementDueDate: '2000-01-01'
-				},
-				documentationSummary: {}
-			},
-			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F1" class="govuk-heading-s govuk-notification-banner__link">Progress to hearing ready to set up</a>`,
-			bannerShouldNotDisplayWhenChildLinkedAppeal: true
-		},
-		{
-			bannerKey: 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements',
-			requiredAction: 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements',
-			mockData: {
-				appealId: 1,
-				appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
-				procedureType: 'Hearing',
-				hearing: {
-					hearingStartTime: '13:00',
-					addressId: 1
-				},
-				appealTimetable: {
-					ipCommentsDueDate: '2000-01-01',
-					lpaStatementDueDate: '2000-01-01'
-				},
-				documentationSummary: {}
-			},
-			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F1" class="govuk-heading-s govuk-notification-banner__link">Progress to awaiting hearing</a>`,
 			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
@@ -571,5 +535,90 @@ describe('mapStatusDependentNotifications', () => {
 		expect(result[0]?.type).not.toBe('notification-banner');
 		expect(result[0]?.parameters.type).not.toBe('important');
 		expect(result[0]?.parameters.html).toBeUndefined();
+	});
+
+	describe.each([APPEAL_TYPE.S78, APPEAL_TYPE.PLANNED_LISTED_BUILDING, APPEAL_TYPE.ADVERTISEMENT])(
+		'Appeal type %s',
+		(appealType) => {
+			it.each([
+				[APPEAL_CASE_PROCEDURE.WRITTEN, false, 'final comments'],
+				[APPEAL_CASE_PROCEDURE.HEARING, false, 'hearing ready to set up'],
+				[APPEAL_CASE_PROCEDURE.HEARING, true, 'awaiting hearing'],
+				[APPEAL_CASE_PROCEDURE.INQUIRY, false, 'proof of evidence and witnesses']
+			])(
+				'should return progressFromStatements banner with correct copy when procedure type is %s and hearing set up is %s and there are no statements or comments',
+				(procedureType, hearingSetUp, expectedText) => {
+					const appealData = appealDataToGetRequiredActions['progressFromStatements'];
+
+					const expectedContainedHtml =
+						`<a href="/appeals-service/appeal-details/${appealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealData.appealId}" class="govuk-heading-s govuk-notification-banner__link">Progress to ` +
+						expectedText +
+						`</a>`;
+
+					const result = mapStatusDependentNotifications(
+						{
+							...appealData,
+							appealType: appealType,
+							procedureType: procedureType,
+							appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+							hearing: hearingSetUp
+								? { hearingStartTime: 'test time', address: 'test address' }
+								: {},
+							documentationSummary: {}
+						},
+						{
+							originalUrl: `/appeals-service/appeal-details/${appealData.appealId}`
+						}
+					);
+
+					expect(Array.isArray(result)).toBe(true);
+					expect(result[0]?.type).toBe('notification-banner');
+					expect(result[0]?.parameters.type).toBe('important');
+					expect(result[0]?.parameters.html).toContain(expectedContainedHtml);
+				}
+			);
+		}
+	);
+
+	describe.each([
+		APPEAL_TYPE.ENFORCEMENT_NOTICE,
+		APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE
+	])('Appeal type %s', (appealType) => {
+		it.each([
+			[APPEAL_CASE_PROCEDURE.WRITTEN, false, 'final comments'],
+			[APPEAL_CASE_PROCEDURE.HEARING, false, 'final comments'],
+			[APPEAL_CASE_PROCEDURE.HEARING, true, 'final comments'],
+			[APPEAL_CASE_PROCEDURE.INQUIRY, false, 'final comments']
+		])(
+			'should return progressFromStatements banner with correct copy when procedure type is %s and hearing set up is %s and there are no statements or comments',
+			(procedureType, hearingSetUp, expectedText) => {
+				const appealData = appealDataToGetRequiredActions['progressFromStatements'];
+
+				const expectedContainedHtml =
+					`<a href="/appeals-service/appeal-details/${appealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealData.appealId}" class="govuk-heading-s govuk-notification-banner__link">Progress to ` +
+					expectedText +
+					`</a>`;
+
+				const result = mapStatusDependentNotifications(
+					{
+						...appealData,
+						appealType: appealType,
+						procedureType: procedureType,
+						appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+						hearing: hearingSetUp ? { hearingStartTime: 'test time', address: 'test address' } : {},
+						documentationSummary: {}
+					},
+					{
+						originalUrl: `/appeals-service/appeal-details/${appealData.appealId}`
+					}
+				);
+
+				expect(Array.isArray(result)).toBe(true);
+				expect(result[0]?.type).toBe('notification-banner');
+				expect(result[0]?.parameters.type).toBe('important');
+				expect(result[0]?.parameters.html).toContain(expectedContainedHtml);
+			}
+		);
 	});
 });

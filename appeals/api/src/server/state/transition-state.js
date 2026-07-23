@@ -3,7 +3,7 @@ import { mapCompletedStateList } from '#mappers/api/shared/map-completed-state-l
 import appealStatusRepository from '#repositories/appeal-status.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import representationRepository from '#repositories/representation.repository.js';
-import { currentStatus } from '#utils/current-status.js';
+import { currentStatus as getCurrentStatus } from '#utils/current-status.js';
 import { isChildAppeal } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
@@ -20,10 +20,10 @@ import {
 } from '@pins/appeals/constants/support.js';
 import {
 	isExpeditedAppealType,
-	isLdcOrDiscontinuanceOrEnforcementCaseType,
-	normalizeProcedureType
+	isLdcOrDiscontinuanceOrEnforcementCaseType
 } from '@pins/appeals/utils/appeal-type-checks.js';
 import { nextUKDay } from '@pins/appeals/utils/date-utils.js';
+import { normaliseProcedureType } from '@pins/appeals/utils/procedure-type.js';
 import {
 	APPEAL_CASE_PROCEDURE,
 	APPEAL_CASE_STATUS,
@@ -57,19 +57,19 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 		throw new Error(`no appeal exists with ID: ${appealId}`);
 	}
 
-	const { appealStatus, appealType, procedureType } = appeal;
-	if (!appealStatus || !appealType) {
+	const { appealStatus, appealType, procedureType, currentStatus } = appeal;
+	if (!appealStatus || !appealType || !currentStatus) {
 		throw new Error(`appeal with ID ${appealId} is missing fields required to transition state`);
 	}
 
-	const currentState = currentStatus(appeal);
+	const currentState = getCurrentStatus(appeal);
 
 	if (!procedureType) {
 		logger.info(`Procedure type not set for appeal ${appealId}, defaulting to written`);
 	}
 
 	const procedureKey = procedureType?.key ?? APPEAL_CASE_PROCEDURE.WRITTEN;
-	const normalizedProcedureKey = normalizeProcedureType(procedureKey);
+	const normalisedProcedureKey = /** @type {string} */ (normaliseProcedureType(procedureKey));
 	const normalizedAppealTypeKey = !isExpeditedAppealType(appealType.key)
 		? APPEAL_CASE_TYPE.W
 		: APPEAL_CASE_TYPE.D;
@@ -77,7 +77,7 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 		appealType.key
 	);
 
-	const eventElapsed = getEventElapsed(appeal, appealType, normalizedProcedureKey);
+	const eventElapsed = getEventElapsed(appeal, appealType, normalisedProcedureKey);
 
 	const stateMachine = createStateMachine(
 		normalizedAppealTypeKey,
@@ -112,7 +112,8 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 		await appealStatusRepository.updateAppealStatusByAppealId(appealId, newState);
 	}
 
-	if (newState === 'issue_determination') azureAdUserId = AUDIT_TRIAL_AUTOMATIC_EVENT_UUID;
+	if (newState === APPEAL_CASE_STATUS.ISSUE_DETERMINATION)
+		azureAdUserId = AUDIT_TRIAL_AUTOMATIC_EVENT_UUID;
 
 	createAuditTrail({
 		appealId,
@@ -123,11 +124,11 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 	if (
 		newState === APPEAL_CASE_STATUS.EVENT &&
 		[APPEAL_CASE_TYPE.D, APPEAL_CASE_TYPE.W].includes(normalizedAppealTypeKey) &&
-		((normalizedProcedureKey === APPEAL_CASE_PROCEDURE.WRITTEN && appeal.siteVisit?.visitDate) ||
-			(normalizedProcedureKey === APPEAL_CASE_PROCEDURE.HEARING &&
+		((normalisedProcedureKey === APPEAL_CASE_PROCEDURE.WRITTEN && appeal.siteVisit?.visitDate) ||
+			(normalisedProcedureKey === APPEAL_CASE_PROCEDURE.HEARING &&
 				appeal.hearing &&
 				appeal.hearing?.addressId) ||
-			(normalizedProcedureKey === APPEAL_CASE_PROCEDURE.INQUIRY &&
+			(normalisedProcedureKey === APPEAL_CASE_PROCEDURE.INQUIRY &&
 				appeal.inquiry &&
 				appeal.inquiry?.addressId))
 	) {
@@ -190,13 +191,14 @@ async function transitionLinkedChildAppealsState(appeal, azureAdUserId, trigger)
 					(childAppeal) =>
 						childAppeal.type === CASE_RELATIONSHIP_LINKED &&
 						childAppeal.child &&
-						currentStatus(childAppeal.child) === currentStatus(appeal)
+						childAppeal.child.currentStatus === appeal.currentStatus
 				)
 				.map(async (childAppeal) => {
-					// @ts-ignore
-					const result = await transitionState(childAppeal.childId, azureAdUserId, trigger);
-					if (result && childAppeal.childId) {
-						updatedChildren.push(childAppeal.childId);
+					if (childAppeal.childId) {
+						const result = await transitionState(childAppeal.childId, azureAdUserId, trigger);
+						if (result && childAppeal.childId) {
+							updatedChildren.push(childAppeal.childId);
+						}
 					}
 				})
 		);

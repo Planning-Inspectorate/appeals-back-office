@@ -2,9 +2,11 @@ import { addressToString } from '#lib/address-formatter.js';
 import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import { getFeedbackLinkFromAppealTypeName } from '#lib/feedback-form-link.js';
 import logger from '#lib/logger.js';
+import { mapPagination } from '#lib/mappers/index.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
+import { stripQueryString } from '#lib/url-utilities.js';
+import { DOCUMENTS_PAGE_SIZE, FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { getEventType } from '@pins/appeals/utils/event-type.js';
 import {
@@ -30,6 +32,9 @@ export const getViewWithdrawalDocumentFolder = async (request, response) => {
 	const {
 		errors,
 		currentAppeal,
+		currentPageNumber,
+		originalUrl,
+		query,
 		params: { appealId }
 	} = request;
 
@@ -45,11 +50,23 @@ export const getViewWithdrawalDocumentFolder = async (request, response) => {
 		currentAppeal.withdrawal?.withdrawalFolder,
 		currentAppeal.withdrawal?.withdrawalRequestDate,
 		request,
+		currentPageNumber,
 		'Appeal withdrawal request'
+	);
+
+	const urlWithoutQuery = stripQueryString(originalUrl);
+	const pagination = mapPagination(
+		currentPageNumber,
+		request.currentFolder.pageCount,
+		DOCUMENTS_PAGE_SIZE,
+		urlWithoutQuery,
+		query,
+		false
 	);
 
 	return response.status(200).render('appeals/documents/manage-folder.njk', {
 		pageContent: mappedPageContent,
+		pagination,
 		errors
 	});
 };

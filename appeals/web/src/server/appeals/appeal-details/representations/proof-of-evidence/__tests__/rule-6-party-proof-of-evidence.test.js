@@ -12,6 +12,13 @@ import supertest from 'supertest';
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
+/**
+ * @param {number} appealId
+ * @param {number} folderId
+ * @returns {string}
+ */
+const getFolderApiUrl = (appealId, folderId) =>
+	`/appeals/${appealId}/document-folders/${folderId}?pageNumber=1&pageSize=100`;
 
 describe('rule 6 party proof of evidence - add document', () => {
 	beforeEach(() => {
@@ -45,8 +52,7 @@ describe('rule 6 party proof of evidence - add document', () => {
 			.persist();
 
 		nock('http://test/')
-			.get('/appeals/2/document-folders/1234')
-			.query(true)
+			.get(getFolderApiUrl(2, 1234))
 			.reply(200, {
 				folderId: 1234,
 				caseId: 2,
@@ -228,8 +234,7 @@ describe('rule 6 party proof of evidence - add document', () => {
 				.persist();
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1234')
-				.query(true)
+				.get(getFolderApiUrl(2, 1234))
 				.reply(200, {
 					folderId: 1234,
 					caseId: 2,

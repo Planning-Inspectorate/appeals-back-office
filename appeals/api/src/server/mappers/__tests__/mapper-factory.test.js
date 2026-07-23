@@ -225,6 +225,11 @@ describe('appeals api mappers', () => {
 			folders: []
 		};
 
+		const appealCASAdvertExpedite = {
+			...mocks.casAdvertExpediteAppeal,
+			folders: []
+		};
+
 		// @ts-ignore
 		const hasAppCaseOutput = mapCase({ appeal: appealHAS, context: contextEnum.appellantCase });
 		// @ts-ignore
@@ -232,6 +237,12 @@ describe('appeals api mappers', () => {
 		const s78ExpediteAppCaseOutput = mapCase({
 			// @ts-ignore
 			appeal: appealS78Expedite,
+			context: contextEnum.appellantCase
+		});
+
+		const casAdvertExpediteAppCaseOutput = mapCase({
+			// @ts-ignore
+			appeal: appealCASAdvertExpedite,
 			context: contextEnum.appellantCase
 		});
 
@@ -258,6 +269,20 @@ describe('appeals api mappers', () => {
 		expect(s78AppCaseOutput).not.toHaveProperty('enforcementNotice');
 
 		expect(s78ExpediteAppCaseOutput).toHaveProperty('planningObligation');
+
+		expect(casAdvertExpediteAppCaseOutput).toHaveProperty('anySignificantChanges');
+		expect(casAdvertExpediteAppCaseOutput).toHaveProperty(
+			'anySignificantChanges_courtJudgementSignificantChanges'
+		);
+		expect(casAdvertExpediteAppCaseOutput).toHaveProperty(
+			'anySignificantChanges_localPlanSignificantChanges'
+		);
+		expect(casAdvertExpediteAppCaseOutput).toHaveProperty(
+			'anySignificantChanges_nationalPolicySignificantChanges'
+		);
+		expect(casAdvertExpediteAppCaseOutput).toHaveProperty(
+			'anySignificantChanges_otherSignificantChanges'
+		);
 	});
 
 	test('should only map the lpaq fields for LDC', async () => {
@@ -349,5 +374,72 @@ describe('appeals integration mappers', () => {
 		// Enforcement specific
 		expect(elbLpaqOutput).not.toHaveProperty('isSiteOnCrownLand');
 		expect(elbLpaqOutput).not.toHaveProperty('changeOfUseRefuseOrWaste');
+	});
+
+	test('should only map the lpaq fields for CAS adverts expedite', async () => {
+		const appealCASAdvertExpedite = {
+			...mocks.casAdvertExpediteAppeal,
+			appealType: {
+				key: APPEAL_CASE_TYPE.ZA,
+				type: 'CAS advert'
+			},
+			folders: []
+		};
+
+		const casAdvertExpediteLpaqOutput = mapCase({
+			// @ts-ignore
+			appeal: appealCASAdvertExpedite,
+			context: contextEnum.lpaQuestionnaire
+		});
+		// CAS Advert Expedite
+		expect(casAdvertExpediteLpaqOutput).toHaveProperty(
+			'listOfDocumentsBeforeDecision',
+			'hoi oyf yrtd ytrtt ulliyuyg utg uyg ugyuo utyu uyg ouyg ouyg ouyg ouyg jhk bhm jvuhguyg oyg uygg ouy gouy uy uy oguy ouygo blargo'
+		);
+		expect(casAdvertExpediteLpaqOutput).toHaveProperty('anySignificantChangesLpa', true);
+		expect(casAdvertExpediteLpaqOutput).toHaveProperty(
+			'anySignificantChangesLpa_courtJudgementSignificantChanges',
+			'100'
+		);
+		expect(casAdvertExpediteLpaqOutput).toHaveProperty(
+			'anySignificantChangesLpa_courtJudgementSignificantChanges',
+			'100'
+		);
+		expect(casAdvertExpediteLpaqOutput).toHaveProperty(
+			'anySignificantChangesLpa_courtJudgementSignificantChanges',
+			'100'
+		);
+	});
+	test('should only map the lpaq fields for CAS adverts', async () => {
+		const appealCASAdvert = {
+			...mocks.advertAppeal,
+			appealType: {
+				key: APPEAL_CASE_TYPE.ZA,
+				type: 'CAS advert'
+			},
+			folders: []
+		};
+
+		const casAdvertLpaqOutput = mapCase({
+			// @ts-ignore
+			appeal: appealCASAdvert,
+			context: contextEnum.lpaQuestionnaire
+		});
+		// CAS Advert
+		expect(casAdvertLpaqOutput).not.toHaveProperty(
+			'listOfDocumentsBeforeDecision',
+			'hoi oyf yrtd ytrtt ulliyuyg utg uyg ugyuo utyu uyg ouyg ouyg ouyg ouyg jhk bhm jvuhguyg oyg uygg ouy gouy uy uy oguy ouygo blargo'
+		);
+
+		expect(casAdvertLpaqOutput).not.toHaveProperty('anySignificantChangesLpa');
+		expect(casAdvertLpaqOutput).not.toHaveProperty(
+			'anySignificantChangesLpa_courtJudgementSignificantChanges'
+		);
+		expect(casAdvertLpaqOutput).not.toHaveProperty(
+			'anySignificantChangesLpa_courtJudgementSignificantChanges'
+		);
+		expect(casAdvertLpaqOutput).not.toHaveProperty(
+			'anySignificantChangesLpa_courtJudgementSignificantChanges'
+		);
 	});
 });

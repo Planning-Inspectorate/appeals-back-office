@@ -13,6 +13,7 @@ import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import nock from 'nock';
 import supertest from 'supertest';
 
@@ -731,6 +732,86 @@ describe('personal-list', () => {
 			);
 
 			expect(resultForUndefined).toBe('');
+		});
+
+		describe.each([
+			APPEAL_TYPE.S78,
+			APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+			APPEAL_TYPE.ADVERTISEMENT
+		])('Appeal type %s', (appealType) => {
+			it.each([
+				[APPEAL_CASE_PROCEDURE.WRITTEN, false, 'final comments'],
+				[APPEAL_CASE_PROCEDURE.HEARING, false, 'hearing ready to set up'],
+				[APPEAL_CASE_PROCEDURE.HEARING, true, 'awaiting hearing'],
+				[APPEAL_CASE_PROCEDURE.INQUIRY, false, 'proof of evidence and witnesses']
+			])(
+				'should return progressFromStatements link with correct copy when procedure type is %s and hearing set up is %s and there are no statements or comments',
+				(procedureType, hearingSetUp, expectedText) => {
+					const appealData = appealDataToGetRequiredActions['progressFromStatements'];
+
+					const expectedHtml = {
+						caseOfficer:
+							`<a class="govuk-link" href="/appeals-service/appeal-details/${appealData.appealId}/share?backUrl=%2Fappeals-service%2Fpersonal-list">Progress to ` +
+							expectedText +
+							`<span class="govuk-visually-hidden"> for appeal ${appealData.appealId}</span></a>`
+					};
+
+					const result = mapActionLinksForAppeal(
+						{
+							...appealData,
+							appealType: appealType,
+							procedureType: procedureType,
+							appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+							isHearingSetup: hearingSetUp,
+							documentationSummary: {}
+						},
+						true,
+						{ originalUrl: baseUrl }
+					);
+
+					expect(result).toContain(expectedHtml.caseOfficer);
+				}
+			);
+		});
+
+		describe.each([
+			APPEAL_TYPE.ENFORCEMENT_NOTICE,
+			APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+			APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE
+		])('Appeal type %s', (appealType) => {
+			it.each([
+				[APPEAL_CASE_PROCEDURE.WRITTEN, false, 'final comments'],
+				[APPEAL_CASE_PROCEDURE.HEARING, false, 'final comments'],
+				[APPEAL_CASE_PROCEDURE.HEARING, true, 'final comments'],
+				[APPEAL_CASE_PROCEDURE.INQUIRY, false, 'final comments']
+			])(
+				'should return progressFromStatements banner with correct copy when procedure type is %s and hearing set up is %s and there are no statements or comments',
+				(procedureType, hearingSetUp, expectedText) => {
+					const appealData = appealDataToGetRequiredActions['progressFromStatements'];
+
+					const expectedHtml = {
+						caseOfficer:
+							`<a class="govuk-link" href="/appeals-service/appeal-details/${appealData.appealId}/share?backUrl=%2Fappeals-service%2Fpersonal-list">Progress to ` +
+							expectedText +
+							`<span class="govuk-visually-hidden"> for appeal ${appealData.appealId}</span></a>`
+					};
+
+					const result = mapActionLinksForAppeal(
+						{
+							...appealData,
+							appealType: appealType,
+							procedureType: procedureType,
+							appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+							isHearingSetup: hearingSetUp,
+							documentationSummary: {}
+						},
+						true,
+						{ originalUrl: baseUrl }
+					);
+
+					expect(result).toContain(expectedHtml.caseOfficer);
+				}
+			);
 		});
 	});
 });

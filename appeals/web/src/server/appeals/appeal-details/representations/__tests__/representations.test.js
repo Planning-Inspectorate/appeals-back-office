@@ -11,7 +11,7 @@ import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import nock from 'nock';
 import supertest from 'supertest';
 
@@ -23,10 +23,313 @@ describe('representations', () => {
 	afterEach(teardown);
 	describe('GET /share', () => {
 		const numIpComments = 1;
+
+		describe.each([
+			APPEAL_TYPE.S78,
+			APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+			APPEAL_TYPE.ADVERTISEMENT
+		])('Appeal type %s at STATEMENTS', (appealType) => {
+			it.each([
+				[APPEAL_CASE_PROCEDURE.WRITTEN, false, 'final comments'],
+				[APPEAL_CASE_PROCEDURE.HEARING, false, 'hearing ready to set up'],
+				[APPEAL_CASE_PROCEDURE.HEARING, true, 'awaiting hearing'],
+				[APPEAL_CASE_PROCEDURE.INQUIRY, false, 'proof of evidence and witnesses']
+			])(
+				'should show the correct heading and button text where procedure is %s, hearing is set up = %s and there are no statements or IP comments',
+				async (procedureType, hearingSetUp, headingText) => {
+					const appealAtStatements = {
+						...appealData,
+						appealType: appealType,
+						procedureType: procedureType,
+						appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+						hearing: hearingSetUp ? { hearingStartTime: 'test time', address: 'test address' } : {},
+						documentationSummary: {}
+					};
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealAtStatements);
+					const response = await request.get(`${baseUrl}/1/share`);
+					const snapshotResponse = parseHtml(response.text);
+					const textResponse = parseHtml(response.text, {
+						skipPrettyPrint: true
+					});
+
+					expect(snapshotResponse.innerHTML).toMatchSnapshot();
+					expect(textResponse.innerHTML).toContain('Progress to ' + headingText + '</h1>');
+					expect(textResponse.innerHTML).toContain(
+						`<div class="govuk-grid-column-two-thirds">There are no statements or interested party comments to share.`
+					);
+					const expectedWarningText =
+						procedureType === APPEAL_CASE_PROCEDURE.INQUIRY
+							? `Warning</span> Do not progress to ` +
+								headingText +
+								` if you are awaiting any late statements or interested party comments.</strong>`
+							: `Warning</span> Do not confirm until you have reviewed all of the supporting documents and redacted any sensitive information.</strong>`;
+					expect(textResponse.innerHTML.toString()).toContain(expectedWarningText);
+					expect(textResponse.innerHTML).toContain(`Progress case</button>`);
+				}
+			);
+
+			it.each([
+				APPEAL_CASE_PROCEDURE.WRITTEN,
+				APPEAL_CASE_PROCEDURE.HEARING,
+				APPEAL_CASE_PROCEDURE.INQUIRY
+			])(
+				'should show the correct heading and button text where procedure is %s and there are only statements',
+				async (procedureType) => {
+					const appealAtStatements = {
+						...appealData,
+						appealType: appealType,
+						procedureType: procedureType,
+						appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+						documentationSummary: {
+							lpaStatement: {
+								representationStatus: 'valid'
+							},
+							appellantStatement: {
+								representationStatus: 'valid'
+							}
+						}
+					};
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealAtStatements);
+					const response = await request.get(`${baseUrl}/1/share`);
+					const snapshotResponse = parseHtml(response.text);
+					const textResponse = parseHtml(response.text, {
+						skipPrettyPrint: true
+					});
+
+					expect(snapshotResponse.innerHTML).toMatchSnapshot();
+					expect(textResponse.innerHTML).toContain('Check and share statements</h1>');
+					expect(textResponse.innerHTML).toContain(`Share statements</button>`);
+				}
+			);
+
+			it.each([
+				APPEAL_CASE_PROCEDURE.WRITTEN,
+				APPEAL_CASE_PROCEDURE.HEARING,
+				APPEAL_CASE_PROCEDURE.INQUIRY
+			])(
+				'should show the correct heading and button text where procedure is %s and there are only IP comments',
+				async (procedureType) => {
+					const appealAtStatements = {
+						...appealData,
+						appealType: appealType,
+						procedureType: procedureType,
+						appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+						documentationSummary: {
+							ipComments: {
+								counts: {
+									valid: numIpComments
+								}
+							}
+						}
+					};
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealAtStatements);
+					const response = await request.get(`${baseUrl}/1/share`);
+					const snapshotResponse = parseHtml(response.text);
+					const textResponse = parseHtml(response.text, {
+						skipPrettyPrint: true
+					});
+
+					expect(snapshotResponse.innerHTML).toMatchSnapshot();
+					expect(textResponse.innerHTML).toContain('Check and share comments</h1>');
+					expect(textResponse.innerHTML).toContain(`Share comments</button>`);
+				}
+			);
+
+			it.each([
+				APPEAL_CASE_PROCEDURE.WRITTEN,
+				APPEAL_CASE_PROCEDURE.HEARING,
+				APPEAL_CASE_PROCEDURE.INQUIRY
+			])(
+				'should show the correct heading and button text where procedure is %s and there are both statements and IP comments',
+				async (procedureType) => {
+					const appealAtStatements = {
+						...appealData,
+						appealType: appealType,
+						procedureType: procedureType,
+						appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+						documentationSummary: {
+							lpaStatement: {
+								representationStatus: 'valid'
+							},
+							appellantStatement: {
+								representationStatus: 'valid'
+							},
+							ipComments: {
+								counts: {
+									valid: numIpComments
+								}
+							}
+						}
+					};
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealAtStatements);
+					const response = await request.get(`${baseUrl}/1/share`);
+					const snapshotResponse = parseHtml(response.text);
+					const textResponse = parseHtml(response.text, {
+						skipPrettyPrint: true
+					});
+
+					expect(snapshotResponse.innerHTML).toMatchSnapshot();
+					expect(textResponse.innerHTML).toContain('Check and share comments and statements</h1>');
+					expect(textResponse.innerHTML).toContain(`Share comments and statements</button>`);
+				}
+			);
+		});
+
+		describe.each([
+			APPEAL_TYPE.ENFORCEMENT_NOTICE,
+			APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+			APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE
+		])('Appeal type %s at STATEMENTS', (appealType) => {
+			it.each([
+				[APPEAL_CASE_PROCEDURE.WRITTEN, false, 'final comments'],
+				[APPEAL_CASE_PROCEDURE.HEARING, false, 'final comments'],
+				[APPEAL_CASE_PROCEDURE.HEARING, true, 'final comments'],
+				[APPEAL_CASE_PROCEDURE.INQUIRY, false, 'final comments']
+			])(
+				'should show the correct heading and button text where procedure is %s, hearing is set up = %s and there are no statements or IP comments',
+				async (procedureType, hearingSetUp, headingText) => {
+					const appealAtStatements = {
+						...appealData,
+						appealType: appealType,
+						procedureType: procedureType,
+						appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+						hearing: hearingSetUp ? { hearingStartTime: 'test time', address: 'test address' } : {},
+						documentationSummary: {}
+					};
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealAtStatements);
+					const response = await request.get(`${baseUrl}/1/share`);
+					const snapshotResponse = parseHtml(response.text);
+					const textResponse = parseHtml(response.text, {
+						skipPrettyPrint: true
+					});
+
+					expect(snapshotResponse.innerHTML).toMatchSnapshot();
+					expect(textResponse.innerHTML).toContain('Progress to ' + headingText + '</h1>');
+					expect(textResponse.innerHTML).toContain(
+						`<div class="govuk-grid-column-two-thirds">There are no statements or interested party comments to share.`
+					);
+					const expectedWarningText =
+						procedureType === APPEAL_CASE_PROCEDURE.INQUIRY
+							? `Warning</span> Do not progress to ` +
+								headingText +
+								` if you are awaiting any late statements or interested party comments.</strong>`
+							: `Warning</span> Do not confirm until you have reviewed all of the supporting documents and redacted any sensitive information.</strong>`;
+					expect(textResponse.innerHTML.toString()).toContain(expectedWarningText);
+					expect(textResponse.innerHTML).toContain(`Progress case</button>`);
+				}
+			);
+
+			it.each([
+				APPEAL_CASE_PROCEDURE.WRITTEN,
+				APPEAL_CASE_PROCEDURE.HEARING,
+				APPEAL_CASE_PROCEDURE.INQUIRY
+			])(
+				'should show the correct heading and button text where procedure is %s and there are only statements',
+				async (procedureType) => {
+					const appealAtStatements = {
+						...appealData,
+						appealType: appealType,
+						procedureType: procedureType,
+						appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+						documentationSummary: {
+							lpaStatement: {
+								representationStatus: 'valid'
+							},
+							appellantStatement: {
+								representationStatus: 'valid'
+							}
+						}
+					};
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealAtStatements);
+					const response = await request.get(`${baseUrl}/1/share`);
+					const snapshotResponse = parseHtml(response.text);
+					const textResponse = parseHtml(response.text, {
+						skipPrettyPrint: true
+					});
+
+					expect(snapshotResponse.innerHTML).toMatchSnapshot();
+					expect(textResponse.innerHTML).toContain('Check and share statements</h1>');
+					expect(textResponse.innerHTML).toContain(`Share statements</button>`);
+				}
+			);
+
+			it.each([
+				APPEAL_CASE_PROCEDURE.WRITTEN,
+				APPEAL_CASE_PROCEDURE.HEARING,
+				APPEAL_CASE_PROCEDURE.INQUIRY
+			])(
+				'should show the correct heading and button text where procedure is %s and there are only IP comments',
+				async (procedureType) => {
+					const appealAtStatements = {
+						...appealData,
+						appealType: appealType,
+						procedureType: procedureType,
+						appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+						documentationSummary: {
+							ipComments: {
+								counts: {
+									valid: numIpComments
+								}
+							}
+						}
+					};
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealAtStatements);
+					const response = await request.get(`${baseUrl}/1/share`);
+					const snapshotResponse = parseHtml(response.text);
+					const textResponse = parseHtml(response.text, {
+						skipPrettyPrint: true
+					});
+
+					expect(snapshotResponse.innerHTML).toMatchSnapshot();
+					expect(textResponse.innerHTML).toContain('Check and share comments</h1>');
+					expect(textResponse.innerHTML).toContain(`Share comments</button>`);
+				}
+			);
+
+			it.each([
+				APPEAL_CASE_PROCEDURE.WRITTEN,
+				APPEAL_CASE_PROCEDURE.HEARING,
+				APPEAL_CASE_PROCEDURE.INQUIRY
+			])(
+				'should show the correct heading and button text where procedure is %s and there are both statements and IP comments',
+				async (procedureType) => {
+					const appealAtStatements = {
+						...appealData,
+						appealType: appealType,
+						procedureType: procedureType,
+						appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+						documentationSummary: {
+							lpaStatement: {
+								representationStatus: 'valid'
+							},
+							appellantStatement: {
+								representationStatus: 'valid'
+							},
+							ipComments: {
+								counts: {
+									valid: numIpComments
+								}
+							}
+						}
+					};
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealAtStatements);
+					const response = await request.get(`${baseUrl}/1/share`);
+					const snapshotResponse = parseHtml(response.text);
+					const textResponse = parseHtml(response.text, {
+						skipPrettyPrint: true
+					});
+
+					expect(snapshotResponse.innerHTML).toMatchSnapshot();
+					expect(textResponse.innerHTML).toContain('Check and share comments and statements</h1>');
+					expect(textResponse.innerHTML).toContain(`Share comments and statements</button>`);
+				}
+			);
+		});
+
 		it('should contain link to interested-party-comments#valid', async () => {
-			const appealWithStatments = {
+			const appealAtStatements = {
 				...appealData,
-				appealStatus: 'statements',
+				appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
 				documentationSummary: {
 					ipComments: {
 						counts: {
@@ -35,46 +338,19 @@ describe('representations', () => {
 					}
 				}
 			};
-			nock('http://test/').get('/appeals/1?include=all').reply(200, appealWithStatments);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealAtStatements);
 			const response = await request.get(`${baseUrl}/1/share`);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Share IP comments and statements</h1>');
+			expect(element.innerHTML).toContain('Check and share comments</h1>');
 			expect(element.innerHTML).toContain(
 				`<a href="/appeals-service/appeal-details/1/interested-party-comments?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare#valid"`
 			);
 		});
 
-		it('should contain correct content if inquiry and proof of evidence and no ip comment or statement to share', async () => {
-			const appealWithStatments = {
-				...appealData,
-				procedureType: 'inquiry',
-				appealStatus: 'statements',
-				documentationSummary: {}
-			};
-			nock('http://test/').get('/appeals/1?include=all').reply(200, appealWithStatments);
-			const response = await request.get(`${baseUrl}/1/share`);
-			const snapshotResponse = parseHtml(response.text);
-			const textResponse = parseHtml(response.text, {
-				skipPrettyPrint: true
-			});
-
-			expect(snapshotResponse.innerHTML).toMatchSnapshot();
-			expect(textResponse.innerHTML).toContain('Progress to proof of evidence and witnesses</h1>');
-			expect(textResponse.innerHTML).toContain(
-				`<div class="govuk-grid-column-two-thirds">There are no statements or interested party comments to share.`
-			);
-			expect(textResponse.innerHTML.toString()).toContain(
-				`Warning</span> Do not progress to proof of evidence and witnesses if you are awaiting any late statements or interested party comments.</strong>`
-			);
-			expect(textResponse.innerHTML).toContain(
-				`Progress to proof of evidence and witnesses</button>`
-			);
-		});
-
 		it('should contain correct content if inquiry and proof of evidence and status is set to "EVIDENCE" and no proof of evidence to share', async () => {
-			const appealWithStatments = {
+			const appealWithStatements = {
 				...appealData,
 				procedureType: 'inquiry',
 				appealStatus: 'evidence',
@@ -83,7 +359,7 @@ describe('representations', () => {
 					proofOfEvidenceAndWitnessesDueDate: '2024-12-04'
 				}
 			};
-			nock('http://test/').get('/appeals/1?include=all').reply(200, appealWithStatments);
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealWithStatements);
 			const response = await request.get(`${baseUrl}/1/share`);
 			const snapshotResponse = parseHtml(response.text);
 			const textResponse = parseHtml(response.text, {
@@ -154,7 +430,7 @@ describe('representations', () => {
 			const numIpComments = 1;
 			const appealWithStatements = {
 				...appealData,
-				appealStatus: 'statements',
+				appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
 				documentationSummary: {
 					ipComments: {
 						counts: {
@@ -176,7 +452,7 @@ describe('representations', () => {
 			const numIpComments = 3;
 			const appealWithStatements = {
 				...appealData,
-				appealStatus: 'statements',
+				appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
 				documentationSummary: {
 					ipComments: {
 						counts: {
@@ -197,7 +473,7 @@ describe('representations', () => {
 		it('should show plural "parties" text when there is at least one rule 6 comment', async () => {
 			const appealWithStatements = {
 				...appealData,
-				appealStatus: 'statements',
+				appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
 				documentationSummary: {
 					rule6PartyStatements: {
 						'rep-id-1': {
@@ -220,7 +496,7 @@ describe('representations', () => {
 		it('should contain links for Rule 6 statements if they exist and are valid', async () => {
 			const appealWithRule6 = {
 				...appealData,
-				appealStatus: 'statements',
+				appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
 				documentationSummary: {
 					rule6PartyStatements: {
 						'rep-id-1': {
@@ -248,7 +524,7 @@ describe('representations', () => {
 			const appealWithAll = {
 				...appealData,
 				appealType: 'Enforcement notice appeal',
-				appealStatus: 'statements',
+				appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
 				documentationSummary: {
 					lpaStatement: {
 						representationStatus: 'valid'
@@ -286,7 +562,7 @@ describe('representations', () => {
 			const appealWithAll = {
 				...appealData,
 				appealType: 'Enforcement notice appeal',
-				appealStatus: 'statements',
+				appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
 				documentationSummary: {
 					ipComments: {
 						counts: {
@@ -324,7 +600,7 @@ describe('representations', () => {
 			const unsupportedAppeal = {
 				...appealData,
 				appealType: 'Planning appeal',
-				appealStatus: 'statements',
+				appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
 				documentationSummary: {
 					lpaStatement: {
 						representationStatus: 'valid'
@@ -345,7 +621,7 @@ describe('representations', () => {
 		it('should NOT display Rule 6 statements if they are not valid or incomplete', async () => {
 			const appealWithInvalidRule6 = {
 				...appealData,
-				appealStatus: 'statements',
+				appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
 				documentationSummary: {
 					rule6PartyStatements: {
 						'rep-id-1': {
@@ -371,72 +647,196 @@ describe('representations', () => {
 			expect(textResponse.innerHTML).not.toContain('Org Two statement');
 			expect(textResponse.innerHTML).toContain('1 Org Three statement');
 		});
-
-		it('should contain correct content for enforcement listed building appeals when sharing statements only', async () => {
-			const appealWithStatments = {
-				...appealData,
-				appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
-				appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
-				documentationSummary: {
-					lpaStatement: {
-						representationStatus: 'valid'
-					},
-					appellantStatement: {
-						representationStatus: 'valid'
-					}
-				}
-			};
-			nock('http://test/').get('/appeals/1?include=all').reply(200, appealWithStatments);
-			const response = await request.get(`${baseUrl}/1/share`);
-			const element = parseHtml(response.text);
-			const textResponse = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Check details and share statements</h1>');
-			expect(textResponse.innerHTML).toContain('Share statements</button>');
-		});
-
-		it('should contain correct content for enforcement listed building appeals when sharing statements and interested party comments', async () => {
-			const appealWithStatments = {
-				...appealData,
-				appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
-				appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
-				documentationSummary: {
-					lpaStatement: {
-						representationStatus: 'valid'
-					},
-					appellantStatement: {
-						representationStatus: 'valid'
-					},
-					ipComments: {
-						counts: {
-							valid: numIpComments
-						}
-					}
-				}
-			};
-			nock('http://test/').get('/appeals/1?include=all').reply(200, appealWithStatments);
-			const response = await request.get(`${baseUrl}/1/share`);
-			const element = parseHtml(response.text);
-			const textResponse = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Check details and share interested party comments and statements</h1>'
-			);
-			expect(textResponse.innerHTML).toContain(
-				'Share interested party comments and statements</button>'
-			);
-			expect(element.innerHTML).toContain(
-				`<a href="/appeals-service/appeal-details/1/interested-party-comments?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare#valid"`
-			);
-		});
 	});
 
 	describe('POST /share', () => {
 		const appealId = 1;
 
-		// TODO: add test suites for ip comments and statements
+		// TODO: add more test suites for ip comments and statements
+
+		describe('statements status', () => {
+			beforeEach(() => {
+				nock.cleanAll();
+				// @ts-ignore
+				usersService.getUsersByRole = jest.fn().mockResolvedValue(activeDirectoryUsersData);
+				// @ts-ignore
+				usersService.getUserById = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
+				// @ts-ignore
+				usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
+				nock('http://test/')
+					.get('/appeals/1/reps?type=appellant_final_comment,lpa_final_comment')
+					.reply(200, {
+						itemCount: 0,
+						items: []
+					})
+					.persist();
+				nock('http://test/')
+					.get(
+						'/appeals/1/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence'
+					)
+					.reply(200, { itemCount: 0, items: [] })
+					.persist();
+				nock('http://test/')
+					.get('/appeals/1/appellant-cases/0')
+					.reply(200, { planningObligation: { hasObligation: false } })
+					.persist();
+				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+			});
+
+			describe.each([
+				APPEAL_TYPE.S78,
+				APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+				APPEAL_TYPE.ADVERTISEMENT
+			])('Appeal type %s at STATEMENTS', (appealType) => {
+				it.each([
+					[APPEAL_CASE_PROCEDURE.WRITTEN, false, 'Progressed to final comments'],
+					[APPEAL_CASE_PROCEDURE.HEARING, false, 'Progressed to hearing ready to set up'],
+					[APPEAL_CASE_PROCEDURE.HEARING, true, 'Progressed to awaiting hearing'],
+					[APPEAL_CASE_PROCEDURE.INQUIRY, false, 'Progressed to proof of evidence and witnesses']
+				])(
+					'should show the correct banner when procedure is %s, hearing is set up = %s and there are no published representations',
+					async (procedureType, hearingSetUp, expectedBannerText) => {
+						const appealAtStatements = {
+							...appealData,
+							appealId,
+							appealType: appealType,
+							procedureType: procedureType,
+							appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+							hearing: hearingSetUp
+								? {
+										hearingStartTime: '2026-01-01T10:00:00.000Z',
+										address: {
+											addressLine1: '1 Test Street',
+											town: 'Test Town',
+											postcode: 'AB12 3CD'
+										}
+									}
+								: {},
+							documentationSummary: {}
+						};
+						nock('http://test/')
+							.get(`/appeals/${appealId}?include=all`)
+							.reply(200, appealAtStatements)
+							.persist();
+						nock('http://test/').post(`/appeals/${appealId}/reps/publish`).reply(200, []);
+
+						const sharePostResponse = await request.post(`${baseUrl}/${appealId}/share`).send({});
+
+						expect(sharePostResponse.statusCode).toBe(302);
+
+						const response = await request.get(`${baseUrl}/${appealId}`);
+						const notificationBannerHtml = parseHtml(response.text, {
+							rootElement: '.govuk-notification-banner--success',
+							skipPrettyPrint: true
+						}).innerHTML;
+
+						expect(notificationBannerHtml).toContain('Success</h3>');
+						expect(notificationBannerHtml).toContain(expectedBannerText);
+					}
+				);
+			});
+
+			describe.each([
+				APPEAL_TYPE.ENFORCEMENT_NOTICE,
+				APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+				APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE
+			])('Appeal type %s at STATEMENTS', (appealType) => {
+				it.each([
+					[APPEAL_CASE_PROCEDURE.WRITTEN, false],
+					[APPEAL_CASE_PROCEDURE.HEARING, false],
+					[APPEAL_CASE_PROCEDURE.HEARING, true],
+					[APPEAL_CASE_PROCEDURE.INQUIRY, false]
+				])(
+					'should show "Progressed to final comments" banner for all procedures where procedure is %s, hearing is set up = %s and there are no published representations',
+					async (procedureType, hearingSetUp) => {
+						const appealAtStatements = {
+							...appealData,
+							appealId,
+							appealType: appealType,
+							procedureType: procedureType,
+							appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+							hearing: hearingSetUp
+								? {
+										hearingStartTime: '2026-01-01T10:00:00.000Z',
+										address: {
+											addressLine1: '1 Test Street',
+											town: 'Test Town',
+											postcode: 'AB12 3CD'
+										}
+									}
+								: {},
+							documentationSummary: {}
+						};
+						nock('http://test/')
+							.get(`/appeals/${appealId}?include=all`)
+							.reply(200, appealAtStatements)
+							.persist();
+						nock('http://test/').post(`/appeals/${appealId}/reps/publish`).reply(200, []);
+
+						const sharePostResponse = await request.post(`${baseUrl}/${appealId}/share`).send({});
+
+						expect(sharePostResponse.statusCode).toBe(302);
+
+						const response = await request.get(`${baseUrl}/${appealId}`);
+						const notificationBannerHtml = parseHtml(response.text, {
+							rootElement: '.govuk-notification-banner--success',
+							skipPrettyPrint: true
+						}).innerHTML;
+
+						expect(notificationBannerHtml).toContain('Success</h3>');
+						expect(notificationBannerHtml).toContain('Progressed to final comments');
+					}
+				);
+			});
+
+			it('should show "Statements and IP comments shared" banner when at STATEMENTS status with published representations', async () => {
+				const appealAtStatements = {
+					...appealData,
+					appealId,
+					appealType: APPEAL_TYPE.S78,
+					procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+					appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+					hearing: {},
+					documentationSummary: {
+						lpaStatement: {
+							representationStatus: 'valid'
+						},
+						appellantStatement: {
+							representationStatus: 'valid'
+						}
+					}
+				};
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=all`)
+					.reply(200, appealAtStatements)
+					.persist();
+				nock('http://test/')
+					.post(`/appeals/${appealId}/reps/publish`)
+					.reply(200, [
+						{
+							appealId: appealId,
+							representationType: 'appellant_statement'
+						},
+						{
+							appealId: appealId,
+							representationType: 'lpa_statement'
+						}
+					]);
+
+				const sharePostResponse = await request.post(`${baseUrl}/${appealId}/share`).send({});
+
+				expect(sharePostResponse.statusCode).toBe(302);
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+				const notificationBannerHtml = parseHtml(response.text, {
+					rootElement: '.govuk-notification-banner--success',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(notificationBannerHtml).toContain('Success</h3>');
+				expect(notificationBannerHtml).toContain('Statements and IP comments shared');
+			});
+		});
 
 		describe('final comments', () => {
 			beforeEach(() => {

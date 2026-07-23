@@ -83,6 +83,9 @@ const appealStatuses = [
 	{ appealStatus: 'witnesses', statusPassedEvent: false }
 ];
 
+const getFolderApiUrl = (folderId) =>
+	`/appeals/1/document-folders/${folderId}?pageNumber=1&pageSize=100`;
+
 describe('appeal-details', () => {
 	beforeAll(teardown);
 	beforeEach(() => {
@@ -498,7 +501,7 @@ describe('appeal-details', () => {
 
 				it('should render a success notification banner when an appellant costs document was uploaded', async () => {
 					nock('http://test/')
-						.get('/appeals/1/document-folders/1')
+						.get(getFolderApiUrl(1))
 						.reply(200, costsFolderInfoAppellantApplication)
 						.persist();
 					nock('http://test/')
@@ -538,7 +541,7 @@ describe('appeal-details', () => {
 
 				it('should render a success notification banner when a new version of an appellant costs document was uploaded', async () => {
 					nock('http://test/')
-						.get('/appeals/1/document-folders/1')
+						.get(getFolderApiUrl(1))
 						.reply(200, costsFolderInfoAppellantApplication)
 						.persist();
 					nock('http://test/')
@@ -601,7 +604,7 @@ describe('appeal-details', () => {
 
 				it('should render a success notification banner when an LPA costs document was uploaded', async () => {
 					nock('http://test/')
-						.get('/appeals/1/document-folders/2')
+						.get(getFolderApiUrl(2))
 						.reply(200, costsFolderInfoLpaApplication)
 						.persist();
 					nock('http://test/')
@@ -641,7 +644,7 @@ describe('appeal-details', () => {
 
 				it('should render a success notification banner when a new version of an LPA costs document was uploaded', async () => {
 					nock('http://test/')
-						.get('/appeals/1/document-folders/2')
+						.get(getFolderApiUrl(2))
 						.reply(200, costsFolderInfoLpaApplication)
 						.persist();
 					nock('http://test/')
@@ -702,7 +705,7 @@ describe('appeal-details', () => {
 
 				it('should render a success notification banner when a costs decision document was uploaded', async () => {
 					nock('http://test/')
-						.get('/appeals/1/document-folders/3')
+						.get(getFolderApiUrl(3))
 						.reply(200, costsFolderInfoDecision)
 						.persist();
 					nock('http://test/')
@@ -748,7 +751,7 @@ describe('appeal-details', () => {
 
 				it('should render a success notification banner when a new version of a costs decision document was uploaded', async () => {
 					nock('http://test/')
-						.get('/appeals/1/document-folders/3')
+						.get(getFolderApiUrl(3))
 						.reply(200, costsFolderInfoDecision)
 						.persist();
 					nock('http://test/')
@@ -955,7 +958,7 @@ describe('appeal-details', () => {
 
 				it('should render a success notification banner when a cross-team correspondence document was uploaded', async () => {
 					nock('http://test/')
-						.get('/appeals/1/document-folders/4')
+						.get(getFolderApiUrl(4))
 						.reply(200, folderInfoCrossTeamCorrespondence)
 						.persist();
 					nock('http://test/')
@@ -994,7 +997,7 @@ describe('appeal-details', () => {
 
 				it('should render a success notification banner when an inspector correspondence document was uploaded', async () => {
 					nock('http://test/')
-						.get('/appeals/1/document-folders/5')
+						.get(getFolderApiUrl(5))
 						.reply(200, folderInfoInspectorCorrespondence)
 						.persist();
 					nock('http://test/')
@@ -1033,7 +1036,7 @@ describe('appeal-details', () => {
 
 				it('should render a success notification banner when a main party correspondence document was uploaded', async () => {
 					nock('http://test/')
-						.get('/appeals/1/document-folders/4')
+						.get(getFolderApiUrl(4))
 						.reply(200, folderInfoMainPartyCorrespondence)
 						.persist();
 					nock('http://test/')

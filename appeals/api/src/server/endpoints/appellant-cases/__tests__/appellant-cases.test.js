@@ -994,7 +994,8 @@ describe('appellant cases routes', () => {
 					// @ts-ignore
 					databaseConnector.appeal.findUnique.mockResolvedValue({
 						...appeal,
-						appealStatus: [{ status: 'validation', valid: true }]
+						currentStatus: APPEAL_CASE_STATUS.VALIDATION,
+						appealStatus: [{ status: APPEAL_CASE_STATUS.VALIDATION, valid: true }]
 					});
 					// @ts-ignore
 					databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
@@ -1060,9 +1061,6 @@ describe('appellant cases routes', () => {
 					});
 
 					if (sendsLPAConfirmation) {
-						console.log(appeal.appealType.type);
-						console.log(APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE);
-
 						/* eslint-disable jest/no-conditional-expect */
 						expect(mockNotifySend).toHaveBeenCalledWith({
 							azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
@@ -1803,6 +1801,7 @@ describe('appellant cases routes', () => {
 			test('updates the appeal case with groundABarred and otherInformation', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...enforcementNoticeAppeal,
+					currentStatus: APPEAL_CASE_STATUS.VALIDATION,
 					appealStatus: [{ status: 'validation', valid: true }]
 				});
 				// @ts-ignore

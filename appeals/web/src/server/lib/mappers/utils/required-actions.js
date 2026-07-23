@@ -17,21 +17,19 @@ import {
 	SITE_VISIT_TYPE_ACCOMPANIED,
 	VALIDATION_OUTCOME_INCOMPLETE
 } from '@pins/appeals/constants/support.js';
-import {
-	isAnyEnforcementAppealType,
-	normalizeProcedureType
-} from '@pins/appeals/utils/appeal-type-checks.js';
+import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import isAppellantStatementAppealType from '@pins/appeals/utils/is-appellant-statement-appeal-type.js';
+import { normaliseProcedureType } from '@pins/appeals/utils/procedure-type.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {'addHorizonReference'|'awaitingEvent'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'|'reviewLpaProofOfEvidence'|'reviewAppellantProofOfEvidence'|'progressToProofOfEvidenceAndWitnesses'|'awaitingProofOfEvidenceAndWitnesses'|'progressToInquiry'|'setupInquiry'|'addInquiryAddress'|'awaitingLpaProofOfEvidenceAndWitnesses'|'awaitingAppellantProofOfEvidenceAndWitnesses'|'awaitingAppellantStatement'|'appellantStatementAwaitingReview'|'awaitingRule6PartyStatement'|'reviewRule6PartyStatement'|'awaitingRule6PartyProofOfEvidence'|'reviewRule6PartyProofOfEvidence'|'addSiteVisitDateTime'|'addSiteVisitTime'|'enforcementNoticeAppealIncomplete'|'enforcementListedAppealIncomplete'|'updateAppellantStatement'|'appealValidated'} AppealRequiredAction */
 
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal */
-/** @typedef {import('#appeals/personal-list/personal-list.mapper').PersonalListAppeal} PersonalListAppeal */
+/** @typedef {import('#appeals/personal-list/personal-list.mapper').PersonalListItem} PersonalListItem */
 
 /**
- * @param {PersonalListAppeal | WebAppeal} appeal
+ * @param {PersonalListItem | WebAppeal} appeal
  * @return {boolean}
  */
 export function canDisplayAction(appeal) {
@@ -54,7 +52,7 @@ export function canDisplayAction(appeal) {
 
 /**
  * This logic is documented in `docs/reference/appeal-action-required-logic.md`. Please ensure this document is kept updated to reflect any changes made in this function.
- * @param {WebAppeal|PersonalListAppeal} appealDetails
+ * @param {WebAppeal|PersonalListItem} appealDetails
  * @param { 'summary'|'detail' } view
  * @returns {AppealRequiredAction[]}
  */
@@ -62,7 +60,7 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 	/** @type {AppealRequiredAction[]} */
 	const actions = [];
 
-	const procedureType = normalizeProcedureType(appealDetails.procedureType);
+	const procedureType = normaliseProcedureType(appealDetails.procedureType);
 
 	switch (appealDetails.appealStatus) {
 		case APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER:
@@ -311,19 +309,6 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			if (ipCommentsDueDatePassed && statementsDueDatePassed && allReviewsCompleted) {
 				if (hasItemsToShare) {
 					actions.push('shareIpCommentsAndLpaStatement');
-				} else if (
-					// @ts-ignore
-					procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING &&
-					// @ts-ignore
-					appealDetails.hearing?.hearingStartTime &&
-					// @ts-ignore
-					appealDetails.hearing?.addressId
-				) {
-					actions.push('progressHearingCaseWithNoRepsAndHearingSetUpFromStatements');
-				} else if (procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING) {
-					actions.push('progressHearingCaseWithNoRepsFromStatements');
-				} else if (procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY) {
-					actions.push('progressToProofOfEvidenceAndWitnesses');
 				} else {
 					actions.push('progressFromStatements');
 				}

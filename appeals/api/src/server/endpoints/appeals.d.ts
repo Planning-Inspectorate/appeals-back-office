@@ -704,7 +704,6 @@ interface AppealListResponse {
 	appealReference: string;
 	appealSite: AppealSite;
 	appealStatus: string;
-	completedStateList: string[];
 	appealType?: string;
 	procedureType?: string;
 	createdAt: Date;
@@ -730,7 +729,30 @@ interface AppealListResponse {
 	hasInquiryAddress: boolean | null;
 	enforcementReference?: string | null;
 	enforcementNoticeInvalid?: string | null;
-	enforcementNoticeGroundAFeeReceiptDueDate?: Date | null;
+	isS78Expedited?: boolean;
+}
+
+interface PersonalListResponse {
+	appealId: number;
+	appealReference: string;
+	appealStatus: string;
+	completedStateList: string[];
+	appealType?: string;
+	procedureType?: string;
+	lpaQuestionnaireId?: number | null;
+	documentationSummary: DocumentationSummary;
+	dueDate: Date | undefined | null;
+	appealTimetable?: AppealTimetable;
+	isParentAppeal: boolean | null;
+	isChildAppeal: boolean | null;
+	isHearingSetup: boolean | null;
+	hasHearingAddress: boolean | null;
+	awaitingLinkedAppeal: boolean | null;
+	costsDecision?: CostsDecision;
+	numberOfResidencesNetChange: number | null;
+	isInquirySetup: boolean | null;
+	hasInquiryAddress: boolean | null;
+	enforcementNoticeInvalid?: string | null;
 	isS78Expedited?: boolean;
 }
 
@@ -796,6 +818,37 @@ interface DocumentVersionInfo {
 	isDeleted?: boolean | null;
 	stage: string;
 	documentType: string;
+}
+
+interface PagedFolderInfo {
+	folderId: number;
+	caseId: string;
+	path: string;
+	totalFolderSize: number;
+	pageCount: number;
+	documents: PagedDocumentInfo[];
+}
+
+interface PagedDocumentInfo {
+	id: string;
+	name: string;
+	createdAt: string;
+	isDeleted?: boolean | null;
+	latestDocumentVersion: PagedDocumentVersionInfo;
+}
+
+interface PagedDocumentVersionInfo {
+	documentId: string;
+	version: number;
+	published: boolean;
+	virusCheckStatus: string;
+	size: string;
+	redactionStatus: string;
+	dateReceived: string;
+	isLateEntry?: boolean | null;
+	isDeleted?: boolean | null;
+	documentType: string;
+	stage: string;
 }
 
 interface SingleSiteVisitDetailsResponse {
@@ -1257,6 +1310,10 @@ export {
 	LookupTables,
 	NotifyClient,
 	NotifyTemplate,
+	PagedDocumentInfo,
+	PagedDocumentVersionInfo,
+	PagedFolderInfo,
+	PersonalListResponse,
 	ReasonOption,
 	RelatedAppeal,
 	ServiceUserResponse,

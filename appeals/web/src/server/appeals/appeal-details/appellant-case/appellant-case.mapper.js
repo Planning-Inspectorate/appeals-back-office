@@ -933,11 +933,7 @@ function generateCaseTypeSpecificComponents(
 				throw new Error('Feature flag inactive for Enforcement notice');
 			}
 		case APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE:
-			if (isFeatureActive(FEATURE_FLAG_NAMES.LDC)) {
-				return generateLdcComponents(appealDetails, appellantCaseData, mappedAppellantCaseData);
-			} else {
-				throw new Error('Feature flag inactive for LDC');
-			}
+			return generateLdcComponents(appealDetails, appellantCaseData, mappedAppellantCaseData);
 		case APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING:
 			return generateEnforcementListedComponents(
 				appealDetails,

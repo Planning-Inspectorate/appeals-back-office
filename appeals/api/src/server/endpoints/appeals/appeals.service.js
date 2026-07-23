@@ -38,19 +38,11 @@ const allStatusesOrdered = [
 ];
 
 /**
- * @param {{ appealStatus: { status: string; }[] }[]} rawStatuses
+ * @param {{ currentStatus: string; }[]} appeals
  * @returns {string[]}
  */
-export const mapAppealStatuses = (rawStatuses) => {
-	const extractedStatuses = [
-		...new Set(
-			rawStatuses
-				.flat()
-				.flatMap((/** @type {*} */ item) =>
-					item.appealStatus.map((/** @type {{ status: any; }} */ statusItem) => statusItem.status)
-				)
-		)
-	];
+export const mapCurrentAppealStatuses = (appeals) => {
+	const extractedStatuses = [...new Set(appeals.map((item) => item.currentStatus))];
 
 	// return the two arrays above with duplicates removed
 	return Array.from(
@@ -170,7 +162,7 @@ const retrieveAppealListData = async (
 	]);
 	const [mappedLPAs, users] = await Promise.all([mapAppealLPAs(allAppeals), mapUsers(allAppeals)]);
 	const mappedAppeals = appeals.map((appeal) => formatAppeal(appeal, []));
-	const mappedStatuses = mapAppealStatuses(appeals);
+	const mappedStatuses = mapCurrentAppealStatuses(appeals);
 	const mappedInspectors = users.inspectors;
 	const mappedCaseOfficers = users.caseOfficers;
 	const mappedPadsInspectors = users.padsInspectors;

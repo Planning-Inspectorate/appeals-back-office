@@ -17,7 +17,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { request } from '../../../app-test.js';
-import { mapAppealStatuses } from '../appeals.service.js';
+import { mapCurrentAppealStatuses } from '../appeals.service.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 const lpas = [
@@ -63,6 +63,8 @@ describe('appeals list routes', () => {
 	});
 	describe('/appeals', () => {
 		beforeEach(() => {
+			const statusesFromDB = statusesInNationalList.map((status) => ({ currentStatus: status }));
+			databaseConnector.$queryRaw.mockResolvedValue(statusesFromDB);
 			databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
 			databaseConnector.appealStatus.findMany.mockResolvedValue(
 				statusesInNationalList.map((status) => ({ status }))
@@ -95,7 +97,6 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
-							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -170,7 +171,6 @@ describe('appeals list routes', () => {
 								postCode: fullPlanningAppeal.address.postcode
 							},
 							appealStatus: fullPlanningAppeal.appealStatus[0].status,
-							completedStateList: fullPlanningAppeal.completedStateList,
 							appealType: fullPlanningAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: fullPlanningAppeal.caseCreatedDate.toISOString(),
@@ -266,7 +266,6 @@ describe('appeals list routes', () => {
 			test('gets appeals when given pagination params', async () => {
 				const expectedQuery = {
 					where: {
-						appealStatus: { some: { valid: true } },
 						appealType: {
 							key: {
 								in: [
@@ -286,7 +285,6 @@ describe('appeals list routes', () => {
 					include: {
 						address: true,
 						appealRule6Parties: { include: { serviceUser: true } },
-						appealStatus: { where: { valid: true } },
 						appealType: true,
 						procedureType: true,
 						lpa: true,
@@ -355,7 +353,6 @@ describe('appeals list routes', () => {
 								postCode: fullPlanningAppeal.address.postcode
 							},
 							appealStatus: fullPlanningAppeal.appealStatus[0].status,
-							completedStateList: fullPlanningAppeal.completedStateList,
 							appealType: fullPlanningAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: fullPlanningAppeal.caseCreatedDate.toISOString(),
@@ -489,12 +486,7 @@ describe('appeals list routes', () => {
 										}
 									}
 								}
-							],
-							appealStatus: {
-								some: {
-									valid: true
-								}
-							}
+							]
 						}
 					})
 				);
@@ -513,7 +505,6 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
-							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -631,12 +622,7 @@ describe('appeals list routes', () => {
 										}
 									}
 								}
-							],
-							appealStatus: {
-								some: {
-									valid: true
-								}
-							}
+							]
 						}
 					})
 				);
@@ -655,7 +641,6 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
-							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -773,12 +758,7 @@ describe('appeals list routes', () => {
 										}
 									}
 								}
-							],
-							appealStatus: {
-								some: {
-									valid: true
-								}
-							}
+							]
 						}
 					})
 				);
@@ -797,7 +777,6 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
-							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -890,12 +869,7 @@ describe('appeals list routes', () => {
 							appealType: {
 								key: { in: getEnabledAppealTypes() }
 							},
-							appealStatus: {
-								some: {
-									status: 'assign_case_officer',
-									valid: true
-								}
-							}
+							currentStatus: 'assign_case_officer'
 						}
 					})
 				);
@@ -914,7 +888,6 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
-							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -1007,11 +980,6 @@ describe('appeals list routes', () => {
 							appealType: {
 								key: { in: getEnabledAppealTypes() }
 							},
-							appealStatus: {
-								some: {
-									valid: true
-								}
-							},
 							OR: [
 								{
 									inspectorUserId: {
@@ -1042,7 +1010,6 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
-							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -1135,11 +1102,6 @@ describe('appeals list routes', () => {
 							appealType: {
 								key: { in: getEnabledAppealTypes() }
 							},
-							appealStatus: {
-								some: {
-									valid: true
-								}
-							},
 							AND: [
 								{
 									inspectorUserId: null
@@ -1166,7 +1128,6 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
-							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -1265,11 +1226,6 @@ describe('appeals list routes', () => {
 							appealType: {
 								key: { in: getEnabledAppealTypes() }
 							},
-							appealStatus: {
-								some: {
-									valid: true
-								}
-							},
 							appealTypeId: 1
 						}
 					})
@@ -1289,7 +1245,6 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
-							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -1389,11 +1344,6 @@ describe('appeals list routes', () => {
 							appealType: {
 								key: { in: getEnabledAppealTypes() }
 							},
-							appealStatus: {
-								some: {
-									valid: true
-								}
-							},
 							procedureTypeId: 1
 						}
 					})
@@ -1413,7 +1363,6 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
-							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -1521,7 +1470,6 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
-							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -1829,8 +1777,18 @@ describe('appeals list routes', () => {
 					{ appealId: 4, leadAppealId: 1, linkType: 'child', appeal: { ...appeal, id: 4 } }
 				])
 				.mockResolvedValueOnce([
-					{ appeal: { appealStatus: [{ status: 'assign_case_officer', valid: true }] } },
-					{ appeal: { appealStatus: [{ status: 'complete', valid: true }] } }
+					{
+						appeal: {
+							currentStatus: 'assign_case_officer',
+							appealStatus: [{ status: 'assign_case_officer', valid: true }]
+						}
+					},
+					{
+						appeal: {
+							currentStatus: 'complete',
+							appealStatus: [{ status: 'complete', valid: true }]
+						}
+					}
 				])
 				.mockResolvedValueOnce([
 					{ appealId: 1, leadAppealId: 1, linkType: 'parent', appeal: { ...appeal, id: 1 } },
@@ -1851,13 +1809,7 @@ describe('appeals list routes', () => {
 					items: [
 						{
 							appealId: 3,
-							appealSite: {
-								addressLine1: '',
-								postCode: ''
-							},
-							appealStatus: '',
 							completedStateList: householdAppeal.completedStateList,
-							localPlanningDepartment: '',
 							lpaQuestionnaireId: null,
 							documentationSummary: {
 								appellantCase: {
@@ -1910,7 +1862,6 @@ describe('appeals list routes', () => {
 							isS78Expedited: false,
 							isHearingSetup: false,
 							enforcementNoticeInvalid: null,
-							enforcementNoticeGroundAFeeReceiptDueDate: null,
 							hasHearingAddress: false,
 							awaitingLinkedAppeal: true,
 							costsDecision: null,
@@ -1931,13 +1882,7 @@ describe('appeals list routes', () => {
 						},
 						{
 							appealId: 4,
-							appealSite: {
-								addressLine1: '',
-								postCode: ''
-							},
-							appealStatus: '',
 							completedStateList: householdAppeal.completedStateList,
-							localPlanningDepartment: '',
 							lpaQuestionnaireId: null,
 							documentationSummary: {
 								appellantCase: {
@@ -1986,7 +1931,6 @@ describe('appeals list routes', () => {
 								rule6PartyStatements: {}
 							},
 							enforcementNoticeInvalid: null,
-							enforcementNoticeGroundAFeeReceiptDueDate: null,
 							isParentAppeal: false,
 							isChildAppeal: true,
 							isS78Expedited: false,
@@ -2020,13 +1964,13 @@ describe('appeals list routes', () => {
 	});
 });
 
-describe('mapAppealStatuses Tests', () => {
+describe('mapCurrentAppealStatuses Tests', () => {
 	test('correctly orders statuses personal list', () => {
 		const preSortedStatuses = [
-			{ appealStatus: [{ status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION }] },
-			{ appealStatus: [{ status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE }] },
-			{ appealStatus: [{ status: APPEAL_CASE_STATUS.AWAITING_TRANSFER }] },
-			{ appealStatus: [{ status: APPEAL_CASE_STATUS.READY_TO_START }] }
+			{ currentStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION },
+			{ currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE },
+			{ currentStatus: APPEAL_CASE_STATUS.AWAITING_TRANSFER },
+			{ currentStatus: APPEAL_CASE_STATUS.READY_TO_START }
 		];
 
 		const expectedOrder = [
@@ -2036,18 +1980,18 @@ describe('mapAppealStatuses Tests', () => {
 			APPEAL_CASE_STATUS.AWAITING_TRANSFER
 		];
 
-		const orderedStatuses = mapAppealStatuses(preSortedStatuses);
+		const orderedStatuses = mapCurrentAppealStatuses(preSortedStatuses);
 		expect(orderedStatuses).toEqual(expectedOrder);
 	});
 
 	test('correctly orders statuses national list', () => {
 		const preSortedStatuses = [
-			{ appealStatus: [{ status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER }] },
-			{ appealStatus: [{ status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION }] },
-			{ appealStatus: [{ status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE }] },
-			{ appealStatus: [{ status: APPEAL_CASE_STATUS.AWAITING_TRANSFER }] },
-			{ appealStatus: [{ status: APPEAL_CASE_STATUS.READY_TO_START }] },
-			{ appealStatus: [{ status: APPEAL_CASE_STATUS.COMPLETE }] }
+			{ currentStatus: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER },
+			{ currentStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION },
+			{ currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE },
+			{ currentStatus: APPEAL_CASE_STATUS.AWAITING_TRANSFER },
+			{ currentStatus: APPEAL_CASE_STATUS.READY_TO_START },
+			{ currentStatus: APPEAL_CASE_STATUS.COMPLETE }
 		];
 
 		const expectedOrder = [
@@ -2059,24 +2003,29 @@ describe('mapAppealStatuses Tests', () => {
 			APPEAL_CASE_STATUS.COMPLETE
 		];
 
-		const orderedStatuses = mapAppealStatuses(preSortedStatuses);
+		const orderedStatuses = mapCurrentAppealStatuses(preSortedStatuses);
 		expect(orderedStatuses).toEqual(expectedOrder);
 	});
 });
 
 describe('updateCompletedEvents', () => {
 	test('updates completed events', async () => {
-		const siteVisit = structuredClone({ ...householdAppeal.siteVisit, appealId: appealS78.id });
-		const appealStatus = [{ status: 'awaiting_event', valid: true }];
+		const siteVisit = structuredClone({
+			...householdAppeal.siteVisit,
+			currentStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
+			appealId: appealS78.id
+		});
+		const appealStatus = [{ status: APPEAL_CASE_STATUS.AWAITING_EVENT, valid: true }];
 		const childAppeals = [
 			{
 				childId: 100,
 				type: CASE_RELATIONSHIP_LINKED,
-				child: { appealStatus }
+				child: { currentStatus: APPEAL_CASE_STATUS.AWAITING_EVENT, appealStatus }
 			}
 		];
 		const linkedLeadAppeal = structuredClone({
 			...appealS78,
+			currentStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 			siteVisit,
 			appealStatus,
 			childAppeals

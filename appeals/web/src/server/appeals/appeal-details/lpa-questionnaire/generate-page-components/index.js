@@ -19,24 +19,21 @@ import { generateS78LpaQuestionnaireComponents } from './s78.js';
  *
  * @param {Appeal} appealDetails
  * @param {{lpaq: MappedInstructions}} mappedLPAQData
+ * @param {String|undefined|null} submittedDate
  * @returns {PageComponent[]}
  */
-export function generateCaseTypeSpecificComponents(appealDetails, mappedLPAQData) {
+export function generateCaseTypeSpecificComponents(appealDetails, mappedLPAQData, submittedDate) {
 	switch (appealDetails.appealType) {
 		case APPEAL_TYPE.HOUSEHOLDER:
 			return generateHASLpaQuestionnaireComponents(mappedLPAQData);
 		case APPEAL_TYPE.CAS_PLANNING:
 			return generateCasPlanningLpaQuestionnaireComponents(mappedLPAQData);
 		case APPEAL_TYPE.CAS_ADVERTISEMENT:
-			return generateCasAdvertLpaQuestionnaireComponents(mappedLPAQData);
+			return generateCasAdvertLpaQuestionnaireComponents(mappedLPAQData, submittedDate || null);
 		case APPEAL_TYPE.ADVERTISEMENT:
 			return generateAdvertLpaQuestionnaireComponents(mappedLPAQData);
 		case APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE:
-			if (isFeatureActive(FEATURE_FLAG_NAMES.LDC)) {
-				return generateLdcLpaQuestionnaireComponents(mappedLPAQData);
-			} else {
-				throw new Error('Feature flag inactive for Ldc');
-			}
+			return generateLdcLpaQuestionnaireComponents(mappedLPAQData);
 		case APPEAL_TYPE.ENFORCEMENT_NOTICE:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE)) {
 				return generateEnforcementLpaQuestionnaireComponents(mappedLPAQData);

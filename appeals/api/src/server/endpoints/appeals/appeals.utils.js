@@ -1,13 +1,17 @@
 import personalListRepository from '#repositories/personal-list.repository.js';
 import { isAwaitingLinkedAppeal } from '#utils/is-awaiting-linked-appeal.js';
 
+/** @typedef {import('#repositories/personal-list.repository.js').getPersonalListRepoResponse} getPersonalListRepoResponse */
+/** @typedef {getPersonalListRepoResponse['personalList'][number]} PersonalListItem */
+/** @typedef {PersonalListItem & { toRemove?: boolean } & { awaitingLinkedAppeal?: boolean }} PersonalListItemForLinkedAppeal */
+
 /**
  *
- * @param {*} personalList
+ * @param {PersonalListItemForLinkedAppeal[]} personalList
  * @param {string} azureUserId
  * @param {number} pageSize
  * @param {string} [status]
- * @returns {Promise<[*]>}
+ * @returns {Promise<PersonalListItemForLinkedAppeal[]>}
  */
 const addAwaitingLinkedAppealToPersonalList = async (
 	personalList,
@@ -18,7 +22,7 @@ const addAwaitingLinkedAppealToPersonalList = async (
 	// If the last item in the personal list is a linked appeal, fetch any missing linked appeals and add them to the personal list temporarily to determine awaiting linked appeals status
 
 	const lastItem = personalList.at(-1);
-	if (personalList.length === pageSize && lastItem.leadAppealId) {
+	if (personalList.length === pageSize && lastItem?.leadAppealId) {
 		const { personalList: linkedAppeals = [] } = await personalListRepository.getPersonalList(
 			azureUserId,
 			1,
@@ -59,37 +63,27 @@ const addAwaitingLinkedAppealToPersonalList = async (
 	}
 
 	// Group linked appeals by parent appeal ID
-	let /** @type {*}[] | undefined */ linkedAppeals;
-	let /** @type {number} | undefined */ currentLeadAppealId;
-	personalList.forEach(
-		/** @param {*} item */ (item) => {
-			// Ignore non-linked appeals
-			if (!item.linkType) {
-				return;
-			}
-			if (item.leadAppealId !== currentLeadAppealId) {
-				currentLeadAppealId = item.leadAppealId;
-				// @ts-ignore
-				linkedAppeals = personalList.filter(({ leadAppealId }) => leadAppealId === item.appealId);
-			}
-			// Ignore items that were added temporarily to determine awaiting linked appeals status
-			if (item.toRemove) {
-				return;
-			}
-			// @ts-ignore
-			item.awaitingLinkedAppeal = isAwaitingLinkedAppeal(
-				item.appeal,
-				linkedAppeals
-					// @ts-ignore
-					.filter(({ appealId }) => appealId !== item.appealId)
-					// @ts-ignore
-					.map(({ appeal }) => appeal)
-			);
+	let /** @type {PersonalListItemForLinkedAppeal[]} */ linkedAppeals;
+	let /** @type {number|null} */ currentLeadAppealId;
+	personalList.forEach((item) => {
+		// Ignore non-linked appeals
+		if (!item.linkType) {
+			return;
 		}
-	);
+		if (item.leadAppealId !== currentLeadAppealId) {
+			currentLeadAppealId = item.leadAppealId;
+			linkedAppeals = personalList.filter(({ leadAppealId }) => leadAppealId === item.appealId);
+		}
+		// Ignore items that were added temporarily to determine awaiting linked appeals status
+		if (item.toRemove) {
+			return;
+		}
+		item.awaitingLinkedAppeal = isAwaitingLinkedAppeal(
+			item.appeal,
+			linkedAppeals.filter(({ appealId }) => appealId !== item.appealId).map(({ appeal }) => appeal)
+		);
+	});
 
-	// Remove items that were added temporarily to determine awaiting linked appeals status
-	// @ts-ignore
 	return personalList.filter(({ toRemove }) => !toRemove);
 };
 

@@ -30,15 +30,17 @@ export function documentSummaryListItem({
 	const documents = (isFolderInfo(folderInfo) && folderInfo.documents) || [];
 	/** @type {ActionItemProperties[]} */
 	const actions = [];
+	if (documents.length) {
+		actions.push({
+			text: 'Manage',
+			visuallyHiddenText: text,
+			href: manageUrl,
+			attributes: { 'data-cy': `manage-${cypressDataName}` },
+			needsPermissions: false
+		});
+	}
+
 	if (editable) {
-		if (documents.length) {
-			actions.push({
-				text: 'Change',
-				visuallyHiddenText: text,
-				href: manageUrl,
-				attributes: { 'data-cy': `manage-${cypressDataName}` }
-			});
-		}
 		actions.push({
 			text: 'Add',
 			visuallyHiddenText: text,

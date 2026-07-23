@@ -52,8 +52,7 @@ describe('Progress Enforcement Appeal to Decision', () => {
 			cy.simulateStatementsDeadlineElapsed(caseObj);
 			cy.reload();
 
-			caseDetailsPage.basePageElements.bannerLink().click();
-			caseDetailsPage.clickButtonByText('Confirm');
+			caseDetailsPage.shareCommentsAndStatements();
 			caseDetailsPage.checkStatusOfCase('Final comments', 0);
 
 			happyPathHelper.addLpaFinalComment(caseObj);
@@ -63,8 +62,7 @@ describe('Progress Enforcement Appeal to Decision', () => {
 			});
 			cy.simulateFinalCommentsDeadlineElapsed(caseObj);
 			cy.reload();
-			caseDetailsPage.basePageElements.bannerLink().click();
-			caseDetailsPage.clickButtonByText('Share final comment');
+			caseDetailsPage.shareFinalComments();
 			caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
 
 			happyPathHelper.setupSiteVisitFromBanner(caseObj);
@@ -118,8 +116,7 @@ describe('Progress Enforcement Appeal to Decision', () => {
 				cy.simulateStatementsDeadlineElapsed(caseObj);
 				cy.reload();
 
-				caseDetailsPage.basePageElements.bannerLink().click();
-				caseDetailsPage.clickButtonByText('Share interested party comments and statements');
+				caseDetailsPage.shareCommentsAndStatements();
 				caseDetailsPage.checkStatusOfCase('Final comments', 0);
 
 				happyPathHelper.addLpaFinalComment(caseObj);
@@ -131,8 +128,7 @@ describe('Progress Enforcement Appeal to Decision', () => {
 				});
 				cy.simulateFinalCommentsDeadlineElapsed(caseObj);
 				cy.reload();
-				caseDetailsPage.basePageElements.bannerLink().click();
-				caseDetailsPage.clickButtonByText('Share final comment');
+				caseDetailsPage.shareFinalComments();
 				caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
 
 				happyPathHelper.setupSiteVisitFromBanner(caseObj);

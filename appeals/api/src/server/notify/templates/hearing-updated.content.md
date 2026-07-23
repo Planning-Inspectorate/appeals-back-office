@@ -27,8 +27,8 @@ You need to attend the hearing on {{hearing_date}}.
 
 The details of the hearing are subject to change. We will contact you by email if we make any changes.
 
-We expect the hearing to finish on the same day. If the hearing needs more time, you will arrange the next steps on the day.
+If the hearing needs more time, you will arrange the next steps on the day.
 {% endif %}
 
-The Planning Inspectorate
+Planning Inspectorate
 {{team_email_address}}

@@ -1,15 +1,13 @@
 import { getFoldersForAppeal } from '#endpoints/documents/documents.service.js';
-import { currentStatus } from '#utils/current-status.js';
 import { APPEAL_CASE_STAGE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
-/** @typedef {import('#repositories/appeal-lists.repository.js').DBAppeals} DBAppeals */
-/** @typedef {DBAppeals[0]} DBAppeal */
-/** @typedef {import('#repositories/appeal-lists.repository.js').DBUserAppeal} DBUserAppeal */
+/** @typedef {import('#db-client/models.ts').AppealModel } AppealModel */
+/** @typedef {import('#db-client/models.ts').AppealStatusModel } AppealStatusModel */
 
 /**
- * @param {DBAppeal | DBUserAppeal | Appeal} appeal
+ * @param {{id: AppealModel['id'], currentStatus: string }} appeal
  * @returns {Promise<CostsDecision>}
  * */
 export const formatCostsDecision = async (appeal) => {
@@ -19,9 +17,9 @@ export const formatCostsDecision = async (appeal) => {
 		const documentCount = folder.documents?.filter((doc) => !doc.isDeleted).length;
 		return { ...costsDecision, [costsType]: documentCount };
 	}, {});
-	const appealStatus = currentStatus(appeal);
 	const appealIsCompleteOrWithdrawn =
-		appealStatus === APPEAL_CASE_STATUS.COMPLETE || appealStatus === APPEAL_CASE_STATUS.WITHDRAWN;
+		appeal.currentStatus === APPEAL_CASE_STATUS.COMPLETE ||
+		appeal.currentStatus === APPEAL_CASE_STATUS.WITHDRAWN;
 
 	const {
 		// @ts-ignore

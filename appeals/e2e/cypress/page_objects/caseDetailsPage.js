@@ -952,9 +952,19 @@ export class CaseDetailsPage extends Page {
 		this.clickButtonByText('Continue');
 	}
 
-	shareIpAndLpaComments() {
+	shareCommentsAndStatements() {
 		this.basePageElements.bannerLink().click();
-		this.clickButtonByText('Confirm');
+		this.clickButtonByText('Share comments and statements');
+	}
+
+	shareComments() {
+		this.basePageElements.bannerLink().click();
+		this.clickButtonByText('Share comments');
+	}
+
+	shareStatements() {
+		this.basePageElements.bannerLink().click();
+		this.clickButtonByText('Share statements');
 	}
 
 	shareFinalComments() {

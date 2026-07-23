@@ -24,6 +24,7 @@ export default {
 	agentId: null,
 	caseOfficerUserId: 1,
 	inspectorUserId: null,
+	currentStatus: 'statements',
 	address: {
 		id: 1,
 		addressLine1: '19 Beauchamp Road',

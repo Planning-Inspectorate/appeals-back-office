@@ -560,7 +560,32 @@ describe('required actions', () => {
 								}
 							}
 						})
-					).toEqual(['progressToProofOfEvidenceAndWitnesses']);
+					).toEqual(['progressFromStatements']);
+				});
+
+				it('should return "progressFromStatements" if ip comments due date and statements due date have both passed, and there are no ip comments or lpa statement awaiting review, and there are no ip comments or lpa statement to share and the procedure is hearing', () => {
+					expect(
+						getRequiredActionsForAppeal({
+							...appealDataWithBothDueDatesPassed,
+							procedureType: 'Hearing',
+							documentationSummary: {
+								...appealDataWithStatementsStatus.documentationSummary,
+								ipComments: {
+									status: 'not_received',
+									counts: {
+										awaiting_review: 0,
+										valid: 0,
+										published: 0
+									}
+								},
+								lpaStatement: {
+									status: 'not_received',
+									receivedAt: null,
+									representationStatus: null
+								}
+							}
+						})
+					).toEqual(['progressFromStatements']);
 				});
 			});
 

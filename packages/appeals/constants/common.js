@@ -27,7 +27,6 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	MANUALLY_ADD_REPS: 'featureFlagManuallyAddReps',
 	APPELLANT_STATEMENT: 'featureFlagAppellantStatement',
 	RULE_6_STATEMENT: 'featureFlagRule6Statement',
-	LDC: 'featureFlagLDC',
 	S20_HEARING: 'featureFlagS20Hearing',
 	S20_INQUIRY: 'featureFlagS20Inquiry',
 	ENFORCEMENT_HEARING: 'featureFlagEnforcementNoticeHearing',
@@ -202,4 +201,5 @@ export const FEEDBACK_FORM_LINKS = Object.freeze({
 
 export const REPRESENTATION_ADDED_AS_DOCUMENT = 'Added as a document';
 
-export const MAX_VISIBLE_DOCUMENTS_IN_SUMMARY = 30;
+export const MAX_VISIBLE_DOCUMENTS_IN_SUMMARY = 5;
+export const DOCUMENTS_PAGE_SIZE = 100;

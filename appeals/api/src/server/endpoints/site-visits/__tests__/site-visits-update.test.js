@@ -1054,7 +1054,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			const appeal = getAppeal();
 			const { siteVisit } = appeal;
 			const idsOfLinkedGroup = getIdsOfLinkedGroup(appeal);
-
+			appeal.currentStatus = 'issue_determination';
 			appeal.appealStatus[0].status = 'issue_determination';
 			addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
 
@@ -1112,6 +1112,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			const appeal = getAppeal();
 			const { siteVisit } = appeal;
 
+			appeal.currentStatus = 'event';
 			appeal.appealStatus[0].status = 'event';
 			appeal.procedureType = { key: 'written' };
 			addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
@@ -1155,6 +1156,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			const appeal = getAppeal();
 			const { siteVisit } = appeal;
 
+			appeal.currentStatus = 'final_comments';
 			appeal.appealStatus[0].status = 'final_comments';
 			appeal.procedureType = { key: 'written' };
 			addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
@@ -1190,6 +1192,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			const appeal = getAppeal();
 			const { siteVisit } = appeal;
 
+			appeal.currentStatus = 'event';
 			appeal.appealStatus[0].status = 'event';
 			appeal.procedureType = { key: 'written' };
 			addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
@@ -1742,6 +1745,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			const appeal = getLinkedLeadAppeal();
 			const { siteVisit } = appeal;
 
+			appeal.currentStatus = APPEAL_CASE_STATUS.EVENT;
 			appeal.appealStatus[0].status = APPEAL_CASE_STATUS.EVENT;
 			appeal.procedureType = { key: 'written' };
 			addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
@@ -1798,6 +1802,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			const appeal = getLinkedLeadAppeal();
 			const { siteVisit } = appeal;
 
+			appeal.currentStatus = APPEAL_CASE_STATUS.EVENT;
 			appeal.appealStatus[0].status = APPEAL_CASE_STATUS.EVENT;
 			appeal.procedureType = { key: 'written' };
 			// Give the child appeals a different status to the lead
@@ -1857,6 +1862,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			const appeal = getLinkedLeadAppeal();
 			const { siteVisit } = appeal;
 
+			appeal.currentStatus = APPEAL_CASE_STATUS.FINAL_COMMENTS;
 			appeal.appealStatus[0].status = APPEAL_CASE_STATUS.FINAL_COMMENTS;
 			appeal.procedureType = { key: 'written' };
 			addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
@@ -1890,6 +1896,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			const { siteVisit } = appeal;
 			const idsOfLinkedGroup = getIdsOfLinkedGroup(appeal);
 
+			appeal.currentStatus = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
 			appeal.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
 			addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
 
@@ -1928,6 +1935,7 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 			const appeal = getLinkedLeadAppeal();
 			const { siteVisit } = appeal;
 
+			appeal.currentStatus = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
 			appeal.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
 			addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
 

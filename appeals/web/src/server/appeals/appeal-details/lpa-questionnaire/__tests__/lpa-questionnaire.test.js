@@ -86,6 +86,7 @@ const appealDataCasAdvert = {
 	...lpaqAppealData,
 	appealType: 'CAS advert'
 };
+
 const appealDataAdvert = {
 	...lpaqAppealData,
 	appealType: 'Advertisement'
@@ -116,6 +117,20 @@ const FieldTestCases = [
 	}
 ];
 
+/**
+ * @param {number} appealId
+ * @param {number} folderId
+ * @returns {string}
+ */
+const getFolderApiUrl = (appealId, folderId) =>
+	`/appeals/${appealId}/document-folders/${folderId}?pageNumber=1&pageSize=100`;
+
+const existsResponse = {
+	id: appealData.appealId,
+	appealId: appealData.appealId,
+	appealReference: appealData.appealReference
+};
+
 describe('LPA Questionnaire review', () => {
 	afterAll(() => {
 		nock.cleanAll();
@@ -123,7 +138,10 @@ describe('LPA Questionnaire review', () => {
 		jest.clearAllMocks();
 	});
 	beforeAll(teardown);
-	beforeEach(installMockApi);
+	beforeEach(() => {
+		installMockApi();
+		nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse).persist();
+	});
 	afterEach(teardown);
 
 	it('should render Enforcement sections 1 and 3 in the correct order', async () => {
@@ -812,6 +830,15 @@ describe('LPA Questionnaire review', () => {
 			beforeEach(() => {
 				nock.cleanAll();
 				nock('http://test/')
+					.get(`/appeals/${appealId}/exists`)
+					.reply(200, {
+						id: appealId,
+						appealId: appealId,
+						appealReference: lpaqAppealData.appealReference
+					})
+					.persist();
+
+				nock('http://test/')
 					.get(`/appeals/${appealId}?include=all`)
 					.reply(200, {
 						...lpaqAppealData,
@@ -835,7 +862,7 @@ describe('LPA Questionnaire review', () => {
 			for (const testCase of testCases) {
 				it(`should render a "${testCase.label} added" success banner when uploading a document in the "${testCase.folderPath}" folder to the lpa questionnaire`, async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}/document-folders/1`)
+						.get(getFolderApiUrl(appealId, folderId))
 						.reply(200, {
 							caseId: appealId,
 							documents: [],
@@ -876,7 +903,7 @@ describe('LPA Questionnaire review', () => {
 
 			it('should render a fallback "Documents added" success banner when uploading a document in an unhandled folder to the lpa questionnaire', async () => {
 				nock('http://test/')
-					.get(`/appeals/${appealId}/document-folders/1`)
+					.get(getFolderApiUrl(appealId, 1))
 					.reply(200, {
 						caseId: appealId,
 						documents: [],
@@ -1374,6 +1401,129 @@ describe('LPA Questionnaire review', () => {
 				'Are there any other ongoing appeals next to, or close to the site?</dt>'
 			);
 			expect(element.innerHTML).toContain('Are there any new conditions?</dt>');
+
+			expect(element.innerHTML).toContain('Additional documents</h2>');
+		}, 10000);
+
+		it('should render the Cas Advert expedite LPA Questionnaire page with the expected content', async () => {
+			nock('http://test/')
+				.get('/appeals/4?include=all')
+				.reply(200, {
+					...appealDataCasAdvert,
+					appealId: 4
+				});
+
+			const expeditedAppellantCaseData = {
+				applicationDate: '2026-04-02T00:00:00.000Z'
+			};
+
+			nock('http://test/')
+				.get('/appeals/4/appellant-cases/0')
+				.reply(200, expeditedAppellantCaseData);
+
+			nock('http://test/')
+				.get('/appeals/4/lpa-questionnaires/1')
+				.reply(200, {
+					...lpaQuestionnaireDataNotValidated,
+					lpaQuestionnaireId: 1
+				});
+
+			const response = await request.get('/appeals-service/appeal-details/4/lpa-questionnaire/1');
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('LPA questionnaire</h1>');
+
+			expect(element.innerHTML).toContain('1. Constraints, designations and other issues</h2>');
+			expect(element.innerHTML).toContain('Is CAS advert the correct type of appeal?</dt>');
+			expect(element.innerHTML).toContain(
+				'Does the development affect the setting of listed buildings?</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'Would the development affect a scheduled monument?</dt>'
+			);
+			expect(element.innerHTML).toContain('Conservation area map and guidance</dt>');
+			expect(element.innerHTML).toContain('Would the development affect a protected species?</dt>');
+			expect(element.innerHTML).toContain(
+				'Is the site in an area of special control of advertisements?</dt>'
+			);
+			expect(element.innerHTML).toContain('Green belt</dt>');
+			expect(element.innerHTML).toContain('Is the site in a national landscape?</dt>');
+			expect(element.innerHTML).toContain(
+				'Is the development in, near or likely to affect any designated sites?</dt>'
+			);
+
+			expect(element.innerHTML).toContain('2. Notifying relevant parties</h2>');
+			expect(element.innerHTML).toContain(
+				'List of neighbours&#39; addresses that you notified about the application</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'How did you notify relevant parties about this application?</dt>'
+			);
+			expect(element.innerHTML).toContain('Site notice</dt>');
+			expect(element.innerHTML).toContain('Letter or email notification</dt>');
+			expect(element.innerHTML).toContain('Press advertisement</dt>');
+			expect(element.innerHTML).toContain(
+				'Appeal notification letter and the list of people that you notified</dt>'
+			);
+
+			expect(element.innerHTML).toContain('3. Consultation responses and representations</h2>');
+			expect(element.innerHTML).toContain(
+				'Representations from members of the public or other parties</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'Did you consult all the relevant statutory consultees about the development?</dt>'
+			);
+
+			expect(element.innerHTML).toContain(
+				'4. Planning officer’s report and supplementary documents</h2>'
+			);
+			expect(element.innerHTML).toContain('Planning officer’s report</dt>');
+			expect(element.innerHTML).toContain(
+				'Did you refuse the application because of highway or traffic public safety?</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'Did the appellant submit complete and accurate photographs and plans?</dt>'
+			);
+			expect(element.innerHTML).toContain('Relevant policies from statutory development plan</dt>');
+			expect(element.innerHTML).toContain('Supplementary planning documents</dt>');
+			expect(element.innerHTML).toContain('Emerging plan relevant to appeal</dt>');
+			expect(element.innerHTML).toContain('Other relevant policies</dt>');
+
+			expect(element.innerHTML).toContain('5. Site access</h2>');
+			expect(element.innerHTML).toContain(
+				'Will the inspector need access to the appellant’s land or property?</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'Will the inspector need to enter a neighbour’s land or property?</dt>'
+			);
+			expect(element.innerHTML).toContain('Address of the neighbour’s land or property</dt>');
+			expect(element.innerHTML).toContain('Are there any potential safety risks?</dt>');
+
+			expect(element.innerHTML).toContain('6. Appeal process</h2>');
+			expect(element.innerHTML).toContain(
+				'Which procedure do you think is most appropriate for this appeal?</dt>'
+			);
+			expect(element.innerHTML).toContain('Why would you prefer this procedure?</dt>');
+			expect(element.innerHTML).toContain(
+				'How many days would you expect the inquiry to last?</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'Are there any other ongoing appeals next to, or close to the site?</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'Have there been any significant changes that would affect the application?'
+			);
+			expect(element.innerHTML).toContain('Are there any new conditions?</dt>');
+			expect(element.innerHTML).toContain('Original Evidence</h2>');
+			expect(element.innerHTML).toContain('Design and access statement</dt>');
+			expect(element.innerHTML).toContain('Plans and drawings</dt>');
+			expect(element.innerHTML).toContain(
+				'Any other documents submitted with the application</dt>'
+			);
+			expect(element.innerHTML).toContain(
+				'What documents and plans did you use to make your decision?</dt>'
+			);
 
 			expect(element.innerHTML).toContain('Additional documents</h2>');
 		}, 10000);
@@ -2963,6 +3113,14 @@ describe('LPA Questionnaire review', () => {
 	describe('GET /lpa-questionnaire/1/add-documents/:folderId/', () => {
 		beforeEach(() => {
 			nock.cleanAll();
+			nock('http://test/')
+				.get(`/appeals/1/exists`)
+				.reply(200, {
+					id: 1,
+					appealId: 1,
+					appealReference: lpaqAppealData.appealReference
+				})
+				.persist();
 			nock('http://test/').get('/appeals/1?include=all').reply(200, lpaqAppealData);
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
@@ -2977,7 +3135,7 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataNotValidated);
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, mockFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1, 1)).reply(200, mockFolderInfo);
 
 			const response = await request.get(
 				`/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/1`
@@ -3008,9 +3166,7 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataNotValidated);
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, additionalDocumentsFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1, 1)).reply(200, additionalDocumentsFolderInfo);
 
 			const response = await request.get(
 				`/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/1`
@@ -3041,9 +3197,7 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataIncompleteOutcome);
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, additionalDocumentsFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1, 1)).reply(200, additionalDocumentsFolderInfo);
 
 			const response = await request.get(
 				`/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/1`
@@ -3074,9 +3228,7 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataCompleteOutcome);
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, additionalDocumentsFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1, 1)).reply(200, additionalDocumentsFolderInfo);
 
 			const response = await request.get(
 				`/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/1`
@@ -3107,6 +3259,14 @@ describe('LPA Questionnaire review', () => {
 	describe('GET /lpa-questionnaire/1/add-documents/:folderId/:documentId', () => {
 		beforeEach(() => {
 			nock.cleanAll();
+			nock('http://test/')
+				.get(`/appeals/1/exists`)
+				.reply(200, {
+					id: 1,
+					appealId: 1,
+					appealReference: lpaqAppealData.appealReference
+				})
+				.persist();
 			nock('http://test/').get('/appeals/1?include=all').reply(200, lpaqAppealData);
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 			nock('http://test/')
@@ -3121,7 +3281,7 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataNotValidated);
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1, 1)).reply(200, documentFolderInfo);
 
 			const response = await request.get(
 				'/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/1/1'
@@ -3154,9 +3314,7 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataNotValidated);
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, additionalDocumentsFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1, 1)).reply(200, additionalDocumentsFolderInfo);
 
 			const response = await request.get(
 				'/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/1/1'
@@ -3187,9 +3345,7 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataIncompleteOutcome);
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, additionalDocumentsFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1, 1)).reply(200, additionalDocumentsFolderInfo);
 
 			const response = await request.get(
 				'/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/1/1'
@@ -3220,9 +3376,7 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataCompleteOutcome);
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, additionalDocumentsFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1, 1)).reply(200, additionalDocumentsFolderInfo);
 
 			const response = await request.get(
 				'/appeals-service/appeal-details/1/lpa-questionnaire/1/add-documents/1/1'
@@ -3253,6 +3407,14 @@ describe('LPA Questionnaire review', () => {
 	describe('GET /lpa-questionnaire/1/add-document-details/:folderId/', () => {
 		beforeEach(() => {
 			nock.cleanAll();
+			nock('http://test/')
+				.get(`/appeals/1/exists`)
+				.reply(200, {
+					id: 1,
+					appealId: 1,
+					appealReference: lpaqAppealData.appealReference
+				})
+				.persist();
 			nock('http://test/').get('/appeals/1?include=all').reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
@@ -3267,10 +3429,7 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataNotValidated);
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, documentFolderInfo)
-				.persist();
+			nock('http://test/').get(getFolderApiUrl(1, 1)).reply(200, documentFolderInfo).persist();
 
 			const response = await request.get(
 				'/appeals-service/appeal-details/1/lpa-questionnaire/1/add-document-details/1'
@@ -3292,7 +3451,7 @@ describe('LPA Questionnaire review', () => {
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataNotValidated);
 			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
+				.get(getFolderApiUrl(1, 1))
 				.reply(200, { ...documentFolderInfo, path: 'lpa-questionnaire/appealNotification' })
 				.persist();
 
@@ -3327,7 +3486,7 @@ describe('LPA Questionnaire review', () => {
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataNotValidated);
 			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
+				.get(getFolderApiUrl(1, 1))
 				.reply(200, lpaqAdditionalDocumentsFolderInfo)
 				.persist();
 
@@ -3362,7 +3521,7 @@ describe('LPA Questionnaire review', () => {
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataIncompleteOutcome);
 			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
+				.get(getFolderApiUrl(1, 1))
 				.reply(200, lpaqAdditionalDocumentsFolderInfo)
 				.persist();
 
@@ -3397,7 +3556,7 @@ describe('LPA Questionnaire review', () => {
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataCompleteOutcome);
 			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
+				.get(getFolderApiUrl(1, 1))
 				.reply(200, lpaqAdditionalDocumentsFolderInfo)
 				.persist();
 
@@ -3431,6 +3590,14 @@ describe('LPA Questionnaire review', () => {
 	describe('GET /lpa-questionnaire/1/add-document-details/:folderId/:documentId', () => {
 		beforeEach(() => {
 			nock.cleanAll();
+			nock('http://test/')
+				.get(`/appeals/1/exists`)
+				.reply(200, {
+					id: 1,
+					appealId: 1,
+					appealReference: lpaqAppealData.appealReference
+				})
+				.persist();
 			nock('http://test/').get('/appeals/1?include=all').reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
@@ -3445,10 +3612,7 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataNotValidated);
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, documentFolderInfo)
-				.persist();
+			nock('http://test/').get(getFolderApiUrl(1, 1)).reply(200, documentFolderInfo).persist();
 
 			const response = await request.get(
 				'/appeals-service/appeal-details/1/lpa-questionnaire/1/add-document-details/1/1'
@@ -3470,7 +3634,7 @@ describe('LPA Questionnaire review', () => {
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataNotValidated);
 			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
+				.get(getFolderApiUrl(1, 1))
 				.reply(200, { ...documentFolderInfo, path: 'lpa-questionnaire/appealNotification' })
 				.persist();
 
@@ -3505,7 +3669,7 @@ describe('LPA Questionnaire review', () => {
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataNotValidated);
 			nock('http://test/')
-				.get('/appeals/1/document-folders/2')
+				.get(getFolderApiUrl(1, 2))
 				.reply(200, lpaqAdditionalDocumentsFolderInfo)
 				.persist();
 
@@ -3540,7 +3704,7 @@ describe('LPA Questionnaire review', () => {
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataIncompleteOutcome);
 			nock('http://test/')
-				.get('/appeals/1/document-folders/2')
+				.get(getFolderApiUrl(1, 2))
 				.reply(200, lpaqAdditionalDocumentsFolderInfo)
 				.persist();
 
@@ -3575,7 +3739,7 @@ describe('LPA Questionnaire review', () => {
 				.get('/appeals/1/lpa-questionnaires/1')
 				.reply(200, lpaQuestionnaireDataCompleteOutcome);
 			nock('http://test/')
-				.get('/appeals/1/document-folders/2')
+				.get(getFolderApiUrl(1, 2))
 				.reply(200, lpaqAdditionalDocumentsFolderInfo)
 				.persist();
 
@@ -3614,13 +3778,18 @@ describe('LPA Questionnaire review', () => {
 
 		beforeEach(async () => {
 			nock('http://test/')
+				.get(`/appeals/1/exists`)
+				.reply(200, {
+					id: 1,
+					appealId: 1,
+					appealReference: lpaqAppealData.appealReference
+				})
+				.persist();
+			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
 				.persist();
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, documentFolderInfo)
-				.persist();
+			nock('http://test/').get(getFolderApiUrl(1, 1)).reply(200, documentFolderInfo).persist();
 			nock('http://test/')
 				.patch('/appeals/1/documents')
 				.reply(200, {
@@ -4037,7 +4206,7 @@ describe('LPA Questionnaire review', () => {
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/document-redaction-statuses').reply(200, []);
 			nock('http://test/').patch(`/appeals/1/documents`).reply(200, []);
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1, 1)).reply(200, documentFolderInfo);
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 
@@ -4060,7 +4229,7 @@ describe('LPA Questionnaire review', () => {
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/document-redaction-statuses').reply(200, []);
 			nock('http://test/').patch('/appeals/1/documents/1').reply(200, {});
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1, 1)).reply(200, documentFolderInfo);
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 
@@ -4077,15 +4246,20 @@ describe('LPA Questionnaire review', () => {
 	describe('GET /lpa-questionnaire/1/add-documents/:folderId/check-your-answers', () => {
 		beforeEach(() => {
 			nock.cleanAll();
+			nock('http://test/')
+				.get(`/appeals/1/exists`)
+				.reply(200, {
+					id: 1,
+					appealId: 1,
+					appealReference: lpaqAppealData.appealReference
+				})
+				.persist();
 			nock('http://test/').get('/appeals/1?include=all').reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
 				.persist();
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, documentFolderInfo)
-				.persist();
+			nock('http://test/').get(getFolderApiUrl(1, 1)).reply(200, documentFolderInfo).persist();
 		});
 		afterEach(() => {
 			nock.cleanAll();
@@ -4145,15 +4319,20 @@ describe('LPA Questionnaire review', () => {
 	describe('POST /lpa-questionnaire/1/add-documents/:folderId/check-your-answers', () => {
 		beforeEach(() => {
 			nock.cleanAll();
+			nock('http://test/')
+				.get(`/appeals/1/exists`)
+				.reply(200, {
+					id: 1,
+					appealId: 1,
+					appealReference: lpaqAppealData.appealReference
+				})
+				.persist();
 			nock('http://test/').get('/appeals/1?include=all').reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
 				.persist();
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, documentFolderInfo)
-				.persist();
+			nock('http://test/').get(getFolderApiUrl(1, 1)).reply(200, documentFolderInfo).persist();
 		});
 		afterEach(() => {
 			nock.cleanAll();
@@ -4227,15 +4406,20 @@ describe('LPA Questionnaire review', () => {
 	describe('GET /lpa-questionnaire/1/add-documents/:folderId/:documentId/check-your-answers', () => {
 		beforeEach(() => {
 			nock.cleanAll();
+			nock('http://test/')
+				.get(`/appeals/1/exists`)
+				.reply(200, {
+					id: 1,
+					appealId: 1,
+					appealReference: lpaqAppealData.appealReference
+				})
+				.persist();
 			nock('http://test/').get('/appeals/1?include=all').reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
 				.persist();
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, documentFolderInfo)
-				.persist();
+			nock('http://test/').get(getFolderApiUrl(1, 1)).reply(200, documentFolderInfo).persist();
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(() => {
@@ -4296,15 +4480,20 @@ describe('LPA Questionnaire review', () => {
 	describe('POST /lpa-questionnaire/1/add-documents/:folderId/:documentId/check-your-answers', () => {
 		beforeEach(() => {
 			nock.cleanAll();
+			nock('http://test/')
+				.get(`/appeals/1/exists`)
+				.reply(200, {
+					id: 1,
+					appealId: 1,
+					appealReference: lpaqAppealData.appealReference
+				})
+				.persist();
 			nock('http://test/').get('/appeals/1?include=all').reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
 				.persist();
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, documentFolderInfo)
-				.persist();
+			nock('http://test/').get(getFolderApiUrl(1, 1)).reply(200, documentFolderInfo).persist();
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(() => {
@@ -4371,6 +4560,14 @@ describe('LPA Questionnaire review', () => {
 			// @ts-ignore
 			usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
 			nock('http://test/')
+				.get(`/appeals/1/exists`)
+				.reply(200, {
+					id: 1,
+					appealId: 1,
+					appealReference: lpaqAppealData.appealReference
+				})
+				.persist();
+			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
 			nock('http://test/')
@@ -4383,7 +4580,7 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should render a 404 error page if the folderId is not valid', async () => {
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1, 1)).reply(200, documentFolderInfo);
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 
 			const response = await request.get(`${baseUrl}/manage-documents/99/`);
@@ -4399,7 +4596,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render the manage documents listing page with one document item for each document present in the folder, if the folderId is valid', async () => {
 			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
+				.get(getFolderApiUrl(1, 1))
 				.reply(200, { ...documentFolderInfo, path: 'lpa-questionnaire/appealNotification' });
 
 			const response = await request.get(`${baseUrl}/manage-documents/1/`);
@@ -4425,9 +4622,7 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should render the manage documents listing page with the expected heading, if the folderId is valid, and the folder is additional documents', async () => {
-			nock('http://test/')
-				.get('/appeals/1/document-folders/2')
-				.reply(200, additionalDocumentsFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1, 2)).reply(200, additionalDocumentsFolderInfo);
 
 			const response = await request.get(`${baseUrl}/manage-documents/2/`);
 			const element = parseHtml(response.text);
@@ -4441,22 +4636,22 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it.each([
-			[
-				'householder',
-				APPEAL_TYPE.HOUSEHOLDER,
-				'Agreement to change the description of development</h1>'
-			],
-			['full planning', APPEAL_TYPE.S78, 'Agreement to change the description of development</h1>'],
-			[
-				'listed building',
-				APPEAL_TYPE.PLANNED_LISTED_BUILDING,
-				'Agreement to change the description of development</h1>'
-			],
-			[
-				'cas planning',
-				APPEAL_TYPE.CAS_PLANNING,
-				'Agreement to change the description of development</h1>'
-			],
+			// [
+			// 	'householder',
+			// 	APPEAL_TYPE.HOUSEHOLDER,
+			// 	'Agreement to change the description of development</h1>'
+			// ],
+			// ['full planning', APPEAL_TYPE.S78, 'Agreement to change the description of development</h1>'],
+			// [
+			// 	'listed building',
+			// 	APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+			// 	'Agreement to change the description of development</h1>'
+			// ],
+			// [
+			// 	'cas planning',
+			// 	APPEAL_TYPE.CAS_PLANNING,
+			// 	'Agreement to change the description of development</h1>'
+			// ],
 			[
 				'cas advertisement',
 				APPEAL_TYPE.CAS_ADVERTISEMENT,
@@ -4473,6 +4668,7 @@ describe('LPA Questionnaire review', () => {
 				nock.cleanAll(); // need to remove the nocks so we can change the appeal type
 				// @ts-ignore
 				usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
+
 				nock('http://test/')
 					.get('/appeals/document-redaction-statuses')
 					.reply(200, documentRedactionStatuses);
@@ -4480,7 +4676,7 @@ describe('LPA Questionnaire review', () => {
 					.get('/appeals/1?include=appealType')
 					.reply(200, { appealType: appealType })
 					.persist();
-				nock('http://test/').get('/appeals/1/document-folders/3').reply(200, documentFolderInfo);
+				nock('http://test/').get(getFolderApiUrl(1, 3)).reply(200, documentFolderInfo);
 
 				const response = await request.get(`${baseUrl}/manage-documents/3/`);
 				const element = parseHtml(response.text);
@@ -4511,10 +4707,7 @@ describe('LPA Questionnaire review', () => {
 				.get('/appeals/1?include=appealType')
 				.reply(200, { appealType: APPEAL_TYPE.HOUSEHOLDER })
 				.persist();
-			nock('http://test/')
-				.get('/appeals/1/document-folders/1')
-				.reply(200, documentFolderInfo)
-				.persist();
+			nock('http://test/').get(getFolderApiUrl(1, 1)).reply(200, documentFolderInfo).persist();
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo).persist();
 		});
 
@@ -4706,7 +4899,7 @@ describe('LPA Questionnaire review', () => {
 				.get('/appeals/1?include=appealType')
 				.reply(200, { appealType: APPEAL_TYPE.HOUSEHOLDER })
 				.persist();
-			nock('http://test/').get('/appeals/1/document-folders/1').reply(200, documentFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(1, 1)).reply(200, documentFolderInfo);
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 

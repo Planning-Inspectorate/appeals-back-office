@@ -7,7 +7,13 @@ import {
 	deleteDocumentVersion
 } from '#repositories/document-metadata.repository.js';
 import documentRedactionStatusRepository from '#repositories/document-redaction-status.repository.js';
-import { getByCaseId, getByCaseIdAndPaths, getById } from '#repositories/folder.repository.js';
+import {
+	getByCaseId,
+	getByCaseIdAndPaths,
+	getById,
+	getFolderSizeById,
+	getRepresentationFolderSizeById
+} from '#repositories/folder.repository.js';
 import { validateBlobContents } from '#utils/blob-validation.js';
 import logger from '#utils/logger.js';
 import {
@@ -37,34 +43,30 @@ import { mapDocumentsForAuditTrail, mapDocumentsForDatabase } from './documents.
 
 /**
  * @param {number} appealId
- * @param {string} folderId
+ * @param {number} folderId
+ * @param {number} pageNumber
+ * @param {number} pageSize
  * @param {number|null} repId
  * @returns {Promise<FolderInfo | null>}
  */
-export const getFolderForAppeal = async (appealId, folderId, repId) => {
-	const folder = await getById(Number(folderId));
+export const getFolderForAppeal = async (appealId, folderId, pageNumber, pageSize, repId) => {
+	const folder = await getById(Number(folderId), pageNumber, pageSize, repId);
 	if (!folder) {
 		return null;
 	}
 
 	if (repId) {
-		const attachments = folder?.documents
-			.filter(
-				(doc) =>
-					doc.latestDocumentVersion?.representation != null &&
-					doc.latestDocumentVersion?.representation.representationId === repId
-			)
-			.map((doc) => {
-				const docFriendlyName = doc.name.replace(/[a-f\d-]{36}_/, '');
-				return {
-					...doc,
-					name: docFriendlyName,
-					latestDocumentVersion: {
-						...doc.latestDocumentVersion,
-						fileName: docFriendlyName
-					}
-				};
-			});
+		const attachments = folder?.documents.map((doc) => {
+			const docFriendlyName = doc.name.replace(/[a-f\d-]{36}_/, '');
+			return {
+				...doc,
+				name: docFriendlyName,
+				latestDocumentVersion: {
+					...doc.latestDocumentVersion,
+					fileName: docFriendlyName
+				}
+			};
+		});
 
 		return (
 			formatFolder({
@@ -79,6 +81,19 @@ export const getFolderForAppeal = async (appealId, folderId, repId) => {
 	}
 
 	return null;
+};
+
+/**
+ * @param {number} folderId
+ * @param {number|null} [repId]
+ * @returns {Promise<number>}
+ */
+export const getFolderDocumentCount = async (folderId, repId) => {
+	if (repId) {
+		return getRepresentationFolderSizeById(folderId, repId);
+	}
+
+	return getFolderSizeById(folderId);
 };
 
 /**
