@@ -4,11 +4,18 @@
 import { users } from '../../fixtures/users';
 import { InquirySectionPage } from '../../page_objects/caseDetails/inquirySectionPage.js';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
+import { FileDetailsPage } from '../../page_objects/fileDetailsPage.js';
+import {
+	ERROR_MESSAGES,
+	invalidFileNameVariants,
+	validFileNameVariants
+} from '../../support/consts.js';
 import { happyPathHelper } from '../../support/happyPathHelper';
 import { getDateAndTimeValues } from '../../support/utils/format.js';
 
 const caseDetailsPage = new CaseDetailsPage();
 const inquirySectionPage = new InquirySectionPage();
+const fileDetailsPage = new FileDetailsPage();
 
 let caseObj;
 let appeal;
@@ -25,18 +32,16 @@ const setupTestCase = () => {
 	});
 };
 
-// global setup and cleanup as are using same case across date and time tests
-before(() => {
-	setupTestCase();
-});
-
-after(() => {
-	cy.deleteAppeals(appeal);
-});
-
-describe('Date Validation', { testIsolation: false }, () => {
+describe('Date and Time Validation', { testIsolation: false }, () => {
+	// global setup and cleanup as are using same case across date and time tests
+	before(() => {
+		setupTestCase();
+	});
 	beforeEach(() => {
 		inquirySectionPage.clearInquiryDateAndTime();
+	});
+	after(() => {
+		cy.deleteAppeals(appeal);
 	});
 
 	it('All fields are blank', () => {
@@ -263,12 +268,6 @@ describe('Date Validation', { testIsolation: false }, () => {
 			fields: ['inquiry-date-day']
 		});
 	});
-});
-
-describe('Time Validation', { testIsolation: false }, () => {
-	beforeEach(() => {
-		inquirySectionPage.clearInquiryDateAndTime();
-	});
 
 	it('All fields are blank', () => {
 		// make sure date part is valid
@@ -406,6 +405,63 @@ describe('Time Validation', { testIsolation: false }, () => {
 			inquirySectionPage.verifyErrorMessages({
 				messages: ['Enter a inquiry time using numbers 0 to 9'],
 				fields: ['inquiry-time-hour']
+			});
+		});
+	});
+});
+
+describe('Rename file with valid name', { testIsolation: false }, () => {
+	before(() => {
+		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.uploadDocAppellantCase(caseObj);
+			caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
+
+			// Simulate the completion of the documents scan
+			cy.simulateDocumentsScanComplete(caseObj);
+
+			caseDetailsPage.clickLinkByText('View and edit');
+		});
+	});
+	after(() => {
+		cy.deleteAppeals(appeal);
+	});
+
+	validFileNameVariants.forEach((fileVariant) => {
+		it.only(`can rename a file with valid name: ${fileVariant.type}`, () => {
+			fileDetailsPage.changeFileName();
+			fileDetailsPage.enterFileName(fileVariant.name);
+			fileDetailsPage.clickButtonByText('Confirm');
+			fileDetailsPage.confirmFileRenamed(fileVariant.name);
+		});
+	});
+});
+
+describe('Rename file with invalid name', { testIsolation: false }, () => {
+	before(() => {
+		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.uploadDocAppellantCase(caseObj);
+			caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
+
+			// Simulate the completion of the documents scan
+			cy.simulateDocumentsScanComplete(caseObj);
+
+			caseDetailsPage.clickLinkByText('View and edit');
+			fileDetailsPage.changeFileName();
+		});
+	});
+	after(() => {
+		cy.deleteAppeals(appeal);
+	});
+
+	invalidFileNameVariants.forEach((invalidFileVariant) => {
+		it.only(`cannot rename a file with invalid name: ${invalidFileVariant.type}`, () => {
+			fileDetailsPage.enterFileName(invalidFileVariant.name);
+			fileDetailsPage.clickButtonByText('Confirm');
+			fileDetailsPage.verifyErrorMessages({
+				messages: [ERROR_MESSAGES.invalidFileName],
+				fields: ['file-name']
 			});
 		});
 	});
