@@ -1,51 +1,72 @@
+import redisClient from '#infrastructure/redis.js';
 import createManyToManyRelationData from '#utils/create-many-to-many-relation-data.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { DATABASE_ORDER_BY_ASC } from '@pins/appeals/constants/support.js';
+import { validCacheLookupTables } from '../../lookup-table-names.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.LookupTables} LookupTables */
 /** @typedef {import('@pins/appeals.api').Appeals.IncompleteInvalidReasons} IncompleteInvalidReasons */
-/**
- * @typedef {import('#db-client/client.ts').Prisma.PrismaPromise<T>} PrismaPromise
- * @template T
- */
+
+const prefix = 'lookup-';
 
 /**
  * @param {string} databaseTable
  * @returns {Promise<LookupTables[]>}
  */
-const getLookupList = (databaseTable) =>
-	// @ts-ignore
-	databaseConnector[databaseTable].findMany({
-		orderBy: {
-			id: DATABASE_ORDER_BY_ASC
-		}
-	});
+const getLookupList = (databaseTable) => {
+	const getLookupData = () =>
+		//@ts-ignore
+		databaseConnector[databaseTable].findMany({
+			orderBy: {
+				id: DATABASE_ORDER_BY_ASC
+			}
+		});
+
+	const cacheKey = `${prefix}${databaseTable}`;
+
+	if (!redisClient || !validCacheLookupTables.has(cacheKey)) {
+		return getLookupData();
+	}
+	const cacheTimeInSeconds = 600;
+	return redisClient.getOrSet(cacheKey, cacheKey, cacheTimeInSeconds, getLookupData);
+};
 
 /**
  * @param {string} databaseTable
  * @param {string} value
  * @returns {Promise<LookupTables | null>}
  */
-const getLookupListValueByName = (databaseTable, value) =>
-	// @ts-ignore
-	databaseConnector[databaseTable].findUnique({
-		where: {
-			name: value
-		}
-	});
+const getLookupListValueByName = async (databaseTable, value) => {
+	if (!validCacheLookupTables.has(`${prefix}${databaseTable}`)) {
+		//@ts-ignore
+		return await databaseConnector[databaseTable].findUnique({
+			where: {
+				name: value
+			}
+		});
+	}
+
+	const all = await getLookupList(databaseTable);
+	return all.find((item) => item.name?.toLowerCase() === value.toLowerCase()) || null;
+};
 
 /**
  * @param {string} databaseTable
  * @param {{key:string,value:string}} param1
  * @returns {Promise<LookupTables | null>}
  */
-const getLookupListValueByKey = (databaseTable, { key, value }) =>
-	// @ts-ignore
-	databaseConnector[databaseTable].findUnique({
-		where: {
-			[key]: value
-		}
-	});
+const getLookupListValueByKey = async (databaseTable, { key, value }) => {
+	if (!validCacheLookupTables.has(`${prefix}${databaseTable}`)) {
+		//@ts-ignore
+		return await databaseConnector[databaseTable].findUnique({
+			where: {
+				[key]: value
+			}
+		});
+	}
+	const all = await getLookupList(databaseTable);
+	return all.find((item) => item[key]?.toLowerCase() === value.toLowerCase()) || null;
+};
 
 /**
  * @param {{

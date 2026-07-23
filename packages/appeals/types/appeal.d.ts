@@ -1,3 +1,8 @@
+export interface CostsDecision {
+	awaitingAppellantCostsDecision: boolean;
+	awaitingLpaCostsDecision: boolean;
+}
+
 export interface Address {
 	addressId?: number;
 	addressLine1?: string;
@@ -40,14 +45,9 @@ export interface AppealSummary {
 	isS78Expedited?: boolean;
 }
 
-export interface CostsDecision {
-	awaitingAppellantCostsDecision: boolean;
-	awaitingLpaCostsDecision: boolean;
-}
-
 export interface AppealList {
 	itemCount: number;
-	items: AppealSummary[];
+	items: AppealListItem[];
 	statuses: string[];
 	statusesInNationalList: string[];
 	lpas: { name: string; lpaCode: string }[];
@@ -57,6 +57,27 @@ export interface AppealList {
 	page: number;
 	pageCount: number;
 	pageSize: number;
+}
+
+export interface AppealListItem {
+	appealId: number;
+	appealReference: string;
+	appealSite: Address;
+	appealStatus: string;
+	appealType?: string;
+	procedureType?: string;
+	createdAt: Date;
+	localPlanningDepartment: string;
+	appealTimetable?: AppealTimetable;
+	documentationSummary: DocumentationSummary;
+	planningApplicationReference: string | null;
+	isHearingSetup: boolean | null;
+	hasHearingAddress: boolean | null;
+	numberOfResidencesNetChange: number | null;
+	isInquirySetup: boolean | null;
+	hasInquiryAddress: boolean | null;
+	enforcementReference?: string | null;
+	isS78Expedited?: boolean;
 }
 
 export interface PersonalList {
@@ -73,23 +94,63 @@ export interface PersonalListItem {
 	appealReference: string;
 	appealStatus: string;
 	completedStateList: string[];
-	appealType: string;
+	appealType?: string;
 	procedureType?: string;
 	lpaQuestionnaireId?: number | null;
 	documentationSummary: DocumentationSummary;
-	dueDate: string;
+	dueDate?: string | null;
 	appealTimetable?: AppealTimetable;
 	isParentAppeal: boolean | null;
 	isChildAppeal: boolean | null;
 	isHearingSetup: boolean | null;
 	hasHearingAddress: boolean | null;
 	awaitingLinkedAppeal: boolean | null;
-	costsDecision?: CostsDecision;
+	costsDecision?: CostsDecision | null;
 	numberOfResidencesNetChange: number | null;
 	isInquirySetup: boolean | null;
 	hasInquiryAddress: boolean | null;
 	enforcementNoticeInvalid?: string | null;
 	isS78Expedited?: boolean;
+}
+
+export interface DocumentationSummary {
+	appellantCase?: DocumentationSummaryEntry;
+	lpaQuestionnaire?: DocumentationSummaryEntry;
+	ipComments?: DocumentationSummaryEntry;
+	lpaStatement?: DocumentationSummaryEntry;
+	rule6PartyStatements?: { [serviceUserId: string]: DocumentationSummaryEntry };
+	lpaFinalComments?: DocumentationSummaryEntry;
+	appellantFinalComments?: DocumentationSummaryEntry;
+	lpaProofOfEvidence?: DocumentationSummaryEntry;
+	appellantProofOfEvidence?: DocumentationSummaryEntry;
+	rule6PartyProofs?: { [serviceUserId: string]: DocumentationSummaryEntry };
+	appellantStatement?: DocumentationSummaryEntry;
+}
+
+export interface DocumentationSummaryEntry {
+	status: string;
+	dueDate?: string | undefined | null;
+	receivedAt?: string | undefined | null;
+	representationStatus?: string | undefined | null;
+	counts?: Record<string, number>;
+	isRedacted?: boolean;
+	organisationName?: string;
+	rule6PartyId?: number;
+}
+
+export interface AppealTimetable {
+	appealTimetableId?: number | null;
+	caseResubmissionDueDate?: string | null;
+	lpaQuestionnaireDueDate?: string | null;
+	ipCommentsDueDate?: string | null;
+	lpaStatementDueDate?: string | null;
+	finalCommentsDueDate?: string | null;
+	s106ObligationDueDate?: string | null;
+	issueDeterminationDate?: string | null;
+	statementOfCommonGroundDueDate?: string | null;
+	planningObligationDueDate?: string | null;
+	proofOfEvidenceAndWitnessesDueDate?: string | null;
+	caseManagementConferenceDueDate?: string | null;
 }
 
 export interface PaginationItem {

@@ -161,7 +161,7 @@ const retrieveAppealListData = async (
 		appealListRepository.getAllAppealsCount(...appealFilters)
 	]);
 	const [mappedLPAs, users] = await Promise.all([mapAppealLPAs(allAppeals), mapUsers(allAppeals)]);
-	const mappedAppeals = appeals.map((appeal) => formatAppeal(appeal, []));
+	const mappedAppeals = appeals.map((appeal) => formatAppeal(appeal));
 	const mappedStatuses = mapCurrentAppealStatuses(appeals);
 	const mappedInspectors = users.inspectors;
 	const mappedCaseOfficers = users.caseOfficers;
