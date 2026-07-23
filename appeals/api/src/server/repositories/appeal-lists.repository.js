@@ -12,6 +12,125 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
  * @typedef {Awaited<ReturnType<getUserAppeals>>[1][0]} DBUserAppeal
  */
 
+/** @satisfies {import('#db-client/models.ts').AppealFindManyArgs['select'] } */
+const appealListSelect = {
+	id: true,
+	reference: true,
+	applicationReference: true,
+	caseExtensionDate: true,
+	currentStatus: true,
+	caseCreatedDate: true,
+	address: {
+		select: {
+			addressLine1: true,
+			addressLine2: true,
+			addressTown: true,
+			addressCounty: true,
+			postcode: true
+		}
+	},
+	lpa: {
+		select: {
+			name: true
+		}
+	},
+	appealStatus: {
+		select: {
+			status: true,
+			valid: true,
+			createdAt: true
+		}
+	},
+	appellantCase: {
+		select: {
+			numberOfResidencesNetChange: true,
+			applicationDate: true,
+			applicationDecision: true,
+			typeOfPlanningApplication: true,
+			appellantCaseValidationOutcomeId: true,
+			enforcementReference: true,
+			appellantCaseValidationOutcome: {
+				select: {
+					name: true
+				}
+			}
+		}
+	},
+	appealType: {
+		select: {
+			type: true,
+			key: true
+		}
+	},
+	lpaQuestionnaire: {
+		select: {
+			id: true,
+			lpaqCreatedDate: true,
+			lpaQuestionnaireValidationOutcome: {
+				select: {
+					name: true
+				}
+			}
+		}
+	},
+	procedureType: {
+		select: {
+			name: true
+		}
+	},
+	inquiry: {
+		select: {
+			addressId: true
+		}
+	},
+	hearing: {
+		select: {
+			addressId: true
+		}
+	},
+	enforcementNoticeAppealOutcome: {
+		select: {
+			enforcementNoticeInvalid: true
+		}
+	},
+	appealTimetable: {
+		select: {
+			id: true,
+			lpaQuestionnaireDueDate: true,
+			caseResubmissionDueDate: true,
+			ipCommentsDueDate: true,
+			lpaStatementDueDate: true,
+			finalCommentsDueDate: true,
+			s106ObligationDueDate: true,
+			issueDeterminationDate: true,
+			proofOfEvidenceAndWitnessesDueDate: true,
+			caseManagementConferenceDueDate: true
+		}
+	},
+	representations: {
+		select: {
+			representationType: true,
+			representedId: true,
+			status: true,
+			dateCreated: true,
+			isRedacted: true
+		}
+	},
+	appealRule6Parties: {
+		select: {
+			id: true,
+			serviceUserId: true,
+			serviceUser: {
+				select: {
+					organisationName: true
+				}
+			}
+		}
+	}
+};
+
+/** @typedef {import('#db-client/models.ts').AppealGetPayload<{ select: appealListSelect }>} AppealListSelected */
+
 /**
  * @param {string} searchTerm
  * @param {string} status
@@ -70,37 +189,7 @@ const getAllAppeals = async (
 
 	const appeals = await databaseConnector.appeal.findMany({
 		where,
-		// TODO: performance
-		// use selects not include to only return the data needed for the appeals list
-		include: {
-			address: true,
-			appealType: true,
-			procedureType: true,
-			lpa: true,
-			appellantCase: {
-				include: {
-					appellantCaseValidationOutcome: true
-				}
-			},
-			inspector: true,
-			caseOfficer: true,
-			padsInspector: true,
-			appealTimetable: true,
-			representations: true,
-			lpaQuestionnaire: {
-				include: {
-					lpaQuestionnaireValidationOutcome: true
-				}
-			},
-			siteVisit: true,
-			hearing: true,
-			inquiry: true,
-			appealRule6Parties: {
-				include: {
-					serviceUser: true
-				}
-			}
-		},
+		select: appealListSelect,
 		orderBy: { caseUpdatedDate: 'desc' },
 		...pagination
 	});
@@ -273,9 +362,6 @@ const buildAllAppealsWhereClause = (
 		...(String(status) !== 'undefined' && {
 			currentStatus: status
 		}),
-		appealType: {
-			key: { in: getEnabledAppealTypes() }
-		},
 		...(String(searchTerm) !== 'undefined' && {
 			OR: [
 				{

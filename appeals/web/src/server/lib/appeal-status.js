@@ -8,7 +8,7 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /**
  * @param {string} appealStatus
- * @param {string} appealType
+ * @param {string|undefined} appealType
  * @param {string|undefined} appealProcedureType
  * @returns {string}
  * */

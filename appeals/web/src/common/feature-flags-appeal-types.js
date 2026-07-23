@@ -47,7 +47,7 @@ export const isAppealCaseTypeEnabled = (appealCaseType) => {
 
 /**
  *
- * @param {string} appealType
+ * @param {string|undefined} appealType
  * @returns boolean
  */
 export const isAppealTypeEnabled = (appealType) => {
