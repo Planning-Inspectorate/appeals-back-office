@@ -7,14 +7,14 @@ exports[`interested-party-comments GET /add-document GET /add-document should re
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Upload supporting document</h1>
+            <h1 class="govuk-heading-l">Upload supporting documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/2/interested-party-comments/5/add-document/redaction-status"
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/2/interested-party-comments/5/add-document/add-document-details"
             data-form-id="1" data-case-id="2" data-case-reference="APP/Q9999/D/21/351062"
-            data-folder-id="1234" data-document-type="attachments" data-document-stage="representation"
+            data-folder-id="1234" data-document-type="representationAttachments" data-document-stage="representation"
             data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
             data-document-title="interested party comment document" data-allowed-types="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
             data-formatted-allowed-types="PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF">
@@ -25,7 +25,7 @@ exports[`interested-party-comments GET /add-document GET /add-document should re
                             <br><span>The total size of your uploaded files must be smaller than 1GB.</span>
                         </div>
                         <div class="middle-errors-hook">
-                            <h2 class="pins-file-upload__container-title">Upload supporting document</h2>
+                            <h2 class="pins-file-upload__container-title">Upload supporting documents</h2>
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1"
@@ -48,105 +48,6 @@ exports[`interested-party-comments GET /add-document GET /add-document should re
                         <div class="progress-hook"></div>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`interested-party-comments GET /add-document GET /add-document/date-submitted should render the date submitted page 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> When was the supporting document submitted?</h1>
-                                </legend>
-                                <div id="date-hint" class="govuk-hint">
-                                    <div class="govuk-hint">For example, 27 3 2024</div>
-                                </div>
-                                <div class="govuk-date-input" id="date">
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="date-day" name="date-day" type="text" value="26" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="date-month" name="date-month" type="text" value="8" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
-                                            id="date-year" name="date-year" type="text" value="2025" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`interested-party-comments GET /add-document GET /add-document/redaction-status should render the redaction status page 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Redaction status</h1>
-                                </legend>
-                                <div class="govuk-radios" data-module="govuk-radios">
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="redactionStatus" name="redactionStatus"
-                                        type="radio" value="redacted">
-                                        <label class="govuk-label govuk-radios__label" for="redactionStatus">Redacted</label>
-                                    </div>
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="redactionStatus-2" name="redactionStatus"
-                                        type="radio" value="not_redacted">
-                                        <label class="govuk-label govuk-radios__label" for="redactionStatus-2">Unredacted</label>
-                                    </div>
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="redactionStatus-3" name="redactionStatus"
-                                        type="radio" value="no_redaction_required">
-                                        <label class="govuk-label govuk-radios__label" for="redactionStatus-3">No redaction required</label>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
             </div>
         </div>
     </div>
