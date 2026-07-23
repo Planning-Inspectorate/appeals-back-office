@@ -4,6 +4,7 @@ import {
 	getAppellantCaseLink,
 	getLPAQuestionnaireLink,
 	tryMapDocument,
+	tryMapRepresentationType,
 	tryMapUsers
 } from '#appeals/appeal-details/audit/audit.mapper.js';
 import { statusFormatMap } from '#appeals/appeal-details/representations/document-attachments/controller/redaction-status.js';
@@ -241,5 +242,64 @@ describe('audit', () => {
 				'<td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--green">Issue decision</strong></td>'
 			);
 		});
+	});
+});
+describe('tryMapRepresentationType', () => {
+	const appeal = { appealId: 1 };
+
+	it('should return the correct link for interested party comment', () => {
+		const log = 'ip_comment was received';
+		const result = tryMapRepresentationType(appeal.appealId, log);
+		expect(result).toBe(
+			`<a class="govuk-link" href="/appeals-service/appeal-details/1/interested-party-comments">Interested party comment</a> was received`
+		);
+	});
+
+	it('should return the correct link for LPA statement', () => {
+		const log = 'lpa_statement was received';
+		const result = tryMapRepresentationType(appeal.appealId, log);
+		expect(result).toBe(
+			`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-statement">LPA statement</a> was received`
+		);
+	});
+
+	it('should return the correct link for appellant statement', () => {
+		const log = 'appellant_statement was received';
+		const result = tryMapRepresentationType(appeal.appealId, log);
+		expect(result).toBe(
+			`<a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-statement">Appellant statement</a> was received`
+		);
+	});
+
+	it('should return the correct link for LPA final comment', () => {
+		const log = 'lpa_final_comment was received';
+		const result = tryMapRepresentationType(appeal.appealId, log);
+		expect(result).toBe(
+			`<a class="govuk-link" href="/appeals-service/appeal-details/1/final-comments/lpa">LPA final comment</a> was received`
+		);
+	});
+
+	it('should return the correct link for appellant final comment', () => {
+		const log = 'appellant_final_comment was received';
+		const result = tryMapRepresentationType(appeal.appealId, log);
+		expect(result).toBe(
+			`<a class="govuk-link" href="/appeals-service/appeal-details/1/final-comments/appellant">Appellant final comment</a> was received`
+		);
+	});
+
+	it('should return the correct link for appellant proof of evidence', () => {
+		const log = 'appellant_proofs_evidence was received';
+		const result = tryMapRepresentationType(appeal.appealId, log);
+		expect(result).toBe(
+			`<a class="govuk-link" href="/appeals-service/appeal-details/1/proof-of-evidence/appellant/manage-documents">Appellant proof of evidence and witnesses</a> was received`
+		);
+	});
+
+	it('should return the correct link for LPA proof of evidence', () => {
+		const log = 'lpa_proofs_evidence was received';
+		const result = tryMapRepresentationType(appeal.appealId, log);
+		expect(result).toBe(
+			`<a class="govuk-link" href="/appeals-service/appeal-details/1/proof-of-evidence/lpa/manage-documents">LPA proof of evidence and witnesses</a> was received`
+		);
 	});
 });
