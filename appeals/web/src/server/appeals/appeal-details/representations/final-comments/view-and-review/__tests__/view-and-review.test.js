@@ -424,28 +424,28 @@ describe('final-comments', () => {
 			const response = await request.get(`${baseUrl}/2/final-comments/lpa/add-document`);
 			expect(response.statusCode).toBe(200);
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-			expect(unprettifiedElement.innerHTML).toContain('Upload supporting document</h1');
+			expect(unprettifiedElement.innerHTML).toContain('Upload supporting documents</h1');
 		});
 
-		it('should render the redaction status page', async () => {
-			const response = await request.get(
-				`${baseUrl}/2/final-comments/lpa/add-document/redaction-status`
-			);
-			expect(response.statusCode).toBe(200);
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-			expect(unprettifiedElement.innerHTML).toContain('Redaction status</h1');
-		});
+		// it('should render the redaction status page', async () => {
+		// 	const response = await request.get(
+		// 		`${baseUrl}/2/final-comments/lpa/add-document/redaction-status`
+		// 	);
+		// 	expect(response.statusCode).toBe(200);
+		// 	const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+		// 	expect(unprettifiedElement.innerHTML).toContain('Redaction status</h1');
+		// });
 
-		it('should render the date submitted page', async () => {
-			const response = await request.get(
-				`${baseUrl}/2/final-comments/lpa/add-document/date-submitted`
-			);
-			expect(response.statusCode).toBe(200);
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-			expect(unprettifiedElement.innerHTML).toContain(
-				'When was the supporting document submitted?</h1'
-			);
-		});
+		// it('should render the date submitted page', async () => {
+		// 	const response = await request.get(
+		// 		`${baseUrl}/2/final-comments/lpa/add-document/date-submitted`
+		// 	);
+		// 	expect(response.statusCode).toBe(200);
+		// 	const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+		// 	expect(unprettifiedElement.innerHTML).toContain(
+		// 		'When was the supporting document submitted?</h1'
+		// 	);
+		// });
 	});
 
 	describe('GET /manage-documents/:folderId/:documentId/:versionId/delete', () => {

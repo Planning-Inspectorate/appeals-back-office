@@ -30,21 +30,36 @@ export const isValidRedactionStatus = (maybeRedactionStatus) =>
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @param {string} value
  * @param {string} backLinkUrl
+
  * @returns {PageContent}
  */
 const mapper = (appealDetails, errors, value, backLinkUrl) => ({
-	title: 'Redaction status',
+	title: 'Add document details',
+	backLinkText: 'Back',
 	backLinkUrl,
-	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
-	pageComponents: [
-		radiosInput({
-			name,
-			legendText: 'Redaction status',
-			legendIsPageHeading: true,
-			items: Object.entries(statusFormatMap).map(([value, text]) => ({ value, text })),
-			value
-		})
-	]
+	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)} - add document details`,
+	heading: 'Representation attachments',
+	pageComponents:
+		// uncommittedFiles.flatMap((uncommittedFile, index) => {
+		// 	return mapFileUploadInfoItemToDocumentDetailsPageComponents({
+		// 		uncommittedFiles,
+		// 		uncommittedFile,
+		// 		bodyItems,
+		// 		index,
+		// 		redactionStatuses,
+		// 		dateLabelTextOverride,
+		// 		errors
+		// 	});
+		// })
+		[
+			radiosInput({
+				name,
+				legendText: 'Redaction status',
+				legendIsPageHeading: true,
+				items: Object.entries(statusFormatMap).map(([value, text]) => ({ value, text })),
+				value
+			})
+		]
 });
 
 /**
@@ -62,12 +77,19 @@ export const renderRedactionStatusFactory =
 		);
 		const value = getValue(request);
 
-		const pageContent = mapper(request.currentAppeal, request.errors, value, backLinkUrl);
+		const { currentAppeal, errors } = request;
 
-		return response.status(request.errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
-			errors: request.errors,
-			pageContent
-		});
+		// const uncommittedFiles = request.session.fileUploadInfo.files;
+		// 		const pageContent = mapper(currentAppeal, errors, value, backLinkUrl, uncommittedFiles);
+
+		const pageContent = mapper(currentAppeal, errors, value, backLinkUrl);
+
+		return response
+			.status(request.errors ? 400 : 200)
+			.render('appeals/documents/add-document-details.njk', {
+				errors: request.errors,
+				pageContent
+			});
 	};
 
 /**
