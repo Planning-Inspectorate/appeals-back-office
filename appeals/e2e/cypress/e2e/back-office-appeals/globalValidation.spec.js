@@ -20,7 +20,7 @@ const fileDetailsPage = new FileDetailsPage();
 let caseObj;
 let appeal;
 
-const setupTestCase = () => {
+const setupTestCaseForDateAndTimeValidation = () => {
 	cy.login(users.appeals.caseAdmin);
 
 	cy.createCase({ caseType: 'W' }).then((refObj) => {
@@ -32,10 +32,27 @@ const setupTestCase = () => {
 	});
 };
 
+const setupTestCaseForFileNameValidation = (startWithSelectFilename = false) => {
+	cy.createCase().then((caseObj) => {
+		appeal = caseObj;
+		happyPathHelper.uploadDocAppellantCase(caseObj);
+		caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
+
+		// Simulate the completion of the documents scan
+		cy.simulateDocumentsScanComplete(caseObj);
+
+		caseDetailsPage.clickLinkByText('View and edit');
+
+		if (startWithSelectFilename) {
+			fileDetailsPage.changeFileName();
+		}
+	});
+};
+
 describe('Date and Time Validation', { testIsolation: false }, () => {
 	// global setup and cleanup as are using same case across date and time tests
 	before(() => {
-		setupTestCase();
+		setupTestCaseForDateAndTimeValidation();
 	});
 	beforeEach(() => {
 		inquirySectionPage.clearInquiryDateAndTime();
@@ -412,16 +429,7 @@ describe('Date and Time Validation', { testIsolation: false }, () => {
 
 describe('Rename file with valid name', { testIsolation: false }, () => {
 	before(() => {
-		cy.createCase().then((caseObj) => {
-			appeal = caseObj;
-			happyPathHelper.uploadDocAppellantCase(caseObj);
-			caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
-
-			// Simulate the completion of the documents scan
-			cy.simulateDocumentsScanComplete(caseObj);
-
-			caseDetailsPage.clickLinkByText('View and edit');
-		});
+		setupTestCaseForFileNameValidation();
 	});
 	after(() => {
 		cy.deleteAppeals(appeal);
@@ -439,17 +447,7 @@ describe('Rename file with valid name', { testIsolation: false }, () => {
 
 describe('Rename file with invalid name', { testIsolation: false }, () => {
 	before(() => {
-		cy.createCase().then((caseObj) => {
-			appeal = caseObj;
-			happyPathHelper.uploadDocAppellantCase(caseObj);
-			caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
-
-			// Simulate the completion of the documents scan
-			cy.simulateDocumentsScanComplete(caseObj);
-
-			caseDetailsPage.clickLinkByText('View and edit');
-			fileDetailsPage.changeFileName();
-		});
+		setupTestCaseForFileNameValidation(true);
 	});
 	after(() => {
 		cy.deleteAppeals(appeal);
