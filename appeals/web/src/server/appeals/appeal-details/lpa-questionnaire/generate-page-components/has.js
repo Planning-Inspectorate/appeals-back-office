@@ -149,7 +149,9 @@ export const generateHASLpaQuestionnaireComponents = (mappedLPAQData) => {
 			},
 			rows: [
 				mappedLPAQData.lpaq?.otherAppeals?.display.summaryListItem,
-				mappedLPAQData.lpaq?.extraConditions?.display.summaryListItem
+				mappedLPAQData.lpaq?.extraConditions?.display.summaryListItem,
+				mappedLPAQData.lpaq?.anySignificantChangesLpa?.display.summaryListItem,
+				mappedLPAQData.lpaq?.listOfDocumentsBeforeDecision?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});

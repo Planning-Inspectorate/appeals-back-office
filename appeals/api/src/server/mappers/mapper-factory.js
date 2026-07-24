@@ -81,6 +81,10 @@ function createDataMap(mappingRequest) {
 				return mergeMaps(caseData, s78);
 			}
 		}
+		case APPEAL_CASE_TYPE.D: {
+			const has = createMap(apiMappers.apiHasMappers, mappingRequest);
+			return mergeMaps(caseData, has);
+		}
 		case APPEAL_CASE_TYPE.ZA: {
 			if (!beforeExpeditedOriginalApplicationCutOff(appeal.appellantCase?.applicationDate)) {
 				const casAdvert = createMap(apiMappers.apiCasAdvertExpeditedMappers, mappingRequest);
@@ -130,6 +134,10 @@ function createIntegrationMap(mappingRequest) {
 
 	switch (appeal.appealType?.key) {
 		//TODO: validate with Data Model
+		case APPEAL_CASE_TYPE.D: {
+			const has = createMap(integrationMappers.integrationHasMappers, mappingRequest);
+			return mergeMaps(caseData, has);
+		}
 		case APPEAL_CASE_TYPE.W: {
 			const s78 = createMap(integrationMappers.integrationS78Mappers, mappingRequest);
 			return mergeMaps(caseData, s78);
