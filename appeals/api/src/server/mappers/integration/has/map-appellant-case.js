@@ -2,61 +2,78 @@
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealS78Case} AppealS78Case */
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
 
+import formatValidationOutcomeResponse from '#utils/format-validation-outcome-response.js';
+
 /**
  *
  * @param {MappingRequest} data
  */
 export const mapAppellantCase = (data) => {
 	const { appeal } = data;
+	const { appellantCase } = appeal;
 
-	const casedata = appeal.appellantCase;
+	if (appellantCase) {
+		const validation = appellantCase.appellantCaseValidationOutcome?.name
+			? formatValidationOutcomeResponse(
+					appellantCase.appellantCaseValidationOutcome?.name || null,
+					appellantCase.appellantCaseIncompleteReasonsSelected,
+					appellantCase.appellantCaseInvalidReasonsSelected,
+					appellantCase.appellantCaseEnforcementInvalidReasonsSelected
+				) || undefined
+			: undefined;
 
-	return {
-		// @ts-ignore
-		applicationDecision: casedata?.applicationDecision ?? null,
-		siteAreaSquareMetres: casedata?.siteAreaSquareMetres
-			? Number(casedata.siteAreaSquareMetres)
-			: null,
-		floorSpaceSquareMetres: casedata?.floorSpaceSquareMetres
-			? Number(casedata.floorSpaceSquareMetres)
-			: null,
-		ownsAllLand: casedata?.ownsAllLand ?? null,
-		ownsSomeLand: casedata?.ownsSomeLand ?? null,
-		advertisedAppeal: casedata?.hasAdvertisedAppeal ?? null,
-		appellantCostsAppliedFor: casedata?.appellantCostsAppliedFor ?? null,
-		originalDevelopmentDescription: casedata?.originalDevelopmentDescription ?? null,
-		changedDevelopmentDescription: casedata?.changedDevelopmentDescription ?? null,
-		// @ts-ignore
-		knowsAllOwners: casedata?.knowsAllOwners?.name ?? null,
-		// @ts-ignore
-		knowsOtherOwners: casedata?.knowsOtherOwners?.name ?? null,
-		ownersInformed: casedata?.ownersInformed ?? null,
-		enforcementNotice: casedata?.enforcementNotice ?? null,
-		isGreenBelt: casedata?.isGreenBelt ?? null,
-		// @ts-ignore
-		typeOfPlanningApplication: casedata?.typeOfPlanningApplication ?? null,
-		reasonForAppealAppellant: casedata?.reasonForAppealAppellant ?? null,
-		/** @type {any[]} */
-		significantChangesAffectingApplicationAppellant:
-			casedata?.anySignificantChanges === 'Yes'
-				? [
-						{
-							value: 'adopted-a-new-local-plan',
-							comment: casedata?.anySignificantChanges_localPlanSignificantChanges ?? null
-						},
-						{
-							value: 'national-policy-change',
-							comment: casedata?.anySignificantChanges_nationalPolicySignificantChanges ?? null
-						},
-						{
-							value: 'court-judgement',
-							comment: casedata?.anySignificantChanges_courtJudgementSignificantChanges ?? null
-						},
-						{
-							value: 'other',
-							comment: casedata?.anySignificantChanges_otherSignificantChanges ?? null
-						}
-					].filter((c) => c.comment !== null)
-				: []
-	};
+		return {
+			validation,
+			applicant: {
+				firstName: appeal.appellant?.firstName || '',
+				surname: appeal.appellant?.lastName || ''
+			},
+			isAppellantNamedOnApplication: appeal.agent == null,
+			applicationDate: appellantCase.applicationDate && appellantCase.applicationDate.toISOString(),
+			applicationDecision: appellantCase.applicationDecision || null,
+			applicationDecisionDate:
+				appellantCase.applicationDecisionDate &&
+				appellantCase.applicationDecisionDate?.toISOString(),
+			hasAdvertisedAppeal: appellantCase.hasAdvertisedAppeal,
+			appellantCostsAppliedFor: appellantCase.appellantCostsAppliedFor,
+			floorSpaceSquareMetres: Number(appellantCase?.floorSpaceSquareMetres) || null,
+			siteAreaSquareMetres: Number(appellantCase?.siteAreaSquareMetres) || null,
+			isGreenBelt: appellantCase?.isGreenBelt,
+			siteOwnership: {
+				areAllOwnersKnown: appellantCase.knowsAllOwners?.name || null,
+				knowsOtherLandowners: appellantCase.knowsOtherOwners?.name || null,
+				ownersInformed: appellantCase.ownersInformed || null,
+				ownsAllLand: appellantCase.ownsAllLand || null,
+				ownsSomeLand: appellantCase.ownsSomeLand || null
+			},
+			siteAccessRequired: {
+				details: appellantCase.siteAccessDetails,
+				isRequired: appellantCase.siteAccessDetails !== null
+			},
+			healthAndSafety: {
+				details: appellantCase.siteSafetyDetails,
+				hasIssues: appellantCase.siteSafetyDetails !== null
+			},
+			developmentDescription: {
+				details: appellantCase?.originalDevelopmentDescription || null,
+				isChanged: appellantCase?.changedDevelopmentDescription === true
+			},
+			// @ts-ignore
+			typeOfPlanningApplication: appellantCase?.typeOfPlanningApplication || null,
+			numberOfResidencesNetChange: appellantCase?.numberOfResidencesNetChange,
+			reasonForAppealAppellant: appellantCase?.reasonForAppealAppellant || null,
+			anySignificantChanges: appellantCase?.anySignificantChanges || null,
+			anySignificantChanges_otherSignificantChanges:
+				appellantCase?.anySignificantChanges_otherSignificantChanges || null,
+			anySignificantChanges_localPlanSignificantChanges:
+				appellantCase?.anySignificantChanges_localPlanSignificantChanges || null,
+			anySignificantChanges_nationalPolicySignificantChanges:
+				appellantCase?.anySignificantChanges_nationalPolicySignificantChanges || null,
+			anySignificantChanges_courtJudgementSignificantChanges:
+				appellantCase?.anySignificantChanges_courtJudgementSignificantChanges || null,
+			screeningOpinionIndicatesEiaRequired:
+				appellantCase?.screeningOpinionIndicatesEiaRequired ?? null,
+			ownershipCertificate: appellantCase?.ownershipCertificate ?? null
+		};
+	}
 };
