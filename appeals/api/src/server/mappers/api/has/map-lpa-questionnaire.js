@@ -1,6 +1,9 @@
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Api.LpaQuestionnaire} LpaQuestionnaire */
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
+import { formatListedBuildingDetails } from '#utils/format-listed-building.js';
+import formatValidationOutcomeResponse from '#utils/format-validation-outcome-response.js';
+
 /**
  *
  * @param {MappingRequest} data
@@ -13,34 +16,33 @@ export const mapHasLpaQuestionnaire = (data) => {
 
 	if (lpaQuestionnaire) {
 		return {
-			designatedSiteNames: [
-				...(lpaQuestionnaire.designatedSiteNames ?? []).map((item) => ({
-					id: item.designatedSite.id,
-					key: item.designatedSite.key,
-					name: item.designatedSite.name
-				})),
-				...(lpaQuestionnaire.designatedSiteNameCustom
-					? [
-							{
-								id: 0,
-								key: 'custom',
-								name: lpaQuestionnaire.designatedSiteNameCustom
-							}
-						]
-					: [])
-			],
+			lpaQuestionnaireId: lpaQuestionnaire.id,
+			isCorrectAppealType: lpaQuestionnaire.isCorrectAppealType,
+			submittedAt: lpaQuestionnaire.lpaQuestionnaireSubmittedDate?.toISOString(),
+			receivedAt: lpaQuestionnaire.lpaqCreatedDate?.toISOString(),
+			validation:
+				formatValidationOutcomeResponse(
+					lpaQuestionnaire.lpaQuestionnaireValidationOutcome?.name ?? null,
+					lpaQuestionnaire.lpaQuestionnaireIncompleteReasonsSelected
+				) ?? undefined,
+			lpaNotificationMethods: lpaQuestionnaire.lpaNotificationMethods?.map(
+				({ lpaNotificationMethod: { name } }) => ({ name })
+			),
+			listedBuildingDetails:
+				formatListedBuildingDetails(lpaQuestionnaire.listedBuildingDetails) || undefined,
+			isConservationArea: lpaQuestionnaire.inConservationArea,
+			isGreenBelt: lpaQuestionnaire.isGreenBelt,
 			extraConditions: lpaQuestionnaire.newConditionDetails,
 			hasExtraConditions: lpaQuestionnaire.newConditionDetails !== null,
-			affectsScheduledMonument: lpaQuestionnaire.affectsScheduledMonument,
-			hasProtectedSpecies: lpaQuestionnaire.hasProtectedSpecies,
-			isAonbNationalLandscape: lpaQuestionnaire.isAonbNationalLandscape,
-			consultedBodiesDetails: lpaQuestionnaire.consultedBodiesDetails,
-			reasonForNeighbourVisits: lpaQuestionnaire.reasonForNeighbourVisits,
-			isSiteInAreaOfSpecialControlAdverts: lpaQuestionnaire.isSiteInAreaOfSpecialControlAdverts,
-			wasApplicationRefusedDueToHighwayOrTraffic:
-				lpaQuestionnaire.wasApplicationRefusedDueToHighwayOrTraffic,
-			didAppellantSubmitCompletePhotosAndPlans:
-				lpaQuestionnaire.didAppellantSubmitCompletePhotosAndPlans,
+			costsAppliedFor: lpaQuestionnaire.lpaCostsAppliedFor,
+			siteAccessRequired: {
+				details: lpaQuestionnaire?.siteAccessDetails,
+				isRequired: lpaQuestionnaire?.siteAccessDetails !== null
+			},
+			healthAndSafety: {
+				details: lpaQuestionnaire?.siteSafetyDetails,
+				hasIssues: lpaQuestionnaire?.siteSafetyDetails !== null
+			},
 			anySignificantChangesLpa: lpaQuestionnaire?.anySignificantChangesLpa || null,
 			anySignificantChangesLpa_localPlanSignificantChanges:
 				lpaQuestionnaire?.anySignificantChangesLpa_localPlanSignificantChanges || null,

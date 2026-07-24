@@ -1,7 +1,6 @@
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Api.LpaQuestionnaire} LpaQuestionnaire */
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
-
 import { formatListedBuildingDetails } from '#utils/format-listed-building.js';
 import formatValidationOutcomeResponse from '#utils/format-validation-outcome-response.js';
 
