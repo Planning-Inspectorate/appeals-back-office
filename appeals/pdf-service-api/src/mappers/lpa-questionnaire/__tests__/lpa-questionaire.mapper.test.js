@@ -59,4 +59,21 @@ describe('mapLpaQuestionnaireData', () => {
 		const result = mapLpaQuestionnaireData(mockLpaQuestionnaireData.advertLpaQuestionnaireData);
 		expect(result).toMatchSnapshot();
 	});
+
+	it('should map CAS planning expedited LPA questionnaire with significant changes details correctly', () => {
+		const result = mapLpaQuestionnaireData(
+			mockLpaQuestionnaireData.casplanningExpeditedLpaQuestionnaireData
+		);
+		const appealProcessSection = result.sections.find((s) => s.heading === 'Appeal process');
+		const significantChangesRow = appealProcessSection.items.find(
+			(item) =>
+				item.key === 'Have there been any significant changes that would affect the application?'
+		);
+		expect(significantChangesRow).toBeDefined();
+		expect(significantChangesRow.html).toContain('Yes');
+		expect(significantChangesRow.html).toContain('Local plan: Details for local plan');
+		expect(significantChangesRow.html).toContain('National policy: Details for national policy');
+		expect(significantChangesRow.html).toContain('Court judgment: Details for court judgement');
+		expect(significantChangesRow.html).toContain('Other: Details for other');
+	});
 });

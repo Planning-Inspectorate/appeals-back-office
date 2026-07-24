@@ -109,6 +109,10 @@ function createDataMap(mappingRequest) {
 			const enforcementListed = createMap(apiMappers.apiEnforcementListedMappers, mappingRequest);
 			return mergeMaps(caseData, enforcementListed);
 		}
+		case APPEAL_CASE_TYPE.ZP: {
+			const casPlanning = createMap(apiMappers.apiCasPlanningMappers, mappingRequest);
+			return mergeMaps(caseData, casPlanning);
+		}
 		default:
 			return caseData;
 	}
@@ -170,6 +174,13 @@ function createIntegrationMap(mappingRequest) {
 				mappingRequest
 			);
 			return mergeMaps(caseData, enforcementListedBuilding);
+		}
+		case APPEAL_CASE_TYPE.ZP: {
+			const casPlanning = createMap(
+				integrationMappers.integrationCasPlanningMappers,
+				mappingRequest
+			);
+			return mergeMaps(caseData, casPlanning);
 		}
 		default:
 			return caseData;
