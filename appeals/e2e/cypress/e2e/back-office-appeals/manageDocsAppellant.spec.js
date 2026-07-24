@@ -177,7 +177,7 @@ describe('manage docs on appellant case', () => {
 		});
 	});
 
-	it.only('can upload a file with brackets in name and rename it', () => {
+	it('can upload a file with brackets in name and rename it', () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			happyPathHelper.uploadDocAppellantCase(caseObj, sampleFiles.documentWithBrackets);
