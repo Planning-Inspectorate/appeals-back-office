@@ -234,12 +234,12 @@ export const happyPathHelper = {
 		return date;
 	},
 
-	uploadDocAppellantCase(caseObj) {
+	uploadDocAppellantCase(caseObj, document = sampleFiles.document) {
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
 		happyPathHelper.assignCaseOfficer(caseObj);
 		caseDetailsPage.clickReviewAppellantCase();
 		caseDetailsPage.clickAddAgreementToChangeDescriptionEvidence();
-		fileUploader.uploadFiles(sampleFiles.document);
+		fileUploader.uploadFiles(document);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Confirm');
@@ -247,7 +247,7 @@ export const happyPathHelper = {
 			'Success',
 			'Agreement to change description evidence added'
 		);
-		caseDetailsPage.verifyAnswerSummaryValue(sampleFiles.document);
+		caseDetailsPage.verifyAnswerSummaryValue(document);
 	},
 
 	manageDocsAppellantCase(caseObj) {

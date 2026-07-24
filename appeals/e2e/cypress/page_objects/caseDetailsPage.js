@@ -82,6 +82,8 @@ export class CaseDetailsPage extends Page {
 		document: 'sample-file.doc',
 		document2: 'sample-file-2.doc',
 		document3: 'sample-file-3.doc',
+		documentWithSpaces: 'sample file.doc',
+		documentWithBrackets: 'sample-file(1).doc',
 		img: 'sample-img.jpeg',
 		pdf: 'test.pdf',
 		pdf2: 'test-2.pdf'
