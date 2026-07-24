@@ -1,3 +1,5 @@
+import { mapAnySignificantChangesLpa } from '#lib/mappers/data/lpa-questionnaire/submappers/map-any-significant-changes-lpa.js';
+import { mapListOfDocumentsBeforeDecision } from '#lib/mappers/data/lpa-questionnaire/submappers/map-list-of-documents-before-decision.js';
 import { mapLpaNeighbouringSitesLpaqAdapter } from '../appeal/submappers/lpa-neighbouring-sites.mapper.js';
 import { mapAdditionalDocumentsContents } from './submappers/map-additional-documents-contents.js';
 import { mapAdditionalDocuments } from './submappers/map-additional-documents.js';
@@ -46,6 +48,8 @@ export const submaps = {
 	additionalDocumentsContents: mapAdditionalDocumentsContents,
 	additionalDocuments: mapAdditionalDocuments,
 	reviewOutcome: mapReviewOutcome,
+	listOfDocumentsBeforeDecision: mapListOfDocumentsBeforeDecision,
+	anySignificantChangesLpa: mapAnySignificantChangesLpa,
 	plansDrawings: mapPlansDrawings,
 	emergingPlan: mapEmergingPlan
 };

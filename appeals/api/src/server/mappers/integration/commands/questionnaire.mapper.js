@@ -35,7 +35,10 @@ export const mapQuestionnaireIn = (command, designatedSites, applicationDate) =>
 		case APPEAL_CASE_TYPE.D: // HAS - schema includes common and has fields
 			return {
 				...generateCommonSchemaFields(casedata),
-				...generateHasSchemaFields(casedata, listedBuildingsData)
+				...generateHasSchemaFields(casedata, listedBuildingsData),
+				...(!beforeExpeditedOriginalApplicationCutOff(applicationDate)
+					? generateExpediteSchemaFields(casedata)
+					: [])
 			};
 		case APPEAL_CASE_TYPE.ZP: // CAS_PLANNING - schema includes common and has fields
 			return {
