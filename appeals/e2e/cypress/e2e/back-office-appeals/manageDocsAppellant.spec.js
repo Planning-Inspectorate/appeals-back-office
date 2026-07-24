@@ -6,11 +6,13 @@ import { DocumentationSectionPage } from '../../page_objects/caseDetails/documen
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { CYASection } from '../../page_objects/cyaSection.js';
 import { EvidenceReasonsSection } from '../../page_objects/evidenceReasonsSection.js';
+import { FileDetailsPage } from '../../page_objects/fileDetailsPage.js';
 import { FileUploaderSection } from '../../page_objects/fileUploadSection.js';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { ReviewEvidenceSection } from '../../page_objects/reviewEvidenceSection.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
 import { urlPaths } from '../../support/urlPaths.js';
+import { getFileNameProperties } from '../../support/utils/format.js';
 
 const cyaSection = new CYASection();
 const listCasesPage = new ListCasesPage();
@@ -19,6 +21,7 @@ const fileUploaderSection = new FileUploaderSection();
 const reviewEvidenceSection = new ReviewEvidenceSection();
 const evidenceReasonsSection = new EvidenceReasonsSection();
 const documentationSectionPage = new DocumentationSectionPage();
+const fileDetailsPage = new FileDetailsPage();
 
 describe('manage docs on appellant case', () => {
 	beforeEach(() => {
@@ -153,20 +156,45 @@ describe('manage docs on appellant case', () => {
 		});
 	});
 
-	it('rename an uploaded file', () => {
+	it('can upload a file with spaces in name and rename it', () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
-			happyPathHelper.uploadDocAppellantCase(caseObj);
+			happyPathHelper.uploadDocAppellantCase(caseObj, sampleFiles.documentWithSpaces);
 			caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
 
 			// Simulate the completion of the documents scan
 			cy.simulateDocumentsScanComplete(caseObj);
 
-			caseDetailsPage.clickLinkByText('View and edit');
-			caseDetailsPage.changeFileManageDocuments('Name');
-			caseDetailsPage.fillInput('new-file', 1);
-			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateBannerMessage('Success', 'Document filename updated');
+			// get the file name from the uploaded file
+			const { fileName } = getFileNameProperties(sampleFiles.documentWithSpaces);
+			const newFileName = `${fileName}-new`;
+
+			fileDetailsPage.clickLinkByText('View and edit');
+			fileDetailsPage.changeFileName();
+			fileDetailsPage.enterFileName(newFileName);
+			fileDetailsPage.clickButtonByText('Confirm');
+			fileDetailsPage.confirmFileRenamed(newFileName);
+		});
+	});
+
+	it.only('can upload a file with brackets in name and rename it', () => {
+		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.uploadDocAppellantCase(caseObj, sampleFiles.documentWithBrackets);
+			caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
+
+			// Simulate the completion of the documents scan
+			cy.simulateDocumentsScanComplete(caseObj);
+
+			// get the file name from the uploaded file
+			const { fileName } = getFileNameProperties(sampleFiles.documentWithBrackets);
+			const newFileName = `${fileName}-new`;
+
+			fileDetailsPage.clickLinkByText('View and edit');
+			fileDetailsPage.changeFileName();
+			fileDetailsPage.enterFileName(newFileName);
+			fileDetailsPage.clickButtonByText('Confirm');
+			fileDetailsPage.confirmFileRenamed(newFileName);
 		});
 	});
 
