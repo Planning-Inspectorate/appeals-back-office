@@ -34,7 +34,7 @@ export function formatCamelCaseToWords(value) {
 	return spaced.charAt(0).toUpperCase() + spaced.slice(1).toLowerCase();
 }
 
-export const getFileNameProperties = (fileName) => {
+export const getFileProperties = (fileName) => {
 	const lastDotIndex = fileName.lastIndexOf('.');
 
 	return {

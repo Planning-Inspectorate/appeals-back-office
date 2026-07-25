@@ -28,6 +28,17 @@ export const ERROR_MESSAGES = {
 		'File name must only include letters a to z, numbers 0 to 9, spaces and special characters such as hyphens, underscores, and parentheses'
 };
 
+export const SAMPLE_FILES = {
+	document: 'sample-file.doc',
+	document2: 'sample-file-2.doc',
+	document3: 'sample-file-3.doc',
+	documentWithSpaces: 'sample file.doc',
+	documentWithBrackets: 'sample-file(1).doc',
+	image: 'sample-img.jpeg',
+	pdf: 'test.pdf',
+	pdf2: 'test-2.pdf'
+};
+
 export const validFileNameVariants = [
 	{
 		name: 'newFile',
