@@ -235,7 +235,7 @@ describe('Other', () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;
 			//all cases
-			basePage.navigateToAppealsService();
+			basePage.navigateToAppealsList();
 			allCases.verifyappealType(caseObj, 'Planning appeal');
 
 			cy.assignCaseOfficerViaApi(caseObj);
@@ -244,7 +244,7 @@ describe('Other', () => {
 			caseDetailsPage.verifyAppealType('Householder');
 
 			//all cases
-			basePage.navigateToAppealsService();
+			basePage.navigateToAppealsList();
 			allCases.verifyappealType(caseObj, 'Householder');
 		});
 	});
