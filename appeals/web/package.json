@@ -61,7 +61,7 @@
     "express-request-id": "2.0.1",
     "express-session": "1.18.2",
     "express-validator": "7.2.1",
-    "form-data": "4.0.4",
+    "form-data": "4.0.6",
     "got": "^12.5.2",
     "govuk-frontend": "5.9.0",
     "helmet": "8.1.0",
