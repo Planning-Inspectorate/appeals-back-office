@@ -9,9 +9,10 @@ import formatValidationOutcomeResponse from '#utils/format-validation-outcome-re
  * @param {MappingRequest} data
  * @returns {LpaQuestionnaire|undefined}
  */
-export const mapLpaQuestionnaire = (data) => {
-	const { appeal } = data;
-	const { lpaQuestionnaire } = appeal;
+export const mapHasLpaQuestionnaire = (data) => {
+	const {
+		appeal: { lpaQuestionnaire }
+	} = data;
 
 	if (lpaQuestionnaire) {
 		return {
@@ -41,7 +42,17 @@ export const mapLpaQuestionnaire = (data) => {
 			healthAndSafety: {
 				details: lpaQuestionnaire?.siteSafetyDetails,
 				hasIssues: lpaQuestionnaire?.siteSafetyDetails !== null
-			}
+			},
+			anySignificantChangesLpa: lpaQuestionnaire?.anySignificantChangesLpa || null,
+			anySignificantChangesLpa_localPlanSignificantChanges:
+				lpaQuestionnaire?.anySignificantChangesLpa_localPlanSignificantChanges || null,
+			anySignificantChangesLpa_nationalPolicySignificantChanges:
+				lpaQuestionnaire?.anySignificantChangesLpa_nationalPolicySignificantChanges || null,
+			anySignificantChangesLpa_otherSignificantChanges:
+				lpaQuestionnaire?.anySignificantChangesLpa_otherSignificantChanges || null,
+			anySignificantChangesLpa_courtJudgementSignificantChanges:
+				lpaQuestionnaire?.anySignificantChangesLpa_courtJudgementSignificantChanges || null,
+			listOfDocumentsBeforeDecision: lpaQuestionnaire.listOfDocumentsBeforeDecision
 		};
 	}
 };

@@ -25,5 +25,5 @@ export const integrationSharedMappers = {
 	caseValidation: mapCaseValidation,
 	appellantCase: mapAppellantCase,
 	lpaQuestionnaire: mapLpaQuestionnaire,
-	questionnareValidation: mapQuestionnaireValidation
+	questionnaireValidation: mapQuestionnaireValidation
 };
