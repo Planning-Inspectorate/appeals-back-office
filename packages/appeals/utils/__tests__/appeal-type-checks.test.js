@@ -1,7 +1,13 @@
+import {
+	APPEAL_APPLICATION_DECISION,
+	APPEAL_CASE_TYPE,
+	APPEAL_TYPE_OF_PLANNING_APPLICATION
+} from '@planning-inspectorate/data-model';
 import { APPEAL_TYPE } from '../../constants/common';
 import {
 	isAnyEnforcementAppealType,
-	isLdcOrDiscontinuanceOrEnforcementAppealType
+	isLdcOrDiscontinuanceOrEnforcementAppealType,
+	isS78ExpeditedAppealType
 } from '../appeal-type-checks';
 
 describe('isAnyEnforcementAppealType', () => {
@@ -45,5 +51,83 @@ describe('isLdcOrDiscontinuanceOrEnforcementAppealType', () => {
 		APPEAL_TYPE.CAS_ADVERTISEMENT
 	])('returns false for %s', (appealType) => {
 		expect(isLdcOrDiscontinuanceOrEnforcementAppealType(appealType)).toBe(false);
+	});
+});
+
+describe('isS78ExpeditedAppealType', () => {
+	const S78 = APPEAL_CASE_TYPE.W;
+	const afterCutoff = '2026-04-01T00:00:00.000Z';
+	const beforeCutoff = '2026-03-31T00:00:00.000Z';
+
+	it.each([
+		APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL,
+		APPEAL_TYPE_OF_PLANNING_APPLICATION.OUTLINE_PLANNING,
+		APPEAL_TYPE_OF_PLANNING_APPLICATION.RESERVED_MATTERS,
+		APPEAL_TYPE_OF_PLANNING_APPLICATION.PRIOR_APPROVAL,
+		APPEAL_TYPE_OF_PLANNING_APPLICATION.REMOVAL_OR_VARIATION_OF_CONDITIONS
+	])('returns true for S78 + %s + refused + date on/after cutoff', (typeOfPlanningApplication) => {
+		expect(
+			isS78ExpeditedAppealType(
+				S78,
+				afterCutoff,
+				APPEAL_APPLICATION_DECISION.REFUSED,
+				typeOfPlanningApplication
+			)
+		).toBe(true);
+	});
+
+	it.each([
+		APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL,
+		APPEAL_TYPE_OF_PLANNING_APPLICATION.OUTLINE_PLANNING,
+		APPEAL_TYPE_OF_PLANNING_APPLICATION.RESERVED_MATTERS,
+		APPEAL_TYPE_OF_PLANNING_APPLICATION.PRIOR_APPROVAL,
+		APPEAL_TYPE_OF_PLANNING_APPLICATION.REMOVAL_OR_VARIATION_OF_CONDITIONS
+	])('returns true for S78 + %s + granted + date on/after cutoff', (typeOfPlanningApplication) => {
+		expect(
+			isS78ExpeditedAppealType(
+				S78,
+				afterCutoff,
+				APPEAL_APPLICATION_DECISION.GRANTED,
+				typeOfPlanningApplication
+			)
+		).toBe(true);
+	});
+	it.each([
+		APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL,
+		APPEAL_TYPE_OF_PLANNING_APPLICATION.OUTLINE_PLANNING,
+		APPEAL_TYPE_OF_PLANNING_APPLICATION.RESERVED_MATTERS,
+		APPEAL_TYPE_OF_PLANNING_APPLICATION.PRIOR_APPROVAL,
+		APPEAL_TYPE_OF_PLANNING_APPLICATION.REMOVAL_OR_VARIATION_OF_CONDITIONS
+	])('returns false for S78 + %s + granted + date before cutoff', (typeOfPlanningApplication) => {
+		expect(
+			isS78ExpeditedAppealType(
+				S78,
+				beforeCutoff,
+				APPEAL_APPLICATION_DECISION.GRANTED,
+				typeOfPlanningApplication
+			)
+		).toBe(false);
+	});
+
+	it('returns true for HOUSEHOLDER_PLANNING + granted', () => {
+		expect(
+			isS78ExpeditedAppealType(
+				S78,
+				afterCutoff,
+				APPEAL_APPLICATION_DECISION.GRANTED,
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.HOUSEHOLDER_PLANNING
+			)
+		).toBe(true);
+	});
+
+	it('returns false for HOUSEHOLDER_PLANNING + refused', () => {
+		expect(
+			isS78ExpeditedAppealType(
+				S78,
+				afterCutoff,
+				APPEAL_APPLICATION_DECISION.REFUSED,
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.HOUSEHOLDER_PLANNING
+			)
+		).toBe(false);
 	});
 });

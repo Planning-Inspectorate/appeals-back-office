@@ -120,4 +120,47 @@ describe('appellant-case-expedited', () => {
 			expect(element.innerHTML).toContain('5. Upload documents</h2>');
 		}
 	);
+
+	it.each([
+		{ decision: 'refused', applicationDecision: 'refused' },
+		{ decision: 'granted', applicationDecision: 'granted' }
+	])(
+		'should render expedited fields for S78 + removal-or-variation-of-conditions + $decision',
+		async ({ applicationDecision }) => {
+			const expeditedAppellantCaseData = {
+				...appellantCaseDataNotValidated,
+				applicationDate: '2026-04-02T00:00:00.000Z',
+				applicationDecision,
+				typeOfPlanningApplication:
+					APPEAL_TYPE_OF_PLANNING_APPLICATION.REMOVAL_OR_VARIATION_OF_CONDITIONS,
+				reasonForAppealAppellant: 'My reason',
+				anySignificantChanges: 'No',
+				screeningOpinionIndicatesEiaRequired: false,
+				ownershipCertificate: false
+			};
+
+			nock('http://test/')
+				.get('/appeals/2?include=all')
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId: 2
+				});
+			nock('http://test/')
+				.get('/appeals/2/appellant-cases/0')
+				.reply(200, expeditedAppellantCaseData);
+
+			const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+			const element = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(element.innerHTML).toContain('Why are you appealing?');
+			expect(element.innerHTML).toContain('My reason</dd>');
+			expect(element.innerHTML).toContain(
+				'Have there been any significant changes that would affect the application?'
+			);
+			expect(element.innerHTML).toContain(
+				'Did you submit an environmental statement with the application?'
+			);
+			expect(element.innerHTML).not.toContain('Draft statement of common ground');
+		}
+	);
 });
