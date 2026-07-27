@@ -1,6 +1,6 @@
 import { paginationDefaultSettings } from '../appeal.constants.js';
 
-/** @typedef {import('@pins/appeals').PersonalList} PersonalList */
+/** @typedef {import('@pins/appeals').AppealList} AppealList */
 
 /**
  * @param {import('got').Got} apiClient
@@ -8,7 +8,7 @@ import { paginationDefaultSettings } from '../appeal.constants.js';
  * @param {number} pageNumber
  * @param {number} pageSize
  * @param {import('#appeals/appeal-users/users-service.js').User|null} caseOfficer
- * @returns {Promise<PersonalList>}
+ * @returns {Promise<AppealList>}
  */
 export const getAppealsAssignedToCurrentUser = (
 	apiClient,

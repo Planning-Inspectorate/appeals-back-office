@@ -49,7 +49,6 @@ describe('POST /:appealId/site-visits/:siteVisitId/missed', () => {
 
 			beforeEach(() => {
 				appeal = getAppeal();
-				appeal.currentStatus = 'awaiting_event';
 				idsOfLinkedGroup = getIdsOfLinkedGroup(appeal);
 				sizeOfLinkedGroup = idsOfLinkedGroup.length;
 				eventStatusIdsOfLinkedGroup = [1, ...idsOfLinkedGroup.slice(1).map((id) => id * 10 + 1)];
@@ -393,7 +392,6 @@ describe('POST /:appealId/site-visits/:siteVisitId/missed', () => {
 
 			beforeEach(() => {
 				appeal = getAppeal();
-				appeal.currentStatus = 'lpa_questionnaire';
 				idsOfLinkedGroup = getIdsOfLinkedGroup(appeal);
 				sizeOfLinkedGroup = idsOfLinkedGroup.length;
 
@@ -584,7 +582,6 @@ describe('POST /:appealId/site-visits/:siteVisitId/missed', () => {
 
 			beforeEach(() => {
 				appeal = getAppeal();
-				appeal.currentStatus = 'issue_determination';
 				idsOfLinkedGroup = getIdsOfLinkedGroup(appeal);
 				sizeOfLinkedGroup = idsOfLinkedGroup.length;
 				eventStatusIdsOfLinkedGroup = [1, ...idsOfLinkedGroup.slice(1).map((id) => id * 10 + 1)];

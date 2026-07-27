@@ -762,7 +762,7 @@ describe('personal-list', () => {
 							appealType: appealType,
 							procedureType: procedureType,
 							appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
-							isHearingSetup: hearingSetUp,
+							isHearingSetUp: hearingSetUp,
 							documentationSummary: {}
 						},
 						true,
@@ -802,7 +802,7 @@ describe('personal-list', () => {
 							appealType: appealType,
 							procedureType: procedureType,
 							appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
-							isHearingSetup: hearingSetUp,
+							isHearingSetUp: hearingSetUp,
 							documentationSummary: {}
 						},
 						true,

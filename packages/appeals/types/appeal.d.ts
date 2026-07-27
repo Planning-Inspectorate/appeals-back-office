@@ -21,6 +21,7 @@ export interface AppealSummary {
 	appealId: number;
 	appealReference: string;
 	appealStatus: string;
+	completedStateList: string[];
 	appealSiteId: number;
 	appealSite: Address;
 	appealType: string;
@@ -57,39 +58,6 @@ export interface AppealList {
 	page: number;
 	pageCount: number;
 	pageSize: number;
-}
-
-export interface PersonalList {
-	itemCount: number;
-	items: PersonalListItem[];
-	statuses: string[];
-	page: number;
-	pageCount: number;
-	pageSize: number;
-}
-
-export interface PersonalListItem {
-	appealId: number;
-	appealReference: string;
-	appealStatus: string;
-	completedStateList: string[];
-	appealType: string;
-	procedureType?: string;
-	lpaQuestionnaireId?: number | null;
-	documentationSummary: DocumentationSummary;
-	dueDate: string;
-	appealTimetable?: AppealTimetable;
-	isParentAppeal: boolean | null;
-	isChildAppeal: boolean | null;
-	isHearingSetup: boolean | null;
-	hasHearingAddress: boolean | null;
-	awaitingLinkedAppeal: boolean | null;
-	costsDecision?: CostsDecision;
-	numberOfResidencesNetChange: number | null;
-	isInquirySetup: boolean | null;
-	hasInquiryAddress: boolean | null;
-	enforcementNoticeInvalid?: string | null;
-	isS78Expedited?: boolean;
 }
 
 export interface PaginationItem {

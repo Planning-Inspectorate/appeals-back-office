@@ -1615,7 +1615,6 @@ describe('inquiry routes', () => {
 			test('updates a single inquiry with address', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
-					currentStatus: APPEAL_CASE_STATUS.EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.EVENT,
@@ -1767,7 +1766,6 @@ describe('inquiry routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
 					appealRule6Parties: [rule6Party],
-					currentStatus: APPEAL_CASE_STATUS.EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.EVENT,
@@ -1811,7 +1809,6 @@ describe('inquiry routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
 					inquiry: existingInquiry,
-					currentStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
@@ -1839,7 +1836,6 @@ describe('inquiry routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
 					inquiry: existingInquiry,
-					currentStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
@@ -1878,7 +1874,6 @@ describe('inquiry routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
 					inquiry: existingInquiry,
-					currentStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
@@ -1916,7 +1911,6 @@ describe('inquiry routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
 					inquiry: existingInquiry,
-					currentStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
@@ -1963,7 +1957,6 @@ describe('inquiry routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
 					inquiry: existingInquiry,
-					currentStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
@@ -2007,7 +2000,6 @@ describe('inquiry routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
 					inquiry: existingInquiry,
-					currentStatus: APPEAL_CASE_STATUS.EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.EVENT,
@@ -2089,7 +2081,6 @@ describe('inquiry routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
 					inquiry: existingInquiry,
-					currentStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
@@ -2140,7 +2131,6 @@ describe('inquiry routes', () => {
 				databaseConnector.inquiry.update.mockResolvedValue(inquiry);
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
-					currentStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.AWAITING_EVENT,

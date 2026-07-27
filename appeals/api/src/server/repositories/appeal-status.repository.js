@@ -18,12 +18,6 @@ const updateAppealStatusByAppealId = (appealId, status) =>
 				status,
 				valid: true
 			}
-		}),
-		databaseConnector.appeal.update({
-			where: { id: appealId },
-			data: {
-				currentStatus: status
-			}
 		})
 	]);
 
@@ -49,11 +43,6 @@ const rollBackAppealStatusTo = (appealId, status) =>
 					gt: prevStatus.createdAt
 				}
 			}
-		});
-
-		await tx.appeal.update({
-			where: { id: prevStatus.appealId },
-			data: { currentStatus: prevStatus.status }
 		});
 
 		return await tx.appealStatus.update({

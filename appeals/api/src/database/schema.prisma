@@ -18,7 +18,6 @@ model Appeal {
   submissionId                   String?
   appealTimetable                AppealTimetable?
   appealStatus                   AppealStatus[]
-  currentStatus                  String                          @default("assign_case_officer")
   appealType                     AppealType?                     @relation(fields: [appealTypeId], references: [id])
   appealTypeId                   Int?
   procedureType                  ProcedureType?                  @relation(fields: [procedureTypeId], references: [id])
@@ -85,9 +84,6 @@ model Appeal {
   @@index([applicationReference])
   @@index([padsInspectorUserId])
   @@index([assignedTeamId])
-  @@index([currentStatus])
-  @@index([currentStatus, caseOfficerUserId])
-  @@index([currentStatus, inspectorUserId])
 }
 
 /// AppealRelationship model

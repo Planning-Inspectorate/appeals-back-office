@@ -74,6 +74,11 @@ const getAllAppeals = async (
 		// use selects not include to only return the data needed for the appeals list
 		include: {
 			address: true,
+			appealStatus: {
+				where: {
+					valid: true
+				}
+			},
 			appealType: true,
 			procedureType: true,
 			lpa: true,
@@ -270,9 +275,12 @@ const buildAllAppealsWhereClause = (
 	appellantProcedurePreferencePreFilter
 ) => {
 	return {
-		...(String(status) !== 'undefined' && {
-			currentStatus: status
-		}),
+		appealStatus: {
+			some: {
+				valid: true,
+				...(String(status) !== 'undefined' && { status })
+			}
+		},
 		appealType: {
 			key: { in: getEnabledAppealTypes() }
 		},
@@ -364,12 +372,17 @@ const buildAllAppealsWhereClause = (
 			procedureTypeId
 		}),
 		...(!!appellantProcedurePreferencePreFilter && {
-			currentStatus: {
-				in: [
-					APPEAL_CASE_STATUS.READY_TO_START,
-					APPEAL_CASE_STATUS.VALIDATION,
-					APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER
-				]
+			appealStatus: {
+				some: {
+					valid: true,
+					status: {
+						in: [
+							APPEAL_CASE_STATUS.READY_TO_START,
+							APPEAL_CASE_STATUS.VALIDATION,
+							APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER
+						]
+					}
+				}
 			},
 			appellantCase: {
 				appellantProcedurePreference: appellantProcedurePreferencePreFilter
@@ -534,9 +547,18 @@ const getAppealsStatusesInPersonalList = (userId) => {
  * @returns {Promise<string[]>} a duplicate-free list of all appeal statuses in the national list
  */
 const getAppealsStatusesInNationalList = async () => {
-	/** @type {{currentStatus: string}[]} */
-	const statuses = await databaseConnector.$queryRaw`SELECT DISTINCT currentStatus FROM Appeal;`;
-	return statuses.map((status) => status.currentStatus);
+	const results = await databaseConnector.appealStatus.findMany({
+		select: {
+			status: true
+		},
+		distinct: ['status']
+		// TODO: performance
+		// Prisma Client's distinct option does not use SQL SELECT DISTINCT. Instead, distinct uses:
+		// A SELECT query + In-memory post-processing to select distinct
+		// this will get worse over time
+	});
+
+	return results.map((result) => result.status);
 };
 
 export default {
@@ -544,5 +566,6 @@ export default {
 	getAllAppealsCount,
 	getUserAppeals,
 	getAppealsStatusesInNationalList,
+	getAppealsStatusesInPersonalList,
 	getAppealsWithoutIncludes
 };
