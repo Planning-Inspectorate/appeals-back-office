@@ -12,10 +12,7 @@ describe('isAwaitingLinkedAppeal', () => {
 	describe('when appeal status is validation', () => {
 		beforeEach(() => {
 			appeal = {
-				currentStatus: 'validation',
-				appellantCase: {
-					appellantCaseValidationOutcome: { name: 'valid', id: 1 }
-				},
+				appellantCase: { appellantCaseValidationOutcome: { name: 'valid', id: 1 } },
 				appealStatus: [{ status: 'validation', valid: true }]
 			};
 		});
@@ -39,7 +36,7 @@ describe('isAwaitingLinkedAppeal', () => {
 
 		test('returns false when appeal is not awaiting linked appeal appellant case validation', () => {
 			expect(
-				isAwaitingLinkedAppeal({ ...appeal }, [
+				isAwaitingLinkedAppeal(appeal, [
 					{
 						currentStatus: 'lpa_questionnaire',
 						completedStateList: ['validation'],
@@ -58,7 +55,6 @@ describe('isAwaitingLinkedAppeal', () => {
 	describe('when appeal status is lpa_questionnaire', () => {
 		beforeEach(() => {
 			appeal = {
-				currentStatus: 'lpa_questionnaire',
 				lpaQuestionnaire: { lpaQuestionnaireValidationOutcome: { name: 'complete' } },
 				appealStatus: [{ status: 'lpa_questionnaire', valid: true }]
 			};

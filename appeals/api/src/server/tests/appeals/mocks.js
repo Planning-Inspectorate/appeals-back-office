@@ -122,7 +122,6 @@ export const householdAppeal = {
 	id: 1,
 	assignedTeamId: 1,
 	reference: '1345264',
-	currentStatus: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
 	procedureType: {
 		id: 1,
 		key: 'written',
@@ -310,7 +309,6 @@ export const householdAppealAgent = {
 	id: 1,
 	assignedTeamId: 1,
 	reference: '1345264',
-	currentStatus: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
 	procedureType: {
 		id: 1,
 		key: 'written',
@@ -823,7 +821,6 @@ export const householdAppealLPAQuestionnaireComplete = {
 
 export const householdAppealLPAQuestionnaireIncomplete = {
 	...householdAppeal,
-	currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 	appealStatus: [
 		{
 			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
@@ -867,7 +864,6 @@ export const casPlanningAppealAppellantCaseInvalid = {
 
 export const casPlanningAppealLPAQuestionnaireIncomplete = {
 	...casPlanningAppeal,
-	currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 	appealStatus: [
 		{
 			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
@@ -883,7 +879,6 @@ export const casPlanningAppealLPAQuestionnaireIncomplete = {
 
 export const casAdvertAppealLPAQuestionnaireIncomplete = {
 	...casPlanningAppeal,
-	currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 	appealStatus: [
 		{
 			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
@@ -964,7 +959,6 @@ export const ldcAppealAppellantCaseInvalid = {
 
 export const ldcAppealLPAQuestionnaireIncomplete = {
 	...ldcAppeal,
-	currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 	appealStatus: [
 		{
 			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
@@ -980,7 +974,6 @@ export const ldcAppealLPAQuestionnaireIncomplete = {
 
 export const fullPlanningAppealLPAQuestionnaireIncomplete = {
 	...fullPlanningAppeal,
-	currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 	appealStatus: [
 		{
 			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
@@ -996,7 +989,6 @@ export const fullPlanningAppealLPAQuestionnaireIncomplete = {
 
 export const listedBuildingAppealLPAQuestionnaireIncomplete = {
 	...listedBuildingAppeal,
-	currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 	appealStatus: [
 		{
 			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,

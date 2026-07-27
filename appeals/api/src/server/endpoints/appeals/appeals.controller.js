@@ -9,8 +9,15 @@ import {
 import { formatPersonalListItem } from './appeals.formatter.js';
 import { retrieveAppealListData, updateCompletedEvents } from './appeals.service.js';
 
+/** @typedef {import('express').Request} Request */
+/** @typedef {import('express').Response} Response */
+/** @typedef {import('@pins/appeals.api').Appeals.SingleAppealDetailsResponse} SingleAppealDetailsResponse */
+/** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
+
 /**
- * @type {import('express').RequestHandler}
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
  */
 const getAppeals = async (req, res) => {
 	const { query } = req;
@@ -67,7 +74,9 @@ const getAppeals = async (req, res) => {
 };
 
 /**
- * @type {import('express').RequestHandler}
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
  */
 const getPersonalList = async (req, res) => {
 	const { query } = req;
@@ -96,6 +105,7 @@ const getPersonalList = async (req, res) => {
 		);
 	}
 
+	// @ts-ignore
 	const items = await Promise.all(personalList.map(formatPersonalListItem));
 
 	return res.send({
@@ -109,7 +119,9 @@ const getPersonalList = async (req, res) => {
 };
 
 /**
- * @type {import('express').RequestHandler}
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
  */
 async function updateCompletedEventsController(req, res) {
 	const azureAdUserId = req.params.azureAdUserId || req.get('azureAdUserId') || '';

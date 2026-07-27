@@ -62,7 +62,6 @@ describe('transitionState', () => {
 	const appealFixture = {
 		id: 11,
 		reference: 'APP/11',
-		currentStatus: 'validation',
 		appealStatus: [
 			{
 				status: 'validation',
@@ -106,7 +105,6 @@ describe('transitionState', () => {
 			async ({ status, expectUpdate, expectCreate }) => {
 				const dynamicFixture = {
 					...appealFixture,
-					currentStatus: status,
 					appealStatus: [{ status, valid: true }]
 				};
 
@@ -131,7 +129,6 @@ describe('transitionState', () => {
 		const appealFixtureIncompleteDoesNotTransition = {
 			id: 22,
 			reference: 'APP/22',
-			currentStatus: 'validation',
 			appealStatus: [
 				{
 					status: 'validation',
@@ -179,7 +176,6 @@ describe('transitionState', () => {
 			test('transitions a WRITTEN_PART_1 appeal with arranged site visit from event to awaiting_event', async () => {
 				const expeditedAppeal = {
 					...appealFixture,
-					currentStatus: 'lpa_questionnaire',
 					appealStatus: [{ status: 'lpa_questionnaire', valid: true }],
 					appealType: { key: APPEAL_CASE_TYPE.D },
 					procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 },
@@ -196,7 +192,6 @@ describe('transitionState', () => {
 					}
 					return Promise.resolve({
 						...expeditedAppeal,
-						currentStatus: 'event',
 						appealStatus: [{ status: 'event', valid: true }]
 					});
 				});
@@ -219,7 +214,6 @@ describe('transitionState', () => {
 			test('transitions a S78 expedited (W + WRITTEN_PART_1) appeal with arranged site visit from event to awaiting_event', async () => {
 				const expeditedAppeal = {
 					...appealFixture,
-					currentStatus: 'lpa_questionnaire',
 					appealStatus: [{ status: 'lpa_questionnaire', valid: true }],
 					appealType: { key: APPEAL_CASE_TYPE.W },
 					procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 },
@@ -236,7 +230,6 @@ describe('transitionState', () => {
 					}
 					return Promise.resolve({
 						...expeditedAppeal,
-						currentStatus: 'event',
 						appealStatus: [{ status: 'event', valid: true }]
 					});
 				});
@@ -282,7 +275,6 @@ describe('transitionState', () => {
 				async ({ type, procedure }) => {
 					const expeditedAppeal = {
 						...appealFixture,
-						currentStatus: 'lpa_questionnaire',
 						appealStatus: [{ status: 'lpa_questionnaire', valid: true }],
 						appealType: { key: type },
 						procedureType: { key: procedure },
@@ -330,7 +322,6 @@ describe('transitionState', () => {
 				async ({ type, procedure }) => {
 					const expeditedAppeal = {
 						...appealFixture,
-						currentStatus: 'lpa_questionnaire',
 						appealStatus: [{ status: 'lpa_questionnaire', valid: true }],
 						appealType: { key: type },
 						procedureType: { key: procedure },
@@ -378,7 +369,6 @@ describe('transitionState', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					id: 11,
-					currentStatus: 'validation',
 					appealStatus: [{ status: 'validation', valid: true }],
 					appealType: null
 				});
@@ -436,7 +426,6 @@ describe('transitionState', () => {
 							type: CASE_RELATIONSHIP_LINKED,
 							child: {
 								id: 11,
-								currentStatus: 'validation',
 								appealStatus: [{ status: 'validation', valid: true }],
 								appealType: { key: APPEAL_CASE_TYPE.W },
 								procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN }
@@ -463,7 +452,6 @@ describe('transitionState', () => {
 				const parentAppeal = {
 					...appealFixture,
 					id: 10,
-					currentStatus: 'ready_to_start',
 					appealStatus: [{ status: 'ready_to_start', valid: true }],
 					childAppeals: [
 						{
@@ -471,7 +459,6 @@ describe('transitionState', () => {
 							type: CASE_RELATIONSHIP_LINKED,
 							child: {
 								id: 11,
-								currentStatus: 'validation',
 								appealStatus: [{ status: 'validation', valid: true }],
 								appealType: { key: APPEAL_CASE_TYPE.W },
 								procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN }
@@ -523,7 +510,6 @@ describe('transitionState', () => {
 			});
 
 			const appealStatusCreateMock = jest.fn().mockImplementation(({ data }) => {
-				currentAppeal.currentStatus = data.status;
 				currentAppeal.appealStatus = currentAppeal.appealStatus.map((s) => ({
 					...s,
 					valid: false
@@ -576,7 +562,6 @@ describe('transitionState', () => {
 				expectedStatus: APPEAL_CASE_STATUS.EVENT,
 				appeal: {
 					id: 100,
-					currentStatus: APPEAL_CASE_STATUS.FINAL_COMMENTS,
 					appealStatus: [{ status: APPEAL_CASE_STATUS.FINAL_COMMENTS, valid: true }],
 					appealType: { key: APPEAL_CASE_TYPE.W },
 					procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN },
@@ -589,7 +574,6 @@ describe('transitionState', () => {
 				expectedStatus: APPEAL_CASE_STATUS.EVENT,
 				appeal: {
 					id: 101,
-					currentStatus: APPEAL_CASE_STATUS.FINAL_COMMENTS,
 					appealStatus: [{ status: APPEAL_CASE_STATUS.FINAL_COMMENTS, valid: true }],
 					appealType: { key: APPEAL_CASE_TYPE.W },
 					procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN },
@@ -602,7 +586,6 @@ describe('transitionState', () => {
 				expectedStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 				appeal: {
 					id: 102,
-					currentStatus: APPEAL_CASE_STATUS.FINAL_COMMENTS,
 					appealStatus: [{ status: APPEAL_CASE_STATUS.FINAL_COMMENTS, valid: true }],
 					appealType: { key: APPEAL_CASE_TYPE.W },
 					procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN },
@@ -615,7 +598,6 @@ describe('transitionState', () => {
 				expectedStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
 				appeal: {
 					id: 103,
-					currentStatus: APPEAL_CASE_STATUS.FINAL_COMMENTS,
 					appealStatus: [{ status: APPEAL_CASE_STATUS.FINAL_COMMENTS, valid: true }],
 					appealType: { key: APPEAL_CASE_TYPE.W },
 					procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN },
@@ -627,7 +609,6 @@ describe('transitionState', () => {
 				expectedStatus: APPEAL_CASE_STATUS.EVENT,
 				appeal: {
 					id: 200,
-					currentStatus: APPEAL_CASE_STATUS.STATEMENTS,
 					appealStatus: [{ status: APPEAL_CASE_STATUS.STATEMENTS, valid: true }],
 					appealType: { key: APPEAL_CASE_TYPE.W },
 					procedureType: { key: APPEAL_CASE_PROCEDURE.HEARING },
@@ -640,7 +621,6 @@ describe('transitionState', () => {
 				expectedStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 				appeal: {
 					id: 201,
-					currentStatus: APPEAL_CASE_STATUS.STATEMENTS,
 					appealStatus: [{ status: APPEAL_CASE_STATUS.STATEMENTS, valid: true }],
 					appealType: { key: APPEAL_CASE_TYPE.W },
 					procedureType: { key: APPEAL_CASE_PROCEDURE.HEARING },
@@ -652,7 +632,6 @@ describe('transitionState', () => {
 				expectedStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 				appeal: {
 					id: 202,
-					currentStatus: APPEAL_CASE_STATUS.STATEMENTS,
 					appealStatus: [{ status: APPEAL_CASE_STATUS.STATEMENTS, valid: true }],
 					appealType: { key: APPEAL_CASE_TYPE.W },
 					procedureType: { key: APPEAL_CASE_PROCEDURE.HEARING },
@@ -665,7 +644,6 @@ describe('transitionState', () => {
 				expectedStatus: APPEAL_CASE_STATUS.EVENT,
 				appeal: {
 					id: 300,
-					currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 					appealStatus: [{ status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, valid: true }],
 					appealType: { key: APPEAL_CASE_TYPE.D },
 					procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN },
@@ -678,7 +656,6 @@ describe('transitionState', () => {
 				expectedStatus: APPEAL_CASE_STATUS.EVENT,
 				appeal: {
 					id: 301,
-					currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 					appealStatus: [{ status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, valid: true }],
 					appealType: { key: APPEAL_CASE_TYPE.D },
 					procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN },
@@ -691,7 +668,6 @@ describe('transitionState', () => {
 				expectedStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 				appeal: {
 					id: 302,
-					currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 					appealStatus: [{ status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, valid: true }],
 					appealType: { key: APPEAL_CASE_TYPE.D },
 					procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN },
@@ -704,7 +680,6 @@ describe('transitionState', () => {
 				expectedStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
 				appeal: {
 					id: 303,
-					currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 					appealStatus: [{ status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, valid: true }],
 					appealType: { key: APPEAL_CASE_TYPE.D },
 					procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN },
@@ -717,7 +692,6 @@ describe('transitionState', () => {
 				mockRepresentations: standardRepresentations,
 				appeal: {
 					id: 400,
-					currentStatus: APPEAL_CASE_STATUS.EVIDENCE,
 					appealStatus: [{ status: APPEAL_CASE_STATUS.EVIDENCE, valid: true }],
 					appealType: { key: APPEAL_CASE_TYPE.W },
 					procedureType: { key: APPEAL_CASE_PROCEDURE.INQUIRY },
@@ -731,7 +705,6 @@ describe('transitionState', () => {
 				mockRepresentations: standardRepresentations,
 				appeal: {
 					id: 401,
-					currentStatus: APPEAL_CASE_STATUS.EVIDENCE,
 					appealStatus: [{ status: APPEAL_CASE_STATUS.EVIDENCE, valid: true }],
 					appealType: { key: APPEAL_CASE_TYPE.W },
 					procedureType: { key: APPEAL_CASE_PROCEDURE.INQUIRY },
@@ -744,7 +717,6 @@ describe('transitionState', () => {
 				mockRepresentations: standardRepresentations,
 				appeal: {
 					id: 402,
-					currentStatus: APPEAL_CASE_STATUS.EVIDENCE,
 					appealStatus: [{ status: APPEAL_CASE_STATUS.EVIDENCE, valid: true }],
 					appealType: { key: APPEAL_CASE_TYPE.W },
 					procedureType: { key: APPEAL_CASE_PROCEDURE.INQUIRY },
@@ -757,7 +729,6 @@ describe('transitionState', () => {
 				expectedStatus: APPEAL_CASE_STATUS.EVENT,
 				appeal: {
 					id: 203,
-					currentStatus: APPEAL_CASE_STATUS.STATEMENTS,
 					appealStatus: [{ status: APPEAL_CASE_STATUS.STATEMENTS, valid: true }],
 					appealType: { key: APPEAL_CASE_TYPE.W },
 					procedureType: { key: APPEAL_CASE_PROCEDURE.HEARING },
@@ -771,7 +742,6 @@ describe('transitionState', () => {
 				mockRepresentations: standardRepresentations,
 				appeal: {
 					id: 403,
-					currentStatus: APPEAL_CASE_STATUS.EVIDENCE,
 					appealStatus: [{ status: APPEAL_CASE_STATUS.EVIDENCE, valid: true }],
 					appealType: { key: APPEAL_CASE_TYPE.W },
 					procedureType: { key: APPEAL_CASE_PROCEDURE.INQUIRY },

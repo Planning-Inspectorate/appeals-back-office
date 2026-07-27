@@ -70,7 +70,6 @@ describe('POST /:appealId/site-visits (rearrange site visit)', () => {
 			});
 			test('updates a site visit and updates the status when status is event', async () => {
 				const { siteVisit } = appeal;
-				appeal.currentStatus = 'event';
 				appeal.appealStatus[0].status = 'event';
 				addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
 
@@ -125,7 +124,6 @@ describe('POST /:appealId/site-visits (rearrange site visit)', () => {
 
 			test('updates a site visit and keeps the same status when status is lpa questionnaire', async () => {
 				const { siteVisit } = appeal;
-				appeal.currentStatus = 'lpa_questionnaire';
 				appeal.appealStatus[0].status = 'lpa_questionnaire';
 				addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
 
@@ -184,7 +182,6 @@ describe('POST /:appealId/site-visits (rearrange site visit)', () => {
 					name: 'Access required',
 					key: 'site_visit_access_required'
 				};
-				appeal.currentStatus = 'event';
 				appeal.appealStatus[0].status = 'event';
 				addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
 
@@ -240,7 +237,6 @@ describe('POST /:appealId/site-visits (rearrange site visit)', () => {
 					name: 'Accompanied',
 					key: 'site_visit_accompanied'
 				};
-				appeal.currentStatus = 'event';
 				appeal.appealStatus[0].status = 'event';
 				addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
 
@@ -304,7 +300,6 @@ describe('POST /:appealId/site-visits (rearrange site visit)', () => {
 					name: 'Unaccompanied',
 					key: 'site_visit_unaccompanied'
 				};
-				appeal.currentStatus = 'event';
 				appeal.appealStatus[0].status = 'event';
 				addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
 

@@ -134,7 +134,6 @@ const enforcementAppeal = {
 const appealsWithValidStatus = [
 	{
 		...householdAppeal,
-		currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 		appealStatus: [
 			{
 				status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
@@ -144,7 +143,6 @@ const appealsWithValidStatus = [
 	},
 	{
 		...householdAppeal,
-		currentStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
 		appealStatus: [
 			{
 				status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
@@ -156,7 +154,6 @@ const appealsWithValidStatus = [
 const appealsWithInvalidStatus = [
 	{
 		...householdAppeal,
-		currentStatus: APPEAL_CASE_STATUS.CLOSED,
 		appealStatus: [
 			{
 				status: APPEAL_CASE_STATUS.CLOSED,
@@ -310,7 +307,6 @@ describe('appeal change type resubmit routes', () => {
 		test('includes enforcement_reference in personalisation for enforcement notice appeal', async () => {
 			const enforcementAppealWithValidStatus = {
 				...enforcementAppeal,
-				currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 				appealStatus: [
 					{
 						status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
@@ -547,7 +543,6 @@ describe('appeal change type transfer confirmation routes', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...householdAppeal,
-				currentStatus: caseStatus,
 				appealStatus: [
 					{
 						status: caseStatus,
@@ -575,7 +570,6 @@ describe('appeal change type transfer confirmation routes', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...householdAppeal,
-				currentStatus: APPEAL_CASE_STATUS.AWAITING_TRANSFER,
 				appealStatus: [
 					{
 						status: APPEAL_CASE_STATUS.AWAITING_TRANSFER,
@@ -603,7 +597,6 @@ describe('appeal change type transfer confirmation routes', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...householdAppeal,
-				currentStatus: APPEAL_CASE_STATUS.AWAITING_TRANSFER,
 				appealStatus: [
 					{
 						status: APPEAL_CASE_STATUS.AWAITING_TRANSFER,
@@ -631,7 +624,6 @@ describe('appeal change type transfer confirmation routes', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...householdAppeal,
-				currentStatus: APPEAL_CASE_STATUS.AWAITING_TRANSFER,
 				appealStatus: [
 					{
 						status: APPEAL_CASE_STATUS.AWAITING_TRANSFER,
@@ -662,7 +654,6 @@ describe('appeal change type transfer confirmation routes', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...householdAppeal,
-				currentStatus: caseStatus,
 				appealStatus: [
 					{
 						status: caseStatus,
@@ -714,7 +705,6 @@ describe('appeal change update routes', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...householdAppeal,
-				currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 				appealStatus: [
 					{
 						status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
@@ -759,7 +749,6 @@ describe('appeal change update routes', () => {
 		])('returns 400 for invalid appeal case status: %s', async (_, caseStatus) => {
 			const appealWithInvalidCaseStatus = {
 				...householdAppeal,
-				currentStatus: caseStatus,
 				appealStatus: [
 					{
 						status: caseStatus,
@@ -838,7 +827,6 @@ describe('appeal change update routes', () => {
 				async (_, sourceAppeal, targetTypeId, expectedExistingType, expectedNewType) => {
 					const appealWithValidCaseStatus = {
 						...sourceAppeal,
-						currentStatus: caseStatus,
 						appealStatus: [
 							{
 								status: caseStatus,
@@ -909,7 +897,6 @@ describe('appeal change update routes', () => {
 			test('includes enforcement_reference in personalisation for enforcement notice appeal', async () => {
 				const enforcementAppealWithValidStatus = {
 					...enforcementAppeal,
-					currentStatus: caseStatus,
 					appealStatus: [
 						{
 							status: caseStatus,
@@ -1004,7 +991,6 @@ describe('appeal change update routes', () => {
 				async (_, sourceAppeal, targetTypeId, expectedExistingType, expectedNewType) => {
 					const appealWithValidCaseStatus = {
 						...sourceAppeal,
-						currentStatus: caseStatus,
 						appealStatus: [
 							{
 								status: caseStatus,
@@ -1076,7 +1062,6 @@ describe('appeal change update routes', () => {
 		test('successfully deletes surplus appellant documents when type is changed from planning appeal to householder appeal', async () => {
 			const appealWithValidCaseStatus = {
 				...fullPlanningAppeal,
-				currentStatus: APPEAL_CASE_STATUS.VALIDATION,
 				appealStatus: [
 					{
 						status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER
@@ -1161,7 +1146,6 @@ describe('appeal change update routes', () => {
 		test('sends a notify to appellant where agent email does not exist', async () => {
 			const appealWithValidCaseStatus = {
 				...householdAppeal,
-				currentStatus: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
 				appealStatus: [
 					{
 						status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,

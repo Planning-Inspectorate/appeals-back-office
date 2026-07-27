@@ -1,5 +1,6 @@
 import { databaseConnector } from '#utils/database-connector.js';
 import { getSkipValue } from '#utils/database-pagination.js';
+import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.PersonalList} PersonalList */
@@ -21,169 +22,127 @@ const upsertPersonalListEntry = async (data) => {
 	});
 };
 
-/** @satisfies {import('#db-client/models.ts').PersonalListFindManyArgs['select'] } */
-const personalListSelect = {
-	id: true,
-	appealId: true,
-	linkType: true,
-	leadAppealId: true,
-	dueDate: true,
-	appeal: {
-		select: {
-			id: true,
-			reference: true,
-			caseExtensionDate: true,
-			currentStatus: true,
-			caseCreatedDate: true,
-			appealStatus: {
-				select: {
-					status: true,
-					valid: true,
-					createdAt: true
-				}
-			},
-			appellantCase: {
-				select: {
-					numberOfResidencesNetChange: true,
-					applicationDate: true,
-					applicationDecision: true,
-					typeOfPlanningApplication: true,
-					appellantCaseValidationOutcomeId: true,
-					appellantCaseValidationOutcome: {
-						select: {
-							name: true
-						}
-					}
-				}
-			},
-			appealType: {
-				select: {
-					type: true,
-					key: true
-				}
-			},
-			lpaQuestionnaire: {
-				select: {
-					id: true,
-					lpaqCreatedDate: true,
-					lpaQuestionnaireValidationOutcome: {
-						select: {
-							name: true
-						}
-					}
-				}
-			},
-			procedureType: {
-				select: {
-					name: true
-				}
-			},
-			inquiry: {
-				select: {
-					addressId: true
-				}
-			},
-			hearing: {
-				select: {
-					addressId: true
-				}
-			},
-			enforcementNoticeAppealOutcome: {
-				select: {
-					enforcementNoticeInvalid: true
-				}
-			},
-			appealTimetable: {
-				select: {
-					id: true,
-					lpaQuestionnaireDueDate: true,
-					caseResubmissionDueDate: true,
-					ipCommentsDueDate: true,
-					lpaStatementDueDate: true,
-					finalCommentsDueDate: true,
-					s106ObligationDueDate: true,
-					issueDeterminationDate: true,
-					proofOfEvidenceAndWitnessesDueDate: true,
-					caseManagementConferenceDueDate: true
-				}
-			},
-			representations: {
-				select: {
-					representationType: true,
-					representedId: true,
-					status: true,
-					dateCreated: true,
-					isRedacted: true
-				}
-			},
-			appealRule6Parties: {
-				select: {
-					id: true,
-					serviceUserId: true,
-					serviceUser: {
-						select: {
-							organisationName: true
-						}
-					}
-				}
-			}
-		}
-	}
-};
-
-/** @typedef {typeof personalListSelect} PersonalListSelect */
-/** @typedef {import('#db-client/models.ts').PersonalListGetPayload<{ select: PersonalListSelect }>} PersonalListSelected */
-/** @typedef {Awaited<ReturnType<getPersonalList>>} getPersonalListRepoResponse */
-
 /**
  * @param {string} userId
  * @param {number} pageNumber
  * @param {number} pageSize
  * @param {string} [status]
- * @param {number|null} [leadAppealId]
- * @returns {Promise<{personalList: PersonalListSelected[], itemCount?: number, statuses?: string[]}>}
+ * @param {number} [leadAppealId]
+ * @returns {Promise<{personalList: PersonalList[], itemCount?: number, statuses?: string[]}>}
  */
 const getPersonalList = async (userId, pageNumber, pageSize, status, leadAppealId) => {
 	/**
-	 * @param {{status?: string, leadAppealId?: number|null}} param0
+	 * @param {{status?: string, leadAppealId?: number}} param0
+	 * @returns {*}
 	 */
-	const where = ({ status, leadAppealId }) => {
-		const statusFilter = status
-			? {
-					currentStatus: status
-				}
-			: {
-					currentStatus: {
-						in: Object.values(APPEAL_CASE_STATUS).filter(
-							(x) => x !== APPEAL_CASE_STATUS.TRANSFERRED && x !== APPEAL_CASE_STATUS.INVALID
-						)
+	const where = ({ status, leadAppealId }) => ({
+		AND: [
+			{
+				...(leadAppealId ? { leadAppealId: { equals: leadAppealId } } : {}),
+				dueDate: { not: null }
+			},
+			{
+				appeal: {
+					is: {
+						appealType: { key: { in: getEnabledAppealTypes() } },
+						AND: [
+							...(status
+								? [
+										{
+											appealStatus: {
+												some: { valid: true, status }
+											}
+										}
+									]
+								: []),
+							{
+								appealStatus: {
+									some: {
+										valid: true,
+										status: {
+											notIn: [APPEAL_CASE_STATUS.TRANSFERRED, APPEAL_CASE_STATUS.INVALID]
+										}
+									}
+								}
+							}
+						],
+						OR: [
+							{ inspector: { azureAdUserId: { equals: userId } } },
+							{ caseOfficer: { azureAdUserId: { equals: userId } } }
+						]
 					}
-				};
-		return {
-			AND: [
-				{
-					...(leadAppealId ? { leadAppealId: leadAppealId } : {}),
-					dueDate: { not: null }
-				},
-				{
-					appeal: {
-						is: {
-							...statusFilter,
-							OR: [
-								{ inspector: { azureAdUserId: userId } },
-								{ caseOfficer: { azureAdUserId: userId } }
-							]
-						}
-					}
 				}
-			]
-		};
-	};
+			}
+		]
+	});
 
 	return databaseConnector.$transaction(async (tx) => {
 		const personalList = await tx.personalList.findMany({
 			where: where({ status, leadAppealId }),
-			select: personalListSelect,
+			// TODO: performance
+			// use selects not include to only return the data needed for the personal list
+			include: {
+				appeal: {
+					include: {
+						appealStatus: true,
+						appealTimetable: true,
+						appealType: true,
+						procedureType: true,
+						appellantCase: {
+							include: {
+								appellantCaseIncompleteReasonsSelected: {
+									include: {
+										appellantCaseIncompleteReason: true,
+										appellantCaseIncompleteReasonText: true
+									}
+								},
+								appellantCaseInvalidReasonsSelected: {
+									include: {
+										appellantCaseInvalidReason: true,
+										appellantCaseInvalidReasonText: true
+									}
+								},
+								appellantCaseValidationOutcome: true
+							}
+						},
+						lpa: true,
+						lpaQuestionnaire: {
+							include: {
+								lpaQuestionnaireValidationOutcome: true,
+								lpaQuestionnaireIncompleteReasonsSelected: {
+									include: {
+										lpaQuestionnaireIncompleteReason: true,
+										lpaQuestionnaireIncompleteReasonText: true
+									}
+								},
+								lpaNotificationMethods: {
+									include: {
+										lpaNotificationMethod: true
+									}
+								},
+								listedBuildingDetails: true
+							}
+						},
+						representations: true,
+						siteVisit: {
+							include: { siteVisitType: true }
+						},
+						hearing: true,
+						inquiry: true,
+						appealRule6Parties: {
+							include: {
+								serviceUser: true
+							}
+						},
+						enforcementNoticeAppealOutcome: {
+							select: {
+								enforcementNoticeInvalid: true,
+								groundAFeeReceiptDueDate: true
+							}
+						}
+					}
+				}
+			},
 			skip: getSkipValue(pageNumber, pageSize),
 			take: pageSize,
 			orderBy: [
@@ -213,13 +172,22 @@ const getPersonalList = async (userId, pageNumber, pageSize, status, leadAppealI
 			select: {
 				appeal: {
 					select: {
-						currentStatus: true
+						appealStatus: {
+							select: {
+								status: true
+							},
+							where: {
+								valid: true
+							}
+						}
 					}
 				}
 			}
 		});
 
-		const statuses = [...new Set(appealStatuses.map(({ appeal }) => appeal.currentStatus))];
+		const statuses = [
+			...new Set(appealStatuses.map(({ appeal }) => appeal.appealStatus[0].status))
+		];
 
 		return { itemCount, personalList, statuses };
 	});

@@ -153,7 +153,6 @@ describe('hearing routes', () => {
 			test('updates a single hearing with address', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
-					currentStatus: APPEAL_CASE_STATUS.EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.EVENT,
@@ -259,7 +258,6 @@ describe('hearing routes', () => {
 				databaseConnector.hearing.update.mockResolvedValue(hearing);
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
-					currentStatus: APPEAL_CASE_STATUS.EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
@@ -434,7 +432,6 @@ describe('hearing routes', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
-					currentStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.EVENT,

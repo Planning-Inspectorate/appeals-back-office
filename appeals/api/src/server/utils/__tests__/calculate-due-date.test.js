@@ -13,7 +13,6 @@ describe('calculateDueDate Tests', () => {
 		reference: 'APP/Q9999/D/21/33813',
 		caseExtensionDate: null,
 		caseCreatedDate: new Date('2023-01-01T00:00:00.000Z'),
-		currentStatus: APPEAL_CASE_STATUS.READY_TO_START,
 		appealStatus: [
 			{
 				id: 2648,
@@ -39,7 +38,6 @@ describe('calculateDueDate Tests', () => {
 			reference: 'APP/Q9999/D/21/33813',
 			caseExtensionDate: null,
 			caseCreatedDate: new Date('2023-01-01T00:00:00.000Z'),
-			currentStatus: APPEAL_CASE_STATUS.READY_TO_START,
 			appealStatus: [
 				{
 					id: 2648,
@@ -56,7 +54,7 @@ describe('calculateDueDate Tests', () => {
 	});
 
 	test('maps STATE_TARGET_READY_TO_START status', async () => {
-		mockAppeal.currentStatus = APPEAL_CASE_STATUS.READY_TO_START;
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.READY_TO_START;
 		mockAppeal.caseExtensionDate = new Date('2023-02-01');
 		mockAppeal.appellantCase = { appellantCaseValidationOutcome: { name: 'Incomplete' } };
 		// @ts-ignore
@@ -65,7 +63,7 @@ describe('calculateDueDate Tests', () => {
 	});
 
 	test('maps STATE_TARGET_READY_TO_START status with Incomplete status', async () => {
-		mockAppeal.currentStatus = APPEAL_CASE_STATUS.READY_TO_START;
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.READY_TO_START;
 		const createdAtPlusFiveDate = new Date('2023-01-06T00:00:00.000Z');
 		// @ts-ignore
 		const dueDate = await calculateDueDate(mockAppeal, '');
@@ -73,7 +71,7 @@ describe('calculateDueDate Tests', () => {
 	});
 
 	test('maps STATE_TARGET_LPA_QUESTIONNAIRE_DUE', async () => {
-		mockAppeal.currentStatus = APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE;
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE;
 
 		const createdAtPlusTenDate = new Date('2023-01-11T00:00:00.000Z');
 		// @ts-ignore
@@ -92,7 +90,7 @@ describe('calculateDueDate Tests', () => {
 				lpaStatementDueDate: null
 			}
 		};
-		mockAppealWithTimetable.currentStatus = APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE;
+		mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE;
 
 		// @ts-ignore
 		const dueDate = await calculateDueDate(mockAppealWithTimetable, '');
@@ -100,7 +98,7 @@ describe('calculateDueDate Tests', () => {
 	});
 
 	test('maps STATE_TARGET_ASSIGN_CASE_OFFICER', async () => {
-		mockAppeal.currentStatus = APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER;
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER;
 
 		const createdAtPlusFifteenDate = new Date('2023-01-16T00:00:00.000Z');
 		// @ts-ignore
@@ -109,7 +107,7 @@ describe('calculateDueDate Tests', () => {
 	});
 
 	test('maps STATE_TARGET_ISSUE_DETERMINATION when site visit available', async () => {
-		mockAppeal.currentStatus = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
 		mockAppeal.siteVisit = { visitDate: new Date('2023-02-01T00:00:00.000Z') };
 		const createdAtPlusFortyBusinessDays = new Date('2023-03-29T00:00:00.000Z');
 		// @ts-ignore
@@ -118,7 +116,7 @@ describe('calculateDueDate Tests', () => {
 	});
 
 	test('maps STATE_TARGET_ISSUE_DETERMINATION to caseCreatedDate fallback when site visit exists but has no visitDate', async () => {
-		mockAppeal.currentStatus = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
 		mockAppeal.siteVisit = { visitDate: null };
 		mockAppeal.caseCreatedDate = new Date('2023-01-01T00:00:00.000Z');
 		const expectedCreatedAtPlusThirtyBusinessDays = new Date('2023-02-10T00:00:00.000Z');
@@ -128,7 +126,7 @@ describe('calculateDueDate Tests', () => {
 	});
 
 	test('maps STATE_TARGET_ISSUE_DETERMINATION when site visit not available', async () => {
-		mockAppeal.currentStatus = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
 
 		const createdAtPlusThirtyBusinessDays = new Date('2025-07-04T00:00:00.000Z');
 		mockAppeal.caseCreatedDate = new Date('2025-05-22T00:00:00.000Z');
@@ -149,7 +147,7 @@ describe('calculateDueDate Tests', () => {
 				lpaStatementDueDate: null
 			}
 		};
-		mockAppealWithTimetable.currentStatus = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
+		mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
 		mockAppealWithTimetable.caseCreatedDate = new Date('2025-05-22T00:00:00.000Z');
 		// @ts-ignore
 		const dueDate = await calculateDueDate(mockAppealWithTimetable, '');
@@ -158,7 +156,7 @@ describe('calculateDueDate Tests', () => {
 	});
 
 	test('maps STATE_TARGET_STATEMENT_REVIEW', async () => {
-		mockAppeal.currentStatus = APPEAL_CASE_STATUS.STATEMENTS;
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.STATEMENTS;
 
 		const createdAtPlusFiftyFiveDate = new Date('2023-02-25T00:00:00.000Z');
 		// @ts-ignore
@@ -178,7 +176,7 @@ describe('calculateDueDate Tests', () => {
 				resubmitAppealTypeDate: null
 			}
 		};
-		mockAppealWithTimetable.currentStatus = APPEAL_CASE_STATUS.STATEMENTS;
+		mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.STATEMENTS;
 
 		// @ts-ignore
 		const dueDate = await calculateDueDate(mockAppealWithTimetable, '');
@@ -186,7 +184,7 @@ describe('calculateDueDate Tests', () => {
 	});
 
 	test('maps STATE_TARGET_FINAL_COMMENT_REVIEW', async () => {
-		mockAppeal.currentStatus = APPEAL_CASE_STATUS.FINAL_COMMENTS;
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.FINAL_COMMENTS;
 
 		const createdAtPlusSixtyDate = new Date('2023-03-02T00:00:00.000Z');
 		// @ts-ignore
@@ -195,7 +193,7 @@ describe('calculateDueDate Tests', () => {
 	});
 
 	test('handles STATE_TARGET_AWAITING_SITE_VISIT', async () => {
-		mockAppeal.currentStatus = APPEAL_CASE_STATUS.AWAITING_EVENT;
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.AWAITING_EVENT;
 		mockAppeal.siteVisit = { visitDate: new Date('2023-02-01T00:00:00.000Z') };
 		mockAppeal.procedureType = {
 			key: APPEAL_CASE_PROCEDURE.WRITTEN
@@ -207,7 +205,7 @@ describe('calculateDueDate Tests', () => {
 	});
 
 	test('handles STATE_TARGET_AWAITING_SITE_VISIT when site visit exists but has no visitDate', async () => {
-		mockAppeal.currentStatus = APPEAL_CASE_STATUS.AWAITING_EVENT;
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.AWAITING_EVENT;
 		mockAppeal.siteVisit = { visitDate: null };
 		mockAppeal.procedureType = {
 			key: APPEAL_CASE_PROCEDURE.WRITTEN
@@ -219,7 +217,7 @@ describe('calculateDueDate Tests', () => {
 	});
 
 	test('handles STATE_TARGET_AWAITING_HEARING', async () => {
-		mockAppeal.currentStatus = APPEAL_CASE_STATUS.AWAITING_EVENT;
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.AWAITING_EVENT;
 		mockAppeal.hearing = { hearingStartTime: new Date('2023-02-01T00:00:00.000Z') };
 		mockAppeal.procedureType = {
 			key: APPEAL_CASE_PROCEDURE.HEARING
@@ -242,7 +240,7 @@ describe('calculateDueDate Tests', () => {
 					lpaQuestionnaireDueDate: new Date('2023-03-01T00:00:00.000Z')
 				}
 			};
-			mockAppealWithTimetable.currentStatus = APPEAL_CASE_STATUS.EVENT;
+			mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.EVENT;
 		});
 
 		test('when final comments due date does not exist', async () => {
@@ -262,7 +260,7 @@ describe('calculateDueDate Tests', () => {
 	});
 
 	test('handles STATE_TARGET_AWAITING_INQUIRY', async () => {
-		mockAppeal.currentStatus = APPEAL_CASE_STATUS.AWAITING_EVENT;
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.AWAITING_EVENT;
 		mockAppeal.inquiry = {
 			inquiryStartTime: new Date('2023-02-01T00:00:00.000Z'),
 			estimatedDays: 3
@@ -280,7 +278,7 @@ describe('calculateDueDate Tests', () => {
 	});
 
 	test('handles STATE_TARGET_COMPLETE', async () => {
-		mockAppeal.currentStatus = APPEAL_CASE_STATUS.COMPLETE;
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.COMPLETE;
 		mockAppeal.appellantCase = { numberOfResidencesNetChange: 5 };
 
 		// @ts-ignore
@@ -294,7 +292,7 @@ describe('calculateDueDate Tests', () => {
 				awaitingAppellantCostsDecision: false,
 				awaitingLpaCostsDecision: false
 			};
-			mockAppeal.currentStatus = APPEAL_CASE_STATUS.WITHDRAWN;
+			mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.WITHDRAWN;
 
 			expect(await calculateDueDate(mockAppeal, mockCostDecision)).toBeNull();
 		});
@@ -306,7 +304,6 @@ describe('calculateDueDate Tests', () => {
 				awaitingLpaCostsDecision: true
 			};
 			mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.WITHDRAWN;
-			mockAppeal.currentStatus = APPEAL_CASE_STATUS.WITHDRAWN;
 
 			const dueDate = await calculateDueDate(mockAppeal, mockCostDecision);
 			expect(dueDate).toEqual(createdAtPlusFiveDate);
@@ -325,7 +322,7 @@ describe('calculateDueDate Tests', () => {
 					proofOfEvidenceAndWitnessesDueDate: new Date('2023-03-01T00:00:00.000Z')
 				}
 			};
-			mockAppealWithTimetable.currentStatus = APPEAL_CASE_STATUS.EVIDENCE;
+			mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.EVIDENCE;
 		});
 		test('return null where proof of evidence due date do not exist', async () => {
 			mockAppealWithTimetable.appealTimetable.proofOfEvidenceAndWitnessesDueDate = null;
@@ -339,7 +336,7 @@ describe('calculateDueDate Tests', () => {
 	});
 
 	test('handles unexpected status (default case)', async () => {
-		mockAppeal.currentStatus = 'unexpected_status';
+		mockAppeal.appealStatus[0].status = 'unexpected_status';
 
 		// @ts-ignore
 		const dueDate = await calculateDueDate(mockAppeal, '');

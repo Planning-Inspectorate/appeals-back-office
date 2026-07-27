@@ -62,10 +62,10 @@ export const targetStateOnStatementsComplete = (
  * Uses appeal information to determine the next status on statements complete
  * @param {string} appealType
  * @param {string} procedureType
- * @param {boolean} isHearingSetup
+ * @param {boolean} isHearingSetUp
  * @returns {string}
  */
-export function getNextStateOnStatementsComplete(appealType, procedureType, isHearingSetup) {
+export function getNextStateOnStatementsComplete(appealType, procedureType, isHearingSetUp) {
 	const normalisedProcedureType = normaliseProcedureType(procedureType);
 
 	const nextState = targetStateOnStatementsComplete(
@@ -76,7 +76,7 @@ export function getNextStateOnStatementsComplete(appealType, procedureType, isHe
 	// currently the target state will only be event if the procedure type is hearing
 	// if the hearing has already been set up then the eventual state will actually be awaiting event
 	const eventualState =
-		isHearingSetup && nextState === APPEAL_CASE_STATUS.EVENT
+		isHearingSetUp && nextState === APPEAL_CASE_STATUS.EVENT
 			? APPEAL_CASE_STATUS.AWAITING_EVENT
 			: nextState;
 

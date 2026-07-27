@@ -1,16 +1,20 @@
-/** @typedef {import('#db-client/models.ts').AppealModel } Appeal */
-/** @typedef {import('#db-client/models.ts').AppealStatusModel } AppealStatus */
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {import('#repositories/appeal-lists.repository.js').DBUserAppeal} DBUserAppeal */
+/** @typedef {import('#repositories/appeal-lists.repository.js').DBAppeals} DBAppeals */
+/** @typedef {DBAppeals[0]} DBAppeal */
 
 /**
- * @param {{currentStatus: Appeal['currentStatus']}} appeal
+ *
+ * @param {DBAppeal | DBUserAppeal | Appeal} appeal
  * @returns {string}
  */
 export const currentStatus = (appeal) => {
-	return appeal?.currentStatus ?? '';
+	return appeal?.appealStatus?.find((item) => item?.valid)?.status ?? '';
 };
 
 /**
- * @param {{currentStatus: Appeal['currentStatus']}} appeal
+ *
+ * @param {DBAppeal | DBUserAppeal | Appeal} appeal
  * @param {string} status
  * @returns {boolean}
  */
@@ -19,7 +23,7 @@ export const isCurrentStatus = (appeal, status) => {
 };
 
 /**
- * @param {{appealStatus?: { valid: AppealStatus['valid'], status: AppealStatus['status'] }[] }} appeal
+ * @param {DBAppeal | DBUserAppeal | Appeal} appeal
  * @returns {string[]}
  */
 export const completedStateList = (appeal) => {

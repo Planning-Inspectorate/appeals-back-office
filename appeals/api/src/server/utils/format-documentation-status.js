@@ -4,16 +4,18 @@ import {
 	DOCUMENT_STATUS_RECEIVED
 } from '@pins/appeals/constants/support.js';
 
-/** @typedef {import('#db-client/models.ts').AppellantCaseValidationOutcomeModel } AppellantCaseValidationOutcomeModel */
-/** @typedef {import('#db-client/models.ts').LPAQuestionnaireValidationOutcomeModel } LPAQuestionnaireValidationOutcomeModel */
-/** @typedef {import('#db-client/models.ts').RepresentationModel } RepresentationModel */
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {import('#repositories/appeal-lists.repository.js').DBAppeals} DBAppeals */
+/** @typedef {DBAppeals[0]} DBAppeal */
+/** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
+/** @typedef {import('#repositories/appeal-lists.repository.js').DBUserAppeal} DBUserAppeal */
 
 /**
- * @param {{ appellantCase?: { appellantCaseValidationOutcome?: { name: AppellantCaseValidationOutcomeModel['name'] } | null } | null }} appeal
+ * @param {Appeal | DBAppeal | DBUserAppeal} appeal
  * @returns {string}
  */
 export const formatAppellantCaseDocumentationStatus = (appeal) => {
-	if (appeal.appellantCase?.appellantCaseValidationOutcome?.name) {
+	if (appeal.appellantCase && appeal.appellantCase.appellantCaseValidationOutcome?.name) {
 		return appeal.appellantCase.appellantCaseValidationOutcome.name;
 	}
 
@@ -21,11 +23,11 @@ export const formatAppellantCaseDocumentationStatus = (appeal) => {
 };
 
 /**
- * @param {{ lpaQuestionnaire?: { lpaQuestionnaireValidationOutcome?: { name: LPAQuestionnaireValidationOutcomeModel['name'] } | null } | null }} appeal
+ * @param {Appeal | DBAppeal | DBUserAppeal} appeal
  * @returns {string}
  */
 export const formatLpaQuestionnaireDocumentationStatus = (appeal) => {
-	if (appeal.lpaQuestionnaire?.lpaQuestionnaireValidationOutcome?.name) {
+	if (appeal.lpaQuestionnaire && appeal.lpaQuestionnaire.lpaQuestionnaireValidationOutcome?.name) {
 		return appeal.lpaQuestionnaire.lpaQuestionnaireValidationOutcome.name;
 	}
 	return appeal.lpaQuestionnaire ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED;
@@ -33,7 +35,7 @@ export const formatLpaQuestionnaireDocumentationStatus = (appeal) => {
 
 /**
  *
- * @param {{ status?: RepresentationModel['status'] }} representation
+ * @param {Representation} representation
  * @returns {string}
  * */
 export function formatRepresentationStatus(representation) {

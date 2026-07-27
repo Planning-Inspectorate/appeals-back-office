@@ -4,7 +4,7 @@ import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal */
-/** @typedef {import('#appeals/personal-list/personal-list.mapper').PersonalListItem} PersonalListItem */
+/** @typedef {import('#appeals/personal-list/personal-list.mapper').PersonalListAppeal} PersonalListAppeal */
 
 /**
  * @param {string} appealStatus
@@ -49,7 +49,7 @@ export function mapAppealProcedureTypeToEventName(appealProcedureType) {
 /**
  * Returns true if the given state was previously passed through.
  *
- * @param {WebAppeal|PersonalListItem} appeal
+ * @param {WebAppeal|PersonalListAppeal} appeal
  * @param {string} state
  * @returns {boolean}
  * */
@@ -78,15 +78,15 @@ export function mapStatusFilterLabel(appealStatus) {
  * Uses appeal information to determine the next status on statements complete and convert it into display text
  * @param {string} appealType
  * @param {string} procedureType
- * @param {boolean} isHearingSetup
+ * @param {boolean} isHearingSetUp
  * @returns {string}
  */
 export function getNextStateDisplayTextOnStatementsComplete(
 	appealType,
 	procedureType,
-	isHearingSetup
+	isHearingSetUp
 ) {
-	const eventualState = getNextStateOnStatementsComplete(appealType, procedureType, isHearingSetup);
+	const eventualState = getNextStateOnStatementsComplete(appealType, procedureType, isHearingSetUp);
 
 	if (eventualState === APPEAL_CASE_STATUS.EVIDENCE) {
 		return 'proof of evidence and witnesses';
