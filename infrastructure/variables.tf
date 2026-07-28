@@ -102,6 +102,7 @@ variable "apps_config" {
       featureFlagSharingHearingDocuments          = bool
       featureFlagSharingInquiryEventDocuments     = bool
       featureFlagSharingInquiryDocuments          = bool
+      featureFlagSharingSupportingDocuments       = bool
     })
 
     analytics = object({
