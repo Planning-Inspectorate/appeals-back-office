@@ -160,7 +160,6 @@ export const generateSharedS78S20LpaQuestionnaireComponents = (mappedLPAQData) =
 				mappedLPAQData.lpaq?.procedurePreference?.display.summaryListItem,
 				mappedLPAQData.lpaq?.procedurePreferenceDetails?.display.summaryListItem,
 				mappedLPAQData.lpaq?.procedurePreferenceDuration?.display.summaryListItem,
-				mappedLPAQData.lpaq?.anySignificantChangesLpa?.display.summaryListItem,
 				mappedLPAQData.lpaq?.otherAppeals?.display.summaryListItem,
 				mappedLPAQData.lpaq?.extraConditions?.display.summaryListItem
 			].filter(isDefined)
