@@ -326,7 +326,7 @@ export const publishDecision = async (
 
 /**
  *
- * @param {Appeal} childAppeal
+ * @param {Omit<Appeal, 'documents' | 'representations'>} childAppeal
  * @param {string} outcome
  * @param {Date} documentDate
  * @param {string} azureAdUserId

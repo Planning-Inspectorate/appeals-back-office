@@ -3,6 +3,7 @@ import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
+import commonRepository from '#repositories/common.repository.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
 import transitionState from '#state/transition-state.js';
@@ -31,7 +32,11 @@ import {
 } from '@pins/appeals/utils/business-days.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_CASE_PROCEDURE,
+	APPEAL_CASE_STATUS,
+	APPEAL_REDACTED_STATUS
+} from '@planning-inspectorate/data-model';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateLPAQuestionnaireValidationOutcomeParams} UpdateLPAQuestionnaireValidationOutcomeParams */
@@ -147,16 +152,17 @@ const updateLPAQuestionnaireValidationOutcome = async (
 	}
 
 	if (isOutcomeComplete(validationOutcome.name)) {
-		const latestDocumentVersionsUpdated = await documentRepository.setRedactionStatusOnValidation(
-			appeal.id
+		const noRedactionRequiredStatus = await commonRepository.getLookupListValueByKey(
+			'documentRedactionStatus',
+			{ key: 'key', value: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
 		);
-		for (const documentUpdated of latestDocumentVersionsUpdated) {
-			await broadcasters.broadcastDocument(
-				documentUpdated.documentGuid,
-				documentUpdated.version,
-				EventType.Update
-			);
-		}
+		const updatedDocuments = await documentRepository.setRedactionStatusOnValidation(
+			appeal.id,
+			appeal.reference,
+			appeal.appealType.key,
+			noRedactionRequiredStatus.id
+		);
+		await broadcasters.broadcastDocuments(updatedDocuments, EventType.Update);
 
 		await sendLpaqCompleteEmailToLPA(notifyClient, appeal, siteAddress, azureAdUserId);
 		await sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress, azureAdUserId);
@@ -164,7 +170,12 @@ const updateLPAQuestionnaireValidationOutcome = async (
 
 	// TODO: performance
 	// is returning all data, return only needed data
-	const updatedAppeal = await appealRepository.deprecatedGetAppealById(Number(appealId));
+	/** @type {Omit<Appeal, 'documents' | 'representations'> | undefined} */
+	const updatedAppeal = await appealRepository.deprecatedGetAppealById(Number(appealId), {
+		omitDocuments: true,
+		omitRepresentations: true
+	});
+
 	if (updatedAppeal) {
 		const { lpaQuestionnaire: updatedLpaQuestionnaire } = updatedAppeal;
 

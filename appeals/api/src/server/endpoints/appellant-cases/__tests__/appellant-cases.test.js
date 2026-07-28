@@ -51,7 +51,13 @@ import {
 	ERROR_NOT_FOUND,
 	LENGTH_8
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { EventType } from '@pins/event-client';
+import {
+	APPEAL_CASE_STAGE,
+	APPEAL_CASE_STATUS,
+	APPEAL_DOCUMENT_TYPE,
+	APPEAL_VIRUS_CHECK_STATUS
+} from '@planning-inspectorate/data-model';
 import {
 	appellantCaseEnforcementGroundsMismatchFacts,
 	appellantCaseEnforcementMissingDocuments
@@ -1011,6 +1017,31 @@ describe('appellant cases routes', () => {
 					databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
 						{ id: 1, key: 'no_redaction_required' }
 					]);
+					databaseConnector.$queryRaw.mockResolvedValue([
+						{
+							guid: '123',
+							name: 'document.pdf',
+							version: 1,
+							documentURI: 'https://example.com/document.pdf',
+							originalFilename: 'document.pdf',
+							size: 1024,
+							mime: 'application/pdf',
+							fileMD5: 'abc123',
+							virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
+							stage: APPEAL_CASE_STAGE.APPELLANT_CASE,
+							documentType: APPEAL_DOCUMENT_TYPE.APPEAL_NOTIFICATION,
+							published: true,
+							datePublished: new Date(),
+							dateCreated: new Date(),
+							dateReceived: new Date(),
+							lastModified: new Date(),
+							representationType: null
+						}
+					]);
+					databaseConnector.documentRedactionStatus.findUnique.mockResolvedValue({
+						id: 1,
+						key: 'no_redaction_required'
+					});
 					// @ts-ignore
 					databaseConnector.document.findUnique.mockResolvedValue(null);
 
@@ -1084,6 +1115,14 @@ describe('appellant cases routes', () => {
 					}
 
 					expect(response.status).toEqual(200);
+					expect(mockBroadcasters.broadcastDocuments).toHaveBeenCalledWith(
+						[
+							expect.objectContaining({
+								guid: '123'
+							})
+						],
+						EventType.Update
+					);
 				}
 			);
 
@@ -1118,6 +1157,11 @@ describe('appellant cases routes', () => {
 				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
 					{ id: 1, key: 'no_redaction_required' }
 				]);
+				databaseConnector.$queryRaw.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findUnique.mockResolvedValue({
+					id: 1,
+					key: 'no_redaction_required'
+				});
 				databaseConnector.document.findUnique.mockResolvedValue(null);
 
 				const patchBody = {
@@ -1228,6 +1272,11 @@ describe('appellant cases routes', () => {
 				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
 					{ id: 1, key: 'no_redaction_required' }
 				]);
+				databaseConnector.documentRedactionStatus.findUnique.mockResolvedValue({
+					id: 1,
+					key: 'no_redaction_required'
+				});
+				databaseConnector.$queryRaw.mockResolvedValue([]);
 				databaseConnector.document.findUnique.mockResolvedValue(null);
 
 				const patchBody = {
@@ -1350,6 +1399,11 @@ describe('appellant cases routes', () => {
 				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
 					{ id: 1, key: 'no_redaction_required' }
 				]);
+				databaseConnector.documentRedactionStatus.findUnique.mockResolvedValue({
+					id: 1,
+					key: 'no_redaction_required'
+				});
+				databaseConnector.$queryRaw.mockResolvedValue([]);
 				databaseConnector.document.findUnique.mockResolvedValue(null);
 
 				const patchBody = {
@@ -1450,6 +1504,11 @@ describe('appellant cases routes', () => {
 				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
 					{ id: 1, key: 'no_redaction_required' }
 				]);
+				databaseConnector.documentRedactionStatus.findUnique.mockResolvedValue({
+					id: 1,
+					key: 'no_redaction_required'
+				});
+				databaseConnector.$queryRaw.mockResolvedValue([]);
 				databaseConnector.document.findUnique.mockResolvedValue(null);
 
 				const patchBody = {
@@ -1818,6 +1877,11 @@ describe('appellant cases routes', () => {
 				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
 					{ id: 1, key: 'no_redaction_required' }
 				]);
+				databaseConnector.documentRedactionStatus.findUnique.mockResolvedValue({
+					id: 1,
+					key: 'no_redaction_required'
+				});
+				databaseConnector.$queryRaw.mockResolvedValue([]);
 				// @ts-ignore
 				databaseConnector.document.findUnique.mockResolvedValue(null);
 

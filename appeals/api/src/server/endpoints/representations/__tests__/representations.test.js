@@ -19,11 +19,15 @@ import {
 	CASE_RELATIONSHIP_RELATED,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
+import { EventType } from '@pins/event-client';
 import {
+	APPEAL_CASE_STAGE,
 	APPEAL_CASE_STATUS,
+	APPEAL_DOCUMENT_TYPE,
 	APPEAL_REDACTED_STATUS,
 	APPEAL_REPRESENTATION_STATUS,
-	APPEAL_REPRESENTATION_TYPE
+	APPEAL_REPRESENTATION_TYPE,
+	APPEAL_VIRUS_CHECK_STATUS
 } from '@planning-inspectorate/data-model';
 import { addDays } from 'date-fns';
 
@@ -2322,6 +2326,27 @@ describe('/appeals/:id/reps', () => {
 
 		describe('publish LPA statements', () => {
 			beforeEach(() => {
+				databaseConnector.$queryRaw.mockResolvedValue([
+					{
+						guid: '123',
+						name: 'document.pdf',
+						version: 1,
+						documentURI: 'https://example.com/document.pdf',
+						originalFilename: 'document.pdf',
+						size: 1024,
+						mime: 'application/pdf',
+						fileMD5: 'abc123',
+						virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
+						stage: APPEAL_CASE_STAGE.LPA_STATEMENT,
+						documentType: APPEAL_DOCUMENT_TYPE.APPEAL_NOTIFICATION,
+						published: true,
+						datePublished: new Date(),
+						dateCreated: new Date(),
+						dateReceived: new Date(),
+						lastModified: new Date(),
+						representationType: APPEAL_REPRESENTATION_TYPE.STATEMENT
+					}
+				]);
 				mockAdvertAppeal.currentStatus = 'statements';
 				mockLdcAppeal.currentStatus = 'statements';
 				mockS78Appeal.currentStatus = 'statements';
@@ -3886,10 +3911,61 @@ describe('/appeals/:id/reps', () => {
 					templateName: 'publish-statements-inquiry-appellant'
 				});
 			});
+
+			test('broadcasts no redaction required docs', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
+				databaseConnector.appealStatus.create.mockResolvedValue({});
+				databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+				databaseConnector.representation.findMany.mockResolvedValue([
+					{ representationType: 'lpa_statement' },
+					{ representationType: 'comment' }
+				]);
+				databaseConnector.representation.updateMany.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+				]);
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+				const response = await request
+					.post('/appeals/1/reps/publish')
+					.query({ type: 'statements' })
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+				expect(mockBroadcasters.broadcastDocuments).toHaveBeenCalledWith(
+					[
+						expect.objectContaining({
+							guid: '123'
+						})
+					],
+					EventType.Update
+				);
+			});
 		});
 
 		describe('publish final comments', () => {
 			beforeEach(() => {
+				databaseConnector.$queryRaw.mockResolvedValue([
+					{
+						guid: '123',
+						name: 'document.pdf',
+						version: 1,
+						documentURI: 'https://example.com/document.pdf',
+						originalFilename: 'document.pdf',
+						size: 1024,
+						mime: 'application/pdf',
+						fileMD5: 'abc123',
+						virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
+						stage: APPEAL_CASE_STAGE.FINAL_COMMENTS,
+						documentType: APPEAL_DOCUMENT_TYPE.APPELLANT_FINAL_COMMENT,
+						published: true,
+						datePublished: new Date(),
+						dateCreated: new Date(),
+						dateReceived: new Date(),
+						lastModified: new Date(),
+						representationType: APPEAL_REPRESENTATION_TYPE.FINAL_COMMENT
+					}
+				]);
 				mockAdvertAppeal.currentStatus = 'final_comments';
 				mockLdcAppeal.currentStatus = 'final_comments';
 				mockS78Appeal.currentStatus = 'final_comments';
@@ -4751,10 +4827,61 @@ describe('/appeals/:id/reps', () => {
 					templateName: 'final-comments-done-lpa'
 				});
 			});
+
+			test('broadcasts no redaction required documents', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
+				databaseConnector.appealStatus.create.mockResolvedValue({});
+				databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+				databaseConnector.representation.findMany.mockResolvedValue([
+					{ representationType: 'appellant_final_comment' },
+					{ representationType: 'lpa_final_comment' }
+				]);
+				databaseConnector.representation.updateMany.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+				]);
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+				const response = await request
+					.post('/appeals/1/reps/publish')
+					.query({ type: 'final_comments' })
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+				expect(mockBroadcasters.broadcastDocuments).toHaveBeenCalledWith(
+					[
+						expect.objectContaining({
+							guid: '123'
+						})
+					],
+					EventType.Update
+				);
+			});
 		});
 
 		describe('publish proof of evidence', () => {
 			beforeEach(() => {
+				databaseConnector.$queryRaw.mockResolvedValue([
+					{
+						guid: '123',
+						name: 'document.pdf',
+						version: 1,
+						documentURI: 'https://example.com/document.pdf',
+						originalFilename: 'document.pdf',
+						size: 1024,
+						mime: 'application/pdf',
+						fileMD5: 'abc123',
+						virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
+						stage: APPEAL_CASE_STAGE.PROOFS_EVIDENCE,
+						documentType: APPEAL_DOCUMENT_TYPE.APPELLANT_PROOF_OF_EVIDENCE,
+						published: true,
+						datePublished: new Date(),
+						dateCreated: new Date(),
+						dateReceived: new Date(),
+						lastModified: new Date(),
+						representationType: APPEAL_REPRESENTATION_TYPE.PROOFS_EVIDENCE
+					}
+				]);
 				mockS78Appeal.currentStatus = 'evidence';
 				mockS20Appeal.currentStatus = 'evidence';
 			});
@@ -5412,6 +5539,54 @@ describe('/appeals/:id/reps', () => {
 					.set('azureAdUserId', '732652365');
 
 				expect(response.status).toEqual(200);
+			});
+
+			test('broadcasts no redaction required documents', async () => {
+				mockS78Appeal = {
+					...mockS78Appeal,
+					inquiry: {
+						id: 1,
+						inquiryStartTime: '2025-12-13 14:00',
+						estimatedDays: 8,
+						address: {
+							addressLine1: '10 Mole lane',
+							addressLine2: 'Test address 2',
+							addressTown: 'London',
+							addressCounty: 'London',
+							postcode: 'WL3 6GH',
+							addressCountry: 'United Kingdom'
+						}
+					}
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
+				databaseConnector.appealStatus.create.mockResolvedValue({});
+				databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+				databaseConnector.representation.findMany.mockResolvedValue([
+					{ representationType: 'appellant_proofs_evidence' },
+					{ representationType: 'lpa_proofs_evidence' }
+				]);
+				databaseConnector.representation.updateMany.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+				]);
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+				const response = await request
+					.post('/appeals/1/reps/publish')
+					.query({ type: 'evidence' })
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+
+				expect(mockBroadcasters.broadcastDocuments).toHaveBeenCalledWith(
+					[
+						expect.objectContaining({
+							guid: '123'
+						})
+					],
+					EventType.Update
+				);
 			});
 		});
 	});

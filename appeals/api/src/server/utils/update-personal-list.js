@@ -7,6 +7,8 @@ import logger from '#utils/logger.js';
 import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+
 /**
  * Updates the PersonalList for the specified appeal
  * @param {number} appealId
@@ -15,7 +17,12 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 export const updatePersonalList = async (appealId) => {
 	// TODO: performance
 	// is returning all data, return only needed data
-	const appeal = await appealRepository.deprecatedGetAppealById(appealId);
+	/** @type {Omit<Appeal, 'documents' | 'representations'> | undefined} */
+	const appeal = await appealRepository.deprecatedGetAppealById(appealId, {
+		omitDocuments: true,
+		omitRepresentations: true
+	});
+
 	if (!appeal) {
 		return;
 	}
@@ -41,7 +48,11 @@ export const updatePersonalList = async (appealId) => {
 			// TODO: performance
 			// is returning all data, return only needed data
 			const parentAppeal = await appealRepository.deprecatedGetAppealById(
-				linkedAppeals[0].parentId
+				linkedAppeals[0].parentId,
+				{
+					omitDocuments: true,
+					omitRepresentations: true
+				}
 			);
 			if (!parentAppeal) {
 				dueDate = null;

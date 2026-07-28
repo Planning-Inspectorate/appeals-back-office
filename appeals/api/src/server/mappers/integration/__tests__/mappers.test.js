@@ -325,14 +325,6 @@ describe('map-document-entity', () => {
 			expectedPublishedDocumentUri: testUri
 		},
 		{
-			desc: 'representationAttachments - unknown type',
-			documentType: internalRepDocType,
-			representationType: 'SOMETHING_UNKNOWN',
-			expectedDocumentType: APPEAL_DOCUMENT_TYPE.UNCATEGORISED,
-			expectedCaseStage: APPEAL_CASE_STAGE.THIRD_PARTY_COMMENTS,
-			expectedPublishedDocumentUri: testUri
-		},
-		{
 			desc: 'other documentType',
 			documentType: 'someOtherType',
 			representationType: null,
@@ -430,6 +422,35 @@ describe('map-document-entity', () => {
 			expect(result.publishedDocumentURI).toBe(expectedPublishedDocumentUri);
 		}
 	);
+
+	test('should handle unknown doc/rep type', () => {
+		const doc = {
+			guid: 'doc-123',
+			caseId: 'case-456',
+			name: '123e4567-e89b-12d3-a456-426614174000_test.pdf',
+			case: { reference: 'REF-1', appealType: { key: APPEAL_CASE_TYPE.D } },
+			versions: [
+				{
+					version: 1,
+					originalFilename: 'test.pdf',
+					size: 1000,
+					mime: 'application/pdf',
+					documentURI: testUri,
+					fileMD5: 'md5hash',
+					dateCreated: new Date('2025-01-01T10:00:00.000Z'),
+					dateReceived: new Date('2025-01-01T11:00:00.000Z'),
+					lastModified: new Date('2025-01-01T12:00:00.000Z'),
+					documentType: internalRepDocType,
+					published: true,
+					stage: APPEAL_CASE_STAGE.THIRD_PARTY_COMMENTS,
+					redactionStatus: { key: 'NOT_REDACTED' },
+					representation: { representation: { representationType: 'SOMETHING_UNKNOWN' } }
+				}
+			]
+		};
+		const result = mapDocumentEntity(doc);
+		expect(result).toBeNull();
+	});
 });
 
 describe('mapAppellantCaseIn', () => {

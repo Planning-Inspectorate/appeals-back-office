@@ -973,6 +973,7 @@ model Representation {
   representationRejectionReasonsSelected RepresentationRejectionReasonsSelected[]
 
   @@index([appealId])
+  @@index([appealId, representationType, dateCreated(sort: Asc)])
 }
 
 /// Representation model
