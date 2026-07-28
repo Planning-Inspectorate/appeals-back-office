@@ -25,7 +25,7 @@ import { generateS78LpaQuestionnaireComponents } from './s78.js';
 export function generateCaseTypeSpecificComponents(appealDetails, mappedLPAQData, applicationDate) {
 	switch (appealDetails.appealType) {
 		case APPEAL_TYPE.HOUSEHOLDER:
-			return generateHASLpaQuestionnaireComponents(mappedLPAQData);
+			return generateHASLpaQuestionnaireComponents(mappedLPAQData, applicationDate || null);
 		case APPEAL_TYPE.CAS_PLANNING:
 			return generateCasPlanningLpaQuestionnaireComponents(mappedLPAQData, applicationDate || null);
 		case APPEAL_TYPE.CAS_ADVERTISEMENT:

@@ -2,10 +2,12 @@ import { mapAnySignificantChangesLpa } from '#lib/mappers/data/lpa-questionnaire
 import { mapListOfDocumentsBeforeDecision } from '#lib/mappers/data/lpa-questionnaire/submappers/map-list-of-documents-before-decision.js';
 import { mapLpaNeighbouringSitesLpaqAdapter } from '../appeal/submappers/lpa-neighbouring-sites.mapper.js';
 import { mapAdditionalDocumentsContents } from './submappers/map-additional-documents-contents.js';
+import { mapAdditionalDocumentsLpa } from './submappers/map-additional-documents-lpa.js';
 import { mapAdditionalDocuments } from './submappers/map-additional-documents.js';
 import { mapAffectsListedBuildingDetails } from './submappers/map-affects-listed-building-details.js';
 import { mapAppealNotification } from './submappers/map-appeal-notification.js';
 import { mapConservationAreaMap } from './submappers/map-conservation-area-map.js';
+import { mapDesignAccessStatementLpa } from './submappers/map-design-access-statement-lpa.js';
 import { mapDevelopmentPlanPolicies } from './submappers/map-development-plan-policies.js';
 import { mapEmergingPlan } from './submappers/map-emerging-plan.js';
 import { mapExtraConditions } from './submappers/map-extra-conditions.js';
@@ -51,5 +53,7 @@ export const submaps = {
 	listOfDocumentsBeforeDecision: mapListOfDocumentsBeforeDecision,
 	anySignificantChangesLpa: mapAnySignificantChangesLpa,
 	plansDrawings: mapPlansDrawings,
-	emergingPlan: mapEmergingPlan
+	emergingPlan: mapEmergingPlan,
+	designAccessStatementLpa: mapDesignAccessStatementLpa,
+	additionalDocumentsLpa: mapAdditionalDocumentsLpa
 };
