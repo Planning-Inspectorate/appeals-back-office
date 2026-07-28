@@ -19,3 +19,17 @@ export const updateAppealDecisionLetter = (appealId, documentGuid) => {
 		}
 	});
 };
+
+/**
+ * @param {number} appealId
+ * @param {Date} caseDecisionOutcomeDate
+ * @returns {PrismaPromise<InspectorDecision>}
+ */
+export const updateAppealCaseDecisionOutcomeDate = (appealId, caseDecisionOutcomeDate) => {
+	return databaseConnector.inspectorDecision.update({
+		where: { appealId },
+		data: {
+			caseDecisionOutcomeDate
+		}
+	});
+};

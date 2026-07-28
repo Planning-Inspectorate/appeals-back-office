@@ -1312,6 +1312,57 @@ describe('decision routes', () => {
 		});
 	});
 
+	describe('PATCH /appeals/:appealId/decision/caseDecisionOutcomeDate', () => {
+		test('returns 200 and updates the caseDecisionOutcomeDate', async () => {
+			const caseDecisionOutcomeDate = '2024-06-15T00:00:00.000Z';
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				id: householdAppeal.id,
+				reference: householdAppeal.reference
+			});
+			// @ts-ignore
+			databaseConnector.inspectorDecision.update.mockResolvedValue({
+				appealId: householdAppeal.id,
+				caseDecisionOutcomeDate
+			});
+
+			const response = await request
+				.patch(`/appeals/${householdAppeal.id}/decision/caseDecisionOutcomeDate`)
+				.send({ caseDecisionOutcomeDate })
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toBe(200);
+			expect(databaseConnector.inspectorDecision.update).toHaveBeenCalledWith({
+				where: { appealId: householdAppeal.id },
+				data: {
+					caseDecisionOutcomeDate: new Date(caseDecisionOutcomeDate)
+				}
+			});
+		});
+
+		test('returns 400 when caseDecisionOutcomeDate is in the future', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				id: householdAppeal.id,
+				reference: householdAppeal.reference
+			});
+			const tomorrow = add(new Date(), { days: 1 });
+			const utcDate = setTimeInTimeZone(tomorrow, 0, 0);
+
+			const response = await request
+				.patch(`/appeals/${householdAppeal.id}/decision/caseDecisionOutcomeDate`)
+				.send({ caseDecisionOutcomeDate: utcDate.toISOString() })
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toBe(400);
+			expect(response.body).toEqual({
+				errors: {
+					caseDecisionOutcomeDate: ERROR_MUST_NOT_BE_IN_FUTURE
+				}
+			});
+		});
+	});
+
 	describe('sendNewDecisionLetter', () => {
 		let mockNotifyClient;
 		let correctAppealState;

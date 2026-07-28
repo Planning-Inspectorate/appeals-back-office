@@ -15,6 +15,7 @@ import config from '@pins/appeals.web/environment/config.js';
 import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
 import { correctionNoticePage } from './update-decision-letter.mapper.js';
+import { updateCaseDecisionOutcomeDate } from './update-decision-letter.service.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getCorrectionNotice = async (request, response) => {
@@ -250,6 +251,8 @@ export const postUpdateDocumentCheckDetails = async (request, response) => {
 			currentDecision.documentId,
 			addDocumentVersionRequestPayload
 		);
+
+		await updateCaseDecisionOutcomeDate(request.apiClient, appealId, uploadInfo.receivedDate);
 
 		addNotificationBannerToSession({
 			session: request.session,

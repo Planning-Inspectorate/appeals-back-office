@@ -331,10 +331,17 @@ describe('update-decision-letter', () => {
 			expect(correctionNoticeResponse.statusCode).toBe(302);
 
 			let capturedApiBody;
+			let capturedCaseDecisionOutcomeDateBody;
 			nock('http://test/')
 				.post('/appeals/1/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b')
 				.reply(200, function (_, body) {
 					capturedApiBody = body;
+					return { success: true };
+				});
+			nock('http://test/')
+				.patch('/appeals/1/decision/caseDecisionOutcomeDate')
+				.reply(200, function (_, body) {
+					capturedCaseDecisionOutcomeDateBody = body;
 					return { success: true };
 				});
 
@@ -344,6 +351,9 @@ describe('update-decision-letter', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(capturedApiBody.document.receivedDate).toBe('2026-01-02T00:00:00.000Z');
+			expect(capturedCaseDecisionOutcomeDateBody.caseDecisionOutcomeDate).toBe(
+				'2026-01-02T00:00:00.000Z'
+			);
 		});
 
 		it('should render the view-decision page after submit', async () => {
@@ -352,6 +362,9 @@ describe('update-decision-letter', () => {
 
 			nock('http://test/')
 				.post('/appeals/1/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b')
+				.reply(200, { success: true });
+			nock('http://test/')
+				.patch('/appeals/1/decision/caseDecisionOutcomeDate')
 				.reply(200, { success: true });
 
 			const response = await request

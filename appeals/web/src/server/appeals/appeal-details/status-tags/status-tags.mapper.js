@@ -1,6 +1,6 @@
 import { mapVirusCheckStatus } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { isStatePassed } from '#lib/appeal-status.js';
-import { dateISOStringToDisplayDate, getOriginalAndLatestLetterDatesObject } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { isLinkedAppealsActive } from '#lib/mappers/utils/is-linked-appeal.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
@@ -66,11 +66,14 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 				appealDetails.costs.appellantDecisionFolder?.documents?.length ||
 				appealDetails.costs.lpaDecisionFolder?.documents?.length))
 	) {
-		let letterDateObject = await getOriginalAndLatestLetterDatesObject(
-			request.apiClient,
-			appealDetails.decision.documentId || '',
-			appealDetails
-		);
+		// the following commented out logic has been left here in case it is useful when work around slip rules
+		// and showing reissued dates is done
+
+		// let letterDateObject = await getOriginalAndLatestLetterDatesObject(
+		// 	request.apiClient,
+		// 	appealDetails.decision.documentId || '',
+		// 	appealDetails
+		// );
 
 		const insetTextRows = [];
 
@@ -79,9 +82,14 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 				`Decision: ${decisionOutcomeToDisplayText(appealDetails.decision.outcome, appealDetails.appealType)}`
 			);
 			insetTextRows.push(
-				letterDateObject.latestFileVersion && letterDateObject.latestFileVersion?.version > 1
-					? `Decision issued on ${letterDateObject.originalLetterDate} (reissued on ${letterDateObject.latestLetterDate})`
-					: `Decision issued on ${letterDateObject.latestLetterDate}`
+				`Decision issued on ${dateISOStringToDisplayDate(appealDetails.decision.letterDate)}`
+
+				// the following commented out logic has been left here in case it is useful when work around slip rules
+				// and showing reissued dates is done
+
+				// letterDateObject.latestFileVersion && letterDateObject.latestFileVersion?.version > 1
+				// 	? `Decision issued on ${letterDateObject.originalLetterDate} (reissued on ${letterDateObject.latestLetterDate})`
+				// 	: `Decision issued on ${letterDateObject.latestLetterDate}`
 			);
 		} else if (isAppealInvalid) {
 			const invalidDate = await getInvalidStatusCreatedDate(
