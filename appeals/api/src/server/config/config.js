@@ -119,7 +119,10 @@ const { value, error } = schema.validate({
 			environment.FEATURE_FLAG_SHARING_HEARING_DOCUMENTS === 'true',
 		featureFlagSharingInquiryEventDocuments:
 			environment.FEATURE_FLAG_SHARING_INQUIRY_EVENT_DOCUMENTS &&
-			environment.FEATURE_FLAG_SHARING_INQUIRY_EVENT_DOCUMENTS === 'true'
+			environment.FEATURE_FLAG_SHARING_INQUIRY_EVENT_DOCUMENTS === 'true',
+		featureFlagSharingInquiryDocuments:
+			environment.FEATURE_FLAG_SHARING_INQUIRY_DOCUMENTS &&
+			environment.FEATURE_FLAG_SHARING_INQUIRY_DOCUMENTS === 'true'
 	},
 	serviceBusEnabled: environment.SERVICE_BUS_ENABLED && environment.SERVICE_BUS_ENABLED === 'true',
 	enableTestEndpoints:
