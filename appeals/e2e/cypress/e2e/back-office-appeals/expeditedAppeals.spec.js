@@ -6,7 +6,11 @@ import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ProcedureTypePage } from '../../page_objects/procedureTypePage';
-import { APPEAL_PAYLOAD_TYPES, APPLICATION_DECISIONS } from '../../support/consts';
+import {
+	APPEAL_PAYLOAD_TYPES,
+	APPLICATION_DECISIONS,
+	PLANNING_APPLICATION_TYPES
+} from '../../support/consts';
 import { happyPathHelper } from '../../support/happyPathHelper';
 
 const caseDetailsPage = new CaseDetailsPage();
@@ -77,8 +81,27 @@ describe('Part1 (expedited) appeals', () => {
 			});
 	};
 
+	const checkAppealDetails = (caseObj, expectedExpedited, typeOfPlanningApplication) => {
+		// check whether the appeal is set as expedited in appeal details
+		cy.loadAppealDetails(caseObj).then((appealDetails) => {
+			cy.writeLog(`** appealDetails ** ${JSON.stringify(appealDetails)}`);
+			expect(appealDetails?.isS78Expedited).to.equal(expectedExpedited);
+
+			// check the appellant case payload to ensure the isS78Expedited flag is set as expected
+			cy.loadAppellantCaseDetails(appealDetails?.appealId, appealDetails?.appellantCaseId).then(
+				(appellantCaseDetails) => {
+					cy.writeLog(`** appellantCaseDetails ** ${JSON.stringify(appellantCaseDetails)}`);
+					expect(appellantCaseDetails?.isS78Expedited).to.equal(expectedExpedited);
+					expect(appellantCaseDetails?.typeOfPlanningApplication).to.equal(
+						typeOfPlanningApplication
+					);
+				}
+			);
+		});
+	};
+
 	describe('Appeals valid for expedited process', () => {
-		it.only('S78 appeal submitted on 01-04-2026 should be set as expedited', () => {
+		it('S78 appeal submitted on 01-04-2026 should be set as expedited', () => {
 			setupTestCase({ additionalDocs: [appealsApiRequests.environmentalAssessment] }).then(() => {
 				// approve appellant case as valid and set a due date for the questionnaire response
 				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
@@ -92,19 +115,7 @@ describe('Part1 (expedited) appeals', () => {
 				procedureTypePage.verifyDisplayedProcedureTypes(expectedProcedureTypesExpedited);
 
 				// check is set as expedited in appeal details
-				cy.loadAppealDetails(caseObj).then((appealDetails) => {
-					cy.writeLog(`** appealDetails ** ${JSON.stringify(appealDetails)}`);
-					expect(appealDetails?.isS78Expedited).to.equal(true);
-
-					// check the appellant case payload to ensure the isS78Expedited flag is set to true
-					cy.loadAppellantCaseDetails(appealDetails?.appealId, appealDetails?.appellantCaseId).then(
-						(appellantCaseDetails) => {
-							cy.writeLog(`** appellantCaseDetails ** ${JSON.stringify(appellantCaseDetails)}`);
-							expect(appellantCaseDetails?.isS78Expedited).to.equal(true);
-							expect(appellantCaseDetails?.typeOfPlanningApplication).to.equal('full-appeal');
-						}
-					);
-				});
+				checkAppealDetails(caseObj, true, PLANNING_APPLICATION_TYPES.FULL);
 			});
 		});
 
@@ -123,10 +134,7 @@ describe('Part1 (expedited) appeals', () => {
 					procedureTypePage.verifyDisplayedProcedureTypes(expectedProcedureTypesExpedited);
 
 					// check is set as expedited in appeal details
-					cy.loadAppealDetails(caseObj).then((appealDetails) => {
-						cy.writeLog(`** appealDetails ** ${JSON.stringify(appealDetails)}`);
-						expect(appealDetails?.isS78Expedited).to.equal(true);
-					});
+					checkAppealDetails(caseObj, true, PLANNING_APPLICATION_TYPES.OUTLINE);
 				}
 			);
 		});
@@ -146,15 +154,12 @@ describe('Part1 (expedited) appeals', () => {
 					procedureTypePage.verifyDisplayedProcedureTypes(expectedProcedureTypesExpedited);
 
 					// check is set as expedited in appeal details
-					cy.loadAppealDetails(caseObj).then((appealDetails) => {
-						cy.writeLog(`** appealDetails ** ${JSON.stringify(appealDetails)}`);
-						expect(appealDetails?.isS78Expedited).to.equal(true);
-					});
+					checkAppealDetails(caseObj, true, PLANNING_APPLICATION_TYPES.RESERVED_MATTERS);
 				}
 			);
 		});
 
-		it('S78 prior approval appeal submitted on 01-04-2026 should be set as expedited', () => {
+		it.only('S78 prior approval appeal submitted on 01-04-2026 should be set as expedited', () => {
 			setupTestCase({
 				appealType: APPEAL_PAYLOAD_TYPES.PRIOR_APPROVAL_APPEAL_SUBMISSION,
 				applicationDecision: APPLICATION_DECISIONS.REFUSED
@@ -171,10 +176,7 @@ describe('Part1 (expedited) appeals', () => {
 				procedureTypePage.verifyDisplayedProcedureTypes(expectedProcedureTypesExpedited);
 
 				// check is set as expedited in appeal details
-				cy.loadAppealDetails(caseObj).then((appealDetails) => {
-					cy.writeLog(`** appealDetails ** ${JSON.stringify(appealDetails)}`);
-					expect(appealDetails?.isS78Expedited).to.equal(true);
-				});
+				checkAppealDetails(caseObj, true, PLANNING_APPLICATION_TYPES.PRIOR_APPROVAL);
 			});
 		});
 
@@ -192,10 +194,7 @@ describe('Part1 (expedited) appeals', () => {
 				procedureTypePage.verifyDisplayedProcedureTypes(expectedProcedureTypesExpedited);
 
 				// check is set as expedited in appeal details
-				cy.loadAppealDetails(caseObj).then((appealDetails) => {
-					cy.writeLog(`** appealDetails ** ${JSON.stringify(appealDetails)}`);
-					expect(appealDetails?.isS78Expedited).to.equal(true);
-				});
+				checkAppealDetails(caseObj, true, PLANNING_APPLICATION_TYPES.FULL);
 			});
 		});
 
@@ -213,10 +212,7 @@ describe('Part1 (expedited) appeals', () => {
 				procedureTypePage.verifyDisplayedProcedureTypes(expectedProcedureTypesExpedited);
 
 				// check is set as expedited in appeal details
-				cy.loadAppealDetails(caseObj).then((appealDetails) => {
-					cy.writeLog(`** appealDetails ** ${JSON.stringify(appealDetails)}`);
-					expect(appealDetails?.isS78Expedited).to.equal(true);
-				});
+				checkAppealDetails(caseObj, true, PLANNING_APPLICATION_TYPES.FULL);
 			});
 		});
 	});
@@ -236,10 +232,7 @@ describe('Part1 (expedited) appeals', () => {
 				procedureTypePage.verifyDisplayedProcedureTypes(expectedProcedureTypesNonExpedited);
 
 				// check is set as non-expedited in appeal details
-				cy.loadAppealDetails(caseObj).then((appealDetails) => {
-					cy.writeLog(`** appealDetails ** ${JSON.stringify(appealDetails)}`);
-					expect(appealDetails?.isS78Expedited).to.equal(false);
-				});
+				checkAppealDetails(caseObj, false, PLANNING_APPLICATION_TYPES.FULL);
 			});
 		});
 
@@ -257,10 +250,28 @@ describe('Part1 (expedited) appeals', () => {
 				procedureTypePage.verifyDisplayedProcedureTypes(expectedProcedureTypesNonExpedited);
 
 				// check is set as non-expedited in appeal details
-				cy.loadAppealDetails(caseObj).then((appealDetails) => {
-					cy.writeLog(`** appealDetails ** ${JSON.stringify(appealDetails)}`);
-					expect(appealDetails?.isS78Expedited).to.equal(false);
-				});
+				checkAppealDetails(caseObj, false, PLANNING_APPLICATION_TYPES.FULL);
+			});
+		});
+
+		it('S78 prior approval appeal submitted on 01-04-2026 as not received should not be set as expedited', () => {
+			setupTestCase({
+				applicationDecision: APPLICATION_DECISIONS.NOT_RECEIVED,
+				appealType: APPEAL_PAYLOAD_TYPES.PRIOR_APPROVAL_APPEAL_SUBMISSION
+			}).then(() => {
+				// approve appellant case as valid and set a due date for the questionnaire response
+				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
+
+				// check for expected validation banners on the case details page
+				caseDetailsPage.validateBannerMessage('Important', 'Appeal valid');
+				caseDetailsPage.validateBannerMessage('Success', 'Appeal validated');
+
+				// check that part 1 is not available as a procedure type option when starting case
+				caseDetailsPage.clickReadyToStartCase();
+				procedureTypePage.verifyDisplayedProcedureTypes(expectedProcedureTypesNonExpedited);
+
+				// check is set as non-expedited in appeal details
+				checkAppealDetails(caseObj, false, PLANNING_APPLICATION_TYPES.PRIOR_APPROVAL);
 			});
 		});
 	});
