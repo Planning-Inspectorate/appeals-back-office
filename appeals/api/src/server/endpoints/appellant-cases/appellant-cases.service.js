@@ -56,10 +56,9 @@ import formatDate, { dateISOStringToDisplayDate } from '@pins/appeals/utils/date
 import { camelToScreamingSnake, capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { EventType } from '@pins/event-client';
 import { loadEnvironment } from '@pins/platform';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_STATUS, APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
 import { add } from 'date-fns';
 import transitionState from '../../state/transition-state.js';
-
 const environment = loadEnvironment(process.env.NODE_ENV);
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
@@ -255,19 +254,24 @@ export const updateAppellantCaseValidationOutcome = async (
 
 	// TODO: performance
 	// is returning all data, return only needed data
-	const updatedAppeal = await appealRepository.deprecatedGetAppealById(Number(appealId));
+	/** @type {Omit<Appeal, 'documents' | 'representations'>|undefined} */
+	const updatedAppeal = await appealRepository.deprecatedGetAppealById(Number(appealId), {
+		omitDocuments: true,
+		omitRepresentations: true
+	});
 
 	if (isOutcomeValid(validationOutcome.name)) {
-		const latestDocumentVersionsUpdated = await documentRepository.setRedactionStatusOnValidation(
-			appeal.id
+		const noRedactionRequiredStatus = await commonRepository.getLookupListValueByKey(
+			'documentRedactionStatus',
+			{ key: 'key', value: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
 		);
-		for (const documentUpdated of latestDocumentVersionsUpdated) {
-			await broadcasters.broadcastDocument(
-				documentUpdated.documentGuid,
-				documentUpdated.version,
-				EventType.Update
-			);
-		}
+		const updatedDocuments = await documentRepository.setRedactionStatusOnValidation(
+			appeal.id,
+			appeal.reference,
+			appeal.appealType.key,
+			noRedactionRequiredStatus.id
+		);
+		await broadcasters.broadcastDocuments(updatedDocuments, EventType.Update);
 
 		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 		if (!recipientEmail) {

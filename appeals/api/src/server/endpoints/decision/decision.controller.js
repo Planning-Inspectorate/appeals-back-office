@@ -89,7 +89,11 @@ export const postInspectorDecision = async (req, res) => {
 							// TODO: performance
 							// is returning all data, return only needed data
 							const childAppeal = await appealRepository.deprecatedGetAppealById(
-								Number(decisionAppealId)
+								Number(decisionAppealId),
+								{
+									omitDocuments: true,
+									omitRepresentations: true
+								}
 							);
 
 							if (childAppeal) {

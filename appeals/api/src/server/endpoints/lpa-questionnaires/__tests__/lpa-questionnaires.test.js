@@ -44,8 +44,15 @@ import {
 	LENGTH_10,
 	LENGTH_8
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { EventType } from '@pins/event-client';
+import {
+	APPEAL_CASE_STAGE,
+	APPEAL_CASE_STATUS,
+	APPEAL_DOCUMENT_TYPE,
+	APPEAL_VIRUS_CHECK_STATUS
+} from '@planning-inspectorate/data-model';
 import { request } from '../../../app-test.js';
+
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 describe('lpa questionnaires routes', () => {
@@ -201,6 +208,27 @@ describe('lpa questionnaires routes', () => {
 				databaseConnector.documentVersion.update.mockResolvedValue([]);
 				// @ts-ignore
 				databaseConnector.document.findUnique.mockResolvedValue(null);
+				databaseConnector.$queryRaw.mockResolvedValue([
+					{
+						guid: '123',
+						name: 'document.pdf',
+						version: 1,
+						documentURI: 'https://example.com/document.pdf',
+						originalFilename: 'document.pdf',
+						size: 1024,
+						mime: 'application/pdf',
+						fileMD5: 'abc123',
+						virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
+						stage: APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE,
+						documentType: APPEAL_DOCUMENT_TYPE.APPEAL_NOTIFICATION,
+						published: true,
+						datePublished: new Date(),
+						dateCreated: new Date(),
+						dateReceived: new Date(),
+						lastModified: new Date(),
+						representationType: null
+					}
+				]);
 				// @ts-ignore
 				databaseConnector.user.upsert.mockResolvedValue({
 					id: 1,
@@ -253,6 +281,14 @@ describe('lpa questionnaires routes', () => {
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 				expect(response.status).toEqual(200);
+				expect(mockBroadcasters.broadcastDocuments).toHaveBeenCalledWith(
+					[
+						expect.objectContaining({
+							guid: '123'
+						})
+					],
+					EventType.Update
+				);
 			});
 
 			test.each([

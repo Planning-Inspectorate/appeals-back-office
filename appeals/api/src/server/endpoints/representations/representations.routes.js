@@ -253,6 +253,7 @@ router.post(
 	*/
 	checkAppealExistsByIdAndAddPartialToRequest([
 		'appealStatus',
+		'appealType',
 		'representations',
 		'appealTimetable',
 		'childAppeals',

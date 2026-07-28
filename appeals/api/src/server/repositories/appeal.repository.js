@@ -432,19 +432,24 @@ const checkAppealExistsById = async (id) => {
  * @deprecated too inefficient do not use, use getAppealById with specific includes only
  * @description DO NOT USE. Gets an appeal and all it's related entities
  * @param {number} id
+ * @param {{omitDocuments: boolean|undefined, omitRepresentations: boolean|undefined}} [options]
  * @returns {Promise<Appeal|undefined>}
  */
-const deprecatedGetAppealById = async (id) => {
+const deprecatedGetAppealById = async (id, options) => {
+	const massInclude = {
+		...appealDetailsInclude,
+		...(options?.omitRepresentations && { representations: false })
+	};
 	const appeal = await databaseConnector.appeal.findUnique({
 		where: {
 			id
 		},
-		include: appealDetailsInclude
+		include: massInclude
 	});
 	if (appeal) {
 		// @ts-ignore
 		if (!appeal.folders) {
-			if (process.env.NODE_ENV === 'test') {
+			if (process.env.NODE_ENV === 'test' || options?.omitDocuments) {
 				// @ts-ignore
 				appeal.folders = [];
 			} else {

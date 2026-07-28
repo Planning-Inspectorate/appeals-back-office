@@ -196,11 +196,15 @@ export const importAppeal = async (req, res) => {
 			users
 		});
 
+		/** @type {(Omit<Appeal, 'documents' | 'representations'>|undefined)[]} */
 		const [parentAppeal, ...childAppeals] = await Promise.all(
 			[parentResult, ...childResults].map(async (caseData) => {
 				// TODO: performance
 				// is returning all data in a loop, return only needed data
-				return appealRepository.deprecatedGetAppealById(caseData.id);
+				return appealRepository.deprecatedGetAppealById(caseData.id, {
+					omitDocuments: true,
+					omitRepresentations: true
+				});
 			})
 		);
 

@@ -158,7 +158,10 @@ const updateAppealTimetableById = async (req, res) => {
 					// is returning all data in a loop, return only needed data
 					const child =
 						childAppeal.child ||
-						(await appealRepository.deprecatedGetAppealById(Number(childAppeal.childId)));
+						(await appealRepository.deprecatedGetAppealById(Number(childAppeal.childId), {
+							omitDocuments: true,
+							omitRepresentations: true
+						}));
 					if (child) {
 						return updateAppealTimetable(child, body, notifyClient, azureAdUserId, true);
 					}

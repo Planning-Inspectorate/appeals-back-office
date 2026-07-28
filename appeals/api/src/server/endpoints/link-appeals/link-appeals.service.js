@@ -533,8 +533,12 @@ export const updateAppealStatusIfRequired = async (
 ) => {
 	// TODO: performance
 	// is returning all data, return only needed data
+	/** @type {Omit<Appeal, 'documents' | 'representations'> | undefined|null} */
 	const leadAppeal = leadAppealId
-		? await appealRepository.deprecatedGetAppealById(leadAppealId)
+		? await appealRepository.deprecatedGetAppealById(leadAppealId, {
+				omitDocuments: true,
+				omitRepresentations: true
+			})
 		: null;
 
 	if (!leadAppeal) {
@@ -543,8 +547,12 @@ export const updateAppealStatusIfRequired = async (
 
 	// TODO: performance
 	// is returning all data, return only needed data
+	/** @type {Omit<Appeal, 'documents' | 'representations'> | undefined|null} */
 	const unlinkedAppeal = unlinkedAppealId
-		? await appealRepository.deprecatedGetAppealById(unlinkedAppealId)
+		? await appealRepository.deprecatedGetAppealById(unlinkedAppealId, {
+				omitDocuments: true,
+				omitRepresentations: true
+			})
 		: null;
 
 	const { appellantCaseValidationOutcome: leadAppealAppellantCaseOutcome } =
@@ -556,38 +564,36 @@ export const updateAppealStatusIfRequired = async (
 
 	switch (currentStatus(leadAppeal)) {
 		case APPEAL_CASE_STATUS.VALIDATION:
-			{
-				if (unlinkedAppealId && unlinkedAppealAppellantCaseOutcome) {
-					if (!isEnforcementNotice) {
-						// The unlinked appeal has been validated correctly and can roll forward to the next status
-						await transitionState(
-							unlinkedAppealId,
-							azureAdUserId,
-							unlinkedAppealAppellantCaseOutcome.name
-						);
-					}
+			if (unlinkedAppealId && unlinkedAppealAppellantCaseOutcome) {
+				if (!isEnforcementNotice) {
+					// The unlinked appeal has been validated correctly and can roll forward to the next status
+					await transitionState(
+						unlinkedAppealId,
+						azureAdUserId,
+						unlinkedAppealAppellantCaseOutcome.name
+					);
 				}
-				if (leadAppealAppellantCaseOutcome) {
-					// transition all the linked appeals if they have all been validated
-					const linkedAppeals = [leadAppeal, ...getChildAppeals(leadAppeal)];
-					const shouldTransition = linkedAppeals.every((linkedAppeal) => {
-						const { appellantCaseValidationOutcome } = linkedAppeal?.appellantCase || {};
-						return !!appellantCaseValidationOutcome;
-					});
-					if (shouldTransition) {
-						await Promise.all(
-							linkedAppeals.map(async (linkedAppeal) => {
-								const { appellantCaseValidationOutcome } = linkedAppeal?.appellantCase || {};
-								if (linkedAppeal?.id && appellantCaseValidationOutcome?.name) {
-									await transitionState(
-										linkedAppeal.id,
-										azureAdUserId,
-										appellantCaseValidationOutcome.name
-									);
-								}
-							})
-						);
-					}
+			}
+			if (leadAppealAppellantCaseOutcome) {
+				// transition all the linked appeals if they have all been validated
+				const linkedAppeals = [leadAppeal, ...getChildAppeals(leadAppeal)];
+				const shouldTransition = linkedAppeals.every((linkedAppeal) => {
+					const { appellantCaseValidationOutcome } = linkedAppeal?.appellantCase || {};
+					return !!appellantCaseValidationOutcome;
+				});
+				if (shouldTransition) {
+					await Promise.all(
+						linkedAppeals.map(async (linkedAppeal) => {
+							const { appellantCaseValidationOutcome } = linkedAppeal?.appellantCase || {};
+							if (linkedAppeal?.id && appellantCaseValidationOutcome?.name) {
+								await transitionState(
+									linkedAppeal.id,
+									azureAdUserId,
+									appellantCaseValidationOutcome.name
+								);
+							}
+						})
+					);
 				}
 			}
 			break;

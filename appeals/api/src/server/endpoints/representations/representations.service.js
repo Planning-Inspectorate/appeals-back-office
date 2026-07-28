@@ -5,6 +5,7 @@ import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import addressRepository from '#repositories/address.repository.js';
+import commonRepository from '#repositories/common.repository.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import neighbouringSitesRepository from '#repositories/neighbouring-sites.repository.js';
 import representationRepository from '#repositories/representation.repository.js';
@@ -36,7 +37,11 @@ import formatDate, {
 } from '@pins/appeals/utils/date-formatter.js';
 import { camelToScreamingSnake } from '@pins/appeals/utils/string-case.js';
 import { EventType } from '@pins/event-client';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_CASE_PROCEDURE,
+	APPEAL_CASE_STATUS,
+	APPEAL_REDACTED_STATUS
+} from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
@@ -431,16 +436,8 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient) {
 		throw new BackOfficeAppError('appeal in incorrect state to publish statements', 409);
 	}
 
-	const latestDocumentVersionsUpdated = await documentRepository.setRedactionStatusOnValidation(
-		appeal.id
-	);
-	for (const documentUpdated of latestDocumentVersionsUpdated) {
-		await broadcasters.broadcastDocument(
-			documentUpdated.documentGuid,
-			documentUpdated.version,
-			EventType.Update
-		);
-	}
+	markUnredactedAsNotRequired(appeal.id, appeal.reference, appeal.appealType?.key ?? '');
+
 	const statementsToPublish = [APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT];
 	if (isFeatureActive(FEATURE_FLAG_NAMES.APPELLANT_STATEMENT)) {
 		statementsToPublish.push(APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT);
@@ -739,16 +736,7 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
 		throw new BackOfficeAppError('appeal in incorrect state to publish final comments', 409);
 	}
 
-	const latestDocumentVersionsUpdated = await documentRepository.setRedactionStatusOnValidation(
-		appeal.id
-	);
-	for (const documentUpdated of latestDocumentVersionsUpdated) {
-		await broadcasters.broadcastDocument(
-			documentUpdated.documentGuid,
-			documentUpdated.version,
-			EventType.Update
-		);
-	}
+	markUnredactedAsNotRequired(appeal.id, appeal.reference, appeal.appealType?.key ?? '');
 
 	const result = await representationRepository.updateRepresentations(
 		[appeal.id],
@@ -798,16 +786,7 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 		throw new BackOfficeAppError('appeal in incorrect state to publish proof of evidence', 409);
 	}
 
-	const latestDocumentVersionsUpdated = await documentRepository.setRedactionStatusOnValidation(
-		appeal.id
-	);
-	for (const documentUpdated of latestDocumentVersionsUpdated) {
-		await broadcasters.broadcastDocument(
-			documentUpdated.documentGuid,
-			documentUpdated.version,
-			EventType.Update
-		);
-	}
+	markUnredactedAsNotRequired(appeal.id, appeal.reference, appeal.appealType?.key ?? '');
 
 	const representationTypes = [
 		APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
@@ -1181,3 +1160,23 @@ export const APPEAL_REPRESENTATION_LABEL_MAP = Object.freeze({
 	[APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE]: 'Appellant proof of evidence',
 	[APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE]: 'Rule 6 party proof of evidence'
 });
+
+/**
+ *
+ * @param {number} appealId
+ * @param {string} appealReference
+ * @param {string} appealType
+ */
+const markUnredactedAsNotRequired = async (appealId, appealReference, appealType) => {
+	const noRedactionRequiredStatus = await commonRepository.getLookupListValueByKey(
+		'documentRedactionStatus',
+		{ key: 'key', value: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+	);
+	const updatedDocuments = await documentRepository.setRedactionStatusOnValidation(
+		appealId,
+		appealReference,
+		appealType,
+		noRedactionRequiredStatus.id
+	);
+	await broadcasters.broadcastDocuments(updatedDocuments, EventType.Update);
+};

@@ -598,7 +598,7 @@ const getStartCaseNotifyPreviews = async (
 };
 
 /**
- * @param {Appeal} appeal
+ * @param {Omit<Appeal, 'documents' | 'representations'>} appeal
  * @param {object} body
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
@@ -694,7 +694,7 @@ const dueDateToAppealTimetableTextMapper = {
 };
 
 /**
- * @param {Appeal} appeal
+ * @param {Omit<Appeal, 'documents' | 'representations'>} appeal
  * @param {object} processedBody
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId

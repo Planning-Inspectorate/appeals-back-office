@@ -178,7 +178,8 @@ const mockAppellantCaseInvalidReasonTextCreateMany = jest.fn().mockResolvedValue
 const mockLPAQuestionnaireIncompleteReasonTextCreateMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseEnforcementInvalidReasonTextDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseEnforcementInvalidReasonTextCreateMany = jest.fn().mockResolvedValue({});
-const mockDocumentRedactionStatusFindMany = jest.fn().mockResolvedValue({});
+const mockDocumentRedactionStatusFindMany = jest.fn().mockResolvedValue([]);
+const mockDocumentRedactionStatusFindUnique = jest.fn().mockResolvedValue({});
 const mockAuditTrailFindMany = jest.fn().mockResolvedValue({});
 const mockAuditTrailCreate = jest.fn().mockResolvedValue({});
 const mockAuditTrailDeleteMany = jest.fn().mockResolvedValue({});
@@ -701,7 +702,8 @@ class MockPrismaClient {
 
 	get documentRedactionStatus() {
 		return {
-			findMany: mockDocumentRedactionStatusFindMany
+			findMany: mockDocumentRedactionStatusFindMany,
+			findUnique: mockDocumentRedactionStatusFindUnique
 		};
 	}
 
@@ -962,6 +964,7 @@ jest.unstable_mockModule('node-fetch', () => ({
 const broadcastersMock = {
 	broadcastServiceUser: jest.fn(),
 	broadcastDocument: jest.fn(),
+	broadcastDocuments: jest.fn(),
 	broadcastAppeal: jest.fn(),
 	broadcastEvent: jest.fn(),
 	broadcastEventEstimates: jest.fn(),

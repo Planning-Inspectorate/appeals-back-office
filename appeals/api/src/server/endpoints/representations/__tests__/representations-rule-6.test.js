@@ -450,6 +450,9 @@ describe('publishProofOfEvidence', () => {
 		databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
 			{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
 		]);
+		databaseConnector.documentRedactionStatus.findUnique.mockResolvedValue({
+			key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED
+		});
 		databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
 		databaseConnector.representation.updateMany.mockResolvedValue([]);
 		databaseConnector.representation.findMany.mockResolvedValue([]);

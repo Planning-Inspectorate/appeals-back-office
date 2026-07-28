@@ -441,7 +441,7 @@ export const getDocumentRedactionStatusIds = async () => {
 
 /**
  *
- * @param {DocumentVersion} documentVersion
+ * @param {{virusCheckStatus: string}} documentVersion
  * @returns {string}
  */
 export const getAvScanStatus = (documentVersion) => {

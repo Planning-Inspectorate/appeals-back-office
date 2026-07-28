@@ -11,16 +11,41 @@ import {
 	APPEAL_CASE_STAGE,
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_ORIGIN,
-	APPEAL_REDACTED_STATUS
+	APPEAL_REDACTED_STATUS,
+	APPEAL_VIRUS_CHECK_STATUS
 } from '@planning-inspectorate/data-model';
 
-/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
-/** @typedef {import('@pins/appeals.api').Schema.Document & {appeal:Appeal}} DocumentWithAppeal */
-/** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
-/** @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} DocumentRedactionStatus */
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealDocument} AppealDocument */
-/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppellantSubmissionCommand['documents'][number]} AppellantSubmissionDocument */
-/** @typedef {import('@planning-inspectorate/data-model').Schemas.LPAQuestionnaireCommand['documents'][number]} LPAQuestionnaireCommandDocument */
+/** @typedef {import('#db-client/models.ts').DocumentModel} DocumentModel */
+/** @typedef {import('#db-client/models.ts').DocumentVersionModel} DocumentVersionModel */
+/**
+ * @typedef {{
+ *   documentURI: DocumentVersionModel['documentURI'],
+ *   redactionStatus?: { key: string } | null,
+ *   representation?: { representation: { representationType: String|Null } | Null } | null,
+ *   documentType: DocumentVersionModel['documentType'],
+ *   stage: DocumentVersionModel['stage'],
+ *   version: DocumentVersionModel['version'],
+ *   originalFilename: DocumentVersionModel['originalFilename'],
+ *   size: DocumentVersionModel['size'],
+ *   mime: DocumentVersionModel['mime'],
+ *   fileMD5: DocumentVersionModel['fileMD5'],
+ *   dateCreated: DocumentVersionModel['dateCreated'],
+ *   dateReceived: DocumentVersionModel['dateReceived'],
+ *   lastModified?: DocumentVersionModel['lastModified'],
+ * 	 datePublished?: DocumentVersionModel['datePublished'],
+ *   published: DocumentVersionModel['published'],
+ *   virusCheckStatus: DocumentVersionModel['virusCheckStatus']
+ * }} DocumentVersion
+ *
+ * @typedef {{
+ *  versions: DocumentVersion[],
+ *  name: DocumentModel['name'],
+ * 	guid: DocumentModel['guid'],
+ *  caseId: DocumentModel['caseId'],
+ *  case: { reference: string, appealType: { key: string } }
+ * }} DocumentWithAppeal
+ */
 
 /**
  *
@@ -68,9 +93,7 @@ export const mapDocumentEntity = (data) => {
 			documentInput.latestDocumentVersion.lastModified ||
 				documentInput.latestDocumentVersion.dateCreated
 		),
-		caseType: isValidAppealType(documentInput.case?.appealType?.key ?? '')
-			? documentInput.case?.appealType?.key
-			: null,
+		caseType: mapCaseType(documentInput),
 		redactedStatus,
 		documentType: mapDocumentType(documentInput.latestDocumentVersion),
 		sourceSystem: ODW_SYSTEM_ID,
@@ -83,14 +106,31 @@ export const mapDocumentEntity = (data) => {
 		...publishedFields
 	};
 
-	// @ts-ignore
+	// wait to broadcast representationAttachments if document type is not known
+	if (
+		documentInput.latestDocumentVersion?.documentType === REP_ATTACHMENT_DOCTYPE &&
+		doc.documentType === APPEAL_DOCUMENT_TYPE.UNCATEGORISED
+	) {
+		return null;
+	}
+
 	return doc;
 };
 
 /**
+ * @param {DocumentWithAppeal} documentInput
+ * @returns {AppealDocument['caseType']}
+ */
+const mapCaseType = (documentInput) =>
+	isValidAppealType(documentInput.case?.appealType?.key ?? '')
+		? //@ts-ignore
+			documentInput.case?.appealType?.key
+		: null;
+
+/**
  *
  * @param {DocumentVersion} documentVersion
- * @returns {'affected'|'not_scanned'|'scanned'}
+ * @returns {AppealDocument['virusCheckStatus']}
  */
 const mapVirusCheckStatus = (documentVersion) => {
 	const status = getAvScanStatus(documentVersion);
@@ -98,7 +138,7 @@ const mapVirusCheckStatus = (documentVersion) => {
 		return status;
 	}
 
-	return 'not_scanned';
+	return APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED;
 };
 
 /** @type {Set<string>} */
@@ -114,7 +154,7 @@ const documentTypesWithManagedPublishedStatuses = new Set([
 /**
  *
  * @param {DocumentVersion} documentVersion
- * @returns {{publishedDocumentURI: string | null, datePublished: string | null}}
+ * @returns {{publishedDocumentURI: AppealDocument['publishedDocumentURI'], datePublished: AppealDocument['datePublished']}}
  */
 const mapPublishedFields = (documentVersion) => {
 	// internal only docs are never meant to be marked published
@@ -148,22 +188,23 @@ const mapPublishedFields = (documentVersion) => {
 
 /**
  *
- * @param {DocumentRedactionStatus | null} status
- * @param {string | null} documentType
- * @returns {string}
+ * @param {DocumentVersion['redactionStatus']} status
+ * @param {DocumentVersion['documentType']} documentType
+ * @returns {AppealDocument['redactedStatus']}
  */
 const mapRedactionStatus = (status, documentType) => {
 	if (documentType === APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER) {
 		return APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED;
 	}
 
+	//@ts-ignore
 	return status?.key || APPEAL_REDACTED_STATUS.NOT_REDACTED;
 };
 
 /**
  *
- * @param {string | null} stage
- * @returns {string | null}
+ * @param {DocumentVersion['stage']} stage
+ * @returns {AppealDocument['origin']}
  */
 const mapOrigin = (stage) => {
 	if (stage === APPEAL_CASE_STAGE.APPELLANT_CASE) {
@@ -181,7 +222,7 @@ const mapOrigin = (stage) => {
 /**
  *
  * @param {DocumentVersion} doc
- * @returns {string}
+ * @returns {AppealDocument['documentType']}
  */
 const mapDocumentType = (doc) => {
 	if (doc.documentType === REP_ATTACHMENT_DOCTYPE) {
@@ -210,13 +251,14 @@ const mapDocumentType = (doc) => {
 		}
 	}
 
+	//@ts-ignore
 	return doc.documentType ?? APPEAL_DOCUMENT_TYPE.UNCATEGORISED;
 };
 
 /**
  *
  * @param {DocumentVersion} doc
- * @returns {string}
+ * @returns {AppealDocument['caseStage']}
  */
 const mapStage = (doc) => {
 	if (doc.documentType === REP_ATTACHMENT_DOCTYPE) {
@@ -238,5 +280,6 @@ const mapStage = (doc) => {
 		}
 	}
 
+	//@ts-ignore
 	return doc.stage ?? APPEAL_CASE_STAGE.INTERNAL;
 };
