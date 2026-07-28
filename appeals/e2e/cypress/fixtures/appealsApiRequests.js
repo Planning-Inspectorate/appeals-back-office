@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import { planningApplicationTypes } from '../support/consts.js';
+import { PLANNING_APPLICATION_TYPES } from '../support/consts.js';
 
 /**
  * Takes a base document object and returns new version with unique values for id and filenames
@@ -218,21 +218,21 @@ const appealsApiRequests = {
 		casedata: {
 			...baseSubmission.casedata,
 			caseType: 'W',
-			typeOfPlanningApplication: planningApplicationTypes.FULL
+			typeOfPlanningApplication: PLANNING_APPLICATION_TYPES.FULL
 		}
 	},
 	S78OutlinePlanningAppealSubmission: {
 		casedata: {
 			...baseSubmission.casedata,
 			caseType: 'W',
-			typeOfPlanningApplication: planningApplicationTypes.OUTLINE
+			typeOfPlanningApplication: PLANNING_APPLICATION_TYPES.OUTLINE
 		}
 	},
 	S78ReservedMattersAppealSubmission: {
 		casedata: {
 			...baseSubmission.casedata,
 			caseType: 'W',
-			typeOfPlanningApplication: planningApplicationTypes.RESERVED_MATTERS,
+			typeOfPlanningApplication: PLANNING_APPLICATION_TYPES.RESERVED_MATTERS,
 			appellantProcedurePreference: "inquiry",
 		}
 	},
@@ -240,7 +240,7 @@ const appealsApiRequests = {
 		casedata: {
 			...baseSubmission.casedata,
 			caseType: 'W',
-			typeOfPlanningApplication: planningApplicationTypes.PRIOR_APPROVAL,
+			typeOfPlanningApplication: PLANNING_APPLICATION_TYPES.PRIOR_APPROVAL,
 			appellantProcedurePreference: "inquiry",
 		}
 	},

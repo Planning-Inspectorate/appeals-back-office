@@ -1,17 +1,17 @@
-export const ApplicationDecisions = {
+export const APPLICATION_DECISIONS = {
 	GRANTED: 'granted',
 	REFUSED: 'refused',
 	NOT_RECEIVED: 'not_received'
 };
 
-export const planningApplicationTypes = {
+export const PLANNING_APPLICATION_TYPES = {
 	FULL: 'full-appeal',
 	OUTLINE: 'outline-planning',
 	RESERVED_MATTERS: 'reserved-matters',
 	PRIOR_APPROVAL: 'prior-approval'
 };
 
-export const appealPayloadTypes = {
+export const APPEAL_PAYLOAD_TYPES = {
 	FULL_APPEAL_SUBMISSION: 'S78FullAppealSubmission',
 	OUTLINE_PLANNING_APPEAL_SUBMISSION: 'S78OutlinePlanningAppealSubmission',
 	RESERVED_MATTERS_APPEAL_SUBMISSION: 'S78ReservedMattersAppealSubmission',
