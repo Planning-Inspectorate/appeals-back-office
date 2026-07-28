@@ -225,6 +225,12 @@ Cypress.Commands.add('loadAppealDetails', (caseObj) => {
 	});
 });
 
+Cypress.Commands.add('loadAppellantCaseDetails', (appealId, appellantCaseId) => {
+	return cy.wrap(null).then(async () => {
+		return await appealsApiClient.loadAppellantCaseDetails(appealId, appellantCaseId);
+	});
+});
+
 Cypress.Commands.add('reloadUntilVirusCheckComplete', () => {
 	cy.reload();
 });
