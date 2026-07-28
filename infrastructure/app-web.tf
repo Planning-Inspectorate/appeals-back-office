@@ -135,6 +135,7 @@ module "app_web" {
     FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE        = var.apps_config.featureFlags.featureFlagEnforcementChangeProcedure
     FEATURE_FLAG_SHARING_HEARING_DOCUMENTS           = var.apps_config.featureFlags.featureFlagSharingHearingDocuments
     FEATURE_FLAG_SHARING_INQUIRY_EVENT_DOCUMENTS     = var.apps_config.featureFlags.featureFlagSharingInquiryEventDocuments
+    FEATURE_FLAG_SHARING_INQUIRY_DOCUMENTS           = var.apps_config.featureFlags.featureFlagSharingInquiryDocuments 
 
 
     #change LPA

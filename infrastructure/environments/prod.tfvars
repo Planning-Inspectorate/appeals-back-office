@@ -91,6 +91,7 @@ apps_config = {
     featureFlagEnforcementChangeProcedure       = false
     featureFlagSharingHearingDocuments          = false
     featureFlagSharingInquiryEventDocuments     = false
+    featureFlagSharingInquiryDocuments          = false
   }
 
   use_system_test_bc_for_change_lpa = false
