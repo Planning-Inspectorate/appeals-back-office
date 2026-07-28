@@ -454,6 +454,34 @@ export const appealsApiClient = {
 			return false;
 		}
 	},
+	async loadAppellantCaseDetails(appealId, appellantCaseId) {
+		try {
+			const url = `${baseUrl}appeals/${appealId}/appellant-cases/${appellantCaseId}`;
+			const response = await fetch(url, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+
+			expect(response.status).to.equal(200);
+
+			const responseBody = await response.json();
+
+			expect(responseBody).to.not.be.null;
+			expect(responseBody).to.not.be.undefined;
+			expect(responseBody.appealId).to.equal(appealId);
+
+			return responseBody;
+		} catch (error) {
+			cy.writeLog(
+				`Failed to load appellant case details for id ${appealId} and appellant case id ${appellantCaseId}:`,
+				error
+			);
+			return false;
+		}
+	},
 	async getBusinessDate(date, days = 7) {
 		try {
 			const url = `${baseUrl}appeals/add-business-days`;

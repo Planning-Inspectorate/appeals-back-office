@@ -1,4 +1,7 @@
 // @ts-nocheck
+
+import { planningApplicationTypes } from '../support/consts.js';
+
 /**
  * Takes a base document object and returns new version with unique values for id and filenames
  * @param {Object} baseDocument base document to be overridden
@@ -61,6 +64,81 @@ export const validLpaQuestionnaireHas = {
 		lpaCostsAppliedFor: false
 	},
 };
+
+const baseSubmission = {
+	casedata: {
+		submissionId: 'e4d42124-364c-4bda-af1f-3c40e4b09ff3',
+		advertisedAppeal: true,
+		appellantCostsAppliedFor: false,
+		applicationDate: '2024-01-01T00:00:00.000Z',
+		applicationDecision: 'refused',
+		applicationDecisionDate: '2024-01-01T00:00:00.000Z',
+		applicationReference: '123',
+		caseProcedure: 'written',
+		caseSubmissionDueDate: '2024-03-25T23:59:59.999Z',
+		caseSubmittedDate: '2024-03-25T23:59:59.999Z',
+		caseType: 'D',
+		changedDevelopmentDescription: false,
+		enforcementNotice: false,
+		floorSpaceSquareMetres: 22,
+		knowsAllOwners: 'Some',
+		knowsOtherOwners: 'Some',
+		lpaCode: 'Q9999',
+		nearbyCaseReferences: [],
+		neighbouringSiteAddresses: [],
+		originalDevelopmentDescription: 'A test description',
+		ownersInformed: true,
+		ownsAllLand: true,
+		ownsSomeLand: true,
+		isSiteOnHighwayLand: true,
+		isAdvertInPosition: true,
+		hasLandownersPermission: true,
+		advertDetails: [],
+		reasonForAppealAppellant: 'I like Christmas',
+		appellantProcedurePreference: "written",
+		appellantProcedurePreferenceDetails: "test",
+		appellantProcedurePreferenceDuration: 10,
+		appellantProcedurePreferenceWitnessCount: 5,
+		siteAccessDetails: ['Come and see'],
+		siteAddressCounty: 'Somewhere',
+		siteAddressLine1: 'e2e Test Address',
+		siteAddressLine2: 'Somewhere St',
+		siteAddressPostcode: 'BS21 6LE',
+		siteAddressTown: 'Somewhereville',
+		siteAreaSquareMetres: 22,
+		siteSafetyDetails: ["It's dangerous"],
+		isGreenBelt: false,
+		typeOfPlanningApplication: 'full-appeal',
+		// S78 fields
+		developmentType: 'minor-dwellings',
+		agriculturalHolding: true,
+		tenantAgriculturalHolding: true,
+		otherTenantsAgriculturalHolding: null,
+		informedTenantsAgriculturalHolding: null,
+		planningObligation: false,
+		statusPlanningObligation: 'not_started',
+	},
+	users: [
+		{
+			emailAddress: 'appellant@test.com',
+			firstName: 'Testy',
+			lastName: 'McTest',
+			salutation: 'string',
+			serviceUserType: 'Appellant',
+			telephoneNumber: '01234 818181',
+			organisation: 'K and C'
+		},
+		{
+			emailAddress: 'agent@test.com',
+			firstName: 'Agent',
+			lastName: 'Bond',
+			salutation: 'string',
+			serviceUserType: 'Agent',
+			telephoneNumber: '01207 818181',
+			organisation: 'K and C'
+		}
+	]
+}
 
 const appealsApiRequests = {
     caseSubmission: {
@@ -135,6 +213,36 @@ const appealsApiRequests = {
 				organisation: 'K and C'
 			}
 		]
+	},
+	S78FullAppealSubmission: {
+		casedata: {
+			...baseSubmission.casedata,
+			caseType: 'W',
+			typeOfPlanningApplication: planningApplicationTypes.FULL
+		}
+	},
+	S78OutlinePlanningAppealSubmission: {
+		casedata: {
+			...baseSubmission.casedata,
+			caseType: 'W',
+			typeOfPlanningApplication: planningApplicationTypes.OUTLINE
+		}
+	},
+	S78ReservedMattersAppealSubmission: {
+		casedata: {
+			...baseSubmission.casedata,
+			caseType: 'W',
+			typeOfPlanningApplication: planningApplicationTypes.RESERVED_MATTERS,
+			appellantProcedurePreference: "inquiry",
+		}
+	},
+	S78PriorApprovalAppealSubmission: {
+		casedata: {
+			...baseSubmission.casedata,
+			caseType: 'W',
+			typeOfPlanningApplication: planningApplicationTypes.PRIOR_APPROVAL,
+			appellantProcedurePreference: "inquiry",
+		}
 	},
 	casAdvertsSubmission: {
 		casedata: {
