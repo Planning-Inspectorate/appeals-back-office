@@ -372,6 +372,11 @@ export interface DecisionInfo {
 	}[];
 }
 
+export interface CaseDecisionOutcomeDateChangeRequest {
+	/** @example "2024-11-10T00:00:00.000Z" */
+	caseDecisionOutcomeDate?: string;
+}
+
 export interface OldDecisionInfo {
 	/** @example "allowed" */
 	outcome?: string;

@@ -1926,9 +1926,7 @@ describe('issue-decision', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('LPA costs decision letter</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('lpa-costs-decision-letter.pdf</a>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'4 August 2023 (reissued on 11 October 2023)'
-			);
+			expect(unprettifiedElement.innerHTML).toContain('25 December 2023');
 		});
 
 		it('should render the view decision page for a linked lead appeal', async () => {

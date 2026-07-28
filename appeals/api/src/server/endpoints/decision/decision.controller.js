@@ -1,5 +1,7 @@
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import appealRepository from '#repositories/appeal.repository.js';
+import { updateAppealCaseDecisionOutcomeDate } from '#repositories/decision.repository.js';
 import { isCurrentStatus } from '#utils/current-status.js';
 import {
 	DECISION_TYPE_APPELLANT_COSTS,
@@ -129,4 +131,26 @@ export const postInspectorDecision = async (req, res) => {
 	const decision = results.find((result) => !!result?.documentType) ?? null;
 
 	return res.status(201).send(decision);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export const patchCaseDecisionOutcomeDate = async (req, res) => {
+	const {
+		params: { appealId },
+		body: { caseDecisionOutcomeDate }
+	} = req;
+
+	const decision = await updateAppealCaseDecisionOutcomeDate(
+		Number(appealId),
+		new Date(caseDecisionOutcomeDate)
+	);
+
+	// update the decision date on FO too (appeal broadcast includes the inspector decision)
+	await broadcasters.broadcastAppeal(Number(appealId));
+
+	return res.status(200).send(decision);
 };

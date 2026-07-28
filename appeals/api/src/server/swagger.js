@@ -116,6 +116,9 @@ export const spec = {
 				}
 			]
 		},
+		caseDecisionOutcomeDateChangeRequest: {
+			caseDecisionOutcomeDate: '2024-11-10T00:00:00.000Z'
+		},
 		//ToDo: Remove once the new version of issue decisions is released
 		OldDecisionInfo: {
 			outcome: 'allowed',

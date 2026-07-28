@@ -6043,7 +6043,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
     <div class="govuk-inset-text">
         <ul class="govuk-list">
             <li>Decision: Dismissed</li>
-            <li>Decision issued on 4 August 2023 (reissued on 11 October 2023)</li>
+            <li>Decision issued on 25 December 2023</li>
             <li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2">View decision</a>
             </li>
         </ul>
@@ -6402,7 +6402,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
     <div class="govuk-inset-text">
         <ul class="govuk-list">
             <li>Decision: Dismissed</li>
-            <li>Decision issued on 4 August 2023 (reissued on 11 October 2023)</li>
+            <li>Decision issued on 25 December 2023</li>
             <li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2">View decision</a>
             </li>
         </ul>
@@ -8556,7 +8556,7 @@ exports[`appeal-details GET /:appealId should render the view decision page 1`] 
                         <dd class="govuk-summary-list__value">Dismissed</dd>
                     </div>
                     <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Decision issue date</dt>
-                        <dd class="govuk-summary-list__value">4 August 2023 (reissued on 11 October 2023)</dd>
+                        <dd class="govuk-summary-list__value">25 December 2023</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
                         <dd class="govuk-summary-list__value"><a class="govuk-link" download href="/documents/1/download/e1e90a49-fab3-44b8-a21a-bb73af089f6b/decision-letter.pdf"

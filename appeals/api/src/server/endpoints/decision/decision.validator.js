@@ -42,6 +42,14 @@ const getDateValidator = composeMiddleware(
 	})
 );
 
+const getCaseDecisionOutcomeDateValidator = composeMiddleware(
+	validateDateParameter({
+		parameterName: 'caseDecisionOutcomeDate',
+		mustBeNotBeFutureDate: true
+	}),
+	validationErrorHandler
+);
+
 const getDocumentValidator = composeMiddleware(
 	body('decisions.*.documentGuid').optional().isUUID().withMessage(ERROR_MUST_BE_UUID),
 	validationErrorHandler
@@ -53,6 +61,7 @@ const getInvalidDecisionReasonValidator = composeMiddleware(
 );
 
 export {
+	getCaseDecisionOutcomeDateValidator,
 	getDateValidator,
 	getDecisionsValidator,
 	getDecisionTypeValidator,

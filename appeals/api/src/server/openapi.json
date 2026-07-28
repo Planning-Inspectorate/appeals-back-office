@@ -3147,6 +3147,71 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/decision/caseDecisionOutcomeDate": {
+			"patch": {
+				"tags": ["Decision"],
+				"description": "Updates the caseDecisionOutcomeDate on an appeal decision",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Gets the decision info or null",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DecisionInfo"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/DecisionInfo"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "caseDecisionOutcomeDate",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/caseDecisionOutcomeDateChangeRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/caseDecisionOutcomeDateChangeRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/appellant-cases/{appellantCaseId}": {
 			"get": {
 				"tags": ["Appellant Cases"],
@@ -9726,6 +9791,18 @@
 				},
 				"xml": {
 					"name": "DecisionInfo"
+				}
+			},
+			"caseDecisionOutcomeDateChangeRequest": {
+				"type": "object",
+				"properties": {
+					"caseDecisionOutcomeDate": {
+						"type": "string",
+						"example": "2024-11-10T00:00:00.000Z"
+					}
+				},
+				"xml": {
+					"name": "caseDecisionOutcomeDateChangeRequest"
 				}
 			},
 			"OldDecisionInfo": {

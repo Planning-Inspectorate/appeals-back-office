@@ -31,7 +31,7 @@ import {
 } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { isFeatureActive } from '#common/feature-flags.js';
 import { isStatePassed } from '#lib/appeal-status.js';
-import { getOriginalAndLatestLetterDatesObject, getTodaysISOString } from '#lib/dates.js';
+import { dateISOStringToDisplayDate, getTodaysISOString } from '#lib/dates.js';
 import { detailsComponent } from '#lib/mappers/components/page-components/details.js';
 import { preHeadingText } from '#lib/mappers/utils/appeal-preheading.js';
 import { mapFileUploadInfoToMappedDocuments } from '#lib/mappers/utils/file-upload-info-to-documents.js';
@@ -890,18 +890,26 @@ export const renderViewDecision = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	let letterDateObject = await getOriginalAndLatestLetterDatesObject(
-		apiClient,
-		currentAppeal.decision.documentId || '',
-		currentAppeal
-	);
+	// the following commented out logic has been left here in case it is useful when work around slip rules
+	// and showing reissued dates is done
+
+	// let letterDateObject = await getOriginalAndLatestLetterDatesObject(
+	// 	apiClient,
+	// 	currentAppeal.decision.documentId || '',
+	// 	currentAppeal
+	// );
 	let latestDecisionDocumentText;
 
 	if (currentAppeal.decision?.outcome) {
-		latestDecisionDocumentText =
-			letterDateObject.latestFileVersion && letterDateObject.latestFileVersion?.version > 1
-				? `${letterDateObject.originalLetterDate} (reissued on ${letterDateObject.latestLetterDate})`
-				: `${letterDateObject.originalLetterDate}`;
+		latestDecisionDocumentText = `${dateISOStringToDisplayDate(currentAppeal.decision.letterDate)}`;
+
+		// the following commented out logic has been left here in case it is useful when work around slip rules
+		// and showing reissued dates is done
+
+		// latestDecisionDocumentText =
+		// 	letterDateObject.latestFileVersion && letterDateObject.latestFileVersion?.version > 1
+		// 		? `${letterDateObject.originalLetterDate} (reissued on ${letterDateObject.latestLetterDate})`
+		// 		: `${letterDateObject.originalLetterDate}`;
 	}
 
 	if (currentAppeal.isChildAppeal) {
