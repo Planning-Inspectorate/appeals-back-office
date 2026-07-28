@@ -9,7 +9,8 @@ export class ProcedureTypePage extends CaseDetailsPage {
 		written: () => cy.get('#appeal-procedure'),
 		hearing: () => cy.get('#appeal-procedure-2'),
 		inquiry: () => cy.get('#appeal-procedure-3'),
-		part1: () => cy.get('#appeal-procedure-4')
+		part1: () => cy.get('#appeal-procedure'),
+		part2: () => cy.get('#appeal-procedure-2')
 	};
 
 	procedureTypeMappings = {
@@ -29,19 +30,28 @@ export class ProcedureTypePage extends CaseDetailsPage {
 			value: 'inquiry'
 		},
 		writtenpart2: {
-			element: this.procedureTypeElements.written,
+			element: this.procedureTypeElements.part2,
 			displayName: 'Written representations (Part 2)',
 			value: 'written'
 		},
 		writtenpart1: {
 			element: this.procedureTypeElements.part1,
 			displayName: 'Written representations (Part 1)',
-			value: 'part 1'
+			value: 'writtenPart1'
 		}
 	};
 
 	procedureTypeExists(label) {
 		const normalizedLabel = label.toLowerCase().trim();
+
+		return Object.values(this.procedureTypeMappings).some(
+			(mapping) => mapping.displayName.toLowerCase().trim() === normalizedLabel
+		);
+	}
+
+	hasProcedureType(label) {
+		const normalizedLabel = label.toLowerCase().trim();
+
 		return Object.prototype.hasOwnProperty.call(this.procedureTypeMappings, normalizedLabel);
 	}
 
@@ -60,7 +70,9 @@ export class ProcedureTypePage extends CaseDetailsPage {
 			);
 		}
 
-		const mapping = this.procedureTypeMappings[normalizedLabel];
+		const mapping = Object.values(this.procedureTypeMappings).find(
+			(m) => m.displayName.toLowerCase().trim() === normalizedLabel
+		);
 
 		// Click and verify it's checked with value validation
 		mapping.element().click().should('be.checked').and('have.value', mapping.value);
@@ -92,7 +104,7 @@ export class ProcedureTypePage extends CaseDetailsPage {
 		// verify each expected procedure type is displayed or not based on the visible property
 		expectedProcedureTypes.forEach((procedureType) => {
 			const normalizedType = procedureType.name.toLowerCase().trim();
-			if (this.procedureTypeExists(normalizedType)) {
+			if (this.hasProcedureType(normalizedType)) {
 				const visibleAssertion = procedureType.visible ? 'be.visible' : 'not.exist';
 				cy.contains('label', this.procedureTypeMappings[normalizedType].displayName).should(
 					visibleAssertion
