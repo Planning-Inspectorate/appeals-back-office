@@ -36,11 +36,15 @@ export const PROCEDURE_TYPES = {
 };
 
 export const BANNER_TYPES = {
-	success: 'Success'
+	success: 'Success',
+	important: 'Important'
 };
 
 export const SUCCESS_MESSAGES = {
-	filenameUpdated: 'Document filename updated'
+	filenameUpdated: 'Document filename updated',
+	appealStarted: 'Appeal started',
+	appealValidated: 'Appeal validated',
+	appealValid: 'Appeal valid'
 };
 
 export const ERROR_MESSAGES = {

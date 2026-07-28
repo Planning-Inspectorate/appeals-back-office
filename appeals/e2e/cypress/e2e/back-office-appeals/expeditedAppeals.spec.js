@@ -3,21 +3,25 @@
 
 import { appealsApiRequests } from '../../fixtures/appealsApiRequests';
 import { users } from '../../fixtures/users';
+import { OverviewSectionPage } from '../../page_objects/caseDetails/overviewSectionPage';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ProcedureTypePage } from '../../page_objects/procedureTypePage';
 import {
 	APPEAL_PAYLOAD_TYPES,
 	APPLICATION_DECISIONS,
-	PLANNING_APPLICATION_TYPES
+	BANNER_TYPES,
+	PLANNING_APPLICATION_TYPES,
+	SUCCESS_MESSAGES
 } from '../../support/consts';
 import { happyPathHelper } from '../../support/happyPathHelper';
 
 const caseDetailsPage = new CaseDetailsPage();
 const procedureTypePage = new ProcedureTypePage();
 const dateTimeSection = new DateTimeSection();
+const overviewSectionPage = new OverviewSectionPage();
 
-describe('Part1 (expedited) appeals', () => {
+describe('Expedited (part1)) appeals', () => {
 	const baseProcedureTypesItems = [
 		{ name: 'hearing', visible: true },
 		{ name: 'inquiry', visible: true }
@@ -40,7 +44,7 @@ describe('Part1 (expedited) appeals', () => {
 		/*if (cases.length > 0) {
 			cy.deleteAppeals(cases);
 		}*/
-		cy.deleteAppeals(appeal);
+		//cy.deleteAppeals(appeal);
 	});
 
 	let caseObj;
@@ -101,18 +105,41 @@ describe('Part1 (expedited) appeals', () => {
 	};
 
 	describe('Appeals valid for expedited process', () => {
-		it('S78 appeal submitted on 01-04-2026 should be set as expedited', () => {
+		it.only('S78 appeal submitted on 01-04-2026 should be set as expedited', () => {
 			setupTestCase({ additionalDocs: [appealsApiRequests.environmentalAssessment] }).then(() => {
 				// approve appellant case as valid and set a due date for the questionnaire response
 				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
 
 				// check for expected validation banners on the case details page
-				caseDetailsPage.validateBannerMessage('Important', 'Appeal valid');
-				caseDetailsPage.validateBannerMessage('Success', 'Appeal validated');
+				caseDetailsPage.validateBannerMessage(BANNER_TYPES.important, SUCCESS_MESSAGES.appealValid);
+				caseDetailsPage.validateBannerMessage(
+					BANNER_TYPES.success,
+					SUCCESS_MESSAGES.appealValidated
+				);
 
 				// check that part 1 is available as a procedure type option when starting case
 				caseDetailsPage.clickReadyToStartCase();
 				procedureTypePage.verifyDisplayedProcedureTypes(expectedProcedureTypesExpedited);
+
+				// start case and check that the procedure type and questionnaire response due date is set correctly
+				procedureTypePage.selectProcedureType('Written representations (Part 1)');
+				procedureTypePage.clickButtonByText('Start case');
+
+				// check that the case overview details are set correctly, including appeal procedure
+				overviewSectionPage.verifyCaseOverviewDetails(
+					{
+						appealType: 'Planning appeal',
+						applicationReference: '123',
+						appealProcedure: 'Written representations (Part 1)',
+						allocationLevel: 'No allocation level for this appeal',
+						linkedAppeals: 'No linked appeals',
+						relatedAppeals: 'No'
+					},
+					false
+				);
+
+				// check for expected validation banner on the case details page
+				caseDetailsPage.validateBannerMessage(BANNER_TYPES.success, SUCCESS_MESSAGES.appealStarted);
 
 				// check is set as expedited in appeal details
 				checkAppealDetails(caseObj, true, PLANNING_APPLICATION_TYPES.FULL);
@@ -126,8 +153,14 @@ describe('Part1 (expedited) appeals', () => {
 					happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
 
 					// check for expected validation banners on the case details page
-					caseDetailsPage.validateBannerMessage('Important', 'Appeal valid');
-					caseDetailsPage.validateBannerMessage('Success', 'Appeal validated');
+					caseDetailsPage.validateBannerMessage(
+						BANNER_TYPES.important,
+						SUCCESS_MESSAGES.appealValid
+					);
+					caseDetailsPage.validateBannerMessage(
+						BANNER_TYPES.success,
+						SUCCESS_MESSAGES.appealValidated
+					);
 
 					// check that part 1 is available as a procedure type option when starting case
 					caseDetailsPage.clickReadyToStartCase();
@@ -146,8 +179,14 @@ describe('Part1 (expedited) appeals', () => {
 					happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
 
 					// check for expected validation banners on the case details page
-					caseDetailsPage.validateBannerMessage('Important', 'Appeal valid');
-					caseDetailsPage.validateBannerMessage('Success', 'Appeal validated');
+					caseDetailsPage.validateBannerMessage(
+						BANNER_TYPES.important,
+						SUCCESS_MESSAGES.appealValid
+					);
+					caseDetailsPage.validateBannerMessage(
+						BANNER_TYPES.success,
+						SUCCESS_MESSAGES.appealValidated
+					);
 
 					// check that part 1 is available as a procedure type option when starting case
 					caseDetailsPage.clickReadyToStartCase();
@@ -159,7 +198,7 @@ describe('Part1 (expedited) appeals', () => {
 			);
 		});
 
-		it.only('S78 prior approval appeal submitted on 01-04-2026 should be set as expedited', () => {
+		it('S78 prior approval appeal submitted on 01-04-2026 should be set as expedited', () => {
 			setupTestCase({
 				appealType: APPEAL_PAYLOAD_TYPES.PRIOR_APPROVAL_APPEAL_SUBMISSION,
 				applicationDecision: APPLICATION_DECISIONS.REFUSED
@@ -168,8 +207,11 @@ describe('Part1 (expedited) appeals', () => {
 				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
 
 				// check for expected validation banners on the case details page
-				caseDetailsPage.validateBannerMessage('Important', 'Appeal valid');
-				caseDetailsPage.validateBannerMessage('Success', 'Appeal validated');
+				caseDetailsPage.validateBannerMessage(BANNER_TYPES.important, SUCCESS_MESSAGES.appealValid);
+				caseDetailsPage.validateBannerMessage(
+					BANNER_TYPES.success,
+					SUCCESS_MESSAGES.appealValidated
+				);
 
 				// check that part 1 is available as a procedure type option when starting case
 				caseDetailsPage.clickReadyToStartCase();
@@ -186,8 +228,11 @@ describe('Part1 (expedited) appeals', () => {
 				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
 
 				// check for expected validation banners on the case details page
-				caseDetailsPage.validateBannerMessage('Important', 'Appeal valid');
-				caseDetailsPage.validateBannerMessage('Success', 'Appeal validated');
+				caseDetailsPage.validateBannerMessage(BANNER_TYPES.important, SUCCESS_MESSAGES.appealValid);
+				caseDetailsPage.validateBannerMessage(
+					BANNER_TYPES.success,
+					SUCCESS_MESSAGES.appealValidated
+				);
 
 				// check that part 1 is available as a procedure type option when starting case
 				caseDetailsPage.clickReadyToStartCase();
@@ -204,8 +249,11 @@ describe('Part1 (expedited) appeals', () => {
 				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
 
 				// check for expected validation banners on the case details page
-				caseDetailsPage.validateBannerMessage('Important', 'Appeal valid');
-				caseDetailsPage.validateBannerMessage('Success', 'Appeal validated');
+				caseDetailsPage.validateBannerMessage(BANNER_TYPES.important, SUCCESS_MESSAGES.appealValid);
+				caseDetailsPage.validateBannerMessage(
+					BANNER_TYPES.success,
+					SUCCESS_MESSAGES.appealValidated
+				);
 
 				// check that part 1 is available as a procedure type option when starting case
 				caseDetailsPage.clickReadyToStartCase();
@@ -224,8 +272,11 @@ describe('Part1 (expedited) appeals', () => {
 				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
 
 				// check for expected validation banners on the case details page
-				caseDetailsPage.validateBannerMessage('Important', 'Appeal valid');
-				caseDetailsPage.validateBannerMessage('Success', 'Appeal validated');
+				caseDetailsPage.validateBannerMessage(BANNER_TYPES.important, SUCCESS_MESSAGES.appealValid);
+				caseDetailsPage.validateBannerMessage(
+					BANNER_TYPES.success,
+					SUCCESS_MESSAGES.appealValidated
+				);
 
 				// check that part 1 is not available as a procedure type option when starting case
 				caseDetailsPage.clickReadyToStartCase();
@@ -242,8 +293,11 @@ describe('Part1 (expedited) appeals', () => {
 				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
 
 				// check for expected validation banners on the case details page
-				caseDetailsPage.validateBannerMessage('Important', 'Appeal valid');
-				caseDetailsPage.validateBannerMessage('Success', 'Appeal validated');
+				caseDetailsPage.validateBannerMessage(BANNER_TYPES.important, SUCCESS_MESSAGES.appealValid);
+				caseDetailsPage.validateBannerMessage(
+					BANNER_TYPES.success,
+					SUCCESS_MESSAGES.appealValidated
+				);
 
 				// check that part 1 is not available as a procedure type option when starting case
 				caseDetailsPage.clickReadyToStartCase();
@@ -263,8 +317,11 @@ describe('Part1 (expedited) appeals', () => {
 				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
 
 				// check for expected validation banners on the case details page
-				caseDetailsPage.validateBannerMessage('Important', 'Appeal valid');
-				caseDetailsPage.validateBannerMessage('Success', 'Appeal validated');
+				caseDetailsPage.validateBannerMessage(BANNER_TYPES.important, SUCCESS_MESSAGES.appealValid);
+				caseDetailsPage.validateBannerMessage(
+					BANNER_TYPES.success,
+					SUCCESS_MESSAGES.appealValidated
+				);
 
 				// check that part 1 is not available as a procedure type option when starting case
 				caseDetailsPage.clickReadyToStartCase();
