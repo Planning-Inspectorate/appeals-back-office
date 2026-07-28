@@ -308,18 +308,6 @@ exports[`LPA Questionnaire review GET / should render review outcome form fields
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/extra-conditions/change">Change<span class="govuk-visually-hidden"> Are there any new conditions? (6. Appeal process)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have there been any significant changes that would affect the application?</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No</span>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/any-significant-changes-lpa/change">Change<span class="govuk-visually-hidden"> Have there been any significant changes that would affect the application? (6. Appeal process)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What documents and plans did you use to make your decision?</dt>
-                            <dd                             class="govuk-summary-list__value">Not provided</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/2/list-of-documents-before-decision/change"
-                                    data-cy="change-list-of-documents-before-decision">Change<span class="govuk-visually-hidden"> What documents and plans did you use to make your decision? (6. Appeal process)</span></a>
-                                </dd>
-                        </div>
                     </dl>
                 </div>
             </div>
@@ -1544,17 +1532,17 @@ exports[`LPA Questionnaire review GET / should render the Cas Advert expedite LP
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Related appeals (6. Appeal process)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have there been any significant changes that would affect the application?</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No</span>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/4/lpa-questionnaire/1/any-significant-changes-lpa/change">Change<span class="govuk-visually-hidden"> Have there been any significant changes that would affect the application? (6. Appeal process)</span></a>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Are there any new conditions?</dt>
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Some extra conditions</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/4/lpa-questionnaire/1/extra-conditions/change">Change<span class="govuk-visually-hidden"> Are there any new conditions? (6. Appeal process)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have there been any significant changes that would affect the application?</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/4/lpa-questionnaire/1/any-significant-changes-lpa/change">Change<span class="govuk-visually-hidden"> Have there been any significant changes that would affect the application? (6. Appeal process)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -1928,17 +1916,17 @@ exports[`LPA Questionnaire review GET / should render the Cas Planning expedite 
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Related appeals (6. Appeal process)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have there been any significant changes that would affect the application?</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No</span>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/4/lpa-questionnaire/1/any-significant-changes-lpa/change">Change<span class="govuk-visually-hidden"> Have there been any significant changes that would affect the application? (6. Appeal process)</span></a>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Are there any new conditions?</dt>
                             <dd                             class="govuk-summary-list__value"><span>Yes</span>
                                 <br><span>Some extra conditions</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/4/lpa-questionnaire/1/extra-conditions/change">Change<span class="govuk-visually-hidden"> Are there any new conditions? (6. Appeal process)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have there been any significant changes that would affect the application?</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/4/lpa-questionnaire/1/any-significant-changes-lpa/change">Change<span class="govuk-visually-hidden"> Have there been any significant changes that would affect the application? (6. Appeal process)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -2325,18 +2313,6 @@ exports[`LPA Questionnaire review GET / should render the Householder LPA Questi
                                 <br><span>Some extra conditions</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/extra-conditions/change">Change<span class="govuk-visually-hidden"> Are there any new conditions? (6. Appeal process)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have there been any significant changes that would affect the application?</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No</span>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/any-significant-changes-lpa/change">Change<span class="govuk-visually-hidden"> Have there been any significant changes that would affect the application? (6. Appeal process)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What documents and plans did you use to make your decision?</dt>
-                            <dd                             class="govuk-summary-list__value">Not provided</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/list-of-documents-before-decision/change"
-                                    data-cy="change-list-of-documents-before-decision">Change<span class="govuk-visually-hidden"> What documents and plans did you use to make your decision? (6. Appeal process)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -4486,18 +4462,6 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/extra-conditions/change">Change<span class="govuk-visually-hidden"> Are there any new conditions? (6. Appeal process)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have there been any significant changes that would affect the application?</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No</span>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/any-significant-changes-lpa/change">Change<span class="govuk-visually-hidden"> Have there been any significant changes that would affect the application? (6. Appeal process)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What documents and plans did you use to make your decision?</dt>
-                            <dd                             class="govuk-summary-list__value">Not provided</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/list-of-documents-before-decision/change"
-                                    data-cy="change-list-of-documents-before-decision">Change<span class="govuk-visually-hidden"> What documents and plans did you use to make your decision? (6. Appeal process)</span></a>
-                                </dd>
-                        </div>
                     </dl>
                 </div>
             </div>
@@ -4862,18 +4826,6 @@ exports[`LPA Questionnaire review GET / with unchecked documents should render a
                                 <br><span>Some extra conditions</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/extra-conditions/change">Change<span class="govuk-visually-hidden"> Are there any new conditions? (6. Appeal process)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have there been any significant changes that would affect the application?</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No</span>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/any-significant-changes-lpa/change">Change<span class="govuk-visually-hidden"> Have there been any significant changes that would affect the application? (6. Appeal process)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What documents and plans did you use to make your decision?</dt>
-                            <dd                             class="govuk-summary-list__value">Not provided</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/list-of-documents-before-decision/change"
-                                    data-cy="change-list-of-documents-before-decision">Change<span class="govuk-visually-hidden"> What documents and plans did you use to make your decision? (6. Appeal process)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -7496,18 +7448,6 @@ exports[`LPA Questionnaire review POST / should render LPA Questionnaire review 
                                 <br><span>Some extra conditions</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/extra-conditions/change">Change<span class="govuk-visually-hidden"> Are there any new conditions? (6. Appeal process)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Have there been any significant changes that would affect the application?</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No</span>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/any-significant-changes-lpa/change">Change<span class="govuk-visually-hidden"> Have there been any significant changes that would affect the application? (6. Appeal process)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What documents and plans did you use to make your decision?</dt>
-                            <dd                             class="govuk-summary-list__value">Not provided</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/list-of-documents-before-decision/change"
-                                    data-cy="change-list-of-documents-before-decision">Change<span class="govuk-visually-hidden"> What documents and plans did you use to make your decision? (6. Appeal process)</span></a>
                                 </dd>
                         </div>
                     </dl>

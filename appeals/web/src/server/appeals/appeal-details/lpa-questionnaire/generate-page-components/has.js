@@ -1,11 +1,13 @@
 import { isDefined } from '#lib/ts-utilities.js';
+import { beforeExpeditedOriginalApplicationCutOff } from '@pins/appeals/utils/appeal-type-checks.js';
 
 /**
  *
  * @param {{lpaq: MappedInstructions}} mappedLPAQData
+ * @param {string | null} applicationDate
  * @returns {PageComponent[]}
  */
-export const generateHASLpaQuestionnaireComponents = (mappedLPAQData) => {
+export const generateHASLpaQuestionnaireComponents = (mappedLPAQData, applicationDate) => {
 	/** @type {PageComponent[]} */
 	const pageComponents = [];
 
@@ -150,11 +152,34 @@ export const generateHASLpaQuestionnaireComponents = (mappedLPAQData) => {
 			rows: [
 				mappedLPAQData.lpaq?.otherAppeals?.display.summaryListItem,
 				mappedLPAQData.lpaq?.extraConditions?.display.summaryListItem,
-				mappedLPAQData.lpaq?.anySignificantChangesLpa?.display.summaryListItem,
-				mappedLPAQData.lpaq?.listOfDocumentsBeforeDecision?.display.summaryListItem
+				!beforeExpeditedOriginalApplicationCutOff(applicationDate) && applicationDate
+					? mappedLPAQData.lpaq?.anySignificantChangesLpa?.display.summaryListItem
+					: undefined
 			].filter(isDefined)
 		}
 	});
+
+	if (!beforeExpeditedOriginalApplicationCutOff(applicationDate) && applicationDate) {
+		pageComponents.push({
+			/** @type {'summary-list'} */
+			type: 'summary-list',
+			wrapperHtml: {
+				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+				closing: '</div></div>'
+			},
+			parameters: {
+				card: {
+					title: {
+						text: '7. Original Evidence'
+					}
+				},
+				rows: [
+					mappedLPAQData.lpaq?.designAccessStatementLpa?.display.summaryListItem,
+					mappedLPAQData.lpaq?.listOfDocumentsBeforeDecision?.display.summaryListItem
+				].filter(isDefined)
+			}
+		});
+	}
 
 	return pageComponents;
 };

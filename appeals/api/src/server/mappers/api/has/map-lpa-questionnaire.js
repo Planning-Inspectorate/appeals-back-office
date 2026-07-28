@@ -43,16 +43,20 @@ export const mapHasLpaQuestionnaire = (data) => {
 				details: lpaQuestionnaire?.siteSafetyDetails,
 				hasIssues: lpaQuestionnaire?.siteSafetyDetails !== null
 			},
-			anySignificantChangesLpa: lpaQuestionnaire?.anySignificantChangesLpa || null,
-			anySignificantChangesLpa_localPlanSignificantChanges:
-				lpaQuestionnaire?.anySignificantChangesLpa_localPlanSignificantChanges || null,
-			anySignificantChangesLpa_nationalPolicySignificantChanges:
-				lpaQuestionnaire?.anySignificantChangesLpa_nationalPolicySignificantChanges || null,
-			anySignificantChangesLpa_otherSignificantChanges:
-				lpaQuestionnaire?.anySignificantChangesLpa_otherSignificantChanges || null,
-			anySignificantChangesLpa_courtJudgementSignificantChanges:
-				lpaQuestionnaire?.anySignificantChangesLpa_courtJudgementSignificantChanges || null,
-			listOfDocumentsBeforeDecision: lpaQuestionnaire.listOfDocumentsBeforeDecision
+			...(lpaQuestionnaire.listOfDocumentsBeforeDecision !== null && {
+				listOfDocumentsBeforeDecision: lpaQuestionnaire.listOfDocumentsBeforeDecision
+			}),
+			...(lpaQuestionnaire.anySignificantChangesLpa !== null && {
+				anySignificantChangesLpa: lpaQuestionnaire.anySignificantChangesLpa,
+				anySignificantChangesLpa_localPlanSignificantChanges:
+					lpaQuestionnaire.anySignificantChangesLpa_localPlanSignificantChanges,
+				anySignificantChangesLpa_nationalPolicySignificantChanges:
+					lpaQuestionnaire.anySignificantChangesLpa_nationalPolicySignificantChanges,
+				anySignificantChangesLpa_otherSignificantChanges:
+					lpaQuestionnaire.anySignificantChangesLpa_otherSignificantChanges,
+				anySignificantChangesLpa_courtJudgementSignificantChanges:
+					lpaQuestionnaire.anySignificantChangesLpa_courtJudgementSignificantChanges
+			})
 		};
 	}
 };

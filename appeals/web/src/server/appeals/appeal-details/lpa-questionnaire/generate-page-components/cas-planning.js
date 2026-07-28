@@ -153,10 +153,10 @@ export const generateCasPlanningLpaQuestionnaireComponents = (
 			},
 			rows: [
 				mappedLPAQData.lpaq?.otherAppeals?.display.summaryListItem,
+				mappedLPAQData.lpaq?.extraConditions?.display.summaryListItem,
 				!beforeExpeditedOriginalApplicationCutOff(applicationDate) && applicationDate
 					? mappedLPAQData.lpaq?.anySignificantChangesLpa?.display.summaryListItem
-					: undefined,
-				mappedLPAQData.lpaq?.extraConditions?.display.summaryListItem
+					: undefined
 			].filter(isDefined)
 		}
 	});
