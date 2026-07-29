@@ -147,6 +147,7 @@ const appealFactory = ({
 		caseValidDate: validAt,
 		reference: randomUUID(),
 		appealStatus: { create: status },
+		currentStatus: status.status,
 		appellantCase: { create: getRandomisedAppellantCaseCreateInput(typeShorthand) },
 		appellant: {
 			create: appellantInput
