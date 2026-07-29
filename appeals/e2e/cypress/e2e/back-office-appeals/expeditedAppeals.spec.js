@@ -5,6 +5,7 @@ import { appealsApiRequests } from '../../fixtures/appealsApiRequests';
 import { users } from '../../fixtures/users';
 import { OverviewSectionPage } from '../../page_objects/caseDetails/overviewSectionPage';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
+import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ProcedureTypePage } from '../../page_objects/procedureTypePage';
 import {
@@ -20,6 +21,7 @@ const caseDetailsPage = new CaseDetailsPage();
 const procedureTypePage = new ProcedureTypePage();
 const dateTimeSection = new DateTimeSection();
 const overviewSectionPage = new OverviewSectionPage();
+const caseHistoryPage = new CaseHistoryPage();
 
 describe('Expedited (part1)) appeals', () => {
 	const baseProcedureTypesItems = [
@@ -136,6 +138,12 @@ describe('Expedited (part1)) appeals', () => {
 						relatedAppeals: 'No'
 					},
 					false
+				);
+
+				// Verify Case History
+				caseDetailsPage.clickViewCaseHistory();
+				caseHistoryPage.verifyCaseHistoryValue(
+					'Appeal started\nAppeal procedure: Written representations (Part 1)'
 				);
 
 				// check for expected validation banner on the case details page
