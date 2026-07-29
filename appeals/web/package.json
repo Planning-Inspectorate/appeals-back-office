@@ -47,7 +47,7 @@
     "accessible-autocomplete": "^3.0.1",
     "applicationinsights": "^2.9.1",
     "archiver": "^7.0.1",
-    "body-parser": "1.20.3",
+    "body-parser": "1.20.6",
     "classnames": "^2.5.1",
     "compression": "1.8.1",
     "connect-redis": "^9.0.0",
