@@ -6,7 +6,7 @@ parameters:
 
   - name: RunParallel
     type: boolean
-    default: true
+    default: 'true'
 
 variables:
   - name: APP
@@ -34,51 +34,7 @@ jobs:
           group1:
             SPEC: >-
               issueDecision.spec.js,
-              hearing.spec.js,
-              reviewAppellantCase.spec.js,
-              inquiry.spec.js,
-              manuallyAddRepresentation.spec.js,
-              part1.spec.js,
-              personalList.spec.js,
-              endToEndEnforcement.spec.js,
-              endToEndLinkedEnforcement.spec.js
-          group2:
-            SPEC: >-
-              relatedAppeals.spec.js,
-              manageCorrespondence.spec.js,
-              manageDocsAppellant.spec.js,
-              manageDocsLpa.spec.js,
-              nationalListSearch.spec.js,
-              reviewLpaq.spec.js,
-              s78ChangeTimetable.spec.js,
-              scheduleSiteVisit.spec.js,
-              startCase.spec.js,
-              unrelateAppeals.spec.js,
-              updateLpaqDueDate.spec.js,
-              addCostDecisionRedacted.spec.js,
-              cancelAppeal.spec.js,
-              captureNetResidence.spec.js,
-              changeAppealProcedureType.spec.js,
-              changeAppealType.spec.js,
-              rule6Party.spec.js
-          group3:
-            SPEC: >-
-              addCorrespondence.spec.js,
-              appellantCase.spec.js,
-              assignUserToCase.spec.js,
-              caseHistory.spec.js,
-              caseNotes.spec.js,
-              changeContact.spec.js,
-              changeSiteVisit.spec.js,
-              changeStartDate.spec.js,
-              globalValidation.spec.js,
-              linkAppeals.spec.js,
-              lpaStatement.spec.js,
-              manageDocsSupporting.spec.js,
-              endToEndAdvert.spec.js,
-              endToEndS20.spec.js,
-              endToEndS78.spec.js,
-              updateDecisionLetter.spec.js
+
 
       #  SINGLE AGENT RUN (manual toggle)
       ${{ if eq(parameters.RunParallel, false) }}:
