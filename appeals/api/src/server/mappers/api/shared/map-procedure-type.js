@@ -3,7 +3,7 @@
 
 /**
  *
- * @param {MappingRequest} data
+ * @param {{appeal: { procedureType?: { name?: string } | null }}} data
  * @returns {string}
  */
 export const mapProcedureType = (data) => {
