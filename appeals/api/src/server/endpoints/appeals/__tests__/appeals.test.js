@@ -1856,6 +1856,7 @@ describe('appeals list routes', () => {
 								postCode: ''
 							},
 							appealStatus: '',
+							procedureType: 'Written',
 							completedStateList: householdAppeal.completedStateList,
 							localPlanningDepartment: '',
 							lpaQuestionnaireId: null,
@@ -1936,6 +1937,7 @@ describe('appeals list routes', () => {
 								postCode: ''
 							},
 							appealStatus: '',
+							procedureType: 'Written',
 							completedStateList: householdAppeal.completedStateList,
 							localPlanningDepartment: '',
 							lpaQuestionnaireId: null,
