@@ -1809,6 +1809,7 @@ describe('appeals list routes', () => {
 					items: [
 						{
 							appealId: 3,
+							procedureType: 'Written',
 							completedStateList: householdAppeal.completedStateList,
 							lpaQuestionnaireId: null,
 							documentationSummary: {
@@ -1882,6 +1883,7 @@ describe('appeals list routes', () => {
 						},
 						{
 							appealId: 4,
+							procedureType: 'Written',
 							completedStateList: householdAppeal.completedStateList,
 							lpaQuestionnaireId: null,
 							documentationSummary: {

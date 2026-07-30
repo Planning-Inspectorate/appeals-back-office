@@ -1,3 +1,4 @@
+import { mapProcedureType } from '#mappers/api/shared/map-procedure-type.js';
 import { completedStateList } from '#utils/current-status.js';
 import formatAddress from '#utils/format-address.js';
 import { formatCostsDecision } from '#utils/format-costs-decision.js';
@@ -101,7 +102,7 @@ const formatPersonalListItem = async ({
 		appealStatus,
 		completedStateList: completedStateList(appeal),
 		appealType: appealType?.type,
-		procedureType: procedureType?.name,
+		procedureType: mapProcedureType({ appeal: { procedureType: procedureType } }),
 		lpaQuestionnaireId: lpaQuestionnaire?.id ?? null,
 		documentationSummary: formatDocumentationSummary(appeal),
 		dueDate,
