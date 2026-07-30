@@ -48,6 +48,17 @@ jobs:
 #          versionSpec: "22.x"
 #        displayName: "Install Node.js"
 
+      - script: |
+          export NVM_DIR="/usr/local/nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+          nvm use default || true
+          node -v || true
+          npm -v || true
+          which node || true
+          which npm || true
+        displayName: "Source NVM and show node/npm (debug)"
+        condition: eq(variables['agent.os'], 'Linux')
+
       - task: ShellScript@2
         inputs:
           scriptPath: 'appeals/e2e/install-chromium.sh'
