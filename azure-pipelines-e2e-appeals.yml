@@ -65,11 +65,16 @@ jobs:
         displayName: 'Install Chromium'
         condition: eq(variables['agent.os'], 'Linux')
 
-      - task: Npm@1
-        inputs:
-          command: "install"
-          workingDir: $(System.DefaultWorkingDirectory)/appeals/e2e
-        displayName: "Install Dependencies"
+      - script: |
+          export NVM_DIR="/usr/local/nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+          nvm use default || true
+          echo "Node: $(node -v || true)"
+          echo "Npm: $(npm -v || true)"
+          cd "$(System.DefaultWorkingDirectory)/appeals/e2e"
+          npm ci || npm install
+        displayName: "Install Dependencies (via npm in-shell)"
+        condition: eq(variables['agent.os'], 'Linux')
 
       - script: |
           CLEAN_SPEC=$(echo "$(SPEC)" | tr -d ' \n' | sed 's/,/,cypress\/e2e\/back-office-appeals\//g')
