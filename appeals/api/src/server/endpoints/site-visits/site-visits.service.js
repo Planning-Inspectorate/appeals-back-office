@@ -21,7 +21,7 @@ import { notifySend } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import logger from '#utils/logger.js';
-import { updatePersonalList } from '#utils/update-personal-list.js';
+import { setPersonalList } from '#utils/update-personal-list.js';
 import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
 import { AUDIT_TRAIL_SITE_VISIT_CANCELLED } from '@pins/appeals/constants/support.js';
 import { addDays } from '@pins/appeals/utils/business-days.js';
@@ -224,7 +224,7 @@ const updateSiteVisit = async (
 
 		const siteVisits = await siteVisitRepository.getSiteVisitByAppealId(appealIdsToUpdate);
 
-		await updatePersonalList(appealId);
+		await setPersonalList({ appealId });
 
 		if (updateSiteVisitData.visitType) {
 			await createAuditTrail({
