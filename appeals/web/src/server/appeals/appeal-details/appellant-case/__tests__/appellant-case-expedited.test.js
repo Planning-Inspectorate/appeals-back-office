@@ -6,7 +6,10 @@ import {
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
-import { APPEAL_TYPE_OF_PLANNING_APPLICATION } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_APPLICATION_DECISION,
+	APPEAL_TYPE_OF_PLANNING_APPLICATION
+} from '@planning-inspectorate/data-model';
 import nock from 'nock';
 import supertest from 'supertest';
 
@@ -23,7 +26,7 @@ describe('appellant-case-expedited', () => {
 		const expeditedAppellantCaseData = {
 			...appellantCaseDataNotValidated,
 			applicationDate: '2026-04-02T00:00:00.000Z',
-			applicationDecision: 'refused',
+			applicationDecision: APPEAL_APPLICATION_DECISION.REFUSED,
 			typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL,
 			reasonForAppealAppellant: 'My reason for appeal',
 			anySignificantChanges: 'Yes',
@@ -122,8 +125,8 @@ describe('appellant-case-expedited', () => {
 	);
 
 	it.each([
-		{ decision: 'refused', applicationDecision: 'refused' },
-		{ decision: 'granted', applicationDecision: 'granted' }
+		{ decision: 'refused', applicationDecision: APPEAL_APPLICATION_DECISION.REFUSED },
+		{ decision: 'granted', applicationDecision: APPEAL_APPLICATION_DECISION.GRANTED }
 	])(
 		'should render expedited fields for S78 + removal-or-variation-of-conditions + $decision',
 		async ({ applicationDecision }) => {
@@ -163,4 +166,31 @@ describe('appellant-case-expedited', () => {
 			expect(element.innerHTML).not.toContain('Draft statement of common ground');
 		}
 	);
+
+	it('should not render appeal statement when ownershipCertificate is null', async () => {
+		const expeditedAppellantCaseData = {
+			...appellantCaseDataNotValidated,
+			applicationDate: '2026-04-02T00:00:00.000Z',
+			applicationDecision: APPEAL_APPLICATION_DECISION.GRANTED,
+			typeOfPlanningApplication:
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.REMOVAL_OR_VARIATION_OF_CONDITIONS,
+			reasonForAppealAppellant: 'My reason',
+			anySignificantChanges: 'No',
+			screeningOpinionIndicatesEiaRequired: false,
+			ownershipCertificate: null
+		};
+
+		nock('http://test/')
+			.get('/appeals/2?include=all')
+			.reply(200, {
+				...appealDataFullPlanning,
+				appealId: 2
+			});
+		nock('http://test/').get('/appeals/2/appellant-cases/0').reply(200, expeditedAppellantCaseData);
+
+		const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+		const element = parseHtml(response.text, { skipPrettyPrint: true });
+
+		expect(element.innerHTML).not.toContain('Appeal statement');
+	});
 });
