@@ -121,50 +121,66 @@ export function generateS78ExpeditedComponents(
 			component.parameters.attributes?.id === 'uploaded-documents'
 	);
 
-	if (uploadedDocumentsComponentIndex !== -1 && appellantCaseData.ownershipCertificate != null) {
-		/**
-		 * @type {PageComponent}
-		 */
-		const uploadedDocumentsSummary = {
-			type: 'summary-list',
-			wrapperHtml: {
-				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-				closing: '</div></div>'
-			},
-			parameters: {
-				attributes: {
-					id: 'uploaded-documents'
+	if (uploadedDocumentsComponentIndex !== -1) {
+		if (appellantCaseData.ownershipCertificate != null) {
+			/**
+			 * @type {PageComponent}
+			 */
+			const uploadedDocumentsSummary = {
+				type: 'summary-list',
+				wrapperHtml: {
+					opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+					closing: '</div></div>'
 				},
-				card: {
-					title: {
-						text: 'Upload documents'
-					}
-				},
-				rows: [
-					mappedAppellantCaseData.applicationForm.display.summaryListItem,
-					mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
-					mappedAppellantCaseData.decisionLetter.display.summaryListItem,
-					mappedAppellantCaseData.planningObligation.display.summaryListItem,
-					...(mappedAppellantCaseData.statementCommonGround
-						? [mappedAppellantCaseData.statementCommonGround.display.summaryListItem]
-						: []),
-					mappedAppellantCaseData.ownershipCertificate.display.summaryListItem,
-					...(isExpeditedAppealsActive
-						? [mappedAppellantCaseData.ownershipCertificateExpedited.display.summaryListItem]
-						: []),
-					mappedAppellantCaseData.costsDocument.display.summaryListItem,
-					...(isExpeditedAppealsActive &&
-					appellantCaseData.screeningOpinionIndicatesEiaRequired != null
-						? [mappedAppellantCaseData.screeningOpinionIndicatesEiaRequired.display.summaryListItem]
-						: []),
-					...(isExpeditedAppealsActive
-						? [mappedAppellantCaseData?.environmentalStatement.display.summaryListItem]
-						: [])
-				]
-			}
-		};
+				parameters: {
+					attributes: {
+						id: 'uploaded-documents'
+					},
+					card: {
+						title: {
+							text: 'Upload documents'
+						}
+					},
+					rows: [
+						mappedAppellantCaseData.applicationForm.display.summaryListItem,
+						mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
+						mappedAppellantCaseData.decisionLetter.display.summaryListItem,
+						mappedAppellantCaseData.planningObligation.display.summaryListItem,
+						...(mappedAppellantCaseData.statementCommonGround
+							? [mappedAppellantCaseData.statementCommonGround.display.summaryListItem]
+							: []),
+						mappedAppellantCaseData.ownershipCertificate.display.summaryListItem,
+						...(isExpeditedAppealsActive
+							? [mappedAppellantCaseData.ownershipCertificateExpedited.display.summaryListItem]
+							: []),
+						mappedAppellantCaseData.costsDocument.display.summaryListItem,
+						...(isExpeditedAppealsActive &&
+						appellantCaseData.screeningOpinionIndicatesEiaRequired != null
+							? [
+									mappedAppellantCaseData.screeningOpinionIndicatesEiaRequired.display
+										.summaryListItem
+								]
+							: []),
+						...(isExpeditedAppealsActive
+							? [mappedAppellantCaseData?.environmentalStatement.display.summaryListItem]
+							: [])
+					]
+				}
+			};
 
-		pageComponents[uploadedDocumentsComponentIndex] = uploadedDocumentsSummary;
+			pageComponents[uploadedDocumentsComponentIndex] = uploadedDocumentsSummary;
+		} else {
+			// remove the appeal statement row from the base s20 uploaded docs section
+			const appealStatementRowIndex = pageComponents[
+				uploadedDocumentsComponentIndex
+			].parameters.rows.indexOf(mappedAppellantCaseData.appealStatement.display.summaryListItem);
+			if (appealStatementRowIndex !== -1) {
+				pageComponents[uploadedDocumentsComponentIndex].parameters.rows.splice(
+					appealStatementRowIndex,
+					1
+				);
+			}
+		}
 	}
 
 	return pageComponents;
