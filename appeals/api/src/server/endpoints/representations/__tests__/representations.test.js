@@ -3419,6 +3419,7 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_lpa_statement: true,
+						front_office_url: expect.any(String),
 						hearing_date: null,
 						team_email_address: expect.any(String)
 					},
@@ -3433,6 +3434,7 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_lpa_statement: true,
+						front_office_url: expect.any(String),
 						hearing_date: null,
 						team_email_address: expect.any(String)
 					},
@@ -3497,6 +3499,7 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_lpa_statement: true,
+						front_office_url: expect.any(String),
 						hearing_date: null,
 						team_email_address: expect.any(String)
 					},
@@ -3511,6 +3514,7 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_lpa_statement: true,
+						front_office_url: expect.any(String),
 						hearing_date: null,
 						team_email_address: expect.any(String)
 					},
@@ -3577,11 +3581,17 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_lpa_statement: true,
+						front_office_url: expect.any(String),
 						hearing_date: null,
+						hearing_time: null,
+						hearing_expected_days: '',
+						inspector_name: undefined,
+						hearing_address: '',
+						final_comments_due_date: expect.any(String),
 						team_email_address: expect.any(String)
 					},
 					recipientEmail: mockLdcAppeal.lpa.email,
-					templateName: 'publish-statements-hearing-lpa'
+					templateName: 'publish-statements-enforcement-hearing-yes-statements-yes-comments'
 				});
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
@@ -3591,11 +3601,17 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_lpa_statement: true,
+						front_office_url: expect.any(String),
 						hearing_date: null,
+						hearing_time: null,
+						hearing_expected_days: '',
+						inspector_name: undefined,
+						hearing_address: '',
+						final_comments_due_date: expect.any(String),
 						team_email_address: expect.any(String)
 					},
-					recipientEmail: mockLdcAppeal.agent.email,
-					templateName: 'publish-statements-hearing-appellant'
+					recipientEmail: 'test@136s7.com',
+					templateName: 'publish-statements-enforcement-hearing-yes-statements-yes-comments'
 				});
 			});
 
@@ -3661,6 +3677,7 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_lpa_statement: true,
+						front_office_url: expect.any(String),
 						team_email_address: expect.any(String)
 					},
 					recipientEmail: appealS78.lpa.email,
@@ -3674,6 +3691,7 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_lpa_statement: true,
+						front_office_url: expect.any(String),
 						team_email_address: expect.any(String)
 					},
 					recipientEmail: appealS78.appellant.email,
@@ -3741,6 +3759,7 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_lpa_statement: true,
+						front_office_url: expect.any(String),
 						team_email_address: expect.any(String)
 					},
 					recipientEmail: appealS78.lpa.email,
@@ -3754,6 +3773,7 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_lpa_statement: true,
+						front_office_url: expect.any(String),
 						team_email_address: expect.any(String)
 					},
 					recipientEmail: appealS78.appellant.email,
@@ -3821,11 +3841,17 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_lpa_statement: true,
+						front_office_url: expect.any(String),
 						hearing_date: '31 January 2025',
+						hearing_time: '12:00am',
+						hearing_expected_days: '',
+						inspector_name: undefined,
+						hearing_address: '',
+						final_comments_due_date: expect.any(String),
 						team_email_address: expect.any(String)
 					},
 					recipientEmail: mockLdcAppeal.lpa.email,
-					templateName: 'publish-statements-hearing-lpa'
+					templateName: 'publish-statements-enforcement-hearing-yes-statements-yes-comments'
 				});
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
@@ -3835,11 +3861,235 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_lpa_statement: true,
+						front_office_url: expect.any(String),
 						hearing_date: '31 January 2025',
+						hearing_time: '12:00am',
+						hearing_expected_days: '',
+						inspector_name: undefined,
+						hearing_address: '',
+						final_comments_due_date: expect.any(String),
 						team_email_address: expect.any(String)
 					},
-					recipientEmail: mockLdcAppeal.agent.email,
-					templateName: 'publish-statements-hearing-appellant'
+					recipientEmail: 'test@136s7.com',
+					templateName: 'publish-statements-enforcement-hearing-yes-statements-yes-comments'
+				});
+			});
+
+			test('send notify comments and statements (hearing) enforcement appeal', async () => {
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => mockEnforcementNoticeAppeal.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedEmailPayload = {
+					lpa_reference: '',
+					enforcement_reference: 'ENF-12345',
+					appeal_reference_number: mockEnforcementNoticeAppeal.reference,
+					final_comments_due_date: '29 December 2019',
+					site_address: expectedSiteAddress
+				};
+
+				const appeal = {
+					...mockEnforcementNoticeAppeal,
+					currentStatus: 'statements',
+					procedureType: {
+						id: 1,
+						key: 'hearing',
+						name: 'Hearing'
+					},
+					appealTimetable: {
+						ipCommentsDueDate: new Date('2019-12-29T23:59:00.000Z'),
+						lpaStatementDueDate: new Date('2019-12-29T23:59:00.000Z'),
+						finalCommentsDueDate: new Date('2019-12-29T23:59:00.000Z')
+					},
+					appealRule6Parties: [],
+					appellantCase: {
+						...mockEnforcementNoticeAppeal.appellantCase,
+						enforcementReference: 'ENF-12345'
+					},
+					applicationReference: undefined,
+					hearing: {
+						hearingStartTime: new Date('2025-01-31T10:00:00.000Z'),
+						estimatedDays: 2,
+						address: mockEnforcementNoticeAppeal.address
+					},
+					inspector: {
+						id: 1,
+						name: 'Smith, John'
+					}
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+				databaseConnector.appealStatus.create.mockResolvedValue({});
+				databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+				databaseConnector.representation.findMany.mockResolvedValue([
+					{ representationType: 'lpa_statement' },
+					{ representationType: 'comment' }
+				]);
+				databaseConnector.representation.updateMany.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+				]);
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+				const response = await request
+					.post('/appeals/1/reps/publish')
+					.query({ type: 'statements' })
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						has_ip_comments: true,
+						has_lpa_statement: true,
+						front_office_url: expect.any(String),
+						hearing_date: '31 January 2025',
+						hearing_time: '10:00am',
+						hearing_expected_days: 2,
+						inspector_name: undefined,
+						hearing_address: expectedSiteAddress,
+						team_email_address: expect.any(String)
+					},
+					recipientEmail: mockEnforcementNoticeAppeal.lpa.email,
+					templateName: 'publish-statements-enforcement-hearing-yes-statements-yes-comments'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						has_ip_comments: true,
+						has_lpa_statement: true,
+						front_office_url: expect.any(String),
+						hearing_date: '31 January 2025',
+						hearing_time: '10:00am',
+						hearing_expected_days: 2,
+						inspector_name: undefined,
+						hearing_address: expectedSiteAddress,
+						team_email_address: expect.any(String)
+					},
+					recipientEmail: 'test@136s7.com',
+					templateName: 'publish-statements-enforcement-hearing-yes-statements-yes-comments'
+				});
+			});
+
+			test('sends notify emails to LPA and appellant for LDC appeal when ip comments and statements are received (hearing)', async () => {
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => ldcAppeal.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedEmailPayload = {
+					lpa_reference: ldcAppeal.applicationReference,
+					appeal_reference_number: ldcAppeal.reference,
+					final_comments_due_date: '29 December 2019',
+					site_address: expectedSiteAddress
+				};
+
+				const appeal = {
+					...ldcAppeal,
+					currentStatus: 'statements',
+					procedureType: {
+						id: 1,
+						key: 'hearing',
+						name: 'Hearing'
+					},
+					appealTimetable: {
+						ipCommentsDueDate: new Date('2019-12-29T23:59:00.000Z'),
+						lpaStatementDueDate: new Date('2019-12-29T23:59:00.000Z'),
+						finalCommentsDueDate: new Date('2019-12-29T23:59:00.000Z')
+					},
+					appealRule6Parties: [],
+					hearing: {
+						hearingStartTime: new Date('2025-01-31T10:00:00.000Z'),
+						estimatedDays: 2,
+						address: ldcAppeal.address
+					},
+					inspector: {
+						id: 1,
+						name: 'Smith, John'
+					}
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+				databaseConnector.appealStatus.create.mockResolvedValue({});
+				databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+				databaseConnector.representation.findMany.mockResolvedValue([
+					{ representationType: 'lpa_statement' },
+					{ representationType: 'comment' }
+				]);
+				databaseConnector.representation.updateMany.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+				]);
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+				const response = await request
+					.post('/appeals/1/reps/publish')
+					.query({ type: 'statements' })
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						has_ip_comments: true,
+						has_lpa_statement: true,
+						front_office_url: expect.any(String),
+						hearing_date: '31 January 2025',
+						hearing_time: '10:00am',
+						hearing_expected_days: 2,
+						inspector_name: undefined,
+						hearing_address: expectedSiteAddress,
+						team_email_address: expect.any(String)
+					},
+					recipientEmail: ldcAppeal.lpa.email,
+					templateName: 'publish-statements-enforcement-hearing-yes-statements-yes-comments'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						has_ip_comments: true,
+						has_lpa_statement: true,
+						front_office_url: expect.any(String),
+						hearing_date: '31 January 2025',
+						hearing_time: '10:00am',
+						hearing_expected_days: 2,
+						inspector_name: undefined,
+						hearing_address: expectedSiteAddress,
+						team_email_address: expect.any(String)
+					},
+					recipientEmail: 'test@136s7.com',
+					templateName: 'publish-statements-enforcement-hearing-yes-statements-yes-comments'
 				});
 			});
 
