@@ -81,11 +81,57 @@ these [Notify Templates](../appeals/api/src/server/notify/templates):
 
 ### Appeal incomplete
 
-- **Appeal type:** all
+- **Appeal type:** all apart from enforcement, ELB
 - **Notify Subject Template:** [appeal-incomplete](../appeals/api/src/server/notify/templates/appeal-incomplete.subject.md)
 - **Notify Content Template:** [appeal-incomplete](../appeals/api/src/server/notify/templates/appeal-incomplete.content.md)
 - **Trigger:** Select "Incomplete" when answering "What is the outcome of your review?", Pick some reasons and then
   confirm.
+
+### Enforcement notice incomplete - enforcement - appellant
+
+- **Appeal type:** enforcement, ELB?
+- **Notify Subject Template:** [enforcement-notice-incomplete-appellant](../appeals/api/src/server/notify/templates/enforcement-notice-incomplete-appellant.subject.md)
+- **Notify Content Template:** [enforcement-notice-incomplete-appellant](../appeals/api/src/server/notify/templates/enforcement-notice-incomplete-appellant.content.md)
+- **Trigger:** Select "Incomplete" when answering "What is the outcome of your review?" for an enforcement appeal, then
+  choosing 'yes' to 'Is the enforcement notice invalid?', pick some reasons and then confirm.
+
+### Enforcement notice incomplete - enforcement - lpa
+
+- **Appeal type:** enforcement, ELB?
+- **Notify Subject Template:** [enforcement-notice-incomplete-lpa](../appeals/api/src/server/notify/templates/enforcement-notice-incomplete-lpa.subject.md)
+- **Notify Content Template:** [enforcement-notice-incomplete-lpa](../appeals/api/src/server/notify/templates/enforcement-notice-incomplete-lpa.content.md)
+- **Trigger:** Select "Incomplete" when answering "What is the outcome of your review?" for an enforcement appeal, then
+  choosing 'yes' to 'Is the enforcement notice invalid?', pick some reasons and then confirm.
+
+### Appeal incomplete - enforcement - appellant
+
+- **Appeal type:** enforcement, ELB
+- **Notify Subject Template:** [enforcement-appeal-incomplete-appellant](../appeals/api/src/server/notify/templates/enforcement-appeal-incomplete-appellant.subject.md)
+- **Notify Content Template:** [enforcement-appeal-incomplete-appellant](../appeals/api/src/server/notify/templates/enforcement-appeal-incomplete-appellant.content.md)
+- **Trigger:** Select "Incomplete" when answering "What is the outcome of your review?" for an enforcement appeal, then
+  choosing 'no' to 'Is the enforcement notice invalid?', pick some reasons and then confirm.
+
+### Appeal incomplete - enforcement - lpa
+
+- **Appeal type:** enforcement, ELB
+- **Notify Subject Template:** [enforcement-appeal-incomplete-lpa](../appeals/api/src/server/notify/templates/enforcement-appeal-incomplete-lpa.subject.md)
+- **Notify Content Template:** [enforcement-appeal-incomplete-lpa](../appeals/api/src/server/notify/templates/enforcement-appeal-incomplete-lpa.content.md)
+- **Trigger:** Select "Incomplete" when answering "What is the outcome of your review?" for an enforcement appeal, then
+  choosing 'no' to 'Is the enforcement notice invalid?', pick some reasons and then confirm.
+
+### Enforcement cancel appeal no fee - appellant
+
+- **Appeal type:**
+- **Notify Subject Template:** [enforcement-cancel-appeal-no-fee-appellant](../appeals/api/src/server/notify/templates/enforcement-cancel-appeal-no-fee-appellant.subject.md)
+- **Notify Content Template:** [enforcement-cancel-appeal-no-fee-appellant](../appeals/api/src/server/notify/templates/enforcement-cancel-appeal-no-fee-appellant.content.md)
+- **Trigger:**
+
+### Enforcement cancel appeal no fee - lpa
+
+- **Appeal type:**
+- **Notify Subject Template:** [enforcement-cancel-appeal-no-fee-lpa](../appeals/api/src/server/notify/templates/enforcement-cancel-appeal-no-fee-lpa.subject.md)
+- **Notify Content Template:** [enforcement-cancel-appeal-no-fee-lpa](../appeals/api/src/server/notify/templates/enforcement-cancel-appeal-no-fee-lpa.content.md)
+- **Trigger:**
 
 ### Appeal invalid
 
@@ -102,6 +148,34 @@ these [Notify Templates](../appeals/api/src/server/notify/templates):
 - **Notify Content Template:** [appeal-invalid-lpa](../appeals/api/src/server/notify/templates/appeal-invalid-lpa.content.md)
 - **Trigger:** Select "Invalid" when answering "What is the outcome of your review?", Pick some reasons and then
   confirm.
+
+### Appeal invalid - enforcement - appellant
+
+- **Appeal type:**
+- **Notify Subject Template:** [enforcement-appeal-invalid-appellant](../appeals/api/src/server/notify/templates/enforcement-appeal-invalid-appellant.subject.md)
+- **Notify Content Template:** [enforcement-appeal-invalid-appellant](../appeals/api/src/server/notify/templates/enforcement-appeal-invalid-appellant.content.md)
+- **Trigger:**
+
+### Appeal invalid - enforcement - lpa
+
+- **Appeal type:**
+- **Notify Subject Template:** [enforcement-appeal-invalid-lpa](../appeals/api/src/server/notify/templates/enforcement-appeal-invalid-lpa.subject.md)
+- **Notify Content Template:** [enforcement-appeal-invalid-lpa](../appeals/api/src/server/notify/templates/enforcement-appeal-invalid-lpa.content.md)
+- **Trigger:**
+
+### Enforcement notice invalid - enforcement - appellant
+
+- **Appeal type:**
+- **Notify Subject Template:** [enforcement-notice-invalid-appellant](../appeals/api/src/server/notify/templates/enforcement-notice-invalid-appellant.subject.md)
+- **Notify Content Template:** [enforcement-notice-invalid-appellant](../appeals/api/src/server/notify/templates/enforcement-notice-invalid-appellant.content.md)
+- **Trigger:**
+
+### Enforcement notice invalid - enforcement - lpa
+
+- **Appeal type:**
+- **Notify Subject Template:** [enforcement-notice-invalid-lpa](../appeals/api/src/server/notify/templates/enforcement-notice-invalid-lpa.subject.md)
+- **Notify Content Template:** [enforcement-notice-invalid-lpa](../appeals/api/src/server/notify/templates/enforcement-notice-invalid-lpa.content.md)
+- **Trigger:**
 
 ### Appeal confirmed - appellant
 
