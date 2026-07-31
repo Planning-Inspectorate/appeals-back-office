@@ -410,8 +410,10 @@ export const updateRepresentationAttachments = async (req, res) => {
  * @returns {Promise<Response>}
  */
 export async function publish(req, res) {
-	const { appeal } = req;
-
+	const {
+		appeal,
+		body: { inspectorName }
+	} = req;
 	/** @type {Record<string, import('./representations.service.js').PublishFunction>} */
 	const handlers = {
 		[APPEAL_CASE_STATUS.STATEMENTS]: representationService.publishStatements,
@@ -436,8 +438,7 @@ export async function publish(req, res) {
 			409
 		);
 	}
-
-	const updatedReps = await publish(appeal, azureAdUserId, req.notifyClient);
+	const updatedReps = await publish(appeal, azureAdUserId, req.notifyClient, inspectorName);
 
 	if (updatedReps.length > 0) {
 		/** @type {Record<string, string>} */
