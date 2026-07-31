@@ -435,6 +435,26 @@ const newS78Appeals = [
 		agent: false
 	}),
 	appealFactory({
+		typeShorthand: APPEAL_CASE_TYPE.C,
+		procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+		status: { status: APPEAL_CASE_STATUS.STATEMENTS, createdAt: getPastDate({ months: 6 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ months: 2 }),
+		validAt: getPastDate({ months: 6 }),
+		assignCaseOfficer: true,
+		agent: false
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_CASE_TYPE.X,
+		procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+		status: { status: APPEAL_CASE_STATUS.STATEMENTS, createdAt: getPastDate({ months: 6 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ months: 2 }),
+		validAt: getPastDate({ months: 6 }),
+		assignCaseOfficer: true,
+		agent: false
+	}),
+	appealFactory({
 		typeShorthand: APPEAL_CASE_TYPE.W,
 		status: { status: APPEAL_CASE_STATUS.STATEMENTS, createdAt: getPastDate({ months: 6 }) },
 		lpaQuestionnaire: true,

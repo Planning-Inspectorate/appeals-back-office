@@ -147,3 +147,11 @@ export const isLdcOrEnforcementCaseType = (caseType) =>
  * @returns {boolean}
  */
 export const isLdcCaseType = (caseType) => caseType === APPEAL_CASE_TYPE.X;
+
+/**
+ *
+ * @param {string|undefined} appealType
+ * @returns {boolean}
+ */
+export const isLdcOrEnforcementAppealType = (appealType) =>
+	isLdcOrEnforcementCaseType(appealTypeToAppealCaseTypeMapper(appealType));

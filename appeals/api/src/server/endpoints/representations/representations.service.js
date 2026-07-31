@@ -615,42 +615,59 @@ const sendPublishedStatementNotifiesForHearing = async (
 		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
 	);
 
+	const isEnforcementOrLdc = isLdcOrEnforcementCaseType(appeal.appealType?.key);
+	const isEnforcementYesStatementsYesComments =
+		isEnforcementOrLdc && hasLpaStatement && hasIpComments;
+	const isEnforcementNoStatementsNoComments =
+		isEnforcementOrLdc && !hasLpaStatement && !hasIpComments;
+	const includeFrontOfficeUrl = !isEnforcementNoStatementsNoComments;
+
 	const lpaPath = `${config.frontOffice.url}/manage-appeals/${appeal.reference}`;
 	const appellantPath = `${config.frontOffice.url}/appeals/${appeal.reference}`;
 
 	const hearingDate = appeal.hearing?.hearingStartTime
 		? dateISOStringToDisplayDate(appeal.hearing.hearingStartTime)
 		: null;
-
 	const hearingTime = appeal.hearing?.hearingStartTime
-		? formatTime12h(appeal.hearing.hearingStartTime)
+		? formatTime12h(
+				typeof appeal.hearing.hearingStartTime === 'string'
+					? new Date(appeal.hearing.hearingStartTime)
+					: appeal.hearing.hearingStartTime
+			)
 		: null;
-
+	const hearingExpectedDays = appeal.hearing?.estimatedDays ?? '';
 	const hearingAddress = appeal.hearing?.address
 		? formatAddressSingleLine(appeal.hearing.address)
 		: '';
 
-	const hearingExpectedDays = appeal.hearing?.estimatedDays?.toString() || '';
+	const finalCommentsDueDate = formatDate(
+		new Date(appeal.appealTimetable?.finalCommentsDueDate || ''),
+		false
+	);
 
 	let lpaTemplate = '';
 	let appellantTemplate = '';
-	const appealTypeKey = /** @type {any} */ (appeal?.appealType?.key ?? '');
 	let additionalEmailValues = {};
 
-	if (isLdcOrEnforcementCaseType(appealTypeKey)) {
-		if (!hasLpaStatement && !hasIpComments) {
-			lpaTemplate = 'publish-statements-enforcement-hearing-no-statements-no-comments';
-			appellantTemplate = 'publish-statements-enforcement-hearing-no-statements-no-comments';
-			additionalEmailValues = {
-				hearing_address: hearingAddress,
-				inspector_name: inspectorName,
-				hearing_expected_days: hearingExpectedDays,
-				hearing_time: hearingTime
-			};
-		} else {
-			lpaTemplate = 'publish-statements-hearing-lpa';
-			appellantTemplate = 'publish-statements-hearing-appellant';
-		}
+	if (isEnforcementYesStatementsYesComments) {
+		lpaTemplate = 'publish-statements-enforcement-hearing-yes-statements-yes-comments';
+		appellantTemplate = 'publish-statements-enforcement-hearing-yes-statements-yes-comments';
+		additionalEmailValues = {
+			hearing_time: hearingTime,
+			hearing_expected_days: hearingExpectedDays,
+			inspector_name: inspectorName,
+			hearing_address: hearingAddress,
+			final_comments_due_date: finalCommentsDueDate
+		};
+	} else if (isEnforcementNoStatementsNoComments) {
+		lpaTemplate = 'publish-statements-enforcement-hearing-no-statements-no-comments';
+		appellantTemplate = 'publish-statements-enforcement-hearing-no-statements-no-comments';
+		additionalEmailValues = {
+			hearing_address: hearingAddress,
+			inspector_name: inspectorName,
+			hearing_expected_days: hearingExpectedDays,
+			hearing_time: hearingTime
+		};
 	} else {
 		lpaTemplate = 'publish-statements-hearing-lpa';
 		appellantTemplate = 'publish-statements-hearing-appellant';
@@ -689,6 +706,7 @@ const sendPublishedStatementNotifiesForHearing = async (
 				site_address: siteAddress,
 				...(enforcementReference && { enforcement_reference: enforcementReference }),
 				lpa_reference: lpaReference || '',
+				...(includeFrontOfficeUrl && { front_office_url: contact.url }),
 				hearing_date: hearingDate,
 				team_email_address,
 				...additionalEmailValues
