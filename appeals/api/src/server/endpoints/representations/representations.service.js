@@ -1176,7 +1176,7 @@ const markUnredactedAsNotRequired = async (appealId, appealReference, appealType
 		appealId,
 		appealReference,
 		appealType,
-		noRedactionRequiredStatus.id
+		noRedactionRequiredStatus
 	);
 	await broadcasters.broadcastDocuments(updatedDocuments, EventType.Update);
 };
