@@ -158,10 +158,15 @@ export const updateRejectionReasons = (apiClient, appealId, commentId, rejection
 /**
  * @param {import('got').Got} apiClient
  * @param {number} appealId
+ * @param {String} inspectorName
  * @returns {Promise<any>}
  * */
-export const publishRepresentations = (apiClient, appealId) =>
-	apiClient.post(`appeals/${appealId}/reps/publish`).json();
+export const publishRepresentations = (apiClient, appealId, inspectorName) =>
+	apiClient
+		.post(`appeals/${appealId}/reps/publish`, {
+			json: { inspectorName }
+		})
+		.json();
 
 /**
  * @param {import('got').Got} apiClient

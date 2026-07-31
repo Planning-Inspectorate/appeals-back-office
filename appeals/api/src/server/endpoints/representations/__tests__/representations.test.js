@@ -2293,10 +2293,8 @@ describe('/appeals/:id/reps', () => {
 				)
 			});
 			mockLdcAppeal = structuredClone({
-				...appealAdvert,
-				representations: appealAdvert.representations.filter(
-					(rep) => rep.status !== 'awaiting_review'
-				)
+				...ldcAppeal,
+				representations: ldcAppeal.representations.filter((rep) => rep.status !== 'awaiting_review')
 			});
 			mockS78Appeal = structuredClone({
 				...appealS78,
@@ -2351,6 +2349,20 @@ describe('/appeals/:id/reps', () => {
 				mockLdcAppeal.currentStatus = 'statements';
 				mockS78Appeal.currentStatus = 'statements';
 				mockS20Appeal.currentStatus = 'statements';
+				mockEnforcementNoticeAppeal.currentStatus = 'statements';
+				mockEnforcementListedAppeal.currentStatus = 'statements';
+				mockLdcAppeal.currentStatus = 'statements';
+
+				const appealTimetable = {
+					id: 1,
+					appealId: 1,
+					finalCommentsDueDate: new Date('2024-12-04'),
+					ipCommentsDueDate: new Date('2024-01-01'),
+					lpaStatementDueDate: new Date('2024-01-01'),
+					statementReviewDate: new Date('2024-12-11')
+				};
+
+				mockLdcAppeal.appealTimetable = appealTimetable;
 			});
 
 			test('409 if case is not in STATEMENTS state', async () => {
@@ -2727,7 +2739,7 @@ describe('/appeals/:id/reps', () => {
 						has_appellant_statement: false,
 						team_email_address: expect.any(String)
 					},
-					recipientEmail: appealS78.lpa.email,
+					recipientEmail: mockLdcAppeal.lpa.email,
 					templateName: 'publish-statements-written-reps-lpa'
 				});
 
@@ -2741,7 +2753,7 @@ describe('/appeals/:id/reps', () => {
 						has_appellant_statement: false,
 						team_email_address: expect.any(String)
 					},
-					recipientEmail: appealS78.appellant.email,
+					recipientEmail: mockLdcAppeal.agent.email,
 					templateName: 'publish-statements-written-reps-appellant'
 				});
 			});
@@ -3532,7 +3544,8 @@ describe('/appeals/:id/reps', () => {
 						id: 1,
 						key: 'hearing',
 						name: 'Hearing'
-					}
+					},
+					hearing: {}
 				};
 
 				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
@@ -3567,7 +3580,7 @@ describe('/appeals/:id/reps', () => {
 						hearing_date: null,
 						team_email_address: expect.any(String)
 					},
-					recipientEmail: appealS78.lpa.email,
+					recipientEmail: mockLdcAppeal.lpa.email,
 					templateName: 'publish-statements-hearing-lpa'
 				});
 
@@ -3581,7 +3594,7 @@ describe('/appeals/:id/reps', () => {
 						hearing_date: null,
 						team_email_address: expect.any(String)
 					},
-					recipientEmail: appealS78.appellant.email,
+					recipientEmail: mockLdcAppeal.agent.email,
 					templateName: 'publish-statements-hearing-appellant'
 				});
 			});
@@ -3811,7 +3824,7 @@ describe('/appeals/:id/reps', () => {
 						hearing_date: '31 January 2025',
 						team_email_address: expect.any(String)
 					},
-					recipientEmail: appealS78.lpa.email,
+					recipientEmail: mockLdcAppeal.lpa.email,
 					templateName: 'publish-statements-hearing-lpa'
 				});
 
@@ -3825,7 +3838,7 @@ describe('/appeals/:id/reps', () => {
 						hearing_date: '31 January 2025',
 						team_email_address: expect.any(String)
 					},
-					recipientEmail: appealS78.appellant.email,
+					recipientEmail: mockLdcAppeal.agent.email,
 					templateName: 'publish-statements-hearing-appellant'
 				});
 			});
@@ -3911,6 +3924,145 @@ describe('/appeals/:id/reps', () => {
 					templateName: 'publish-statements-inquiry-appellant'
 				});
 			});
+			test.each([
+				[
+					'enforcement_notice',
+					structuredClone({
+						...enforcementNoticeAppeal,
+						representations: enforcementNoticeAppeal.representations.filter(
+							(rep) => rep.status !== 'awaiting_review'
+						)
+					})
+				],
+				[
+					'enforcement_listed_building',
+					structuredClone({
+						...appealEnforcementListed,
+						representations: appealEnforcementListed.representations.filter(
+							(rep) => rep.status !== 'awaiting_review'
+						)
+					})
+				],
+				[
+					'ldc',
+					structuredClone({
+						...ldcAppeal,
+						representations: ldcAppeal.representations.filter(
+							(rep) => rep.status !== 'awaiting_review'
+						)
+					})
+				]
+			])(
+				'sends notify emails to LPA and appellant when ip comments and statements are not received and appeal type is %s',
+				async (appealType, appeal) => {
+					appeal.currentStatus = 'statements';
+					const expectedSiteAddress = [
+						'addressLine1',
+						'addressLine2',
+						'addressTown',
+						'addressCounty',
+						'postcode',
+						'addressCountry'
+					]
+						.map((key) => appeal.address[key])
+						.filter((value) => value)
+						.join(', ');
+
+					const expectedEmailPayload = {
+						lpa_reference: appeal.applicationReference,
+						appeal_reference_number: appeal.reference,
+						site_address: expectedSiteAddress,
+						...(appealType !== 'ldc' ? { enforcement_reference: 'Reference' } : {})
+					};
+
+					const pastDate = new Date();
+					pastDate.setDate(pastDate.getDate() - 1);
+
+					databaseConnector.appeal.findUnique.mockResolvedValue({
+						...appeal,
+						procedureType: {
+							key: 'hearing'
+						},
+						appealTimetable: {
+							...appeal.appealTimetable,
+							ipCommentsDueDate: pastDate,
+							lpaStatementDueDate: pastDate,
+							proofOfEvidenceAndWitnessesDueDate: '2025-12-13'
+						},
+						hearing: {
+							id: 1,
+							appealId: 1,
+							hearingStartTime: new Date('2022-03-31T01:00:00.000Z'),
+							hearingEndTime: new Date('2022-03-31T03:00:00.000Z'),
+							addressId: 1,
+							address: {
+								id: 1,
+								addressLine1: '96 The Avenue',
+								addressLine2: 'Leftfield',
+								addressCountry: 'United Kingdom',
+								addressCounty: 'Kent',
+								postcode: 'MD21 5XY',
+								addressTown: 'Maidstone'
+							}
+						}
+					});
+					databaseConnector.appealStatus.create.mockResolvedValue({});
+					databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+					databaseConnector.representation.findMany.mockResolvedValue([]);
+					databaseConnector.representation.updateMany.mockResolvedValue([]);
+					databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+						{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+					]);
+					databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+					const response = await request
+						.post('/appeals/1/reps/publish')
+						.query({ type: 'statements' })
+						.set('azureAdUserId', '732652365');
+
+					expect(response.status).toEqual(200);
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						azureAdUserId: expect.anything(),
+						notifyClient: expect.anything(),
+						personalisation: {
+							...expectedEmailPayload,
+							has_ip_comments: false,
+							has_lpa_statement: false,
+							team_email_address: expect.any(String),
+							hearing_address:
+								'96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+							hearing_date: '31 March 2022',
+							hearing_expected_days: '',
+							inspector_name: undefined,
+							hearing_time: '2:00am'
+						},
+						recipientEmail: appeal.lpa.email,
+						templateName: 'publish-statements-enforcement-hearing-no-statements-no-comments'
+					});
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						azureAdUserId: expect.anything(),
+						notifyClient: expect.anything(),
+						personalisation: {
+							...expectedEmailPayload,
+							has_ip_comments: false,
+							has_lpa_statement: false,
+							team_email_address: expect.any(String),
+							hearing_address:
+								'96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+							hearing_date: '31 March 2022',
+							hearing_expected_days: '',
+							inspector_name: undefined,
+							hearing_time: '2:00am'
+						},
+						recipientEmail: appeal.agent.email,
+						templateName: 'publish-statements-enforcement-hearing-no-statements-no-comments'
+					});
+				}
+			);
 
 			test('broadcasts no redaction required docs', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
@@ -4477,6 +4629,16 @@ describe('/appeals/:id/reps', () => {
 					site_address: expectedSiteAddress,
 					statement_url: '',
 					user_type: ''
+				};
+				mockLdcAppeal.currentStatus = APPEAL_CASE_STATUS.FINAL_COMMENTS;
+				mockLdcAppeal.appealStatus = [
+					{ status: APPEAL_CASE_STATUS.STATEMENTS, valid: false },
+					{ status: APPEAL_CASE_STATUS.EVIDENCE, valid: false },
+					{ status: APPEAL_CASE_STATUS.FINAL_COMMENTS, valid: true }
+				];
+				mockLdcAppeal.appealTimetable = {
+					...mockLdcAppeal.appealTimetable,
+					finalCommentsDueDate: new Date('2023-01-01T00:00:00.000Z')
 				};
 				databaseConnector.appeal.findUnique.mockResolvedValue(mockLdcAppeal);
 				databaseConnector.appealStatus.create.mockResolvedValue({});
