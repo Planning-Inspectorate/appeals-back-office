@@ -202,6 +202,22 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 					`/appeals-service/appeal-details/${appealDetails.appealId}/share`
 				)}" class="govuk-heading-s govuk-notification-banner__link">Share IP comments and statements</a>`
 			});
+		case 'shareIpComments':
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<a href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/share`
+				)}" class="govuk-heading-s govuk-notification-banner__link">Share comments</a>`
+			});
+		case 'shareStatements':
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<a href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/share`
+				)}" class="govuk-heading-s govuk-notification-banner__link">Share statements</a>`
+			});
 		case 'appealValidAndReadyToStart':
 			return createNotificationBanner({
 				bannerDefinitionKey,

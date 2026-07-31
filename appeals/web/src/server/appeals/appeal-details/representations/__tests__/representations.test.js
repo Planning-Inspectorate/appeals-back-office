@@ -797,7 +797,8 @@ describe('representations', () => {
 				);
 			});
 
-			it('should show "Statements and IP comments shared" banner when at STATEMENTS status with published representations', async () => {
+			it('should show "Statements and IP comments shared" banner when at STATEMENTS status with published statements and IP comments', async () => {
+				const numIpComments = 1;
 				const appealAtStatements = {
 					...appealData,
 					appealId,
@@ -811,6 +812,74 @@ describe('representations', () => {
 						},
 						appellantStatement: {
 							representationStatus: 'valid'
+						},
+						ipComments: {
+							representationStatus: 'valid',
+							counts: {
+								valid: numIpComments
+							}
+						}
+					}
+				};
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=all`)
+					.reply(200, appealAtStatements)
+					.persist();
+				nock('http://test/')
+					.get(`/appeals/${appealId}/page-details`)
+					.reply(200, appealAtStatements)
+					.persist();
+				nock('http://test/')
+					.post(`/appeals/${appealId}/reps/publish`)
+					.reply(200, [
+						{
+							appealId: appealId,
+							representationType: 'appellant_statement'
+						},
+						{
+							appealId: appealId,
+							representationType: 'lpa_statement'
+						},
+						{
+							appealId: appealId,
+							representationType: 'comment'
+						}
+					]);
+
+				const sharePostResponse = await request.post(`${baseUrl}/${appealId}/share`).send({});
+
+				expect(sharePostResponse.statusCode).toBe(302);
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+				const notificationBannerHtml = parseHtml(response.text, {
+					rootElement: '.govuk-notification-banner--success',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(notificationBannerHtml).toContain('Success</h3>');
+				expect(notificationBannerHtml).toContain('Statements and IP comments shared');
+			});
+			it('should show "Statements shared" banner when at STATEMENTS status with published statements and no IP comments', async () => {
+				const numIpComments = 0;
+				const appealAtStatements = {
+					...appealData,
+					appealId,
+					appealType: APPEAL_TYPE.S78,
+					procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+					appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+					hearing: {},
+					documentationSummary: {
+						lpaStatement: {
+							representationStatus: 'valid'
+						},
+						appellantStatement: {
+							representationStatus: 'valid'
+						},
+						ipComments: {
+							representationStatus: 'valid',
+							counts: {
+								valid: numIpComments
+							}
 						}
 					}
 				};
@@ -846,7 +915,62 @@ describe('representations', () => {
 				}).innerHTML;
 
 				expect(notificationBannerHtml).toContain('Success</h3>');
-				expect(notificationBannerHtml).toContain('Statements and IP comments shared');
+				expect(notificationBannerHtml).toContain('Statements shared');
+			});
+			it('should show "Comments shared" banner when at STATEMENTS status with published IP comments and no statements', async () => {
+				const numIpComments = 1;
+				const appealAtStatements = {
+					...appealData,
+					appealId,
+					appealType: APPEAL_TYPE.S78,
+					procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+					appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+					hearing: {},
+					documentationSummary: {
+						appellantStatement: {
+							representationStatus: 'valid'
+						},
+						ipComments: {
+							representationStatus: 'valid',
+							counts: {
+								valid: numIpComments
+							}
+						}
+					}
+				};
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=all`)
+					.reply(200, appealAtStatements)
+					.persist();
+				nock('http://test/')
+					.get(`/appeals/${appealId}/page-details`)
+					.reply(200, appealAtStatements)
+					.persist();
+				nock('http://test/')
+					.post(`/appeals/${appealId}/reps/publish`)
+					.reply(200, [
+						{
+							appealId: appealId,
+							representationType: 'appellant_statement'
+						},
+						{
+							appealId: appealId,
+							representationType: 'comment'
+						}
+					]);
+
+				const sharePostResponse = await request.post(`${baseUrl}/${appealId}/share`).send({});
+
+				expect(sharePostResponse.statusCode).toBe(302);
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+				const notificationBannerHtml = parseHtml(response.text, {
+					rootElement: '.govuk-notification-banner--success',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(notificationBannerHtml).toContain('Success</h3>');
+				expect(notificationBannerHtml).toContain('Comments shared');
 			});
 		});
 
