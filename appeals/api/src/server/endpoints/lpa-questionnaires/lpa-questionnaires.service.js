@@ -160,7 +160,7 @@ const updateLPAQuestionnaireValidationOutcome = async (
 			appeal.id,
 			appeal.reference,
 			appeal.appealType.key,
-			noRedactionRequiredStatus.id
+			noRedactionRequiredStatus
 		);
 		await broadcasters.broadcastDocuments(updatedDocuments, EventType.Update);
 

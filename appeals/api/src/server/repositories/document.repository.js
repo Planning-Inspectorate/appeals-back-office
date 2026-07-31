@@ -253,11 +253,12 @@ export const setRedactionStatusOnValidation = async (
 	appealType,
 	redactionStatus
 ) => {
+	const redactionStatusId = redactionStatus ? redactionStatus.id : null;
 	// can be 1000+ updates followed by a subsequent broadcast that looks them up
 	// can be done in 1 action with $queryRaw
 	/** @type {UpdateRedactionStatusResult[]} */
 	const result = await databaseConnector.$queryRaw`UPDATE dv
-		SET redactionStatusId = ${redactionStatus ? redactionStatus.id : null}
+		SET redactionStatusId = ${redactionStatusId}
 		OUTPUT 
 			 d.guid ,d.name
 			,inserted.version ,inserted.documentURI ,inserted.originalFilename 
