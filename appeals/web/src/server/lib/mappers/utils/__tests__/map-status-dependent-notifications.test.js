@@ -162,6 +162,18 @@ describe('mapStatusDependentNotifications', () => {
 			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
+			bannerKey: 'shareIpComments',
+			requiredAction: 'shareIpComments',
+			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}" class="govuk-heading-s govuk-notification-banner__link">Share comments</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
+			bannerKey: 'shareStatements',
+			requiredAction: 'shareStatements',
+			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}" class="govuk-heading-s govuk-notification-banner__link">Share statements</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
 			bannerKey: 'appealValidAndReadyToStart',
 			requiredAction: 'startAppeal',
 			expectedContainedHtml: '<p class="govuk-notification-banner__heading">Appeal valid</p>',

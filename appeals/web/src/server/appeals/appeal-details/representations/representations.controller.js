@@ -12,6 +12,8 @@ import {
 } from './representations.mapper.js';
 import { publishRepresentations } from './representations.service.js';
 
+/** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
+
 /** @type {import('@pins/express').RequestHandler<{}>} */
 export function renderShareRepresentations(request, response) {
 	const { errors, currentAppeal } = request;
@@ -54,11 +56,27 @@ export function renderShareRepresentations(request, response) {
 /** @type {import('@pins/express').RequestHandler<{}>} */
 export async function postShareRepresentations(request, response) {
 	const { apiClient, currentAppeal, session } = request;
-
 	const publishedReps = await publishRepresentations(apiClient, currentAppeal.appealId);
+	const hasComments = publishedReps.some(
+		/**
+		 * @param {Representation} rep
+		 * @returns {boolean}
+		 */
+		(rep) => rep?.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
+	);
 
+	const hasStatements = publishedReps.some(
+		/**
+		 * @param {Representation} rep
+		 * @returns {boolean}
+		 */
+		(rep) =>
+			rep?.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT ||
+			rep?.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT ||
+			rep?.representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT
+	);
 	const hearingIsSetUp = Boolean(
-		currentAppeal.hearing?.hearingStartTime && currentAppeal.hearing.address
+		currentAppeal.hearing?.hearingStartTime && currentAppeal.hearing?.address
 	);
 	const normalisedProcedureType = normaliseProcedureType(currentAppeal.procedureType);
 	const eventualState = getNextStateOnStatementsComplete(
@@ -95,9 +113,14 @@ export async function postShareRepresentations(request, response) {
 								`Unexpected eventual state ${eventualState} for appeal type ${currentAppeal.appealType} and procedure type ${normalisedProcedureType}`
 							);
 					}
-				} else {
-					//publishedReps.length > 0
+				} else if (hasComments && hasStatements) {
 					return 'commentsAndLpaStatementShared';
+				} else if (hasStatements) {
+					return 'statementsShared';
+				} else if (hasComments) {
+					return 'commentsShared';
+				} else {
+					return 'caseProgressed';
 				}
 			case APPEAL_CASE_STATUS.FINAL_COMMENTS:
 				return publishedReps.filter(

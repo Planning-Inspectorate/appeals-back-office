@@ -480,6 +480,18 @@ function mapRequiredActionToPersonalListActionHtml(
 				`/appeals-service/appeal-details/${appealId}/share`
 			)}">Share IP comments and statements<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
+		case 'shareIpComments': {
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/share`
+			)}">Share comments<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+		}
+		case 'shareStatements': {
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/share`
+			)}">Share statements<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+		}
 		case 'startAppeal': {
 			return isCaseOfficer
 				? `<a class="govuk-link" href="${addBackLinkQueryToUrl(

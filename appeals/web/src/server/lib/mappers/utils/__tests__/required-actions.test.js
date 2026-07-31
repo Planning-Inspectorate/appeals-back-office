@@ -414,7 +414,7 @@ describe('required actions', () => {
 					}
 				};
 
-				it('should return "shareIpCommentsAndLpaStatement" if ip comments due date and statements due date have both passed, and there are no ip comments or lpa statement awaiting review, and there are ip comments to share but no lpa statement to share', () => {
+				it('should return "shareIpComments" if ip comments due date and statements due date have both passed, and there are no ip comments or lpa statement awaiting review, and there are ip comments to share but no lpa statement to share', () => {
 					expect(
 						getRequiredActionsForAppeal(
 							{
@@ -438,10 +438,10 @@ describe('required actions', () => {
 							},
 							'detail'
 						)
-					).toEqual(['shareIpCommentsAndLpaStatement']);
+					).toEqual(['shareIpComments']);
 				});
 
-				it('should return "shareIpCommentsAndLpaStatement" if ip comments due date and statements due date have both passed, and there are no ip comments or lpa statement awaiting review, and there are no ip comments to share but there is an lpa statement to share', () => {
+				it('should return "shareStatements" if ip comments due date and statements due date have both passed, and there are no ip comments or lpa statement awaiting review, and there are no ip comments to share but there is an lpa statement to share', () => {
 					expect(
 						getRequiredActionsForAppeal(
 							{
@@ -465,7 +465,7 @@ describe('required actions', () => {
 							},
 							'detail'
 						)
-					).toEqual(['shareIpCommentsAndLpaStatement']);
+					).toEqual(['shareStatements']);
 				});
 
 				it('should return "shareIpCommentsAndLpaStatement" if ip comments due date and statements due date have both passed, and there are no ip comments or lpa statement awaiting review, and there are ip comments to share and an lpa statement to share', () => {
@@ -519,7 +519,7 @@ describe('required actions', () => {
 					).toEqual(['progressFromStatements']);
 				});
 
-				it('should return "shareIpCommentsAndLpaStatement" and "updateLpaStatement" if ip comments due date and statements due date have both passed, and there are no ip comments or lpa statement awaiting review, and there is an lpa statement to share, and the lpa statement is marked as incomplete', () => {
+				it('should return "shareIpCommentsAndLpaStatement" and "updateLpaStatement" if ip comments due date and statements due date have both passed, and there are no ip comments or lpa statement awaiting review, and there is an lpa statement to share, and IP comments to share, and the lpa statement is marked as incomplete', () => {
 					expect(
 						getRequiredActionsForAppeal(
 							{
@@ -530,6 +530,14 @@ describe('required actions', () => {
 										status: 'received',
 										receivedAt: pastDate,
 										representationStatus: 'incomplete'
+									},
+									ipComments: {
+										status: 'received',
+										counts: {
+											awaiting_review: 0,
+											valid: 1,
+											published: 0
+										}
 									}
 								}
 							},

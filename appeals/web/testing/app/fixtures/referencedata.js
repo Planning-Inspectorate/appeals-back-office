@@ -4710,8 +4710,52 @@ export const appealDataToGetRequiredActions = {
 				}
 			},
 			lpaStatement: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.VALID
+			}
+		}
+	},
+	shareIpComments: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealTimetable: {
+			ipCommentsDueDate: pastDate,
+			lpaStatementDueDate: pastDate
+		},
+		documentationSummary: {
+			ipComments: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				counts: {
+					awaiting_review: 0,
+					valid: 1,
+					published: 0
+				}
+			},
+			lpaStatement: {
 				status: DOCUMENT_STATUS_NOT_RECEIVED,
 				representationStatus: null
+			}
+		}
+	},
+	shareStatements: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealTimetable: {
+			ipCommentsDueDate: pastDate,
+			lpaStatementDueDate: pastDate
+		},
+		documentationSummary: {
+			ipComments: {
+				status: DOCUMENT_STATUS_NOT_RECEIVED,
+				counts: {
+					awaiting_review: 0,
+					valid: 0,
+					published: 0
+				}
+			},
+			lpaStatement: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.VALID
 			}
 		}
 	},
