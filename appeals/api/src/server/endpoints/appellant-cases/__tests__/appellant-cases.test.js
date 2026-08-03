@@ -44,6 +44,8 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { jest } from '@jest/globals';
 import { APPEAL_TYPE, FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import {
+	AUDIT_TRAIL_APPELLANT_CASE_UPDATED,
+	AUDIT_TRAIL_REASON_FOR_APPEAL_APPELLANT_UPDATED,
 	AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED,
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
 	CASE_RELATIONSHIP_LINKED,
@@ -293,6 +295,106 @@ describe('appellant cases routes', () => {
 
 				expect(response.status).toEqual(200);
 			});
+
+			test('updates appellant case- why are you appealing?', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(enforcementNoticeAppeal);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const patchBody = {
+					reasonForAppealAppellant: 'This is my reason for appealing'
+				};
+				const dataToSave = {
+					reasonForAppealAppellant: patchBody.reasonForAppealAppellant
+				};
+
+				const { appellantCase, id } = enforcementNoticeAppeal;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(patchBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { id: appellantCase.id },
+					data: dataToSave
+				});
+
+				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: enforcementNoticeAppeal.id,
+						details: stringTokenReplacement(AUDIT_TRAIL_REASON_FOR_APPEAL_APPELLANT_UPDATED, [
+							'This is my reason for appealing'
+						]),
+						loggedAt: expect.any(Date),
+						userId: enforcementNoticeAppeal.caseOfficer.id
+					}
+				});
+
+				expect(response.status).toEqual(200);
+			});
+
+			test('updates appellant case- Have there been any significant changes that would affect the application?', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(enforcementNoticeAppeal);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const patchBody = {
+					anySignificantChanges: 'Yes',
+					anySignificantChanges_localPlanSignificantChanges:
+						'There have been significant local plan changes',
+					anySignificantChanges_nationalPolicySignificantChanges: null,
+					anySignificantChanges_otherSignificantChanges: null,
+					anySignificantChanges_courtJudgementSignificantChanges: null
+				};
+				const dataToSave = {
+					anySignificantChanges: patchBody.anySignificantChanges,
+					anySignificantChanges_localPlanSignificantChanges:
+						patchBody.anySignificantChanges_localPlanSignificantChanges,
+					anySignificantChanges_nationalPolicySignificantChanges:
+						patchBody.anySignificantChanges_nationalPolicySignificantChanges,
+					anySignificantChanges_otherSignificantChanges:
+						patchBody.anySignificantChanges_otherSignificantChanges,
+					anySignificantChanges_courtJudgementSignificantChanges:
+						patchBody.anySignificantChanges_courtJudgementSignificantChanges
+				};
+
+				const { appellantCase, id } = enforcementNoticeAppeal;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(patchBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { id: appellantCase.id },
+					data: dataToSave
+				});
+
+				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: enforcementNoticeAppeal.id,
+						details: stringTokenReplacement(AUDIT_TRAIL_APPELLANT_CASE_UPDATED, [
+							'This is my reason for appealing'
+						]),
+						loggedAt: expect.any(Date),
+						userId: enforcementNoticeAppeal.caseOfficer.id
+					}
+				});
+
+				expect(response.status).toEqual(200);
+			});
+
 			test('updates appellant case when the validation outcome is Incomplete without reason text and with an appeal due date', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(
 					householdAppealAppellantCaseIncomplete
@@ -2486,7 +2588,7 @@ describe('appellant cases routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
 					data: {
 						appealId: id,
-						details: 'Case updated',
+						details: 'Appellant case updated',
 						loggedAt: expect.any(Date),
 						userId: 1
 					}
@@ -2642,7 +2744,7 @@ describe('appellant cases routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
 					data: {
 						appealId: id,
-						details: 'Case updated',
+						details: 'Appellant case updated',
 						loggedAt: expect.any(Date),
 						userId: 1
 					}
@@ -2775,7 +2877,7 @@ describe('appellant cases routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
 					data: {
 						appealId: id,
-						details: 'Case updated',
+						details: 'Appellant case updated',
 						loggedAt: expect.any(Date),
 						userId: 1
 					}
@@ -2895,7 +2997,7 @@ describe('appellant cases routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
 					data: {
 						appealId: id,
-						details: 'Case updated',
+						details: 'Appellant case updated',
 						loggedAt: expect.any(Date),
 						userId: 1
 					}
@@ -3020,7 +3122,7 @@ describe('appellant cases routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
 					data: {
 						appealId: id,
-						details: 'Case updated',
+						details: 'Appellant case updated',
 						loggedAt: expect.any(Date),
 						userId: 1
 					}
@@ -3038,7 +3140,7 @@ describe('appellant cases routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
 					data: {
 						appealId: id,
-						details: 'Case updated',
+						details: 'Appellant case updated',
 						loggedAt: expect.any(Date),
 						userId: 1
 					}

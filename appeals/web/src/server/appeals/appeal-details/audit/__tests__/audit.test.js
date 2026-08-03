@@ -200,11 +200,15 @@ describe('audit', () => {
 			expect(unprettifiedHtml).toContain(
 				'<td class="govuk-table__cell">The <a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1">LPA questionnaire</a> was received</td>'
 			);
-			expect(unprettifiedHtml).toContain('<td class="govuk-table__cell">Case updated</td>');
+			expect(unprettifiedHtml).toContain(
+				'<td class="govuk-table__cell">Appellant case updated</td>'
+			);
 			expect(unprettifiedHtml).toContain(
 				'<td class="govuk-table__cell">The case timeline was created</td>'
 			);
-			expect(unprettifiedHtml).toContain('<td class="govuk-table__cell">Case updated</td>');
+			expect(unprettifiedHtml).toContain(
+				'<td class="govuk-table__cell">Appellant case updated</td>'
+			);
 			expect(unprettifiedHtml).toContain(
 				'<td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--green">LPA questionnaire</strong></td>'
 			);

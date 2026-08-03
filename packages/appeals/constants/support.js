@@ -160,7 +160,7 @@ export const AUDIT_TRAIL_SERVICE_USER_ADDRESS_UPDATED =
 	"The {replacement0}'s address details were updated";
 export const AUDIT_TRAIL_SERVICE_USER_REMOVED = 'The {replacement0} was removed';
 export const AUDIT_TRAIL_ADDRESS_UPDATED = 'Site address updated to\n{replacement0}';
-export const AUDIT_TRAIL_APPELLANT_CASE_UPDATED = 'Case updated';
+export const AUDIT_TRAIL_APPELLANT_CASE_UPDATED = 'Appellant case updated';
 export const AUDIT_TRAIL_DEVELOPMENT_TYPE_UPDATED = 'Development type updated to {replacement0}';
 export const AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED = 'Site area updated to {replacement0} m²';
 export const AUDIT_TRAIL_HIGHWAY_LAND_UPDATED =
@@ -295,6 +295,10 @@ export const AUDIT_TRAIL_HORIZON_REFERENCE_UPDATED = 'Horizon reference updated'
 
 export const AUDIT_TRAIL_ASSIGNED_TEAM_UPDATED = 'Case team {replacement0} assigned';
 export const BANK_HOLIDAY_FEED_DIVISION_ENGLAND = 'england-and-wales';
+
+// Expedited - appellant case
+export const AUDIT_TRAIL_REASON_FOR_APPEAL_APPELLANT_UPDATED =
+	"'Why are you appealing?' updated to {replacement0}";
 
 // Enforcement notice - appellant case
 export const AUDIT_TRAIL_ENFORCEMENT_NOTICE_UPDATED =

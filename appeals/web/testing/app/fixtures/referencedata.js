@@ -5339,7 +5339,7 @@ export const caseAuditLog = [
 	},
 	{
 		azureAdUserId: activeDirectoryUsersData[0].id,
-		details: 'Case updated',
+		details: 'Appellant case updated',
 		loggedDate: '2025-05-27T09:52:23.680Z'
 	},
 	{
