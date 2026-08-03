@@ -4837,9 +4837,14 @@ describe('/appeals/:id/reps', () => {
 					{ representationType: 'lpa_final_comment' }
 				]);
 				databaseConnector.representation.updateMany.mockResolvedValue([]);
+				const redactionStatusId = 123;
 				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
-					{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+					{ id: redactionStatusId, key: 'no_redaction_required' }
 				]);
+				databaseConnector.documentRedactionStatus.findUnique.mockResolvedValue({
+					id: redactionStatusId,
+					key: 'no_redaction_required'
+				});
 				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
 
 				const response = await request
@@ -4848,6 +4853,11 @@ describe('/appeals/:id/reps', () => {
 					.set('azureAdUserId', '732652365');
 
 				expect(response.status).toEqual(200);
+				expect(databaseConnector.$queryRaw).toHaveBeenCalledWith(
+					expect.arrayContaining([expect.stringContaining('SET redactionStatusId =')]),
+					redactionStatusId,
+					mockS78Appeal.id
+				);
 				expect(mockBroadcasters.broadcastDocuments).toHaveBeenCalledWith(
 					[
 						expect.objectContaining({

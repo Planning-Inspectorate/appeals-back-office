@@ -1013,10 +1013,14 @@ describe('appellant cases routes', () => {
 					databaseConnector.documentVersion.findMany.mockResolvedValue([]);
 					// @ts-ignore
 					databaseConnector.documentVersion.update.mockResolvedValue([]);
-					// @ts-ignore
+					const redactionStatusId = 123;
 					databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
-						{ id: 1, key: 'no_redaction_required' }
+						{ id: redactionStatusId, key: 'no_redaction_required' }
 					]);
+					databaseConnector.documentRedactionStatus.findUnique.mockResolvedValue({
+						id: redactionStatusId,
+						key: 'no_redaction_required'
+					});
 					databaseConnector.$queryRaw.mockResolvedValue([
 						{
 							guid: '123',
@@ -1038,10 +1042,6 @@ describe('appellant cases routes', () => {
 							representationType: null
 						}
 					]);
-					databaseConnector.documentRedactionStatus.findUnique.mockResolvedValue({
-						id: 1,
-						key: 'no_redaction_required'
-					});
 					// @ts-ignore
 					databaseConnector.document.findUnique.mockResolvedValue(null);
 
@@ -1115,6 +1115,11 @@ describe('appellant cases routes', () => {
 					}
 
 					expect(response.status).toEqual(200);
+					expect(databaseConnector.$queryRaw).toHaveBeenCalledWith(
+						expect.arrayContaining([expect.stringContaining('SET redactionStatusId =')]),
+						redactionStatusId,
+						appeal.id
+					);
 					expect(mockBroadcasters.broadcastDocuments).toHaveBeenCalledWith(
 						[
 							expect.objectContaining({
