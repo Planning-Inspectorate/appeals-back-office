@@ -234,10 +234,14 @@ describe('lpa questionnaires routes', () => {
 					id: 1,
 					azureAdUserId
 				});
-				// @ts-ignore
+				const redactionStatusId = 123;
 				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
-					{ id: 1, key: 'no_redaction_required' }
+					{ id: redactionStatusId, key: 'no_redaction_required' }
 				]);
+				databaseConnector.documentRedactionStatus.findUnique.mockResolvedValue({
+					id: redactionStatusId,
+					key: 'no_redaction_required'
+				});
 
 				const body = {
 					validationOutcome: 'complete'
@@ -281,6 +285,11 @@ describe('lpa questionnaires routes', () => {
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 				expect(response.status).toEqual(200);
+				expect(databaseConnector.$queryRaw).toHaveBeenCalledWith(
+					expect.arrayContaining([expect.stringContaining('SET redactionStatusId =')]),
+					redactionStatusId,
+					householdAppeal.id
+				);
 				expect(mockBroadcasters.broadcastDocuments).toHaveBeenCalledWith(
 					[
 						expect.objectContaining({
