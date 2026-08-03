@@ -134,7 +134,7 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                         <td class="govuk-table__cell">27 May 2025
                             <br><span>10:52am</span>
                         </td>
-                        <td class="govuk-table__cell">Case updated</td>
+                        <td class="govuk-table__cell">Appellant case updated</td>
                         <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">

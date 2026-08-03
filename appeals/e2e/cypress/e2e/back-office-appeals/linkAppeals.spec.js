@@ -337,12 +337,12 @@ describe.skip('Net residences', () => {
 				happyPathHelper.addNetResidences('Net gain', '4');
 				(caseDetailsPage.validateBannerMessage('Success', 'Number of residential units added'),
 					caseDetailsPage.clickViewCaseHistory());
-				caseHistoryPage.verifyCaseHistoryValue('Case updated');
+				caseHistoryPage.verifyCaseHistoryValue('Appellant case updated');
 
 				//child appeal
 				happyPathHelper.viewCaseDetails(childCaseObj);
 				caseDetailsPage.clickViewCaseHistory();
-				caseHistoryPage.verifyCaseHistoryValue('Case updated', false);
+				caseHistoryPage.verifyCaseHistoryValue('Appellant case updated', false);
 			});
 		});
 	});

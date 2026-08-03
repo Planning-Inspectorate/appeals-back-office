@@ -801,7 +801,8 @@ export function renderAuditTrailDetail(data) {
 				/** @type {string} */ (data.applicationMadeUnderActSection || '').replaceAll('-', ' ')
 			),
 		AUDIT_TRAIL_SCREENING_OPINION_INDICATES_EIA_REQUIRED_UPDATED: () =>
-			data.screeningOpinionIndicatesEiaRequired ? 'Yes' : 'No'
+			data.screeningOpinionIndicatesEiaRequired ? 'Yes' : 'No',
+		AUDIT_TRAIL_REASON_FOR_APPEAL_APPELLANT_UPDATED: () => data.reasonForAppealAppellant
 	};
 
 	if (!auditTrailParameters[constantKey]) {
