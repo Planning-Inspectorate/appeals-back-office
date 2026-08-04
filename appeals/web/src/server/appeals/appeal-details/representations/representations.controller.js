@@ -1,4 +1,5 @@
 import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
+import { getInspectorFormattedEmailName } from '#lib/service-user-formatter.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
@@ -56,7 +57,13 @@ export function renderShareRepresentations(request, response) {
 /** @type {import('@pins/express').RequestHandler<{}>} */
 export async function postShareRepresentations(request, response) {
 	const { apiClient, currentAppeal, session } = request;
-	const publishedReps = await publishRepresentations(apiClient, currentAppeal.appealId);
+
+	const inspectorName = await getInspectorFormattedEmailName(currentAppeal?.inspector, request);
+	const publishedReps = await publishRepresentations(
+		apiClient,
+		currentAppeal.appealId,
+		inspectorName || ''
+	);
 	const hasComments = publishedReps.some(
 		/**
 		 * @param {Representation} rep
@@ -64,7 +71,6 @@ export async function postShareRepresentations(request, response) {
 		 */
 		(rep) => rep?.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
 	);
-
 	const hasStatements = publishedReps.some(
 		/**
 		 * @param {Representation} rep

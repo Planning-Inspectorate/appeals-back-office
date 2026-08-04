@@ -7,6 +7,7 @@ import { APPEAL_TYPE } from '../../constants/common';
 import {
 	isAnyEnforcementAppealType,
 	isLdcOrDiscontinuanceOrEnforcementAppealType,
+	isLdcOrEnforcementCaseType,
 	isS78ExpeditedAppealType
 } from '../appeal-type-checks';
 
@@ -54,6 +55,30 @@ describe('isLdcOrDiscontinuanceOrEnforcementAppealType', () => {
 	});
 });
 
+describe('isLdcOrEnforcementAppealType', () => {
+	it.each([APPEAL_CASE_TYPE.X, APPEAL_CASE_TYPE.C, APPEAL_CASE_TYPE.F])(
+		'returns true for %s',
+		(appealType) => {
+			expect(isLdcOrEnforcementCaseType(appealType)).toBe(true);
+		}
+	);
+	it.each([
+		APPEAL_CASE_TYPE.D,
+		APPEAL_CASE_TYPE.G,
+		APPEAL_CASE_TYPE.H,
+		APPEAL_CASE_TYPE.L,
+		APPEAL_CASE_TYPE.Q,
+		APPEAL_CASE_TYPE.S,
+		APPEAL_CASE_TYPE.V,
+		APPEAL_CASE_TYPE.W,
+		APPEAL_CASE_TYPE.Y,
+		APPEAL_CASE_TYPE.Z,
+		APPEAL_CASE_TYPE.ZA,
+		APPEAL_CASE_TYPE.ZP
+	])('returns false for %s', (appealType) => {
+		expect(isLdcOrEnforcementCaseType(appealType)).toBe(false);
+	});
+});
 describe('isS78ExpeditedAppealType', () => {
 	const S78 = APPEAL_CASE_TYPE.W;
 	const afterCutoff = '2026-04-01T00:00:00.000Z';

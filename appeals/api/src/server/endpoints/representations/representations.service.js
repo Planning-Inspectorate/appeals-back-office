@@ -30,7 +30,10 @@ import {
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
-import { isEnforcementCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
+import {
+	isEnforcementCaseType,
+	isLdcOrEnforcementCaseType
+} from '@pins/appeals/utils/appeal-type-checks.js';
 import formatDate, {
 	dateISOStringToDisplayDate,
 	formatTime12h
@@ -424,14 +427,14 @@ export async function updateRepresentation(repId, payload, existingRep) {
 
 /** @typedef {Awaited<ReturnType<updateRepresentation>>} UpdatedDBRepresentation */
 
-/** @typedef {(appeal: Appeal, azureAdUserId: string, notifyClient: import('#endpoints/appeals.js').NotifyClient) => Promise<Representation[]>} PublishFunction */
+/** @typedef {(appeal: Appeal, azureAdUserId: string, notifyClient: import('#endpoints/appeals.js').NotifyClient, inspectorName: string) => Promise<Representation[]>} PublishFunction */
 
 /**
  * Also publishes any valid IP comments at the same time.
  *
  * @type {PublishFunction}
  * */
-export async function publishStatements(appeal, azureAdUserId, notifyClient) {
+export async function publishStatements(appeal, azureAdUserId, notifyClient, inspectorName) {
 	if (!isCurrentStatus(appeal, APPEAL_CASE_STATUS.STATEMENTS)) {
 		throw new BackOfficeAppError('appeal in incorrect state to publish statements', 409);
 	}
@@ -489,7 +492,8 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient) {
 				appeal,
 				representations,
 				notifyClient,
-				azureAdUserId
+				azureAdUserId,
+				inspectorName
 			);
 		} else {
 			await sendPublishedStatementNotifiesForWrittenReps(
@@ -595,12 +599,14 @@ const sendPublishedStatementNotifiesForInquiry = async (
  * @param {Representation[]} representations
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
+ * @param {string} inspectorName
  */
 const sendPublishedStatementNotifiesForHearing = async (
 	appeal,
 	representations,
 	notifyClient,
-	azureAdUserId
+	azureAdUserId,
+	inspectorName
 ) => {
 	const hasLpaStatement = representations.some(
 		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
@@ -609,15 +615,63 @@ const sendPublishedStatementNotifiesForHearing = async (
 		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
 	);
 
+	const isEnforcementOrLdc = isLdcOrEnforcementCaseType(appeal.appealType?.key);
+	const isEnforcementYesStatementsYesComments =
+		isEnforcementOrLdc && hasLpaStatement && hasIpComments;
+	const isEnforcementNoStatementsNoComments =
+		isEnforcementOrLdc && !hasLpaStatement && !hasIpComments;
+	const includeFrontOfficeUrl = !isEnforcementNoStatementsNoComments;
+
 	const lpaPath = `${config.frontOffice.url}/manage-appeals/${appeal.reference}`;
 	const appellantPath = `${config.frontOffice.url}/appeals/${appeal.reference}`;
 
 	const hearingDate = appeal.hearing?.hearingStartTime
 		? dateISOStringToDisplayDate(appeal.hearing.hearingStartTime)
 		: null;
+	const hearingTime = appeal.hearing?.hearingStartTime
+		? formatTime12h(
+				typeof appeal.hearing.hearingStartTime === 'string'
+					? new Date(appeal.hearing.hearingStartTime)
+					: appeal.hearing.hearingStartTime
+			)
+		: null;
+	const hearingExpectedDays = appeal.hearing?.estimatedDays ?? '';
+	const hearingAddress = appeal.hearing?.address
+		? formatAddressSingleLine(appeal.hearing.address)
+		: '';
 
-	let lpaTemplate = 'publish-statements-hearing-lpa';
-	let appellantTemplate = 'publish-statements-hearing-appellant';
+	const finalCommentsDueDate = formatDate(
+		new Date(appeal.appealTimetable?.finalCommentsDueDate || ''),
+		false
+	);
+
+	let lpaTemplate = '';
+	let appellantTemplate = '';
+	let additionalEmailValues = {};
+
+	if (isEnforcementYesStatementsYesComments) {
+		lpaTemplate = 'publish-statements-enforcement-hearing-yes-statements-yes-comments';
+		appellantTemplate = 'publish-statements-enforcement-hearing-yes-statements-yes-comments';
+		additionalEmailValues = {
+			hearing_time: hearingTime,
+			hearing_expected_days: hearingExpectedDays,
+			inspector_name: inspectorName,
+			hearing_address: hearingAddress,
+			final_comments_due_date: finalCommentsDueDate
+		};
+	} else if (isEnforcementNoStatementsNoComments) {
+		lpaTemplate = 'publish-statements-enforcement-hearing-no-statements-no-comments';
+		appellantTemplate = 'publish-statements-enforcement-hearing-no-statements-no-comments';
+		additionalEmailValues = {
+			hearing_address: hearingAddress,
+			inspector_name: inspectorName,
+			hearing_expected_days: hearingExpectedDays,
+			hearing_time: hearingTime
+		};
+	} else {
+		lpaTemplate = 'publish-statements-hearing-lpa';
+		appellantTemplate = 'publish-statements-hearing-appellant';
+	}
 
 	const contacts = [
 		{
@@ -633,7 +687,6 @@ const sendPublishedStatementNotifiesForHearing = async (
 	];
 
 	const team_email_address = await getTeamEmailFromAppealId(appeal.id);
-
 	contacts.forEach(async (contact) => {
 		const { siteAddress, lpaReference, enforcementReference } = getNotifyPersonalisations(
 			appeal,
@@ -653,8 +706,10 @@ const sendPublishedStatementNotifiesForHearing = async (
 				site_address: siteAddress,
 				...(enforcementReference && { enforcement_reference: enforcementReference }),
 				lpa_reference: lpaReference || '',
+				...(includeFrontOfficeUrl && { front_office_url: contact.url }),
 				hearing_date: hearingDate,
-				team_email_address
+				team_email_address,
+				...additionalEmailValues
 			}
 		});
 	});

@@ -138,4 +138,20 @@ export const isLdcOrDiscontinuanceOrEnforcementCaseType = (caseType) =>
  * @param {string|undefined} caseType
  * @returns {boolean}
  */
+export const isLdcOrEnforcementCaseType = (caseType) =>
+	isLdcCaseType(caseType) || isEnforcementCaseType(caseType);
+
+/**
+ *
+ * @param {string|undefined} caseType
+ * @returns {boolean}
+ */
 export const isLdcCaseType = (caseType) => caseType === APPEAL_CASE_TYPE.X;
+
+/**
+ *
+ * @param {string|undefined} appealType
+ * @returns {boolean}
+ */
+export const isLdcOrEnforcementAppealType = (appealType) =>
+	isLdcOrEnforcementCaseType(appealTypeToAppealCaseTypeMapper(appealType));
