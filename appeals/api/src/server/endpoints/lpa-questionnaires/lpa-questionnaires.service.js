@@ -247,7 +247,7 @@ async function sendLpaqCompleteEmailToLPA(notifyClient, appeal, siteAddress, azu
  * @param {string} azureAdUserId
  * */
 async function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress, azureAdUserId) {
-	const email = appeal.appellant?.email ?? appeal.agent?.email;
+	const email = appeal.agent?.email ?? appeal.appellant?.email;
 	const whatHappensNext =
 		'We will send you another email when the local planning authority submits their statement ' +
 		'and we receive any comments from interested parties.';

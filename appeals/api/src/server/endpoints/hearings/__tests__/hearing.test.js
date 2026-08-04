@@ -240,7 +240,7 @@ describe('hearing routes', () => {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
 					personalisation: { ...personalisation, is_lpa: false },
-					recipientEmail: fullPlanningAppeal.appellant.email,
+					recipientEmail: fullPlanningAppeal.agent.email,
 					templateName: 'hearing-updated'
 				});
 
@@ -363,7 +363,7 @@ describe('hearing routes', () => {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
 					personalisation: { ...personalisation, is_lpa: false },
-					recipientEmail: fullPlanningAppeal.appellant.email,
+					recipientEmail: fullPlanningAppeal.agent.email,
 					templateName: 'hearing-updated'
 				});
 
@@ -414,7 +414,7 @@ describe('hearing routes', () => {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
 					personalisation: { ...personalisation, is_lpa: false },
-					recipientEmail: fullPlanningAppeal.appellant.email,
+					recipientEmail: fullPlanningAppeal.agent.email,
 					templateName: 'hearing-updated'
 				});
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
@@ -1207,7 +1207,7 @@ describe('hearing routes', () => {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
 					personalisation: { ...personalisation, is_lpa: false },
-					recipientEmail: fullPlanningAppeal.appellant.email,
+					recipientEmail: fullPlanningAppeal.agent.email,
 					templateName: 'hearing-set-up'
 				});
 
@@ -1268,7 +1268,7 @@ describe('hearing routes', () => {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
 					personalisation: { ...personalisation, is_lpa: false },
-					recipientEmail: fullPlanningAppeal.appellant.email,
+					recipientEmail: fullPlanningAppeal.agent.email,
 					templateName: 'hearing-set-up'
 				});
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
@@ -1905,7 +1905,7 @@ describe('hearing routes', () => {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
 					personalisation,
-					recipientEmail: fullPlanningAppeal.appellant.email,
+					recipientEmail: fullPlanningAppeal.agent.email,
 					templateName: 'hearing-cancelled'
 				});
 

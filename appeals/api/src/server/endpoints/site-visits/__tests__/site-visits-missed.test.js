@@ -216,7 +216,7 @@ describe('POST /:appealId/site-visits/:siteVisitId/missed', () => {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
 					personalisation: personalisation,
-					recipientEmail: appeal.appellant.email,
+					recipientEmail: appeal.agent.email,
 					templateName: 'record-missed-site-visit-appellant'
 				});
 				expect(response.status).toEqual(200);
@@ -514,7 +514,7 @@ describe('POST /:appealId/site-visits/:siteVisitId/missed', () => {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
 					personalisation: personalisation,
-					recipientEmail: appeal.appellant.email,
+					recipientEmail: appeal.agent.email,
 					templateName: 'record-missed-site-visit-appellant'
 				});
 				expect(response.status).toEqual(200);
@@ -760,7 +760,7 @@ describe('POST /:appealId/site-visits/:siteVisitId/missed', () => {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
 					personalisation: personalisation,
-					recipientEmail: appeal.appellant.email,
+					recipientEmail: appeal.agent.email,
 					templateName: 'record-missed-site-visit-appellant'
 				});
 				expect(response.status).toEqual(200);

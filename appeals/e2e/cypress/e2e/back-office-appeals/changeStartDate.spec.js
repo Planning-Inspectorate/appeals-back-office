@@ -30,7 +30,7 @@ describe('Change start date', () => {
 			const expectedNotifies = [
 				{
 					template: 'appeal-start-date-change-appellant',
-					recipient: 'appellant@test.com'
+					recipient: 'agent@test.com'
 				},
 				{
 					template: 'appeal-start-date-change-lpa',
@@ -60,7 +60,7 @@ describe('Change start date', () => {
 			const expectedNotifies = [
 				{
 					template: 'appeal-start-date-change-appellant',
-					recipient: 'appellant@test.com'
+					recipient: 'agent@test.com'
 				},
 				{
 					template: 'appeal-start-date-change-lpa',

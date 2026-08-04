@@ -161,7 +161,7 @@ const sendInquiryNotifications = async (
 	appeal,
 	personalisation = {}
 ) => {
-	const appellantEmail = appeal.appellant?.email ?? appeal.agent?.email;
+	const appellantEmail = appeal.agent?.email ?? appeal.appellant?.email;
 	const lpaEmail = appeal.lpa?.email;
 	if (!appellantEmail || !lpaEmail) {
 		throw new Error(ERROR_NO_RECIPIENT_EMAIL);

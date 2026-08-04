@@ -88,7 +88,7 @@ describe('local-planning-authorities', () => {
 				azureAdUserId,
 				templateName: 'lpa-changed-appellant',
 				notifyClient: expect.anything(),
-				recipientEmail: householdAppeal.appellant.email,
+				recipientEmail: householdAppeal.agent.email,
 				personalisation: {
 					appeal_reference_number: householdAppeal.reference,
 					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',

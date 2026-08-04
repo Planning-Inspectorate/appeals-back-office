@@ -157,7 +157,7 @@ describe('inquiry routes', () => {
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					notifyClient: expect.anything(),
 					personalisation,
-					recipientEmail: appeal.appellant.email,
+					recipientEmail: appeal.agent.email,
 					templateName: expectedTemplateName
 				});
 
@@ -921,7 +921,7 @@ describe('inquiry routes', () => {
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					notifyClient: expect.anything(),
 					personalisation,
-					recipientEmail: fullPlanningAppeal.appellant.email,
+					recipientEmail: fullPlanningAppeal.agent.email,
 					templateName: 'inquiry-set-up'
 				});
 
@@ -1705,7 +1705,7 @@ describe('inquiry routes', () => {
 						...personalisation,
 						is_lpa: false
 					},
-					recipientEmail: fullPlanningAppeal.appellant.email,
+					recipientEmail: fullPlanningAppeal.agent.email,
 					templateName: 'inquiry-updated'
 				});
 
@@ -2222,7 +2222,7 @@ describe('inquiry routes', () => {
 						...personalisation,
 						is_lpa: false
 					},
-					recipientEmail: fullPlanningAppeal.appellant.email,
+					recipientEmail: fullPlanningAppeal.agent.email,
 					templateName: 'inquiry-updated'
 				});
 
@@ -3045,7 +3045,7 @@ describe('inquiry routes', () => {
 					...personalisation,
 					is_lpa: false
 				},
-				recipientEmail: fullPlanningAppeal.appellant.email,
+				recipientEmail: fullPlanningAppeal.agent.email,
 				templateName: 'inquiry-cancelled'
 			});
 
