@@ -624,7 +624,7 @@ const recordMissedSiteVisit = async (
 		])
 	});
 
-	const appellantEmail = appeal.appellant?.email ?? appeal.agent?.email;
+	const appellantEmail = appeal.agent?.email ?? appeal.appellant?.email;
 	const lpaEmail = appeal.lpa?.email;
 
 	if (appellantEmail && whoMissedSiteVisit === 'appellant') {

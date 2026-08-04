@@ -303,7 +303,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		const expectedNotifies = [
 			{
 				template: 'hearing-cancelled',
-				recipient: 'appellant@test.com'
+				recipient: 'agent@test.com'
 			},
 			{
 				template: 'hearing-cancelled',
@@ -323,7 +323,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		const expectedNotifies = [
 			{
 				template: 'hearing-cancelled',
-				recipient: 'appellant@test.com'
+				recipient: 'agent@test.com'
 			},
 			{
 				template: 'hearing-cancelled',
@@ -350,7 +350,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		const expectedNotifies = [
 			{
 				template: 'hearing-updated',
-				recipient: 'appellant@test.com'
+				recipient: 'agent@test.com'
 			},
 			{
 				template: 'hearing-updated',
@@ -391,7 +391,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		const expectedNotifies = [
 			{
 				template: 'hearing-updated',
-				recipient: 'appellant@test.com'
+				recipient: 'agent@test.com'
 			},
 			{
 				template: 'hearing-updated',
@@ -458,7 +458,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		const expectedNotifies = [
 			{
 				template: 'hearing-set-up',
-				recipient: 'appellant@test.com'
+				recipient: 'agent@test.com'
 			},
 			{
 				template: 'hearing-set-up',

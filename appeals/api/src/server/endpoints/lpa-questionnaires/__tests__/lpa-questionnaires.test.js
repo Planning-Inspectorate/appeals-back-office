@@ -545,7 +545,7 @@ describe('lpa questionnaires routes', () => {
 						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.anything(),
 						personalisation: test.personalisation,
-						recipientEmail: test.appeal.appellant.email,
+						recipientEmail: test.appeal.agent?.email || test.appeal.appellant.email,
 						templateName: test.templateName
 					});
 

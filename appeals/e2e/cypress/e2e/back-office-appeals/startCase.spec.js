@@ -27,7 +27,7 @@ describe('Start case', () => {
 		Household: [
 			{
 				template: 'appeal-valid-start-case-appellant',
-				recipient: 'appellant@test.com'
+				recipient: 'agent@test.com'
 			},
 			{
 				template: 'appeal-valid-start-case-lpa',
@@ -37,7 +37,7 @@ describe('Start case', () => {
 		PlanningAppeal: [
 			{
 				template: 'appeal-valid-start-case-s78-appellant',
-				recipient: 'appellant@test.com'
+				recipient: 'agent@test.com'
 			},
 			{
 				template: 'appeal-valid-start-case-s78-lpa',
@@ -47,7 +47,7 @@ describe('Start case', () => {
 		PlanningAppealHearing: [
 			{
 				template: 'appeal-valid-start-case-s78-hearing-appellant',
-				recipient: 'appellant@test.com'
+				recipient: 'agent@test.com'
 			},
 			{
 				template: 'appeal-valid-start-case-s78-hearing-lpa',

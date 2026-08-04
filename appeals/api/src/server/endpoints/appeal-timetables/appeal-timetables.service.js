@@ -155,7 +155,7 @@ const getStartCaseNotifyParams = async ({
 			break;
 	}
 
-	const appellantEmail = appeal.appellant?.email || appeal.agent?.email;
+	const appellantEmail = appeal.agent?.email || appeal.appellant?.email;
 	const lpaEmail = appeal.lpa?.email || '';
 
 	const teamEmail = await getTeamEmailFromAppealId(appeal.id);

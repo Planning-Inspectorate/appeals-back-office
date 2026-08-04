@@ -84,7 +84,7 @@ const sendLpaChangeNotifications = async (appeal, newLpaDetails, azureAdUserId, 
 
 	const teamEmail = await getTeamEmailFromAppealId(appealId);
 	const isEnforcement = isEnforcementCaseType(appeal.appealType?.key || '');
-	const recipientEmail = appeal.appellant?.email || appeal.agent?.email;
+	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 	if (!recipientEmail) {
 		throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 	}
