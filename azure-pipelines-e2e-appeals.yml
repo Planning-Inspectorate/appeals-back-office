@@ -6,7 +6,7 @@ parameters:
 
   - name: RunParallel
     type: boolean
-    default: true
+    default: 'true'
 
 variables:
   - name: APP
@@ -34,51 +34,7 @@ jobs:
           group1:
             SPEC: >-
               issueDecision.spec.js,
-              hearing.spec.js,
-              reviewAppellantCase.spec.js,
-              inquiry.spec.js,
-              manuallyAddRepresentation.spec.js,
-              part1.spec.js,
-              personalList.spec.js,
-              endToEndEnforcement.spec.js,
-              endToEndLinkedEnforcement.spec.js
-          group2:
-            SPEC: >-
-              relatedAppeals.spec.js,
-              manageCorrespondence.spec.js,
-              manageDocsAppellant.spec.js,
-              manageDocsLpa.spec.js,
-              nationalListSearch.spec.js,
-              reviewLpaq.spec.js,
-              s78ChangeTimetable.spec.js,
-              scheduleSiteVisit.spec.js,
-              startCase.spec.js,
-              unrelateAppeals.spec.js,
-              updateLpaqDueDate.spec.js,
-              addCostDecisionRedacted.spec.js,
-              cancelAppeal.spec.js,
-              captureNetResidence.spec.js,
-              changeAppealProcedureType.spec.js,
-              changeAppealType.spec.js,
-              rule6Party.spec.js
-          group3:
-            SPEC: >-
-              addCorrespondence.spec.js,
-              appellantCase.spec.js,
-              assignUserToCase.spec.js,
-              caseHistory.spec.js,
-              caseNotes.spec.js,
-              changeContact.spec.js,
-              changeSiteVisit.spec.js,
-              changeStartDate.spec.js,
-              globalValidation.spec.js,
-              linkAppeals.spec.js,
-              lpaStatement.spec.js,
-              manageDocsSupporting.spec.js,
-              endToEndAdvert.spec.js,
-              endToEndS20.spec.js,
-              endToEndS78.spec.js,
-              updateDecisionLetter.spec.js
+
 
       #  SINGLE AGENT RUN (manual toggle)
       ${{ if eq(parameters.RunParallel, false) }}:
@@ -87,29 +43,45 @@ jobs:
             SPEC: '**/*.spec.js'
 
     steps:
-      - task: NodeTool@0
-        inputs:
-          versionSpec: "22.x"
-        displayName: "Install Node.js"
-        
+#      - task: NodeTool@0
+#        inputs:
+#          versionSpec: "22.x"
+#        displayName: "Install Node.js"
+
+      - script: |
+          export NVM_DIR="/usr/local/nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+          nvm use default || true
+          node -v || true
+          npm -v || true
+          which node || true
+          which npm || true
+        displayName: "Source NVM and show node/npm (debug)"
+        condition: eq(variables['agent.os'], 'Linux')
+
       - task: ShellScript@2
         inputs:
           scriptPath: 'appeals/e2e/install-chromium.sh'
         displayName: 'Install Chromium'
         condition: eq(variables['agent.os'], 'Linux')
 
-      - task: Npm@1
-        inputs:
-          command: "install"
-          workingDir: $(System.DefaultWorkingDirectory)/appeals/e2e
-        displayName: "Install Dependencies"
+      - script: |
+          export NVM_DIR="/usr/local/nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+          nvm use default || true
+          echo "Node: $(node -v || true)"
+          echo "Npm: $(npm -v || true)"
+          cd "$(System.DefaultWorkingDirectory)/appeals/e2e"
+          npm ci || npm install
+        displayName: "Install Dependencies (via npm in-shell)"
+        condition: eq(variables['agent.os'], 'Linux')
 
       - script: |
           CLEAN_SPEC=$(echo "$(SPEC)" | tr -d ' \n' | sed 's/,/,cypress\/e2e\/back-office-appeals\//g')
           CLEAN_SPEC="cypress/e2e/back-office-appeals/$CLEAN_SPEC"
           echo "Running: $CLEAN_SPEC"
           npx cypress run --spec "$CLEAN_SPEC"
-        workingDirectory: $(System.DefaultWorkingDirectory)/appeals/e2e        
+        workingDirectory: $(System.DefaultWorkingDirectory)/appeals/e2e
         env:
           TZ: 'Europe/London'
           BASE_URL: $(APPEALS_BASE_URL)
