@@ -1054,7 +1054,7 @@ it('should display the correct status tags when cancelling inquiry', () => {
 		caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
 
 		happyPathHelper.reviewLPaStatement(caseObj, {
-			progressText: CTA_TEXT.caseProgression.progressToProofOfEvidence
+			progressText: CTA_TEXT.share.shareCommentsAndStatements
 		});
 
 		// Verify evidence tag

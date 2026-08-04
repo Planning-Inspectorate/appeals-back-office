@@ -31,7 +31,7 @@ export const generateUniqueDocument = (baseDocument) => {
 const validLpaQuestionnaireCommon = {
 	casedata: {
 		caseReference: '6000000',
-		nearbyCaseReferences: ['1000000'],
+		nearbyCaseReferences: null, //['1000000'] is a bug with displaying related appeals in case overview, see https://pins-ds.atlassian.net/browse/A2-8942 
 		lpaQuestionnaireSubmittedDate: new Date(2024, 5, 1).toISOString(),
 		siteAccessDetails: ['Here it is'],
 		siteSafetyDetails: ['Fine'],

@@ -38,7 +38,7 @@ jobs:
               reviewAppellantCase.spec.js,
               inquiry.spec.js,
               manuallyAddRepresentation.spec.js,
-              part1.spec.js,
+              expeditedAppeals.spec.js,
               personalList.spec.js,
               endToEndEnforcement.spec.js,
               endToEndLinkedEnforcement.spec.js

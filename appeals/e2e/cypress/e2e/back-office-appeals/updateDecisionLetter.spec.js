@@ -62,9 +62,7 @@ describe('Update Decision Letter', () => {
 			caseDetailsPage.validateBannerMessage('Success', 'Decision letter updated');
 			caseDetailsPage.verifyCheckYourAnswers('Decision issue date', formattedDate.date);
 			caseDetailsPage.clickBackLink();
-			caseDetailsPage.checkDecisionOutcome(
-				`Decision issued on ${formattedDate.date} (reissued on ${formattedDate.date})`
-			);
+			caseDetailsPage.checkDecisionOutcome(`Decision issued on ${formattedDate.date}`);
 			//verify Case History
 			caseDetailsPage.clickViewCaseHistory();
 			caseHistoryPage.verifyCaseHistoryValue('Correction notice added: Test Correction Notice');
