@@ -665,6 +665,48 @@ describe('appeal timetables routes', () => {
 	});
 	describe('/appeals/:appealId/appeal-timetables', () => {
 		describe('POST', () => {
+			describe('post 1 April 2026 expedited appeals', () => {
+				test.each([
+					['HAS', houseAppealWithTimetable],
+					['CAS Planning', casPlanningAppealWithTimetable],
+					['CAS Advert', casAdvertAppealWithTimetable]
+				])(
+					'defaults %s appeal to writtenPart1 when application date is on or after 1 April 2026',
+					async (_, mockExpeditedAppeal) => {
+						const testAppeal = {
+							...mockExpeditedAppeal,
+							caseStartedDate: null,
+							procedureType: undefined,
+							appellantCase: {
+								...mockExpeditedAppeal.appellantCase,
+								applicationDate: '2026-04-01T00:00:00.000Z'
+							}
+						};
+						databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
+						databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
+
+						const response = await request
+							.post(`/appeals/${testAppeal.id}/appeal-timetables/`)
+							.send()
+							.set('azureAdUserId', azureAdUserId);
+
+						expect(response.status).toEqual(201);
+						expect(mockNotifySend).toHaveBeenNthCalledWith(
+							1,
+							expect.objectContaining({
+								templateName: 'appeal-valid-start-case-appellant'
+							})
+						);
+						expect(mockNotifySend).toHaveBeenNthCalledWith(
+							2,
+							expect.objectContaining({
+								templateName: 'appeal-valid-start-case-lpa'
+							})
+						);
+					}
+				);
+			});
+
 			describe.each([
 				[
 					'householdAppeal',
@@ -738,200 +780,205 @@ describe('appeal timetables routes', () => {
 			])(
 				'updates a %s appeal timetable',
 				(_, appeal, expectedResponse, additionalPersonalisation) => {
-					test('when procedure type is written', async () => {
-						// @ts-ignore
-						databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
-						// @ts-ignore
-						databaseConnector.user.upsert.mockResolvedValue({
-							id: 1,
-							azureAdUserId
+					describe('when procedure type is written or undefined', () => {
+						test('when procedure type is written', async () => {
+							const appealCopy = { ...appeal };
+							// @ts-ignore
+							databaseConnector.appeal.findUnique.mockResolvedValue(appealCopy);
+							// @ts-ignore
+							databaseConnector.user.upsert.mockResolvedValue({
+								id: 1,
+								azureAdUserId
+							});
+
+							const { id } = appeal;
+							const response = await request
+								.post(`/appeals/${id}/appeal-timetables/`)
+								.send()
+								.set('azureAdUserId', azureAdUserId);
+
+							expect(response.status).toEqual(201);
+							expect(response.body).toEqual(expectedResponse);
+
+							expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+							expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+								azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+								notifyClient: expect.anything(),
+								personalisation: {
+									appeal_reference_number: appeal.reference,
+									inspector_name: null,
+									appeal_type: trimAppealType(appeal.appealType.type),
+									appellant_email_address: appeal.appellant.email,
+									child_appeals: [],
+									comment_deadline: '',
+									due_date: dateISOStringToDisplayDate(
+										expectedResponse.lpaQuestionnaireDueDate || ''
+									),
+									final_comments_deadline: dateISOStringToDisplayDate(
+										expectedResponse.finalCommentsDueDate || ''
+									),
+									ip_comments_deadline: dateISOStringToDisplayDate(
+										expectedResponse.ipCommentsDueDate || ''
+									),
+									local_planning_authority: appeal.lpa.name,
+									lpa_reference: appeal.applicationReference,
+									lpa_statement_deadline: dateISOStringToDisplayDate(
+										expectedResponse.lpaStatementDueDate || ''
+									),
+									procedure_type: 'written representations',
+									questionnaire_due_date: dateISOStringToDisplayDate(
+										expectedResponse.lpaQuestionnaireDueDate || ''
+									),
+									site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+									start_date: '5 June 2024',
+									site_visit: true,
+									costs_info: true,
+									statement_of_common_ground_deadline: '',
+									team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+								},
+								recipientEmail: appeal.appellant.email,
+								templateName: 'appeal-start-date-change-appellant'
+							});
+
+							expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+								azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+								notifyClient: expect.anything(),
+								personalisation: {
+									appeal_reference_number: appeal.reference,
+									inspector_name: null,
+									appeal_type: trimAppealType(appeal.appealType.type),
+									appellant_email_address: appeal.appellant.email,
+									child_appeals: [],
+									comment_deadline: '',
+									due_date: dateISOStringToDisplayDate(
+										expectedResponse.lpaQuestionnaireDueDate || ''
+									),
+									final_comments_deadline: dateISOStringToDisplayDate(
+										expectedResponse.finalCommentsDueDate || ''
+									),
+									ip_comments_deadline: dateISOStringToDisplayDate(
+										expectedResponse.ipCommentsDueDate || ''
+									),
+									local_planning_authority: appeal.lpa.name,
+									lpa_reference: appeal.applicationReference,
+									lpa_statement_deadline: dateISOStringToDisplayDate(
+										expectedResponse.lpaStatementDueDate || ''
+									),
+									procedure_type: 'written representations',
+									questionnaire_due_date: dateISOStringToDisplayDate(
+										expectedResponse.lpaQuestionnaireDueDate || ''
+									),
+									site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+									start_date: '5 June 2024',
+									statement_of_common_ground_deadline: '',
+									...additionalPersonalisation,
+									team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+								},
+								recipientEmail: appeal.lpa.email,
+								templateName: 'appeal-start-date-change-lpa'
+							});
 						});
 
-						const { id } = appeal;
-						const response = await request
-							.post(`/appeals/${id}/appeal-timetables/`)
-							.send()
-							.set('azureAdUserId', azureAdUserId);
+						test('when procedure type is undefined', async () => {
+							const appealCopy = {
+								...appeal,
+								procedureType: appeal.procedureType || { id: 3, name: 'Written', key: 'written' }
+							};
+							databaseConnector.appeal.findUnique.mockResolvedValue(appealCopy);
+							// @ts-ignore
+							databaseConnector.user.upsert.mockResolvedValue({
+								id: 1,
+								azureAdUserId
+							});
 
-						expect(response.status).toEqual(201);
-						expect(response.body).toEqual(expectedResponse);
+							const { id } = appeal;
+							const response = await request
+								.post(`/appeals/${id}/appeal-timetables/`)
+								.send()
+								.set('azureAdUserId', azureAdUserId);
 
-						expect(mockNotifySend).toHaveBeenCalledTimes(2);
+							expect(response.status).toEqual(201);
+							expect(response.body).toEqual(expectedResponse);
 
-						expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-							azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
-							notifyClient: expect.anything(),
-							personalisation: {
-								appeal_reference_number: appeal.reference,
-								inspector_name: null,
-								appeal_type: trimAppealType(appeal.appealType.type),
-								appellant_email_address: appeal.appellant.email,
-								child_appeals: [],
-								comment_deadline: '',
-								due_date: dateISOStringToDisplayDate(
-									expectedResponse.lpaQuestionnaireDueDate || ''
-								),
-								final_comments_deadline: dateISOStringToDisplayDate(
-									expectedResponse.finalCommentsDueDate || ''
-								),
-								ip_comments_deadline: dateISOStringToDisplayDate(
-									expectedResponse.ipCommentsDueDate || ''
-								),
-								local_planning_authority: appeal.lpa.name,
-								lpa_reference: appeal.applicationReference,
-								lpa_statement_deadline: dateISOStringToDisplayDate(
-									expectedResponse.lpaStatementDueDate || ''
-								),
-								procedure_type: 'written representations',
-								questionnaire_due_date: dateISOStringToDisplayDate(
-									expectedResponse.lpaQuestionnaireDueDate || ''
-								),
-								site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
-								start_date: '5 June 2024',
-								site_visit: true,
-								costs_info: true,
-								statement_of_common_ground_deadline: '',
-								team_email_address: 'caseofficers@planninginspectorate.gov.uk'
-							},
-							recipientEmail: appeal.appellant.email,
-							templateName: 'appeal-start-date-change-appellant'
-						});
+							expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-						expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-							azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
-							notifyClient: expect.anything(),
-							personalisation: {
-								appeal_reference_number: appeal.reference,
-								inspector_name: null,
-								appeal_type: trimAppealType(appeal.appealType.type),
-								appellant_email_address: appeal.appellant.email,
-								child_appeals: [],
-								comment_deadline: '',
-								due_date: dateISOStringToDisplayDate(
-									expectedResponse.lpaQuestionnaireDueDate || ''
-								),
-								final_comments_deadline: dateISOStringToDisplayDate(
-									expectedResponse.finalCommentsDueDate || ''
-								),
-								ip_comments_deadline: dateISOStringToDisplayDate(
-									expectedResponse.ipCommentsDueDate || ''
-								),
-								local_planning_authority: appeal.lpa.name,
-								lpa_reference: appeal.applicationReference,
-								lpa_statement_deadline: dateISOStringToDisplayDate(
-									expectedResponse.lpaStatementDueDate || ''
-								),
-								procedure_type: 'written representations',
-								questionnaire_due_date: dateISOStringToDisplayDate(
-									expectedResponse.lpaQuestionnaireDueDate || ''
-								),
-								site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
-								start_date: '5 June 2024',
-								statement_of_common_ground_deadline: '',
-								...additionalPersonalisation,
-								team_email_address: 'caseofficers@planninginspectorate.gov.uk'
-							},
-							recipientEmail: appeal.lpa.email,
-							templateName: 'appeal-start-date-change-lpa'
-						});
-					});
+							expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+								azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+								notifyClient: expect.anything(),
+								personalisation: {
+									appeal_reference_number: appeal.reference,
+									inspector_name: null,
+									appeal_type: trimAppealType(appeal.appealType.type),
+									appellant_email_address: appeal.appellant.email,
+									child_appeals: [],
+									comment_deadline: '',
+									due_date: dateISOStringToDisplayDate(
+										expectedResponse.lpaQuestionnaireDueDate || ''
+									),
+									final_comments_deadline: dateISOStringToDisplayDate(
+										expectedResponse.finalCommentsDueDate || ''
+									),
+									ip_comments_deadline: dateISOStringToDisplayDate(
+										expectedResponse.ipCommentsDueDate || ''
+									),
+									local_planning_authority: appeal.lpa.name,
+									lpa_reference: appeal.applicationReference,
+									lpa_statement_deadline: dateISOStringToDisplayDate(
+										expectedResponse.lpaStatementDueDate || ''
+									),
+									procedure_type: 'written representations',
+									questionnaire_due_date: dateISOStringToDisplayDate(
+										expectedResponse.lpaQuestionnaireDueDate || ''
+									),
+									site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+									start_date: '5 June 2024',
+									site_visit: true,
+									costs_info: true,
+									statement_of_common_ground_deadline: '',
+									team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+								},
+								recipientEmail: appeal.appellant.email,
+								templateName: 'appeal-start-date-change-appellant'
+							});
 
-					test('when procedure type is undefined', async () => {
-						// @ts-ignore
-						appeal.procedureType = undefined;
-						databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
-						// @ts-ignore
-						databaseConnector.user.upsert.mockResolvedValue({
-							id: 1,
-							azureAdUserId
-						});
-
-						const { id } = appeal;
-						const response = await request
-							.post(`/appeals/${id}/appeal-timetables/`)
-							.send()
-							.set('azureAdUserId', azureAdUserId);
-
-						expect(response.status).toEqual(201);
-						expect(response.body).toEqual(expectedResponse);
-
-						expect(mockNotifySend).toHaveBeenCalledTimes(2);
-
-						expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-							azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
-							notifyClient: expect.anything(),
-							personalisation: {
-								appeal_reference_number: appeal.reference,
-								inspector_name: null,
-								appeal_type: trimAppealType(appeal.appealType.type),
-								appellant_email_address: appeal.appellant.email,
-								child_appeals: [],
-								comment_deadline: '',
-								due_date: dateISOStringToDisplayDate(
-									expectedResponse.lpaQuestionnaireDueDate || ''
-								),
-								final_comments_deadline: dateISOStringToDisplayDate(
-									expectedResponse.finalCommentsDueDate || ''
-								),
-								ip_comments_deadline: dateISOStringToDisplayDate(
-									expectedResponse.ipCommentsDueDate || ''
-								),
-								local_planning_authority: appeal.lpa.name,
-								lpa_reference: appeal.applicationReference,
-								lpa_statement_deadline: dateISOStringToDisplayDate(
-									expectedResponse.lpaStatementDueDate || ''
-								),
-								procedure_type: 'written representations',
-								questionnaire_due_date: dateISOStringToDisplayDate(
-									expectedResponse.lpaQuestionnaireDueDate || ''
-								),
-								site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
-								start_date: '5 June 2024',
-								site_visit: true,
-								costs_info: true,
-								statement_of_common_ground_deadline: '',
-								team_email_address: 'caseofficers@planninginspectorate.gov.uk'
-							},
-							recipientEmail: appeal.appellant.email,
-							templateName: 'appeal-start-date-change-appellant'
-						});
-
-						expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-							azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
-							notifyClient: expect.anything(),
-							personalisation: {
-								appeal_reference_number: appeal.reference,
-								inspector_name: null,
-								appeal_type: trimAppealType(appeal.appealType.type),
-								appellant_email_address: appeal.appellant.email,
-								child_appeals: [],
-								comment_deadline: '',
-								due_date: dateISOStringToDisplayDate(
-									expectedResponse.lpaQuestionnaireDueDate || ''
-								),
-								final_comments_deadline: dateISOStringToDisplayDate(
-									expectedResponse.finalCommentsDueDate || ''
-								),
-								ip_comments_deadline: dateISOStringToDisplayDate(
-									expectedResponse.ipCommentsDueDate || ''
-								),
-								local_planning_authority: appeal.lpa.name,
-								lpa_reference: appeal.applicationReference,
-								lpa_statement_deadline: dateISOStringToDisplayDate(
-									expectedResponse.lpaStatementDueDate || ''
-								),
-								procedure_type: 'written representations',
-								questionnaire_due_date: dateISOStringToDisplayDate(
-									expectedResponse.lpaQuestionnaireDueDate || ''
-								),
-								site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
-								start_date: '5 June 2024',
-								statement_of_common_ground_deadline: '',
-								...additionalPersonalisation,
-								team_email_address: 'caseofficers@planninginspectorate.gov.uk'
-							},
-							recipientEmail: appeal.lpa.email,
-							templateName: 'appeal-start-date-change-lpa'
+							expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+								azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+								notifyClient: expect.anything(),
+								personalisation: {
+									appeal_reference_number: appeal.reference,
+									inspector_name: null,
+									appeal_type: trimAppealType(appeal.appealType.type),
+									appellant_email_address: appeal.appellant.email,
+									child_appeals: [],
+									comment_deadline: '',
+									due_date: dateISOStringToDisplayDate(
+										expectedResponse.lpaQuestionnaireDueDate || ''
+									),
+									final_comments_deadline: dateISOStringToDisplayDate(
+										expectedResponse.finalCommentsDueDate || ''
+									),
+									ip_comments_deadline: dateISOStringToDisplayDate(
+										expectedResponse.ipCommentsDueDate || ''
+									),
+									local_planning_authority: appeal.lpa.name,
+									lpa_reference: appeal.applicationReference,
+									lpa_statement_deadline: dateISOStringToDisplayDate(
+										expectedResponse.lpaStatementDueDate || ''
+									),
+									procedure_type: 'written representations',
+									questionnaire_due_date: dateISOStringToDisplayDate(
+										expectedResponse.lpaQuestionnaireDueDate || ''
+									),
+									site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+									start_date: '5 June 2024',
+									statement_of_common_ground_deadline: '',
+									...additionalPersonalisation,
+									team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+								},
+								recipientEmail: appeal.lpa.email,
+								templateName: 'appeal-start-date-change-lpa'
+							});
 						});
 					});
 				}
