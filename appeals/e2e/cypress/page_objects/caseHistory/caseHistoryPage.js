@@ -55,19 +55,21 @@ export class CaseHistoryPage extends Page {
 
 	verifyCaseHistoryValue(value, checkIncluded = true) {
 		const expectedText = value.toLocaleLowerCase();
+		cy.writeLog(`Verifying case history value: ${expectedText}`); // Log the expected text for debugging
 
-		this.basePageElements.tableCell(value).then(($elem) => {
-			cy.wrap($elem)
-				.invoke('text')
-				.then((t) => {
-					const text = t.trim().toLocaleLowerCase();
-					const assertionBase = checkIncluded ? expect(text).to : expect(text).to.not;
-					const errorMessage = checkIncluded
-						? `${value} is not included`
-						: `${value} should not be included`;
-					assertionBase.include(expectedText, errorMessage);
-				});
-		});
+		let found = false;
+		cy.get('.govuk-table__body')
+			.children()
+			.each(($row) => {
+				const rowText = $row.text().trim().toLowerCase();
+				cy.writeLog(`Row text: ${rowText}`); // Log the row text for debugging
+				if (rowText.includes(expectedText)) {
+					found = true;
+				}
+			})
+			.then(() => {
+				expect(found, `Expected at least one row to contain "${expectedText}"`).to.be.true;
+			});
 	}
 
 	verifyCaseHistoryValues(values) {

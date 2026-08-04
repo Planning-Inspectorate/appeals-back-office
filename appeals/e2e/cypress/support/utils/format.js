@@ -77,7 +77,11 @@ export function formatDateAndTime(date, isOrdinal = false) {
 	const formattedDate = new Intl.DateTimeFormat('en-GB', dateOptions).format(date);
 
 	// Format date short (e.g., "22 Oct 2025")
-	const formattedDateShort = new Intl.DateTimeFormat('en-GB', dateOptionsShort).format(date);
+	// For some case history entries backoffice uses short date format, however in en-GB (only)
+	// 'September' is abbreviated to 'Sept', but 'Sep' is required
+	const formattedDateShort = new Intl.DateTimeFormat('en-GB', dateOptionsShort)
+		.format(date)
+		.replace('Sept', 'Sep');
 
 	// Format time (e.g., "2:31am" or "14:31")
 	const formattedTime = new Intl.DateTimeFormat('en-GB', timeOptions)

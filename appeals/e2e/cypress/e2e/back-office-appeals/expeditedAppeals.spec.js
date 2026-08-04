@@ -12,6 +12,7 @@ import {
 	APPEAL_PAYLOAD_TYPES,
 	APPLICATION_DECISIONS,
 	BANNER_TYPES,
+	DEFAULT_OVERVIEW_DETAILS,
 	PLANNING_APPLICATION_TYPES,
 	SUCCESS_MESSAGES
 } from '../../support/consts';
@@ -43,10 +44,7 @@ describe('Expedited (part1)) appeals', () => {
 	];
 
 	afterEach(() => {
-		/*if (cases.length > 0) {
-			cy.deleteAppeals(cases);
-		}*/
-		//cy.deleteAppeals(appeal);
+		cy.deleteAppeals(appeal);
 	});
 
 	let caseObj;
@@ -107,7 +105,7 @@ describe('Expedited (part1)) appeals', () => {
 	};
 
 	describe('Appeals valid for expedited process', () => {
-		it.only('S78 appeal submitted on 01-04-2026 should be set as expedited', () => {
+		it('S78 appeal submitted on 01-04-2026 should be set as expedited', () => {
 			setupTestCase({ additionalDocs: [appealsApiRequests.environmentalAssessment] }).then(() => {
 				// approve appellant case as valid and set a due date for the questionnaire response
 				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
@@ -130,24 +128,20 @@ describe('Expedited (part1)) appeals', () => {
 				// check that the case overview details are set correctly, including appeal procedure
 				overviewSectionPage.verifyCaseOverviewDetails(
 					{
-						appealType: 'Planning appeal',
-						applicationReference: '123',
-						appealProcedure: 'Written representations (Part 1)',
-						allocationLevel: 'No allocation level for this appeal',
-						linkedAppeals: 'No linked appeals',
-						relatedAppeals: 'No'
+						...DEFAULT_OVERVIEW_DETAILS,
+						appealProcedure: 'Written representations (Part 1)'
 					},
 					false
 				);
 
+				// check for expected validation banner on the case details page
+				caseDetailsPage.validateBannerMessage(BANNER_TYPES.success, SUCCESS_MESSAGES.appealStarted);
+
 				// Verify Case History
 				caseDetailsPage.clickViewCaseHistory();
 				caseHistoryPage.verifyCaseHistoryValue(
-					'Appeal started\nAppeal procedure: Written representations (Part 1)'
+					'appeal startedappeal procedure: written representations (part 1)'
 				);
-
-				// check for expected validation banner on the case details page
-				caseDetailsPage.validateBannerMessage(BANNER_TYPES.success, SUCCESS_MESSAGES.appealStarted);
 
 				// check is set as expedited in appeal details
 				checkAppealDetails(caseObj, true, PLANNING_APPLICATION_TYPES.FULL);

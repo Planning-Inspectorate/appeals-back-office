@@ -25,6 +25,9 @@ export const CTA_TEXT = {
 	},
 	caseProgression: {
 		progressToProofOfEvidence: 'Progress to proof of evidence and witnesses'
+	},
+	share: {
+		shareCommentsAndStatements: 'Share comments and statements'
 	}
 };
 
@@ -61,6 +64,15 @@ export const SAMPLE_FILES = {
 	image: 'sample-img.jpeg',
 	pdf: 'test.pdf',
 	pdf2: 'test-2.pdf'
+};
+
+export const DEFAULT_OVERVIEW_DETAILS = {
+	appealType: 'Planning appeal',
+	applicationReference: '123',
+	allocationLevel: 'No allocation level for this appeal',
+	linkedAppeals: 'No linked appeals',
+	relatedAppeals: 'No', //'1000000' is a bug with displaying related appeals in case overview, see https://pins-ds.atlassian.net/browse/A2-8942
+	netGainResidential: 'Not provided'
 };
 
 export const validFileNameVariants = [
