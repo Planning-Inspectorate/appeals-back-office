@@ -565,13 +565,31 @@ these [Notify Templates](../appeals/api/src/server/notify/templates):
 - **GOV notify template:** [Enf Hearing - No statement from any party, No comment - GOV.UK Notify](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/dd6a3378-26dc-4c80-bd93-06a23809d37d)
 - **Trigger:** Publish representations when the appeal is in the statements stage and does not have any IP comments or statements. Sent to appellant/agent and LPA.
 
+### Statements published - hearing with appeallant statments, no LPA statements and no comments - ELB, Enforcement and LDC LPA
+
+- **Appeal type:** Enforcement, ELB and LDC
+- **Procedure:** Hearing
+- **Notify Subject Template:** [publish-statements-enforcement-hearing-yes-appellant-statements-no-lpa-statements-no-comments-lpa](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-yes-appellant-statements-no-lpa-statements-no-comments-lpa.subject.md)
+- **Notify Content Template:** [publish-statements-enforcement-hearing-yes-appellant-statements-no-lpa-statements-no-comments-lpa](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-yes-appellant-statements-no-lpa-statements-no-comments-lpa.content.md)
+- **GOV notify template:** [Enf hearing - Yes appellant statement, no LPA statement, No comments - GOV.UK Notify](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/1027b457-e75a-4a3d-aea4-8f7056d09bdd)
+- **Trigger:** Publish representations when the appeal is in the statements stage and does not have any IP comments or statements. Sent to appellant/agent and LPA.
+
+### Statements published - hearing with appeallant statments, no LPA statements and no comments - ELB, Enforcement and LDC Appellant
+
+- **Appeal type:** Enforcement, ELB and LDC
+- **Procedure:** Hearing
+- **Notify Subject Template:** [publish-statements-enforcement-hearing-yes-appellant-statements-no-lpa-statements-no-comments-appellant](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-yes-appellant-statements-no-lpa-statements-no-comments-appellant.subject.md)
+- **Notify Content Template:** [publish-statements-enforcement-hearing-yes-appellant-statements-no-lpa-statements-no-comments-appellant](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-yes-appellant-statements-no-lpa-statements-no-comments-appellant.content.md)
+- **GOV notify template:** [Enf hearing - Yes appellant statement, no LPA statement, No comments - GOV.UK Notify](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/1027b457-e75a-4a3d-aea4-8f7056d09bdd)
+- **Trigger:** Publish representations when the appeal is in the statements stage and does not have any IP comments or statements. Sent to appellant/agent and LPA.
+
 ### Statements published - enforcement hearing no statements yes comments
 
 - **Appeal type:** Enforcement, ELB and LDC
 - **Procedure:** Hearing
 - **Notify Subject Template:** [publish-statements-enforcement-hearing-no-statements-yes-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-no-statements-yes-comments.subject.md)
 - **Notify Content Template:** [publish-statements-enforcement-hearing-no-statements-yes-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-no-statements-yes-comments.content.md)
-- - **GOV notify template:** [Enf Hearing - No statement from any party, Comments received - GOV.UK Notify](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/fcdaf559-08da-4067-bc1a-f449bdcfad86)
+- **GOV notify template:** [Enf Hearing - No statement from any party, Comments received - GOV.UK Notify](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/fcdaf559-08da-4067-bc1a-f449bdcfad86)
 - **Trigger:** Publish representations when the appeal is in the statements stage and IP comments have been submitted but no statements received. Sent to appellant/agent.
 
 ## Evidence
