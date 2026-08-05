@@ -681,8 +681,7 @@ const sendPublishedStatementNotifiesForHearing = async (
 			inspector_name: inspectorName,
 			hearing_expected_days: hearingExpectedDays,
 			hearing_time: hearingTime,
-			final_comments_due_date: finalCommentsDueDate,
-			has_appellant_statement: hasAppellantStatement
+			final_comments_due_date: finalCommentsDueDate
 		};
 	} else {
 		lpaTemplate = 'publish-statements-hearing-lpa';
