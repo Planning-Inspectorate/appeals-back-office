@@ -30,7 +30,9 @@ import {
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
 import {
+	beforeExpeditedOriginalApplicationCutOff,
 	isEnforcementCaseType,
+	isExpeditedAppealType,
 	isS78ExpeditedAppealType
 } from '@pins/appeals/utils/appeal-type-checks.js';
 import {
@@ -91,6 +93,51 @@ const checkAppealTimetableExists = async (req, res, next) => {
 };
 
 /**
+ * @param {string | undefined} procedureType
+ * @param {string} appealTypeKey
+ * @param {string | undefined} hearingStartTime
+ * @param {boolean} caseIsStarted
+ * @returns {{ lpaTemplate: string, appellantTemplate: string }}
+ */
+const getNotifyTemplateNames = (procedureType, appealTypeKey, hearingStartTime, caseIsStarted) => {
+	const appealTypeNotifyTemplate = appealTypeMap(appealTypeKey);
+	const baseTemplate = caseIsStarted
+		? 'appeal-start-date-change-'
+		: `appeal-valid-start-case-${appealTypeNotifyTemplate}${appealTypeNotifyTemplate ? '-' : ''}`;
+
+	const getSuffixes = () => {
+		switch (procedureType) {
+			case APPEAL_CASE_PROCEDURE.INQUIRY:
+				return { lpa: APPEAL_CASE_PROCEDURE.INQUIRY, appellant: APPEAL_CASE_PROCEDURE.INQUIRY };
+
+			case APPEAL_CASE_PROCEDURE.HEARING: {
+				const hearingPrefix = !caseIsStarted && hearingStartTime ? 'hearing-' : '';
+				return { lpa: `${hearingPrefix}lpa`, appellant: `${hearingPrefix}appellant` };
+			}
+
+			case APPEAL_CASE_PROCEDURE.WRITTEN_PART_1:
+			case PROCEDURE_TYPE_KEY.WRITTEN_PART_1:
+				if (appealTypeNotifyTemplate) {
+					return { lpa: 'expedited-lpa', appellant: 'expedited-appellant' };
+				}
+				return { lpa: 'lpa', appellant: 'appellant' };
+
+			case APPEAL_CASE_PROCEDURE.WRITTEN_PART_2:
+			case PROCEDURE_TYPE_KEY.WRITTEN_PART_2:
+			default:
+				return { lpa: 'lpa', appellant: 'appellant' };
+		}
+	};
+
+	const { lpa, appellant } = getSuffixes();
+
+	return {
+		lpaTemplate: `${baseTemplate}${lpa}`,
+		appellantTemplate: `${baseTemplate}${appellant}`
+	};
+};
+
+/**
  * @param {Object} params
  * @param {Appeal} params.appeal
  * @param {string} params.startDate
@@ -120,40 +167,10 @@ const getStartCaseNotifyParams = async ({
 }) => {
 	const { type = '', key: appealTypeKey = APPEAL_CASE_TYPE.D } = appeal.appealType || {};
 	const appealType = trimAppealType(type);
-	const caseIsStarted = appeal.caseStartedDate;
-	const appealTypeNotifyTemplate = appealTypeMap(appealTypeKey);
-	let formattedLPATemplate;
-	let formattedAppellantTemplate;
-	let baseTemplate = caseIsStarted
-		? 'appeal-start-date-change-'
-		: `appeal-valid-start-case-${appealTypeNotifyTemplate}${appealTypeNotifyTemplate ? '-' : ''}`;
+	const caseIsStarted = Boolean(appeal.caseStartedDate);
 
-	switch (procedureType) {
-		case APPEAL_CASE_PROCEDURE.INQUIRY:
-			formattedLPATemplate = `${baseTemplate}${APPEAL_CASE_PROCEDURE.INQUIRY}`;
-			formattedAppellantTemplate = `${baseTemplate}${APPEAL_CASE_PROCEDURE.INQUIRY}`;
-			break;
-		case APPEAL_CASE_PROCEDURE.HEARING:
-			if (caseIsStarted) {
-				formattedLPATemplate = `${baseTemplate}lpa`;
-				formattedAppellantTemplate = `${baseTemplate}appellant`;
-			} else {
-				formattedLPATemplate = `${baseTemplate}${hearingStartTime ? 'hearing-' : ''}lpa`;
-				formattedAppellantTemplate = `${baseTemplate}${hearingStartTime ? 'hearing-' : ''}appellant`;
-			}
-			break;
-		case APPEAL_CASE_PROCEDURE.WRITTEN_PART_1:
-		case PROCEDURE_TYPE_KEY.WRITTEN_PART_1:
-			formattedLPATemplate = `${baseTemplate}expedited-lpa`;
-			formattedAppellantTemplate = `${baseTemplate}expedited-appellant`;
-			break;
-		case APPEAL_CASE_PROCEDURE.WRITTEN_PART_2:
-		case PROCEDURE_TYPE_KEY.WRITTEN_PART_2:
-		default:
-			formattedLPATemplate = `${baseTemplate}lpa`;
-			formattedAppellantTemplate = `${baseTemplate}appellant`;
-			break;
-	}
+	const { lpaTemplate: formattedLPATemplate, appellantTemplate: formattedAppellantTemplate } =
+		getNotifyTemplateNames(procedureType, appealTypeKey, hearingStartTime, caseIsStarted);
 
 	const appellantEmail = appeal.appellant?.email || appeal.agent?.email;
 	const lpaEmail = appeal.lpa?.email || '';
@@ -161,47 +178,44 @@ const getStartCaseNotifyParams = async ({
 	const teamEmail = await getTeamEmailFromAppealId(appeal.id);
 	const childEnforcementsWithGrounds = await getChildEnforcementsWithGrounds(appeal);
 
+	/** @param {string | Date | null | undefined} dateStr */
+	const formatDeadline = (dateStr) => (dateStr ? formatDate(new Date(dateStr), false) : '');
+
+	const isWrittenReps =
+		!procedureType ||
+		procedureType === APPEAL_CASE_PROCEDURE.WRITTEN ||
+		procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1;
+
 	// Note that those properties not used within the specified template will be ignored
 	const commonEmailVariables = {
 		appeal_reference_number: appeal.reference,
 		inspector_name: inspectorName ? inspectorName : null,
 		lpa_reference: appeal.applicationReference || '',
 		site_address: siteAddress,
-		start_date: formatDate(new Date(startDate || ''), false),
+		start_date: formatDeadline(startDate),
 		appellant_email_address: appellantEmail || '',
 		appeal_type: appealType || '',
 		procedure_type: PROCEDURE_TYPE_MAP[procedureType || 'written'],
-		questionnaire_due_date: formatDate(new Date(timetable.lpaQuestionnaireDueDate || ''), false),
+		questionnaire_due_date: formatDeadline(timetable.lpaQuestionnaireDueDate),
 		local_planning_authority: appeal.lpa?.name || '',
-		due_date: formatDate(new Date(timetable.lpaQuestionnaireDueDate || ''), false),
-		comment_deadline: formatDate(new Date(timetable.commentDeadline || ''), false),
-		lpa_statement_deadline: formatDate(
-			new Date(timetable.lpaStatementDueDate || timetable.statementDueDate || ''),
-			false
+		due_date: formatDeadline(timetable.lpaQuestionnaireDueDate),
+		comment_deadline: formatDeadline(timetable.commentDeadline),
+		lpa_statement_deadline: formatDeadline(
+			timetable.lpaStatementDueDate || timetable.statementDueDate
 		),
-		ip_comments_deadline: formatDate(new Date(timetable.ipCommentsDueDate || ''), false),
-		final_comments_deadline: formatDate(new Date(timetable.finalCommentsDueDate || ''), false),
-		statement_of_common_ground_deadline: formatDate(
-			new Date(timetable.statementOfCommonGroundDueDate || ''),
-			false
-		),
+		ip_comments_deadline: formatDeadline(timetable.ipCommentsDueDate),
+		final_comments_deadline: formatDeadline(timetable.finalCommentsDueDate),
+		statement_of_common_ground_deadline: formatDeadline(timetable.statementOfCommonGroundDueDate),
 		...(inquiry && {
-			proof_of_evidence_and_witnesses_deadline: formatDate(
-				new Date(timetable.proofOfEvidenceAndWitnessesDueDate || ''),
-				false
+			proof_of_evidence_and_witnesses_deadline: formatDeadline(
+				timetable.proofOfEvidenceAndWitnessesDueDate
 			)
 		}),
 		...(inquiry && {
-			case_management_conference_deadline: formatDate(
-				new Date(timetable.caseManagementConferenceDueDate || ''),
-				false
-			)
+			case_management_conference_deadline: formatDeadline(timetable.caseManagementConferenceDueDate)
 		}),
 		...(inquiry && {
-			planning_obligation_deadline: formatDate(
-				new Date(timetable.planningObligationDueDate || ''),
-				false
-			)
+			planning_obligation_deadline: formatDeadline(timetable.planningObligationDueDate)
 		}),
 		child_appeals:
 			appeal.childAppeals
@@ -209,14 +223,14 @@ const getStartCaseNotifyParams = async ({
 				.map((appeal) => appeal.childRef) || [],
 		team_email_address: teamEmail,
 		...(hearingStartTime && {
-			hearing_date: formatDate(new Date(hearingStartTime), false),
+			hearing_date: formatDeadline(hearingStartTime),
 			hearing_time: formatTime12h(hearingStartTime)
 		}),
 		...(hearingEstimatedDays && {
 			hearing_expected_days: hearingEstimatedDays
 		}),
 		...(inquiry && {
-			inquiry_date: formatDate(new Date(inquiry.inquiryStartTime), false),
+			inquiry_date: formatDeadline(inquiry.inquiryStartTime),
 			inquiry_time: formatTime12h(inquiry.inquiryStartTime),
 			inquiry_address: inquiry.inquiryAddress,
 			inquiry_expected_days: inquiry.inquiryEstimationDays
@@ -238,20 +252,11 @@ const getStartCaseNotifyParams = async ({
 				personalisation: {
 					...commonEmailVariables,
 					...(inquiry && { is_lpa: false }),
-					site_visit:
-						procedureType === APPEAL_CASE_PROCEDURE.WRITTEN ||
-						procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 ||
-						procedureType === undefined, //undefined procedure types are treated as written
-					costs_info:
-						procedureType === APPEAL_CASE_PROCEDURE.WRITTEN ||
-						procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 ||
-						procedureType === undefined,
+					site_visit: isWrittenReps,
+					costs_info: isWrittenReps,
 					...(isEnforcementCaseType(appeal.appealType?.key) &&
 						appeal.appellantCase?.planningObligation && {
-							planning_obligation_deadline: formatDate(
-								new Date(timetable.planningObligationDueDate || ''),
-								false
-							)
+							planning_obligation_deadline: formatDeadline(timetable.planningObligationDueDate)
 						})
 				}
 			}
@@ -266,14 +271,10 @@ const getStartCaseNotifyParams = async ({
 					...commonEmailVariables,
 					...(inquiry && { is_lpa: true }),
 					...(appeal.appealType?.key === APPEAL_CASE_TYPE.W && {
-						statement_of_common_ground_deadline: formatDate(
-							new Date(timetable.statementOfCommonGroundDueDate || ''),
-							false
+						statement_of_common_ground_deadline: formatDeadline(
+							timetable.statementOfCommonGroundDueDate
 						),
-						planning_obligation_deadline: formatDate(
-							new Date(timetable.planningObligationDueDate || ''),
-							false
-						)
+						planning_obligation_deadline: formatDeadline(timetable.planningObligationDueDate)
 					})
 				}
 			}
@@ -394,6 +395,65 @@ const generateStartCaseNotifyPreviews = async (
 };
 
 /**
+ * @param {Appeal} appeal
+ * @param {string | undefined} procedureType
+ * @returns {string}
+ */
+const getEffectiveProcedureType = (appeal, procedureType) => {
+	if (procedureType) {
+		return procedureType;
+	}
+
+	const rawAppDate = appeal.appellantCase?.applicationDate;
+	const applicationDateStr = rawAppDate instanceof Date ? rawAppDate.toISOString() : rawAppDate;
+
+	const isHasOrCasPart1 =
+		isExpeditedAppealType(appeal.appealType?.key) &&
+		Boolean(applicationDateStr) &&
+		!beforeExpeditedOriginalApplicationCutOff(applicationDateStr);
+
+	return isHasOrCasPart1 ? APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 : (appeal.procedureType?.key ?? '');
+};
+
+/**
+ * @param {Object} params
+ * @param {number} params.appealId
+ * @param {string | undefined} params.azureAdUserId
+ * @param {string} params.procedureType
+ * @param {string} [params.hearingStartTime]
+ */
+const createStartCaseAuditTrails = async ({
+	appealId,
+	azureAdUserId,
+	procedureType,
+	hearingStartTime
+}) => {
+	await createAuditTrail({
+		appealId,
+		azureAdUserId,
+		details: AUDIT_TRAIL_CASE_TIMELINE_CREATED
+	});
+
+	await createAuditTrail({
+		appealId,
+		azureAdUserId,
+		details: stringTokenReplacement(AUDIT_TRAIL_CASE_STARTED, [
+			mapProcedureTypeForAudit(procedureType)
+		])
+	});
+
+	if (hearingStartTime) {
+		await createAuditTrail({
+			appealId,
+			azureAdUserId,
+			details: stringTokenReplacement(AUDIT_TRAIL_HEARING_SET_UP, [
+				dateISOStringToDisplayDate(hearingStartTime)
+			])
+		});
+	}
+};
+
+/**
  *
  * @param {Appeal} appeal
  * @param {string} startDate
@@ -403,7 +463,7 @@ const generateStartCaseNotifyPreviews = async (
  * @param {string} [hearingStartTime]
  * @param {string} [hearingEstimatedDays]
  * @param {string | null | undefined} inspectorName
- * @returns
+ * @returns {Promise<{ success: boolean, timetable?: any }>}
  */
 const startCase = async (
 	appeal,
@@ -416,6 +476,11 @@ const startCase = async (
 	inspectorName = null
 ) => {
 	try {
+		const appealType = appeal.appealType || null;
+		if (!appealType) {
+			throw new Error('Appeal type is required to start a case.');
+		}
+
 		const isChildAppeal =
 			isLinkedAppealsActive(appeal) &&
 			Boolean(
@@ -423,11 +488,6 @@ const startCase = async (
 					(parentAppeal) => parentAppeal.type === CASE_RELATIONSHIP_LINKED
 				).length
 			);
-
-		const appealType = appeal.appealType || null;
-		if (!appealType) {
-			throw new Error('Appeal type is required to start a case.');
-		}
 
 		const startedAt = await recalculateDateIfNotBusinessDay(startDate);
 		const isS78Expedited = isS78ExpeditedAppealType(
@@ -437,86 +497,72 @@ const startCase = async (
 			appeal.appellantCase?.typeOfPlanningApplication
 		);
 
+		const effectiveProcedureType = getEffectiveProcedureType(appeal, procedureType);
+
 		const timetable = await calculateTimetable(
 			appealType.key,
 			startedAt,
-			procedureType,
+			effectiveProcedureType,
 			null,
 			isS78Expedited
 		);
-		const startDateWithTimeCorrection = setTimeInTimeZone(startedAt, 0, 0);
 
-		const procedureTypeId = procedureType && PROCEDURE_TYPE_ID_MAP[procedureType];
-
-		if (timetable) {
-			await Promise.all([
-				// @ts-ignore
-				appealTimetableRepository.upsertAppealTimetableById(appeal.id, timetable),
-				appealRepository.updateAppealById(appeal.id, {
-					caseStartedDate: startDateWithTimeCorrection.toISOString(),
-					...(procedureTypeId && { procedureTypeId }),
-					...(hearingStartTime && { hearingStartTime }),
-					...(hearingEstimatedDays && { hearingEstimatedDays })
-				})
-			]);
-
-			await transitionState(
-				appeal.id,
-				azureAdUserId || AUDIT_TRAIL_SYSTEM_UUID,
-				APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
-			);
-
-			await createAuditTrail({
-				appealId: appeal.id,
-				azureAdUserId,
-				details: AUDIT_TRAIL_CASE_TIMELINE_CREATED
-			});
-
-			await createAuditTrail({
-				appealId: appeal.id,
-				azureAdUserId,
-				details: stringTokenReplacement(AUDIT_TRAIL_CASE_STARTED, [
-					mapProcedureTypeForAudit(procedureType)
-				])
-			});
-
-			if (hearingStartTime) {
-				await createAuditTrail({
-					appealId: appeal.id,
-					azureAdUserId,
-					details: stringTokenReplacement(AUDIT_TRAIL_HEARING_SET_UP, [
-						dateISOStringToDisplayDate(hearingStartTime)
-					])
-				});
-			}
-
-			if (!isChildAppeal) {
-				const siteAddress = appeal.address
-					? formatAddressSingleLine(appeal.address)
-					: 'Address not available';
-
-				await sendStartCaseNotifies(
-					appeal,
-					startDateWithTimeCorrection,
-					notifyClient,
-					siteAddress,
-					azureAdUserId,
-					timetable,
-					procedureType,
-					hearingStartTime,
-					hearingEstimatedDays,
-					inspectorName
-				);
-			}
-
-			await broadcasters.broadcastAppeal(appeal.id);
-			return { success: true, timetable };
+		if (!timetable) {
+			return { success: false };
 		}
+
+		const startDateWithTimeCorrection = setTimeInTimeZone(startedAt, 0, 0);
+		const procedureTypeId = effectiveProcedureType && PROCEDURE_TYPE_ID_MAP[effectiveProcedureType];
+
+		await Promise.all([
+			// @ts-ignore
+			appealTimetableRepository.upsertAppealTimetableById(appeal.id, timetable),
+			appealRepository.updateAppealById(appeal.id, {
+				caseStartedDate: startDateWithTimeCorrection.toISOString(),
+				...(procedureTypeId && { procedureTypeId }),
+				...(hearingStartTime && { hearingStartTime }),
+				...(hearingEstimatedDays && { hearingEstimatedDays })
+			})
+		]);
+
+		await transitionState(
+			appeal.id,
+			azureAdUserId || AUDIT_TRAIL_SYSTEM_UUID,
+			APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
+		);
+
+		await createStartCaseAuditTrails({
+			appealId: appeal.id,
+			azureAdUserId,
+			procedureType: effectiveProcedureType,
+			hearingStartTime
+		});
+
+		if (!isChildAppeal) {
+			const siteAddress = appeal.address
+				? formatAddressSingleLine(appeal.address)
+				: 'Address not available';
+
+			await sendStartCaseNotifies(
+				appeal,
+				startDateWithTimeCorrection,
+				notifyClient,
+				siteAddress,
+				azureAdUserId,
+				timetable,
+				effectiveProcedureType,
+				hearingStartTime,
+				hearingEstimatedDays,
+				inspectorName
+			);
+		}
+
+		await broadcasters.broadcastAppeal(appeal.id);
+		return { success: true, timetable };
 	} catch (error) {
 		logger.error(`Error starting case for appeal ID ${appeal.id}: ${error}`);
+		return { success: false };
 	}
-
-	return { success: false };
 };
 
 /**
