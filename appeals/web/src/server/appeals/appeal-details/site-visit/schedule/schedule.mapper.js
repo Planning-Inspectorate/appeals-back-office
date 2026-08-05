@@ -74,6 +74,15 @@ export function scheduleVisitDateTimePage(
 	body
 ) {
 	let shortAppealReference = appealShortReference(appealReference);
+	const {
+		visitEndTimeHour,
+		visitEndTimeMinute,
+		visitStartTimeHour,
+		visitStartTimeMinute,
+		visitDateDay,
+		visitDateMonth,
+		visitDateYear
+	} = session;
 	const { day, month, year } = dateISOStringToDayMonthYearHourMinute(
 		appealDetails.siteVisit?.visitDate
 	);
@@ -83,7 +92,6 @@ export function scheduleVisitDateTimePage(
 	let { hour: endTimeHour, minute: endTimeMinute } = dateISOStringToDayMonthYearHourMinute(
 		appealDetails.siteVisit?.visitEndTime
 	);
-
 	startTimeHour = startTimeHour !== undefined ? padNumberWithZero(startTimeHour) : undefined;
 	startTimeMinute = startTimeMinute !== undefined ? padNumberWithZero(startTimeMinute) : undefined;
 	endTimeHour = endTimeHour !== undefined ? padNumberWithZero(endTimeHour) : undefined;
@@ -91,32 +99,14 @@ export function scheduleVisitDateTimePage(
 	let visitType =
 		session.visitType || mapGetApiVisitTypeToWebVisitType(appealDetails.siteVisit?.visitType);
 	let readyToSetUp = session.readyToSetUp || false;
-	let visitDateDay =
-		body['visit-date-day'] ?? (appealDetails.siteVisit?.visitDate ? day : undefined);
-	let visitDateMonth =
-		body['visit-date-month'] ?? (appealDetails.siteVisit?.visitDate ? month : undefined);
-	let visitDateYear =
-		body['visit-date-year'] ?? (appealDetails.siteVisit?.visitDate ? year : undefined);
-	let visitStartTimeHour =
-		body['visit-start-time-hour'] ??
-		(appealDetails.siteVisit?.visitStartTime ? startTimeHour : undefined);
-	let visitStartTimeMinute =
-		body['visit-start-time-minute'] ??
-		(appealDetails.siteVisit?.visitStartTime ? startTimeMinute : undefined);
-	let visitEndTimeHour =
-		body['visit-end-time-hour'] ??
-		(appealDetails.siteVisit?.visitEndTime ? endTimeHour : undefined);
-	let visitEndTimeMinute =
-		body['visit-end-time-minute'] ??
-		(appealDetails.siteVisit?.visitEndTime ? endTimeMinute : undefined);
 	const selectDateComponent = dateInput({
 		name: siteVisitDateField,
 		id: siteVisitDateField,
 		namePrefix: siteVisitDateField,
 		value: {
-			day: visitDateDay,
-			month: visitDateMonth,
-			year: visitDateYear
+			day: body['visit-date-day'] ?? visitDateDay ?? day,
+			month: body['visit-date-month'] ?? visitDateMonth ?? month,
+			year: body['visit-date-year'] ?? visitDateYear ?? year
 		},
 		legendText: 'Date',
 		legendClasses: 'govuk-fieldset__legend--m',
@@ -126,7 +116,10 @@ export function scheduleVisitDateTimePage(
 
 	const selectStartTimeComponent = timeInput({
 		id: 'visit-start-time',
-		value: { hour: visitStartTimeHour, minute: visitStartTimeMinute },
+		value: {
+			hour: body['visit-start-time-hour'] ?? visitStartTimeHour ?? startTimeHour,
+			minute: body['visit-start-time-minute'] ?? visitStartTimeMinute ?? startTimeMinute
+		},
 		legendText: visitType === 'Unaccompanied' ? 'Time (optional)' : 'Start time',
 		legendClasses: 'govuk-fieldset__legend--m',
 		showLabels: true,
@@ -136,7 +129,10 @@ export function scheduleVisitDateTimePage(
 
 	const selectEndTimeComponent = timeInput({
 		id: 'visit-end-time',
-		value: { hour: visitEndTimeHour, minute: visitEndTimeMinute },
+		value: {
+			hour: body['visit-end-time-hour'] ?? visitEndTimeHour ?? endTimeHour,
+			minute: body['visit-end-time-minute'] ?? visitEndTimeMinute ?? endTimeMinute
+		},
 		legendText: !(visitType === 'Access required' && readyToSetUp)
 			? 'End time (optional)'
 			: 'End time',
