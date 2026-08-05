@@ -9,8 +9,8 @@ Time: {{inquiry_time}}
 Expected days: {{inquiry_expected_days}}
 {% if inquiry_address -%}
 Venue address: {{inquiry_address}}
+{% endif %}
 
-{% endif -%}
 {{inquiry_detail_warning_text}}
 
 {{inquiry_witnesses_text}}

@@ -37,9 +37,9 @@ router
 	.route('/enforcement/date')
 	.get(controller.getEnforcementValidDate)
 	.post(
-		validators.validateValidDateFields('Decision date'),
-		validators.validateValidDateValid('Decision date'),
-		validators.validateValidDateInPastOrToday('Decision date'),
+		validators.validateValidDateFields('Valid date'),
+		validators.validateValidDateValid('Valid date'),
+		validators.validateValidDateInPastOrToday('Valid date'),
 		extractAndProcessDateErrors({
 			fieldNamePrefix: 'valid-date'
 		}),
@@ -50,5 +50,10 @@ router
 	.route('/enforcement/check-details')
 	.get(controller.getEnforcementCheckDetails)
 	.post(controller.postEnforcementCheckDetails);
+
+router
+	.route('/environmental-services-review')
+	.get(asyncHandler(controller.getEnvironmentalServicesReview))
+	.post(asyncHandler(controller.postEnvironmentalServicesReview));
 
 export default router;

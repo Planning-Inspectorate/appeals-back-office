@@ -16,7 +16,9 @@ export const checkRepresentationExistsById = async (req, res, next) => {
 		params: { repId }
 	} = req;
 
-	const representation = await representationRepository.getById(Number(repId));
+	const representation = await representationRepository.checkRepresentationExistsById(
+		Number(repId)
+	);
 
 	if (!representation) {
 		return res.status(404).send({ errors: { repId: ERROR_NOT_FOUND } });

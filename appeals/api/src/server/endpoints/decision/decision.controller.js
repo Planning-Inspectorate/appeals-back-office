@@ -1,5 +1,7 @@
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import appealRepository from '#repositories/appeal.repository.js';
+import { updateAppealCaseDecisionOutcomeDate } from '#repositories/decision.repository.js';
 import { isCurrentStatus } from '#utils/current-status.js';
 import {
 	DECISION_TYPE_APPELLANT_COSTS,
@@ -13,6 +15,36 @@ import { publishChildDecision, publishCostsDecision, publishDecision } from './d
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
 /** @typedef {{decisionType: string, outcome: string, invalidReason?: string, documentGuid: string, documentDate: Date, appealId: number, isChildAppeal: boolean}} Decision */
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export const postDecisionPreview = async (req, res) => {
+	const { appeal } = req;
+	const { outcome, invalidDecisionReason } = req.body;
+
+	const siteAddress = appeal.address
+		? formatAddressSingleLine(appeal.address)
+		: 'Address not available';
+
+	const azureAdUserId = req.get('azureAdUserId') || '';
+
+	const previews = await publishDecision(
+		appeal,
+		outcome || 'allowed',
+		new Date(),
+		'',
+		req.notifyClient,
+		siteAddress,
+		azureAdUserId,
+		invalidDecisionReason || null,
+		true
+	);
+
+	return res.json(previews);
+};
 
 /**
  * @param {Request} req
@@ -54,16 +86,18 @@ export const postInspectorDecision = async (req, res) => {
 				switch (decisionType) {
 					case DECISION_TYPE_INSPECTOR: {
 						if (isChildAppeal) {
-							const childAppeal = await appealRepository.getAppealById(Number(decisionAppealId));
+							// TODO: performance
+							// is returning all data, return only needed data
+							const childAppeal = await appealRepository.deprecatedGetAppealById(
+								Number(decisionAppealId),
+								{
+									omitDocuments: true,
+									omitRepresentations: true
+								}
+							);
 
 							if (childAppeal) {
-								return publishChildDecision(
-									childAppeal,
-									outcome,
-									documentDate,
-									azureAdUserId,
-									appeal
-								);
+								return publishChildDecision(childAppeal, outcome, documentDate, azureAdUserId);
 							}
 						}
 						return publishDecision(
@@ -101,4 +135,26 @@ export const postInspectorDecision = async (req, res) => {
 	const decision = results.find((result) => !!result?.documentType) ?? null;
 
 	return res.status(201).send(decision);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export const patchCaseDecisionOutcomeDate = async (req, res) => {
+	const {
+		params: { appealId },
+		body: { caseDecisionOutcomeDate }
+	} = req;
+
+	const decision = await updateAppealCaseDecisionOutcomeDate(
+		Number(appealId),
+		new Date(caseDecisionOutcomeDate)
+	);
+
+	// update the decision date on FO too (appeal broadcast includes the inspector decision)
+	await broadcasters.broadcastAppeal(Number(appealId));
+
+	return res.status(200).send(decision);
 };

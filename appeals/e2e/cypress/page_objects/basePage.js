@@ -63,6 +63,7 @@ export class Page {
 		unpublish: 'a.govuk-button:nth-child(5)', // TODO Use specific data-cy selector
 		caseObjTraining: ':nth-child(2) > .govuk-table__body > :nth-child(1) > :nth-child(2)', // TODO Use specific data-cy selector
 		serviceHeader: '.pins-header-domainname',
+		unlinkChildAppeal: `data-cy="unlink-appeal-6011661"`,
 		users: '#users'
 	};
 
@@ -101,6 +102,10 @@ export class Page {
 		summaryErrorMessages: () => cy.get(this.selectors.summaryErrorMessages),
 		input: () => cy.get(this.selectors.input),
 		linkByText: (text) => cy.contains(this.selectors.link, text, { matchCase: true }),
+		unlinkLeadAppeal: (caseObj) =>
+			cy.get(
+				`:nth-child(2) > .govuk-\\!\\-text-align-right > [data-cy="unlink-appeal-${caseObj}"]`
+			),
 		loggedInUser: () => cy.get(`${this.selectors.rightCol} > span`),
 		getPageCaption: () => cy.get('.govuk-caption-l'),
 		panelBody: () => cy.get(`${this.selectors.panelBody}`),
@@ -216,11 +221,19 @@ export class Page {
 		this.basePageElements.tabByText(tabText).click();
 	}
 
+	clickUnlinkLeadAppeal(caseObj) {
+		this.basePageElements.unlinkLeadAppeal(caseObj).click();
+	}
+
 	chooseRadioBtnByIndex(indexNumber) {
 		this.basePageElements.radioButton().find('input').eq(indexNumber).check();
 	}
 
 	checkStatusOfCase(text, index = 0) {
+		this.basePageElements.status().eq(index).contains(text);
+	}
+
+	checkLinkedStatusOfCase(text, index = 0) {
 		this.basePageElements.status().eq(index).contains(text);
 	}
 

@@ -20,6 +20,14 @@ const procedureTypePage = new ProcedureTypePage();
 let sampleFiles = fileUploader.sampleFiles;
 let pdf = sampleFiles.pdf;
 
+const defaultHearingProperties = {
+	date: null,
+	setDate: true, // As CO user will normally enter a date (even if estimate), default to true
+	setEstimatedDays: false,
+	estimatedDays: 1,
+	startCase: true
+};
+
 export const happyPathHelper = {
 	viewCaseDetails(caseObj) {
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
@@ -38,19 +46,32 @@ export const happyPathHelper = {
 		caseDetailsPage.clickReviewAppellantCase();
 		caseDetailsPage.selectRadioButtonByValue('Valid');
 		caseDetailsPage.clickButtonByText('Continue');
+		cy.intercept('POST', '**/appellant-case/valid/date').as('confirmValidDate');
 		caseDetailsPage.clickButtonByText('Confirm');
+		cy.wait('@confirmValidDate');
 	},
-	reviewLpaq(caseObj, state = 'Complete') {
+	reviewEnforcementAppellantCase(caseObj) {
 		let dueDate = new Date();
 
+		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
+		caseDetailsPage.clickReviewAppellantCase();
+		caseDetailsPage.selectRadioButtonByValue('Valid');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue('Yes');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue('No');
+		caseDetailsPage.clickButtonByText('Continue');
+		dateTimeSection.enterValidDate(dueDate);
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Mark appeal as valid');
+	},
+	reviewLpaq(caseObj, state = 'Complete') {
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
 		caseDetailsPage.clickReviewLpaq();
 		caseDetailsPage.selectRadioButtonByValue(state);
 		caseDetailsPage.clickButtonByText('Confirm');
 	},
 	reviewS78Lpaq(caseObj, state = 'Complete') {
-		let dueDate = new Date();
-
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
 		caseDetailsPage.clickReviewLpaq();
 		caseDetailsPage.selectRadioButtonByValue(state);
@@ -85,27 +106,62 @@ export const happyPathHelper = {
 	startS78HearingCase(
 		caseObj,
 		procedureType,
-		dateKnown = false,
-		hearingEstimationYesNo = 'no',
-		hearingEstimationDays = 1
+		hearingProperties = {
+			date: null,
+			setDate: true,
+			setEstimatedDays: false,
+			estimatedDays: 1,
+			startCase: true
+		}
 	) {
+		// merge hearingProperties with defaultHearingProperties to get default values plus any overrides
+		hearingProperties = {
+			...defaultHearingProperties,
+			...hearingProperties
+		};
+
+		cy.writeLog(`Starting S78 hearing case with properties: ${JSON.stringify(hearingProperties)}`);
+
+		// proceed to setup hearing
 		happyPathHelper.viewCaseDetails(caseObj);
 		caseDetailsPage.clickReadyToStartCase();
 		caseDetailsPage.selectRadioButtonByValue(procedureType);
 		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.selectRadioButtonByValue(dateKnown ? 'yes' : 'no');
+
+		// select whether the date and time of the hearing is known or not based on the hearingProperties
+		const dateTimeKnown = hearingProperties.setDate ? 'yes' : 'no';
+		caseDetailsPage.selectRadioButtonByValue(dateTimeKnown);
 		caseDetailsPage.clickButtonByText('Continue');
-		if (dateKnown) {
-			dateTimeSection.enterHearingDate(happyPathHelper.validVisitDate());
-			dateTimeSection.enterHearingTime('13', '45');
-			caseDetailsPage.clickButtonByText('Continue');
+
+		// set date if set to true in hearing properties, otherwise skip to estimated days question
+		// if hearing date is provided in the properties, use it, otherwise calculate a date 2 business days in the future and use that
+		// we wrap either the provided date or the calculated date in a Cypress promise to ensure that the rest of the code waits for the date
+		// to be available before proceeding
+		if (hearingProperties.setDate) {
+			const datePromise = hearingProperties.date
+				? cy.wrap(hearingProperties.date)
+				: cy.getBusinessActualDate(new Date(), 2);
+
+			// set hearing date and time
+			datePromise.then((date) => {
+				dateTimeSection.enterHearingDate(date);
+				dateTimeSection.enterHearingTime(date.getHours(), date.getMinutes());
+				caseDetailsPage.clickButtonByText('Continue');
+			});
 		}
-		caseDetailsPage.selectRadioButtonByValue(hearingEstimationYesNo);
-		if (hearingEstimationYesNo === 'yes') {
-			cy.get('#hearing-estimation-days').clear().type(hearingEstimationDays.toString());
+
+		// check if estimated hearing days is known and if so enter estimated hearing days
+		const knowEstimatedDays = hearingProperties.setEstimatedDays ? 'Yes' : 'No';
+		caseDetailsPage.selectRadioButtonByValue(knowEstimatedDays);
+		if (hearingProperties.setEstimatedDays) {
+			cy.get('#hearing-estimation-days').clear().type(hearingProperties.estimatedDays.toString());
 		}
 		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.clickButtonByText('Start case');
+
+		// check if should start case as part of hearing setup
+		if (hearingProperties.startCase) {
+			caseDetailsPage.clickButtonByText('Start case');
+		}
 	},
 
 	startS78InquiryCase(caseObj, procedureType) {
@@ -118,6 +174,7 @@ export const happyPathHelper = {
 		//caseDetailsPage.selectRadioButtonByValue('Yes');
 		//caseDetailsPage.clickButtonByText('Continue');
 	},
+
 	startS78Part1Case(caseObj, procedureType) {
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
 		caseDetailsPage.clickReadyToStartCase();
@@ -125,7 +182,7 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Start case');
 	},
-	reviewLPaStatement(caseObj) {
+	reviewLPaStatement(caseObj, reviewProperties = { progressText: 'Progress case' }) {
 		happyPathHelper.reviewS78Lpaq(caseObj);
 		caseDetailsPage.checkStatusOfCase('Statements', 0);
 		happyPathHelper.addThirdPartyComment(caseObj, true);
@@ -136,8 +193,28 @@ export const happyPathHelper = {
 		cy.simulateStatementsDeadlineElapsed(caseObj);
 		cy.reload();
 		caseDetailsPage.basePageElements.bannerLink().click();
-		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.clickButtonByText(reviewProperties.progressText);
 		caseDetailsPage.validateBannerMessage('Success', 'Statements and IP comments shared');
+	},
+
+	validateBackNavigationFlow(navigationConfig) {
+		cy.writeLog(`Validating back navigation flow with config: ${JSON.stringify(navigationConfig)}`);
+
+		// if clickBackFirst is true, it means we need to click back before checking the first header, otherwise we check the first header immediately
+		if (navigationConfig.clickBackFirst) {
+			caseDetailsPage.clickBackLink();
+		}
+
+		navigationConfig?.headers?.forEach((header, index) => {
+			const isLast = index === navigationConfig.headers.length - 1;
+
+			caseDetailsPage.checkHeading(header);
+
+			// if it's not the last header, we click back to navigate to the next header. If it is the last header, we only click back if clickBackLast is true
+			if (!isLast || navigationConfig.clickBackLast) {
+				caseDetailsPage.clickBackLink();
+			}
+		});
 	},
 
 	changeStartDate(caseObj) {
@@ -157,12 +234,12 @@ export const happyPathHelper = {
 		return date;
 	},
 
-	uploadDocAppellantCase(caseObj) {
+	uploadDocAppellantCase(caseObj, document = sampleFiles.document) {
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
 		happyPathHelper.assignCaseOfficer(caseObj);
 		caseDetailsPage.clickReviewAppellantCase();
 		caseDetailsPage.clickAddAgreementToChangeDescriptionEvidence();
-		fileUploader.uploadFiles(sampleFiles.document);
+		fileUploader.uploadFiles(document);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Confirm');
@@ -170,7 +247,7 @@ export const happyPathHelper = {
 			'Success',
 			'Agreement to change description evidence added'
 		);
-		caseDetailsPage.verifyAnswerSummaryValue(sampleFiles.document);
+		caseDetailsPage.verifyAnswerSummaryValue(document);
 	},
 
 	manageDocsAppellantCase(caseObj) {
@@ -206,6 +283,10 @@ export const happyPathHelper = {
 
 	uploadDocVersionLpaq(caseObj) {
 		caseDetailsPage.clickManageNotifyingParties();
+
+		// Simulate the completion of the documents scan
+		cy.simulateDocumentsScanComplete(caseObj);
+
 		caseDetailsPage.clickLinkByText('View and edit');
 		caseDetailsPage.clickButtonByText('Upload a new version');
 		fileUploader.uploadFiles(sampleFiles.document2);
@@ -220,6 +301,10 @@ export const happyPathHelper = {
 
 	removeDocLpaq(caseObj) {
 		caseDetailsPage.clickManageNotifyingParties();
+
+		// Simulate the completion of the documents scan
+		cy.simulateDocumentsScanComplete(caseObj);
+
 		caseDetailsPage.clickLinkByText('View and edit');
 		caseDetailsPage.clickButtonByText('Remove current version');
 		caseDetailsPage.selectRadioButtonByValue('Yes');
@@ -473,10 +558,13 @@ export const happyPathHelper = {
 	},
 
 	addLpaCostWithdrawal() {
+		cy.intercept('POST', '**/costs/lpa/withdrawal/check-your-answers/**').as('submitWithdrawal');
+
 		caseDetailsPage.clickAddLpaWithdrawal();
 		fileUploader.uploadFiles(pdf);
 		fileUploader.clickButtonByText('Continue');
 		fileUploader.clickButtonByText('Confirm');
+		cy.wait(5000);
 		fileUploader.clickButtonByText('Confirm');
 	},
 
@@ -532,15 +620,46 @@ export const happyPathHelper = {
 		basePage.validateBannerMessage('Success', 'Number of residential units added');
 	},
 
+	unlinkLeadEnforcementAppeal(caseObj, childAppeal) {
+		caseDetailsPage.clickManageLinkedAppeal();
+		caseDetailsPage.clickUnlinkLeadAppeal(caseObj);
+		caseDetailsPage.selectRadioButtonByValue(childAppeal);
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Unlink lead appeal');
+		basePage.validateBannerMessage('Success', 'Appeal unlinked');
+	},
+
+	changeEnforcementLeadAppeal(caseObj) {
+		caseDetailsPage.clickManageLinkedAppeal();
+		caseDetailsPage.clickLinkByText('Change lead appeal');
+		caseDetailsPage.selectRadioButtonByValue(caseObj);
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Update lead appeal');
+		basePage.validateBannerMessage('Success', 'Lead appeal changed');
+	},
+
 	/**
 	 * @param {*} caseObj
 	 * @param {import('./flows').Status} currentStatus
 	 * @param {import('./flows').Status} targetStatus
 	 * @param {import('./flows').AppealType} appealType
 	 * @param {import('./flows').ProcedureType} procedureType
+	 * @param {boolean} [loadCaseDetails=true] whether or not to load case details page after advancing to a status
 	 */
 
-	advanceTo(caseObj, currentStatus, targetStatus, appealType, procedureType = 'WRITTEN') {
+	advanceTo(
+		caseObj,
+		currentStatus,
+		targetStatus,
+		appealType,
+		procedureType = 'WRITTEN',
+		loadCaseDetails = true
+	) {
+		cy.writeLog(`**Advancing case ${caseObj.id} from ${currentStatus} to ${targetStatus}`);
+
+		// define the base actions for each status that can be used to advance the case to the next status in the flow.
+		// These are the common actions that are used across different flows, but some flows might have additional actions
+		// that are specific to that flow and those will be defined in the FLOWS object in the flows.js file
 		const baseActions = {
 			[STATUSES.ASSIGN_CASE_OFFICER]: (c) => cy.assignCaseOfficerViaApi(c),
 			[STATUSES.VALIDATION]: (c) =>
@@ -552,7 +671,16 @@ export const happyPathHelper = {
 				}),
 			[STATUSES.READY_TO_START]: (c, appealType, procedureType) => {
 				if (procedureType === 'HEARING') {
-					happyPathHelper.startS78HearingCase(c, 'hearing');
+					cy.getBusinessActualDate(new Date(), 2).then((date) => {
+						const estimatedDays = 6;
+
+						happyPathHelper.startS78HearingCase(caseObj, 'hearing', {
+							date,
+							setEstimatedDays: true,
+							estimatedDays,
+							startCase: true
+						});
+					});
 				} else if (procedureType === 'INQUIRY') {
 					cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 						cy.addInquiryViaApi(caseObj, inquiryDate);
@@ -590,7 +718,12 @@ export const happyPathHelper = {
 			},
 			[STATUSES.EVENT_READY_TO_SETUP]: (c) => {
 				if (procedureType == 'HEARING') {
-					cy.setupHearingViaApi(c);
+					// check if hearing already set up (i.e. as part of start case flow), if not set up hearing
+					cy.getHearingDetails(c).then((hearingDetails) => {
+						if (!hearingDetails) {
+							cy.setupHearingViaApi(c);
+						}
+					});
 				} else if (procedureType === 'INQUIRY') {
 					cy.log('Inquiry procedure - skipping as inquiry already set up');
 				} else {
@@ -609,6 +742,10 @@ export const happyPathHelper = {
 			[STATUSES.ISSUE_DECISION]: (c) => cy.issueDecisionViaApi(c)
 		};
 
+		// fetch the flow for the given appeal type and find the index of the current status and target status in that flow.
+		// Then we can loop through the flow from the current status to the target status and execute the corresponding action
+		// for each status using the baseActions object defined above.
+		// If there is no action defined for a particular status, we log that information and continue with the next status.
 		const flow = FLOWS[appealType];
 		if (!flow) {
 			throw new Error(
@@ -624,6 +761,12 @@ export const happyPathHelper = {
 			if (fn) fn(caseObj, appealType, procedureType);
 			else cy.log(`No action defined for ${current}`);
 		}
-		this.viewCaseDetails(caseObj);
+
+		// after advancing through the statuses, if loadCaseDetails is true, navigate to the case details page
+		// in some scenarios we might want to advance the case to a certain status but not load the case details page, so we make this optional
+		// for example if we want to validate some part of the page first (e.g. banner messages)
+		if (loadCaseDetails) {
+			this.viewCaseDetails(caseObj);
+		}
 	}
 };

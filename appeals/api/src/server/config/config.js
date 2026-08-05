@@ -63,8 +63,6 @@ const { value, error } = schema.validate({
 		featureFlagLinkedAppealsUnlink:
 			environment.FEATURE_FLAG_LINKED_APPEALS_UNLINK &&
 			environment.FEATURE_FLAG_LINKED_APPEALS_UNLINK === 'true',
-		featureFlagNetResidence:
-			environment.FEATURE_FLAG_NET_RESIDENCE && environment.FEATURE_FLAG_NET_RESIDENCE === 'true',
 		featureFlagNetResidenceS20:
 			environment.FEATURE_FLAG_NET_RESIDENCE_S20 &&
 			environment.FEATURE_FLAG_NET_RESIDENCE_S20 === 'true',
@@ -93,9 +91,11 @@ const { value, error } = schema.validate({
 		featureFlagExpeditedAppeals:
 			environment.FEATURE_FLAG_EXPEDITED_APPEALS &&
 			environment.FEATURE_FLAG_EXPEDITED_APPEALS === 'true',
+		featureFlagExpeditedAppealsLpaq:
+			environment.FEATURE_FLAG_EXPEDITED_APPEALS_LPAQ &&
+			environment.FEATURE_FLAG_EXPEDITED_APPEALS_LPAQ === 'true',
 		featureFlagRule6Costs:
 			environment.FEATURE_FLAG_RULE_6_COSTS && environment.FEATURE_FLAG_RULE_6_COSTS === 'true',
-		featureFlagLDC: environment.FEATURE_FLAG_LDC && environment.FEATURE_FLAG_LDC === 'true',
 		featureFlagAppellantStatement:
 			environment.FEATURE_FLAG_APPELLANT_STATEMENT &&
 			environment.FEATURE_FLAG_APPELLANT_STATEMENT === 'true',
@@ -107,7 +107,25 @@ const { value, error } = schema.validate({
 			environment.FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED === 'true',
 		featureFlagEnforcementChangeProcedureLinked:
 			environment.FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED &&
-			environment.FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED === 'true'
+			environment.FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED === 'true',
+		featureFlagNewBeforeYouStart:
+			environment.FEATURE_FLAG_NEW_BEFORE_YOU_START &&
+			environment.FEATURE_FLAG_NEW_BEFORE_YOU_START === 'true',
+		featureFlagEnforcementChangeProcedure:
+			environment.FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE &&
+			environment.FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE === 'true',
+		featureFlagSharingHearingDocuments:
+			environment.FEATURE_FLAG_SHARING_HEARING_DOCUMENTS &&
+			environment.FEATURE_FLAG_SHARING_HEARING_DOCUMENTS === 'true',
+		featureFlagSharingInquiryEventDocuments:
+			environment.FEATURE_FLAG_SHARING_INQUIRY_EVENT_DOCUMENTS &&
+			environment.FEATURE_FLAG_SHARING_INQUIRY_EVENT_DOCUMENTS === 'true',
+		featureFlagSharingInquiryDocuments:
+			environment.FEATURE_FLAG_SHARING_INQUIRY_DOCUMENTS &&
+			environment.FEATURE_FLAG_SHARING_INQUIRY_DOCUMENTS === 'true',
+		featureFlagSharingSupportingDocuments:
+			environment.FEATURE_FLAG_SHARING_SUPPORTING_DOCUMENTS &&
+			environment.FEATURE_FLAG_SHARING_SUPPORTING_DOCUMENTS === 'true'
 	},
 	serviceBusEnabled: environment.SERVICE_BUS_ENABLED && environment.SERVICE_BUS_ENABLED === 'true',
 	enableTestEndpoints:
@@ -144,7 +162,9 @@ const { value, error } = schema.validate({
 	frontOffice: {
 		url: environment.FRONT_OFFICE_URL || '/mock-front-office-url'
 	},
-	requestSizeLimit: environment.REQUEST_SIZE_LIMIT || '1mb'
+	requestSizeLimit: environment.REQUEST_SIZE_LIMIT || '1mb',
+	redisConnectionString: environment.REDIS_CONNECTION_STRING || undefined,
+	disableRedis: environment.DISABLE_REDIS && environment.DISABLE_REDIS === 'true'
 });
 
 if (error) {

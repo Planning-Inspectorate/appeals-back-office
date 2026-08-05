@@ -62,6 +62,16 @@ const updateLPAQuestionnaireById = (id, data) => {
 				appealUnderActSection: data.appealUnderActSection,
 				lpaConsiderAppealInvalid: data.lpaConsiderAppealInvalid,
 				lpaAppealInvalidReasons: data.lpaAppealInvalidReasons,
+				listOfDocumentsBeforeDecision: data.listOfDocumentsBeforeDecision,
+				anySignificantChangesLpa: data.anySignificantChangesLpa,
+				anySignificantChangesLpa_localPlanSignificantChanges:
+					data.anySignificantChangesLpa_localPlanSignificantChanges,
+				anySignificantChangesLpa_nationalPolicySignificantChanges:
+					data.anySignificantChangesLpa_nationalPolicySignificantChanges,
+				anySignificantChangesLpa_courtJudgementSignificantChanges:
+					data.anySignificantChangesLpa_courtJudgementSignificantChanges,
+				anySignificantChangesLpa_otherSignificantChanges:
+					data.anySignificantChangesLpa_otherSignificantChanges,
 				// Enforcement
 				noticeRelatesToBuildingEngineeringMiningOther:
 					data.noticeRelatesToBuildingEngineeringMiningOther,
@@ -101,6 +111,21 @@ const updateLPAQuestionnaireById = (id, data) => {
 	}
 
 	return databaseConnector.$transaction(transaction);
+};
+
+/**
+ * @param {number} appealId
+ * @param {boolean} visible
+ * @returns {Promise<{count: number}>}
+ */
+const updateLpaCostsAppliedFor = (appealId, visible) => {
+	// use updateMany to avoid errors if there is no LPAQ for this appeal
+	return databaseConnector.lPAQuestionnaire.updateMany({
+		where: { appealId },
+		data: {
+			lpaCostsAppliedFor: visible
+		}
+	});
 };
 
 /**
@@ -175,4 +200,4 @@ function processDesignatedSites(id, data, transaction) {
 	}
 }
 
-export default { updateLPAQuestionnaireById };
+export default { updateLPAQuestionnaireById, updateLpaCostsAppliedFor };

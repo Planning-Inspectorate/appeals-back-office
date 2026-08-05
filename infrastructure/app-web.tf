@@ -15,6 +15,7 @@ module "app_web" {
   app_service_plan_id                  = azurerm_service_plan.apps.id
   app_service_plan_resource_group_name = azurerm_resource_group.primary.name
   worker_count                         = var.apps_config.web.worker_count
+  client_affinity_enabled              = true
 
   # container
   container_registry_name = var.tooling_config.container_registry_name
@@ -41,6 +42,7 @@ module "app_web" {
     APPLICATIONINSIGHTS_CONNECTION_STRING      = local.key_vault_refs["app-insights-connection-string"]
     ApplicationInsightsAgent_EXTENSION_VERSION = "~3"
     NODE_ENV                                   = var.apps_config.node_environment
+    WEBSITES_ENABLE_APP_SERVICE_STORAGE        = false
 
     API_HOST     = "https://${module.app_api.default_site_hostname}"
     APP_HOSTNAME = var.web_app_domain
@@ -64,6 +66,11 @@ module "app_web" {
     # documents
     AZURE_BLOB_DEFAULT_CONTAINER = azurerm_storage_container.appeal_documents.name
     AZURE_BLOB_STORE_HOST        = azurerm_storage_account.documents.primary_blob_endpoint # TODO: replace with custom domain
+
+    # analytics
+    GOOGLE_ANALYTICS_ID   = var.apps_config.analytics.google_analytics_id
+    GOOGLE_TAG_MANAGER_ID = var.apps_config.analytics.google_tag_manager_id
+    MICROSOFT_CLARITY_ID  = var.apps_config.analytics.microsoft_clarity_id
 
     # logging
     LOG_LEVEL_FILE   = var.apps_config.logging.level_file
@@ -91,7 +98,6 @@ module "app_web" {
     FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT            = var.apps_config.featureFlags.featureFlagSimplifyTeamAssignment
     FEATURE_FLAG_PDF_DOWNLOAD                        = var.apps_config.featureFlags.featureFlagPdfDownload
     FEATURE_FLAG_NOTIFY_CASE_HISTORY                 = var.apps_config.featureFlags.featureFlagNotifyCaseHistory
-    FEATURE_FLAG_NET_RESIDENCE                       = var.apps_config.featureFlags.featureFlagNetResidence
     FEATURE_FLAG_NET_RESIDENCE_S20                   = var.apps_config.featureFlags.featureFlagNetResidenceS20
     FEATURE_FLAG_CANCEL_CASE                         = var.apps_config.featureFlags.featureFlagCancelCase
     FEATURE_FLAG_CHANGE_PROCEDURE_TYPE               = var.apps_config.featureFlags.featureFlagChangeProcedureType
@@ -123,6 +129,14 @@ module "app_web" {
     FEATURE_FLAG_ENFORCEMENT_HEARING_LINKED          = var.apps_config.featureFlags.featureFlagEnforcementHearingLinked
     FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED          = var.apps_config.featureFlags.featureFlagEnforcementInquiryLinked
     FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED = var.apps_config.featureFlags.featureFlagEnforcementChangeProcedureLinked
+    FEATURE_FLAG_EXPEDITED_APPEALS_LPAQ              = var.apps_config.featureFlags.featureFlagExpeditedAppealsLpaq
+    FEATURE_FLAG_SHARE_COSTS                         = var.apps_config.featureFlags.featureFlagShareCosts
+    FEATURE_FLAG_NEW_BEFORE_YOU_START                = var.apps_config.featureFlags.featureFlagNewBeforeYouStart
+    FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE        = var.apps_config.featureFlags.featureFlagEnforcementChangeProcedure
+    FEATURE_FLAG_SHARING_HEARING_DOCUMENTS           = var.apps_config.featureFlags.featureFlagSharingHearingDocuments
+    FEATURE_FLAG_SHARING_INQUIRY_EVENT_DOCUMENTS     = var.apps_config.featureFlags.featureFlagSharingInquiryEventDocuments
+    FEATURE_FLAG_SHARING_INQUIRY_DOCUMENTS           = var.apps_config.featureFlags.featureFlagSharingInquiryDocuments
+    FEATURE_FLAG_SHARING_SUPPORTING_DOCUMENTS        = var.apps_config.featureFlags.featureFlagSharingSupportingDocuments
 
 
     #change LPA
@@ -165,6 +179,11 @@ resource "azurerm_key_vault_secret" "session_secret" {
   name         = "${local.service_name}-session-secret"
   value        = random_password.session_secret.result
   content_type = "session-secret"
+
+  depends_on = [
+    azurerm_private_endpoint.keyvault,
+    azurerm_private_dns_zone_virtual_network_link.keyvault
+  ]
 
   tags = local.tags
 }

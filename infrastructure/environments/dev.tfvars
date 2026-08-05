@@ -18,7 +18,7 @@ apps_config = {
   functions_node_version     = 22
   functions_service_plan_sku = "P0v3"
   node_environment           = "development"
-  private_endpoint_enabled   = false
+  private_endpoint_enabled   = true
   session_max_age            = 10800000
   front_office_url           = "https://appeals-service-dev.planninginspectorate.gov.uk"
   db_connection_limit        = 15
@@ -55,7 +55,6 @@ apps_config = {
     featureFlagNotifyCaseHistory                = true
     featureFlagSimplifyTeamAssignment           = true
     featureFlagPdfDownload                      = true
-    featureFlagNetResidence                     = true
     featureFlagNetResidenceS20                  = true
     featureFlagCancelCase                       = true
     featureFlagChangeProcedureType              = true
@@ -87,10 +86,23 @@ apps_config = {
     featureFlagEnforcementHearingLinked         = true
     featureFlagEnforcementInquiryLinked         = true
     featureFlagEnforcementChangeProcedureLinked = true
+    featureFlagShareCosts                       = true
+    featureFlagExpeditedAppealsLpaq             = true
+    featureFlagNewBeforeYouStart                = true
+    featureFlagEnforcementChangeProcedure       = true
+    featureFlagSharingHearingDocuments          = true
+    featureFlagSharingInquiryEventDocuments     = true
+    featureFlagSharingInquiryDocuments          = true
+    featureFlagSharingSupportingDocuments       = true
   }
 
-
   use_system_test_bc_for_change_lpa = true
+
+  analytics = {
+    google_analytics_id   = "dummy-id",
+    google_tag_manager_id = "dummy-tag-manager-id",
+    microsoft_clarity_id  = "dummy-id"
+  }
 
   logging = {
     level_file   = "silent"

@@ -5,14 +5,19 @@ import {
 } from '#lib/dates.js';
 import { timeInput } from '#lib/mappers/components/page-components/time.js';
 import { dateInput, yesNoInput } from '#lib/mappers/index.js';
-import { capitalizeFirstLetter, padNumberWithZero } from '#lib/string-utilities.js';
-import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
-import { mapVisitTypeToReadable } from '../site-visit.mapper.js';
+import { formatFirstInitialLastName, padNumberWithZero } from '#lib/string-utilities.js';
+import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
+import {
+	mapGetApiVisitTypeToWebVisitType,
+	mapVisitTypeToReadable,
+	mapWebVisitTypeToApiVisitType
+} from '../site-visit.mapper.js';
 import { siteVisitDateField } from '../site-visits.constants.js';
 
 /**
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
- * @typedef {'unaccompanied'|'accompanied'|'accessRequired'} WebSiteVisitType
+ * @typedef {'Unaccompanied'|'Accompanied'|'Access required'} WebSiteVisitType
  * @typedef {string|null|undefined} ApiVisitType
  */
 
@@ -28,16 +33,20 @@ import { siteVisitDateField } from '../site-visits.constants.js';
  */
 export function knowDateTimePage(appealDetails, appealReference, errors, session, backlinkUrl) {
 	const shortAppealReference = appealShortReference(appealReference);
-	const dateTimeKnown = session.dateTimeKnown || appealDetails.siteVisit ? 'yes' : 'no';
+	const dateTimeKnown = session.dateTimeKnown
+		? session.dateTimeKnown
+		: appealDetails.siteVisit?.visitDate
+			? 'yes'
+			: 'no';
 	/** @type {PageContent} */
 	return {
 		title: `Do you know the date and time of the site visit?`,
 		backLinkUrl: backlinkUrl,
 		preHeading: `Appeal ${shortAppealReference}  - set up site visit`,
+		heading: `Do you know the date and time of the site visit?`,
 		pageComponents: [
 			yesNoInput({
 				name: 'dateTimeRadio',
-				legendText: 'Do you know the date and time of the site visit?',
 				legendIsPageHeading: true,
 				value: dateTimeKnown,
 				errorMessage: errors?.dateTimeRadio?.msg
@@ -53,6 +62,7 @@ export function knowDateTimePage(appealDetails, appealReference, errors, session
  * @param {*} errors
  * @param {*} session
  * @param {*} backLinkUrl
+ * @param {*} body
  * @returns {PageContent}
  */
 export function scheduleVisitDateTimePage(
@@ -60,7 +70,8 @@ export function scheduleVisitDateTimePage(
 	appealReference,
 	errors,
 	session,
-	backLinkUrl
+	backLinkUrl,
+	body
 ) {
 	let shortAppealReference = appealShortReference(appealReference);
 	const { day, month, year } = dateISOStringToDayMonthYearHourMinute(
@@ -77,18 +88,27 @@ export function scheduleVisitDateTimePage(
 	startTimeMinute = startTimeMinute !== undefined ? padNumberWithZero(startTimeMinute) : undefined;
 	endTimeHour = endTimeHour !== undefined ? padNumberWithZero(endTimeHour) : undefined;
 	endTimeMinute = endTimeMinute !== undefined ? padNumberWithZero(endTimeMinute) : undefined;
-
-	let visitType = session.visitType || appealDetails.siteVisit?.visitType;
+	let visitType =
+		session.visitType || mapGetApiVisitTypeToWebVisitType(appealDetails.siteVisit?.visitType);
 	let readyToSetUp = session.readyToSetUp || false;
-	let visitDateDay = appealDetails.siteVisit?.visitDate ? day : undefined;
-	let visitDateMonth = appealDetails.siteVisit?.visitDate ? month : undefined;
-	let visitDateYear = appealDetails.siteVisit?.visitDate ? year : undefined;
-	let visitStartTimeHour = appealDetails.siteVisit?.visitStartTime ? startTimeHour : undefined;
-	let visitStartTimeMinute = appealDetails.siteVisit?.visitStartTime ? startTimeMinute : undefined;
-	let visitEndTimeHour = appealDetails.siteVisit?.visitEndTime ? endTimeHour : undefined;
-	let visitEndTimeMinute = appealDetails.siteVisit?.visitEndTime ? endTimeMinute : undefined;
-
-	// /** @type {PageComponent} */
+	let visitDateDay =
+		body['visit-date-day'] ?? (appealDetails.siteVisit?.visitDate ? day : undefined);
+	let visitDateMonth =
+		body['visit-date-month'] ?? (appealDetails.siteVisit?.visitDate ? month : undefined);
+	let visitDateYear =
+		body['visit-date-year'] ?? (appealDetails.siteVisit?.visitDate ? year : undefined);
+	let visitStartTimeHour =
+		body['visit-start-time-hour'] ??
+		(appealDetails.siteVisit?.visitStartTime ? startTimeHour : undefined);
+	let visitStartTimeMinute =
+		body['visit-start-time-minute'] ??
+		(appealDetails.siteVisit?.visitStartTime ? startTimeMinute : undefined);
+	let visitEndTimeHour =
+		body['visit-end-time-hour'] ??
+		(appealDetails.siteVisit?.visitEndTime ? endTimeHour : undefined);
+	let visitEndTimeMinute =
+		body['visit-end-time-minute'] ??
+		(appealDetails.siteVisit?.visitEndTime ? endTimeMinute : undefined);
 	const selectDateComponent = dateInput({
 		name: siteVisitDateField,
 		id: siteVisitDateField,
@@ -107,7 +127,7 @@ export function scheduleVisitDateTimePage(
 	const selectStartTimeComponent = timeInput({
 		id: 'visit-start-time',
 		value: { hour: visitStartTimeHour, minute: visitStartTimeMinute },
-		legendText: visitType === 'unaccompanied' ? 'Time (optional)' : 'Start time',
+		legendText: visitType === 'Unaccompanied' ? 'Time (optional)' : 'Start time',
 		legendClasses: 'govuk-fieldset__legend--m',
 		showLabels: true,
 		errorMessage: errors?.['visit-start-time-hour']?.msg,
@@ -117,7 +137,7 @@ export function scheduleVisitDateTimePage(
 	const selectEndTimeComponent = timeInput({
 		id: 'visit-end-time',
 		value: { hour: visitEndTimeHour, minute: visitEndTimeMinute },
-		legendText: !(visitType === 'accessRequired' && readyToSetUp)
+		legendText: !(visitType === 'Access required' && readyToSetUp)
 			? 'End time (optional)'
 			: 'End time',
 		legendClasses: 'govuk-fieldset__legend--m',
@@ -137,9 +157,9 @@ export function scheduleVisitDateTimePage(
 		pageComponents: [
 			selectDateComponent,
 			selectStartTimeComponent,
-			...(visitType === 'accompanied' ||
-			visitType === 'accessRequired' ||
-			(visitType === 'accessRequired' && readyToSetUp)
+			...(visitType === 'Accompanied' ||
+			visitType === 'Access required' ||
+			(visitType === 'Access required' && readyToSetUp)
 				? [selectEndTimeComponent]
 				: [])
 		]
@@ -168,7 +188,6 @@ export function checkAndConfirmSiteVisitPage(request) {
 		}
 	} = request;
 	const backLinkUrl = getBackLinkUrlFromQuery(request);
-
 	if (dateTimeKnown === 'no') {
 		/**@type {PageComponent} */
 		const summaryListComponent = {
@@ -185,7 +204,10 @@ export function checkAndConfirmSiteVisitPage(request) {
 						actions: {
 							items: [
 								{
-									href: `/appeals-service/appeal-details/${currentAppeal.appealId}/site-visit/schedule-visit`,
+									href: addBackLinkQueryToUrl(
+										request,
+										`/appeals-service/appeal-details/${currentAppeal.appealId}/site-visit/schedule-visit?visitType=${visitType}`
+									),
 									text: 'Change',
 									visuallyHiddenText: 'Type of site visit'
 								}
@@ -202,7 +224,10 @@ export function checkAndConfirmSiteVisitPage(request) {
 						actions: {
 							items: [
 								{
-									href: `/appeals-service/appeal-details/${currentAppeal.appealId}/site-visit/schedule`,
+									href: addBackLinkQueryToUrl(
+										request,
+										`/appeals-service/appeal-details/${currentAppeal.appealId}/site-visit/schedule`
+									),
 									text: 'Change',
 									visuallyHiddenText: 'Do you know the date and time of the site visit?'
 								}
@@ -229,6 +254,7 @@ export function checkAndConfirmSiteVisitPage(request) {
 		const hasEndTime = visitEndTimeHour !== '' && visitEndTimeMinute !== '';
 		const hasVisitDate = visitDateDay !== '' && visitDateMonth !== '' && visitDateYear !== '';
 		/** @type {PageComponent} */
+
 		const summaryListComponent = {
 			type: 'summary-list',
 			parameters: {
@@ -243,7 +269,10 @@ export function checkAndConfirmSiteVisitPage(request) {
 						actions: {
 							items: [
 								{
-									href: `/appeals-service/appeal-details/${currentAppeal.appealId}/site-visit/schedule-visit`,
+									href: addBackLinkQueryToUrl(
+										request,
+										`/appeals-service/appeal-details/${currentAppeal.appealId}/site-visit/schedule-visit?visitType=${visitType}`
+									),
 									text: 'Change',
 									visuallyHiddenText: 'Type of site visit'
 								}
@@ -260,7 +289,10 @@ export function checkAndConfirmSiteVisitPage(request) {
 						actions: {
 							items: [
 								{
-									href: `/appeals-service/appeal-details/${currentAppeal.appealId}/site-visit/schedule`,
+									href: addBackLinkQueryToUrl(
+										request,
+										`/appeals-service/appeal-details/${currentAppeal.appealId}/site-visit/schedule`
+									),
 									text: 'Change',
 									visuallyHiddenText: 'Do you know the date and time of the site visit?'
 								}
@@ -279,7 +311,10 @@ export function checkAndConfirmSiteVisitPage(request) {
 									actions: {
 										items: [
 											{
-												href: `/appeals-service/appeal-details/${currentAppeal.appealId}/site-visit/schedule/schedule-visit-date`,
+												href: addBackLinkQueryToUrl(
+													request,
+													`/appeals-service/appeal-details/${currentAppeal.appealId}/site-visit/schedule/schedule-visit-date`
+												),
 												text: 'Change',
 												visuallyHiddenText: 'Do you know the date and time of the site visit?'
 											}
@@ -302,7 +337,10 @@ export function checkAndConfirmSiteVisitPage(request) {
 									actions: {
 										items: [
 											{
-												href: `/appeals-service/appeal-details/${currentAppeal.appealId}/site-visit/schedule/schedule-visit-date`,
+												href: addBackLinkQueryToUrl(
+													request,
+													`/appeals-service/appeal-details/${currentAppeal.appealId}/site-visit/schedule/schedule-visit-date`
+												),
 												text: 'Change',
 												visuallyHiddenText: 'Start time'
 											}
@@ -327,7 +365,10 @@ export function checkAndConfirmSiteVisitPage(request) {
 									actions: {
 										items: [
 											{
-												href: `/appeals-service/appeal-details/${currentAppeal.appealId}/site-visit/schedule/schedule-visit-date`,
+												href: addBackLinkQueryToUrl(
+													request,
+													`/appeals-service/appeal-details/${currentAppeal.appealId}/site-visit/schedule/schedule-visit-date`
+												),
 												text: 'Change',
 												visuallyHiddenText: 'End time'
 											}
@@ -416,22 +457,10 @@ export function mapPostScheduleOrManageSiteVisitCommonParameters(
 				: '',
 		apiVisitType: mapWebVisitTypeToApiVisitType(visitType),
 		previousVisitType: '',
-		inspectorName
+		inspectorName: formatFirstInitialLastName(inspectorName)
 	};
 }
-/**
- *
- * @param {WebSiteVisitType} webVisitType
- * @returns {import('@pins/appeals/types/inspector.js').SiteVisitType}
- */
-export function mapWebVisitTypeToApiVisitType(webVisitType) {
-	switch (webVisitType) {
-		case 'accessRequired':
-			return 'access required';
-		default:
-			return webVisitType;
-	}
-}
+
 /**
  * @param {import('../site-visit.service.js').UpdateOrCreateSiteVisitParameters} updateOrCreateSiteVisitParameters
  * @param {ApiVisitType | undefined} oldApiVisitType

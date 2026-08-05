@@ -1,3 +1,4 @@
+import { mapWrittenOrVerbalPermission } from '#lib/mappers/data/appellant-case/submappers/written-or-verbal-permission.js';
 import { submaps as s78Submaps } from './s78.js';
 import { mapContactAddress } from './submappers/contact-address.js';
 import { mapContactPlanningInspectorateDate } from './submappers/contact-planning-inspectorate-date.js';
@@ -26,6 +27,7 @@ export const submaps = {
 	enforcementReference: mapEnforcementReference,
 	contactAddress: mapContactAddress,
 	interestInLand: mapInterestInLand,
+	writtenOrVerbalPermission: mapWrittenOrVerbalPermission,
 	descriptionOfAllegedBreach: mapDescriptionOfAllegedBreach,
 	groundsForAppeal: mapGroundsForAppeal,
 	factsForGrounds: mapFactsForGrounds,

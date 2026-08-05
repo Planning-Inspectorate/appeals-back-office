@@ -66,8 +66,6 @@ describe('appellant photos and plans', () => {
 				.post(`${lpaQuestionnaireUrl}/accurate-photographs-plans/change`)
 				.send(validData);
 
-			console.log(response.status);
-
 			expect(apiCall.isDone()).toBe(true);
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(

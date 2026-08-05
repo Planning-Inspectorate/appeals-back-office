@@ -826,7 +826,12 @@ export const appealIngestionInput = {
 					key: 'Some'
 				}
 			},
-			isGreenBelt: false
+			isGreenBelt: false,
+			anySignificantChanges: 'No',
+			anySignificantChanges_otherSignificantChanges: null,
+			anySignificantChanges_localPlanSignificantChanges: null,
+			anySignificantChanges_nationalPolicySignificantChanges: null,
+			anySignificantChanges_courtJudgementSignificantChanges: null
 		}
 	},
 	neighbouringSites: {
@@ -836,6 +841,22 @@ export const appealIngestionInput = {
 		create: FOLDERS.map((/** @type {{ path: string; }} */ f) => {
 			return { path: f };
 		})
+	}
+};
+
+export const appealIngestionInputHouseholder = {
+	...appealIngestionInput,
+	appellantCase: {
+		...appealIngestionInput.appellantCase,
+		create: {
+			...appealIngestionInput.appellantCase.create,
+			anySignificantChanges: 'No',
+			anySignificantChanges_otherSignificantChanges: null,
+			anySignificantChanges_localPlanSignificantChanges: null,
+			anySignificantChanges_nationalPolicySignificantChanges: null,
+			anySignificantChanges_courtJudgementSignificantChanges: null,
+			reasonForAppealAppellant: undefined
+		}
 	}
 };
 
@@ -912,7 +933,12 @@ export const appealIngestionInputAdverts = {
 					key: 'Some'
 				}
 			},
-			isGreenBelt: false
+			isGreenBelt: false,
+			anySignificantChanges: 'No',
+			anySignificantChanges_otherSignificantChanges: null,
+			anySignificantChanges_localPlanSignificantChanges: null,
+			anySignificantChanges_nationalPolicySignificantChanges: null,
+			anySignificantChanges_courtJudgementSignificantChanges: null
 		}
 	},
 	neighbouringSites: {
@@ -994,7 +1020,13 @@ export const appealIngestionInputCasAdverts = {
 					key: 'Some'
 				}
 			},
-			isGreenBelt: false
+			isGreenBelt: false,
+			anySignificantChanges: 'No',
+			anySignificantChanges_otherSignificantChanges: null,
+			anySignificantChanges_localPlanSignificantChanges: null,
+			anySignificantChanges_nationalPolicySignificantChanges: null,
+			anySignificantChanges_courtJudgementSignificantChanges: null,
+			reasonForAppealAppellant: undefined
 		}
 	},
 	neighbouringSites: {
@@ -1072,7 +1104,13 @@ export const appealIngestionInputCasPlanning = {
 					key: 'Some'
 				}
 			},
-			isGreenBelt: false
+			isGreenBelt: false,
+			anySignificantChanges: 'No',
+			anySignificantChanges_otherSignificantChanges: null,
+			anySignificantChanges_localPlanSignificantChanges: null,
+			anySignificantChanges_nationalPolicySignificantChanges: null,
+			anySignificantChanges_courtJudgementSignificantChanges: null,
+			reasonForAppealAppellant: undefined
 		}
 	},
 	neighbouringSites: {
@@ -1087,6 +1125,12 @@ export const appealIngestionInputCasPlanning = {
 
 export const appealIngestionInputS78 = {
 	...appealIngestionInput,
+	appellant: {
+		create: {
+			...appealIngestionInput.appellant.create,
+			address: undefined
+		}
+	},
 	appealType: {
 		connect: {
 			key: APPEAL_CASE_TYPE.W
@@ -1111,13 +1155,28 @@ export const appealIngestionInputS78 = {
 			numberOfResidencesNetChange: undefined,
 			otherTenantsAgriculturalHolding: null,
 			tenantAgriculturalHolding: null,
-			typeOfPlanningApplication: undefined
+			typeOfPlanningApplication: undefined,
+			jurisdiction: undefined,
+			reasonForAppealAppellant: undefined,
+			anySignificantChanges: 'No',
+			anySignificantChanges_otherSignificantChanges: null,
+			anySignificantChanges_localPlanSignificantChanges: null,
+			anySignificantChanges_nationalPolicySignificantChanges: null,
+			anySignificantChanges_courtJudgementSignificantChanges: null,
+			screeningOpinionIndicatesEiaRequired: undefined,
+			ownershipCertificate: undefined
 		}
 	}
 };
 
 export const appealIngestionInputS78Written = {
 	...appealIngestionInput,
+	appellant: {
+		create: {
+			...appealIngestionInput.appellant.create,
+			address: undefined
+		}
+	},
 	appealType: {
 		connect: {
 			key: APPEAL_CASE_TYPE.W
@@ -1142,7 +1201,16 @@ export const appealIngestionInputS78Written = {
 			numberOfResidencesNetChange: undefined,
 			otherTenantsAgriculturalHolding: null,
 			tenantAgriculturalHolding: null,
-			typeOfPlanningApplication: undefined
+			typeOfPlanningApplication: undefined,
+			jurisdiction: undefined,
+			reasonForAppealAppellant: undefined,
+			anySignificantChanges: 'No',
+			anySignificantChanges_otherSignificantChanges: null,
+			anySignificantChanges_localPlanSignificantChanges: null,
+			anySignificantChanges_nationalPolicySignificantChanges: null,
+			anySignificantChanges_courtJudgementSignificantChanges: null,
+			screeningOpinionIndicatesEiaRequired: undefined,
+			ownershipCertificate: undefined
 		}
 	}
 };
@@ -1315,6 +1383,12 @@ export const appealIngestionInputS78AssignedTeamId = {
 
 export const appealIngestionInputS20 = {
 	...appealIngestionInput,
+	appellant: {
+		create: {
+			...appealIngestionInput.appellant.create,
+			address: undefined
+		}
+	},
 	appealType: {
 		connect: {
 			key: APPEAL_CASE_TYPE.Y
@@ -1335,13 +1409,28 @@ export const appealIngestionInputS20 = {
 			siteGridReferenceEasting: undefined,
 			siteGridReferenceNorthing: undefined,
 			numberOfResidencesNetChange: undefined,
-			typeOfPlanningApplication: undefined
+			typeOfPlanningApplication: undefined,
+			jurisdiction: undefined,
+			reasonForAppealAppellant: undefined,
+			anySignificantChanges: 'No',
+			anySignificantChanges_otherSignificantChanges: null,
+			anySignificantChanges_localPlanSignificantChanges: null,
+			anySignificantChanges_nationalPolicySignificantChanges: null,
+			anySignificantChanges_courtJudgementSignificantChanges: null,
+			screeningOpinionIndicatesEiaRequired: undefined,
+			ownershipCertificate: undefined
 		}
 	}
 };
 
 export const appealIngestionInputS20Written = {
 	...appealIngestionInput,
+	appellant: {
+		create: {
+			...appealIngestionInput.appellant.create,
+			address: undefined
+		}
+	},
 	appealType: {
 		connect: {
 			key: APPEAL_CASE_TYPE.Y
@@ -1362,7 +1451,16 @@ export const appealIngestionInputS20Written = {
 			siteGridReferenceEasting: undefined,
 			siteGridReferenceNorthing: undefined,
 			numberOfResidencesNetChange: undefined,
-			typeOfPlanningApplication: undefined
+			typeOfPlanningApplication: undefined,
+			jurisdiction: undefined,
+			reasonForAppealAppellant: undefined,
+			anySignificantChanges: 'No',
+			anySignificantChanges_otherSignificantChanges: null,
+			anySignificantChanges_localPlanSignificantChanges: null,
+			anySignificantChanges_nationalPolicySignificantChanges: null,
+			anySignificantChanges_courtJudgementSignificantChanges: null,
+			screeningOpinionIndicatesEiaRequired: undefined,
+			ownershipCertificate: undefined
 		}
 	}
 };
@@ -1628,6 +1726,12 @@ export const validLpaQuestionnaireIngestionS78 = {
 					lpaProcedurePreference: 'written',
 					lpaProcedurePreferenceDetails: '',
 					lpaProcedurePreferenceDuration: 1,
+					anySignificantChangesLpa: 'No',
+					anySignificantChangesLpa_courtJudgementSignificantChanges: null,
+					anySignificantChangesLpa_localPlanSignificantChanges: null,
+					anySignificantChangesLpa_nationalPolicySignificantChanges: null,
+					anySignificantChangesLpa_otherSignificantChanges: null,
+					listOfDocumentsBeforeDecision: undefined,
 					designatedSiteNameCustom: undefined,
 					designatedSiteNames: {
 						create: [

@@ -1,6 +1,8 @@
 
 {% include 'parts/appeal-details.md' %}
-
+{% if inspector_name -%}
+Inspector: {{inspector_name}}
+{% endif %}
 # About the inquiry
 
 ^Date: {{inquiry_date}}

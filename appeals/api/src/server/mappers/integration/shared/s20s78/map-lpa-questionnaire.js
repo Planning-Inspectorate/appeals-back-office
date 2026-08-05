@@ -19,6 +19,30 @@ export const mapLpaQuestionnaireSharedFields = (data) => {
 		...(casedata?.designatedSiteNameCustom ? [casedata?.designatedSiteNameCustom] : [])
 	];
 
+	const significantChanges =
+		/** @type {import('@planning-inspectorate/data-model').Schemas.AppealS78Case['significantChangesAffectingApplicationLpa']} */ (
+			casedata?.anySignificantChangesLpa === 'Yes'
+				? [
+						{
+							value: 'adopted-a-new-local-plan',
+							comment: casedata?.anySignificantChangesLpa_localPlanSignificantChanges ?? null
+						},
+						{
+							value: 'national-policy-change',
+							comment: casedata?.anySignificantChangesLpa_nationalPolicySignificantChanges ?? null
+						},
+						{
+							value: 'court-judgement',
+							comment: casedata?.anySignificantChangesLpa_courtJudgementSignificantChanges ?? null
+						},
+						{
+							value: 'other',
+							comment: casedata?.anySignificantChangesLpa_otherSignificantChanges ?? null
+						}
+					].filter((c) => c.comment !== null)
+				: []
+		);
+
 	return {
 		extraConditions: casedata?.newConditionDetails ?? null,
 		isPublicRightOfWay: casedata?.isPublicRightOfWay ?? null,
@@ -65,6 +89,8 @@ export const mapLpaQuestionnaireSharedFields = (data) => {
 		originalCaseDecisionDate: mapDate(casedata?.originalCaseDecisionDate),
 		targetDate: mapDate(casedata?.targetDate),
 		siteNoticesSentDate: mapDate(casedata?.siteNoticesSentDate),
-		siteWithinSSSI: casedata?.siteWithinSSSI ?? null
+		siteWithinSSSI: casedata?.siteWithinSSSI ?? null,
+		significantChangesAffectingApplicationLpa: significantChanges,
+		listOfDocumentsBeforeDecision: casedata?.listOfDocumentsBeforeDecision ?? null
 	};
 };

@@ -36,3 +36,17 @@ data "azurerm_cdn_frontdoor_endpoint" "shared" {
   profile_name        = var.front_door_config.name
   provider            = azurerm.front_door
 }
+
+data "azurerm_private_dns_zone" "keyvault" {
+  name                = "privatelink.vaultcore.azure.net"
+  resource_group_name = var.tooling_config.network_rg
+
+  provider = azurerm.tooling
+}
+
+data "azurerm_private_dns_zone" "storage" {
+  name                = "privatelink.blob.core.windows.net"
+  resource_group_name = var.tooling_config.network_rg
+
+  provider = azurerm.tooling
+}

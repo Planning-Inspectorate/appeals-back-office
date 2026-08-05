@@ -71,6 +71,8 @@ export default joi
 		frontOffice: {
 			url: joi.string().optional()
 		},
-		requestSizeLimit: joi.string().optional()
+		requestSizeLimit: joi.string().optional(),
+		redisConnectionString: joi.string().optional(),
+		disableRedis: joi.boolean().optional()
 	})
 	.options({ presence: 'required' }); // required by default;

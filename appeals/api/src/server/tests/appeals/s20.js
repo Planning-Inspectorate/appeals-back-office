@@ -24,6 +24,7 @@ export default {
 	agentId: null,
 	caseOfficerUserId: 1,
 	inspectorUserId: null,
+	currentStatus: 'lpa_questionnaire',
 	address: {
 		id: 1,
 		addressLine1: '19 Beauchamp Road',
@@ -91,7 +92,15 @@ export default {
 			key: 'some',
 			name: 'Some'
 		},
-		knowsAllOwners: null
+		knowsAllOwners: null,
+		reasonForAppealAppellant: null,
+		anySignificantChanges: null,
+		anySignificantChanges_otherSignificantChanges: null,
+		anySignificantChanges_localPlanSignificantChanges: null,
+		anySignificantChanges_nationalPolicySignificantChanges: null,
+		anySignificantChanges_courtJudgementSignificantChanges: null,
+		screeningOpinionIndicatesEiaRequired: null,
+		ownershipCertificate: null
 	},
 	appellant: {
 		id: 2,

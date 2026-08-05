@@ -4,8 +4,7 @@ import { APPEAL_TYPE } from '@pins/appeals/constants/common';
 
 describe.each([
 	['S78', APPEAL_TYPE.S78],
-	['S20', APPEAL_TYPE.PLANNED_LISTED_BUILDING],
-	['Full advertisement', APPEAL_TYPE.ADVERTISEMENT]
+	['S20', APPEAL_TYPE.PLANNED_LISTED_BUILDING]
 ])('lpa-statement-due-date.mapper - %s', (_, appealType) => {
 	let data;
 	beforeEach(() => {
@@ -63,6 +62,7 @@ describe.each([
 });
 
 describe.each([
+	['Full advertisement', APPEAL_TYPE.ADVERTISEMENT],
 	['Enforcement notice', APPEAL_TYPE.ENFORCEMENT_NOTICE],
 	['Enforcement listed building', APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING],
 	['Lawful development certificate', APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE]
@@ -117,6 +117,34 @@ describe.each([
 					}
 				}
 			},
+			id: 'lpa-statement-due-date'
+		});
+	});
+});
+
+describe('S78 expedited appeal - lpa-statement-due-date.mapper', () => {
+	let data;
+	beforeEach(() => {
+		data = {
+			currentRoute: '/test',
+			appealDetails: {
+				validAt: '2026-04-01',
+				appealTimetable: { lpaStatementDueDate: '' },
+				appealType: APPEAL_TYPE.S78
+			},
+			appellantCase: {
+				applicationDate: '2026-04-01',
+				applicationDecision: 'refused',
+				typeOfPlanningApplication: 'full-appeal'
+			},
+			userHasUpdateCasePermission: true
+		};
+	});
+
+	it('should not display LPA Statement due date for S78 expedited appeal', () => {
+		const mappedData = mapLpaStatementDueDate(data);
+		expect(mappedData).toEqual({
+			display: {},
 			id: 'lpa-statement-due-date'
 		});
 	});

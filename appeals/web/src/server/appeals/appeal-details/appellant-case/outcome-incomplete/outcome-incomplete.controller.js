@@ -32,6 +32,7 @@ import * as outcomeIncompleteService from './outcome-incomplete.service.js';
 import {
 	getAppellantCaseEnforcementGroundsMismatch,
 	getAppellantCaseEnforcementMissingDocuments,
+	getFilteredReasons,
 	setReviewOutcomeForEnforcementNoticeAppellantCase
 } from './outcome-incomplete.service.js';
 
@@ -75,18 +76,11 @@ const renderIncompleteReason = async (request, response) => {
 	const { webAppellantCaseReviewOutcome } = request.session;
 
 	if (incompleteReasonOptions) {
-		const filteredReasons = isAnyEnforcementAppealType(appealType)
-			? appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
-				? incompleteReasonOptions.filter(
-						(/** @type {{ id: number; }} */ reason) =>
-							reason.id > 9 && reason.id !== 11 && reason.id !== 14
-					)
-				: incompleteReasonOptions.filter(
-						(/** @type {{ id: number; }} */ reason) => reason.id > 9 && reason.id !== 11
-					)
-			: incompleteReasonOptions.filter(
-					(/** @type {{ id: number; }} */ reason) => reason.id <= 10 || reason.id === 11
-				);
+		const filteredReasons = getFilteredReasons(
+			incompleteReasonOptions,
+			appealType,
+			appellantCaseResponse
+		);
 		const mappedIncompleteReasonOptions =
 			mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters(
 				'incomplete',
@@ -638,6 +632,7 @@ const renderCheckDetailsAndMarkEnforcementAsIncomplete = async (request, respons
 		}
 
 		const outcome = session?.webAppellantCaseReviewOutcome;
+
 		const isIncomplete = outcome?.validationOutcome === 'incomplete';
 
 		const tasks = {
@@ -691,7 +686,7 @@ const renderCheckDetailsAndMarkEnforcementAsIncomplete = async (request, respons
 						})
 					: [],
 				local_planning_authority: currentAppeal.localPlanningDepartment ?? '',
-				other_info: outcome?.reasonsText?.length ? Object.values(outcome?.reasonsText) : [],
+				other_info: outcome?.reasonsText ? Object.values(outcome?.reasonsText) : [],
 				due_date: outcome?.updatedDueDate
 					? dayMonthYearHourMinuteToDisplayDate(outcome?.updatedDueDate)
 					: '',

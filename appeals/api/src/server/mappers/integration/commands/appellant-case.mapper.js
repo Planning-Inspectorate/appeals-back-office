@@ -95,6 +95,17 @@ export const mapAppellantCaseIn = (command) => {
 		...(knowsOtherOwners && { knowsOtherOwners }),
 		isGreenBelt: casedata.isGreenBelt,
 		typeOfPlanningApplication: casedata.typeOfPlanningApplication,
+		reasonForAppealAppellant: casedata.reasonForAppealAppellant,
+		anySignificantChanges: sharedFields.anySignificantChanges,
+		anySignificantChanges_otherSignificantChanges:
+			sharedFields.anySignificantChanges_otherSignificantChanges,
+		anySignificantChanges_localPlanSignificantChanges:
+			sharedFields.anySignificantChanges_localPlanSignificantChanges,
+		anySignificantChanges_nationalPolicySignificantChanges:
+			sharedFields.anySignificantChanges_nationalPolicySignificantChanges,
+		anySignificantChanges_courtJudgementSignificantChanges:
+			sharedFields.anySignificantChanges_courtJudgementSignificantChanges,
+
 		...(isS20 && { ...sharedFields }),
 		...(isS78 && {
 			...sharedFields,
@@ -136,8 +147,6 @@ export const mapAppellantCaseIn = (command) => {
 		}),
 		...(isLDC && {
 			...procedurePreferenceFields,
-			planningObligation: command.casedata.planningObligation,
-			statusPlanningObligation: command.casedata.statusPlanningObligation,
 			siteUseAtTimeOfApplication: command.casedata.siteUseAtTimeOfApplication,
 			applicationMadeUnderActSection: command.casedata.applicationMadeUnderActSection
 		}),
@@ -150,6 +159,7 @@ export const mapAppellantCaseIn = (command) => {
 			contactPlanningInspectorateDate: casedata.contactPlanningInspectorateDate,
 			enforcementReference: casedata.enforcementReference,
 			interestInLand: casedata.interestInLand,
+			writtenOrVerbalPermission: casedata.writtenOrVerbalPermission,
 			descriptionOfAllegedBreach: casedata.descriptionOfAllegedBreach,
 			contactAddress: { create: contactAddress },
 			planningObligation: command.casedata.planningObligation,

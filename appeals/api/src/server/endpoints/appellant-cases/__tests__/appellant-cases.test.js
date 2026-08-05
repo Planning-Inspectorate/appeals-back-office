@@ -42,7 +42,7 @@ import {
 import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { jest } from '@jest/globals';
-import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import {
 	AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED,
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
@@ -51,7 +51,13 @@ import {
 	ERROR_NOT_FOUND,
 	LENGTH_8
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { EventType } from '@pins/event-client';
+import {
+	APPEAL_CASE_STAGE,
+	APPEAL_CASE_STATUS,
+	APPEAL_DOCUMENT_TYPE,
+	APPEAL_VIRUS_CHECK_STATUS
+} from '@planning-inspectorate/data-model';
 import {
 	appellantCaseEnforcementGroundsMismatchFacts,
 	appellantCaseEnforcementMissingDocuments
@@ -989,12 +995,13 @@ describe('appellant cases routes', () => {
 				['ldc', ldcAppeal, FEEDBACK_FORM_LINKS.LAWFUL_DEVELOPMENT_CERTIFICATE]
 			])(
 				'updates appellant case and sends a notify email when the validation outcome is Valid for %s appeal',
-				async (_, appeal, expectedFeedbackLink) => {
+				async (type, appeal, expectedFeedbackLink) => {
 					// Mock DB responses
 					// @ts-ignore
 					databaseConnector.appeal.findUnique.mockResolvedValue({
 						...appeal,
-						appealStatus: [{ status: 'validation', valid: true }]
+						currentStatus: APPEAL_CASE_STATUS.VALIDATION,
+						appealStatus: [{ status: APPEAL_CASE_STATUS.VALIDATION, valid: true }]
 					});
 					// @ts-ignore
 					databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
@@ -1006,9 +1013,34 @@ describe('appellant cases routes', () => {
 					databaseConnector.documentVersion.findMany.mockResolvedValue([]);
 					// @ts-ignore
 					databaseConnector.documentVersion.update.mockResolvedValue([]);
-					// @ts-ignore
+					const redactionStatusId = 123;
 					databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
-						{ id: 1, key: 'no_redaction_required' }
+						{ id: redactionStatusId, key: 'no_redaction_required' }
+					]);
+					databaseConnector.documentRedactionStatus.findUnique.mockResolvedValue({
+						id: redactionStatusId,
+						key: 'no_redaction_required'
+					});
+					databaseConnector.$queryRaw.mockResolvedValue([
+						{
+							guid: '123',
+							name: 'document.pdf',
+							version: 1,
+							documentURI: 'https://example.com/document.pdf',
+							originalFilename: 'document.pdf',
+							size: 1024,
+							mime: 'application/pdf',
+							fileMD5: 'abc123',
+							virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
+							stage: APPEAL_CASE_STAGE.APPELLANT_CASE,
+							documentType: APPEAL_DOCUMENT_TYPE.APPEAL_NOTIFICATION,
+							published: true,
+							datePublished: new Date(),
+							dateCreated: new Date(),
+							dateReceived: new Date(),
+							lastModified: new Date(),
+							representationType: null
+						}
 					]);
 					// @ts-ignore
 					databaseConnector.document.findUnique.mockResolvedValue(null);
@@ -1035,13 +1067,21 @@ describe('appellant cases routes', () => {
 						}
 					});
 
-					expect(mockNotifySend).toHaveBeenCalledTimes(1);
+					const sendsLPAConfirmation = ['ldc'].includes(type);
 
-					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					expect(mockNotifySend).toHaveBeenCalledTimes(sendsLPAConfirmation ? 2 : 1);
+
+					expect(mockNotifySend).toHaveBeenCalledWith({
 						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
+							appeal_type: expect.any(String),
+							ldc_type:
+								appeal.appealType.type === APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE
+									? //eslint-disable-next-line jest/no-conditional-expect
+										expect.any(String)
+									: undefined,
 							lpa_reference: appeal.applicationReference,
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 							feedback_link: expectedFeedbackLink,
@@ -1051,7 +1091,43 @@ describe('appellant cases routes', () => {
 						templateName: 'appeal-confirmed'
 					});
 
+					if (sendsLPAConfirmation) {
+						/* eslint-disable jest/no-conditional-expect */
+						expect(mockNotifySend).toHaveBeenCalledWith({
+							azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+							notifyClient: expect.anything(),
+							personalisation: {
+								appeal_reference_number: appeal.reference,
+								appeal_type: expect.any(String),
+								lpa_reference: appeal.applicationReference,
+								site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+								team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+								agent_contact_details: expect.stringContaining(appeal.agent.email),
+								appellant_contact_details: expect.stringContaining(appeal.appellant.email),
+								ldc_type:
+									appeal.appealType.type === APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE
+										? 'Existing development or use of a site (section 191)'
+										: undefined
+							},
+							recipientEmail: appeal.lpa.email,
+							templateName: 'appeal-confirmed-lpa'
+						});
+					}
+
 					expect(response.status).toEqual(200);
+					expect(databaseConnector.$queryRaw).toHaveBeenCalledWith(
+						expect.arrayContaining([expect.stringContaining('SET redactionStatusId =')]),
+						redactionStatusId,
+						appeal.id
+					);
+					expect(mockBroadcasters.broadcastDocuments).toHaveBeenCalledWith(
+						[
+							expect.objectContaining({
+								guid: '123'
+							})
+						],
+						EventType.Update
+					);
 				}
 			);
 
@@ -1086,6 +1162,11 @@ describe('appellant cases routes', () => {
 				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
 					{ id: 1, key: 'no_redaction_required' }
 				]);
+				databaseConnector.$queryRaw.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findUnique.mockResolvedValue({
+					id: 1,
+					key: 'no_redaction_required'
+				});
 				databaseConnector.document.findUnique.mockResolvedValue(null);
 
 				const patchBody = {
@@ -1196,6 +1277,11 @@ describe('appellant cases routes', () => {
 				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
 					{ id: 1, key: 'no_redaction_required' }
 				]);
+				databaseConnector.documentRedactionStatus.findUnique.mockResolvedValue({
+					id: 1,
+					key: 'no_redaction_required'
+				});
+				databaseConnector.$queryRaw.mockResolvedValue([]);
 				databaseConnector.document.findUnique.mockResolvedValue(null);
 
 				const patchBody = {
@@ -1318,6 +1404,11 @@ describe('appellant cases routes', () => {
 				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
 					{ id: 1, key: 'no_redaction_required' }
 				]);
+				databaseConnector.documentRedactionStatus.findUnique.mockResolvedValue({
+					id: 1,
+					key: 'no_redaction_required'
+				});
+				databaseConnector.$queryRaw.mockResolvedValue([]);
 				databaseConnector.document.findUnique.mockResolvedValue(null);
 
 				const patchBody = {
@@ -1418,6 +1509,11 @@ describe('appellant cases routes', () => {
 				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
 					{ id: 1, key: 'no_redaction_required' }
 				]);
+				databaseConnector.documentRedactionStatus.findUnique.mockResolvedValue({
+					id: 1,
+					key: 'no_redaction_required'
+				});
+				databaseConnector.$queryRaw.mockResolvedValue([]);
 				databaseConnector.document.findUnique.mockResolvedValue(null);
 
 				const patchBody = {
@@ -1558,7 +1654,7 @@ describe('appellant cases routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body.errors).toHaveProperty(
 					'appellantProcedurePreference',
-					'Must be null or one of the following values: hearing, inquiry, written, writtenPart1'
+					'Must be null or one of the following values: hearing, inquiry, written, writtenPart1, writtenPart2'
 				);
 			});
 			test('returns an error if appellantProcedurePreferenceDuration is outside the allowed range', async () => {
@@ -1722,8 +1818,6 @@ describe('appellant cases routes', () => {
 					.send(patchBody)
 					.set('azureAdUserId', azureAdUserId);
 
-				console.log(response.error);
-
 				expect(response.status).toEqual(200);
 				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith(
 					expect.objectContaining({
@@ -1771,6 +1865,7 @@ describe('appellant cases routes', () => {
 			test('updates the appeal case with groundABarred and otherInformation', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...enforcementNoticeAppeal,
+					currentStatus: APPEAL_CASE_STATUS.VALIDATION,
 					appealStatus: [{ status: 'validation', valid: true }]
 				});
 				// @ts-ignore
@@ -1787,6 +1882,11 @@ describe('appellant cases routes', () => {
 				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
 					{ id: 1, key: 'no_redaction_required' }
 				]);
+				databaseConnector.documentRedactionStatus.findUnique.mockResolvedValue({
+					id: 1,
+					key: 'no_redaction_required'
+				});
+				databaseConnector.$queryRaw.mockResolvedValue([]);
 				// @ts-ignore
 				databaseConnector.document.findUnique.mockResolvedValue(null);
 
@@ -2560,7 +2660,7 @@ describe('appellant cases routes', () => {
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
 					local_planning_authority: 'Maidstone Borough Council',
 					due_date: '14 July 2099',
-					fee_due_date: '14 Aug 2035',
+					fee_due_date: '14 August 2035',
 					missing_documents: ['Grounds of appeal supporting documents: Missing doc'],
 					other_info: ['Other reason'],
 					appeal_grounds: ['a', 'b'],
@@ -2716,6 +2816,127 @@ describe('appellant cases routes', () => {
 				});
 				expect(response.status).toEqual(200);
 			});
+
+			test('updates the appellant case for incomplete enforcement notice appeal with valid enforcement notice where ground fee receipt due', async () => {
+				databaseConnector.appellantCaseIncompleteReason.findMany.mockResolvedValue([
+					{
+						id: 14,
+						name: 'Waiting for appellant to pay the fee',
+						hasText: false
+					}
+				]);
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...enforcementNoticeAppealAppellantCaseIncomplete,
+					appellantCase: {
+						...enforcementNoticeAppealAppellantCaseIncomplete.appellantCase,
+						appellantCaseEnforcementMissingDocumentsSelected: [],
+						appellantCaseEnforcementGroundsMismatchSelected: [],
+						appellantCaseIncompleteReasonsSelected: []
+					},
+					enforcementNoticeAppealOutcome: {
+						...enforcementNoticeAppealAppellantCaseIncomplete.enforcementNoticeAppealOutcome,
+						groundAFeeReceiptDueDate: '2099-07-14T00:00:00.000Z'
+					}
+				});
+				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+					appellantCaseValidationOutcomes[0]
+				);
+				databaseConnector.appellantCaseIncompleteReasonsSelected.deleteMany.mockResolvedValue(true);
+				databaseConnector.appellantCaseIncompleteReasonsSelected.createMany.mockResolvedValue(true);
+				databaseConnector.appellantCaseEnforcementGroundsMismatchFactsText.deleteMany.mockResolvedValue(
+					true
+				);
+				databaseConnector.appellantCaseEnforcementGroundsMismatchFactsText.createMany.mockResolvedValue(
+					true
+				);
+				databaseConnector.appeal.update.mockResolvedValue();
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+				databaseConnector.appellantCaseEnforcementGroundsMismatchFacts.findMany.mockResolvedValue(
+					appellantCaseEnforcementGroundsMismatchFacts
+				);
+
+				const body = {
+					enforcementNoticeInvalid: 'no',
+					feeReceiptDueDate: '2099-07-14T00:00:00.000Z',
+					incompleteReasons: [{ id: 14 }],
+					validationOutcome: 'incomplete'
+				};
+				const { appellantCase, id } = enforcementNoticeAppealAppellantCaseIncomplete;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { id: appellantCase.id },
+					data: {
+						appellantCaseValidationOutcomeId: 1
+					}
+				});
+				expect(databaseConnector.enforcementNoticeAppealOutcome.upsert).toHaveBeenCalledWith({
+					create: expect.any(Object),
+					update: {
+						appeal: { connect: { id } },
+						otherInformation: null,
+						enforcementNoticeInvalid: 'no',
+						groundAFeeReceiptDueDate: '2099-07-14T00:00:00.000Z',
+						otherLiveAppeals: null
+					},
+					where: { appealId: id }
+				});
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+					data: {
+						appealId: id,
+						details: 'Appeal marked as incomplete:\n<ul><li>Ground (a) fee receipt due</li></ul>',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+					data: {
+						appealId: id,
+						details: 'Case updated',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+
+				const personalisation = {
+					appeal_reference_number: '1345264',
+					enforcement_reference: 'Reference',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					local_planning_authority: 'Maidstone Borough Council',
+					due_date: '',
+					fee_due_date: '14 July 2099',
+					missing_documents: [],
+					other_info: [],
+					appeal_grounds: [],
+					grounds_and_facts: []
+				};
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation,
+					recipientEmail: enforcementNoticeAppealAppellantCaseIncomplete.agent.email,
+					templateName: 'enforcement-appeal-incomplete-appellant'
+				});
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation,
+					recipientEmail: enforcementNoticeAppealAppellantCaseIncomplete.lpa.email,
+					templateName: 'enforcement-appeal-incomplete-lpa'
+				});
+				expect(response.status).toEqual(200);
+			});
+
 			test('updates the appellant case for incomplete enforcement notice appeal with invalid enforcement listed building', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...enforcementListedAppealAppellantCaseIncomplete,

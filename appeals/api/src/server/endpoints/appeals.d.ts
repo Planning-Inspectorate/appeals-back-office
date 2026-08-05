@@ -250,6 +250,7 @@ interface SingleAppellantCaseResponse {
 		enforcementNotice?: FolderInfo | null;
 		enforcementNoticePlan?: FolderInfo | null;
 		groundAFeeReceipt?: FolderInfo | null;
+		eiaEnvironmentalStatementAppellant?: FolderInfo | null;
 	};
 	validation: ValidationOutcomeResponse | null;
 	isGreenBelt?: boolean | null;
@@ -274,6 +275,14 @@ interface SingleAppellantCaseResponse {
 	landownerPermission?: boolean | null;
 	siteGridReferenceEasting?: string | null;
 	siteGridReferenceNorthing?: string | null;
+	reasonForAppealAppellant?: string | null;
+	anySignificantChanges?: string | null;
+	anySignificantChanges_otherSignificantChanges?: string | null;
+	anySignificantChanges_localPlanSignificantChanges?: string | null;
+	anySignificantChanges_nationalPolicySignificantChanges?: string | null;
+	anySignificantChanges_courtJudgementSignificantChanges?: string | null;
+	screeningOpinionIndicatesEiaRequired?: boolean | null;
+	ownershipCertificate?: boolean | null;
 	appealGrounds?: AppealGround[] | null;
 	siteUseAtTimeOfApplication?: string | null;
 	applicationMadeUnderActSection?: string | null;
@@ -392,6 +401,9 @@ interface SingleLPAQuestionnaireResponse {
 		otherPartyRepresentations?: FolderInfo | null;
 		planningOfficerReport?: FolderInfo | null;
 		plansDrawings?: FolderInfo | null;
+		additionalDocumentsLPA?: FolderInfo | null;
+		designAccessStatementLPA?: FolderInfo | null;
+		plansDrawingsLPA?: FolderInfo | null;
 		developmentPlanPolicies?: FolderInfo | null;
 		treePreservationPlan?: FolderInfo | null;
 		definitiveMapStatement?: FolderInfo | null;
@@ -480,6 +492,12 @@ interface SingleLPAQuestionnaireResponse {
 	appealUnderActSection?: string | null;
 	lpaConsiderAppealInvalid?: boolean;
 	lpaAppealInvalidReasons?: string | null;
+	listOfDocumentsBeforeDecision?: string | null;
+	anySignificantChangesLpa?: string | null;
+	anySignificantChangesLpa_otherSignificantChanges?: string | null;
+	anySignificantChangesLpa_localPlanSignificantChanges?: string | null;
+	anySignificantChangesLpa_nationalPolicySignificantChanges?: string | null;
+	anySignificantChangesLpa_courtJudgementSignificantChanges?: string | null;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -686,7 +704,6 @@ interface AppealListResponse {
 	appealReference: string;
 	appealSite: AppealSite;
 	appealStatus: string;
-	completedStateList: string[];
 	appealType?: string;
 	procedureType?: string;
 	createdAt: Date;
@@ -712,7 +729,31 @@ interface AppealListResponse {
 	hasInquiryAddress: boolean | null;
 	enforcementReference?: string | null;
 	enforcementNoticeInvalid?: string | null;
-	enforcementNoticeGroundAFeeReceiptDueDate?: Date | null;
+	isS78Expedited?: boolean;
+}
+
+interface PersonalListResponse {
+	appealId: number;
+	appealReference: string;
+	appealStatus: string;
+	completedStateList: string[];
+	appealType?: string;
+	procedureType?: string;
+	lpaQuestionnaireId?: number | null;
+	documentationSummary: DocumentationSummary;
+	dueDate: Date | undefined | null;
+	appealTimetable?: AppealTimetable;
+	isParentAppeal: boolean | null;
+	isChildAppeal: boolean | null;
+	isHearingSetup: boolean | null;
+	hasHearingAddress: boolean | null;
+	awaitingLinkedAppeal: boolean | null;
+	costsDecision?: CostsDecision;
+	numberOfResidencesNetChange: number | null;
+	isInquirySetup: boolean | null;
+	hasInquiryAddress: boolean | null;
+	enforcementNoticeInvalid?: string | null;
+	isS78Expedited?: boolean;
 }
 
 interface DocumentationSummary {
@@ -744,6 +785,7 @@ interface FolderInfo {
 	folderId: number;
 	caseId: string;
 	path: string;
+	documentCount?: number;
 	documents: DocumentInfo[];
 }
 
@@ -768,6 +810,7 @@ interface DocumentVersionInfo {
 	blobStoragePath: string;
 	documentURI: string;
 	dateReceived: string;
+	published: boolean;
 	redactionStatus: string;
 	virusCheckStatus: string;
 	size: string;
@@ -776,6 +819,37 @@ interface DocumentVersionInfo {
 	isDeleted?: boolean | null;
 	stage: string;
 	documentType: string;
+}
+
+interface PagedFolderInfo {
+	folderId: number;
+	caseId: string;
+	path: string;
+	totalFolderSize: number;
+	pageCount: number;
+	documents: PagedDocumentInfo[];
+}
+
+interface PagedDocumentInfo {
+	id: string;
+	name: string;
+	createdAt: string;
+	isDeleted?: boolean | null;
+	latestDocumentVersion: PagedDocumentVersionInfo;
+}
+
+interface PagedDocumentVersionInfo {
+	documentId: string;
+	version: number;
+	published: boolean;
+	virusCheckStatus: string;
+	size: string;
+	redactionStatus: string;
+	dateReceived: string;
+	isLateEntry?: boolean | null;
+	isDeleted?: boolean | null;
+	documentType: string;
+	stage: string;
 }
 
 interface SingleSiteVisitDetailsResponse {
@@ -1069,9 +1143,14 @@ type GetAuditTrailsResponse = {
 		| undefined;
 }[];
 
-type UpdateDocumentFileNameRequest = {
-	id: string;
-	fileName: string;
+type UpdateDocumentRequest = {
+	document: {
+		id?: string;
+		fileName?: string;
+		isShared?: boolean;
+	};
+	inviteResponses?: boolean;
+	sharingDocumentType?: string;
 };
 
 type UpdateDocumentsRequest = {
@@ -1232,6 +1311,10 @@ export {
 	LookupTables,
 	NotifyClient,
 	NotifyTemplate,
+	PagedDocumentInfo,
+	PagedDocumentVersionInfo,
+	PagedFolderInfo,
+	PersonalListResponse,
 	ReasonOption,
 	RelatedAppeal,
 	ServiceUserResponse,
@@ -1255,7 +1338,7 @@ export {
 	UpdateAsssignedTeamRequest,
 	UpdateAsssignedTeamResponse,
 	UpdateDocumentAvCheckRequest,
-	UpdateDocumentFileNameRequest,
+	UpdateDocumentRequest,
 	UpdateDocumentsRequest,
 	UpdateHearing,
 	UpdateInquiry,

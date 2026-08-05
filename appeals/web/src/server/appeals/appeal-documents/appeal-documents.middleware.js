@@ -1,3 +1,5 @@
+import { paginationDefaultSettings } from '#appeals/appeal.constants.js';
+import { DOCUMENTS_PAGE_SIZE } from '@pins/appeals/constants/common.js';
 import { getFileInfo, getFolder } from './appeal.documents.service.js';
 
 /**
@@ -6,14 +8,26 @@ import { getFileInfo, getFolder } from './appeal.documents.service.js';
  */
 export const validateCaseFolderId = async (req, res, next) => {
 	const { appealId, folderId } = req.params;
+	const { pageNumber = paginationDefaultSettings.firstPageNumber } = req.query;
+	if (Number.isNaN(Number(pageNumber)) || Number(pageNumber) < 1) {
+		return res.status(400).render('app/400.njk');
+	}
 	const repId = req.currentRepresentation?.id;
-	const folder = await getFolder(req.apiClient, appealId, folderId, repId);
+	const folder = await getFolder(
+		req.apiClient,
+		appealId,
+		folderId,
+		Number(pageNumber),
+		DOCUMENTS_PAGE_SIZE,
+		repId
+	);
 
 	if (!folder) {
 		return res.status(404).render('app/404.njk');
 	}
 
 	req.currentFolder = folder;
+	req.currentPageNumber = Number(pageNumber);
 	next();
 };
 

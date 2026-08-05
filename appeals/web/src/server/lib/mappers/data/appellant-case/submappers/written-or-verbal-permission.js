@@ -1,6 +1,6 @@
 import { INTEREST_IN_LAND } from '#lib/constants.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
-import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapWrittenOrVerbalPermission = ({

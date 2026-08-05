@@ -12,7 +12,6 @@ import {
 	APPEAL_REPRESENTATION_STATUS
 } from '@pins/appeals/constants/common.js';
 import { APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
-
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal
  */

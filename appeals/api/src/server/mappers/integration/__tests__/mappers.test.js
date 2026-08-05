@@ -15,7 +15,6 @@ import { mapAppellantCaseIn } from '../commands/appellant-case.mapper.js';
 import { mapDesignatedSiteNames, mapQuestionnaireIn } from '../commands/questionnaire.mapper.js';
 import { mapDocumentEntity } from '../map-document-entity.js';
 import { mapCaseDates } from '../shared/s20s78/map-case-dates.js';
-
 describe('appeals generic mappers', () => {
 	test('map case validation date on invalid appeal', async () => {
 		const input = {
@@ -85,7 +84,6 @@ describe('appeals generic mappers', () => {
 			: (findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.INVALID) ??
 				findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.READY_TO_START));
 
-		console.log(output);
 		expect(output).toBe('2025-03-18T09:12:33.334Z');
 	});
 
@@ -252,94 +250,146 @@ describe('mapCaseDates', () => {
 
 describe('map-document-entity', () => {
 	const internalRepDocType = REP_ATTACHMENT_DOCTYPE;
+	const testUri = 'http://doc.uri';
 	test.each([
 		{
 			desc: 'representationAttachments - APPELLANT_FINAL_COMMENT',
 			documentType: internalRepDocType,
 			representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT,
 			expectedDocumentType: APPEAL_DOCUMENT_TYPE.APPELLANT_FINAL_COMMENT,
-			expectedCaseStage: APPEAL_CASE_STAGE.FINAL_COMMENTS
+			expectedCaseStage: APPEAL_CASE_STAGE.FINAL_COMMENTS,
+			expectedPublishedDocumentUri: testUri
 		},
 		{
 			desc: 'representationAttachments - LPA_FINAL_COMMENT',
 			documentType: internalRepDocType,
 			representationType: APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT,
 			expectedDocumentType: APPEAL_DOCUMENT_TYPE.LPA_FINAL_COMMENT,
-			expectedCaseStage: APPEAL_CASE_STAGE.FINAL_COMMENTS
+			expectedCaseStage: APPEAL_CASE_STAGE.FINAL_COMMENTS,
+			expectedPublishedDocumentUri: testUri
 		},
 		{
 			desc: 'representationAttachments - APPELLANT_STATEMENT',
 			documentType: internalRepDocType,
 			representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT,
 			expectedDocumentType: APPEAL_DOCUMENT_TYPE.APPELLANT_STATEMENT,
-			expectedCaseStage: APPEAL_CASE_STAGE.STATEMENTS
+			expectedCaseStage: APPEAL_CASE_STAGE.STATEMENTS,
+			expectedPublishedDocumentUri: testUri
 		},
 		{
 			desc: 'representationAttachments - LPA_STATEMENT',
 			documentType: internalRepDocType,
 			representationType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
 			expectedDocumentType: APPEAL_DOCUMENT_TYPE.LPA_STATEMENT,
-			expectedCaseStage: APPEAL_CASE_STAGE.STATEMENTS
+			expectedCaseStage: APPEAL_CASE_STAGE.STATEMENTS,
+			expectedPublishedDocumentUri: testUri
 		},
 		{
 			desc: 'representationAttachments - RULE_6_PARTY_STATEMENT',
 			documentType: internalRepDocType,
 			representationType: APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT,
 			expectedDocumentType: APPEAL_DOCUMENT_TYPE.RULE_6_STATEMENT,
-			expectedCaseStage: APPEAL_CASE_STAGE.STATEMENTS
+			expectedCaseStage: APPEAL_CASE_STAGE.STATEMENTS,
+			expectedPublishedDocumentUri: testUri
 		},
 		{
 			desc: 'representationAttachments - APPELLANT_PROOFS_EVIDENCE',
 			documentType: internalRepDocType,
 			representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
 			expectedDocumentType: APPEAL_DOCUMENT_TYPE.APPELLANT_PROOF_OF_EVIDENCE,
-			expectedCaseStage: APPEAL_CASE_STAGE.EVIDENCE
+			expectedCaseStage: APPEAL_CASE_STAGE.EVIDENCE,
+			expectedPublishedDocumentUri: testUri
 		},
 		{
 			desc: 'representationAttachments - LPA_PROOFS_EVIDENCE',
 			documentType: internalRepDocType,
 			representationType: APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
 			expectedDocumentType: APPEAL_DOCUMENT_TYPE.LPA_PROOF_OF_EVIDENCE,
-			expectedCaseStage: APPEAL_CASE_STAGE.EVIDENCE
+			expectedCaseStage: APPEAL_CASE_STAGE.EVIDENCE,
+			expectedPublishedDocumentUri: testUri
 		},
 		{
 			desc: 'representationAttachments - RULE_6_PARTY_PROOFS_EVIDENCE',
 			documentType: internalRepDocType,
 			representationType: APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE,
 			expectedDocumentType: APPEAL_DOCUMENT_TYPE.RULE_6_PROOF_OF_EVIDENCE,
-			expectedCaseStage: APPEAL_CASE_STAGE.EVIDENCE
+			expectedCaseStage: APPEAL_CASE_STAGE.EVIDENCE,
+			expectedPublishedDocumentUri: testUri
 		},
 		{
 			desc: 'representationAttachments - COMMENT',
 			documentType: internalRepDocType,
 			representationType: APPEAL_REPRESENTATION_TYPE.COMMENT,
 			expectedDocumentType: APPEAL_DOCUMENT_TYPE.INTERESTED_PARTY_COMMENT,
-			expectedCaseStage: APPEAL_CASE_STAGE.THIRD_PARTY_COMMENTS
-		},
-		{
-			desc: 'representationAttachments - unknown type',
-			documentType: internalRepDocType,
-			representationType: 'SOMETHING_UNKNOWN',
-			expectedDocumentType: APPEAL_DOCUMENT_TYPE.UNCATEGORISED,
-			expectedCaseStage: APPEAL_CASE_STAGE.THIRD_PARTY_COMMENTS
+			expectedCaseStage: APPEAL_CASE_STAGE.THIRD_PARTY_COMMENTS,
+			expectedPublishedDocumentUri: testUri
 		},
 		{
 			desc: 'other documentType',
 			documentType: 'someOtherType',
 			representationType: null,
 			expectedDocumentType: 'someOtherType',
-			expectedCaseStage: APPEAL_CASE_STAGE.APPEAL_DECISION
+			expectedCaseStage: APPEAL_CASE_STAGE.APPEAL_DECISION,
+			expectedPublishedDocumentUri: testUri
 		},
 		{
 			desc: 'documentType undefined',
 			documentType: undefined,
 			representationType: null,
 			expectedDocumentType: APPEAL_DOCUMENT_TYPE.UNCATEGORISED,
-			expectedCaseStage: APPEAL_CASE_STAGE.APPEAL_DECISION
+			expectedCaseStage: APPEAL_CASE_STAGE.APPEAL_DECISION,
+			expectedPublishedDocumentUri: testUri
+		},
+		{
+			desc: 'documentType internal',
+			documentType: APPEAL_DOCUMENT_TYPE.INSPECTOR_CORRESPONDENCE,
+			representationType: null,
+			caseStage: APPEAL_CASE_STAGE.INTERNAL,
+			expectedDocumentType: APPEAL_DOCUMENT_TYPE.INSPECTOR_CORRESPONDENCE,
+			expectedCaseStage: APPEAL_CASE_STAGE.INTERNAL,
+			expectedPublishedDocumentUri: null
+		},
+		{
+			desc: 'cost published',
+			documentType: APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_CORRESPONDENCE,
+			representationType: null,
+			caseStage: APPEAL_CASE_STAGE.COSTS,
+			isPublished: true,
+			expectedDocumentType: APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_CORRESPONDENCE,
+			expectedCaseStage: APPEAL_CASE_STAGE.COSTS,
+			expectedPublishedDocumentUri: testUri
+		},
+		{
+			desc: 'cost unpublished',
+			documentType: APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_CORRESPONDENCE,
+			representationType: null,
+			caseStage: APPEAL_CASE_STAGE.COSTS,
+			isPublished: false,
+			expectedDocumentType: APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_CORRESPONDENCE,
+			expectedCaseStage: APPEAL_CASE_STAGE.COSTS,
+			expectedPublishedDocumentUri: null
+		},
+		{
+			desc: 'appellant case cost unpublished - still broadcast as published',
+			documentType: APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_CORRESPONDENCE,
+			representationType: null,
+			caseStage: APPEAL_CASE_STAGE.APPELLANT_CASE,
+			isPublished: false,
+			expectedDocumentType: APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_CORRESPONDENCE,
+			expectedCaseStage: APPEAL_CASE_STAGE.APPELLANT_CASE,
+			expectedPublishedDocumentUri: testUri
 		}
 	])(
 		'handles document type: $desc',
-		({ documentType, representationType, expectedDocumentType, expectedCaseStage }) => {
+		({
+			documentType,
+			representationType,
+			caseStage,
+			isPublished,
+			expectedDocumentType,
+			expectedCaseStage,
+			expectedPublishedDocumentUri
+		}) => {
 			const doc = {
 				guid: 'doc-123',
 				caseId: 'case-456',
@@ -351,13 +401,14 @@ describe('map-document-entity', () => {
 						originalFilename: 'test.pdf',
 						size: 1000,
 						mime: 'application/pdf',
-						documentURI: 'http://doc.uri',
+						documentURI: testUri,
 						fileMD5: 'md5hash',
 						dateCreated: new Date('2025-01-01T10:00:00.000Z'),
 						dateReceived: new Date('2025-01-01T11:00:00.000Z'),
 						lastModified: new Date('2025-01-01T12:00:00.000Z'),
 						documentType,
-						stage: APPEAL_CASE_STAGE.APPEAL_DECISION,
+						published: isPublished ?? false,
+						stage: caseStage ?? APPEAL_CASE_STAGE.APPEAL_DECISION,
 						redactionStatus: { key: 'NOT_REDACTED' },
 						representation: representationType
 							? { representation: { representationType } }
@@ -368,8 +419,38 @@ describe('map-document-entity', () => {
 			const result = mapDocumentEntity(doc);
 			expect(result.documentType).toBe(expectedDocumentType);
 			expect(result.caseStage).toBe(expectedCaseStage);
+			expect(result.publishedDocumentURI).toBe(expectedPublishedDocumentUri);
 		}
 	);
+
+	test('should handle unknown doc/rep type', () => {
+		const doc = {
+			guid: 'doc-123',
+			caseId: 'case-456',
+			name: '123e4567-e89b-12d3-a456-426614174000_test.pdf',
+			case: { reference: 'REF-1', appealType: { key: APPEAL_CASE_TYPE.D } },
+			versions: [
+				{
+					version: 1,
+					originalFilename: 'test.pdf',
+					size: 1000,
+					mime: 'application/pdf',
+					documentURI: testUri,
+					fileMD5: 'md5hash',
+					dateCreated: new Date('2025-01-01T10:00:00.000Z'),
+					dateReceived: new Date('2025-01-01T11:00:00.000Z'),
+					lastModified: new Date('2025-01-01T12:00:00.000Z'),
+					documentType: internalRepDocType,
+					published: true,
+					stage: APPEAL_CASE_STAGE.THIRD_PARTY_COMMENTS,
+					redactionStatus: { key: 'NOT_REDACTED' },
+					representation: { representation: { representationType: 'SOMETHING_UNKNOWN' } }
+				}
+			]
+		};
+		const result = mapDocumentEntity(doc);
+		expect(result).toBeNull();
+	});
 });
 
 describe('mapAppellantCaseIn', () => {
@@ -423,7 +504,11 @@ describe('mapAppellantCaseIn', () => {
 					ownersInformed: true,
 					isGreenBelt: true,
 					typeOfPlanningApplication: 'full',
-					numberOfResidencesNetChange: 123
+					numberOfResidencesNetChange: 123,
+					reasonForAppealAppellant: 'My reason for appeal',
+					significantChangesAffectingApplicationAppellant: [
+						{ value: 'adopted-a-new-local-plan', comment: 'local plan' }
+					]
 				}
 			},
 			expected: {
@@ -446,6 +531,12 @@ describe('mapAppellantCaseIn', () => {
 				isGreenBelt: true,
 				typeOfPlanningApplication: 'full',
 				numberOfResidencesNetChange: 123,
+				reasonForAppealAppellant: 'My reason for appeal',
+				anySignificantChanges: 'Yes',
+				anySignificantChanges_localPlanSignificantChanges: 'local plan',
+				anySignificantChanges_nationalPolicySignificantChanges: null,
+				anySignificantChanges_courtJudgementSignificantChanges: null,
+				anySignificantChanges_otherSignificantChanges: null,
 				siteAccessDetails: null,
 				siteSafetyDetails: null
 			}
@@ -476,6 +567,33 @@ describe('mapAppellantCaseIn', () => {
 				tenantAgriculturalHolding: false,
 				otherTenantsAgriculturalHolding: true,
 				informedTenantsAgriculturalHolding: false
+			})
+		},
+		{
+			desc: 'S78 case with expedited fields',
+			input: {
+				casedata: {
+					caseType: APPEAL_CASE_TYPE.W,
+					reasonForAppealAppellant: 'reason',
+					significantChangesAffectingApplicationAppellant: [
+						{ value: 'adopted-a-new-local-plan', comment: 'lp' },
+						{ value: 'national-policy-change', comment: 'np' },
+						{ value: 'court-judgement', comment: 'cj' },
+						{ value: 'other', comment: 'o' }
+					],
+					screeningOpinionIndicatesEiaRequired: true,
+					ownershipCertificate: true
+				}
+			},
+			expected: expect.objectContaining({
+				reasonForAppealAppellant: 'reason',
+				anySignificantChanges: 'Yes',
+				anySignificantChanges_localPlanSignificantChanges: 'lp',
+				anySignificantChanges_nationalPolicySignificantChanges: 'np',
+				anySignificantChanges_courtJudgementSignificantChanges: 'cj',
+				anySignificantChanges_otherSignificantChanges: 'o',
+				screeningOpinionIndicatesEiaRequired: true,
+				ownershipCertificate: true
 			})
 		},
 		{
@@ -535,7 +653,11 @@ describe('mapAppellantCaseIn', () => {
 							isSiteOnHighwayLand: false
 						}
 					],
-					hasLandownersPermission: true
+					hasLandownersPermission: true,
+					reasonForAppealAppellant: 'Adverts reason',
+					significantChangesAffectingApplicationAppellant: [
+						{ value: 'national-policy-change', comment: 'national policy change' }
+					]
 				}
 			},
 			expected: expect.objectContaining({
@@ -549,7 +671,10 @@ describe('mapAppellantCaseIn', () => {
 						]
 					}
 				},
-				landownerPermission: true
+				landownerPermission: true,
+				reasonForAppealAppellant: 'Adverts reason',
+				anySignificantChanges: 'Yes',
+				anySignificantChanges_nationalPolicySignificantChanges: 'national policy change'
 			})
 		},
 		{
@@ -697,7 +822,7 @@ describe('mapQuestionnaireIn', () => {
 			})
 		},
 		{
-			desc: 'S78 case',
+			desc: 'S78 case with expedited fields',
 			input: {
 				casedata: {
 					caseType: APPEAL_CASE_TYPE.W,
@@ -706,21 +831,23 @@ describe('mapQuestionnaireIn', () => {
 					siteSafetyDetails: ['safety1'],
 					notificationMethod: ['email'],
 					affectedListedBuildingNumbers: ['LB1'],
-					designatedSitesNames: ['siteA', 'customSite']
+					designatedSitesNames: ['siteA'],
+					significantChangesAffectingApplicationLpa: [
+						{ value: 'adopted-a-new-local-plan', comment: 'lp' },
+						{ value: 'national-policy-change', comment: 'np' },
+						{ value: 'court-judgement', comment: 'cj' },
+						{ value: 'other', comment: 'o' }
+					],
+					listOfDocumentsBeforeDecision: 'docs'
 				}
 			},
 			expected: expect.objectContaining({
-				lpaQuestionnaireSubmittedDate: '2025-10-22',
-				siteAccessDetails: 'access1',
-				siteSafetyDetails: 'safety1',
-				listedBuildingDetails: { create: [{ listEntry: 'LB1', affectsListedBuilding: true }] },
-				lpaNotificationMethods: {
-					create: [{ lpaNotificationMethod: { connect: { key: 'email' } } }]
-				},
-				designatedSiteNames: {
-					create: [{ designatedSite: { connect: { key: 'siteA' } } }]
-				},
-				designatedSiteNameCustom: 'customSite'
+				anySignificantChangesLpa: 'Yes',
+				anySignificantChangesLpa_localPlanSignificantChanges: 'lp',
+				anySignificantChangesLpa_nationalPolicySignificantChanges: 'np',
+				anySignificantChangesLpa_courtJudgementSignificantChanges: 'cj',
+				anySignificantChangesLpa_otherSignificantChanges: 'o',
+				listOfDocumentsBeforeDecision: 'docs'
 			})
 		},
 		{
@@ -802,6 +929,75 @@ describe('mapQuestionnaireIn', () => {
 				isSiteInAreaOfSpecialControlAdverts: true,
 				wasApplicationRefusedDueToHighwayOrTraffic: true,
 				didAppellantSubmitCompletePhotosAndPlans: true
+			})
+		},
+		{
+			desc: 'CAS adverts case expedited(ZA)',
+			input: {
+				casedata: {
+					caseType: APPEAL_CASE_TYPE.ZA,
+					lpaQuestionnaireSubmittedDate: '2026-10-22',
+					siteAccessDetails: ['access1'],
+					siteSafetyDetails: ['safety1'],
+					notificationMethod: ['post'],
+					affectedListedBuildingNumbers: ['LB1'],
+					designatedSitesNames: ['siteA'],
+					affectsScheduledMonument: true,
+					hasProtectedSpecies: true,
+					isAonbNationalLandscape: true,
+					hasStatutoryConsultees: true,
+					consultedBodiesDetails: 'details',
+					hasEmergingPlan: true,
+					lpaProcedurePreference: 'written',
+					lpaProcedurePreferenceDetails: 'preference details',
+					lpaProcedurePreferenceDuration: 12,
+					siteWithinSSSI: true,
+					isSiteInAreaOfSpecialControlAdverts: true,
+					wasApplicationRefusedDueToHighwayOrTraffic: true,
+					didAppellantSubmitCompletePhotosAndPlans: true,
+					significantChangesAffectingApplicationLpa: [
+						{ value: 'adopted-a-new-local-plan', comment: 'lp' },
+						{ value: 'national-policy-change', comment: 'np' },
+						{ value: 'court-judgement', comment: 'cj' },
+						{ value: 'other', comment: 'o' }
+					],
+					listOfDocumentsBeforeDecision: 'docs'
+				},
+				appeal: {
+					appellantCase: {
+						applicationDate: '2026-10-22'
+					}
+				}
+			},
+			expected: expect.objectContaining({
+				lpaQuestionnaireSubmittedDate: '2026-10-22',
+				siteAccessDetails: 'access1',
+				siteSafetyDetails: 'safety1',
+				listedBuildingDetails: { create: [{ listEntry: 'LB1', affectsListedBuilding: true }] },
+				lpaNotificationMethods: {
+					create: [{ lpaNotificationMethod: { connect: { key: 'post' } } }]
+				},
+				designatedSiteNames: {
+					create: [{ designatedSite: { connect: { key: 'siteA' } } }]
+				},
+				affectsScheduledMonument: true,
+				hasProtectedSpecies: true,
+				isAonbNationalLandscape: true,
+				hasStatutoryConsultees: true,
+				consultedBodiesDetails: 'details',
+				hasEmergingPlan: true,
+				lpaProcedurePreference: 'written',
+				lpaProcedurePreferenceDetails: 'preference details',
+				lpaProcedurePreferenceDuration: 12,
+				isSiteInAreaOfSpecialControlAdverts: true,
+				wasApplicationRefusedDueToHighwayOrTraffic: true,
+				didAppellantSubmitCompletePhotosAndPlans: true,
+				anySignificantChangesLpa: 'Yes',
+				anySignificantChangesLpa_otherSignificantChanges: 'o',
+				anySignificantChangesLpa_localPlanSignificantChanges: 'lp',
+				anySignificantChangesLpa_nationalPolicySignificantChanges: 'np',
+				anySignificantChangesLpa_courtJudgementSignificantChanges: 'cj',
+				listOfDocumentsBeforeDecision: 'docs'
 			})
 		},
 		{
@@ -924,9 +1120,78 @@ describe('mapQuestionnaireIn', () => {
 				preserveGrantLoan: true,
 				historicEnglandConsultation: true
 			})
+		},
+		{
+			desc: 'CAS Planning Expedite',
+			input: {
+				casedata: {
+					caseType: APPEAL_CASE_TYPE.ZP,
+					lpaQuestionnaireSubmittedDate: '2026-10-22',
+					inConservationArea: true,
+					isCorrectAppealType: true,
+					isGreenBelt: false,
+					siteAccessDetails: ['access1'],
+					siteSafetyDetails: ['safety1'],
+					notificationMethod: ['post'],
+					affectedListedBuildingNumbers: ['LB1'],
+					designatedSitesNames: ['siteA'],
+					hasProtectedSpecies: true,
+					isAonbNationalLandscape: true,
+					hasStatutoryConsultees: true,
+					consultedBodiesDetails: 'details',
+					hasEmergingPlan: true,
+					lpaProcedurePreference: 'written',
+					lpaProcedurePreferenceDetails: 'preference details',
+					lpaProcedurePreferenceDuration: 12,
+					lpaStatement: 'statement',
+					newConditionDetails: 'details',
+					reasonForNeighbourVisits: 'visit',
+					siteWithinSSSI: true,
+					isSiteInAreaOfSpecialControlAdverts: true,
+					wasApplicationRefusedDueToHighwayOrTraffic: true,
+					didAppellantSubmitCompletePhotosAndPlans: true,
+					significantChangesAffectingApplicationLpa: [
+						{ value: 'adopted-a-new-local-plan', comment: 'lp' },
+						{ value: 'national-policy-change', comment: 'np' },
+						{ value: 'court-judgement', comment: 'cj' },
+						{ value: 'other', comment: 'o' }
+					],
+					listOfDocumentsBeforeDecision: 'docs'
+				},
+				appeal: {
+					appellantCase: {
+						applicationDate: '2026-10-22'
+					}
+				}
+			},
+			expected: expect.objectContaining({
+				lpaQuestionnaireSubmittedDate: '2026-10-22',
+				siteAccessDetails: 'access1',
+				siteSafetyDetails: 'safety1',
+				listedBuildingDetails: { create: [{ listEntry: 'LB1', affectsListedBuilding: true }] },
+				lpaNotificationMethods: {
+					create: [{ lpaNotificationMethod: { connect: { key: 'post' } } }]
+				},
+				anySignificantChangesLpa: 'Yes',
+				anySignificantChangesLpa_otherSignificantChanges: 'o',
+				anySignificantChangesLpa_localPlanSignificantChanges: 'lp',
+				anySignificantChangesLpa_nationalPolicySignificantChanges: 'np',
+				anySignificantChangesLpa_courtJudgementSignificantChanges: 'cj',
+				listOfDocumentsBeforeDecision: 'docs',
+				inConservationArea: true,
+				isCorrectAppealType: true,
+				isGreenBelt: false,
+				lpaStatement: 'statement',
+				newConditionDetails: 'details',
+				reasonForNeighbourVisits: 'visit'
+			})
 		}
 	])('mapQuestionnaireIn: $desc', ({ input, expected }) => {
-		const result = mapQuestionnaireIn(input, designatedSites);
+		const result = mapQuestionnaireIn(
+			input,
+			designatedSites,
+			input.appeal?.appellantCase?.applicationDate || null
+		);
 		expect(result).toMatchObject(expected);
 	});
 });

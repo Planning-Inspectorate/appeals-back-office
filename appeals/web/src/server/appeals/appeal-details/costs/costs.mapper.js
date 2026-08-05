@@ -69,9 +69,10 @@ export function decisionCheckAndConfirmPage(
 
 /**
  * @param {string} backLinkUrl
+ * @param {string} [selectedInviteResponses]
  * @returns {PageContent}
  */
-export function inviteResponsesPage(backLinkUrl) {
+export function inviteResponsesPage(backLinkUrl, selectedInviteResponses) {
 	/** @type {PageContent} */
 	return {
 		title: 'Do you want to invite responses?',
@@ -84,6 +85,7 @@ export function inviteResponsesPage(backLinkUrl) {
 				parameters: {
 					name: 'invite-responses',
 					idPrefix: 'invite-responses',
+					value: selectedInviteResponses || null,
 					items: [
 						{ text: 'Yes', value: 'yes' },
 						{ text: 'No', value: 'no' }
@@ -103,9 +105,15 @@ export function inviteResponsesPage(backLinkUrl) {
  * @param {string} backLinkUrl
  * @param {import('@pins/appeals.api').Appeals.DocumentVersionInfo} documentVersion
  * @param {string} [inviteResponses]
- * @returns {PageContent}
+ * @param {{renderedHtml: string}} notifyPreview
+ * * @returns {PageContent}
  */
-export function shareDocumentCheckAndConfirmPage(backLinkUrl, documentVersion, inviteResponses) {
+export function shareDocumentCheckAndConfirmPage(
+	backLinkUrl,
+	documentVersion,
+	notifyPreview,
+	inviteResponses
+) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Check your answers',
@@ -150,8 +158,8 @@ export function shareDocumentCheckAndConfirmPage(backLinkUrl, documentVersion, i
 	pageContent.pageComponents?.push({
 		type: 'details',
 		parameters: {
-			summaryText: 'Preview email to LPA',
-			html: '<p class="govuk-body">Notify email preview content will appear here.</p>'
+			summaryText: 'Preview email to LPA and appellant',
+			html: notifyPreview.renderedHtml
 		}
 	});
 

@@ -61,7 +61,20 @@ export const mapAppellantCase = (data) => {
 			},
 			// @ts-ignore
 			typeOfPlanningApplication: appellantCase?.typeOfPlanningApplication || null,
-			numberOfResidencesNetChange: appellantCase?.numberOfResidencesNetChange
+			numberOfResidencesNetChange: appellantCase?.numberOfResidencesNetChange,
+			reasonForAppealAppellant: appellantCase?.reasonForAppealAppellant || null,
+			anySignificantChanges: appellantCase?.anySignificantChanges || null,
+			anySignificantChanges_otherSignificantChanges:
+				appellantCase?.anySignificantChanges_otherSignificantChanges || null,
+			anySignificantChanges_localPlanSignificantChanges:
+				appellantCase?.anySignificantChanges_localPlanSignificantChanges || null,
+			anySignificantChanges_nationalPolicySignificantChanges:
+				appellantCase?.anySignificantChanges_nationalPolicySignificantChanges || null,
+			anySignificantChanges_courtJudgementSignificantChanges:
+				appellantCase?.anySignificantChanges_courtJudgementSignificantChanges || null,
+			screeningOpinionIndicatesEiaRequired:
+				appellantCase?.screeningOpinionIndicatesEiaRequired ?? null,
+			ownershipCertificate: appellantCase?.ownershipCertificate ?? null
 		};
 	}
 };

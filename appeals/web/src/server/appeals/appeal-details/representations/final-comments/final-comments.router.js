@@ -12,13 +12,6 @@ import viewAndReviewFinalCommentsRouter from './view-and-review/view-and-review.
 const router = createRouter({ mergeParams: true });
 
 router.use(
-	'/:finalCommentsType',
-	validateAppeal,
-	withSingularRepresentation,
-	viewAndReviewFinalCommentsRouter
-);
-
-router.use(
 	'/:finalCommentsType/redact',
 	validateAppeal,
 	withSingularRepresentation,
@@ -34,6 +27,7 @@ router.use(
 
 router.use(
 	'/:finalCommentsType/add-document',
+	validateAppeal,
 	withSingularRepresentation,
 	getRepresentationAttachmentsFolder,
 	addDocumentRouter
@@ -41,6 +35,7 @@ router.use(
 
 router.use(
 	'/:finalCommentsType/manage-documents',
+	validateAppeal,
 	withSingularRepresentation,
 	getRepresentationAttachmentsFolder,
 	manageDocumentsRouter
@@ -51,6 +46,13 @@ router.use(
 	validateAppeal,
 	withSingularRepresentation,
 	acceptFinalCommentsRouter
+);
+
+router.use(
+	'/:finalCommentsType',
+	validateAppeal,
+	withSingularRepresentation,
+	viewAndReviewFinalCommentsRouter
 );
 
 export default router;

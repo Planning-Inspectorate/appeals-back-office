@@ -31,7 +31,7 @@ export const isAppealTypeEnabled = (type) => {
 			return isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE);
 		}
 		case APPEAL_CASE_TYPE.X: {
-			return isFeatureActive(FEATURE_FLAG_NAMES.LDC);
+			return true;
 		}
 		case APPEAL_CASE_TYPE.F: {
 			return true;

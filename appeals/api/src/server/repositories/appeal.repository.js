@@ -2,6 +2,7 @@ import { databaseConnector } from '#utils/database-connector.js';
 import { hasValueOrIsNull } from '#utils/has-value-or-null.js';
 import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
+import { MAX_VISIBLE_DOCUMENTS_IN_SUMMARY } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import {
 	deleteAppealsInBatches,
@@ -41,7 +42,7 @@ const linkedAppealsInclude = isLinkedAppealsActive()
 
 /**
  * @deprecated too inefficient, use specific selects only
- * @type {Omit<typeof appealDetailsIncludeMap, 'caseNotes'>}
+ * @type {Omit<typeof appealDetailsIncludeMap, 'caseNotes' | 'folders'>}
  * legacy all data include
  **/
 export const appealDetailsInclude = /** @type {Object} */ {
@@ -161,22 +162,6 @@ export const appealDetailsInclude = /** @type {Object} */ {
 	inquiry: {
 		include: {
 			address: true
-		}
-	},
-	folders: {
-		include: {
-			documents: {
-				where: {
-					isDeleted: false
-				},
-				include: {
-					latestDocumentVersion: {
-						include: {
-							redactionStatus: true
-						}
-					}
-				}
-			}
 		}
 	},
 	representations: true,
@@ -319,22 +304,7 @@ export const appealDetailsIncludeMap = /** @type {Object} */ {
 		}
 	},
 	caseNotes: true,
-	folders: {
-		include: {
-			documents: {
-				where: {
-					isDeleted: false
-				},
-				include: {
-					latestDocumentVersion: {
-						include: {
-							redactionStatus: true
-						}
-					}
-				}
-			}
-		}
-	},
+	folders: true,
 	representations: true,
 	hearingEstimate: true,
 	inquiryEstimate: true,
@@ -380,8 +350,7 @@ export const buildAppealInclude = (
 	}
 
 	if (!selectedKeys.length && !selectAppealTypeKey) {
-		// Return everything if no keys are selected
-		return appealDetailsInclude;
+		throw new Error('Must provide at least one: selectedKeys or selectAppealTypeKey');
 	}
 
 	/** @type {Partial<import('#db-client/models.ts').AppealInclude>} */
@@ -415,6 +384,11 @@ export const buildAppealInclude = (
 const getAppealById = async (id, includeDetails = true, selectedKeys = [], selectAppealTypeKey) => {
 	const include = buildAppealInclude(selectedKeys, includeDetails, selectAppealTypeKey);
 
+	const includeFolders = include && include.folders;
+	if (include && 'folders' in include) {
+		delete include.folders;
+	}
+
 	const appeal = await databaseConnector.appeal.findUnique({
 		where: {
 			id
@@ -422,6 +396,68 @@ const getAppealById = async (id, includeDetails = true, selectedKeys = [], selec
 		include
 	});
 	if (appeal) {
+		//@ts-ignore
+		if (includeFolders && !appeal.folders) {
+			if (process.env.NODE_ENV === 'test') {
+				// @ts-ignore
+				appeal.folders = [];
+			} else {
+				const folders = await getFoldersWithDocumentsAndVersions(id);
+				// @ts-ignore
+				appeal.folders = folders;
+			}
+		}
+		// @ts-ignore
+		return appeal;
+	}
+};
+
+/**
+ * @param {number} id
+ * @returns {Promise<{id: number} | null>}
+ */
+const checkAppealExistsById = async (id) => {
+	return databaseConnector.appeal.findUnique({
+		where: {
+			id
+		},
+		select: {
+			id: true,
+			reference: true
+		}
+	});
+};
+
+/**
+ * @deprecated too inefficient do not use, use getAppealById with specific includes only
+ * @description DO NOT USE. Gets an appeal and all it's related entities
+ * @param {number} id
+ * @param {{omitDocuments: boolean|undefined, omitRepresentations: boolean|undefined}} [options]
+ * @returns {Promise<Appeal|undefined>}
+ */
+const deprecatedGetAppealById = async (id, options) => {
+	const massInclude = {
+		...appealDetailsInclude,
+		...(options?.omitRepresentations && { representations: false })
+	};
+	const appeal = await databaseConnector.appeal.findUnique({
+		where: {
+			id
+		},
+		include: massInclude
+	});
+	if (appeal) {
+		// @ts-ignore
+		if (!appeal.folders) {
+			if (process.env.NODE_ENV === 'test' || options?.omitDocuments) {
+				// @ts-ignore
+				appeal.folders = [];
+			} else {
+				const folders = await getFoldersWithDocumentsAndVersions(id);
+				// @ts-ignore
+				appeal.folders = folders;
+			}
+		}
 		// @ts-ignore
 		return appeal;
 	}
@@ -446,11 +482,11 @@ const getAppealTypeById = async (id) => {
 };
 
 /**
- *
+ * @deprecated too inefficient, use getAppealById with specific includes only
  * @param {string} appealReference
  * @returns {Promise<Appeal|undefined|null>}
  */
-const getAppealByAppealReference = async (appealReference) => {
+const deprecatedGetAppealByAppealReference = async (appealReference) => {
 	const appeal = await databaseConnector.appeal.findUnique({
 		where: {
 			reference: appealReference
@@ -459,6 +495,17 @@ const getAppealByAppealReference = async (appealReference) => {
 	});
 
 	if (appeal) {
+		// @ts-ignore
+		if (!appeal.folders) {
+			if (process.env.NODE_ENV === 'test') {
+				// @ts-ignore
+				appeal.folders = [];
+			} else {
+				const folders = await getFoldersWithDocumentsAndVersions(appeal.id);
+				// @ts-ignore
+				appeal.folders = folders;
+			}
+		}
 		// @ts-ignore
 		return appeal;
 	}
@@ -764,25 +811,10 @@ const removeAppealServiceUser = async (appealId, data) => {
 	});
 };
 
-const statusSelect = {
-	select: {
-		status: true,
-		valid: true
-	},
-	where: {
-		valid: true
-	}
-};
-
 const getAppealsWithCompletedEvents = () =>
 	databaseConnector.appeal.findMany({
 		where: {
-			appealStatus: {
-				some: {
-					status: APPEAL_CASE_STATUS.AWAITING_EVENT,
-					valid: true
-				}
-			},
+			currentStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 			OR: [
 				{
 					siteVisit: {
@@ -839,7 +871,7 @@ const getAppealsWithCompletedEvents = () =>
 		},
 		select: {
 			id: true,
-			appealStatus: statusSelect,
+			currentStatus: true,
 			childAppeals: {
 				select: {
 					childId: true,
@@ -847,7 +879,7 @@ const getAppealsWithCompletedEvents = () =>
 					child: {
 						select: {
 							id: true,
-							appealStatus: statusSelect
+							currentStatus: true
 						}
 					}
 				}
@@ -919,6 +951,120 @@ const checkIfAppealHasAgent = async (appealId) => {
 };
 
 /**
+ * @param {number} caseId
+ * @returns {Promise<any[]>}
+ */
+/**
+ * @param {number} caseId
+ * @param {boolean} [loadAllVersions]
+ * @returns {Promise<any[]>}
+ */
+const getFoldersWithDocumentsAndVersions = async (caseId, loadAllVersions = false) => {
+	if (!databaseConnector.folder) {
+		return [];
+	}
+	const folders = await databaseConnector.folder.findMany({
+		where: { caseId }
+	});
+
+	if (!folders || folders.length === 0) {
+		return [];
+	}
+
+	if (!databaseConnector.document) {
+		return folders.map((f) => ({ ...f, documents: [] }));
+	}
+
+	const folderIds = folders.map((f) => f.id);
+	const documents = await databaseConnector.document.findMany({
+		where: {
+			folderId: { in: folderIds },
+			isDeleted: false
+		},
+		orderBy: {
+			createdAt: 'desc'
+		}
+	});
+
+	if (!documents || documents.length === 0) {
+		return folders.map((f) => ({ ...f, documents: [] }));
+	}
+
+	if (!databaseConnector.documentVersion) {
+		return folders.map((f) => {
+			const folderDocs = documents.filter((d) => d.folderId === f.id);
+			return {
+				...f,
+				documents: folderDocs.map((d) => ({ ...d, latestDocumentVersion: null }))
+			};
+		});
+	}
+
+	let guidsToFetch = [];
+	if (loadAllVersions) {
+		guidsToFetch = documents.map((d) => d.guid).filter(Boolean);
+	} else {
+		const docsByFolder = new Map();
+		for (const doc of documents) {
+			if (!docsByFolder.has(doc.folderId)) {
+				docsByFolder.set(doc.folderId, []);
+			}
+			docsByFolder.get(doc.folderId).push(doc);
+		}
+		for (const docs of docsByFolder.values()) {
+			const visibleDocs = docs.slice(0, MAX_VISIBLE_DOCUMENTS_IN_SUMMARY);
+			for (const doc of visibleDocs) {
+				if (doc.guid) {
+					guidsToFetch.push(doc.guid);
+				}
+			}
+		}
+	}
+
+	const batchSize = 1000;
+	const documentVersions = [];
+
+	for (let i = 0; i < guidsToFetch.length; i += batchSize) {
+		const chunk = guidsToFetch.slice(i, i + batchSize);
+		const chunkVersions = await databaseConnector.documentVersion.findMany({
+			where: {
+				documentGuid: { in: chunk }
+			},
+			include: {
+				redactionStatus: true
+			}
+		});
+		documentVersions.push(...chunkVersions);
+	}
+
+	const versionsByGuid = new Map();
+	for (const version of documentVersions) {
+		versionsByGuid.set(version.documentGuid, version);
+	}
+
+	const documentsWithVersions = documents.map((doc) => {
+		const latestVersion = versionsByGuid.get(doc.guid) || null;
+		return {
+			...doc,
+			latestDocumentVersion: latestVersion
+		};
+	});
+
+	const documentsByFolderId = new Map();
+	for (const doc of documentsWithVersions) {
+		if (!documentsByFolderId.has(doc.folderId)) {
+			documentsByFolderId.set(doc.folderId, []);
+		}
+		documentsByFolderId.get(doc.folderId).push(doc);
+	}
+
+	return folders.map((folder) => ({
+		...folder,
+		documents: documentsByFolderId.get(folder.id) || []
+	}));
+};
+
+/**
  * @param {number} appealId
  * @returns {Promise<string>}
  */
@@ -935,12 +1081,384 @@ const getAppealReference = async (appealId) => {
 	return appeal?.reference ?? '';
 };
 
+/**
+ * @type {import('#db-client/models.ts').AppealSelect}
+ **/
+export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
+	id: true,
+	reference: true,
+	currentStatus: true,
+	applicationReference: true,
+	caseCreatedDate: true,
+	caseValidDate: true,
+	caseExtensionDate: true,
+	caseStartedDate: true,
+	withdrawalRequestDate: true,
+	caseResubmittedTypeId: true,
+	caseTransferredId: true,
+	eiaScreeningRequired: true,
+	padsInspectorUserId: true,
+	address: true,
+	procedureType: {
+		select: {
+			name: true
+		}
+	},
+	parentAppeals: {
+		select: {
+			type: true,
+			linkingDate: true,
+			parent: {
+				select: {
+					id: true,
+					reference: true
+				}
+			}
+		}
+	},
+	childAppeals: {
+		select: {
+			type: true,
+			linkingDate: true,
+			child: {
+				select: {
+					id: true,
+					reference: true
+				}
+			}
+		}
+	},
+	neighbouringSites: {
+		select: {
+			id: true,
+			source: true,
+			address: {
+				select: {
+					addressLine1: true,
+					addressLine2: true,
+					addressTown: true,
+					addressCounty: true,
+					postcode: true
+				}
+			}
+		}
+	},
+	allocation: {
+		select: {
+			level: true,
+			band: true
+		}
+	},
+	specialisms: {
+		select: {
+			specialism: {
+				select: {
+					name: true
+				}
+			}
+		}
+	},
+	appellantCase: {
+		select: {
+			id: true,
+			appellantCaseValidationOutcome: true,
+			knowsOtherOwners: true,
+			knowsAllOwners: true,
+			appellantCaseAdvertDetails: true,
+			contactAddress: true,
+			siteSafetyDetails: true,
+			numberOfResidencesNetChange: true,
+			screeningOpinionIndicatesEiaRequired: true,
+			applicationMadeUnderActSection: true,
+			planningObligation: true,
+			statusPlanningObligation: true,
+			enforcementReference: true
+		}
+	},
+	appellant: {
+		select: {
+			id: true,
+			firstName: true,
+			lastName: true,
+			organisationName: true,
+			email: true,
+			phoneNumber: true
+		}
+	},
+	agent: {
+		select: {
+			id: true,
+			firstName: true,
+			lastName: true,
+			organisationName: true,
+			email: true,
+			phoneNumber: true
+		}
+	},
+	lpa: {
+		select: {
+			name: true,
+			email: true
+		}
+	},
+	appealStatus: {
+		select: {
+			status: true,
+			valid: true,
+			createdAt: true
+		}
+	},
+	appealTimetable: {
+		select: {
+			id: true,
+			lpaQuestionnaireDueDate: true,
+			caseResubmissionDueDate: true,
+			ipCommentsDueDate: true,
+			lpaStatementDueDate: true,
+			finalCommentsDueDate: true,
+			s106ObligationDueDate: true,
+			issueDeterminationDate: true,
+			proofOfEvidenceAndWitnessesDueDate: true,
+			caseManagementConferenceDueDate: true,
+			planningObligationDueDate: true,
+			statementOfCommonGroundDueDate: true
+		}
+	},
+	appealType: {
+		select: {
+			id: true,
+			type: true,
+			key: true
+		}
+	},
+	assignedTeam: {
+		select: {
+			id: true,
+			name: true,
+			email: true
+		}
+	},
+	caseOfficer: {
+		select: {
+			azureAdUserId: true
+		}
+	},
+	inspector: {
+		select: {
+			azureAdUserId: true
+		}
+	},
+	inspectorDecision: {
+		select: {
+			outcome: true,
+			decisionLetterGuid: true,
+			caseDecisionOutcomeDate: true,
+			invalidDecisionReason: true
+		}
+	},
+	lpaQuestionnaire: {
+		select: {
+			id: true,
+			lpaqCreatedDate: true,
+			lpaQuestionnaireValidationOutcome: {
+				select: {
+					name: true
+				}
+			},
+			siteSafetyDetails: true
+		}
+	},
+	siteVisit: {
+		where: {
+			whoMissedSiteVisit: null
+		},
+		select: {
+			id: true,
+			visitDate: true,
+			visitStartTime: true,
+			visitEndTime: true,
+			siteVisitType: {
+				select: {
+					name: true
+				}
+			}
+		}
+	},
+	hearing: {
+		select: {
+			id: true,
+			hearingStartTime: true,
+			hearingEndTime: true,
+			estimatedDays: true,
+			addressId: true,
+			address: {
+				select: {
+					addressLine1: true,
+					addressLine2: true,
+					addressTown: true,
+					addressCounty: true,
+					postcode: true
+				}
+			}
+		}
+	},
+	inquiry: {
+		select: {
+			id: true,
+			inquiryStartTime: true,
+			inquiryEndTime: true,
+			addressId: true,
+			estimatedDays: true,
+			address: {
+				select: {
+					addressLine1: true,
+					addressLine2: true,
+					addressTown: true,
+					addressCounty: true,
+					postcode: true
+				}
+			}
+		}
+	},
+	representations: {
+		select: {
+			id: true,
+			representationType: true,
+			dateCreated: true,
+			isRedacted: true,
+			representedId: true,
+			status: true
+		}
+	},
+	hearingEstimate: {
+		select: {
+			id: true,
+			preparationTime: true,
+			sittingTime: true,
+			reportingTime: true
+		}
+	},
+	inquiryEstimate: {
+		select: {
+			id: true,
+			preparationTime: true,
+			sittingTime: true,
+			reportingTime: true
+		}
+	},
+	appealGrounds: {
+		where: {
+			isDeleted: false
+		},
+		select: {
+			factsForGround: true,
+			isDeleted: true,
+			ground: {
+				select: {
+					groundRef: true,
+					groundDescription: true
+				}
+			}
+		}
+	},
+	appealRule6Parties: {
+		select: {
+			id: true,
+			serviceUser: {
+				select: {
+					id: true,
+					organisationName: true,
+					email: true
+				}
+			}
+		}
+	},
+	enforcementNoticeAppealOutcome: {
+		select: {
+			id: true,
+			groundABarred: true,
+			otherInformation: true,
+			enforcementNoticeInvalid: true,
+			otherLiveAppeals: true,
+			groundAFeeReceiptDueDate: true
+		}
+	},
+	folders: {
+		select: {
+			id: true,
+			path: true,
+			caseId: true,
+			_count: {
+				select: {
+					documents: {
+						where: {
+							isDeleted: false
+						}
+					}
+				}
+			},
+			documents: {
+				where: {
+					isDeleted: false
+				},
+				orderBy: {
+					createdAt: 'desc'
+				},
+				take: 1,
+				select: {
+					guid: true,
+					name: true,
+					isDeleted: true,
+					latestDocumentVersion: {
+						select: {
+							documentGuid: true,
+							dateReceived: true,
+							isDeleted: true,
+							stage: true,
+							documentType: true
+						}
+					}
+				}
+			}
+		}
+	},
+	caseNotes: {
+		include: {
+			user: true
+		},
+		orderBy: {
+			createdAt: 'desc'
+		}
+	}
+};
+
+/**
+ * @param {number} id
+ * @returns {Promise<Appeal|undefined>}
+ */
+const getAppealByIdForPageDisplay = async (id) => {
+	const appeal = await databaseConnector.appeal.findUnique({
+		where: {
+			id
+		},
+		select: appealDetailsPageDisplaySelect
+	});
+
+	if (appeal) {
+		// @ts-ignore
+		return appeal;
+	}
+};
+
 export default {
+	checkAppealExistsById,
 	getLinkedAppeals,
 	getLinkedAppealsById,
 	getAppealById,
+	getAppealByIdForPageDisplay,
+	deprecatedGetAppealById,
 	getAppealTypeById,
-	getAppealByAppealReference,
+	deprecatedGetAppealByAppealReference,
 	getAppealIdList,
 	updateAppealById,
 	setAppealDecision,
@@ -955,5 +1473,6 @@ export default {
 	setAssignedTeamId,
 	deleteAppealsByIds,
 	checkIfAppealHasAgent,
-	getAppealReference
+	getAppealReference,
+	getFoldersWithDocumentsAndVersions
 };

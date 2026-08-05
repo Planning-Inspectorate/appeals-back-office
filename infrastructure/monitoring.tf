@@ -28,6 +28,11 @@ resource "azurerm_key_vault_secret" "app_insights_connection_string" {
   value        = azurerm_application_insights.main.connection_string
   content_type = "connection-string"
 
+  depends_on = [
+    azurerm_private_endpoint.keyvault,
+    azurerm_private_dns_zone_virtual_network_link.keyvault
+  ]
+
   tags = local.tags
 }
 
@@ -54,7 +59,7 @@ resource "azurerm_application_insights_standard_web_test" "web" {
   }
   validation_rules {
     ssl_check_enabled           = true
-    ssl_cert_remaining_lifetime = 7
+    ssl_cert_remaining_lifetime = 30
   }
 
   tags = local.tags

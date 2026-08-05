@@ -25,6 +25,7 @@ import {
 import {
 	APPEAL_ALLOCATION_LEVEL,
 	APPEAL_APPELLANT_PROCEDURE_PREFERENCE,
+	APPEAL_CASE_PROCEDURE,
 	APPEAL_CASE_STATUS,
 	APPEAL_CASE_TYPE
 } from '@planning-inspectorate/data-model';
@@ -146,6 +147,7 @@ const appealFactory = ({
 		caseValidDate: validAt,
 		reference: randomUUID(),
 		appealStatus: { create: status },
+		currentStatus: status.status,
 		appellantCase: { create: getRandomisedAppellantCaseCreateInput(typeShorthand) },
 		appellant: {
 			create: appellantInput
@@ -433,6 +435,26 @@ const newS78Appeals = [
 		agent: false
 	}),
 	appealFactory({
+		typeShorthand: APPEAL_CASE_TYPE.C,
+		procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+		status: { status: APPEAL_CASE_STATUS.STATEMENTS, createdAt: getPastDate({ months: 6 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ months: 2 }),
+		validAt: getPastDate({ months: 6 }),
+		assignCaseOfficer: true,
+		agent: false
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_CASE_TYPE.X,
+		procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+		status: { status: APPEAL_CASE_STATUS.STATEMENTS, createdAt: getPastDate({ months: 6 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ months: 2 }),
+		validAt: getPastDate({ months: 6 }),
+		assignCaseOfficer: true,
+		agent: false
+	}),
+	appealFactory({
 		typeShorthand: APPEAL_CASE_TYPE.W,
 		status: { status: APPEAL_CASE_STATUS.STATEMENTS, createdAt: getPastDate({ months: 6 }) },
 		lpaQuestionnaire: true,
@@ -607,6 +629,47 @@ const newS78Appeals = [
 		assignCaseOfficer: true,
 		agent: false,
 		procedureType: APPEAL_APPELLANT_PROCEDURE_PREFERENCE.INQUIRY
+	}),
+	// S78 Expedited (Part 1) Seed Appeals for manual testing
+	appealFactory({
+		typeShorthand: APPEAL_CASE_TYPE.W,
+		procedureType: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
+		status: { status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, createdAt: getPastDate({ weeks: 1 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ weeks: 1 }),
+		validAt: getPastDate({ weeks: 1 }),
+		assignCaseOfficer: true,
+		agent: false
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_CASE_TYPE.W,
+		procedureType: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
+		status: { status: APPEAL_CASE_STATUS.EVENT, createdAt: getPastDate({ weeks: 1 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ weeks: 1 }),
+		validAt: getPastDate({ weeks: 1 }),
+		assignCaseOfficer: true,
+		agent: false
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_CASE_TYPE.W,
+		procedureType: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
+		status: { status: APPEAL_CASE_STATUS.AWAITING_EVENT, createdAt: getPastDate({ weeks: 1 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ weeks: 1 }),
+		validAt: getPastDate({ weeks: 1 }),
+		assignCaseOfficer: true,
+		agent: false
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_CASE_TYPE.W,
+		procedureType: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
+		status: { status: APPEAL_CASE_STATUS.AWAITING_EVENT, createdAt: getPastDate({ weeks: 1 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ weeks: 1 }),
+		validAt: getPastDate({ weeks: 1 }),
+		assignCaseOfficer: true,
+		agent: false
 	})
 ];
 
@@ -1429,6 +1492,42 @@ export async function seedTestData(databaseConnector) {
 		const appealType =
 			appealTypes.filter(({ id }) => id === appealTypeId)[0].key || APPEAL_CASE_TYPE.D;
 
+		const currentStatusRec = appealStatus.find((s) => s.appealId === id && s.valid);
+
+		if (currentStatusRec) {
+			const pastStatuses = [];
+			const cur = currentStatusRec.status;
+
+			if (
+				cur !== APPEAL_CASE_STATUS.VALIDATION &&
+				cur !== APPEAL_CASE_STATUS.READY_TO_START &&
+				cur !== APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER
+			) {
+				pastStatuses.push(APPEAL_CASE_STATUS.VALIDATION, APPEAL_CASE_STATUS.READY_TO_START);
+			}
+			if (
+				[
+					APPEAL_CASE_STATUS.EVENT,
+					APPEAL_CASE_STATUS.AWAITING_EVENT,
+					APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+					APPEAL_CASE_STATUS.COMPLETE
+					//@ts-ignore
+				].includes(cur)
+			) {
+				pastStatuses.push(APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE);
+			}
+
+			if (pastStatuses.length > 0) {
+				await databaseConnector.appealStatus.createMany({
+					data: pastStatuses.map((status) => ({
+						appealId: id,
+						status,
+						valid: false
+					}))
+				});
+			}
+		}
+
 		if (caseStartedDate) {
 			const appealTimetable = await calculateTimetable(appealType, caseStartedDate);
 
@@ -1485,6 +1584,11 @@ export async function seedTestData(databaseConnector) {
 				[APPEAL_CASE_STATUS.ISSUE_DETERMINATION, APPEAL_CASE_STATUS.COMPLETE].includes(status)
 		);
 
+		const awaitingEventStatus = appealStatus.find(
+			({ appealId, status, valid }) =>
+				appealId === id && valid && status === APPEAL_CASE_STATUS.AWAITING_EVENT
+		);
+
 		const today = new Date();
 
 		if (statusWithSiteVisitSet) {
@@ -1497,6 +1601,31 @@ export async function seedTestData(databaseConnector) {
 					siteVisitTypeId: siteVisitType[pickRandom(siteVisitType)].id
 				}
 			});
+		} else if (awaitingEventStatus) {
+			const dbAppeal = await databaseConnector.appeal.findUnique({
+				where: { id },
+				include: { procedureType: true }
+			});
+
+			if (dbAppeal && dbAppeal.procedureType?.key === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1) {
+				const isPast = id % 2 === 0;
+				const targetDate = new Date();
+				if (isPast) {
+					targetDate.setDate(targetDate.getDate() - 2);
+				} else {
+					targetDate.setDate(targetDate.getDate() + 2);
+				}
+
+				await databaseConnector.siteVisit.create({
+					data: {
+						appealId: id,
+						visitDate: targetDate,
+						visitEndTime: `${targetDate.toISOString().split('T')[0]}T16:00:00.000Z`,
+						visitStartTime: `${targetDate.toISOString().split('T')[0]}T14:00:00.000Z`,
+						siteVisitTypeId: siteVisitType[pickRandom(siteVisitType)].id
+					}
+				});
+			}
 		}
 	}
 
@@ -1613,6 +1742,7 @@ export async function seedTestData(databaseConnector) {
 				where: { appealId: appealId },
 				data: {
 					contactAddressId: address.id,
+					enforcementNotice: true,
 					enforcementNoticeListedBuilding: false,
 					enforcementIssueDate: getPastDate({ days: 10 }),
 					enforcementEffectiveDate: new Date(),
@@ -1899,6 +2029,7 @@ async function addProofsEvidence(databaseConnector, id, source, sourceId) {
 		data: {
 			blobStorageContainer: 'document-service-uploads',
 			dateCreated: '2024-03-01T13:48:35.847Z',
+			dateReceived: '2024-03-01T13:48:35.847Z',
 			description: 'Document img2.jpg (001) imported',
 			documentGuid: doc.guid,
 			documentType,

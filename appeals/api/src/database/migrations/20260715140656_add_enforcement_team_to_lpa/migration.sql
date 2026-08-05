@@ -1,0 +1,28 @@
+BEGIN TRY
+
+BEGIN TRAN;
+
+-- DropForeignKey
+ALTER TABLE [dbo].[LPA] DROP CONSTRAINT [LPA_teamId_fkey];
+
+-- AlterTable
+ALTER TABLE [dbo].[LPA] ADD [enforcementTeamId] INT;
+
+-- AddForeignKey
+ALTER TABLE [dbo].[LPA] ADD CONSTRAINT [LPA_teamId_fkey] FOREIGN KEY ([teamId]) REFERENCES [dbo].[Team]([id]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE [dbo].[LPA] ADD CONSTRAINT [LPA_enforcementTeamId_fkey] FOREIGN KEY ([enforcementTeamId]) REFERENCES [dbo].[Team]([id]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+COMMIT TRAN;
+
+END TRY
+BEGIN CATCH
+
+IF @@TRANCOUNT > 0
+BEGIN
+    ROLLBACK TRAN;
+END;
+THROW
+
+END CATCH

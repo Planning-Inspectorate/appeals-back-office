@@ -3,30 +3,42 @@
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 
+import config from '#config/config.js';
 import {
 	addDocumentsToAppeal,
 	getFoldersForAppeal
 } from '#endpoints/documents/documents.service.js';
-import addressRepository from '#repositories/address.repository.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import appealRepository from '#repositories/appeal.repository.js';
+import { updateAppealDecisionLetter } from '#repositories/decision.repository.js';
 import { getDocumentsInFolder } from '#repositories/document.repository.js';
 import representationRepository from '#repositories/representation.repository.js';
-import serviceUserRepository from '#repositories/service-user.repository.js';
 import transitionState from '#state/transition-state.js';
 import { copyBlobs } from '#utils/blob-copy.js';
 import { currentStatus } from '#utils/current-status.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { getChildAppeals } from '#utils/link-appeals.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_REPRESENTATION_TYPE, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import {
 	CASE_RELATIONSHIP_LINKED,
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { EventType } from '@pins/event-client';
+import {
+	APPEAL_CASE_STATUS,
+	APPEAL_DOCUMENT_TYPE,
+	SERVICE_USER_TYPE
+} from '@planning-inspectorate/data-model';
 import { omit } from 'lodash-es';
 import rhea from 'rhea';
 
 const { generate_uuid } = rhea;
+
+const appellantRepresentationTypes = [
+	APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT,
+	APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT,
+	APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
+];
 
 /**
  * Checks if an appeal is linked to other appeals as a parent.
@@ -73,7 +85,12 @@ export const canLinkAppeals = (appeal, type, relationship) => {
  * @returns {Boolean}
  */
 export const checkAppealsStatusBeforeLPAQ = (appeal, linkedAppeal, isCurrentAppealParent) => {
-	if (!isCurrentAppealParent && linkedAppeal.childAppeals?.length) {
+	if (
+		!isCurrentAppealParent &&
+		linkedAppeal.childAppeals?.filter(
+			(childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED
+		).length
+	) {
 		const appealStatus = linkedAppeal.appealStatus?.[linkedAppeal.appealStatus.length - 1];
 		return appealStatus?.status !== 'lpa_questionnaire';
 	}
@@ -108,6 +125,8 @@ export const replaceLeadAppeal = async (currentLead, appealToReplaceLead) => {
 				}
 			}) || [];
 
+	let newServiceUserId;
+
 	await databaseConnector.$transaction(async (tx) => {
 		await tx.appealRelationship.deleteMany({ where: { parentId: currentLead.id } });
 		await Promise.all(
@@ -119,16 +138,27 @@ export const replaceLeadAppeal = async (currentLead, appealToReplaceLead) => {
 		);
 
 		// The current lead is now the child of the new lead. If it has no agent, it needs to be the agent of the new lead.
-		if (!currentLead.agent) {
+		if (!currentLead.agentId) {
 			// eslint-disable-next-line no-unused-vars
 			const data = omit(appealToReplaceLead.agent, 'id', 'addressId', 'address');
 			const { id: agentId } = await tx.serviceUser.create({ data });
+
 			await tx.appeal.update({
 				where: { id: currentLead.id },
 				data: { agentId }
 			});
+			newServiceUserId = agentId;
 		}
 	});
+
+	if (newServiceUserId) {
+		await broadcasters.broadcastServiceUser(
+			newServiceUserId,
+			EventType.Create,
+			SERVICE_USER_TYPE.AGENT,
+			currentLead.reference
+		);
+	}
 };
 
 /**
@@ -142,30 +172,75 @@ export const unlinkChildAppeal = async (appeal) => {
 
 /**
  * Moves representations from the source appeal to the destination appeal.
- * @param {Appeal | {id: number, reference: string}} sourceAppeal
- * @param {Appeal | {id: number, reference: string}} destinationAppeal
+ * @param {Appeal | Partial<Appeal> | {id: number, reference: string}} sourceAppeal
+ * @param {Appeal | {id: number, reference: string, agentId: number | null, appellantId: number | null}} destinationAppeal
  * @returns {Promise<*>}
  */
 export const moveRepresentations = async (sourceAppeal, destinationAppeal) => {
-	return representationRepository.updateRepresentations(
-		[Number(sourceAppeal.id)],
-		{},
-		{
-			appealId: destinationAppeal.id
-		}
+	// get representations for the source appeal
+	const { comments: representations } = await representationRepository.getRepresentations([
+		Number(sourceAppeal.id)
+	]);
+
+	// iterate through reps to update to destination appeal
+	const movedRepresentations = await Promise.allSettled(
+		representations.map(async (representation) => {
+			let updateData = {
+				appealId: destinationAppeal.id
+			};
+
+			// if appellant representation, update representedId if present
+			if (
+				appellantRepresentationTypes.includes(representation.representationType) &&
+				representation.represented
+			) {
+				//@ts-ignore
+				updateData.representedId = destinationAppeal.agentId || destinationAppeal.appellantId;
+			}
+
+			return await representationRepository.updateRepresentationById(
+				Number(representation.id),
+				updateData
+			);
+		})
 	);
+
+	const successfullyMovedRepresentations = movedRepresentations
+		.filter((rep) => rep.status === 'fulfilled')
+		.map((rep) => rep.value);
+
+	const destinationFolders = await getFoldersForAppeal(destinationAppeal.id, 'representation');
+
+	const movedRepresentationAttachmentDocuments = await Promise.allSettled(
+		successfullyMovedRepresentations.map(async (movedRepresentation) => {
+			return await representationRepository.moveRepresentationAttachmentDocuments(
+				movedRepresentation.id,
+				destinationAppeal.id,
+				destinationFolders[0].id
+			);
+		})
+	);
+
+	return {
+		movedRepresentations: successfullyMovedRepresentations,
+		movedDocuments: movedRepresentationAttachmentDocuments
+			.filter((rep) => rep.status === 'fulfilled')
+			.map((rep) => rep.value)
+			.flat()
+	};
 };
 
 /**
  * Copies representations from the source appeal to the destination appeal.
- * @param {Appeal | {id: number, reference: string}} sourceAppeal
- * @param {Appeal | {id: number, reference: string}} destinationAppeal
+ * @param {Appeal | {id: number, reference: string }} sourceAppeal
+ * @param {Appeal | {id: number, reference: string, agentId: number | null, appellantId: number | null}} destinationAppeal
  * @returns {Promise<*>}
  */
 export const copyRepresentations = async (sourceAppeal, destinationAppeal) => {
 	const { comments: representations } = await representationRepository.getRepresentations([
 		Number(sourceAppeal.id)
 	]);
+	if (representations.length === 0) return [];
 	const stage = 'representation';
 	const sourceFolders = await getFoldersForAppeal(sourceAppeal.id, stage);
 	const destinationFolders = await getFoldersForAppeal(destinationAppeal.id, stage);
@@ -173,21 +248,23 @@ export const copyRepresentations = async (sourceAppeal, destinationAppeal) => {
 		return;
 	}
 	const documents = await getDocumentsInFolder({ folderId: sourceFolders[0].id });
-	const attachmentsByRepresentedId = {};
-	const copiedRepresentations = await Promise.all(
+	const representationAttachments = {};
+	const copiedRepresentations = await Promise.allSettled(
 		representations.map(async (representation) => {
-			const copyList = representation.attachments.map((attachment) => {
-				const document = documents.find((doc) => {
-					return doc.guid === attachment.documentGuid;
-				});
-				return buildFileCopyDetails(
-					// @ts-ignore
-					document,
-					destinationAppeal,
-					destinationFolders[0].id,
-					sourceAppeal
-				);
-			});
+			const copyList = representation.attachments
+				.map((attachment) => {
+					const document = documents.find((doc) => {
+						return doc.guid === attachment.documentGuid;
+					});
+					return buildFileCopyDetails(
+						// @ts-ignore
+						document,
+						destinationAppeal,
+						destinationFolders[0].id,
+						sourceAppeal
+					);
+				})
+				.filter((copyDetails) => copyDetails != undefined);
 			const copyBlobList = copyList.map(({ sourceBlobName, destinationBlobName }) => ({
 				sourceBlobName,
 				destinationBlobName
@@ -196,31 +273,50 @@ export const copyRepresentations = async (sourceAppeal, destinationAppeal) => {
 				copyBlobs(copyBlobList),
 				addDocumentsToAppeal(
 					{
-						// @ts-ignore
+						blobStorageHost: config.BO_BLOB_STORAGE_ACCOUNT,
+						blobStorageContainer: config.BO_BLOB_CONTAINER,
 						documents: copyList.map((copyDetails) => copyDetails.destinationDocument)
 					},
-					destinationAppeal,
+					/** @type {Appeal} */ (destinationAppeal),
 					true
 				)
 			]);
-			const address =
-				representation?.represented?.address &&
-				// @ts-ignore
-				(await addressRepository.createAddress(omit(representation.represented.address, 'id')));
-			const represented =
-				representation?.represented &&
-				(await serviceUserRepository.createServiceUser({
-					...omit(representation.represented, 'id', 'address'),
-					addressId: address?.id ?? null
-				}));
+
+			let represented;
+
+			// if representation has a represented field set the serviceUserId on copied rep:
+			// if representation is an appellant representation - use destination agent or appellant
+			// otherwise copy over source rep serviceUserId
+			if (representation?.represented) {
+				represented = appellantRepresentationTypes.includes(representation.representationType)
+					? { id: destinationAppeal.agentId || destinationAppeal.appellantId }
+					: { id: representation.represented.id };
+			}
+
 			const attachments = copyList.map(({ destinationGuid, version }) => ({
 				documentGuid: destinationGuid,
 				version
 			}));
-			if (represented?.id) {
+
+			//	attachments and rejection reasons cannot be added until the representation itself has
+			// been created and so need to be stored against an appropriate key until reps are created
+			// (see below)
+			//	ip comments will retain the original serviceUser id so this can be the key
+			// appellant and lpa rep types should only appear once per appeal, so the type can be the key
+			if (representation.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT) {
 				// @ts-ignore
-				attachmentsByRepresentedId[represented.id] = attachments;
+				representationAttachments[represented.id] = {
+					attachments,
+					rejectionReasons: representation.representationRejectionReasonsSelected
+				};
+			} else {
+				// @ts-ignore
+				representationAttachments[representation.representationType] = {
+					attachments,
+					rejectionReasons: representation.representationRejectionReasonsSelected
+				};
 			}
+
 			return {
 				appealId: destinationAppeal.id,
 				representedId: represented?.id ?? null,
@@ -229,23 +325,54 @@ export const copyRepresentations = async (sourceAppeal, destinationAppeal) => {
 				dateCreated: representation.dateCreated ?? null,
 				status: representation.status ?? null,
 				lpaCode: representation.lpa?.lpaCode ?? null,
-				originalRepresentation: representation.originalRepresentation ?? null
+				originalRepresentation: representation.originalRepresentation ?? null,
+				redactedRepresentation: representation.redactedRepresentation ?? null,
+				isRedacted: representation.isRedacted ?? false
 			};
 		})
 	);
-	// @ts-ignore
-	await representationRepository.createRepresentations(copiedRepresentations);
+
+	await representationRepository.createRepresentations(
+		copiedRepresentations.filter((rep) => rep.status === 'fulfilled').map((rep) => rep.value)
+	);
+
 	const { comments: representationsInDestinationAppeal } =
 		await representationRepository.getRepresentations([Number(destinationAppeal.id)]);
+
 	await Promise.allSettled(
 		representationsInDestinationAppeal.map(async (representation) => {
-			if (!representation.represented?.id) return;
+			const attachmentsListKey =
+				representation.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
+					? representation.represented?.id
+					: representation.representationType;
+
 			// @ts-ignore
-			const attachments = attachmentsByRepresentedId[representation.represented.id];
+			const { attachments, rejectionReasons } = representationAttachments[attachmentsListKey];
+
+			if (!attachments && !rejectionReasons) return;
+
+			if (rejectionReasons.length > 0) {
+				//@ts-ignore
+				const updateDataArray = rejectionReasons.map((reason) => {
+					//@ts-ignore
+					const textArray = reason.representationRejectionReasonText.map(
+						//@ts-ignore
+						(textObject) => textObject.text
+					);
+					return {
+						id: reason.representationRejectionReason?.id,
+						text: textArray
+					};
+				});
+
+				await representationRepository.updateRejectionReasons(representation.id, updateDataArray);
+			}
+
 			if (attachments)
 				await representationRepository.addAttachments(representation.id, attachments);
 		})
 	);
+	return representationsInDestinationAppeal;
 };
 
 /**
@@ -267,7 +394,7 @@ export const duplicateAllFiles = async (sourceAppeal, destinationAppeal, options
  * @param {Appeal | {id: number, reference: string}} sourceAppeal
  * @param {string[]} [existingDocuments]
  * @param {string | null} [stage]
- * @returns {{sourceBlobName: string, destinationBlobName: string, destinationDocument: Partial<Document>, sourceGuid: string, destinationGuid: string, version: number}}
+ * @returns {{sourceBlobName: string, destinationBlobName: string, destinationDocument: MappedDocument, sourceGuid: string, destinationGuid: string, version: number} | undefined}
  */
 export const buildFileCopyDetails = (
 	sourceDocument,
@@ -277,8 +404,9 @@ export const buildFileCopyDetails = (
 	existingDocuments = [],
 	stage = null
 ) => {
+	if (!sourceDocument) return;
 	const destinationGuid = generate_uuid();
-	const fileExtension = '.' + sourceDocument.name.split('.').pop();
+	const fileExtension = '.' + sourceDocument.name?.split('.').pop();
 	const sourceBlobName = sourceDocument.latestDocumentVersion?.blobStoragePath ?? '';
 	const documentName = sourceBlobName.split('/').pop() ?? '';
 	const destinationFileName = existingDocuments.includes(documentName)
@@ -348,9 +476,25 @@ export const duplicateFiles = async (sourceAppeal, destinationAppeal, stage, opt
 						existingDocuments,
 						stage
 					);
-				});
+				})
+				.filter((copyDetails) => copyDetails != undefined);
 		})
 		.flat();
+
+	// we need to add the new case decision letter guid to the decision on the destination appeal
+	const caseDecisionLetter = copyList.find((copyDetails) => {
+		return (
+			copyDetails.destinationDocument.documentType === APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER
+		);
+	});
+
+	if (caseDecisionLetter?.destinationDocument?.GUID) {
+		await updateAppealDecisionLetter(
+			destinationAppeal.id,
+			caseDecisionLetter.destinationDocument.GUID
+		);
+	}
+
 	const copyBlobList = copyList.map(({ sourceBlobName, destinationBlobName }) => ({
 		sourceBlobName,
 		destinationBlobName
@@ -359,10 +503,11 @@ export const duplicateFiles = async (sourceAppeal, destinationAppeal, stage, opt
 		copyBlobs(copyBlobList),
 		addDocumentsToAppeal(
 			{
-				// @ts-ignore
+				blobStorageHost: config.BO_BLOB_STORAGE_ACCOUNT,
+				blobStorageContainer: config.BO_BLOB_CONTAINER,
 				documents: copyList.map((copyDetails) => copyDetails.destinationDocument)
 			},
-			destinationAppeal,
+			/** @type {Appeal} */ (destinationAppeal),
 			true
 		)
 	]);
@@ -386,14 +531,28 @@ export const updateAppealStatusIfRequired = async (
 	previousLeadAppealId,
 	azureAdUserId
 ) => {
-	const leadAppeal = leadAppealId ? await appealRepository.getAppealById(leadAppealId) : null;
+	// TODO: performance
+	// is returning all data, return only needed data
+	/** @type {Omit<Appeal, 'documents' | 'representations'> | undefined|null} */
+	const leadAppeal = leadAppealId
+		? await appealRepository.deprecatedGetAppealById(leadAppealId, {
+				omitDocuments: true,
+				omitRepresentations: true
+			})
+		: null;
 
 	if (!leadAppeal) {
 		throw new Error('Lead appeal not found');
 	}
 
+	// TODO: performance
+	// is returning all data, return only needed data
+	/** @type {Omit<Appeal, 'documents' | 'representations'> | undefined|null} */
 	const unlinkedAppeal = unlinkedAppealId
-		? await appealRepository.getAppealById(unlinkedAppealId)
+		? await appealRepository.deprecatedGetAppealById(unlinkedAppealId, {
+				omitDocuments: true,
+				omitRepresentations: true
+			})
 		: null;
 
 	const { appellantCaseValidationOutcome: leadAppealAppellantCaseOutcome } =
@@ -405,38 +564,36 @@ export const updateAppealStatusIfRequired = async (
 
 	switch (currentStatus(leadAppeal)) {
 		case APPEAL_CASE_STATUS.VALIDATION:
-			{
-				if (unlinkedAppealId && unlinkedAppealAppellantCaseOutcome) {
-					if (!isEnforcementNotice) {
-						// The unlinked appeal has been validated correctly and can roll forward to the next status
-						await transitionState(
-							unlinkedAppealId,
-							azureAdUserId,
-							unlinkedAppealAppellantCaseOutcome.name
-						);
-					}
+			if (unlinkedAppealId && unlinkedAppealAppellantCaseOutcome) {
+				if (!isEnforcementNotice) {
+					// The unlinked appeal has been validated correctly and can roll forward to the next status
+					await transitionState(
+						unlinkedAppealId,
+						azureAdUserId,
+						unlinkedAppealAppellantCaseOutcome.name
+					);
 				}
-				if (leadAppealAppellantCaseOutcome) {
-					// transition all the linked appeals if they have all been validated
-					const linkedAppeals = [leadAppeal, ...getChildAppeals(leadAppeal)];
-					const shouldTransition = linkedAppeals.every((linkedAppeal) => {
-						const { appellantCaseValidationOutcome } = linkedAppeal?.appellantCase || {};
-						return !!appellantCaseValidationOutcome;
-					});
-					if (shouldTransition) {
-						await Promise.all(
-							linkedAppeals.map(async (linkedAppeal) => {
-								const { appellantCaseValidationOutcome } = linkedAppeal?.appellantCase || {};
-								if (linkedAppeal?.id && appellantCaseValidationOutcome?.name) {
-									await transitionState(
-										linkedAppeal.id,
-										azureAdUserId,
-										appellantCaseValidationOutcome.name
-									);
-								}
-							})
-						);
-					}
+			}
+			if (leadAppealAppellantCaseOutcome) {
+				// transition all the linked appeals if they have all been validated
+				const linkedAppeals = [leadAppeal, ...getChildAppeals(leadAppeal)];
+				const shouldTransition = linkedAppeals.every((linkedAppeal) => {
+					const { appellantCaseValidationOutcome } = linkedAppeal?.appellantCase || {};
+					return !!appellantCaseValidationOutcome;
+				});
+				if (shouldTransition) {
+					await Promise.all(
+						linkedAppeals.map(async (linkedAppeal) => {
+							const { appellantCaseValidationOutcome } = linkedAppeal?.appellantCase || {};
+							if (linkedAppeal?.id && appellantCaseValidationOutcome?.name) {
+								await transitionState(
+									linkedAppeal.id,
+									azureAdUserId,
+									appellantCaseValidationOutcome.name
+								);
+							}
+						})
+					);
 				}
 			}
 			break;

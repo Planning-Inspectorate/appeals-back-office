@@ -9,6 +9,7 @@ import {
 	enforcementNoticeAppeal,
 	fullPlanningAppeal,
 	fullPlanningAppealLPAQuestionnaireIncomplete,
+	fullPlanningS78ExpeditedAppeal,
 	householdAppeal,
 	householdAppealLPAQuestionnaireComplete,
 	householdAppealLPAQuestionnaireIncomplete,
@@ -43,8 +44,15 @@ import {
 	LENGTH_10,
 	LENGTH_8
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { EventType } from '@pins/event-client';
+import {
+	APPEAL_CASE_STAGE,
+	APPEAL_CASE_STATUS,
+	APPEAL_DOCUMENT_TYPE,
+	APPEAL_VIRUS_CHECK_STATUS
+} from '@planning-inspectorate/data-model';
 import { request } from '../../../app-test.js';
+
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 describe('lpa questionnaires routes', () => {
@@ -168,6 +176,7 @@ describe('lpa questionnaires routes', () => {
 				databaseConnector.appeal.findUnique
 					.mockResolvedValueOnce({
 						...householdAppeal,
+						currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 						appealStatus: [
 							{
 								status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
@@ -177,6 +186,7 @@ describe('lpa questionnaires routes', () => {
 					})
 					.mockResolvedValueOnce({
 						...householdAppeal,
+						currentStatus: APPEAL_CASE_STATUS.EVENT,
 						appealStatus: [
 							{
 								status: APPEAL_CASE_STATUS.EVENT,
@@ -198,15 +208,40 @@ describe('lpa questionnaires routes', () => {
 				databaseConnector.documentVersion.update.mockResolvedValue([]);
 				// @ts-ignore
 				databaseConnector.document.findUnique.mockResolvedValue(null);
+				databaseConnector.$queryRaw.mockResolvedValue([
+					{
+						guid: '123',
+						name: 'document.pdf',
+						version: 1,
+						documentURI: 'https://example.com/document.pdf',
+						originalFilename: 'document.pdf',
+						size: 1024,
+						mime: 'application/pdf',
+						fileMD5: 'abc123',
+						virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
+						stage: APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE,
+						documentType: APPEAL_DOCUMENT_TYPE.APPEAL_NOTIFICATION,
+						published: true,
+						datePublished: new Date(),
+						dateCreated: new Date(),
+						dateReceived: new Date(),
+						lastModified: new Date(),
+						representationType: null
+					}
+				]);
 				// @ts-ignore
 				databaseConnector.user.upsert.mockResolvedValue({
 					id: 1,
 					azureAdUserId
 				});
-				// @ts-ignore
+				const redactionStatusId = 123;
 				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
-					{ id: 1, key: 'no_redaction_required' }
+					{ id: redactionStatusId, key: 'no_redaction_required' }
 				]);
+				databaseConnector.documentRedactionStatus.findUnique.mockResolvedValue({
+					id: redactionStatusId,
+					key: 'no_redaction_required'
+				});
 
 				const body = {
 					validationOutcome: 'complete'
@@ -250,6 +285,19 @@ describe('lpa questionnaires routes', () => {
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 				expect(response.status).toEqual(200);
+				expect(databaseConnector.$queryRaw).toHaveBeenCalledWith(
+					expect.arrayContaining([expect.stringContaining('SET redactionStatusId =')]),
+					redactionStatusId,
+					householdAppeal.id
+				);
+				expect(mockBroadcasters.broadcastDocuments).toHaveBeenCalledWith(
+					[
+						expect.objectContaining({
+							guid: '123'
+						})
+					],
+					EventType.Update
+				);
 			});
 
 			test.each([
@@ -361,6 +409,20 @@ describe('lpa questionnaires routes', () => {
 					}
 				],
 				[
+					'fullPlanningExpeditedAppeal',
+					{
+						appeal: fullPlanningS78ExpeditedAppeal,
+						templateName: 'lpaq-complete-s78-expedite-appellant',
+						personalisation: {
+							lpa_reference: fullPlanningS78ExpeditedAppeal.applicationReference,
+							appeal_reference_number: fullPlanningS78ExpeditedAppeal.reference,
+							site_address: `${fullPlanningS78ExpeditedAppeal.address.addressLine1}, ${fullPlanningS78ExpeditedAppeal.address.addressLine2}, ${fullPlanningS78ExpeditedAppeal.address.addressTown}, ${fullPlanningS78ExpeditedAppeal.address.addressCounty}, ${fullPlanningS78ExpeditedAppeal.address.postcode}, ${fullPlanningS78ExpeditedAppeal.address.addressCountry}`,
+							due_date: expect.any(String),
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+						}
+					}
+				],
+				[
 					'listedBuildingAppeal',
 					{
 						appeal: listedBuildingAppeal,
@@ -414,6 +476,7 @@ describe('lpa questionnaires routes', () => {
 					databaseConnector.appeal.findUnique
 						.mockResolvedValueOnce({
 							...test.appeal,
+							currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 							appealStatus: [
 								{
 									status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
@@ -423,6 +486,7 @@ describe('lpa questionnaires routes', () => {
 						})
 						.mockResolvedValue({
 							...test.appeal,
+							currentStatus: APPEAL_CASE_STATUS.EVENT,
 							appealStatus: [
 								{
 									status: APPEAL_CASE_STATUS.EVENT,
@@ -481,7 +545,7 @@ describe('lpa questionnaires routes', () => {
 						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.anything(),
 						personalisation: test.personalisation,
-						recipientEmail: test.appeal.appellant.email,
+						recipientEmail: test.appeal.agent?.email || test.appeal.appellant.email,
 						templateName: test.templateName
 					});
 
@@ -493,6 +557,7 @@ describe('lpa questionnaires routes', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
+					currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
@@ -565,6 +630,7 @@ describe('lpa questionnaires routes', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
+					currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 					appealRule6Parties: [
 						{
 							serviceUser: {
@@ -616,6 +682,79 @@ describe('lpa questionnaires routes', () => {
 					})
 				);
 
+				expect(response.status).toEqual(200);
+			});
+
+			test('updates an lpa questionnaire when the validation outcome is complete for a S78 Expedited appeal', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...fullPlanningS78ExpeditedAppeal,
+					currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+					appealStatus: [
+						{
+							status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+							valid: true
+						}
+					]
+				});
+				// @ts-ignore
+				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
+					lpaQuestionnaireValidationOutcomes[0]
+				);
+				// @ts-ignore
+				databaseConnector.lPAQuestionnaireIncompleteReason.findMany.mockResolvedValue(
+					lpaQuestionnaireIncompleteReasons
+				);
+				// @ts-ignore
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+				// @ts-ignore
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ id: 1, key: 'no_redaction_required' }
+				]);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const body = {
+					validationOutcome: 'Complete'
+				};
+				const { id, lpaQuestionnaire } = fullPlanningS78ExpeditedAppeal;
+				const response = await request
+					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.lPAQuestionnaire.update).toHaveBeenCalledWith({
+					data: {
+						lpaQuestionnaireValidationOutcomeId: lpaQuestionnaireValidationOutcomes[0].id
+					},
+					where: {
+						id: fullPlanningS78ExpeditedAppeal.lpaQuestionnaire.id
+					}
+				});
+				expect(databaseConnector.appealStatus.create).toHaveBeenCalledWith({
+					data: {
+						appealId: fullPlanningS78ExpeditedAppeal.id,
+						createdAt: expect.any(Date),
+						status: APPEAL_CASE_STATUS.STATEMENTS,
+						valid: true
+					}
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: fullPlanningS78ExpeditedAppeal.id,
+						details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [
+							APPEAL_CASE_STATUS.STATEMENTS
+						]),
+						loggedAt: expect.any(Date),
+						userId: fullPlanningS78ExpeditedAppeal.caseOfficer.id
+					}
+				});
+				expect(
+					databaseConnector.lPAQuestionnaireIncompleteReasonsSelected.update
+				).not.toHaveBeenCalled();
 				expect(response.status).toEqual(200);
 			});
 
@@ -1156,13 +1295,61 @@ describe('lpa questionnaires routes', () => {
 				['cas advert', casAdvertAppealLPAQuestionnaireIncomplete],
 				['full planning', fullPlanningAppealLPAQuestionnaireIncomplete],
 				['listed building', listedBuildingAppealLPAQuestionnaireIncomplete],
-				['ldc', ldcAppealLPAQuestionnaireIncomplete]
+				['ldc', ldcAppealLPAQuestionnaireIncomplete],
+				['enforcement', enforcementNoticeAppeal],
+				['enforcement listed building', enforcementListedAppealAppellantCaseIncomplete]
 			])(
 				'sends a correctly formatted notify email when the outcome is incomplete for a %s appeal',
 				async (_, appealLPAQIncomplete) => {
-					const appeal = appealLPAQIncomplete;
+					const appeal = {
+						...appealLPAQIncomplete,
+						currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+						appealStatus: [
+							{
+								status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+								valid: true
+							}
+						],
+						lpa: {
+							...(appealLPAQIncomplete.lpa || {}),
+							email: appealLPAQIncomplete.lpa?.email || 'lpa@example.com'
+						},
+						lpaQuestionnaire: {
+							id: appealLPAQIncomplete.lpaQuestionnaire?.id || 1,
+							...(appealLPAQIncomplete.lpaQuestionnaire || {}),
+							lpaQuestionnaireIncompleteReasonsSelected: [
+								{
+									lpaQuestionnaireIncompleteReason: {
+										name: 'Documents or information are missing'
+									},
+									lpaQuestionnaireIncompleteReasonText: [{ text: 'Policy is missing' }]
+								},
+								{
+									lpaQuestionnaireIncompleteReason: {
+										name: 'Other'
+									},
+									lpaQuestionnaireIncompleteReasonText: [
+										{ text: 'Addresses are incorrect or missing' }
+									]
+								}
+							]
+						}
+					};
 					// @ts-ignore
 					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+					// @ts-ignore
+					databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
+						lpaQuestionnaireValidationOutcomes[1]
+					);
+					// @ts-ignore
+					databaseConnector.lPAQuestionnaireIncompleteReason.findMany.mockResolvedValue(
+						lpaQuestionnaireIncompleteReasons
+					);
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
 
 					const body = {
 						incompleteReasons: [{ id: 1 }, { id: 2 }],
@@ -1189,7 +1376,10 @@ describe('lpa questionnaires routes', () => {
 								'Documents or information are missing: Policy is missing',
 								'Other: Addresses are incorrect or missing'
 							],
-							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+							...(appeal.appellantCase?.enforcementReference && {
+								enforcement_reference: appeal.appellantCase.enforcementReference
+							})
 						},
 						recipientEmail: appeal.lpa.email,
 						templateName: 'lpaq-incomplete'

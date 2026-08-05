@@ -3,8 +3,8 @@ import { dateISOStringToDisplayDate, dayMonthYearHourMinuteToISOString } from '#
 import { detailsComponent } from '#lib/mappers/components/page-components/details.js';
 import { dateInput, simpleHtmlComponent, yesNoInput } from '#lib/mappers/index.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { LENGTH_300 } from '@pins/appeals/constants/support.js';
+import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 
 /**
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
@@ -219,7 +219,7 @@ export function updateEnforcementValidDatePage(
 		backLinkUrl: `/appeals-service/appeal-details/${appealId}/appellant-case/valid/enforcement/other-information`,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
 		backLinkText: 'Back',
-		submitButtonText: 'Confirm',
+		submitButtonText: 'Continue',
 		pageComponents: [descriptiveHtml, selectDateComponent]
 	};
 
@@ -376,6 +376,29 @@ export function checkAndConfirmEnforcementPage(request, emailPreviews) {
 				'We will mark the appeal as valid and send an email to the relevant parties.'
 			),
 			...emailPreviewComponents
+		]
+	};
+}
+
+/**
+ * @param {number} appealId
+ * @param {string} appealReference
+ * @returns {PageContent}
+ */
+export function environmentalServicesReviewPage(appealId, appealReference) {
+	return {
+		title: 'The environmental services team needs to review the case',
+		backLinkUrl: `/appeals-service/appeal-details/${appealId}/appellant-case/valid/date`,
+		preHeading: `Appeal ${appealShortReference(appealReference)}`,
+		heading: 'The environmental services team needs to review the case',
+		submitButtonText: 'Continue',
+		pageComponents: [
+			{
+				type: 'html',
+				parameters: {
+					html: `<p class="govuk-body">Email <a class="govuk-link" href="mailto:environmentalservices@planninginspectorate.gov.uk">environmentalservices@planninginspectorate.gov.uk</a> to request an environmental assessment.</p>`
+				}
+			}
 		]
 	};
 }

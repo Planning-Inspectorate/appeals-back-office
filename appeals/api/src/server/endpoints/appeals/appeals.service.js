@@ -38,19 +38,11 @@ const allStatusesOrdered = [
 ];
 
 /**
- * @param {{ appealStatus: { status: string; }[] }[]} rawStatuses
+ * @param {{ currentStatus: string; }[]} appeals
  * @returns {string[]}
  */
-export const mapAppealStatuses = (rawStatuses) => {
-	const extractedStatuses = [
-		...new Set(
-			rawStatuses
-				.flat()
-				.flatMap((/** @type {*} */ item) =>
-					item.appealStatus.map((/** @type {{ status: any; }} */ statusItem) => statusItem.status)
-				)
-		)
-	];
+export const mapCurrentAppealStatuses = (appeals) => {
+	const extractedStatuses = [...new Set(appeals.map((item) => item.currentStatus))];
 
 	// return the two arrays above with duplicates removed
 	return Array.from(
@@ -170,7 +162,7 @@ const retrieveAppealListData = async (
 	]);
 	const [mappedLPAs, users] = await Promise.all([mapAppealLPAs(allAppeals), mapUsers(allAppeals)]);
 	const mappedAppeals = appeals.map((appeal) => formatAppeal(appeal, []));
-	const mappedStatuses = mapAppealStatuses(appeals);
+	const mappedStatuses = mapCurrentAppealStatuses(appeals);
 	const mappedInspectors = users.inspectors;
 	const mappedCaseOfficers = users.caseOfficers;
 	const mappedPadsInspectors = users.padsInspectors;
@@ -190,18 +182,29 @@ const retrieveAppealListData = async (
 /** @param {string} azureAdUserId */
 async function updateCompletedEvents(azureAdUserId) {
 	const appealsToUpdate = await appealRepository.getAppealsWithCompletedEvents();
-
+	/**@type {Set<number>} */
+	const toBroadcast = new Set();
 	await Promise.all(
 		appealsToUpdate.map(async (appeal) => {
 			if (isLinkedAppealsActive(appeal)) {
-				// @ts-ignore
-				await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+				const results = await transitionLinkedChildAppealsState(
+					// @ts-ignore
+					appeal,
+					azureAdUserId,
+					VALIDATION_OUTCOME_COMPLETE
+				);
+				results.forEach((id) => toBroadcast.add(id));
 			}
-			await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+			const result = await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+			if (result) {
+				toBroadcast.add(appeal.id);
+			}
 		})
 	);
 
-	await Promise.all(appealsToUpdate.map((appeal) => broadcasters.broadcastAppeal(appeal.id)));
+	await Promise.all(
+		Array.from(toBroadcast).map((appealId) => broadcasters.broadcastAppeal(appealId))
+	);
 }
 
 export { calculateIssueDecisionDeadline, retrieveAppealListData, updateCompletedEvents };

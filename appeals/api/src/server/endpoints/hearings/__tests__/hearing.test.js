@@ -153,6 +153,7 @@ describe('hearing routes', () => {
 			test('updates a single hearing with address', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
+					currentStatus: APPEAL_CASE_STATUS.EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.EVENT,
@@ -226,6 +227,7 @@ describe('hearing routes', () => {
 					lpa_reference: '48269/APP/2021/1482',
 					hearing_date: '1 January 2999',
 					hearing_time: '12:00pm',
+					inspector_name: null,
 					hearing_expected_days: '',
 					hearing_address:
 						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
@@ -238,7 +240,7 @@ describe('hearing routes', () => {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
 					personalisation: { ...personalisation, is_lpa: false },
-					recipientEmail: fullPlanningAppeal.appellant.email,
+					recipientEmail: fullPlanningAppeal.agent.email,
 					templateName: 'hearing-updated'
 				});
 
@@ -257,6 +259,7 @@ describe('hearing routes', () => {
 				databaseConnector.hearing.update.mockResolvedValue(hearing);
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
+					currentStatus: APPEAL_CASE_STATUS.EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
@@ -347,6 +350,7 @@ describe('hearing routes', () => {
 					lpa_reference: '48269/APP/2021/1482',
 					hearing_date: '2 January 2999',
 					hearing_time: '12:00pm',
+					inspector_name: null,
 					hearing_expected_days: '',
 					hearing_address:
 						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
@@ -359,7 +363,7 @@ describe('hearing routes', () => {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
 					personalisation: { ...personalisation, is_lpa: false },
-					recipientEmail: fullPlanningAppeal.appellant.email,
+					recipientEmail: fullPlanningAppeal.agent.email,
 					templateName: 'hearing-updated'
 				});
 
@@ -399,6 +403,7 @@ describe('hearing routes', () => {
 					lpa_reference: '48269/APP/2021/1482',
 					hearing_date: '3 January 2999',
 					hearing_time: '12:00pm',
+					inspector_name: null,
 					hearing_expected_days: '',
 					hearing_address: '',
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -409,7 +414,7 @@ describe('hearing routes', () => {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
 					personalisation: { ...personalisation, is_lpa: false },
-					recipientEmail: fullPlanningAppeal.appellant.email,
+					recipientEmail: fullPlanningAppeal.agent.email,
 					templateName: 'hearing-updated'
 				});
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
@@ -429,6 +434,7 @@ describe('hearing routes', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
+					currentStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.EVENT,
@@ -1188,6 +1194,7 @@ describe('hearing routes', () => {
 					lpa_reference: '48269/APP/2021/1482',
 					hearing_date: '1 January 2999',
 					hearing_time: '1:00pm',
+					inspector_name: null,
 					hearing_expected_days: '',
 					hearing_address:
 						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
@@ -1200,7 +1207,7 @@ describe('hearing routes', () => {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
 					personalisation: { ...personalisation, is_lpa: false },
-					recipientEmail: fullPlanningAppeal.appellant.email,
+					recipientEmail: fullPlanningAppeal.agent.email,
 					templateName: 'hearing-set-up'
 				});
 
@@ -1250,6 +1257,7 @@ describe('hearing routes', () => {
 					lpa_reference: '48269/APP/2021/1482',
 					hearing_date: '1 January 2999',
 					hearing_time: '12:00pm',
+					inspector_name: null,
 					hearing_expected_days: '',
 					hearing_address: '',
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -1260,7 +1268,7 @@ describe('hearing routes', () => {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
 					personalisation: { ...personalisation, is_lpa: false },
-					recipientEmail: fullPlanningAppeal.appellant.email,
+					recipientEmail: fullPlanningAppeal.agent.email,
 					templateName: 'hearing-set-up'
 				});
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
@@ -1897,7 +1905,7 @@ describe('hearing routes', () => {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
 					personalisation,
-					recipientEmail: fullPlanningAppeal.appellant.email,
+					recipientEmail: fullPlanningAppeal.agent.email,
 					templateName: 'hearing-cancelled'
 				});
 

@@ -1,9 +1,11 @@
 import {
 	appealDataEnforcementListedBuilding,
-	appealDataEnforcementNotice
+	appealDataEnforcementNotice,
+	appealDataFullPlanning
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform/testing/html-parser.js';
+import { APPEAL_TYPE_OF_PLANNING_APPLICATION } from '@planning-inspectorate/data-model';
 import nock from 'nock';
 import supertest from 'supertest';
 
@@ -23,8 +25,12 @@ describe('Appellant Case Valid Flow', () => {
 				.reply(200, appealDataEnforcementNotice)
 				.persist();
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=appellantCase`)
+				.get(`/appeals/${appealId}?include=appellantCase,appealType`)
 				.reply(200, appealDataEnforcementNotice);
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=appellantCase,appealType`)
+				.reply(200, appealDataEnforcementNotice)
+				.persist();
 		});
 		describe('GET /enforcement/ground-a', () => {
 			it(`should render the 'Is the appeal ground (a) barred?' screen`, async () => {
@@ -153,15 +159,15 @@ describe('Appellant Case Valid Flow', () => {
 					'This is the date all case documentation was received and the appeal was valid.</p>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'name="valid-date-day" type="text" inputmode="numeric">'
+					'name="valid-date-day" type="text" value="21" inputmode="numeric">'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'name="valid-date-month" type="text" inputmode="numeric">'
+					'name="valid-date-month" type="text" value="5" inputmode="numeric">'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'name="valid-date-year" type="text" inputmode="numeric">'
+					'name="valid-date-year" type="text" value="2023" inputmode="numeric">'
 				);
-				expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
+				expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 			});
 		});
 
@@ -180,7 +186,7 @@ describe('Appellant Case Valid Flow', () => {
 				const element = parseHtml(response.text);
 
 				expect(element.innerHTML).toMatchSnapshot();
-				expect(element.innerHTML).toContain('Enter the decision date</a>');
+				expect(element.innerHTML).toContain('Enter the valid date</a>');
 
 				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',
@@ -188,7 +194,36 @@ describe('Appellant Case Valid Flow', () => {
 				}).innerHTML;
 
 				expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-				expect(unprettifiedErrorSummaryHtml).toContain('Enter the decision date');
+				expect(unprettifiedErrorSummaryHtml).toContain('Enter the valid date');
+			});
+
+			it(`should re-render the 'Valid date' screen if the date is before the date case was received`, async () => {
+				const response = await request
+					.post(`${baseUrl}/${appealId}/appellant-case/valid/enforcement/date`)
+					.send({
+						'valid-date-day': '1',
+						'valid-date-month': '1',
+						'valid-date-year': '2023'
+					});
+
+				expect(response.statusCode).toBe(200);
+
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain(
+					'The valid date must be on or after the date the case was received.</a>'
+				);
+
+				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+				expect(unprettifiedErrorSummaryHtml).toContain(
+					'The valid date must be on or after the date the case was received.'
+				);
 			});
 
 			it(`should re-render the 'Valid date' screen if the date is in the future`, async () => {
@@ -205,7 +240,7 @@ describe('Appellant Case Valid Flow', () => {
 				const element = parseHtml(response.text);
 
 				expect(element.innerHTML).toMatchSnapshot();
-				expect(element.innerHTML).toContain('The decision date must be today or in the past</a>');
+				expect(element.innerHTML).toContain('The valid date must be today or in the past</a>');
 
 				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 					rootElement: '.govuk-error-summary',
@@ -214,7 +249,7 @@ describe('Appellant Case Valid Flow', () => {
 
 				expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 				expect(unprettifiedErrorSummaryHtml).toContain(
-					'The decision date must be today or in the past'
+					'The valid date must be today or in the past'
 				);
 			});
 
@@ -241,7 +276,7 @@ describe('Appellant Case Valid Flow', () => {
 			it(`should render the 'Check details' screen`, async () => {
 				// mock API call
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=appellantCase`)
+					.get(`/appeals/${appealId}?include=appellantCase,appealType`)
 					.reply(200, appealDataEnforcementNotice)
 					.persist();
 
@@ -298,7 +333,7 @@ describe('Appellant Case Valid Flow', () => {
 			it(`should redirect to the Check Details' screen on success`, async () => {
 				// mock API call
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=appellantCase`)
+					.get(`/appeals/${appealId}?include=appellantCase,appealType`)
 					.reply(200, appealDataEnforcementNotice)
 					.persist();
 				nock('http://test/')
@@ -345,7 +380,7 @@ describe('Appellant Case Valid Flow', () => {
 		it(`should redirect to the Check Details' screen on success`, async () => {
 			// mock API call
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=appellantCase`)
+				.get(`/appeals/${appealId}?include=appellantCase,appealType`)
 				.reply(200, appealDataEnforcementNotice)
 				.persist();
 			nock('http://test/')
@@ -390,15 +425,19 @@ describe('Appellant Case Valid Flow', () => {
 	});
 
 	describe('Enforcement listed Appeals', () => {
-		const appealId = appealDataEnforcementNotice.appealId;
+		const appealId = appealDataEnforcementListedBuilding.appealId;
 		beforeEach(() => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, appealDataEnforcementListedBuilding)
 				.persist();
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=appellantCase`)
+				.get(`/appeals/${appealId}?include=appellantCase,appealType`)
 				.reply(200, appealDataEnforcementListedBuilding);
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=appellantCase,appealType`)
+				.reply(200, appealDataEnforcementListedBuilding)
+				.persist();
 		});
 		describe('GET /enforcement/check-details', () => {
 			afterEach(() => {
@@ -407,7 +446,7 @@ describe('Appellant Case Valid Flow', () => {
 			it(`should render the 'Check details' screen for ELB`, async () => {
 				// mock API call
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=appellantCase`)
+					.get(`/appeals/${appealId}?include=appellantCase,appealType`)
 					.reply(200, appealDataEnforcementListedBuilding)
 					.persist();
 
@@ -474,7 +513,7 @@ describe('Appellant Case Valid Flow', () => {
 			it(`should redirect to the Check Details' screen on success`, async () => {
 				// mock API call
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=appellantCase`)
+					.get(`/appeals/${appealId}?include=appellantCase,appealType`)
 					.reply(200, appealDataEnforcementNotice)
 					.persist();
 				nock('http://test/')
@@ -509,6 +548,132 @@ describe('Appellant Case Valid Flow', () => {
 				// check details response
 				const response = await request.post(
 					`${baseUrl}/${appealId}/appellant-case/valid/enforcement/check-details`
+				);
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					`Found. Redirecting to /appeals-service/appeal-details/${appealId}`
+				);
+			});
+		});
+	});
+
+	describe('Environmental Services Review', () => {
+		const appealId = 12345;
+		const appealReference = 'APP/Q9999/D/21/114328';
+
+		beforeEach(() => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId,
+					appealReference,
+					procedureTypeId: 4,
+					appellantCase: {
+						screeningOpinionIndicatesEiaRequired: true
+					}
+				})
+				.persist();
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=appellantCase,appealType`)
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId,
+					appealReference,
+					procedureTypeId: 4,
+					appellantCase: {
+						screeningOpinionIndicatesEiaRequired: true
+					}
+				})
+				.persist();
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=appellantCase,appealType`)
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId,
+					appealReference,
+					procedureTypeId: 4,
+					appellantCase: {
+						screeningOpinionIndicatesEiaRequired: true
+					}
+				})
+				.persist();
+		});
+
+		describe('GET /environmental-services-review', () => {
+			it('should render the environmental services review screen', async () => {
+				const response = await request.get(
+					`${baseUrl}/${appealId}/appellant-case/valid/environmental-services-review`
+				);
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain(
+					'The environmental services team needs to review the case</h1>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Email <a class="govuk-link" href="mailto:environmentalservices@planninginspectorate.gov.uk">environmentalservices@planninginspectorate.gov.uk</a> to request an environmental assessment.'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+			});
+		});
+
+		describe('Redirection to environmental services review', () => {
+			it('should redirect to environmental services review screen after posting valid date for S78 Part 1 with EIA flag', async () => {
+				nock('http://test/').patch(`/appeals/${appealId}/appellant-cases/0`).reply(200);
+				nock('http://test/').get(`/appeals/${appealId}/appellant-cases/0`).reply(200, {
+					screeningOpinionIndicatesEiaRequired: true,
+					applicationDate: '2026-05-01',
+					applicationDecision: 'refused',
+					typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+				});
+
+				const response = await request
+					.post(`${baseUrl}/${appealId}/appellant-case/valid/date`)
+					.send({
+						'valid-date-day': '1',
+						'valid-date-month': 'Jan',
+						'valid-date-year': '2025'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					`Found. Redirecting to /appeals-service/appeal-details/${appealId}/appellant-case/valid/environmental-services-review`
+				);
+			});
+
+			it('should handle posting environmental services review details', async () => {
+				nock('http://test/')
+					.patch(`/appeals/${appealId}/appellant-cases/0`, {
+						validationOutcome: 'valid',
+						validAt: '2025-01-01T00:00:00.000Z'
+					})
+					.reply(200);
+				nock('http://test/')
+					.patch(`/appeals/${appealId}/eia-screening-required`, {
+						eiaScreeningRequired: true
+					})
+					.reply(200);
+				nock('http://test/')
+					.get(`/appeals/${appealId}/appellant-cases/0`)
+					.reply(200, {
+						screeningOpinionIndicatesEiaRequired: true,
+						applicationDate: '2026-05-01',
+						applicationDecision: 'refused',
+						typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL,
+						documents: {}
+					})
+					.persist();
+
+				// Post valid date first to store it in session
+				await request.post(`${baseUrl}/${appealId}/appellant-case/valid/date`).send({
+					'valid-date-day': '1',
+					'valid-date-month': 'Jan',
+					'valid-date-year': '2025'
+				});
+
+				const response = await request.post(
+					`${baseUrl}/${appealId}/appellant-case/valid/environmental-services-review`
 				);
 
 				expect(response.statusCode).toBe(302);

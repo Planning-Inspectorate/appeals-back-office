@@ -54,7 +54,6 @@ apps_config = {
     featureFlagNotifyCaseHistory                = true
     featureFlagSimplifyTeamAssignment           = true
     featureFlagPdfDownload                      = true
-    featureFlagNetResidence                     = true
     featureFlagNetResidenceS20                  = true
     featureFlagCancelCase                       = true
     featureFlagChangeProcedureType              = true
@@ -86,9 +85,23 @@ apps_config = {
     featureFlagEnforcementHearingLinked         = true
     featureFlagEnforcementInquiryLinked         = true
     featureFlagEnforcementChangeProcedureLinked = true
+    featureFlagShareCosts                       = true
+    featureFlagExpeditedAppealsLpaq             = true
+    featureFlagNewBeforeYouStart                = true
+    featureFlagEnforcementChangeProcedure       = true
+    featureFlagSharingHearingDocuments          = true
+    featureFlagSharingInquiryEventDocuments     = true
+    featureFlagSharingInquiryDocuments          = true
+    featureFlagSharingSupportingDocuments       = true
   }
 
   use_system_test_bc_for_change_lpa = true
+
+  analytics = {
+    google_analytics_id   = "G-Q3NCERD9XE",
+    google_tag_manager_id = "dummy-tag-manager-id",
+    microsoft_clarity_id  = "dummy-id"
+  }
 
   logging = {
     level_file   = "silent"

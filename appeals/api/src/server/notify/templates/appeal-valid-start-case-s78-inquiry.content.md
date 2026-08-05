@@ -10,7 +10,9 @@ We have set up your timetable.
 {% if is_lpa -%}
 Start date: {{start_date}}
 {% endif %}
-# Timetable
+{% if inspector_name -%}
+Inspector: {{inspector_name}}
+{% endif %}# Timetable
 
 ## Local planning authority questionnaire
 

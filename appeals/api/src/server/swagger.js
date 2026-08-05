@@ -116,6 +116,9 @@ export const spec = {
 				}
 			]
 		},
+		caseDecisionOutcomeDateChangeRequest: {
+			caseDecisionOutcomeDate: '2024-11-10T00:00:00.000Z'
+		},
 		//ToDo: Remove once the new version of issue decisions is released
 		OldDecisionInfo: {
 			outcome: 'allowed',
@@ -229,6 +232,63 @@ export const spec = {
 					inspectorId: 18
 				}
 			],
+			page: 1,
+			pageCount: 27,
+			pageSize: 30
+		},
+		PersonalList: {
+			itemCount: 57,
+			items: [
+				{
+					appealId: 1,
+					appealReference: 'APP/Q9999/D/21/235348',
+					appealStatus: 'awaiting_lpa_questionnaire',
+					completedStateList: ['awaiting_event'],
+					appealType: 'household',
+					procedureType: 'Written',
+					lpaQuestionnaireId: 1,
+					documentationSummary: {
+						appellantCase: {
+							status: 'received',
+							dueDate: null,
+							receivedAt: '2024-06-26T11:57:39.953Z'
+						},
+						lpaQuestionnaire: {
+							status: 'not_received'
+						}
+					},
+					appealTimetable: {
+						appealTimetableId: 1,
+						caseResubmissionDueDate: '2024-06-18T00:00:00.000Z',
+						lpaQuestionnaireDueDate: '2024-06-18T00:00:00.000Z',
+						ipCommentsDueDate: '2024-06-18T00:00:00.000Z',
+						lpaStatementDueDate: '2024-06-18T00:00:00.000Z',
+						finalCommentsDueDate: '2024-06-18T00:00:00.000Z',
+						s106ObligationDueDate: '2024-06-18T00:00:00.000Z',
+						issueDeterminationDate: '2024-06-18T00:00:00.000Z',
+						statementOfCommonGroundDueDate: '2024-06-18T00:00:00.000Z',
+						planningObligationDueDate: '2024-06-18T00:00:00.000Z',
+						proofOfEvidenceAndWitnessesDueDate: '2024-06-18T00:00:00.000Z',
+						caseManagementConferenceDueDate: '2024-06-18T00:00:00.000Z'
+					},
+					dueDate: '2024-06-18T00:00:00.000Z',
+					isParentAppeal: false,
+					isChildAppeal: false,
+					isHearingSetup: false,
+					hasHearingAddress: false,
+					awaitingLinkedAppeal: false,
+					costsDecision: {
+						awaitingAppellantCostsDecision: false,
+						awaitingLpaCostsDecision: false
+					},
+					numberOfResidencesNetChange: 2,
+					isInquirySetup: false,
+					hasInquiryAddress: false,
+					enforcementNoticeInvalid: 'invalid reason',
+					isS78Expedited: false
+				}
+			],
+			statuses: ['lpa_questionnaire'],
 			page: 1,
 			pageCount: 27,
 			pageSize: 30
@@ -425,6 +485,11 @@ export const spec = {
 				}
 			}
 		},
+		AppealExistsResponse: {
+			id: 118,
+			appealId: 118,
+			appealReference: '6000118'
+		},
 		SingleAppellantCaseResponse: {
 			agriculturalHolding: {
 				isPartOfAgriculturalHolding: true,
@@ -498,6 +563,10 @@ export const spec = {
 				statementCommonGround: {
 					folderId: 4576,
 					documents: []
+				},
+				eiaEnvironmentalStatementAppellant: {
+					folderId: 4577,
+					documents: []
 				}
 			},
 			appellantProcedurePreference: 'Hearing',
@@ -545,7 +614,15 @@ export const spec = {
 			advertInPosition: true,
 			landownerPermission: true,
 			siteGridReferenceEasting: '123456',
-			siteGridReferenceNorthing: '654321'
+			siteGridReferenceNorthing: '654321',
+			reasonForAppealAppellant: 'My reason for appeal',
+			anySignificantChanges: 'Yes',
+			anySignificantChanges_otherSignificantChanges: 'Other changes',
+			anySignificantChanges_localPlanSignificantChanges: 'Local plan changes',
+			anySignificantChanges_nationalPolicySignificantChanges: 'National policy changes',
+			anySignificantChanges_courtJudgementSignificantChanges: 'Court judgment changes',
+			screeningOpinionIndicatesEiaRequired: true,
+			ownershipCertificate: true
 		},
 		UpdateCaseTeamRequest: {
 			caseOfficerId: '13de469c-8de6-4908-97cd-330ea73df618',
@@ -648,7 +725,10 @@ export const spec = {
 				planningContraventionNotice: folderWithDocs,
 				enforcementNoticePlan: folderWithDocs,
 				enforcementNotice: folderWithDocs,
-				planningPermission: folderWithDocs
+				planningPermission: folderWithDocs,
+				additionalDocumentsLPA: folderWithDocs,
+				designAccessStatementLPA: folderWithDocs,
+				plansDrawingsLPA: folderWithDocs
 			},
 			doesAffectAListedBuilding: true,
 			doesAffectAScheduledMonument: true,
@@ -724,7 +804,15 @@ export const spec = {
 			preserveGrantLoan: true,
 			isSiteInAreaOfSpecialControlAdverts: true,
 			wasApplicationRefusedDueToHighwayOrTraffic: true,
-			didAppellantSubmitCompletePhotosAndPlans: true
+			didAppellantSubmitCompletePhotosAndPlans: true,
+			listOfDocumentsBeforeDecision: 'List of documents before decision',
+			anySignificantChangesLpa: 'Yes',
+			anySignificantChangesLpa_otherSignificantChanges: 'Other significant changes',
+			anySignificantChangesLpa_localPlanSignificantChanges: 'Local plan significant changes',
+			anySignificantChangesLpa_nationalPolicySignificantChanges:
+				'National policy significant changes',
+			anySignificantChangesLpa_courtJudgementSignificantChanges:
+				'Court judgement significant changes'
 		},
 		UpdateAppellantCaseRequest: {
 			appealDueDate: '2024-12-13',
@@ -764,7 +852,9 @@ export const spec = {
 			siteGridReferenceEasting: '123456',
 			siteGridReferenceNorthing: '654321',
 			siteUseAtTimeOfApplication: 'Residential',
-			applicationMadeUnderActSection: 'existing-development'
+			applicationMadeUnderActSection: 'existing-development',
+			reasonForAppealAppellant: 'My reason for appeal',
+			screeningOpinionIndicatesEiaRequired: true
 		},
 		UpdateAppellantCaseResponse: {},
 		EnforcementValidNotifyPreviewRequest: {
@@ -1051,11 +1141,16 @@ export const spec = {
 				}
 			]
 		},
-		UpdateDocumentFileNameRequest: {
-			id: '987e66e0-1db4-404b-8213-8082919159e9',
-			fileName: 'renamed-document.pdf'
+		UpdateDocumentRequest: {
+			document: {
+				id: '987e66e0-1db4-404b-8213-8082919159e9',
+				fileName: 'renamed-document.pdf',
+				isShared: true
+			},
+			inviteResponses: true,
+			sharingDocumentType: 'costs-application'
 		},
-		UpdateDocumentFileNameResponse: {
+		UpdateDocumentResponse: {
 			id: '987e66e0-1db4-404b-8213-8082919159e9',
 			fileName: 'renamed-document.pdf'
 		},

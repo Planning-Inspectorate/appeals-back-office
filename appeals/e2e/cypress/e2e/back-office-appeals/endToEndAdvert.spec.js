@@ -81,7 +81,7 @@ describe('Progress Advertisment Appeal to Decision', () => {
 		});
 	});
 
-	it(`Completes a Full Advertisment appeal to decision`, { tags: tag.smoke }, () => {
+	it(`Completes a Full Advertisment appeal to decision`, () => {
 		cy.createCase({ ...appealsApiRequests.advertsSubmission.casedata }).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
@@ -111,8 +111,7 @@ describe('Progress Advertisment Appeal to Decision', () => {
 			cy.simulateStatementsDeadlineElapsed(caseObj);
 			cy.reload();
 
-			caseDetailsPage.basePageElements.bannerLink().click();
-			caseDetailsPage.clickButtonByText('Confirm');
+			caseDetailsPage.shareCommentsAndStatements();
 			caseDetailsPage.checkStatusOfCase('Final comments', 0);
 
 			happyPathHelper.addLpaFinalComment(caseObj);
@@ -122,8 +121,7 @@ describe('Progress Advertisment Appeal to Decision', () => {
 			});
 			cy.simulateFinalCommentsDeadlineElapsed(caseObj);
 			cy.reload();
-			caseDetailsPage.basePageElements.bannerLink().click();
-			caseDetailsPage.clickButtonByText('Share final comments');
+			caseDetailsPage.shareFinalComments();
 			caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
 
 			happyPathHelper.setupSiteVisitFromBanner(caseObj);

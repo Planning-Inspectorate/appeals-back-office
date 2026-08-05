@@ -787,7 +787,8 @@ describe('set up hearing', () => {
 			nock('http://test/')
 				.post(`/appeals/${appealId}/hearing`, {
 					hearingStartTime: '3025-02-01T12:00:00.000Z',
-					address: { ...omit(addressValues, 'postCode'), postcode: addressValues.postCode }
+					address: { ...omit(addressValues, 'postCode'), postcode: addressValues.postCode },
+					inspectorName: null
 				})
 				.reply(201, { hearingId: 1 });
 
@@ -809,7 +810,8 @@ describe('set up hearing', () => {
 		it('should redirect to appeal details page after submission with no address', async () => {
 			nock('http://test/')
 				.post(`/appeals/${appealId}/hearing`, {
-					hearingStartTime: '3025-02-01T12:00:00.000Z'
+					hearingStartTime: '3025-02-01T12:00:00.000Z',
+					inspectorName: null
 				})
 				.reply(201, { hearingId: 1 });
 

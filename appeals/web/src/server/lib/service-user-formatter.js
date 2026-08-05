@@ -1,3 +1,6 @@
+import usersService from '#appeals/appeal-users/users-service.js';
+import { formatFirstInitialLastName } from '#lib/string-utilities.js';
+
 /**
  *
  * @param {import("@pins/appeals.api/src/server/endpoints/appeals.js").ServiceUserResponse} serviceUser
@@ -32,4 +35,15 @@ export const formatServiceUserAsHtmlList = (serviceUser) => {
 		serviceUser.phoneNumber ? '<li>' + serviceUser.phoneNumber + '</li>' : ''
 	}`;
 	return `<ul class="govuk-list">${name}${organisationName}${email}${phoneNumber}</ul>`;
+};
+
+/**
+ * @param {string | undefined | null} inspector
+ * @param {import('@pins/express/types/express.js').Request} request
+ */
+export const getInspectorFormattedEmailName = async (inspector, request) => {
+	const assignedInspector = inspector
+		? await usersService.getUserById(inspector, request.session)
+		: null;
+	return assignedInspector ? formatFirstInitialLastName(assignedInspector?.name) : null;
 };

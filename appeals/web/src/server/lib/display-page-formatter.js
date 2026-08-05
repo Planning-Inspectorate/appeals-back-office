@@ -1,8 +1,8 @@
 import { mapDocumentInfoVirusCheckStatus } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import config from '#environment/config.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
-import { SHOW_MORE_MAXIMUM_ROWS_BEFORE_HIDING } from '#lib/constants.js';
 import logger from '#lib/logger.js';
+import { MAX_VISIBLE_DOCUMENTS_IN_SUMMARY } from '@pins/appeals/constants/common.js';
 import { appealSiteToMultilineAddressStringHtml } from './address-formatter.js';
 import { appealShortReference } from './nunjucks-filters/appeals.js';
 
@@ -157,19 +157,39 @@ export const formatListOfListedBuildingNumbers = (listOfListedBuildingNumbers) =
  * @param {import('@pins/appeals.api/src/server/endpoints/appeals.js').DocumentInfo[]} options.documents
  * @param {import('#appeals/appeals.types.js').DocumentRowDisplayMode} [options.displayMode]
  * @param {boolean} [options.isAdditionalDocuments]
+ * @param {number} [options.documentCount]
  * @returns {TextProperty & ClassesProperty | HtmlProperty & ClassesProperty}
  */
-export function formatDocumentValues({ appealId, documents, displayMode, isAdditionalDocuments }) {
+export function formatDocumentValues({
+	appealId,
+	documents,
+	displayMode,
+	isAdditionalDocuments,
+	documentCount
+}) {
 	switch (displayMode) {
 		case 'none':
 			return { text: '' };
 		case 'number':
-			return formatDocumentValuesAsNumber({ documents });
+			return formatDocumentValuesAsNumber({ documents, documentCount });
 		case 'list':
 		default:
 			return formatDocumentValuesAsList({ appealId, documents, isAdditionalDocuments });
 	}
 }
+
+/**
+ * @param {Object} options
+ * @param {import('@pins/appeals.api/src/server/endpoints/appeals.js').DocumentInfo[]} options.documents
+ * @param {number} [options.documentCount]
+ * @returns {TextProperty & ClassesProperty}
+ */
+const formatDocumentValuesAsNumber = ({ documents, documentCount }) => {
+	const count = typeof documentCount === 'number' ? documentCount : documents.length;
+	return {
+		html: `${count > 0 ? count : 'No'} document${count === 1 ? '' : 's'}`
+	};
+};
 
 /**
  * @param {Object} options
@@ -186,8 +206,38 @@ const formatDocumentValuesAsList = ({ appealId, documents, isAdditionalDocuments
 	};
 
 	if (documents.length > 0) {
-		for (let i = 0; i < documents.length; i++) {
-			const document = documents[i];
+		const visibleDocs = documents.slice(0, MAX_VISIBLE_DOCUMENTS_IN_SUMMARY);
+		const hasMore = documents.length > MAX_VISIBLE_DOCUMENTS_IN_SUMMARY;
+
+		htmlProperty.wrapperHtml = {
+			opening: '<div class="full-width">',
+			closing: '</div>'
+		};
+
+		if (hasMore) {
+			htmlProperty.pageComponents.push({
+				type: 'html',
+				parameters: {
+					html: isAdditionalDocuments
+						? `<p class="govuk-body">Showing ${MAX_VISIBLE_DOCUMENTS_IN_SUMMARY} of ${documents.length} documents</p>`
+						: `<span class="govuk-body">Showing ${MAX_VISIBLE_DOCUMENTS_IN_SUMMARY} of ${documents.length} documents</span>`
+				}
+			});
+		}
+
+		htmlProperty.pageComponents.push({
+			type: 'html',
+			parameters: {
+				// hides list styling if only 1 doc
+				html:
+					documents.length > 1
+						? `<ul class="govuk-list govuk-list--bullet pins-file-list">`
+						: `<ul class="govuk-list pins-file-list">`
+			}
+		});
+
+		for (let i = 0; i < visibleDocs.length; i++) {
+			const document = visibleDocs[i];
 			const virusCheckStatus = mapDocumentInfoVirusCheckStatus(document);
 
 			/** @type {PageComponent[]} */
@@ -231,7 +281,7 @@ const formatDocumentValuesAsList = ({ appealId, documents, isAdditionalDocuments
 				});
 			}
 
-			if (isAdditionalDocuments && document.latestDocumentVersion.isLateEntry) {
+			if (isAdditionalDocuments && document.latestDocumentVersion?.isLateEntry) {
 				documentPageComponents.push({
 					type: 'status-tag',
 					parameters: {
@@ -246,7 +296,7 @@ const formatDocumentValuesAsList = ({ appealId, documents, isAdditionalDocuments
 						isAdditionalDocuments
 							? ` class="govuk-!-margin-bottom-0${
 									i > 0 ? ' govuk-!-padding-top-2' : ''
-								} govuk-!-padding-bottom-2${i < documents.length - 1 ? ' pins-border-bottom' : ''}"`
+								} govuk-!-padding-bottom-2${i < visibleDocs.length - 1 ? ' pins-border-bottom' : ''}"`
 							: ''
 					}><span>`,
 					closing: '</span></li>'
@@ -259,17 +309,12 @@ const formatDocumentValuesAsList = ({ appealId, documents, isAdditionalDocuments
 			});
 		}
 
-		if (htmlProperty.pageComponents.length > 1) {
-			htmlProperty.wrapperHtml = {
-				opening: '<ol class="govuk-list govuk-list--number pins-file-list">',
-				closing: '</ol>'
-			};
-		} else if (htmlProperty.pageComponents.length > 0) {
-			htmlProperty.wrapperHtml = {
-				opening: '<ul class="govuk-list pins-file-list">',
-				closing: '</ul>'
-			};
-		}
+		htmlProperty.pageComponents.push({
+			type: 'html',
+			parameters: {
+				html: `</ul>`
+			}
+		});
 	} else {
 		htmlProperty.pageComponents.push({
 			type: 'html',
@@ -280,46 +325,7 @@ const formatDocumentValuesAsList = ({ appealId, documents, isAdditionalDocuments
 		logger.debug('No documents in this folder');
 	}
 
-	if (documents.length > SHOW_MORE_MAXIMUM_ROWS_BEFORE_HIDING && isAdditionalDocuments) {
-		htmlProperty.pageComponents = [
-			{
-				type: 'show-more',
-				parameters: {
-					labelText: 'additional documents',
-					html: '',
-					contentRowSelector: 'li',
-					toggleTextCollapsed: 'View all',
-					pageComponents: [
-						{
-							type: 'html',
-							wrapperHtml: htmlProperty.wrapperHtml,
-							parameters: {
-								html: '',
-								pageComponents: htmlProperty.pageComponents
-							}
-						}
-					]
-				}
-			}
-		];
-
-		delete htmlProperty.wrapperHtml;
-	}
-
 	return htmlProperty;
-};
-
-/**
- * @param {Object} options
- * @param {import('@pins/appeals.api/src/server/endpoints/appeals.js').DocumentInfo[]} options.documents
- * @returns {TextProperty & ClassesProperty}
- */
-const formatDocumentValuesAsNumber = ({ documents }) => {
-	return {
-		html: `${documents.length > 0 ? documents.length : 'No'} document${
-			documents.length === 1 ? '' : 's'
-		}`
-	};
 };
 
 /**

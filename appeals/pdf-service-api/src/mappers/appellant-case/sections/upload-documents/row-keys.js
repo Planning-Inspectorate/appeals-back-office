@@ -1,24 +1,58 @@
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { beforeExpeditedOriginalApplicationCutOff } from '@pins/appeals/utils/appeal-type-checks.js';
 export const rowKeys = {
 	[APPEAL_TYPE.HOUSEHOLDER]: [
 		'originalApplicationForm',
 		'changedDescription',
-		'appellantStatement',
+		{
+			key: 'appellantStatement',
+			condition: (data) => beforeExpeditedOriginalApplicationCutOff(data.applicationDate)
+		},
 		'appellantApplicationFolder'
 	],
 	[APPEAL_TYPE.CAS_PLANNING]: [
 		'originalApplicationForm',
 		'changedDescription',
-		'appellantStatement',
+		{
+			key: 'reasonForAppealAppellant',
+			condition: (/** @type {{ applicationDate: string | null | undefined; }} */ data) =>
+				!beforeExpeditedOriginalApplicationCutOff(data.applicationDate)
+		},
+		{
+			key: 'appellantStatement',
+			condition: (/** @type {{ applicationDate: string | null | undefined; }} */ data) =>
+				beforeExpeditedOriginalApplicationCutOff(data.applicationDate)
+		},
 		'appellantApplicationFolder',
-		'designAccessStatement',
-		'plansDrawings'
+		{
+			key: 'designAccessStatement',
+			condition: (/** @type {{ applicationDate: string | null | undefined; }} */ data) =>
+				beforeExpeditedOriginalApplicationCutOff(data.applicationDate)
+		},
+		{
+			key: 'plansDrawings',
+			condition: (/** @type {{ applicationDate: string | null | undefined; }} */ data) =>
+				beforeExpeditedOriginalApplicationCutOff(data.applicationDate)
+		}
 	],
 	[APPEAL_TYPE.CAS_ADVERTISEMENT]: [
 		'originalApplicationForm',
-		'appellantStatement',
+		{
+			key: 'reasonForAppealAppellant',
+			condition: (/** @type {{ applicationDate: string | null | undefined; }} */ data) =>
+				!beforeExpeditedOriginalApplicationCutOff(data.applicationDate)
+		},
+		{
+			key: 'appellantStatement',
+			condition: (/** @type {{ applicationDate: string | null | undefined; }} */ data) =>
+				beforeExpeditedOriginalApplicationCutOff(data.applicationDate)
+		},
 		'appellantApplicationFolder',
-		'plansDrawings'
+		{
+			key: 'plansDrawings',
+			condition: (/** @type {{ applicationDate: string | null | undefined; }} */ data) =>
+				beforeExpeditedOriginalApplicationCutOff(data.applicationDate)
+		}
 	],
 	[APPEAL_TYPE.ADVERTISEMENT]: [
 		'originalApplicationForm',
@@ -56,13 +90,22 @@ export const rowKeys = {
 		'newPlansDrawings',
 		'otherNewDocuments'
 	],
+	[APPEAL_TYPE.S78_EXPEDITED]: [
+		'originalApplicationForm',
+		'didYouSubmitEnvironmentalStatement',
+		'environmentalStatement',
+		'changedDevelopmentDescription',
+		'changedDescription',
+		'applicationDecisionLetter',
+		'planningObligation',
+		'ownershipCertificate',
+		'appellantApplicationFolder'
+	],
 	[APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE]: [
 		'originalApplicationForm',
 		'appellantStatement',
 		'appellantApplicationFolder',
 		'plansDrawings',
-		'planningObligationStatus',
-		'planningObligation',
 		'statementCommonGround',
 		'newPlansDrawings',
 		'applicationDecisionLetter',

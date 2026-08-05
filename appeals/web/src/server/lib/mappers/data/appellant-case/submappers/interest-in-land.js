@@ -1,6 +1,6 @@
 import { INTEREST_IN_LAND } from '#lib/constants.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
-import { camelCaseToWords, capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { camelCaseToWords, capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapInterestInLand = ({ appellantCaseData, currentRoute, userHasUpdateCase }) => {

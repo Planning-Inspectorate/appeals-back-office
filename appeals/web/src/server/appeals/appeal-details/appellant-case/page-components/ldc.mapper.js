@@ -1,4 +1,3 @@
-import { convertFromBooleanToYesNo } from '#lib/boolean-formatter.js';
 import { removeSummaryListActions } from '#lib/mappers/index.js';
 
 /**
@@ -48,12 +47,6 @@ export function generateLdcComponents(appealDetails, appellantCaseData, mappedAp
 				removeSummaryListActions(mappedAppellantCaseData.applicationType.display.summaryListItem),
 				mappedAppellantCaseData.applicationDecision.display.summaryListItem,
 				mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
-				{
-					key: { text: 'Are you claiming costs as part of your appeal?' },
-					value: {
-						text: convertFromBooleanToYesNo(appellantCaseData.appellantCostsAppliedFor, 'No data')
-					}
-				},
 				mappedAppellantCaseData.applicationReference.display.summaryListItem
 			]
 		}
@@ -104,7 +97,6 @@ export function generateLdcComponents(appealDetails, appellantCaseData, mappedAp
 			},
 			rows: [
 				mappedAppellantCaseData.siteAddress.display.summaryListItem,
-				mappedAppellantCaseData.inGreenBelt.display.summaryListItem,
 				mappedAppellantCaseData.inspectorAccess.display.summaryListItem,
 				mappedAppellantCaseData.healthAndSafetyIssues.display.summaryListItem
 			]
@@ -187,8 +179,6 @@ export function generateLdcComponents(appealDetails, appellantCaseData, mappedAp
 				mappedAppellantCaseData.appealStatement.display.summaryListItem,
 				mappedAppellantCaseData.costsDocument.display.summaryListItem,
 				mappedAppellantCaseData.supportingDocuments.display.summaryListItem,
-				mappedAppellantCaseData.statusPlanningObligation.display.summaryListItem,
-				mappedAppellantCaseData.planningObligation.display.summaryListItem,
 				mappedAppellantCaseData.statementCommonGround.display.summaryListItem,
 				mappedAppellantCaseData.newPlansDrawings.display.summaryListItem,
 				mappedAppellantCaseData.decisionLetter.display.summaryListItem,

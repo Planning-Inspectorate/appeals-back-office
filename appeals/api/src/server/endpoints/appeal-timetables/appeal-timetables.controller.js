@@ -1,6 +1,10 @@
 import appealRepository from '#repositories/appeal.repository.js';
 import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
-import { hasChildAppeals, isLinkedAppeal, isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
+import {
+	hasChildLinkedAppeals,
+	isLinkedAppeal,
+	isLinkedAppealsActive
+} from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
@@ -49,7 +53,8 @@ const startAppeal = async (req, res) => {
 							req.get('azureAdUserId') || '',
 							body.procedureType || appeal.procedureType?.key,
 							body.hearingStartTime,
-							body.hearingEstimatedDays
+							body.hearingEstimatedDays,
+							body.inspectorName
 						)
 					)
 				);
@@ -77,7 +82,8 @@ const startAppeal = async (req, res) => {
 				req.get('azureAdUserId') || '',
 				body.procedureType || appeal.procedureType?.key,
 				body.hearingStartTime,
-				body.hearingEstimatedDays
+				body.hearingEstimatedDays,
+				body.inspectorName
 			);
 
 			if (result.success) {
@@ -115,7 +121,8 @@ const startAppealNotifyPreview = async (req, res) => {
 				body.procedureType || appeal.procedureType?.key,
 				body.hearingStartTime,
 				body.hearingEstimatedDays,
-				body.inquiry
+				body.inquiry,
+				body.inspectorName
 			);
 			return res.status(200).send(result);
 		} catch (/** @type {any} */ error) {
@@ -143,13 +150,18 @@ const updateAppealTimetableById = async (req, res) => {
 		const azureAdUserId = req.get('azureAdUserId') || '';
 		await updateAppealTimetable(appeal, body, notifyClient, azureAdUserId);
 
-		if (hasChildAppeals(appeal)) {
+		if (hasChildLinkedAppeals(appeal)) {
 			await Promise.all(
 				// @ts-ignore
 				appeal.childAppeals.map(async (childAppeal) => {
+					// TODO: performance
+					// is returning all data in a loop, return only needed data
 					const child =
 						childAppeal.child ||
-						(await appealRepository.getAppealById(Number(childAppeal.childId)));
+						(await appealRepository.deprecatedGetAppealById(Number(childAppeal.childId), {
+							omitDocuments: true,
+							omitRepresentations: true
+						}));
 					if (child) {
 						return updateAppealTimetable(child, body, notifyClient, azureAdUserId, true);
 					}

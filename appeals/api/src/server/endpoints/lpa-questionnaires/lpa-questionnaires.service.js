@@ -3,6 +3,7 @@ import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
+import commonRepository from '#repositories/common.repository.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
 import transitionState from '#state/transition-state.js';
@@ -17,15 +18,25 @@ import { getChildAppeals } from '#utils/link-appeals.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { DAYTIME_HOUR, DAYTIME_MINUTE } from '@pins/appeals/constants/dates.js';
 import {
 	AUDIT_TRAIL_LPAQ_INCOMPLETE,
 	ERROR_NO_RECIPIENT_EMAIL,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import { recalculateDateIfNotBusinessDay } from '@pins/appeals/utils/business-days.js';
+import { isS78ExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import {
+	addDays,
+	recalculateDateIfNotBusinessDay,
+	setTimeInTimeZone
+} from '@pins/appeals/utils/business-days.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_CASE_PROCEDURE,
+	APPEAL_CASE_STATUS,
+	APPEAL_REDACTED_STATUS
+} from '@planning-inspectorate/data-model';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateLPAQuestionnaireValidationOutcomeParams} UpdateLPAQuestionnaireValidationOutcomeParams */
@@ -141,22 +152,30 @@ const updateLPAQuestionnaireValidationOutcome = async (
 	}
 
 	if (isOutcomeComplete(validationOutcome.name)) {
-		const latestDocumentVersionsUpdated = await documentRepository.setRedactionStatusOnValidation(
-			appeal.id
+		const noRedactionRequiredStatus = await commonRepository.getLookupListValueByKey(
+			'documentRedactionStatus',
+			{ key: 'key', value: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
 		);
-		for (const documentUpdated of latestDocumentVersionsUpdated) {
-			await broadcasters.broadcastDocument(
-				documentUpdated.documentGuid,
-				documentUpdated.version,
-				EventType.Update
-			);
-		}
+		const updatedDocuments = await documentRepository.setRedactionStatusOnValidation(
+			appeal.id,
+			appeal.reference,
+			appeal.appealType.key,
+			noRedactionRequiredStatus
+		);
+		await broadcasters.broadcastDocuments(updatedDocuments, EventType.Update);
 
 		await sendLpaqCompleteEmailToLPA(notifyClient, appeal, siteAddress, azureAdUserId);
 		await sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress, azureAdUserId);
 	}
 
-	const updatedAppeal = await appealRepository.getAppealById(Number(appealId));
+	// TODO: performance
+	// is returning all data, return only needed data
+	/** @type {Omit<Appeal, 'documents' | 'representations'> | undefined} */
+	const updatedAppeal = await appealRepository.deprecatedGetAppealById(Number(appealId), {
+		omitDocuments: true,
+		omitRepresentations: true
+	});
+
 	if (updatedAppeal) {
 		const { lpaQuestionnaire: updatedLpaQuestionnaire } = updatedAppeal;
 
@@ -228,7 +247,7 @@ async function sendLpaqCompleteEmailToLPA(notifyClient, appeal, siteAddress, azu
  * @param {string} azureAdUserId
  * */
 async function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress, azureAdUserId) {
-	const email = appeal.appellant?.email ?? appeal.agent?.email;
+	const email = appeal.agent?.email ?? appeal.appellant?.email;
 	const whatHappensNext =
 		'We will send you another email when the local planning authority submits their statement ' +
 		'and we receive any comments from interested parties.';
@@ -249,114 +268,87 @@ async function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddres
 				azureAdUserId
 			);
 		case APPEAL_TYPE.S78:
-		case APPEAL_TYPE.ENFORCEMENT_NOTICE: {
-			const enforcementReference = await getEnforcementReference(appeal);
-
-			if (String(appeal.procedureType) === APPEAL_CASE_PROCEDURE.HEARING) {
-				const hearingStartTime = appeal.hearing?.hearingStartTime;
-				const hearingDate = hearingStartTime ? formatDate(hearingStartTime, false) : undefined;
-				return sendLpaqCompleteEmail(
-					notifyClient,
-					appeal,
-					{
-						...s78Fields,
-						hearing_date: hearingDate,
-						what_happens_next: 'We will contact you if we need any more information.',
-						...(enforcementReference && { enforcement_reference: enforcementReference })
-					},
-					s78Template,
-					email,
-					azureAdUserId
-				);
-			}
-
-			const s78EmailPromises = [
-				sendLpaqCompleteEmail(
-					notifyClient,
-					appeal,
-					{
-						...s78Fields,
-						...(enforcementReference && { enforcement_reference: enforcementReference })
-					},
-					s78Template,
-					email,
-					azureAdUserId
-				)
-			];
-
-			if (appeal.appealRule6Parties && appeal.appealRule6Parties.length > 0) {
-				for (const party of appeal.appealRule6Parties) {
-					if (party.serviceUser?.email) {
-						s78EmailPromises.push(
-							sendLpaqCompleteEmail(
-								notifyClient,
-								appeal,
-								{
-									...s78Fields,
-									...(enforcementReference && { enforcement_reference: enforcementReference })
-								},
-								s78Template,
-								party.serviceUser.email,
-								azureAdUserId
-							)
-						);
-					}
-				}
-			}
-
-			return Promise.all(s78EmailPromises);
-		}
+		case APPEAL_TYPE.ENFORCEMENT_NOTICE:
 		case APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING: {
-			const enforcementReference = await getEnforcementReference(appeal);
-
-			if (String(appeal.procedureType) === APPEAL_CASE_PROCEDURE.HEARING) {
-				const hearingStartTime = appeal.hearing?.hearingStartTime;
-				const hearingDate = hearingStartTime ? formatDate(hearingStartTime, false) : undefined;
-				return sendLpaqCompleteEmail(
-					notifyClient,
-					appeal,
-					{
-						...s78Fields,
-						hearing_date: hearingDate,
-						what_happens_next: 'We will contact you if we need any more information.',
-						...(enforcementReference && { enforcement_reference: enforcementReference })
-					},
-					s78Template,
-					email,
-					azureAdUserId
-				);
-			}
-
-			const s78EmailPromises = [
-				sendLpaqCompleteEmail(
-					notifyClient,
-					appeal,
-					{
-						...s78Fields,
-						...(enforcementReference && { enforcement_reference: enforcementReference })
-					},
-					s78Template,
-					email,
-					azureAdUserId
+			const s78EmailPromises = [];
+			if (
+				isS78ExpeditedAppealType(
+					appeal.appealType?.type,
+					appeal.appellantCase?.applicationDate,
+					appeal.appellantCase?.applicationDecision,
+					appeal.appellantCase?.typeOfPlanningApplication
 				)
-			];
+			) {
+				const s78ExpeditedTemplate = 'lpaq-complete-s78-expedite-appellant';
+				const initialDate = setTimeInTimeZone(new Date(), DAYTIME_HOUR, DAYTIME_MINUTE);
+				const calculatedDate = addDays(initialDate, 5);
 
-			if (appeal.appealRule6Parties && appeal.appealRule6Parties.length > 0) {
-				for (const party of appeal.appealRule6Parties) {
-					if (party.serviceUser?.email) {
-						s78EmailPromises.push(
-							sendLpaqCompleteEmail(
-								notifyClient,
-								appeal,
-								{
-									...s78Fields,
-									...(enforcementReference && { enforcement_reference: enforcementReference })
-								},
-								s78Template,
-								party.serviceUser.email,
-								azureAdUserId
-							)
-						);
+				const s78ExpeditedFields = {
+					...fields,
+					due_date: calculatedDate ? formatDate(calculatedDate, false) : undefined
+				};
+				s78EmailPromises.push(
+					sendLpaqCompleteEmail(
+						notifyClient,
+						appeal,
+						s78ExpeditedFields,
+						s78ExpeditedTemplate,
+						email,
+						azureAdUserId
+					)
+				);
+			} else {
+				const enforcementReference = await getEnforcementReference(appeal);
+
+				if (String(appeal.procedureType) === APPEAL_CASE_PROCEDURE.HEARING) {
+					const hearingStartTime = appeal.hearing?.hearingStartTime;
+					const hearingDate = hearingStartTime ? formatDate(hearingStartTime, false) : undefined;
+					return sendLpaqCompleteEmail(
+						notifyClient,
+						appeal,
+						{
+							...s78Fields,
+							hearing_date: hearingDate,
+							what_happens_next: 'We will contact you if we need any more information.',
+							...(enforcementReference && { enforcement_reference: enforcementReference })
+						},
+						s78Template,
+						email,
+						azureAdUserId
+					);
+				}
+
+				s78EmailPromises.push(
+					sendLpaqCompleteEmail(
+						notifyClient,
+						appeal,
+						{
+							...s78Fields,
+							...(enforcementReference && { enforcement_reference: enforcementReference })
+						},
+						s78Template,
+						email,
+						azureAdUserId
+					)
+				);
+
+				if (appeal.appealRule6Parties && appeal.appealRule6Parties.length > 0) {
+					for (const party of appeal.appealRule6Parties) {
+						if (party.serviceUser?.email) {
+							s78EmailPromises.push(
+								sendLpaqCompleteEmail(
+									notifyClient,
+									appeal,
+									{
+										...s78Fields,
+										...(enforcementReference && { enforcement_reference: enforcementReference })
+									},
+									s78Template,
+									party.serviceUser.email,
+									azureAdUserId
+								)
+							);
+						}
 					}
 				}
 			}

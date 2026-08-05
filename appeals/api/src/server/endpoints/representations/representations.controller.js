@@ -2,7 +2,6 @@ import { Prisma } from '#db-client/client.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { sendRepresentationReceivedNotifications } from '#endpoints/integrations/integrations.controller.js';
-import representationRepository from '#repositories/representation.repository.js';
 import { isStatePassed } from '#state/transition-state.js';
 import BackOfficeAppError from '#utils/app-error.js';
 import { currentStatus } from '#utils/current-status.js';
@@ -16,6 +15,7 @@ import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import {
 	AUDIT_TRIAL_APPELLANT_UUID,
 	AUDIT_TRIAL_RULE_6_PARTY_ID,
+	CASE_RELATIONSHIP_LINKED,
 	DEFAULT_PAGE_NUMBER,
 	DEFAULT_PAGE_SIZE,
 	ERROR_NOT_FOUND,
@@ -56,7 +56,9 @@ export const getRepresentations = async (req, res) => {
 	const { itemCount, comments } = await representationService.getRepresentations(
 		[
 			Number(appeal.id),
-			...(appeal?.childAppeals?.map((childAppeal) => Number(childAppeal.childId)) || [])
+			...(appeal?.childAppeals
+				?.filter((childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED)
+				?.map((childAppeal) => Number(childAppeal.childId)) || [])
 		],
 		pageNumber,
 		pageSize,
@@ -89,7 +91,9 @@ export const getRepresentationCounts = async (req, res) => {
 		const counts = await representationService.getRepresentationCounts(
 			[
 				Number(appeal.id),
-				...(appeal?.childAppeals?.map((childAppeal) => Number(childAppeal.childId)) || [])
+				...(appeal?.childAppeals
+					?.filter((childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED)
+					?.map((childAppeal) => Number(childAppeal.childId)) || [])
 			],
 			{
 				status: status ? String(status) : undefined
@@ -121,31 +125,6 @@ export const getRepresentation = async (req, res) => {
 		});
 	}
 
-	return res.send(formatRepresentation(rep));
-};
-
-/**
- * @param {Request} req
- * @param {Response} res
- * @returns {Promise<Response>}
- */
-export const addRedactedRepresentation = async (req, res) => {
-	const { repId } = req.params;
-	const { redactedRepresentation } = req.body;
-
-	const rep = await representationRepository.updateRepresentationById(Number(repId), {
-		redactedRepresentation
-	});
-
-	if (!rep) {
-		return res.status(404).send({
-			errors: {
-				repId: ERROR_NOT_FOUND
-			}
-		});
-	}
-
-	await broadcasters.broadcastRepresentation(rep.id, EventType.Update);
 	return res.send(formatRepresentation(rep));
 };
 
@@ -193,7 +172,8 @@ export async function updateRepresentation(request, response) {
 
 	const updatedRep = await representationService.updateRepresentation(
 		parseInt(repId),
-		status === APPEAL_REPRESENTATION_STATUS.PUBLISHED ? { ...request.body, status } : request.body
+		status === APPEAL_REPRESENTATION_STATUS.PUBLISHED ? { ...request.body, status } : request.body,
+		existingRep
 	);
 
 	if (status !== existingRep.status) {
@@ -279,7 +259,7 @@ export const createRepresentation = () => async (req, res) => {
 	}
 
 	const rep = await representationService.createRepresentation(
-		parseInt(appealId),
+		Number.parseInt(appealId, 10),
 		String(req.get('azureAdUserId')),
 		shouldAutoPublish,
 		req.appeal.appealStatus.find((item) => item.valid === true)?.status ?? '',
@@ -430,8 +410,10 @@ export const updateRepresentationAttachments = async (req, res) => {
  * @returns {Promise<Response>}
  */
 export async function publish(req, res) {
-	const { appeal } = req;
-
+	const {
+		appeal,
+		body: { inspectorName }
+	} = req;
 	/** @type {Record<string, import('./representations.service.js').PublishFunction>} */
 	const handlers = {
 		[APPEAL_CASE_STATUS.STATEMENTS]: representationService.publishStatements,
@@ -456,8 +438,7 @@ export async function publish(req, res) {
 			409
 		);
 	}
-
-	const updatedReps = await publish(appeal, azureAdUserId, req.notifyClient);
+	const updatedReps = await publish(appeal, azureAdUserId, req.notifyClient, inspectorName);
 
 	if (updatedReps.length > 0) {
 		/** @type {Record<string, string>} */

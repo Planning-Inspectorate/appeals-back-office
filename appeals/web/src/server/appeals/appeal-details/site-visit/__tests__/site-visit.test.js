@@ -110,13 +110,13 @@ describe('site-visit', () => {
 				'Interested party and neighbour addresses</dt>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="visit-type" type="radio" value="unaccompanied"'
+				'name="visit-type" type="radio" value="Unaccompanied"'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="visit-type" type="radio" value="accessRequired"'
+				'name="visit-type" type="radio" value="Access required"'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="visit-type" type="radio" value="accompanied"'
+				'name="visit-type" type="radio" value="Accompanied"'
 			);
 
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
@@ -182,7 +182,7 @@ describe('site-visit', () => {
 			let response = await request
 				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
 				.send({
-					'visit-type': 'unaccompanied',
+					'visit-type': 'Unaccompanied',
 					'visit-date-day': '0',
 					'visit-date-month': '1',
 					'visit-date-year': '3000',
@@ -207,7 +207,7 @@ describe('site-visit', () => {
 			response = await request
 				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
 				.send({
-					'visit-type': 'unaccompanied',
+					'visit-type': 'Unaccompanied',
 					'visit-date-day': '32',
 					'visit-date-month': '1',
 					'visit-date-year': '3000',
@@ -235,7 +235,7 @@ describe('site-visit', () => {
 			let response = await request
 				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
 				.send({
-					'visit-type': 'unaccompanied',
+					'visit-type': 'Unaccompanied',
 					'visit-date-day': '1',
 					'visit-date-month': '0',
 					'visit-date-year': '3000',
@@ -261,7 +261,7 @@ describe('site-visit', () => {
 			response = await request
 				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
 				.send({
-					'visit-type': 'unaccompanied',
+					'visit-type': 'Unaccompanied',
 					'visit-date-day': '1',
 					'visit-date-month': '13',
 					'visit-date-year': '3000',
@@ -289,7 +289,7 @@ describe('site-visit', () => {
 			let response = await request
 				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
 				.send({
-					'visit-type': 'unaccompanied',
+					'visit-type': 'Unaccompanied',
 					'visit-date-day': '1',
 					'visit-date-month': '1',
 					'visit-date-year': '202',
@@ -315,7 +315,7 @@ describe('site-visit', () => {
 			response = await request
 				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
 				.send({
-					'visit-type': 'unaccompanied',
+					'visit-type': 'Unaccompanied',
 					'visit-date-day': '1',
 					'visit-date-month': '1',
 					'visit-date-year': '30003',
@@ -343,7 +343,7 @@ describe('site-visit', () => {
 			const response = await request
 				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
 				.send({
-					'visit-type': 'unaccompanied',
+					'visit-type': 'Unaccompanied',
 					'visit-date-day': '29',
 					'visit-date-month': '2',
 					'visit-date-year': '3000',
@@ -371,7 +371,7 @@ describe('site-visit', () => {
 			const response = await request
 				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
 				.send({
-					'visit-type': 'accompanied',
+					'visit-type': 'Accompanied',
 					'visit-date-day': '1',
 					'visit-date-month': '1',
 					'visit-date-year': '3000',
@@ -399,7 +399,7 @@ describe('site-visit', () => {
 			const response = await request
 				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
 				.send({
-					'visit-type': 'accompanied',
+					'visit-type': 'Accompanied',
 					'visit-date-day': '1',
 					'visit-date-month': '1',
 					'visit-date-year': '3000',
@@ -425,7 +425,7 @@ describe('site-visit', () => {
 
 		it('should re-render the schedule visit page with the expected error message if visit end time hour is invalid', async () => {
 			await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'unaccompanied'
+				'visit-type': 'Unaccompanied'
 			});
 
 			await request.post(`${baseUrl}/1${siteVisitPath}/schedule`).send({
@@ -457,7 +457,7 @@ describe('site-visit', () => {
 
 		it('should re-render the schedule visit page with the expected error message if visit end time minute is invalid', async () => {
 			await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'accessRequired'
+				'visit-type': 'Access required'
 			});
 
 			await request.post(`${baseUrl}/1${siteVisitPath}/schedule`).send({
@@ -493,7 +493,7 @@ describe('site-visit', () => {
 			const response = await request
 				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
 				.send({
-					'visit-type': 'accessRequired',
+					'visit-type': 'Access required',
 					'visit-date-day': '1',
 					'visit-date-month': '1',
 					'visit-date-year': '3000',
@@ -521,7 +521,7 @@ describe('site-visit', () => {
 			const response = await request
 				.post(`${baseUrl}/1${siteVisitPath}/schedule/check-details`)
 				.send({
-					'visit-type': 'accessRequired',
+					'visit-type': 'Access required',
 					'visit-date-day': '1',
 					'visit-date-month': '1',
 					'visit-date-year': '3000',
@@ -539,7 +539,7 @@ describe('site-visit', () => {
 			const response = await request
 				.post(`${baseUrl}/1${siteVisitPath}/schedule/check-details`)
 				.send({
-					'visit-type': 'unaccompanied',
+					'visit-type': 'Unaccompanied',
 					'visit-date-day': '1',
 					'visit-date-month': '1',
 					'visit-date-year': '3000',
@@ -557,7 +557,7 @@ describe('site-visit', () => {
 			const response = await request
 				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
 				.send({
-					'visit-type': 'accompanied',
+					'visit-type': 'Accompanied',
 					'visit-date-day': '1',
 					'visit-date-month': '1',
 					'visit-date-year': '3000',
@@ -585,7 +585,7 @@ describe('site-visit', () => {
 			const response = await request
 				.post(`${baseUrl}/1${siteVisitPath}/schedule/check-details`)
 				.send({
-					'visit-type': 'accompanied',
+					'visit-type': 'Accompanied',
 					'visit-date-day': '1',
 					'visit-date-month': '1',
 					'visit-date-year': '3000',
@@ -603,7 +603,7 @@ describe('site-visit', () => {
 			const response = await request
 				.post(`${baseUrl}/1${siteVisitPath}/schedule/schedule-visit-date`)
 				.send({
-					'visit-type': 'accompanied',
+					'visit-type': 'Access required',
 					'visit-date-day': '1',
 					'visit-date-month': '1',
 					'visit-date-year': '3000',
@@ -647,7 +647,7 @@ describe('site-visit', () => {
 			const response = await request
 				.post(`${baseUrl}/${appealId}${siteVisitPath}/schedule/check-details`)
 				.send({
-					'visit-type': 'accessRequired',
+					'visit-type': 'Access required',
 					'visit-date-day': '1',
 					'visit-date-month': '1',
 					'visit-date-year': '3000',
@@ -693,7 +693,7 @@ describe('site-visit', () => {
 			let response = await request
 				.post(`${baseUrl}/1${siteVisitPath}/schedule/check-details`)
 				.send({
-					'visit-type': 'unaccompanied',
+					'visit-type': 'Unaccompanied',
 					'visit-date-day': '1',
 					'visit-date-month': '1',
 					'visit-date-year': '3000',
@@ -769,7 +769,7 @@ describe('site-visit', () => {
 
 			updateOrCreateSiteVisitParameters = {
 				appealIdNumber: 1,
-				apiVisitType: 'unaccompanied',
+				apiVisitType: 'Unaccompanied',
 				visitDate: '2023-05-20T00:00:00Z',
 				visitStartTime: '10:00',
 				visitEndTime: '11:00',

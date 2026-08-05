@@ -10,9 +10,11 @@ import {
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
+import { getFilteredReasons } from '../outcome-incomplete.service.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -1117,4 +1119,64 @@ describe('incomplete-appeal', () => {
 			});
 		});
 	});
+});
+
+describe('getFilteredReasons', () => {
+	it('should not display option 2 when selecting an incomplete reason for expedited case validation', () => {
+		const forbiddenString =
+			'Attachments and/or appendices have not been included to the full statement of case';
+		const incompleteReasonOptions = [
+			{ id: 1, name: 'Appellant name is not the same on the application form and appeal form' },
+			{ id: 2, name: forbiddenString },
+			{ id: 3, name: "LPA's decision notice is missing" },
+			{ id: 4, name: "LPA's decision notice is incorrect or incomplete" },
+			{ id: 10, name: 'Other' }
+		];
+		// Expedited appeal conditions
+		const appellantCase = {
+			appellantCaseDataNotValidated,
+			applicationDate: '2026-04-01',
+			applicationDecision: 'refused',
+			typeOfPlanningApplication: 'full-appeal'
+		};
+		const filtered = getFilteredReasons(incompleteReasonOptions, 'Planning appeal', appellantCase);
+		const reason2 = filtered.find((r) => r.id === 2);
+		expect(reason2).toBeUndefined();
+		expect(filtered.some((r) => r.name === forbiddenString)).toBe(false);
+	});
+
+	it.each([
+		['Householder', APPEAL_TYPE.HOUSEHOLDER],
+		['CAS', APPEAL_TYPE.CAS_PLANNING],
+		['CAS advert', APPEAL_TYPE.CAS_ADVERTISEMENT]
+	])(
+		'should not display the statement of case related options for %s appeals from 1st April 2026 onwards',
+		(_appealTypeLabel, appealType) => {
+			const forbiddenStatementOfCaseString = 'Statement of case and ground of appeal are missing';
+			const forbiddenAttachmentsString =
+				'Attachments and/or appendices have not been included to the full statement of case';
+			const incompleteReasonOptions = [
+				{ id: 1, name: 'Appellant name is not the same on the application form and appeal form' },
+				{ id: 2, name: forbiddenAttachmentsString },
+				{ id: 9, name: forbiddenStatementOfCaseString },
+				{ id: 10, name: 'Other' },
+				{ id: 11, name: 'Draft statement of common ground is missing' }
+			];
+			const appellantCase = {
+				appellantCaseDataNotValidated,
+				applicationDate: '2026-04-01',
+				applicationDecision: 'refused',
+				typeOfPlanningApplication: 'Listed building consent'
+			};
+
+			const filtered = getFilteredReasons(incompleteReasonOptions, appealType, appellantCase);
+			const reason2 = filtered.find((r) => r.id === 2);
+			const reason9 = filtered.find((r) => r.id === 9);
+
+			expect(reason2).toBeUndefined();
+			expect(reason9).toBeUndefined();
+			expect(filtered.some((r) => r.name === forbiddenAttachmentsString)).toBe(false);
+			expect(filtered.some((r) => r.name === forbiddenStatementOfCaseString)).toBe(false);
+		}
+	);
 });

@@ -1,0 +1,1004 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`appellant-case documents GET /appellant-case/add-documents/:folderId/ should render a document upload page with a file upload component, and no late entry tag and associated details component, and no additional documents warning text, if the folder is changedDescription with correct text for advertisement 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload evidence of your agreement to change the description of the advertisement</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/2864"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2864" data-document-type="changedDescription" data-document-stage="appellant-case"
+            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
+            data-document-title="evidence of your agreement to change the description of development"
+            data-allowed-types="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+            data-formatted-allowed-types="PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF">
+                <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+                data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
+                    <div class="pins-file-upload__container">
+                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 250MB.</span>
+                            <br><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        </div>
+                        <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload evidence of your agreement to change the description of the advertisement</h2>
+                            <div class="pins-file-upload__upload">
+                                <input class="display--none" id="upload-file-1" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+                                type="file" name="files" value="Choose file" aria-controls="file-list-1"
+                                multiple>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose files</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop files</span>
+                                </div>
+                            </div>
+                            <div id="file-list-1">
+                                <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
+                                <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
+                                aria-live="polite"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="display--flex">
+                        <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+                        id="submit-button-1">Continue</button>
+                        <div class="progress-hook"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case documents GET /appellant-case/add-documents/:folderId/ should render a document upload page with a file upload component, and no late entry tag and associated details component, and no additional documents warning text, if the folder is changedDescription with correct text for cas advertisement 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload evidence of your agreement to change the description of the advertisement</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/2864"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2864" data-document-type="changedDescription" data-document-stage="appellant-case"
+            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
+            data-document-title="evidence of your agreement to change the description of development"
+            data-allowed-types="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+            data-formatted-allowed-types="PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF">
+                <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+                data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
+                    <div class="pins-file-upload__container">
+                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 250MB.</span>
+                            <br><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        </div>
+                        <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload evidence of your agreement to change the description of the advertisement</h2>
+                            <div class="pins-file-upload__upload">
+                                <input class="display--none" id="upload-file-1" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+                                type="file" name="files" value="Choose file" aria-controls="file-list-1"
+                                multiple>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose files</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop files</span>
+                                </div>
+                            </div>
+                            <div id="file-list-1">
+                                <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
+                                <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
+                                aria-live="polite"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="display--flex">
+                        <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+                        id="submit-button-1">Continue</button>
+                        <div class="progress-hook"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case documents GET /appellant-case/add-documents/:folderId/ should render a document upload page with a file upload component, and no late entry tag and associated details component, and no additional documents warning text, if the folder is changedDescription with correct text for cas planning 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload evidence of your agreement to change the description of development</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/2864"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2864" data-document-type="changedDescription" data-document-stage="appellant-case"
+            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
+            data-document-title="evidence of your agreement to change the description of development"
+            data-allowed-types="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+            data-formatted-allowed-types="PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF">
+                <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+                data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
+                    <div class="pins-file-upload__container">
+                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 250MB.</span>
+                            <br><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        </div>
+                        <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload evidence of your agreement to change the description of development</h2>
+                            <div class="pins-file-upload__upload">
+                                <input class="display--none" id="upload-file-1" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+                                type="file" name="files" value="Choose file" aria-controls="file-list-1"
+                                multiple>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose files</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop files</span>
+                                </div>
+                            </div>
+                            <div id="file-list-1">
+                                <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
+                                <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
+                                aria-live="polite"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="display--flex">
+                        <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+                        id="submit-button-1">Continue</button>
+                        <div class="progress-hook"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case documents GET /appellant-case/add-documents/:folderId/ should render a document upload page with a file upload component, and no late entry tag and associated details component, and no additional documents warning text, if the folder is changedDescription with correct text for full planning 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload evidence of your agreement to change the description of development</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/2864"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2864" data-document-type="changedDescription" data-document-stage="appellant-case"
+            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
+            data-document-title="evidence of your agreement to change the description of development"
+            data-allowed-types="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+            data-formatted-allowed-types="PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF">
+                <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+                data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
+                    <div class="pins-file-upload__container">
+                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 250MB.</span>
+                            <br><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        </div>
+                        <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload evidence of your agreement to change the description of development</h2>
+                            <div class="pins-file-upload__upload">
+                                <input class="display--none" id="upload-file-1" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+                                type="file" name="files" value="Choose file" aria-controls="file-list-1"
+                                multiple>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose files</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop files</span>
+                                </div>
+                            </div>
+                            <div id="file-list-1">
+                                <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
+                                <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
+                                aria-live="polite"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="display--flex">
+                        <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+                        id="submit-button-1">Continue</button>
+                        <div class="progress-hook"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case documents GET /appellant-case/add-documents/:folderId/ should render a document upload page with a file upload component, and no late entry tag and associated details component, and no additional documents warning text, if the folder is changedDescription with correct text for householder 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload evidence of your agreement to change the description of development</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/2864"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2864" data-document-type="changedDescription" data-document-stage="appellant-case"
+            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
+            data-document-title="evidence of your agreement to change the description of development"
+            data-allowed-types="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+            data-formatted-allowed-types="PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF">
+                <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+                data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
+                    <div class="pins-file-upload__container">
+                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 250MB.</span>
+                            <br><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        </div>
+                        <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload evidence of your agreement to change the description of development</h2>
+                            <div class="pins-file-upload__upload">
+                                <input class="display--none" id="upload-file-1" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+                                type="file" name="files" value="Choose file" aria-controls="file-list-1"
+                                multiple>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose files</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop files</span>
+                                </div>
+                            </div>
+                            <div id="file-list-1">
+                                <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
+                                <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
+                                aria-live="polite"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="display--flex">
+                        <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+                        id="submit-button-1">Continue</button>
+                        <div class="progress-hook"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case documents GET /appellant-case/add-documents/:folderId/ should render a document upload page with a file upload component, and no late entry tag and associated details component, and no additional documents warning text, if the folder is changedDescription with correct text for listed building 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload evidence of your agreement to change the description of development</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/2864"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2864" data-document-type="changedDescription" data-document-stage="appellant-case"
+            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
+            data-document-title="evidence of your agreement to change the description of development"
+            data-allowed-types="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+            data-formatted-allowed-types="PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF">
+                <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+                data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
+                    <div class="pins-file-upload__container">
+                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 250MB.</span>
+                            <br><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        </div>
+                        <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload evidence of your agreement to change the description of development</h2>
+                            <div class="pins-file-upload__upload">
+                                <input class="display--none" id="upload-file-1" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+                                type="file" name="files" value="Choose file" aria-controls="file-list-1"
+                                multiple>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose files</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop files</span>
+                                </div>
+                            </div>
+                            <div id="file-list-1">
+                                <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
+                                <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
+                                aria-live="polite"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="display--flex">
+                        <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+                        id="submit-button-1">Continue</button>
+                        <div class="progress-hook"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case documents GET /appellant-case/add-documents/:folderId/ should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of incomplete 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload additional documents</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/2865"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2865" data-document-type="appellantCaseCorrespondence"
+            data-document-stage="appellant-case" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
+            data-blob-storage-container="document-service-uploads" data-allowed-types="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+            data-formatted-allowed-types="PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF">
+                <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+                data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
+                    <div class="pins-file-upload__container">
+                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 250MB.</span>
+                            <br><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        </div>
+                        <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload additional documents</h2>
+                            <div class="pins-file-upload__upload">
+                                <input class="display--none" id="upload-file-1" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+                                type="file" name="files" value="Choose file" aria-controls="file-list-1"
+                                multiple>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose files</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop files</span>
+                                </div>
+                            </div>
+                            <div id="file-list-1">
+                                <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
+                                <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
+                                aria-live="polite"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                        <strong                         class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Only upload files to
+                            additional documents when no other folder is applicable.</strong>
+                    </div>
+                    <div class="display--flex">
+                        <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+                        id="submit-button-1">Continue</button>
+                        <div class="progress-hook"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case documents GET /appellant-case/add-documents/:folderId/ should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of invalid 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload additional documents</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/2865"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2865" data-document-type="appellantCaseCorrespondence"
+            data-document-stage="appellant-case" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
+            data-blob-storage-container="document-service-uploads" data-allowed-types="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+            data-formatted-allowed-types="PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF">
+                <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+                data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
+                    <div class="pins-file-upload__container">
+                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 250MB.</span>
+                            <br><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        </div>
+                        <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload additional documents</h2>
+                            <div class="pins-file-upload__upload">
+                                <input class="display--none" id="upload-file-1" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+                                type="file" name="files" value="Choose file" aria-controls="file-list-1"
+                                multiple>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose files</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop files</span>
+                                </div>
+                            </div>
+                            <div id="file-list-1">
+                                <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
+                                <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
+                                aria-live="polite"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                        <strong                         class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Only upload files to
+                            additional documents when no other folder is applicable.</strong>
+                    </div>
+                    <div class="display--flex">
+                        <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+                        id="submit-button-1">Continue</button>
+                        <div class="progress-hook"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case documents GET /appellant-case/add-documents/:folderId/ should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the appellant case has no validation outcome 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload additional documents</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/2865"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2865" data-document-type="appellantCaseCorrespondence"
+            data-document-stage="appellant-case" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
+            data-blob-storage-container="document-service-uploads" data-allowed-types="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+            data-formatted-allowed-types="PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF">
+                <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+                data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
+                    <div class="pins-file-upload__container">
+                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 250MB.</span>
+                            <br><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        </div>
+                        <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload additional documents</h2>
+                            <div class="pins-file-upload__upload">
+                                <input class="display--none" id="upload-file-1" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+                                type="file" name="files" value="Choose file" aria-controls="file-list-1"
+                                multiple>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose files</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop files</span>
+                                </div>
+                            </div>
+                            <div id="file-list-1">
+                                <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
+                                <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
+                                aria-live="polite"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                        <strong                         class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Only upload files to
+                            additional documents when no other folder is applicable.</strong>
+                    </div>
+                    <div class="display--flex">
+                        <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+                        id="submit-button-1">Continue</button>
+                        <div class="progress-hook"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case documents GET /appellant-case/add-documents/:folderId/ should render document upload page with late entry status tag and associated details component, and without additional documents warning text, if the folder is additional documents, and the appellant case validation outcome is valid 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Upload additional documents</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full govuk-!-margin-top-3 govuk-!-margin-bottom-5"><strong class="govuk-tag govuk-tag--pink">Late entry</strong>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <details class="govuk-details">
+                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> What is late entry?</span>
+                        </summary>
+                        <div class="govuk-details__text">Additional documents are marked as late entries when the appellant case
+                            or LPA questionnaire to which they are being added has already been reviewed
+                            as valid or complete.</div>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/2865"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2865" data-document-type="appellantCaseCorrespondence"
+            data-document-stage="appellant-case" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
+            data-blob-storage-container="document-service-uploads" data-allowed-types="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+            data-formatted-allowed-types="PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF">
+                <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+                data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
+                    <div class="pins-file-upload__container">
+                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 250MB.</span>
+                            <br><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        </div>
+                        <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload additional documents</h2>
+                            <div class="pins-file-upload__upload">
+                                <input class="display--none" id="upload-file-1" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+                                type="file" name="files" value="Choose file" aria-controls="file-list-1"
+                                multiple>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose files</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop files</span>
+                                </div>
+                            </div>
+                            <div id="file-list-1">
+                                <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
+                                <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
+                                aria-live="polite"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="display--flex">
+                        <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+                        id="submit-button-1">Continue</button>
+                        <div class="progress-hook"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case documents GET /appellant-case/add-documents/:folderId/:documentId should render a document upload page with a file upload component, and no late entry tag and associated details component, and no additional documents warning text, if the folder is not additional documents 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Evidence of your agreement to change the description of development</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/1/1"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2864" data-document-type="changedDescription" data-document-stage="appellant-case"
+            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
+            data-document-id="1" data-allowed-types="application/pdf" data-formatted-allowed-types="PDF">
+                <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+                data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
+                    <div class="pins-file-upload__container">
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 250MB.</span>
+                        </div>
+                        <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload evidence of your agreement to change the description of development</h2>
+                            <div class="pins-file-upload__upload">
+                                <input class="display--none" id="upload-file-1" accept="application/pdf"
+                                type="file" name="files" value="Choose file" aria-controls="file-list-1">
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose file</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop file</span>
+                                </div>
+                            </div>
+                            <div id="file-list-1">
+                                <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
+                                <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
+                                aria-live="polite"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="display--flex">
+                        <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+                        id="submit-button-1">Continue</button>
+                        <div class="progress-hook"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case documents GET /appellant-case/add-documents/:folderId/:documentId should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of incomplete 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Update additional document</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/1/1"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2865" data-document-type="appellantCaseCorrespondence"
+            data-document-stage="appellant-case" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
+            data-blob-storage-container="document-service-uploads" data-document-id="1"
+            data-allowed-types="application/pdf" data-formatted-allowed-types="PDF">
+                <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+                data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
+                    <div class="pins-file-upload__container">
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 250MB.</span>
+                        </div>
+                        <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Update additional document</h2>
+                            <div class="pins-file-upload__upload">
+                                <input class="display--none" id="upload-file-1" accept="application/pdf"
+                                type="file" name="files" value="Choose file" aria-controls="file-list-1">
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose file</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop file</span>
+                                </div>
+                            </div>
+                            <div id="file-list-1">
+                                <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
+                                <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
+                                aria-live="polite"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                        <strong                         class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Only upload files to
+                            additional documents when no other folder is applicable.</strong>
+                    </div>
+                    <div class="display--flex">
+                        <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+                        id="submit-button-1">Continue</button>
+                        <div class="progress-hook"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case documents GET /appellant-case/add-documents/:folderId/:documentId should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the appellant case has a validation outcome of invalid 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Update additional document</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/1/1"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2865" data-document-type="appellantCaseCorrespondence"
+            data-document-stage="appellant-case" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
+            data-blob-storage-container="document-service-uploads" data-document-id="1"
+            data-allowed-types="application/pdf" data-formatted-allowed-types="PDF">
+                <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+                data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
+                    <div class="pins-file-upload__container">
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 250MB.</span>
+                        </div>
+                        <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Update additional document</h2>
+                            <div class="pins-file-upload__upload">
+                                <input class="display--none" id="upload-file-1" accept="application/pdf"
+                                type="file" name="files" value="Choose file" aria-controls="file-list-1">
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose file</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop file</span>
+                                </div>
+                            </div>
+                            <div id="file-list-1">
+                                <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
+                                <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
+                                aria-live="polite"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                        <strong                         class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Only upload files to
+                            additional documents when no other folder is applicable.</strong>
+                    </div>
+                    <div class="display--flex">
+                        <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+                        id="submit-button-1">Continue</button>
+                        <div class="progress-hook"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case documents GET /appellant-case/add-documents/:folderId/:documentId should render document upload page with additional documents warning text, and without late entry status tag and associated details component, if the folder is additional documents, and the appellant case has no validation outcome 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Update additional document</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/1/1"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2865" data-document-type="appellantCaseCorrespondence"
+            data-document-stage="appellant-case" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
+            data-blob-storage-container="document-service-uploads" data-document-id="1"
+            data-allowed-types="application/pdf" data-formatted-allowed-types="PDF">
+                <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+                data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
+                    <div class="pins-file-upload__container">
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 250MB.</span>
+                        </div>
+                        <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Update additional document</h2>
+                            <div class="pins-file-upload__upload">
+                                <input class="display--none" id="upload-file-1" accept="application/pdf"
+                                type="file" name="files" value="Choose file" aria-controls="file-list-1">
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose file</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop file</span>
+                                </div>
+                            </div>
+                            <div id="file-list-1">
+                                <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
+                                <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
+                                aria-live="polite"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                        <strong                         class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Only upload files to
+                            additional documents when no other folder is applicable.</strong>
+                    </div>
+                    <div class="display--flex">
+                        <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+                        id="submit-button-1">Continue</button>
+                        <div class="progress-hook"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case documents GET /appellant-case/add-documents/:folderId/:documentId should render document upload page with late entry status tag and associated details component, and without additional documents warning text, if the folder is additional documents, and the appellant case validation outcome is valid 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Update additional document</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full govuk-!-margin-top-3 govuk-!-margin-bottom-5"><strong class="govuk-tag govuk-tag--pink">Late entry</strong>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <details class="govuk-details">
+                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> What is late entry?</span>
+                        </summary>
+                        <div class="govuk-details__text">Additional documents are marked as late entries when the appellant case
+                            or LPA questionnaire to which they are being added has already been reviewed
+                            as valid or complete.</div>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/1/1"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="2865" data-document-type="appellantCaseCorrespondence"
+            data-document-stage="appellant-case" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
+            data-blob-storage-container="document-service-uploads" data-document-id="1"
+            data-allowed-types="application/pdf" data-formatted-allowed-types="PDF">
+                <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+                data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
+                    <div class="pins-file-upload__container">
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 250MB.</span>
+                        </div>
+                        <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Update additional document</h2>
+                            <div class="pins-file-upload__upload">
+                                <input class="display--none" id="upload-file-1" accept="application/pdf"
+                                type="file" name="files" value="Choose file" aria-controls="file-list-1">
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose file</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop file</span>
+                                </div>
+                            </div>
+                            <div id="file-list-1">
+                                <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
+                                <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
+                                aria-live="polite"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="display--flex">
+                        <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+                        id="submit-button-1">Continue</button>
+                        <div class="progress-hook"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case documents GET /appellant-case/add-documents/:folderId/:documentId/check-your-answers should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case documents GET /appellant-case/add-documents/:folderId/check-your-answers should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case documents POST /appellant-case/add-documents/:folderId/ should render a 500 error page if request body upload-info is in an incorrect format 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case documents POST /appellant-case/add-documents/:folderId/ should render a 500 error page if upload-info is not present in the request body 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case documents POST /appellant-case/add-documents/:folderId/:documentId should render a 500 error page if request body upload-info is in an incorrect format 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case documents POST /appellant-case/add-documents/:folderId/:documentId should render a 500 error page if upload-info is not present in the request body 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case documents POST /appellant-case/add-documents/:folderId/:documentId/check-your-answers should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case documents POST /appellant-case/add-documents/:folderId/check-your-answers should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
+        </div>
+    </div>
+</main>"
+`;

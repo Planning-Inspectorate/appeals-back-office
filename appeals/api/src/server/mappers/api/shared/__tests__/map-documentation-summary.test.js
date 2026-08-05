@@ -54,12 +54,13 @@ describe('mapDocumentationSummary', () => {
 					representationType: APPEAL_REPRESENTATION_TYPE.COMMENT,
 					status: 'valid',
 					dateCreated: date1,
-					redactedRepresentation: 'redacted'
+					isRedacted: true
 				},
 				{
 					representationType: APPEAL_REPRESENTATION_TYPE.COMMENT,
 					status: 'awaiting_review',
-					dateCreated: date2
+					dateCreated: date2,
+					isRedacted: false
 				}
 			]
 		};
@@ -82,8 +83,7 @@ describe('mapDocumentationSummary', () => {
 					representationType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
 					status: 'valid',
 					dateCreated: new Date(),
-					originalRepresentation: 'original',
-					redactedRepresentation: 'redacted' // Different, so isRedacted should be true
+					isRedacted: true
 				}
 			]
 		};
@@ -106,8 +106,7 @@ describe('mapDocumentationSummary', () => {
 					representationType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
 					status: 'valid',
 					dateCreated: new Date(),
-					originalRepresentation: 'same',
-					redactedRepresentation: 'same' // Same, so isRedacted should be false
+					isRedacted: false
 				}
 			]
 		};
@@ -124,8 +123,7 @@ describe('mapDocumentationSummary', () => {
 			representations: [
 				{
 					representationType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
-					originalRepresentation: 'original',
-					redactedRepresentation: 'redacted', // Sets the global "redactLPAStatementMatching" flag to TRUE
+					isRedacted: true,
 					dateCreated: new Date()
 				},
 				{
@@ -133,7 +131,7 @@ describe('mapDocumentationSummary', () => {
 					representedId: 1,
 					status: 'valid',
 					dateCreated: new Date(),
-					redactedRepresentation: 'some redacted content'
+					isRedacted: true
 				}
 			]
 		};
@@ -155,8 +153,7 @@ describe('mapDocumentationSummary', () => {
 			representations: [
 				{
 					representationType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
-					originalRepresentation: 'original',
-					redactedRepresentation: 'redacted',
+					isRedacted: false,
 					dateCreated: new Date()
 				},
 				{
@@ -164,7 +161,7 @@ describe('mapDocumentationSummary', () => {
 					representedId: 1,
 					status: 'valid',
 					dateCreated: new Date(),
-					redactedRepresentation: 'redacted content'
+					isRedacted: true
 				}
 			]
 		};

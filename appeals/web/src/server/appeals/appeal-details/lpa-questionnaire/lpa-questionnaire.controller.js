@@ -1,14 +1,18 @@
 import * as appealDetailsService from '#appeals/appeal-details/appeal-details.service.js';
 import { getDocumentFileType } from '#appeals/appeal-documents/appeal.documents.service.js';
 import logger from '#lib/logger.js';
-import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
+import {
+	getPageHeadingTextOverrideForAddDocuments,
+	getPageHeadingTextOverrideForFolder,
+	mapFolderNameToDisplayLabel
+} from '#lib/mappers/utils/documents-and-folders.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { uncapitalizeFirstLetter } from '#lib/string-utilities.js';
 import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { DOCUMENT_FOLDER_DISPLAY_LABELS } from '@pins/appeals/constants/documents.js';
 import askEnvironmentServiceTeamReviewQuestion from '@pins/appeals/utils/ask-environment-service-team-review-question.js';
+import { uncapitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import {
 	postChangeDocumentDetails,
@@ -27,6 +31,7 @@ import {
 	renderManageFolder,
 	renderUploadDocumentsCheckAndConfirm
 } from '../../appeal-documents/appeal-documents.controller.js';
+import * as appellantCaseService from '../appellant-case/appellant-case.service.js';
 import {
 	checkAndConfirmPage,
 	environmentServiceTeamReviewCasePage,
@@ -59,17 +64,27 @@ const renderLpaQuestionnaire = async (request, response, errors = null) => {
 		currentAppeal.appealId,
 		lpaQuestionnaireId
 	);
+	const appellantCaseResponse = await appellantCaseService
+		.getAppellantCaseFromAppealId(
+			request.apiClient,
+			currentAppeal.appealId,
+			currentAppeal.appellantCaseId
+		)
+		.catch((error) => {
+			return logger.error(error);
+		});
+
 	if (!lpaQuestionnaire) {
 		return response.status(404).render('app/404.njk');
 	}
-
 	const mappedPageContent = await lpaQuestionnairePage(
 		lpaQuestionnaire,
 		currentAppeal,
 		stripQueryString(request.originalUrl),
 		session,
 		request,
-		getBackLinkUrlFromQuery(request)
+		getBackLinkUrlFromQuery(request),
+		appellantCaseResponse?.applicationDate
 	);
 
 	return response.status(200).render('patterns/display-page.pattern.njk', {
@@ -106,7 +121,10 @@ export const postLpaQuestionnaire = async (request, response) => {
 		request.session.reviewOutcome = reviewOutcome;
 
 		if (reviewOutcome === 'complete') {
-			if (askEnvironmentServiceTeamReviewQuestion(currentAppeal.appealType)) {
+			if (
+				askEnvironmentServiceTeamReviewQuestion(currentAppeal.appealType) &&
+				!currentAppeal?.eiaScreeningRequired
+			) {
 				return response.redirect(
 					`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/environment-service-team-review-case`
 				);
@@ -322,48 +340,8 @@ export const getAddDocuments = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	const documentType = currentFolder.path.split('/')[1];
-
 	// @ts-ignore
-	const pageHeadingTextOverride = {
-		[APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED]:
-			"Upload the list of neighbours' addresses that you notified about the application",
-		[APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_SITE_NOTICE]: 'Upload the site notice',
-		[APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_LETTER_TO_NEIGHBOURS]: 'Upload letter or email notification',
-		[APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_PRESS_ADVERT]: 'Upload press advertisement',
-		[APPEAL_DOCUMENT_TYPE.OTHER_RELEVANT_POLICIES]: 'Upload any other relevant policies',
-		[APPEAL_DOCUMENT_TYPE.TREE_PRESERVATION_PLAN]: 'Upload a plan showing the extent of the order',
-		[APPEAL_DOCUMENT_TYPE.DEFINITIVE_MAP_STATEMENT]:
-			'Upload the definitive map and statement extract',
-		[APPEAL_DOCUMENT_TYPE.EIA_SCREENING_DIRECTION]: 'Upload the screening direction',
-		[APPEAL_DOCUMENT_TYPE.EIA_SCREENING_OPINION]:
-			'Upload your screening opinion and any correspondence',
-		[APPEAL_DOCUMENT_TYPE.EIA_SCOPING_OPINION]:
-			'Upload your scoping opinion and any correspondence',
-		[APPEAL_DOCUMENT_TYPE.EIA_ENVIRONMENTAL_STATEMENT]:
-			'Environmental statement and supporting information',
-		[APPEAL_DOCUMENT_TYPE.CONSULTATION_RESPONSES]:
-			'Upload the consultation responses and standing advice',
-		[APPEAL_DOCUMENT_TYPE.OTHER_PARTY_REPRESENTATIONS]:
-			'Upload the representations from members of the public or other parties',
-		[APPEAL_DOCUMENT_TYPE.PLANS_DRAWINGS]: 'Upload the plans, drawings and list of plans',
-		[APPEAL_DOCUMENT_TYPE.PLANNING_OFFICER_REPORT]:
-			'Upload the planning officer’s report or what your decision notice would have said',
-		[APPEAL_DOCUMENT_TYPE.DEVELOPMENT_PLAN_POLICIES]:
-			'Upload relevant policies from your statutory development plan',
-		[APPEAL_DOCUMENT_TYPE.EMERGING_PLAN]: 'Upload the emerging plan and supporting information',
-		[APPEAL_DOCUMENT_TYPE.SUPPLEMENTARY_PLANNING]: 'Upload supplementary planning documents',
-		[APPEAL_DOCUMENT_TYPE.STOP_NOTICE]: 'Upload the stop notice',
-		[APPEAL_DOCUMENT_TYPE.ARTICLE_4_DIRECTION]: 'Upload the article 4 direction',
-		[APPEAL_DOCUMENT_TYPE.COMMUNITY_INFRASTRUCTURE_LEVY]:
-			'Upload the community infrastructure levy',
-		[APPEAL_DOCUMENT_TYPE.LOCAL_DEVELOPMENT_ORDER]: 'Upload the local development order',
-		[APPEAL_DOCUMENT_TYPE.PLANNING_PERMISSION]:
-			'Upload the planning permission and any other relevant documents',
-		[APPEAL_DOCUMENT_TYPE.LPA_ENFORCEMENT_NOTICE]: 'Upload the enforcement notice',
-		[APPEAL_DOCUMENT_TYPE.LPA_ENFORCEMENT_NOTICE_PLAN]: 'Upload the enforcement notice plan',
-		[APPEAL_DOCUMENT_TYPE.PLANNING_CONTRAVENTION_NOTICE]: 'Upload the planning contravention notice'
-	}[documentType];
+	const pageHeadingTextOverride = getPageHeadingTextOverrideForAddDocuments(currentFolder);
 
 	await renderDocumentUpload({
 		request,
@@ -528,38 +506,7 @@ export const postAddDocumentVersionCheckAndConfirm = async (request, response) =
 export const getManageFolder = async (request, response) => {
 	const { currentFolder } = request;
 
-	const documentType = currentFolder.path.split('/')[1];
-	let managePageHeadingText = '';
-
-	switch (documentType) {
-		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED}`:
-			managePageHeadingText = `Notification documents`;
-			break;
-		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_SITE_NOTICE}`:
-			managePageHeadingText = `Site notice documents`;
-			break;
-		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_LETTER_TO_NEIGHBOURS}`:
-			managePageHeadingText = `Letter or email notification documents`;
-			break;
-		case `${APPEAL_DOCUMENT_TYPE.WHO_NOTIFIED_PRESS_ADVERT}`:
-			managePageHeadingText = `Press advert notification documents`;
-			break;
-		case `${APPEAL_DOCUMENT_TYPE.EIA_ENVIRONMENTAL_STATEMENT}`:
-			managePageHeadingText = `Environmental statement documents`;
-			break;
-		case `${APPEAL_DOCUMENT_TYPE.EIA_SCREENING_OPINION}`:
-			managePageHeadingText = `Screening opinion documents`;
-			break;
-		case `${APPEAL_DOCUMENT_TYPE.EIA_SCREENING_DIRECTION}`:
-			managePageHeadingText = `Screening direction documents`;
-			break;
-		case `${APPEAL_DOCUMENT_TYPE.OTHER_RELEVANT_POLICIES}`:
-			managePageHeadingText = `Other relevant policies`;
-			break;
-		default:
-			managePageHeadingText = '';
-			break;
-	}
+	const managePageHeadingText = getPageHeadingTextOverrideForFolder(currentFolder);
 
 	await renderManageFolder({
 		request,

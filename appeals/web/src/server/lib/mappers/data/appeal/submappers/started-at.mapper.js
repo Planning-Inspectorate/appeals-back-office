@@ -1,10 +1,8 @@
+import featureFlags from '#common/feature-flags.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
-import {
-	canStartAppeal,
-	isAwaitingLinkedAppeal,
-	isChildAppeal
-} from '#lib/mappers/utils/is-linked-appeal.js';
+import { isAwaitingLinkedAppeal, isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapStartedAt = ({ appealDetails, currentRoute, userHasUpdateCasePermission }) => {
@@ -28,8 +26,17 @@ export const mapStartedAt = ({ appealDetails, currentRoute, userHasUpdateCasePer
 			!isChildAppeal(appealDetails) &&
 			Boolean(userHasUpdateCasePermission) &&
 			['not_received', 'received'].includes(lpaQuestionnaireStatus) &&
-			!awaitingLinkedAppeal,
+			!awaitingLinkedAppeal &&
+			(!appealDetails.isS78Expedited ||
+				featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS_LPAQ)),
 		classes: 'appeal-start-date',
-		actionText: appealDetails.startedAt ? 'Change' : canStartAppeal(appealDetails) ? 'Start' : ''
+		actionText:
+			appealDetails.startedAt ||
+			(appealDetails.isS78Expedited &&
+				!featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS_LPAQ))
+				? appealDetails.startedAt
+					? 'Change'
+					: ''
+				: 'Start'
 	});
 };

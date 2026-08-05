@@ -34,6 +34,15 @@ export function formatCamelCaseToWords(value) {
 	return spaced.charAt(0).toUpperCase() + spaced.slice(1).toLowerCase();
 }
 
+export const getFileProperties = (fileName) => {
+	const lastDotIndex = fileName.lastIndexOf('.');
+
+	return {
+		fileName: fileName.substring(0, lastDotIndex),
+		extension: fileName.substring(lastDotIndex + 1)
+	};
+};
+
 /**
  * Takes a date object and returns formatted date and time
  * @param {Date} date - Date to format

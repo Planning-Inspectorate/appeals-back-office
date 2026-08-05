@@ -22,7 +22,9 @@ const linkableCaseStatuses = [
  * @returns {Promise<import('@pins/appeals.api').Appeals.LinkableAppealSummary>}
  */
 export const getLinkableAppealSummaryByCaseReference = async (appealReference, linkableType) => {
-	let appeal = await appealRepository.getAppealByAppealReference(appealReference);
+	// TODO: performance
+	// is returning all data, return only needed data
+	let appeal = await appealRepository.deprecatedGetAppealByAppealReference(appealReference);
 	if (!appeal) {
 		logger.debug('Case not found in BO, now trying to query Horizon');
 		const horizonAppeal = await getAppealFromHorizon(appealReference).catch((error) => {

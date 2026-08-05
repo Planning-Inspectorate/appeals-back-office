@@ -1,4 +1,4 @@
-import { convertFromBooleanToYesNo } from '#lib/boolean-formatter.js';
+import { isFeatureActive } from '#common/feature-flags.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import {
 	documentUploadUrlTemplate,
@@ -6,6 +6,8 @@ import {
 } from '#lib/mappers/data/appellant-case/common.js';
 import { removeSummaryListActions } from '#lib/mappers/index.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
+import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { beforeExpeditedOriginalApplicationCutOff } from '@pins/appeals/utils/appeal-type-checks.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse
@@ -60,12 +62,6 @@ export function generateHASComponents(
 				removeSummaryListActions(mappedAppellantCaseData.applicationType.display.summaryListItem),
 				mappedAppellantCaseData.applicationDecision.display.summaryListItem,
 				mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
-				{
-					key: { text: 'Are you claiming costs as part of your appeal?' },
-					value: {
-						text: convertFromBooleanToYesNo(appellantCaseData.appellantCostsAppliedFor, 'No data')
-					}
-				},
 				mappedAppellantCaseData.applicationReference.display.summaryListItem
 			]
 		}
@@ -121,8 +117,9 @@ export function generateHASComponents(
 				mappedAppellantCaseData.siteOwnership.display.summaryListItem,
 				mappedAppellantCaseData.ownersKnown.display.summaryListItem,
 				mappedAppellantCaseData.inspectorAccess.display.summaryListItem,
-				mappedAppellantCaseData.healthAndSafetyIssues.display.summaryListItem
-			]
+				mappedAppellantCaseData.healthAndSafetyIssues.display.summaryListItem,
+				mappedAppellantCaseData.anySignificantChanges?.display?.summaryListItem
+			].filter(Boolean)
 		}
 	};
 
@@ -149,7 +146,7 @@ export function generateHASComponents(
 				mappedAppellantCaseData.developmentDescription.display.summaryListItem,
 				mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
 				mappedAppellantCaseData.decisionLetter.display.summaryListItem
-			]
+			].filter(Boolean)
 		}
 	};
 
@@ -174,7 +171,10 @@ export function generateHASComponents(
 			rows: [
 				mappedAppellantCaseData.applicationForm.display.summaryListItem,
 				mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
-				mappedAppellantCaseData.appealStatement.display.summaryListItem,
+				// we want to hide the appeal statement for appeals submitted 1st April 2026 onwards
+				...(beforeExpeditedOriginalApplicationCutOff(appellantCaseData.applicationDate)
+					? [mappedAppellantCaseData.appealStatement.display.summaryListItem]
+					: []),
 				mappedAppellantCaseData.costsDocument.display.summaryListItem
 			]
 		}
@@ -205,7 +205,7 @@ export function generateHASComponents(
 						appellantCaseData.documents?.appellantCaseCorrespondence?.documents.length > 0
 							? [
 									{
-										text: 'Change',
+										text: 'Manage',
 										visuallyHiddenText: 'additional documents',
 										href: mapDocumentManageUrl(
 											appellantCaseData.appealId,
@@ -247,12 +247,45 @@ export function generateHASComponents(
 		}
 	};
 
-	return [
+	const isExpeditedAppealsActive = isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS);
+	const isExpeditedEligible =
+		isExpeditedAppealsActive &&
+		(appealDetails.appealType === APPEAL_TYPE.HOUSEHOLDER ||
+			appealDetails.appealType === APPEAL_TYPE.CAS_PLANNING ||
+			appealDetails.appealType === APPEAL_TYPE.CAS_ADVERTISEMENT) &&
+		!beforeExpeditedOriginalApplicationCutOff(appellantCaseData.applicationDate);
+
+	const components = [
 		beforeYouStartSectionSummary,
 		appellantSummary,
 		appealSiteSummary,
-		applicationSummary,
-		uploadedDocuments,
-		additionalDocumentsSummary
+		applicationSummary
 	];
+
+	if (isExpeditedEligible) {
+		components.push({
+			type: 'summary-list',
+			wrapperHtml: {
+				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+				closing: '</div></div>'
+			},
+			parameters: {
+				attributes: {
+					id: 'appeal-summary'
+				},
+				card: {
+					title: {
+						text: 'Appeal details'
+					}
+				},
+				rows: [mappedAppellantCaseData.reasonForAppealAppellant.display.summaryListItem].filter(
+					Boolean
+				)
+			}
+		});
+	}
+
+	components.push(uploadedDocuments, additionalDocumentsSummary);
+
+	return components;
 }

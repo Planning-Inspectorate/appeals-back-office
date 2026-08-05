@@ -1,7 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateInput } from '#lib/mappers/components/page-components/date.js';
 import { timeInput } from '#lib/mappers/components/page-components/time.js';
-import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 
 /**
  * @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal

@@ -53,12 +53,10 @@ Due by {{lpa_statement_deadline}}.
 
 Due by {{ip_comments_deadline}}.
 
-{% if procedure_type == 'written representations' -%}
 ## Final comments
 
 Due by {{final_comments_deadline}}.
 
-{% endif -%}
 {% if statement_of_common_ground_deadline -%}
 ## Statement of common ground
 
@@ -70,11 +68,26 @@ Due by {{statement_of_common_ground_deadline}}.
 
 [Submit your questionnaire and other documents]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}), including your appeal notification letter and a list of those notified by {{questionnaire_due_date}}.
 
+{% if procedure_type == 'a hearing' -%}
+We will send you another email when we set up the hearing.
+
+{% endif -%}
+
 [Find out your responsibilities in the appeal process](https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide).
 
 # Notifications
 
 You must [notify anyone you served the enforcement notice to](https://www.gov.uk/government/publications/model-notification-letter-for-enforcement-appeals) about the appeal.
 
-The Planning Inspectorate
+# Appeal costs
+
+You may have to pay costs if you:
+
+- behave unreasonably during the appeal
+- withdraw your enforcement notice without good reason
+- submit late evidence
+
+[Find out more about appeal costs](https://www.gov.uk/claim-planning-appeal-costs).
+
+Planning Inspectorate
 {{team_email_address}}

@@ -67,10 +67,6 @@ export const createSiteVisit = async (
 			siteVisitTypeId: visitTypeId
 		});
 
-		if (isChildAppeal) {
-			return;
-		}
-
 		if (visitDate) {
 			await broadcasters.broadcastEvent(siteVisit.id, EVENT_TYPE.SITE_VISIT, EventType.Create);
 			await createAuditTrail({
@@ -82,47 +78,53 @@ export const createSiteVisit = async (
 			});
 		}
 
-		const notifyTemplateIds = fetchSiteVisitScheduleTemplateIds(siteVisitData.visitType.name);
-
-		const emailVariables = {
-			appeal_reference_number: siteVisitData.appealReferenceNumber,
-			lpa_reference: siteVisitData.lpaReference,
-			...(siteVisitData.enforcementReference && {
-				enforcement_reference: siteVisitData.enforcementReference
-			}),
-			site_address: siteVisitData.siteAddress,
-			start_time: formatTime(siteVisitData.visitStartTime),
-			end_time: formatTime(siteVisitData.visitEndTime),
-			visit_date: formatDate(new Date(siteVisitData.visitDate || ''), false),
-			inspector_name: siteVisitData.inspectorName || '',
-			team_email_address: await getTeamEmailFromAppealId(appealId)
-		};
-
-		if (notifyTemplateIds.appellant && siteVisitData.appellantEmail) {
-			try {
-				await notifySend({
-					azureAdUserId,
-					templateName: notifyTemplateIds.appellant,
-					notifyClient,
-					recipientEmail: siteVisitData.appellantEmail,
-					personalisation: emailVariables
-				});
-			} catch (error) {
-				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-			}
+		if (isChildAppeal) {
+			return;
 		}
 
-		if (notifyTemplateIds.lpa && siteVisitData.lpaEmail) {
-			try {
-				await notifySend({
-					azureAdUserId,
-					templateName: notifyTemplateIds.lpa,
-					notifyClient,
-					recipientEmail: siteVisitData.lpaEmail,
-					personalisation: emailVariables
-				});
-			} catch (error) {
-				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+		if (visitDate && visitStartTime) {
+			const notifyTemplateIds = fetchSiteVisitScheduleTemplateIds(siteVisitData.visitType.name);
+
+			const emailVariables = {
+				appeal_reference_number: siteVisitData.appealReferenceNumber,
+				lpa_reference: siteVisitData.lpaReference,
+				...(siteVisitData.enforcementReference && {
+					enforcement_reference: siteVisitData.enforcementReference
+				}),
+				site_address: siteVisitData.siteAddress,
+				start_time: formatTime(siteVisitData.visitStartTime),
+				end_time: formatTime(siteVisitData.visitEndTime),
+				visit_date: formatDate(new Date(siteVisitData.visitDate || ''), false),
+				inspector_name: siteVisitData.inspectorName || '',
+				team_email_address: await getTeamEmailFromAppealId(appealId)
+			};
+
+			if (notifyTemplateIds.appellant && siteVisitData.appellantEmail) {
+				try {
+					await notifySend({
+						azureAdUserId,
+						templateName: notifyTemplateIds.appellant,
+						notifyClient,
+						recipientEmail: siteVisitData.appellantEmail,
+						personalisation: emailVariables
+					});
+				} catch (error) {
+					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+				}
+			}
+
+			if (notifyTemplateIds.lpa && siteVisitData.lpaEmail) {
+				try {
+					await notifySend({
+						azureAdUserId,
+						templateName: notifyTemplateIds.lpa,
+						notifyClient,
+						recipientEmail: siteVisitData.lpaEmail,
+						personalisation: emailVariables
+					});
+				} catch (error) {
+					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+				}
 			}
 		}
 	} catch (error) {
@@ -184,8 +186,14 @@ const checkSiteVisitExists = async (req, res, next) => {
  * @param {string} azureAdUserId
  * @param {UpdateSiteVisitData} updateSiteVisitData
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {number[]} appealIdsToUpdate
  */
-const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient) => {
+const updateSiteVisit = async (
+	azureAdUserId,
+	updateSiteVisitData,
+	notifyClient,
+	appealIdsToUpdate
+) => {
 	try {
 		const visitDate = updateSiteVisitData.visitDate;
 		const visitEndTime = updateSiteVisitData.visitEndTime;
@@ -206,13 +214,15 @@ const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient)
 			updateSiteVisitData.siteVisitChangeType
 		);
 
-		const result = await siteVisitRepository.updateSiteVisitById(
-			updateSiteVisitData.siteVisitId,
+		const result = await siteVisitRepository.updateMultiSiteVisitByAppealId(
+			appealIdsToUpdate,
 			updateData
 		);
 		if (!result) {
 			throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 		}
+
+		const siteVisits = await siteVisitRepository.getSiteVisitByAppealId(appealIdsToUpdate);
 
 		await updatePersonalList(appealId);
 
@@ -223,66 +233,74 @@ const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient)
 				details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED
 			});
 
-			await broadcasters.broadcastEvent(
-				updateSiteVisitData.siteVisitId,
-				EVENT_TYPE.SITE_VISIT,
-				EventType.Update
+			// @ts-ignore
+			await Promise.allSettled(
+				siteVisits.map((siteVisit) =>
+					broadcasters.broadcastEvent(siteVisit.id, EVENT_TYPE.SITE_VISIT, EventType.Update)
+				)
 			);
 		}
+		if (visitDate && visitStartTime) {
+			const emailVariables = {
+				appeal_reference_number: updateSiteVisitData.appealReferenceNumber,
+				lpa_reference: updateSiteVisitData.lpaReference,
+				...(updateSiteVisitData.enforcementReference && {
+					enforcement_reference: updateSiteVisitData.enforcementReference
+				}),
+				site_address: updateSiteVisitData.siteAddress,
+				start_time: formatTime(updateSiteVisitData.visitStartTime),
+				end_time: formatTime(updateSiteVisitData.visitEndTime),
+				visit_date: formatDate(new Date(updateSiteVisitData.visitDate || ''), false),
+				inspector_name: updateSiteVisitData.inspectorName || '',
+				team_email_address: await getTeamEmailFromAppealId(appealId)
+			};
 
-		const emailVariables = {
-			appeal_reference_number: updateSiteVisitData.appealReferenceNumber,
-			lpa_reference: updateSiteVisitData.lpaReference,
-			...(updateSiteVisitData.enforcementReference && {
-				enforcement_reference: updateSiteVisitData.enforcementReference
-			}),
-			site_address: updateSiteVisitData.siteAddress,
-			start_time: formatTime(updateSiteVisitData.visitStartTime),
-			end_time: formatTime(updateSiteVisitData.visitEndTime),
-			visit_date: formatDate(new Date(updateSiteVisitData.visitDate || ''), false),
-			inspector_name: updateSiteVisitData.inspectorName || '',
-			team_email_address: await getTeamEmailFromAppealId(appealId)
-		};
+			if (notifyTemplateIds.appellant && updateSiteVisitData.appellantEmail) {
+				try {
+					await notifySend({
+						azureAdUserId,
+						templateName: notifyTemplateIds.appellant,
+						notifyClient,
+						recipientEmail: updateSiteVisitData.appellantEmail,
+						personalisation: emailVariables
+					});
+				} catch (error) {
+					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+				}
+			}
 
-		if (notifyTemplateIds.appellant && updateSiteVisitData.appellantEmail) {
-			try {
-				await notifySend({
-					azureAdUserId,
-					templateName: notifyTemplateIds.appellant,
-					notifyClient,
-					recipientEmail: updateSiteVisitData.appellantEmail,
-					personalisation: emailVariables
-				});
-			} catch (error) {
-				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+			if (notifyTemplateIds.lpa && updateSiteVisitData.lpaEmail) {
+				try {
+					await notifySend({
+						azureAdUserId,
+						templateName: notifyTemplateIds.lpa,
+						notifyClient,
+						recipientEmail: updateSiteVisitData.lpaEmail,
+						personalisation: emailVariables
+					});
+				} catch (error) {
+					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+				}
 			}
 		}
-
-		if (notifyTemplateIds.lpa && updateSiteVisitData.lpaEmail) {
-			try {
-				await notifySend({
-					azureAdUserId,
-					templateName: notifyTemplateIds.lpa,
-					notifyClient,
-					recipientEmail: updateSiteVisitData.lpaEmail,
-					personalisation: emailVariables
-				});
-			} catch (error) {
-				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
-			}
-		}
-
 		return result;
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
 };
+
 /**
  * @param {string} azureAdUserId
  * @param {UpdateSiteVisitData} updateSiteVisitData
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {number[]} appealIdsToUpdate
  */
-const updateWhenSiteVisitMissed = async (azureAdUserId, updateSiteVisitData, notifyClient) => {
+const updateWhenSiteVisitMissed = async (
+	azureAdUserId,
+	updateSiteVisitData,
+	notifyClient,
+	appealIdsToUpdate
+) => {
 	try {
 		const visitDate = updateSiteVisitData.visitDate;
 		const visitEndTime = updateSiteVisitData.visitEndTime;
@@ -301,13 +319,15 @@ const updateWhenSiteVisitMissed = async (azureAdUserId, updateSiteVisitData, not
 			updateSiteVisitData.visitType.name
 		);
 
-		const result = await siteVisitRepository.updateSiteVisitById(
-			updateSiteVisitData.siteVisitId,
+		const result = await siteVisitRepository.updateMultiSiteVisitByAppealId(
+			appealIdsToUpdate,
 			updateData
 		);
 		if (!result) {
 			throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 		}
+
+		const siteVisits = await siteVisitRepository.getSiteVisitByAppealId(appealIdsToUpdate);
 
 		if (updateSiteVisitData.visitType) {
 			if (visitDate) {
@@ -320,10 +340,11 @@ const updateWhenSiteVisitMissed = async (azureAdUserId, updateSiteVisitData, not
 				});
 			}
 
-			await broadcasters.broadcastEvent(
-				updateSiteVisitData.siteVisitId,
-				EVENT_TYPE.SITE_VISIT,
-				EventType.Update
+			// @ts-ignore
+			await Promise.allSettled(
+				siteVisits.map((siteVisit) =>
+					broadcasters.broadcastEvent(siteVisit.id, EVENT_TYPE.SITE_VISIT, EventType.Update)
+				)
 			);
 		}
 
@@ -501,22 +522,26 @@ const fetchRearrangeMissedSiteVisitTemplateIds = (visitTypeName) => {
 
 /**
  *
- * @param {number} siteVisitId
  * @param {import('@pins/appeals.api').Schema.Appeal} appeal
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
+ * @param {number[]} appealIdsToUpdate
  */
-const deleteSiteVisit = async (siteVisitId, appeal, notifyClient, azureAdUserId) => {
+const deleteSiteVisit = async (appeal, notifyClient, azureAdUserId, appealIdsToUpdate) => {
 	try {
-		const existingSiteVisit = await siteVisitRepository.getSiteVisitById(siteVisitId);
-		await siteVisitRepository.deleteSiteVisitById(siteVisitId);
+		const siteVisits = await siteVisitRepository.getSiteVisitByAppealId(appealIdsToUpdate);
+		await siteVisitRepository.deleteMultiSiteVisitByAppealId(appealIdsToUpdate);
 
-		await broadcasters.broadcastEvent(
-			siteVisitId,
-			EVENT_TYPE.SITE_VISIT,
-			EventType.Delete,
-			// @ts-ignore
-			existingSiteVisit
+		await Promise.allSettled(
+			siteVisits.map((siteVisit) =>
+				broadcasters.broadcastEvent(
+					siteVisit.id,
+					EVENT_TYPE.SITE_VISIT,
+					EventType.Delete,
+					// @ts-ignore
+					siteVisit
+				)
+			)
 		);
 
 		await sendCancelledSiteVisitNotification({
@@ -543,6 +568,7 @@ const deleteSiteVisit = async (siteVisitId, appeal, notifyClient, azureAdUserId)
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
  * @param {string} whoMissedSiteVisit
+ * @param {number[]} appealIdsToUpdate
  * @returns
  */
 const recordMissedSiteVisit = async (
@@ -550,12 +576,28 @@ const recordMissedSiteVisit = async (
 	appeal,
 	notifyClient,
 	azureAdUserId,
-	whoMissedSiteVisit
+	whoMissedSiteVisit,
+	appealIdsToUpdate
 ) => {
-	const result = await siteVisitRepository.updateSiteVisitById(siteVisitId, { whoMissedSiteVisit });
+	const siteVisits = await siteVisitRepository.getSiteVisitByAppealId(appealIdsToUpdate);
+	const result = await siteVisitRepository.updateMultiSiteVisitByAppealId(appealIdsToUpdate, {
+		whoMissedSiteVisit
+	});
 	if (!result) {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
+
+	await Promise.allSettled(
+		siteVisits.map((siteVisit) =>
+			broadcasters.broadcastEvent(
+				siteVisit.id,
+				EVENT_TYPE.SITE_VISIT,
+				EventType.Delete,
+				// @ts-ignore
+				siteVisit
+			)
+		)
+	);
 
 	const siteAddress = appeal.address
 		? formatAddressSingleLine(appeal.address)
@@ -582,7 +624,7 @@ const recordMissedSiteVisit = async (
 		])
 	});
 
-	const appellantEmail = appeal.appellant?.email ?? appeal.agent?.email;
+	const appellantEmail = appeal.agent?.email ?? appeal.appellant?.email;
 	const lpaEmail = appeal.lpa?.email;
 
 	if (appellantEmail && whoMissedSiteVisit === 'appellant') {

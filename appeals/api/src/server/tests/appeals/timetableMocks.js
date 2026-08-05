@@ -1,6 +1,7 @@
 // @ts-nocheck
 import {
 	advertisementAppeal,
+	appealS78Expedite,
 	casAdvertAppeal,
 	casPlanningAppeal,
 	fullPlanningAppeal,
@@ -82,6 +83,19 @@ const fullPlanningAppealWithTimetable = {
 	}
 };
 
+const fullPlanningAppealExpediteWithTimetable = {
+	...appealS78Expedite,
+	caseStartedDate: '',
+	caseValidationDate: new Date(2026, 4, 20),
+	caseValidDate: new Date(2026, 4, 20),
+	appealTimetable: {
+		appealId: 1,
+		id: 101,
+		lpaQuestionnaireDueDate: new Date('2026-05-16T01:00:00.000Z'),
+		lpaStatementDueDate: null
+	}
+};
+
 const fullPlanningInquiryAppealWithTimetable = {
 	...fullPlanningAppeal,
 	procedureType: {
@@ -135,6 +149,7 @@ export {
 	advertisementAppealWithTimetable,
 	casAdvertAppealWithTimetable,
 	casPlanningAppealWithTimetable,
+	fullPlanningAppealExpediteWithTimetable,
 	fullPlanningAppealWithTimetable,
 	fullPlanningHearingAppealWithTimetable,
 	fullPlanningInquiryAppealWithTimetable,

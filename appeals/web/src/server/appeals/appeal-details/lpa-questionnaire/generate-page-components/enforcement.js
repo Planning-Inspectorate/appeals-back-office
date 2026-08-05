@@ -68,8 +68,10 @@ export const generateEnforcementLpaQuestionnaireComponents = (mappedLPAQData) =>
 			attributes: { id: 'notifications-summary' },
 			card: { title: { text: '3. Notifying relevant parties' } },
 			rows: [
-				mappedLPAQData.lpaq?.appealNotification?.display.summaryListItem,
-				mappedLPAQData.lpaq?.enforcementList?.display.summaryListItem
+				mappedLPAQData.lpaq?.lpaEnforcementNotice?.display.summaryListItem,
+				mappedLPAQData.lpaq?.lpaEnforcementNoticePlan?.display.summaryListItem,
+				mappedLPAQData.lpaq?.enforcementList?.display.summaryListItem,
+				mappedLPAQData.lpaq?.appealNotification?.display.summaryListItem
 			].filter(isDefined)
 		}
 	});
@@ -93,8 +95,6 @@ export const generateEnforcementLpaQuestionnaireComponents = (mappedLPAQData) =>
 				mappedLPAQData.lpaq?.infrastructureLevyExpectedDate?.display.summaryListItem,
 				mappedLPAQData.lpaq?.localDevelopmentOrder?.display.summaryListItem,
 				mappedLPAQData.lpaq?.planningPermission?.display.summaryListItem,
-				mappedLPAQData.lpaq?.lpaEnforcementNotice?.display.summaryListItem,
-				mappedLPAQData.lpaq?.lpaEnforcementNoticePlan?.display.summaryListItem,
 				mappedLPAQData.lpaq?.planningContraventionNotice?.display.summaryListItem
 			].filter(isDefined)
 		}

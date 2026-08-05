@@ -229,6 +229,16 @@ describe('withdrawal', () => {
 
 		it('should render a 404 error page for the view withdrawal request document folder page of the appeal that is not withdrawn', async () => {
 			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
+			nock('http://test/')
+				.get(
+					`/appeals/${appealData.appealId}/document-folders/${appealData.withdrawal.withdrawalFolder?.folderId}?pageNumber=1&pageSize=100`
+				)
+				.reply(200, {
+					caseId: appealData.appealId,
+					documents: [],
+					folderId: appealData.withdrawal.withdrawalFolder?.folderId,
+					path: appealData.withdrawal.withdrawalFolder?.path
+				});
 
 			const response = await request.get(
 				`${baseUrl}/${mockAppealId}${withdrawalPath}${withdrawalRequestViewPath}`
@@ -248,6 +258,16 @@ describe('withdrawal', () => {
 			};
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataWithWithdrawalData);
+			nock('http://test/')
+				.get(
+					`/appeals/${appealData.appealId}/document-folders/${appealDataWithWithdrawalData.withdrawal.withdrawalFolder?.folderId}?pageNumber=1&pageSize=100`
+				)
+				.reply(200, {
+					caseId: appealDataWithWithdrawalData.appealId,
+					documents: [],
+					folderId: appealDataWithWithdrawalData.withdrawal.withdrawalFolder?.folderId,
+					path: appealDataWithWithdrawalData.withdrawal.withdrawalFolder?.path
+				});
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 
 			const response = await request.get(

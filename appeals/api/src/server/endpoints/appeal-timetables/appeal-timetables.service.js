@@ -14,7 +14,11 @@ import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { trimAppealType } from '#utils/string-utils.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
-import { PROCEDURE_TYPE_ID_MAP, PROCEDURE_TYPE_MAP } from '@pins/appeals/constants/common.js';
+import {
+	PROCEDURE_TYPE_ID_MAP,
+	PROCEDURE_TYPE_KEY,
+	PROCEDURE_TYPE_MAP
+} from '@pins/appeals/constants/common.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import {
 	AUDIT_TRAIL_CASE_STARTED,
@@ -25,7 +29,10 @@ import {
 	CASE_RELATIONSHIP_LINKED,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import { isEnforcementCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
+import {
+	isEnforcementCaseType,
+	isS78ExpeditedAppealType
+} from '@pins/appeals/utils/appeal-type-checks.js';
 import {
 	calculateTimetable,
 	recalculateDateIfNotBusinessDay,
@@ -84,20 +91,21 @@ const checkAppealTimetableExists = async (req, res, next) => {
 };
 
 /**
- *
- * @param {Appeal} appeal
- * @param {string} startDate
- * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
- * @param {string} siteAddress
- * @param {string} azureAdUserId
- * @param {TimetableDeadlineDate} timetable
- * @param {string} [procedureType]
- * @param {string} [hearingStartTime]
- * @param {string | number} [hearingEstimatedDays]
- * @param {any} [inquiry]
+ * @param {Object} params
+ * @param {Appeal} params.appeal
+ * @param {string} params.startDate
+ * @param {import('#endpoints/appeals.js').NotifyClient} params.notifyClient
+ * @param {string} params.siteAddress
+ * @param {string} params.azureAdUserId
+ * @param {TimetableDeadlineDate} params.timetable
+ * @param {string} [params.procedureType]
+ * @param {string} [params.hearingStartTime]
+ * @param {string | number} [params.hearingEstimatedDays]
+ * @param {any} [params.inquiry]
+ * @param {string | null | undefined} params.inspectorName
  * @returns
  */
-const getStartCaseNotifyParams = async (
+const getStartCaseNotifyParams = async ({
 	appeal,
 	startDate,
 	notifyClient,
@@ -107,35 +115,47 @@ const getStartCaseNotifyParams = async (
 	procedureType,
 	hearingStartTime,
 	hearingEstimatedDays,
-	inquiry
-) => {
-	const hearingSuffix = hearingStartTime ? '-hearing' : '';
-	const inquirySuffix =
-		appeal.procedureType?.key === APPEAL_CASE_PROCEDURE.INQUIRY ||
-		(inquiry && inquiry.inquiryStartTime)
-			? 'inquiry'
-			: '';
-
+	inquiry,
+	inspectorName = null
+}) => {
 	const { type = '', key: appealTypeKey = APPEAL_CASE_TYPE.D } = appeal.appealType || {};
 	const appealType = trimAppealType(type);
+	const caseIsStarted = appeal.caseStartedDate;
+	const appealTypeNotifyTemplate = appealTypeMap(appealTypeKey);
+	let formattedLPATemplate;
+	let formattedAppellantTemplate;
+	let baseTemplate = caseIsStarted
+		? 'appeal-start-date-change-'
+		: `appeal-valid-start-case-${appealTypeNotifyTemplate}${appealTypeNotifyTemplate ? '-' : ''}`;
 
-	const appellantTemplate = appeal.caseStartedDate
-		? inquirySuffix
-			? 'appeal-start-date-change-inquiry'
-			: 'appeal-start-date-change-appellant'
-		: `appeal-valid-start-case${[appealTypeMap(appealTypeKey)]}${
-				hearingSuffix ? `appellant${hearingSuffix}` : inquirySuffix ? inquirySuffix : 'appellant'
-			}`;
+	switch (procedureType) {
+		case APPEAL_CASE_PROCEDURE.INQUIRY:
+			formattedLPATemplate = `${baseTemplate}${APPEAL_CASE_PROCEDURE.INQUIRY}`;
+			formattedAppellantTemplate = `${baseTemplate}${APPEAL_CASE_PROCEDURE.INQUIRY}`;
+			break;
+		case APPEAL_CASE_PROCEDURE.HEARING:
+			if (caseIsStarted) {
+				formattedLPATemplate = `${baseTemplate}lpa`;
+				formattedAppellantTemplate = `${baseTemplate}appellant`;
+			} else {
+				formattedLPATemplate = `${baseTemplate}${hearingStartTime ? 'hearing-' : ''}lpa`;
+				formattedAppellantTemplate = `${baseTemplate}${hearingStartTime ? 'hearing-' : ''}appellant`;
+			}
+			break;
+		case APPEAL_CASE_PROCEDURE.WRITTEN_PART_1:
+		case PROCEDURE_TYPE_KEY.WRITTEN_PART_1:
+			formattedLPATemplate = `${baseTemplate}expedited-lpa`;
+			formattedAppellantTemplate = `${baseTemplate}expedited-appellant`;
+			break;
+		case APPEAL_CASE_PROCEDURE.WRITTEN_PART_2:
+		case PROCEDURE_TYPE_KEY.WRITTEN_PART_2:
+		default:
+			formattedLPATemplate = `${baseTemplate}lpa`;
+			formattedAppellantTemplate = `${baseTemplate}appellant`;
+			break;
+	}
 
-	const lpaTemplate = appeal.caseStartedDate
-		? inquirySuffix
-			? 'appeal-start-date-change-inquiry'
-			: 'appeal-start-date-change-lpa'
-		: `appeal-valid-start-case${[appealTypeMap(appealTypeKey)]}${
-				hearingSuffix ? `lpa${hearingSuffix}` : inquirySuffix ? inquirySuffix : 'lpa'
-			}`;
-
-	const appellantEmail = appeal.appellant?.email || appeal.agent?.email;
+	const appellantEmail = appeal.agent?.email || appeal.appellant?.email;
 	const lpaEmail = appeal.lpa?.email || '';
 
 	const teamEmail = await getTeamEmailFromAppealId(appeal.id);
@@ -144,6 +164,7 @@ const getStartCaseNotifyParams = async (
 	// Note that those properties not used within the specified template will be ignored
 	const commonEmailVariables = {
 		appeal_reference_number: appeal.reference,
+		inspector_name: inspectorName ? inspectorName : null,
 		lpa_reference: appeal.applicationReference || '',
 		site_address: siteAddress,
 		start_date: formatDate(new Date(startDate || ''), false),
@@ -211,7 +232,7 @@ const getStartCaseNotifyParams = async (
 		...(appellantEmail && {
 			appellant: {
 				azureAdUserId,
-				templateName: appellantTemplate,
+				templateName: formattedAppellantTemplate,
 				notifyClient,
 				recipientEmail: appellantEmail,
 				personalisation: {
@@ -238,7 +259,7 @@ const getStartCaseNotifyParams = async (
 		...(lpaEmail && {
 			lpa: {
 				azureAdUserId,
-				templateName: lpaTemplate,
+				templateName: formattedLPATemplate,
 				notifyClient,
 				recipientEmail: lpaEmail,
 				personalisation: {
@@ -261,7 +282,6 @@ const getStartCaseNotifyParams = async (
 };
 
 /**
- *
  * @param {Appeal} appeal
  * @param {string} startDate
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
@@ -271,6 +291,7 @@ const getStartCaseNotifyParams = async (
  * @param {string} [procedureType]
  * @param {string} [hearingStartTime]
  * @param {string | number} [hearingEstimatedDays]
+ * @param {string | null | undefined} inspectorName
  * @returns
  */
 const sendStartCaseNotifies = async (
@@ -282,9 +303,10 @@ const sendStartCaseNotifies = async (
 	timetable,
 	procedureType,
 	hearingStartTime,
-	hearingEstimatedDays
+	hearingEstimatedDays,
+	inspectorName = null
 ) => {
-	const { appellant, lpa } = await getStartCaseNotifyParams(
+	const { appellant, lpa } = await getStartCaseNotifyParams({
 		appeal,
 		startDate,
 		notifyClient,
@@ -293,8 +315,9 @@ const sendStartCaseNotifies = async (
 		timetable,
 		procedureType,
 		hearingStartTime,
-		hearingEstimatedDays
-	);
+		hearingEstimatedDays,
+		inspectorName
+	});
 
 	if (appellant) {
 		await notifySend(appellant);
@@ -317,6 +340,7 @@ const sendStartCaseNotifies = async (
  * @param {string} [hearingStartTime]
  * @param {string | number} [hearingEstimatedDays]
  * @param {string} [inquiry]
+ * @param {string | null | undefined} inspectorName
  * @returns {Promise<{appellant?: string, lpa?: string}>}
  */
 const generateStartCaseNotifyPreviews = async (
@@ -329,9 +353,10 @@ const generateStartCaseNotifyPreviews = async (
 	procedureType,
 	hearingStartTime,
 	hearingEstimatedDays,
-	inquiry
+	inquiry,
+	inspectorName = null
 ) => {
-	const { appellant, lpa } = await getStartCaseNotifyParams(
+	const { appellant, lpa } = await getStartCaseNotifyParams({
 		appeal,
 		startDate,
 		notifyClient,
@@ -341,11 +366,13 @@ const generateStartCaseNotifyPreviews = async (
 		procedureType,
 		hearingStartTime,
 		hearingEstimatedDays,
-		inquiry
-	);
+		inquiry,
+		inspectorName
+	});
 
 	const commonPersonalisation = {
-		front_office_url: environment.FRONT_OFFICE_URL || ''
+		front_office_url: environment.FRONT_OFFICE_URL || '',
+		inspectorName: inspectorName ? inspectorName : null
 	};
 	const appellantTemplate = appellant
 		? renderTemplate(`${appellant.templateName}.content.md`, {
@@ -375,6 +402,7 @@ const generateStartCaseNotifyPreviews = async (
  * @param {string} [procedureType]
  * @param {string} [hearingStartTime]
  * @param {string} [hearingEstimatedDays]
+ * @param {string | null | undefined} inspectorName
  * @returns
  */
 const startCase = async (
@@ -384,10 +412,17 @@ const startCase = async (
 	azureAdUserId,
 	procedureType,
 	hearingStartTime,
-	hearingEstimatedDays
+	hearingEstimatedDays,
+	inspectorName = null
 ) => {
 	try {
-		const isChildAppeal = isLinkedAppealsActive(appeal) && Boolean(appeal?.parentAppeals?.length);
+		const isChildAppeal =
+			isLinkedAppealsActive(appeal) &&
+			Boolean(
+				appeal?.parentAppeals?.filter(
+					(parentAppeal) => parentAppeal.type === CASE_RELATIONSHIP_LINKED
+				).length
+			);
 
 		const appealType = appeal.appealType || null;
 		if (!appealType) {
@@ -395,7 +430,20 @@ const startCase = async (
 		}
 
 		const startedAt = await recalculateDateIfNotBusinessDay(startDate);
-		const timetable = await calculateTimetable(appealType.key, startedAt, procedureType);
+		const isS78Expedited = isS78ExpeditedAppealType(
+			appealType.type,
+			appeal.appellantCase?.applicationDate,
+			appeal.appellantCase?.applicationDecision,
+			appeal.appellantCase?.typeOfPlanningApplication
+		);
+
+		const timetable = await calculateTimetable(
+			appealType.key,
+			startedAt,
+			procedureType,
+			null,
+			isS78Expedited
+		);
 		const startDateWithTimeCorrection = setTimeInTimeZone(startedAt, 0, 0);
 
 		const procedureTypeId = procedureType && PROCEDURE_TYPE_ID_MAP[procedureType];
@@ -456,7 +504,8 @@ const startCase = async (
 					timetable,
 					procedureType,
 					hearingStartTime,
-					hearingEstimatedDays
+					hearingEstimatedDays,
+					inspectorName
 				);
 			}
 
@@ -480,6 +529,7 @@ const startCase = async (
  * @param {string} [hearingStartTime]
  * @param {string | number} [hearingEstimatedDays]
  * @param {any} [inquiry]
+ * @param {string | null | undefined} inspectorName
  * @returns {Promise<{appellant?: string, lpa?: string}>}
  */
 const getStartCaseNotifyPreviews = async (
@@ -490,10 +540,17 @@ const getStartCaseNotifyPreviews = async (
 	procedureType,
 	hearingStartTime,
 	hearingEstimatedDays,
-	inquiry
+	inquiry,
+	inspectorName = null
 ) => {
 	try {
-		const isChildAppeal = isLinkedAppealsActive(appeal) && Boolean(appeal?.parentAppeals?.length);
+		const isChildAppeal =
+			isLinkedAppealsActive(appeal) &&
+			Boolean(
+				appeal?.parentAppeals?.filter(
+					(parentAppeal) => parentAppeal.type === CASE_RELATIONSHIP_LINKED
+				).length
+			);
 
 		const appealType = appeal.appealType || null;
 		if (!appealType) {
@@ -531,7 +588,8 @@ const getStartCaseNotifyPreviews = async (
 			procedureType,
 			hearingStartTime,
 			hearingEstimatedDays,
-			inquiry
+			inquiry,
+			inspectorName
 		);
 	} catch (/** @type {any} */ error) {
 		logger.error(`Error generating notify previews for appeal ID ${appeal.id}: ${error}`);
@@ -540,7 +598,7 @@ const getStartCaseNotifyPreviews = async (
 };
 
 /**
- * @param {Appeal} appeal
+ * @param {Omit<Appeal, 'documents' | 'representations'>} appeal
  * @param {object} body
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
@@ -636,7 +694,7 @@ const dueDateToAppealTimetableTextMapper = {
 };
 
 /**
- * @param {Appeal} appeal
+ * @param {Omit<Appeal, 'documents' | 'representations'>} appeal
  * @param {object} processedBody
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
@@ -780,6 +838,14 @@ const shouldSendNotify = (appealTypeShorthand, procedureType) => {
 				procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 ||
 				procedureType === APPEAL_CASE_PROCEDURE.INQUIRY ||
 				procedureType === APPEAL_CASE_PROCEDURE.HEARING)) ||
+		(appealTypeShorthand === APPEAL_CASE_TYPE.C &&
+			(procedureType === APPEAL_CASE_PROCEDURE.WRITTEN ||
+				procedureType === APPEAL_CASE_PROCEDURE.INQUIRY ||
+				procedureType === APPEAL_CASE_PROCEDURE.HEARING)) ||
+		(appealTypeShorthand === APPEAL_CASE_TYPE.F &&
+			(procedureType === APPEAL_CASE_PROCEDURE.WRITTEN ||
+				procedureType === APPEAL_CASE_PROCEDURE.INQUIRY ||
+				procedureType === APPEAL_CASE_PROCEDURE.HEARING)) ||
 		procedureType === undefined
 	);
 };
@@ -814,6 +880,7 @@ const getTimetableUpdatedTemplateName = (appealTypeKey, procedureType) => {
 export {
 	calculateAppealTimetable,
 	checkAppealTimetableExists,
+	getStartCaseNotifyParams,
 	getStartCaseNotifyPreviews,
 	startCase,
 	updateAppealTimetable

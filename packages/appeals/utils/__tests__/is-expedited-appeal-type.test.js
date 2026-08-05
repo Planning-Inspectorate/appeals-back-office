@@ -1,5 +1,9 @@
-import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
-import { isExpeditedAppealType } from '../appeal-type-checks';
+import {
+	APPEAL_CASE_TYPE,
+	APPEAL_TYPE_OF_PLANNING_APPLICATION
+} from '@planning-inspectorate/data-model';
+import { APPEAL_TYPE } from '../../constants/common';
+import { isExpeditedAppealType, isS78ExpeditedAppealType } from '../appeal-type-checks';
 
 describe('isExpeditedAppealType', () => {
 	it('returns true for HAS appealType', () => {
@@ -36,10 +40,202 @@ describe('isExpeditedAppealType', () => {
 	it('returns false for LDC appealType', () => {
 		expect(isExpeditedAppealType(APPEAL_CASE_TYPE.X)).toBe(false);
 	});
+});
 
-	it('throws an error for null appealType', () => {
-		expect(() => isExpeditedAppealType(null)).toThrow(
-			'Appeal type - null not defined in isExpeditedAppealType baseCaseType'
-		);
+describe('isS78ExpeditedAppealType', () => {
+	it('returns true if appealType is S78, date is after 2026-04-01 and decision is refused', () => {
+		expect(
+			isS78ExpeditedAppealType(
+				APPEAL_TYPE.S78,
+				'2026-04-02',
+				'refused',
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+			)
+		).toBe(true);
+	});
+
+	it('returns true if appealType is S78, date is after 2026-04-01 and decision is granted', () => {
+		expect(
+			isS78ExpeditedAppealType(
+				APPEAL_TYPE.S78,
+				'2026-04-02',
+				'granted',
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+			)
+		).toBe(true);
+	});
+
+	it('returns true if appealType is W, date is after 2026-04-01 and decision is refused', () => {
+		expect(
+			isS78ExpeditedAppealType(
+				APPEAL_CASE_TYPE.W,
+				'2026-04-02',
+				'refused',
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+			)
+		).toBe(true);
+	});
+
+	it('returns false if appealType is not S78 or W', () => {
+		expect(
+			isS78ExpeditedAppealType(
+				APPEAL_CASE_TYPE.D,
+				'2026-04-02',
+				'refused',
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+			)
+		).toBe(false);
+		expect(
+			isS78ExpeditedAppealType(
+				APPEAL_CASE_TYPE.H,
+				'2026-04-02',
+				'refused',
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+			)
+		).toBe(false);
+		expect(
+			isS78ExpeditedAppealType(
+				APPEAL_CASE_TYPE.Y,
+				'2026-04-02',
+				'refused',
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+			)
+		).toBe(false);
+		expect(
+			isS78ExpeditedAppealType(
+				APPEAL_CASE_TYPE.X,
+				'2026-04-02',
+				'refused',
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+			)
+		).toBe(false);
+		expect(
+			isS78ExpeditedAppealType(
+				APPEAL_CASE_TYPE.F,
+				'2026-04-02',
+				'refused',
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+			)
+		).toBe(false);
+		expect(
+			isS78ExpeditedAppealType(
+				APPEAL_CASE_TYPE.C,
+				'2026-04-02',
+				'refused',
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+			)
+		).toBe(false);
+	});
+
+	it('returns false if date is before 2026-04-01', () => {
+		expect(
+			isS78ExpeditedAppealType(
+				APPEAL_TYPE.S78,
+				'2026-03-31',
+				'refused',
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+			)
+		).toBe(false);
+	});
+
+	it('returns false if decision is not refused or granted', () => {
+		expect(
+			isS78ExpeditedAppealType(
+				APPEAL_TYPE.S78,
+				'2026-04-02',
+				'not_decided',
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+			)
+		).toBe(false);
+	});
+
+	it('returns false if appealType is null', () => {
+		expect(
+			isS78ExpeditedAppealType(
+				null,
+				'2026-04-02',
+				'refused',
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+			)
+		).toBe(false);
+	});
+
+	it('returns true if appealType is S78, planning application is MINOR_COMMERCIAL_DEVELOPMENT, and decision is granted', () => {
+		expect(
+			isS78ExpeditedAppealType(
+				APPEAL_TYPE.S78,
+				'2026-04-02',
+				'granted',
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.MINOR_COMMERCIAL_DEVELOPMENT
+			)
+		).toBe(true);
+	});
+
+	it('returns false if appealType is S78, planning application is MINOR_COMMERCIAL_DEVELOPMENT, and decision is refused', () => {
+		expect(
+			isS78ExpeditedAppealType(
+				APPEAL_TYPE.S78,
+				'2026-04-02',
+				'refused',
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.MINOR_COMMERCIAL_DEVELOPMENT
+			)
+		).toBe(false);
+	});
+
+	it('returns true if appealType is S78, planning application is HOUSEHOLDER_PLANNING, and decision is granted', () => {
+		expect(
+			isS78ExpeditedAppealType(
+				APPEAL_TYPE.S78,
+				'2026-04-02',
+				'granted',
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.HOUSEHOLDER_PLANNING
+			)
+		).toBe(true);
+	});
+
+	it('returns false if appealType is S78, planning application is HOUSEHOLDER_PLANNING, and decision is refused', () => {
+		expect(
+			isS78ExpeditedAppealType(
+				APPEAL_TYPE.S78,
+				'2026-04-02',
+				'refused',
+				APPEAL_TYPE_OF_PLANNING_APPLICATION.HOUSEHOLDER_PLANNING
+			)
+		).toBe(false);
+	});
+
+	describe('prior-approval', () => {
+		it('returns true when decision is GRANTED and date is on/after cutoff', () => {
+			expect(
+				isS78ExpeditedAppealType(
+					APPEAL_TYPE.S78,
+					'2026-04-02',
+					'granted',
+					APPEAL_TYPE_OF_PLANNING_APPLICATION.PRIOR_APPROVAL
+				)
+			).toBe(true);
+		});
+
+		it('returns true when decision is REFUSED and date is on/after cutoff', () => {
+			expect(
+				isS78ExpeditedAppealType(
+					APPEAL_TYPE.S78,
+					'2026-04-02',
+					'refused',
+					APPEAL_TYPE_OF_PLANNING_APPLICATION.PRIOR_APPROVAL
+				)
+			).toBe(true);
+		});
+
+		it('returns false when decision is not granted or refused', () => {
+			expect(
+				isS78ExpeditedAppealType(
+					APPEAL_TYPE.S78,
+					'2026-04-02',
+					'not_decided',
+					APPEAL_TYPE_OF_PLANNING_APPLICATION.PRIOR_APPROVAL
+				)
+			).toBe(false);
+		});
 	});
 });

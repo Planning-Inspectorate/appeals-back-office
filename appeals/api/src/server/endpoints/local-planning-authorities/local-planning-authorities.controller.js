@@ -14,15 +14,15 @@ const changeLpa = async (req, res) => {
 	const { appeal } = req;
 	const { newLpaId } = req.body;
 	const azureAdUserId = req.get('azureAdUserId');
-
-	await lpaService.changeLpa(appeal.id, Number(newLpaId), azureAdUserId);
+	const notifyClient = req.notifyClient;
+	await lpaService.changeLpa(appeal, Number(newLpaId), azureAdUserId, notifyClient, false);
 
 	if (isParentAppeal(appeal)) {
 		const childAppeals = getChildAppeals(appeal);
 		await Promise.allSettled(
 			childAppeals.map((childAppeal) => {
 				if (childAppeal?.id) {
-					lpaService.changeLpa(childAppeal.id, Number(newLpaId), azureAdUserId);
+					lpaService.changeLpa(childAppeal, Number(newLpaId), azureAdUserId, notifyClient, true);
 				}
 			})
 		);

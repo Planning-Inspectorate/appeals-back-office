@@ -48,12 +48,12 @@ describe('Update Decision Letter', () => {
 			//Notify
 			const expectedNotifies = [
 				{
-					template: 'correction-notice-decision',
-					recipient: apiUsers[1].emailAddress
+					template: 'correction-notice-decision-lpa',
+					recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
 				},
 				{
-					template: 'correction-notice-decision',
-					recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+					template: 'correction-notice-decision-appellant',
+					recipient: 'agent@test.com'
 				}
 			];
 
@@ -63,7 +63,7 @@ describe('Update Decision Letter', () => {
 			caseDetailsPage.verifyCheckYourAnswers('Decision issue date', formattedDate.date);
 			caseDetailsPage.clickBackLink();
 			caseDetailsPage.checkDecisionOutcome(
-				`Decision issued on ${formattedDate.date} (updated on ${formattedDate.date})`
+				`Decision issued on ${formattedDate.date} (reissued on ${formattedDate.date})`
 			);
 			//verify Case History
 			caseDetailsPage.clickViewCaseHistory();

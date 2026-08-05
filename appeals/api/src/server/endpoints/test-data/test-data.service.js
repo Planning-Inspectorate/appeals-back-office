@@ -1,6 +1,6 @@
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { databaseConnector } from '#utils/database-connector.js';
-import { FOLDERS } from '@pins/appeals/constants/documents.js';
+import { FOLDERS, REP_ATTACHMENT_DOCTYPE } from '@pins/appeals/constants/documents.js';
 import { AUDIT_TRAIL_SYSTEM_UUID } from '@pins/appeals/constants/support.js';
 import { EventType } from '@pins/event-client';
 import {
@@ -138,9 +138,10 @@ export const createRepresentationWithAttachments = async (tx, appealId, folderId
 		versionData.push({
 			blobStorageContainer: 'document-service-uploads',
 			dateCreated: new Date().toISOString(),
+			dateReceived: new Date().toISOString(),
 			description: `${fileName} imported`,
 			documentGuid: guid,
-			documentType: options.documentType || 'lpaFinalComments',
+			documentType: options.documentType || REP_ATTACHMENT_DOCTYPE,
 			draft: false,
 			fileName,
 			mime: 'application/pdf',
@@ -221,6 +222,7 @@ const createCaseDocuments = async (appealId, docCount = 25) => {
 			versionData.push({
 				blobStorageContainer: 'document-service-uploads',
 				dateCreated: new Date().toISOString(),
+				dateReceived: new Date().toISOString(),
 				description: `${fileName} imported`,
 				documentGuid: guid,
 				documentType: def.documentType,

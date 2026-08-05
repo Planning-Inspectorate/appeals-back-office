@@ -5,7 +5,7 @@ describe('appeal-valid-start-case-appellant-hearing.md', () => {
 	test('should call notify sendEmail with the correct data', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'appeal-valid-start-case-s78-appellant-hearing',
+			templateName: 'appeal-valid-start-case-s78-hearing-appellant',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},

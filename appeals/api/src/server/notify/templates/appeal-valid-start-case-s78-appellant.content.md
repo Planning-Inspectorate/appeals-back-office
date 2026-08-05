@@ -5,7 +5,9 @@ Your appeal started on {{start_date}}. The timetable for the appeal begins from 
 Your appeal procedure is {{procedure_type}}.
 
 {% include 'parts/appeal-details.md' %}
-
+{% if inspector_name -%}
+Inspector: {{inspector_name}}
+{% endif %}
 # Timetable
 
 {%- if child_appeals.length === 1 %}

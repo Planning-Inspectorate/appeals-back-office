@@ -2,6 +2,10 @@ import { isFeatureActive } from '#utils/feature-flags.js';
 import mergeMaps from '#utils/merge-maps.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
+	beforeExpeditedOriginalApplicationCutOff,
+	isS78ExpeditedAppealType
+} from '@pins/appeals/utils/appeal-type-checks.js';
+import {
 	APPEAL_CASE_STAGE,
 	APPEAL_CASE_TYPE,
 	APPEAL_DOCUMENT_TYPE
@@ -11,6 +15,7 @@ import { contextEnum } from './context-enum.js';
 import { integrationMappers } from './integration/index.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {Appeal & { caseNotes?: (import('@pins/appeals.api').Schema.CaseNote & { user: import('@pins/appeals.api').Schema.User })[], appealStatus?: import('@pins/appeals.api').Schema.AppealStatus[] }} AppealWithRelations */
 /** @typedef {import('@pins/appeals.api').Schema.AppealType} AppealType */
 /** @typedef {import('@pins/appeals.api').Api.Appeal} AppealDTO */
 /** @typedef {import('@pins/appeals.api').Api.AppellantCase} AppellantCaseDto */
@@ -20,7 +25,7 @@ import { integrationMappers } from './integration/index.js';
 /** @typedef {AppealDTO|AppellantCaseDto|LpaQuestionnaireDTO|AppealHASCase|AppealS78Case} MapResult */
 /** @typedef {import('@pins/appeals.api').Api.Folder} Folder */
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
-/** @typedef {{ appeal: Appeal, appealTypes?: AppealType[]|undefined, linkedAppeals?: *[]|undefined, costsDecision?: CostsDecision|undefined, context?: keyof contextEnum }} MappingRequest */
+/** @typedef {{ appeal: AppealWithRelations, appealTypes?: AppealType[]|undefined, linkedAppeals?: *[]|undefined, costsDecision?: CostsDecision|undefined, context?: keyof contextEnum }} MappingRequest */
 
 /**
  *
@@ -63,12 +68,32 @@ function createDataMap(mappingRequest) {
 			return mergeMaps(caseData, s20);
 		}
 		case APPEAL_CASE_TYPE.W: {
-			const s78 = createMap(apiMappers.apiS78Mappers, mappingRequest);
-			return mergeMaps(caseData, s78);
+			const isS78Expedited = isS78ExpeditedAppealType(
+				appeal.appealType?.type,
+				appeal.appellantCase?.applicationDate,
+				appeal.appellantCase?.applicationDecision,
+				appeal.appellantCase?.typeOfPlanningApplication
+			);
+			if (isS78Expedited && isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS)) {
+				const s78 = createMap(apiMappers.apiS78ExpeditedMappers, mappingRequest);
+				return mergeMaps(caseData, s78);
+			} else {
+				const s78 = createMap(apiMappers.apiS78Mappers, mappingRequest);
+				return mergeMaps(caseData, s78);
+			}
+		}
+		case APPEAL_CASE_TYPE.D: {
+			const has = createMap(apiMappers.apiHasMappers, mappingRequest);
+			return mergeMaps(caseData, has);
 		}
 		case APPEAL_CASE_TYPE.ZA: {
-			const casAdvert = createMap(apiMappers.apiCasAdvertMappers, mappingRequest);
-			return mergeMaps(caseData, casAdvert);
+			if (!beforeExpeditedOriginalApplicationCutOff(appeal.appellantCase?.applicationDate)) {
+				const casAdvert = createMap(apiMappers.apiCasAdvertExpeditedMappers, mappingRequest);
+				return mergeMaps(caseData, casAdvert);
+			} else {
+				const casAdvert = createMap(apiMappers.apiCasAdvertMappers, mappingRequest);
+				return mergeMaps(caseData, casAdvert);
+			}
 		}
 		case APPEAL_CASE_TYPE.H: {
 			const advert = createMap(apiMappers.apiAdvertMappers, mappingRequest);
@@ -82,15 +107,16 @@ function createDataMap(mappingRequest) {
 			return mergeMaps(caseData, enforcement);
 		}
 		case APPEAL_CASE_TYPE.X: {
-			if (!isFeatureActive(FEATURE_FLAG_NAMES.LDC)) {
-				return caseData;
-			}
 			const ldc = createMap(apiMappers.apiLdcMappers, mappingRequest);
 			return mergeMaps(caseData, ldc);
 		}
 		case APPEAL_CASE_TYPE.F: {
 			const enforcementListed = createMap(apiMappers.apiEnforcementListedMappers, mappingRequest);
 			return mergeMaps(caseData, enforcementListed);
+		}
+		case APPEAL_CASE_TYPE.ZP: {
+			const casPlanning = createMap(apiMappers.apiCasPlanningMappers, mappingRequest);
+			return mergeMaps(caseData, casPlanning);
 		}
 		default:
 			return caseData;
@@ -109,6 +135,10 @@ function createIntegrationMap(mappingRequest) {
 
 	switch (appeal.appealType?.key) {
 		//TODO: validate with Data Model
+		case APPEAL_CASE_TYPE.D: {
+			const has = createMap(integrationMappers.integrationHasMappers, mappingRequest);
+			return mergeMaps(caseData, has);
+		}
 		case APPEAL_CASE_TYPE.W: {
 			const s78 = createMap(integrationMappers.integrationS78Mappers, mappingRequest);
 			return mergeMaps(caseData, s78);
@@ -118,8 +148,16 @@ function createIntegrationMap(mappingRequest) {
 			return mergeMaps(caseData, s20);
 		}
 		case APPEAL_CASE_TYPE.ZA: {
-			const casAdvert = createMap(integrationMappers.integrationCasAdvertMappers, mappingRequest);
-			return mergeMaps(caseData, casAdvert);
+			if (!beforeExpeditedOriginalApplicationCutOff(appeal.appellantCase?.applicationDate)) {
+				const casAdvert = createMap(integrationMappers.integrationCasAdvertMappers, mappingRequest);
+				return mergeMaps(caseData, casAdvert);
+			} else {
+				const casAdvert = createMap(
+					integrationMappers.integrationCasAdvertExpeditedMappers,
+					mappingRequest
+				);
+				return mergeMaps(caseData, casAdvert);
+			}
 		}
 		case APPEAL_CASE_TYPE.H: {
 			const advert = createMap(integrationMappers.integrationAdvertMappers, mappingRequest);
@@ -136,9 +174,6 @@ function createIntegrationMap(mappingRequest) {
 			return mergeMaps(caseData, enforcement);
 		}
 		case APPEAL_CASE_TYPE.X: {
-			if (!isFeatureActive(FEATURE_FLAG_NAMES.LDC)) {
-				return caseData;
-			}
 			const ldc = createMap(integrationMappers.integrationLDCMappers, mappingRequest);
 			return mergeMaps(caseData, ldc);
 		}
@@ -148,6 +183,13 @@ function createIntegrationMap(mappingRequest) {
 				mappingRequest
 			);
 			return mergeMaps(caseData, enforcementListedBuilding);
+		}
+		case APPEAL_CASE_TYPE.ZP: {
+			const casPlanning = createMap(
+				integrationMappers.integrationCasPlanningMappers,
+				mappingRequest
+			);
+			return mergeMaps(caseData, casPlanning);
 		}
 		default:
 			return caseData;
@@ -176,7 +218,7 @@ const createMap = (mappers, mappingRequest) =>
  * @param {MappingRequest} mappingRequest
  */
 function createDataLayout(caseMap, mappingRequest) {
-	const { context, appeal } = mappingRequest;
+	const { context, appeal, appealTypes } = mappingRequest;
 
 	if (context === contextEnum.broadcast) {
 		return Array.from(caseMap.values()).reduce((acc, val) => ({ ...acc, ...val }), {});
@@ -232,6 +274,51 @@ function createDataLayout(caseMap, mappingRequest) {
 				...appealDetails,
 				appellantCaseId: appeal.appellantCase?.id,
 				lpaQuestionnaireId: appeal.lpaQuestionnaire?.id,
+				appellantCase: {
+					numberOfResidencesNetChange: appeal.appellantCase?.numberOfResidencesNetChange ?? null,
+					screeningOpinionIndicatesEiaRequired:
+						appeal.appellantCase?.screeningOpinionIndicatesEiaRequired ?? null,
+					applicationMadeUnderActSection:
+						appeal.appellantCase?.applicationMadeUnderActSection ?? null,
+					isEnforcementChild: appellantCase?.isEnforcementChild ?? false,
+					planningObligation:
+						appeal.appellantCase?.planningObligation !== undefined
+							? {
+									hasObligation: appeal.appellantCase.planningObligation,
+									status: appeal.appellantCase.statusPlanningObligation ?? null
+								}
+							: null,
+					enforcementNotice:
+						appeal.appellantCase?.enforcementNotice || appeal.appellantCase?.enforcementReference
+							? {
+									reference: appeal.appellantCase.enforcementReference ?? null
+								}
+							: null
+				},
+				resubmitTypeId: appeal.caseResubmittedTypeId,
+				resubmitType:
+					appeal.caseResubmittedTypeId && appealTypes
+						? (() => {
+								const found = appealTypes.find((t) => t.id === appeal.caseResubmittedTypeId);
+								return found ? { id: found.id, key: found.key, type: found.type } : null;
+							})()
+						: null,
+				caseNotes: appeal.caseNotes
+					? appeal.caseNotes
+							.filter((caseNote) => !caseNote.archived)
+							.map((caseNote) => ({
+								id: caseNote.id,
+								comment: caseNote.comment,
+								createdAt: caseNote.createdAt.toISOString(),
+								azureAdUserId: caseNote.user?.azureAdUserId
+							}))
+					: [],
+				appealStatusHistory: appeal.appealStatus
+					? appeal.appealStatus.map((s) => ({
+							status: s.status,
+							createdAt: s.createdAt.toISOString()
+						}))
+					: [],
 				healthAndSafety: {
 					appellantCase: { ...appellantCase?.healthAndSafety },
 					lpaQuestionnaire: { ...(lpaQuestionnaire?.healthAndSafety ?? null) }

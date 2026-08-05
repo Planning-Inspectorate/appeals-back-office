@@ -10,6 +10,7 @@ import {
 import logger from '#lib/logger.js';
 import isLinkedAppeal from '#lib/mappers/utils/is-linked-appeal.js';
 import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
+import { getInspectorFormattedEmailName } from '#lib/service-user-formatter.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import {
 	addBackLinkQueryToUrl,
@@ -20,6 +21,7 @@ import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.
 import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { recalculateDateIfNotBusinessDay } from '@pins/appeals/utils/business-days.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
+import { getAppellantCaseFromAppealId } from '../appellant-case/appellant-case.service.js';
 import {
 	changeDatePage,
 	confirmProcedurePage,
@@ -206,9 +208,12 @@ export const getSelectProcedure = async (request, response) => {
  */
 const renderSelectProcedure = async (request, response) => {
 	const {
-		currentAppeal: { appealId, appealReference, appealType },
+		currentAppeal: { appealId, appealReference, appealType, appellantCaseId },
 		errors
 	} = request;
+	const appellantCase = featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS_LPAQ)
+		? await getAppellantCaseFromAppealId(request.apiClient, appealId, appellantCaseId)
+		: undefined;
 
 	const sessionValues = getSessionValuesForAppeal(request, 'startCaseAppealProcedure', appealId);
 	const isLinked = isLinkedAppeal(request.currentAppeal);
@@ -225,6 +230,7 @@ const renderSelectProcedure = async (request, response) => {
 		isLinked,
 		backUrl,
 		{ appealProcedure: sessionValues?.appealProcedure },
+		appellantCase,
 		errors ? errors['appealProcedure']?.msg : undefined
 	);
 
@@ -321,7 +327,7 @@ export const getConfirmProcedure = async (request, response) => {
  */
 const renderConfirmProcedure = async (request, response) => {
 	const {
-		currentAppeal: { appealId, appealReference, appealType },
+		currentAppeal: { appealId, appealReference, appealType, inspector },
 		errors
 	} = request;
 
@@ -338,6 +344,8 @@ const renderConfirmProcedure = async (request, response) => {
 	/** @type {{appellant: string, lpa: string} | undefined} */
 	let emailPreviews;
 
+	const inspectorName = await getInspectorFormattedEmailName(inspector, request);
+
 	if (showEmailPreviews) {
 		const errorMessage = 'Failed to generate email preview';
 		try {
@@ -345,7 +353,11 @@ const renderConfirmProcedure = async (request, response) => {
 				request.apiClient,
 				appealId,
 				undefined,
-				sessionValues?.appealProcedure
+				sessionValues?.appealProcedure,
+				null,
+				null,
+				null,
+				inspectorName
 			);
 			emailPreviews = {
 				appellant: result.appellant || errorMessage,
@@ -374,7 +386,7 @@ const renderConfirmProcedure = async (request, response) => {
 export const postConfirmProcedure = async (request, response) => {
 	try {
 		const {
-			currentAppeal: { appealId }
+			currentAppeal: { appealId, inspector }
 		} = request;
 
 		const sessionValues = getSessionValuesForAppeal(request, 'startCaseAppealProcedure', appealId);
@@ -383,11 +395,16 @@ export const postConfirmProcedure = async (request, response) => {
 			return response.status(500).render('app/500.njk');
 		}
 
+		const inspectorName = await getInspectorFormattedEmailName(inspector, request);
+
 		await startCaseService.setStartDate(
 			request.apiClient,
 			appealId,
 			getTodaysISOString(),
-			sessionValues?.appealProcedure
+			sessionValues?.appealProcedure,
+			null,
+			null,
+			inspectorName
 		);
 
 		addNotificationBannerToSession({

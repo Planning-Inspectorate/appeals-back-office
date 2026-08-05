@@ -10,6 +10,7 @@ export const mapLpaQuestionnaire = (data) => {
 	const { appeal } = data;
 
 	const casedata = appeal.lpaQuestionnaire;
+
 	return {
 		lpaStatement: casedata?.lpaStatement ?? null,
 		isCorrectAppealType: casedata?.isCorrectAppealType ?? null,

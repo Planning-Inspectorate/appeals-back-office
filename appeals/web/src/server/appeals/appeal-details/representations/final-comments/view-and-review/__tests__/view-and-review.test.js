@@ -22,6 +22,17 @@ const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 
+/**
+ * @param {number} appealId
+ * @param {number} folderId
+ * @param {number} [repId]
+ * @returns {string}
+ */
+const getFolderApiUrl = (appealId, folderId, repId) => {
+	const repString = repId ? `&repId=${repId}` : '';
+	return `/appeals/${appealId}/document-folders/${folderId}?pageNumber=1&pageSize=100${repString}`;
+};
+
 describe('final-comments', () => {
 	beforeEach(() => {
 		installMockApi();
@@ -176,7 +187,7 @@ describe('final-comments', () => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1?repId=3670')
+				.get(getFolderApiUrl(2, 1, 3670))
 				.reply(200, costsFolderInfoAppellantApplication)
 				.persist();
 
@@ -188,7 +199,7 @@ describe('final-comments', () => {
 		});
 
 		it('should render a 404 error page if the folderId is invalid', async () => {
-			nock('http://test/').get('/appeals/2/document-folders/99').reply(404);
+			nock('http://test/').get(getFolderApiUrl(2, 99)).reply(404);
 
 			const response = await request.get(`${baseUrl}/2/final-comments/lpa/manage-documents/99`);
 
@@ -241,7 +252,7 @@ describe('final-comments', () => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1?repId=3670')
+				.get(getFolderApiUrl(2, 1, 3670))
 				.reply(200, costsFolderInfoAppellantApplication)
 				.persist();
 
@@ -250,7 +261,7 @@ describe('final-comments', () => {
 				.reply(200, documentRedactionStatuses);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1?repId=3670')
+				.get(getFolderApiUrl(2, 1, 3670))
 				.reply(200, documentFolderInfo)
 				.persist();
 
@@ -258,7 +269,7 @@ describe('final-comments', () => {
 		});
 
 		it('should render a 404 error page if the folderId is invalid', async () => {
-			nock('http://test/').get('/appeals/2/document-folders/99').reply(404);
+			nock('http://test/').get(getFolderApiUrl(2, 99)).reply(404);
 
 			const response = await request.get(`${baseUrl}/2/final-comments/lpa/manage-documents/1/99`);
 
@@ -307,7 +318,7 @@ describe('final-comments', () => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1?repId=3670')
+				.get(getFolderApiUrl(2, 1, 3670))
 				.reply(200, costsFolderInfoAppellantApplication)
 				.persist();
 
@@ -349,7 +360,7 @@ describe('final-comments', () => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1?repId=3670')
+				.get(getFolderApiUrl(2, 1, 3670))
 				.reply(200, costsFolderInfoAppellantApplication)
 				.persist();
 
@@ -358,7 +369,7 @@ describe('final-comments', () => {
 				.reply(200, documentRedactionStatuses);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1?repId=3670')
+				.get(getFolderApiUrl(2, 1, 3670))
 				.reply(200, documentFolderInfo)
 				.persist();
 
@@ -454,7 +465,7 @@ describe('final-comments', () => {
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1?repId=3670')
+				.get(getFolderApiUrl(2, 1, 3670))
 				.reply(200, documentFolderInfo)
 				.persist();
 
@@ -507,7 +518,7 @@ describe('final-comments', () => {
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1?repId=3670')
+				.get(getFolderApiUrl(2, 1, 3670))
 				.reply(200, documentFolderInfo)
 				.persist();
 
@@ -568,7 +579,7 @@ describe('final-comments', () => {
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1?repId=3670')
+				.get(getFolderApiUrl(2, 1, 3670))
 				.reply(200, documentFolderInfo);
 
 			nock('http://test/')

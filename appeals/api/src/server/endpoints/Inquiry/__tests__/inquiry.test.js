@@ -87,6 +87,7 @@ describe('inquiry routes', () => {
 			requestData = {
 				inquiryStartTime: '2999-01-01T13:00:00.000Z',
 				address: inquiryAddress,
+				inspector_name: null,
 				ipCommentsDueDate: new Date('2999-01-01T14:00:00.000Z'),
 				lpaQuestionnaireDueDate: new Date('2999-01-01T15:00:00.000Z'),
 				planningObligationDueDate: new Date('2999-01-01T16:00:00.000Z'),
@@ -135,6 +136,7 @@ describe('inquiry routes', () => {
 					lpa_reference: '48269/APP/2021/1482',
 					inquiry_date: '1 January 2999',
 					inquiry_time: '1:00pm',
+					inspector_name: null,
 					inquiry_address:
 						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
@@ -155,7 +157,7 @@ describe('inquiry routes', () => {
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					notifyClient: expect.anything(),
 					personalisation,
-					recipientEmail: appeal.appellant.email,
+					recipientEmail: appeal.agent.email,
 					templateName: expectedTemplateName
 				});
 
@@ -893,6 +895,7 @@ describe('inquiry routes', () => {
 				);
 				const personalisation = {
 					appeal_reference_number: '1345264',
+					inspector_name: null,
 					appeal_type: 'Planning',
 					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 					lpa_reference: '48269/APP/2021/1482',
@@ -918,7 +921,7 @@ describe('inquiry routes', () => {
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					notifyClient: expect.anything(),
 					personalisation,
-					recipientEmail: fullPlanningAppeal.appellant.email,
+					recipientEmail: fullPlanningAppeal.agent.email,
 					templateName: 'inquiry-set-up'
 				});
 
@@ -1612,6 +1615,7 @@ describe('inquiry routes', () => {
 			test('updates a single inquiry with address', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
+					currentStatus: APPEAL_CASE_STATUS.EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.EVENT,
@@ -1676,6 +1680,7 @@ describe('inquiry routes', () => {
 
 				const personalisation = {
 					appeal_reference_number: '1345264',
+					inspector_name: null,
 					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 					lpa_reference: '48269/APP/2021/1482',
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
@@ -1700,7 +1705,7 @@ describe('inquiry routes', () => {
 						...personalisation,
 						is_lpa: false
 					},
-					recipientEmail: fullPlanningAppeal.appellant.email,
+					recipientEmail: fullPlanningAppeal.agent.email,
 					templateName: 'inquiry-updated'
 				});
 
@@ -1762,6 +1767,7 @@ describe('inquiry routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
 					appealRule6Parties: [rule6Party],
+					currentStatus: APPEAL_CASE_STATUS.EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.EVENT,
@@ -1805,6 +1811,7 @@ describe('inquiry routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
 					inquiry: existingInquiry,
+					currentStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
@@ -1832,6 +1839,7 @@ describe('inquiry routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
 					inquiry: existingInquiry,
+					currentStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
@@ -1870,6 +1878,7 @@ describe('inquiry routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
 					inquiry: existingInquiry,
+					currentStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
@@ -1907,6 +1916,7 @@ describe('inquiry routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
 					inquiry: existingInquiry,
+					currentStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
@@ -1953,6 +1963,7 @@ describe('inquiry routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
 					inquiry: existingInquiry,
+					currentStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
@@ -1996,6 +2007,7 @@ describe('inquiry routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
 					inquiry: existingInquiry,
+					currentStatus: APPEAL_CASE_STATUS.EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.EVENT,
@@ -2077,6 +2089,7 @@ describe('inquiry routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
 					inquiry: existingInquiry,
+					currentStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
@@ -2127,6 +2140,7 @@ describe('inquiry routes', () => {
 				databaseConnector.inquiry.update.mockResolvedValue(inquiry);
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
+					currentStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
@@ -2183,6 +2197,7 @@ describe('inquiry routes', () => {
 
 				const personalisation = {
 					appeal_reference_number: '1345264',
+					inspector_name: null,
 					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 					lpa_reference: '48269/APP/2021/1482',
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
@@ -2207,7 +2222,7 @@ describe('inquiry routes', () => {
 						...personalisation,
 						is_lpa: false
 					},
-					recipientEmail: fullPlanningAppeal.appellant.email,
+					recipientEmail: fullPlanningAppeal.agent.email,
 					templateName: 'inquiry-updated'
 				});
 
@@ -3030,7 +3045,7 @@ describe('inquiry routes', () => {
 					...personalisation,
 					is_lpa: false
 				},
-				recipientEmail: fullPlanningAppeal.appellant.email,
+				recipientEmail: fullPlanningAppeal.agent.email,
 				templateName: 'inquiry-cancelled'
 			});
 

@@ -22,6 +22,14 @@ describe('environmental-assessment.mapper', () => {
 		});
 	});
 
+	it('should contain tableItem if screeningOpinionIndicatesEiaRequired is true', () => {
+		data.appealDetails.eiaScreeningRequired = false;
+		data.appellantCase = { screeningOpinionIndicatesEiaRequired: true };
+		const mappedData = mapEnvironmentalAssessment(data);
+		expect(mappedData.display.tableItem).toBeDefined();
+		expect(mappedData.display.tableItem[0].text).toEqual('Environmental services team review');
+	});
+
 	it('should contain tableItem with no documents', () => {
 		const mappedData = mapEnvironmentalAssessment(data);
 		expect(mappedData).toEqual({
@@ -47,6 +55,7 @@ describe('environmental-assessment.mapper', () => {
 	});
 
 	it('should contain tableItem with one documents', () => {
+		data.appealDetails.environmentalAssessment.documentCount = 1;
 		data.appealDetails.environmentalAssessment.documents = [
 			{
 				latestDocumentVersion: { dateReceived: new Date('2025-02-01') }
@@ -76,6 +85,7 @@ describe('environmental-assessment.mapper', () => {
 	});
 
 	it('should contain tableItem with three documents', () => {
+		data.appealDetails.environmentalAssessment.documentCount = 3;
 		data.appealDetails.environmentalAssessment.documents = [
 			{
 				latestDocumentVersion: { dateReceived: new Date('2025-02-01') }

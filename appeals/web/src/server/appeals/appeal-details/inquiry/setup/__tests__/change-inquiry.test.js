@@ -977,7 +977,8 @@ describe('change inquiry', () => {
 				.patch(`/appeals/${appealId}/inquiry/${appealWithInquiry.inquiry.inquiryId}`, {
 					inquiryStartTime: '3025-02-01T12:00:00.000Z',
 					estimatedDays: 6,
-					address: { ...omit(addressValues, 'postCode'), postcode: addressValues.postCode }
+					address: { ...omit(addressValues, 'postCode'), postcode: addressValues.postCode },
+					inspectorName: null
 				})
 				.reply(200, { inquiryId: 1 });
 
@@ -1001,7 +1002,8 @@ describe('change inquiry', () => {
 				.patch(`/appeals/${appealId}/inquiry/${appealWithInquiry.inquiry.inquiryId}`, {
 					inquiryStartTime: '3025-02-01T12:00:00.000Z',
 					estimatedDays: 6,
-					address: null
+					address: null,
+					inspectorName: null
 				})
 				.reply(200, { inquiryId: 1 });
 
@@ -1021,7 +1023,8 @@ describe('change inquiry', () => {
 			nock('http://test/')
 				.patch(`/appeals/${appealId}/inquiry/${appealWithInquiry.inquiry.inquiryId}`, {
 					inquiryStartTime: '3025-02-01T12:00:00.000Z', // address not sent if unchanged
-					estimatedDays: 6
+					estimatedDays: 6,
+					inspectorName: null
 				})
 				.reply(200, { inquiryId: 1 });
 
@@ -1046,7 +1049,8 @@ describe('change inquiry', () => {
 				.patch(`/appeals/${appealId}/inquiry/${appealWithInquiry.inquiry.inquiryId}`, {
 					inquiryStartTime: '3024-03-02T08:54:00.000Z', // original date and time
 					address: { ...omit(addressValues, 'postCode'), postcode: addressValues.postCode },
-					estimatedDays: 6
+					estimatedDays: 6,
+					inspectorName: null
 				})
 				.reply(200, { inquiryId: 1 });
 
@@ -1066,7 +1070,8 @@ describe('change inquiry', () => {
 				.patch(`/appeals/${appealId}/inquiry/${appealWithInquiry.inquiry.inquiryId}`, {
 					inquiryStartTime: '3024-03-02T08:54:00.000Z', // original date and time
 					address: { ...omit(addressValues, 'postCode'), postcode: addressValues.postCode },
-					estimatedDays: 6
+					estimatedDays: 6,
+					inspectorName: null
 				})
 				.reply(200, { inquiryId: 1 });
 
@@ -1089,7 +1094,8 @@ describe('change inquiry', () => {
 				.patch(`/appeals/${appealId}/inquiry/${appealWithInquiry.inquiry.inquiryId}`, {
 					inquiryStartTime: '3024-03-02T08:54:00.000Z', // original date and time
 					estimatedDays: 6,
-					address: null
+					address: null,
+					inspectorName: null
 				})
 				.reply(200, { inquiryId: 1 });
 

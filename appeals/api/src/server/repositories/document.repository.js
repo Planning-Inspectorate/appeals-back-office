@@ -12,8 +12,13 @@ import {
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentsRequest} UpdateDocumentsRequest */
-/** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentFileNameRequest} UpdateDocumentFileNameRequest */
+/** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentRequest} UpdateDocumentRequest */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentAvCheckRequest} UpdateDocumentAvCheckRequest */
+/** @typedef {import('#db-client/models.ts').AppealModel} AppealModel */
+/** @typedef {import('#db-client/models.ts').AppealTypeModel} AppealTypeModel */
+/** @typedef {import('#db-client/models.ts').DocumentModel} DocumentModel */
+/** @typedef {import('#db-client/models.ts').DocumentVersionModel} DocumentVersionModel */
+/** @typedef {import('#db-client/models.ts').RepresentationModel} RepresentationModel */
 
 /**
  * @param {string} guid
@@ -167,75 +172,140 @@ export const updateDocuments = (data) => {
 };
 
 /**
- * @param {string} documentId
- * @param {UpdateDocumentFileNameRequest} document
- * @returns
+ * @param {Document} latestDocument
+ * @param {UpdateDocumentRequest['document']} document
+ * @returns {Promise<Document>}
  */
-export const updateDocumentById = (documentId, document) => {
-	return databaseConnector.document.update({
-		data: { name: document.fileName },
-		where: {
-			guid: documentId
+export const updateDocument = (latestDocument, document) => {
+	const { guid, latestDocumentVersion } = latestDocument;
+
+	return databaseConnector.$transaction(async (tx) => {
+		const documentResult = await tx.document.update({
+			data: { name: document.fileName },
+			where: {
+				guid: guid
+			}
+		});
+
+		// publish doc if isShared and not already published
+		if (document.isShared && latestDocumentVersion && !latestDocumentVersion.published) {
+			const redactionStatuses =
+				await documentRedactionStatusRepository.getAllDocumentRedactionStatuses();
+			const noRedactionRequiredStatus = redactionStatuses.find(
+				(redaction) => redaction.key === APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED
+			);
+
+			/** @type {import('#db-client/client.ts').Prisma.DocumentVersionUpdateInput} */
+			const update = {
+				published: true,
+				datePublished: new Date()
+			};
+
+			if (latestDocumentVersion.redactionStatusId === null) {
+				update.redactionStatus = { connect: { id: noRedactionRequiredStatus?.id } };
+			}
+
+			await tx.documentVersion.update({
+				data: update,
+				where: {
+					documentGuid_version: {
+						documentGuid: guid,
+						version: latestDocumentVersion.version
+					}
+				}
+			});
 		}
+
+		return documentResult;
 	});
 };
 
 /**
- * @param {number} appealId
- * @returns {Promise<{documentGuid: string, version: number}[]>}
+ * @typedef UpdateRedactionStatusResult
+ * @property {DocumentModel['guid']} guid
+ * @property {DocumentModel['name']} name
+ * @property {DocumentVersionModel['version']} version
+ * @property {DocumentVersionModel['documentURI']} documentURI
+ * @property {DocumentVersionModel['originalFilename']} originalFilename
+ * @property {DocumentVersionModel['size']} size
+ * @property {DocumentVersionModel['mime']} mime
+ * @property {DocumentVersionModel['fileMD5']} fileMD5
+ * @property {DocumentVersionModel['virusCheckStatus']} virusCheckStatus
+ * @property {DocumentVersionModel['stage']} stage
+ * @property {DocumentVersionModel['documentType']} documentType
+ * @property {DocumentVersionModel['published']} published
+ * @property {DocumentVersionModel['datePublished']} datePublished
+ * @property {DocumentVersionModel['dateCreated']} dateCreated
+ * @property {DocumentVersionModel['dateReceived']} dateReceived
+ * @property {DocumentVersionModel['lastModified']} lastModified
+ * @property {RepresentationModel['representationType']} representationType
+
+/**
+ * @param {AppealModel['id']} appealId
+ * @param {AppealModel['reference']} appealRef
+ * @param {AppealTypeModel['key']} appealType
+ * @param {{id: Number, key: String}|Null} redactionStatus
+ * @returns {Promise<import('#mappers/integration/map-document-entity.js').DocumentWithAppeal[]>}
  */
-export const setRedactionStatusOnValidation = async (appealId) => {
-	const documentsToUpdate = await databaseConnector.documentVersion.findMany({
-		where: {
-			redactionStatusId: null,
-			document: {
-				caseId: appealId,
-				isDeleted: false
-			}
+export const setRedactionStatusOnValidation = async (
+	appealId,
+	appealRef,
+	appealType,
+	redactionStatus
+) => {
+	const redactionStatusId = redactionStatus ? redactionStatus.id : null;
+	// can be 1000+ updates followed by a subsequent broadcast that looks them up
+	// can be done in 1 action with $queryRaw
+	/** @type {UpdateRedactionStatusResult[]} */
+	const result = await databaseConnector.$queryRaw`UPDATE dv
+		SET redactionStatusId = ${redactionStatusId}
+		OUTPUT 
+			 d.guid ,d.name
+			,inserted.version ,inserted.documentURI ,inserted.originalFilename 
+			,inserted.size ,inserted.mime ,inserted.fileMD5 ,inserted.virusCheckStatus
+			,inserted.stage	,inserted.documentType ,inserted.published
+			,inserted.datePublished	,inserted.dateCreated ,inserted.dateReceived ,inserted.lastModified
+			,r.representationType
+		FROM Document d
+		JOIN DocumentVersion dv ON dv.documentGuid = d.guid	AND dv.version = d.latestVersionId
+		LEFT JOIN RepresentationAttachment ra ON ra.documentGuid = dv.documentGuid AND ra.version = dv.version
+		LEFT JOIN Representation r ON r.id = ra.representationId
+		WHERE d.caseId = ${appealId} AND d.isDeleted = 0 AND dv.redactionStatusId IS NULL`;
+
+	return result.map((doc) => ({
+		guid: doc.guid,
+		name: doc.name,
+		caseId: appealId,
+		case: {
+			appealType: { key: appealType },
+			reference: appealRef
 		},
-		select: {
-			documentGuid: true,
-			version: true,
-			document: {
-				select: {
-					latestVersionId: true
-				}
+		versions: [
+			{
+				dateCreated: doc.dateCreated,
+				dateReceived: doc.dateReceived,
+				datePublished: doc.datePublished,
+				documentType: doc.documentType,
+				documentURI: doc.documentURI,
+				fileMD5: doc.fileMD5,
+				mime: doc.mime,
+				originalFilename: doc.originalFilename,
+				published: doc.published,
+				...(redactionStatus
+					? { redactionStatus: { key: redactionStatus.key } }
+					: { redactionStatus: null }),
+				stage: doc.stage,
+				size: doc.size,
+				version: doc.version,
+				virusCheckStatus: doc.virusCheckStatus,
+				lastModified: doc.lastModified,
+				representation:
+					doc.representationType !== null
+						? { representation: { representationType: doc.representationType } }
+						: null
 			}
-		}
-	});
-
-	const redactionStatuses =
-		await documentRedactionStatusRepository.getAllDocumentRedactionStatuses();
-	const noRedactionRequiredStatus = redactionStatuses.find(
-		(redaction) => redaction.key === APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED
-	);
-
-	if (!noRedactionRequiredStatus) {
-		throw new Error('No redaction status found for no redaction required');
-	}
-
-	for (const documentToUpdate of documentsToUpdate) {
-		await databaseConnector.documentVersion.update({
-			where: {
-				documentGuid_version: {
-					documentGuid: documentToUpdate.documentGuid,
-					version: documentToUpdate.version
-				}
-			},
-			data: {
-				redactionStatusId: noRedactionRequiredStatus.id
-			}
-		});
-	}
-
-	const broadcastDocuments = documentsToUpdate
-		.filter((document) => document.document?.latestVersionId === document.version)
-		.map((document) => ({
-			documentGuid: document.documentGuid,
-			version: document.version
-		}));
-
-	return broadcastDocuments;
+		]
+	}));
 };
 
 /**

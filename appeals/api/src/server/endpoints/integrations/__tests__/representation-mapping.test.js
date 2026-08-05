@@ -187,23 +187,19 @@ describe('representation mapper', () => {
 			const mapped = mapRepresentationEntity({
 				...mockRepresentation,
 				representationRejectionReasonsSelected: [
+					// @ts-ignore
 					{
-						// @ts-ignore
 						representationRejectionReason: {
 							name: 'Contains links to web pages',
 							hasText: false
 						}
 					},
 					{
-						// @ts-ignore
 						representationRejectionReason: {
 							name: 'other_reason',
 							hasText: true
 						},
-						representationRejectionReasonText: [
-							// @ts-ignore
-							{ text: 'Custom rejection reason text' }
-						]
+						representationRejectionReasonText: [{ text: 'Custom rejection reason text' }]
 					}
 				]
 			});

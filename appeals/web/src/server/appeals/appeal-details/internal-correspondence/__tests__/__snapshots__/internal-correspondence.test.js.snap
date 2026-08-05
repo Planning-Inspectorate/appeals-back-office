@@ -604,14 +604,8 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                 </thead>
                 <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__cell">
-                            <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFolderInfo.pdf"
-                                target="_blank">test-pdf-documentFolderInfo.pdf</a>
-                            </div>
-                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
-                                <dd>PDF, 129 KB</dd>
-                            </dl>
-                        </td>
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/documents/1/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFolderInfo.pdf"
+                            target="_blank">test-pdf-documentFolderInfo.pdf</a> (129 KB)</td>
                         <td class="govuk-table__cell">1 February 2023</td>
                         <td class="govuk-table__cell">No redaction required</td>
                         <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/manage-documents/10/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
@@ -619,19 +613,13 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                         </td>
                     </tr>
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__cell">
-                            <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/47d8f073-c837-4f07-9161-c1a5626eba56/sample-20s-documentFolderInfo.mp4"
-                                target="_blank">sample-20s-documentFolderInfo.mp4</a>
-                            </div>
-                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
-                                <dd>MP4, 11.8 MB</dd>
-                            </dl>
-                        </td>
-                        <td class="govuk-table__cell">2 March 2024</td>
-                        <td class="govuk-table__cell">No redaction required</td>
-                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/manage-documents/10/47d8f073-c837-4f07-9161-c1a5626eba56"
-                            class="govuk-link">View and edit <span class="govuk-visually-hidden">sample-20s-documentFolderInfo.mp4</span></a>
-                        </td>
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/documents/1/download/47d8f073-c837-4f07-9161-c1a5626eba56/sample-20s-documentFolderInfo.mp4"
+                            target="_blank">sample-20s-documentFolderInfo.mp4</a> (11.8 MB)</td>
+                        <td                         class="govuk-table__cell">2 March 2024</td>
+                            <td class="govuk-table__cell">No redaction required</td>
+                            <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/internal-correspondence/cross-team/manage-documents/10/47d8f073-c837-4f07-9161-c1a5626eba56"
+                                class="govuk-link">View and edit <span class="govuk-visually-hidden">sample-20s-documentFolderInfo.mp4</span></a>
+                            </td>
                     </tr>
                 </tbody>
             </table>
@@ -662,14 +650,8 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                 </thead>
                 <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__cell">
-                            <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFolderInfo.pdf"
-                                target="_blank">test-pdf-documentFolderInfo.pdf</a>
-                            </div>
-                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
-                                <dd>PDF, 129 KB</dd>
-                            </dl>
-                        </td>
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/documents/1/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFolderInfo.pdf"
+                            target="_blank">test-pdf-documentFolderInfo.pdf</a> (129 KB)</td>
                         <td class="govuk-table__cell">1 February 2023</td>
                         <td class="govuk-table__cell">No redaction required</td>
                         <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/internal-correspondence/inspector/manage-documents/11/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
@@ -677,19 +659,13 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                         </td>
                     </tr>
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__cell">
-                            <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/47d8f073-c837-4f07-9161-c1a5626eba56/sample-20s-documentFolderInfo.mp4"
-                                target="_blank">sample-20s-documentFolderInfo.mp4</a>
-                            </div>
-                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
-                                <dd>MP4, 11.8 MB</dd>
-                            </dl>
-                        </td>
-                        <td class="govuk-table__cell">2 March 2024</td>
-                        <td class="govuk-table__cell">No redaction required</td>
-                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/internal-correspondence/inspector/manage-documents/11/47d8f073-c837-4f07-9161-c1a5626eba56"
-                            class="govuk-link">View and edit <span class="govuk-visually-hidden">sample-20s-documentFolderInfo.mp4</span></a>
-                        </td>
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/documents/1/download/47d8f073-c837-4f07-9161-c1a5626eba56/sample-20s-documentFolderInfo.mp4"
+                            target="_blank">sample-20s-documentFolderInfo.mp4</a> (11.8 MB)</td>
+                        <td                         class="govuk-table__cell">2 March 2024</td>
+                            <td class="govuk-table__cell">No redaction required</td>
+                            <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/internal-correspondence/inspector/manage-documents/11/47d8f073-c837-4f07-9161-c1a5626eba56"
+                                class="govuk-link">View and edit <span class="govuk-visually-hidden">sample-20s-documentFolderInfo.mp4</span></a>
+                            </td>
                     </tr>
                 </tbody>
             </table>
@@ -720,14 +696,8 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                 </thead>
                 <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__cell">
-                            <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFolderInfo.pdf"
-                                target="_blank">test-pdf-documentFolderInfo.pdf</a>
-                            </div>
-                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
-                                <dd>PDF, 129 KB</dd>
-                            </dl>
-                        </td>
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/documents/1/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFolderInfo.pdf"
+                            target="_blank">test-pdf-documentFolderInfo.pdf</a> (129 KB)</td>
                         <td class="govuk-table__cell">1 February 2023</td>
                         <td class="govuk-table__cell">No redaction required</td>
                         <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/internal-correspondence/main-party/manage-documents/22/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
@@ -735,19 +705,13 @@ exports[`internal correspondence GET /internal-correspondence/:correspondenceCat
                         </td>
                     </tr>
                     <tr class="govuk-table__row">
-                        <td class="govuk-table__cell">
-                            <div class="govuk-!-margin-bottom-4"><a class="govuk-link" href="/documents/1/download/47d8f073-c837-4f07-9161-c1a5626eba56/sample-20s-documentFolderInfo.mp4"
-                                target="_blank">sample-20s-documentFolderInfo.mp4</a>
-                            </div>
-                            <dl class="govuk-body govuk-!-font-size-16 pins-inline-definition-list"><dt>File type and size:&nbsp;</dt>
-                                <dd>MP4, 11.8 MB</dd>
-                            </dl>
-                        </td>
-                        <td class="govuk-table__cell">2 March 2024</td>
-                        <td class="govuk-table__cell">No redaction required</td>
-                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/internal-correspondence/main-party/manage-documents/22/47d8f073-c837-4f07-9161-c1a5626eba56"
-                            class="govuk-link">View and edit <span class="govuk-visually-hidden">sample-20s-documentFolderInfo.mp4</span></a>
-                        </td>
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/documents/1/download/47d8f073-c837-4f07-9161-c1a5626eba56/sample-20s-documentFolderInfo.mp4"
+                            target="_blank">sample-20s-documentFolderInfo.mp4</a> (11.8 MB)</td>
+                        <td                         class="govuk-table__cell">2 March 2024</td>
+                            <td class="govuk-table__cell">No redaction required</td>
+                            <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/internal-correspondence/main-party/manage-documents/22/47d8f073-c837-4f07-9161-c1a5626eba56"
+                                class="govuk-link">View and edit <span class="govuk-visually-hidden">sample-20s-documentFolderInfo.mp4</span></a>
+                            </td>
                     </tr>
                 </tbody>
             </table>

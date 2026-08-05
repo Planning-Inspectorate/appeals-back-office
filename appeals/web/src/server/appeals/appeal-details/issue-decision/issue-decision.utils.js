@@ -14,7 +14,7 @@ import { APPEAL_CASE_DECISION_OUTCOME } from '@planning-inspectorate/data-model'
  * @typedef {import('@pins/express/types/express.js').Request & {specificDecisionType?: string}} Request
  * @typedef {import("express-session").Session & Partial<import("express-session").SessionData>} Session
  * @typedef {import('../appeal-details.types.js').WebAppeal} WebAppeal
- * @typedef {import('#appeals/personal-list/personal-list.mapper').PersonalListAppeal} PersonalListAppeal
+ * @typedef {import('#appeals/personal-list/personal-list.mapper').PersonalListItem} PersonalListItem
  */
 
 /**
@@ -84,7 +84,7 @@ export function generateIssueDecisionUrl(appealId) {
 
 /**
  *
- * @param {WebAppeal | Partial<PersonalListAppeal & { appealTimetable: Record<string, string>; awaitingLinkedAppeal: boolean; costs?: *; costsDecision?: *}>} currentAppeal
+ * @param {WebAppeal | Partial<PersonalListItem & { appealTimetable: Record<string, string>; awaitingLinkedAppeal: boolean; costs?: *; costsDecision?: *}>} currentAppeal
  * @returns {{appellantHasAppliedForCosts: boolean, lpaHasAppliedForCosts: boolean, appellantDecisionHasAlreadyBeenIssued: boolean, lpaDecisionHasAlreadyBeenIssued: boolean}}
  */
 export function buildIssueDecisionLogicData(currentAppeal) {

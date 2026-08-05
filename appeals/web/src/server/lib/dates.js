@@ -342,20 +342,6 @@ export const formatDays = (days) => {
 	return `${numberOfDays} ${suffix}`;
 };
 
-/**
- *
- * @param {string | Date} date
- * @param {Number} hours
- * @param {Number} minutes
- * @returns {Date}
- */
-export const setTimeInTimeZone = (date, hours, minutes) => {
-	const ymd = formatInTimeZone(date, DEFAULT_TIMEZONE, 'yyyy-MM-dd');
-	const paddedHours = hours.toString().padStart(2, '0');
-	const paddedMinutes = minutes.toString().padStart(2, '0');
-	return zonedTimeToUtc(`${ymd} ${paddedHours}:${paddedMinutes}`, DEFAULT_TIMEZONE);
-};
-
 export const getExampleDateHint = (daysFromToday = 45, inFuture = true) => {
 	const date = new Date(Date.now());
 	date.setDate(date.getDate() + (inFuture ? daysFromToday : -daysFromToday));

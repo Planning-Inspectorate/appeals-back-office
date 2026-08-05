@@ -37,8 +37,6 @@ export const getHearingById = async (req, res) => {
 	const { appeal } = req;
 	const formattedAppeal = formatHearing(appeal);
 
-	console.log('formattedAppeal', formattedAppeal);
-
 	return res.send(formattedAppeal);
 };
 
@@ -75,6 +73,7 @@ export const postHearing = async (req, res) => {
 				})
 			},
 			appeal,
+			req.body.inspectorName,
 			req.notifyClient,
 			azureAdUserId
 		);
@@ -139,6 +138,7 @@ export const rearrangeHearing = async (req, res) => {
 				})
 			},
 			appeal,
+			req.body.inspectorName,
 			req.notifyClient,
 			azureAdUserId,
 			existingAddressId

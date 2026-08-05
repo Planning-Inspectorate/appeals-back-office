@@ -10,8 +10,8 @@ import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-co
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { uncapitalizeFirstLetter } from '#lib/string-utilities.js';
 import { formatAppealTypeForNotify } from '@pins/appeals/utils/change-appeal-type.js';
+import { uncapitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import {
 	addHorizonReferencePage,

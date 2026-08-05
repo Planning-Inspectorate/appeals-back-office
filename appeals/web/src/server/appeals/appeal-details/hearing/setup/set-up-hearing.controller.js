@@ -9,6 +9,7 @@ import {
 	isAtEditEntrypoint
 } from '#lib/edit-utilities.js';
 import logger from '#lib/logger.js';
+import { getInspectorFormattedEmailName } from '#lib/service-user-formatter.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
 import { has, isEmpty, isEqual, pick } from 'lodash-es';
@@ -598,12 +599,14 @@ export const getChangeHearingCheckDetails = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postHearingCheckDetails = async (request, response) => {
-	const { appealId } = request.currentAppeal;
+	const { appealId, inspector } = request.currentAppeal;
 	const hearing = request.session.setUpHearing;
 
 	if (!hearing) {
 		return renderAlreadySubmittedError(request, response);
 	}
+
+	const inspectorName = await getInspectorFormattedEmailName(inspector, request);
 
 	try {
 		const submittedAddress = {
@@ -623,7 +626,8 @@ export const postHearingCheckDetails = async (request, response) => {
 			...(hearing.hearingEstimationYesNo === 'yes' && {
 				estimatedDays: hearing.hearingEstimationDays
 			}),
-			...(hearing.addressKnown === 'yes' && submittedAddress)
+			...(hearing.addressKnown === 'yes' && submittedAddress),
+			inspectorName
 		});
 
 		addNotificationBannerToSession({
@@ -647,7 +651,7 @@ export const postHearingCheckDetails = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postChangeHearingCheckDetails = async (request, response) => {
-	const { appealId, hearing } = request.currentAppeal;
+	const { appealId, hearing, inspector } = request.currentAppeal;
 	const sessionData = request.session.changeHearing;
 
 	if (!sessionData) {
@@ -665,13 +669,16 @@ export const postChangeHearingCheckDetails = async (request, response) => {
 		address = submittedAddress;
 	}
 
+	const inspectorName = await getInspectorFormattedEmailName(inspector, request);
+
 	try {
 		await updateHearing(request, request.currentAppeal.hearing.hearingId, {
 			hearingStartTime: hearingStartTimeForUpdate(sessionData, hearing.hearingStartTime),
 			...(sessionData.hearingEstimationYesNo === 'yes' && {
 				estimatedDays: sessionData.hearingEstimationDays
 			}),
-			address
+			address,
+			inspectorName
 		});
 
 		addNotificationBannerToSession({

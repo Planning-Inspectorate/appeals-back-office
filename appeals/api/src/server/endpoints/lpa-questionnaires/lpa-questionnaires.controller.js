@@ -8,9 +8,9 @@ import { allLpaQuestionnaireOutcomesAreComplete } from '#utils/is-awaiting-linke
 import { isParentAppeal } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { camelToScreamingSnake, capitalizeFirstLetter } from '#utils/string-utils.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
+import { camelToScreamingSnake, capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import {
 	updateLPAQuestionnaire,
 	updateLPAQuestionnaireValidationOutcome
@@ -79,6 +79,12 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			appealUnderActSection,
 			lpaConsiderAppealInvalid,
 			lpaAppealInvalidReasons,
+			listOfDocumentsBeforeDecision,
+			anySignificantChangesLpa,
+			anySignificantChangesLpa_localPlanSignificantChanges,
+			anySignificantChangesLpa_nationalPolicySignificantChanges,
+			anySignificantChangesLpa_otherSignificantChanges,
+			anySignificantChangesLpa_courtJudgementSignificantChanges,
 			// Enforcement
 			noticeRelatesToBuildingEngineeringMiningOther,
 			siteAreaSquareMetres,
@@ -103,7 +109,6 @@ const updateLPAQuestionnaireById = async (req, res) => {
 		? formatAddressSingleLine(appeal.address)
 		: 'Address not available';
 	const notifyClient = req.notifyClient;
-
 	try {
 		validationOutcome
 			? (body.lpaQuestionnaireDueDate = await updateLPAQuestionnaireValidationOutcome(
@@ -155,6 +160,12 @@ const updateLPAQuestionnaireById = async (req, res) => {
 						appealUnderActSection,
 						lpaConsiderAppealInvalid,
 						lpaAppealInvalidReasons,
+						listOfDocumentsBeforeDecision,
+						anySignificantChangesLpa,
+						anySignificantChangesLpa_localPlanSignificantChanges,
+						anySignificantChangesLpa_nationalPolicySignificantChanges,
+						anySignificantChangesLpa_otherSignificantChanges,
+						anySignificantChangesLpa_courtJudgementSignificantChanges,
 						// Enforcement
 						noticeRelatesToBuildingEngineeringMiningOther,
 						siteAreaSquareMetres,
@@ -276,7 +287,8 @@ const updateLPAQuestionnaireById = async (req, res) => {
 				relatesToBuildingSingleDwellingHouse,
 				affectedTrunkRoadName,
 				isSiteOnCrownLand,
-				article4AffectedDevelopmentRights
+				article4AffectedDevelopmentRights,
+				listOfDocumentsBeforeDecision
 			};
 
 	return res.send(response);

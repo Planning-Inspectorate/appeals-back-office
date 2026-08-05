@@ -1,10 +1,16 @@
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { beforeExpeditedOriginalApplicationCutOff } from '@pins/appeals/utils/appeal-type-checks.js';
+
 export const rowKeys = {
 	[APPEAL_TYPE.HOUSEHOLDER]: [
 		'applicationDate',
 		'developmentDescription',
 		'otherAppealsList',
-		'applicationDecisionLetter'
+		'applicationDecisionLetter',
+		{
+			key: 'reasonForAppealAppellant',
+			condition: (data) => !beforeExpeditedOriginalApplicationCutOff(data.applicationDate)
+		}
 	],
 	[APPEAL_TYPE.CAS_PLANNING]: [
 		'applicationDate',
@@ -33,6 +39,12 @@ export const rowKeys = {
 		'developmentType'
 	],
 	[APPEAL_TYPE.S78]: [
+		'applicationDate',
+		'developmentDescription',
+		'otherAppealsList',
+		'developmentType'
+	],
+	[APPEAL_TYPE.S78_EXPEDITED]: [
 		'applicationDate',
 		'developmentDescription',
 		'otherAppealsList',

@@ -3,7 +3,11 @@ import { permissionNames } from '#environment/permissions.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as documentsValidators from '../../appeal-documents/appeal-documents.validators.js';
-import { validateAppeal, validateAppealWithInclude } from '../appeal-details.middleware.js';
+import {
+	validateAppeal,
+	validateAppealExists,
+	validateAppealWithInclude
+} from '../appeal-details.middleware.js';
 import * as controller from './lpa-questionnaire.controller.js';
 import * as validators from './lpa-questionnaire.validators.js';
 import outcomeIncompleteRouter from './outcome-incomplete/outcome-incomplete.router.js';
@@ -23,6 +27,7 @@ import safetyRisksRouter from '../safety-risks/safety-risks.router.js';
 import affectedListedBuildingsRouter from './affected-listed-buildings/affected-listed-buildings.router.js';
 import affectsScheduledMonumentRouter from './affects-scheduled-monument/affects-scheduled-monument.router.js';
 import allegedBreachCreatesFloorSpaceRouter from './alleged-breach-creates-floor-space/alleged-breach-creates-floor-space.router.js';
+import anySignificantChangesLpaRouter from './any-significant-changes-lpa/any-significant-changes-lpa.router.js';
 import appellantPhotosAndPlansRouter from './appellant-photos-and-plans/appellant-photos-and-plans.router.js';
 import changeOfUseMineralExtractionRouter from './change-of-use-mineral-extraction/change-of-use-mineral-extraction.router.js';
 import changeOfUseMineralStorageRouter from './change-of-use-mineral-storage/change-of-use-mineral-storage.router.js';
@@ -46,6 +51,7 @@ import isAppealInvalidRouter from './is-appeal-invalid/is-appeal-invalid.router.
 import isGypsyOrTravellerSiteRouter from './is-gypsy-or-traveller-site/is-gypsy-or-traveller-site.router.js';
 import isOnCrownLandRouter from './is-on-crown-land/is-on-crown-land.router.js';
 import appealUnderActSectionRouter from './ldc-type/ldc-type.router.js';
+import listDocumentsBeforeDecisionRouter from './list-of-documents-before-decision/list-of-documents-before-decision.router.js';
 import { validateLpaQuestionnaireId } from './lpa-questionnaire.middleware.js';
 import neighbouringSiteAccessRouter from './neighbouring-site-access/neighbouring-site-access.router.js';
 import notificationMethodsRouter from './notification-methods/notification-methods.router.js';
@@ -59,7 +65,6 @@ import singleDwellingHouseRouter from './single-dwelling-house/single-dwelling-h
 import siteAreaRouter from './site-area/site-area.router.js';
 import specialControlOfAdvertisementRouter from './special-control-of-advertisement/special-control-of-advertisement.router.js';
 import trunkRoadRouter from './trunk-road/trunk-road.router.js';
-
 const router = createRouter({ mergeParams: true });
 router.param('lpaQuestionnaireId', (req, res, next) => {
 	validateLpaQuestionnaireId(req, res, next);
@@ -307,24 +312,24 @@ router
 router
 	.route('/:lpaQuestionnaireId/add-documents/:folderId')
 	.get(
-		validateAppeal,
+		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		validateCaseDocumentId,
 		asyncHandler(controller.getAddDocuments)
 	)
-	.post(validateAppeal, validateCaseFolderId, asyncHandler(controller.postAddDocuments));
+	.post(validateAppealExists, validateCaseFolderId, asyncHandler(controller.postAddDocuments));
 
 router
 	.route('/:lpaQuestionnaireId/add-documents/:folderId/check-your-answers')
 	.get(
-		validateAppeal,
+		validateAppealExists,
 		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getAddDocumentsCheckAndConfirm)
 	)
 	.post(
-		validateAppeal,
+		validateAppealExists,
 		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.postAddDocumentsCheckAndConfirm)
@@ -333,13 +338,13 @@ router
 router
 	.route('/:lpaQuestionnaireId/add-documents/:folderId/:documentId')
 	.get(
-		validateAppeal,
+		validateAppealExists,
 		validateCaseFolderId,
 		validateCaseDocumentId,
 		asyncHandler(controller.getAddDocumentVersion)
 	)
 	.post(
-		validateAppeal,
+		validateAppealExists,
 		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.postAddDocumentVersion)
@@ -348,13 +353,13 @@ router
 router
 	.route('/:lpaQuestionnaireId/add-documents/:folderId/:documentId/check-your-answers')
 	.get(
-		validateAppeal,
+		validateAppealExists,
 		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getAddDocumentsCheckAndConfirm)
 	)
 	.post(
-		validateAppeal,
+		validateAppealExists,
 		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.postAddDocumentVersionCheckAndConfirm)
@@ -363,13 +368,13 @@ router
 router
 	.route('/:lpaQuestionnaireId/add-document-details/:folderId')
 	.get(
-		validateAppeal,
+		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		asyncHandler(controller.getAddDocumentDetails)
 	)
 	.post(
-		validateAppeal,
+		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		documentsValidators.validateDocumentDetailsBodyFormat,
@@ -384,13 +389,13 @@ router
 router
 	.route('/:lpaQuestionnaireId/add-document-details/:folderId/:documentId')
 	.get(
-		validateAppeal,
+		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		asyncHandler(controller.getAddDocumentVersionDetails)
 	)
 	.post(
-		validateAppeal,
+		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		documentsValidators.validateDocumentDetailsBodyFormat,
@@ -414,14 +419,14 @@ router
 router
 	.route('/:lpaQuestionnaireId/manage-documents/:folderId/:documentId')
 	.get(
-		validateAppeal,
+		validateAppealExists,
 		assertUserHasPermission(permissionNames.viewCaseDetails),
 		validateCaseFolderId,
 		validateCaseDocumentId,
 		asyncHandler(controller.getManageDocument)
 	)
 	.post(
-		validateAppeal,
+		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		validateCaseDocumentId,
@@ -432,13 +437,13 @@ router
 router
 	.route('/:lpaQuestionnaireId/change-document-name/:folderId/:documentId')
 	.get(
-		validateAppeal,
+		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		asyncHandler(controller.getChangeDocumentFileNameDetails)
 	)
 	.post(
-		validateAppeal,
+		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		documentsValidators.validateDocumentNameBodyFormat,
@@ -449,13 +454,13 @@ router
 router
 	.route('/:lpaQuestionnaireId/change-document-details/:folderId/:documentId')
 	.get(
-		validateAppeal,
+		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		asyncHandler(controller.getChangeDocumentVersionDetails)
 	)
 	.post(
-		validateAppeal,
+		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		documentsValidators.validateDocumentDetailsBodyFormat,
@@ -470,14 +475,14 @@ router
 router
 	.route('/:lpaQuestionnaireId/manage-documents/:folderId/:documentId/:versionId/delete')
 	.get(
-		validateAppeal,
+		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		validateCaseDocumentId,
 		asyncHandler(controller.getDeleteDocument)
 	)
 	.post(
-		validateAppeal,
+		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		validateCaseDocumentId,
@@ -590,4 +595,17 @@ router.use(
 	isAppealInvalidRouter
 );
 
+router.use(
+	'/:lpaQuestionnaireId/list-of-documents-before-decision',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	listDocumentsBeforeDecisionRouter
+);
+
+router.use(
+	'/:lpaQuestionnaireId/any-significant-changes-lpa',
+	validateAppealWithInclude(['lpaQuestionnaire']),
+	assertUserHasPermission(permissionNames.updateCase),
+	anySignificantChangesLpaRouter
+);
 export default router;

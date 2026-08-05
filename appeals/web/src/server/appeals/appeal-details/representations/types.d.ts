@@ -17,6 +17,7 @@ export interface Representation {
 	status: RepresentationStatus;
 	originalRepresentation: string;
 	redactedRepresentation: string;
+	isRedacted: boolean;
 	created: string;
 	notes: string;
 	attachments: any[];

@@ -115,6 +115,7 @@ const householdAppealDto = {
 		}
 	},
 	isParentAppeal: false,
+	isS78Expedited: false,
 	isChildAppeal: false,
 	linkedAppeals: [],
 	otherAppeals: [],
@@ -127,7 +128,25 @@ const householdAppealDto = {
 	startedAt: householdAppeal.caseStartedDate?.toISOString(),
 	validAt: householdAppeal.caseValidDate?.toISOString(),
 	enforcementNotice: { appellantCase: {}, appealOutcome: {} },
-	appealRule6Parties: {}
+	appealRule6Parties: {},
+	appellantCase: {
+		numberOfResidencesNetChange: null,
+		screeningOpinionIndicatesEiaRequired: null,
+		applicationMadeUnderActSection: null,
+		isEnforcementChild: false,
+		planningObligation: {
+			hasObligation: true,
+			status: 'not_started'
+		},
+		enforcementNotice: null
+	},
+	resubmitTypeId: null,
+	resubmitType: null,
+	caseNotes: [],
+	appealStatusHistory: householdAppeal.appealStatus.map((s) => ({
+		status: s.status,
+		createdAt: s.createdAt.toISOString()
+	}))
 };
 
 const s78AppealDto = {
@@ -267,6 +286,7 @@ const s78AppealDto = {
 	},
 	isParentAppeal: false,
 	isChildAppeal: false,
+	isS78Expedited: false,
 	linkedAppeals: [],
 	otherAppeals: [],
 	localPlanningDepartment: fullPlanningAppeal.lpa.name,
@@ -277,7 +297,28 @@ const s78AppealDto = {
 	createdAt: fullPlanningAppeal.caseCreatedDate.toISOString(),
 	startedAt: fullPlanningAppeal.caseStartedDate?.toISOString(),
 	validAt: fullPlanningAppeal.caseValidDate?.toISOString(),
-	enforcementNotice: { appellantCase: {}, appealOutcome: {} }
+	enforcementNotice: { appellantCase: {}, appealOutcome: {} },
+	appellantCase: {
+		numberOfResidencesNetChange: null,
+		screeningOpinionIndicatesEiaRequired: null,
+		applicationMadeUnderActSection: null,
+		isEnforcementChild: false,
+		planningObligation:
+			fullPlanningAppeal.appellantCase.planningObligation !== undefined
+				? {
+						hasObligation: fullPlanningAppeal.appellantCase.planningObligation,
+						status: fullPlanningAppeal.appellantCase.statusPlanningObligation
+					}
+				: null,
+		enforcementNotice: null
+	},
+	resubmitTypeId: null,
+	resubmitType: null,
+	caseNotes: [],
+	appealStatusHistory: fullPlanningAppeal.appealStatus.map((s) => ({
+		status: s.status,
+		createdAt: s.createdAt.toISOString()
+	}))
 };
 
 const folders = [
@@ -306,7 +347,7 @@ describe('Appeal detail routes', () => {
 				});
 
 				const response = await request
-					.get(`/appeals/${mocks.householdAppeal.id}?include=all`)
+					.get(`/appeals/${mocks.householdAppeal.id}`)
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
@@ -326,7 +367,7 @@ describe('Appeal detail routes', () => {
 				});
 
 				const response = await request
-					.get(`/appeals/${fullPlanningAppeal.id}?include=all`)
+					.get(`/appeals/${fullPlanningAppeal.id}`)
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
@@ -380,7 +421,7 @@ describe('Appeal detail routes', () => {
 				});
 
 				const response = await request
-					.get(`/appeals/${fullPlanningAppeal.id}?include=all`)
+					.get(`/appeals/${fullPlanningAppeal.id}`)
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
@@ -414,7 +455,7 @@ describe('Appeal detail routes', () => {
 				});
 
 				const response = await request
-					.get(`/appeals/${fullPlanningAppeal.id}?include=all`)
+					.get(`/appeals/${fullPlanningAppeal.id}`)
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
@@ -448,7 +489,7 @@ describe('Appeal detail routes', () => {
 				});
 
 				const response = await request
-					.get(`/appeals/${fullPlanningAppeal.id}?include=all`)
+					.get(`/appeals/${fullPlanningAppeal.id}`)
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
@@ -1373,6 +1414,54 @@ describe('Appeal detail routes', () => {
 
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({});
+			});
+		});
+	});
+
+	describe('/appeals/:appealId/exists', () => {
+		describe('GET', () => {
+			test('checks an appeal exists', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...mocks.householdAppeal,
+					folders
+				});
+
+				const response = await request
+					.get(`/appeals/${mocks.householdAppeal.id}/exists`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					id: mocks.householdAppeal.id,
+					appealId: mocks.householdAppeal.id,
+					appealReference: mocks.householdAppeal.reference
+				});
+			});
+
+			test('returns an error if appealId is not numeric', async () => {
+				const response = await request
+					.get('/appeals/one/exists')
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						appealId: ERROR_MUST_BE_NUMBER
+					}
+				});
+			});
+
+			test('returns an error if appealId is not found', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+				const response = await request.get('/appeals/3/exists').set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(404);
+				expect(response.body).toEqual({
+					errors: {
+						appealId: ERROR_NOT_FOUND
+					}
+				});
 			});
 		});
 	});

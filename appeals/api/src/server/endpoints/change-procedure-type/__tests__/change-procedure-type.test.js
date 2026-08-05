@@ -172,7 +172,7 @@ describe('Change appeal procedure type route', () => {
 						existing_appeal_procedure: 'hearing',
 						week_before_conference_date: '25 December 2998'
 					},
-					recipientEmail: fullPlanningAppeal.appellant.email,
+					recipientEmail: fullPlanningAppeal.agent.email,
 					templateName: 'change-procedure-type'
 				});
 
@@ -261,7 +261,7 @@ describe('Change appeal procedure type route', () => {
 						is_lpa: false,
 						subject: 'We have changed your appeal procedure: 1345264'
 					},
-					recipientEmail: fullPlanningAppeal.appellant.email,
+					recipientEmail: fullPlanningAppeal.agent.email,
 					templateName: 'change-procedure-type'
 				});
 
@@ -455,7 +455,7 @@ describe('Change appeal procedure type route', () => {
 						existing_appeal_procedure: 'inquiry',
 						week_before_conference_date: '25 December 2998'
 					},
-					recipientEmail: fullPlanningAppeal.appellant.email,
+					recipientEmail: fullPlanningAppeal.agent.email,
 					templateName: 'change-procedure-type'
 				});
 
@@ -547,7 +547,7 @@ describe('Change appeal procedure type route', () => {
 						existing_appeal_procedure: 'written',
 						week_before_conference_date: '25 December 2998'
 					},
-					recipientEmail: fullPlanningAppeal.appellant.email,
+					recipientEmail: fullPlanningAppeal.agent.email,
 					templateName: 'change-procedure-type'
 				});
 
@@ -689,7 +689,7 @@ describe('Change appeal procedure type route', () => {
 						existing_appeal_procedure: 'hearing',
 						week_before_conference_date: '25 December 2998'
 					},
-					recipientEmail: fullPlanningAppeal.appellant.email,
+					recipientEmail: fullPlanningAppeal.agent.email,
 					templateName: 'change-procedure-type'
 				});
 
@@ -841,7 +841,7 @@ describe('Change appeal procedure type route', () => {
 						week_before_conference_date: '25 December 2998',
 						proof_of_evidence_due_date: '15 December 2025'
 					},
-					recipientEmail: fullPlanningAppeal.appellant.email,
+					recipientEmail: fullPlanningAppeal.agent.email,
 					templateName: 'change-procedure-type'
 				});
 

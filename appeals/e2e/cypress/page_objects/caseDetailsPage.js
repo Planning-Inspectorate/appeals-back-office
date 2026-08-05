@@ -72,6 +72,7 @@ export class CaseDetailsPage extends Page {
 		addNetResidence: 'add-net-residence-change',
 		documentationTable: '#case-documentation-table',
 		documentationRowHeader: '#case-documentation-table th',
+		manageEnforcementLinkedAppeal: 'manage-linked-appeals',
 		documentationCells: '#case-documentation-table td'
 	};
 
@@ -81,6 +82,8 @@ export class CaseDetailsPage extends Page {
 		document: 'sample-file.doc',
 		document2: 'sample-file-2.doc',
 		document3: 'sample-file-3.doc',
+		documentWithSpaces: 'sample file.doc',
+		documentWithBrackets: 'sample-file(1).doc',
 		img: 'sample-img.jpeg',
 		pdf: 'test.pdf',
 		pdf2: 'test-2.pdf'
@@ -256,6 +259,8 @@ export class CaseDetailsPage extends Page {
 		addAppellantComments: () => cy.getByData(this._cyDataSelectors.addAppellantComments),
 		addLpaWithdrawal: () => cy.getByData(this._cyDataSelectors.addLpaWithdrawal),
 		addNetResidence: () => cy.getByData(this._cyDataSelectors.addNetResidence),
+		manageEnforcementLinkedAppeal: () =>
+			cy.getByData(this._cyDataSelectors.manageEnforcementLinkedAppeal),
 		contactSection: () => cy.get('.govuk-summary-list__key'),
 		rule6PartyName: 'Rule 6 party name'
 	};
@@ -949,9 +954,19 @@ export class CaseDetailsPage extends Page {
 		this.clickButtonByText('Continue');
 	}
 
-	shareIpAndLpaComments() {
+	shareCommentsAndStatements() {
 		this.basePageElements.bannerLink().click();
-		this.clickButtonByText('Confirm');
+		this.clickButtonByText('Share comments and statements');
+	}
+
+	shareComments() {
+		this.basePageElements.bannerLink().click();
+		this.clickButtonByText('Share comments');
+	}
+
+	shareStatements() {
+		this.basePageElements.bannerLink().click();
+		this.clickButtonByText('Share statements');
 	}
 
 	shareFinalComments() {
@@ -1035,5 +1050,9 @@ export class CaseDetailsPage extends Page {
 		cy.get(config.selector).within(() => {
 			cy.contains('tr', documentName).should('not.exist');
 		});
+	}
+
+	clickManageLinkedAppeal() {
+		this.elements.manageEnforcementLinkedAppeal().click();
 	}
 }

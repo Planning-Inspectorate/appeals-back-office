@@ -1,5 +1,4 @@
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
-import { validateAppeal } from '#appeals/appeal-details/appeal-details.middleware.js';
 import {
 	validateCaseDocumentId,
 	validateCaseFolderId
@@ -41,13 +40,11 @@ router
 router
 	.route('/change-document-name/:folderId/:documentId')
 	.get(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
 
 		asyncHandler(controller.getChangeDocumentFileNameDetails)
 	)
 	.post(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
 
 		documentsValidators.validateDocumentNameBodyFormat,
@@ -58,13 +55,11 @@ router
 router
 	.route('/change-document-details/:folderId/:documentId')
 	.get(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
 
 		asyncHandler(controller.getChangeDocumentVersionDetails)
 	)
 	.post(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
 
 		documentsValidators.validateDocumentDetailsBodyFormat,
@@ -79,14 +74,12 @@ router
 router
 	.route('/:folderId/:documentId/:versionId/delete')
 	.get(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
 
 		validateCaseDocumentId,
 		asyncHandler(controller.getDeleteDocument)
 	)
 	.post(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
 
 		validateCaseDocumentId,
@@ -96,24 +89,16 @@ router
 
 router
 	.route('/add-documents/:folderId/:documentId')
-	.get(
-		validateAppeal,
-
-		validateCaseDocumentId,
-		asyncHandler(controller.getAddDocumentVersion)
-	)
+	.get(validateCaseDocumentId, asyncHandler(controller.getAddDocumentVersion))
 	.post(
-		validateAppeal,
-
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.postAddDocumentVersion)
 	);
 
 router
 	.route('/add-document-details/:folderId/:documentId')
-	.get(validateAppeal, asyncHandler(controller.getAddDocumentVersionDetails))
+	.get(asyncHandler(controller.getAddDocumentVersionDetails))
 	.post(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
 
 		documentsValidators.validateDocumentDetailsBodyFormat,
@@ -128,14 +113,10 @@ router
 router
 	.route('/check-your-answers/:folderId/:documentId')
 	.get(
-		validateAppeal,
-
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getAddDocumentsCheckAndConfirm)
 	)
 	.post(
-		validateAppeal,
-
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.postAddDocumentVersionCheckAndConfirm)
 	);

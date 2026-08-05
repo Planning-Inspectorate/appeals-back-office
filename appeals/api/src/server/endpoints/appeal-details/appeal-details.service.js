@@ -16,10 +16,10 @@ import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import { hasValueOrIsNull } from '#utils/has-value-or-null.js';
 import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { camelToScreamingSnake } from '#utils/string-utils.js';
 import * as SUPPORT_CONSTANTS from '@pins/appeals/constants/support.js';
 import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
 import { getCache, setCache } from '@pins/appeals/utils/cache-data.js';
+import { camelToScreamingSnake } from '@pins/appeals/utils/string-case.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 const {

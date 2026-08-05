@@ -1,0 +1,184 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`appellant-case check-your-answers GET /appellant-case/check-your-answers should render the 500 error page if required data is not present in the session 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case check-your-answers GET /appellant-case/check-your-answers should render the check your answers page with the expected content if outcome is "incomplete" and required data is present in the session 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check your answers before confirming your review</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review outcome</dt>
+                    <dd class="govuk-summary-list__value">Incomplete</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case">Change<span class="govuk-visually-hidden"> review outcome</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Incomplete reasons</dt>
+                    <dd class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="Read more" data-mode="html">
+                            <ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet">
+                                <li>Attachments and/or appendices have not been included to the full statement
+                                    of case: test reason text 1</li>
+                                <li>Attachments and/or appendices have not been included to the full statement
+                                    of case: test reason text 2</li>
+                                <li>LPA's decision notice is incorrect or incomplete: test reason text 1</li>
+                            </ul>
+                        </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/incomplete">Change<span class="govuk-visually-hidden"> Incomplete reasons</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Updated due date</dt>
+                    <dd class="govuk-summary-list__value">1 December 3000</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/incomplete/date">Change<span class="govuk-visually-hidden"> updated due date</span></a>
+                    </dd>
+                </div>
+            </dl>
+            <div class="govuk-inset-text">Confirming this review will inform the relevant parties of the outcome.</div>
+            <div             class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                    </form>
+                </div>
+        </div>
+    </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case check-your-answers GET /appellant-case/check-your-answers should render the check your answers page with the expected content if outcome is "invalid" and required data is present in the session 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check your answers before confirming your review</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review outcome</dt>
+                    <dd class="govuk-summary-list__value">Invalid</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case">Change<span class="govuk-visually-hidden"> review outcome</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Invalid reasons</dt>
+                    <dd class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="Read more" data-mode="html">
+                            <ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet">
+                                <li>Documents have not been submitted on time: test reason text 1</li>
+                                <li>Other reason: test reason text 1</li>
+                                <li>Other reason: test reason text 2</li>
+                            </ul>
+                        </div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/invalid">Change<span class="govuk-visually-hidden"> Invalid reasons</span></a>
+                    </dd>
+                </div>
+            </dl>
+            <div class="govuk-inset-text">Confirming this review will inform the relevant parties of the outcome.</div>
+            <div             class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+                    </form>
+                </div>
+        </div>
+    </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case check-your-answers GET /appellant-case/check-your-answers should render the check your answers page with the expected content if the outcome is "invalid" and the appeal type is enforcement notice 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and mark appeal as invalid</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decision</dt>
+                    <dd class="govuk-summary-list__value">Invalid</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case">Change<span class="govuk-visually-hidden"> review outcome</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the enforcement notice invalid?</dt>
+                    <dd                     class="govuk-summary-list__value">No</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/invalid/enforcement-notice">Change<span class="govuk-visually-hidden"> Is the enforcement notice invalid?</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Why is the appeal invalid?</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="Read more" data-mode="html">
+                            <ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet">
+                                <li>Documents have not been submitted on time: test reason text 1</li>
+                                <li>Other reason: test reason text 1</li>
+                                <li>Other reason: test reason text 2</li>
+                            </ul>
+                        </div>
+                        </dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/invalid">Change<span class="govuk-visually-hidden"> Invalid reasons</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Are there any other live appeals against the enforcement notice?</dt>
+                    <dd                     class="govuk-summary-list__value">No</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/invalid/other-live-appeals">Change<span class="govuk-visually-hidden"> Are there any other live appeals against the enforcement notice?</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Updated due date</dt>
+                    <dd class="govuk-summary-list__value">1 December 3000</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/5623/appellant-case/invalid/date">Change<span class="govuk-visually-hidden"> updated due date</span></a>
+                    </dd>
+                </div>
+            </dl>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <details class="govuk-details" data-cy="preview-email-to-appellant">
+                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
+                        </summary>
+                        <div class="govuk-details__text"></div>
+                    </details>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <details class="govuk-details" data-cy="preview-email-to-lpa">
+                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to LPA</span>
+                        </summary>
+                        <div class="govuk-details__text"></div>
+                    </details>
+                </div>
+            </div>
+            <div class="govuk-inset-text">We will mark the appeal as invalid and send an email to the relevant parties.</div>
+            <div             class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Mark appeal as invalid</button>
+                    </form>
+                </div>
+        </div>
+    </div>
+    </div>
+</main>"
+`;

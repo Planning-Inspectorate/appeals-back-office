@@ -1,3 +1,4 @@
+import { beforeExpeditedOriginalApplicationCutOff } from '@pins/appeals/utils/appeal-type-checks.js';
 import { generateHASComponents } from './has.mapper.js';
 
 /**
@@ -105,9 +106,14 @@ export function generateCASAdvertComponents(
 				},
 				rows: [
 					mappedAppellantCaseData.applicationForm.display.summaryListItem,
-					mappedAppellantCaseData.appealStatement.display.summaryListItem,
+					// we want to hide the appeal statement for appeals submitted 1st April 2026 onwards
+					...(beforeExpeditedOriginalApplicationCutOff(appellantCaseData.applicationDate)
+						? [mappedAppellantCaseData.appealStatement.display.summaryListItem]
+						: []),
 					mappedAppellantCaseData.costsDocument.display.summaryListItem,
-					mappedAppellantCaseData.supportingDocuments.display.summaryListItem
+					...(beforeExpeditedOriginalApplicationCutOff(appellantCaseData.applicationDate)
+						? [mappedAppellantCaseData.supportingDocuments.display.summaryListItem]
+						: [])
 				]
 			}
 		};

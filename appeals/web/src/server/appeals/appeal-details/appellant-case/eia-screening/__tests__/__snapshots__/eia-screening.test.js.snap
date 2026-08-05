@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`eia-screening GET /change should render the change eia screening page with "no" radio option checked if screeningOpinionIndicatesEiaRequired is false 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Did you submit an environmental statement with the application?</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    <h1 class="govuk-fieldset__heading"> Did you submit an environmental statement with the application?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eia-screening-radio" name="eiaScreeningRadio"
+                                        type="radio" value="yes">
+                                        <label class="govuk-label govuk-radios__label" for="eia-screening-radio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eia-screening-radio-2" name="eiaScreeningRadio"
+                                        type="radio" value="no" checked>
+                                        <label class="govuk-label govuk-radios__label" for="eia-screening-radio-2">No</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`eia-screening GET /change should render the change eia screening page with "yes" radio option checked if screeningOpinionIndicatesEiaRequired is true 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Did you submit an environmental statement with the application?</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    <h1 class="govuk-fieldset__heading"> Did you submit an environmental statement with the application?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eia-screening-radio" name="eiaScreeningRadio"
+                                        type="radio" value="yes" checked>
+                                        <label class="govuk-label govuk-radios__label" for="eia-screening-radio">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="eia-screening-radio-2" name="eiaScreeningRadio"
+                                        type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="eia-screening-radio-2">No</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;

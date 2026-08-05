@@ -16,7 +16,7 @@ export function environmentalImpactAssessmentSection(templateData) {
 		appealType
 	} = templateData;
 
-	const isS78 = appealType === APPEAL_TYPE.S78;
+	const isS78 = appealType === APPEAL_TYPE.S78 || appealType === APPEAL_TYPE.S78_EXPEDITED;
 	const isS20 = appealType === APPEAL_TYPE.PLANNED_LISTED_BUILDING;
 
 	if (!isS78 && !isS20) return;

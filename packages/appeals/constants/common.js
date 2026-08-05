@@ -10,7 +10,6 @@ export const EVENT_TYPE = Object.freeze({
 export const FEATURE_FLAG_NAMES = Object.freeze({
 	SECTION_78: 'featureFlagS78Written',
 	SECTION_78_INQUIRY: 'featureFlagS78Inquiry',
-	NET_RESIDENCE: 'featureFlagNetResidence',
 	NET_RESIDENCE_S20: 'featureFlagNetResidenceS20',
 	LINKED_APPEALS: 'featureFlagLinkedAppeals',
 	LINKED_APPEALS_UNLINK: 'featureFlagLinkedAppealsUnlink',
@@ -19,16 +18,15 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	SEARCH_CASE_OFFICER: 'featureFlagSearchCaseOfficer',
 	ENFORCEMENT_NOTICE: 'featureFlagEnforcementNotice',
 	ENFORCEMENT_LINKED: 'featureFlagEnforcementLinked',
-	ENFORCEMENT_LEAD_CAN_START: 'featureFlagEnforcementLeadCanStart',
 	ENFORCEMENT_CANCEL: 'featureFlagEnforcementCancel',
 	INVALID_DECISION_LETTER: 'featureFlagInvalidDecisionLetter',
 	RULE_6_PARTIES_MVP: 'featureFlagRule6Mvp',
 	RULE_6_PARTIES_POE: 'featureFlagRule6PoE',
 	EXPEDITED_APPEALS: 'featureFlagExpeditedAppeals',
+	EXPEDITED_APPEALS_LPAQ: 'featureFlagExpeditedAppealsLpaq',
 	MANUALLY_ADD_REPS: 'featureFlagManuallyAddReps',
 	APPELLANT_STATEMENT: 'featureFlagAppellantStatement',
 	RULE_6_STATEMENT: 'featureFlagRule6Statement',
-	LDC: 'featureFlagLDC',
 	S20_HEARING: 'featureFlagS20Hearing',
 	S20_INQUIRY: 'featureFlagS20Inquiry',
 	ENFORCEMENT_HEARING: 'featureFlagEnforcementNoticeHearing',
@@ -39,7 +37,9 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	ELB_INQUIRY: 'featureFlagElbInquiry',
 	ENFORCEMENT_HEARING_LINKED: 'featureFlagEnforcementHearingLinked',
 	ENFORCEMENT_INQUIRY_LINKED: 'featureFlagEnforcementInquiryLinked',
-	ENFORCEMENT_CHANGE_PROCEDURE_LINKED: 'featureFlagEnforcementChangeProcedureLinked'
+	ENFORCEMENT_CHANGE_PROCEDURE_LINKED: 'featureFlagEnforcementChangeProcedureLinked',
+	SHARE_COSTS: 'featureFlagShareCosts',
+	ENFORCEMENT_CHANGE_PROCEDURE: 'featureFlagEnforcementChangeProcedure'
 });
 
 export const APPEAL_TYPE = Object.freeze({
@@ -56,7 +56,8 @@ export const APPEAL_TYPE = Object.freeze({
 	LAWFUL_DEVELOPMENT_CERTIFICATE: 'Lawful development certificate appeal',
 	PLANNED_LISTED_BUILDING: 'Planning listed building and conservation area appeal',
 	CAS_PLANNING: 'CAS planning',
-	CAS_ADVERTISEMENT: 'CAS advert'
+	CAS_ADVERTISEMENT: 'CAS advert',
+	S78_EXPEDITED: 'S78 expedited'
 });
 
 export const APPEAL_TYPE_CHANGE_APPEALS = Object.freeze({
@@ -79,9 +80,23 @@ export const APPEAL_TYPE_CHANGE_APPEALS = Object.freeze({
 /** @type {Object<string, string>} */
 export const PROCEDURE_TYPE_MAP = Object.freeze({
 	written: 'written representations',
-	writtenPart1: 'Part 1',
+	writtenPart1: 'written representations',
 	hearing: 'a hearing',
 	inquiry: 'an inquiry'
+});
+
+export const PROCEDURE_TYPE_KEY = Object.freeze({
+	WRITTEN_PART_2: 'written',
+	WRITTEN_PART_1: 'writtenPart1',
+	HEARING: 'hearing',
+	INQUIRY: 'inquiry'
+});
+
+export const PROCEDURE_TYPE_NAME = Object.freeze({
+	WRITTEN_PART_2: 'Written',
+	WRITTEN_PART_1: 'Part 1',
+	HEARING: 'Hearing',
+	INQUIRY: 'Inquiry'
 });
 
 export const PROCEDURE_TYPE_ID_MAP = Object.freeze({
@@ -177,8 +192,14 @@ export const FEEDBACK_FORM_LINKS = Object.freeze({
 
 	LAWFUL_DEVELOPMENT_CERTIFICATE: 'https://forms.cloud.microsoft/e/J5EwyG3e0e',
 
+	COMMENT_ON_APPEAL:
+		'https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQVU3UkdCT0FPVlYwQUsxUDYySDA1V1NXWC4u',
+
 	ENFORCEMENT_LISTED_BUILDING:
 		'https://forms.cloud.microsoft/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UNDJFTjBCRTlFV1pYVjVWRkhKQVBYTVRKUC4u&route=shorturl'
 });
 
 export const REPRESENTATION_ADDED_AS_DOCUMENT = 'Added as a document';
+
+export const MAX_VISIBLE_DOCUMENTS_IN_SUMMARY = 5;
+export const DOCUMENTS_PAGE_SIZE = 100;

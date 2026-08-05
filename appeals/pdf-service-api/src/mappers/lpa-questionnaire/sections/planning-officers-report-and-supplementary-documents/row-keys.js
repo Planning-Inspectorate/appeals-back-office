@@ -55,6 +55,18 @@ export const rowKeys = {
 		'infrastructureLevyAdoptedDate',
 		'infrastructureLevyExpectedDate'
 	],
+	[APPEAL_TYPE.S78_EXPEDITED]: [
+		'planningOfficerReport',
+		'developmentPlanPolicies',
+		'supplementaryPlanning',
+		'emergingPlan',
+		'otherRelevantPolicies',
+		'hasInfrastructureLevy',
+		'communityInfrastructureLevy',
+		'isInfrastructureLevyFormallyAdopted',
+		'infrastructureLevyAdoptedDate',
+		'infrastructureLevyExpectedDate'
+	],
 	[APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE]: [
 		'planningOfficerReport',
 		'hasInfrastructureLevy',

@@ -94,7 +94,14 @@ const updateAppellantCaseById = async (req, res) => {
 			applicationDevelopmentAllOrPart,
 			appealDecisionDate,
 			siteUseAtTimeOfApplication,
-			applicationMadeUnderActSection
+			applicationMadeUnderActSection,
+			anySignificantChanges,
+			anySignificantChanges_localPlanSignificantChanges,
+			anySignificantChanges_nationalPolicySignificantChanges,
+			anySignificantChanges_otherSignificantChanges,
+			anySignificantChanges_courtJudgementSignificantChanges,
+			reasonForAppealAppellant,
+			screeningOpinionIndicatesEiaRequired
 		},
 		params,
 		validationOutcome
@@ -187,7 +194,14 @@ const updateAppellantCaseById = async (req, res) => {
 						applicationDevelopmentAllOrPart,
 						appealDecisionDate,
 						siteUseAtTimeOfApplication,
-						applicationMadeUnderActSection
+						applicationMadeUnderActSection,
+						anySignificantChanges,
+						anySignificantChanges_localPlanSignificantChanges,
+						anySignificantChanges_nationalPolicySignificantChanges,
+						anySignificantChanges_otherSignificantChanges,
+						anySignificantChanges_courtJudgementSignificantChanges,
+						reasonForAppealAppellant,
+						screeningOpinionIndicatesEiaRequired
 					},
 					appeal
 				);
@@ -242,7 +256,8 @@ const updateAppellantCaseById = async (req, res) => {
 				appellantProcedurePreference,
 				appellantProcedurePreferenceDetails,
 				appellantProcedurePreferenceDuration,
-				appellantProcedurePreferenceWitnessCount
+				appellantProcedurePreferenceWitnessCount,
+				screeningOpinionIndicatesEiaRequired
 			};
 
 	return res.send(response);

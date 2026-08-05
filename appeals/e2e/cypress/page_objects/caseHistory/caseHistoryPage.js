@@ -15,6 +15,10 @@ export class CaseHistoryPage extends Page {
 	fixturesPath = 'cypress/fixtures/';
 	states = CASE_HISTORY_STATES;
 
+	/********************************************************
+	 ************************ Methods ***********************
+	 *********************************************************/
+
 	verifyCaseHistory(groupArray, caseRef) {
 		caseDetailsPage.clickViewCaseHistory();
 		const state = this.states[groupArray];
@@ -63,6 +67,12 @@ export class CaseHistoryPage extends Page {
 						: `${value} should not be included`;
 					assertionBase.include(expectedText, errorMessage);
 				});
+		});
+	}
+
+	verifyCaseHistoryValues(values) {
+		values.forEach((value) => {
+			this.verifyCaseHistoryValue(value);
 		});
 	}
 }

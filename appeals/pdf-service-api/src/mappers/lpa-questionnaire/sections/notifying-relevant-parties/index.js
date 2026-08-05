@@ -41,7 +41,7 @@ export function notifyingRelevantPartiesSection(templateData) {
 				html: formatDocumentData(whoNotifiedPressAdvert)
 			},
 			{
-				key: 'Appeal notification letter',
+				key: 'Appeal notification letter and the list of people that you notified',
 				html: formatDocumentData(appealNotification)
 			}
 		]

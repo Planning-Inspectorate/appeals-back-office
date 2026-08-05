@@ -62,7 +62,7 @@ describe('proof-of-evidence', () => {
 			.persist();
 
 		nock('http://test/')
-			.get('/appeals/2/document-folders/1?repId=3670')
+			.get('/appeals/2/document-folders/1?pageNumber=1&pageSize=100&repId=3670')
 			.reply(200, costsFolderInfoAppellantApplication)
 			.persist();
 

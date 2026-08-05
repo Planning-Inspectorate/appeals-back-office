@@ -44,10 +44,10 @@ describe('hearing-updated.md', () => {
 			'',
 			'The details of the hearing are subject to change. We will contact you by email if we make any changes.',
 			'',
-			'We expect the hearing to finish on the same day. If the hearing needs more time, you will arrange the next steps on the day.',
+			'If the hearing needs more time, you will arrange the next steps on the day.',
 			'',
 			'',
-			'The Planning Inspectorate',
+			'Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
 		].join('\n');
 
@@ -104,7 +104,7 @@ describe('hearing-updated.md', () => {
 			'Email caseofficers@planninginspectorate.gov.uk to confirm the venue address for the hearing.',
 			'',
 			'',
-			'The Planning Inspectorate',
+			'Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
 		].join('\n');
 
@@ -161,7 +161,7 @@ describe('hearing-updated.md', () => {
 			'We will contact you when the local planning authority confirms the venue address for the hearing.',
 			'',
 			'',
-			'The Planning Inspectorate',
+			'Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
 		].join('\n');
 

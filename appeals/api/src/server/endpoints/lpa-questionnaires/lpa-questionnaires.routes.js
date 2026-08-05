@@ -83,6 +83,7 @@ router.patch(
 			'childAppeals',
 			'appealStatus',
 			'appealType',
+			'appellantCase',
 			'lpa',
 			'appellant',
 			'agent',

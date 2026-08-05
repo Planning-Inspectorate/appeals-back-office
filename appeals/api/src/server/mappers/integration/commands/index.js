@@ -119,7 +119,11 @@ const mapAppealSubmission = (data) => {
 const mapQuestionnaireSubmission = (data, appeal, designatedSites) => {
 	const { casedata, documents } = data;
 	const questionnaireInput = {
-		...mapQuestionnaireIn({ casedata }, designatedSites),
+		...mapQuestionnaireIn(
+			{ casedata },
+			designatedSites,
+			appeal?.appellantCase?.applicationDate || null
+		),
 		neighbouringSites: {
 			create: casedata.neighbouringSiteAddresses?.map((site) => {
 				return {

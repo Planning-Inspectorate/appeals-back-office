@@ -23,13 +23,19 @@ export const getAllCaseFolders = async (apiClient, appealId) => {
  * @param {import('got').Got} apiClient
  * @param {string|number} appealId
  * @param {string|number} folderId
+ * @param {string|number} pageNumber
+ * @param {string|number} pageSize
  * @param {string|number} [repId]
  * @returns {Promise<FolderInfo|undefined>}
  */
-export const getFolder = async (apiClient, appealId, folderId, repId) => {
+export const getFolder = async (apiClient, appealId, folderId, pageNumber, pageSize, repId) => {
 	try {
-		const query = repId ? `?repId=${repId}` : '';
-		const url = `appeals/${appealId}/document-folders/${folderId}${query}`;
+		const urlParams = new URLSearchParams();
+		urlParams.append('pageNumber', pageNumber.toString());
+		urlParams.append('pageSize', pageSize.toString());
+		if (repId) urlParams.append('repId', repId.toString());
+
+		const url = `appeals/${appealId}/document-folders/${folderId}?${urlParams.toString()}`;
 
 		const locationInfo = await apiClient.get(url).json();
 		return locationInfo;
@@ -122,7 +128,9 @@ export const getDocumentRedactionStatuses = async (apiClient) => {
 /**
  * @typedef {Object} DocumentDetailAPIPatchRequest
  * @property {DocumentDetailAPIDocument} document
- */
+ * @property {string} [sharingDocumentType]
+ * @property {boolean} [inviteResponses]
+ * */
 
 /**
  * @typedef {Object} DocumentDetailAPIPatchResponse
@@ -141,7 +149,9 @@ export const updateDocument = async (apiClient, appealId, documentDetail) => {
 		return await apiClient
 			.patch(`appeals/${appealId}/documents/${documentDetail.document.id}`, {
 				json: {
-					document: documentDetail.document
+					document: documentDetail.document,
+					sharingDocumentType: documentDetail.sharingDocumentType,
+					inviteResponses: documentDetail.inviteResponses
 				}
 			})
 			.json();

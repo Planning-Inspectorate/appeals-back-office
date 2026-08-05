@@ -1,5 +1,4 @@
 import NodeCache from 'node-cache';
-import logger from './logger.js';
 
 /**
  * @description A constant that holds an instance of the `NodeCache` class.
@@ -31,8 +30,6 @@ export async function storeInCache(key, value, ttl) {
 	const cacheTTL = storeInCacheTTL(ttl);
 
 	nodeCache.set(key, value, cacheTTL);
-
-	logger.info('set generated access token into cache');
 }
 
 /**
@@ -44,12 +41,6 @@ export async function storeInCache(key, value, ttl) {
  */
 export async function fetchFromCache(key) {
 	const cache = await nodeCache.get(key);
-
-	if (cache) {
-		logger.info(`Successfully fetched value with key "${key}" from the cache`);
-	} else {
-		logger.info(`Unable to fetch value with key "${key}" from the cache`);
-	}
 
 	return cache;
 }

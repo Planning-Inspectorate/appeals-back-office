@@ -1,8 +1,8 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
 import { isRepresentationReviewRequired } from '#lib/representation-utilities.js';
-import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
+import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { generateCommentsSummaryList } from './page-components/common.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */

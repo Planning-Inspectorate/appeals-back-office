@@ -5,7 +5,6 @@ import {
 	formatDocumentData,
 	formatSentenceCase
 } from '../../../../lib/nunjucks-filters/index.js';
-
 export const rowBuilders = {
 	applicationDate: (data) => ({
 		key: 'What date did you submit your application?',
@@ -40,5 +39,9 @@ export const rowBuilders = {
 	applicationDecisionLetter: (data) => ({
 		key: 'Decision letter from the local planning authority',
 		html: formatDocumentData(data.documents.applicationDecisionLetter)
+	}),
+	reasonForAppealAppellant: (data) => ({
+		key: 'Why are you appealing?',
+		text: formatSentenceCase(data.reasonForAppealAppellant, 'Not provided')
 	})
 };

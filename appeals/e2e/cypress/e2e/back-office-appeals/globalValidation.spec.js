@@ -4,16 +4,23 @@
 import { users } from '../../fixtures/users';
 import { InquirySectionPage } from '../../page_objects/caseDetails/inquirySectionPage.js';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
+import { FileDetailsPage } from '../../page_objects/fileDetailsPage.js';
+import {
+	ERROR_MESSAGES,
+	invalidFileNameVariants,
+	validFileNameVariants
+} from '../../support/consts.js';
 import { happyPathHelper } from '../../support/happyPathHelper';
 import { getDateAndTimeValues } from '../../support/utils/format.js';
 
 const caseDetailsPage = new CaseDetailsPage();
 const inquirySectionPage = new InquirySectionPage();
+const fileDetailsPage = new FileDetailsPage();
 
 let caseObj;
 let appeal;
 
-const setupTestCase = () => {
+const setupTestCaseForDateAndTimeValidation = () => {
 	cy.login(users.appeals.caseAdmin);
 
 	cy.createCase({ caseType: 'W' }).then((refObj) => {
@@ -25,18 +32,33 @@ const setupTestCase = () => {
 	});
 };
 
-// global setup and cleanup as are using same case across date and time tests
-before(() => {
-	setupTestCase();
-});
+const setupTestCaseForFileNameValidation = (startWithSelectFilename = false) => {
+	cy.createCase().then((caseObj) => {
+		appeal = caseObj;
+		happyPathHelper.uploadDocAppellantCase(caseObj);
+		caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
 
-after(() => {
-	cy.deleteAppeals(appeal);
-});
+		// Simulate the completion of the documents scan
+		cy.simulateDocumentsScanComplete(caseObj);
 
-describe('Date Validation', { testIsolation: false }, () => {
+		caseDetailsPage.clickLinkByText('View and edit');
+
+		if (startWithSelectFilename) {
+			fileDetailsPage.changeFileName();
+		}
+	});
+};
+
+describe('Date and Time Validation', { testIsolation: false }, () => {
+	// global setup and cleanup as are using same case across date and time tests
+	before(() => {
+		setupTestCaseForDateAndTimeValidation();
+	});
 	beforeEach(() => {
 		inquirySectionPage.clearInquiryDateAndTime();
+	});
+	after(() => {
+		cy.deleteAppeals(appeal);
 	});
 
 	it('All fields are blank', () => {
@@ -263,12 +285,6 @@ describe('Date Validation', { testIsolation: false }, () => {
 			fields: ['inquiry-date-day']
 		});
 	});
-});
-
-describe('Time Validation', { testIsolation: false }, () => {
-	beforeEach(() => {
-		inquirySectionPage.clearInquiryDateAndTime();
-	});
 
 	it('All fields are blank', () => {
 		// make sure date part is valid
@@ -406,6 +422,44 @@ describe('Time Validation', { testIsolation: false }, () => {
 			inquirySectionPage.verifyErrorMessages({
 				messages: ['Enter a inquiry time using numbers 0 to 9'],
 				fields: ['inquiry-time-hour']
+			});
+		});
+	});
+});
+
+describe('Rename file with valid name', { testIsolation: false }, () => {
+	before(() => {
+		setupTestCaseForFileNameValidation();
+	});
+	after(() => {
+		cy.deleteAppeals(appeal);
+	});
+
+	validFileNameVariants.forEach((fileVariant) => {
+		it(`can rename a file with valid name: ${fileVariant.type}`, () => {
+			fileDetailsPage.changeFileName();
+			fileDetailsPage.enterFileName(fileVariant.name);
+			fileDetailsPage.clickButtonByText('Confirm');
+			fileDetailsPage.confirmFileRenamed(fileVariant.name);
+		});
+	});
+});
+
+describe('Rename file with invalid name', { testIsolation: false }, () => {
+	before(() => {
+		setupTestCaseForFileNameValidation(true);
+	});
+	after(() => {
+		cy.deleteAppeals(appeal);
+	});
+
+	invalidFileNameVariants.forEach((invalidFileVariant) => {
+		it(`cannot rename a file with invalid name: ${invalidFileVariant.type}`, () => {
+			fileDetailsPage.enterFileName(invalidFileVariant.name);
+			fileDetailsPage.clickButtonByText('Confirm');
+			fileDetailsPage.verifyErrorMessages({
+				messages: [ERROR_MESSAGES.invalidFileName],
+				fields: ['file-name']
 			});
 		});
 	});

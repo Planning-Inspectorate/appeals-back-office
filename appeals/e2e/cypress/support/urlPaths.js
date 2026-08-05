@@ -12,3 +12,12 @@ export const urlPaths = {
 	personalListFilteredStatement:
 		'/appeals-service/personal-list?pageSize=1000&pageNumber=1&appealStatusFilter=statements'
 };
+
+/**
+ *
+ * @param {string} status - The appeal status to filter by (e.g., 'event', 'awaiting_event', 'evidence', 'statements').
+ * @returns
+ */
+export const getPersonalListURLWithFilter = (status) => {
+	return `${urlPaths.personalList}&appealStatusFilter=${status}`;
+};

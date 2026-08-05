@@ -10,8 +10,10 @@ import enforcementNoticeRouter from '#appeals/appeal-details/appellant-case/enfo
 import enforcementReferenceRouter from '#appeals/appeal-details/appellant-case/enforcement-reference/enforcement-reference.router.js';
 import groundsForAppealRouter from '#appeals/appeal-details/appellant-case/grounds-for-appeal/grounds-for-appeal.router.js';
 import changeProcedureTypeRouter from '#appeals/appeal-details/change-procedure-type/change-procedure-type.router.js';
+import { isFeatureActive } from '#common/feature-flags.js';
 import { permissionNames } from '#environment/permissions.js';
 import { extractAndProcessDocumentDateErrors } from '#lib/validators/date-input.validator.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import {
@@ -20,7 +22,11 @@ import {
 	validateCaseFolderId
 } from '../../appeal-documents/appeal-documents.middleware.js';
 import * as documentsValidators from '../../appeal-documents/appeal-documents.validators.js';
-import { validateAppeal, validateAppealWithInclude } from '../appeal-details.middleware.js';
+import {
+	validateAppeal,
+	validateAppealExists,
+	validateAppealWithInclude
+} from '../appeal-details.middleware.js';
 import changeLpaRouter from '../change-appeal-details/local-planning-authority/local-planning-authority.router.js';
 import greenBeltRouter from '../green-belt/green-belt.router.js';
 import inspectorAccessRouter from '../inspector-access/inspector-access.router.js';
@@ -33,6 +39,7 @@ import siteAddressRouter from './address/address.router.js';
 import advertisementDescriptionRouter from './advertisement-description/advertisement-description.router.js';
 import advertisementInPositionRouter from './advertisement-in-position/advertisement-in-position.router.js';
 import agriculturalHoldingRouter from './agricultural-holding/agricultural-holding.router.js';
+import significantChangesRouter from './any-significant-changes/any-significant-changes.router.js';
 import * as controller from './appellant-case.controller.js';
 import * as validators from './appellant-case.validators.js';
 import applicationDecisionDateRouter from './application-decision-date/application-decision-date.router.js';
@@ -41,6 +48,7 @@ import applicationOutcomeRouter from './application-outcome/application-outcome.
 import applicationSubmissionDateRouter from './application-submission-date/application-submission-date.router.js';
 import contactAddressRouter from './contact-address/contact-address.router.js';
 import developmentDescriptionRouter from './development-description/development-description.router.js';
+import eiaScreeningRouter from './eia-screening/eia-screening.router.js';
 import factsForGroundRouter from './facts-for-ground/facts-for-ground.router.js';
 import gridReferenceRouter from './grid-reference/grid-reference.router.js';
 import highwayLandRouter from './highway-land/highway-land.router.js';
@@ -52,6 +60,7 @@ import outcomeValidRouter from './outcome-valid/outcome-valid.router.js';
 import ownersKnownRouter from './owners-known/owners-known.router.js';
 import planningObligationRouter from './planning-obligation/planning-obligation.router.js';
 import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
+import reasonForAppealRouter from './reason-for-appeal/reason-for-appeal.router.js';
 import retrospectiveApplicationRouter from './retrospective-application/retrospective-application.router.js';
 import siteAreaRouter from './site-area/site-area.router.js';
 import siteOwnershipRouter from './site-ownership/site-ownership.router.js';
@@ -62,7 +71,7 @@ const router = createRouter({ mergeParams: true });
 
 router.use(
 	'/valid',
-	validateAppealWithInclude(['appellantCase']),
+	validateAppealWithInclude(['appellantCase', 'appealType']),
 	assertUserHasPermission(permissionNames.updateCase),
 	outcomeValidRouter
 );
@@ -338,6 +347,31 @@ router.use(
 	applicationMadeUnderActSectionRouter
 );
 
+router.use(
+	'/any-significant-changes',
+	validateAppealWithInclude(['appellantCase']),
+	significantChangesRouter
+);
+
+router.use(
+	'/reason-for-appeal',
+	validateAppealWithInclude(['appellantCase']),
+	reasonForAppealRouter
+);
+
+router.use(
+	'/eia-screening',
+	(req, res, next) => {
+		if (isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS)) {
+			return next();
+		}
+		return res.status(404).render('app/404.njk');
+	},
+	validateAppealWithInclude(['appellantCase']),
+	assertUserHasPermission(permissionNames.updateCase),
+	eiaScreeningRouter
+);
+
 router
 	.route('/')
 	.get(validateAppeal, clearUncommittedFilesFromSession, asyncHandler(controller.getAppellantCase))
@@ -364,22 +398,22 @@ router
 router
 	.route('/add-documents/:folderId')
 	.get(
-		validateAppeal,
+		validateAppealWithInclude(['appealType', 'appellantCase']),
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		asyncHandler(controller.getAddDocuments)
 	)
-	.post(validateAppeal, validateCaseFolderId, asyncHandler(controller.postAddDocuments));
+	.post(validateAppealExists, validateCaseFolderId, asyncHandler(controller.postAddDocuments));
 
 router
 	.route('/add-documents/:folderId/check-your-answers')
 	.get(
-		validateAppeal,
+		validateAppealExists,
 		validateCaseFolderId,
 		asyncHandler(controller.getAddDocumentsCheckAndConfirm)
 	)
 	.post(
-		validateAppeal,
+		validateAppealWithInclude(['appellantCase']),
 		validateCaseFolderId,
 		asyncHandler(controller.postAddDocumentsCheckAndConfirm)
 	);
@@ -387,23 +421,27 @@ router
 router
 	.route('/add-documents/:folderId/:documentId')
 	.get(
-		validateAppeal,
+		validateAppealWithInclude(['appealType', 'appellantCase']),
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		validateCaseDocumentId,
 		asyncHandler(controller.getAddDocumentVersion)
 	)
-	.post(validateAppeal, validateCaseFolderId, asyncHandler(controller.postAddDocumentVersion));
+	.post(
+		validateAppealExists,
+		validateCaseFolderId,
+		asyncHandler(controller.postAddDocumentVersion)
+	);
 
 router
 	.route('/add-documents/:folderId/:documentId/check-your-answers')
 	.get(
-		validateAppeal,
+		validateAppealExists,
 		validateCaseFolderId,
 		asyncHandler(controller.getAddDocumentsCheckAndConfirm)
 	)
 	.post(
-		validateAppeal,
+		validateAppealExists,
 		validateCaseFolderId,
 		asyncHandler(controller.postAddDocumentVersionCheckAndConfirm)
 	);
@@ -411,13 +449,13 @@ router
 router
 	.route('/add-document-details/:folderId')
 	.get(
-		validateAppeal,
+		validateAppealWithInclude(['appealType', 'appellantCase']),
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		asyncHandler(controller.getAddDocumentDetails)
 	)
 	.post(
-		validateAppeal,
+		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		documentsValidators.validateDocumentDetailsBodyFormat,
@@ -432,13 +470,13 @@ router
 router
 	.route('/add-document-details/:folderId/:documentId')
 	.get(
-		validateAppeal,
+		validateAppealWithInclude(['appealType', 'appellantCase']),
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		asyncHandler(controller.getAddDocumentVersionDetails)
 	)
 	.post(
-		validateAppeal,
+		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		documentsValidators.validateDocumentDetailsBodyFormat,
@@ -454,7 +492,7 @@ router
 	.route('/manage-documents/:folderId/')
 	.get(
 		validateAppealWithInclude(['appealType']),
-		assertUserHasPermission(permissionNames.updateCase),
+		assertUserHasPermission(permissionNames.viewCaseDetails),
 		validateCaseFolderId,
 		asyncHandler(controller.getManageFolder)
 	);
@@ -462,7 +500,7 @@ router
 router
 	.route('/manage-documents/:folderId/:documentId')
 	.get(
-		validateAppeal,
+		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		validateCaseDocumentId,
@@ -472,13 +510,13 @@ router
 router
 	.route('/change-document-name/:folderId/:documentId')
 	.get(
-		validateAppeal,
+		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		asyncHandler(controller.getChangeDocumentFileNameDetails)
 	)
 	.post(
-		validateAppeal,
+		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		documentsValidators.validateDocumentNameBodyFormat,
@@ -489,13 +527,13 @@ router
 router
 	.route('/change-document-details/:folderId/:documentId')
 	.get(
-		validateAppeal,
+		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		asyncHandler(controller.getChangeDocumentVersionDetails)
 	)
 	.post(
-		validateAppeal,
+		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		documentsValidators.validateDocumentDetailsBodyFormat,
@@ -510,14 +548,14 @@ router
 router
 	.route('/manage-documents/:folderId/:documentId/:versionId/delete')
 	.get(
-		validateAppeal,
+		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		validateCaseDocumentId,
 		asyncHandler(controller.getDeleteDocument)
 	)
 	.post(
-		validateAppeal,
+		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		validateCaseDocumentId,

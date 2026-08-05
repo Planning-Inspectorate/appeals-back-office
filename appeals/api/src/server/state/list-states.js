@@ -1,5 +1,6 @@
 import logger from '#utils/logger.js';
 import { isExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import { normaliseProcedureType } from '@pins/appeals/utils/procedure-type.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import createStateMachine from './create-state-machine.js';
 
@@ -14,18 +15,18 @@ import createStateMachine from './create-state-machine.js';
  * @returns {StateStub[]}
  * */
 function listStates(appealType, procedureType, currentState) {
-	const appealTypeKey = !isExpeditedAppealType(appealType.key)
+	const normalizedAppealTypeKey = !isExpeditedAppealType(appealType.key)
 		? APPEAL_CASE_TYPE.W
 		: APPEAL_CASE_TYPE.D;
 	const stateMachine = createStateMachine(
-		appealTypeKey,
+		normalizedAppealTypeKey,
 		procedureType?.key || APPEAL_CASE_PROCEDURE.WRITTEN,
 		currentState
 	);
 	const { states } = stateMachine;
 
 	if (!procedureType) {
-		logger.info('Procedure type not set, defaulting to written');
+		logger.debug('Procedure type not set, defaulting to written');
 	}
 
 	const stateList = Object.keys(states)
@@ -34,11 +35,14 @@ function listStates(appealType, procedureType, currentState) {
 			const { validAppealTypes, validProcedureTypes } = state.meta;
 
 			if (!procedureType) {
-				return validAppealTypes.includes(appealTypeKey);
+				return validAppealTypes.includes(normalizedAppealTypeKey);
 			}
 
+			const procedureTypeKey = normaliseProcedureType(procedureType.key);
+
 			return (
-				validAppealTypes.includes(appealTypeKey) && validProcedureTypes.includes(procedureType.key)
+				validAppealTypes.includes(normalizedAppealTypeKey) &&
+				validProcedureTypes.includes(procedureTypeKey)
 			);
 		})
 		.sort((a, b) => states[a].order - states[b].order);

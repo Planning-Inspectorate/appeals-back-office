@@ -20,6 +20,8 @@ export const mapAppellantCase = (data) => {
 		informedTenantsAgriculturalHolding: casedata?.informedTenantsAgriculturalHolding ?? null,
 		agriculturalHolding: casedata?.agriculturalHolding ?? null,
 		tenantAgriculturalHolding: casedata?.tenantAgriculturalHolding ?? null,
-		otherTenantsAgriculturalHolding: casedata?.otherTenantsAgriculturalHolding ?? null
+		otherTenantsAgriculturalHolding: casedata?.otherTenantsAgriculturalHolding ?? null,
+		screeningOpinionIndicatesEiaRequired: casedata?.screeningOpinionIndicatesEiaRequired ?? null,
+		ownershipCertificate: casedata?.ownershipCertificate ?? null
 	};
 };

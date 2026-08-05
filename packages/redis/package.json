@@ -10,7 +10,8 @@
   "scripts": {
     "lint:js": "npx eslint .",
     "lint:js:fix": "npx eslint . --fix",
-    "test": "echo \"No tests yet...\"",
+    "test": "cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest --logHeapUsage --ci",
+    "test:cov": "cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest --logHeapUsage --ci --coverage --forceExit",
     "tscheck": "npx tsc -p jsconfig.json --maxNodeModuleJsDepth 0"
   },
   "dependencies": {
@@ -18,5 +19,8 @@
     "redis": "^4.6.10",
     "@pins/platform": "^0.0.0",
     "@azure/msal-node": "^5.0.5"
+  },
+  "devDependencies": {
+    "jest": "^30.2.0"
   }
 }

@@ -7,6 +7,12 @@ import {
 	VALIDATION_OUTCOME_VALID
 } from '@pins/appeals/constants/support.js';
 import {
+	targetStateOnEventCancelled,
+	targetStateOnLpaqComplete,
+	targetStateOnStatementsComplete
+} from '@pins/appeals/utils/business-rules.js';
+import { normaliseProcedureType } from '@pins/appeals/utils/procedure-type.js';
+import {
 	APPEAL_CASE_PROCEDURE,
 	APPEAL_CASE_STATUS,
 	APPEAL_CASE_TYPE
@@ -14,23 +20,33 @@ import {
 import { createMachine } from 'xstate';
 
 /**
- * @typedef {import('@planning-inspectorate/data-model').APPEAL_CASE_TYPE} AppealType
+ * @typedef {import('@planning-inspectorate/data-model').APPEAL_CASE_TYPE} AppealTypeKey
  * @typedef {import('@planning-inspectorate/data-model').APPEAL_CASE_PROCEDURE} ProcedureType
+ * @typedef {import('@planning-inspectorate/data-model').APPEAL_CASE_STATUS} CaseStatus
  * @typedef {object} AdditionalCheckObject
  * */
 
 /**
- * @param {AppealType} appealType
+ * @param {AppealTypeKey} appealTypeKey NOTE - at present implementations only pass 'W' or 'D' to this function
  * @param {ProcedureType} procedureType
  * @param {string} currentState
  * @param {boolean} [eventElapsed]
+ * @param {boolean} [isLdcOrDiscontinuanceOrEnforcementCaseType]
  */
-const createStateMachine = (appealType, procedureType, currentState, eventElapsed = false) =>
-	createMachine({
+const createStateMachine = (
+	appealTypeKey,
+	procedureType,
+	currentState,
+	eventElapsed = false,
+	isLdcOrDiscontinuanceOrEnforcementCaseType = false
+) => {
+	const normalisedProcedureType = normaliseProcedureType(procedureType);
+
+	return createMachine({
 		id: 'appeals-state-machine',
 		initial: currentState || APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
 		context: {
-			appealType,
+			appealType: appealTypeKey,
 			procedureType,
 			eventElapsed
 		},
@@ -104,8 +120,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 			[APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE]: {
 				on: {
 					[VALIDATION_OUTCOME_COMPLETE]: {
-						//@ts-ignore
-						target: targetStateOnLpaqComplete[appealType]
+						target: targetStateOnLpaqComplete(appealTypeKey, procedureType, eventElapsed)
 					},
 					[VALIDATION_OUTCOME_INCOMPLETE]: undefined,
 					[APPEAL_CASE_STATUS.CLOSED]: { target: APPEAL_CASE_STATUS.CLOSED },
@@ -131,7 +146,10 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 					//@ts-ignore
 					[VALIDATION_OUTCOME_COMPLETE]: {
 						//@ts-ignore
-						target: targetStateOnStatementsComplete[procedureType],
+						target: targetStateOnStatementsComplete(
+							isLdcOrDiscontinuanceOrEnforcementCaseType,
+							normalisedProcedureType
+						),
 						cond: isAppealTypeAndProcedureTypeValid
 					},
 					[APPEAL_CASE_STATUS.CLOSED]: {
@@ -185,7 +203,9 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 				},
 				meta: {
 					validAppealTypes: [APPEAL_CASE_TYPE.W],
-					validProcedureTypes: [APPEAL_CASE_PROCEDURE.WRITTEN]
+					validProcedureTypes: finalCommentsValidProcedures(
+						isLdcOrDiscontinuanceOrEnforcementCaseType
+					)
 				}
 			},
 			[APPEAL_CASE_STATUS.EVENT]: {
@@ -244,7 +264,10 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 			[APPEAL_CASE_STATUS.AWAITING_EVENT]: {
 				on: {
 					//@ts-ignore
-					[VALIDATION_OUTCOME_COMPLETE]: { target: APPEAL_CASE_STATUS.ISSUE_DETERMINATION },
+					[VALIDATION_OUTCOME_COMPLETE]: {
+						target: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						cond: isEventElapsedAndValid
+					},
 					[VALIDATION_OUTCOME_INCOMPLETE]: { target: APPEAL_CASE_STATUS.EVENT },
 					//@ts-ignore
 					[VALIDATION_OUTCOME_CANCEL]: { target: targetStateOnEventCancelled[procedureType] },
@@ -364,9 +387,10 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 			}
 		}
 	});
+};
 
 /**
- * @typedef {{ appealType: string, procedureType: string, eventElapsed: boolean }} Ctx
+ * @typedef {{ appealType: AppealTypeKey, procedureType: string, eventElapsed: boolean }} Ctx
  * @typedef {{ state: { value: string, meta: Record<string, any> } }} State
  * @typedef {import('xstate').EventObject} _evt
  */
@@ -381,9 +405,11 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 const isAppealTypeAndProcedureTypeValid = (ctx, _evt, { state }) => {
 	const meta = state.meta[`appeals-state-machine.${state.value}`];
 	const appealType = ctx.appealType;
-	const procedureType = ctx.procedureType;
+	let procedureType = ctx.procedureType;
 
 	if (!appealType || !procedureType || !meta) return false;
+
+	procedureType = /** @type {string} */ (normaliseProcedureType(procedureType));
 
 	return (
 		meta.validAppealTypes.includes(appealType) && meta.validProcedureTypes.includes(procedureType)
@@ -411,21 +437,15 @@ const isEventElapsedAndValid = (ctx, _evt, meta) => {
 	return isAppealTypeAndProcedureTypeValid(ctx, _evt, meta) && isEventElapsed(ctx);
 };
 
-const targetStateOnStatementsComplete = {
-	[APPEAL_CASE_PROCEDURE.HEARING]: APPEAL_CASE_STATUS.EVENT,
-	[APPEAL_CASE_PROCEDURE.INQUIRY]: APPEAL_CASE_STATUS.EVIDENCE,
-	[APPEAL_CASE_PROCEDURE.WRITTEN]: APPEAL_CASE_STATUS.FINAL_COMMENTS
-};
-
-const targetStateOnEventCancelled = {
-	[APPEAL_CASE_PROCEDURE.HEARING]: APPEAL_CASE_STATUS.EVENT,
-	[APPEAL_CASE_PROCEDURE.INQUIRY]: APPEAL_CASE_STATUS.EVENT,
-	[APPEAL_CASE_PROCEDURE.WRITTEN]: APPEAL_CASE_STATUS.FINAL_COMMENTS
-};
-
-const targetStateOnLpaqComplete = {
-	[APPEAL_CASE_TYPE.W]: APPEAL_CASE_STATUS.STATEMENTS,
-	[APPEAL_CASE_TYPE.D]: APPEAL_CASE_STATUS.EVENT
+/**
+ * Determines the next state after statements are complete based on the appeal type and procedure type.
+ * @param {boolean} isLdcOrDiscontinuanceOrEnforcementCaseType
+ * @returns {ProcedureType[]}
+ */
+const finalCommentsValidProcedures = (isLdcOrDiscontinuanceOrEnforcementCaseType) => {
+	return isLdcOrDiscontinuanceOrEnforcementCaseType
+		? [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.HEARING, APPEAL_CASE_PROCEDURE.INQUIRY]
+		: [APPEAL_CASE_PROCEDURE.WRITTEN];
 };
 
 export default createStateMachine;

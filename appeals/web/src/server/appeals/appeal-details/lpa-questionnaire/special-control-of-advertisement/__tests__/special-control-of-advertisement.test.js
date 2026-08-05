@@ -62,8 +62,6 @@ describe('special control of advertisement', () => {
 				.post(`${lpaQuestionnaireUrl}/area-special-control/change`)
 				.send(validData);
 
-			console.log(response.status);
-
 			expect(apiCall.isDone()).toBe(true);
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(

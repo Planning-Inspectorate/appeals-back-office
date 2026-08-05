@@ -19,9 +19,10 @@
  * @param {import('got').Got} apiClient
  * @param {string} appealId
  * @param {string} dateISOString
- * @param {string} [procedureType]
- * @param {string} [hearingStartTime]
- * @param {string} [hearingEstimatedDays]
+ * @param {string | null} [procedureType]
+ * @param {string | null} [hearingStartTime]
+ * @param {string | null} [hearingEstimatedDays]
+ * @param {string | null | undefined} inspectorName
  * @returns {Promise<Appeal>}
  */
 export async function setStartDate(
@@ -30,7 +31,8 @@ export async function setStartDate(
 	dateISOString,
 	procedureType,
 	hearingStartTime,
-	hearingEstimatedDays
+	hearingEstimatedDays,
+	inspectorName = null
 ) {
 	return await apiClient
 		.post(`appeals/${appealId}/appeal-timetables`, {
@@ -38,7 +40,8 @@ export async function setStartDate(
 				startDate: dateISOString,
 				...(procedureType && { procedureType }),
 				...(hearingStartTime && { hearingStartTime }),
-				...(hearingEstimatedDays && { hearingEstimatedDays })
+				...(hearingEstimatedDays && { hearingEstimatedDays }),
+				...(inspectorName && { inspectorName })
 			}
 		})
 		.json();
@@ -49,10 +52,11 @@ export async function setStartDate(
  * @param {import('got').Got} apiClient
  * @param {string} appealId
  * @param {string} [startDate]
- * @param {string} [procedureType]
- * @param {string} [hearingStartTime]
- * @param {string} [hearingEstimatedDays]
+ * @param {string | null} [procedureType]
+ * @param {string | null} [hearingStartTime]
+ * @param {string | null} [hearingEstimatedDays]
  * @param {any} [inquiry]
+ * @param {string | null | undefined} inspectorName
  * @returns {Promise<{appellant?: string, lpa?: string}>}
  */
 export async function getStartCaseNotifyPreviews(
@@ -62,7 +66,8 @@ export async function getStartCaseNotifyPreviews(
 	procedureType,
 	hearingStartTime,
 	hearingEstimatedDays,
-	inquiry
+	inquiry,
+	inspectorName = null
 ) {
 	const result = await apiClient
 		.post(`appeals/${appealId}/appeal-timetables/notify-preview`, {
@@ -71,7 +76,8 @@ export async function getStartCaseNotifyPreviews(
 				...(procedureType && { procedureType }),
 				...(hearingStartTime && { hearingStartTime }),
 				...(hearingEstimatedDays && { hearingEstimatedDays }),
-				...(inquiry && { inquiry })
+				...(inquiry && { inquiry }),
+				...(inspectorName && { inspectorName })
 			}
 		})
 		.json();

@@ -6,7 +6,6 @@ import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
-import { tag } from '../../support/tag';
 
 const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();
@@ -23,7 +22,7 @@ describe('Progress S20 to decision', () => {
 		cy.deleteAppeals(appeal);
 	});
 
-	it(`Completes a s20 appeal to decision`, { tags: tag.smoke }, () => {
+	it(`Completes a s20 appeal to decision`, () => {
 		let todaysDate = new Date();
 
 		cy.createCase({
@@ -52,8 +51,7 @@ describe('Progress S20 to decision', () => {
 			cy.simulateStatementsDeadlineElapsed(caseObj);
 			cy.reload();
 
-			caseDetailsPage.basePageElements.bannerLink().click();
-			caseDetailsPage.clickButtonByText('Confirm');
+			caseDetailsPage.shareCommentsAndStatements();
 			caseDetailsPage.checkStatusOfCase('Final comments', 0);
 
 			happyPathHelper.addLpaFinalComment(caseObj);
@@ -63,8 +61,7 @@ describe('Progress S20 to decision', () => {
 			});
 			cy.simulateFinalCommentsDeadlineElapsed(caseObj);
 			cy.reload();
-			caseDetailsPage.basePageElements.bannerLink().click();
-			caseDetailsPage.clickButtonByText('Share final comments');
+			caseDetailsPage.shareFinalComments();
 			caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
 
 			happyPathHelper.setupSiteVisitFromBanner(caseObj);

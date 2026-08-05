@@ -64,7 +64,6 @@ variable "apps_config" {
       featureFlagNotifyCaseHistory                = bool
       featureFlagSimplifyTeamAssignment           = bool
       featureFlagPdfDownload                      = bool
-      featureFlagNetResidence                     = bool
       featureFlagNetResidenceS20                  = bool
       featureFlagCancelCase                       = bool
       featureFlagChangeProcedureType              = bool
@@ -96,6 +95,20 @@ variable "apps_config" {
       featureFlagEnforcementHearingLinked         = bool
       featureFlagEnforcementInquiryLinked         = bool
       featureFlagEnforcementChangeProcedureLinked = bool
+      featureFlagShareCosts                       = bool
+      featureFlagExpeditedAppealsLpaq             = bool
+      featureFlagNewBeforeYouStart                = bool
+      featureFlagEnforcementChangeProcedure       = bool
+      featureFlagSharingHearingDocuments          = bool
+      featureFlagSharingInquiryEventDocuments     = bool
+      featureFlagSharingInquiryDocuments          = bool
+      featureFlagSharingSupportingDocuments       = bool
+    })
+
+    analytics = object({
+      google_analytics_id   = string,
+      google_tag_manager_id = string,
+      microsoft_clarity_id  = string
     })
 
     logging = object({

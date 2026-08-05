@@ -1,5 +1,5 @@
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
-import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 

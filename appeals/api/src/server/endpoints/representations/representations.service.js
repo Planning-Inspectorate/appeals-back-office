@@ -5,6 +5,7 @@ import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import addressRepository from '#repositories/address.repository.js';
+import commonRepository from '#repositories/common.repository.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import neighbouringSitesRepository from '#repositories/neighbouring-sites.repository.js';
 import representationRepository from '#repositories/representation.repository.js';
@@ -17,7 +18,6 @@ import { isFeatureActive } from '#utils/feature-flags.js';
 import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { camelToScreamingSnake } from '#utils/string-utils.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE,
@@ -30,13 +30,21 @@ import {
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
-import { isEnforcementCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
+import {
+	isEnforcementCaseType,
+	isLdcOrEnforcementCaseType
+} from '@pins/appeals/utils/appeal-type-checks.js';
 import formatDate, {
 	dateISOStringToDisplayDate,
 	formatTime12h
 } from '@pins/appeals/utils/date-formatter.js';
+import { camelToScreamingSnake } from '@pins/appeals/utils/string-case.js';
 import { EventType } from '@pins/event-client';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_CASE_PROCEDURE,
+	APPEAL_CASE_STATUS,
+	APPEAL_REDACTED_STATUS
+} from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
@@ -73,6 +81,14 @@ export const getRepresentations = async (
 		pageNumber - 1,
 		pageSize
 	);
+};
+
+/**
+ * @param {number[]} appealIds
+ * @returns {Promise<string[]>}
+ */
+export const getInterestedPartyEmails = async (appealIds) => {
+	return representationRepository.getInterestedPartyEmails(appealIds);
 };
 
 /**
@@ -372,12 +388,17 @@ export const updateAttachments = async (repId, attachments) => {
 /**
  * @param {number} repId
  * @param {import('express').Request['body']} payload
+ * @param {import('#db-client/models.ts').RepresentationModel} existingRep
  * */
-export async function updateRepresentation(repId, payload) {
+export async function updateRepresentation(repId, payload, existingRep) {
 	if (payload.rejectionReasons) {
 		await representationRepository.updateRejectionReasons(repId, payload.rejectionReasons);
 	}
-	const updatedRep = await representationRepository.updateRepresentationById(repId, payload);
+	const updatedRep = await representationRepository.updateRepresentationById(
+		repId,
+		payload,
+		existingRep
+	);
 
 	if (!updatedRep.represented?.addressId) {
 		return updatedRep;
@@ -406,28 +427,20 @@ export async function updateRepresentation(repId, payload) {
 
 /** @typedef {Awaited<ReturnType<updateRepresentation>>} UpdatedDBRepresentation */
 
-/** @typedef {(appeal: Appeal, azureAdUserId: string, notifyClient: import('#endpoints/appeals.js').NotifyClient) => Promise<Representation[]>} PublishFunction */
+/** @typedef {(appeal: Appeal, azureAdUserId: string, notifyClient: import('#endpoints/appeals.js').NotifyClient, inspectorName: string) => Promise<Representation[]>} PublishFunction */
 
 /**
  * Also publishes any valid IP comments at the same time.
  *
  * @type {PublishFunction}
  * */
-export async function publishStatements(appeal, azureAdUserId, notifyClient) {
+export async function publishStatements(appeal, azureAdUserId, notifyClient, inspectorName) {
 	if (!isCurrentStatus(appeal, APPEAL_CASE_STATUS.STATEMENTS)) {
 		throw new BackOfficeAppError('appeal in incorrect state to publish statements', 409);
 	}
 
-	const latestDocumentVersionsUpdated = await documentRepository.setRedactionStatusOnValidation(
-		appeal.id
-	);
-	for (const documentUpdated of latestDocumentVersionsUpdated) {
-		await broadcasters.broadcastDocument(
-			documentUpdated.documentGuid,
-			documentUpdated.version,
-			EventType.Update
-		);
-	}
+	markUnredactedAsNotRequired(appeal.id, appeal.reference, appeal.appealType?.key ?? '');
+
 	const statementsToPublish = [APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT];
 	if (isFeatureActive(FEATURE_FLAG_NAMES.APPELLANT_STATEMENT)) {
 		statementsToPublish.push(APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT);
@@ -436,7 +449,7 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient) {
 		statementsToPublish.push(APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT);
 	}
 
-	const result = await representationRepository.updateRepresentations(
+	const representations = await representationRepository.updateRepresentations(
 		[appeal.id],
 		{
 			OR: [
@@ -463,120 +476,314 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient) {
 		await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 	}
 
-	const finalCommentsDueDate = formatDate(
-		new Date(appeal.appealTimetable?.finalCommentsDueDate || ''),
-		false
-	);
-
-	const proofOfEvidenceDueDate = formatDate(
-		new Date(appeal.appealTimetable?.proofOfEvidenceAndWitnessesDueDate || ''),
-		false
-	);
-
-	const hasLpaStatement = result.some(
-		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
-	);
-	const hasIpComments = result.some(
-		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
-	);
-	const hasRule6Statement = result.some(
-		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT
-	);
-	const hasRule6Parties =
-		Array.isArray(appeal.appealRule6Parties) && appeal.appealRule6Parties.length > 0;
+	const isInquiryProcedure = String(appeal.procedureType?.key) === APPEAL_CASE_PROCEDURE.INQUIRY;
 	const isHearingProcedure = String(appeal.procedureType?.key) === APPEAL_CASE_PROCEDURE.HEARING;
 
-	const isInquiryProcedure = String(appeal.procedureType?.key) === APPEAL_CASE_PROCEDURE.INQUIRY;
-	const lpaPath = `${config.frontOffice.url}/manage-appeals/${appeal.reference}`;
-	const appellantPath = `${config.frontOffice.url}/appeals/${appeal.reference}`;
+	try {
+		if (isInquiryProcedure) {
+			await sendPublishedStatementNotifiesForInquiry(
+				appeal,
+				representations,
+				notifyClient,
+				azureAdUserId
+			);
+		} else if (isHearingProcedure) {
+			await sendPublishedStatementNotifiesForHearing(
+				appeal,
+				representations,
+				notifyClient,
+				azureAdUserId,
+				inspectorName
+			);
+		} else {
+			await sendPublishedStatementNotifiesForWrittenReps(
+				appeal,
+				representations,
+				notifyClient,
+				azureAdUserId
+			);
+		}
+	} catch (error) {
+		logger.error(error);
+	}
 
 	try {
-		let whatHappensNextAppellant;
-		let whatHappensNextLpa;
-		if (isHearingProcedure) {
-			if (appeal.hearing?.hearingStartTime) {
-				whatHappensNextAppellant = `Your hearing is on ${formatDate(
-					appeal.hearing?.hearingStartTime,
-					false
-				)}.\n\nWe will contact you if we need any more information.`;
-				whatHappensNextLpa = `The hearing is on ${formatDate(
-					appeal.hearing?.hearingStartTime,
-					false
-				)}.`;
-			} else {
-				whatHappensNextAppellant = `We will contact you if we need any more information.`;
-				whatHappensNextLpa = `We will contact you when the hearing has been set up.`;
-			}
-		} else if (isInquiryProcedure) {
-			whatHappensNextAppellant = `You need to [submit your proof of evidence and witnesses](${appellantPath}) by ${proofOfEvidenceDueDate}.`;
-			whatHappensNextLpa = `You need to [submit your proof of evidence and witnesses](${lpaPath}) by ${proofOfEvidenceDueDate}.`;
-		} else {
-			whatHappensNextAppellant = `You need to [submit your final comments](${appellantPath}) by ${finalCommentsDueDate}.`;
-			whatHappensNextLpa = hasIpComments
-				? `You need to [submit your final comments](${lpaPath}) by ${finalCommentsDueDate}.`
-				: `The inspector will visit the site and we will contact you when we have made the decision.`;
-		}
-
-		let lpaTemplate = 'received-statement-and-ip-comments-lpa';
-		let appellantTemplate = 'received-statement-and-ip-comments-appellant';
-		let rule6Template = 'received-statement-and-ip-comments-appellant';
-
-		if (isInquiryProcedure && !hasLpaStatement && !hasIpComments && !hasRule6Statement) {
-			lpaTemplate = 'not-received-statement-and-ip-comments';
-			appellantTemplate = 'not-received-statement-and-ip-comments';
-			rule6Template = 'not-received-statement-and-ip-comments';
-		} else if (isInquiryProcedure && !hasLpaStatement && hasRule6Statement) {
-			lpaTemplate = 'rule-6-statement-received';
-			appellantTemplate = 'rule-6-statement-received';
-			rule6Template = 'received-only-rule-6-statement-rule-6-party';
-		}
-
-		const contacts = [
-			{
-				email: appeal.lpa?.email,
-				template: lpaTemplate,
-				whatHappensNextTemplate: whatHappensNextLpa,
-				url: lpaPath
-			},
-			{
-				email: appeal.agent?.email || appeal.appellant?.email,
-				template: appellantTemplate,
-				whatHappensNextTemplate: whatHappensNextAppellant,
-				url: appellantPath
-			},
-			...(appeal.appealRule6Parties?.map((rule6Party) => ({
-				email: rule6Party.serviceUser?.email,
-				template: rule6Template,
-				whatHappensNextTemplate: whatHappensNextAppellant,
-				url: undefined
-			})) ?? [])
-		];
-
-		contacts.forEach(async (contact) => {
-			await notifyPublished({
-				appeal,
-				notifyClient,
-				hasLpaStatement,
-				hasIpComments,
-				hasRule6Parties,
-				hasRule6Statement,
-				isHearingProcedure,
-				isInquiryProcedure,
-				statementUrl: contact.url,
-				templateName: contact.template,
-				recipientEmail: contact.email,
-				finalCommentsDueDate,
-				whatHappensNext: contact.whatHappensNextTemplate,
-				azureAdUserId
-			});
-		});
 		await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 	} catch (error) {
 		logger.error(error);
 	}
 
-	return result;
+	return representations;
 }
+
+/**
+ * @param {Appeal} appeal
+ * @param {Representation[]} representations
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {string} azureAdUserId
+ */
+const sendPublishedStatementNotifiesForInquiry = async (
+	appeal,
+	representations,
+	notifyClient,
+	azureAdUserId
+) => {
+	const proofOfEvidenceDueDate = formatDate(
+		new Date(appeal.appealTimetable?.proofOfEvidenceAndWitnessesDueDate || ''),
+		false
+	);
+
+	const hasLpaStatement = representations.some(
+		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
+	);
+	const hasIpComments = representations.some(
+		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
+	);
+	const hasRule6Statement = representations.some(
+		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT
+	);
+	const hasRule6Parties =
+		Array.isArray(appeal.appealRule6Parties) && appeal.appealRule6Parties.length > 0;
+
+	let lpaTemplate = 'publish-statements-inquiry-lpa';
+	let appellantTemplate = 'publish-statements-inquiry-appellant';
+	let rule6Template = 'publish-statements-inquiry-rule-6';
+
+	const contacts = [
+		{
+			email: appeal.lpa?.email,
+			template: lpaTemplate
+		},
+		{
+			email: appeal.agent?.email || appeal.appellant?.email,
+			template: appellantTemplate
+		},
+		...(appeal.appealRule6Parties?.map((rule6Party) => ({
+			email: rule6Party.serviceUser?.email,
+			template: rule6Template
+		})) ?? [])
+	];
+
+	const team_email_address = await getTeamEmailFromAppealId(appeal.id);
+
+	contacts.forEach(async (contact) => {
+		const { siteAddress, lpaReference, enforcementReference } = getNotifyPersonalisations(
+			appeal,
+			contact.template,
+			contact.email
+		);
+
+		await notifySend({
+			azureAdUserId,
+			notifyClient,
+			templateName: contact.template,
+			recipientEmail: contact.email,
+			personalisation: {
+				appeal_reference_number: appeal.reference,
+				has_rule_6_statement: hasRule6Statement,
+				has_rule_6_parties: hasRule6Parties,
+				has_lpa_statement: hasLpaStatement,
+				has_ip_comments: hasIpComments,
+				site_address: siteAddress,
+				...(enforcementReference && { enforcement_reference: enforcementReference }),
+				lpa_reference: lpaReference || '',
+				proof_of_evidence_due_date: proofOfEvidenceDueDate,
+				team_email_address
+			}
+		});
+	});
+};
+
+/**
+ * @param {Appeal} appeal
+ * @param {Representation[]} representations
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {string} azureAdUserId
+ * @param {string} inspectorName
+ */
+const sendPublishedStatementNotifiesForHearing = async (
+	appeal,
+	representations,
+	notifyClient,
+	azureAdUserId,
+	inspectorName
+) => {
+	const hasLpaStatement = representations.some(
+		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
+	);
+	const hasIpComments = representations.some(
+		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
+	);
+
+	const isEnforcementOrLdc = isLdcOrEnforcementCaseType(appeal.appealType?.key);
+	const isEnforcementYesStatementsYesComments =
+		isEnforcementOrLdc && hasLpaStatement && hasIpComments;
+	const isEnforcementNoStatementsNoComments =
+		isEnforcementOrLdc && !hasLpaStatement && !hasIpComments;
+	const includeFrontOfficeUrl = !isEnforcementNoStatementsNoComments;
+
+	const lpaPath = `${config.frontOffice.url}/manage-appeals/${appeal.reference}`;
+	const appellantPath = `${config.frontOffice.url}/appeals/${appeal.reference}`;
+
+	const hearingDate = appeal.hearing?.hearingStartTime
+		? dateISOStringToDisplayDate(appeal.hearing.hearingStartTime)
+		: null;
+	const hearingTime = appeal.hearing?.hearingStartTime
+		? formatTime12h(
+				typeof appeal.hearing.hearingStartTime === 'string'
+					? new Date(appeal.hearing.hearingStartTime)
+					: appeal.hearing.hearingStartTime
+			)
+		: null;
+	const hearingExpectedDays = appeal.hearing?.estimatedDays ?? '';
+	const hearingAddress = appeal.hearing?.address
+		? formatAddressSingleLine(appeal.hearing.address)
+		: '';
+
+	const finalCommentsDueDate = formatDate(
+		new Date(appeal.appealTimetable?.finalCommentsDueDate || ''),
+		false
+	);
+
+	let lpaTemplate = '';
+	let appellantTemplate = '';
+	let additionalEmailValues = {};
+
+	if (isEnforcementYesStatementsYesComments) {
+		lpaTemplate = 'publish-statements-enforcement-hearing-yes-statements-yes-comments';
+		appellantTemplate = 'publish-statements-enforcement-hearing-yes-statements-yes-comments';
+		additionalEmailValues = {
+			hearing_time: hearingTime,
+			hearing_expected_days: hearingExpectedDays,
+			inspector_name: inspectorName,
+			hearing_address: hearingAddress,
+			final_comments_due_date: finalCommentsDueDate
+		};
+	} else if (isEnforcementNoStatementsNoComments) {
+		lpaTemplate = 'publish-statements-enforcement-hearing-no-statements-no-comments';
+		appellantTemplate = 'publish-statements-enforcement-hearing-no-statements-no-comments';
+		additionalEmailValues = {
+			hearing_address: hearingAddress,
+			inspector_name: inspectorName,
+			hearing_expected_days: hearingExpectedDays,
+			hearing_time: hearingTime
+		};
+	} else {
+		lpaTemplate = 'publish-statements-hearing-lpa';
+		appellantTemplate = 'publish-statements-hearing-appellant';
+	}
+
+	const contacts = [
+		{
+			email: appeal.lpa?.email,
+			template: lpaTemplate,
+			url: lpaPath
+		},
+		{
+			email: appeal.agent?.email || appeal.appellant?.email,
+			template: appellantTemplate,
+			url: appellantPath
+		}
+	];
+
+	const team_email_address = await getTeamEmailFromAppealId(appeal.id);
+	contacts.forEach(async (contact) => {
+		const { siteAddress, lpaReference, enforcementReference } = getNotifyPersonalisations(
+			appeal,
+			contact.template,
+			contact.email
+		);
+
+		await notifySend({
+			azureAdUserId,
+			notifyClient,
+			templateName: contact.template,
+			recipientEmail: contact.email,
+			personalisation: {
+				appeal_reference_number: appeal.reference,
+				has_lpa_statement: hasLpaStatement,
+				has_ip_comments: hasIpComments,
+				site_address: siteAddress,
+				...(enforcementReference && { enforcement_reference: enforcementReference }),
+				lpa_reference: lpaReference || '',
+				...(includeFrontOfficeUrl && { front_office_url: contact.url }),
+				hearing_date: hearingDate,
+				team_email_address,
+				...additionalEmailValues
+			}
+		});
+	});
+};
+
+/**
+ * @param {Appeal} appeal
+ * @param {Representation[]} representations
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {string} azureAdUserId
+ */
+const sendPublishedStatementNotifiesForWrittenReps = async (
+	appeal,
+	representations,
+	notifyClient,
+	azureAdUserId
+) => {
+	const finalCommentsDueDate = formatDate(
+		new Date(appeal.appealTimetable?.finalCommentsDueDate || ''),
+		false
+	);
+
+	const hasAppellantStatement = representations.some(
+		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT
+	);
+	const hasLpaStatement = representations.some(
+		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
+	);
+	const hasIpComments = representations.some(
+		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
+	);
+
+	let lpaTemplate = 'publish-statements-written-reps-lpa';
+	let appellantTemplate = 'publish-statements-written-reps-appellant';
+
+	const contacts = [
+		{
+			email: appeal.lpa?.email,
+			template: lpaTemplate
+		},
+		{
+			email: appeal.agent?.email || appeal.appellant?.email,
+			template: appellantTemplate
+		}
+	];
+
+	const team_email_address = await getTeamEmailFromAppealId(appeal.id);
+
+	contacts.forEach(async (contact) => {
+		const { siteAddress, lpaReference, enforcementReference } = getNotifyPersonalisations(
+			appeal,
+			contact.template,
+			contact.email
+		);
+
+		await notifySend({
+			azureAdUserId,
+			notifyClient,
+			templateName: contact.template,
+			recipientEmail: contact.email,
+			personalisation: {
+				appeal_reference_number: appeal.reference,
+				has_lpa_statement: hasLpaStatement,
+				has_appellant_statement: hasAppellantStatement,
+				has_ip_comments: hasIpComments,
+				site_address: siteAddress,
+				...(enforcementReference && { enforcement_reference: enforcementReference }),
+				lpa_reference: lpaReference || '',
+				final_comments_due_date: finalCommentsDueDate,
+				team_email_address
+			}
+		});
+	});
+};
 
 /** @type {PublishFunction} */
 export async function publishFinalComments(appeal, azureAdUserId, notifyClient) {
@@ -584,16 +791,7 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
 		throw new BackOfficeAppError('appeal in incorrect state to publish final comments', 409);
 	}
 
-	const latestDocumentVersionsUpdated = await documentRepository.setRedactionStatusOnValidation(
-		appeal.id
-	);
-	for (const documentUpdated of latestDocumentVersionsUpdated) {
-		await broadcasters.broadcastDocument(
-			documentUpdated.documentGuid,
-			documentUpdated.version,
-			EventType.Update
-		);
-	}
+	markUnredactedAsNotRequired(appeal.id, appeal.reference, appeal.appealType?.key ?? '');
 
 	const result = await representationRepository.updateRepresentations(
 		[appeal.id],
@@ -643,16 +841,7 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 		throw new BackOfficeAppError('appeal in incorrect state to publish proof of evidence', 409);
 	}
 
-	const latestDocumentVersionsUpdated = await documentRepository.setRedactionStatusOnValidation(
-		appeal.id
-	);
-	for (const documentUpdated of latestDocumentVersionsUpdated) {
-		await broadcasters.broadcastDocument(
-			documentUpdated.documentGuid,
-			documentUpdated.version,
-			EventType.Update
-		);
-	}
+	markUnredactedAsNotRequired(appeal.id, appeal.reference, appeal.appealType?.key ?? '');
 
 	const representationTypes = [
 		APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
@@ -770,14 +959,30 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 					? 'proof-of-evidence-and-witnesses-shared'
 					: 'not-received-proof-of-evidence-and-witnesses';
 
+			const nonSubmittedParties = allParties.filter((p) => !p.isValid).map((p) => p.name);
+
+			const formattedParties = nonSubmittedParties.reduce((acc, name, index, array) => {
+				if (index === 0) return name;
+				if (index === array.length - 1) return `${acc} or ${name}`;
+				return `${acc}, ${name}`;
+			}, '');
+
 			const inquirySubjectLine =
 				submittedParties.length > 0
 					? submittedParties.map((p) => p.name)
-					: 'Proof of evidence and witnesses not received';
+					: `We did not receive any proof of evidence or any details of witnesses from ${formattedParties}`;
 
 			for (const recipient of recipients) {
 				const templateWhatHappensNext =
-					recipient.id === 'lpa' ? 'manage-appeals' : recipient.isRule6 ? 'rule-6' : 'appeals';
+					submittedParties.length === 0
+						? appeal.inquiry
+							? `You need to attend the inquiry on ${inquiryDate}.`
+							: 'We will contact you by email when we set up the inquiry'
+						: recipient.id === 'lpa'
+							? 'manage-appeals'
+							: recipient.isRule6
+								? 'rule-6'
+								: 'appeals';
 
 				await notifyPublished({
 					appeal,
@@ -858,23 +1063,11 @@ async function notifyPublished({
 	inquiryAddress = '',
 	azureAdUserId
 }) {
-	const lpaReference = appeal.applicationReference;
-	const enforcementReference =
-		isEnforcementCaseType(appeal.appealType?.key) && appeal.appellantCase?.enforcementReference;
-	if (!lpaReference && !enforcementReference) {
-		throw new Error(
-			`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: no applicationReference or enforcementReference in appeal`
-		);
-	}
-	if (!recipientEmail) {
-		throw new Error(
-			`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: missing recipient email address for template ${templateName}`
-		);
-	}
-
-	const siteAddress = appeal.address
-		? formatAddressSingleLine(appeal.address)
-		: 'Address not available';
+	const { siteAddress, lpaReference, enforcementReference } = getNotifyPersonalisations(
+		appeal,
+		templateName,
+		recipientEmail
+	);
 
 	await notifySend({
 		azureAdUserId,
@@ -906,6 +1099,34 @@ async function notifyPublished({
 			inquiry_address: inquiryAddress
 		}
 	});
+}
+
+/**
+ * @param {Appeal} appeal
+ * @param {string} templateName
+ * @param {string|null|undefined} recipientEmail
+ * @returns {{ siteAddress: string, lpaReference: string | null, enforcementReference: string | null }}
+ */
+function getNotifyPersonalisations(appeal, templateName, recipientEmail) {
+	const lpaReference = appeal.applicationReference;
+	const enforcementReference =
+		isEnforcementCaseType(appeal.appealType?.key) && appeal.appellantCase?.enforcementReference;
+	if (!lpaReference && !enforcementReference) {
+		throw new Error(
+			`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: no applicationReference or enforcementReference in appeal`
+		);
+	}
+	if (!recipientEmail) {
+		throw new Error(
+			`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: missing recipient email address for template ${templateName}`
+		);
+	}
+
+	const siteAddress = appeal.address
+		? formatAddressSingleLine(appeal.address)
+		: 'Address not available';
+
+	return { siteAddress, lpaReference, enforcementReference };
 }
 
 /**
@@ -994,3 +1215,23 @@ export const APPEAL_REPRESENTATION_LABEL_MAP = Object.freeze({
 	[APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE]: 'Appellant proof of evidence',
 	[APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE]: 'Rule 6 party proof of evidence'
 });
+
+/**
+ *
+ * @param {number} appealId
+ * @param {string} appealReference
+ * @param {string} appealType
+ */
+const markUnredactedAsNotRequired = async (appealId, appealReference, appealType) => {
+	const noRedactionRequiredStatus = await commonRepository.getLookupListValueByKey(
+		'documentRedactionStatus',
+		{ key: 'key', value: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+	);
+	const updatedDocuments = await documentRepository.setRedactionStatusOnValidation(
+		appealId,
+		appealReference,
+		appealType,
+		noRedactionRequiredStatus
+	);
+	await broadcasters.broadcastDocuments(updatedDocuments, EventType.Update);
+};

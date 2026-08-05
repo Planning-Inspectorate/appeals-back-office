@@ -1,7 +1,10 @@
 import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
+import { getInspectorFormattedEmailName } from '#lib/service-user-formatter.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
+import { getNextStateOnStatementsComplete } from '@pins/appeals/utils/business-rules.js';
+import { normaliseProcedureType } from '@pins/appeals/utils/procedure-type.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import {
 	finalCommentsSharePage,
@@ -9,6 +12,8 @@ import {
 	statementAndCommentsSharePage
 } from './representations.mapper.js';
 import { publishRepresentations } from './representations.service.js';
+
+/** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 
 /** @type {import('@pins/express').RequestHandler<{}>} */
 export function renderShareRepresentations(request, response) {
@@ -53,25 +58,75 @@ export function renderShareRepresentations(request, response) {
 export async function postShareRepresentations(request, response) {
 	const { apiClient, currentAppeal, session } = request;
 
-	const publishedReps = await publishRepresentations(apiClient, currentAppeal.appealId);
+	const inspectorName = await getInspectorFormattedEmailName(currentAppeal?.inspector, request);
+	const publishedReps = await publishRepresentations(
+		apiClient,
+		currentAppeal.appealId,
+		inspectorName || ''
+	);
+	const hasComments = publishedReps.some(
+		/**
+		 * @param {Representation} rep
+		 * @returns {boolean}
+		 */
+		(rep) => rep?.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
+	);
+	const hasStatements = publishedReps.some(
+		/**
+		 * @param {Representation} rep
+		 * @returns {boolean}
+		 */
+		(rep) =>
+			rep?.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT ||
+			rep?.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT ||
+			rep?.representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT
+	);
+	const hearingIsSetUp = Boolean(
+		currentAppeal.hearing?.hearingStartTime && currentAppeal.hearing?.address
+	);
+	const normalisedProcedureType = normaliseProcedureType(currentAppeal.procedureType);
+	const eventualState = getNextStateOnStatementsComplete(
+		/** @type {string} */ (currentAppeal.appealType),
+		/** @type {string} */ (normalisedProcedureType),
+		hearingIsSetUp
+	);
 
 	const bannerDefinitionKey = (() => {
 		switch (currentAppeal.appealStatus) {
 			case APPEAL_CASE_STATUS.STATEMENTS:
-				if (publishedReps.length === 0 && currentAppeal.procedureType === 'Hearing') {
-					const hearingIsSetUp = Boolean(
-						currentAppeal.hearing?.hearingStartTime && currentAppeal.hearing.address
-					);
-					return hearingIsSetUp ? 'progressedToAwaitingHearing' : 'progressedToHearingReadyToSetUp';
-				} else if (
-					publishedReps.length === 0 &&
-					currentAppeal.procedureType.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY
-				) {
-					return 'progressedToProofOfEvidenceAndWitnesses';
-				} else if (publishedReps.length > 0) {
+				if (publishedReps.length === 0) {
+					switch (eventualState) {
+						case APPEAL_CASE_STATUS.AWAITING_EVENT:
+							if (normalisedProcedureType === APPEAL_CASE_PROCEDURE.HEARING) {
+								return 'progressedToAwaitingHearing';
+							}
+							throw new Error(
+								`Unexpected eventual state ${eventualState} for appeal type ${currentAppeal.appealType} and procedure type ${normalisedProcedureType}`
+							);
+						case APPEAL_CASE_STATUS.EVENT:
+							if (normalisedProcedureType === APPEAL_CASE_PROCEDURE.HEARING) {
+								return 'progressedToHearingReadyToSetUp';
+							}
+							throw new Error(
+								`Unexpected eventual state ${eventualState} for appeal type ${currentAppeal.appealType} and procedure type ${normalisedProcedureType}`
+							);
+						case APPEAL_CASE_STATUS.FINAL_COMMENTS:
+							return 'progressedToFinalComments';
+						case APPEAL_CASE_STATUS.EVIDENCE:
+							return 'progressedToProofOfEvidenceAndWitnesses';
+						default:
+							throw new Error(
+								`Unexpected eventual state ${eventualState} for appeal type ${currentAppeal.appealType} and procedure type ${normalisedProcedureType}`
+							);
+					}
+				} else if (hasComments && hasStatements) {
 					return 'commentsAndLpaStatementShared';
+				} else if (hasStatements) {
+					return 'statementsShared';
+				} else if (hasComments) {
+					return 'commentsShared';
 				} else {
-					return 'progressedToFinalComments';
+					return 'caseProgressed';
 				}
 			case APPEAL_CASE_STATUS.FINAL_COMMENTS:
 				return publishedReps.filter(

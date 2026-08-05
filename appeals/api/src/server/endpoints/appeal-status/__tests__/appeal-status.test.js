@@ -29,7 +29,10 @@ describe('appeal status routes', () => {
 				};
 
 				// Mock the appeal exists check
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...householdAppeal,
+					currentStatus: status
+				});
 
 				// Mock the repository method
 				databaseConnector.$transaction = jest.fn().mockImplementation(async (callback) => {
@@ -39,6 +42,9 @@ describe('appeal status routes', () => {
 							findFirst: jest.fn().mockResolvedValue(mockAppealStatus),
 							deleteMany: jest.fn().mockResolvedValue({ count: 1 }),
 							update: jest.fn().mockResolvedValue(mockAppealStatus)
+						},
+						appeal: {
+							update: jest.fn().mockResolvedValue({})
 						}
 					};
 					return await callback(mockTx);

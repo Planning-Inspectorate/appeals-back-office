@@ -1,11 +1,14 @@
 import { mapLpaNeighbouringSitesLpaqAdapter } from '../appeal/submappers/lpa-neighbouring-sites.mapper.js';
 import { mapAdditionalDocumentsContents } from './submappers/map-additional-documents-contents.js';
+import { mapAdditionalDocumentsLpa } from './submappers/map-additional-documents-lpa.js';
 import { mapAdditionalDocuments } from './submappers/map-additional-documents.js';
 import { mapAffectsListedBuildingDetails } from './submappers/map-affects-listed-building-details.js';
 import { mapAffectsScheduledMonument } from './submappers/map-affects-scheduled-monument.js';
+import { mapAnySignificantChangesLpa } from './submappers/map-any-significant-changes-lpa.js';
 import { mapAppealNotification } from './submappers/map-appeal-notification.js';
 import { mapAppellantPhotosAndPlans } from './submappers/map-appellant-photos-and-plans.js';
 import { mapConservationAreaMap } from './submappers/map-conservation-area-map.js';
+import { mapDesignAccessStatementLpa } from './submappers/map-design-access-statement-lpa.js';
 import { mapInNearOrLikelyToAffectDesignatedSites } from './submappers/map-designated-sites.js';
 import { mapDevelopmentPlanPolicies } from './submappers/map-development-plan-policies.js';
 import { mapEiaConsultedBodiesDetails } from './submappers/map-eia-consulted-bodies-details.js';
@@ -16,12 +19,14 @@ import { mapHighwayTrafficPublicSafety } from './submappers/map-highway-traffic-
 import { mapIsAonbNationalLandscape } from './submappers/map-is-aonb-national-landscape.js';
 import { mapIsCorrectAppealType } from './submappers/map-is-correct-appeal-type.js';
 import { mapLettersToNeighbours } from './submappers/map-letters-to-neighbours.js';
+import { mapListOfDocumentsBeforeDecision } from './submappers/map-list-of-documents-before-decision.js';
 import { mapLpaHealthAndSafety } from './submappers/map-lpa-health-and-safety.js';
 import { mapNotificationMethods } from './submappers/map-notification-methods.js';
 import { mapNotifyingParties } from './submappers/map-notify-parties.js';
 import { mapOfficersReport } from './submappers/map-officers-report.js';
 import { mapOtherAppeals } from './submappers/map-other-appeals.js';
 import { mapOtherRelevantPolicies } from './submappers/map-other-relevant-policies.js';
+import { mapPlansDrawingsLpa } from './submappers/map-plans-drawings-lpa.js';
 import { mapPressAdvert } from './submappers/map-press-advert.js';
 import { mapProcedurePreferenceDetails } from './submappers/map-procedure-preference-details.js';
 import { mapProcedurePreferenceDuration } from './submappers/map-procedure-preference-duration.js';
@@ -71,5 +76,10 @@ export const submaps = {
 	otherAppeals: mapOtherAppeals,
 	reviewOutcome: mapReviewOutcome,
 	additionalDocumentsContents: mapAdditionalDocumentsContents,
-	additionalDocuments: mapAdditionalDocuments
+	additionalDocuments: mapAdditionalDocuments,
+	listOfDocumentsBeforeDecision: mapListOfDocumentsBeforeDecision,
+	anySignificantChangesLpa: mapAnySignificantChangesLpa,
+	designAccessStatementLpa: mapDesignAccessStatementLpa,
+	plansDrawingsLpa: mapPlansDrawingsLpa,
+	additionalDocumentsLpa: mapAdditionalDocumentsLpa
 };

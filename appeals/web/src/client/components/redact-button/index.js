@@ -56,6 +56,12 @@ export const isHTMLButtonElement = (element) => element instanceof HTMLButtonEle
  * */
 export const isHTMLDivElement = (element) => element instanceof HTMLDivElement;
 
+/**
+ * @param {HTMLElement} element
+ * @returns {string}
+ */
+export const getRenderedText = (element) => element.innerText.replace(/\r\n?/g, '\n').trim();
+
 export const initRedactButtons = () => {
 	const originalCommentText = document.querySelector(SELECTORS.ORIGINAL_COMMENT_IDENTIFIER);
 	const redactButton = document.querySelector(SELECTORS.REDACT_BUTTON_IDENTIFIER);
@@ -84,5 +90,5 @@ export const initRedactButtons = () => {
 
 	redactButton.onclick = generateOnClick(textarea);
 	undoButton.onclick = setAreaText(textarea, savedRedaction);
-	revertButton.onclick = setAreaText(textarea, originalCommentText.textContent?.trim() ?? '');
+	revertButton.onclick = setAreaText(textarea, getRenderedText(originalCommentText));
 };

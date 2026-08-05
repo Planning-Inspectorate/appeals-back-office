@@ -1,5 +1,8 @@
 import { getAppealValidator } from '#endpoints/appeal-details/appeal-details.validators.js';
-import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import {
+	checkAppealExistsById,
+	checkAppealExistsByIdAndAddPartialToRequest
+} from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as controller from './documents.controller.js';
@@ -9,7 +12,7 @@ import {
 	getDocumentValidator,
 	getDocumentsValidator,
 	getFolderIdValidator,
-	patchDocumentFileNameValidator,
+	patchDocumentValidator,
 	patchDocumentsAvCheckValidator,
 	patchDocumentsValidator
 } from './documents.validators.js';
@@ -28,14 +31,14 @@ router.get(
 			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 		}
 		#swagger.responses[200] = {
-			description: 'Returns the contents of a single appeal folder, by id',
+			description: 'Returns the contents of a group of folders',
 			schema: { $ref: '#/components/schemas/Folder' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
 	 */
 	getAppealValidator,
-	checkAppealExistsByIdAndAddPartialToRequest([]),
+	checkAppealExistsById,
 	controller.getFolders
 );
 
@@ -44,7 +47,7 @@ router.get(
 	/*
 		#swagger.tags = ['Documents']
 		#swagger.path = '/appeals/{appealId}/document-folders/{folderId}'
-		#swagger.description = Returns the contents of a single appeal folder, by id
+		#swagger.description = Returns the contents of a single appeal folder, by id, paged
 		#swagger.parameters['azureAdUserId'] = {
 			in: 'header',
 			required: true,
@@ -56,14 +59,14 @@ router.get(
 			example: 1,
 		}
 		#swagger.responses[200] = {
-			description: 'Returns the contents of a single appeal folder, by id',
-			schema: { $ref: '#/components/schemas/Folder' }
+			description: 'Returns the contents of a single appeal folder, by id, paged',
+			schema: { $ref: '#/components/schemas/PagedFolder' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
 	 */
 	getAppealValidator,
-	checkAppealExistsByIdAndAddPartialToRequest([]),
+	checkAppealExistsById,
 	getFolderIdValidator,
 	asyncHandler(controller.getFolder)
 );
@@ -200,7 +203,7 @@ router.patch(
 		#swagger.responses[404] = {}
 	 */
 	patchDocumentsValidator,
-	checkAppealExistsByIdAndAddPartialToRequest([]),
+	checkAppealExistsById,
 	asyncHandler(controller.updateDocuments)
 );
 
@@ -209,7 +212,7 @@ router.patch(
 	/*
 		#swagger.tags = ['Documents']
 		#swagger.path = '/appeals/{appealId}/documents/{documentId}'
-		#swagger.description = Updates document file name
+		#swagger.description = Updates document
 		#swagger.parameters['azureAdUserId'] = {
 			in: 'header',
 			required: true,
@@ -217,20 +220,26 @@ router.patch(
 		}
 		#swagger.requestBody = {
 			in: 'body',
-			description: 'Document to update file name',
-			schema: { $ref: '#/components/schemas/UpdateDocumentFileNameRequest' },
+			description: 'Document to update',
+			schema: { $ref: '#/components/schemas/UpdateDocumentRequest' },
 			required: true
 		}
 		#swagger.responses[200] = {
-			description: 'Document to update filename',
-			schema: { $ref: '#/components/schemas/UpdateDocumentFileNameResponse' }
+			description: 'Document updated',
+			schema: { $ref: '#/components/schemas/UpdateDocumentResponse' }
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
 	 */
-	patchDocumentFileNameValidator,
-	checkAppealExistsByIdAndAddPartialToRequest([]),
-	asyncHandler(controller.updateDocumentFileName)
+	patchDocumentValidator,
+	checkAppealExistsByIdAndAddPartialToRequest([
+		'address',
+		'agent',
+		'appellant',
+		'lpa',
+		'appellantCase'
+	]),
+	asyncHandler(controller.updateDocument)
 );
 
 router.patch(

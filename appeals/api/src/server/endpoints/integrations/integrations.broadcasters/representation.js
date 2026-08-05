@@ -9,11 +9,53 @@ import { schemas, validateFromSchema } from '../integrations.validators.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 
+/** @satisfies {import('#db-client/models.ts').RepresentationFindUniqueArgs['select'] } */
+export const broadcastRepSelect = {
+	id: true,
+	representationType: true,
+	status: true,
+	redactedRepresentation: true,
+	originalRepresentation: true,
+	source: true,
+	reviewer: true,
+	representedId: true,
+	dateCreated: true,
+	appeal: {
+		select: {
+			id: true,
+			reference: true
+		}
+	},
+	lpa: {
+		select: {
+			id: true
+		}
+	},
+	representationRejectionReasonsSelected: {
+		select: {
+			representationRejectionReason: {
+				select: {
+					hasText: true,
+					name: true
+				}
+			},
+			representationRejectionReasonText: {
+				select: {
+					text: true
+				}
+			}
+		}
+	},
+	attachments: {
+		select: {
+			documentGuid: true
+		}
+	}
+};
+
 /**
- *
  * @param {number} representationId
  * @param {string} updateType
- * @returns
  */
 export const broadcastRepresentation = async (representationId, updateType) => {
 	if (!config.serviceBusEnabled && config.NODE_ENV !== 'development') {
@@ -22,17 +64,7 @@ export const broadcastRepresentation = async (representationId, updateType) => {
 
 	const rep = await databaseConnector.representation.findUnique({
 		where: { id: representationId },
-		include: {
-			appeal: true,
-			lpa: true,
-			representationRejectionReasonsSelected: {
-				include: {
-					representationRejectionReason: true,
-					representationRejectionReasonText: true
-				}
-			},
-			attachments: true
-		}
+		select: broadcastRepSelect
 	});
 
 	if (!rep || rep === null) {
@@ -42,7 +74,6 @@ export const broadcastRepresentation = async (representationId, updateType) => {
 		return false;
 	}
 
-	// @ts-ignore
 	const msg = mapRepresentationEntity(rep);
 
 	if (msg) {

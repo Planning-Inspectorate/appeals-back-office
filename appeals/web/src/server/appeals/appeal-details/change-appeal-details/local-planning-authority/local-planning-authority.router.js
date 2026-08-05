@@ -9,5 +9,9 @@ router
 	.route('/')
 	.get(asyncHandler(controllers.getChangeLpa))
 	.post(validators.validateLpa, asyncHandler(controllers.postChangeLpa));
+router
+	.route('/check-details')
+	.get(asyncHandler(controllers.getCheckDetails))
+	.post(asyncHandler(controllers.postCheckDetails));
 
 export default router;

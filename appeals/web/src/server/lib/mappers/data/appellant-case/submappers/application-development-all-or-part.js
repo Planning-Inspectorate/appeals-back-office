@@ -1,5 +1,5 @@
 import { textSummaryListItem } from '#lib/mappers/index.js';
-import { toSentenceCase } from '#lib/string-utilities.js';
+import { toSentenceCase } from '@pins/appeals/utils/string-case.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapApplicationDevelopmentAllOrPart = ({

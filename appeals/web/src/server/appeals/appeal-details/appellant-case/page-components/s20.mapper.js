@@ -162,15 +162,15 @@ export function generateS20Components(
 					mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
 					mappedAppellantCaseData.decisionLetter.display.summaryListItem,
 					mappedAppellantCaseData.appealStatement.display.summaryListItem,
-					mappedAppellantCaseData.statusPlanningObligation.display.summaryListItem,
-					mappedAppellantCaseData.planningObligation.display.summaryListItem,
-					mappedAppellantCaseData.statementCommonGround.display.summaryListItem,
+					mappedAppellantCaseData.statusPlanningObligation?.display.summaryListItem,
+					mappedAppellantCaseData.planningObligation?.display.summaryListItem,
+					mappedAppellantCaseData.statementCommonGround?.display.summaryListItem,
 					mappedAppellantCaseData.ownershipCertificate.display.summaryListItem,
 					mappedAppellantCaseData.costsDocument.display.summaryListItem,
-					mappedAppellantCaseData.designAccessStatement.display.summaryListItem,
-					mappedAppellantCaseData.supportingDocuments.display.summaryListItem,
-					mappedAppellantCaseData.newPlansDrawings.display.summaryListItem,
-					mappedAppellantCaseData.otherNewDocuments.display.summaryListItem
+					mappedAppellantCaseData.designAccessStatement?.display.summaryListItem,
+					mappedAppellantCaseData.supportingDocuments?.display.summaryListItem,
+					mappedAppellantCaseData.newPlansDrawings?.display.summaryListItem,
+					mappedAppellantCaseData.otherNewDocuments?.display.summaryListItem
 				]
 			}
 		};

@@ -18,6 +18,8 @@ function assertAuthCookiesExist() {
 function assertAuthenticated() {
 	const PATH = '/appeals-service/personal-list';
 
+	cy.writeLog(`**Asserting authentication by checking access to a protected route (${PATH})**`);
+
 	cy.request({
 		url: PATH,
 		failOnStatusCode: false, // don't fail the test on 302/404
@@ -94,6 +96,10 @@ Cypress.Commands.add('loginWithPuppeteer', (user) => {
 });
 
 Cypress.Commands.add('loginSession', (user) => {
+	const { id, email } = user || {};
+
+	cy.writeLog(`**Logging in as ${email} (${id})**`);
+
 	if (!user?.id || !user?.email) {
 		throw new Error('loginSession: user must be an object with { id, email }');
 	}
@@ -105,10 +111,11 @@ Cypress.Commands.add('loginSession', (user) => {
 		() => {
 			cy.task('CookiesFileExists', user.id).then((exists) => {
 				if (!exists) {
-					cy.log(`No cookie file for ${user.id} → performing Azure sign-in`);
+					cy.writeLog(`No cookie file for ${id} → performing Azure sign-in`);
+					cy.writeLog(`**Logging in with puppeteer as ${email}**`);
 					cy.loginWithPuppeteer(user);
 				} else {
-					cy.log(`Using cookie file for ${user.id}`);
+					cy.writeLog(`Cookie file found for ${id} → setting local cookies`);
 					setLocalCookies(user.id);
 				}
 			});
@@ -218,6 +225,12 @@ Cypress.Commands.add('loadAppealDetails', (caseObj) => {
 	});
 });
 
+Cypress.Commands.add('loadAppellantCaseDetails', (appealId, appellantCaseId) => {
+	return cy.wrap(null).then(async () => {
+		return await appealsApiClient.loadAppellantCaseDetails(appealId, appellantCaseId);
+	});
+});
+
 Cypress.Commands.add('reloadUntilVirusCheckComplete', () => {
 	cy.reload();
 });
@@ -300,6 +313,13 @@ Cypress.Commands.add('deleteHearing', (caseObj) => {
 	});
 });
 
+Cypress.Commands.add('getHearingDetails', (caseObj) => {
+	return cy.wrap(null).then(async () => {
+		const details = await appealsApiClient.loadCaseDetails(caseObj.reference);
+		return details?.hearing ?? null;
+	});
+});
+
 Cypress.Commands.add('checkNotifySent', (caseObj, expectedNotifies) => {
 	// ensure input is always an array
 	const expected = [].concat(expectedNotifies);
@@ -344,6 +364,33 @@ Cypress.Commands.add('checkNotifySent', (caseObj, expectedNotifies) => {
 
 			// assert on missing notifies
 			expect(missingNotifies, `Missing notifies: ${missingDetails}`).to.be.empty;
+		});
+});
+
+Cypress.Commands.add('checkNotifyNotSent', (caseObj, expectedNotifies) => {
+	return cy
+		.wrap(null)
+		.then(() => {
+			// return the promise so Cypress waits for it
+			return appealsApiClient.getNotifyEmails(caseObj.reference);
+		})
+		.then((sentNotifies) => {
+			cy.writeLog(`** sent notifies ${JSON.stringify(sentNotifies)}`);
+
+			// filter for sent notifies that match those provided (i.e. were found but shouldn't have been)
+			const matchingNotifies = sentNotifies.filter((notify) => {
+				return expectedNotifies.find(
+					(expectedNotify) =>
+						notify.template === expectedNotify.template &&
+						notify.recipient === expectedNotify.recipient
+				);
+			});
+
+			cy.writeLog(`** matching notifies ${JSON.stringify(matchingNotifies)}`);
+
+			// assert that should not be any matching notifies
+			expect(matchingNotifies, `Unexpected notifies: ${JSON.stringify(matchingNotifies)}`).to.be
+				.empty;
 		});
 });
 
@@ -556,6 +603,7 @@ Cypress.Commands.add('assignCaseOfficerViaApi', (caseObj) => {
 		const result = await appealsApiClient.assignCaseOfficer(caseObj.id);
 		expect(result, 'assign case officer response').to.not.equal(false);
 		expect(result).to.have.property('caseOfficerId');
+		cy.reload();
 		return result;
 	});
 });

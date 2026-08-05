@@ -12,6 +12,7 @@ describe('hearing-set-up.md', () => {
 			recipientEmail: 'test@136s7.com',
 			personalisation: {
 				appeal_reference_number: 'ABC45678',
+				inspector_name: 'B. Jones',
 				site_address: '10, Test Street',
 				lpa_reference: '12345XYZ',
 				hearing_date: '31 January 2025',
@@ -29,6 +30,7 @@ describe('hearing-set-up.md', () => {
 			'^Appeal reference number: ABC45678',
 			'Address: 10, Test Street',
 			'Planning application reference: 12345XYZ',
+			'Inspector: B. Jones',
 			'',
 			'# Hearing details',
 			'',
@@ -44,10 +46,10 @@ describe('hearing-set-up.md', () => {
 			'',
 			'The details of the hearing are subject to change. We will contact you by email if we make any changes.',
 			'',
-			'We expect the hearing to finish on the same day. If the hearing needs more time, you will arrange the next steps on the day.',
+			'If the hearing needs more time, you will arrange the next steps on the day.',
 			'',
 			'',
-			'The Planning Inspectorate',
+			'Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
 		].join('\n');
 
@@ -104,7 +106,7 @@ describe('hearing-set-up.md', () => {
 			'We will contact you when the local planning authority confirms the venue address for the hearing.',
 			'',
 			'',
-			'The Planning Inspectorate',
+			'Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
 		].join('\n');
 
@@ -161,7 +163,7 @@ describe('hearing-set-up.md', () => {
 			'Email caseofficers@planninginspectorate.gov.uk to confirm the venue address for the hearing.',
 			'',
 			'',
-			'The Planning Inspectorate',
+			'Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
 		].join('\n');
 

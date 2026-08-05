@@ -9,9 +9,17 @@ import { paginationDefaultSettings } from '#appeals/appeal.constants.js';
  * @param {number} itemsPerPage
  * @param {string} baseUrl
  * @param {object} query
+ * @param {boolean} [includePageSize]
  * @returns {Pagination}
  */
-export function mapPagination(currentPage, pageCount, itemsPerPage, baseUrl, query) {
+export function mapPagination(
+	currentPage,
+	pageCount,
+	itemsPerPage,
+	baseUrl,
+	query,
+	includePageSize = true
+) {
 	// filter out pagination related query params
 	const paginationlessQueryParams = Object.entries(query).filter(
 		([prop]) => prop !== 'pageNumber' && prop !== 'pageSize'
@@ -128,6 +136,31 @@ export function mapPagination(currentPage, pageCount, itemsPerPage, baseUrl, que
 				});
 			}
 		}
+	}
+
+	if (!includePageSize) {
+		/** @param {string} href */
+		const removePageSizeFromQuery = (href) => {
+			const urlObj = new URL(href, 'http://localhost');
+			urlObj.searchParams.delete('pageSize');
+			return urlObj.pathname + urlObj.search;
+		};
+
+		if (pagination.previous?.href) {
+			pagination.previous.href = removePageSizeFromQuery(pagination.previous.href);
+		}
+		if (pagination.next?.href) {
+			pagination.next.href = removePageSizeFromQuery(pagination.next.href);
+		}
+		pagination.items = pagination.items.map((item) => {
+			if (item.href) {
+				return {
+					...item,
+					href: removePageSizeFromQuery(item.href)
+				};
+			}
+			return item;
+		});
 	}
 
 	return pagination;

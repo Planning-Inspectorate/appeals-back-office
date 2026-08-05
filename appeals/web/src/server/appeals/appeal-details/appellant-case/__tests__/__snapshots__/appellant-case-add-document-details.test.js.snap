@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`appellant-case add-document-details GET /appellant-case/add-document-details/:folderId/ should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case add-document-details GET /appellant-case/add-document-details/:folderId/:documentId should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://intranet.planninginspectorate.gov.uk/task/report-it-problem/"
+                class="govuk-link">Report an IT problem</a> if the problem continues.</p>
+        </div>
+    </div>
+</main>"
+`;

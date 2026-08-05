@@ -4,3 +4,4 @@ export const DAYTIME_HOUR = 10;
 export const DAYTIME_MINUTE = 0;
 export const DEFAULT_TIMEZONE = 'Europe/London';
 export const NUM_DAYS_TO_RESUBMIT_REJECTED_IP_COMMENTS = 3;
+export const EXPEDITED_ORIGINAL_APPLICATION_CUTOFF = new Date('2026-04-01T00:00:00.000Z');

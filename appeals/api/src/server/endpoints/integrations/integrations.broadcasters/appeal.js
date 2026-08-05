@@ -94,7 +94,6 @@ export const broadcastAppeal = async (appealId, updateType = EventType.Update) =
 					}
 				}
 			},
-			representations: true,
 			appealGrounds: {
 				include: {
 					ground: true
@@ -107,6 +106,19 @@ export const broadcastAppeal = async (appealId, updateType = EventType.Update) =
 		pino.error(`Trying to broadcast info for appeal ${appealId} , but it was not found.`);
 		return false;
 	}
+
+	// get first rep by type for representation submission dates
+	//@ts-ignore
+	appeal.representations = (
+		await databaseConnector.representation.groupBy({
+			by: ['representationType'],
+			where: { appealId },
+			_min: { dateCreated: true }
+		})
+	).map((rep) => ({
+		representationType: rep.representationType,
+		dateCreated: rep._min.dateCreated
+	}));
 
 	const appealRelationships = [...appeal.parentAppeals, ...appeal.childAppeals];
 

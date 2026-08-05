@@ -7,6 +7,7 @@ import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
+import { APPEAL_TYPE_OF_PLANNING_APPLICATION } from '@planning-inspectorate/data-model';
 import nock from 'nock';
 import supertest from 'supertest';
 
@@ -19,7 +20,19 @@ const appealDataWithoutStartDate = {
 };
 
 describe('start-case', () => {
-	afterEach(teardown);
+	afterEach(() => {
+		teardown();
+		jest.restoreAllMocks();
+	});
+
+	beforeEach(() => {
+		jest.spyOn(featureFlags, 'isFeatureActive').mockImplementation((flag) => {
+			if (flag === 'featureFlagExpeditedAppealsLpaq') {
+				return false;
+			}
+			return true;
+		});
+	});
 
 	describe('GET /start-case/add', () => {
 		it('should render the start case page with the expected content if the appeal type is Householder', async () => {
@@ -335,6 +348,12 @@ describe('start-case', () => {
 			getEnabledHearingAppealTypes.mockReturnValue([APPEAL_TYPE.S78]);
 			// @ts-ignore
 			getEnabledInquiryAppealTypes.mockReturnValue([APPEAL_TYPE.S78]);
+
+			nock('http://test/').get('/appeals/1/appellant-cases/0').reply(200, {
+				applicationDate: '2026-04-01',
+				applicationDecision: 'refused',
+				typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+			});
 		});
 
 		afterEach(() => {
@@ -342,6 +361,19 @@ describe('start-case', () => {
 		});
 
 		it('should render the select procedure page with the expected content', async () => {
+			jest.spyOn(featureFlags, 'isFeatureActive').mockImplementation((flag) => {
+				if (flag === 'featureFlagExpeditedAppealsLpaq') {
+					return true;
+				}
+				return true;
+			});
+
+			nock('http://test/').get('/appeals/1/appellant-cases/0').reply(200, {
+				applicationDate: '2026-04-01',
+				applicationDecision: 'refused',
+				typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+			});
+
 			nock('http://test/')
 				.get('/appeals/1?include=all')
 				.reply(200, {
@@ -386,7 +418,82 @@ describe('start-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 
+		it('should render the select procedure page with the expected content if the appeal is S78 and is NOT expedited', async () => {
+			jest.spyOn(featureFlags, 'isFeatureActive').mockImplementation((flag) => {
+				if (flag === 'featureFlagExpeditedAppealsLpaq') {
+					return true;
+				}
+				return true;
+			});
+
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+			nock('http://test/').get('/appeals/1/appellant-cases/0').reply(200, {
+				applicationDate: '2026-03-31',
+				applicationDecision: 'refused'
+			});
+
+			const response = await request.get(
+				'/appeals-service/appeal-details/1/start-case/select-procedure'
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: 'body',
+				skipPrettyPrint: true
+			});
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="appealProcedure" type="radio" value="written">'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'name="appealProcedure" type="radio" value="writtenPart1">'
+			);
+		});
+
+		it('should NOT render the select procedure page with the Part 1 option if the featureFlagExpeditedAppealsLpaq is OFF', async () => {
+			// featureFlagExpeditedAppealsLpaq is OFF by default in our global mock
+
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+			// NOT expedited dates
+			nock('http://test/').get('/appeals/1/appellant-cases/0').reply(200, {
+				applicationDate: '2026-03-31',
+				applicationDecision: 'refused'
+			});
+
+			const response = await request.get(
+				'/appeals-service/appeal-details/1/start-case/select-procedure'
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: 'body',
+				skipPrettyPrint: true
+			});
+
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'name="appealProcedure" type="radio" value="writtenPart1">'
+			);
+		});
+
 		it('should render the select procedure page with the expected back link URL, if the backLink query parameter was saved', async () => {
+			nock('http://test/').get('/appeals/1/appellant-cases/0').reply(200, {
+				applicationDate: '2026-04-01',
+				applicationDecision: 'refused'
+			});
 			nock('http://test/')
 				.get('/appeals/1?include=all')
 				.twice()
@@ -451,6 +558,11 @@ describe('start-case', () => {
 						`Found. Redirecting to /appeals-service/appeal-details/1/start-case/${redirectPath}`
 					);
 
+					nock('http://test/').get('/appeals/1/appellant-cases/0').reply(200, {
+						applicationDate: '2026-04-01',
+						applicationDecision: 'refused'
+					});
+
 					nock('http://test/')
 						.get('/appeals/1?include=all')
 						.reply(200, {
@@ -481,7 +593,7 @@ describe('start-case', () => {
 		});
 
 		it('should render the select procedure page with no option preselected if the flow was restarted after submitting the select procedure page with an option selected', async () => {
-			featureFlags.isFeatureActive = () => true;
+			jest.spyOn(featureFlags, 'isFeatureActive').mockReturnValue(true);
 
 			nock('http://test/')
 				.get('/appeals/1?include=all')
@@ -706,7 +818,14 @@ describe('start-case', () => {
 				);
 			});
 
-			it('should show all radio button labels for S78 when hearing and inquiry are enabled', async () => {
+			it('should show all radio button labels for S78 when hearing and inquiry are enabled and the appeal is expedited', async () => {
+				jest.spyOn(featureFlags, 'isFeatureActive').mockImplementation((flag) => {
+					if (flag === 'featureFlagExpeditedAppealsLpaq') {
+						return true;
+					}
+					return true;
+				});
+
 				// @ts-ignore
 				getEnabledHearingAppealTypes.mockReturnValue([APPEAL_TYPE.S78]);
 				// @ts-ignore
@@ -716,7 +835,11 @@ describe('start-case', () => {
 					.get('/appeals/1?include=all')
 					.reply(200, {
 						...appealDataWithoutStartDate,
-						appealType: APPEAL_TYPE.S78
+						appealType: APPEAL_TYPE.S78,
+						appellantCase: {
+							applicationDate: '2026-04-01',
+							applicationDecision: 'refused'
+						}
 					});
 
 				const response = await request.get(
@@ -833,6 +956,11 @@ describe('start-case', () => {
 					...appealDataWithoutStartDate,
 					appealType: 'Planning appeal'
 				});
+
+			nock('http://test/').get('/appeals/1/appellant-cases/0').reply(200, {
+				applicationDate: '2026-04-01',
+				applicationDecision: 'refused'
+			});
 
 			const response = await request
 				.post('/appeals-service/appeal-details/1/start-case/select-procedure')

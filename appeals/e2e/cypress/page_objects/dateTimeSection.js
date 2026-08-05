@@ -128,6 +128,10 @@ export class DateTimeSection extends Page {
 		this.#setDateFields(this.selectorPrefix.inquiryDate, day, month, year);
 	}
 
+	setHearingDate(day, month, year) {
+		this.#setDateFields(this.selectorPrefix.hearingDate, day, month, year);
+	}
+
 	enterInquiryTime(hour, minute) {
 		if (hour) this.#set(this.elements.enterInquiryTimeHour(), hour);
 		if (minute) this.#set(this.elements.enterInquiryTimeMinute(), minute);
@@ -141,6 +145,10 @@ export class DateTimeSection extends Page {
 
 	clearInquiryDateAndTime() {
 		this.#clearDateAndTimeFields(this.selectorPrefix.inquiry);
+	}
+
+	clearHearingDateAndTime() {
+		this.#clearDateAndTimeFields(this.selectorPrefix.hearing);
 	}
 
 	enterChangeAppealTypeResubmissionDate(date) {

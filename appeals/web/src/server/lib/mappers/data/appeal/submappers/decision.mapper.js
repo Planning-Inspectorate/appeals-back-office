@@ -6,8 +6,8 @@ import { permissionNames } from '#environment/permissions.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { textSummaryListItem, userHasPermission } from '#lib/mappers/index.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
-import { toSentenceCase } from '#lib/string-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { decisionOutcomeToDisplayText } from '@pins/appeals/utils/decision-outcome-display-text.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @type {import('../mapper.js').SubMapper} */
@@ -35,7 +35,9 @@ export const mapDecision = ({ appealDetails, session, request }) => {
 	return textSummaryListItem({
 		id: 'decision',
 		text: 'Decision',
-		value: toSentenceCase(decision?.outcome || '') || 'Not issued',
+		value:
+			decisionOutcomeToDisplayText(decision?.outcome || '', appealDetails.appealType) ||
+			'Not issued',
 		link,
 		editable,
 		actionText: canIssueDecision ? 'Issue' : 'View',

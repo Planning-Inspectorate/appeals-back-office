@@ -6,6 +6,7 @@ import {
 	sortNotificationBanners
 } from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { DOCUMENTS_PAGE_SIZE } from '@pins/appeals/constants/common.js';
 import { APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
 import {
 	folderPathToFolderNameText,
@@ -22,6 +23,7 @@ import {
  * @typedef {import('@pins/appeals.api').Appeals.DocumentInfo} DocumentInfo
  * @typedef {import('@pins/appeals.api').Appeals.DocumentVersionInfo} DocumentVersionInfo
  * @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo
+ * @typedef {import('@pins/appeals.api').Appeals.PagedFolderInfo} PagedFolderInfo
  * @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} RedactionStatus
  * @typedef {import('#lib/nunjucks-template-builders/tag-builders.js').HtmlLink} HtmlLink
  * @typedef {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem} FileUploadInfoItem
@@ -30,9 +32,10 @@ import {
 /**
  * @param {string|number} appealId
  * @param {string} backLinkUrl
- * @param {FolderInfo} folder
+ * @param {PagedFolderInfo} folder
  * @param {string} withdrawalRequestDate
  * @param {import('@pins/express/types/express.js').Request} request
+ * @param {number} currentPageNumber
  * @param {string} [pageHeadingTextOverride]
  * @returns {PageContent}
  */
@@ -42,6 +45,7 @@ export function manageWithdrawalRequestFolderPage(
 	folder,
 	withdrawalRequestDate,
 	request,
+	currentPageNumber,
 	pageHeadingTextOverride
 ) {
 	const notificationBanners = mapNotificationBannersFromSession(
@@ -78,6 +82,8 @@ export function manageWithdrawalRequestFolderPage(
 		});
 	}
 
+	const docStartCount = (currentPageNumber - 1) * DOCUMENTS_PAGE_SIZE;
+
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Manage folder',
@@ -112,8 +118,13 @@ export function manageWithdrawalRequestFolderPage(
 					attributes: {
 						id: 'documents-table'
 					},
-					rows: (folder?.documents || []).map((document) => [
-						mapFolderDocumentInformationHtmlProperty(folder, document),
+					rows: (folder?.documents || []).map((document, index) => [
+						mapFolderDocumentInformationHtmlProperty(
+							folder,
+							document,
+							docStartCount + index,
+							folder.totalFolderSize
+						),
 						{
 							text: dateISOStringToDisplayDate(withdrawalRequestDate)
 						},

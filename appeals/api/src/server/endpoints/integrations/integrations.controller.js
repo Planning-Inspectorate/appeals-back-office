@@ -1,7 +1,6 @@
 import config from '#config/config.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import { addDocumentAudit } from '#endpoints/documents/documents.service.js';
 import { commandMappers } from '#mappers/integration/commands/index.js';
 import { serviceUserIdStartRange } from '#mappers/integration/map-service-user-entity.js';
 import { notifySend } from '#notify/notify-send.js';
@@ -15,7 +14,6 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { APPEAL_REPRESENTATION_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
 	AUDIT_TRAIL_APPELLANT_IMPORT_MSG,
-	AUDIT_TRAIL_DOCUMENT_IMPORTED,
 	AUDIT_TRAIL_IP_UUID,
 	AUDIT_TRAIL_LPA_UUID,
 	AUDIT_TRAIL_LPAQ_IMPORT_MSG,
@@ -116,15 +114,6 @@ const importIndividualAppeal = async (data) => {
 		);
 	}
 
-	await Promise.all(
-		documentVersions.map(async (document) => {
-			await Promise.all([
-				broadcasters.broadcastDocument(document.documentGuid, 1, EventType.Create),
-				writeDocumentAuditTrail(id, document, AUDIT_TRIAL_APPELLANT_UUID)
-			]);
-		})
-	);
-
 	return { id, reference, assignedTeamId, appealTypeId };
 };
 
@@ -207,9 +196,15 @@ export const importAppeal = async (req, res) => {
 			users
 		});
 
+		/** @type {(Omit<Appeal, 'documents' | 'representations'>|undefined)[]} */
 		const [parentAppeal, ...childAppeals] = await Promise.all(
 			[parentResult, ...childResults].map(async (caseData) => {
-				return appealRepository.getAppealById(caseData.id);
+				// TODO: performance
+				// is returning all data in a loop, return only needed data
+				return appealRepository.deprecatedGetAppealById(caseData.id, {
+					omitDocuments: true,
+					omitRepresentations: true
+				});
 			})
 		);
 
@@ -305,15 +300,6 @@ export const importIndividualLpaqSubmission = async (
 		broadcasters.broadcastAppeal(id, EventType.Update),
 		integrationService.importDocuments(documents, documentVersions)
 	]);
-
-	await Promise.all(
-		documentVersions.map(async (document) => {
-			await Promise.all([
-				broadcasters.broadcastDocument(document.documentGuid, 1, EventType.Create),
-				writeDocumentAuditTrail(id, document, AUDIT_TRAIL_LPA_UUID)
-			]);
-		})
-	);
 
 	return caseData;
 };
@@ -531,12 +517,6 @@ export const importRepresentation = async (req, res) => {
 		integrationService.importDocuments(attachments, documentVersions)
 	]);
 
-	await Promise.all(
-		documentVersions.map(async (document) => {
-			await broadcasters.broadcastDocument(document.documentGuid, 1, EventType.Create);
-		})
-	);
-
 	if (repType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT) {
 		await sendRepresentationReceivedNotifications(
 			req.appeal,
@@ -547,24 +527,6 @@ export const importRepresentation = async (req, res) => {
 	}
 
 	return res.status(201).send(rep);
-};
-
-/**
- *
- * @param {number} appealId
- * @param {{ fileName: string|null, documentGuid: string}} document
- * @param {string} azureAdUserId
- */
-const writeDocumentAuditTrail = async (appealId, document, azureAdUserId) => {
-	const auditTrail = await createAuditTrail({
-		appealId: appealId,
-		azureAdUserId: azureAdUserId,
-		details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_IMPORTED, [document.fileName || ''])
-	});
-
-	if (auditTrail) {
-		await addDocumentAudit(document.documentGuid, 1, auditTrail, EventType.Create);
-	}
 };
 
 /**

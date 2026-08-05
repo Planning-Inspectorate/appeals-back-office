@@ -49,7 +49,7 @@ jobs:
           resourceGroupsBySub: >
             {
               "dev": ["pins-rg-appeals-bo-dev", "pins-rg-appeals-bo-secondary-dev"],
-              "test": ["pins-rg-appeals-bo-test", "pins-rg-appeals-bo-secondary-test"],
+              "test": ["pins-rg-appeals-bo-test", "pins-rg-appeals-bo-secondary-test", "pins-rg-appeals-bo-staging"],
               "training": ["pins-rg-appeals-bo-training", "pins-rg-appeals-bo-secondary-training"],
               "prod": ["pins-rg-appeals-bo-prod", "pins-rg-appeals-bo-secondary-prod"]
             }

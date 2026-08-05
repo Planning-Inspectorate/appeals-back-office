@@ -30,6 +30,7 @@ import {
 	LINK_APPEALS_CHANGE_LEAD_OPERATION,
 	LINK_APPEALS_UNLINK_OPERATION
 } from '@pins/appeals/constants/support.js';
+import { EventType } from '@pins/event-client';
 import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import {
 	canLinkAppeals,
@@ -440,27 +441,43 @@ export const updateLinkedAppeals = async (req, res) => {
 			`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_D_SUPPORTING}`,
 			`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_E_SUPPORTING}`,
 			`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_F_SUPPORTING}`,
-			`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING}`
+			`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING}`,
+			// representation docs are accounted for in moveRepresentations/copyRepresentations
+			`representation/representationAttachments`
 		];
 
 		const options = { omitFolders };
 
 		let appealToUnlink;
 		let appealsToBroadcast;
+		let representationsToBroadcast;
+		let documentsToBroadcast;
+		// @ts-ignore
+		let representationBroadcastAction;
 
 		switch (operation) {
 			case LINK_APPEALS_CHANGE_LEAD_OPERATION: {
-				await Promise.allSettled([
+				const results = await Promise.allSettled([
 					// @ts-ignore
-					moveRepresentations(currentLead.id, appealToReplaceLead.id),
+					moveRepresentations(currentLead, appealToReplaceLead),
 					// @ts-ignore
 					duplicateAllFiles(currentLead, appealToReplaceLead, options),
 					// @ts-ignore
 					replaceLeadAppeal(currentLead, appealToReplaceLead)
 				]);
+				// @ts-ignore
+				const { movedRepresentations, movedDocuments } = results[0].value;
+				// @ts-ignore
+				representationsToBroadcast = movedRepresentations;
+				// @ts-ignore
+				documentsToBroadcast = movedDocuments;
+				// @ts-ignore
+				representationBroadcastAction = EventType.Update;
 				break;
 			}
 			case LINK_APPEALS_UNLINK_OPERATION: {
+				representationBroadcastAction = EventType.Create;
+
 				appealToUnlink =
 					// Just unlink the child if it's a parent of only one child
 					isParentAppeal(appeal) && childAppeals.length === 1
@@ -469,12 +486,14 @@ export const updateLinkedAppeals = async (req, res) => {
 						: appeal;
 
 				if (isChildAppeal(appealToUnlink)) {
-					await Promise.allSettled([
+					const results = await Promise.allSettled([
 						// @ts-ignore
 						copyRepresentations(currentLead, appealToUnlink),
 						// @ts-ignore
 						duplicateAllFiles(currentLead, appealToUnlink, options)
 					]);
+					// @ts-ignore
+					representationsToBroadcast = results[0].value;
 					// only need to broadcast to the child and lead involved in the unlink action
 					appealsToBroadcast = [currentLead?.id, appealToUnlink?.id];
 				} else {
@@ -483,7 +502,7 @@ export const updateLinkedAppeals = async (req, res) => {
 							.status(400)
 							.send('Appeal to replace lead is required for unlinking a parent appeal');
 					}
-					await Promise.allSettled([
+					const results = await Promise.allSettled([
 						// @ts-ignore
 						copyRepresentations(appealToUnlink, appealToReplaceLead),
 						// @ts-ignore
@@ -491,6 +510,8 @@ export const updateLinkedAppeals = async (req, res) => {
 						// @ts-ignore
 						replaceLeadAppeal(appealToUnlink, appealToReplaceLead)
 					]);
+					// @ts-ignore
+					representationsToBroadcast = results[0].value;
 				}
 				await Promise.allSettled([
 					// @ts-ignore
@@ -539,6 +560,45 @@ export const updateLinkedAppeals = async (req, res) => {
 			appealsToBroadcast = appealsToAudit;
 		}
 
+		await updateAppealStatusIfRequired(
+			appealToReplaceLead?.id || currentLead?.id,
+			appealToUnlink?.id,
+			currentLead?.id,
+			azureAdUserId
+		);
+
+		if (representationsToBroadcast) {
+			await Promise.allSettled(
+				// @ts-ignore
+				representationsToBroadcast
+					// @ts-ignore
+					.filter((representation) => representation.id !== undefined)
+					// @ts-ignore
+					.map((representation) =>
+						// @ts-ignore
+						broadcasters.broadcastRepresentation(representation.id, representationBroadcastAction)
+					)
+			);
+		}
+
+		// will broadcast updated documents when reps moved
+		// newly created docs from copy etc are broadcast as part of the copyReps / duplicateFiles
+		if (documentsToBroadcast) {
+			await Promise.allSettled(
+				documentsToBroadcast
+					// @ts-ignore
+					.filter((document) => document.guid !== undefined)
+					// @ts-ignore
+					.map((document) =>
+						broadcasters.broadcastDocument(
+							document.guid,
+							document.latestVersionId,
+							EventType.Update
+						)
+					)
+			);
+		}
+
 		if (appealsToBroadcast) {
 			await Promise.allSettled(
 				appealsToBroadcast
@@ -547,13 +607,6 @@ export const updateLinkedAppeals = async (req, res) => {
 					.map((appealId) => broadcasters.broadcastAppeal(appealId))
 			);
 		}
-
-		await updateAppealStatusIfRequired(
-			appealToReplaceLead?.id || currentLead?.id,
-			appealToUnlink?.id,
-			currentLead?.id,
-			azureAdUserId
-		);
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).send({ errors: { body: ERROR_UNLINKING_APPEALS } });

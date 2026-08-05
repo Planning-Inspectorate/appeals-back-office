@@ -86,18 +86,28 @@ describe('internal correspondence', () => {
 
 	const correspondenceCategories = ['cross-team', 'inspector', 'main-party'];
 
+	const getFolderApiUrl = (folderId) =>
+		`/appeals/1/document-folders/${folderId}?pageNumber=1&pageSize=100`;
+
+	const existsResponse = {
+		id: appealData.appealId,
+		appealId: appealData.appealId,
+		appealReference: appealData.appealReference
+	};
+
 	describe('GET /internal-correspondence/:correspondenceCategory/upload-documents/:folderId', () => {
 		beforeEach(async () => {
+			nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse).persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/10')
+				.get(getFolderApiUrl(10))
 				.reply(200, folderInfoCrossTeamCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/11')
+				.get(getFolderApiUrl(11))
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/22')
+				.get(getFolderApiUrl(22))
 				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
 		});
@@ -138,15 +148,15 @@ describe('internal correspondence', () => {
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
 			nock('http://test/')
-				.get('/appeals/1/document-folders/10')
+				.get(getFolderApiUrl(10))
 				.reply(200, folderInfoCrossTeamCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/11')
+				.get(getFolderApiUrl(11))
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/22')
+				.get(getFolderApiUrl(22))
 				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
 		});
@@ -219,15 +229,15 @@ describe('internal correspondence', () => {
 	describe('GET /internal-correspondence/:correspondenceCategory/upload-documents/:folderId/:documentId', () => {
 		beforeEach(async () => {
 			nock('http://test/')
-				.get('/appeals/1/document-folders/10')
+				.get(getFolderApiUrl(10))
 				.reply(200, folderInfoCrossTeamCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/11')
+				.get(getFolderApiUrl(11))
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/22')
+				.get(getFolderApiUrl(22))
 				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
@@ -261,15 +271,15 @@ describe('internal correspondence', () => {
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
 			nock('http://test/')
-				.get('/appeals/1/document-folders/10')
+				.get(getFolderApiUrl(10))
 				.reply(200, folderInfoCrossTeamCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/11')
+				.get(getFolderApiUrl(11))
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/22')
+				.get(getFolderApiUrl(22))
 				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
@@ -343,15 +353,15 @@ describe('internal correspondence', () => {
 	describe('GET /internal-correspondence/:correspondenceCategory/add-document-details/:folderId', () => {
 		beforeEach(async () => {
 			nock('http://test/')
-				.get('/appeals/1/document-folders/10')
+				.get(getFolderApiUrl(10))
 				.reply(200, folderInfoCrossTeamCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/11')
+				.get(getFolderApiUrl(11))
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/22')
+				.get(getFolderApiUrl(22))
 				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
 			nock('http://test/')
@@ -457,15 +467,15 @@ describe('internal correspondence', () => {
 				.reply(200, documentRedactionStatuses)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/10')
+				.get(getFolderApiUrl(10))
 				.reply(200, folderInfoCrossTeamCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/11')
+				.get(getFolderApiUrl(11))
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/22')
+				.get(getFolderApiUrl(22))
 				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
 			nock('http://test/')
@@ -786,15 +796,15 @@ describe('internal correspondence', () => {
 	describe('GET /internal-correspondence/:correspondenceCategory/add-document-details/:folderId/:documentId', () => {
 		beforeEach(async () => {
 			nock('http://test/')
-				.get('/appeals/1/document-folders/10')
+				.get(getFolderApiUrl(10))
 				.reply(200, folderInfoCrossTeamCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/11')
+				.get(getFolderApiUrl(11))
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/22')
+				.get(getFolderApiUrl(22))
 				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
 			nock('http://test/')
@@ -900,15 +910,15 @@ describe('internal correspondence', () => {
 				.reply(200, documentRedactionStatuses)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/10')
+				.get(getFolderApiUrl(10))
 				.reply(200, folderInfoCrossTeamCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/11')
+				.get(getFolderApiUrl(11))
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/22')
+				.get(getFolderApiUrl(22))
 				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
 			nock('http://test/')
@@ -1232,15 +1242,15 @@ describe('internal correspondence', () => {
 				.reply(200, documentRedactionStatuses)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/10')
+				.get(getFolderApiUrl(10))
 				.reply(200, folderInfoCrossTeamCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/11')
+				.get(getFolderApiUrl(11))
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/22')
+				.get(getFolderApiUrl(22))
 				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
 		});
@@ -1326,15 +1336,15 @@ describe('internal correspondence', () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/10')
+				.get(getFolderApiUrl(10))
 				.reply(200, folderInfoCrossTeamCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/11')
+				.get(getFolderApiUrl(11))
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/22')
+				.get(getFolderApiUrl(22))
 				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
 			nock('http://test/')
@@ -1402,15 +1412,15 @@ describe('internal correspondence', () => {
 				.reply(200, documentRedactionStatuses)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/10')
+				.get(getFolderApiUrl(10))
 				.reply(200, folderInfoCrossTeamCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/11')
+				.get(getFolderApiUrl(11))
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/22')
+				.get(getFolderApiUrl(22))
 				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
@@ -1498,15 +1508,15 @@ describe('internal correspondence', () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/10')
+				.get(getFolderApiUrl(10))
 				.reply(200, folderInfoCrossTeamCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/11')
+				.get(getFolderApiUrl(11))
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/22')
+				.get(getFolderApiUrl(22))
 				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
 			nock('http://test/')
@@ -1575,15 +1585,15 @@ describe('internal correspondence', () => {
 			// @ts-ignore
 			usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
 			nock('http://test/')
-				.get('/appeals/1/document-folders/10')
+				.get(getFolderApiUrl(10))
 				.reply(200, folderInfoCrossTeamCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/11')
+				.get(getFolderApiUrl(11))
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/22')
+				.get(getFolderApiUrl(22))
 				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
 			nock('http://test/')
@@ -1642,15 +1652,15 @@ describe('internal correspondence', () => {
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
 			nock('http://test/')
-				.get('/appeals/1/document-folders/10')
+				.get(getFolderApiUrl(10))
 				.reply(200, folderInfoCrossTeamCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/11')
+				.get(getFolderApiUrl(11))
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/22')
+				.get(getFolderApiUrl(22))
 				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
@@ -1811,15 +1821,15 @@ describe('internal correspondence', () => {
 	describe('GET /internal-correspondence/:correspondenceCategory/change-document-details/:folderId/:documentId', () => {
 		beforeEach(async () => {
 			nock('http://test/')
-				.get('/appeals/1/document-folders/10')
+				.get(getFolderApiUrl(10))
 				.reply(200, folderInfoCrossTeamCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/11')
+				.get(getFolderApiUrl(11))
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/22')
+				.get(getFolderApiUrl(22))
 				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
 			nock('http://test/')
@@ -1898,15 +1908,15 @@ describe('internal correspondence', () => {
 				.reply(200, documentRedactionStatuses)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/10')
+				.get(getFolderApiUrl(10))
 				.reply(200, folderInfoCrossTeamCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/11')
+				.get(getFolderApiUrl(11))
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/22')
+				.get(getFolderApiUrl(22))
 				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
 			nock('http://test/')
@@ -2202,9 +2212,9 @@ describe('internal correspondence', () => {
 
 	describe('GET /internal-correspondence/:correspondenceCategory/change-document-name/:folderId/:documentId', () => {
 		beforeEach(() => {
-			nock('http://test/').get('/appeals/1/document-folders/10').reply(200, documentFolderInfo);
-			nock('http://test/').get('/appeals/1/document-folders/11').reply(200, documentFolderInfo);
-			nock('http://test/').get('/appeals/1/document-folders/22').reply(200, documentFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(10)).reply(200, documentFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(11)).reply(200, documentFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(22)).reply(200, documentFolderInfo);
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 		for (const correspondenceCategory of correspondenceCategories) {
@@ -2233,9 +2243,9 @@ describe('internal correspondence', () => {
 		beforeEach(() => {
 			nock('http://test/').get('/appeals/document-redaction-statuses').reply(200, []);
 			nock('http://test/').patch('/appeals/1/documents/1').reply(200, {});
-			nock('http://test/').get('/appeals/1/document-folders/10').reply(200, documentFolderInfo);
-			nock('http://test/').get('/appeals/1/document-folders/11').reply(200, documentFolderInfo);
-			nock('http://test/').get('/appeals/1/document-folders/22').reply(200, documentFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(10)).reply(200, documentFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(11)).reply(200, documentFolderInfo);
+			nock('http://test/').get(getFolderApiUrl(22)).reply(200, documentFolderInfo);
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 		});
 		for (const correspondenceCategory of correspondenceCategories) {
@@ -2265,15 +2275,15 @@ describe('internal correspondence', () => {
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
 			nock('http://test/')
-				.get('/appeals/1/document-folders/10')
+				.get(getFolderApiUrl(10))
 				.reply(200, folderInfoCrossTeamCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/11')
+				.get(getFolderApiUrl(11))
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/22')
+				.get(getFolderApiUrl(22))
 				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
@@ -2368,15 +2378,15 @@ describe('internal correspondence', () => {
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
 			nock('http://test/')
-				.get('/appeals/1/document-folders/10')
+				.get(getFolderApiUrl(10))
 				.reply(200, folderInfoCrossTeamCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/11')
+				.get(getFolderApiUrl(11))
 				.reply(200, folderInfoInspectorCorrespondence)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/1/document-folders/22')
+				.get(getFolderApiUrl(22))
 				.reply(200, folderInfoMainPartyCorrespondence)
 				.persist();
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);

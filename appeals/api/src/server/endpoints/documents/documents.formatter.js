@@ -71,6 +71,7 @@ const formatDocumentVersion = (latestDocumentVersion) => {
 		dateReceived: latestDocumentVersion.dateReceived?.toISOString() || '',
 		redactionStatus: latestDocumentVersion.redactionStatus?.name || '',
 		virusCheckStatus: getAvScanStatus(latestDocumentVersion),
+		published: latestDocumentVersion.published,
 		size: latestDocumentVersion?.size?.toString() || '',
 		mime: latestDocumentVersion?.mime || '',
 		isLateEntry: latestDocumentVersion?.isLateEntry,

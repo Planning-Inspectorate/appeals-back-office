@@ -4,7 +4,9 @@ We will decide the appeal by {{procedure_type}}. You can tell us if you think a 
 
 {% include 'parts/appeal-details.md' %}
 Start date: {{start_date}}
-
+{% if inspector_name -%}
+Inspector: {{inspector_name}}
+{% endif %}
 # Timetable
 
 {%- if child_appeals.length === 1 %}

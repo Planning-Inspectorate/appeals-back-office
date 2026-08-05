@@ -1,0 +1,1 @@
+The application for costs against appeal {{appeal_reference_number}} has been withdrawn

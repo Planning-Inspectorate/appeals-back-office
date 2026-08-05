@@ -18,6 +18,7 @@ model Appeal {
   submissionId                   String?
   appealTimetable                AppealTimetable?
   appealStatus                   AppealStatus[]
+  currentStatus                  String                          @default("assign_case_officer")
   appealType                     AppealType?                     @relation(fields: [appealTypeId], references: [id])
   appealTypeId                   Int?
   procedureType                  ProcedureType?                  @relation(fields: [procedureTypeId], references: [id])
@@ -82,6 +83,11 @@ model Appeal {
   @@index([caseOfficerUserId])
   @@index([inspectorUserId])
   @@index([applicationReference])
+  @@index([padsInspectorUserId])
+  @@index([assignedTeamId])
+  @@index([currentStatus])
+  @@index([currentStatus, caseOfficerUserId])
+  @@index([currentStatus, inspectorUserId])
 }
 
 /// AppealRelationship model
@@ -202,14 +208,16 @@ model ProcedureType {
 /// LPA model
 /// Contains information about the Local Planning Authority in the appeal site.
 model LPA {
-  id              Int              @id @default(autoincrement())
-  name            String
-  lpaCode         String           @unique
-  email           String?
-  appeals         Appeal[]
-  representations Representation[] @relation("lpaRepresentation")
-  team            Team?            @relation("team", fields: [teamId], references: [id])
-  teamId          Int?
+  id                Int              @id @default(autoincrement())
+  name              String
+  lpaCode           String           @unique
+  email             String?
+  appeals           Appeal[]
+  representations   Representation[] @relation("lpaRepresentation")
+  team              Team?            @relation("team", fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  teamId            Int?
+  enforcementTeam   Team?            @relation("enforcementTeam", fields: [enforcementTeamId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  enforcementTeamId Int?
 }
 
 /// ServiceUser model
@@ -358,6 +366,16 @@ model AppellantCase {
   //LDC Fields
   siteUseAtTimeOfApplication     String?
   applicationMadeUnderActSection String?
+
+  //Expedited Fields
+  reasonForAppealAppellant                               String?  @db.NVarChar(Max)
+  anySignificantChanges                                  String?
+  anySignificantChanges_otherSignificantChanges          String?  @db.NVarChar(Max)
+  anySignificantChanges_localPlanSignificantChanges      String?  @db.NVarChar(Max)
+  anySignificantChanges_nationalPolicySignificantChanges String?  @db.NVarChar(Max)
+  anySignificantChanges_courtJudgementSignificantChanges String?  @db.NVarChar(Max)
+  screeningOpinionIndicatesEiaRequired                   Boolean?
+  ownershipCertificate                                   Boolean?
 }
 
 /// AppealGround model
@@ -372,6 +390,7 @@ model AppealGround {
   isDeleted      Boolean @default(false)
 
   @@unique([groundId, appealId])
+  @@index([appealId, isDeleted])
 }
 
 /// AppellantCaseValidationOutcome model
@@ -586,46 +605,52 @@ model LPAQuestionnaire {
   isGreenBelt                               Boolean?
 
   // S78 fields
-  affectsScheduledMonument            Boolean?
-  isAonbNationalLandscape             Boolean?
-  isGypsyOrTravellerSite              Boolean?
-  isPublicRightOfWay                  Boolean?
-  eiaEnvironmentalImpactSchedule      String?
-  eiaDevelopmentDescription           String?
-  eiaSensitiveAreaDetails             String?
-  eiaColumnTwoThreshold               Boolean?
-  eiaScreeningOpinion                 Boolean?
-  eiaRequiresEnvironmentalStatement   Boolean?
-  eiaCompletedEnvironmentalStatement  Boolean?
-  eiaScopingOpinion                   Boolean?
-  consultedBodiesDetails              String?
-  hasProtectedSpecies                 Boolean?
-  hasStatutoryConsultees              Boolean?
-  hasInfrastructureLevy               Boolean?
-  hasTreePreservationOrder            Boolean?
-  hasConsultationResponses            Boolean?
-  hasEmergingPlan                     Boolean?
-  hasSupplementaryPlanningDocs        Boolean?
-  isInfrastructureLevyFormallyAdopted Boolean?
-  infrastructureLevyAdoptedDate       DateTime?
-  infrastructureLevyExpectedDate      DateTime?
-  lpaProcedurePreference              String?
-  lpaProcedurePreferenceDetails       String?
-  lpaProcedurePreferenceDuration      Int?
-  lpaFinalCommentDetails              String?
-  lpaAddedWitnesses                   Boolean?
-  siteWithinSSSI                      Boolean?
-  reasonForNeighbourVisits            String?
-  importantInformation                String?
-  redeterminedIndicator               String?
-  dateCostsReportDespatched           DateTime?
-  dateNotRecoveredOrDerecovered       DateTime?
-  dateRecovered                       DateTime?
-  originalCaseDecisionDate            DateTime?
-  targetDate                          DateTime?
-  siteNoticesSentDate                 DateTime?
-  designatedSiteNameCustom            String?
-  designatedSiteNames                 DesignatedSiteSelected[]
+  affectsScheduledMonument                                  Boolean?
+  isAonbNationalLandscape                                   Boolean?
+  isGypsyOrTravellerSite                                    Boolean?
+  isPublicRightOfWay                                        Boolean?
+  eiaEnvironmentalImpactSchedule                            String?
+  eiaDevelopmentDescription                                 String?
+  eiaSensitiveAreaDetails                                   String?
+  eiaColumnTwoThreshold                                     Boolean?
+  eiaScreeningOpinion                                       Boolean?
+  eiaRequiresEnvironmentalStatement                         Boolean?
+  eiaCompletedEnvironmentalStatement                        Boolean?
+  eiaScopingOpinion                                         Boolean?
+  consultedBodiesDetails                                    String?
+  hasProtectedSpecies                                       Boolean?
+  hasStatutoryConsultees                                    Boolean?
+  hasInfrastructureLevy                                     Boolean?
+  hasTreePreservationOrder                                  Boolean?
+  hasConsultationResponses                                  Boolean?
+  hasEmergingPlan                                           Boolean?
+  hasSupplementaryPlanningDocs                              Boolean?
+  isInfrastructureLevyFormallyAdopted                       Boolean?
+  infrastructureLevyAdoptedDate                             DateTime?
+  infrastructureLevyExpectedDate                            DateTime?
+  lpaProcedurePreference                                    String?
+  lpaProcedurePreferenceDetails                             String?
+  lpaProcedurePreferenceDuration                            Int?
+  lpaFinalCommentDetails                                    String?
+  lpaAddedWitnesses                                         Boolean?
+  siteWithinSSSI                                            Boolean?
+  reasonForNeighbourVisits                                  String?
+  importantInformation                                      String?
+  redeterminedIndicator                                     String?
+  dateCostsReportDespatched                                 DateTime?
+  dateNotRecoveredOrDerecovered                             DateTime?
+  dateRecovered                                             DateTime?
+  originalCaseDecisionDate                                  DateTime?
+  targetDate                                                DateTime?
+  siteNoticesSentDate                                       DateTime?
+  designatedSiteNameCustom                                  String?
+  designatedSiteNames                                       DesignatedSiteSelected[]
+  anySignificantChangesLpa                                  String?
+  anySignificantChangesLpa_otherSignificantChanges          String?                  @db.NVarChar(Max)
+  anySignificantChangesLpa_localPlanSignificantChanges      String?                  @db.NVarChar(Max)
+  anySignificantChangesLpa_nationalPolicySignificantChanges String?                  @db.NVarChar(Max)
+  anySignificantChangesLpa_courtJudgementSignificantChanges String?                  @db.NVarChar(Max)
+  listOfDocumentsBeforeDecision                             String?                  @db.NVarChar(Max)
 
   // S20 fields
   historicEnglandConsultation Boolean?
@@ -728,6 +753,7 @@ model LPANotificationMethodsSelected {
   lpaQuestionnaireId    Int
 
   @@id([notificationMethodId, lpaQuestionnaireId])
+  @@index([lpaQuestionnaireId])
 }
 
 /// DesignatedSite model
@@ -931,6 +957,7 @@ model Representation {
   dateLastUpdated                        DateTime                                 @default(now())
   originalRepresentation                 String?                                  @db.NVarChar(Max)
   redactedRepresentation                 String?                                  @db.NVarChar(Max)
+  isRedacted                             Boolean                                  @default(false)
   represented                            ServiceUser?                             @relation("represented", fields: [representedId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   representedId                          Int?
   representative                         ServiceUser?                             @relation("representative", fields: [representativeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -946,6 +973,7 @@ model Representation {
   representationRejectionReasonsSelected RepresentationRejectionReasonsSelected[]
 
   @@index([appealId])
+  @@index([appealId, representationType, dateCreated(sort: Asc)])
 }
 
 /// Representation model
@@ -1094,8 +1122,9 @@ model Team {
   name  String  @unique
   email String?
 
-  lpas   LPA[]    @relation("team")
-  Appeal Appeal[]
+  lpas            LPA[]    @relation("team")
+  enforcementLpas LPA[]    @relation("enforcementTeam")
+  Appeal          Appeal[]
 }
 
 /// PersonalList model

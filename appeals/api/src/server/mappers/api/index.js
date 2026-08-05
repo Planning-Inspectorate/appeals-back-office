@@ -1,9 +1,13 @@
 import { apiAdvertMappers } from './advert/index.js';
+import { apiCasAdvertExpeditedMappers } from './cas-advert-expedited/index.js';
 import { apiCasAdvertMappers } from './cas-advert/index.js';
+import { apiCasPlanningMappers } from './cas-planning/index.js';
 import { apiEnforcementListedMappers } from './enforcement-listed/index.js';
 import { apiEnforcementMappers } from './enforcement/index.js';
+import { apiHasMappers } from './has/index.js';
 import { apiLdcMappers } from './ldc/index.js';
 import { apiS20Mappers } from './s20/index.js';
+import { apiS78ExpeditedMappers } from './s78-expedited/index.js';
 import { apiS78Mappers } from './s78/index.js';
 import { apiSharedMappers } from './shared/index.js';
 
@@ -12,8 +16,12 @@ export const apiMappers = {
 	apiS78Mappers,
 	apiS20Mappers,
 	apiCasAdvertMappers,
+	apiCasAdvertExpeditedMappers,
 	apiAdvertMappers,
 	apiEnforcementMappers,
 	apiLdcMappers,
-	apiEnforcementListedMappers
+	apiEnforcementListedMappers,
+	apiS78ExpeditedMappers,
+	apiCasPlanningMappers,
+	apiHasMappers
 };

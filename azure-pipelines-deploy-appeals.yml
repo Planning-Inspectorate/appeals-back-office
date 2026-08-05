@@ -82,7 +82,9 @@ extends:
           - name: Deploy Appeals API
             condition: eq(${{ parameters.deployAppealsAPI }}, true)
             steps:
-              - checkout: self
+              - bash: |
+                  git clone --depth=1 --no-tags --revision="$(resources.pipeline.build.sourceCommit)" $(Build.Repository.Uri) .
+                displayName: Checkout Build-Commit
               - ${{ if eq(parameters.schemaMigration, true) }}:
                 # kv name is different in the training env (had to be shorter)
                 - bash: |

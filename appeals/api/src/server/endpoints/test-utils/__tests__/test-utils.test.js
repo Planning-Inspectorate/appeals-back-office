@@ -458,6 +458,7 @@ describe('test utils routes', () => {
 			databaseConnector.appeal.findUnique
 				.mockResolvedValueOnce({
 					...householdAppeal,
+					currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
@@ -467,6 +468,7 @@ describe('test utils routes', () => {
 				})
 				.mockResolvedValueOnce({
 					...householdAppeal,
+					currentStatus: APPEAL_CASE_STATUS.EVENT,
 					appealStatus: [
 						{
 							status: APPEAL_CASE_STATUS.EVENT,
@@ -709,7 +711,8 @@ describe('test utils routes', () => {
 
 	describe('POST /:appealReference/share-comments-and-statement', () => {
 		test('returns 200 for valid appeal reference', async () => {
-			const testAppeal = householdAppeal;
+			const testAppeal = structuredClone(householdAppeal);
+			testAppeal.currentStatus = 'statements';
 			testAppeal.appealStatus[0].status = 'statements';
 			databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
 			databaseConnector.representation.findMany.mockResolvedValue([
@@ -739,7 +742,8 @@ describe('test utils routes', () => {
 
 	describe('POST /:appealReference/issue-decision', () => {
 		test('returns 201 for valid appeal reference', async () => {
-			const testAppeal = householdAppeal;
+			const testAppeal = structuredClone(householdAppeal);
+			testAppeal.currentStatus = 'issue_determination';
 			testAppeal.appealStatus[0].status = 'issue_determination';
 			databaseConnector.appeal.findUnique.mockResolvedValue(testAppeal);
 

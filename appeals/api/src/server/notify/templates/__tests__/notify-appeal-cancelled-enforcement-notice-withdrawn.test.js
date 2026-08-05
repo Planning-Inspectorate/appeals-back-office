@@ -14,7 +14,7 @@ describe('appeal-cancelled-enforcement-notice-withdrawn.content.md', () => {
 				appeal_reference_number: '134526',
 				local_planning_authority: 'Bristol City Council',
 				enforcement_reference: 'ENF/2025/123456',
-				effective_date: '01 January 2025',
+				issue_date: '01 January 2025',
 				site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 				event_type: 'site visit',
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -72,7 +72,7 @@ describe('appeal-cancelled-enforcement-notice-withdrawn.content.md', () => {
 				appeal_reference_number: '134526',
 				local_planning_authority: 'Bristol City Council',
 				enforcement_reference: 'ENF/2025/123456',
-				effective_date: '01 January 2025',
+				issue_date: '01 January 2025',
 				site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 				event_type: '',
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk'

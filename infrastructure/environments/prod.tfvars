@@ -2,17 +2,17 @@ apps_config = {
   app_service_plan = {
     sku                      = "P1v3"
     per_site_scaling_enabled = true
-    worker_count             = 2
+    worker_count             = 5
     zone_balancing_enabled   = false
   }
   api = {
-    worker_count = 2
+    worker_count = 5
   }
   pdf = {
     worker_count = 1
   }
   web = {
-    worker_count = 1
+    worker_count = 5
   }
   functions_node_version     = 22
   functions_service_plan_sku = "P1v3"
@@ -50,11 +50,10 @@ apps_config = {
     featureFlagS78Written                       = true
     featureFlagS78Inquiry                       = true
     featureFlagLinkedAppeals                    = false
-    featureFlagLinkedAppealsUnlink              = false
+    featureFlagLinkedAppealsUnlink              = true
     featureFlagNotifyCaseHistory                = true
     featureFlagSimplifyTeamAssignment           = true
     featureFlagPdfDownload                      = true
-    featureFlagNetResidence                     = true
     featureFlagNetResidenceS20                  = true
     featureFlagCancelCase                       = true
     featureFlagChangeProcedureType              = true
@@ -64,20 +63,20 @@ apps_config = {
     featureFlagSearchCaseOfficer                = true
     featureFlagEnforcementNotice                = true
     featureFlagEnforcementLinked                = true
-    featureFlagEnforcementLeadCanStart          = false
+    featureFlagEnforcementLeadCanStart          = true
     featureFlagEnforcementCancel                = true
-    featureFlagInvalidDecisionLetter            = false
+    featureFlagInvalidDecisionLetter            = true
     featureFlagRule6Mvp                         = true
     featureFlagRule6PoE                         = true
-    featureFlagExpeditedAppeals                 = false
+    featureFlagExpeditedAppeals                 = true
     featureFlagManuallyAddReps                  = true
     featureFlagAppellantStatement               = true
     featureFlagRule6Statement                   = true
     featureFlagLDC                              = true
     featureFlagRule6Costs                       = false
-    featureFlagS20Hearing                       = false
+    featureFlagS20Hearing                       = true
     featureFlagS20Inquiry                       = false
-    featureFlagEnforcementNoticeHearing         = false
+    featureFlagEnforcementNoticeHearing         = true
     featureFlagEnforcementNoticeInquiry         = false
     featureFlagLdcHearing                       = false
     featureFlagLdcInquiry                       = false
@@ -86,9 +85,23 @@ apps_config = {
     featureFlagEnforcementHearingLinked         = false
     featureFlagEnforcementInquiryLinked         = false
     featureFlagEnforcementChangeProcedureLinked = false
+    featureFlagShareCosts                       = true
+    featureFlagExpeditedAppealsLpaq             = true
+    featureFlagNewBeforeYouStart                = true
+    featureFlagEnforcementChangeProcedure       = false
+    featureFlagSharingHearingDocuments          = false
+    featureFlagSharingInquiryEventDocuments     = false
+    featureFlagSharingInquiryDocuments          = false
+    featureFlagSharingSupportingDocuments       = false
   }
 
   use_system_test_bc_for_change_lpa = false
+
+  analytics = {
+    google_analytics_id   = "G-8X56B5X9SN",
+    google_tag_manager_id = "GTM-P3SL44C2",
+    microsoft_clarity_id  = "wu1g4cpzbg"
+  }
 
   logging = {
     level_file   = "silent"

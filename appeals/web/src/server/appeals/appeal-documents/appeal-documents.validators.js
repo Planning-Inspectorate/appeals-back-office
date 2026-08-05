@@ -21,10 +21,10 @@ export const validateDocumentName = createValidator(
 		.notEmpty()
 		.withMessage('File name must be entered')
 		.bail()
-		// Filename must only contain alphanumeric characters, underscores and hyphens
-		.matches('^[a-zA-Z0-9_ -]+$')
+		// Filename must only contain alphanumeric characters, spaces, underscores, hyphens, and parentheses
+		.matches('^[a-zA-Z0-9_ ()-]+$')
 		.withMessage(
-			'File name must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and underscores'
+			'File name must only include letters a to z, numbers 0 to 9, spaces and special characters such as hyphens, underscores, and parentheses'
 		)
 		.bail()
 		.custom((value, { req }) => {

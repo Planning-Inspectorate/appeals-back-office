@@ -1,4 +1,5 @@
 import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
+import { getNextStateDisplayTextOnStatementsComplete } from '#lib/appeal-status.js';
 import {
 	canDisplayAction,
 	createNotificationBanner,
@@ -48,6 +49,9 @@ export function mapStatusDependentNotifications(appealDetails, request) {
  * @returns {PageComponent|PageComponent[]|undefined}
  */
 function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, request) {
+	const hearingIsSetUp = Boolean(
+		appealDetails.hearing?.hearingStartTime && appealDetails.hearing?.address
+	);
 	switch (bannerDefinitionKey) {
 		case 'awaitingLinkedAppeal':
 			return createNotificationBanner({
@@ -61,6 +65,11 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 					request,
 					`/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/add-horizon-reference`
 				)}">Mark as transferred</a></p>`
+			});
+		case 'appealValidated':
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: '<p class="govuk-notification-banner__heading">Appeal valid</p>'
 			});
 		case 'readyForSetUpSiteVisit':
 			request.session.readyToSetUp = true;
@@ -119,23 +128,7 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 				html: `<a href="${addBackLinkQueryToUrl(
 					request,
 					`/appeals-service/appeal-details/${appealDetails.appealId}/share`
-				)}" class="govuk-heading-s govuk-notification-banner__link">Progress to final comments</a>`
-			});
-		case 'progressHearingCaseWithNoRepsFromStatements':
-			return createNotificationBanner({
-				bannerDefinitionKey,
-				html: `<a href="${addBackLinkQueryToUrl(
-					request,
-					`/appeals-service/appeal-details/${appealDetails.appealId}/share`
-				)}" class="govuk-heading-s govuk-notification-banner__link">Progress to hearing ready to set up</a>`
-			});
-		case 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements':
-			return createNotificationBanner({
-				bannerDefinitionKey,
-				html: `<a href="${addBackLinkQueryToUrl(
-					request,
-					`/appeals-service/appeal-details/${appealDetails.appealId}/share`
-				)}" class="govuk-heading-s govuk-notification-banner__link">Progress to awaiting hearing</a>`
+				)}" class="govuk-heading-s govuk-notification-banner__link">Progress to ${getNextStateDisplayTextOnStatementsComplete(/** @type {string} */ (appealDetails.appealType), /** @type {string} */ (appealDetails.procedureType), hearingIsSetUp)}</a>`
 			});
 		case 'readyForValidation':
 			return createNotificationBanner({
@@ -208,6 +201,22 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 					request,
 					`/appeals-service/appeal-details/${appealDetails.appealId}/share`
 				)}" class="govuk-heading-s govuk-notification-banner__link">Share IP comments and statements</a>`
+			});
+		case 'shareIpComments':
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<a href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/share`
+				)}" class="govuk-heading-s govuk-notification-banner__link">Share comments</a>`
+			});
+		case 'shareStatements':
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<a href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/share`
+				)}" class="govuk-heading-s govuk-notification-banner__link">Share statements</a>`
 			});
 		case 'appealValidAndReadyToStart':
 			return createNotificationBanner({

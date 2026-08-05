@@ -911,8 +911,8 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
         <div class="govuk-summary-list__row appeal-appeal-type"><dt class="govuk-summary-list__key"> Appeal type</dt>
             <dd class="govuk-summary-list__value">Householder</dd>
         </div>
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-            <dd class="govuk-summary-list__value">Written</dd>
+        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+            <dd class="govuk-summary-list__value">Written representations</dd>
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
@@ -1143,8 +1143,8 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
                 data-cy="change-appeal-type">Change<span class="govuk-visually-hidden"> Appeal type</span></a>
             </dd>
         </div>
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-            <dd class="govuk-summary-list__value">Written</dd>
+        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+            <dd class="govuk-summary-list__value">Written representations</dd>
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
@@ -1543,8 +1543,8 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
         <div class="govuk-summary-list__row appeal-appeal-type"><dt class="govuk-summary-list__key"> Appeal type</dt>
             <dd class="govuk-summary-list__value">Householder</dd>
         </div>
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-            <dd class="govuk-summary-list__value">Written</dd>
+        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+            <dd class="govuk-summary-list__value">Written representations</dd>
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
@@ -1772,8 +1772,8 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
         <div class="govuk-summary-list__row appeal-appeal-type"><dt class="govuk-summary-list__key"> Appeal type</dt>
             <dd class="govuk-summary-list__value">Householder</dd>
         </div>
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-            <dd class="govuk-summary-list__value">Written</dd>
+        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+            <dd class="govuk-summary-list__value">Written representations</dd>
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
@@ -2171,8 +2171,8 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
         <div class="govuk-summary-list__row appeal-appeal-type"><dt class="govuk-summary-list__key"> Appeal type</dt>
             <dd class="govuk-summary-list__value">Householder</dd>
         </div>
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-            <dd class="govuk-summary-list__value">Written</dd>
+        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+            <dd class="govuk-summary-list__value">Written representations</dd>
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
@@ -2584,8 +2584,8 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
                 data-cy="change-appeal-type">Change<span class="govuk-visually-hidden"> Appeal type</span></a>
             </dd>
         </div>
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-            <dd class="govuk-summary-list__value">Written</dd>
+        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+            <dd class="govuk-summary-list__value">Written representations</dd>
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
@@ -3004,8 +3004,8 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
                 data-cy="change-appeal-type">Change<span class="govuk-visually-hidden"> Appeal type</span></a>
             </dd>
         </div>
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-            <dd class="govuk-summary-list__value">Written</dd>
+        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+            <dd class="govuk-summary-list__value">Written representations</dd>
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
@@ -3415,8 +3415,8 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
                 data-cy="change-appeal-type">Change<span class="govuk-visually-hidden"> Appeal type</span></a>
             </dd>
         </div>
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-            <dd class="govuk-summary-list__value">Written</dd>
+        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+            <dd class="govuk-summary-list__value">Written representations</dd>
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
@@ -3826,8 +3826,8 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                 data-cy="change-appeal-type">Change<span class="govuk-visually-hidden"> Appeal type</span></a>
             </dd>
         </div>
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-            <dd class="govuk-summary-list__value">Written</dd>
+        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+            <dd class="govuk-summary-list__value">Written representations</dd>
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
@@ -4250,8 +4250,8 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                 data-cy="change-appeal-type">Change<span class="govuk-visually-hidden"> Appeal type</span></a>
             </dd>
         </div>
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-            <dd class="govuk-summary-list__value">Written</dd>
+        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+            <dd class="govuk-summary-list__value">Written representations</dd>
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
@@ -4603,8 +4603,8 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                 data-cy="change-appeal-type">Change<span class="govuk-visually-hidden"> Appeal type</span></a>
             </dd>
         </div>
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-            <dd class="govuk-summary-list__value">Written</dd>
+        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+            <dd class="govuk-summary-list__value">Written representations</dd>
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
@@ -5139,8 +5139,8 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
                 data-cy="change-appeal-type">Change<span class="govuk-visually-hidden"> Appeal type</span></a>
             </dd>
         </div>
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-            <dd class="govuk-summary-list__value">Written</dd>
+        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+            <dd class="govuk-summary-list__value">Written representations</dd>
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
@@ -5666,7 +5666,7 @@ data-index="0">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
     </div>
     <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Case officer has been assigned</p>
+        <p class="govuk-notification-banner__heading">Case officer assigned</p>
     </div>
 </div>"
 `;
@@ -5679,20 +5679,7 @@ data-index="0">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
     </div>
     <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Inspector has been assigned</p>
-    </div>
-</div>"
-`;
-
-exports[`appeal-details GET /:appealId Notification banners Success banners should render a success notification banner when a user was successfully unassigned as inspector 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
-role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
-data-index="0">
-    <div class="govuk-notification-banner__header">
-        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
-    </div>
-    <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Inspector removed</p>
+        <p class="govuk-notification-banner__heading">Inspector assigned</p>
     </div>
 </div>"
 `;
@@ -6056,7 +6043,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
     <div class="govuk-inset-text">
         <ul class="govuk-list">
             <li>Decision: Dismissed</li>
-            <li>Decision issued on 4 August 2023 (updated on 11 October 2023)</li>
+            <li>Decision issued on 25 December 2023</li>
             <li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2">View decision</a>
             </li>
         </ul>
@@ -6146,8 +6133,8 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                 data-cy="change-appeal-type">Change<span class="govuk-visually-hidden"> Appeal type</span></a>
             </dd>
         </div>
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-            <dd class="govuk-summary-list__value">Written</dd>
+        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+            <dd class="govuk-summary-list__value">Written representations</dd>
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
@@ -6415,7 +6402,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
     <div class="govuk-inset-text">
         <ul class="govuk-list">
             <li>Decision: Dismissed</li>
-            <li>Decision issued on 4 August 2023 (updated on 11 October 2023)</li>
+            <li>Decision issued on 25 December 2023</li>
             <li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2">View decision</a>
             </li>
         </ul>
@@ -6505,8 +6492,8 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                 data-cy="change-appeal-type">Change<span class="govuk-visually-hidden"> Appeal type</span></a>
             </dd>
         </div>
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-            <dd class="govuk-summary-list__value">Written</dd>
+        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+            <dd class="govuk-summary-list__value">Written representations</dd>
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
@@ -6858,8 +6845,8 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                 data-cy="change-appeal-type">Change<span class="govuk-visually-hidden"> Appeal type</span></a>
             </dd>
         </div>
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-            <dd class="govuk-summary-list__value">Written</dd>
+        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+            <dd class="govuk-summary-list__value">Written representations</dd>
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
@@ -7217,8 +7204,8 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                 data-cy="change-appeal-type">Change<span class="govuk-visually-hidden"> Appeal type</span></a>
             </dd>
         </div>
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-            <dd class="govuk-summary-list__value">Written</dd>
+        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+            <dd class="govuk-summary-list__value">Written representations</dd>
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
@@ -7581,8 +7568,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                 data-cy="change-appeal-type">Change<span class="govuk-visually-hidden"> Appeal type</span></a>
             </dd>
         </div>
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-            <dd class="govuk-summary-list__value">Written</dd>
+        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+            <dd class="govuk-summary-list__value">Written representations</dd>
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
@@ -7933,8 +7920,8 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                 data-cy="change-appeal-type">Change<span class="govuk-visually-hidden"> Appeal type</span></a>
             </dd>
         </div>
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-            <dd class="govuk-summary-list__value">Written</dd>
+        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+            <dd class="govuk-summary-list__value">Written representations</dd>
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
@@ -8312,8 +8299,8 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 data-cy="change-appeal-type">Change<span class="govuk-visually-hidden"> Appeal type</span></a>
             </dd>
         </div>
-        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-            <dd class="govuk-summary-list__value">Written</dd>
+        <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+            <dd class="govuk-summary-list__value">Written representations</dd>
         </div>
         <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
             <dd class="govuk-summary-list__value">
@@ -8569,7 +8556,7 @@ exports[`appeal-details GET /:appealId should render the view decision page 1`] 
                         <dd class="govuk-summary-list__value">Dismissed</dd>
                     </div>
                     <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Decision issue date</dt>
-                        <dd class="govuk-summary-list__value">4 August 2023 (reissued on 11 October 2023)</dd>
+                        <dd class="govuk-summary-list__value">25 December 2023</dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
                         <dd class="govuk-summary-list__value"><a class="govuk-link" download href="/documents/1/download/e1e90a49-fab3-44b8-a21a-bb73af089f6b/decision-letter.pdf"
@@ -8716,8 +8703,8 @@ exports[`appeal-details should not render a back button 1`] = `
                             data-cy="change-appeal-type">Change<span class="govuk-visually-hidden"> Appeal type</span></a>
                         </dd>
                     </div>
-                    <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
-                        <dd class="govuk-summary-list__value">Written</dd>
+                    <div class="govuk-summary-list__row appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+                        <dd class="govuk-summary-list__value">Written representations</dd>
                     </div>
                     <div class="govuk-summary-list__row appeal-allocation-details"><dt class="govuk-summary-list__key"> Allocation level</dt>
                         <dd class="govuk-summary-list__value">

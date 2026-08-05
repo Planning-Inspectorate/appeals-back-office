@@ -31,7 +31,11 @@ const renderTypeOfSiteVisit = async (request, response, pageType) => {
 	const appealDetails = request.currentAppeal;
 
 	if (appealDetails) {
-		let visitType = request.session.visitType || appealDetails.siteVisit?.visitType || null;
+		let visitType =
+			request.query.visitType?.toString() ||
+			request.session.visitType ||
+			appealDetails.siteVisit?.visitType ||
+			null;
 
 		request.session.visitType = visitType;
 		request.session.readyToSetUp = request.session.readyToSetUp || false;
@@ -264,9 +268,12 @@ const renderCancelSiteVisit = async (request, response) => {
 		appealDetails.appealId
 	);
 
+	const enforcementReference = appealDetails.enforcementNotice?.appellantCase?.reference;
+
 	const personalisation = {
 		appeal_reference_number: appealDetails.appealReference,
 		site_address: appealSiteToAddressString(appealDetails.appealSite),
+		...(enforcementReference && { enforcement_reference: enforcementReference }),
 		lpa_reference: appealDetails.planningApplicationReference,
 		team_email_address: assignedTeamEmail
 	};

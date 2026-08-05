@@ -18,10 +18,12 @@ import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { detailsComponent } from '#lib/mappers/components/page-components/details.js';
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
+import { getInspectorFormattedEmailName } from '#lib/service-user-formatter.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
 import { capitalize } from 'lodash-es';
-import { getStartCaseNotifyPreviews, setStartDate } from '../start-case.service.js';
+import * as startCaseService from '../start-case.service.js';
+import { getStartCaseNotifyPreviews } from '../start-case.service.js';
 import { dateKnownPage, estimationPage } from './hearing.mapper.js';
 
 /** @typedef {import('@pins/express').ValidationErrors} ValidationErrors */
@@ -235,6 +237,9 @@ export const getHearingConfirm = async (request, response) => {
 	let appellantPreview = errorMessage;
 	/** @type {string} */
 	let lpaPreview = errorMessage;
+
+	const inspectorName = await getInspectorFormattedEmailName(currentAppeal.inspector, request);
+
 	try {
 		const result = await getStartCaseNotifyPreviews(
 			request.apiClient,
@@ -242,7 +247,9 @@ export const getHearingConfirm = async (request, response) => {
 			undefined,
 			sessionValues?.appealProcedure,
 			dateKnown ? hearingStartTime : undefined,
-			hearingEstimatedDays
+			hearingEstimatedDays,
+			null,
+			inspectorName
 		);
 		appellantPreview = result.appellant || '';
 		lpaPreview = result.lpa || '';
@@ -370,7 +377,7 @@ export const getHearingConfirm = async (request, response) => {
 export const postHearingConfirm = async (request, response) => {
 	try {
 		const {
-			currentAppeal: { appealId }
+			currentAppeal: { appealId, inspector }
 		} = request;
 
 		const sessionValues = getSessionValuesForAppeal(request, 'startCaseAppealProcedure', appealId);
@@ -387,13 +394,16 @@ export const postHearingConfirm = async (request, response) => {
 		const hearingStartTime =
 			sessionValues?.dateKnown === 'yes' ? hearingStartTimeFromSession(sessionValues) : undefined;
 
-		await setStartDate(
+		const inspectorName = await getInspectorFormattedEmailName(inspector, request);
+
+		await startCaseService.setStartDate(
 			request.apiClient,
 			appealId,
 			getTodaysISOString(),
 			sessionValues?.appealProcedure,
 			hearingStartTime,
-			hearingEstimatedDays
+			hearingEstimatedDays,
+			inspectorName
 		);
 
 		addNotificationBannerToSession({

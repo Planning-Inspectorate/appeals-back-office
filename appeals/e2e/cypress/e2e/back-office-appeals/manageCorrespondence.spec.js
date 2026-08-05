@@ -3,6 +3,7 @@
 
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
+import { CTA_TEXT } from '../../support/consts.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
 
 const caseDetailsPage = new CaseDetailsPage();
@@ -36,8 +37,11 @@ describe('Manage correspondence', () => {
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateBannerMessage('Success', 'Cross-team correspondence added');
 			caseDetailsPage.clickManageCrossTeamCorrespondence();
-			cy.reloadUntilVirusCheckComplete();
-			caseDetailsPage.clickLinkByText('View and edit');
+
+			// Simulate the completion of the documents scan
+			cy.simulateDocumentsScanComplete(caseObj);
+
+			caseDetailsPage.clickLinkByText(CTA_TEXT.documents.viewEdit);
 			caseDetailsPage.clickButtonByText('Upload a new version');
 			caseDetailsPage.uploadSampleFile(sampleFiles.document2);
 			caseDetailsPage.clickButtonByText('Continue');
@@ -66,8 +70,11 @@ describe('Manage correspondence', () => {
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateBannerMessage('Success', 'Inspector correspondence added');
 			caseDetailsPage.clickManageInspectorCorrespondence();
-			cy.reloadUntilVirusCheckComplete();
-			caseDetailsPage.clickLinkByText('View and edit');
+
+			// Simulate the completion of the documents scan
+			cy.simulateDocumentsScanComplete(caseObj);
+
+			caseDetailsPage.clickLinkByText(CTA_TEXT.documents.viewEdit);
 			caseDetailsPage.clickButtonByText('Remove current version');
 			caseDetailsPage.selectRadioButtonByValue('Yes');
 			caseDetailsPage.clickButtonByText('Continue');

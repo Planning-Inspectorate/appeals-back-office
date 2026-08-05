@@ -2,13 +2,12 @@ import { calculateIssueDecisionDeadline } from '#endpoints/appeals/appeals.servi
 import { currentStatus } from '#utils/current-status.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { add, addBusinessDays } from 'date-fns';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
-/** @typedef {import('#repositories/appeal-lists.repository.js').DBAppeals} DBAppeals */
-/** @typedef {DBAppeals[0]} DBAppeal */
 /** @typedef {import('#repositories/appeal-lists.repository.js').DBUserAppeal} DBUserAppeal */
 
 const approxStageCompletion = {
@@ -28,7 +27,7 @@ const approxStageCompletion = {
  */
 const isNetResidencesAppealType = (appealType) => {
 	return (
-		(isFeatureActive(FEATURE_FLAG_NAMES.NET_RESIDENCE) && appealType === APPEAL_TYPE.S78) ||
+		appealType === APPEAL_TYPE.S78 ||
 		(isFeatureActive(FEATURE_FLAG_NAMES.NET_RESIDENCE_S20) &&
 			appealType === APPEAL_TYPE.PLANNED_LISTED_BUILDING)
 	);
@@ -36,13 +35,16 @@ const isNetResidencesAppealType = (appealType) => {
 
 /**
  * Map each appeal to include a due date.
- * @param {DBAppeal | DBUserAppeal | Appeal} appeal
+ * @param {DBUserAppeal | Appeal} appeal
  * @param {CostsDecision | null} [costsDecision]
  * @returns {Promise<Date | null | undefined>}
  */
 export const calculateDueDate = async (appeal, costsDecision) => {
 	// @ts-ignore
-	const isChildAppeal = !!appeal.parentAppeals?.length;
+	const isChildAppeal = !!appeal.parentAppeals?.filter(
+		// @ts-ignore
+		(parentAppeal) => parentAppeal.type === CASE_RELATIONSHIP_LINKED
+	).length;
 	switch (currentStatus(appeal)) {
 		case APPEAL_CASE_STATUS.READY_TO_START:
 			if (
@@ -85,9 +87,9 @@ export const calculateDueDate = async (appeal, costsDecision) => {
 			}
 			return new Date(appeal.caseExtensionDate ? appeal.caseExtensionDate : appeal.caseCreatedDate);
 		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION: {
-			if (appeal.siteVisit) {
+			if (appeal.siteVisit?.visitDate) {
 				return await calculateIssueDecisionDeadline(
-					new Date(appeal.siteVisit.visitEndTime || appeal.siteVisit.visitDate || 0),
+					new Date(appeal.siteVisit.visitEndTime || appeal.siteVisit.visitDate),
 					approxStageCompletion.STATE_TARGET_ISSUE_DETERMINATION_AFTER_SITE_VISIT
 				);
 			}
@@ -163,7 +165,7 @@ export const calculateDueDate = async (appeal, costsDecision) => {
 				}
 				return date;
 			}
-			return appeal.siteVisit ? new Date(appeal.siteVisit?.visitDate || 0) : undefined;
+			return appeal.siteVisit?.visitDate ? new Date(appeal.siteVisit.visitDate) : undefined;
 		}
 		case APPEAL_CASE_STATUS.EVENT: {
 			return new Date(

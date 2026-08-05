@@ -1,15 +1,25 @@
+import casAdvertExpedite from './advert-expedite.js';
+import advert from './advert.js';
 import enforcementListed from './enforcement-listed.js';
 import enforcement from './enforcement.js';
 import has from './has.js';
 import ldc from './ldc.js';
+import planningExpedite from './planning-expedite.js';
+import planning from './planning.js';
 import s20 from './s20.js';
+import s78Expedite from './s78-expedite.js';
 import s78 from './s78.js';
 
 export const mocks = {
 	householdAppeal: has,
 	s78Appeal: s78,
+	s78ExpediteAppeal: s78Expedite,
 	s20Appeal: s20,
 	enforcementAppeal: enforcement,
 	ldcAppeal: ldc,
-	enforcementListedAppeal: enforcementListed
+	enforcementListedAppeal: enforcementListed,
+	casPlanningAppeal: planning,
+	casPlanningExpediteAppeal: planningExpedite,
+	advertAppeal: advert,
+	casAdvertExpediteAppeal: casAdvertExpedite
 };

@@ -10,6 +10,7 @@ import {
 	AUDIT_TRAIL_ENFORCEMENT_NOTICE_CONTACT_ADDRESS,
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
 	AUDIT_TRAIL_SUBMISSION_INVALID,
+	ENFORCEMENT_APPEAL_INVALID_GROUND_A_FEE_NOT_PAID,
 	ERROR_NO_RECIPIENT_EMAIL,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
@@ -40,28 +41,24 @@ import {
 } from '#utils/link-appeals.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import {
-	addressToString,
-	camelToScreamingSnake,
-	capitalizeFirstLetter,
-	trimAppealType
-} from '#utils/string-utils.js';
+import { addressToString, trimAppealType } from '#utils/string-utils.js';
 import {
 	APPEAL_DEVELOPMENT_TYPES,
 	PLANNING_OBLIGATION_STATUSES
 } from '@pins/appeals/constants/appellant-cases.constants.js';
-import { ENFORCEMENT_APPEAL_INVALID_GROUND_A_FEE_NOT_PAID } from '@pins/appeals/constants/support.js';
 import {
 	isAnyEnforcementAppealType,
-	isEnforcementCaseType
+	isEnforcementCaseType,
+	isLdcCaseType
 } from '@pins/appeals/utils/appeal-type-checks.js';
+import { formatAppealUnderActSection } from '@pins/appeals/utils/appellant-case-mappers.js';
 import formatDate, { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
+import { camelToScreamingSnake, capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { EventType } from '@pins/event-client';
 import { loadEnvironment } from '@pins/platform';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_STATUS, APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
 import { add } from 'date-fns';
 import transitionState from '../../state/transition-state.js';
-
 const environment = loadEnvironment(process.env.NODE_ENV);
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
@@ -255,25 +252,33 @@ export const updateAppellantCaseValidationOutcome = async (
 		azureAdUserId
 	});
 
-	const updatedAppeal = await appealRepository.getAppealById(Number(appealId));
+	// TODO: performance
+	// is returning all data, return only needed data
+	/** @type {Omit<Appeal, 'documents' | 'representations'>|undefined} */
+	const updatedAppeal = await appealRepository.deprecatedGetAppealById(Number(appealId), {
+		omitDocuments: true,
+		omitRepresentations: true
+	});
 
 	if (isOutcomeValid(validationOutcome.name)) {
-		const latestDocumentVersionsUpdated = await documentRepository.setRedactionStatusOnValidation(
-			appeal.id
+		const noRedactionRequiredStatus = await commonRepository.getLookupListValueByKey(
+			'documentRedactionStatus',
+			{ key: 'key', value: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
 		);
-		for (const documentUpdated of latestDocumentVersionsUpdated) {
-			await broadcasters.broadcastDocument(
-				documentUpdated.documentGuid,
-				documentUpdated.version,
-				EventType.Update
-			);
-		}
+		const updatedDocuments = await documentRepository.setRedactionStatusOnValidation(
+			appeal.id,
+			appeal.reference,
+			appeal.appealType.key,
+			noRedactionRequiredStatus
+		);
+		await broadcasters.broadcastDocuments(updatedDocuments, EventType.Update);
 
 		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 		if (!recipientEmail) {
 			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 		}
 		const isEnforcement = isEnforcementCaseType(appeal.appealType.key);
+		const isLdc = isLdcCaseType(appeal.appealType.key);
 		const childEnforcementWithGrounds = await getChildEnforcementsWithGrounds(appeal);
 
 		const personalisation = {
@@ -281,9 +286,9 @@ export const updateAppellantCaseValidationOutcome = async (
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
 			team_email_address: teamEmail,
+			appeal_type: trimAppealType(appeal.appealType.type),
 			...(isEnforcement && {
 				local_planning_authority: updatedAppeal?.lpa?.name || '',
-				appeal_type: trimAppealType(appeal.appealType.type),
 				enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
 				appeal_grounds:
 					updatedAppeal?.appealGrounds?.map((ground) => ground.ground?.groundRef || '').sort() ||
@@ -293,6 +298,11 @@ export const updateAppellantCaseValidationOutcome = async (
 				}),
 				ground_a_barred: groundABarred || false,
 				other_info: otherInformation || ''
+			}),
+			...(isLdc && {
+				ldc_type: formatAppealUnderActSection(
+					updatedAppeal?.appellantCase?.applicationMadeUnderActSection
+				)
 			})
 		};
 		await notifySend({
@@ -305,11 +315,11 @@ export const updateAppellantCaseValidationOutcome = async (
 				feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key)
 			}
 		});
-		if (isEnforcement) {
+		if (isEnforcement || isLdc) {
 			const { agent, appellant } = updatedAppeal || {};
 			await notifySend({
 				azureAdUserId,
-				templateName: 'appeal-confirmed-enforcement-lpa',
+				templateName: isEnforcement ? 'appeal-confirmed-enforcement-lpa' : 'appeal-confirmed-lpa',
 				notifyClient,
 				recipientEmail: updatedAppeal?.lpa?.email,
 				personalisation: {
@@ -363,7 +373,7 @@ export const updateAppellantCaseValidationOutcome = async (
 					details
 				});
 
-				if (incompleteAppealDueDate) {
+				if (incompleteAppealDueDate || enforcementNoticeAppealOutcome?.groundAFeeReceiptDueDate) {
 					const missingDocumentOptions = await commonRepository.getLookupList(
 						'appellantCaseEnforcementMissingDocument'
 					);
@@ -380,10 +390,8 @@ export const updateAppellantCaseValidationOutcome = async (
 										`${missingDocumentOptions.find((option) => option.id === document.id)?.name}: ${document.text?.[0] || ''}`
 								)
 							: [],
-						fee_due_date: updatedAppeal?.enforcementNoticeAppealOutcome?.groundAFeeReceiptDueDate
-							? formatDate(
-									new Date(updatedAppeal.enforcementNoticeAppealOutcome.groundAFeeReceiptDueDate)
-								)
+						fee_due_date: enforcementNoticeAppealOutcome?.groundAFeeReceiptDueDate
+							? formatDate(new Date(enforcementNoticeAppealOutcome.groundAFeeReceiptDueDate), false)
 							: '',
 						grounds_and_facts: enforcementGroundsMismatchFacts
 							? enforcementGroundsMismatchFacts.map(
@@ -394,7 +402,9 @@ export const updateAppellantCaseValidationOutcome = async (
 						local_planning_authority: updatedAppeal?.lpa?.name || '',
 						other_info: incompleteReasons?.find((reason) => reason.id === 10)?.['text'] || [],
 						team_email_address: teamEmail,
-						due_date: formatDate(new Date(incompleteAppealDueDate), false),
+						due_date: incompleteAppealDueDate
+							? formatDate(new Date(incompleteAppealDueDate), false)
+							: '',
 						appeal_grounds:
 							updatedAppeal?.appealGrounds
 								?.map((ground) => ground.ground?.groundRef || '')
@@ -789,7 +799,9 @@ export function renderAuditTrailDetail(data) {
 		AUDIT_TRAIL_APPLICATION_MADE_UNDER_ACT_SECTION_UPDATED: () =>
 			capitalizeFirstLetter(
 				/** @type {string} */ (data.applicationMadeUnderActSection || '').replaceAll('-', ' ')
-			)
+			),
+		AUDIT_TRAIL_SCREENING_OPINION_INDICATES_EIA_REQUIRED_UPDATED: () =>
+			data.screeningOpinionIndicatesEiaRequired ? 'Yes' : 'No'
 	};
 
 	if (!auditTrailParameters[constantKey]) {

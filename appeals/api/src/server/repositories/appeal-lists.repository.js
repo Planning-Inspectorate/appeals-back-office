@@ -1,3 +1,4 @@
+import redisClient from '#infrastructure/redis.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { getSkipValue } from '#utils/database-pagination.js';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
@@ -69,13 +70,10 @@ const getAllAppeals = async (
 
 	const appeals = await databaseConnector.appeal.findMany({
 		where,
+		// TODO: performance
+		// use selects not include to only return the data needed for the appeals list
 		include: {
 			address: true,
-			appealStatus: {
-				where: {
-					valid: true
-				}
-			},
 			appealType: true,
 			procedureType: true,
 			lpa: true,
@@ -201,7 +199,45 @@ const getAppealsWithoutIncludes = async (
 		appellantProcedurePreferencePreFilter
 	);
 
-	return databaseConnector.appeal.findMany({ where });
+	const cacheTimeInSeconds = 120;
+	const cacheKey =
+		'getAppealsWithoutIncludes-' +
+		JSON.stringify({
+			searchTerm,
+			status,
+			hasInspector,
+			lpaCode,
+			inspectorId,
+			caseOfficerId,
+			padsInspectorId,
+			isGreenBelt,
+			appealTypeId,
+			assignedTeamId,
+			procedureTypeId,
+			appellantProcedurePreferencePreFilter
+		});
+
+	const getAppeals = async () =>
+		databaseConnector.appeal.findMany({
+			where,
+			select: {
+				lpaId: true,
+				inspectorUserId: true,
+				caseOfficerUserId: true,
+				padsInspectorUserId: true
+			}
+		});
+
+	if (!redisClient) {
+		return getAppeals();
+	}
+
+	return redisClient.getOrSet(
+		'getAppealsWithoutIncludes',
+		cacheKey,
+		cacheTimeInSeconds,
+		getAppeals
+	);
 };
 
 /**
@@ -234,12 +270,9 @@ const buildAllAppealsWhereClause = (
 	appellantProcedurePreferencePreFilter
 ) => {
 	return {
-		appealStatus: {
-			some: {
-				valid: true,
-				...(String(status) !== 'undefined' && { status })
-			}
-		},
+		...(String(status) !== 'undefined' && {
+			currentStatus: status
+		}),
 		appealType: {
 			key: { in: getEnabledAppealTypes() }
 		},
@@ -331,17 +364,12 @@ const buildAllAppealsWhereClause = (
 			procedureTypeId
 		}),
 		...(!!appellantProcedurePreferencePreFilter && {
-			appealStatus: {
-				some: {
-					valid: true,
-					status: {
-						in: [
-							APPEAL_CASE_STATUS.READY_TO_START,
-							APPEAL_CASE_STATUS.VALIDATION,
-							APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER
-						]
-					}
-				}
+			currentStatus: {
+				in: [
+					APPEAL_CASE_STATUS.READY_TO_START,
+					APPEAL_CASE_STATUS.VALIDATION,
+					APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER
+				]
 			},
 			appellantCase: {
 				appellantProcedurePreference: appellantProcedurePreferencePreFilter
@@ -506,14 +534,9 @@ const getAppealsStatusesInPersonalList = (userId) => {
  * @returns {Promise<string[]>} a duplicate-free list of all appeal statuses in the national list
  */
 const getAppealsStatusesInNationalList = async () => {
-	const results = await databaseConnector.appealStatus.findMany({
-		select: {
-			status: true
-		},
-		distinct: ['status']
-	});
-
-	return results.map((result) => result.status);
+	/** @type {{currentStatus: string}[]} */
+	const statuses = await databaseConnector.$queryRaw`SELECT DISTINCT currentStatus FROM Appeal;`;
+	return statuses.map((status) => status.currentStatus);
 };
 
 export default {
@@ -521,6 +544,5 @@ export default {
 	getAllAppealsCount,
 	getUserAppeals,
 	getAppealsStatusesInNationalList,
-	getAppealsStatusesInPersonalList,
 	getAppealsWithoutIncludes
 };

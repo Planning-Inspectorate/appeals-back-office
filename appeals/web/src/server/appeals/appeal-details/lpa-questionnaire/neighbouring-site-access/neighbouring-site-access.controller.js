@@ -107,8 +107,6 @@ export const postChangeNeighbouringSiteAccess = async (request, response) => {
 			text: 'Will the inspector need to enter a neighbour’s land or property updated'
 		});
 
-		console.log(request.currentAppeal.neighboringSites);
-
 		const nextPageUrl = createNextPageUrl(
 			request,
 			appealId,

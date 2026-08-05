@@ -23,6 +23,17 @@ const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 
+/**
+ * @param {number} appealId
+ * @param {number} folderId
+ * @param {number} [repId]
+ * @returns {string}
+ */
+const getFolderApiUrl = (appealId, folderId, repId) => {
+	const repString = repId ? `&repId=${repId}` : '';
+	return `/appeals/${appealId}/document-folders/${folderId}?pageNumber=1&pageSize=100${repString}`;
+};
+
 describe('interested-party-comments', () => {
 	beforeEach(() => {
 		installMockApi();
@@ -41,7 +52,7 @@ describe('interested-party-comments', () => {
 			.reply(200, [{ folderId: 1234, path: 'representation/attachments' }]);
 
 		nock('http://test/')
-			.get('/appeals/2/document-folders/1?repId=3670')
+			.get(getFolderApiUrl(2, 1, 3670))
 			.reply(200, costsFolderInfoAppellantApplication)
 			.persist();
 
@@ -355,7 +366,7 @@ describe('interested-party-comments', () => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1')
+				.get(getFolderApiUrl(2, 1))
 				.reply(200, costsFolderInfoAppellantApplication)
 				.persist();
 
@@ -367,7 +378,7 @@ describe('interested-party-comments', () => {
 		});
 
 		it('should render a 404 error page if the folderId is invalid', async () => {
-			nock('http://test/').get('/appeals/2/document-folders/99').reply(404);
+			nock('http://test/').get(getFolderApiUrl(2, 99)).reply(404);
 
 			const response = await request.get(
 				`${baseUrl}/2/interested-party-comments/5/manage-documents/99`
@@ -424,7 +435,7 @@ describe('interested-party-comments', () => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1')
+				.get(getFolderApiUrl(2, 1))
 				.reply(200, costsFolderInfoAppellantApplication)
 				.persist();
 
@@ -432,10 +443,7 @@ describe('interested-party-comments', () => {
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
 
-			nock('http://test/')
-				.get('/appeals/2/document-folders/1')
-				.reply(200, documentFolderInfo)
-				.persist();
+			nock('http://test/').get(getFolderApiUrl(2, 1)).reply(200, documentFolderInfo).persist();
 
 			nock('http://test/')
 				.get('/appeals/2/reps?type=comment')
@@ -445,7 +453,7 @@ describe('interested-party-comments', () => {
 		});
 
 		it('should render a 404 error page if the folderId is invalid', async () => {
-			nock('http://test/').get('/appeals/2/document-folders/99').reply(404);
+			nock('http://test/').get(getFolderApiUrl(2, 99)).reply(404);
 
 			const response = await request.get(
 				`${baseUrl}/2/interested-party-comments/5/manage-documents/1/99`
@@ -498,7 +506,7 @@ describe('interested-party-comments', () => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1')
+				.get(getFolderApiUrl(2, 1))
 				.reply(200, costsFolderInfoAppellantApplication)
 				.persist();
 
@@ -544,7 +552,7 @@ describe('interested-party-comments', () => {
 			nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
 
 			nock('http://test/')
-				.get('/appeals/2/document-folders/1')
+				.get(getFolderApiUrl(2, 1))
 				.reply(200, costsFolderInfoAppellantApplication)
 				.persist();
 
@@ -552,10 +560,7 @@ describe('interested-party-comments', () => {
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
 
-			nock('http://test/')
-				.get('/appeals/2/document-folders/1')
-				.reply(200, documentFolderInfo)
-				.persist();
+			nock('http://test/').get(getFolderApiUrl(2, 1)).reply(200, documentFolderInfo).persist();
 
 			nock('http://test/')
 				.get('/appeals/2/reps?type=comment')

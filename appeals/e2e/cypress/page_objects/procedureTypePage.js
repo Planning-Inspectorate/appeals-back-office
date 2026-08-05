@@ -1,3 +1,6 @@
+// @ts-nocheck
+/// <reference types="cypress"/>
+
 import { CaseDetailsPage } from './caseDetailsPage.js';
 
 export class ProcedureTypePage extends CaseDetailsPage {
@@ -6,15 +9,11 @@ export class ProcedureTypePage extends CaseDetailsPage {
 		written: () => cy.get('#appeal-procedure'),
 		hearing: () => cy.get('#appeal-procedure-2'),
 		inquiry: () => cy.get('#appeal-procedure-3'),
-		'part 1': () => cy.get('#appeal-procedure-4')
+		part1: () => cy.get('#appeal-procedure'),
+		part2: () => cy.get('#appeal-procedure-2')
 	};
 
 	procedureTypeMappings = {
-		part1: {
-			element: () => cy.get('#appeal-procedure'),
-			displayName: 'Part 1',
-			value: 'writtenPart1'
-		},
 		written: {
 			element: this.procedureTypeElements.written,
 			displayName: 'Written representations',
@@ -30,15 +29,29 @@ export class ProcedureTypePage extends CaseDetailsPage {
 			displayName: 'Inquiry',
 			value: 'inquiry'
 		},
-		'part 1': {
-			element: this.procedureTypeElements['part 1'],
-			displayName: 'Part 1',
-			value: 'part 1'
+		writtenpart2: {
+			element: this.procedureTypeElements.part2,
+			displayName: 'Written representations (Part 2)',
+			value: 'written'
+		},
+		writtenpart1: {
+			element: this.procedureTypeElements.part1,
+			displayName: 'Written representations (Part 1)',
+			value: 'writtenPart1'
 		}
 	};
 
 	procedureTypeExists(label) {
 		const normalizedLabel = label.toLowerCase().trim();
+
+		return Object.values(this.procedureTypeMappings).some(
+			(mapping) => mapping.displayName.toLowerCase().trim() === normalizedLabel
+		);
+	}
+
+	hasProcedureType(label) {
+		const normalizedLabel = label.toLowerCase().trim();
+
 		return Object.prototype.hasOwnProperty.call(this.procedureTypeMappings, normalizedLabel);
 	}
 
@@ -57,7 +70,9 @@ export class ProcedureTypePage extends CaseDetailsPage {
 			);
 		}
 
-		const mapping = this.procedureTypeMappings[normalizedLabel];
+		const mapping = Object.values(this.procedureTypeMappings).find(
+			(m) => m.displayName.toLowerCase().trim() === normalizedLabel
+		);
 
 		// Click and verify it's checked with value validation
 		mapping.element().click().should('be.checked').and('have.value', mapping.value);
@@ -70,8 +85,36 @@ export class ProcedureTypePage extends CaseDetailsPage {
 		return Object.values(this.procedureTypeMappings).map((mapping) => mapping.displayName);
 	}
 
+	getNumberOfExpectedVisibleProcedureTypes(expectedProcedureTypes) {
+		return expectedProcedureTypes.filter((type) => type.visible).length;
+	}
+
 	verifyHeader(procedureTypeCaption) {
 		this.elements.getAppealRefCaseDetails().should('contain.text', procedureTypeCaption);
+	}
+
+	verifyDisplayedProcedureTypes(expectedProcedureTypes) {
+		const availableOptions = this.getAvailableProcedureTypes().join(', ');
+
+		// verify number of radio options displayed matches number of expected procedure types
+		const expectedVisibleCount =
+			this.getNumberOfExpectedVisibleProcedureTypes(expectedProcedureTypes);
+		this.validateNumberOfRadioBtn(expectedVisibleCount);
+
+		// verify each expected procedure type is displayed or not based on the visible property
+		expectedProcedureTypes.forEach((procedureType) => {
+			const normalizedType = procedureType.name.toLowerCase().trim();
+			if (this.hasProcedureType(normalizedType)) {
+				const visibleAssertion = procedureType.visible ? 'be.visible' : 'not.exist';
+				cy.contains('label', this.procedureTypeMappings[normalizedType].displayName).should(
+					visibleAssertion
+				);
+			} else {
+				throw new Error(
+					`Procedure type "${procedureType.name}" not found. Available options: ${availableOptions}`
+				);
+			}
+		});
 	}
 
 	verifyNoProcedureTypeSelected(part1 = true, linkedCase = false) {

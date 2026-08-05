@@ -5,8 +5,6 @@ import { mapDocumentEntity } from '#mappers/integration/map-document-entity.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import pino from '#utils/logger.js';
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
-import { REP_ATTACHMENT_DOCTYPE } from '@pins/appeals/constants/documents.js';
-import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { schemas, validateFromSchema } from '../integrations.validators.js';
 
 const entityInfo = {
@@ -72,16 +70,6 @@ export const broadcastDocument = async (documentId, version, updateType) => {
 		return false;
 	}
 
-	const latestDocumentVersion = document.versions?.length === 1 ? document.versions[0] : null;
-
-	// wait to broadcast representationAttachments if document type is not known
-	if (
-		latestDocumentVersion?.documentType === REP_ATTACHMENT_DOCTYPE &&
-		msg.documentType === APPEAL_DOCUMENT_TYPE.UNCATEGORISED
-	) {
-		return false;
-	}
-
 	const topic = producers.boDocument;
 	const res = await eventClient.sendEvents(topic, [msg], updateType, {
 		entityType: entityInfo.name,
@@ -93,4 +81,68 @@ export const broadcastDocument = async (documentId, version, updateType) => {
 	}
 
 	return true;
+};
+
+/**
+ * @param {import('#mappers/integration/map-document-entity.js').DocumentWithAppeal[]} documents
+ * @param {string} updateType
+ * @returns
+ */
+export const broadcastDocuments = async (documents, updateType) => {
+	if (!config.serviceBusEnabled && config.NODE_ENV !== 'development') {
+		return false;
+	}
+
+	if (!documents || documents.length === 0) {
+		pino.error(`No documents to broadcast`);
+		return false;
+	}
+
+	const messages = documents
+		.map((document) => mapDocumentEntity(document))
+		.filter((x) => x !== null)
+		.filter(Boolean);
+
+	if (!messages || messages.length === 0) {
+		pino.error(`Failed to map documents for broadcast`);
+		return false;
+	}
+
+	let failedToValidate = false;
+	for (const msg of messages) {
+		if (!msg) {
+			pino.error(`Failed to map document for broadcast`);
+		}
+
+		const validationResult = await validateFromSchema(schemas.events.document, msg);
+
+		if (validationResult !== true && validationResult.errors) {
+			const errorDetails = validationResult.errors?.map(
+				(e) => `${e.instancePath || '/'}: ${e.message}`
+			);
+
+			pino.error(`Error validating ${entityInfo.name} entity: ${errorDetails}`);
+			failedToValidate = true;
+		}
+	}
+	if (failedToValidate) return false;
+
+	// batch send document messages to service bus
+	const topic = producers.boDocument;
+	const batchSize = 100;
+	let allSucceeded = true;
+	for (let i = 0; i < messages.length; i += batchSize) {
+		const messageBatch = messages.slice(i, i + batchSize);
+		const batchResult = await eventClient.sendEvents(topic, messageBatch, updateType, {
+			entityType: entityInfo.name,
+			sourceSystem: ODW_SYSTEM_ID
+		});
+
+		if (!batchResult) {
+			pino.error(`Failed to send batch of ${messageBatch.length} documents to service bus`);
+			allSucceeded = false;
+		}
+	}
+
+	return allSucceeded;
 };

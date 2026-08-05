@@ -1,18 +1,8 @@
 import { textSummaryListItem } from '#lib/mappers/components/index.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapApplicationReference = ({
-	appealDetails,
-	appellantCaseData,
-	currentRoute,
-	userHasUpdateCase
-}) => {
-	const editable =
-		userHasUpdateCase &&
-		!appellantCaseData.isEnforcementChild &&
-		!appealDetails.lpaQuestionnaireId &&
-		appealDetails.appealStatus !== APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE;
+export const mapApplicationReference = ({ appellantCaseData, currentRoute, userHasUpdateCase }) => {
+	const editable = userHasUpdateCase && !appellantCaseData.isEnforcementChild;
 
 	return textSummaryListItem({
 		id: 'application-reference',

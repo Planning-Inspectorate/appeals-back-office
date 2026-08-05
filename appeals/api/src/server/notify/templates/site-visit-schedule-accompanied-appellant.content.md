@@ -2,7 +2,7 @@
 
 # About the visit
 
-Our inspector (or their representative) will visit {{site_address}} at {{start_time}} on {{visit_date}}.
+Our inspector {% if inspector_name -%}{{inspector_name}} {% endif %}(or their representative) will visit {{site_address}} at {{start_time}} on {{visit_date}}.
 
 You cannot give the inspector any documents or discuss the appeal with them.
 

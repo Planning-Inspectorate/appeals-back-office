@@ -76,7 +76,6 @@ const importLPAQuestionnaire = async (caseReference, data, documents, relatedRef
  * @param {Appeal} appeal
  * @param {Omit<import('#db-client/models.ts').RepresentationCreateInput, 'appeal'>} data
  * @param {import('#db-client/models.ts').DocumentVersionCreateInput[]} attachments
- * @returns {Promise<{rep: Representation, documentVersions: DocumentVersion[]}>}
  */
 const importRepresentation = async (appeal, data, attachments) => {
 	const result = await createRepresentation(appeal, data, attachments);

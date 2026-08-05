@@ -1,6 +1,6 @@
 # New start date for appeal
 
-There is a new start date for the {{appeal_type}} appeal against the planning application {{lpa_reference}}.
+There is a new start date for the {{appeal_type}} appeal against the planning application {%-if enforcement_reference %} {{ enforcement_reference}}{%- else %} {{ lpa_reference}}{% endif %}.
 
 The new start date is {{start_date}}.
 

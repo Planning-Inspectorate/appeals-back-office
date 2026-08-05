@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -44,7 +45,6 @@ describe('update-decision-letter', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-			console.log('unprettifiedElement', unprettifiedElement.innerHTML);
 			expect(unprettifiedElement.innerHTML).toContain('Correction notice');
 		});
 	});
@@ -196,6 +196,11 @@ describe('update-decision-letter', () => {
 	describe('GET /issue-decision/check-your-decision', () => {
 		let issueDecisionAppealData = appealDataIssuedDecision;
 
+		beforeEach(() => {
+			jest.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate', 'performance'] });
+			jest.setSystemTime(new Date('2026-01-02T00:00:00.000Z'));
+		});
+
 		beforeEach(async () => {
 			nock.cleanAll();
 			nock('http://test/')
@@ -205,8 +210,18 @@ describe('update-decision-letter', () => {
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
 			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 			nock('http://test/')
-				.post(`/appeals/notify-preview/correction-notice-decision.content.md`)
-				.reply(200, template);
+				.post(`/appeals/notify-preview/correction-notice-decision-lpa.content.md`)
+				.reply(200, template)
+				.persist();
+			nock('http://test/')
+				.post('/appeals/notify-preview/correction-notice-decision-appellant.content.md')
+				.reply(200, template)
+				.persist();
+			nock('http://test/')
+				.post('/appeals/notify-preview/correction-notice-decision-interested-party.content.md')
+				.reply(200, template)
+				.persist();
+
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -235,9 +250,9 @@ describe('update-decision-letter', () => {
 				});
 		});
 
-		afterEach(teardown);
+		afterEach(teardown); // this includes jest.useRealTimers();
 
-		it('should render the check your decision page', async () => {
+		it('should render the check your details page', async () => {
 			nock('http://test/')
 				.get('/appeals/1/case-team-email')
 				.reply(200, {
@@ -260,11 +275,13 @@ describe('update-decision-letter', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Check details and update decision letter');
 			expect(unprettifiedElement.innerHTML).toContain('Decision letter');
 			expect(unprettifiedElement.innerHTML).toContain('Correction notice');
-			expect(unprettifiedElement.innerHTML).toContain('Preview');
+			expect(unprettifiedElement.innerHTML).toContain('Preview LPA email');
+			expect(unprettifiedElement.innerHTML).toContain('Preview appellant email');
+			expect(unprettifiedElement.innerHTML).toContain('Preview interested party email');
 			expect(unprettifiedElement.innerHTML).toContain('Update decision letter');
 		});
 
-		it('should use the original decision letterDate in the email preview, not the upload date', async () => {
+		it('should use the new file upload date in the notifies', async () => {
 			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
 			expect(correctionNoticeResponse.statusCode).toBe(302);
 
@@ -292,26 +309,39 @@ describe('update-decision-letter', () => {
 
 			let capturedPreviewBody;
 			nock('http://test/')
-				.post(`/appeals/notify-preview/correction-notice-decision.content.md`)
+				.post('/appeals/notify-preview/correction-notice-decision-lpa.content.md')
 				.reply(200, function (_, body) {
 					capturedPreviewBody = body;
 					return template;
 				});
+			nock('http://test/')
+				.post('/appeals/notify-preview/correction-notice-decision-appellant.content.md')
+				.reply(200, template);
+			nock('http://test/')
+				.post('/appeals/notify-preview/correction-notice-decision-interested-party.content.md')
+				.reply(200, template);
 
 			await request.get(`${baseUrl}/1/update-decision-letter/check-details`);
 
-			expect(capturedPreviewBody.decision_date).toBe('25 December 2023');
+			expect(capturedPreviewBody.decision_date).toBe('2 January 2026');
 		});
 
-		it('should submit the original decision letterDate as receivedDate, not the upload date', async () => {
+		it('should submit the upload date as receivedDate', async () => {
 			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
 			expect(correctionNoticeResponse.statusCode).toBe(302);
 
 			let capturedApiBody;
+			let capturedCaseDecisionOutcomeDateBody;
 			nock('http://test/')
 				.post('/appeals/1/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b')
 				.reply(200, function (_, body) {
 					capturedApiBody = body;
+					return { success: true };
+				});
+			nock('http://test/')
+				.patch('/appeals/1/decision/caseDecisionOutcomeDate')
+				.reply(200, function (_, body) {
+					capturedCaseDecisionOutcomeDateBody = body;
 					return { success: true };
 				});
 
@@ -320,7 +350,10 @@ describe('update-decision-letter', () => {
 				.send({});
 
 			expect(response.statusCode).toBe(302);
-			expect(capturedApiBody.document.receivedDate).toBe('2023-12-25T00:00:00.000Z');
+			expect(capturedApiBody.document.receivedDate).toBe('2026-01-02T00:00:00.000Z');
+			expect(capturedCaseDecisionOutcomeDateBody.caseDecisionOutcomeDate).toBe(
+				'2026-01-02T00:00:00.000Z'
+			);
 		});
 
 		it('should render the view-decision page after submit', async () => {
@@ -329,6 +362,9 @@ describe('update-decision-letter', () => {
 
 			nock('http://test/')
 				.post('/appeals/1/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b')
+				.reply(200, { success: true });
+			nock('http://test/')
+				.patch('/appeals/1/decision/caseDecisionOutcomeDate')
 				.reply(200, { success: true });
 
 			const response = await request

@@ -59,11 +59,13 @@ export function loadConfig() {
 		FEATURE_FLAG_NOTIFY_CASE_HISTORY,
 		FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT,
 		FEATURE_FLAG_PDF_DOWNLOAD,
-		FEATURE_FLAG_NET_RESIDENCE,
 		FEATURE_FLAG_NET_RESIDENCE_S20,
 		FEATURE_FLAG_HEARING_POST_MVP,
 		FEATURE_FLAG_EXPEDITED_APPEALS,
+		FEATURE_FLAG_EXPEDITED_APPEALS_LPAQ,
 		FEATURE_FLAG_MANUALLY_ADD_REP,
+		GOOGLE_ANALYTICS_ID,
+		MICROSOFT_CLARITY_ID,
 		HORIZON_APPEAL_BASE_URL,
 		HTTP_PORT = 8080,
 		HTTPS_ENABLED,
@@ -84,7 +86,6 @@ export function loadConfig() {
 		FEATURE_FLAG_SEARCH_CASE_OFFICER,
 		FEATURE_FLAG_ENFORCEMENT_NOTICE,
 		FEATURE_FLAG_ENFORCEMENT_LINKED,
-		FEATURE_FLAG_ENFORCEMENT_LEAD_CAN_START,
 		FEATURE_FLAG_ENFORCEMENT_CANCEL,
 		FEATURE_FLAG_INVALID_DECISION_LETTER,
 		FEATURE_FLAG_RULE_6_MVP,
@@ -92,7 +93,6 @@ export function loadConfig() {
 		FEATURE_FLAG_APPELLANT_STATEMENT,
 		FEATURE_FLAG_RULE_6_STATEMENT,
 		FEATURE_FLAG_RULE_6_COSTS,
-		FEATURE_FLAG_LDC,
 		FEATURE_FLAG_S20_HEARING,
 		FEATURE_FLAG_S20_INQUIRY,
 		FEATURE_FLAG_ENFORCEMENT_NOTICE_HEARING,
@@ -103,7 +103,10 @@ export function loadConfig() {
 		FEATURE_FLAG_ELB_INQUIRY,
 		FEATURE_FLAG_ENFORCEMENT_HEARING_LINKED,
 		FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED,
-		FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED
+		FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED,
+		FEATURE_FLAG_SHARE_COSTS,
+		FEATURE_FLAG_NEW_BEFORE_YOU_START,
+		FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE
 	} = environment;
 
 	const config = {
@@ -122,6 +125,8 @@ export function loadConfig() {
 		cacheControl: {
 			maxAge: CACHE_CONTROL_MAX_AGE || '1d'
 		},
+		googleAnalyticsId: GOOGLE_ANALYTICS_ID || 'id',
+		microsoftClarityId: MICROSOFT_CLARITY_ID || 'id',
 		horizonAppealBaseUrl: HORIZON_APPEAL_BASE_URL,
 		useBlobEmulator: AZURE_BLOB_USE_EMULATOR === 'true',
 		logLevelStdOut: LOG_LEVEL_STDOUT,
@@ -165,7 +170,6 @@ export function loadConfig() {
 			featureFlagNotifyCaseHistory: FEATURE_FLAG_NOTIFY_CASE_HISTORY === 'true',
 			featureFlagSimplifyTeamAssignment: FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT === 'true',
 			featureFlagPdfDownload: FEATURE_FLAG_PDF_DOWNLOAD === 'true',
-			featureFlagNetResidence: FEATURE_FLAG_NET_RESIDENCE === 'true',
 			featureFlagNetResidenceS20: FEATURE_FLAG_NET_RESIDENCE_S20 === 'true',
 			featureFlagChangeProcedureType: FEATURE_FLAG_CHANGE_PROCEDURE_TYPE === 'true',
 			featureFlagHearingPostMvp: FEATURE_FLAG_HEARING_POST_MVP === 'true',
@@ -173,17 +177,16 @@ export function loadConfig() {
 			featureFlagSearchCaseOfficer: FEATURE_FLAG_SEARCH_CASE_OFFICER === 'true',
 			featureFlagEnforcementNotice: FEATURE_FLAG_ENFORCEMENT_NOTICE === 'true',
 			featureFlagEnforcementLinked: FEATURE_FLAG_ENFORCEMENT_LINKED === 'true',
-			featureFlagEnforcementLeadCanStart: FEATURE_FLAG_ENFORCEMENT_LEAD_CAN_START === 'true',
 			featureFlagEnforcementCancel: FEATURE_FLAG_ENFORCEMENT_CANCEL === 'true',
 			featureFlagInvalidDecisionLetter: FEATURE_FLAG_INVALID_DECISION_LETTER === 'true',
 			featureFlagRule6Mvp: FEATURE_FLAG_RULE_6_MVP === 'true',
 			featureFlagRule6PoE: FEATURE_FLAG_RULE_6_POE === 'true',
 			featureFlagExpeditedAppeals: FEATURE_FLAG_EXPEDITED_APPEALS === 'true',
+			featureFlagExpeditedAppealsLpaq: FEATURE_FLAG_EXPEDITED_APPEALS_LPAQ === 'true',
 			featureFlagManuallyAddReps: FEATURE_FLAG_MANUALLY_ADD_REP === 'true',
 			featureFlagAppellantStatement: FEATURE_FLAG_APPELLANT_STATEMENT === 'true',
 			featureFlagRule6Statement: FEATURE_FLAG_RULE_6_STATEMENT === 'true',
 			featureFlagRule6Costs: FEATURE_FLAG_RULE_6_COSTS === 'true',
-			featureFlagLDC: FEATURE_FLAG_LDC === 'true',
 			featureFlagS20Hearing: FEATURE_FLAG_S20_HEARING === 'true',
 			featureFlagS20Inquiry: FEATURE_FLAG_S20_INQUIRY === 'true',
 			featureFlagEnforcementNoticeHearing: FEATURE_FLAG_ENFORCEMENT_NOTICE_HEARING === 'true',
@@ -195,7 +198,18 @@ export function loadConfig() {
 			featureFlagEnforcementHearingLinked: FEATURE_FLAG_ENFORCEMENT_HEARING_LINKED === 'true',
 			featureFlagEnforcementInquiryLinked: FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED === 'true',
 			featureFlagEnforcementChangeProcedureLinked:
-				FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED === 'true'
+				FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED === 'true',
+			featureFlagShareCosts: FEATURE_FLAG_SHARE_COSTS === 'true',
+			featureFlagNewBeforeYouStart: FEATURE_FLAG_NEW_BEFORE_YOU_START === 'true',
+			featureFlagEnforcementChangeProcedure: FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE === 'true',
+			featureFlagSharingHearingDocuments:
+				environment.FEATURE_FLAG_SHARING_HEARING_DOCUMENTS === 'true',
+			featureFlagSharingInquiryEventDocuments:
+				environment.FEATURE_FLAG_SHARING_INQUIRY_EVENT_DOCUMENTS === 'true',
+			featureFlagSharingInquiryDocuments:
+				environment.FEATURE_FLAG_SHARING_INQUIRY_DOCUMENTS === 'true',
+			featureFlagSharingSupportingDocuments:
+				environment.FEATURE_FLAG_SHARING_SUPPORTING_DOCUMENTS === 'true'
 		},
 		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
 		pdfServiceHost: PDF_SERVICE_HOST

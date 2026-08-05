@@ -7,7 +7,6 @@ import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
-import { tag } from '../../support/tag';
 
 const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();
@@ -36,7 +35,7 @@ describe('Progress S78 to decision', () => {
 		cy.deleteAppeals(appeal);
 	});
 
-	it(`Completes a S78 appeal to decision`, { tags: tag.smoke }, () => {
+	it(`Completes a S78 appeal to decision`, () => {
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {
@@ -68,8 +67,7 @@ describe('Progress S78 to decision', () => {
 			cy.simulateStatementsDeadlineElapsed(caseObj);
 			cy.reload();
 
-			caseDetailsPage.basePageElements.bannerLink().click();
-			caseDetailsPage.clickButtonByText('Confirm');
+			caseDetailsPage.shareCommentsAndStatements();
 			caseDetailsPage.checkStatusOfCase('Final comments', 0);
 
 			happyPathHelper.addLpaFinalComment(caseObj);
@@ -79,8 +77,7 @@ describe('Progress S78 to decision', () => {
 			});
 			cy.simulateFinalCommentsDeadlineElapsed(caseObj);
 			cy.reload();
-			caseDetailsPage.basePageElements.bannerLink().click();
-			caseDetailsPage.clickButtonByText('Share final comment');
+			caseDetailsPage.shareFinalComments();
 			caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
 
 			happyPathHelper.setupSiteVisitFromBanner(caseObj);
@@ -105,7 +102,7 @@ describe('Progress S78 to decision', () => {
 		});
 	});
 
-	it(`Completes a CAS Planning Appeal to decision`, { tags: tag.smoke }, () => {
+	it(`Completes a CAS Planning Appeal to decision`, () => {
 		cy.createCase({ caseType: 'ZP' }).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);

@@ -4,9 +4,73 @@ import { appealData, appealDataEnforcementNotice } from '#testing/app/fixtures/r
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { addDays } from 'date-fns';
-import { getRequiredActionsForAppeal } from '../required-actions.js';
+import { canDisplayAction, getRequiredActionsForAppeal } from '../required-actions.js';
 
 describe('required actions', () => {
+	describe('canDisplayAction', () => {
+		it('returns true for non-child appeals', () => {
+			expect(
+				canDisplayAction({
+					appealStatus: APPEAL_CASE_STATUS.EVENT,
+					appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
+					isChildAppeal: false
+				})
+			).toBe(true);
+		});
+		it.each([
+			[
+				'true for non-enforcement child appeal in status VALIDATION, validation on each appeal',
+				APPEAL_CASE_STATUS.VALIDATION,
+				APPEAL_TYPE.S78,
+				true
+			],
+			[
+				'false for enforcement notice child appeal in status VALIDATION, validation only on the lead',
+				APPEAL_CASE_STATUS.VALIDATION,
+				APPEAL_TYPE.ENFORCEMENT_NOTICE,
+				false
+			],
+			[
+				'true for child appeal in status AWAITING_TRANSFER, awaiting transfer on each appeal',
+				APPEAL_CASE_STATUS.AWAITING_TRANSFER,
+				APPEAL_TYPE.ENFORCEMENT_NOTICE,
+				true
+			],
+			[
+				'true for non-enforcement child appeal in status LPA_QUESTIONNAIRE, lpaq on each appeal',
+				APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				APPEAL_TYPE.S78,
+				true
+			],
+			[
+				'false for enforcement notice child appeal in status LPA_QUESTIONNAIRE, lpaq only submitted on the lead',
+				APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				APPEAL_TYPE.ENFORCEMENT_NOTICE,
+				false
+			],
+			[
+				'false for child appeal in status EVENT, event only set up on the lead',
+				APPEAL_CASE_STATUS.EVENT,
+				APPEAL_TYPE.S78,
+				false
+			],
+			[
+				'false for child appeal in any other status',
+				APPEAL_CASE_STATUS.COMPLETE,
+				APPEAL_TYPE.S78,
+				false
+			]
+		])('returns %s', (_, appealStatus, appealType, expectedResult) => {
+			expect(
+				canDisplayAction({
+					appealStatus,
+					appealType,
+					isChildAppeal: true
+				})
+			).toBe(expectedResult);
+		});
+	});
+
 	describe('getRequiredActionsForAppeal', () => {
 		const pastDate = '2025-01-06T23:59:00.000Z';
 		const futureDate = '3000-01-06T23:59:00.000Z';
@@ -29,6 +93,19 @@ describe('required actions', () => {
 					{
 						...appealData,
 						appealStatus: APPEAL_CASE_STATUS.READY_TO_START
+					},
+					'detail'
+				)
+			).toEqual(['startAppeal']);
+		});
+
+		it('should return "startAppeal" if appeal status is "READY_TO_START" and appeal is S78 expedited', () => {
+			expect(
+				getRequiredActionsForAppeal(
+					{
+						...appealData,
+						appealStatus: APPEAL_CASE_STATUS.READY_TO_START,
+						isS78Expedited: true
 					},
 					'detail'
 				)
@@ -66,6 +143,34 @@ describe('required actions', () => {
 					{
 						...appealData,
 						procedureType: null,
+						siteVisit: undefined,
+						appealStatus: APPEAL_CASE_STATUS.EVENT
+					},
+					'detail'
+				)
+			).toEqual(['arrangeSiteVisit']);
+		});
+
+		it('should return "arrangeSiteVisit" if appeal procedure is "writtenPart1", appeal status is "EVENT" and no siteVisit exists', () => {
+			expect(
+				getRequiredActionsForAppeal(
+					{
+						...appealData,
+						procedureType: 'writtenPart1',
+						siteVisit: undefined,
+						appealStatus: APPEAL_CASE_STATUS.EVENT
+					},
+					'detail'
+				)
+			).toEqual(['arrangeSiteVisit']);
+		});
+
+		it('should return "arrangeSiteVisit" if appeal procedure is "writtenPart2", appeal status is "EVENT" and no siteVisit exists', () => {
+			expect(
+				getRequiredActionsForAppeal(
+					{
+						...appealData,
+						procedureType: 'writtenPart2',
 						siteVisit: undefined,
 						appealStatus: APPEAL_CASE_STATUS.EVENT
 					},
@@ -309,7 +414,7 @@ describe('required actions', () => {
 					}
 				};
 
-				it('should return "shareIpCommentsAndLpaStatement" if ip comments due date and statements due date have both passed, and there are no ip comments or lpa statement awaiting review, and there are ip comments to share but no lpa statement to share', () => {
+				it('should return "shareIpComments" if ip comments due date and statements due date have both passed, and there are no ip comments or lpa statement awaiting review, and there are ip comments to share but no lpa statement to share', () => {
 					expect(
 						getRequiredActionsForAppeal(
 							{
@@ -333,10 +438,10 @@ describe('required actions', () => {
 							},
 							'detail'
 						)
-					).toEqual(['shareIpCommentsAndLpaStatement']);
+					).toEqual(['shareIpComments']);
 				});
 
-				it('should return "shareIpCommentsAndLpaStatement" if ip comments due date and statements due date have both passed, and there are no ip comments or lpa statement awaiting review, and there are no ip comments to share but there is an lpa statement to share', () => {
+				it('should return "shareStatements" if ip comments due date and statements due date have both passed, and there are no ip comments or lpa statement awaiting review, and there are no ip comments to share but there is an lpa statement to share', () => {
 					expect(
 						getRequiredActionsForAppeal(
 							{
@@ -360,7 +465,7 @@ describe('required actions', () => {
 							},
 							'detail'
 						)
-					).toEqual(['shareIpCommentsAndLpaStatement']);
+					).toEqual(['shareStatements']);
 				});
 
 				it('should return "shareIpCommentsAndLpaStatement" if ip comments due date and statements due date have both passed, and there are no ip comments or lpa statement awaiting review, and there are ip comments to share and an lpa statement to share', () => {
@@ -414,7 +519,7 @@ describe('required actions', () => {
 					).toEqual(['progressFromStatements']);
 				});
 
-				it('should return "shareIpCommentsAndLpaStatement" and "updateLpaStatement" if ip comments due date and statements due date have both passed, and there are no ip comments or lpa statement awaiting review, and there is an lpa statement to share, and the lpa statement is marked as incomplete', () => {
+				it('should return "shareIpCommentsAndLpaStatement" and "updateLpaStatement" if ip comments due date and statements due date have both passed, and there are no ip comments or lpa statement awaiting review, and there is an lpa statement to share, and IP comments to share, and the lpa statement is marked as incomplete', () => {
 					expect(
 						getRequiredActionsForAppeal(
 							{
@@ -425,6 +530,14 @@ describe('required actions', () => {
 										status: 'received',
 										receivedAt: pastDate,
 										representationStatus: 'incomplete'
+									},
+									ipComments: {
+										status: 'received',
+										counts: {
+											awaiting_review: 0,
+											valid: 1,
+											published: 0
+										}
 									}
 								}
 							},
@@ -455,7 +568,32 @@ describe('required actions', () => {
 								}
 							}
 						})
-					).toEqual(['progressToProofOfEvidenceAndWitnesses']);
+					).toEqual(['progressFromStatements']);
+				});
+
+				it('should return "progressFromStatements" if ip comments due date and statements due date have both passed, and there are no ip comments or lpa statement awaiting review, and there are no ip comments or lpa statement to share and the procedure is hearing', () => {
+					expect(
+						getRequiredActionsForAppeal({
+							...appealDataWithBothDueDatesPassed,
+							procedureType: 'Hearing',
+							documentationSummary: {
+								...appealDataWithStatementsStatus.documentationSummary,
+								ipComments: {
+									status: 'not_received',
+									counts: {
+										awaiting_review: 0,
+										valid: 0,
+										published: 0
+									}
+								},
+								lpaStatement: {
+									status: 'not_received',
+									receivedAt: null,
+									representationStatus: null
+								}
+							}
+						})
+					).toEqual(['progressFromStatements']);
 				});
 			});
 
@@ -1480,6 +1618,7 @@ describe('required actions', () => {
 					getRequiredActionsForAppeal(
 						{
 							...appealData,
+							siteVisit: undefined,
 							appealStatus: APPEAL_CASE_STATUS.EVENT
 						},
 						'detail'

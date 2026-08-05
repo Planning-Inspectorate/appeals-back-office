@@ -20,6 +20,7 @@ import * as controller from '../documents.controller.js';
 import * as mappers from '../documents.mapper.js';
 import * as service from '../documents.service.js';
 
+const { notifySend } = await import('#notify/notify-send.js');
 const { databaseConnector } = await import('#utils/database-connector.js');
 const { default: got } = await import('got');
 
@@ -38,15 +39,18 @@ describe('/appeals/:appealId/document-folders/:folderId', () => {
 		test('gets a single document folder', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 			databaseConnector.folder.findUnique.mockResolvedValue(savedFolder);
+			databaseConnector.document.count.mockResolvedValue(10);
 
 			const response = await request
-				.get(`/appeals/${householdAppeal.id}/document-folders/${savedFolder.id}`)
+				.get(`/appeals/${householdAppeal.id}/document-folders/${savedFolder.id}?pageSize=10`)
 				.set('azureAdUserId', azureAdUserId);
 
 			expect(response.status).toEqual(200);
 
 			expect(response.body).toEqual({
 				folderId: savedFolder.id,
+				pageCount: 1,
+				totalFolderSize: 10,
 				path: savedFolder.path,
 				caseId: savedFolder.caseId.toString(),
 				documents: [
@@ -76,6 +80,27 @@ describe('/appeals/:appealId/document-folders/:folderId', () => {
 					}
 				]
 			});
+		});
+
+		test('gets a paged results', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			databaseConnector.folder.findUnique.mockResolvedValue(savedFolder);
+			databaseConnector.document.count.mockResolvedValue(10);
+
+			const response = await request
+				.get(
+					`/appeals/${householdAppeal.id}/document-folders/${savedFolder.id}?pageSize=1&pageNumber=2`
+				)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+
+			expect(response.body).toEqual(
+				expect.objectContaining({
+					pageCount: 10,
+					totalFolderSize: 10
+				})
+			);
 		});
 	});
 });
@@ -120,28 +145,166 @@ describe('/appeals/documents/:documentId', () => {
 
 describe('/appeals/:appealId/documents/:documentId', () => {
 	describe('PATCH', () => {
-		databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-		databaseConnector.user.upsert.mockResolvedValue({
-			id: 1,
-			azureAdUserId
+		beforeEach(() => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue(
+				documentRedactionStatuses
+			);
 		});
-		databaseConnector.document.update = jest.fn().mockResolvedValue(null);
 
-		const requestBody = {
-			document: {
-				id: '8b107895-b8c9-467f-aad0-c09daafeaaad',
-				fileName: 'new_filename.txt'
-			}
-		};
+		afterEach(() => {
+			jest.clearAllMocks();
+		});
 
 		test('updates filename in document', async () => {
 			const response = await request
 				.patch(`/appeals/${householdAppeal.id}/documents/${documentCreated.guid}`)
-				.send(requestBody)
+				.send({ document: { id: documentCreated.guid, fileName: 'new_filename.txt' } })
 				.set('azureAdUserId', azureAdUserId);
 
 			expect(databaseConnector.document.update).toHaveBeenCalledTimes(1);
 			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+			expect(response.status).toEqual(200);
+		});
+
+		test('shares a document and broadcasts when isShared is true and not yet published', async () => {
+			databaseConnector.document.findUnique.mockResolvedValue({
+				...documentCreated,
+				latestDocumentVersion: {
+					...documentCreated.latestDocumentVersion,
+					published: false,
+					redactionStatusId: 1
+				}
+			});
+
+			const response = await request
+				.patch(`/appeals/${householdAppeal.id}/documents/${documentCreated.guid}`)
+				.send({
+					document: { id: documentCreated.guid, isShared: true },
+					sharingDocumentType: 'costs-withdrawal'
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.document.update).toHaveBeenCalledTimes(1);
+			expect(databaseConnector.documentVersion.update).toHaveBeenCalledTimes(1);
+			expect(databaseConnector.documentVersion.update).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({ published: true })
+				})
+			);
+			expect(notifySend).toHaveBeenCalledTimes(2);
+			expect(mockBroadcasters.broadcastDocument).toHaveBeenCalledWith(
+				documentCreated.guid,
+				documentCreated.latestDocumentVersion.version,
+				'Update'
+			);
+			expect(databaseConnector.auditTrail.create).not.toHaveBeenCalled();
+			expect(response.status).toEqual(200);
+		});
+
+		test('should not send notify for a document when no sharingDocumentType is provided', async () => {
+			databaseConnector.document.findUnique.mockResolvedValue({
+				...documentCreated,
+				latestDocumentVersion: {
+					...documentCreated.latestDocumentVersion,
+					published: false,
+					redactionStatusId: 1
+				}
+			});
+
+			await request
+				.patch(`/appeals/${householdAppeal.id}/documents/${documentCreated.guid}`)
+				.send({
+					document: { id: documentCreated.guid, isShared: true }
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(notifySend).not.toHaveBeenCalled();
+		});
+
+		const sharingDocumentTypes = [
+			{
+				type: 'costs-application',
+				expectedTemplate: 'shared-cost-application',
+				inviteResponses: true
+			},
+			{
+				type: 'costs-application',
+				expectedTemplate: 'shared-cost-application',
+				inviteResponses: false
+			},
+			{
+				type: 'costs-correspondence',
+				expectedTemplate: 'shared-cost-application-comment',
+				inviteResponses: true
+			},
+			{
+				type: 'costs-correspondence',
+				expectedTemplate: 'shared-cost-application-comment',
+				inviteResponses: false
+			},
+			{
+				type: 'costs-withdrawal',
+				expectedTemplate: 'shared-cost-application-withdrawal',
+				inviteResponses: true
+			},
+			{
+				type: 'costs-withdrawal',
+				expectedTemplate: 'shared-cost-application-withdrawal',
+				inviteResponses: false
+			}
+		];
+
+		sharingDocumentTypes.forEach(({ type, expectedTemplate, inviteResponses }) => {
+			test(`sharing a document sends notify for: ${type}`, async () => {
+				databaseConnector.document.findUnique.mockResolvedValue({
+					...documentCreated,
+					latestDocumentVersion: {
+						...documentCreated.latestDocumentVersion,
+						published: false,
+						redactionStatusId: 1
+					}
+				});
+
+				await request
+					.patch(`/appeals/${householdAppeal.id}/documents/${documentCreated.guid}`)
+					.send({
+						document: { id: documentCreated.guid, isShared: true },
+						sharingDocumentType: type,
+						inviteResponses: inviteResponses ? true : undefined
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(notifySend).toHaveBeenCalledTimes(2);
+				expect(notifySend).toHaveBeenCalledWith(
+					expect.objectContaining({
+						templateName: expectedTemplate,
+						personalisation: expect.objectContaining({
+							responses_invited: inviteResponses
+						})
+					})
+				);
+			});
+		});
+
+		test('does not re-publish document when already published', async () => {
+			databaseConnector.document.findUnique.mockResolvedValue({
+				...documentCreated,
+				latestDocumentVersion: {
+					...documentCreated.latestDocumentVersion,
+					published: true
+				}
+			});
+
+			const response = await request
+				.patch(`/appeals/${householdAppeal.id}/documents/${documentCreated.guid}`)
+				.send({ document: { id: documentCreated.guid, isShared: true } })
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.documentVersion.update).not.toHaveBeenCalled();
+			expect(mockBroadcasters.broadcastDocument).not.toHaveBeenCalled();
 			expect(response.status).toEqual(200);
 		});
 	});
@@ -155,6 +318,7 @@ describe('/appeals/:appealId/documents', () => {
 			documents: [
 				{
 					id: '987e66e0-1db4-404b-8213-8082919159e9',
+					GUID: '987e66e0-1db4-404b-8213-8082919159e9',
 					receivedDate: '2023-09-22',
 					latestVersion: 1,
 					redactionStatus: 1,
@@ -162,6 +326,7 @@ describe('/appeals/:appealId/documents', () => {
 				},
 				{
 					id: '8b107895-b8c9-467f-aad0-c09daafeaaad',
+					GUID: '8b107895-b8c9-467f-aad0-c09daafeaaad',
 					receivedDate: '2023-09-23',
 					latestVersion: 1,
 					redactionStatus: 2,
@@ -220,7 +385,7 @@ describe('/appeals/:appealId/documents', () => {
 				.set('azureAdUserId', azureAdUserId);
 
 			expect(databaseConnector.$transaction).toHaveBeenCalledTimes(1);
-			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
 			expect(response.status).toEqual(201);
 		});
 	});
@@ -232,6 +397,7 @@ describe('/appeals/:appealId/documents', () => {
 			id: 1,
 			azureAdUserId
 		});
+		databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
 		databaseConnector.documentVersion.update = jest.fn().mockResolvedValue(null);
 
 		const requestBody = {
@@ -485,6 +651,13 @@ describe('appeals documents', () => {
 	});
 
 	describe('documents AV scanning', () => {
+		beforeEach(() => {
+			jest.clearAllMocks();
+		});
+		afterEach(() => {
+			jest.clearAllMocks();
+		});
+
 		test('validate AV scan result: no UUID provided', async () => {
 			databaseConnector.document.findUnique.mockReturnValue(null);
 			const requestBody = {
@@ -559,6 +732,7 @@ describe('appeals documents', () => {
 
 			expect(databaseConnector.documentVersionAvScan.upsert).toHaveBeenCalled();
 			expect(response.status).toEqual(200);
+			expect(mockBroadcasters.broadcastDocument).not.toHaveBeenCalled();
 		});
 		test('validate AV scan result: version not found / scan result requested', async () => {
 			databaseConnector.document.findUnique.mockReturnValue(documentCreated);
@@ -579,6 +753,7 @@ describe('appeals documents', () => {
 
 			expect(databaseConnector.documentVersionAvScan.upsert).toHaveBeenCalled();
 			expect(response.status).toEqual(200);
+			expect(mockBroadcasters.broadcastDocument).not.toHaveBeenCalled();
 		});
 		test('validate AV scan result: document found', async () => {
 			databaseConnector.document.findUnique.mockReturnValue({
@@ -610,6 +785,7 @@ describe('appeals documents', () => {
 			expect(databaseConnector.documentVersionAvScan.upsert).toHaveBeenCalled();
 			expect(databaseConnector.document.findUnique).toHaveBeenCalled();
 			expect(response.status).toEqual(200);
+			expect(mockBroadcasters.broadcastDocument).not.toHaveBeenCalled();
 		});
 
 		test('updates AV scan document not yet saved', async () => {
@@ -639,6 +815,7 @@ describe('appeals documents', () => {
 				]
 			});
 			expect(response.status).toEqual(200);
+			expect(mockBroadcasters.broadcastDocument).not.toHaveBeenCalled();
 		});
 
 		test('updates AV scan document already saved', async () => {
@@ -678,6 +855,7 @@ describe('appeals documents', () => {
 				]
 			});
 			expect(response.status).toEqual(200);
+			expect(mockBroadcasters.broadcastDocument).toHaveBeenCalled();
 		});
 	});
 
@@ -686,6 +864,7 @@ describe('appeals documents', () => {
 			jest.clearAllMocks();
 			jest.resetAllMocks();
 			databaseConnector.appellantCase.update = jest.fn().mockResolvedValue({});
+			databaseConnector.lPAQuestionnaire.updateMany.mockResolvedValue({ count: 1 });
 		});
 
 		test.each([
@@ -718,5 +897,42 @@ describe('appeals documents', () => {
 				expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(appealId);
 			}
 		);
+
+		test('sets document visibility for lpa costs', async () => {
+			let appealId = 1;
+			await controller.updateDocumentVisibilityBooleans(
+				[APPEAL_DOCUMENT_TYPE.LPA_COSTS_APPLICATION],
+				appealId,
+				123,
+				true
+			);
+
+			expect(databaseConnector.lPAQuestionnaire.updateMany).toHaveBeenCalledWith({
+				data: {
+					lpaCostsAppliedFor: true
+				},
+				where: { appealId }
+			});
+
+			expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(appealId);
+
+			appealId++;
+
+			await controller.updateDocumentVisibilityBooleans(
+				[APPEAL_DOCUMENT_TYPE.LPA_COSTS_APPLICATION],
+				appealId,
+				123,
+				false
+			);
+
+			expect(databaseConnector.lPAQuestionnaire.updateMany).toHaveBeenCalledWith({
+				data: {
+					lpaCostsAppliedFor: false
+				},
+				where: { appealId }
+			});
+
+			expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(appealId);
+		});
 	});
 });

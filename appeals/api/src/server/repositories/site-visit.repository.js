@@ -39,11 +39,40 @@ const updateSiteVisitById = (id, data) =>
 	});
 
 /**
+ * @param {number[]} appealIds
+ * @param {{
+ * 	visitDate?: Date;
+ * 	visitEndTime?: Date;
+ * 	visitStartTime?: Date;
+ * 	siteVisitTypeId?: number;
+ * 	whoMissedSiteVisit?: string
+ * }} data
+ * @returns {PrismaPromise<object>}
+ */
+const updateMultiSiteVisitByAppealId = (appealIds, data) =>
+	databaseConnector.siteVisit.updateMany({
+		where: {
+			appealId: { in: appealIds }
+		},
+		data
+	});
+
+/**
  * @param {number} id
  * */
 const deleteSiteVisitById = (id) =>
 	databaseConnector.siteVisit.delete({
 		where: { id }
+	});
+
+/**
+ * @param {number[]} appealIds
+ * */
+const deleteMultiSiteVisitByAppealId = (appealIds) =>
+	databaseConnector.siteVisit.deleteMany({
+		where: {
+			appealId: { in: appealIds }
+		}
 	});
 
 /**
@@ -81,10 +110,32 @@ const getSiteVisitById = (id) => {
 	});
 };
 
+/**
+ * @param {number[]} appealIds
+ * @returns
+ */
+const getSiteVisitByAppealId = (appealIds) =>
+	databaseConnector.siteVisit.findMany({
+		where: {
+			appealId: { in: appealIds }
+		},
+		include: {
+			siteVisitType: true,
+			appeal: {
+				include: {
+					address: true
+				}
+			}
+		}
+	});
+
 export default {
 	createSiteVisitById,
 	updateSiteVisitById,
+	updateMultiSiteVisitByAppealId,
 	deleteSiteVisitById,
+	deleteMultiSiteVisitByAppealId,
 	getMissedSiteVisitByAppealId,
-	getSiteVisitById
+	getSiteVisitById,
+	getSiteVisitByAppealId
 };

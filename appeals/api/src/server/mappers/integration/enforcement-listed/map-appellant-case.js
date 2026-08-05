@@ -7,6 +7,21 @@ import { mapAppellantCaseSharedFields } from '#mappers/integration/shared/s20s78
 import { capitalize } from 'lodash-es';
 
 /**
+ * @param {string | null | undefined} writtenOrVerbalPermission
+ * @returns {boolean | null}`
+ */
+const mapToBool = (writtenOrVerbalPermission) => {
+	switch (writtenOrVerbalPermission) {
+		case 'yes':
+			return true;
+		case 'no':
+			return false;
+		default:
+			return null;
+	}
+};
+
+/**
  *
  * @param {AppealGround} appealGround
  * @returns {any}
@@ -26,6 +41,7 @@ export const mapAppellantCase = (data) => {
 	const { appellantCase, appealGrounds } = data.appeal || {};
 	const {
 		interestInLand,
+		writtenOrVerbalPermission,
 		enforcementEffectiveDate,
 		enforcementIssueDate,
 		enforcementReference,
@@ -39,6 +55,7 @@ export const mapAppellantCase = (data) => {
 	return {
 		...mapAppellantCaseSharedFields(data),
 		ownerOccupancyStatus: interestInLand ? capitalize(interestInLand) : null,
+		occupancyConditionsMet: mapToBool(writtenOrVerbalPermission),
 		applicationElbAppealGroundsDetails: appealGrounds?.length
 			? appealGrounds.filter(({ isDeleted }) => !isDeleted).map(mapAppealGround)
 			: null,

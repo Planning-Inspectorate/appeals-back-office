@@ -21,6 +21,12 @@ const appealId = appealData.appealId.toString();
 const folderId = documentFolderInfo.folderId;
 const { documentId, version } = documentFileVersionsInfo.latestDocumentVersion;
 
+const existsResponse = {
+	id: appealData.appealId,
+	appealId: appealData.appealId,
+	appealReference: appealData.appealReference
+};
+
 describe('environmental-assessment', () => {
 	beforeEach(() => {
 		installMockApi();
@@ -30,6 +36,7 @@ describe('environmental-assessment', () => {
 		usersService.getUserById = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
 		// @ts-ignore
 		usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
+		nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse).persist();
 		nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appealData).persist();
 		nock('http://test/').post(`/appeals/${appealId}/documents`).reply(200);
 		nock('http://test/')
@@ -38,7 +45,7 @@ describe('environmental-assessment', () => {
 			.persist();
 		nock('http://test/').post(`/appeals/${appealId}/documents/${documentId}`).reply(200);
 		nock('http://test/')
-			.get(`/appeals/${appealId}/document-folders/${folderId}`)
+			.get(`/appeals/${appealId}/document-folders/${folderId}?pageNumber=1&pageSize=100`)
 			.reply(200, documentFolderInfo)
 			.persist();
 		nock('http://test/')

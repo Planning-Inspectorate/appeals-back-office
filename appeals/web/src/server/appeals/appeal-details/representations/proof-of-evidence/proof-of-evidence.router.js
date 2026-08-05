@@ -65,14 +65,6 @@ router.use(
 );
 
 router.use(
-	'/:proofOfEvidenceType/:rule6PartyId',
-	validateAppeal,
-	validateRule6Party,
-	withSingularRepresentation,
-	viewAndReviewProofOfEvidenceRouter
-);
-
-router.use(
 	'/:proofOfEvidenceType/:rule6PartyId/accept',
 	validateAppeal,
 	validateRule6Party,
@@ -106,6 +98,14 @@ router.use(
 	withSingularRepresentation,
 	getRepresentationAttachmentsFolder,
 	manageDocumentsRouter
+);
+
+router.use(
+	'/:proofOfEvidenceType/:rule6PartyId',
+	validateAppeal,
+	validateRule6Party,
+	withSingularRepresentation,
+	viewAndReviewProofOfEvidenceRouter
 );
 
 router.use(

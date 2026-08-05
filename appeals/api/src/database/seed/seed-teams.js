@@ -8,12 +8,40 @@
 export const seedTeams = async (databaseConnector, teams) => {
 	const teamNameToIdMap = new Map();
 	for (const team of teams) {
-		const newTeam = await databaseConnector.team.upsert({
-			create: team,
-			where: { name: team.name },
-			update: team
+		const existingTeamByName = await databaseConnector.team.findUnique({
+			where: { name: team.name }
 		});
-		teamNameToIdMap.set(newTeam.name, newTeam.id);
+
+		const existingTeamById = team.id
+			? await databaseConnector.team.findUnique({
+					where: { id: team.id }
+				})
+			: null;
+
+		let teamRecord;
+		if (existingTeamByName) {
+			teamRecord = await databaseConnector.team.update({
+				where: { id: existingTeamByName.id },
+				data: {
+					name: team.name,
+					email: team.email
+				}
+			});
+		} else if (existingTeamById) {
+			teamRecord = await databaseConnector.team.update({
+				where: { id: existingTeamById.id },
+				data: {
+					name: team.name,
+					email: team.email
+				}
+			});
+		} else {
+			teamRecord = await databaseConnector.team.create({
+				data: team
+			});
+		}
+
+		teamNameToIdMap.set(teamRecord.name, teamRecord.id);
 	}
 	return teamNameToIdMap;
 };

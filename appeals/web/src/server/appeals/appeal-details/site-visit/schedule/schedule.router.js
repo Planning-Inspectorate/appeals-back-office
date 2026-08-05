@@ -1,3 +1,4 @@
+import { extractAndProcessDateErrors } from '#lib/validators/date-input.validator.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as controller from './schedule.controller.js';
@@ -19,6 +20,7 @@ router
 		validators.validateVisitStartTime,
 		validators.validateVisitEndTime,
 		validators.validateVisitStartTimeBeforeEndTime,
+		extractAndProcessDateErrors({ fieldNamePrefix: 'visit-date' }),
 		asyncHandler(controller.postScheduleVisitDateTime)
 	);
 

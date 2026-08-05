@@ -6,13 +6,14 @@ import { permissionNames } from '#environment/permissions.js';
 import { getTodaysISOString } from '#lib/dates.js';
 import { folderIsAdditionalDocuments } from '#lib/documents.js';
 import logger from '#lib/logger.js';
-import { userHasPermission } from '#lib/mappers/index.js';
+import { mapPagination, userHasPermission } from '#lib/mappers/index.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { isFileUploadInfoItemArray } from '#lib/ts-utilities.js';
-import { isInternalUrl, safeRedirect } from '#lib/url-utilities.js';
+import { isInternalUrl, safeRedirect, stripQueryString } from '#lib/url-utilities.js';
 import config from '@pins/appeals.web/environment/config.js';
+import { DOCUMENTS_PAGE_SIZE } from '@pins/appeals/constants/common.js';
 import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
 import {
 	addDocumentDetailsFormDataToFileUploadInfo,
@@ -310,7 +311,7 @@ export const renderManageFolder = async ({
 	preHeadingTextOverride,
 	isCosts = false
 }) => {
-	const { currentFolder, errors } = request;
+	const { currentFolder, currentPageNumber, originalUrl, query, errors } = request;
 
 	if (!currentFolder) {
 		return response.status(404).render('app/404.njk');
@@ -326,11 +327,24 @@ export const renderManageFolder = async ({
 		addButtonTextOverride,
 		dateColumnLabelTextOverride,
 		preHeadingTextOverride,
+		editable: userHasPermission(permissionNames.updateCase, request.session),
+		currentPageNumber,
 		isCosts
 	});
 
+	const urlWithoutQuery = stripQueryString(originalUrl);
+	const pagination = mapPagination(
+		currentPageNumber,
+		currentFolder.pageCount,
+		DOCUMENTS_PAGE_SIZE,
+		urlWithoutQuery,
+		query,
+		false
+	);
+
 	return response.status(200).render('appeals/documents/manage-folder.njk', {
 		pageContent: mappedPageContent,
+		pagination,
 		errors
 	});
 };
@@ -974,7 +988,7 @@ export const renderDeleteDocument = async ({ request, response, backButtonUrl })
 		backButtonUrl,
 		redactionStatuses,
 		document,
-		currentFolder,
+		currentFolder.folderId,
 		versionId,
 		errors
 	);

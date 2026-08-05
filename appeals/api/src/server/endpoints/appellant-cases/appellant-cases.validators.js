@@ -119,6 +119,7 @@ const patchAppellantCaseValidator = composeMiddleware(
 			return value;
 		}
 	}),
+	validateBooleanParameter('screeningOpinionIndicatesEiaRequired'),
 	validationErrorHandler
 );
 

@@ -1,34 +1,35 @@
+import featureFlags from '#common/feature-flags.js';
 import { isNetResidencesAppealType } from '#common/net-residences-appeal-types.js';
 import config from '#environment/config.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
-import {
-	canStartAppeal,
-	isAwaitingLinkedAppeal,
-	isChildAppeal
-} from '#lib/mappers/utils/is-linked-appeal.js';
+import { isAwaitingLinkedAppeal, isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import {
 	APPEAL_PROOF_OF_EVIDENCE_STATUS,
 	APPEAL_REPRESENTATION_STATUS,
-	APPEAL_TYPE
+	APPEAL_TYPE,
+	FEATURE_FLAG_NAMES
 } from '@pins/appeals/constants/common.js';
 import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
 	DOCUMENT_STATUS_RECEIVED,
+	SITE_VISIT_TYPE_ACCESS_REQUIRED,
+	SITE_VISIT_TYPE_ACCOMPANIED,
 	VALIDATION_OUTCOME_INCOMPLETE
 } from '@pins/appeals/constants/support.js';
 import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import isAppellantStatementAppealType from '@pins/appeals/utils/is-appellant-statement-appeal-type.js';
+import { normaliseProcedureType } from '@pins/appeals/utils/procedure-type.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
-/** @typedef {'addHorizonReference'|'awaitingEvent'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'|'reviewLpaProofOfEvidence'|'reviewAppellantProofOfEvidence'|'progressToProofOfEvidenceAndWitnesses'|'awaitingProofOfEvidenceAndWitnesses'|'progressToInquiry'|'setupInquiry'|'addInquiryAddress'|'awaitingLpaProofOfEvidenceAndWitnesses'|'awaitingAppellantProofOfEvidenceAndWitnesses'|'awaitingAppellantStatement'|'appellantStatementAwaitingReview'|'awaitingRule6PartyStatement'|'reviewRule6PartyStatement'|'awaitingRule6PartyProofOfEvidence'|'reviewRule6PartyProofOfEvidence'|'addSiteVisitDateTime'|'addSiteVisitTime'|'enforcementNoticeAppealIncomplete'|'enforcementListedAppealIncomplete'|'updateAppellantStatement'} AppealRequiredAction */
+/** @typedef {'addHorizonReference'|'awaitingEvent'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpComments'|'shareStatements'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'|'reviewLpaProofOfEvidence'|'reviewAppellantProofOfEvidence'|'progressToProofOfEvidenceAndWitnesses'|'awaitingProofOfEvidenceAndWitnesses'|'progressToInquiry'|'setupInquiry'|'addInquiryAddress'|'awaitingLpaProofOfEvidenceAndWitnesses'|'awaitingAppellantProofOfEvidenceAndWitnesses'|'awaitingAppellantStatement'|'appellantStatementAwaitingReview'|'awaitingRule6PartyStatement'|'reviewRule6PartyStatement'|'awaitingRule6PartyProofOfEvidence'|'reviewRule6PartyProofOfEvidence'|'addSiteVisitDateTime'|'addSiteVisitTime'|'enforcementNoticeAppealIncomplete'|'enforcementListedAppealIncomplete'|'updateAppellantStatement'|'appealValidated'} AppealRequiredAction */
 
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal */
-/** @typedef {import('#appeals/personal-list/personal-list.mapper').PersonalListAppeal} PersonalListAppeal */
+/** @typedef {import('#appeals/personal-list/personal-list.mapper').PersonalListItem} PersonalListItem */
 
 /**
- * @param {PersonalListAppeal | WebAppeal} appeal
+ * @param {PersonalListItem | WebAppeal} appeal
  * @return {boolean}
  */
 export function canDisplayAction(appeal) {
@@ -43,7 +44,7 @@ export function canDisplayAction(appeal) {
 		case APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE:
 			return appeal.appealType !== APPEAL_TYPE.ENFORCEMENT_NOTICE;
 		case APPEAL_CASE_STATUS.EVENT:
-			return appeal.procedureType !== APPEAL_CASE_PROCEDURE.WRITTEN;
+			return false; // one site visit, hearing or inquiry event recorded against lead appeal
 		default:
 			return false;
 	}
@@ -51,7 +52,7 @@ export function canDisplayAction(appeal) {
 
 /**
  * This logic is documented in `docs/reference/appeal-action-required-logic.md`. Please ensure this document is kept updated to reflect any changes made in this function.
- * @param {WebAppeal|PersonalListAppeal} appealDetails
+ * @param {WebAppeal|PersonalListItem} appealDetails
  * @param { 'summary'|'detail' } view
  * @returns {AppealRequiredAction[]}
  */
@@ -59,12 +60,18 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 	/** @type {AppealRequiredAction[]} */
 	const actions = [];
 
+	const procedureType = normaliseProcedureType(appealDetails.procedureType);
+
 	switch (appealDetails.appealStatus) {
 		case APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER:
 			actions.push('assignCaseOfficer');
 			break;
 		case APPEAL_CASE_STATUS.READY_TO_START:
-			if (!canStartAppeal(appealDetails)) {
+			if (
+				appealDetails.isS78Expedited &&
+				!featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS_LPAQ)
+			) {
+				actions.push('appealValidated');
 				break;
 			}
 			if (isAwaitingLinkedAppeal(appealDetails)) {
@@ -83,16 +90,17 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			// appeal types that can't have hearings/inquiries have no procedure type set
 			// i.e. HAS is null, S20 before feature flag is turned on is null etc.
 			if (
-				!appealDetails.procedureType ||
-				appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN.toLowerCase()
+				!procedureType ||
+				procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN.toLowerCase()
 			) {
-				actions.push('arrangeSiteVisit');
+				// @ts-ignore
+				if (!appealDetails.siteVisit?.visitType) {
+					actions.push('arrangeSiteVisit');
+				}
 				break;
 			}
 
-			if (
-				appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING.toLowerCase()
-			) {
+			if (procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING.toLowerCase()) {
 				if (
 					// @ts-ignore
 					(view === 'detail' && !appealDetails.hearing) ||
@@ -119,9 +127,7 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				}
 			}
 
-			if (
-				appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY.toLowerCase()
-			) {
+			if (procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY.toLowerCase()) {
 				if (
 					// @ts-ignore
 					(view === 'detail' && !appealDetails.inquiry) ||
@@ -280,10 +286,15 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				(item) => item.status === DOCUMENT_STATUS_NOT_RECEIVED
 			);
 
-			const hasItemsToShare =
+			const allReviewsCompleted =
+				!ipCommentsAwaitingReview &&
+				!lpaStatementAwaitingReview &&
+				(!appellantStatementEnabled || !appellantStatementAwaitingReview) &&
+				(!rule6StatementEnabled || !rule6StatementAwaitingReview);
+			const hasIPComments = Boolean(ipCommentsCounts?.valid && ipCommentsCounts?.valid > 0);
+			const hasStatements =
 				lpaStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.VALID ||
 				lpaStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.INCOMPLETE ||
-				(ipCommentsCounts?.valid && ipCommentsCounts?.valid > 0) ||
 				(appellantStatementEnabled &&
 					(appellantStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.VALID ||
 						appellantStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.INCOMPLETE)) ||
@@ -294,28 +305,13 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 							status === APPEAL_REPRESENTATION_STATUS.INCOMPLETE
 					));
 
-			const allReviewsCompleted =
-				!ipCommentsAwaitingReview &&
-				!lpaStatementAwaitingReview &&
-				(!appellantStatementEnabled || !appellantStatementAwaitingReview) &&
-				(!rule6StatementEnabled || !rule6StatementAwaitingReview);
-
 			if (ipCommentsDueDatePassed && statementsDueDatePassed && allReviewsCompleted) {
-				if (hasItemsToShare) {
+				if (hasIPComments && hasStatements) {
 					actions.push('shareIpCommentsAndLpaStatement');
-				} else if (
-					// @ts-ignore
-					appealDetails.procedureType === 'Hearing' &&
-					// @ts-ignore
-					appealDetails.hearing?.hearingStartTime &&
-					// @ts-ignore
-					appealDetails.hearing?.addressId
-				) {
-					actions.push('progressHearingCaseWithNoRepsAndHearingSetUpFromStatements');
-				} else if (appealDetails.procedureType === 'Hearing') {
-					actions.push('progressHearingCaseWithNoRepsFromStatements');
-				} else if (appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY) {
-					actions.push('progressToProofOfEvidenceAndWitnesses');
+				} else if (hasIPComments) {
+					actions.push('shareIpComments');
+				} else if (hasStatements) {
+					actions.push('shareStatements');
 				} else {
 					actions.push('progressFromStatements');
 				}
@@ -511,10 +507,17 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 
 	// @ts-ignore
 	const siteVisit = appealDetails?.siteVisit;
-	if (siteVisit && !siteVisit.visitDate && !siteVisit.visitStartTime) {
-		actions.push('addSiteVisitDateTime');
-	} else if (siteVisit && siteVisit.visitDate && !siteVisit.visitStartTime) {
-		actions.push('addSiteVisitTime');
+	if (siteVisit && siteVisit.visitType) {
+		if (!siteVisit.visitDate) {
+			actions.push('addSiteVisitDateTime');
+		} else if (
+			(siteVisit.visitType === SITE_VISIT_TYPE_ACCOMPANIED ||
+				siteVisit.visitType === SITE_VISIT_TYPE_ACCESS_REQUIRED) &&
+			!siteVisit.visitStartTime
+		) {
+			actions.push('addSiteVisitTime');
+		}
 	}
+
 	return actions;
 }

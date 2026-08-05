@@ -1,7 +1,13 @@
+import { TEAM_NAME_MAP } from '@pins/appeals/constants/common.js';
+
 export const teamsToCreate = [
 	{ id: 10000001, name: 'Ops Test', email: 'opstest@planninginspectorate.co.uk' },
 	{ id: 1, name: 'Major Casework Officer', email: null },
-	{ id: 2, name: 'Enforcement Appeals Team', email: 'ECAT@planninginspectorate.gov.uk' },
+	{
+		id: 2,
+		name: TEAM_NAME_MAP.ENFORCEMENT_APPEALS_TEAM,
+		email: 'ECAT@planninginspectorate.gov.uk'
+	},
 
 	{
 		id: 3,

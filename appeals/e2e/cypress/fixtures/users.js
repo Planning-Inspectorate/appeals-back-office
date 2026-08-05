@@ -22,3 +22,5 @@ export const users = {
 		}
 	}
 };
+
+export const CASE_OFFICER_ID = '544f5029-e660-4bc3-81b1-adc19d47e970'; // id for the case officer user, to be used in API calls where needed

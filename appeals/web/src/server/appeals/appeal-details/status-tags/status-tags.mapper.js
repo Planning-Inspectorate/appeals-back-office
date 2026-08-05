@@ -1,13 +1,11 @@
 import { mapVirusCheckStatus } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { isStatePassed } from '#lib/appeal-status.js';
-import { dateISOStringToDisplayDate, getOriginalAndLatestLetterDatesObject } from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { isLinkedAppealsActive } from '#lib/mappers/utils/is-linked-appeal.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { toSentenceCase } from '#lib/string-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { decisionOutcomeToDisplayText } from '@pins/appeals/utils/decision-outcome-display-text.js';
 import { APPEAL_CASE_STATUS, APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
-import { getAppealTypesFromId } from '../change-appeal-type/change-appeal-type.service.js';
-import { getInvalidStatusCreatedDate } from '../invalid-appeal/invalid-appeal.service.js';
 
 /**
  * @param {{ appeal: MappedInstructions }} mappedData
@@ -66,29 +64,40 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 				appealDetails.costs.appellantDecisionFolder?.documents?.length ||
 				appealDetails.costs.lpaDecisionFolder?.documents?.length))
 	) {
-		let letterDateObject = await getOriginalAndLatestLetterDatesObject(
-			request.apiClient,
-			appealDetails.decision.documentId || '',
-			appealDetails
-		);
+		// the following commented out logic has been left here in case it is useful when work around slip rules
+		// and showing reissued dates is done
+
+		// let letterDateObject = await getOriginalAndLatestLetterDatesObject(
+		// 	request.apiClient,
+		// 	appealDetails.decision.documentId || '',
+		// 	appealDetails
+		// );
 
 		const insetTextRows = [];
 
 		if (appealDetails.decision?.outcome) {
-			insetTextRows.push(`Decision: ${toSentenceCase(appealDetails.decision.outcome)}`);
 			insetTextRows.push(
-				letterDateObject.latestFileVersion && letterDateObject.latestFileVersion?.version > 1
-					? `Decision issued on ${letterDateObject.originalLetterDate} (updated on ${letterDateObject.latestLetterDate})`
-					: `Decision issued on ${letterDateObject.latestLetterDate}`
+				`Decision: ${decisionOutcomeToDisplayText(appealDetails.decision.outcome, appealDetails.appealType)}`
+			);
+			insetTextRows.push(
+				`Decision issued on ${dateISOStringToDisplayDate(appealDetails.decision.letterDate)}`
+
+				// the following commented out logic has been left here in case it is useful when work around slip rules
+				// and showing reissued dates is done
+
+				// letterDateObject.latestFileVersion && letterDateObject.latestFileVersion?.version > 1
+				// 	? `Decision issued on ${letterDateObject.originalLetterDate} (reissued on ${letterDateObject.latestLetterDate})`
+				// 	: `Decision issued on ${letterDateObject.latestLetterDate}`
 			);
 		} else if (isAppealInvalid) {
-			const invalidDate = await getInvalidStatusCreatedDate(
-				request.apiClient,
-				appealDetails.appealId
+			// @ts-ignore
+			const invalidStatusObj = appealDetails.appealStatusHistory?.find(
+				(/** @type {any} */ s) => s.status === 'invalid'
 			);
-			insetTextRows.push(
-				`Marked as invalid on ${dateISOStringToDisplayDate(invalidDate.createdDate)}`
-			);
+			const invalidDate = invalidStatusObj?.createdAt;
+			if (invalidDate) {
+				insetTextRows.push(`Marked as invalid on ${dateISOStringToDisplayDate(invalidDate)}`);
+			}
 			insetTextRows.push(getViewInvalidAppealLink(appealDetails.appealId));
 		}
 
@@ -153,14 +162,10 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 		appealDetails.resubmitTypeId &&
 		appealDetails.appealTimetable?.caseResubmissionDueDate
 	) {
-		const appealTypesFromId = await getAppealTypesFromId(request.apiClient, appealDetails.appealId);
-		const appealTypeById = appealTypesFromId?.find(
-			(appealType) => appealType.id === appealDetails.resubmitTypeId
-		);
+		// @ts-ignore
+		const resubmitType = appealDetails.resubmitType;
 		const appealTypeText =
-			appealTypeById?.key && appealTypeById?.type
-				? `${appealTypeById.type} (${appealTypeById.key})`
-				: '';
+			resubmitType?.key && resubmitType?.type ? `${resubmitType.type} (${resubmitType.key})` : '';
 		const caseResubmissionDueDate = dateISOStringToDisplayDate(
 			appealDetails.appealTimetable.caseResubmissionDueDate
 		);

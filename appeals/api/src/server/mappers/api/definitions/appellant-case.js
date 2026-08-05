@@ -154,6 +154,30 @@ const updateableFields = {
 		type: 'number',
 		nullable: true
 	},
+	reasonForAppealAppellant: {
+		type: 'string',
+		nullable: true
+	},
+	anySignificantChanges: {
+		type: 'string',
+		nullable: true
+	},
+	anySignificantChanges_otherSignificantChanges: {
+		type: 'string',
+		nullable: true
+	},
+	anySignificantChanges_localPlanSignificantChanges: {
+		type: 'string',
+		nullable: true
+	},
+	anySignificantChanges_nationalPolicySignificantChanges: {
+		type: 'string',
+		nullable: true
+	},
+	anySignificantChanges_courtJudgementSignificantChanges: {
+		type: 'string',
+		nullable: true
+	},
 	developmentDescription: {
 		type: 'object',
 		properties: {
@@ -199,6 +223,14 @@ const updateableFields = {
 		type: 'string',
 		nullable: true,
 		enum: [...Object.values(APPEAL_APPLICATION_MADE_UNDER_ACT_SECTION)]
+	},
+	screeningOpinionIndicatesEiaRequired: {
+		type: 'boolean',
+		nullable: true
+	},
+	ownershipCertificate: {
+		type: 'boolean',
+		nullable: true
 	}
 };
 
@@ -331,7 +363,8 @@ const appellantCase = {
 				planningObligation: { ...Folder },
 				ownershipCertificate: { ...Folder },
 				otherNewDocuments: { ...Folder },
-				statementCommonGround: { ...Folder }
+				statementCommonGround: { ...Folder },
+				eiaEnvironmentalStatementAppellant: { ...Folder }
 			}
 		},
 		enforcementNotice: {

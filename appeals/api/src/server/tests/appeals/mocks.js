@@ -2,6 +2,7 @@ import advert from './advert.js';
 import enforcementListed from './enforcement-listed.js';
 import has from './has.js';
 import s20 from './s20.js';
+import s78Expedite from './s78-expedite.js';
 import s78 from './s78.js';
 
 import {
@@ -14,6 +15,11 @@ import {
 } from '#tests/shared/mocks.js';
 import { APPEAL_TYPE, APPEAL_TYPE_CHANGE_APPEALS } from '@pins/appeals/constants/common.js';
 import {
+	CASE_RELATIONSHIP_LINKED,
+	CASE_RELATIONSHIP_RELATED
+} from '@pins/appeals/constants/support.js';
+import {
+	APPEAL_APPEAL_UNDER_ACT_SECTION,
 	APPEAL_CASE_STATUS,
 	APPEAL_CASE_TYPE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
@@ -98,6 +104,10 @@ export const appealS78 = {
 	...s78
 };
 
+export const appealS78Expedite = {
+	...s78Expedite
+};
+
 export const appealS20 = {
 	...s20
 };
@@ -112,6 +122,7 @@ export const householdAppeal = {
 	id: 1,
 	assignedTeamId: 1,
 	reference: '1345264',
+	currentStatus: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
 	procedureType: {
 		id: 1,
 		key: 'written',
@@ -141,6 +152,186 @@ export const householdAppeal = {
 		phoneNumber: '01234 567 890',
 		organisationName: 'Thornton LTD'
 	},
+	agent: {
+		id: 1,
+		firstName: 'John',
+		lastName: 'Smith',
+		email: 'test@136s7.com',
+		phoneNumber: '09876 543 210',
+		organisationName: 'Smith Inc.'
+	},
+	address: {
+		addressLine1: '96 The Avenue',
+		addressLine2: 'Leftfield',
+		addressCountry: 'United Kingdom',
+		addressCounty: 'Kent',
+		id: 1,
+		postcode: 'MD21 5XY',
+		addressTown: 'Maidstone'
+	},
+	appealType: {
+		id: 2,
+		key: APPEAL_CASE_TYPE.D,
+		processCode: 'HAS',
+		type: APPEAL_TYPE.HOUSEHOLDER,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.HOUSEHOLDER
+	},
+	appellantCase: {
+		id: 1,
+		appellantCaseIncompleteReasonsSelected: [],
+		appellantCaseValidationOutcome: null,
+		appellantCostsAppliedFor: null,
+		applicationDate: new Date(2022, 2, 18),
+		applicationDecision: 'refused',
+		applicationDecisionDate: new Date(2022, 2, 18),
+		caseSubmissionDueDate: new Date(2022, 2, 18),
+		caseSubmittedDate: new Date(2022, 2, 18),
+		changedDevelopmentDescription: false,
+		enforcementNotice: null,
+		floorSpaceSquareMetres: null,
+		hasAdvertisedAppeal: true,
+		knowsAllOwners: null,
+		knowsOtherOwners: null,
+		originalDevelopmentDescription: 'A test description',
+		ownersInformed: true,
+		ownsAllLand: true,
+		ownsSomeLand: true,
+		siteAccessDetails: 'There is no mobile reception at the site',
+		siteSafetyDetails: 'Small dog big character',
+		siteAreaSquareMetres: '100',
+		appellantProcedurePreference: 'Hearing',
+		appellantProcedurePreferenceDetails: 'Reason for preference',
+		appellantProcedurePreferenceDuration: 5,
+		appellantProcedurePreferenceWitnessCount: 1,
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.HOUSEHOLDER_PLANNING,
+		numberOfResidencesNetChange: 5,
+		reasonForAppealAppellant: null,
+		anySignificantChanges: null,
+		anySignificantChanges_otherSignificantChanges: null,
+		anySignificantChanges_localPlanSignificantChanges: null,
+		anySignificantChanges_nationalPolicySignificantChanges: null,
+		anySignificantChanges_courtJudgementSignificantChanges: null,
+		screeningOpinionIndicatesEiaRequired: null,
+		ownershipCertificate: null
+	},
+	caseOfficer: {
+		id: 1,
+		azureAdUserId: 'a8973f33-4d2e-486b-87b0-d068343ad9eb'
+	},
+	inspector: {
+		id: 2,
+		azureAdUserId: 'e8f89175-d02c-4a60-870e-dc954d5b530a'
+	},
+	siteVisit: {
+		id: 1,
+		appealId: 1,
+		visitDate: new Date('2022-03-31T01:00:00.000Z'),
+		visitEndTime: new Date('2022-03-31T03:00:00.000Z'),
+		visitStartTime: new Date('2022-03-31T01:00:00.000Z'),
+		siteVisitType: {
+			id: 1,
+			name: 'Access required',
+			key: 'site_visit_access_required'
+		}
+	},
+	hearing: {
+		id: 1,
+		appealId: 1,
+		hearingStartTime: new Date('2022-03-31T01:00:00.000Z'),
+		hearingEndTime: new Date('2022-03-31T03:00:00.000Z'),
+		addressId: 1,
+		address: {
+			id: 1,
+			addressLine1: '96 The Avenue',
+			addressLine2: 'Leftfield',
+			addressCountry: 'United Kingdom',
+			addressCounty: 'Kent',
+			postcode: 'MD21 5XY',
+			addressTown: 'Maidstone'
+		}
+	},
+	inquiry: {
+		id: 1,
+		appealId: 1,
+		inquiryStartTime: new Date('2022-03-31T01:00:00.000Z'),
+		inquiryEndTime: new Date('2022-03-31T03:00:00.000Z'),
+		estimatedDays: 6,
+		addressId: 1,
+		address: {
+			id: 1,
+			addressLine1: '96 The Avenue',
+			addressLine2: 'Leftfield',
+			addressCountry: 'United Kingdom',
+			addressCounty: 'Kent',
+			postcode: 'MD21 5XY',
+			addressTown: 'Maidstone'
+		}
+	},
+	parentAppeals: [],
+	childAppeals: [],
+	lpaQuestionnaire: {
+		id: 1,
+		appealId: 1,
+		siteSafetyDetails: 'There may be no mobile reception at the site',
+		siteAccessDetails: 'There is a tall hedge around the site which obstructs the view of the site',
+		inConservationArea: true,
+		isCorrectAppealType: true,
+		lpaStatement: null,
+		newConditionDetails: null,
+		lpaCostsAppliedFor: false,
+		siteWithinGreenBelt: null,
+		listedBuildingDetails: [
+			{
+				id: 1,
+				listEntry: '1',
+				affectsListedBuilding: false
+			},
+			{
+				id: 2,
+				listEntry: '2',
+				affectsListedBuilding: true
+			}
+		],
+		lpaNotificationMethods: [
+			{
+				lpaNotificationMethod: {
+					name: 'A site notice',
+					key: 'notice'
+				}
+			}
+		],
+		lpaqCreatedDate: new Date(2024, 5, 24),
+		lpaQuestionnaireSubmittedDate: new Date(2024, 5, 24)
+	}
+};
+export const householdAppealAgent = {
+	caseCreatedDate: new Date('2024-03-25T23:59:59.999Z'),
+	caseUpdatedDate: new Date('2024-03-25T23:59:59.999Z'),
+	id: 1,
+	assignedTeamId: 1,
+	reference: '1345264',
+	currentStatus: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+	procedureType: {
+		id: 1,
+		key: 'written',
+		name: 'Written'
+	},
+	neighbouringSites: [],
+	appealStatus: [
+		{
+			status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+			valid: true
+		}
+	],
+	completedStateList: [],
+	addressId: 1,
+	lpa: {
+		name: 'Maidstone Borough Council',
+		lpaCode: 'MAID',
+		id: 1,
+		email: 'maid@lpa-email.gov.uk'
+	},
+	applicationReference: '48269/APP/2021/1482',
 	agent: {
 		id: 1,
 		firstName: 'John',
@@ -444,6 +635,49 @@ export const fullPlanningAppeal = {
 	]
 };
 
+export const fullPlanningS78ExpeditedAppeal = {
+	...householdAppeal,
+	caseCreatedDate: new Date('2026-04-25T23:59:59.999Z'),
+	caseUpdatedDate: new Date('2026-04-25T23:59:59.999Z'),
+	id: 2,
+	appealType: {
+		id: 1,
+		key: APPEAL_CASE_TYPE.W,
+		type: APPEAL_TYPE.S78,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.S78
+	},
+	appellant: {
+		firstName: 'S78 ExpeditedPerson',
+		lastName: 'Smith',
+		email: 'test@136s7.com',
+		phoneNumber: '',
+		organisationName: ''
+	},
+	appellantCase: {
+		...householdAppeal.appellantCase,
+		hasDesignAndAccessStatement: true,
+		hasNewPlansOrDrawings: true,
+		hasOtherTenants: true,
+		hasPlanningObligation: true,
+		hasSeparateOwnershipCertificate: true,
+		hasToldTenants: false,
+		isAgriculturalHolding: true,
+		isAgriculturalHoldingTenant: true,
+		isDevelopmentDescriptionStillCorrect: false,
+		newDevelopmentDescription: 'A new extension has been added at the back',
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL,
+		appellantProcedurePreference: 'hearing',
+		appellantProcedurePreferenceDetails: 'Reason for preference',
+		appellantProcedurePreferenceDuration: 5,
+		appellantProcedurePreferenceWitnessCount: 1,
+		applicationDecisionDate: new Date(2026, 4, 18),
+		caseSubmissionDueDate: new Date(2026, 4, 18),
+		caseSubmittedDate: new Date(2026, 4, 18),
+		applicationDate: new Date(2026, 4, 18)
+	},
+	representations: []
+};
+
 export const listedBuildingAppeal = {
 	...fullPlanningAppeal,
 	id: 3,
@@ -589,6 +823,7 @@ export const householdAppealLPAQuestionnaireComplete = {
 
 export const householdAppealLPAQuestionnaireIncomplete = {
 	...householdAppeal,
+	currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 	appealStatus: [
 		{
 			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
@@ -632,6 +867,7 @@ export const casPlanningAppealAppellantCaseInvalid = {
 
 export const casPlanningAppealLPAQuestionnaireIncomplete = {
 	...casPlanningAppeal,
+	currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 	appealStatus: [
 		{
 			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
@@ -647,6 +883,7 @@ export const casPlanningAppealLPAQuestionnaireIncomplete = {
 
 export const casAdvertAppealLPAQuestionnaireIncomplete = {
 	...casPlanningAppeal,
+	currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 	appealStatus: [
 		{
 			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
@@ -691,7 +928,8 @@ export const ldcAppeal = {
 	},
 	appellantCase: {
 		...fullPlanningAppeal.appellantCase,
-		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.LAWFUL_DEVELOPMENT_CERTIFICATE
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.LAWFUL_DEVELOPMENT_CERTIFICATE,
+		applicationMadeUnderActSection: APPEAL_APPEAL_UNDER_ACT_SECTION.EXISTING_DEVELOPMENT
 	},
 	representations: []
 };
@@ -726,6 +964,7 @@ export const ldcAppealAppellantCaseInvalid = {
 
 export const ldcAppealLPAQuestionnaireIncomplete = {
 	...ldcAppeal,
+	currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 	appealStatus: [
 		{
 			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
@@ -741,6 +980,7 @@ export const ldcAppealLPAQuestionnaireIncomplete = {
 
 export const fullPlanningAppealLPAQuestionnaireIncomplete = {
 	...fullPlanningAppeal,
+	currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 	appealStatus: [
 		{
 			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
@@ -756,6 +996,7 @@ export const fullPlanningAppealLPAQuestionnaireIncomplete = {
 
 export const listedBuildingAppealLPAQuestionnaireIncomplete = {
 	...listedBuildingAppeal,
+	currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 	appealStatus: [
 		{
 			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
@@ -908,6 +1149,38 @@ export const linkedAppeals = [
 		relationshipId: 1,
 		type: 'linked',
 		externalSource: true
+	}
+];
+
+export const childAppealsEnforcementBase = [
+	{
+		id: 0,
+		childId: 101,
+		parentId: enforcementNoticeAppeal.id,
+		type: CASE_RELATIONSHIP_LINKED,
+		child: {
+			id: 101,
+			appealType: enforcementNoticeAppeal.appealType
+		}
+	},
+	{
+		id: 1,
+		childId: 102,
+		parentId: enforcementNoticeAppeal.id,
+		type: CASE_RELATIONSHIP_RELATED,
+		child: {
+			id: 102
+		}
+	},
+	{
+		id: 2,
+		childId: 103,
+		parentId: enforcementNoticeAppeal.id,
+		type: CASE_RELATIONSHIP_LINKED,
+		child: {
+			id: 103,
+			appealType: enforcementNoticeAppeal.appealType
+		}
 	}
 ];
 

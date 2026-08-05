@@ -4,9 +4,14 @@ import {
 } from '#lib/dates.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { APPEAL_TYPE, PROCEDURE_TYPE_ID_MAP } from '@pins/appeals/constants/common.js';
+import { isS78ExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { isBefore } from 'date-fns';
+import { setEnvironmentalImpactAssessmentScreening } from '../../appeal-details.service.js';
+import * as appellantCaseService from '../appellant-case.service.js';
 import {
 	checkAndConfirmEnforcementPage,
+	environmentalServicesReviewPage,
 	updateEnforcementGroundAPage,
 	updateEnforcementOtherInformationPage,
 	updateEnforcementValidDatePage,
@@ -85,22 +90,51 @@ export const postValidDate = async (request, response) => {
 			return renderValidDatePage(request, response, errorMessage);
 		}
 
-		await setReviewOutcomeValidForAppellantCase(
-			request.apiClient,
-			appealId,
-			appellantCaseId,
-			dayMonthYearHourMinuteToISOString({
+		const appellantCaseResponse = await appellantCaseService
+			.getAppellantCaseFromAppealId(
+				request.apiClient,
+				currentAppeal.appealId,
+				currentAppeal.appellantCaseId
+			)
+			.catch((error) => {
+				return logger.error(error);
+			});
+		if (
+			(isS78ExpeditedAppealType(
+				currentAppeal.appealType,
+				appellantCaseResponse.applicationDate,
+				appellantCaseResponse.applicationDecision,
+				appellantCaseResponse.typeOfPlanningApplication
+			) &&
+				appellantCaseResponse.screeningOpinionIndicatesEiaRequired) ||
+			appellantCaseResponse.documents.eiaEnvironmentalStatementAppellant?.documents.length > 0
+		) {
+			session.updatedValidDate = {
 				day: updatedValidDateDay,
 				month: updatedValidDateMonth,
 				year: updatedValidDateYear
-			})
-		);
+			};
+			return response.redirect(
+				`/appeals-service/appeal-details/${appealId}/appellant-case/valid/environmental-services-review`
+			);
+		} else {
+			await setReviewOutcomeValidForAppellantCase(
+				request.apiClient,
+				appealId,
+				appellantCaseId,
+				dayMonthYearHourMinuteToISOString({
+					day: updatedValidDateDay,
+					month: updatedValidDateMonth,
+					year: updatedValidDateYear
+				})
+			);
 
-		addNotificationBannerToSession({
-			session,
-			bannerDefinitionKey: 'appealValidated',
-			appealId
-		});
+			addNotificationBannerToSession({
+				session,
+				bannerDefinitionKey: 'appealValidated',
+				appealId
+			});
+		}
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
@@ -126,7 +160,6 @@ const renderValidDatePage = async (request, response, apiErrors) => {
 	const {
 		currentAppeal: { appealId, appealReference, createdAt }
 	} = request;
-
 	const createdDayMonthYear = dateISOStringToDayMonthYearHourMinute(createdAt);
 	const dateValidDay = request.body['valid-date-day'] || createdDayMonthYear.day;
 	const dateValidMonth = request.body['valid-date-month'] || createdDayMonthYear.month;
@@ -330,6 +363,38 @@ export const postEnforcementValidDate = async (request, response) => {
 			return renderEnforcementValidDate(request, response, errorMessage);
 		}
 
+		const { createdAt } = currentAppeal;
+		const validDateISOString = dayMonthYearHourMinuteToISOString({
+			year: updatedValidDateYear,
+			month: updatedValidDateMonth,
+			day: updatedValidDateDay
+		});
+
+		const {
+			day: createdAtDay,
+			month: createdAtMonth,
+			year: createdAtYear
+		} = dateISOStringToDayMonthYearHourMinute(createdAt);
+		const createdAtDateAtMidnight = dayMonthYearHourMinuteToISOString({
+			day: createdAtDay,
+			month: createdAtMonth,
+			year: createdAtYear
+		});
+
+		if (isBefore(new Date(validDateISOString), new Date(createdAtDateAtMidnight))) {
+			const /** @type {import('@pins/express').ValidationErrors} */ errorMessage = {
+					'valid-date-day': {
+						location: 'body',
+						path: 'all-fields',
+						value: '',
+						type: 'field',
+						msg: 'The valid date must be on or after the date the case was received.'
+					}
+				};
+
+			return renderEnforcementValidDate(request, response, errorMessage);
+		}
+
 		session.webAppellantCaseReviewOutcome = {
 			...session.webAppellantCaseReviewOutcome,
 			updatedValidDateDay,
@@ -361,16 +426,23 @@ export const postEnforcementValidDate = async (request, response) => {
  */
 const renderEnforcementValidDate = async (request, response, apiErrors) => {
 	const {
-		currentAppeal: { appealId, appealReference },
+		currentAppeal: { appealId, appealReference, createdAt },
 		session: { webAppellantCaseReviewOutcome }
 	} = request;
+	const createdDayMonthYear = dateISOStringToDayMonthYearHourMinute(createdAt);
 
 	const dateValidDay =
-		request.body['valid-date-day'] || webAppellantCaseReviewOutcome?.updatedValidDateDay;
+		request.body['valid-date-day'] ||
+		webAppellantCaseReviewOutcome?.updatedValidDateDay ||
+		createdDayMonthYear.day;
 	const dateValidMonth =
-		request.body['valid-date-month'] || webAppellantCaseReviewOutcome?.updatedValidDateMonth;
+		request.body['valid-date-month'] ||
+		webAppellantCaseReviewOutcome?.updatedValidDateMonth ||
+		createdDayMonthYear.month;
 	const dateValidYear =
-		request.body['valid-date-year'] || webAppellantCaseReviewOutcome?.updatedValidDateYear;
+		request.body['valid-date-year'] ||
+		webAppellantCaseReviewOutcome?.updatedValidDateYear ||
+		createdDayMonthYear.year;
 
 	let errors = request.errors || apiErrors;
 
@@ -439,6 +511,16 @@ export const postEnforcementCheckDetails = async (request, response) => {
 
 		delete session.webAppellantCaseReviewOutcome;
 
+		if (
+			currentAppeal.appealType === APPEAL_TYPE.S78 &&
+			currentAppeal.procedureTypeId === PROCEDURE_TYPE_ID_MAP.writtenPart1 &&
+			currentAppeal.appellantCase?.screeningOpinionIndicatesEiaRequired
+		) {
+			return response.redirect(
+				`/appeals-service/appeal-details/${appealId}/appellant-case/valid/environmental-services-review`
+			);
+		}
+
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
 		logger.error(
@@ -503,4 +585,49 @@ const renderEnforcementCheckDetails = async (request, response, apiErrors) => {
 		pageContent: mappedPageContent,
 		errors: errors || apiErrors
 	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const getEnvironmentalServicesReview = async (request, response) => {
+	const {
+		currentAppeal: { appealId, appealReference }
+	} = request;
+
+	const mappedPageContent = environmentalServicesReviewPage(appealId, appealReference);
+
+	return response.status(200).render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postEnvironmentalServicesReview = async (request, response) => {
+	const {
+		currentAppeal: { appealId, appellantCaseId },
+		session
+	} = request;
+
+	const { day, month, year } = session.updatedValidDate || {};
+
+	await setReviewOutcomeValidForAppellantCase(
+		request.apiClient,
+		appealId,
+		appellantCaseId,
+		dayMonthYearHourMinuteToISOString({
+			day,
+			month,
+			year
+		})
+	);
+
+	await setEnvironmentalImpactAssessmentScreening(request.apiClient, appealId, true);
+
+	delete session.updatedValidDate;
+
+	addNotificationBannerToSession({
+		session,
+		bannerDefinitionKey: 'appealValidated',
+		appealId
+	});
+	return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 };

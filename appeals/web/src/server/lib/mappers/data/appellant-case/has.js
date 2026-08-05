@@ -17,8 +17,10 @@ import { mapInGreenBelt } from './submappers/in-green-belt.js';
 import { mapInspectorAccess } from './submappers/inspector-access.js';
 import { mapLocalPlanningAuthority } from './submappers/local-planning-authority.js';
 import { mapOwnersKnown } from './submappers/owners-known.js';
+import { mapReasonForAppeal } from './submappers/reason-for-appeal.js';
 import { mapRelatedAppeals } from './submappers/related-appeals.js';
 import { mapReviewOutcome } from './submappers/review-outcome.js';
+import { mapSignificantChanges } from './submappers/significant-changes.js';
 import { mapSiteAddress } from './submappers/site-address.js';
 import { mapSiteArea } from './submappers/site-area.js';
 import { mapSiteOwnership } from './submappers/site-ownership.js';
@@ -49,5 +51,7 @@ export const submaps = {
 	additionalDocuments: mapAdditionalDocuments,
 	reviewOutcome: mapReviewOutcome,
 	relatedAppeals: mapRelatedAppeals,
-	statementCommonGround: mapStatementCommonGroundDocument
+	statementCommonGround: mapStatementCommonGroundDocument,
+	reasonForAppealAppellant: mapReasonForAppeal,
+	anySignificantChanges: mapSignificantChanges
 };

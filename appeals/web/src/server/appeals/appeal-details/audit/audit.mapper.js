@@ -2,8 +2,10 @@ import usersService from '#appeals/appeal-users/users-service.js';
 import { mapStatusText } from '#lib/appeal-status.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import {
+	AUDIT_TRAIL_APPELLANT_IMPORT_MSG,
 	AUDIT_TRAIL_IP_UUID,
 	AUDIT_TRAIL_LPA_UUID,
+	AUDIT_TRAIL_LPAQ_IMPORT_MSG,
 	AUDIT_TRAIL_SYSTEM_UUID,
 	AUDIT_TRIAL_APPELLANT_UUID,
 	AUDIT_TRIAL_AUTOMATIC_EVENT_UUID,
@@ -32,10 +34,13 @@ export const mapMessageContent = async (appeal, log, docInfo, session, apiClient
 		result = await tryMapUsers(result, session, apiClient);
 	}
 
+	result = getAppellantCaseLink(appeal, result);
+	result = getLPAQuestionnaireLink(appeal, result);
+
 	result = tryMapDocumentRedactionStatus(result);
 	result = tryMapDocument(appeal.appealId, result, docInfo, appeal?.lpaQuestionnaireId || null);
 
-	result = tryMapRepresentationType(result);
+	result = tryMapRepresentationType(appeal.appealId, result);
 	result = tryMapStatus(result, appeal.appealType, appeal.procedureType);
 
 	result = result.replace(/\n/g, '<br>');
@@ -77,6 +82,35 @@ export const tryMapUsers = async (log, session, apiClient) => {
 	const user = await usersService.getUserById(uuid[2], session);
 
 	return result.replace(uuid[2], user?.name || 'User not found!');
+};
+
+/**
+ * @param {import('../appeal-details.types.js').WebAppeal} appeal
+ * @param {string} log
+ * @returns {string}
+ */
+export const getAppellantCaseLink = (appeal, log) => {
+	if (log !== AUDIT_TRAIL_APPELLANT_IMPORT_MSG) return log;
+
+	return AUDIT_TRAIL_APPELLANT_IMPORT_MSG.replace(
+		'appellant case',
+		`<a class="govuk-link" href="/appeals-service/appeal-details/${appeal.appealId}/appellant-case/">appellant case</a>`
+	);
+};
+
+/**
+ * @param {import('../appeal-details.types.js').WebAppeal} appeal
+ * @param {string} log
+ * @returns {string}
+ */
+export const getLPAQuestionnaireLink = (appeal, log) => {
+	if (log !== AUDIT_TRAIL_LPAQ_IMPORT_MSG) return log;
+	if (!appeal.lpaQuestionnaireId) return log;
+
+	return AUDIT_TRAIL_LPAQ_IMPORT_MSG.replace(
+		'LPA questionnaire',
+		`<a class="govuk-link" href="/appeals-service/appeal-details/${appeal.appealId}/lpa-questionnaire/${appeal.lpaQuestionnaireId}">LPA questionnaire</a>`
+	);
 };
 
 /**
@@ -169,6 +203,10 @@ export const tryMapDocument = (appealId, log, docInfo, lpaqId) => {
 			const repAuditDisplayName = name.replace(/[a-f\d-]{36}_/, '');
 			return log.replace(name, `<a class="govuk-link" href="#">${repAuditDisplayName}</a>`);
 		}
+		case APPEAL_CASE_STAGE.CANCELLATION: {
+			const url = `/documents/${appealId}/download/${documentGuid}/${name}`;
+			return log.replace(name, `<a class="govuk-link" href="${url}">${name}</a>`);
+		}
 	}
 
 	return log;
@@ -217,15 +255,40 @@ const tryMapStatus = (log, appealType, appealProcedureType) => {
 
 /**
  *
+ * @param {number} appealId
  * @param {string} log
  * @returns {string}
  */
-const tryMapRepresentationType = (log) =>
+export const tryMapRepresentationType = (appealId, log) =>
 	log
-		.replace('ip_comment', 'An interested party comment')
-		.replace('lpa_statement', 'The LPA statement')
-		.replace('lpa_final_comment', 'The LPA final comment')
-		.replace('appellant_final_comment', 'The appellant final comment');
+		.replace(
+			'ip_comment',
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/interested-party-comments">Interested party comment</a>`
+		)
+		.replace(
+			'lpa_statement',
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-statement">LPA statement</a>`
+		)
+		.replace(
+			'appellant_statement',
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/appellant-statement">Appellant statement</a>`
+		)
+		.replace(
+			'lpa_final_comment',
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/final-comments/lpa">LPA final comment</a>`
+		)
+		.replace(
+			'appellant_final_comment',
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/final-comments/appellant">Appellant final comment</a>`
+		)
+		.replace(
+			'appellant_proofs_evidence',
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/proof-of-evidence/appellant/manage-documents">Appellant proof of evidence and witnesses</a>`
+		)
+		.replace(
+			'lpa_proofs_evidence',
+			`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/proof-of-evidence/lpa/manage-documents">LPA proof of evidence and witnesses</a>`
+		);
 
 /**
  *

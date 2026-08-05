@@ -20,6 +20,7 @@ import { appellantCaseInvalidReasonsRoutes } from './appellant-case-invalid-reas
 import { appellantCaseValidationOutcomesRoutes } from './appellant-case-validation-outcomes/appellant-case-validation-outcomes.routes.js';
 import { appellantCasesRoutes } from './appellant-cases/appellant-cases.routes.js';
 import { auditTrailsRoutes } from './audit-trails/audit-trails.routes.js';
+import { broadcastRoutes } from './broadcast/broadcast.routes.js';
 import { businessDaysRoutes } from './business-days/business-days.routes.js';
 import { cancelRoutes } from './cancel/cancel.routes.js';
 import { caseNotesRoutes } from './case-notes/case-notes.routes.js';
@@ -66,6 +67,7 @@ router.use(caseTeamRouter);
 router.use(integrationsRoutes);
 router.use(businessDaysRoutes);
 router.use(historicEnglandRoutes);
+router.use(broadcastRoutes);
 
 if (config.enableTestEndpoints) {
 	router.use(testDataRoutes);

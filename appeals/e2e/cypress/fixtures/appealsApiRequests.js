@@ -1,4 +1,7 @@
 // @ts-nocheck
+
+import { PLANNING_APPLICATION_TYPES } from '../support/consts.js';
+
 /**
  * Takes a base document object and returns new version with unique values for id and filenames
  * @param {Object} baseDocument base document to be overridden
@@ -62,6 +65,81 @@ export const validLpaQuestionnaireHas = {
 	},
 };
 
+const baseSubmission = {
+	casedata: {
+		submissionId: 'e4d42124-364c-4bda-af1f-3c40e4b09ff3',
+		advertisedAppeal: true,
+		appellantCostsAppliedFor: false,
+		applicationDate: '2024-01-01T00:00:00.000Z',
+		applicationDecision: 'refused',
+		applicationDecisionDate: '2024-01-01T00:00:00.000Z',
+		applicationReference: '123',
+		caseProcedure: 'written',
+		caseSubmissionDueDate: '2024-03-25T23:59:59.999Z',
+		caseSubmittedDate: '2024-03-25T23:59:59.999Z',
+		caseType: 'D',
+		changedDevelopmentDescription: false,
+		enforcementNotice: false,
+		floorSpaceSquareMetres: 22,
+		knowsAllOwners: 'Some',
+		knowsOtherOwners: 'Some',
+		lpaCode: 'Q9999',
+		nearbyCaseReferences: [],
+		neighbouringSiteAddresses: [],
+		originalDevelopmentDescription: 'A test description',
+		ownersInformed: true,
+		ownsAllLand: true,
+		ownsSomeLand: true,
+		isSiteOnHighwayLand: true,
+		isAdvertInPosition: true,
+		hasLandownersPermission: true,
+		advertDetails: [],
+		reasonForAppealAppellant: 'I like Christmas',
+		appellantProcedurePreference: "written",
+		appellantProcedurePreferenceDetails: "test",
+		appellantProcedurePreferenceDuration: 10,
+		appellantProcedurePreferenceWitnessCount: 5,
+		siteAccessDetails: ['Come and see'],
+		siteAddressCounty: 'Somewhere',
+		siteAddressLine1: 'e2e Test Address',
+		siteAddressLine2: 'Somewhere St',
+		siteAddressPostcode: 'BS21 6LE',
+		siteAddressTown: 'Somewhereville',
+		siteAreaSquareMetres: 22,
+		siteSafetyDetails: ["It's dangerous"],
+		isGreenBelt: false,
+		typeOfPlanningApplication: 'full-appeal',
+		// S78 fields
+		developmentType: 'minor-dwellings',
+		agriculturalHolding: true,
+		tenantAgriculturalHolding: true,
+		otherTenantsAgriculturalHolding: null,
+		informedTenantsAgriculturalHolding: null,
+		planningObligation: false,
+		statusPlanningObligation: 'not_started',
+	},
+	users: [
+		{
+			emailAddress: 'appellant@test.com',
+			firstName: 'Testy',
+			lastName: 'McTest',
+			salutation: 'string',
+			serviceUserType: 'Appellant',
+			telephoneNumber: '01234 818181',
+			organisation: 'K and C'
+		},
+		{
+			emailAddress: 'agent@test.com',
+			firstName: 'Agent',
+			lastName: 'Bond',
+			salutation: 'string',
+			serviceUserType: 'Agent',
+			telephoneNumber: '01207 818181',
+			organisation: 'K and C'
+		}
+	]
+}
+
 const appealsApiRequests = {
     caseSubmission: {
         casedata: {
@@ -113,7 +191,7 @@ const appealsApiRequests = {
             otherTenantsAgriculturalHolding: null,
             informedTenantsAgriculturalHolding: null,
             planningObligation: false,
-            statusPlanningObligation: 'not_started'
+            statusPlanningObligation: 'not_started',
         },
 		users: [
 			{
@@ -135,6 +213,36 @@ const appealsApiRequests = {
 				organisation: 'K and C'
 			}
 		]
+	},
+	S78FullAppealSubmission: {
+		casedata: {
+			...baseSubmission.casedata,
+			caseType: 'W',
+			typeOfPlanningApplication: PLANNING_APPLICATION_TYPES.FULL
+		}
+	},
+	S78OutlinePlanningAppealSubmission: {
+		casedata: {
+			...baseSubmission.casedata,
+			caseType: 'W',
+			typeOfPlanningApplication: PLANNING_APPLICATION_TYPES.OUTLINE
+		}
+	},
+	S78ReservedMattersAppealSubmission: {
+		casedata: {
+			...baseSubmission.casedata,
+			caseType: 'W',
+			typeOfPlanningApplication: PLANNING_APPLICATION_TYPES.RESERVED_MATTERS,
+			appellantProcedurePreference: "inquiry",
+		}
+	},
+	S78PriorApprovalAppealSubmission: {
+		casedata: {
+			...baseSubmission.casedata,
+			caseType: 'W',
+			typeOfPlanningApplication: PLANNING_APPLICATION_TYPES.PRIOR_APPROVAL,
+			appellantProcedurePreference: "inquiry",
+		}
 	},
 	casAdvertsSubmission: {
 		casedata: {
@@ -272,6 +380,229 @@ const appealsApiRequests = {
 			}
 		]
 	},
+	enforcementSubmission: {
+		casedata: {
+			submissionId: '14960baa-3d0f-4db9-9e84-0c75be891560',
+			advertisedAppeal: true,
+			appellantCostsAppliedFor: false,
+			applicationDate: '2024-01-01T00:00:00.000Z',
+			applicationDecision: 'refused',
+			applicationDecisionDate: '2024-01-01T00:00:00.000Z',
+			applicationReference: '123',
+			caseProcedure: 'written',
+			caseSubmissionDueDate: '2024-03-25T23:59:59.999Z',
+			caseSubmittedDate: '2024-03-25T23:59:59.999Z',
+			changedDevelopmentDescription: false,
+			enforcementNotice: true,
+			floorSpaceSquareMetres: 22,
+			knowsAllOwners: 'Some',
+			knowsOtherOwners: 'Some',
+			lpaCode: 'Q9999',
+			isGreenBelt: false,
+			nearbyCaseReferences: ['1000000'],
+			neighbouringSiteAddresses: [],
+			originalDevelopmentDescription: 'A test description - i made this appeal',
+			ownersInformed: true,
+			ownsAllLand: true,
+			ownsSomeLand: true,
+			siteAccessDetails: ['Come and see'],
+			siteAddressCounty: 'Somewhere',
+			siteAddressLine1: 'Somewhere',
+			siteAddressLine2: 'Somewhere St',
+			siteAddressPostcode: 'SOM3 W3R',
+			siteAddressTown: 'Somewhereville',
+			siteAreaSquareMetres: 22,
+			siteSafetyDetails: ["It's dangerous"],
+			caseType: 'C',
+			enforcementReference: 'ENF-12345',
+			enforcementIssueDate: '2024-05-31T23:00:00.000Z',
+			enforcementEffectiveDate: '2024-05-31T23:00:00.000Z',
+			appealDecisionDate: '2024-05-31T23:00:00.000Z',
+			applicationDevelopmentAllOrPart: 'all-of-the-development',
+			contactPlanningInspectorateDate: '2024-05-31T23:00:00.000Z',
+			descriptionOfAllegedBreach: 'Christmas tree stolen',
+			enforcementNoticeListedBuilding: false,
+			interestInLand: 'owner',
+			writtenOrVerbalPermission: 'yes',
+			appellantProcedurePreference: 'written',
+			appellantProcedurePreferenceDetails: 'Reason for preference',
+			appellantProcedurePreferenceDuration: 3,
+			appellantProcedurePreferenceWitnessCount: 2,
+			agriculturalHolding: false,
+			tenantAgriculturalHolding: null,
+			otherTenantsAgriculturalHolding: null,
+			informedTenantsAgriculturalHolding: null,
+			planningObligation: false,
+			statusPlanningObligation: null,
+			developmentType: 'minor-dwellings',
+			contactAddressLine1: 'Flat 2',
+			contactAddressLine2: '123 Fake Street',
+			contactAddressTown: 'London',
+			contactAddressCounty: null,
+			contactAddressPostcode: 'N1 1AA',
+			appealGrounds: [
+				{
+					groundRef: 'a',
+					factsForGround: 'I like Christmas'
+				}
+			]
+		},	
+	},
+	enforcementLinkedSubmission: {
+		casedata: {
+			submissionId: '14960baa-3d0f-4db9-9e84-0c75be891560',
+			advertisedAppeal: true,
+			appellantCostsAppliedFor: false,
+			applicationDate: '2024-01-01T00:00:00.000Z',
+			applicationDecision: 'refused',
+			applicationDecisionDate: '2024-01-01T00:00:00.000Z',
+			applicationReference: '123',
+			caseProcedure: 'written',
+			caseSubmissionDueDate: '2024-03-25T23:59:59.999Z',
+			caseSubmittedDate: '2024-03-25T23:59:59.999Z',
+			changedDevelopmentDescription: false,
+			enforcementNotice: true,
+			floorSpaceSquareMetres: 22,
+			knowsAllOwners: 'Some',
+			knowsOtherOwners: 'Some',
+			lpaCode: 'Q9999',
+			isGreenBelt: false,
+			nearbyCaseReferences: ['1000000'],
+			neighbouringSiteAddresses: [],
+			originalDevelopmentDescription: 'A test description - i made this appeal',
+			ownersInformed: true,
+			ownsAllLand: true,
+			ownsSomeLand: true,
+			siteAccessDetails: ['Come and see'],
+			siteAddressCounty: 'Somewhere',
+			siteAddressLine1: 'Somewhere',
+			siteAddressLine2: 'Somewhere St',
+			siteAddressPostcode: 'SOM3 W3R',
+			siteAddressTown: 'Somewhereville',
+			siteAreaSquareMetres: 22,
+			siteSafetyDetails: ["It's dangerous"],
+			caseType: 'C',
+			enforcementReference: 'ENF-12345',
+			enforcementIssueDate: '2024-05-31T23:00:00.000Z',
+			enforcementEffectiveDate: '2024-05-31T23:00:00.000Z',
+			appealDecisionDate: '2024-05-31T23:00:00.000Z',
+			applicationDevelopmentAllOrPart: 'all-of-the-development',
+			contactPlanningInspectorateDate: '2024-05-31T23:00:00.000Z',
+			descriptionOfAllegedBreach: 'Christmas tree stolen',
+			enforcementNoticeListedBuilding: false,
+			interestInLand: 'owner',
+			writtenOrVerbalPermission: 'yes',
+			appellantProcedurePreference: 'written',
+			appellantProcedurePreferenceDetails: 'Reason for preference',
+			appellantProcedurePreferenceDuration: 3,
+			appellantProcedurePreferenceWitnessCount: 2,
+			agriculturalHolding: false,
+			tenantAgriculturalHolding: null,
+			otherTenantsAgriculturalHolding: null,
+			informedTenantsAgriculturalHolding: null,
+			planningObligation: false,
+			statusPlanningObligation: null,
+			developmentType: 'minor-dwellings',
+			contactAddressLine1: 'Flat 2',
+			contactAddressLine2: '123 Fake Street',
+			contactAddressTown: 'London',
+			contactAddressCounty: null,
+			contactAddressPostcode: 'N1 1AA',
+			appealGrounds: [
+				{
+					groundRef: 'a',
+					factsForGround: 'I like Christmas'
+				}
+			],
+				namedIndividuals: [
+			{
+				firstName: 'Jack',
+				lastName: 'Jackerson',
+				interestInLand: 'owner',
+				writtenOrVerbalPermission: 'yes'
+			}, 
+			{
+				firstName: 'Nilay',
+				lastName: 'Nilayerson',
+				interestInLand: 'owner',
+				writtenOrVerbalPermission: 'yes'
+			}, 
+			
+			{
+				firstName: 'Bob',
+				lastName: 'Bobberson',
+				interestInLand: 'owner',
+				writtenOrVerbalPermission: 'yes'
+			}, 
+		],
+		},	
+	},
+	enforcementListedSubmission: {
+		casedata: {
+			submissionId: '14960baa-3d0f-4db9-9e84-0c75be891560',
+			advertisedAppeal: true,
+			appellantCostsAppliedFor: false,
+			applicationDate: '2024-01-01T00:00:00.000Z',
+			applicationDecision: 'refused',
+			applicationDecisionDate: '2024-01-01T00:00:00.000Z',
+			applicationReference: '123',
+			caseProcedure: 'written',
+			caseSubmissionDueDate: '2024-03-25T23:59:59.999Z',
+			caseSubmittedDate: '2024-03-25T23:59:59.999Z',
+			changedDevelopmentDescription: false,
+			enforcementNotice: true,
+			floorSpaceSquareMetres: 22,
+			knowsAllOwners: 'Some',
+			knowsOtherOwners: 'Some',
+			lpaCode: 'Q9999',
+			isGreenBelt: false,
+			nearbyCaseReferences: ['1000000'],
+			neighbouringSiteAddresses: [],
+			originalDevelopmentDescription: 'A test description - i made this appeal',
+			ownersInformed: true,
+			ownsAllLand: true,
+			ownsSomeLand: true,
+			siteAccessDetails: ['Come and see'],
+			siteAddressCounty: 'Somewhere',
+			siteAddressLine1: 'Somewhere',
+			siteAddressLine2: 'Somewhere St',
+			siteAddressPostcode: 'SOM3 W3R',
+			siteAddressTown: 'Somewhereville',
+			siteAreaSquareMetres: 22,
+			siteSafetyDetails: ["It's dangerous"],
+			caseType: 'F',
+			enforcementReference: '12345',
+			enforcementIssueDate: '1890-12-28T22:49:47.0Z',
+			enforcementEffectiveDate: '1890-12-28T22:49:47.0Z',
+			contactPlanningInspectorateDate: null,
+			interestInLand: 'owner',
+			caseSubmissionDueDate: null,
+			siteAddressLine1: 'occaecat aliquip non pariatur consequat',
+			siteAddressLine2: null,
+			siteAddressTown: 'et',
+			siteAddressCounty: 'velit',
+			siteAddressPostcode: 'nisi minim laboris sed',
+			contactAddressLine1: null,
+			contactAddressLine2: null,
+			contactAddressTown: null,
+			contactAddressCounty: null,
+			contactAddressPostcode: null,
+			siteAccessDetails: ['laborum', 'aute velit quis', 'dolor'],
+			siteSafetyDetails: ['velit aliqua', 'qui', 'tempor Duis ut dolore', 'anim Ut in ea', 'eiusmod laborum'],
+			appellantCostsAppliedFor: false,
+			appellantProcedurePreference: null,
+			appellantProcedurePreferenceDetails: 'eiusmod ex exercitation',
+			appellantProcedurePreferenceDuration: 10816414.941069126,
+			appellantProcedurePreferenceWitnessCount: -91300569.36444478,
+			nearbyCaseReferences: ['incididunt'],
+			appealGrounds: [
+				{
+					groundRef: 'a',
+					factsForGround: 'I like Christmas'
+				}
+			]
+		},	
+	},		
 	lpaqSubmission: {
 		casedata: {
 			...validLpaQuestionnaireHas.casedata,

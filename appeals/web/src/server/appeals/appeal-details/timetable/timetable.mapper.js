@@ -2,12 +2,11 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDayMonthYearHourMinute, getExampleDateHint } from '#lib/dates.js';
 import { dateInput } from '#lib/mappers/index.js';
 import { appealTypeToAppealCaseTypeMapper } from '@pins/appeals/utils/appeal-type-case.mapper.js';
-import { isExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import {
-	APPEAL_CASE_PROCEDURE,
-	APPEAL_CASE_STATUS,
-	APPEAL_CASE_TYPE
-} from '@planning-inspectorate/data-model';
+	isExpeditedAppealType,
+	isLdcOrDiscontinuanceOrEnforcementCaseType
+} from '@pins/appeals/utils/appeal-type-checks.js';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -138,17 +137,6 @@ export const getIdText = (timetableType) => {
 };
 
 /**
- * @param {AppealTimetableType[]} validAppealTimetableType
- * @param {AppellantCase} appellantCase
- */
-const addHearingOrInquiryTimetableTypes = (validAppealTimetableType, appellantCase) => {
-	validAppealTimetableType.push('statementOfCommonGroundDueDate');
-	if (appellantCase.planningObligation?.hasObligation) {
-		validAppealTimetableType.push('planningObligationDueDate');
-	}
-};
-
-/**
  * @param {Appeal} appeal
  * @param {AppellantCase} appellantCase
  * @returns {AppealTimetableType[]}
@@ -176,19 +164,25 @@ export const getAppealTimetableTypes = (appeal, appellantCase) => {
 		}
 		if (
 			appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN ||
-			([APPEAL_CASE_TYPE.C, APPEAL_CASE_TYPE.F, APPEAL_CASE_TYPE.G, APPEAL_CASE_TYPE.X].includes(
-				caseType
-			) &&
+			(isLdcOrDiscontinuanceOrEnforcementCaseType(caseType) &&
 				(appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING ||
 					appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY))
 		) {
 			validAppealTimetableType.push('finalCommentsDueDate');
 		}
 		if (appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING) {
-			addHearingOrInquiryTimetableTypes(validAppealTimetableType, appellantCase);
+			if (!isLdcOrDiscontinuanceOrEnforcementCaseType(caseType)) {
+				validAppealTimetableType.push('statementOfCommonGroundDueDate');
+			}
+			if (appellantCase.planningObligation?.hasObligation) {
+				validAppealTimetableType.push('planningObligationDueDate');
+			}
 		}
 		if (appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY) {
-			addHearingOrInquiryTimetableTypes(validAppealTimetableType, appellantCase);
+			validAppealTimetableType.push('statementOfCommonGroundDueDate');
+			if (appellantCase.planningObligation?.hasObligation) {
+				validAppealTimetableType.push('planningObligationDueDate');
+			}
 			validAppealTimetableType.push('proofOfEvidenceAndWitnessesDueDate');
 			validAppealTimetableType.push('caseManagementConferenceDueDate');
 		}

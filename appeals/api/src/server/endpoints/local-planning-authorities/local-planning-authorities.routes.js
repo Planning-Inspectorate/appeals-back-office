@@ -48,7 +48,9 @@ router.post(
         #swagger.responses[400] = {}
 	*/
 	postLpaValidator,
-	asyncHandler(checkAppealExistsByIdAndAddPartialToRequest(['childAppeals'])),
+	asyncHandler(
+		checkAppealExistsByIdAndAddPartialToRequest(['childAppeals', 'appellant', 'address', 'agent'])
+	),
 	checkLpaIdExists,
 	asyncHandler(controller.changeLpa)
 );

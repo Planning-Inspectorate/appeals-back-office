@@ -117,7 +117,8 @@ router.patch(
 		'appellant',
 		'agent',
 		'lpa',
-		'appealStatus'
+		'appealStatus',
+		'childAppeals'
 	]),
 	checkSiteVisitExists,
 	checkLookupValueIsValidAndAddToRequest(
@@ -158,7 +159,8 @@ router.delete(
 		'appellant',
 		'agent',
 		'lpa',
-		'appealStatus'
+		'appealStatus',
+		'childAppeals'
 	]),
 	checkSiteVisitExists,
 	checkLookupValueIsValidAndAddToRequest(
@@ -200,7 +202,8 @@ router.post(
 		'appellant',
 		'lpa',
 		'appealStatus',
-		'agent'
+		'agent',
+		'childAppeals'
 	]),
 	asyncHandler(postSiteVisitMissed)
 );
