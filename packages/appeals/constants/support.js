@@ -522,12 +522,6 @@ const s78timetable = {
 const s78ExpeditedTimetable = {
 	lpaQuestionnaireDueDate: {
 		daysFromStartDate: 5
-	},
-	finalCommentsDueDate: {
-		daysFromStartDate: 35
-	},
-	s106ObligationDueDate: {
-		daysFromStartDate: 35
 	}
 };
 const advertTimetable = {

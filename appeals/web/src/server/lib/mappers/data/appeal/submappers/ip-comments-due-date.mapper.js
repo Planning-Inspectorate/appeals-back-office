@@ -2,26 +2,21 @@ import { isStatePassed } from '#lib/appeal-status.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
-import { isS78ExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common.js';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapIpCommentsDueDate = ({
 	appealDetails,
 	currentRoute,
-	userHasUpdateCasePermission,
-	appellantCase
+	userHasUpdateCasePermission
 }) => {
 	const id = 'ip-comments-due-date';
 
 	if (
 		!appealDetails.startedAt ||
-		isS78ExpeditedAppealType(
-			appealDetails.appealType,
-			appellantCase?.applicationDate,
-			appellantCase?.applicationDecision,
-			appellantCase?.typeOfPlanningApplication
-		)
+		appealDetails.procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 ||
+		appealDetails.procedureType === PROCEDURE_TYPE_NAME.WRITTEN_PART_1
 	) {
 		return { id, display: {} };
 	}
