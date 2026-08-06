@@ -592,6 +592,14 @@ these [Notify Templates](../appeals/api/src/server/notify/templates):
 - **GOV notify template:** [Enf Hearing - No statement from any party, Comments received - GOV.UK Notify](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/fcdaf559-08da-4067-bc1a-f449bdcfad86)
 - **Trigger:** Publish representations when the appeal is in the statements stage and IP comments have been submitted but no statements received. Sent to appellant/agent.
 
+### Statements published - enforcement hearing yes lpa statements no appellant statement no comments
+
+- **Appeal type:** Enforcement, ELB and LDC
+- **Procedure:** Hearing
+- **Notify Subject Template:** [publish-statements-enforcement-hearing-yes-lpa-statement-no-appellant-statement-no-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-yes-lpa-statement-no-appellant-statement-no-comments.subject.md)
+- **Notify Content Template:** [publish-statements-enforcement-hearing-yes-lpa-statement-no-appellant-statement-no-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-yes-lpa-statement-no-appellant-statement-no-comments.content.md)
+- **Trigger:** Publish representations when the appeal is in the statements stage. Sent to appellant/agent.
+
 ## Evidence
 
 ### Rule 6 proof of evidence received

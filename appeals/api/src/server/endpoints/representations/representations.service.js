@@ -627,6 +627,8 @@ const sendPublishedStatementNotifiesForHearing = async (
 		isEnforcementOrLdc && !hasLpaStatement && !hasAppellantStatement && hasIpComments;
 	const isEnforcementYesAppellantStatementNoLpaStatementNoIpComments =
 		isEnforcementOrLdc && !hasLpaStatement && !hasIpComments && hasAppellantStatement;
+	const isEnforcementYesLpaStatementNoAppellantStatementNoIpComments =
+		isEnforcementOrLdc && hasLpaStatement && !hasAppellantStatement && !hasIpComments;
 
 	const includeFrontOfficeUrl = !isEnforcementNoStatementsNoComments;
 
@@ -681,6 +683,18 @@ const sendPublishedStatementNotifiesForHearing = async (
 			'publish-statements-enforcement-hearing-yes-appellant-statements-no-lpa-statements-no-comments-lpa';
 		appellantTemplate =
 			'publish-statements-enforcement-hearing-yes-appellant-statements-no-lpa-statements-no-comments-appellant';
+		additionalEmailValues = {
+			hearing_address: hearingAddress,
+			inspector_name: inspectorName,
+			hearing_expected_days: hearingExpectedDays,
+			hearing_time: hearingTime,
+			final_comments_deadline: finalCommentsDueDate
+		};
+	} else if (isEnforcementYesLpaStatementNoAppellantStatementNoIpComments) {
+		lpaTemplate =
+			'publish-statements-enforcement-hearing-yes-lpa-statement-no-appellant-statement-no-comments';
+		appellantTemplate =
+			'publish-statements-enforcement-hearing-yes-lpa-statement-no-appellant-statement-no-comments';
 		additionalEmailValues = {
 			hearing_address: hearingAddress,
 			inspector_name: inspectorName,
