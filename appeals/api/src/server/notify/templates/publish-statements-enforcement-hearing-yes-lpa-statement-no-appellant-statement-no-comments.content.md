@@ -7,15 +7,7 @@ You can [view this information in the appeals service]({{front_office_url}}).
 We did not receive a statement from the appellant.
 We did not receive comments from interested parties.
 
-# Appeal details
-
-^Appeal reference number: {{appeal_reference_number}}
-Address: {{site_address}}
-{% if enforcement_reference -%}
-Enforcement notice reference: {{enforcement_reference}}
-{%- else -%}
-Planning application reference: {{lpa_reference}}
-{%- endif %}
+{% include 'parts/appeal-details.md' %}
 
 {% if hearing_date -%}
 # Hearing details
