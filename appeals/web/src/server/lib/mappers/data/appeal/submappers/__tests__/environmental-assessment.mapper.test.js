@@ -57,7 +57,7 @@ describe('environmental-assessment.mapper', () => {
 	it('should contain tableItem with one documents', () => {
 		data.appealDetails.environmentalAssessment.documents = [
 			{
-				latestDocumentVersion: { dateReceived: new Date('2025-02-01') }
+				createdAt: new Date('2025-02-01')
 			}
 		];
 		const mappedData = mapEnvironmentalAssessment(data);
@@ -86,13 +86,13 @@ describe('environmental-assessment.mapper', () => {
 	it('should contain tableItem with three documents', () => {
 		data.appealDetails.environmentalAssessment.documents = [
 			{
-				latestDocumentVersion: { dateReceived: new Date('2025-02-01') }
+				createdAt: new Date('2025-02-01')
 			},
 			{
-				latestDocumentVersion: { dateReceived: new Date('2025-01-01') }
+				createdAt: new Date('2025-01-01')
 			},
 			{
-				latestDocumentVersion: { dateReceived: new Date('2025-03-01') }
+				createdAt: new Date('2025-03-01')
 			}
 		];
 		const mappedData = mapEnvironmentalAssessment(data);
