@@ -44,7 +44,7 @@ describe('appellant-case mapper', () => {
 		expect(result.statementCommonGround).toBeDefined();
 	});
 
-	it('should NOT include statementCommonGround for S78 expedited appeal', () => {
+	it('should include statementCommonGround for S78 expedited appeal', () => {
 		const appellantCaseData = {
 			...appellantCaseDataNotValidated,
 			applicationDate: '2026-04-02T00:00:00.000Z',
@@ -70,6 +70,6 @@ describe('appellant-case mapper', () => {
 			mockRequest
 		);
 
-		expect(result.statementCommonGround).toBeUndefined();
+		expect(result.statementCommonGround).toBeDefined();
 	});
 });
