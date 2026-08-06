@@ -8,6 +8,7 @@ import { notifySend, renderTemplate } from '#notify/notify-send.js';
 import appealTimetableRepository from '#repositories/appeal-timetable.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
+import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import { getChildEnforcementsWithGrounds } from '#utils/link-appeals.js';
 import logger from '#utils/logger.js';
@@ -38,6 +39,7 @@ import {
 	recalculateDateIfNotBusinessDay,
 	setTimeInTimeZone
 } from '@pins/appeals/utils/business-days.js';
+import { displayPlanningObligation } from '@pins/appeals/utils/business-rules.js';
 import formatDate, {
 	dateISOStringToDisplayDate,
 	formatTime12h
@@ -711,6 +713,8 @@ const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient, az
 		return formatDate(new Date(isoDate), false) || '';
 	};
 
+	const enforcementReference = await getEnforcementReference(appeal);
+
 	const personalisation = {
 		appeal_reference_number: appeal.reference,
 		lpa_reference: appeal.applicationReference || '',
@@ -761,9 +765,14 @@ const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient, az
 		),
 		// @ts-ignore
 		planning_obligation_due_date: optionalDate(
-			// @ts-ignore
-			processedBody['planningObligationDueDate'] ||
-				appeal.appealTimetable?.planningObligationDueDate
+			displayPlanningObligation(
+				appeal.appealType?.type ?? undefined,
+				appeal.procedureType?.key ?? undefined,
+				appeal.appellantCase?.planningObligation ?? undefined
+			) &&
+				// @ts-ignore
+				(processedBody['planningObligationDueDate'] ||
+					appeal.appealTimetable?.planningObligationDueDate)
 		),
 		// @ts-ignore
 		case_management_conference_due_date: optionalDate(
@@ -771,7 +780,8 @@ const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient, az
 			processedBody['caseManagementConferenceDueDate'] ||
 				appeal.appealTimetable?.caseManagementConferenceDueDate
 		),
-		team_email_address: await getTeamEmailFromAppealId(appeal.id)
+		team_email_address: await getTeamEmailFromAppealId(appeal.id),
+		...(enforcementReference && { enforcement_reference: enforcementReference })
 	};
 
 	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
@@ -787,7 +797,7 @@ const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient, az
 			templateName,
 			notifyClient,
 			recipientEmail,
-			personalisation
+			personalisation: { ...personalisation, appellant: true }
 		});
 	}
 
@@ -797,7 +807,7 @@ const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient, az
 			templateName,
 			notifyClient,
 			recipientEmail: lpaEmail,
-			personalisation
+			personalisation: { ...personalisation, appellant: false }
 		});
 	}
 
@@ -809,7 +819,7 @@ const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient, az
 					templateName,
 					notifyClient,
 					recipientEmail: party.serviceUser.email,
-					personalisation
+					personalisation: { ...personalisation, appellant: false }
 				});
 			}
 		});
@@ -865,6 +875,14 @@ const getTimetableUpdatedTemplateName = (appealTypeKey, procedureType) => {
 		case APPEAL_CASE_TYPE.ZP:
 		case APPEAL_CASE_TYPE.ZA:
 			return 'has-appeal-timetable-updated';
+		case APPEAL_CASE_TYPE.C:
+			if (procedureType === APPEAL_CASE_PROCEDURE.INQUIRY) {
+				return 'appeal-timetable-updated-inquiry';
+			}
+			if (procedureType === APPEAL_CASE_PROCEDURE.HEARING) {
+				return 'appeal-timetable-updated-enforcement-hearing';
+			}
+			return 'appeal-timetable-updated';
 
 		default:
 			if (procedureType === APPEAL_CASE_PROCEDURE.INQUIRY) {

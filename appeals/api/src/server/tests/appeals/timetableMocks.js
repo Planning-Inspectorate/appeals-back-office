@@ -4,6 +4,7 @@ import {
 	appealS78Expedite,
 	casAdvertAppeal,
 	casPlanningAppeal,
+	enforcementNoticeAppeal,
 	fullPlanningAppeal,
 	householdAppeal,
 	ldcAppeal,
@@ -132,6 +133,25 @@ const fullPlanningHearingAppealWithTimetable = {
 	}
 };
 
+const enforcementNoticeHearingAppealWithTimetable = {
+	...enforcementNoticeAppeal,
+	procedureType: {
+		id: 3,
+		key: 'hearing',
+		name: 'Hearing'
+	},
+	caseStartedDate: new Date(2022, 4, 22),
+	caseValidationDate: new Date(2022, 4, 20),
+	caseValidDate: new Date(2022, 4, 20),
+	appealTimetable: {
+		appealId: 2,
+		id: 101,
+		lpaQuestionnaireDueDate: new Date('2023-05-16T01:00:00.000Z'),
+		lpaStatementDueDate: null,
+		finalCommentsDueDate: null
+	}
+};
+
 const listedBuildingAppealWithTimetable = {
 	...listedBuildingAppeal,
 	caseStartedDate: new Date(2022, 4, 22),
@@ -149,6 +169,7 @@ export {
 	advertisementAppealWithTimetable,
 	casAdvertAppealWithTimetable,
 	casPlanningAppealWithTimetable,
+	enforcementNoticeHearingAppealWithTimetable,
 	fullPlanningAppealExpediteWithTimetable,
 	fullPlanningAppealWithTimetable,
 	fullPlanningHearingAppealWithTimetable,
