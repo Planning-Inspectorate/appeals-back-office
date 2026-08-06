@@ -598,6 +598,7 @@ these [Notify Templates](../appeals/api/src/server/notify/templates):
 - **Procedure:** Hearing
 - **Notify Subject Template:** [publish-statements-enforcement-hearing-yes-lpa-statement-no-appellant-statement-no-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-yes-lpa-statement-no-appellant-statement-no-comments.subject.md)
 - **Notify Content Template:** [publish-statements-enforcement-hearing-yes-lpa-statement-no-appellant-statement-no-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-yes-lpa-statement-no-appellant-statement-no-comments.content.md)
+- **GOV notify template:** [Enf Hearing - Yes LPA statement, No appellant statement, No comments - GOV.UK Notify](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/ed5211de-1c8f-4f9c-98a6-4c2a9ae5a0c9)
 - **Trigger:** Publish representations when the appeal is in the statements stage. Sent to appellant/agent.
 
 ## Evidence
