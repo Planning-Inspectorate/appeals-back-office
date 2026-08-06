@@ -58,7 +58,7 @@ describe('environmental-assessment.mapper', () => {
 		data.appealDetails.environmentalAssessment.documentCount = 1;
 		data.appealDetails.environmentalAssessment.documents = [
 			{
-				latestDocumentVersion: { dateReceived: new Date('2025-02-01') }
+				createdAt: new Date('2025-02-01')
 			}
 		];
 		const mappedData = mapEnvironmentalAssessment(data);
@@ -88,13 +88,13 @@ describe('environmental-assessment.mapper', () => {
 		data.appealDetails.environmentalAssessment.documentCount = 3;
 		data.appealDetails.environmentalAssessment.documents = [
 			{
-				latestDocumentVersion: { dateReceived: new Date('2025-02-01') }
+				createdAt: new Date('2025-02-01')
 			},
 			{
-				latestDocumentVersion: { dateReceived: new Date('2025-01-01') }
+				createdAt: new Date('2025-01-01')
 			},
 			{
-				latestDocumentVersion: { dateReceived: new Date('2025-03-01') }
+				createdAt: new Date('2025-03-01')
 			}
 		];
 		const mappedData = mapEnvironmentalAssessment(data);

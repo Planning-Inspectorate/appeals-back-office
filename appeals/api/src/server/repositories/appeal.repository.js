@@ -1409,6 +1409,7 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 					guid: true,
 					name: true,
 					isDeleted: true,
+					createdAt: true,
 					latestDocumentVersion: {
 						select: {
 							documentGuid: true,
