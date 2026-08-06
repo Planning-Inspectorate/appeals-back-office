@@ -3443,6 +3443,7 @@ describe('/appeals/:id/reps', () => {
 					templateName: 'publish-statements-hearing-appellant'
 				});
 			});
+
 			test('send notify comments and statements (hearing not yet set up) S20', async () => {
 				const expectedSiteAddress = [
 					'addressLine1',
@@ -3700,6 +3701,7 @@ describe('/appeals/:id/reps', () => {
 					templateName: 'publish-statements-hearing-appellant'
 				});
 			});
+
 			test('send notify comments and statements (hearing already set up) S20', async () => {
 				const expectedSiteAddress = [
 					'addressLine1',
@@ -4435,6 +4437,155 @@ describe('/appeals/:id/reps', () => {
 						},
 						recipientEmail: appeal.agent.email,
 						templateName: 'publish-statements-enforcement-hearing-no-statements-yes-comments'
+					});
+				}
+			);
+
+			test.each([
+				[
+					'enforcement_notice',
+					structuredClone({
+						...enforcementNoticeAppeal,
+						representations: enforcementNoticeAppeal.representations.filter(
+							(rep) => rep.status !== 'awaiting_review'
+						)
+					})
+				],
+				[
+					'enforcement_listed_building',
+					structuredClone({
+						...appealEnforcementListed,
+						representations: appealEnforcementListed.representations.filter(
+							(rep) => rep.status !== 'awaiting_review'
+						)
+					})
+				],
+				[
+					'ldc',
+					structuredClone({
+						...ldcAppeal,
+						representations: ldcAppeal.representations.filter(
+							(rep) => rep.status !== 'awaiting_review'
+						)
+					})
+				]
+			])(
+				'sends correct notify emails to LPA and appellant when LPA statement received but no IP comments received and no appellant statement received and appeal type is %s',
+				async (appealType, appeal) => {
+					appeal.currentStatus = 'statements';
+					const expectedSiteAddress = [
+						'addressLine1',
+						'addressLine2',
+						'addressTown',
+						'addressCounty',
+						'postcode',
+						'addressCountry'
+					]
+						.map((key) => appeal.address[key])
+						.filter((value) => value)
+						.join(', ');
+
+					const expectedEmailPayload = {
+						lpa_reference: appeal.applicationReference,
+						appeal_reference_number: appeal.reference,
+						site_address: expectedSiteAddress,
+						...(appealType !== 'ldc' ? { enforcement_reference: 'Reference' } : {}),
+						final_comments_deadline: ''
+					};
+
+					const pastDate = new Date();
+					pastDate.setDate(pastDate.getDate() - 1);
+
+					databaseConnector.appeal.findUnique.mockResolvedValue({
+						...appeal,
+						procedureType: {
+							key: 'hearing'
+						},
+						appealTimetable: {
+							...appeal.appealTimetable,
+							ipCommentsDueDate: pastDate,
+							lpaStatementDueDate: pastDate,
+							proofOfEvidenceAndWitnessesDueDate: '2025-12-13'
+						},
+						hearing: {
+							id: 1,
+							appealId: 1,
+							hearingStartTime: new Date('2022-03-31T01:00:00.000Z'),
+							hearingEndTime: new Date('2022-03-31T03:00:00.000Z'),
+							addressId: 1,
+							address: {
+								id: 1,
+								addressLine1: '96 The Avenue',
+								addressLine2: 'Leftfield',
+								addressCountry: 'United Kingdom',
+								addressCounty: 'Kent',
+								postcode: 'MD21 5XY',
+								addressTown: 'Maidstone'
+							}
+						}
+					});
+					databaseConnector.appealStatus.create.mockResolvedValue({});
+					databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+					databaseConnector.representation.findMany.mockResolvedValue([]);
+					databaseConnector.representation.updateMany.mockResolvedValue([]);
+					databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+						{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+					]);
+					databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+					databaseConnector.representation.findMany.mockResolvedValue([
+						{ representationType: 'lpa_statement' }
+					]);
+					databaseConnector.representation.updateMany.mockResolvedValue([]);
+
+					const response = await request
+						.post('/appeals/1/reps/publish')
+						.query({ type: 'statements' })
+						.set('azureAdUserId', '732652365');
+
+					expect(response.status).toEqual(200);
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						azureAdUserId: expect.anything(),
+						notifyClient: expect.anything(),
+						personalisation: {
+							...expectedEmailPayload,
+							front_office_url: expect.any(String),
+							has_ip_comments: false,
+							has_lpa_statement: true,
+							team_email_address: expect.any(String),
+							hearing_address:
+								'96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+							hearing_date: '31 March 2022',
+							hearing_expected_days: '',
+							inspector_name: undefined,
+							hearing_time: '2:00am'
+						},
+						recipientEmail: appeal.lpa.email,
+						templateName:
+							'publish-statements-enforcement-hearing-yes-lpa-statement-no-appellant-statement-no-comments'
+					});
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						azureAdUserId: expect.anything(),
+						notifyClient: expect.anything(),
+						personalisation: {
+							...expectedEmailPayload,
+							front_office_url: expect.any(String),
+							has_ip_comments: false,
+							has_lpa_statement: true,
+							team_email_address: expect.any(String),
+							hearing_address:
+								'96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+							hearing_date: '31 March 2022',
+							hearing_expected_days: '',
+							inspector_name: undefined,
+							hearing_time: '2:00am'
+						},
+						recipientEmail: appeal.agent.email,
+						templateName:
+							'publish-statements-enforcement-hearing-yes-lpa-statement-no-appellant-statement-no-comments'
 					});
 				}
 			);
