@@ -1,4 +1,5 @@
-import dotenv from 'dotenv';
+import { loadEnvFile } from 'node:process';
+
 import path from 'node:path';
 
 /**
@@ -14,7 +15,9 @@ export function loadEnvironment(environment, rootDir = process.cwd()) {
 	// either load .env.test for tests, or just .env regardless of environment
 	const sourceFile = isTest ? '.env.test' : '.env';
 	// load into process.env (process.env takes precendence)
-	dotenv.config({ path: path.join(rootDir, sourceFile) });
+	try {
+		loadEnvFile(path.join(rootDir, sourceFile));
+	} catch {/* ignore errors*/}
 
 	return process.env;
 }
