@@ -27,12 +27,11 @@ export const mapEnvironmentalAssessment = (data) => {
 				return currentDocument;
 			}
 
-			return latestReceivedDocument?.latestDocumentVersion?.dateReceived >
-				currentDocument.latestDocumentVersion?.dateReceived
+			return latestReceivedDocument?.createdAt > currentDocument.createdAt
 				? latestReceivedDocument
 				: currentDocument;
 		},
-		{ latestDocumentVersion: { dateReceived: '' } }
+		{ createdAt: '' }
 	);
 
 	const text = 'Environmental services team review';
@@ -44,8 +43,8 @@ export const mapEnvironmentalAssessment = (data) => {
 			? `${environmentalAssessment.documentCount} document${environmentalAssessment.documentCount === 1 ? '' : 's'}`
 			: 'No documents',
 		receivedText:
-			documents?.length && latestReceivedDocument?.latestDocumentVersion?.dateReceived
-				? dateISOStringToDisplayDate(latestReceivedDocument.latestDocumentVersion.dateReceived)
+			documents?.length && latestReceivedDocument?.createdAt
+				? dateISOStringToDisplayDate(latestReceivedDocument.createdAt)
 				: 'Not applicable',
 		actionHtml: actionsHtml({
 			id,
