@@ -35,8 +35,8 @@ const batchArray = (arr, size) => {
 
 /**
  *
- * @param {import('#db-client/models.ts').AppealCreateInput} data
- * @param {import('#db-client/models.ts').DocumentVersionCreateInput[]} documents
+ * @param {import('@pins/appeals-database/src/client/models.ts').AppealCreateInput} data
+ * @param {import('@pins/appeals-database/src/client/models.ts').DocumentVersionCreateInput[]} documents
  * @param {string[]} relatedReferences
  * @param {{groundRef:string, factsForGround:string}[]} appealGrounds
  * @param {string} appellantProcedurePreference
@@ -117,8 +117,8 @@ export const createAppeal = async (
 /**
  *
  * @param {string} caseReference
- * @param {Omit<import('#db-client/models.ts').LPAQuestionnaireCreateInput, 'appeal'>} data
- * @param {import('#db-client/models.ts').DocumentVersionCreateInput[]} documents
+ * @param {Omit<import('@pins/appeals-database/src/client/models.ts').LPAQuestionnaireCreateInput, 'appeal'>} data
+ * @param {import('@pins/appeals-database/src/client/models.ts').DocumentVersionCreateInput[]} documents
  * @param {string[]} relatedReferences
  * @returns
  */
@@ -181,8 +181,8 @@ export const createOrUpdateLpaQuestionnaire = async (
 /**
  *
  * @param {Appeal} appeal
- * @param {Omit<import('#db-client/models.ts').RepresentationCreateInput, 'appeal'>} data
- * @param {import('#db-client/models.ts').DocumentVersionCreateInput[]} attachments
+ * @param {Omit<import('@pins/appeals-database/src/client/models.ts').RepresentationCreateInput, 'appeal'>} data
+ * @param {import('@pins/appeals-database/src/client/models.ts').DocumentVersionCreateInput[]} attachments
  */
 export const createRepresentation = async (appeal, data, attachments) => {
 	const transaction = await databaseConnector.$transaction(async (tx) => {
@@ -214,7 +214,7 @@ export const createRepresentation = async (appeal, data, attachments) => {
 
 /**
  *
- * @param {import('#db-client/client.ts').Prisma.TransactionClient} tx
+ * @param {import('@pins/appeals-database/src/client/client.ts').Prisma.TransactionClient} tx
  * @param {number} appealId
  * @param {string} caseReference
  * @param {string[]} relatedReferences
@@ -271,11 +271,11 @@ const setAppealRelationships = async (tx, appealId, caseReference, relatedRefere
 
 /**
  *
- * @param {import('#db-client/client.ts').Prisma.TransactionClient} tx
+ * @param {import('@pins/appeals-database/src/client/client.ts').Prisma.TransactionClient} tx
  * @param {number} appealId
  * @param {string} caseReference
- * @param {import('#db-client/models.ts').DocumentVersionCreateInput[]} documents
- * @returns {Promise<import('#db-client/client.ts').DocumentVersion[]>}
+ * @param {import('@pins/appeals-database/src/client/models.ts').DocumentVersionCreateInput[]} documents
+ * @returns {Promise<import('@pins/appeals-database/src/client/client.ts').DocumentVersion[]>}
  */
 const setDocumentVersions = async (tx, appealId, caseReference, documents) => {
 	const BATCH_SIZE = 100;
@@ -359,9 +359,9 @@ const setDocumentVersions = async (tx, appealId, caseReference, documents) => {
 
 /**
  *
- * @param {import('#db-client/client.ts').Prisma.TransactionClient} tx
+ * @param {import('@pins/appeals-database/src/client/client.ts').Prisma.TransactionClient} tx
  * @param {number} repId
- * @param {import('#db-client/client.ts').DocumentVersion[]} documents
+ * @param {import('@pins/appeals-database/src/client/client.ts').DocumentVersion[]} documents
  * @returns
  */
 const attachToRepresentation = async (tx, repId, documents) => {
@@ -380,7 +380,7 @@ const attachToRepresentation = async (tx, repId, documents) => {
 
 /**
  *
- * @param {import('#db-client/client.ts').Prisma.TransactionClient} tx
+ * @param {import('@pins/appeals-database/src/client/client.ts').Prisma.TransactionClient} tx
  * @param {number} appealId
  * @param {{groundRef:string, factsForGround:string}[]} appealGrounds
  * @returns {Promise<void>}

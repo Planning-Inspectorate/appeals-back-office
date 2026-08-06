@@ -1,10 +1,10 @@
 import { databaseConnector } from '#utils/database-connector.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 
-/** @typedef {import('#db-client/models.ts').RepresentationWhereInput} RepresentationWhereInput */
-/** @typedef {import('#db-client/models.ts').RepresentationModel} RepresentationModel */
-/** @typedef {import('#db-client/models.ts').RepresentationCreateArgs} RepresentationCreateArgs */
-/** @typedef {import('#db-client/models.ts').RepresentationCreateManyInput} RepresentationCreateManyInput */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').RepresentationWhereInput} RepresentationWhereInput */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').RepresentationModel} RepresentationModel */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').RepresentationCreateArgs} RepresentationCreateArgs */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').RepresentationCreateManyInput} RepresentationCreateManyInput */
 
 /**
  * @typedef {Object} RepresentationUpdateData

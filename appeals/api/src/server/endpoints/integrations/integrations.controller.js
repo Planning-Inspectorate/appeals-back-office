@@ -265,8 +265,8 @@ export const importAppeal = async (req, res) => {
 
 /**
  * @param {string} caseReference
- * @param {Omit<import('#db-client/models.ts').LPAQuestionnaireCreateInput, 'appeal'>} questionnaire
- * @param {import('#db-client/models.ts').DocumentVersionCreateInput[]} documents
+ * @param {Omit<import('@pins/appeals-database/src/client/models.ts').LPAQuestionnaireCreateInput, 'appeal'>} questionnaire
+ * @param {import('@pins/appeals-database/src/client/models.ts').DocumentVersionCreateInput[]} documents
  * @param {string[] | null} relatedReferences
  * @returns
  */

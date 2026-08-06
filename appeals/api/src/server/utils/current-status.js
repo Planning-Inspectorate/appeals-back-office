@@ -1,5 +1,5 @@
-/** @typedef {import('#db-client/models.ts').AppealModel } Appeal */
-/** @typedef {import('#db-client/models.ts').AppealStatusModel } AppealStatus */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').AppealModel } Appeal */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').AppealStatusModel } AppealStatus */
 
 /**
  * @param {{currentStatus: Appeal['currentStatus']}} appeal

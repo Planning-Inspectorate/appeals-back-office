@@ -4,8 +4,8 @@ import { normaliseProcedureType } from '@pins/appeals/utils/procedure-type.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import createStateMachine from './create-state-machine.js';
 
-/** @typedef {import('#db-client/client.ts').AppealType} AppealType */
-/** @typedef {import('#db-client/client.ts').ProcedureType} ProcedureType */
+/** @typedef {import('@pins/appeals-database/src/client/client.ts').AppealType} AppealType */
+/** @typedef {import('@pins/appeals-database/src/client/client.ts').ProcedureType} ProcedureType */
 /** @typedef {import('@pins/appeals.api').Appeals.StateStub} StateStub */
 
 /**

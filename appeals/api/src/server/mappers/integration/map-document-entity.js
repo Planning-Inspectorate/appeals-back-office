@@ -16,8 +16,8 @@ import {
 } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealDocument} AppealDocument */
-/** @typedef {import('#db-client/models.ts').DocumentModel} DocumentModel */
-/** @typedef {import('#db-client/models.ts').DocumentVersionModel} DocumentVersionModel */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').DocumentModel} DocumentModel */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').DocumentVersionModel} DocumentVersionModel */
 /**
  * @typedef {{
  *   documentURI: DocumentVersionModel['documentURI'],

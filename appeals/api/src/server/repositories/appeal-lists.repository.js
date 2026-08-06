@@ -253,7 +253,7 @@ const getAppealsWithoutIncludes = async (
  * @param {number} assignedTeamId
  * @param {number} procedureTypeId
  * @param {string} appellantProcedurePreferencePreFilter
- * @returns {import('#db-client/models.ts').AppealWhereInput}
+ * @returns {import('@pins/appeals-database/src/client/models.ts').AppealWhereInput}
  */
 const buildAllAppealsWhereClause = (
 	searchTerm,

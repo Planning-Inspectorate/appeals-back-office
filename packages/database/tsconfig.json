@@ -1,7 +1,7 @@
 {
-	"include": ["../server/utils/db-client/client.ts"],
+	"include": ["./src/client/client.ts"],
 	"compilerOptions": {
-		"baseUrl": "../server/utils/db-client",
+		"baseUrl": "./src/client/db-client",
 		"esModuleInterop": true,
 		"moduleResolution": "nodenext",
 		"checkJs": false,

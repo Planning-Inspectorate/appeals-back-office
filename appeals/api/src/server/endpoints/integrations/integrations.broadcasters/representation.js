@@ -9,7 +9,7 @@ import { schemas, validateFromSchema } from '../integrations.validators.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 
-/** @satisfies {import('#db-client/models.ts').RepresentationFindUniqueArgs['select'] } */
+/** @satisfies {import('@pins/appeals-database/src/client/models.ts').RepresentationFindUniqueArgs['select'] } */
 export const broadcastRepSelect = {
 	id: true,
 	representationType: true,

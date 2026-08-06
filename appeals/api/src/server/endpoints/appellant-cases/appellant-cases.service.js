@@ -28,7 +28,6 @@ import * as documentRepository from '#repositories/document.repository.js';
 import auditApplicationDecisionMapper from '#utils/audit-application-decision-mapper.js';
 import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
 import { currentStatus } from '#utils/current-status.js';
-import { Prisma } from '#utils/db-client/client.js';
 import { getFormattedReasons } from '#utils/email-formatter.js';
 import { formatContactDetails } from '#utils/format-contact-details.js';
 import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
@@ -42,6 +41,7 @@ import {
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { addressToString, trimAppealType } from '#utils/string-utils.js';
+import { Prisma } from '@pins/appeals-database/src/client/client.js';
 import {
 	APPEAL_DEVELOPMENT_TYPES,
 	PLANNING_OBLIGATION_STATUSES

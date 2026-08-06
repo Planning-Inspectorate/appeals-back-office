@@ -6,10 +6,10 @@ import enforcementNoticeAppealOutcomeRepository from './enforcement-notice-appea
 
 /** @typedef {import('@pins/appeals.api').Schema.AppellantCase} AppellantCase */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcome} UpdateAppellantCaseValidationOutcome */
-/** @typedef {import('#db-client/models.ts').AppellantCaseUpdateInput} AppellantCaseUpdateInput */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').AppellantCaseUpdateInput} AppellantCaseUpdateInput */
 /** @typedef {import('@pins/appeals.api').Api.AppellantCaseUpdateRequest} AppellantCaseUpdateRequest */
 /**
- * @typedef {import('#db-client/client.ts').Prisma.PrismaPromise<T>} PrismaPromise
+ * @typedef {import('@pins/appeals-database/src/client/client.ts').Prisma.PrismaPromise<T>} PrismaPromise
  * @template T
  */
 

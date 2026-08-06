@@ -13,8 +13,8 @@ import { EventType } from '@pins/event-client';
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 
 /**
- * @param {import('#db-client/models.ts').AppealCreateInput} data
- * @param {import('#db-client/models.ts').DocumentVersionCreateInput[]} documents
+ * @param {import('@pins/appeals-database/src/client/models.ts').AppealCreateInput} data
+ * @param {import('@pins/appeals-database/src/client/models.ts').DocumentVersionCreateInput[]} documents
  * @param {string[] | null} relatedReferences
  * @param {{groundRef:string, factsForGround:string}[]} appealGrounds
  * @param {string} appellantProcedurePreference
@@ -48,8 +48,8 @@ const importAppellantCase = async (
 /**
  *
  * @param {string} caseReference
- * @param {Omit<import('#db-client/models.ts').LPAQuestionnaireCreateInput, 'appeal'>} data
- * @param {import('#db-client/models.ts').DocumentVersionCreateInput[]} documents
+ * @param {Omit<import('@pins/appeals-database/src/client/models.ts').LPAQuestionnaireCreateInput, 'appeal'>} data
+ * @param {import('@pins/appeals-database/src/client/models.ts').DocumentVersionCreateInput[]} documents
  * @param {string[] | null} relatedReferences
  * @returns
  */
@@ -74,8 +74,8 @@ const importLPAQuestionnaire = async (caseReference, data, documents, relatedRef
 /**
  *
  * @param {Appeal} appeal
- * @param {Omit<import('#db-client/models.ts').RepresentationCreateInput, 'appeal'>} data
- * @param {import('#db-client/models.ts').DocumentVersionCreateInput[]} attachments
+ * @param {Omit<import('@pins/appeals-database/src/client/models.ts').RepresentationCreateInput, 'appeal'>} data
+ * @param {import('@pins/appeals-database/src/client/models.ts').DocumentVersionCreateInput[]} attachments
  */
 const importRepresentation = async (appeal, data, attachments) => {
 	const result = await createRepresentation(appeal, data, attachments);
@@ -92,7 +92,7 @@ const importRepresentation = async (appeal, data, attachments) => {
 
 /**
  *
- * @param {import('#db-client/models.ts').DocumentVersionCreateInput[]} documents
+ * @param {import('@pins/appeals-database/src/client/models.ts').DocumentVersionCreateInput[]} documents
  * @param {import('@pins/appeals.api').Schema.DocumentVersion[]} documentVersions
  * @returns {Promise<boolean>}
  */

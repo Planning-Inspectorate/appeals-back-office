@@ -14,8 +14,8 @@ import { EventType } from '@pins/event-client';
 import { SERVICE_USER_TYPE } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('express').Request['appeal']} Appeal */
-/** @typedef {import('#db-client/client.ts').ServiceUser} ServiceUser */
-/** @typedef {import('#db-client/client.ts').AppealRule6Party} AppealRule6Party */
+/** @typedef {import('@pins/appeals-database/src/client/client.ts').ServiceUser} ServiceUser */
+/** @typedef {import('@pins/appeals-database/src/client/client.ts').AppealRule6Party} AppealRule6Party */
 /** @typedef {import('#endpoints/appeals.js').NotifyClient} NotifyClient */
 
 /**

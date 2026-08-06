@@ -4,9 +4,9 @@ import {
 	DOCUMENT_STATUS_RECEIVED
 } from '@pins/appeals/constants/support.js';
 
-/** @typedef {import('#db-client/models.ts').AppellantCaseValidationOutcomeModel } AppellantCaseValidationOutcomeModel */
-/** @typedef {import('#db-client/models.ts').LPAQuestionnaireValidationOutcomeModel } LPAQuestionnaireValidationOutcomeModel */
-/** @typedef {import('#db-client/models.ts').RepresentationModel } RepresentationModel */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').AppellantCaseValidationOutcomeModel } AppellantCaseValidationOutcomeModel */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').LPAQuestionnaireValidationOutcomeModel } LPAQuestionnaireValidationOutcomeModel */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').RepresentationModel } RepresentationModel */
 
 /**
  * @param {{ appellantCase?: { appellantCaseValidationOutcome?: { name: AppellantCaseValidationOutcomeModel['name'] } | null } | null }} appeal

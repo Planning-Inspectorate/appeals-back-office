@@ -20,9 +20,9 @@ import { serviceUserIdStartRange } from './map-service-user-entity.js';
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealRepresentation} AppealRepresentation */
 /** @typedef {'Contains links to web pages'|'Duplicated or repeated comment'|'Includes inflammatory content'|'Includes personal or medical information'|'No list of suggested conditions'|'Not relevant to this appeal'|'Received after deadline'|'other_reason'} RejectionReason*/
-/** @typedef {import('#db-client/models.ts').RepresentationModel} Representation */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').RepresentationModel} Representation */
 /** @typedef {typeof import('#endpoints/integrations/integrations.broadcasters/representation.js').broadcastRepSelect} RepresentationBroadcaster */
-/** @typedef {import('#db-client/models.ts').RepresentationGetPayload<{ select: RepresentationBroadcaster }>} RepresentationBroadcastData */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').RepresentationGetPayload<{ select: RepresentationBroadcaster }>} RepresentationBroadcastData */
 
 /**
  * @param {RepresentationBroadcastData|null} data

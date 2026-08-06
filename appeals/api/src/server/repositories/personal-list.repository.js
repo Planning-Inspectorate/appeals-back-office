@@ -21,7 +21,7 @@ const upsertPersonalListEntry = async (data) => {
 	});
 };
 
-/** @satisfies {import('#db-client/models.ts').PersonalListFindManyArgs['select'] } */
+/** @satisfies {import('@pins/appeals-database/src/client/models.ts').PersonalListFindManyArgs['select'] } */
 const personalListSelect = {
 	id: true,
 	appealId: true,
@@ -132,7 +132,7 @@ const personalListSelect = {
 };
 
 /** @typedef {typeof personalListSelect} PersonalListSelect */
-/** @typedef {import('#db-client/models.ts').PersonalListGetPayload<{ select: PersonalListSelect }>} PersonalListSelected */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').PersonalListGetPayload<{ select: PersonalListSelect }>} PersonalListSelected */
 /** @typedef {Awaited<ReturnType<getPersonalList>>} getPersonalListRepoResponse */
 
 /**

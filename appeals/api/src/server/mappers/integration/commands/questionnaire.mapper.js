@@ -13,7 +13,7 @@ import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
  * @param {Pick<LPAQuestionnaireCommand, 'casedata'>} command
  * @param {DesignatedSite[]} designatedSites
  * @param {Date|null} applicationDate
- * @returns {Omit<import('#db-client/models.ts').LPAQuestionnaireCreateInput, 'appeal'>}
+ * @returns {Omit<import('@pins/appeals-database/src/client/models.ts').LPAQuestionnaireCreateInput, 'appeal'>}
  */
 export const mapQuestionnaireIn = (command, designatedSites, applicationDate) => {
 	const casedata = command.casedata;

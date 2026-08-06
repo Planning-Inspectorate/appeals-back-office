@@ -3,7 +3,7 @@ import { DATABASE_ORDER_BY_ASC } from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} DocumentRedactionStatus */
 /**
- * @typedef {import('#db-client/client.ts').Prisma.PrismaPromise<T>} PrismaPromise
+ * @typedef {import('@pins/appeals-database/src/client/client.ts').Prisma.PrismaPromise<T>} PrismaPromise
  * @template T
  */
 

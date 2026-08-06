@@ -49,8 +49,8 @@ import {
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAddressRequest} UpdateAddressRequest */
-/** @typedef {import('#db-client/models.ts').RepresentationUpdateInput} RepresentationUpdateInput */
-/** @typedef {import('#db-client/models.ts').RepresentationUncheckedCreateInput} RepresentationCreateInput */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').RepresentationUpdateInput} RepresentationUpdateInput */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').RepresentationUncheckedCreateInput} RepresentationCreateInput */
 /** @typedef {Awaited<ReturnType<getRepresentation>>} DBRepresentation */
 
 /**
@@ -388,7 +388,7 @@ export const updateAttachments = async (repId, attachments) => {
 /**
  * @param {number} repId
  * @param {import('express').Request['body']} payload
- * @param {import('#db-client/models.ts').RepresentationModel} existingRep
+ * @param {import('@pins/appeals-database/src/client/models.ts').RepresentationModel} existingRep
  * */
 export async function updateRepresentation(repId, payload, existingRep) {
 	if (payload.rejectionReasons) {

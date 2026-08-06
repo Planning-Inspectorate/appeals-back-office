@@ -3,8 +3,8 @@ import { APPEAL_CASE_STAGE, APPEAL_CASE_STATUS } from '@planning-inspectorate/da
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
-/** @typedef {import('#db-client/models.ts').AppealModel } AppealModel */
-/** @typedef {import('#db-client/models.ts').AppealStatusModel } AppealStatusModel */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').AppealModel } AppealModel */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').AppealStatusModel } AppealStatusModel */
 
 /**
  * @param {{id: AppealModel['id'], currentStatus: string }} appeal

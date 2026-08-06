@@ -5,7 +5,7 @@ import { databaseConnector } from '#utils/database-connector.js';
 /** @typedef {import('@pins/appeals.api').Appeals.CreateInquiry} CreateInquiry */
 /** @typedef {import('@pins/appeals.api').Appeals.InquiryAddress} InquiryAddress */
 /**
- * @typedef {import('#db-client/client.ts').Prisma.PrismaPromise<T>} PrismaPromise
+ * @typedef {import('@pins/appeals-database/src/client/client.ts').Prisma.PrismaPromise<T>} PrismaPromise
  * @template T
  */
 

@@ -1,8 +1,12 @@
-import { PrismaClient } from '#db-client/client.js';
 import { PrismaMssql } from '@prisma/adapter-mssql';
+import { PrismaClient } from './client/client.js';
 
 /** @type {PrismaClient} */
 let prismaClient;
+
+export const PrismaCounts = {
+	queries: 0
+};
 
 /**
  * @param {import('pino').Logger} [logger]
@@ -47,21 +51,22 @@ export const createPrismaClient = (databaseUrl = process.env.DATABASE_URL, logge
 		prismaClient = new PrismaClient(prismaConfig);
 
 		if (logger) {
-			/** @param {import('#db-client/client.ts').Prisma.QueryEvent} e */
+			/** @param {import('./client/client.ts').Prisma.QueryEvent} e */
 			const logQuery = (e) => {
+				PrismaCounts.queries++;
 				logger.debug(
 					{ query: e.query, params: e.params, duration: e.duration },
 					'Prisma query executed'
 				);
 			};
 
-			/** @param {import('#db-client/client.ts').Prisma.LogEvent} e */
+			/** @param {import('./client/client.ts').Prisma.LogEvent} e */
 			const logError = (e) => logger.error({ e }, 'Prisma error');
 
-			/** @param {import('#db-client/client.ts').Prisma.LogEvent} e */
+			/** @param {import('./client/client.ts').Prisma.LogEvent} e */
 			const logInfo = (e) => logger.debug({ e });
 
-			/** @param {import('#db-client/client.ts').Prisma.LogEvent} e */
+			/** @param {import('./client/client.ts').Prisma.LogEvent} e */
 			const logWarn = (e) => logger.warn({ e });
 
 			// @ts-ignore

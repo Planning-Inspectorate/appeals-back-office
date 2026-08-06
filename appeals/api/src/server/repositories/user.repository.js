@@ -2,7 +2,7 @@ import { databaseConnector } from '#utils/database-connector.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.User} User */
 /**
- * @typedef {import('#db-client/client.ts').Prisma.PrismaPromise<T>} PrismaPromise
+ * @typedef {import('@pins/appeals-database/src/client/client.ts').Prisma.PrismaPromise<T>} PrismaPromise
  * @template T
  */
 

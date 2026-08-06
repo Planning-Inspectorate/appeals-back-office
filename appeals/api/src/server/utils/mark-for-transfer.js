@@ -56,7 +56,7 @@ const markAwaitingTransfer = async (appealId, newAppealTypeId, azureAdUserId) =>
 	const currentDate = new Date();
 	const caseExtensionDate = await addDays(currentDate, 5);
 
-	/** @type {Partial<import('#db-client/models.ts').AppealUpdateInput>} data */
+	/** @type {Partial<import('@pins/appeals-database/src/client/models.ts').AppealUpdateInput>} data */
 	const data = {
 		caseResubmittedTypeId: newAppealTypeId,
 		caseUpdatedDate: new Date(),

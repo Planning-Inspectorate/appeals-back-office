@@ -21,7 +21,7 @@ import {
 /** @typedef {import('@pins/appeals.api').Appeals.SetInvalidAppealDecisionRequest} SetInvalidAppealDecisionRequest */
 /** @typedef {import('@pins/appeals.api').Appeals.AppealRelationshipRequest } AppealRelationshipRequest */
 /**
- * @typedef {import('#db-client/client.ts').Prisma.PrismaPromise<T>} PrismaPromise
+ * @typedef {import('@pins/appeals-database/src/client/client.ts').Prisma.PrismaPromise<T>} PrismaPromise
  * @template T
  */
 
@@ -332,7 +332,7 @@ export const appealDetailsIncludeMap = /** @type {Object} */ {
  * @param {K[]} selectedKeys
  * @param {boolean} includeDetails
  * @param {boolean} selectAppealTypeKey
- * @returns {Partial<import('#db-client/models.ts').AppealInclude> | null}
+ * @returns {Partial<import('@pins/appeals-database/src/client/models.ts').AppealInclude> | null}
  */
 export const buildAppealInclude = (
 	selectedKeys = [],
@@ -353,7 +353,7 @@ export const buildAppealInclude = (
 		throw new Error('Must provide at least one: selectedKeys or selectAppealTypeKey');
 	}
 
-	/** @type {Partial<import('#db-client/models.ts').AppealInclude>} */
+	/** @type {Partial<import('@pins/appeals-database/src/client/models.ts').AppealInclude>} */
 	let include = {};
 	for (const key of selectedKeys) {
 		include[key] = appealDetailsIncludeMap[key];
@@ -616,7 +616,7 @@ const setAppealDecision = (
 /**
  * @param {number} id
  * @param {Date} withdrawalRequestDate
- * @returns {PrismaPromise<import('#db-client/client.ts').Appeal>}
+ * @returns {PrismaPromise<import('@pins/appeals-database/src/client/client.ts').Appeal>}
  */
 const setAppealWithdrawal = (id, withdrawalRequestDate) => {
 	return databaseConnector.appeal.update({
@@ -632,7 +632,7 @@ const setAppealWithdrawal = (id, withdrawalRequestDate) => {
 /**
  * @param {number} id
  * @param {Boolean} eiaScreeningRequired
- * @returns {PrismaPromise<import('#db-client/client.ts').Appeal>}
+ * @returns {PrismaPromise<import('@pins/appeals-database/src/client/client.ts').Appeal>}
  */
 const setAppealEiaScreeningRequired = (id, eiaScreeningRequired) => {
 	return databaseConnector.appeal.update({
@@ -798,7 +798,7 @@ const getAppealsByIds = async (linkedAppealIds) => {
  *
  * @param {number} appealId
  * @param {Object<string, number>} data
- * @returns {Promise<import('#db-client/client.ts').ServiceUser>}
+ * @returns {Promise<import('@pins/appeals-database/src/client/client.ts').ServiceUser>}
  */
 const removeAppealServiceUser = async (appealId, data) => {
 	const { userType, serviceUserId } = data;
@@ -905,7 +905,7 @@ const getAppealIdList = (whereNoPersonalListEntries = false) => {
 /**
  * @param {number} id
  * @param {number|null} assignedTeamId
- * @returns {PrismaPromise<import('#db-client/client.ts').Appeal>}
+ * @returns {PrismaPromise<import('@pins/appeals-database/src/client/client.ts').Appeal>}
  */
 const setAssignedTeamId = (id, assignedTeamId) => {
 	return databaseConnector.appeal.update({
@@ -1082,7 +1082,7 @@ const getAppealReference = async (appealId) => {
 };
 
 /**
- * @type {import('#db-client/models.ts').AppealSelect}
+ * @type {import('@pins/appeals-database/src/client/models.ts').AppealSelect}
  **/
 export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 	id: true,

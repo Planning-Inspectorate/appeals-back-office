@@ -1,5 +1,6 @@
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { databaseConnector } from '#utils/database-connector.js';
+import { randomBool } from '@pins/appeals-database/src/seed/data-utilities.js';
 import { FOLDERS, REP_ATTACHMENT_DOCTYPE } from '@pins/appeals/constants/documents.js';
 import { AUDIT_TRAIL_SYSTEM_UUID } from '@pins/appeals/constants/support.js';
 import { EventType } from '@pins/event-client';
@@ -13,7 +14,6 @@ import {
 } from '@planning-inspectorate/data-model';
 import { sub } from 'date-fns';
 import { randomUUID } from 'node:crypto';
-import { randomBool } from '../../../database/seed/data-utilities.js';
 import {
 	createAppeal,
 	createDocuments,
@@ -98,7 +98,7 @@ const generateAppeals = async (appealType, count, userEmails, docCount = 25) => 
 };
 
 /**
- * @param {import('#db-client/client.ts').Prisma.TransactionClient} tx
+ * @param {import('@pins/appeals-database/src/client/client.ts').Prisma.TransactionClient} tx
  * @param {number} appealId
  * @param {number} folderId
  * @param {{ count?: number, type?: string, text?: string, status?: string, source?: string, notes?: string, stage?: string, documentType?: string, fileName?: string }} options
@@ -253,7 +253,7 @@ const createCaseDocuments = async (appealId, docCount = 25) => {
 /**
  * @param {'has' | 's78'} type
  * @param {string[]} userEmails
- * @returns {import('#db-client/models.ts').AppealCreateInput}
+ * @returns {import('@pins/appeals-database/src/client/models.ts').AppealCreateInput}
  */
 export function createMockAppeal(type = 'has', userEmails = []) {
 	const typeKey = type === 'has' ? APPEAL_CASE_TYPE.D : APPEAL_CASE_TYPE.W;
@@ -373,7 +373,7 @@ function generateLpaReference() {
 
 /**
  * @param {string} appealTypeShorthand
- * @returns {import('#db-client/models.ts').AppellantCaseCreateWithoutAppealInput}
+ * @returns {import('@pins/appeals-database/src/client/models.ts').AppellantCaseCreateWithoutAppealInput}
  */
 export const getRandomisedAppellantCaseCreateInput = (appealTypeShorthand) => {
 	const monthAgo = sub(new Date(), { months: 1 });
@@ -416,7 +416,7 @@ export const getRandomisedAppellantCaseCreateInput = (appealTypeShorthand) => {
 
 /**
  * @param {string} appealTypeShorthand
- * @returns {import('#db-client/models.ts').LPAQuestionnaireCreateWithoutAppealInput | undefined}
+ * @returns {import('@pins/appeals-database/src/client/models.ts').LPAQuestionnaireCreateWithoutAppealInput | undefined}
  */
 export function createLPAQuestionnaireForAppealType(appealTypeShorthand) {
 	if (appealTypeShorthand !== APPEAL_CASE_TYPE.D) {

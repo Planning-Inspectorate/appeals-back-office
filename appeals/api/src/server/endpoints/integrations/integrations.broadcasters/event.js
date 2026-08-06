@@ -15,7 +15,7 @@ import { schemas, validateFromSchema } from '../integrations.validators.js';
 /** @typedef {import('@pins/appeals.api').Schema.Hearing} Hearing */
 /** @typedef {import('@pins/appeals.api').Schema.Inquiry} Inquiry */
 /** @typedef {import('@pins/appeals.api').Schema.SiteVisit} SiteVisit */
-/** @typedef {import('#db-client/client.ts').Hearing | import('#db-client/client.ts').Inquiry | import('#db-client/client.ts').SiteVisit | undefined | null} ExistingEvent */
+/** @typedef {import('@pins/appeals-database/src/client/client.ts').Hearing | import('@pins/appeals-database/src/client/client.ts').Inquiry | import('@pins/appeals-database/src/client/client.ts').SiteVisit | undefined | null} ExistingEvent */
 
 /**
  *

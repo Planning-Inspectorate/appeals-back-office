@@ -1,9 +1,9 @@
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealRepresentationSubmission} AppealRepresentationSubmission */
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
-/** @typedef {import('#db-client/models.ts').ServiceUserCreateOrConnectWithoutAppealsInput} ServiceUserConnectInput */
-/** @typedef {Omit<import('#db-client/models.ts').RepresentationCreateInput, 'appeal'> & {represented?: ServiceUserConnectInput|undefined}} RepresentationCreateInput */
-/** @typedef {import('#db-client/models.ts').DocumentVersionCreateInput} DocumentVersionCreateInput */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').ServiceUserCreateOrConnectWithoutAppealsInput} ServiceUserConnectInput */
+/** @typedef {Omit<import('@pins/appeals-database/src/client/models.ts').RepresentationCreateInput, 'appeal'> & {represented?: ServiceUserConnectInput|undefined}} RepresentationCreateInput */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').DocumentVersionCreateInput} DocumentVersionCreateInput */
 
 import { serviceUserIdStartRange } from '#mappers/integration/map-service-user-entity.js';
 import { APPEAL_REPRESENTATION_TYPE as INTERNAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';

@@ -32,8 +32,8 @@ import {
 import { interpret } from 'xstate';
 import createStateMachine from './create-state-machine.js';
 
-/** @typedef {import('#db-client/client.ts').AppealType} AppealType */
-/** @typedef {import('#db-client/client.ts').AppealStatus} AppealStatus */
+/** @typedef {import('@pins/appeals-database/src/client/client.ts').AppealType} AppealType */
+/** @typedef {import('@pins/appeals-database/src/client/client.ts').AppealStatus} AppealStatus */
 /** @typedef {import('xstate').StateValue} StateValue */
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /**

@@ -1,0 +1,31 @@
+{
+  "name": "@pins/appeals-database",
+  "version": "0.0.0",
+  "description": "Common sql database access",
+  "private": true,
+  "main": "./src/create-client.js",
+  "type": "module",
+  "scripts": {
+    "migrate": "npx prisma migrate dev",
+    "migrate:prod": "npx prisma migrate deploy",
+    "push": "npx prisma db push --accept-data-loss",
+    "reset": "npx prisma migrate reset --force",
+    "seed": "npm run prisma-generate && npx prisma db src/seed",
+    "seed:no-purge": "npm run prisma-generate && node src/database/seed/seed-no-purge.js",
+    "seed:training": "npm run prisma-generate && node src/database/seed/seed-training.js",
+    "seed:prod": "npm run prisma-generate && node src/database/seed/seed-production.js",
+    "seed:test": "npm run prisma-generate && node src/database/seed/seed-test.js",
+    "seed:clear-test-data": "npm run prisma-generate && node src/database/seed/seed-clear-test-data.js",
+    "prisma-format": "npx prisma format",
+    "prisma-generate": "npx prisma generate && tsc --project tsconfig.json"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/adapter-mssql": "*",
+    "@prisma/client": "*"
+  },
+  "devDependencies": {
+    "prisma": "*"
+  },
+	"prisma.schema" : "./src/schema.prisma"
+}

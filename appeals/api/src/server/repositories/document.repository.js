@@ -6,7 +6,7 @@ import {
 } from '@planning-inspectorate/data-model';
 
 /**
- * @typedef {import('#db-client/client.ts').Prisma.PrismaPromise<T>} PrismaPromise
+ * @typedef {import('@pins/appeals-database/src/client/client.ts').Prisma.PrismaPromise<T>} PrismaPromise
  * @template T
  */
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
@@ -14,11 +14,11 @@ import {
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentsRequest} UpdateDocumentsRequest */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentRequest} UpdateDocumentRequest */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentAvCheckRequest} UpdateDocumentAvCheckRequest */
-/** @typedef {import('#db-client/models.ts').AppealModel} AppealModel */
-/** @typedef {import('#db-client/models.ts').AppealTypeModel} AppealTypeModel */
-/** @typedef {import('#db-client/models.ts').DocumentModel} DocumentModel */
-/** @typedef {import('#db-client/models.ts').DocumentVersionModel} DocumentVersionModel */
-/** @typedef {import('#db-client/models.ts').RepresentationModel} RepresentationModel */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').AppealModel} AppealModel */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').AppealTypeModel} AppealTypeModel */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').DocumentModel} DocumentModel */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').DocumentVersionModel} DocumentVersionModel */
+/** @typedef {import('@pins/appeals-database/src/client/models.ts').RepresentationModel} RepresentationModel */
 
 /**
  * @param {string} guid
@@ -195,7 +195,7 @@ export const updateDocument = (latestDocument, document) => {
 				(redaction) => redaction.key === APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED
 			);
 
-			/** @type {import('#db-client/client.ts').Prisma.DocumentVersionUpdateInput} */
+			/** @type {import('@pins/appeals-database/src/client/client.ts').Prisma.DocumentVersionUpdateInput} */
 			const update = {
 				published: true,
 				datePublished: new Date()
@@ -259,9 +259,9 @@ export const setRedactionStatusOnValidation = async (
 	/** @type {UpdateRedactionStatusResult[]} */
 	const result = await databaseConnector.$queryRaw`UPDATE dv
 		SET redactionStatusId = ${redactionStatusId}
-		OUTPUT 
+		OUTPUT
 			 d.guid ,d.name
-			,inserted.version ,inserted.documentURI ,inserted.originalFilename 
+			,inserted.version ,inserted.documentURI ,inserted.originalFilename
 			,inserted.size ,inserted.mime ,inserted.fileMD5 ,inserted.virusCheckStatus
 			,inserted.stage	,inserted.documentType ,inserted.published
 			,inserted.datePublished	,inserted.dateCreated ,inserted.dateReceived ,inserted.lastModified
