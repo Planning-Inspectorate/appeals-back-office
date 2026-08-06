@@ -1,3 +1,4 @@
+import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import {
 	APPEAL_CASE_PROCEDURE,
 	APPEAL_CASE_STATUS,
@@ -25,6 +26,22 @@ export const displayFinalComments = (appealType, procedureType) =>
 		procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.INQUIRY &&
 		procedureType !== APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 &&
 		procedureType !== PROCEDURE_TYPE_NAME.WRITTEN_PART_1);
+
+// display planning obligation when it 'hasObligation' for any procedure type for enforcement appeal types
+// and only hearing and inquiry otherwise
+/**
+ * @param {string | undefined} appealType
+ * @param {string | undefined} procedureType
+ * @param {boolean | undefined} hasObligation
+ * @returns {boolean}
+ */
+export const displayPlanningObligation = (appealType, procedureType, hasObligation) =>
+	(isAnyEnforcementAppealType(appealType) ||
+		[APPEAL_CASE_PROCEDURE.HEARING, APPEAL_CASE_PROCEDURE.INQUIRY].includes(
+			// @ts-ignore
+			procedureType?.toLowerCase() ?? ''
+		)) &&
+	hasObligation;
 
 /**
  * Determines the next state after the LPAQ is complete based on the appeal type and procedure type.

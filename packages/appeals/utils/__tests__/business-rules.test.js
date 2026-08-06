@@ -6,6 +6,7 @@ import {
 import { APPEAL_TYPE } from '../../constants/common';
 import {
 	displayFinalComments,
+	displayPlanningObligation,
 	targetStateOnLpaqComplete,
 	targetStateOnStatementsComplete
 } from '../business-rules.js';
@@ -49,6 +50,66 @@ describe('displayFinalComments', () => {
 			'returns false for writtenPart1 / Part 1 procedure: %s',
 			(procedureType) => {
 				expect(displayFinalComments(appealType, procedureType)).toBe(false);
+			}
+		);
+	});
+});
+
+describe('displayPlanningObligation', () => {
+	describe.each([APPEAL_TYPE.ENFORCEMENT_NOTICE, APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING])(
+		'appeal type: %s',
+		(appealType) => {
+			it.each([
+				APPEAL_CASE_PROCEDURE.WRITTEN,
+				APPEAL_CASE_PROCEDURE.HEARING,
+				APPEAL_CASE_PROCEDURE.INQUIRY
+			])('returns true for %s when hasObligation = true', (procedureType) => {
+				expect(displayPlanningObligation(appealType, procedureType, true)).toBe(true);
+			});
+
+			it.each([
+				APPEAL_CASE_PROCEDURE.WRITTEN,
+				APPEAL_CASE_PROCEDURE.HEARING,
+				APPEAL_CASE_PROCEDURE.INQUIRY
+			])('returns true for %s when hasObligation = false', (procedureType) => {
+				expect(displayPlanningObligation(appealType, procedureType, false)).toBe(false);
+			});
+		}
+	);
+
+	describe.each([
+		APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE,
+		APPEAL_TYPE.DISCONTINUANCE_NOTICE,
+		APPEAL_TYPE.HOUSEHOLDER,
+		APPEAL_TYPE.S78,
+		APPEAL_TYPE.ADVERTISEMENT,
+		APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+		APPEAL_TYPE.CAS_PLANNING,
+		APPEAL_TYPE.CAS_ADVERTISEMENT
+	])('appeal type: %s', (appealType) => {
+		it('returns false for written when hasObligation = true', () => {
+			expect(displayPlanningObligation(appealType, APPEAL_CASE_PROCEDURE.WRITTEN, true)).toBe(
+				false
+			);
+		});
+
+		it('returns false for written when hasObligation = false', () => {
+			expect(displayPlanningObligation(appealType, APPEAL_CASE_PROCEDURE.WRITTEN, false)).toBe(
+				false
+			);
+		});
+
+		it.each([APPEAL_CASE_PROCEDURE.HEARING, APPEAL_CASE_PROCEDURE.INQUIRY])(
+			'returns true for %s when hasObligation = true',
+			(procedureType) => {
+				expect(displayPlanningObligation(appealType, procedureType, true)).toBe(true);
+			}
+		);
+
+		it.each([APPEAL_CASE_PROCEDURE.HEARING, APPEAL_CASE_PROCEDURE.INQUIRY])(
+			'returns false for %s when hasObligation = false',
+			(procedureType) => {
+				expect(displayPlanningObligation(appealType, procedureType, false)).toBe(false);
 			}
 		);
 	});

@@ -128,7 +128,8 @@ router.patch(
 		'appellant',
 		'agent',
 		'lpa',
-		'appealRule6Parties'
+		'appealRule6Parties',
+		'appellantCase'
 	]),
 	checkAppealTimetableExists,
 	patchAppealTimetableValidator,
