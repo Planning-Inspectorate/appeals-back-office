@@ -52,6 +52,6 @@ export const mapLpaQuestionnaire = (data) => {
 				.map((lb) => lb.listEntry) || null,
 		reasonForNeighbourVisits: casedata?.reasonForNeighbourVisits,
 		listOfDocumentsBeforeDecision: casedata?.listOfDocumentsBeforeDecision ?? null,
-		anySignificantChangesAffectingApplicationLpa: significantChanges
+		significantChangesAffectingApplicationLpa: significantChanges
 	};
 };
