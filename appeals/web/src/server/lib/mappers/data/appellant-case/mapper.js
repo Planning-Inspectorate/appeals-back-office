@@ -105,10 +105,6 @@ export function initialiseAndMapData(
 		throw new Error(`No submappers found for appeal type ${appealType}`);
 	}
 
-	if (appealType === APPEAL_TYPE.S78_EXPEDITED) {
-		delete submappers.statementCommonGround;
-	}
-
 	/** @type {MappedInstructions} */
 	const mappedData = {};
 
