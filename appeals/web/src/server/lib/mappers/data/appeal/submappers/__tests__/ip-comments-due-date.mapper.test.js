@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { mapIpCommentsDueDate } from '#lib/mappers/data/appeal/submappers/ip-comments-due-date.mapper.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 describe.each([
 	['S78', APPEAL_TYPE.S78],
@@ -120,27 +121,9 @@ describe.each([
 			id: 'ip-comments-due-date'
 		});
 	});
-});
-describe('S78 expedited appeal - ip-comments-due-date.mapper', () => {
-	let data;
-	beforeEach(() => {
-		data = {
-			currentRoute: '/test',
-			appealDetails: {
-				startedAt: '2026-04-01',
-				appealTimetable: { ipCommentsDueDate: '' },
-				documentationSummary: { ipComments: { counts: { published: 0 } } },
-				appealType: APPEAL_TYPE.S78
-			},
-			appellantCase: {
-				applicationDate: '2026-04-01',
-				applicationDecision: 'refused',
-				typeOfPlanningApplication: 'full-appeal'
-			},
-			userHasUpdateCasePermission: true
-		};
-	});
-	it(`should not display IP Comments due date`, () => {
+
+	it('should not display IP Comments due date for writtenPart1 procedure type', () => {
+		data.appealDetails.procedureType = APPEAL_CASE_PROCEDURE.WRITTEN_PART_1;
 		const mappedData = mapIpCommentsDueDate(data);
 		expect(mappedData).toEqual({
 			display: {},

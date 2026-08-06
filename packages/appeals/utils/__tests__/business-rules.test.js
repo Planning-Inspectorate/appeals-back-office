@@ -44,6 +44,13 @@ describe('displayFinalComments', () => {
 				expect(displayFinalComments(appealType, procedureType)).toBe(false);
 			}
 		);
+
+		it.each([APPEAL_CASE_PROCEDURE.WRITTEN_PART_1, 'Part 1'])(
+			'returns false for writtenPart1 / Part 1 procedure: %s',
+			(procedureType) => {
+				expect(displayFinalComments(appealType, procedureType)).toBe(false);
+			}
+		);
 	});
 });
 

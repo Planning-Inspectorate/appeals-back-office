@@ -5301,6 +5301,37 @@ describe('appeal-details', () => {
 					expect(caseTimeTable).toMatchSnapshot();
 				});
 
+				it('should not render LPA statement, IP comments, Statement of common ground, or Final comments due dates for S78 Part 1 procedureType appeals', async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}/page-details`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							caseOfficer: '2cb7735e-c4cf-410b-b773-5ec4cf110b87',
+							appealId,
+							procedureType: 'Part 1',
+							appealTimetable: {
+								lpaQuestionnaireDueDate: '2026-04-10T23:59:00.000Z',
+								lpaStatementDueDate: '2026-04-20T23:59:00.000Z',
+								ipCommentsDueDate: '2026-04-20T23:59:00.000Z',
+								statementOfCommonGroundDueDate: '2026-04-20T23:59:00.000Z',
+								finalCommentsDueDate: '2026-04-30T23:59:00.000Z'
+							}
+						});
+					const response = await request.get(`${baseUrl}/${appealId}`);
+					expect(response.statusCode).toBe(200);
+
+					const caseTimeTable = parseHtml(response.text, {
+						rootElement: '.appeal-case-timetable',
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(caseTimeTable).toContain('LPA questionnaire due');
+					expect(caseTimeTable).not.toContain('LPA statement due');
+					expect(caseTimeTable).not.toContain('Interested party comments due');
+					expect(caseTimeTable).not.toContain('Statement of common ground due');
+					expect(caseTimeTable).not.toContain('Final comments due');
+				});
+
 				it('should render a "Timetable" with all rows with the IP comments due date and change link displaying when published IP comments count equals zero', async () => {
 					nock('http://test/')
 						.get(`/appeals/${appealId}/page-details`)

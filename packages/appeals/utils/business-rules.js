@@ -3,6 +3,7 @@ import {
 	APPEAL_CASE_STATUS,
 	APPEAL_CASE_TYPE
 } from '@planning-inspectorate/data-model';
+import { PROCEDURE_TYPE_NAME } from '../constants/common.js';
 import { isLdcOrDiscontinuanceOrEnforcementAppealType } from './appeal-type-checks.js';
 import { normaliseProcedureType } from './procedure-type.js';
 
@@ -21,7 +22,9 @@ import { normaliseProcedureType } from './procedure-type.js';
 export const displayFinalComments = (appealType, procedureType) =>
 	isLdcOrDiscontinuanceOrEnforcementAppealType(appealType) ||
 	(procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.HEARING &&
-		procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.INQUIRY);
+		procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.INQUIRY &&
+		procedureType !== APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 &&
+		procedureType !== PROCEDURE_TYPE_NAME.WRITTEN_PART_1);
 
 /**
  * Determines the next state after the LPAQ is complete based on the appeal type and procedure type.
