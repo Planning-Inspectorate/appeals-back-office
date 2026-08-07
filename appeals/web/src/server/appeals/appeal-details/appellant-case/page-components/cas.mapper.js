@@ -1,5 +1,14 @@
+import { isFeatureActive } from '#common/feature-flags.js';
+import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { beforeExpeditedOriginalApplicationCutOff } from '@pins/appeals/utils/appeal-type-checks.js';
-import { generateHASComponents } from './has.mapper.js';
+import {
+	buildAppealDetailsCard,
+	buildAppellantDetailsCard,
+	buildApplicationDetailsCard,
+	buildBeforeYouStartCard,
+	buildSiteDetailsCard,
+	buildSummaryListCard
+} from './common-sections.mapper.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse
@@ -7,79 +16,56 @@ import { generateHASComponents } from './has.mapper.js';
  */
 
 /**
+ * Builds the CAS "Uploaded documents" card section.
+ * @param {SingleAppellantCaseResponse} appellantCaseData
+ * @param {MappedInstructions} mappedAppellantCaseData
+ * @returns {PageComponent|null}
+ */
+export function buildCASUploadedDocumentsCard(appellantCaseData, mappedAppellantCaseData) {
+	return buildSummaryListCard('uploaded-documents', 'Upload documents', [
+		mappedAppellantCaseData.applicationForm?.display?.summaryListItem,
+		mappedAppellantCaseData.changedDevelopmentDescriptionDocument?.display?.summaryListItem,
+		...(beforeExpeditedOriginalApplicationCutOff(appellantCaseData.applicationDate)
+			? [mappedAppellantCaseData.appealStatement?.display?.summaryListItem]
+			: []),
+		mappedAppellantCaseData.costsDocument?.display?.summaryListItem,
+		...(beforeExpeditedOriginalApplicationCutOff(appellantCaseData.applicationDate)
+			? [
+					mappedAppellantCaseData.designAndAccessStatement?.display?.summaryListItem,
+					mappedAppellantCaseData.supportingDocuments?.display?.summaryListItem
+				]
+			: [])
+	]);
+}
+
+/**
  *
  * @param {Appeal} appealDetails
  * @param {SingleAppellantCaseResponse} appellantCaseData
  * @param {MappedInstructions} mappedAppellantCaseData
- * @param {boolean} userHasUpdateCasePermission
- * @returns {PageComponent[]}
+ * @returns {(PageComponent|null)[]}
  */
-export function generateCASComponents(
-	appealDetails,
-	appellantCaseData,
-	mappedAppellantCaseData,
-	userHasUpdateCasePermission
-) {
-	const pageComponents = generateHASComponents(
-		appealDetails,
-		appellantCaseData,
-		mappedAppellantCaseData,
-		userHasUpdateCasePermission
-	);
+export function generateCASComponents(appealDetails, appellantCaseData, mappedAppellantCaseData) {
+	const isExpeditedAppealsActive = isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS);
+	const isExpeditedEligible =
+		isExpeditedAppealsActive &&
+		(appealDetails.appealType === APPEAL_TYPE.HOUSEHOLDER ||
+			appealDetails.appealType === APPEAL_TYPE.CAS_PLANNING ||
+			appealDetails.appealType === APPEAL_TYPE.CAS_ADVERTISEMENT) &&
+		!beforeExpeditedOriginalApplicationCutOff(appellantCaseData.applicationDate);
 
-	const uploadedDocumentsComponentIndex = pageComponents.findIndex(
-		(component) =>
-			component.type === 'summary-list' &&
-			component.parameters.attributes?.id === 'uploaded-documents'
-	);
+	const components = [
+		buildBeforeYouStartCard(mappedAppellantCaseData),
+		buildAppellantDetailsCard(appealDetails, mappedAppellantCaseData),
+		buildSiteDetailsCard(mappedAppellantCaseData),
+		buildApplicationDetailsCard(mappedAppellantCaseData)
+	];
 
-	if (uploadedDocumentsComponentIndex !== -1) {
-		/**
-		 * @type {PageComponent}
-		 */
-		const uploadedDocuments = {
-			type: 'summary-list',
-			wrapperHtml: {
-				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-				closing: '</div></div>'
-			},
-			parameters: {
-				attributes: {
-					id: 'uploaded-documents'
-				},
-				card: {
-					title: {
-						text: 'Upload documents'
-					}
-				},
-				rows: [
-					mappedAppellantCaseData.applicationForm.display.summaryListItem,
-					mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
-					// we want to hide the appeal statement for appeals submitted 1st April 2026 onwards
-					...(beforeExpeditedOriginalApplicationCutOff(appellantCaseData.applicationDate)
-						? [mappedAppellantCaseData.appealStatement.display.summaryListItem]
-						: []),
-					mappedAppellantCaseData.costsDocument.display.summaryListItem,
-					...(beforeExpeditedOriginalApplicationCutOff(appellantCaseData.applicationDate)
-						? [
-								mappedAppellantCaseData.designAndAccessStatement.display.summaryListItem,
-								mappedAppellantCaseData.supportingDocuments.display.summaryListItem
-							]
-						: [])
-				]
-			}
-		};
-		pageComponents[uploadedDocumentsComponentIndex] = uploadedDocuments;
+	if (isExpeditedEligible) {
+		components.push(buildAppealDetailsCard(mappedAppellantCaseData));
 	}
 
-	const additionalDocumentsComponentIndex = pageComponents.findIndex(
-		(component) =>
-			component.type === 'summary-list' &&
-			component.parameters.attributes?.id === 'additional-documents'
-	);
-	if (additionalDocumentsComponentIndex !== -1) {
-		pageComponents.splice(additionalDocumentsComponentIndex, 1);
-	}
+	components.push(buildCASUploadedDocumentsCard(appellantCaseData, mappedAppellantCaseData));
 
-	return pageComponents;
+	return components.filter(Boolean);
 }

@@ -1,4 +1,12 @@
-import { generateS20Components } from './s20.mapper.js';
+import {
+	buildAdditionalDocumentsCard,
+	buildAppellantDetailsCard,
+	buildBeforeYouStartCard,
+	buildFullPlanningAppealDetailsCard,
+	buildFullPlanningApplicationDetailsCard,
+	buildFullPlanningUploadedDocumentsCard,
+	buildSummaryListCard
+} from './common-sections.mapper.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse
@@ -6,12 +14,32 @@ import { generateS20Components } from './s20.mapper.js';
  */
 
 /**
+ * Builds the S78 "Site details" section card component.
+ * @param {MappedInstructions} mappedAppellantCaseData
+ * @returns {PageComponent|null}
+ */
+export function buildS78SiteDetailsCard(mappedAppellantCaseData) {
+	return buildSummaryListCard('site-details', 'Site details', [
+		mappedAppellantCaseData.siteAddress?.display?.summaryListItem,
+		mappedAppellantCaseData.siteArea?.display?.summaryListItem,
+		mappedAppellantCaseData.inGreenBelt?.display?.summaryListItem,
+		mappedAppellantCaseData.siteOwnership?.display?.summaryListItem,
+		mappedAppellantCaseData.ownersKnown?.display?.summaryListItem,
+		mappedAppellantCaseData.partOfAgriculturalHolding?.display?.summaryListItem,
+		mappedAppellantCaseData.tenantOfAgriculturalHolding?.display?.summaryListItem,
+		mappedAppellantCaseData.otherTenantsOfAgriculturalHolding?.display?.summaryListItem,
+		mappedAppellantCaseData.inspectorAccess?.display?.summaryListItem,
+		mappedAppellantCaseData.healthAndSafetyIssues?.display?.summaryListItem
+	]);
+}
+
+/**
  *
  * @param {Appeal} appealDetails
  * @param {SingleAppellantCaseResponse} appellantCaseData
  * @param {MappedInstructions} mappedAppellantCaseData
  * @param {boolean} userHasUpdateCasePermission
- * @returns {PageComponent[]}
+ * @returns {(PageComponent|null)[]}
  */
 export function generateS78Components(
 	appealDetails,
@@ -19,100 +47,19 @@ export function generateS78Components(
 	mappedAppellantCaseData,
 	userHasUpdateCasePermission
 ) {
-	const pageComponents = generateS20Components(
-		appealDetails,
-		appellantCaseData,
-		mappedAppellantCaseData,
-		userHasUpdateCasePermission
-	);
+	const components = [
+		buildBeforeYouStartCard(mappedAppellantCaseData),
+		buildAppellantDetailsCard(appealDetails, mappedAppellantCaseData),
+		buildS78SiteDetailsCard(mappedAppellantCaseData),
+		buildFullPlanningApplicationDetailsCard(mappedAppellantCaseData),
+		buildFullPlanningAppealDetailsCard(mappedAppellantCaseData),
+		buildFullPlanningUploadedDocumentsCard(mappedAppellantCaseData),
+		buildAdditionalDocumentsCard(
+			appellantCaseData,
+			mappedAppellantCaseData,
+			userHasUpdateCasePermission
+		)
+	];
 
-	const siteDetailsComponentIndex = pageComponents.findIndex(
-		(component) =>
-			component.type === 'summary-list' && component.parameters.attributes?.id === 'site-details'
-	);
-
-	if (siteDetailsComponentIndex !== -1) {
-		/**
-		 * @type {PageComponent}
-		 */
-		const appealSiteSummary = {
-			type: 'summary-list',
-			wrapperHtml: {
-				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-				closing: '</div></div>'
-			},
-			parameters: {
-				attributes: {
-					id: 'site-details'
-				},
-				card: {
-					title: {
-						text: 'Site details'
-					}
-				},
-				rows: [
-					mappedAppellantCaseData.siteAddress.display.summaryListItem,
-					mappedAppellantCaseData.siteArea.display.summaryListItem,
-					mappedAppellantCaseData.inGreenBelt.display.summaryListItem,
-					mappedAppellantCaseData.siteOwnership.display.summaryListItem,
-					mappedAppellantCaseData.ownersKnown.display.summaryListItem,
-					mappedAppellantCaseData.partOfAgriculturalHolding.display.summaryListItem,
-					mappedAppellantCaseData.tenantOfAgriculturalHolding.display.summaryListItem,
-					mappedAppellantCaseData.otherTenantsOfAgriculturalHolding.display.summaryListItem,
-					mappedAppellantCaseData.inspectorAccess.display.summaryListItem,
-					mappedAppellantCaseData.healthAndSafetyIssues.display.summaryListItem
-				]
-			}
-		};
-
-		pageComponents[siteDetailsComponentIndex] = appealSiteSummary;
-	}
-
-	const uploadedDocumentsComponentIndex = pageComponents.findIndex(
-		(component) =>
-			component.type === 'summary-list' &&
-			component.parameters.attributes?.id === 'uploaded-documents'
-	);
-
-	if (uploadedDocumentsComponentIndex !== -1 && appellantCaseData.ownershipCertificate != null) {
-		/**
-		 * @type {PageComponent}
-		 */
-		const uploadedDocumentsSummary = {
-			type: 'summary-list',
-			wrapperHtml: {
-				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-				closing: '</div></div>'
-			},
-			parameters: {
-				attributes: {
-					id: 'uploaded-documents'
-				},
-				card: {
-					title: {
-						text: 'Upload documents'
-					}
-				},
-				rows: [
-					mappedAppellantCaseData.applicationForm.display.summaryListItem,
-					mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
-					mappedAppellantCaseData.decisionLetter.display.summaryListItem,
-					mappedAppellantCaseData.appealStatement.display.summaryListItem,
-					mappedAppellantCaseData.statusPlanningObligation.display.summaryListItem,
-					mappedAppellantCaseData.planningObligation.display.summaryListItem,
-					mappedAppellantCaseData.statementCommonGround.display.summaryListItem,
-					mappedAppellantCaseData.ownershipCertificate.display.summaryListItem,
-					mappedAppellantCaseData.costsDocument.display.summaryListItem,
-					mappedAppellantCaseData.designAccessStatement.display.summaryListItem,
-					mappedAppellantCaseData.supportingDocuments.display.summaryListItem,
-					mappedAppellantCaseData.newPlansDrawings.display.summaryListItem,
-					mappedAppellantCaseData.otherNewDocuments.display.summaryListItem
-				]
-			}
-		};
-
-		pageComponents[uploadedDocumentsComponentIndex] = uploadedDocumentsSummary;
-	}
-
-	return pageComponents;
+	return components.filter(Boolean);
 }
