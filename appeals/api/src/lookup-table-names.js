@@ -1,0 +1,23 @@
+export const validCacheLookupTables = new Set([
+	'lookup-advertType',
+	'lookup-appealType',
+	'lookup-appellantCaseEnforcementGroundsMismatchFacts',
+	'lookup-appellantCaseEnforcementInvalidReason',
+	'lookup-appellantCaseEnforcementMissingDocument',
+	'lookup-appellantCaseIncompleteReason ',
+	'lookup-appellantCaseInvalidReason',
+	'lookup-appellantCaseValidationOutcome',
+	'lookup-designatedSite',
+	'lookup-documentRedactionStatus',
+	'lookup-ground',
+	'lookup-knowledgeOfOtherLandowners',
+	'lookup-lpa',
+	'lookup-lPANotificationMethods',
+	'lookup-lPAQuestionnaireIncompleteReason',
+	'lookup-lPAQuestionnaireValidationOutcome',
+	'lookup-procedureType',
+	'lookup-representationRejectionReason',
+	'lookup-siteVisitType',
+	'lookup-specialism',
+	'lookup-team'
+]);

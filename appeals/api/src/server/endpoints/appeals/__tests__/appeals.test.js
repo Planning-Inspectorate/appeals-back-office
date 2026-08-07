@@ -1,7 +1,7 @@
 // @ts-nocheck
+import repo from '#repositories/appeal-lists.repository.js';
 import { appealS78, fullPlanningAppeal, householdAppeal } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
-import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { jest } from '@jest/globals';
 import {
@@ -98,10 +98,8 @@ describe('appeals list routes', () => {
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
 							appealType: householdAppeal.appealType.type,
-							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							dueDate: null,
 							documentationSummary: {
 								appellantCase: {
 									receivedAt: '2024-03-25T23:59:59.999Z',
@@ -149,9 +147,7 @@ describe('appeals list routes', () => {
 									isRedacted: false
 								}
 							},
-							isParentAppeal: false,
 							isS78Expedited: false,
-							isChildAppeal: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
 							hasHearingAddress: true,
@@ -172,10 +168,8 @@ describe('appeals list routes', () => {
 							},
 							appealStatus: fullPlanningAppeal.appealStatus[0].status,
 							appealType: fullPlanningAppeal.appealType.type,
-							awaitingLinkedAppeal: null,
 							createdAt: fullPlanningAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: fullPlanningAppeal.lpa.name,
-							dueDate: null,
 							documentationSummary: {
 								appellantCase: {
 									receivedAt: '2024-03-25T23:59:59.999Z',
@@ -239,8 +233,6 @@ describe('appeals list routes', () => {
 									}
 								}
 							},
-							isParentAppeal: false,
-							isChildAppeal: false,
 							isS78Expedited: false,
 							planningApplicationReference: fullPlanningAppeal.applicationReference,
 							procedureType: 'Written',
@@ -265,40 +257,8 @@ describe('appeals list routes', () => {
 
 			test('gets appeals when given pagination params', async () => {
 				const expectedQuery = {
-					where: {
-						appealType: {
-							key: {
-								in: [
-									APPEAL_CASE_TYPE.D,
-									APPEAL_CASE_TYPE.W,
-									APPEAL_CASE_TYPE.Y,
-									APPEAL_CASE_TYPE.ZP,
-									APPEAL_CASE_TYPE.ZA,
-									APPEAL_CASE_TYPE.H,
-									APPEAL_CASE_TYPE.C,
-									APPEAL_CASE_TYPE.X,
-									APPEAL_CASE_TYPE.F
-								]
-							}
-						}
-					},
-					include: {
-						address: true,
-						appealRule6Parties: { include: { serviceUser: true } },
-						appealType: true,
-						procedureType: true,
-						lpa: true,
-						appellantCase: { include: { appellantCaseValidationOutcome: true } },
-						inspector: true,
-						caseOfficer: true,
-						padsInspector: true,
-						appealTimetable: true,
-						representations: true,
-						lpaQuestionnaire: { include: { lpaQuestionnaireValidationOutcome: true } },
-						siteVisit: true,
-						hearing: true,
-						inquiry: true
-					},
+					where: {},
+					select: repo.appealListSelect,
 					orderBy: { caseUpdatedDate: 'desc' },
 					skip: 1,
 					take: 1
@@ -354,10 +314,8 @@ describe('appeals list routes', () => {
 							},
 							appealStatus: fullPlanningAppeal.appealStatus[0].status,
 							appealType: fullPlanningAppeal.appealType.type,
-							awaitingLinkedAppeal: null,
 							createdAt: fullPlanningAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: fullPlanningAppeal.lpa.name,
-							dueDate: null,
 							documentationSummary: {
 								appellantCase: {
 									receivedAt: '2024-03-25T23:59:59.999Z',
@@ -421,8 +379,6 @@ describe('appeals list routes', () => {
 									}
 								}
 							},
-							isParentAppeal: false,
-							isChildAppeal: false,
 							isS78Expedited: false,
 							planningApplicationReference: fullPlanningAppeal.applicationReference,
 							procedureType: 'Written',
@@ -458,9 +414,6 @@ describe('appeals list routes', () => {
 				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
 					expect.objectContaining({
 						where: {
-							appealType: {
-								key: { in: getEnabledAppealTypes() }
-							},
 							OR: [
 								{
 									reference: {
@@ -506,10 +459,8 @@ describe('appeals list routes', () => {
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
 							appealType: householdAppeal.appealType.type,
-							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							dueDate: null,
 							documentationSummary: {
 								appellantCase: {
 									receivedAt: '2024-03-25T23:59:59.999Z',
@@ -557,8 +508,6 @@ describe('appeals list routes', () => {
 								rule6PartyProofs: {},
 								rule6PartyStatements: {}
 							},
-							isParentAppeal: false,
-							isChildAppeal: false,
 							isS78Expedited: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
@@ -594,9 +543,6 @@ describe('appeals list routes', () => {
 				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
 					expect.objectContaining({
 						where: {
-							appealType: {
-								key: { in: getEnabledAppealTypes() }
-							},
 							OR: [
 								{
 									reference: {
@@ -642,10 +588,8 @@ describe('appeals list routes', () => {
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
 							appealType: householdAppeal.appealType.type,
-							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							dueDate: null,
 							documentationSummary: {
 								appellantCase: {
 									receivedAt: '2024-03-25T23:59:59.999Z',
@@ -693,8 +637,6 @@ describe('appeals list routes', () => {
 								rule6PartyProofs: {},
 								rule6PartyStatements: {}
 							},
-							isParentAppeal: false,
-							isChildAppeal: false,
 							isS78Expedited: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
@@ -730,9 +672,6 @@ describe('appeals list routes', () => {
 				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
 					expect.objectContaining({
 						where: {
-							appealType: {
-								key: { in: getEnabledAppealTypes() }
-							},
 							OR: [
 								{
 									reference: {
@@ -778,10 +717,8 @@ describe('appeals list routes', () => {
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
 							appealType: householdAppeal.appealType.type,
-							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							dueDate: null,
 							documentationSummary: {
 								appellantCase: {
 									receivedAt: '2024-03-25T23:59:59.999Z',
@@ -829,8 +766,6 @@ describe('appeals list routes', () => {
 								rule6PartyProofs: {},
 								rule6PartyStatements: {}
 							},
-							isParentAppeal: false,
-							isChildAppeal: false,
 							isS78Expedited: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
@@ -866,9 +801,6 @@ describe('appeals list routes', () => {
 				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
 					expect.objectContaining({
 						where: {
-							appealType: {
-								key: { in: getEnabledAppealTypes() }
-							},
 							currentStatus: 'assign_case_officer'
 						}
 					})
@@ -889,10 +821,8 @@ describe('appeals list routes', () => {
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
 							appealType: householdAppeal.appealType.type,
-							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							dueDate: null,
 							documentationSummary: {
 								appellantCase: {
 									receivedAt: '2024-03-25T23:59:59.999Z',
@@ -940,8 +870,6 @@ describe('appeals list routes', () => {
 								rule6PartyProofs: {},
 								rule6PartyStatements: {}
 							},
-							isParentAppeal: false,
-							isChildAppeal: false,
 							isS78Expedited: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
@@ -977,9 +905,6 @@ describe('appeals list routes', () => {
 				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
 					expect.objectContaining({
 						where: {
-							appealType: {
-								key: { in: getEnabledAppealTypes() }
-							},
 							OR: [
 								{
 									inspectorUserId: {
@@ -1011,10 +936,8 @@ describe('appeals list routes', () => {
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
 							appealType: householdAppeal.appealType.type,
-							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							dueDate: null,
 							documentationSummary: {
 								appellantCase: {
 									receivedAt: '2024-03-25T23:59:59.999Z',
@@ -1062,8 +985,6 @@ describe('appeals list routes', () => {
 								rule6PartyProofs: {},
 								rule6PartyStatements: {}
 							},
-							isParentAppeal: false,
-							isChildAppeal: false,
 							isS78Expedited: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
@@ -1099,9 +1020,6 @@ describe('appeals list routes', () => {
 				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
 					expect.objectContaining({
 						where: {
-							appealType: {
-								key: { in: getEnabledAppealTypes() }
-							},
 							AND: [
 								{
 									inspectorUserId: null
@@ -1129,7 +1047,6 @@ describe('appeals list routes', () => {
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
 							appealType: householdAppeal.appealType.type,
-							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
 							documentationSummary: {
@@ -1179,9 +1096,6 @@ describe('appeals list routes', () => {
 								rule6PartyProofs: {},
 								rule6PartyStatements: {}
 							},
-							dueDate: null,
-							isParentAppeal: false,
-							isChildAppeal: false,
 							isS78Expedited: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
@@ -1223,9 +1137,6 @@ describe('appeals list routes', () => {
 				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
 					expect.objectContaining({
 						where: {
-							appealType: {
-								key: { in: getEnabledAppealTypes() }
-							},
 							appealTypeId: 1
 						}
 					})
@@ -1246,10 +1157,8 @@ describe('appeals list routes', () => {
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
 							appealType: householdAppeal.appealType.type,
-							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							dueDate: null,
 							documentationSummary: {
 								appellantCase: {
 									receivedAt: '2024-03-25T23:59:59.999Z',
@@ -1297,8 +1206,6 @@ describe('appeals list routes', () => {
 								rule6PartyProofs: {},
 								rule6PartyStatements: {}
 							},
-							isParentAppeal: false,
-							isChildAppeal: false,
 							isS78Expedited: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
@@ -1341,9 +1248,6 @@ describe('appeals list routes', () => {
 				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
 					expect.objectContaining({
 						where: {
-							appealType: {
-								key: { in: getEnabledAppealTypes() }
-							},
 							procedureTypeId: 1
 						}
 					})
@@ -1364,10 +1268,8 @@ describe('appeals list routes', () => {
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
 							appealType: householdAppeal.appealType.type,
-							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							dueDate: null,
 							documentationSummary: {
 								appellantCase: {
 									receivedAt: '2024-03-25T23:59:59.999Z',
@@ -1415,8 +1317,6 @@ describe('appeals list routes', () => {
 								rule6PartyProofs: {},
 								rule6PartyStatements: {}
 							},
-							isParentAppeal: false,
-							isChildAppeal: false,
 							isS78Expedited: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
@@ -1471,10 +1371,8 @@ describe('appeals list routes', () => {
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
 							appealType: householdAppeal.appealType.type,
-							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							dueDate: null,
 							documentationSummary: {
 								appellantCase: {
 									receivedAt: '2024-03-25T23:59:59.999Z',
@@ -1522,8 +1420,6 @@ describe('appeals list routes', () => {
 								rule6PartyProofs: {},
 								rule6PartyStatements: {}
 							},
-							isParentAppeal: false,
-							isChildAppeal: false,
 							isS78Expedited: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',

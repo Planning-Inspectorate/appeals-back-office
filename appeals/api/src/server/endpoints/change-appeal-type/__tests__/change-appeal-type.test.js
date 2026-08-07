@@ -15,11 +15,11 @@ import {
 	ERROR_CANNOT_BE_EMPTY_STRING,
 	ERROR_INVALID_APPEAL_STATE,
 	ERROR_MUST_BE_STRING,
-	ERROR_NOT_FOUND
+	ERROR_NOT_FOUND,
+	VALIDATION_OUTCOME_INVALID
 } from '@pins/appeals/constants/support.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
-
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 const appealTypes = [
@@ -354,11 +354,11 @@ describe('appeal resubmit mark invalid type routes', () => {
 			// @ts-ignore
 			databaseConnector.appealType.findMany.mockResolvedValue(appealTypes);
 			// @ts-ignore
-			databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-				appellantCaseValidationOutcomes[0]
+			databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+				appellantCaseValidationOutcomes
 			);
 			// @ts-ignore
-			databaseConnector.appellantCaseInvalidReason.findUnique.mockResolvedValue(mockInvalidReason);
+			databaseConnector.appellantCaseInvalidReason.findMany.mockResolvedValue([mockInvalidReason]);
 
 			const response = await request
 				.post(`/appeals/${householdAppeal.id}/appeal-resubmit-mark-invalid`)
@@ -398,7 +398,9 @@ describe('appeal resubmit mark invalid type routes', () => {
 			expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
 				where: { id: 1 },
 				data: {
-					appellantCaseValidationOutcomeId: appellantCaseValidationOutcomes[0].id
+					appellantCaseValidationOutcomeId: appellantCaseValidationOutcomes.find(
+						(x) => x.name === VALIDATION_OUTCOME_INVALID
+					).id
 				}
 			});
 
@@ -432,11 +434,11 @@ describe('appeal resubmit mark invalid type routes', () => {
 			// @ts-ignore
 			databaseConnector.appealType.findMany.mockResolvedValue(appealTypes);
 			// @ts-ignore
-			databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-				appellantCaseValidationOutcomes[0]
+			databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+				appellantCaseValidationOutcomes
 			);
 			// @ts-ignore
-			databaseConnector.appellantCaseInvalidReason.findUnique.mockResolvedValue(mockInvalidReason);
+			databaseConnector.appellantCaseInvalidReason.findMany.mockResolvedValue([mockInvalidReason]);
 
 			const response = await request
 				.post(`/appeals/${enforcementAppeal.id}/appeal-resubmit-mark-invalid`)

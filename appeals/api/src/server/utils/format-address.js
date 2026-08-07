@@ -1,7 +1,13 @@
-/** @typedef {import('@pins/appeals.api').Schema.Address} Address */
+/** @typedef {import('#db-client/models.ts').AddressModel} AddressModel */
 
 /**
- * @param {Address | null | undefined} [address]
+ * @param {{
+ * 		addressLine1: AddressModel['addressLine1'],
+ * 		addressLine2?: AddressModel['addressLine2'],
+ * 		addressTown?: AddressModel['addressTown'],
+ * 		addressCounty?: AddressModel['addressCounty'],
+ * 		postcode?: AddressModel['postcode']
+ * 	} | null} [address]
  * @returns {{
  *   addressLine1: string,
  *   addressLine2?: string,

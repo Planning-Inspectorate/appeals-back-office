@@ -1,3 +1,4 @@
+import redisClient from '#infrastructure/redis.js';
 import { databaseConnector } from '#utils/database-connector.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.AppealType} AppealType */
@@ -7,10 +8,17 @@ import { databaseConnector } from '#utils/database-connector.js';
  */
 
 /**
- * @returns {PrismaPromise<AppealType[]>}
+ * @returns {Promise<AppealType[]>}
  */
 export const getAllAppealTypes = () => {
-	return databaseConnector.appealType.findMany();
+	const getAppealTypes = () => databaseConnector.appealType.findMany();
+	if (!redisClient) {
+		return getAppealTypes();
+	}
+	const cacheKey = `lookup-appealType`;
+	const cacheTimeInSeconds = 600;
+
+	return redisClient.getOrSet(cacheKey, cacheKey, cacheTimeInSeconds, getAppealTypes);
 };
 
 /**

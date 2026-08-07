@@ -85,7 +85,7 @@ describe('POST /:appealId/site-visits', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
 			// @ts-ignore`
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 
 			// Send request using siteVisitData fields
 			const response = await request
@@ -138,7 +138,7 @@ describe('POST /:appealId/site-visits', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 
 			const response = await request
 				.post(`/appeals/${appeal.id}/site-visits`)
@@ -210,7 +210,7 @@ describe('POST /:appealId/site-visits', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 
 			const visitData = {
 				visitEndTime: '2022-03-31T12:00:00.000Z',
@@ -264,7 +264,7 @@ describe('POST /:appealId/site-visits', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 
 			const visitData = {
 				visitEndTime: '',
@@ -309,7 +309,7 @@ describe('POST /:appealId/site-visits', () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockImplementation(mockAppealFindUnique(appeal));
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 
 			const response = await request
 				.post(`/appeals/${appeal.id}/site-visits`)
@@ -346,7 +346,7 @@ describe('POST /:appealId/site-visits', () => {
 				appeal: appeal
 			});
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
@@ -408,7 +408,7 @@ describe('POST /:appealId/site-visits', () => {
 				appeal: appeal
 			});
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
@@ -468,7 +468,7 @@ describe('POST /:appealId/site-visits', () => {
 				appeal: appeal
 			});
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
@@ -527,7 +527,7 @@ describe('POST /:appealId/site-visits', () => {
 				appeal: appeal
 			});
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
 			// @ts-ignore
 			databaseConnector.user.upsert.mockResolvedValue({
 				id: 1,
@@ -643,7 +643,7 @@ describe('POST /:appealId/site-visits', () => {
 				appeal: appeal
 			});
 			// @ts-ignore
-			databaseConnector.siteVisitType.findUnique.mockResolvedValue(null);
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([]);
 
 			const response = await request
 				.post(`/appeals/${appeal.id}/site-visits`)
