@@ -15,10 +15,10 @@
     "tscheck": "npx tsc -p jsconfig.json --maxNodeModuleJsDepth 0"
   },
   "dependencies": {
-    "connect-redis": "^9.0.0",
-    "redis": "^4.6.10",
+    "connect-redis": "^10.0.0",
+    "redis": "^6.1.0",
     "@pins/platform": "^0.0.0",
-    "@azure/msal-node": "^5.0.5"
+    "@azure/msal-node": "^5.4.3"
   },
   "devDependencies": {
     "jest": "^30.2.0"
