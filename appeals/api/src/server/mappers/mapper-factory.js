@@ -149,13 +149,13 @@ function createIntegrationMap(mappingRequest) {
 		}
 		case APPEAL_CASE_TYPE.ZA: {
 			if (!beforeExpeditedOriginalApplicationCutOff(appeal.appellantCase?.applicationDate)) {
-				const casAdvert = createMap(integrationMappers.integrationCasAdvertMappers, mappingRequest);
-				return mergeMaps(caseData, casAdvert);
-			} else {
 				const casAdvert = createMap(
 					integrationMappers.integrationCasAdvertExpeditedMappers,
 					mappingRequest
 				);
+				return mergeMaps(caseData, casAdvert);
+			} else {
+				const casAdvert = createMap(integrationMappers.integrationCasAdvertMappers, mappingRequest);
 				return mergeMaps(caseData, casAdvert);
 			}
 		}
