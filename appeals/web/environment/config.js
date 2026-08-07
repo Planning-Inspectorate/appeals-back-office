@@ -52,6 +52,7 @@ export function loadConfig() {
 		AZURE_BLOB_USE_EMULATOR,
 		BETA_FEEDBACK_URL,
 		CACHE_CONTROL_MAX_AGE,
+		DATABASE_URL,
 		FEATURE_FLAG_S78_WRITTEN,
 		FEATURE_FLAG_S78_INQUIRY,
 		FEATURE_FLAG_LINKED_APPEALS,
@@ -125,6 +126,7 @@ export function loadConfig() {
 		cacheControl: {
 			maxAge: CACHE_CONTROL_MAX_AGE || '1d'
 		},
+		databaseUrl: DATABASE_URL,
 		googleAnalyticsId: GOOGLE_ANALYTICS_ID || 'id',
 		microsoftClarityId: MICROSOFT_CLARITY_ID || 'id',
 		horizonAppealBaseUrl: HORIZON_APPEAL_BASE_URL,

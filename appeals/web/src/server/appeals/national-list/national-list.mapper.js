@@ -17,10 +17,10 @@ import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 /** @typedef {import('#appeals/appeals.types.js').AppealType} AppealType */
 /** @typedef {import('#appeals/appeals.types.js').AppealProcedureType} AppealProcedureType */
 /**
- * @param {{azureAdUserId: string, id: number, name: string}[]} users
- * @param {AppealList|void} appeals
- * @param {AppealType[]} appealTypes
- * @param {import('@pins/appeals.api').Api.CaseTeams} caseTeams
+ * @param {{azureAdUserId: string | null, id: number, name: string}[]} users
+ * @param {import('./national-list.view-model.ts').NationalList.ViewModel} appeals
+ * @param {import('./national-list.service.ts').GetAppealTypesResponse} appealTypes
+ * @param {import('./national-list.service.ts').GetCaseTeamsResponse} caseTeams
  * @param {AppealProcedureType[]} appealProcedureTypes
  * @param {string} urlWithoutQuery
  * @param {string|undefined} searchTerm
@@ -34,7 +34,7 @@ import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
  * @param {string|undefined} caseTeamFilter
  * @param {string|undefined} appealProcedureFilter
  * @param {string|undefined} greenBeltFilter
- * @param {{sapId: string, id: number, name: string}[]} padsUsers
+ * @param {import('./national-list.view-model.ts').NationalList.PadsUserModel[]} padsUsers
  * @returns {PageContent}
  */
 

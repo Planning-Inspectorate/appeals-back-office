@@ -1,12 +1,12 @@
-import { getTeamList } from '#appeals/appeal-details/update-case-team/update-case-team.service.js';
 import usersService from '#appeals/appeal-users/users-service.js';
+import { toNationalListViewModel } from '#appeals/national-list/national-list.view-model.ts';
 import config from '#environment/config.js';
-import logger from '#lib/logger.js';
+import { dbClient } from '#lib/database-client.js';
 import { mapPagination } from '#lib/mappers/index.js';
 import { getPaginationParametersFromQuery } from '#lib/pagination-utilities.js';
 import { stripQueryString } from '#lib/url-utilities.js';
 import { getAppellantProcedurePreference, nationalListPage } from './national-list.mapper.js';
-import { getAppealProcedureTypes, getAppeals, getAppealTypes } from './national-list.service.js';
+import { NationalListService } from './national-list.service.ts';
 
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
 
@@ -47,7 +47,7 @@ export const viewNationalList = async (request, response) => {
 	let searchTermError = '';
 	const procedurePreferenceRequest =
 		params.procedurePreferenceRequest && String(params.procedurePreferenceRequest);
-	const appellantProcedurePreferenceFilter = getAppellantProcedurePreference(
+	const appellantProcedurePreferencePreFilter = getAppellantProcedurePreference(
 		procedurePreferenceRequest
 	);
 
@@ -57,35 +57,48 @@ export const viewNationalList = async (request, response) => {
 			'Appeal reference, planning application or enforcement reference, or postcode must be between 2 and 50 characters';
 	}
 
-	const appealTypes = await getAppealTypes(request.apiClient);
-	const appealProcedureTypes = await getAppealProcedureTypes(request.apiClient);
-
 	const urlWithoutQuery = stripQueryString(originalUrl);
 	const paginationParameters = getPaginationParametersFromQuery(query);
-	const appeals = await getAppeals(
-		request.apiClient,
-		searchTerm,
-		appealStatusFilter,
-		inspectorStatusFilter,
-		localPlanningAuthorityFilter,
-		caseOfficerFilter,
-		inspectorFilter,
-		greenBeltFilter,
-		appealTypeFilter,
-		caseTeamFilter,
-		appealProcedureFilter,
-		appellantProcedurePreferenceFilter,
-		paginationParameters.pageNumber,
-		paginationParameters.pageSize
-	).catch((error) => logger.error(error));
 
-	if (!appeals) {
+	const service = new NationalListService(dbClient);
+
+	const [appealTypes, appealProcedureTypes, caseTeams, appealsStatusesInNationalList, results] =
+		await Promise.all([
+			service.getAppealTypes(),
+			service.getAppealProcedureTypes(),
+			service.getCaseTeams(),
+			service.getAppealsStatusesInNationalList(),
+			service.getAppeals({
+				searchTerm,
+				appealStatusFilter,
+				inspectorStatusFilter,
+				localPlanningAuthorityFilter,
+				caseOfficerFilter,
+				inspectorFilter,
+				greenBeltFilter,
+				appealTypeFilter,
+				caseTeamFilter,
+				appealProcedureFilter,
+				appellantProcedurePreferencePreFilter,
+				pageNumber: paginationParameters.pageNumber,
+				pageSize: paginationParameters.pageSize
+			})
+		]);
+
+	// I don't think this can ever be hit?
+	if (!results) {
 		return response.status(404).render('app/404.njk');
 	}
 
+	const viewModel = toNationalListViewModel(
+		results,
+		paginationParameters,
+		appealsStatusesInNationalList
+	);
+
 	const users = await Promise.all(
-		[...appeals.caseOfficers, ...appeals.inspectors].map(async ({ id, azureAdUserId }) => {
-			const user = await usersService.getUserById(azureAdUserId, session);
+		[...viewModel.caseOfficers, ...viewModel.inspectors].map(async ({ id, azureAdUserId }) => {
+			const user = azureAdUserId && (await usersService.getUserById(azureAdUserId, session));
 			return {
 				id,
 				azureAdUserId,
@@ -93,11 +106,9 @@ export const viewNationalList = async (request, response) => {
 			};
 		})
 	);
-	const padsUsers = [...appeals.padsInspectors];
-	const caseTeams = await getTeamList(request.apiClient);
 	const mappedPageContent = nationalListPage(
 		users,
-		appeals,
+		viewModel,
 		appealTypes,
 		caseTeams,
 		appealProcedureTypes,
@@ -113,13 +124,13 @@ export const viewNationalList = async (request, response) => {
 		caseTeamFilter,
 		appealProcedureFilter,
 		greenBeltFilter,
-		padsUsers
+		viewModel.padsInspectors
 	);
 
 	const pagination = mapPagination(
-		appeals.page,
-		appeals.pageCount,
-		appeals.pageSize,
+		viewModel.page,
+		viewModel.pageCount,
+		viewModel.pageSize,
 		urlWithoutQuery,
 		query
 	);

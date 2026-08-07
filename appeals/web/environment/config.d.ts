@@ -37,6 +37,7 @@ export interface EnvironmentConfig extends BaseEnvironmentConfig {
 	cacheControl: {
 		maxAge: string;
 	};
+	databaseUrl: string;
 	googleAnalyticsId: string;
 	microsoftClarityId: string;
 	horizonAppealBaseUrl?: string;
