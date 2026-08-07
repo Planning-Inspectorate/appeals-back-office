@@ -5269,7 +5269,7 @@ describe('appeal-details', () => {
 
 				it('should not render LPA statement, IP comments, Statement of common ground, or Final comments due dates for S78 Part 1 procedureType appeals', async () => {
 					nock('http://test/')
-						.get(`/appeals/${appealId}/page-details`)
+						.get(`/appeals/${appealId}?include=all`)
 						.reply(200, {
 							...appealDataFullPlanning,
 							caseOfficer: '2cb7735e-c4cf-410b-b773-5ec4cf110b87',
