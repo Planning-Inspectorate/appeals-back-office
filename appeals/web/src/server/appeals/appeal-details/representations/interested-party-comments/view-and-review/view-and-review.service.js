@@ -1,3 +1,5 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
+
 /**
  * @param {import('got').Got} apiClient
  * @param {string} appealId
@@ -11,9 +13,11 @@ export const patchInterestedPartyCommentStatus = (
 	commentId,
 	status,
 	siteVisitRequested
-) =>
-	apiClient
-		.patch(`appeals/${appealId}/reps/${commentId}`, {
+) => {
+	const ids = assertValidNumericIds({ appealId, commentId });
+	return apiClient
+		.patch(`appeals/${ids.appealId}/reps/${ids.commentId}`, {
 			json: { status, siteVisitRequested }
 		})
 		.json();
+};
