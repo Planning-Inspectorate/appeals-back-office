@@ -1,6 +1,7 @@
 import usersService from '#appeals/appeal-users/users-service.js';
 import { gigabyte, kilobyte, megabyte } from '#appeals/appeal.constants.js';
 import { isFeatureActive } from '#common/feature-flags.js';
+import { permissionNames } from '#environment/permissions.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import {
 	dateISOStringToDayMonthYearHourMinute,
@@ -12,7 +13,8 @@ import { folderIsAdditionalDocuments } from '#lib/documents.js';
 import {
 	createNotificationBanner,
 	documentDateInput,
-	mapNotificationBannersFromSession
+	mapNotificationBannersFromSession,
+	userHasPermission
 } from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
@@ -961,6 +963,11 @@ export function manageFolderPage({
 			classes: 'govuk-button--secondary'
 		}
 	};
+	// Inspectors should not see redaction status column
+	const canViewRedactionColumn = userHasPermission(
+		permissionNames.viewRedactionStatusColumn,
+		request.session
+	);
 	const tableHead = [
 		{
 			text: 'Name'
@@ -968,9 +975,13 @@ export function manageFolderPage({
 		{
 			text: dateColumnLabelTextOverride || 'Date received'
 		},
-		{
-			text: 'Redaction status'
-		},
+		...(canViewRedactionColumn
+			? [
+					{
+						text: 'Redaction status'
+					}
+				]
+			: []),
 		...(editable
 			? [
 					{
@@ -1043,9 +1054,9 @@ export function manageFolderPage({
 							: {
 									text: dateISOStringToDisplayDate(document?.latestDocumentVersion?.dateReceived)
 								},
-						{
-							text: document?.latestDocumentVersion?.redactionStatus
-						},
+						...(canViewRedactionColumn
+							? [{ text: document?.latestDocumentVersion?.redactionStatus }]
+							: []),
 						...(editable
 							? [mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEditUrl, isCosts)]
 							: [])
