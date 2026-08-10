@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} WebAppeal
  */
@@ -10,8 +11,9 @@
  * @returns {Promise<WebAppeal>}
  */
 export async function postWithdrawalRequest(apiClient, appealId, withdrawalRequestDate) {
+	const ids = assertValidNumericIds({ appealId });
 	return await apiClient
-		.post(`appeals/${appealId}/withdrawal`, {
+		.post(`appeals/${ids.appealId}/withdrawal`, {
 			json: { withdrawalRequestDate }
 		})
 		.json();

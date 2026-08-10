@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 
 /**
@@ -13,9 +14,10 @@ export const rejectInterestedPartyComment = (
 	commentId,
 	allowResubmit,
 	siteVisitRequested
-) =>
-	apiClient
-		.patch(`appeals/${appealId}/reps/${commentId}`, {
+) => {
+	const ids = assertValidNumericIds({ appealId, commentId });
+	return apiClient
+		.patch(`appeals/${ids.appealId}/reps/${ids.commentId}`, {
 			json: {
 				status: COMMENT_STATUS.INVALID,
 				allowResubmit,
@@ -23,3 +25,4 @@ export const rejectInterestedPartyComment = (
 			}
 		})
 		.json();
+};
