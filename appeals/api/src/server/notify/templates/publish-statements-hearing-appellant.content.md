@@ -15,7 +15,7 @@ You can [view this information in the appeals service]({{front_office_url}}/appe
 {% endif -%}
 {% if not has_ip_comments -%}
    We did not receive any comments from interested parties.
-{% endif -%}
+{% endif %}
 
 {% include 'parts/appeal-details.md' %}
 

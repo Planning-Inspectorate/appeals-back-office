@@ -10,7 +10,7 @@
 
 {% if has_ip_comments -%}
 You can [view this information in the appeals service]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}).
-{% endif -%}
+{% endif %}
 
 {% include 'parts/appeal-details.md' %}
 
