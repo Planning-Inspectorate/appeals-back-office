@@ -98,7 +98,8 @@ async function handleSiteVisitEvent(eventId, updateType, existingEvent) {
 				siteVisitType: true,
 				appeal: {
 					include: {
-						address: true
+						address: true,
+						procedureType: true
 					}
 				}
 			}
