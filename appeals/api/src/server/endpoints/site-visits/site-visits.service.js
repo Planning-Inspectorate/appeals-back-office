@@ -127,6 +127,9 @@ export const createSiteVisit = async (
 				}
 			}
 		}
+		if (!visitDate && !visitStartTime && visitTypeId) {
+			await broadcasters.broadcastEvent(siteVisit.id, EVENT_TYPE.SITE_VISIT, EventType.Create);
+		}
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
