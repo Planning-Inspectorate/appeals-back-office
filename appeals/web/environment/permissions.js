@@ -33,7 +33,8 @@ export const calculatePermissions = (currentUserGroups) => {
 		setCaseOutcome: isCaseOfficer || isInspector,
 		setEvents: isCaseOfficer || isInspector,
 		reIssueDecisionLetter: isCaseOfficer || isCqtTeam,
-		viewRedactionStatusColumn: !isInspector || isCaseOfficer
+		viewRedactionStatusColumn: !isInspector || isCaseOfficer,
+		readOnlyDocumentsFolder: isInspector
 	};
 
 	return perms;
@@ -49,5 +50,6 @@ export const permissionNames = {
 	setCaseOutcome: 'setCaseOutcome',
 	setEvents: 'setEvents',
 	reIssueDecisionLetter: 'reIssueDecisionLetter',
-	viewRedactionStatusColumn: 'viewRedactionStatusColumn'
+	viewRedactionStatusColumn: 'viewRedactionStatusColumn',
+	readOnlyDocumentsFolder: 'readOnlyDocumentsFolder'
 };
