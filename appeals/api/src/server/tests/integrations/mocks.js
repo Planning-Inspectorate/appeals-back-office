@@ -341,8 +341,8 @@ export const validAppellantCaseEnforcementListedBuilding = {
 		namedIndividuals: [],
 		appealGrounds: [
 			{
-				groundRef: 'a',
-				factsForGround: 'I like Christmas'
+				groundRef: 'c',
+				factsForGround: 'I like a listed Christmas'
 			}
 		]
 	}

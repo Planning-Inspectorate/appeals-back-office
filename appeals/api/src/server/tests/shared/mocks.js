@@ -1,3 +1,4 @@
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import {
 	VALIDATION_OUTCOME_COMPLETE,
 	VALIDATION_OUTCOME_INCOMPLETE,
@@ -176,16 +177,19 @@ export const grounds = [
 	{
 		id: 1,
 		groundRef: 'a',
-		groundDescription: 'Ground A'
+		groundDescription: 'Ground A',
+		appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE
 	},
 	{
 		id: 2,
 		groundRef: 'b',
-		groundDescription: 'Ground B'
+		groundDescription: 'Ground B',
+		appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE
 	},
 	{
 		id: 3,
 		groundRef: 'c',
-		groundDescription: 'Ground C'
+		groundDescription: 'Ground C',
+		appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
 	}
 ];

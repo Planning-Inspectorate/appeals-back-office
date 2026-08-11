@@ -5,6 +5,7 @@ import { createAppealReference } from '#utils/appeal-reference.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { PROCEDURE_TYPE_ID_MAP, TEAM_NAME_MAP } from '@pins/appeals/constants/common.js';
 import { CASE_RELATIONSHIP_RELATED } from '@pins/appeals/constants/support.js';
+import { appealCaseTypeToAppealTypeMapper } from '@pins/appeals/utils/appeal-type-case.mapper.js';
 import { isLdcOrDiscontinuanceOrEnforcementCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_STATUS, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { getAppealTypeByTypeId } from './appeal-type.repository.js';
@@ -94,7 +95,8 @@ export const createAppeal = async (
 			);
 			await setAppealRelationships(tx, appeal.id, appeal.reference, relatedReferences);
 
-			await setAppealGrounds(tx, appeal.id, appealGrounds);
+			const appealTypeString = appealCaseTypeToAppealTypeMapper(caseType);
+			await setAppealGrounds(tx, appeal.id, appealTypeString, appealGrounds);
 
 			const appealDetails = await tx.appeal.findUnique({
 				where: { id: appeal.id }
@@ -382,16 +384,20 @@ const attachToRepresentation = async (tx, repId, documents) => {
  *
  * @param {import('#db-client/client.ts').Prisma.TransactionClient} tx
  * @param {number} appealId
+ * @param {string} appealTypeString
  * @param {{groundRef:string, factsForGround:string}[]} appealGrounds
  * @returns {Promise<void>}
  */
 // @ts-ignore
-const setAppealGrounds = async (tx, appealId, appealGrounds) => {
+const setAppealGrounds = async (tx, appealId, appealTypeString, appealGrounds) => {
 	if (appealGrounds?.length) {
 		const grounds = await tx.ground.findMany();
+
 		await tx.appealGround.createMany({
 			data: appealGrounds.map((appealGround) => {
-				const groundId = grounds.find((g) => g.groundRef === appealGround.groundRef)?.id;
+				const groundId = grounds.find(
+					(g) => g.groundRef === appealGround.groundRef && g.appealType === appealTypeString
+				)?.id;
 				return {
 					appealId,
 					groundId,
