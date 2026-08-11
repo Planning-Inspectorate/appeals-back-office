@@ -25,7 +25,7 @@ router
 router
 	.route('/:folderId/')
 	.get(
-		assertUserHasPermission(permissionNames.updateCase),
+		assertUserHasPermission(permissionNames.updateCase, permissionNames.readOnlyDocumentsFolder),
 		asyncHandler(controller.getManageFolder)
 	);
 
