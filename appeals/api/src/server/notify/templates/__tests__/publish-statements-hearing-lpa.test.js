@@ -35,6 +35,8 @@ describe('publish-statements-hearing-lpa.md', () => {
 			'   - all statements',
 			'   - comments from interested parties',
 			'You can [view this information in the appeals service](/mock-front-office-url/manage-appeals/ABC45678).',
+			'',
+			'',
 			'# Appeal details',
 			'',
 			'^Appeal reference number: ABC45678',
@@ -78,6 +80,8 @@ describe('publish-statements-hearing-lpa.md', () => {
 		const expectedContent = [
 			"We've received comments from interested parties.",
 			'You can [view this information in the appeals service](/mock-front-office-url/manage-appeals/ABC45678).',
+			'',
+			'',
 			'# Appeal details',
 			'',
 			'^Appeal reference number: ABC45678',
@@ -120,6 +124,8 @@ describe('publish-statements-hearing-lpa.md', () => {
 
 		const expectedContent = [
 			'We did not receive any comments from interested parties.',
+			'',
+			'',
 			'# Appeal details',
 			'',
 			'^Appeal reference number: ABC45678',
@@ -165,6 +171,8 @@ describe('publish-statements-hearing-lpa.md', () => {
 			'   - all statements',
 			'   - comments from interested parties',
 			'You can [view this information in the appeals service](/mock-front-office-url/manage-appeals/ABC45678).',
+			'',
+			'',
 			'# Appeal details',
 			'',
 			'^Appeal reference number: ABC45678',
