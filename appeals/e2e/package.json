@@ -13,7 +13,7 @@
 		"cy:open:test:data:generation:dev": "npx cypress open --browser chrome --e2e --config-file cypress.test-generation.config.dev.env.js",
 		"cy:open:test:data:generation:test": "npx cypress open --browser chrome --e2e --config-file cypress.test-generation.config.test.env.js",
 		"cy:open:test:data:generation:staging": "npx cypress open --browser chrome --e2e --config-file cypress.test-generation.config.staging.env.js",
-		"cy:run": "npx cypress run --config-file cypress.config.local.env.js", 
+		"cy:run": "npx cypress run --config-file cypress.config.local.env.js",
 		"cy:run:dev": "npx cypress run --config-file cypress.config.dev.env.js",
 		"cy:run:test": "npx cypress run --config-file cypress.config.test.env.js",
 		"cy:run:staging": "npx cypress run --config-file cypress.config.staging.env.js",
@@ -37,7 +37,6 @@
 		"@cypress/webpack-preprocessor": "^5.16.1",
 		"@faker-js/faker": "^7.6.0",
 		"cypress": "^15.3.0",
-		"dotenv": "^16.0.3",
 		"eslint-plugin-cypress": "^4.3.0",
 		"fs-extra": "^11.2.0",
 		"puppeteer": "^24.3.0"

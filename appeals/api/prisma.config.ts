@@ -1,5 +1,8 @@
-import 'dotenv/config';
 import { defineConfig } from 'prisma/config';
+
+// load from .env file
+// prettier-ignore
+try { require('node:process').loadEnvFile(); } catch {/* ignore errors*/}
 
 export default defineConfig({
 	schema: './src/database/schema.prisma',
