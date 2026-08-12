@@ -620,7 +620,7 @@ const sendPublishedStatementNotifiesForHearing = async (
 	const hasStatementsOrComments = hasAppellantStatement || hasLpaStatement || hasIpComments;
 	const isEnforcementOrLdc = isLdcOrEnforcementCaseType(appeal.appealType?.key);
 
-	const includeFrontOfficeUrl = !isEnforcementOrLdc || hasStatementsOrComments;
+	const includeFrontOfficeUrl = isEnforcementOrLdc && !hasStatementsOrComments;
 	const lpaPath = `${config.frontOffice.url}/manage-appeals/${appeal.reference}`;
 	const appellantPath = `${config.frontOffice.url}/appeals/${appeal.reference}`;
 
