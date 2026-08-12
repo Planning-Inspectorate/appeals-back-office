@@ -532,14 +532,32 @@ these [Notify Templates](../appeals/api/src/server/notify/templates):
 - **Notify Content Template:** [publish-statements-hearing-appellant](../appeals/api/src/server/notify/templates/publish-statements-hearing-appellant.content.md)
 - **Trigger:** Publish representations when the appeal is in the statements stage. Sent to appellant/agent.
 
-### Statements published - enforcement hearing yes statements yes comments
+### Statements published - enforcement hearing statements or comments received LPA
 
 - **Appeal type:** Enforcement, Enforcement Listed Building, Lawful Development Certificate
 - **Procedure:** Hearing
-- **Notify Subject Template:** [publish-statements-enforcement-hearing-yes-statements-yes-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-yes-statements-yes-comments.subject.md)
-- **Notify Content Template:** [publish-statements-enforcement-hearing-yes-statements-yes-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-yes-statements-yes-comments.content.md)
+- **Notify Subject Template:** [publish-statements-enforcement-hearing-yes-statements-yes-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-statements-or-comments-received-lpa.subject.md)
+- **Notify Content Template:** [publish-statements-enforcement-hearing-yes-statements-yes-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-statements-or-comments-received-lpa.content.md)
 - **GOV notify template:** [Enf Hearing - Yes all statements, Yes comments] (https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/dea23a30-cc67-4ed9-8809-32e419089210)
-- **Trigger:** Publish representations when the appeal is in the statements stage and both statements and IP comments exist. Sent to appellant/agent and LPA.
+- **Trigger:** Publish representations when the appeal is in the statements stage and either statements or comments have been received LPA.
+
+### Statements published - enforcement hearing statements or comments received appellant
+
+- **Appeal type:** Enforcement, Enforcement Listed Building, Lawful Development Certificate
+- **Procedure:** Hearing
+- **Notify Subject Template:** [publish-statements-enforcement-hearing-yes-statements-yes-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-statements-or-comments-received-appellant.subject.md)
+- **Notify Content Template:** [publish-statements-enforcement-hearing-yes-statements-yes-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-statements-or-comments-received-appellant.content.md)
+- **GOV notify template:** [Enf Hearing - Yes all statements, Yes comments] (https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/dea23a30-cc67-4ed9-8809-32e419089210)
+- **Trigger:** Publish representations when the appeal is in the statements stage and either statements or comments have been received appellant.
+
+### Statements published - hearing with no statements and no comments - ELB, Enforcement and LDC
+
+- **Appeal type:** Enforcement, ELB and LDC
+- **Procedure:** Hearing
+- **Notify Subject Template:** [publish-statements-enforcement-hearing-no-statements-no-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-no-statements-or-comments-received.subject.md)
+- **Notify Content Template:** [publish-statements-enforcement-hearing-no-statements-no-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-no-statements-or-comments-received.content.md)
+- **GOV notify template:** [Enf Hearing - No statement from any party, No comment - GOV.UK Notify](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/dd6a3378-26dc-4c80-bd93-06a23809d37d)
+- **Trigger:** Publish representations when the appeal is in the statements stage and does not have any IP comments or statements. Sent to appellant/agent and LPA.
 
 ### Statements published - inquiry lpa
 
@@ -564,51 +582,6 @@ these [Notify Templates](../appeals/api/src/server/notify/templates):
 - **Notify Subject Template:** [publish-statements-inquiry-rule-6](../appeals/api/src/server/notify/templates/publish-statements-inquiry-rule-6.subject.md)
 - **Notify Content Template:** [publish-statements-inquiry-rule-6](../appeals/api/src/server/notify/templates/publish-statements-inquiry-rule-6.content.md)
 - **Trigger:** Publish representations when the appeal is in the statements stage. Sent to any Rule 6 parties.
-
-### Statements published - hearing with no statements and no comments - ELB, Enforcement and LDC
-
-- **Appeal type:** Enforcement, ELB and LDC
-- **Procedure:** Hearing
-- **Notify Subject Template:** [publish-statements-enforcement-hearing-no-statements-no-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-no-statements-no-comments.subject.md)
-- **Notify Content Template:** [publish-statements-enforcement-hearing-no-statements-no-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-no-statements-no-comments.content.md)
-- **GOV notify template:** [Enf Hearing - No statement from any party, No comment - GOV.UK Notify](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/dd6a3378-26dc-4c80-bd93-06a23809d37d)
-- **Trigger:** Publish representations when the appeal is in the statements stage and does not have any IP comments or statements. Sent to appellant/agent and LPA.
-
-### Statements published - hearing with appeallant statments, no LPA statements and no comments - ELB, Enforcement and LDC LPA
-
-- **Appeal type:** Enforcement, ELB and LDC
-- **Procedure:** Hearing
-- **Notify Subject Template:** [publish-statements-enforcement-hearing-yes-appellant-statements-no-lpa-statements-no-comments-lpa](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-yes-appellant-statements-no-lpa-statements-no-comments-lpa.subject.md)
-- **Notify Content Template:** [publish-statements-enforcement-hearing-yes-appellant-statements-no-lpa-statements-no-comments-lpa](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-yes-appellant-statements-no-lpa-statements-no-comments-lpa.content.md)
-- **GOV notify template:** [Enf hearing - Yes appellant statement, no LPA statement, No comments - GOV.UK Notify](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/1027b457-e75a-4a3d-aea4-8f7056d09bdd)
-- **Trigger:** Publish representations when the appeal is in the statements stage and does not have any IP comments or statements. Sent to appellant/agent and LPA.
-
-### Statements published - hearing with appeallant statments, no LPA statements and no comments - ELB, Enforcement and LDC Appellant
-
-- **Appeal type:** Enforcement, ELB and LDC
-- **Procedure:** Hearing
-- **Notify Subject Template:** [publish-statements-enforcement-hearing-yes-appellant-statements-no-lpa-statements-no-comments-appellant](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-yes-appellant-statements-no-lpa-statements-no-comments-appellant.subject.md)
-- **Notify Content Template:** [publish-statements-enforcement-hearing-yes-appellant-statements-no-lpa-statements-no-comments-appellant](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-yes-appellant-statements-no-lpa-statements-no-comments-appellant.content.md)
-- **GOV notify template:** [Enf hearing - Yes appellant statement, no LPA statement, No comments - GOV.UK Notify](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/1027b457-e75a-4a3d-aea4-8f7056d09bdd)
-- **Trigger:** Publish representations when the appeal is in the statements stage and does not have any IP comments or statements. Sent to appellant/agent and LPA.
-
-### Statements published - enforcement hearing no statements yes comments
-
-- **Appeal type:** Enforcement, ELB and LDC
-- **Procedure:** Hearing
-- **Notify Subject Template:** [publish-statements-enforcement-hearing-no-statements-yes-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-no-statements-yes-comments.subject.md)
-- **Notify Content Template:** [publish-statements-enforcement-hearing-no-statements-yes-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-no-statements-yes-comments.content.md)
-- **GOV notify template:** [Enf Hearing - No statement from any party, Comments received - GOV.UK Notify](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/fcdaf559-08da-4067-bc1a-f449bdcfad86)
-- **Trigger:** Publish representations when the appeal is in the statements stage and IP comments have been submitted but no statements received. Sent to appellant/agent.
-
-### Statements published - enforcement hearing yes lpa statements no appellant statement no comments
-
-- **Appeal type:** Enforcement, ELB and LDC
-- **Procedure:** Hearing
-- **Notify Subject Template:** [publish-statements-enforcement-hearing-yes-lpa-statement-no-appellant-statement-no-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-yes-lpa-statement-no-appellant-statement-no-comments.subject.md)
-- **Notify Content Template:** [publish-statements-enforcement-hearing-yes-lpa-statement-no-appellant-statement-no-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-yes-lpa-statement-no-appellant-statement-no-comments.content.md)
-- **GOV notify template:** [Enf Hearing - Yes LPA statement, No appellant statement, No comments - GOV.UK Notify](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/ed5211de-1c8f-4f9c-98a6-4c2a9ae5a0c9)
-- **Trigger:** Publish representations when the appeal is in the statements stage. Sent to appellant/agent.
 
 ## Evidence
 
