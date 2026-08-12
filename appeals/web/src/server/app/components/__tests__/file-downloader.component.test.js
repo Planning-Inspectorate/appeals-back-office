@@ -1,12 +1,22 @@
 // @ts-nocheck
 
 import { jest } from '@jest/globals';
+let archiveEntryCallback;
 const mockArchive = {
 	pipe: jest.fn(),
-	append: jest.fn(),
+	append: jest.fn(() => {
+		archiveEntryCallback?.();
+		archiveEntryCallback = undefined;
+	}),
 	finalize: jest.fn().mockResolvedValue(),
 	on: jest.fn(),
-	once: jest.fn(),
+	once: jest.fn((event, callback) => {
+		if (event === 'entry') {
+			archiveEntryCallback = callback;
+		}
+		return mockArchive;
+	}),
+	removeListener: jest.fn(),
 	destroyed: false,
 	destroy: jest.fn()
 };
@@ -20,7 +30,7 @@ jest.unstable_mockModule('archiver', () => ({
 const mockGenerateAllPdfs = jest.fn();
 
 const mockConfig = { featureFlags: { featureFlagPdfDownload: false } };
-const mockLogger = { warn: jest.fn(), error: jest.fn() };
+const mockLogger = { warn: jest.fn(), error: jest.fn(), info: jest.fn(), debug: jest.fn() };
 
 jest.unstable_mockModule('@pins/appeals.web/environment/config.js', () => ({
 	__esModule: true,
@@ -48,6 +58,7 @@ const mockBlobInstance = {
 };
 const BlobStorageClient = jest.fn(() => mockBlobInstance);
 BlobStorageClient.fromUrlAndToken = jest.fn(() => mockBlobInstance);
+BlobStorageClient.fromUrlAndCredential = jest.fn(() => mockBlobInstance);
 jest.unstable_mockModule('@pins/blob-storage-client', () => ({
 	BlobStorageClient
 }));
@@ -79,7 +90,10 @@ describe('getBulkDocumentDownload', () => {
 		mockArchive.on.mockClear();
 		mockArchive.once.mockClear();
 		mockArchive.destroyed = false;
+		archiveEntryCallback = undefined;
 		mockConfig.featureFlags.featureFlagPdfDownload = false;
+		mockBlobInstance.getBlobProperties.mockReset();
+		mockBlobInstance.downloadStream.mockReset();
 	});
 
 	it('downloads files and finalizes archive (no pdfs)', async () => {
@@ -101,12 +115,8 @@ describe('getBulkDocumentDownload', () => {
 				]
 			}
 		]);
-		// Patch blob client
-		const blobClientMod = await import('@pins/blob-storage-client');
-		blobClientMod.BlobStorageClient.mockImplementation(() => ({
-			getBlobProperties: jest.fn().mockResolvedValue({}),
-			downloadStream: jest.fn().mockResolvedValue({ readableStreamBody: { pipe: jest.fn() } })
-		}));
+		mockBlobInstance.getBlobProperties.mockResolvedValue({});
+		mockBlobInstance.downloadStream.mockResolvedValue({ readableStreamBody: { pipe: jest.fn() } });
 
 		const { getBulkDocumentDownload } = await import('../file-downloader.component.js');
 		await getBulkDocumentDownload(
@@ -146,11 +156,8 @@ describe('getBulkDocumentDownload', () => {
 				]
 			}
 		]);
-		const blobClientMod = await import('@pins/blob-storage-client');
-		blobClientMod.BlobStorageClient.mockImplementation(() => ({
-			getBlobProperties: jest.fn().mockResolvedValue({}),
-			downloadStream: jest.fn().mockResolvedValue({ readableStreamBody: { pipe: jest.fn() } })
-		}));
+		mockBlobInstance.getBlobProperties.mockResolvedValue({});
+		mockBlobInstance.downloadStream.mockResolvedValue({ readableStreamBody: { pipe: jest.fn() } });
 		mockGenerateAllPdfs.mockResolvedValue([{ name: 'foo.pdf', buffer: Buffer.from('a') }]);
 		await getBulkDocumentDownload(
 			{
@@ -187,6 +194,67 @@ describe('getBulkDocumentDownload', () => {
 		expect(mockArchive.finalize).toHaveBeenCalled();
 		expect(mockResponse.status).toHaveBeenCalledWith(200);
 		expect(mockResponse.send).not.toHaveBeenCalled();
+	});
+
+	it('skips a failed blob download and still finalizes the zip', async () => {
+		const docService = await import('#appeals/appeal-documents/appeal.documents.service.js');
+		docService.getAllCaseFolders.mockResolvedValue([
+			{
+				path: 'folder',
+				documents: [
+					{
+						latestDocumentVersion: {
+							blobStorageContainer: 'c',
+							blobStoragePath: 'bad',
+							documentURI: 'uri'
+						},
+						name: 'bad.pdf',
+						guid: 'bad',
+						id: 'bad'
+					},
+					{
+						latestDocumentVersion: {
+							blobStorageContainer: 'c',
+							blobStoragePath: 'good',
+							documentURI: 'uri'
+						},
+						name: 'good.pdf',
+						guid: 'good',
+						id: 'good'
+					}
+				]
+			}
+		]);
+
+		mockBlobInstance.getBlobProperties.mockResolvedValue({});
+		mockBlobInstance.downloadStream.mockImplementation((container, blobPath) => {
+			if (blobPath === 'bad') {
+				return Promise.reject(new Error('blob failed'));
+			}
+
+			return Promise.resolve({ readableStreamBody: { pipe: jest.fn() } });
+		});
+
+		const { getBulkDocumentDownload } = await import('../file-downloader.component.js');
+		await getBulkDocumentDownload(
+			{
+				apiClient: mockApiClient,
+				params: { caseId: '1' },
+				session: mockSession,
+				currentAppeal: mockAppeal
+			},
+			mockResponse
+		);
+
+		expect(mockArchive.append).toHaveBeenCalledWith(
+			expect.any(Object),
+			expect.objectContaining({ name: 'Folder/good.pdf' })
+		);
+		expect(mockArchive.append).toHaveBeenCalledWith(expect.any(Buffer), {
+			name: 'missing-files.json'
+		});
+		expect(mockArchive.finalize).toHaveBeenCalled();
+		expect(mockResponse.status).toHaveBeenCalledWith(200);
 	});
 
 	it('handles error and destroys archive/response', async () => {
