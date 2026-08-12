@@ -649,9 +649,8 @@ const sendPublishedStatementNotifiesForHearing = async (
 	let additionalEmailValues = {};
 
 	if (isEnforcementOrLdc && hasStatementsOrComments) {
-		lpaTemplate = 'publish-statements-enforcement-hearing-statements-or-comments-received-lpa';
-		appellantTemplate =
-			'publish-statements-enforcement-hearing-statements-or-comments-received-appellant';
+		lpaTemplate = 'publish-statements-enforcement-hearing-statements-or-comments-received';
+		appellantTemplate = 'publish-statements-enforcement-hearing-statements-or-comments-received';
 		additionalEmailValues = {
 			has_appellant_statement: hasAppellantStatement,
 			has_ip_comments: hasIpComments,
@@ -680,12 +679,14 @@ const sendPublishedStatementNotifiesForHearing = async (
 		{
 			email: appeal.lpa?.email,
 			template: lpaTemplate,
-			url: lpaPath
+			url: lpaPath,
+			recipientRole: 'lpa'
 		},
 		{
 			email: appeal.agent?.email || appeal.appellant?.email,
 			template: appellantTemplate,
-			url: appellantPath
+			url: appellantPath,
+			recipientRole: 'appellant'
 		}
 	];
 
@@ -714,6 +715,7 @@ const sendPublishedStatementNotifiesForHearing = async (
 				}),
 				hearing_date: hearingDate,
 				team_email_address,
+				recipient_role: contact.recipientRole,
 				...additionalEmailValues
 			}
 		});
