@@ -1,6 +1,10 @@
 You have a new {{appeal_type | lower}} appeal against the application {{lpa_reference}}.
 
-We will decide the appeal by {{procedure_type}}. You can tell us if you think a different procedure is more appropriate in the questionnaire.
+We will decide the appeal by {{procedure_type}}.
+
+You will need to send us your statement. You may need to send final comments.
+
+You can tell us if you think a different procedure is more appropriate in the questionnaire.
 
 {% include 'parts/appeal-details.md' %}
 Start date: {{start_date}}
@@ -53,9 +57,9 @@ Due by {{planning_obligation_deadline}}.
 
 # What happens next
 
-[Submit your questionnaire and other documents]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}), including your appeal notification letter and a list of those notified by {{questionnaire_due_date}}.
+[Submit your questionnaire]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}), including the appropriate appeal notification letter by {{questionnaire_due_date}}.
 
-[Find out your responsibilities in the appeal process](http://www.gov.uk/government/publications/planning-appeals-procedural-guide/procedural-guide-planning-appeals-england).
+You need to ask interested parties for comments when you notify them.
 
 {% if procedure_type == 'a hearing' -%}
 We will send you another email when we set up the hearing.

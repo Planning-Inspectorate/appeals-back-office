@@ -221,6 +221,7 @@ these [Notify Templates](../appeals/api/src/server/notify/templates):
 - **Procedure:** Written, Hearing (with no date and time for the hearing)
 - **Notify Subject Template:** [appeal-valid-start-case-s78-lpa](../appeals/api/src/server/notify/templates/appeal-valid-start-case-s78-lpa.subject.md)
 - **Notify Content Template:** [appeal-valid-start-case-s78-lpa](../appeals/api/src/server/notify/templates/appeal-valid-start-case-s78-lpa.content.md)
+- **GOV notify template:** [Appeal started (part 1 and part 2) - GOV.UK notify](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/162a7c77-d4ea-4d1c-b6b9-bda115ad36c5)
 - **Trigger:** Start a full planning or listed building case, select an appeal procedure, and confirm.
 
 ### Start case - s78 expedited appellant
@@ -237,6 +238,7 @@ these [Notify Templates](../appeals/api/src/server/notify/templates):
 - **Procedure:** Expedited (Written part 1)
 - **Notify Subject Template:** [appeal-valid-start-case-s78-expedited-lpa](../appeals/api/src/server/notify/templates/appeal-valid-start-case-s78-expedited-lpa.subject.md)
 - **Notify Content Template:** [appeal-valid-start-case-s78-expedited-lpa](../appeals/api/src/server/notify/templates/appeal-valid-start-case-s78-expedited-lpa.content.md)
+- **GOV notify template:** [Appeal started (part 1 and part 2) - GOV.UK notify](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/162a7c77-d4ea-4d1c-b6b9-bda115ad36c5)
 - **Trigger:** Start a full planning or listed building case, select expedited (written part 1) procedure, and confirm.
 
 ### Start case - s78 hearing appellant
