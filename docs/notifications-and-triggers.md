@@ -532,25 +532,16 @@ these [Notify Templates](../appeals/api/src/server/notify/templates):
 - **Notify Content Template:** [publish-statements-hearing-appellant](../appeals/api/src/server/notify/templates/publish-statements-hearing-appellant.content.md)
 - **Trigger:** Publish representations when the appeal is in the statements stage. Sent to appellant/agent.
 
-### Statements published - enforcement hearing statements or comments received LPA
+### Statements published - ELB/Enforcement/LDC hearing with either statements or comments received
 
 - **Appeal type:** Enforcement, Enforcement Listed Building, Lawful Development Certificate
 - **Procedure:** Hearing
-- **Notify Subject Template:** [publish-statements-enforcement-hearing-yes-statements-yes-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-statements-or-comments-received-lpa.subject.md)
-- **Notify Content Template:** [publish-statements-enforcement-hearing-yes-statements-yes-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-statements-or-comments-received-lpa.content.md)
+- **Notify Subject Template:** [publish-statements-enforcement-hearing-yes-statements-yes-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-statements-or-comments-received.subject.md)
+- **Notify Content Template:** [publish-statements-enforcement-hearing-yes-statements-yes-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-statements-or-comments-received.content.md)
 - **GOV notify template:** [Enf Hearing - Yes all statements, Yes comments] (https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/dea23a30-cc67-4ed9-8809-32e419089210)
 - **Trigger:** Publish representations when the appeal is in the statements stage and either statements or comments have been received LPA.
 
-### Statements published - enforcement hearing statements or comments received appellant
-
-- **Appeal type:** Enforcement, Enforcement Listed Building, Lawful Development Certificate
-- **Procedure:** Hearing
-- **Notify Subject Template:** [publish-statements-enforcement-hearing-yes-statements-yes-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-statements-or-comments-received-appellant.subject.md)
-- **Notify Content Template:** [publish-statements-enforcement-hearing-yes-statements-yes-comments](../appeals/api/src/server/notify/templates/publish-statements-enforcement-hearing-statements-or-comments-received-appellant.content.md)
-- **GOV notify template:** [Enf Hearing - Yes all statements, Yes comments] (https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/dea23a30-cc67-4ed9-8809-32e419089210)
-- **Trigger:** Publish representations when the appeal is in the statements stage and either statements or comments have been received appellant.
-
-### Statements published - hearing with no statements and no comments - ELB, Enforcement and LDC
+### Statements published - ELB/Enforcement/LDC hearing with no statements or comments received
 
 - **Appeal type:** Enforcement, ELB and LDC
 - **Procedure:** Hearing
