@@ -5,24 +5,14 @@ import {
 	buildEnforcementBeforeYouStartCard,
 	buildEnforcementLandDetailsCard,
 	buildFullPlanningAppealDetailsCard,
-	buildSummaryListCard
+	buildSummaryListCard,
+	getSummaryListItems
 } from './common-sections.mapper.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} Appeal
  */
-
-/**
- * Helper to extract summaryListItem from subMapper array or object.
- * @param {any} [subMapperList]
- * @returns {any[]}
- */
-export function getSummaryListItems(subMapperList) {
-	if (!subMapperList) return [];
-	const list = Array.isArray(subMapperList) ? subMapperList : [subMapperList];
-	return list.map((subMapper) => subMapper?.display?.summaryListItem).filter(Boolean);
-}
 
 /**
  * Builds the Enforcement Notice "Grounds and facts" section card component.

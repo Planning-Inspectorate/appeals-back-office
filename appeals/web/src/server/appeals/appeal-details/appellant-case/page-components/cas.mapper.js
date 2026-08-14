@@ -58,14 +58,10 @@ export function generateCASComponents(appealDetails, appellantCaseData, mappedAp
 		buildBeforeYouStartCard(mappedAppellantCaseData),
 		buildAppellantDetailsCard(appealDetails, mappedAppellantCaseData),
 		buildSiteDetailsCard(mappedAppellantCaseData),
-		buildApplicationDetailsCard(mappedAppellantCaseData)
+		buildApplicationDetailsCard(mappedAppellantCaseData),
+		isExpeditedEligible ? buildAppealDetailsCard(mappedAppellantCaseData) : null,
+		buildCASUploadedDocumentsCard(appellantCaseData, mappedAppellantCaseData)
 	];
-
-	if (isExpeditedEligible) {
-		components.push(buildAppealDetailsCard(mappedAppellantCaseData));
-	}
-
-	components.push(buildCASUploadedDocumentsCard(appellantCaseData, mappedAppellantCaseData));
 
 	return components.filter(Boolean);
 }

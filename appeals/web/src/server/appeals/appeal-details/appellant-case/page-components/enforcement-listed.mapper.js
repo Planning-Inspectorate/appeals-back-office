@@ -5,9 +5,9 @@ import {
 	buildEnforcementBeforeYouStartCard,
 	buildEnforcementLandDetailsCard,
 	buildFullPlanningAppealDetailsCard,
-	buildSummaryListCard
+	buildSummaryListCard,
+	getSummaryListItems
 } from './common-sections.mapper.js';
-import { getSummaryListItems } from './enforcement-notice.mapper.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse

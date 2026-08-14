@@ -59,21 +59,15 @@ export function generateHASComponents(
 		buildBeforeYouStartCard(mappedAppellantCaseData),
 		buildAppellantDetailsCard(appealDetails, mappedAppellantCaseData),
 		buildSiteDetailsCard(mappedAppellantCaseData),
-		buildApplicationDetailsCard(mappedAppellantCaseData)
-	];
-
-	if (isExpeditedEligible) {
-		components.push(buildAppealDetailsCard(mappedAppellantCaseData));
-	}
-
-	components.push(
+		buildApplicationDetailsCard(mappedAppellantCaseData),
+		isExpeditedEligible ? buildAppealDetailsCard(mappedAppellantCaseData) : null,
 		buildHASUploadedDocumentsCard(appellantCaseData, mappedAppellantCaseData),
 		buildAdditionalDocumentsCard(
 			appellantCaseData,
 			mappedAppellantCaseData,
 			userHasUpdateCasePermission
 		)
-	);
+	];
 
 	return components.filter(Boolean);
 }
