@@ -242,12 +242,21 @@ export const deleteDocument = async (apiClient, documentId, versionId, appellant
 /**
  * @param {import('got').Got} apiClient
  * @param {string} appealId
+ * @param {number} [pageSize]
+ * @param {number} [pageNumber]
  * @returns {Promise<*>}
  */
-export const getRepresentationAttachments = async (apiClient, appealId) => {
+export const getRepresentationAttachments = async (apiClient, appealId, pageSize, pageNumber) => {
 	try {
 		const ids = assertValidNumericIds({ appealId });
-		return await apiClient.get(`appeals/${ids.appealId}/reps`).json();
+		const params = new URLSearchParams();
+		if (pageSize) params.append('pageSize', String(pageSize));
+		if (pageNumber) params.append('pageNumber', String(pageNumber));
+		const queryString = params.toString();
+		const url = queryString
+			? `appeals/${ids.appealId}/reps?${queryString}`
+			: `appeals/${ids.appealId}/reps`;
+		return await apiClient.get(url).json();
 	} catch (error) {
 		logger.error(
 			error,
@@ -256,4 +265,47 @@ export const getRepresentationAttachments = async (apiClient, appealId) => {
 				: `An error occurred while attempting to retrieve the representation attachments for appeal ID ${appealId}`
 		);
 	}
+};
+
+/**
+ * Retrieves all representation attachments across all pages using batched concurrency limits.
+ *
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @param {number} [pageSize=100]
+ * @param {number} [concurrencyLimit=5]
+ * @returns {Promise<Array<*>>}
+ */
+export const getAllRepresentationAttachments = async (
+	apiClient,
+	appealId,
+	pageSize = 100,
+	concurrencyLimit = 5
+) => {
+	const firstPage = await getRepresentationAttachments(apiClient, appealId, pageSize, 1);
+	const allReps = [...(firstPage?.items || [])];
+	const pageCount = firstPage?.pageCount || 1;
+
+	if (pageCount > 1) {
+		const remainingPageNumbers = [];
+		for (let page = 2; page <= pageCount; page++) {
+			remainingPageNumbers.push(page);
+		}
+
+		for (let i = 0; i < remainingPageNumbers.length; i += concurrencyLimit) {
+			const batchPageNumbers = remainingPageNumbers.slice(i, i + concurrencyLimit);
+			const batchResults = await Promise.all(
+				batchPageNumbers.map((pageNum) =>
+					getRepresentationAttachments(apiClient, appealId, pageSize, pageNum)
+				)
+			);
+			batchResults.forEach((pageData) => {
+				if (pageData?.items) {
+					allReps.push(...pageData.items);
+				}
+			});
+		}
+	}
+
+	return allReps;
 };
