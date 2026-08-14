@@ -21,7 +21,8 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE,
-	FEATURE_FLAG_NAMES
+	FEATURE_FLAG_NAMES,
+	PROCEDURE_TYPE_NAME
 } from '@pins/appeals/constants/common.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import {
@@ -1227,10 +1228,22 @@ function notifyNoFinalComments(appeal, notifyClient, azureAdUserId, userTypeNoCo
 			? appeal.lpa?.email
 			: appeal.agent?.email || appeal.appellant?.email;
 
+	if (!recipientEmail) {
+		throw new Error(
+			`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: no ${userTypeNoCommentSubmitted} email address in appeal`
+		);
+	}
+
+	const isEnforcementOrLdc = isLdcOrEnforcementCaseType(appeal.appealType?.key);
+	const templateName =
+		isEnforcementOrLdc && appeal.procedureType?.name === PROCEDURE_TYPE_NAME.HEARING
+			? 'final-comments-none-enforcement-hearing'
+			: 'final-comments-none';
+
 	return notifyPublished({
 		appeal,
 		notifyClient,
-		templateName: 'final-comments-none',
+		templateName,
 		recipientEmail,
 		azureAdUserId,
 		userTypeNoCommentSubmitted
