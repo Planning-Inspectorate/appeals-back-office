@@ -47,6 +47,7 @@ import {
 import { mapSiteVisitTimetable } from './submappers/site-visit-timetable.mapper.js';
 import { mapSiteVisit, mapSiteVisitOld } from './submappers/site-visit.mapper.js';
 import { mapStartedAt } from './submappers/started-at.mapper.js';
+import { mapSupportingDocuments } from './submappers/supporting-documents.mapper.js';
 import { mapCaseTeam } from './submappers/team.mapper.js';
 import { mapValidAt } from './submappers/valid-at.mapper.js';
 import { mapVisitType } from './submappers/visit-type.mapper.js';
@@ -88,6 +89,7 @@ export const submaps = {
 	caseHistory: mapCaseHistory,
 	appellantCase: mapAppellantCase,
 	lpaQuestionnaire: mapLpaQuestionnaire,
+	supportingDocuments: mapSupportingDocuments,
 	appealDecision: mapAppealDecision,
 	costsAppellantApplication: mapCostsAppellantApplication,
 	costsAppellantWithdrawal: mapCostsAppellantWithdrawal,

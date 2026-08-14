@@ -559,6 +559,12 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
                     data-cy="review-appellant-case" class="govuk-link">Review<span class="govuk-visually-hidden"> appellant case</span></a>
                 </td>
             </tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Supporting documents</th>
+                <td class="govuk-table__cell">No documents</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
+            </tr>
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>

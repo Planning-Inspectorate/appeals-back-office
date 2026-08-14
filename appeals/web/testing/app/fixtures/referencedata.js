@@ -8,6 +8,7 @@ import {
 	APPEAL_CASE_PROCEDURE,
 	APPEAL_CASE_STATUS,
 	APPEAL_CASE_TYPE,
+	APPEAL_DOCUMENT_TYPE,
 	APPEAL_REDACTED_STATUS,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION,
 	APPEAL_VIRUS_CHECK_STATUS
@@ -3490,6 +3491,40 @@ export const linkableAppeal = {
 	agentName: 'Mr John Smith (Smith Planning Agency)',
 	submissionDate: '2014-11-14T00:00:00+00:00',
 	source: 'back-office'
+};
+
+export const supportingDocumentsFolderInfo = {
+	caseId: 1,
+	documents: [
+		{
+			id: '15d19184-155b-4b6c-bba6-2bd2a61ca9a3',
+			name: 'test-pdf-documentFolderInfo.pdf',
+			latestDocumentVersion: {
+				draft: false,
+				dateReceived: '2023-02-01T01:00:00.000Z',
+				redactionStatus: 'No redaction required',
+				size: 129363,
+				mime: 'application/pdf',
+				virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
+				isLateEntry: false
+			}
+		},
+		{
+			id: '47d8f073-c837-4f07-9161-c1a5626eba56',
+			name: 'sample-20s-documentFolderInfo.mp4',
+			latestDocumentVersion: {
+				draft: false,
+				dateReceived: '2024-03-02T01:00:00.000Z',
+				redactionStatus: 'No redaction required',
+				size: 11815175,
+				mime: 'video/mp4',
+				virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
+				isLateEntry: false
+			}
+		}
+	],
+	folderId: 1,
+	path: `general/${APPEAL_DOCUMENT_TYPE.GENERAL_SUPPORTING}`
 };
 
 export const costsFolderInfoAppellantApplication = {

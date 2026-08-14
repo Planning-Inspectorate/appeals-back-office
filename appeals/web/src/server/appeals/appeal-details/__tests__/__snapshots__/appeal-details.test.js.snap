@@ -199,6 +199,12 @@ exports[`appeal-details GET /:appealId Documentation Appellant statement should 
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
             <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Supporting documents</th>
+                <td class="govuk-table__cell">No documents</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
+            </tr>
+            <tr class="govuk-table__row">
                 <th scope="row" class="govuk-table__header">Appellant statement</th>
                 <td class="govuk-table__cell">Ready to review</td>
                 <td class="govuk-table__cell">1 January 2025</td>
@@ -262,6 +268,12 @@ exports[`appeal-details GET /:appealId Documentation Appellant statement should 
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
             <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Supporting documents</th>
+                <td class="govuk-table__cell">No documents</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
+            </tr>
+            <tr class="govuk-table__row">
                 <th scope="row" class="govuk-table__header">Appellant statement</th>
                 <td class="govuk-table__cell"></td>
                 <td class="govuk-table__cell"></td>
@@ -313,6 +325,12 @@ exports[`appeal-details GET /:appealId Documentation Rule 6 party statements and
                 <td class="govuk-table__cell"></td>
                 <td class="govuk-table__cell"></td>
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Supporting documents</th>
+                <td class="govuk-table__cell">No documents</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
             </tr>
             <tr class="govuk-table__row">
                 <th scope="row" class="govuk-table__header">LPA statement</th>
@@ -388,6 +406,12 @@ exports[`appeal-details GET /:appealId Documentation Rule 6 party statements and
                 <td class="govuk-table__cell">Overdue</td>
                 <td class="govuk-table__cell">Due by 11 October 2023</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
+            </tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Supporting documents</th>
+                <td class="govuk-table__cell">No documents</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
             </tr>
             <tr class="govuk-table__row">
                 <th scope="row" class="govuk-table__header">LPA statement</th>

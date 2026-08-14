@@ -394,6 +394,9 @@ function createFoldersLayout(folders, context) {
 						f.path ===
 						`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.ENVIRONMENTAL_ASSESSMENT}`
 				),
+				supportingDocuments: folders.find(
+					(f) => f.path === `general/${APPEAL_DOCUMENT_TYPE.GENERAL_SUPPORTING}`
+				),
 				costs: {
 					appellantApplicationFolder: folders.find(
 						(f) =>
