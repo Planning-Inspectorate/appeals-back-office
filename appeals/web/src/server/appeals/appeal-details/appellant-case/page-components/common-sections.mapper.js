@@ -13,6 +13,17 @@ import { isFolderInfo } from '#lib/ts-utilities.js';
  */
 
 /**
+ * Helper to extract summaryListItem from subMapper array or object.
+ * @param {any} [subMapperList]
+ * @returns {any[]}
+ */
+export function getSummaryListItems(subMapperList) {
+	if (!subMapperList) return [];
+	const list = Array.isArray(subMapperList) ? subMapperList : [subMapperList];
+	return list.map((subMapper) => subMapper?.display?.summaryListItem).filter(Boolean);
+}
+
+/**
  * Creates a standard summary list card component.
  * @param {string} id
  * @param {string} title
