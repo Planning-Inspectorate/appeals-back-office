@@ -13,6 +13,7 @@
     "clean": "rimraf .turbo node_modules dist",
     "clean:dev": "rimraf dist src/server/static/scripts src/server/static/styles",
     "dev": "cross-env NODE_ENV=local npm-run-all --silent clean:dev sass rollup --parallel --race watch:** nodemon",
+    "generate-docs:appellant-case": "node --experimental-vm-modules src/server/appeals/appeal-details/appellant-case/page-components/scripts/generate-docs.js",
     "lint:js": "npx eslint .",
     "lint:js:fix": "npx eslint . --fix",
     "nodemon": "nodemon --config ./nodemon.json ./src/server/server.js",

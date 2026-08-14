@@ -5,3 +5,4 @@ npm run tscheck
 npx lint-staged
 ./packages/scripts/verify_openapi_docs.sh
 ./packages/scripts/verify_notify_docs.sh
+./packages/scripts/verify_appellant_case_docs.sh
