@@ -1,9 +1,9 @@
 import { generateAllPdfs } from '#app/components/download-all-generated-pdfs.component.js';
 import {
 	getAllCaseFolders,
+	getAllRepresentationAttachments,
 	getFileInfo,
-	getFileVersionsInfo,
-	getRepresentationAttachments
+	getFileVersionsInfo
 } from '#appeals/appeal-documents/appeal.documents.service.js';
 import getActiveDirectoryAccessToken from '#lib/active-directory-token.js';
 import logger from '#lib/logger.js';
@@ -467,25 +467,26 @@ const buildZipFileName = (caseId, filename) => {
  */
 
 export const getRepresentationAttachmentFullNames = async (apiClient, caseId) => {
-	const representations = await getRepresentationAttachments(apiClient, caseId);
+	const allReps = (await getAllRepresentationAttachments(apiClient, caseId)) || [];
+
+	/** @type {Record<string, string>} */
 	const fullAttachmentNames = {};
 	const statusCounts = {};
 
-	// @ts-ignore
-	representations?.items?.forEach((representation) => {
+	allReps.forEach((representation) => {
 		// Skip comments with invalid status
 		if (representation.representationType === 'comment' && representation.status === 'invalid') {
 			return; // Skip this representation
 		}
 		let representationStatus = representation.status;
-		if (representation.status === 'valid') {
+		if (representation.status === 'valid' || representation.status === 'published') {
 			representationStatus = 'accepted';
 		} else if (representation.status === 'invalid') {
 			representationStatus = 'rejected';
 		}
 
 		// Keep a count of each representation type and status so that we can give each ip comment a unique folder name
-		const statusCountKey = `${representation.representationType}-${representation.status}`;
+		const statusCountKey = `${representation.representationType}-${representationStatus}`;
 		// @ts-ignore
 		if (statusCounts[statusCountKey] === undefined) {
 			// @ts-ignore
@@ -501,10 +502,16 @@ export const getRepresentationAttachmentFullNames = async (apiClient, caseId) =>
 				: toSentenceCase(representation.representationType).replace('Lpa', 'LPA');
 
 		// @ts-ignore
-		representation.attachments.forEach((attachment) => {
-			const { document } = attachment.documentVersion || {};
-			// @ts-ignore
-			fullAttachmentNames[document.guid] = `Representations/${representationType}/${document.name}`;
+		representation.attachments?.forEach((attachment) => {
+			const { document } = attachment?.documentVersion || {};
+			const guid = document?.guid || attachment?.documentGuid;
+			const name =
+				document?.name ||
+				attachment?.documentVersion?.fileName ||
+				attachment?.documentVersion?.originalFilename;
+			if (guid && name) {
+				fullAttachmentNames[guid] = `Representations/${representationType}/${name}`;
+			}
 		});
 	});
 	return fullAttachmentNames;
