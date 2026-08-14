@@ -1,15 +1,15 @@
 // @ts-nocheck
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { generateAdvertComponents } from '../page-components/adverts.mapper.js';
-import { generateCASAdvertComponents } from '../page-components/cas-advert.mapper.js';
-import { generateCASComponents } from '../page-components/cas.mapper.js';
-import { generateEnforcementListedComponents } from '../page-components/enforcement-listed.mapper.js';
-import { generateEnforcementNoticeComponents } from '../page-components/enforcement-notice.mapper.js';
-import { generateHASComponents } from '../page-components/has.mapper.js';
-import { generateLdcComponents } from '../page-components/ldc.mapper.js';
-import { generateS20Components } from '../page-components/s20.mapper.js';
-import { generateS78ExpeditedComponents } from '../page-components/s78-expedited.mapper.js';
-import { generateS78Components } from '../page-components/s78.mapper.js';
+import { generateAdvertComponents } from '../adverts.mapper.js';
+import { generateCASAdvertComponents } from '../cas-advert.mapper.js';
+import { generateCASComponents } from '../cas.mapper.js';
+import { generateEnforcementListedComponents } from '../enforcement-listed.mapper.js';
+import { generateEnforcementNoticeComponents } from '../enforcement-notice.mapper.js';
+import { generateHASComponents } from '../has.mapper.js';
+import { generateLdcComponents } from '../ldc.mapper.js';
+import { generateS20Components } from '../s20.mapper.js';
+import { generateS78ExpeditedComponents } from '../s78-expedited.mapper.js';
+import { generateS78Components } from '../s78.mapper.js';
 
 describe('Appellant Case Page Component Mapper Contracts', () => {
 	const mockAppeal = {
