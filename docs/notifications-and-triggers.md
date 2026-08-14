@@ -932,6 +932,14 @@ these [Notify Templates](../appeals/api/src/server/notify/templates):
 - **Notify Content Template:** [final-comments-none](../appeals/api/src/server/notify/templates/final-comments-none.content.md)
 - **Trigger:**
 
+### Final comments none - Enf/ELB/LDC Hearing
+
+- **Appeal type:**
+- **Notify Subject Template:** [final-comments-none](../appeals/api/src/server/notify/templates/final-comments-none-enforcement-hearing.subject.md)
+- **Notify Content Template:** [final-comments-none](../appeals/api/src/server/notify/templates/final-comments-none-enforcement-hearing.content.md)
+- - **GOV notify template:** [Hearing updated - GOV.UK Notify](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/1105f639-569d-4bc0-8c4f-ef9373afc182)
+- **Trigger:** Progress from final comments in Enf/ELB/LDC case hearing procedure and no final comments have been received from any party. Sent to appellant/agent and LPA.
+
 ## Decision
 
 ### Decision is (allowed, split, or dismissed) appellant
