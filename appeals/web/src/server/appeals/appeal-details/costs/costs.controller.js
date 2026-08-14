@@ -390,7 +390,7 @@ export const getManageFolder = async (request, response) => {
 		...(costsCategory === 'decision' && {
 			dateColumnLabelTextOverride: 'Decision date'
 		}),
-		isCosts: true
+		canShare: true
 	});
 };
 
@@ -427,7 +427,7 @@ export const getManageDocument = async (request, response) => {
 		...(costsCategory === 'decision' && {
 			dateRowLabelTextOverride: 'Decision date'
 		}),
-		isCosts: true
+		canShare: true
 	});
 };
 

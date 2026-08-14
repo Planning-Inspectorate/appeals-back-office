@@ -2,15 +2,18 @@ import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { validateCaseNoteTextArea } from '#appeals/appeal-details/appeals-details.validator.js';
 import { postCaseNote } from '#appeals/appeal-details/case-notes/case-notes.controller.js';
 import changeAppealProcedureTypeRouter from '#appeals/appeal-details/change-procedure-type/change-procedure-type.router.js';
+import { isFeatureActive } from '#common/feature-flags.js';
 import { permissionNames } from '#environment/permissions.js';
 import { clearSessionData } from '#lib/middleware/clear-session-data.js';
 import { saveBackUrl } from '#lib/middleware/save-back-url.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import allocationDetailsRouter from './allocation-details/allocation-details.router.js';
 import * as controller from './appeal-details.controller.js';
 import {
 	validateAppeal,
+	validateAppealExists,
 	validateAppealForAppealDetailsPage,
 	validateAppealWithInclude
 } from './appeal-details.middleware.js';
@@ -44,6 +47,7 @@ import safetyRisksRouter from './safety-risks/safety-risks.router.js';
 import serviceUserRouter from './service-user/service-user.router.js';
 import siteVisitRouter from './site-visit/site-visit.router.js';
 import startDateRouter from './start-case/start-case.router.js';
+import supportingDocumentsRouter from './supporting-documents/supporting-documents.router.js';
 import timetableRouter from './timetable/timetable.router.js';
 import updateCaseTeamRouter from './update-case-team/update-case-team.router.js';
 import updateDecisionLetterRouter from './update-decision-letter/update-decision-letter.router.js';
@@ -118,10 +122,22 @@ router.use(
 );
 router.use(
 	'/:appealId/costs',
-	validateAppeal,
+	validateAppealWithInclude(['appellantCase']),
 	assertUserHasPermission(permissionNames.viewCaseDetails, permissionNames.viewAssignedCaseDetails),
 	costsRouter
 );
+
+if (isFeatureActive(FEATURE_FLAG_NAMES.SHARING_SUPPORTING_DOCUMENTS)) {
+	router.use(
+		'/:appealId/supporting-documents',
+		validateAppealExists,
+		assertUserHasPermission(
+			permissionNames.viewCaseDetails,
+			permissionNames.viewAssignedCaseDetails
+		),
+		supportingDocumentsRouter
+	);
+}
 
 router.use(
 	'/:appealId/environmental-assessment',

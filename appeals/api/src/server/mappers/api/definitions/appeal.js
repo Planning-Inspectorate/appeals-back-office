@@ -161,6 +161,13 @@ const appeal = {
 				...Folder.properties
 			},
 			nullable: true
+		},
+		supportingDocuments: {
+			type: 'object',
+			properties: {
+				...Folder.properties
+			},
+			nullable: true
 		}
 	}
 };

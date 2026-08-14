@@ -1,7 +1,8 @@
 import { APPEAL_CASE_PRE_STATEMENTS_STATUS } from '#appeals/appeal.constants.js';
+import { isFeatureActive } from '#common/feature-flags.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { isDefined } from '#lib/ts-utilities.js';
-import { PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common.js';
+import { FEATURE_FLAG_NAMES, PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common.js';
 
 /**
  * @param {{appeal: MappedInstructions}} mappedData
@@ -29,6 +30,9 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 			rows: [
 				mappedData.appeal.appellantCase.display.tableItem,
 				caseStarted ? mappedData.appeal.lpaQuestionnaire.display.tableItem : undefined,
+				...(isFeatureActive(FEATURE_FLAG_NAMES.SHARING_SUPPORTING_DOCUMENTS)
+					? [mappedData.appeal.supportingDocuments.display.tableItem]
+					: []),
 				...(!isChildAppeal(appealDetails) && !isExpeditedAppealType
 					? [
 							caseStarted ? mappedData.appeal.appellantStatement.display.tableItem : undefined,

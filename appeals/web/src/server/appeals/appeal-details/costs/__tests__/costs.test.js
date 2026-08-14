@@ -53,7 +53,7 @@ describe('costs', () => {
 
 	beforeEach(() => {
 		installMockApi();
-		nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
+		nock('http://test/').get('/appeals/1?include=appellantCase').reply(200, appealData);
 		nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse).persist();
 
 		nock('http://test/')
@@ -1486,7 +1486,10 @@ describe('costs', () => {
 
 			it(`Should render 'Manage and share' CTA and NO tag if document is NOT shared`, async () => {
 				nock.cleanAll();
-				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+				nock('http://test/')
+					.get('/appeals/1?include=appellantCase')
+					.reply(200, appealData)
+					.persist();
 
 				const unsharedDocumentFolder = structuredClone(costsFolderInfoAppellantApplication);
 				unsharedDocumentFolder.documents.forEach((doc) => {
@@ -1508,7 +1511,10 @@ describe('costs', () => {
 
 			it(`Should render 'Manage' CTA and 'Shared' tag if document IS shared`, async () => {
 				nock.cleanAll();
-				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+				nock('http://test/')
+					.get('/appeals/1?include=appellantCase')
+					.reply(200, appealData)
+					.persist();
 
 				const sharedDocumentFolder = structuredClone(costsFolderInfoAppellantApplication);
 				sharedDocumentFolder.documents.forEach((doc) => {
@@ -1692,7 +1698,10 @@ describe('costs', () => {
 
 					it(`should render 'Shared' tags under the Version Summary and in Version History if document IS shared`, async () => {
 						nock.cleanAll();
-						nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+						nock('http://test/')
+							.get('/appeals/1?include=appellantCase')
+							.reply(200, appealData)
+							.persist();
 						nock('http://test/')
 							.get('/appeals/document-redaction-statuses')
 							.reply(200, documentRedactionStatuses)
@@ -1726,7 +1735,10 @@ describe('costs', () => {
 
 					it(`should render 'Document details' and 'Share document' button with correct link if document is NOT shared`, async () => {
 						nock.cleanAll();
-						nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+						nock('http://test/')
+							.get('/appeals/1?include=appellantCase')
+							.reply(200, appealData)
+							.persist();
 						nock('http://test/')
 							.get('/appeals/document-redaction-statuses')
 							.reply(200, documentRedactionStatuses)
@@ -2006,7 +2018,10 @@ describe('costs', () => {
 				describe(`Testing ${costsCategory} ${costsDocumentType}`, () => {
 					beforeEach(() => {
 						nock.cleanAll();
-						nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+						nock('http://test/')
+							.get('/appeals/1?include=appellantCase')
+							.reply(200, appealData)
+							.persist();
 						nock('http://test/')
 							.get(getFolderApiUrl(costsFolder.folderId))
 							.reply(200, costsFolder)
@@ -2098,7 +2113,10 @@ describe('costs', () => {
 									: 'shared-cost-application-comment.content.md';
 
 						nock.cleanAll();
-						nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+						nock('http://test/')
+							.get('/appeals/1?include=appellantCase')
+							.reply(200, appealData)
+							.persist();
 						nock('http://test/')
 							.get(getFolderApiUrl(costsFolder.folderId))
 							.reply(200, costsFolder)

@@ -370,6 +370,26 @@ describe('map-document-entity', () => {
 			expectedPublishedDocumentUri: null
 		},
 		{
+			desc: 'supporting document published',
+			documentType: APPEAL_DOCUMENT_TYPE.GENERAL_SUPPORTING,
+			representationType: null,
+			caseStage: 'general',
+			isPublished: true,
+			expectedDocumentType: APPEAL_DOCUMENT_TYPE.GENERAL_SUPPORTING,
+			expectedCaseStage: null,
+			expectedPublishedDocumentUri: testUri
+		},
+		{
+			desc: 'supporting document unpublished',
+			documentType: APPEAL_DOCUMENT_TYPE.GENERAL_SUPPORTING,
+			representationType: null,
+			caseStage: 'general',
+			isPublished: false,
+			expectedDocumentType: APPEAL_DOCUMENT_TYPE.GENERAL_SUPPORTING,
+			expectedCaseStage: null,
+			expectedPublishedDocumentUri: null
+		},
+		{
 			desc: 'appellant case cost unpublished - still broadcast as published',
 			documentType: APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_CORRESPONDENCE,
 			representationType: null,

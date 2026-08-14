@@ -24,7 +24,11 @@ export function installMockAppealsService() {
 	// appeal exists check (for checkAppealExists / validateAppealExists middleware)
 	nock('http://test/')
 		.get(`/appeals/${appealData.appealId}/exists`)
-		.reply(200, { id: appealData.appealId })
+		.reply(200, {
+			id: appealData.appealId,
+			appealId: appealData.appealId,
+			appealReference: appealData.appealReference
+		})
 		.persist();
 
 	nock('http://test/').get('/appeals/0').reply(500).persist();

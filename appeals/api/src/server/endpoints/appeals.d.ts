@@ -72,6 +72,7 @@ interface SingleAppealDetailsResponse {
 		appellantDecisionFolder?: FolderInfo | null;
 		lpaDecisionFolder?: FolderInfo | null;
 	};
+	supportingDocuments?: FolderInfo | null;
 	costsDecision?: CostsDecision;
 	decision: {
 		folderId: number;

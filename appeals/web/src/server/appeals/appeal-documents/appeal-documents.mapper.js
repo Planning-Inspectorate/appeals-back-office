@@ -1,6 +1,5 @@
 import usersService from '#appeals/appeal-users/users-service.js';
 import { gigabyte, kilobyte, megabyte } from '#appeals/appeal.constants.js';
-import { isFeatureActive } from '#common/feature-flags.js';
 import { permissionNames } from '#environment/permissions.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import {
@@ -20,11 +19,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
 import { redactionStatusIdToName } from '#lib/redaction-statuses.js';
 import config from '@pins/appeals.web/environment/config.js';
-import {
-	APPEAL_TYPE,
-	DOCUMENTS_PAGE_SIZE,
-	FEATURE_FLAG_NAMES
-} from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, DOCUMENTS_PAGE_SIZE } from '@pins/appeals/constants/common.js';
 import {
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_REDACTED_STATUS,
@@ -783,7 +778,7 @@ export function addDocumentsCheckAndConfirmPage({
  * @param {DocumentInfo|PagedDocumentInfo} document
  * @param {number} index
  * @param {number} totalDocuments
- * @param {boolean} [isCosts]
+ * @param {boolean} [canShare]
  * @returns {HtmlProperty & ClassesProperty}
  */
 export function mapFolderDocumentInformationHtmlProperty(
@@ -791,7 +786,7 @@ export function mapFolderDocumentInformationHtmlProperty(
 	document,
 	index,
 	totalDocuments,
-	isCosts = false
+	canShare = false
 ) {
 	/** @type {HtmlProperty} */
 	const htmlProperty = {
@@ -801,7 +796,7 @@ export function mapFolderDocumentInformationHtmlProperty(
 
 	const isShared = document?.latestDocumentVersion?.published;
 	const sharedTagHtml =
-		isCosts && isShared
+		canShare && isShared
 			? `<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong>`
 			: '';
 
@@ -852,14 +847,14 @@ export function mapFolderDocumentInformationHtmlProperty(
  * @param {FolderInfo|PagedFolderInfo} folder
  * @param {DocumentInfo|PagedDocumentInfo} document
  * @param {string} viewAndEditUrl
- * @param {boolean} [isCosts]
+ * @param {boolean} [canShare]
  * @returns {HtmlProperty & ClassesProperty}
  */
 export function mapFolderDocumentActionsHtmlProperty(
 	folder,
 	document,
 	viewAndEditUrl,
-	isCosts = false
+	canShare = false
 ) {
 	/** @type {HtmlProperty} */
 	const htmlProperty = {
@@ -872,11 +867,8 @@ export function mapFolderDocumentActionsHtmlProperty(
 		let actionText = virusCheckStatus.manageFolderPageActionText;
 		const isShared = document.latestDocumentVersion?.published;
 
-		if (isCosts && virusCheckStatus.safe) {
-			actionText =
-				!isFeatureActive(FEATURE_FLAG_NAMES.SHARE_COSTS) || isShared
-					? 'Manage'
-					: 'Manage and share';
+		if (canShare && virusCheckStatus.safe) {
+			actionText = isShared ? 'Manage' : 'Manage and share';
 		}
 
 		htmlProperty.html = `<a href="${viewAndEditUrl
@@ -900,7 +892,8 @@ export function mapFolderDocumentActionsHtmlProperty(
  * @param {string} [params.addButtonTextOverride]
  * @param {string} [params.dateColumnLabelTextOverride]
  * @param {string} [params.preHeadingTextOverride]
- * @param {boolean} [params.isCosts]
+ * @param {boolean} [params.canShare]
+ * @param {string} [params.shareAllLinkUrl]
  * @param {boolean} [params.editable]
  * @param {number} params.currentPageNumber
  * @returns {PageContent}
@@ -917,7 +910,8 @@ export function manageFolderPage({
 	preHeadingTextOverride,
 	editable = true,
 	currentPageNumber,
-	isCosts = false
+	canShare = false,
+	shareAllLinkUrl
 }) {
 	const appealType = request.currentAppeal?.appealType;
 	const notificationBanners = mapNotificationBannersFromSession(
@@ -963,6 +957,16 @@ export function manageFolderPage({
 			classes: 'govuk-button--secondary'
 		}
 	};
+	/** @type {PageComponent} */
+	const shareAllButtonComponent = {
+		type: 'button',
+		parameters: {
+			text: 'Share all documents',
+			href: shareAllLinkUrl?.replace('{{folderId}}', folder.folderId.toString()),
+			classes: 'govuk-button--secondary'
+		}
+	};
+
 	// Inspectors should not see redaction status column
 	const canViewRedactionColumn = userHasPermission(
 		permissionNames.viewRedactionStatusColumn,
@@ -993,6 +997,22 @@ export function manageFolderPage({
 
 	const docStartCount = (currentPageNumber - 1) * DOCUMENTS_PAGE_SIZE;
 
+	const hasMultipleButtons = editable && shareAllLinkUrl;
+	/** @type {PageComponent} */
+	const buttonWrapperOpen = {
+		type: 'html',
+		parameters: {
+			html: '<div class="govuk-button-group">'
+		}
+	};
+	/** @type {PageComponent} */
+	const buttonWrapperClose = {
+		type: 'html',
+		parameters: {
+			html: '</div>'
+		}
+	};
+
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Manage folder',
@@ -1003,7 +1023,10 @@ export function manageFolderPage({
 		pageComponents: [
 			...notificationBanners,
 			...errorSummaryPageComponents,
+			...(hasMultipleButtons ? [buttonWrapperOpen] : []),
 			...(editable ? [buttonComponent] : []),
+			...(shareAllLinkUrl ? [shareAllButtonComponent] : []),
+			...(hasMultipleButtons ? [buttonWrapperClose] : []),
 			{
 				type: 'table',
 				wrapperHtml: {
@@ -1021,7 +1044,7 @@ export function manageFolderPage({
 							document,
 							docStartCount + index,
 							folder.totalFolderSize,
-							isCosts
+							canShare
 						),
 						folderIsAdditionalDocuments(folder.path) && document?.latestDocumentVersion?.isLateEntry
 							? {
@@ -1058,7 +1081,7 @@ export function manageFolderPage({
 							? [{ text: document?.latestDocumentVersion?.redactionStatus }]
 							: []),
 						...(editable
-							? [mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEditUrl, isCosts)]
+							? [mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEditUrl, canShare)]
 							: [])
 					])
 				}
@@ -1143,10 +1166,10 @@ function mapVersionDocumentInformationHtmlProperty(document, documentVersion) {
 /**
  * @param {DocumentInfo} document
  * @param {DocumentVersionInfo} documentVersion
- * @param {boolean} [isCosts]
+ * @param {boolean} [canShare]
  * @returns {HtmlProperty & ClassesProperty}
  */
-function mapDocumentNameHtmlProperty(document, documentVersion, isCosts = false) {
+function mapDocumentNameHtmlProperty(document, documentVersion, canShare = false) {
 	/** @type {HtmlProperty} */
 	const htmlProperty = {
 		html: '',
@@ -1160,7 +1183,7 @@ function mapDocumentNameHtmlProperty(document, documentVersion, isCosts = false)
 
 	const isShared = documentVersion.published;
 	const sharedTagHtml =
-		isCosts && isShared
+		canShare && isShared
 			? `<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong>`
 			: '';
 
@@ -1249,7 +1272,7 @@ function mapDocumentNameHtmlProperty(document, documentVersion, isCosts = false)
  * @param {boolean} [params.editable]
  * @param {boolean} [params.skipChangeDocumentDetails]
  * @param {string} [params.baseUrl]
- * @param {boolean} [params.isCosts]
+ * @param {boolean} [params.canShare]
  * @returns {Promise<PageContent>}
  */
 export async function manageDocumentPage({
@@ -1265,7 +1288,7 @@ export async function manageDocumentPage({
 	editable,
 	skipChangeDocumentDetails,
 	baseUrl = '',
-	isCosts = false
+	canShare = false
 }) {
 	const changeDetailsUrl =
 		!skipChangeDocumentDetails &&
@@ -1275,7 +1298,7 @@ export async function manageDocumentPage({
 		`${baseUrl}change-document-name`
 	);
 
-	const headingText = isCosts ? 'Document details' : document?.name || '';
+	const headingText = canShare ? 'Document details' : document?.name || '';
 
 	const session = request.session;
 	const latestVersion = getDocumentLatestVersion(document);
@@ -1321,7 +1344,7 @@ export async function manageDocumentPage({
 
 	const isShared = latestVersion?.published;
 
-	if (isFeatureActive(FEATURE_FLAG_NAMES.SHARE_COSTS) && isCosts && !isShared) {
+	if (canShare && !isShared) {
 		const { costsDocumentType } = request.params;
 		const shareUrl =
 			costsDocumentType === 'withdrawal'
@@ -1377,7 +1400,7 @@ export async function manageDocumentPage({
 				{
 					key: { text: 'Version' },
 					value: {
-						html: `${versionId} ${isCosts && isShared ? '<br><strong class="govuk-tag govuk-tag--blue govuk-!-margin-top-1">Shared</strong>' : ''}`
+						html: `${versionId} ${canShare && isShared ? '<br><strong class="govuk-tag govuk-tag--blue govuk-!-margin-top-1">Shared</strong>' : ''}`
 					}
 				}
 			]
@@ -1546,7 +1569,7 @@ export async function manageDocumentPage({
 									{
 										text: documentVersion.version?.toString() || ''
 									},
-									mapDocumentNameHtmlProperty(document, documentVersion, isCosts),
+									mapDocumentNameHtmlProperty(document, documentVersion, canShare),
 									{
 										html: await mapDocumentVersionToAuditActivityHtml(
 											documentVersion,
@@ -1935,6 +1958,10 @@ export const folderPathToFolderNameText = (folderPath, capitalizeFirstLetter = t
 
 	if (folderPath === 'appellant-case/priorCorrespondenceWithPINS') {
 		nameText = 'communication with the Planning Inspectorate';
+	}
+
+	if (folderPath === `general/${APPEAL_DOCUMENT_TYPE.GENERAL_SUPPORTING}`) {
+		nameText = 'supporting';
 	}
 
 	return capitalizeFirstLetter ? capitalize(nameText) : nameText;
