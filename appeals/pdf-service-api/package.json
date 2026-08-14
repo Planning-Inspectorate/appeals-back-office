@@ -14,13 +14,13 @@
 		"start:dev": "nodemon -e .js,.json,.yml,.yaml ./ | pino-pretty -tlc",
 		"test": "cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest --logHeapUsage --ci",
 		"test:cov": "cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest --logHeapUsage --ci --coverage",
-    	"test:update": "cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest -u --logHeapUsage --ci",
+		"test:update": "cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest -u --logHeapUsage --ci",
 		"test:watch": "jest --watchAll --runInBand"
 	},
 	"dependencies": {
 		"@pins/platform": "^0.0.0",
 		"applicationinsights": "*",
-		"body-parser": "*",
+		"body-parser": "^1.20.6",
 		"cors": "*",
 		"date-fns": "^2.30.0",
 		"date-fns-tz": "^2.0.0",
