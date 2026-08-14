@@ -53,7 +53,7 @@ export const CASE_HISTORY_STATES = Object.freeze({
 	],
 	missedSiteVisit: [
 		{
-			detail: 'Missed site visit: {caseRef} sent to appellant',
+			detail: 'Missed site visit: {caseRef} sent to agent',
 			emailLink: 'yes',
 			emailSubject: 'Subject: Missed site visit: {caseRef}',
 			emailBody: 'Nobody was at the site to give the inspector access.'
