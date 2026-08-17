@@ -4412,7 +4412,7 @@ describe('/appeals/:id/reps', () => {
 				});
 			});
 
-			test('send notify lpa and appellant final comments ldc agent email', async () => {
+			test('send notify lpa and appellant final comments ldc agent email - written', async () => {
 				mockLdcAppeal.appellant.email = null;
 				mockLdcAppeal.agent = {
 					email: 'agent@example.com'
@@ -4491,7 +4491,7 @@ describe('/appeals/:id/reps', () => {
 				});
 			});
 
-			test('send notify lpa and appellant final comments ELB', async () => {
+			test('send notify lpa and appellant final comments ELB - written', async () => {
 				const expectedSiteAddress = [
 					'addressLine1',
 					'addressLine2',
@@ -4573,6 +4573,310 @@ describe('/appeals/:id/reps', () => {
 					},
 					recipientEmail: mockEnforcementListedAppeal.lpa.email,
 					templateName: 'final-comments-done-lpa'
+				});
+			});
+
+			test('send notify lpa and appellant final comments Enforcement - hearing', async () => {
+				const { hearing: expectedHearing } = mockEnforcementNoticeAppeal;
+
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => mockEnforcementNoticeAppeal.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedHearingAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => expectedHearing.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedEmailPayload = {
+					lpa_reference: mockEnforcementNoticeAppeal.applicationReference,
+					enforcement_reference: 'Reference',
+					appeal_reference_number: mockEnforcementNoticeAppeal.reference,
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					site_address: expectedSiteAddress,
+					hearing_address: expectedHearingAddress,
+					hearing_date: '31 March 2022',
+					hearing_expected_days: expectedHearing.estimatedDays,
+					hearing_time: '2:00am',
+					inspector_name: undefined
+				};
+
+				mockEnforcementNoticeAppeal.currentStatus = 'final_comments';
+				mockEnforcementNoticeAppeal.appealStatus = [{ status: 'final_comments', valid: true }];
+
+				mockEnforcementNoticeAppeal.procedureType = {
+					id: 1,
+					key: 'hearing',
+					name: 'Hearing'
+				};
+
+				mockEnforcementNoticeAppeal.appealTimetable = {
+					...mockEnforcementNoticeAppeal.appealTimetable,
+					finalCommentsDueDate: new Date('2023-01-01T00:00:00.000Z')
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(mockEnforcementNoticeAppeal);
+				databaseConnector.appealStatus.create.mockResolvedValue({});
+				databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+				databaseConnector.representation.findMany.mockResolvedValue([
+					{ representationType: 'appellant_final_comment' },
+					{ representationType: 'lpa_final_comment' }
+				]);
+				databaseConnector.representation.updateMany.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+				]);
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+				const response = await request
+					.post('/appeals/1/reps/publish')
+					.query({ type: 'final_comments' })
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						fo_dashboard_stub: 'appeals',
+						submitting_party: 'local planning authority'
+					},
+					recipientEmail: mockEnforcementNoticeAppeal.agent.email,
+					templateName: 'final-comments-received-enforcement-hearing'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						fo_dashboard_stub: 'manage-appeals',
+						submitting_party: 'appellant'
+					},
+					recipientEmail: mockEnforcementNoticeAppeal.lpa.email,
+					templateName: 'final-comments-received-enforcement-hearing'
+				});
+			});
+
+			test('send notify lpa and appellant final comments ELB - Hearing', async () => {
+				const { hearing: expectedHearing } = mockEnforcementNoticeAppeal;
+
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => mockEnforcementListedAppeal.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedHearingAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => expectedHearing.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedEmailPayload = {
+					lpa_reference: mockEnforcementListedAppeal.applicationReference,
+					enforcement_reference: 'Reference',
+					appeal_reference_number: mockEnforcementListedAppeal.reference,
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					site_address: expectedSiteAddress,
+					hearing_address: expectedHearingAddress,
+					hearing_date: '31 March 2022',
+					hearing_expected_days: expectedHearing.estimatedDays,
+					hearing_time: '2:00am',
+					inspector_name: undefined
+				};
+
+				mockEnforcementListedAppeal.currentStatus = 'final_comments';
+				mockEnforcementListedAppeal.appealStatus = [{ status: 'final_comments', valid: true }];
+
+				mockEnforcementListedAppeal.procedureType = {
+					id: 1,
+					key: 'hearing',
+					name: 'Hearing'
+				};
+
+				mockEnforcementListedAppeal.hearing = expectedHearing;
+
+				mockEnforcementListedAppeal.appealTimetable = {
+					...mockEnforcementListedAppeal.appealTimetable,
+					finalCommentsDueDate: new Date('2023-01-01T00:00:00.000Z')
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(mockEnforcementListedAppeal);
+				databaseConnector.appealStatus.create.mockResolvedValue({});
+				databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+				databaseConnector.representation.findMany.mockResolvedValue([
+					{ representationType: 'appellant_final_comment' },
+					{ representationType: 'lpa_final_comment' }
+				]);
+				databaseConnector.representation.updateMany.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+				]);
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+				const response = await request
+					.post('/appeals/1/reps/publish')
+					.query({ type: 'final_comments' })
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						fo_dashboard_stub: 'appeals',
+						submitting_party: 'local planning authority'
+					},
+					recipientEmail: mockEnforcementListedAppeal.agent.email,
+					templateName: 'final-comments-received-enforcement-hearing'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						fo_dashboard_stub: 'manage-appeals',
+						submitting_party: 'appellant'
+					},
+					recipientEmail: mockEnforcementListedAppeal.lpa.email,
+					templateName: 'final-comments-received-enforcement-hearing'
+				});
+			});
+
+			test('send notify lpa and appellant final comments LDC - hearing', async () => {
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => mockLdcAppeal.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const { hearing: expectedHearing } = mockLdcAppeal;
+
+				const expectedHearingAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => expectedHearing.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedEmailPayload = {
+					lpa_reference: mockLdcAppeal.applicationReference,
+					appeal_reference_number: mockLdcAppeal.reference,
+					site_address: expectedSiteAddress,
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					hearing_address: expectedHearingAddress,
+					hearing_date: '31 March 2022',
+					hearing_expected_days: expectedHearing.estimatedDays,
+					hearing_time: '2:00am',
+					inspector_name: undefined
+				};
+
+				mockLdcAppeal.currentStatus = 'final_comments';
+				mockLdcAppeal.appealStatus = [{ status: 'final_comments', valid: true }];
+
+				mockLdcAppeal.appealTimetable = {
+					...mockEnforcementListedAppeal.appealTimetable,
+					finalCommentsDueDate: new Date('2023-01-01T00:00:00.000Z')
+				};
+
+				mockLdcAppeal.procedureType = {
+					id: 1,
+					key: 'hearing',
+					name: 'Hearing'
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(mockLdcAppeal);
+				databaseConnector.appealStatus.create.mockResolvedValue({});
+				databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+				databaseConnector.representation.findMany.mockResolvedValue([
+					{ representationType: 'appellant_final_comment' },
+					{ representationType: 'lpa_final_comment' }
+				]);
+				databaseConnector.representation.updateMany.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+				]);
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+				const response = await request
+					.post('/appeals/1/reps/publish')
+					.query({ type: 'final_comments' })
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						fo_dashboard_stub: 'appeals',
+						submitting_party: 'local planning authority'
+					},
+					recipientEmail: mockLdcAppeal.agent.email,
+					templateName: 'final-comments-received-enforcement-hearing'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						fo_dashboard_stub: 'manage-appeals',
+						submitting_party: 'appellant'
+					},
+					recipientEmail: mockLdcAppeal.lpa.email,
+					templateName: 'final-comments-received-enforcement-hearing'
 				});
 			});
 

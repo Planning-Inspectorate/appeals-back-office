@@ -57,7 +57,7 @@ describe('hearing routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					hearingId: hearing.id,
-					estimatedDays: null,
+					estimatedDays: hearing.estimatedDays,
 					appealId: hearing.appealId,
 					hearingStartTime: hearing.hearingStartTime,
 					hearingEndTime: hearing.hearingEndTime,

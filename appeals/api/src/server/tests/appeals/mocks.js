@@ -239,6 +239,7 @@ export const householdAppeal = {
 		appealId: 1,
 		hearingStartTime: new Date('2022-03-31T01:00:00.000Z'),
 		hearingEndTime: new Date('2022-03-31T03:00:00.000Z'),
+		estimatedDays: 1,
 		addressId: 1,
 		address: {
 			id: 1,
