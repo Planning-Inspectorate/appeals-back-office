@@ -32,11 +32,8 @@ Time: {{hearing_time}}
 {% if hearing_expected_days -%}
 Expected days: {{hearing_expected_days}}
 {% endif -%}
-{% if inspector_name -%}
-Inspector: {{inspector_name}}
-{% endif -%}
-{% if hearing_address -%}
-Venue address: {{hearing_address}}
+{% if inspector_name -%}Inspector: {{inspector_name}}{% endif -%}
+{% if hearing_address -%}Venue address: {{hearing_address}}
 {% endif %}
 We will contact you if we make any changes to the hearing.
 {% else -%}
