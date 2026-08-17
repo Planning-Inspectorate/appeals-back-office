@@ -21,7 +21,8 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE,
-	FEATURE_FLAG_NAMES
+	FEATURE_FLAG_NAMES,
+	PROCEDURE_TYPE_NAME
 } from '@pins/appeals/constants/common.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import {
@@ -830,7 +831,7 @@ const sendPublishedStatementNotifiesForWrittenReps = async (
 };
 
 /** @type {PublishFunction} */
-export async function publishFinalComments(appeal, azureAdUserId, notifyClient) {
+export async function publishFinalComments(appeal, azureAdUserId, notifyClient, inspectorName) {
 	if (!isCurrentStatus(appeal, APPEAL_CASE_STATUS.FINAL_COMMENTS)) {
 		throw new BackOfficeAppError('appeal in incorrect state to publish final comments', 409);
 	}
@@ -862,13 +863,23 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
 		);
 
 		if (hasLpaFinalComment) {
-			await notifyAppellantAboutLpaFinalComments(appeal, notifyClient, azureAdUserId);
+			await notifyAppellantAboutLpaFinalComments(
+				appeal,
+				notifyClient,
+				azureAdUserId,
+				inspectorName
+			);
 		} else {
 			await notifyNoFinalComments(appeal, notifyClient, azureAdUserId, 'local planning authority');
 		}
 
 		if (hasAppellantFinalComment) {
-			await notifyLpaAboutAppellantFinalComments(appeal, notifyClient, azureAdUserId);
+			await notifyLpaAboutAppellantFinalComments(
+				appeal,
+				notifyClient,
+				azureAdUserId,
+				inspectorName
+			);
 		} else {
 			await notifyNoFinalComments(appeal, notifyClient, azureAdUserId, 'appellant');
 		}
@@ -1177,28 +1188,89 @@ function getNotifyPersonalisations(appeal, templateName, recipientEmail) {
  * @param {Appeal} appeal
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
+ * @param {string | null} inspectorName
  * */
-function notifyLpaAboutAppellantFinalComments(appeal, notifyClient, azureAdUserId) {
+function notifyLpaAboutAppellantFinalComments(appeal, notifyClient, azureAdUserId, inspectorName) {
 	const recipientEmail = appeal.lpa?.email;
 	if (!recipientEmail) {
 		throw new Error(`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: no LPA email address in appeal`);
 	}
 
-	return notifyPublished({
-		appeal,
+	const isEnforcementOrLdcHearing =
+		isLdcOrEnforcementCaseType(appeal.appealType?.key) &&
+		appeal.procedureType?.name === PROCEDURE_TYPE_NAME.HEARING;
+
+	const templateName = isEnforcementOrLdcHearing
+		? 'final-comments-received-enforcement-hearing-lpa'
+		: 'final-comments-done-lpa';
+
+	const commonNotifyValues = {
 		notifyClient,
-		templateName: 'final-comments-done-lpa',
+		templateName,
 		recipientEmail,
 		azureAdUserId
-	});
+	};
+
+	if (isEnforcementOrLdcHearing) {
+		const hearingDate = appeal.hearing?.hearingStartTime
+			? dateISOStringToDisplayDate(appeal.hearing.hearingStartTime)
+			: null;
+		const hearingTime = appeal.hearing?.hearingStartTime
+			? formatTime12h(
+					typeof appeal.hearing.hearingStartTime === 'string'
+						? new Date(appeal.hearing.hearingStartTime)
+						: appeal.hearing.hearingStartTime
+				)
+			: null;
+		const hearingExpectedDays = appeal.hearing?.estimatedDays ?? '';
+		const hearingAddress = appeal.hearing?.address
+			? formatAddressSingleLine(appeal.hearing.address)
+			: '';
+
+		const lpaReference = appeal.applicationReference;
+
+		const enforcementReference =
+			isEnforcementCaseType(appeal.appealType?.key) && appeal.appellantCase?.enforcementReference;
+
+		if (!lpaReference && !enforcementReference) {
+			throw new Error(
+				`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: no applicationReference or enforcementReference in appeal`
+			);
+		}
+
+		const siteAddress = appeal.address
+			? formatAddressSingleLine(appeal.address)
+			: 'Address not available';
+
+		return notifySend({
+			...commonNotifyValues,
+			personalisation: {
+				appeal_reference_number: appeal.reference,
+				site_address: siteAddress,
+				...(enforcementReference && { enforcement_reference: enforcementReference }),
+				lpa_reference: lpaReference || '',
+				hearing_date: hearingDate,
+				hearing_address: hearingAddress,
+				inspector_name: inspectorName,
+				hearing_expected_days: hearingExpectedDays,
+				hearing_time: hearingTime
+			}
+		});
+	} else {
+		return notifyPublished({
+			appeal,
+			...commonNotifyValues
+		});
+	}
 }
 
 /**
  * @param {Appeal} appeal
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
+ * @param {string | null} inspectorName
  * */
-function notifyAppellantAboutLpaFinalComments(appeal, notifyClient, azureAdUserId) {
+function notifyAppellantAboutLpaFinalComments(appeal, notifyClient, azureAdUserId, inspectorName) {
 	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 	if (!recipientEmail) {
 		throw new Error(
@@ -1206,13 +1278,72 @@ function notifyAppellantAboutLpaFinalComments(appeal, notifyClient, azureAdUserI
 		);
 	}
 
-	return notifyPublished({
-		appeal,
+	const isEnforcementOrLdcHearing =
+		isLdcOrEnforcementCaseType(appeal.appealType?.key) &&
+		appeal.procedureType?.name === PROCEDURE_TYPE_NAME.HEARING;
+
+	const templateName = isEnforcementOrLdcHearing
+		? 'final-comments-received-enforcement-hearing-appellant'
+		: 'final-comments-done-appellant';
+
+	const commonNotifyValues = {
 		notifyClient,
-		templateName: 'final-comments-done-appellant',
+		templateName,
 		recipientEmail,
 		azureAdUserId
-	});
+	};
+
+	if (isEnforcementOrLdcHearing) {
+		const hearingDate = appeal.hearing?.hearingStartTime
+			? dateISOStringToDisplayDate(appeal.hearing.hearingStartTime)
+			: null;
+		const hearingTime = appeal.hearing?.hearingStartTime
+			? formatTime12h(
+					typeof appeal.hearing.hearingStartTime === 'string'
+						? new Date(appeal.hearing.hearingStartTime)
+						: appeal.hearing.hearingStartTime
+				)
+			: null;
+		const hearingExpectedDays = appeal.hearing?.estimatedDays ?? '';
+		const hearingAddress = appeal.hearing?.address
+			? formatAddressSingleLine(appeal.hearing.address)
+			: '';
+
+		const lpaReference = appeal.applicationReference;
+
+		const enforcementReference =
+			isEnforcementCaseType(appeal.appealType?.key) && appeal.appellantCase?.enforcementReference;
+
+		if (!lpaReference && !enforcementReference) {
+			throw new Error(
+				`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: no applicationReference or enforcementReference in appeal`
+			);
+		}
+
+		const siteAddress = appeal.address
+			? formatAddressSingleLine(appeal.address)
+			: 'Address not available';
+
+		return notifySend({
+			...commonNotifyValues,
+			personalisation: {
+				appeal_reference_number: appeal.reference,
+				site_address: siteAddress,
+				...(enforcementReference && { enforcement_reference: enforcementReference }),
+				lpa_reference: lpaReference || '',
+				hearing_date: hearingDate,
+				hearing_address: hearingAddress,
+				inspector_name: inspectorName,
+				hearing_expected_days: hearingExpectedDays,
+				hearing_time: hearingTime
+			}
+		});
+	} else {
+		return notifyPublished({
+			appeal,
+			...commonNotifyValues
+		});
+	}
 }
 
 /**
