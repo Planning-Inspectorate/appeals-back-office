@@ -46,7 +46,7 @@ describe('publish-statements-enforcement-hearing.content.md', () => {
 		'We will contact you if we make any changes to the hearing.',
 		'',
 		'# What happens next',
-		'You need to submit your final comments by 20 March 2025.',
+		'You need to submit any final comments by 20 March 2025.',
 		'',
 		'Planning Inspectorate',
 		'caseofficers@planninginspectorate.gov.uk'
@@ -213,6 +213,6 @@ describe('publish-statements-enforcement-hearing.content.md', () => {
 		expect(content).toContain(
 			'We will let you know if the local planning authority submits any final comments.'
 		);
-		expect(content).not.toContain('You need to submit your final comments by 20 March 2025.');
+		expect(content).not.toContain('You need to submit any final comments by 20 March 2025.');
 	});
 });

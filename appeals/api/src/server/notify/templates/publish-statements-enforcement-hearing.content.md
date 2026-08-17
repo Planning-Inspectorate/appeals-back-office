@@ -30,10 +30,12 @@ We did not receive a statement from the local planning authority, the appellant 
 ^Date: {{hearing_date}}
 Time: {{hearing_time}}
 {% if hearing_expected_days -%}
-Expected days: {{hearing_expected_days}}
+Expected days: {{hearing_expected_days}}{% endif %}
+{% if inspector_name -%}
+Inspector: {{inspector_name}}
 {% endif -%}
-{% if inspector_name -%}Inspector: {{inspector_name}}{% endif -%}
-{% if hearing_address -%}Venue address: {{hearing_address}}
+{% if hearing_address -%}
+Venue address: {{hearing_address}}
 {% endif %}
 We will contact you if we make any changes to the hearing.
 {% else -%}
@@ -44,7 +46,7 @@ We will contact you by email when we set up the hearing.
 {% if recipient_role == 'appellant' and has_appellant_statement and not has_lpa_statement and not has_ip_comments -%}
 We will let you know if the local planning authority submits any final comments.
 {% else -%}
-You need to submit your final comments by {{final_comments_due_date}}.
+You need to submit any final comments by {{final_comments_due_date}}.
 {% endif -%}
 {% endif %}
 Planning Inspectorate
