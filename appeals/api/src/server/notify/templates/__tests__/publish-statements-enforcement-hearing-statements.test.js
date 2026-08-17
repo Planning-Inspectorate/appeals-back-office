@@ -1,8 +1,7 @@
 import { renderTemplate } from '#notify/notify-send.js';
 
-describe('publish-statements-enforcement-hearing-statements-or-comments-received.content.md', () => {
-	const templateName =
-		'publish-statements-enforcement-hearing-statements-or-comments-received.content.md';
+describe('publish-statements-enforcement-hearing.content.md', () => {
+	const templateName = 'publish-statements-enforcement-hearing.content.md';
 
 	const basePersonalisation = {
 		appeal_reference_number: 'ENF12345',
@@ -29,45 +28,29 @@ describe('publish-statements-enforcement-hearing-statements-or-comments-received
 			'\n'
 		);
 
-	/** @param {string} content */
-	const getDocumentsReceivedSection = (content) => content.split('\n# Appeal details')[0].trim();
-
-	test('should render all supplied variables correctly', () => {
-		const content = renderContent();
-
-		const expectedContent = [
-			'# Documents received',
-			'- appellant’s statement',
-			'- local planning authority’s statement',
-			'- comments from interested parties',
-			'',
-			'You can [view this information in the appeals service](/mock-front-office-url/appeals/ENF12345).',
-			'',
-			'# Appeal details',
-			'',
-			'^Appeal reference number: ENF12345',
-			'Address: 10, Enforcement Street',
-			'Enforcement notice reference: ENF/2025/0001',
-			'',
-			'# Hearing details',
-			'',
-			'^Date: 15 March 2025',
-			'Time: 10:30am',
-			'Expected days: 2',
-			'Inspector: Jane Smith',
-			'Venue address: Hearing Room, 1 Test Avenue',
-			'',
-			'We will contact you if we make any changes to the hearing.',
-			'',
-			'# What happens next',
-			'You need to submit your final comments by 20 March 2025.',
-			'',
-			'Planning Inspectorate',
-			'caseofficers@planninginspectorate.gov.uk'
-		].join('\n');
-
-		expect(content).toEqual(expectedContent);
-	});
+	const appealHearingAndNextStepsLines = [
+		'# Appeal details',
+		'',
+		'^Appeal reference number: ENF12345',
+		'Address: 10, Enforcement Street',
+		'Enforcement notice reference: ENF/2025/0001',
+		'',
+		'# Hearing details',
+		'',
+		'^Date: 15 March 2025',
+		'Time: 10:30am',
+		'Expected days: 2',
+		'Inspector: Jane Smith',
+		'Venue address: Hearing Room, 1 Test Avenue',
+		'',
+		'We will contact you if we make any changes to the hearing.',
+		'',
+		'# What happens next',
+		'You need to submit your final comments by 20 March 2025.',
+		'',
+		'Planning Inspectorate',
+		'caseofficers@planninginspectorate.gov.uk'
+	];
 
 	test.each([
 		{
@@ -75,13 +58,14 @@ describe('publish-statements-enforcement-hearing-statements-or-comments-received
 			has_appellant_statement: true,
 			has_lpa_statement: true,
 			has_ip_comments: true,
-			expectedSection: [
+			expectedContent: [
 				'# Documents received',
 				'- appellant’s statement',
 				'- local planning authority’s statement',
 				'- comments from interested parties',
 				'',
-				'You can [view this information in the appeals service](/mock-front-office-url/appeals/ENF12345).'
+				'You can [view this information in the appeals service](/mock-front-office-url/appeals/ENF12345).',
+				...appealHearingAndNextStepsLines
 			].join('\n')
 		},
 		{
@@ -89,13 +73,14 @@ describe('publish-statements-enforcement-hearing-statements-or-comments-received
 			has_appellant_statement: true,
 			has_lpa_statement: true,
 			has_ip_comments: false,
-			expectedSection: [
+			expectedContent: [
 				'# Documents received',
 				'- appellant’s statement',
 				'- local planning authority’s statement',
 				'',
 				'You can [view this information in the appeals service](/mock-front-office-url/appeals/ENF12345).',
-				'We did not receive comments from interested parties.'
+				'We did not receive comments from interested parties.',
+				...appealHearingAndNextStepsLines
 			].join('\n')
 		},
 		{
@@ -103,13 +88,14 @@ describe('publish-statements-enforcement-hearing-statements-or-comments-received
 			has_appellant_statement: true,
 			has_lpa_statement: false,
 			has_ip_comments: true,
-			expectedSection: [
+			expectedContent: [
 				'# Documents received',
 				'- appellant’s statement',
 				'- comments from interested parties',
 				'',
 				'You can [view this information in the appeals service](/mock-front-office-url/appeals/ENF12345).',
-				'We did not receive a statement from the local planning authority.'
+				'We did not receive a statement from the local planning authority.',
+				...appealHearingAndNextStepsLines
 			].join('\n')
 		},
 		{
@@ -117,13 +103,14 @@ describe('publish-statements-enforcement-hearing-statements-or-comments-received
 			has_appellant_statement: false,
 			has_lpa_statement: true,
 			has_ip_comments: true,
-			expectedSection: [
+			expectedContent: [
 				'# Documents received',
 				'- local planning authority’s statement',
 				'- comments from interested parties',
 				'',
 				'You can [view this information in the appeals service](/mock-front-office-url/appeals/ENF12345).',
-				'We did not receive a statement from the appellant.'
+				'We did not receive a statement from the appellant.',
+				...appealHearingAndNextStepsLines
 			].join('\n')
 		},
 		{
@@ -131,13 +118,14 @@ describe('publish-statements-enforcement-hearing-statements-or-comments-received
 			has_appellant_statement: true,
 			has_lpa_statement: false,
 			has_ip_comments: false,
-			expectedSection: [
+			expectedContent: [
 				'# Documents received',
 				'- appellant’s statement',
 				'',
 				'You can [view this information in the appeals service](/mock-front-office-url/appeals/ENF12345).',
 				'We did not receive a statement from the local planning authority.',
-				'We did not receive comments from interested parties.'
+				'We did not receive comments from interested parties.',
+				...appealHearingAndNextStepsLines
 			].join('\n')
 		},
 		{
@@ -145,13 +133,14 @@ describe('publish-statements-enforcement-hearing-statements-or-comments-received
 			has_appellant_statement: false,
 			has_lpa_statement: true,
 			has_ip_comments: false,
-			expectedSection: [
+			expectedContent: [
 				'# Documents received',
 				'- local planning authority’s statement',
 				'',
 				'You can [view this information in the appeals service](/mock-front-office-url/appeals/ENF12345).',
 				'We did not receive a statement from the appellant.',
-				'We did not receive comments from interested parties.'
+				'We did not receive comments from interested parties.',
+				...appealHearingAndNextStepsLines
 			].join('\n')
 		},
 		{
@@ -159,13 +148,14 @@ describe('publish-statements-enforcement-hearing-statements-or-comments-received
 			has_appellant_statement: false,
 			has_lpa_statement: false,
 			has_ip_comments: true,
-			expectedSection: [
+			expectedContent: [
 				'# Documents received',
 				'- comments from interested parties',
 				'',
 				'You can [view this information in the appeals service](/mock-front-office-url/appeals/ENF12345).',
 				'We did not receive a statement from the local planning authority.',
-				'We did not receive a statement from the appellant.'
+				'We did not receive a statement from the appellant.',
+				...appealHearingAndNextStepsLines
 			].join('\n')
 		},
 		{
@@ -173,19 +163,21 @@ describe('publish-statements-enforcement-hearing-statements-or-comments-received
 			has_appellant_statement: false,
 			has_lpa_statement: false,
 			has_ip_comments: false,
-			expectedSection:
-				'We did not receive a statement from the local planning authority, the appellant or any comments from interested parties.'
+			expectedContent: [
+				'We did not receive a statement from the local planning authority, the appellant or any comments from interested parties.',
+				...appealHearingAndNextStepsLines
+			].join('\n')
 		}
 	])(
-		'should map documents received correctly when $name',
-		({ has_appellant_statement, has_lpa_statement, has_ip_comments, expectedSection }) => {
+		'should render the full template content correctly when $name',
+		({ has_appellant_statement, has_lpa_statement, has_ip_comments, expectedContent }) => {
 			const content = renderContent({
 				has_appellant_statement,
 				has_lpa_statement,
 				has_ip_comments
 			});
 
-			expect(getDocumentsReceivedSection(content)).toEqual(expectedSection);
+			expect(content).toEqual(expectedContent);
 		}
 	);
 
