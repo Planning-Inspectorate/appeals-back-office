@@ -27,9 +27,9 @@ appeals/web/src/server/appeals/appeal-details/appellant-case/
 
 ## How Appellant Case Layout is Structured
 
-1. `appellant-casePage()` in [appellant-case.mapper.js](../appellant-case.mapper.js) initializes and maps appeal and appellant case data (`initialiseAndMapData`).
+1. `appellantCasePage()` in [appellant-case.mapper.js](../appellant-case.mapper.js) initializes and maps appeal and appellant case data (`initialiseAndMapData`).
 2. It delegates to `generateCaseTypeSpecificComponents(appealDetails, appellantCaseData, mappedAppellantCaseData, userHasUpdateCasePermission)`.
-3. `generateCaseTypeSpecificComponents` matches `appealDetails.appealType` (and checking flags/expedited criteria) to dispatch to the corresponding generator in `page-components/`.
+3. `generateCaseTypeSpecificComponents` checks `appealDetails.appealType` (along with flags and expedited criteria) to determine which appellant case generator to use.
 4. Each generator function returns an array of `PageComponent` objects representing summary cards (e.g. `before-you-start`, `appellant-details`, `site-details`, `application-summary`, `appeal-summary`, `uploaded-documents`, `additional-documents`).
 5. Section numbers (e.g., `1. Appellant details`, `2. Site details`) are automatically prefixed sequentially by `appellant-case.mapper.js` to all cards except `before-you-start` and `additional-documents`.
 
@@ -37,7 +37,7 @@ appeals/web/src/server/appeals/appeal-details/appellant-case/
 
 ## Shared Card Builders (`common-sections.mapper.js`)
 
-`common-sections.mapper.js` provides reusable builder functions and helper functions. If changes are needed to be made for individualy appeals from these functions dedicased mapper functions should be used within each appeal specific mapper file, see [Overriding Card Builders for Appeal-Specific Needs](#2-overriding-card-builders-for-appeal-specific-needs).
+`common-sections.mapper.js` provides reusable builder functions and helper functions. If changes are needed to be made for individual appeals from these functions dedicated mapper functions should be used within each appeal specific mapper file, see [Overriding Card Builders for Appeal-Specific Needs](#2-overriding-card-builders-for-appeal-specific-needs).
 
 ### Core Helper: `buildSummaryListCard`
 ```javascript
@@ -45,16 +45,6 @@ buildSummaryListCard(id, title, rows, options = {})
 ```
 - **Filter logic:** Filters out `null`/`undefined` row elements automatically. Returns `null` if no valid rows exist (unless `options.actions` is defined).
 - **Output:** Standard GOV.UK summary list card component schema.
-
-### Reusable Card Builders
-- **`buildBeforeYouStartCard(mappedAppellantCaseData, options)`**
-- **`buildAppellantDetailsCard(appealDetails, mappedAppellantCaseData)`**
-- **`buildSiteDetailsCard(mappedAppellantCaseData, additionalRows)`** – accepts optional `additionalRows` appended to the card.
-- **`buildApplicationDetailsCard(mappedAppellantCaseData, additionalRows)`** – accepts optional `additionalRows`.
-- **`buildAdditionalDocumentsCard(appellantCaseData, mappedAppellantCaseData, userHasUpdateCasePermission)`**
-- **`buildFullPlanningApplicationDetailsCard`**, **`buildFullPlanningAppealDetailsCard`**, **`buildFullPlanningUploadedDocumentsCard`**
-- **`buildEnforcementBeforeYouStartCard`**, **`buildEnforcementAppellantDetailsCard`**, **`buildEnforcementLandDetailsCard`**, **`buildEnforcementApplicationDetailsCard`**
-- **`buildAdvertSiteDetailsCard`**, **`buildAdvertApplicationDetailsCard`**
 
 ---
 
@@ -68,8 +58,9 @@ To add, remove, or reorder summary rows for a specific appeal type:
 
 ### 2. Overriding Card Builders for Appeal-Specific Needs
 If an appeal type requires custom rows in standard sections (e.g. `site-details` or `application-summary`), you can either:
-- Pass extra row instructions using `additionalRows` parameter on `buildSiteDetailsCard` / `buildApplicationDetailsCard`. Or add this functionality ot other mappers where appropriate.
-- Define an appeal-specific builder function in the appeal's mapper module (e.g., `buildHASUploadedDocumentsCard` in `has.mapper.js` or `buildLdcSiteDetailsCard` in `ldc.mapper.js`).
+- Pass extra row instructions using `additionalRows` parameter on `buildSiteDetailsCard` / `buildApplicationDetailsCard`. Or add this functionality to other mappers where appropriate.
+- Define an appeal-specific builder function in the appeal's mapper module (e.g., `buildHASUploadedDocumentsCard` in `has.mapper.js` or `buildLdcSiteDetailsCard` in `ldc.mapper.js`) 
+- Taking a common section builder and applying manipulations should always be avoided.
 
 ### 3. Adding a New Appeal Type
 1. Create a new mapper module in `page-components/<appeal-type>.mapper.js`.
@@ -77,6 +68,29 @@ If an appeal type requires custom rows in standard sections (e.g. `site-details`
 3. Compose and return card components using `common-sections.mapper.js` builders or custom card builders.
 4. Import and add a `case` branch in `generateCaseTypeSpecificComponents` inside [appellant-case.mapper.js](../appellant-case.mapper.js).
 5. Add unit test coverage in `__tests__/appellant-case.test.js` or component-specific test suites.
+
+## Reusable Card Builders (`common-sections.mapper.js`)
+
+> Note: Auto-generated from `common-sections.mapper.js`. Re-run `npm run generate-docs` to update.
+
+- **`buildSummaryListCard(id, title, rows, options = {})`**
+- **`buildBeforeYouStartCard(mappedAppellantCaseData, options = {})`** – Builds the "Before you start" section card component.
+- **`buildAppellantDetailsCard(appealDetails, mappedAppellantCaseData)`** – Builds the "Appellant details" section card component.
+- **`buildSiteDetailsCard(mappedAppellantCaseData, additionalRows = [])`** – Builds the "Site details" section card component.
+- **`buildApplicationDetailsCard(mappedAppellantCaseData, additionalRows = [])`** – Builds the "Application details" section card component.
+- **`buildAppealDetailsCard(mappedAppellantCaseData, additionalRows = [])`** – Builds the "Appeal details" section card component.
+- **`buildAdditionalDocumentsCard(appellantCaseData, mappedAppellantCaseData, userHasUpdateCasePermission)`** – Builds the "Additional documents" section card component.
+- **`buildFullPlanningApplicationDetailsCard(mappedAppellantCaseData)`** – Builds the Full Planning (S20 & S78) "Application details" section card component.
+- **`buildFullPlanningAppealDetailsCard(mappedAppellantCaseData)`** – Builds the Full Planning (S20 & S78) "Appeal details" section card component.
+- **`buildFullPlanningUploadedDocumentsCard(mappedAppellantCaseData)`** – Builds the Full Planning (S20 & S78) "Uploaded documents" section card component.
+- **`buildEnforcementBeforeYouStartCard(mappedAppellantCaseData)`** – Builds the Enforcement "Before you start" section card component.
+- **`buildEnforcementAppellantDetailsCard(appealDetails, mappedAppellantCaseData)`** – Builds the Enforcement "Appellant details" section card component.
+- **`buildEnforcementLandDetailsCard(mappedAppellantCaseData)`** – Builds the Enforcement "Land" section card component.
+- **`buildEnforcementApplicationDetailsCard(mappedAppellantCaseData)`** – Builds the Enforcement "Application details" section card component.
+- **`buildAdvertSiteDetailsCard(mappedAppellantCaseData)`** – Builds the Advert "Site details" section card component.
+- **`buildAdvertApplicationDetailsCard(mappedAppellantCaseData)`** – Builds the Advert "Application details" section card component.
+
+---
 
 ## Auto-Generated Rendered Rows by Appeal Type
 

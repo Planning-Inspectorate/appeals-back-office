@@ -99,7 +99,28 @@ const mockMappedData = /** @type {any} */ ({
 const emptyAppellantCaseData = /** @type {SingleAppellantCaseResponse} */ ({});
 
 export function generateDocContent() {
-	let doc = '## Auto-Generated Rendered Rows by Appeal Type\n\n';
+	let doc = '## Reusable Card Builders (`common-sections.mapper.js`)\n\n';
+	doc +=
+		'> Note: Auto-generated from `common-sections.mapper.js`. Re-run `npm run generate-docs` to update.\n\n';
+
+	const commonMapperPath = path.resolve(__dirname, '../common-sections.mapper.js');
+	const commonMapperCode = fs.readFileSync(commonMapperPath, 'utf8');
+
+	const functionRegex = /\/\*\*[\s\S]*?\*\/\s*export function (build\w+)\(([^)]*)\)/g;
+	let match;
+	while ((match = functionRegex.exec(commonMapperCode)) !== null) {
+		const funcName = match[1];
+		const params = match[2].replace(/\s+/g, ' ').trim();
+		const jsdocBlock = match[0];
+
+		const descMatch = jsdocBlock.match(/\/\*\*\s*\*\s*([^\n@]+)/);
+		const description = descMatch ? descMatch[1].trim() : '';
+
+		doc += `- **\`${funcName}(${params})\`**${description ? ` – ${description}` : ''}\n`;
+	}
+
+	doc += '\n---\n\n';
+	doc += '## Auto-Generated Rendered Rows by Appeal Type\n\n';
 	doc +=
 		'> Note: Auto-generated from component mapper contracts. Re-run `npm run generate-docs` or `node scripts/generate-appellant-case-docs.js` to update.\n';
 	doc +=
@@ -112,33 +133,41 @@ export function generateDocContent() {
 		'Enforcement Listed': APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
 		'Enforcement Notice': APPEAL_TYPE.ENFORCEMENT_NOTICE,
 		'Householder (HAS)': APPEAL_TYPE.HOUSEHOLDER,
-		LDC: APPEAL_TYPE.LDC,
-		S20: APPEAL_TYPE.S20,
+		LDC: APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE,
+		S20: APPEAL_TYPE.PLANNED_LISTED_BUILDING,
 		'S78 Expedited': APPEAL_TYPE.S78,
 		'S78 Standard': APPEAL_TYPE.S78
 	});
 
-	for (const [typeName, fn] of Object.entries(mappers)) {
-		doc += `### ${typeName}\n`;
-		const appealType = appealTypeMap[typeName] || APPEAL_TYPE.HOUSEHOLDER;
+	for (const [appealTypeName, generateComponents] of Object.entries(mappers)) {
+		doc += `### ${appealTypeName}\n`;
+		const appealType = appealTypeMap[appealTypeName];
+		if (!appealType) {
+			throw new Error(`Missing appeal type mapping for mapper: "${appealTypeName}"`);
+		}
+
 		const testAppeal = /** @type {WebAppeal} */ (
 			/** @type {unknown} */ ({ appealId: 1, appealType })
 		);
 
 		try {
-			const fullComps = fn(testAppeal, emptyAppellantCaseData, mockMappedData, true).filter(
-				Boolean
-			);
+			const components = generateComponents(
+				testAppeal,
+				emptyAppellantCaseData,
+				mockMappedData,
+				true
+			).filter(Boolean);
 
-			fullComps.forEach((c) => {
-				if (!c) return;
-				const cardTitle = c.parameters?.card?.title?.text || c.parameters?.attributes?.id;
-				const rows = (c.parameters?.rows || [])
-					.map((/** @type {any} */ r) => r?.key?.text)
+			components.forEach((component) => {
+				if (!component) return;
+				const cardTitle =
+					component.parameters?.card?.title?.text || component.parameters?.attributes?.id;
+				const rowKeys = (component.parameters?.rows || [])
+					.map((/** @type {any} */ row) => row?.key?.text)
 					.filter(Boolean);
 				doc += `- **${cardTitle}**\n`;
-				rows.forEach((/** @type {string} */ r) => {
-					doc += `  - ${r}\n`;
+				rowKeys.forEach((/** @type {string} */ rowKey) => {
+					doc += `  - ${rowKey}\n`;
 				});
 			});
 		} catch (e) {
@@ -157,7 +186,7 @@ if (process.argv[1] === __filename) {
 	const readmePath = path.resolve(__dirname, '../README.md');
 	let currentContent = fs.readFileSync(readmePath, 'utf8');
 
-	const marker = '## Auto-Generated Rendered Rows by Appeal Type';
+	const marker = '## Reusable Card Builders (`common-sections.mapper.js`)';
 	if (currentContent.includes(marker)) {
 		currentContent = currentContent.split(marker)[0];
 	}
