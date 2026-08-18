@@ -87,6 +87,9 @@ jobs:
             SPEC: '**/*.spec.js'
 
     steps:
+      - script: java -version
+        displayName: 'Check Java'
+
       - task: NodeTool@0
         inputs:
           versionSpec: "22.x"
