@@ -129,7 +129,7 @@ describe('Link appeals', () => {
 				//link appeal
 				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
 				caseDetailsPage.checkStatusOfCase('Lead', 1);
-
+				v;
 				//child appeal
 				caseDetailsPage.clickLinkedAppeal(childCaseObj);
 				caseDetailsPage.verifyAppealRefOnCaseDetails(childCaseObj.reference);
@@ -423,11 +423,11 @@ describe('Timetable', () => {
 					basePage.clickButtonByText('Update timetable due dates');
 					caseDetailsPage.verifyRowValue('LPA statement due', formattedDate.date);
 
-					// //case history
-					// caseDetailsPage.clickViewCaseHistory();
-					// caseHistoryPage.verifyCaseHistoryValue(
-					// 	`Statements due date changed to ${formattedDate.date}`
-					// );
+					//case history
+					caseDetailsPage.clickViewCaseHistory();
+					caseHistoryPage.verifyCaseHistoryValue(
+						`Statements due date changed to ${formattedDate.date}`
+					);
 
 					//child apppeal
 					happyPathHelper.viewCaseDetails(childCaseObj);
