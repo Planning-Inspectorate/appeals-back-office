@@ -191,7 +191,7 @@ describe('Manually Add a rep', () => {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.selectRadioButtonByValue('Redacted');
 		caseDetailsPage.clickButtonByText('Confirm');
-		// caseDetailsPage.clickButtonByText('Confirm');
-		// caseDetailsPage.clickButtonByText('Add document');
+		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.clickButtonByText('Add document');
 	};
 });
