@@ -224,6 +224,57 @@ describe('Appellant Case Page Component Mapper Contracts', () => {
 		]);
 	});
 
+	it('CAS Advert mapper produces exact section cards and field/document row contracts (post-cut-off)', () => {
+		const components = generateCASAdvertComponents(
+			{ ...mockAppeal, appealType: APPEAL_TYPE.CAS_ADVERTISEMENT },
+			{ applicationDate: '2026-04-02T00:00:00.000Z', reasonForAppealAppellant: 'My reason' },
+			mockMappedData
+		);
+		expect(extractCardTitles(components)).toEqual([
+			'Before you start',
+			'Appellant details',
+			'Site details',
+			'Application details',
+			'Appeal details',
+			'Upload documents'
+		]);
+		expect(extractRowKeysForCard(components, 'before-you-start')).toEqual([
+			'Local planning authority',
+			'Application type',
+			'Application decision',
+			'Application decision date',
+			'LPA application reference number'
+		]);
+		expect(extractRowKeysForCard(components, 'appellant-details')).toEqual([
+			'Appellant name',
+			'Agent name'
+		]);
+		expect(extractRowKeysForCard(components, 'site-details')).toEqual([
+			'Site address',
+			'Highway land',
+			'Advertisement in position',
+			'Green belt',
+			'Site ownership',
+			'Owners known',
+			'Inspector access',
+			'Safety risks',
+			'Landowner permission',
+			'Significant changes'
+		]);
+		expect(extractRowKeysForCard(components, 'application-summary')).toEqual([
+			'Application date',
+			'Advertisement description',
+			'Evidence of agreement to change advertisement description',
+			'Related appeals',
+			'Decision letter'
+		]);
+		expect(extractRowKeysForCard(components, 'appeal-summary')).toEqual(['Why are you appealing?']);
+		expect(extractRowKeysForCard(components, 'uploaded-documents')).toEqual([
+			'Application form',
+			'Application for a award of costs'
+		]);
+	});
+
 	it('Householder mapper produces exact section cards and field/document row contracts (pre-cut-off)', () => {
 		const components = generateHASComponents(
 			{ ...mockAppeal, appealType: APPEAL_TYPE.HOUSEHOLDER },
@@ -269,6 +320,56 @@ describe('Appellant Case Page Component Mapper Contracts', () => {
 			'Application form',
 			'Evidence of agreement to change development description',
 			'Appeal statement',
+			'Application for a award of costs'
+		]);
+	});
+
+	it('Householder mapper produces exact section cards and field/document row contracts (post-cut-off)', () => {
+		const components = generateHASComponents(
+			{ ...mockAppeal, appealType: APPEAL_TYPE.HOUSEHOLDER },
+			{ applicationDate: '2026-04-02T00:00:00.000Z', reasonForAppealAppellant: 'My reason' },
+			mockMappedData
+		);
+		expect(extractCardTitles(components)).toEqual([
+			'Before you start',
+			'Appellant details',
+			'Site details',
+			'Application details',
+			'Appeal details',
+			'Upload documents',
+			'Additional documents'
+		]);
+		expect(extractRowKeysForCard(components, 'before-you-start')).toEqual([
+			'Local planning authority',
+			'Application type',
+			'Application decision',
+			'Application decision date',
+			'LPA application reference number'
+		]);
+		expect(extractRowKeysForCard(components, 'appellant-details')).toEqual([
+			'Appellant name',
+			'Agent name'
+		]);
+		expect(extractRowKeysForCard(components, 'site-details')).toEqual([
+			'Site address',
+			'Site area',
+			'Green belt',
+			'Site ownership',
+			'Owners known',
+			'Inspector access',
+			'Safety risks',
+			'Significant changes'
+		]);
+		expect(extractRowKeysForCard(components, 'application-summary')).toEqual([
+			'Application date',
+			'Development description',
+			'Related appeals',
+			'Decision letter'
+		]);
+		expect(extractRowKeysForCard(components, 'appeal-summary')).toEqual(['Why are you appealing?']);
+		expect(extractRowKeysForCard(components, 'uploaded-documents')).toEqual([
+			'Application form',
+			'Evidence of agreement to change development description',
 			'Application for a award of costs'
 		]);
 	});
@@ -397,7 +498,7 @@ describe('Appellant Case Page Component Mapper Contracts', () => {
 		]);
 	});
 
-	it('CAS planning mapper produces exact section cards and field/document row contracts', () => {
+	it('CAS planning mapper produces exact section cards and field/document row contracts (pre-cut-off)', () => {
 		const components = generateCASComponents(
 			{ ...mockAppeal, appealType: APPEAL_TYPE.CAS_PLANNING },
 			mockAppellantCaseData,
@@ -436,6 +537,62 @@ describe('Appellant Case Page Component Mapper Contracts', () => {
 			'Development description',
 			'Related appeals',
 			'Decision letter'
+		]);
+		expect(extractRowKeysForCard(components, 'uploaded-documents')).toEqual([
+			'Application form',
+			'Evidence of agreement to change development description',
+			'Appeal statement',
+			'Application for a award of costs',
+			'Other new supporting documents'
+		]);
+	});
+
+	it('CAS planning mapper produces exact section cards and field/document row contracts (post-cut-off)', () => {
+		const components = generateCASComponents(
+			{ ...mockAppeal, appealType: APPEAL_TYPE.CAS_PLANNING },
+			{ applicationDate: '2026-04-02T00:00:00.000Z', reasonForAppealAppellant: 'My reason' },
+			mockMappedData
+		);
+		expect(extractCardTitles(components)).toEqual([
+			'Before you start',
+			'Appellant details',
+			'Site details',
+			'Application details',
+			'Appeal details',
+			'Upload documents'
+		]);
+		expect(extractRowKeysForCard(components, 'before-you-start')).toEqual([
+			'Local planning authority',
+			'Application type',
+			'Application decision',
+			'Application decision date',
+			'LPA application reference number'
+		]);
+		expect(extractRowKeysForCard(components, 'appellant-details')).toEqual([
+			'Appellant name',
+			'Agent name'
+		]);
+		expect(extractRowKeysForCard(components, 'site-details')).toEqual([
+			'Site address',
+			'Site area',
+			'Green belt',
+			'Site ownership',
+			'Owners known',
+			'Inspector access',
+			'Safety risks',
+			'Significant changes'
+		]);
+		expect(extractRowKeysForCard(components, 'application-summary')).toEqual([
+			'Application date',
+			'Development description',
+			'Related appeals',
+			'Decision letter'
+		]);
+		expect(extractRowKeysForCard(components, 'appeal-summary')).toEqual(['Why are you appealing?']);
+		expect(extractRowKeysForCard(components, 'uploaded-documents')).toEqual([
+			'Application form',
+			'Evidence of agreement to change development description',
+			'Application for a award of costs'
 		]);
 	});
 
