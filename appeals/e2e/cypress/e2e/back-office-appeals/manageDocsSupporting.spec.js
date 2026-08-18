@@ -99,7 +99,7 @@ describe('add supporting documents', () => {
 		});
 	});
 
-	it.only('upload and manage Final Comments documemnts ', () => {
+	it('upload and manage Final Comments documemnts ', () => {
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {
