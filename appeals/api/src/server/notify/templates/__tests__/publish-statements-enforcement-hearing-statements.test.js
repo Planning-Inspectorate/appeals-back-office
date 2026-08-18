@@ -28,7 +28,7 @@ describe('publish-statements-enforcement-hearing.content.md', () => {
 			'\n'
 		);
 
-	const appealHearingAndNextStepsLines = [
+	const appealHearingLines = [
 		'# Appeal details',
 		'',
 		'^Appeal reference number: ENF12345',
@@ -44,12 +44,21 @@ describe('publish-statements-enforcement-hearing.content.md', () => {
 		'Venue address: Hearing Room, 1 Test Avenue',
 		'',
 		'We will contact you if we make any changes to the hearing.',
-		'',
+		''
+	];
+
+	const whatHappensNextLines = [
 		'# What happens next',
 		'You need to submit any final comments by 20 March 2025.',
-		'',
-		'Planning Inspectorate',
-		'caseofficers@planninginspectorate.gov.uk'
+		''
+	];
+
+	const footerLines = ['Planning Inspectorate', 'caseofficers@planninginspectorate.gov.uk'];
+
+	const appealHearingAndNextStepsLines = [
+		...appealHearingLines,
+		...whatHappensNextLines,
+		...footerLines
 	];
 
 	test.each([
@@ -165,7 +174,8 @@ describe('publish-statements-enforcement-hearing.content.md', () => {
 			has_ip_comments: false,
 			expectedContent: [
 				'We did not receive a statement from the local planning authority, the appellant or any comments from interested parties.',
-				...appealHearingAndNextStepsLines
+				...appealHearingLines,
+				...footerLines
 			].join('\n')
 		}
 	])(
