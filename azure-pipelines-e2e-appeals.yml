@@ -87,9 +87,6 @@ jobs:
             SPEC: '**/*.spec.js'
 
     steps:
-      - script: java -version
-        displayName: 'Check Java'
-
       - task: NodeTool@0
         inputs:
           versionSpec: "22.x"
@@ -123,6 +120,22 @@ jobs:
           USER_PASSWORD: $(USER_PASSWORD)
           HAPPY_PATH_EMAIL: $(HAPPY_PATH_EMAIL)
         displayName: "Run Cypress Tests"
+
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFormat: 'JUnit'
+          testResultsFiles: '**/cypress/reports/junit/*.xml'
+          mergeTestResults: true
+          testRunTitle: 'Appeals E2E - ${{ parameters.Environment }}'
+        displayName: "Publish Test Results"
+
+      - task: PublishBuildArtifacts@1
+        condition: succeededOrFailed()
+        inputs:
+          pathToPublish: 'appeals/e2e/cypress/reports/html'
+          artifactName: 'TestReport'
+        displayName: "Publish HTML Report"
 
       - task: PublishBuildArtifacts@1
         condition: failed()
