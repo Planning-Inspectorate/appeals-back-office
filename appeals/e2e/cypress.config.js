@@ -17,10 +17,26 @@ require('dotenv').config();
 const app = process.env.APP;
 
 module.exports = defineConfig({
+	reporter: require.resolve('cypress-multi-reporters'),
+	reporterOptions: {
+		reporterEnabled: 'cypress-mochawesome-reporter, mocha-junit-reporter',
+		mochaJunitReporterReporterOptions: {
+			mochaFile: 'cypress/reports/junit/results-[hash].xml',
+			toConsole: false
+		},
+		cypressMochawesomeReporterReporterOptions: {
+			charts: true,
+			reportPageTitle: 'Appeals Back Office E2E',
+			embeddedScreenshots: true,
+			inlineAssets: true
+		}
+	},
 	e2e: {
 		async setupNodeEvents(on, config) {
 			// Set timezone explicitly for CI consistency
 			process.env.TZ = 'Europe/London';
+
+			require('cypress-mochawesome-reporter/plugin')(on);
 
 			on('task', { AzureSignIn: azureSignIn });
 			on('task', { ClearAllCookies: clearAllCookies });
@@ -58,7 +74,7 @@ module.exports = defineConfig({
 		experimentalRunAllSpecs: true,
 		chromeWebSecurity: false,
 		video: false,
-		retries: 0,
+		retries: 1,
 		redirectionLimit: 50
 	}
 });
