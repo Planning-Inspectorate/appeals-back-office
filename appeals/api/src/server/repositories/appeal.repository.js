@@ -1364,6 +1364,7 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 	appealRule6Parties: {
 		select: {
 			id: true,
+			serviceUserId: true,
 			serviceUser: {
 				select: {
 					id: true,
