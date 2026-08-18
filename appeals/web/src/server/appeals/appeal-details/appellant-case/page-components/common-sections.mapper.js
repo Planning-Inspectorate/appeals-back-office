@@ -173,7 +173,7 @@ export function buildAdditionalDocumentsCard(
 
 	const actionsItems = [];
 
-	if (hasDocs && isFolderInfo(correspondenceFolder)) {
+	if (hasDocs) {
 		actionsItems.push({
 			text: 'Manage',
 			visuallyHiddenText: 'additional documents',
