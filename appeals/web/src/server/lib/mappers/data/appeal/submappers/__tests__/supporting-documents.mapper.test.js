@@ -47,6 +47,7 @@ describe('supporting-documents.mapper', () => {
 				latestDocumentVersion: { isDeleted: false }
 			}
 		];
+		data.appealDetails.supportingDocuments.documentCount = 1;
 
 		const mappedData = mapSupportingDocuments(data);
 
@@ -63,14 +64,7 @@ describe('supporting-documents.mapper', () => {
 	});
 
 	it('should show plural documents when the folder has multiple documents', () => {
-		data.appealDetails.supportingDocuments.documents = [
-			{
-				latestDocumentVersion: { isDeleted: false }
-			},
-			{
-				latestDocumentVersion: { isDeleted: false }
-			}
-		];
+		data.appealDetails.supportingDocuments.documentCount = 2;
 
 		const mappedData = mapSupportingDocuments(data);
 

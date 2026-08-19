@@ -10,6 +10,7 @@ import { getDocumentRedactionStatuses } from '#appeals/appeal-documents/appeal.d
 import { isAtEditEntrypoint } from '#lib/edit-utilities.js';
 import logger from '#lib/logger.js';
 import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
+import { redactionStatusIdToKey, redactionStatusKeyToId } from '#lib/redaction-statuses.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
 import config from '@pins/appeals.web/environment/config.js';
@@ -208,16 +209,17 @@ export const postCheckYourAnswers = async (request, response) => {
 		(/** @type {AppealRule6Party} */ { id }) => id === Number(rule6PartyId)
 	);
 
-	const folderId = fileUploadInfo.folderId;
+	const { folderId, files: uploadFiles } = fileUploadInfo;
 
 	try {
 		const redactionStatuses = await getDocumentRedactionStatuses(apiClient);
 
 		if (!redactionStatuses) throw new Error('Redaction statuses could not be retrieved');
 
-		const noRedactionRequiredStatusId = redactionStatuses?.find(
-			(status) => status.key === APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED
-		)?.id;
+		const noRedactionRequiredStatusId = redactionStatusKeyToId(
+			redactionStatuses,
+			APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED
+		);
 
 		if (!noRedactionRequiredStatusId) {
 			throw new Error('Default redaction status not found.');
@@ -229,7 +231,7 @@ export const postCheckYourAnswers = async (request, response) => {
 				config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
 			blobStorageContainer: config.blobStorageDefaultContainer,
 			appellantCaseId: Number(currentAppeal.appellantCaseId),
-			documents: fileUploadInfo.files.map(
+			documents: uploadFiles.map(
 				(/** @type {import('#lib/ts-utilities.js').FileUploadInfoItem} */ document) => {
 					/** @type {import('@pins/appeals/index.js').MappedDocument} */
 					const mappedDocument = {
@@ -251,23 +253,37 @@ export const postCheckYourAnswers = async (request, response) => {
 			)
 		};
 
+		// creates document record in database before either creating rep or create repAttachment relationship
 		await createNewDocument(apiClient, appealId, addDocumentsRequestPayload);
 
 		const representedId = rule6Party?.serviceUserId;
 
-		// @ts-ignore
-		fileUploadInfo.files.map(async (document) => {
+		// path for manually added reps, where rep added as a doc
+		if (session.createNewRepresentation) {
+			//@ts-ignore
+			const documentGuids = uploadFiles.map((document) => document.GUID);
+			const firstDocument = uploadFiles[0];
+
+			const redactionStatus =
+				redactionStatusIdToKey(redactionStatuses, firstDocument?.redactionStatus) ||
+				APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED;
+
 			const payload = buildPayload(
 				representationType,
-				document.GUID,
-				document.redactionStatus,
-				document.receivedDate,
+				documentGuids,
+				redactionStatus,
+				firstDocument.receivedDate,
 				representedId
 			);
-			session.createNewRepresentation
-				? await postRepresentation(request.apiClient, appealId, payload, representationType)
-				: await patchRepresentationAttachments(apiClient, appealId, id, [document.GUID]);
-		});
+
+			await postRepresentation(apiClient, appealId, payload, representationType);
+		} else {
+			// path for documents added as supporting docs for rep
+			// @ts-ignore
+			fileUploadInfo.files.map(async (document) => {
+				await patchRepresentationAttachments(apiClient, appealId, id, [document.GUID]);
+			});
+		}
 	} catch (error) {
 		logger.error(
 			error,
@@ -365,7 +381,7 @@ export const postCheckYourAnswers = async (request, response) => {
 
 /**
  * @param {string} representationType
- * @param {string} documentGuid
+ * @param {string[]} documentGuids
  * @param {string} redactionStatus
  * @param {string} createdDate
  * @param {number} [representedId]
@@ -373,7 +389,7 @@ export const postCheckYourAnswers = async (request, response) => {
  */
 export const buildPayload = (
 	representationType,
-	documentGuid,
+	documentGuids,
 	redactionStatus,
 	createdDate,
 	representedId
@@ -395,7 +411,7 @@ export const buildPayload = (
 	].includes(representationType);
 
 	return {
-		attachments: [documentGuid],
+		attachments: [...documentGuids],
 		redactionStatus,
 		source,
 		dateCreated: createdDate,

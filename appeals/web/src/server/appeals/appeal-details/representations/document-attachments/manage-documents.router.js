@@ -18,7 +18,7 @@ router.param('folderId', (req, res, next) => {
 router
 	.route('/')
 	.get(
-		assertUserHasPermission(permissionNames.updateCase),
+		assertUserHasPermission(permissionNames.updateCase, permissionNames.readOnlyDocumentsFolder),
 		asyncHandler(controller.goToManageDocuments)
 	);
 

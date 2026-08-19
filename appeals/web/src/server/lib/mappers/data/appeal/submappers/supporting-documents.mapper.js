@@ -5,9 +5,7 @@ export const mapSupportingDocuments = ({ appealDetails, currentRoute }) => {
 	const id = 'supporting-documents';
 	const folderInfo = appealDetails.supportingDocuments;
 	const folderId = folderInfo?.folderId;
-	const documentCount =
-		folderInfo?.documents?.filter((document) => !document.latestDocumentVersion?.isDeleted)
-			.length ?? 0;
+	const documentCount = folderInfo?.documentCount ?? 0;
 	const hasDocuments = documentCount > 0;
 	let statusText = 'No documents';
 
