@@ -17,7 +17,7 @@ describe('appeal-valid-start-case-s78-expedited-lpa.md', () => {
 				start_date: '01 January 2025',
 				local_planning_authority: 'Bristol City Council',
 				appeal_type: 'Planning',
-				procedure_type: 'written representations',
+				procedure_type: 'written representations (Part 1)',
 				questionnaire_due_date: '01 January 2025',
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
@@ -31,7 +31,7 @@ describe('appeal-valid-start-case-s78-expedited-lpa.md', () => {
 		const expectedContent = [
 			'You have a new planning appeal against the application 48269/APP/2021/1482.',
 			'',
-			'We will decide the appeal by written representations.',
+			'We will decide the appeal by written representations (Part 1).',
 			'',
 			'There will be no local planning authority statement, interested party comments or final comments.',
 			'',
@@ -89,7 +89,7 @@ describe('appeal-valid-start-case-s78-expedited-lpa.md', () => {
 				start_date: '01 January 2025',
 				local_planning_authority: 'Bristol City Council',
 				appeal_type: 'Planning',
-				procedure_type: 'written representations',
+				procedure_type: 'written representations (Part 1)',
 				questionnaire_due_date: '01 January 2025',
 				lpa_statement_deadline: '10 January 2025',
 				ip_comments_deadline: '20 January 2025',
@@ -107,7 +107,7 @@ describe('appeal-valid-start-case-s78-expedited-lpa.md', () => {
 		const expectedContent = [
 			'You have a new planning appeal against the application 48269/APP/2021/1482.',
 			'',
-			'We will decide the appeal by written representations.',
+			'We will decide the appeal by written representations (Part 1).',
 			'',
 			'There will be no local planning authority statement, interested party comments or final comments.',
 			'',
@@ -167,7 +167,7 @@ describe('appeal-valid-start-case-s78-expedited-lpa.md', () => {
 				start_date: '01 January 2025',
 				local_planning_authority: 'Bristol City Council',
 				appeal_type: 'Planning',
-				procedure_type: 'written representations',
+				procedure_type: 'written representations (Part 1)',
 				questionnaire_due_date: '01 January 2025',
 				lpa_statement_deadline: '10 January 2025',
 				ip_comments_deadline: '20 January 2025',
@@ -185,7 +185,7 @@ describe('appeal-valid-start-case-s78-expedited-lpa.md', () => {
 		const expectedContent = [
 			'You have a new planning appeal against the application 48269/APP/2021/1482.',
 			'',
-			'We will decide the appeal by written representations.',
+			'We will decide the appeal by written representations (Part 1).',
 			'',
 			'There will be no local planning authority statement, interested party comments or final comments.',
 			'',
