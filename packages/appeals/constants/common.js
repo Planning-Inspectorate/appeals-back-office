@@ -40,7 +40,8 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	ENFORCEMENT_CHANGE_PROCEDURE_LINKED: 'featureFlagEnforcementChangeProcedureLinked',
 	SHARE_COSTS: 'featureFlagShareCosts',
 	ENFORCEMENT_CHANGE_PROCEDURE: 'featureFlagEnforcementChangeProcedure',
-	SHARING_SUPPORTING_DOCUMENTS: 'featureFlagSharingSupportingDocuments'
+	SHARING_SUPPORTING_DOCUMENTS: 'featureFlagSharingSupportingDocuments',
+	SHARING_INQUIRY_EVENT_DOCUMENTS: 'featureFlagSharingInquiryEventDocuments'
 });
 
 export const APPEAL_TYPE = Object.freeze({

@@ -20993,6 +20993,300 @@ export interface Appeal {
 			}[];
 		}[];
 	};
+	inquiryEventDocuments?: {
+		caseId?: number;
+		folderId?: number;
+		path?: string;
+		documents?: {
+			/** @format uuid */
+			id: string;
+			caseId?: number;
+			folderId?: number;
+			name: string;
+			/** @format date-time */
+			createdAt?: string;
+			latestDocumentVersion?: {
+				/** @format uuid */
+				id: string;
+				version: number;
+				fileName?: string;
+				originalFileName?: string;
+				size?: number;
+				mime?: string;
+				/** @format date-time */
+				createdAt?: string;
+				/** @format date-time */
+				dateReceived?: string;
+				redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+				virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+				documentType?:
+					| 'additionalDocumentsLPA'
+					| 'appealNotification'
+					| 'appellantCaseCorrespondence'
+					| 'appellantCaseWithdrawalLetter'
+					| 'appellantCostsApplication'
+					| 'appellantCostsCorrespondence'
+					| 'appellantCostsDecisionLetter'
+					| 'appellantCostsWithdrawal'
+					| 'appellantFinalComment'
+					| 'appellantProofOfEvidence'
+					| 'appellantStatement'
+					| 'appellantWitnessesEvidence'
+					| 'applicationDecisionLetter'
+					| 'article4Direction'
+					| 'caseDecisionLetter'
+					| 'changedDescription'
+					| 'communityInfrastructureLevy'
+					| 'conservationDocuments'
+					| 'conservationMap'
+					| 'consultationResponses'
+					| 'crossTeamCorrespondence'
+					| 'definitiveMapAndStatementExtract'
+					| 'definitiveMapStatement'
+					| 'delegatedReport'
+					| 'designAccessStatement'
+					| 'designAccessStatementLPA'
+					| 'developmentPlanPolicies'
+					| 'discontinuanceNotice'
+					| 'eiaEnvironmentalStatement'
+					| 'eiaEnvironmentalStatementAppellant'
+					| 'eiaScopingOpinion'
+					| 'eiaScreeningDirection'
+					| 'eiaScreeningOpinion'
+					| 'emergingPlan'
+					| 'enforcementList'
+					| 'enforcementNotice'
+					| 'enforcementNoticePlan'
+					| 'environmentalAssessment'
+					| 'generalSupporting'
+					| 'groundAFeeReceipt'
+					| 'groundASupporting'
+					| 'groundBSupporting'
+					| 'groundCSupporting'
+					| 'groundDSupporting'
+					| 'groundESupporting'
+					| 'groundFSupporting'
+					| 'groundGSupporting'
+					| 'groundHSupporting'
+					| 'groundISupporting'
+					| 'groundJSupporting'
+					| 'groundKSupporting'
+					| 'hearingProcess'
+					| 'historicEnglandConsultation'
+					| 'inquiryCore'
+					| 'inquiryPostEvent'
+					| 'inspectorCorrespondence'
+					| 'interestedPartyComment'
+					| 'localDevelopmentOrder'
+					| 'lpaCaseCorrespondence'
+					| 'lpaCostsApplication'
+					| 'lpaCostsCorrespondence'
+					| 'lpaCostsDecisionLetter'
+					| 'lpaCostsWithdrawal'
+					| 'lpaEnforcementNotice'
+					| 'lpaEnforcementNoticePlan'
+					| 'lpaEnforcementNoticeWithdrawal'
+					| 'lpaFinalComment'
+					| 'lpaProofOfEvidence'
+					| 'lpaStatement'
+					| 'lpaWitnessesEvidence'
+					| 'mainPartyCorrespondence'
+					| 'newPlansDrawings'
+					| 'originalApplicationForm'
+					| 'otherNewDocuments'
+					| 'otherPartyRepresentations'
+					| 'otherRelevantMatters'
+					| 'otherRelevantPolicies'
+					| 'ownershipCertificate'
+					| 'planShowingExtentOfOrder'
+					| 'planningContraventionNotice'
+					| 'planningObligation'
+					| 'planningOfficerReport'
+					| 'planningPermission'
+					| 'plansDrawings'
+					| 'plansDrawingsLPA'
+					| 'priorCorrespondenceWithPINS'
+					| 'relatedApplications'
+					| 'rule6ProofOfEvidence'
+					| 'rule6Statement'
+					| 'rule6WitnessesEvidence'
+					| 'statementCommonGround'
+					| 'stopNotice'
+					| 'supplementaryPlanning'
+					| 'treePreservationPlan'
+					| 'uncategorised'
+					| 'whoNotified'
+					| 'whoNotifiedLetterToNeighbours'
+					| 'whoNotifiedPressAdvert'
+					| 'whoNotifiedSiteNotice';
+				stage?:
+					| 'appeal-decision'
+					| 'appellant-case'
+					| 'cancellation'
+					| 'costs'
+					| 'evidence'
+					| 'final-comments'
+					| 'internal'
+					| 'lpa-questionnaire'
+					| 'statements'
+					| 'third-party-comments'
+					| 'witnesses';
+				documentURI: string;
+				isLateEntry?: boolean;
+				isDeleted?: boolean;
+				versionAudit?:
+					| {
+							/** @format date-time */
+							loggedAt: string;
+							/** @format uuid */
+							user: string;
+							action: string;
+							details: string;
+					  }[]
+					| null;
+			};
+			allVersions?: {
+				/** @format uuid */
+				id: string;
+				version: number;
+				fileName?: string;
+				originalFileName?: string;
+				size?: number;
+				mime?: string;
+				/** @format date-time */
+				createdAt?: string;
+				/** @format date-time */
+				dateReceived?: string;
+				redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+				virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+				documentType?:
+					| 'additionalDocumentsLPA'
+					| 'appealNotification'
+					| 'appellantCaseCorrespondence'
+					| 'appellantCaseWithdrawalLetter'
+					| 'appellantCostsApplication'
+					| 'appellantCostsCorrespondence'
+					| 'appellantCostsDecisionLetter'
+					| 'appellantCostsWithdrawal'
+					| 'appellantFinalComment'
+					| 'appellantProofOfEvidence'
+					| 'appellantStatement'
+					| 'appellantWitnessesEvidence'
+					| 'applicationDecisionLetter'
+					| 'article4Direction'
+					| 'caseDecisionLetter'
+					| 'changedDescription'
+					| 'communityInfrastructureLevy'
+					| 'conservationDocuments'
+					| 'conservationMap'
+					| 'consultationResponses'
+					| 'crossTeamCorrespondence'
+					| 'definitiveMapAndStatementExtract'
+					| 'definitiveMapStatement'
+					| 'delegatedReport'
+					| 'designAccessStatement'
+					| 'designAccessStatementLPA'
+					| 'developmentPlanPolicies'
+					| 'discontinuanceNotice'
+					| 'eiaEnvironmentalStatement'
+					| 'eiaEnvironmentalStatementAppellant'
+					| 'eiaScopingOpinion'
+					| 'eiaScreeningDirection'
+					| 'eiaScreeningOpinion'
+					| 'emergingPlan'
+					| 'enforcementList'
+					| 'enforcementNotice'
+					| 'enforcementNoticePlan'
+					| 'environmentalAssessment'
+					| 'generalSupporting'
+					| 'groundAFeeReceipt'
+					| 'groundASupporting'
+					| 'groundBSupporting'
+					| 'groundCSupporting'
+					| 'groundDSupporting'
+					| 'groundESupporting'
+					| 'groundFSupporting'
+					| 'groundGSupporting'
+					| 'groundHSupporting'
+					| 'groundISupporting'
+					| 'groundJSupporting'
+					| 'groundKSupporting'
+					| 'hearingProcess'
+					| 'historicEnglandConsultation'
+					| 'inquiryCore'
+					| 'inquiryPostEvent'
+					| 'inspectorCorrespondence'
+					| 'interestedPartyComment'
+					| 'localDevelopmentOrder'
+					| 'lpaCaseCorrespondence'
+					| 'lpaCostsApplication'
+					| 'lpaCostsCorrespondence'
+					| 'lpaCostsDecisionLetter'
+					| 'lpaCostsWithdrawal'
+					| 'lpaEnforcementNotice'
+					| 'lpaEnforcementNoticePlan'
+					| 'lpaEnforcementNoticeWithdrawal'
+					| 'lpaFinalComment'
+					| 'lpaProofOfEvidence'
+					| 'lpaStatement'
+					| 'lpaWitnessesEvidence'
+					| 'mainPartyCorrespondence'
+					| 'newPlansDrawings'
+					| 'originalApplicationForm'
+					| 'otherNewDocuments'
+					| 'otherPartyRepresentations'
+					| 'otherRelevantMatters'
+					| 'otherRelevantPolicies'
+					| 'ownershipCertificate'
+					| 'planShowingExtentOfOrder'
+					| 'planningContraventionNotice'
+					| 'planningObligation'
+					| 'planningOfficerReport'
+					| 'planningPermission'
+					| 'plansDrawings'
+					| 'plansDrawingsLPA'
+					| 'priorCorrespondenceWithPINS'
+					| 'relatedApplications'
+					| 'rule6ProofOfEvidence'
+					| 'rule6Statement'
+					| 'rule6WitnessesEvidence'
+					| 'statementCommonGround'
+					| 'stopNotice'
+					| 'supplementaryPlanning'
+					| 'treePreservationPlan'
+					| 'uncategorised'
+					| 'whoNotified'
+					| 'whoNotifiedLetterToNeighbours'
+					| 'whoNotifiedPressAdvert'
+					| 'whoNotifiedSiteNotice';
+				stage?:
+					| 'appeal-decision'
+					| 'appellant-case'
+					| 'cancellation'
+					| 'costs'
+					| 'evidence'
+					| 'final-comments'
+					| 'internal'
+					| 'lpa-questionnaire'
+					| 'statements'
+					| 'third-party-comments'
+					| 'witnesses';
+				documentURI: string;
+				isLateEntry?: boolean;
+				isDeleted?: boolean;
+				versionAudit?:
+					| {
+							/** @format date-time */
+							loggedAt: string;
+							/** @format uuid */
+							user: string;
+							action: string;
+							details: string;
+					  }[]
+					| null;
+			}[];
+		}[];
+	};
 }
 
 export interface AppellantCaseUpdateRequest {
