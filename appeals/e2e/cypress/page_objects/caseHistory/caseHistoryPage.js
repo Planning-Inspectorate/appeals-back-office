@@ -53,7 +53,7 @@ export class CaseHistoryPage extends Page {
 		caseDetailsPage.clickBackLink();
 	}
 
-	verifyCaseHistoryValue(value, checkIncluded = true) {
+	verifyCaseHistoryValue(value) {
 		const expectedText = value.toLocaleLowerCase();
 		cy.writeLog(`Verifying case history value: ${expectedText}`); // Log the expected text for debugging
 
@@ -76,5 +76,24 @@ export class CaseHistoryPage extends Page {
 		values.forEach((value) => {
 			this.verifyCaseHistoryValue(value);
 		});
+	}
+
+	verifyNotCaseHistoryValue(value) {
+		const expectedText = value.toLocaleLowerCase();
+		cy.writeLog(`Verifying there is no case history value containing: ${expectedText}`); // Log the expected text for debugging
+
+		let found = false;
+		cy.get('.govuk-table__body')
+			.children()
+			.each(($row) => {
+				const rowText = $row.text().trim().toLowerCase();
+				cy.writeLog(`Row text: ${rowText}`); // Log the row text for debugging
+				if (rowText.includes(expectedText)) {
+					found = true;
+				}
+			})
+			.then(() => {
+				expect(found, `Expected no row to contain "${expectedText}"`).to.be.false;
+			});
 	}
 }

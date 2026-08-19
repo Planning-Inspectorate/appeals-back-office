@@ -1089,6 +1089,7 @@ type GetCaseNoteResponse = {
 
 export interface CreateSiteVisitData {
 	appealId: number;
+	appealTypeKey: string;
 	visitDate?: Date;
 	visitEndTime?: Date;
 	visitStartTime?: Date;
