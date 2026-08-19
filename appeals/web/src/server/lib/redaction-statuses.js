@@ -21,3 +21,21 @@ export function redactionStatusIdToName(redactionStatuses, id) {
 		.find((redactionStatus) => redactionStatus.id === id)
 		?.name?.toLowerCase();
 }
+
+/**
+ * @param {import("#appeals/appeal-documents/appeal-documents.mapper.js").RedactionStatus[]} redactionStatuses
+ * @param {string} key
+ * @returns {number|undefined}
+ */
+export function redactionStatusKeyToId(redactionStatuses, key) {
+	return Number(redactionStatuses.find((redactionStatus) => redactionStatus.key === key)?.id);
+}
+
+/**
+ * @param {import("#appeals/appeal-documents/appeal-documents.mapper.js").RedactionStatus[]} redactionStatuses
+ * @param {number} id
+ * @returns {string|undefined}
+ */
+export function redactionStatusIdToKey(redactionStatuses, id) {
+	return redactionStatuses.find((redactionStatus) => redactionStatus.id === id)?.key;
+}

@@ -72,7 +72,7 @@ describe('representations add documents controller utilities', () => {
 			({ type, source, hasRepresentedId, expectedRepresentationText }) => {
 				const result = buildPayload(
 					type,
-					documentGuid,
+					[documentGuid],
 					redactionStatus,
 					createdDate,
 					hasRepresentedId ? representedId : undefined
