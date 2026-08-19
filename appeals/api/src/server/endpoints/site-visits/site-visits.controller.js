@@ -55,6 +55,7 @@ const postSiteVisit = async (req, res) => {
 	} = req;
 
 	const appealId = Number(params.appealId);
+	const appealTypeKey = appeal.appealType?.key || '';
 	const missedSiteVisit = await getMissedSiteVisit(appealId);
 
 	if (missedSiteVisit) {
@@ -76,6 +77,7 @@ const postSiteVisit = async (req, res) => {
 	/** @type { CreateSiteVisitData } */
 	const siteVisitData = {
 		appealId: Number(appealId),
+		appealTypeKey,
 		visitDate: isNaN(new Date(visitDate).getTime()) ? undefined : new Date(visitDate),
 		visitEndTime: isNaN(new Date(visitEndTime).getTime()) ? undefined : new Date(visitEndTime),
 		visitStartTime: isNaN(new Date(visitStartTime).getTime())

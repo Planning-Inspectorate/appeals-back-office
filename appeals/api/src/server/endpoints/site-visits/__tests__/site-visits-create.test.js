@@ -60,24 +60,33 @@ describe('POST /:appealId/site-visits', () => {
 		jest.useRealTimers();
 	});
 
-	describe.each([
+	const notifyEnabledUnaccompaniedTestCases = [
 		['householdAppeal', householdAppealData],
 		['advertisementAppeal', advertisementAppealData],
 		['casPlanningAppeal', casPlanningAppealData],
 		['casAdvertAppeal', casAdvertAppealData],
 		['fullPlanningAppeal', fullPlanningAppealData],
-		['listedBuildingAppeal', listedBuildingAppealData],
+		['listedBuildingAppeal', listedBuildingAppealData]
+	];
+
+	const notifyDisabledUnaccompaniedTestCases = [
 		['ldcAppeal', ldcAppeal],
+		['enforcementAppeal', enforcementNoticeAppeal],
 		['elbAppeal', appealEnforcementListed]
-	])('create site visit for appeal type %s', (_, appeal) => {
-		beforeEach(() => {
+	];
+
+	const testCases = [
+		...notifyEnabledUnaccompaniedTestCases,
+		...notifyDisabledUnaccompaniedTestCases
+	];
+
+	describe(`creates an Unaccompanied site visit and sends notify email to appellant/agent`, () => {
+		test.each(notifyEnabledUnaccompaniedTestCases)('appeal type %s', async (_, appeal) => {
 			// @ts-ignore
 			databaseConnector.siteVisit.findUnique.mockResolvedValue({
 				...appeal.siteVisit,
 				appeal: appeal
 			});
-		});
-		test('creates an Unaccompanied site visit and sends notify email to appellant/agent', async () => {
 			const { siteVisit } = JSON.parse(JSON.stringify(appeal));
 
 			siteVisit.siteVisitType.name = SITE_VISIT_TYPE_UNACCOMPANIED;
@@ -129,8 +138,57 @@ describe('POST /:appealId/site-visits', () => {
 
 			expect(response.status).toEqual(201);
 		});
+	});
 
-		test('creates an Accompanied site visit and sends GMT date and time notify email to appellant/agent and lpa', async () => {
+	describe(`creates an Unaccompanied site visit and does not send notify email to appellant/agent`, () => {
+		test.each(notifyDisabledUnaccompaniedTestCases)('appeal type %s', async (_, appeal) => {
+			// @ts-ignore
+			databaseConnector.siteVisit.findUnique.mockResolvedValue({
+				...appeal.siteVisit,
+				appeal: appeal
+			});
+
+			const { siteVisit } = JSON.parse(JSON.stringify(appeal));
+
+			siteVisit.siteVisitType.name = SITE_VISIT_TYPE_UNACCOMPANIED;
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+			// @ts-ignore`
+			databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+
+			// Send request using siteVisitData fields
+			const response = await request
+				.post(`/appeals/${appeal.id}/site-visits`)
+				.send({
+					visitDate: siteVisit.visitDate,
+					visitEndTime: siteVisit.visitEndTime,
+					visitStartTime: siteVisit.visitStartTime,
+					visitType: siteVisit.siteVisitType.name
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.body).toEqual({
+				visitDate: siteVisit.visitDate,
+				visitEndTime: siteVisit.visitEndTime,
+				visitStartTime: siteVisit.visitStartTime,
+				visitType: siteVisit.siteVisitType.name
+			});
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(0);
+
+			expect(response.status).toEqual(201);
+		});
+	});
+
+	describe('creates an Accompanied site visit and sends GMT date and time notify email to appellant/agent and lpa', () => {
+		test.each(testCases)('appeal type %s', async (_, appeal) => {
+			// @ts-ignore
+			databaseConnector.siteVisit.findUnique.mockResolvedValue({
+				...appeal.siteVisit,
+				appeal: appeal
+			});
+
 			const { siteVisit } = JSON.parse(JSON.stringify(appeal));
 
 			siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCOMPANIED;
@@ -201,8 +259,16 @@ describe('POST /:appealId/site-visits', () => {
 
 			expect(response.status).toEqual(201);
 		});
+	});
 
-		test('creates an Access Required site visit and sends notify email to appellant/agent', async () => {
+	describe('creates an Access Required site visit and sends notify email to appellant/agent', () => {
+		test.each(testCases)('appeal type %s', async (_, appeal) => {
+			// @ts-ignore
+			databaseConnector.siteVisit.findUnique.mockResolvedValue({
+				...appeal.siteVisit,
+				appeal: appeal
+			});
+
 			const { siteVisit } = JSON.parse(JSON.stringify(appeal));
 
 			siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCESS_REQUIRED;
@@ -256,7 +322,16 @@ describe('POST /:appealId/site-visits', () => {
 
 			expect(response.status).toEqual(201);
 		});
-		test('creates an Access Required site visit with no date and time and does not send notify email to appellant/agent', async () => {
+	});
+
+	describe('creates an Access Required site visit with no date and time and does not send notify email to appellant/agent', () => {
+		test.each(testCases)('appeal type %s', async (_, appeal) => {
+			// @ts-ignore
+			databaseConnector.siteVisit.findUnique.mockResolvedValue({
+				...appeal.siteVisit,
+				appeal: appeal
+			});
+
 			const { siteVisit } = JSON.parse(JSON.stringify(appeal));
 
 			siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCESS_REQUIRED;

@@ -7,6 +7,7 @@ import { APPEAL_TYPE } from '../../constants/common';
 import {
 	displayFinalComments,
 	displayPlanningObligation,
+	sendSiteVisitScheduleUnaccompaniedNotify,
 	targetStateOnLpaqComplete,
 	targetStateOnStatementsComplete
 } from '../business-rules.js';
@@ -222,5 +223,27 @@ describe('targetStateOnStatementsComplete', () => {
 				APPEAL_CASE_STATUS.EVIDENCE
 			);
 		});
+	});
+});
+
+describe('sendSiteVisitScheduleUnaccompaniedNotify', () => {
+	it.each([
+		APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE,
+		APPEAL_TYPE.ENFORCEMENT_NOTICE,
+		APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
+	])('returns false for appeal type %s', (appealType) => {
+		expect(sendSiteVisitScheduleUnaccompaniedNotify(appealType)).toBe(false);
+	});
+
+	it.each([
+		APPEAL_TYPE.HOUSEHOLDER,
+		APPEAL_TYPE.S78,
+		APPEAL_TYPE.ADVERTISEMENT,
+		APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+		APPEAL_TYPE.CAS_PLANNING,
+		APPEAL_TYPE.CAS_ADVERTISEMENT,
+		APPEAL_TYPE.DISCONTINUANCE_NOTICE
+	])('returns true for appeal type %s', (appealType) => {
+		expect(sendSiteVisitScheduleUnaccompaniedNotify(appealType)).toBe(true);
 	});
 });
