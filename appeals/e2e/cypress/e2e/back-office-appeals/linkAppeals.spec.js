@@ -129,7 +129,6 @@ describe('Link appeals', () => {
 				//link appeal
 				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
 				caseDetailsPage.checkStatusOfCase('Lead', 1);
-				v;
 				//child appeal
 				caseDetailsPage.clickLinkedAppeal(childCaseObj);
 				caseDetailsPage.verifyAppealRefOnCaseDetails(childCaseObj.reference);
