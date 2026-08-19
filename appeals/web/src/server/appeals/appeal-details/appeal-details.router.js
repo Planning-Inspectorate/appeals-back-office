@@ -28,6 +28,7 @@ import appealTypeChangeRouter from './change-appeal-type/change-appeal-type.rout
 import costsRouter from './costs/costs.router.js';
 import environmentalAssessmentRouter from './environmental-assessment/environmental-assessment.router.js';
 import hearingRouter from './hearing/hearing.router.js';
+import inquiryEventDocumentsRouter from './inquiry/event-documents/inquiry-event-documents.router.js';
 import inquiryRouter from './inquiry/inquiry.router.js';
 import inspectorAccessRouter from './inspector-access/inspector-access.router.js';
 import internalCorrespondenceRouter from './internal-correspondence/internal-correspondence.router.js';
@@ -136,6 +137,17 @@ if (isFeatureActive(FEATURE_FLAG_NAMES.SHARING_SUPPORTING_DOCUMENTS)) {
 			permissionNames.viewAssignedCaseDetails
 		),
 		supportingDocumentsRouter
+	);
+}
+if (isFeatureActive(FEATURE_FLAG_NAMES.SHARING_INQUIRY_EVENT_DOCUMENTS)) {
+	router.use(
+		'/:appealId/inquiry-event-documents',
+		validateAppealExists,
+		assertUserHasPermission(
+			permissionNames.viewCaseDetails,
+			permissionNames.viewAssignedCaseDetails
+		),
+		inquiryEventDocumentsRouter
 	);
 }
 

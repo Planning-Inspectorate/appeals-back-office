@@ -38,6 +38,10 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 				isInquiryProcedureType
 					? [mappedData.appeal?.inquiryDocuments.display.tableItem || []]
 					: []),
+				...(isInquiryProcedureType &&
+				isFeatureActive(FEATURE_FLAG_NAMES.SHARING_INQUIRY_EVENT_DOCUMENTS)
+					? [mappedData.appeal.inquiryEventDocuments.display.tableItem]
+					: []),
 				...(!isChildAppeal(appealDetails) && !isExpeditedAppealType
 					? [
 							caseStarted ? mappedData.appeal.appellantStatement.display.tableItem : undefined,

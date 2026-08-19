@@ -4425,39 +4425,39 @@ describe('appeal-details', () => {
 					const table = element.querySelector('#case-documentation-table');
 					expect(table.innerHTML).toMatchSnapshot();
 					const rows = table.querySelectorAll('.govuk-table__body .govuk-table__row');
-					expect(rows[5].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
+					expect(rows[6].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
 						'Test Rule 6 Party statement'
 					);
-					expect(rows[5].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
+					expect(rows[6].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
 						''
 					);
-					expect(rows[5].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
+					expect(rows[6].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
 						''
 					);
 					expect(
-						rows[5].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
+						rows[6].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
 					).toBe('Add<span class="govuk-visually-hidden"> Test Rule 6 Party statement</span>');
 					expect(
-						rows[5]
+						rows[6]
 							.querySelector('.govuk-table__cell:nth-child(4) a.govuk-link')
 							.getAttribute('href')
 					).toBe('/appeals-service/appeal-details/2/rule-6-party-statement/1/add-document');
-					expect(rows[9].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
+					expect(rows[10].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
 						'Test Rule 6 Party proof of evidence and witness'
 					);
-					expect(rows[9].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
+					expect(rows[10].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
 						'Awaiting proof of evidence and witness'
 					);
-					expect(rows[9].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
+					expect(rows[10].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
 						''
 					);
 					expect(
-						rows[9].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
+						rows[10].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
 					).toBe(
 						'Add<span class="govuk-visually-hidden"> Test Rule 6 Party proof of evidence</span>'
 					);
 					expect(
-						rows[9]
+						rows[10]
 							.querySelector('.govuk-table__cell:nth-child(4) a.govuk-link')
 							.getAttribute('href')
 					).toBe(
@@ -4516,41 +4516,41 @@ describe('appeal-details', () => {
 					expect(table.innerHTML).toMatchSnapshot();
 
 					const rows = table.querySelectorAll('.govuk-table__body .govuk-table__row');
-					expect(rows[5].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
+					expect(rows[6].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
 						'Test Rule 6 Party statement'
 					);
-					expect(rows[5].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
+					expect(rows[6].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
 						'Ready to review'
 					);
-					expect(rows[5].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
+					expect(rows[6].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
 						'1 January 2025'
 					);
 					expect(
-						rows[5].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
+						rows[6].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
 					).toBe('Review<span class="govuk-visually-hidden"> Test Rule 6 Party statement</span>');
 					expect(
-						rows[5]
+						rows[6]
 							.querySelector('.govuk-table__cell:nth-child(4) a.govuk-link')
 							.getAttribute('href')
 					).toBe(
 						'/appeals-service/appeal-details/2/rule-6-party-statement/1?backUrl=%2Fappeals-service%2Fappeal-details%2F2'
 					);
-					expect(rows[9].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
+					expect(rows[10].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
 						'Test Rule 6 Party proof of evidence and witness'
 					);
-					expect(rows[9].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
+					expect(rows[10].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
 						'Received'
 					);
-					expect(rows[9].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
+					expect(rows[10].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
 						'1 January 2025'
 					);
 					expect(
-						rows[9].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
+						rows[10].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
 					).toBe(
 						'Review<span class="govuk-visually-hidden"> Test Rule 6 Party proof of evidence</span>'
 					);
 					expect(
-						rows[9]
+						rows[10]
 							.querySelector('.govuk-table__cell:nth-child(4) a.govuk-link')
 							.getAttribute('href')
 					).toBe(
@@ -5140,6 +5140,78 @@ describe('appeal-details', () => {
 						'No documents'
 					);
 					expect(rows[3].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
+						'Not applicable'
+					);
+				});
+			});
+			describe('Inquiry event documents', () => {
+				it(
+					'should render the correct rows without inquiry event documents when procedure type is not' +
+						' inquiry',
+					async () => {
+						const appealId = 2;
+						const appeal = {
+							...appealDataFullPlanning,
+							appealId,
+							procedureType: PROCEDURE_TYPE_NAME.WRITTEN
+						};
+						nock('http://test/').get(`/appeals/${appealId}/page-details`).reply(200, appeal);
+						nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+						nock('http://test/')
+							.get(
+								`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence`
+							)
+							.reply(200, {
+								itemCount: 0
+							});
+
+						const response = await request.get(`${baseUrl}/${appealId}`);
+
+						expect(response.statusCode).toBe(200);
+
+						const element = parseHtml(response.text);
+						const table = element.querySelector('#case-documentation-table');
+						expect(table.innerHTML).toMatchSnapshot();
+						expect(table.innerHTML).not.toContain('Inquiry event documents');
+					}
+				);
+
+				it('should render the inquiry event documents row', async () => {
+					const appealId = 2;
+					const appeal = {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: PROCEDURE_TYPE_NAME.INQUIRY,
+						documentationSummary: {}
+					};
+					nock('http://test/').get(`/appeals/${appealId}/page-details`).reply(200, appeal);
+					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							itemCount: 2,
+							items: [
+								...appellantFinalCommentsAwaitingReview.items,
+								...lpaFinalCommentsAwaitingReview.items
+							]
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const element = parseHtml(response.text);
+					const table = element.querySelector('#case-documentation-table');
+					expect(table.innerHTML).toMatchSnapshot();
+					expect(table.innerHTML).toContain('Inquiry event documents');
+					const rows = table.querySelectorAll('.govuk-table__body .govuk-table__row');
+					expect(rows[4].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
+						'Inquiry event documents'
+					);
+					expect(rows[4].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
+						'No documents'
+					);
+					expect(rows[4].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
 						'Not applicable'
 					);
 				});
