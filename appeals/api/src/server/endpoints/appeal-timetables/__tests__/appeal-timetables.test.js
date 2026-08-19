@@ -1457,7 +1457,7 @@ describe('appeal timetables routes', () => {
 							expect.objectContaining({
 								templateName: 'appeal-valid-start-case-s78-expedited-appellant',
 								personalisation: expect.objectContaining({
-									procedure_type: 'written representations',
+									procedure_type: 'written representations (Part 1)',
 									site_visit: true,
 									costs_info: true
 								})
@@ -1468,7 +1468,7 @@ describe('appeal timetables routes', () => {
 							expect.objectContaining({
 								templateName: 'appeal-valid-start-case-s78-expedited-lpa',
 								personalisation: expect.objectContaining({
-									procedure_type: 'written representations'
+									procedure_type: 'written representations (Part 1)'
 								})
 							})
 						);
