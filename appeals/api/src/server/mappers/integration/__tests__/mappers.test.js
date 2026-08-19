@@ -400,6 +400,16 @@ describe('map-document-entity', () => {
 			expectedPublishedDocumentUri: testUri
 		},
 		{
+			desc: 'inquiry event document published',
+			documentType: APPEAL_DOCUMENT_TYPE.INQUIRY_POST_EVENT,
+			representationType: null,
+			caseStage: 'inquiry',
+			isPublished: true,
+			expectedDocumentType: APPEAL_DOCUMENT_TYPE.INQUIRY_POST_EVENT,
+			expectedCaseStage: 'inquiry',
+			expectedPublishedDocumentUri: testUri
+		},
+		{
 			desc: 'appellant case cost unpublished - still broadcast as published',
 			documentType: APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_CORRESPONDENCE,
 			representationType: null,

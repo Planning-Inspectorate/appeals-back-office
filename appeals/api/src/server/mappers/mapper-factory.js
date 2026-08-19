@@ -400,6 +400,9 @@ function createFoldersLayout(folders, context) {
 				inquiryDocuments: folders.find(
 					(f) => f.path === `inquiry/${APPEAL_DOCUMENT_TYPE.INQUIRY_CORE}`
 				),
+				inquiryEventDocuments: folders.find(
+					(f) => f.path === `inquiry/${APPEAL_DOCUMENT_TYPE.INQUIRY_POST_EVENT}`
+				),
 				costs: {
 					appellantApplicationFolder: folders.find(
 						(f) =>

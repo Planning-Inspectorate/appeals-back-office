@@ -425,6 +425,7 @@ export interface WebAppeal extends SingleAppealDetailsResponse {
 	};
 	environmentalAssessment?: FolderInfo | null;
 	supportingDocuments?: FolderInfo | null;
+	inquiryEventDocuments?: FolderInfo | null;
 	eiaEnvironmentalStatementAppellant?: FolderInfo | null;
 	procedureType?: string | undefined;
 	appealRule6Parties?: AppealRule6Party[] | null;
