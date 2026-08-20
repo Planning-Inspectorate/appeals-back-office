@@ -1,34 +1,28 @@
 import { createNewDocument } from '#app/components/file-uploader.component.js';
-import { postDocumentUpload } from '#appeals/appeal-documents/appeal-documents.controller.js';
+import {
+	postDocumentDetails as postDocumentDetailsHelper,
+	postDocumentUpload,
+	renderDocumentDetails as renderDocumentDetailsHelper
+} from '#appeals/appeal-documents/appeal-documents.controller.js';
 import { getDocumentRedactionStatuses } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { dayMonthYearHourMinuteToDisplayDate } from '#lib/dates.js';
 import { clearEdits, editLink, getSessionValues } from '#lib/edit-utilities.js';
 import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
-import { mapFileUploadInfoToMappedDocuments } from '#lib/mappers/utils/file-upload-info-to-documents.js';
 import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
+import { redactionStatusKeyToId } from '#lib/redaction-statuses.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
+import config from '@pins/appeals.web/environment/config.js';
 import { APPEAL_CASE_STATUS, APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
 import { getAttachmentsFolder } from '../../document-attachments/attachments-service.js';
 import { postRepresentation } from '../../representations.service.js';
-import {
-	postDateSubmittedFactory,
-	postRedactionStatusFactory,
-	renderRedactionStatusFactory
-} from '../common/index.js';
-import {
-	isValidRedactionStatus,
-	name as redactionStatusFieldName,
-	statusFormatMap
-} from '../common/redaction-status.js';
 import { ipAddressPage } from '../interested-party-comments.mapper.js';
 import {
 	checkAddressPage,
-	dateSubmitted,
+	generateCheckAnswersCommentPageComponents,
 	ipDetailsPage,
 	mapSessionToRepresentationRequest,
 	uploadPage
@@ -36,6 +30,7 @@ import {
 
 /** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
+/** @typedef {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem} FileUploadInfoItem */
 
 const getBackLinkUrl = backLinkGenerator('addIpComment');
 
@@ -149,67 +144,65 @@ export async function postUpload(request, response) {
 	const { currentAppeal } = request;
 
 	request.currentFolder = await getAttachmentsFolder(request.apiClient, currentAppeal.appealId);
+
 	await postDocumentUpload({
 		request,
 		response,
-		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/redaction-status`
+		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/add-document-details`
 	});
 }
 
 /**
- * @param {Appeal} appealDetails
- * @param {Representation} _comment
- * @param {import('@pins/express/types/express.js').Request} request
- */
-const getRedactionStatusBackUrl = (appealDetails, _comment, request) => {
-	const baseUrl = `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add`;
-	return getBackLinkUrl(request, `${baseUrl}/upload`, `${baseUrl}/check-your-answers`);
-};
-
-export const renderRedactionStatus = renderRedactionStatusFactory({
-	getBackLinkUrl: getRedactionStatusBackUrl,
-	getValue: (request) =>
-		request.session.addIpComment?.redactionStatus ||
-		request.body.redactionStatus ||
-		APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED
-});
-
-export const postRedactionStatus = postRedactionStatusFactory({
-	getRedirectUrl: (appealDetails, _comment, request) =>
-		preserveQueryString(
-			request,
-			`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/date-submitted`
-		),
-	errorHandler: renderRedactionStatus
-});
-
-/**
+ *
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * */
-export function renderDateSubmitted(request, response) {
-	const { currentAppeal, errors, body } = request;
-	/** @type {import('@pins/express/types/express.js').Request['session']['addIpComment'] | undefined} */
-	const addIpComment = getSessionValues(request, 'addIpComment');
-	const baseUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add`;
-	const pageContent = dateSubmitted(
+ */
+export async function renderDocumentDetails(request, response) {
+	const {
 		currentAppeal,
-		errors,
-		addIpComment || body,
-		getBackLinkUrl(request, `${baseUrl}/redaction-status`, `${baseUrl}/check-your-answers`)
-	);
+		locals: { pageContent }
+	} = request;
 
-	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
-		errors,
-		pageContent
+	const baseUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add`;
+	const backLinkUrl = getBackLinkUrl(request, `${baseUrl}/upload`, `${baseUrl}/check-your-answers`);
+
+	request.currentFolder = await getAttachmentsFolder(request.apiClient, currentAppeal.appealId);
+
+	return await renderDocumentDetailsHelper({
+		request,
+		response,
+		backLinkUrl,
+		pageHeadingTextOverride:
+			pageContent?.addDocument?.pageHeadingTextOverride ||
+			`Appeal ${currentAppeal.appealReference}: Interested party comments`
 	});
 }
 
-export const postDateSubmitted = postDateSubmittedFactory({
-	getRedirectUrl: (appealDetails) =>
-		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/check-your-answers`,
-	errorHandler: renderDateSubmitted
-});
+/**
+ * @type {import('@pins/express/types/express.js').RequestHandler<{}>}
+ */
+export async function postDocumentDetails(request, response) {
+	const { currentAppeal } = request;
+
+	request.currentFolder = await getAttachmentsFolder(request.apiClient, currentAppeal.appealId);
+
+	if (!currentAppeal || !request.currentFolder) {
+		return response.status(404).render('app/404.njk');
+	}
+
+	const baseUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add`;
+	const backLinkUrl = getBackLinkUrl(request, `${baseUrl}/upload`, `${baseUrl}/check-your-answers`);
+
+	const nextPageUrl = preserveQueryString(request, `${baseUrl}/check-your-answers`);
+
+	return await postDocumentDetailsHelper({
+		request,
+		response,
+		backLinkUrl,
+		nextPageUrl,
+		pageHeadingTextOverride: `Appeal ${currentAppeal.appealReference}: Interested party comments`
+	});
+}
 
 /**
  *
@@ -281,9 +274,16 @@ export async function postIpAddress(request, response) {
  */
 export async function postIPComment(request, response) {
 	try {
-		const { apiClient, currentAppeal } = request;
+		const {
+			apiClient,
+			currentAppeal,
+			session: { fileUploadInfo }
+		} = request;
 
 		const { folderId } = await getAttachmentsFolder(request.apiClient, currentAppeal.appealId);
+
+		const { files: uploadFiles } = fileUploadInfo;
+
 		if (request.session?.addIpComment) {
 			request.session.addIpComment = {
 				...request.session.addIpComment,
@@ -295,28 +295,53 @@ export async function postIPComment(request, response) {
 			delete request.session.addIpComment['date-month'];
 			delete request.session.addIpComment['date-year'];
 		}
-		const payload = mapSessionToRepresentationRequest(
-			request.session?.addIpComment,
-			request.session?.fileUploadInfo
-		);
 
-		const redactionStatus = request.session?.addIpComment?.redactionStatus;
 		const redactionStatuses = await getDocumentRedactionStatuses(apiClient);
 
 		if (!redactionStatuses) throw new Error('Redaction statuses could not be retrieved');
-		const redactionStatusId = redactionStatuses.find(({ key }) => redactionStatus === key)?.id;
-		if (!redactionStatusId) {
-			throw new Error(
-				'Submitted redaction status did not correspond with a known redaction status key'
-			);
+
+		const noRedactionRequiredStatusId = redactionStatusKeyToId(
+			redactionStatuses,
+			APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED
+		);
+
+		if (!noRedactionRequiredStatusId) {
+			throw new Error('Default redaction status not found.');
 		}
 
-		const addDocumentsRequestPayload = mapFileUploadInfoToMappedDocuments({
-			caseId: currentAppeal.appealId,
-			folderId,
-			redactionStatus: redactionStatusId,
-			fileUploadInfo: request.session.fileUploadInfo
-		});
+		const payload = mapSessionToRepresentationRequest(
+			request.session?.addIpComment,
+			request.session?.fileUploadInfo,
+			redactionStatuses
+		);
+
+		/** @type {import('@pins/appeals/index.js').AddDocumentsRequest} */
+		const addDocumentsRequestPayload = {
+			blobStorageHost:
+				config.useBlobEmulator === true ? config.blobEmulatorSasUrl : config.blobStorageUrl,
+			blobStorageContainer: config.blobStorageDefaultContainer,
+			appellantCaseId: Number(currentAppeal.appellantCaseId),
+			documents: uploadFiles.map(
+				(/** @type {import('#lib/ts-utilities.js').FileUploadInfoItem} */ document) => {
+					/** @type {import('@pins/appeals/index.js').MappedDocument} */
+					const mappedDocument = {
+						caseId: currentAppeal.appealId,
+						documentName: document.name,
+						documentType: document.documentType,
+						mimeType: document.mimeType,
+						documentSize: document.size,
+						stage: document.stage,
+						folderId,
+						GUID: document.GUID,
+						receivedDate: document.receivedDate,
+						redactionStatusId: document.redactionStatus || noRedactionRequiredStatusId,
+						blobStoragePath: document.blobStoreUrl
+					};
+
+					return mappedDocument;
+				}
+			)
+		};
 
 		try {
 			await createNewDocument(
@@ -372,10 +397,6 @@ export async function renderCheckYourAnswers(request, response) {
 		currentAppeal: { appealReference, appealId } = {},
 		session: {
 			addIpComment: {
-				[redactionStatusFieldName]: redactionStatus,
-				'date-day': day,
-				'date-month': month,
-				'date-year': year,
 				firstName,
 				lastName,
 				emailAddress,
@@ -386,10 +407,6 @@ export async function renderCheckYourAnswers(request, response) {
 				county,
 				postCode
 			} = {
-				redactionStatus: APPEAL_REDACTED_STATUS.NOT_REDACTED,
-				'date-day': '',
-				'date-month': '',
-				'date-year': '',
 				firstName: '',
 				lastName: '',
 				emailAddress: '',
@@ -399,24 +416,33 @@ export async function renderCheckYourAnswers(request, response) {
 				town: '',
 				county: '',
 				postCode: ''
-			}
+			},
+			fileUploadInfo
 		}
 	} = request;
 
-	if (!isValidRedactionStatus(redactionStatus)) {
-		throw new Error('Received invalid redaction status');
-	}
-
 	clearEdits(request, 'addIpComment');
 
+	const { files: uploadFiles } = fileUploadInfo;
+
 	const baseUrl = `/appeals-service/appeal-details/${appealId}/interested-party-comments/add`;
+
+	const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
+	if (!redactionStatuses) throw new Error('Redaction statuses could not be retrieved');
+
+	const commentPageComponents = generateCheckAnswersCommentPageComponents(
+		uploadFiles,
+		appealReference,
+		baseUrl,
+		redactionStatuses
+	);
 
 	return renderCheckYourAnswersComponent(
 		{
 			title: 'Check details and add interested party comment',
 			heading: 'Check details and add interested party comment',
 			preHeading: `Appeal ${appealShortReference(appealReference)}`,
-			backLinkUrl: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/date-submitted`,
+			backLinkUrl: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/add-document-details`,
 			submitButtonText: 'Add comment',
 			responses: {
 				'Contact details': {
@@ -453,42 +479,9 @@ export async function renderCheckYourAnswers(request, response) {
 							}
 						}
 					}
-				}),
-				Comment: {
-					html: (request.session.fileUploadInfo?.files || [])
-						.map(
-							// @ts-ignore
-							({ name, blobStoreUrl }) =>
-								`<a class="govuk-link" download href="${blobStoreUrl ?? ''}">${name ?? ''}</a>`
-						)
-						.join('<br>'),
-					actions: {
-						Change: {
-							href: editLink(baseUrl, 'upload'),
-							visuallyHiddenText: 'Comment'
-						}
-					}
-				},
-				'Redaction status': {
-					// @ts-ignore
-					value: statusFormatMap[redactionStatus],
-					actions: {
-						Change: {
-							href: editLink(baseUrl, 'redaction-status'),
-							visuallyHiddenText: 'Redaction Status'
-						}
-					}
-				},
-				'Date submitted': {
-					value: dayMonthYearHourMinuteToDisplayDate({ day, month, year }),
-					actions: {
-						Change: {
-							href: editLink(baseUrl, 'date-submitted'),
-							visuallyHiddenText: 'Date submitted'
-						}
-					}
-				}
-			}
+				})
+			},
+			after: commentPageComponents
 		},
 		response,
 		errors

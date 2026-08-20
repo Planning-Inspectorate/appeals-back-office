@@ -1,5 +1,9 @@
 // @ts-nocheck
-import { appealData, fileUploadInfo } from '#testing/app/fixtures/referencedata.js';
+import {
+	appealData,
+	documentRedactionStatuses,
+	fileUploadInfo
+} from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
@@ -10,8 +14,24 @@ const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 
+const documentFolderInfo = [
+	{
+		caseId: '2',
+		documents: [],
+		folderId: 55539,
+		path: 'representation/representationAttachments'
+	}
+];
+
 describe('add-ip-comment', () => {
-	beforeEach(installMockApi);
+	beforeEach(() => {
+		installMockApi();
+
+		nock('http://test/')
+			.get('/appeals/document-redaction-statuses')
+			.reply(200, documentRedactionStatuses)
+			.persist();
+	});
 	afterEach(teardown);
 
 	describe('GET /add', () => {
@@ -615,327 +635,514 @@ describe('add-ip-comment', () => {
 		});
 	});
 
-	describe('GET /redaction-status', () => {
+	describe('POST /add/upload', () => {
 		const appealId = 2;
-
-		/** @type {*} */
-		let pageHtml;
 
 		beforeEach(async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
 				.reply(200, { ...appealData, appealId });
-
-			const response = await request.get(
-				`${baseUrl}/${appealId}/interested-party-comments/add/redaction-status`
-			);
-			pageHtml = parseHtml(response.text, { rootElement: 'body' });
 		});
 
-		it('should match the snapshot', () => {
-			expect(pageHtml.innerHTML).toMatchSnapshot();
-		});
-
-		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe('Redaction status');
-		});
-
-		it('should render the correct back link', async () => {
-			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
-				'/appeals-service/appeal-details/2/interested-party-comments/add/upload'
-			);
-		});
-	});
-
-	describe('GET /date-submitted', () => {
-		const appealId = 2;
-
-		/** @type {*} */
-		let pageHtml;
-
-		beforeEach(async () => {
+		it(`should render a 500 error page if upload-info is not present in the request body`, async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=all`)
-				.reply(200, { ...appealData, appealId });
+				.get(`/appeals/${appealId}/document-folders?path=representation/representationAttachments`)
+				.reply(200, documentFolderInfo);
 
-			jest
-				.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
-				.setSystemTime(new Date('2024-10-30'));
+			const response = await request
+				.post(`${baseUrl}/${appealId}/interested-party-comments/add/upload`)
+				.send({});
 
-			const response = await request.get(
-				`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`
-			);
-			pageHtml = parseHtml(response.text, { rootElement: 'body' });
-		});
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
 
-		it('should match the snapshot', () => {
-			expect(pageHtml.innerHTML).toMatchSnapshot();
-		});
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-		it('should render the date submitted page', () => {
-			expect(pageHtml).not.toBeNull();
-		});
-
-		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe(
-				'When did the interested party submit the comment?'
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
 			);
 		});
 
-		it('should render day, month, and year input fields', () => {
-			expect(pageHtml.querySelector('input#date-day')).not.toBeNull();
-			expect(pageHtml.querySelector('input#date-month')).not.toBeNull();
-			expect(pageHtml.querySelector('input#date-year')).not.toBeNull();
-		});
-
-		it('should render any previous response', async () => {
+		it(`should render a 500 error page if request body upload-info is in an incorrect format`, async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=all`)
-				.twice()
-				.reply(200, { ...appealData, appealId });
+				.get(`/appeals/${appealId}/document-folders?path=representation/representationAttachments`)
+				.reply(200, documentFolderInfo);
 
-			await request
-				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
+			const response = await request
+				.post(`${baseUrl}/${appealId}/interested-party-comments/add/upload`)
 				.send({
-					'date-day': '30',
-					'date-month': '10',
-					'date-year': '2024'
+					'upload-info': ''
 				});
 
-			const response = await request.get(
-				`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`
-			);
-			pageHtml = parseHtml(response.text, { rootElement: 'body' });
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
 
-			expect(pageHtml.querySelector('input#date-day').getAttribute('value')).toEqual('30');
-			expect(pageHtml.querySelector('input#date-month').getAttribute('value')).toEqual('10');
-			expect(pageHtml.querySelector('input#date-year').getAttribute('value')).toEqual('2024');
-		});
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-		it('should render the correct back link', async () => {
-			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
-				'/appeals-service/appeal-details/2/interested-party-comments/add/redaction-status'
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
 			);
 		});
 
-		it('should render the correct back link when editing from this page', async () => {
+		it(`should render a 500 error page if request body upload-info is present but currentFolder is missing`, async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=all`)
-				.reply(200, { ...appealData, appealId });
+				.get(`/appeals/${appealId}/document-folders?path=representation/representationAttachments`)
+				.reply(200);
 
-			const response = await request.get(
-				`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted` +
-					`?editEntrypoint=${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`
-			);
-			pageHtml = parseHtml(response.text, { rootElement: 'body' });
+			const response = await request
+				.post(`${baseUrl}/${appealId}/interested-party-comments/add/upload`)
+				.send({
+					'upload-info': fileUploadInfo
+				});
 
-			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
-				'/appeals-service/appeal-details/2/interested-party-comments/add/check-your-answers'
+			expect(response.statusCode).toBe(500);
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
 			);
 		});
 
-		it('should render the correct back link when editing from a previous page', async () => {
+		it('should redirect to the add document details page if upload info is present and in the correct format', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=all`)
-				.reply(200, { ...appealData, appealId });
+				.get(`/appeals/${appealId}/document-folders?path=representation/representationAttachments`)
+				.reply(200, documentFolderInfo);
 
-			const response = await request.get(
-				`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted` +
-					`?editEntrypoint=${baseUrl}/${appealId}/interested-party-comments/add/ip-address`
-			);
-			pageHtml = parseHtml(response.text, { rootElement: 'body' });
+			const response = await request
+				.post(`${baseUrl}/${appealId}/interested-party-comments/add/upload`)
+				.send({
+					'upload-info': fileUploadInfo
+				});
 
-			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
-				'/appeals-service/appeal-details/2/interested-party-comments/add/redaction-status' +
-					'?editEntrypoint=' +
-					'%2Fappeals-service%2Fappeal-details%2F2%2Finterested-party-comments%2Fadd%2Fip-address'
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				`Found. Redirecting to ${baseUrl}/${appealId}/interested-party-comments/add/add-document-details`
 			);
 		});
 	});
 
-	describe('POST /date-submitted', () => {
+	describe('GET /add/add-document-details', () => {
 		const appealId = 2;
 
 		beforeEach(() => {
 			nock('http://test/')
+				.get(`/appeals/${appealId}/document-folders?path=representation/representationAttachments`)
+				.reply(200, documentFolderInfo)
+				.persist();
+
+			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
-				.reply(200, { ...appealData, appealId });
-			jest
-				.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
-				.setSystemTime(new Date('2024-10-30'));
+				.reply(200, { ...appealData, appealId })
+				.persist();
 		});
 
-		it('should redirect on valid today date input', async () => {
-			const response = await request
-				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
-				.send({
-					'date-day': '30',
-					'date-month': '10',
-					'date-year': '2024'
-				});
-
-			expect(response.statusCode).toBe(302);
-			expect(response.headers.location).toBe(
-				'/appeals-service/appeal-details/2/interested-party-comments/add/check-your-answers'
+		it(`should render a 500 error page if fileUploadInfo is not present in the session`, async () => {
+			const response = await request.get(
+				`${baseUrl}/${appealId}/interested-party-comments/add/add-document-details`
 			);
-		});
 
-		it('should redirect on valid month name date input', async () => {
-			const response = await request
-				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
-				.send({
-					'date-day': '30',
-					'date-month': 'October',
-					'date-year': '2024'
-				});
-
-			expect(response.statusCode).toBe(302);
-			expect(response.headers.location).toBe(
-				'/appeals-service/appeal-details/2/interested-party-comments/add/check-your-answers'
-			);
-		});
-
-		it('should redirect on valid month abbreviation date input', async () => {
-			const response = await request
-				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
-				.send({
-					'date-day': '30',
-					'date-month': 'OCT',
-					'date-year': '2024'
-				});
-
-			expect(response.statusCode).toBe(302);
-			expect(response.headers.location).toBe(
-				'/appeals-service/appeal-details/2/interested-party-comments/add/check-your-answers'
-			);
-		});
-
-		it('should redirect on valid yesterday date input', async () => {
-			const response = await request
-				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
-				.send({
-					'date-day': '30',
-					'date-month': '10',
-					'date-year': '2024'
-				});
-
-			expect(response.statusCode).toBe(302);
-			expect(response.headers.location).toBe(
-				'/appeals-service/appeal-details/2/interested-party-comments/add/check-your-answers'
-			);
-		});
-
-		it('should return 400 on valid tomorow date input with appropriate error messages', async () => {
-			const response = await request
-				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
-				.send({
-					'date-day': '31',
-					'date-month': '10',
-					'date-year': '2024'
-				});
-
-			expect(response.statusCode).toBe(400);
-
+			expect(response.statusCode).toBe(500);
 			const element = parseHtml(response.text);
-			expect(element.querySelector('h1')?.innerHTML.trim()).toBe(
-				'When did the interested party submit the comment?'
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
 			);
-
-			const errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('The submitted date must be today or in the past');
 		});
 
-		it('should return 400 on empty date fields with appropriate error messages', async () => {
-			const response = await request
-				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
-				.send({
-					'date-day': '',
-					'date-month': '',
-					'date-year': ''
-				});
+		it('should render the add documents details page', async () => {
+			await request.post(`${baseUrl}/${appealId}/interested-party-comments/add/upload`).send({
+				'upload-info': fileUploadInfo
+			});
 
-			expect(response.statusCode).toBe(400);
-
-			const element = parseHtml(response.text);
-			expect(element.querySelector('h1')?.innerHTML.trim()).toBe(
-				'When did the interested party submit the comment?'
+			const response = await request.get(
+				`${baseUrl}/${appealId}/interested-party-comments/add/add-document-details`
 			);
+			expect(response.statusCode).toBe(200);
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain('Add document details</span');
+			expect(unprettifiedElement.innerHTML).toContain(
+				`Appeal ${appealData.appealReference}: Interested party comments</h1>`
+			);
+		});
+	});
 
-			const errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
+	describe('POST /add/add-document-details', () => {
+		const appealId = 2;
 
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter the submitted date');
+		beforeEach(async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}/document-folders?path=representation/representationAttachments`)
+				.reply(200, documentFolderInfo)
+				.persist();
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=all`)
+				.reply(200, { ...appealData, appealId, appealStatus: 'statements' })
+				.persist();
+
+			await request.post(`${baseUrl}/${appealId}/interested-party-comments/add/upload`).send({
+				'upload-info': fileUploadInfo
+			});
 		});
 
-		it('should return 400 on invalid date input with appropriate error messages', async () => {
+		it(`should re-render add documents details page with service error message if the request body is in an incorrect format`, async () => {
 			const response = await request
-				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
-				.send({
-					'date-day': '99',
-					'date-month': '99',
-					'date-year': '9999'
-				});
+				.post(`${baseUrl}/${appealId}/interested-party-comments/add/add-document-details`)
+				.send({});
 
-			expect(response.statusCode).toBe(400);
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			const element = parseHtml(response.text);
-			expect(element.querySelector('h1')?.innerHTML.trim()).toBe(
-				'When did the interested party submit the comment?'
+			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain(
+				`Appeal ${appealData.appealReference}: Interested party comments</h1>`
 			);
 
-			const errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
+			const errorSummaryElement = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary'
+			});
 
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Submitted date day must be between 1 and 31');
+			expect(errorSummaryElement.innerHTML).toContain('There is a problem with the service');
+		});
+
+		it(`should re-render the document details page with the expected error message if receivedDate day is an invalid value`, async () => {
+			const testCases = [
+				{
+					value: '',
+					expectedError: `Received date must include a day`
+				},
+				{
+					value: 'a',
+					expectedError: `Received date day must be a number`
+				},
+				{
+					value: '0',
+					expectedError: `Received date day must be between 1 and 31`
+				},
+				{
+					value: '32',
+					expectedError: `Received date day must be between 1 and 31`
+				}
+			];
+
+			for (const testCase of testCases) {
+				const response = await request
+					.post(`${baseUrl}/${appealId}/interested-party-comments/add/add-document-details`)
+					.send({
+						items: [
+							{
+								documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+								receivedDate: {
+									day: testCase.value,
+									month: '2',
+									year: '2030'
+								},
+								redactionStatus: 3
+							}
+						]
+					});
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(
+					`Appeal ${appealData.appealReference}: Interested party comments</h1>`
+				);
+
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
+
+				expect(errorSummaryElement.innerHTML).toContain(testCase.expectedError);
+			}
+		});
+
+		it(`should re-render the document details page with the expected error message if receivedDate month is an invalid value`, async () => {
+			const testCases = [
+				{
+					value: '',
+					expectedError: `Received date must include a month`
+				},
+				{
+					value: 'a',
+					expectedError: `Received date must be a real date`
+				},
+				{
+					value: '0',
+					expectedError: `Received date month must be between 1 and 12`
+				},
+				{
+					value: '13',
+					expectedError: `Received date month must be between 1 and 12`
+				}
+			];
+
+			for (const testCase of testCases) {
+				const response = await request
+					.post(`${baseUrl}/${appealId}/interested-party-comments/add/add-document-details`)
+					.send({
+						items: [
+							{
+								documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+								receivedDate: {
+									day: '1',
+									month: testCase.value,
+									year: '2030'
+								},
+								redactionStatus: 3
+							}
+						]
+					});
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(
+					`Appeal ${appealData.appealReference}: Interested party comments</h1>`
+				);
+
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
+
+				expect(errorSummaryElement.innerHTML).toContain(testCase.expectedError);
+			}
+		});
+
+		it(`should re-render the document details page with the expected error message if receivedDate year is an invalid value`, async () => {
+			const testCases = [
+				{
+					value: '',
+					expectedError: `Received date must include a year`
+				},
+				{
+					value: 'a',
+					expectedError: `Received date year must be a number`
+				},
+				{
+					value: '202',
+					expectedError: `Received date year must be 4 digits`
+				}
+			];
+
+			for (const testCase of testCases) {
+				const response = await request
+					.post(`${baseUrl}/${appealId}/interested-party-comments/add/add-document-details`)
+					.send({
+						items: [
+							{
+								documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+								receivedDate: {
+									day: '1',
+									month: '2',
+									year: testCase.value
+								},
+								redactionStatus: 3
+							}
+						]
+					});
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(
+					`Appeal ${appealData.appealReference}: Interested party comments</h1>`
+				);
+
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
+
+				expect(errorSummaryElement.innerHTML).toContain(testCase.expectedError);
+			}
+		});
+
+		it(`should re-render add documents details page if receivedDate is not a valid date`, async () => {
+			const testCases = [
+				{
+					value: {
+						day: '29',
+						month: '2',
+						year: 2023
+					},
+					expectedError: `Received date must be a real date`
+				},
+				{
+					value: {
+						day: '',
+						month: '',
+						year: ''
+					},
+					expectedError: `Enter the date`
+				},
+				{
+					value: {
+						day: '2',
+						month: '',
+						year: ''
+					},
+					expectedError: `Received date must include a month and year`
+				},
+				{
+					value: {
+						day: '',
+						month: '2',
+						year: ''
+					},
+					expectedError: `Received date must include a day and year`
+				},
+				{
+					value: {
+						day: '',
+						month: '',
+						year: '2025'
+					},
+					expectedError: `Received date must include a day and month`
+				},
+				{
+					value: {
+						day: '14',
+						month: '2',
+						year: '3095'
+					},
+					expectedError: `Received date must be in the past`
+				}
+			];
+
+			for (const testCase of testCases) {
+				const response = await request
+					.post(`${baseUrl}/${appealId}/interested-party-comments/add/add-document-details`)
+					.send({
+						items: [
+							{
+								documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+								receivedDate: testCase.value,
+								redactionStatus: 3
+							}
+						]
+					});
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain(
+					`Appeal ${appealData.appealReference}: Interested party comments</h1>`
+				);
+
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
+
+				expect(errorSummaryElement.innerHTML).toContain(testCase.expectedError);
+			}
+		});
+
+		it(`should redirect to check your answers if valid details posted`, async () => {
+			const response = await request
+				.post(`${baseUrl}/${appealId}/interested-party-comments/add/add-document-details`)
+				.send({
+					items: [
+						{
+							documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+							receivedDate: {
+								day: '1',
+								month: '2',
+								year: '2023'
+							},
+							redactionStatus: 3
+						}
+					]
+				});
+
+			expect(response.statusCode).toBe(302);
+
+			expect(response.text).toBe(
+				`Found. Redirecting to ${baseUrl}/${appealId}/interested-party-comments/add/check-your-answers`
+			);
 		});
 	});
 
 	describe('GET /check-your-answers', () => {
 		const appealId = 2;
 
-		/** @type {*} */
-		let pageHtml;
-
 		beforeEach(async () => {
 			nock('http://test/')
+				.get(`/appeals/${appealId}/document-folders?path=representation/representationAttachments`)
+				.reply(200, documentFolderInfo)
+				.persist();
+
+			nock('http://test/')
 				.get(`/appeals/${appealId}?include=all`)
-				.reply(200, { ...appealData, appealId });
+				.reply(200, { ...appealData, appealId })
+				.persist();
+		});
+
+		it(`should render check your answers page with correct content`, async () => {
+			const response1 = await request
+				.post(`${baseUrl}/${appealId}/interested-party-comments/add/upload`)
+				.send({
+					'upload-info': fileUploadInfo
+				});
+			expect(response1.statusCode).toBe(302);
+
+			const response2 = await request
+				.post(`${baseUrl}/${appealId}/interested-party-comments/add/add-document-details`)
+				.send({
+					items: [
+						{
+							documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+							receivedDate: {
+								day: '1',
+								month: '2',
+								year: '2023'
+							},
+							redactionStatus: 3
+						}
+					]
+				});
+			expect(response2.statusCode).toBe(302);
 
 			const response = await request.get(
 				`${baseUrl}/${appealId}/interested-party-comments/add/check-your-answers`
 			);
-			pageHtml = parseHtml(response.text, { rootElement: 'body' });
-		});
 
-		it('should match the snapshot', () => {
-			expect(pageHtml.innerHTML).toMatchSnapshot();
-		});
+			expect(response.statusCode).toBe(200);
 
-		it('should render the correct heading', () => {
-			expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe(
-				'Check details and add interested party comment'
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appeal 351062</span');
+			expect(unprettifiedElement.innerHTML).toContain(
+				`Check details and add interested party comment</h1>`
 			);
-		});
-
-		it('should render a summary list', () => {
-			expect(pageHtml.querySelector('dl.govuk-summary-list')).not.toBeNull();
-		});
-
-		it('should render the correct back link', async () => {
-			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
-				'/appeals-service/appeal-details/2/interested-party-comments/add/date-submitted'
+			expect(unprettifiedElement.innerHTML).toContain('Contact details</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Address Provided</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Interested party comment document</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt" target="_blank">test-document.txt</a></dd>'
 			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/interested-party-comments/add/upload?editEntrypoint=`
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`>Change<span class="govuk-visually-hidden"> file test-document.txt</span></a></dd>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Date received</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Redaction status</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('No redaction required</dd>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/interested-party-comments/add/add-document-details?editEntrypoint=`
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`>Change<span class="govuk-visually-hidden"> test-document.txt date received</span></a></dd>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Add comment</button>');
 		});
 	});
 
@@ -952,15 +1159,6 @@ describe('add-ip-comment', () => {
 		});
 
 		it('should send an API request to create a new document', async () => {
-			const documentFolderInfo = [
-				{
-					caseId: '2',
-					documents: [],
-					folderId: 55539,
-					path: 'representation/representationAttachments'
-				}
-			];
-
 			nock('http://test/')
 				.get(`/appeals/${appealId}/document-folders?path=representation/representationAttachments`)
 				.reply(200, documentFolderInfo);
@@ -975,23 +1173,6 @@ describe('add-ip-comment', () => {
 		});
 
 		it('should send an API request to create a new document with correct redactionStatusId', async () => {
-			const documentFolderInfo = [
-				{
-					caseId: '2',
-					documents: [],
-					folderId: 55539,
-					path: 'representation/representationAttachments'
-				}
-			];
-
-			nock('http://test/')
-				.get(`/appeals/document-redaction-statuses`)
-				.reply(200, [
-					{ id: 1, key: 'unredacted' },
-					{ id: 2, key: 'no_redaction_required' },
-					{ id: 3, key: 'redacted' }
-				]);
-
 			nock('http://test/')
 				.get(`/appeals/${appealId}/document-folders?path=representation/representationAttachments`)
 				.reply(200, documentFolderInfo);
