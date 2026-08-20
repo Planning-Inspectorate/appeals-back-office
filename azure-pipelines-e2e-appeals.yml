@@ -16,6 +16,14 @@ variables:
 pr: none
 trigger: none
 
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      endpoint: Planning-Inspectorate
+      name: Planning-Inspectorate/common-pipeline-templates
+      ref: refs/tags/release/3.30.0
+
 schedules:
   - cron: "0 2 * * 1-5"
     displayName: Weekday test run
@@ -87,39 +95,34 @@ jobs:
             SPEC: '**/*.spec.js'
 
     steps:
-      - task: NodeTool@0
-        inputs:
-          versionSpec: "22.x"
-        displayName: "Install Node.js"
-        
-      - task: ShellScript@2
-        inputs:
-          scriptPath: 'appeals/e2e/install-chromium.sh'
-        displayName: 'Install Chromium'
-        condition: eq(variables['agent.os'], 'Linux')
+      - template: steps/node_script.yml@templates
+        parameters:
+          displayName: 'Install npm'
+          nodeVersion: 22
+          script: npm ci
+          workingDirectory: '$(System.DefaultWorkingDirectory)/appeals/e2e'
+          environmentVariables:
+            npm_config_cache: $(npm_config_cache)
 
-      - task: Npm@1
-        inputs:
-          command: "install"
-          workingDir: $(System.DefaultWorkingDirectory)/appeals/e2e
-        displayName: "Install Dependencies"
-
-      - script: |
-          CLEAN_SPEC=$(echo "$(SPEC)" | tr -d ' \n' | sed 's/,/,cypress\/e2e\/back-office-appeals\//g')
-          CLEAN_SPEC="cypress/e2e/back-office-appeals/$CLEAN_SPEC"
-          echo "Running: $CLEAN_SPEC"
-          npx cypress run --spec "$CLEAN_SPEC"
-        workingDirectory: $(System.DefaultWorkingDirectory)/appeals/e2e        
-        env:
-          TZ: 'Europe/London'
-          BASE_URL: $(APPEALS_BASE_URL)
-          CASE_TEAM_EMAIL: $(CASE_TEAM_APPEALS_EMAIL)
-          CASE_ADMIN_EMAIL: $(CASE_ADMIN_APPEALS_EMAIL)
-          INSPECTOR_EMAIL: $(INSPECTOR_APPEALS_EMAIL)
-          VALIDATION_OFFICER_EMAIL: $(VALIDATION_OFFICER_EMAIL)
-          USER_PASSWORD: $(USER_PASSWORD)
-          HAPPY_PATH_EMAIL: $(HAPPY_PATH_EMAIL)
-        displayName: "Run Cypress Tests"
+      - template: steps/node_script.yml@templates
+        parameters:
+          displayName: 'Run Cypress Tests'
+          nodeVersion: 22
+          script: |
+            CLEAN_SPEC=$(echo "$(SPEC)" | tr -d ' \n' | sed 's/,/,cypress\/e2e\/back-office-appeals\//g')
+            CLEAN_SPEC="cypress/e2e/back-office-appeals/$CLEAN_SPEC"
+            echo "Running: $CLEAN_SPEC"
+            npx cypress run --spec "$CLEAN_SPEC"
+          workingDirectory: $(System.DefaultWorkingDirectory)/appeals/e2e
+          environmentVariables:
+            TZ: 'Europe/London'
+            BASE_URL: $(APPEALS_BASE_URL)
+            CASE_TEAM_EMAIL: $(CASE_TEAM_APPEALS_EMAIL)
+            CASE_ADMIN_EMAIL: $(CASE_ADMIN_APPEALS_EMAIL)
+            INSPECTOR_EMAIL: $(INSPECTOR_APPEALS_EMAIL)
+            VALIDATION_OFFICER_EMAIL: $(VALIDATION_OFFICER_EMAIL)
+            USER_PASSWORD: $(USER_PASSWORD)
+            HAPPY_PATH_EMAIL: $(HAPPY_PATH_EMAIL)
 
       - task: PublishBuildArtifacts@1
         condition: failed()
