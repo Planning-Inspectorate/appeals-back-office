@@ -20,22 +20,27 @@ pr:
       - apps/e2e/cypress/e2e/back-office-applications
 trigger: none
 
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      endpoint: Planning-Inspectorate
+      name: Planning-Inspectorate/common-pipeline-templates
+      ref: refs/tags/release/3.30.0
+
 jobs:
   - job: Run_API_Tests
-    pool:
-      vmImage: "ubuntu-latest"
+    pool: pins-odt-agent-pool-tests
 
     steps:
-      - task: NodeTool@0
-        inputs:
-          versionSpec: "22.x"
-        displayName: "Install Node.js"
-
-      - task: Npm@1
-        inputs:
-          command: "install"
-          workingDir: $(System.DefaultWorkingDirectory)
-        displayName: "Install Dependencies"
+      - template: steps/node_script.yml@templates
+        parameters:
+          displayName: 'Install npm'
+          nodeVersion: 22
+          script: npm ci
+          workingDirectory: 'apps/e2e'
+          environmentVariables:
+            npm_config_cache: $(npm_config_cache)
 
       - task: ShellScript@2
         inputs:
