@@ -1,14 +1,9 @@
 import { saveBackUrl } from '#lib/middleware/save-back-url.js';
 import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
-import {
-	createDateInputDateInPastOrTodayValidator,
-	createDateInputDateValidityValidator,
-	createDateInputFieldsValidator,
-	extractAndProcessDateErrors
-} from '#lib/validators/date-input.validator.js';
+import { extractAndProcessDocumentDateErrors } from '#lib/validators/date-input.validator.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
-import { validateRedactionStatus } from '../../representations.validators.js';
+import * as documentsValidators from '../../../../appeal-documents/appeal-documents.validators.js';
 import { validateInterestedPartyAddress } from '../common/validators.js';
 import * as controller from './add-ip-comment.controller.js';
 import {
@@ -51,24 +46,16 @@ router
 	.post(asyncHandler(controller.postUpload));
 
 router
-	.route('/redaction-status')
-	.get(asyncHandler(controller.renderRedactionStatus))
+	.route('/add-document-details')
+	.get(asyncHandler(controller.renderDocumentDetails))
 	.post(
-		validateRedactionStatus,
-		saveBodyToSession('addIpComment'),
-		asyncHandler(controller.postRedactionStatus)
-	);
-
-router
-	.route('/date-submitted')
-	.get(asyncHandler(controller.renderDateSubmitted))
-	.post(
-		createDateInputFieldsValidator('date', 'Submitted date'),
-		createDateInputDateValidityValidator('date', 'Submitted date'),
-		createDateInputDateInPastOrTodayValidator('date', 'Submitted date'),
-		extractAndProcessDateErrors({ fieldNamePrefix: 'date' }),
-		saveBodyToSession('addIpComment'),
-		asyncHandler(controller.postDateSubmitted)
+		documentsValidators.validateDocumentDetailsBodyFormat,
+		documentsValidators.validateDocumentDetailsReceivedDatesFields,
+		documentsValidators.validateDocumentDetailsReceivedDateValid,
+		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
+		documentsValidators.validateDocumentDetailsRedactionStatuses,
+		extractAndProcessDocumentDateErrors(),
+		asyncHandler(controller.postDocumentDetails)
 	);
 
 router
