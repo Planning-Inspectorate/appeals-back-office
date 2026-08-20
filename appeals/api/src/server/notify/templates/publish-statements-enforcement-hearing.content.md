@@ -41,15 +41,25 @@ We will contact you if we make any changes to the hearing.
 {% else -%}
 We will contact you by email when we set up the hearing.
 {% endif %}
-{% if has_appellant_statement or has_lpa_statement or has_ip_comments -%}
 {% if final_comments_due_date -%}
+{% if has_appellant_statement or has_lpa_statement or has_ip_comments -%}
 # What happens next
-{% if recipient_role == 'appellant' and has_appellant_statement and not has_lpa_statement and not has_ip_comments -%}
+
+{% if recipient_role == 'appellant' -%}
+{% if has_appellant_statement and not has_lpa_statement and not has_ip_comments -%}
 We will let you know if the local planning authority submits any final comments.
+{% else -%}
+You need to submit any final comments by {{final_comments_due_date}}.
+{% endif %}
+{% elseif recipient_role == 'lpa' -%}
+{% if not has_appellant_statement and has_lpa_statement and not has_ip_comments -%}
+We will let you know if the appellant submits any final comments.
 {% else -%}
 You need to submit any final comments by {{final_comments_due_date}}.
 {% endif -%}
 {% endif %}
 {% endif -%}
+{% endif -%}
+
 Planning Inspectorate
 {{team_email_address}}

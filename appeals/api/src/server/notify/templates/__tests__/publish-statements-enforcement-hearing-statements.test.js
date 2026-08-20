@@ -1,6 +1,6 @@
 import { renderTemplate } from '#notify/notify-send.js';
 
-describe('publish-statements-enforcement-hearing.content.md', () => {
+describe('publish-statements-enforcement-hearing.content.md - LPA notify', () => {
 	const templateName = 'publish-statements-enforcement-hearing.content.md';
 
 	const basePersonalisation = {
@@ -49,7 +49,15 @@ describe('publish-statements-enforcement-hearing.content.md', () => {
 
 	const whatHappensNextLines = [
 		'# What happens next',
+		'',
 		'You need to submit any final comments by 20 March 2025.',
+		''
+	];
+
+	const whatHappensNextLinesLPAStatementSubmitted = [
+		'# What happens next',
+		'',
+		'We will let you know if the appellant submits any final comments.',
 		''
 	];
 
@@ -149,7 +157,9 @@ describe('publish-statements-enforcement-hearing.content.md', () => {
 				'You can [view this information in the appeals service](/mock-front-office-url/appeals/ENF12345).',
 				'We did not receive a statement from the appellant.',
 				'We did not receive comments from interested parties.',
-				...appealHearingAndNextStepsLines
+				...appealHearingLines,
+				...whatHappensNextLinesLPAStatementSubmitted,
+				...footerLines
 			].join('\n')
 		},
 		{
@@ -219,6 +229,8 @@ describe('publish-statements-enforcement-hearing.content.md', () => {
 			has_ip_comments: false,
 			recipient_role: 'appellant'
 		});
+
+		console.log(content);
 
 		expect(content).toContain(
 			'We will let you know if the local planning authority submits any final comments.'
