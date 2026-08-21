@@ -148,6 +148,7 @@ interface SingleAppealDetailsResponse {
 	hearing?: Hearing | null;
 	inquiry?: Inquiry | null;
 	inquiryEstimate?: InquiryEstimate | null;
+	inquiryDocumentsFolder?: FolderInfo | null;
 	numberOfResidencesNetChange?: number | null;
 	enforcementNotice?: {
 		appealOutcome?: EnforcementNoticeAppealOutcome;
@@ -689,6 +690,89 @@ interface ValidationOutcomeResponse {
 	outcome: string | null;
 	incompleteReasons?: IncompleteInvalidReasonsResponse[];
 	invalidReasons?: IncompleteInvalidReasonsResponse[];
+}
+
+interface AppealListResponse {
+	appealId: number;
+	appealReference: string;
+	appealSite: AppealSite;
+	appealStatus: string;
+	appealType?: string;
+	procedureType?: string;
+	createdAt: Date;
+	localPlanningDepartment: string;
+	dueDate: Date | undefined | null;
+	lpaQuestionnaireId?: number | null;
+	appealTimetable?: AppealTimetable;
+	documentationSummary: DocumentationSummary;
+	isParentAppeal: boolean | null;
+	isChildAppeal: boolean | null;
+	planningApplicationReference: string | null;
+	isHearingSetup: boolean | null;
+	hasHearingAddress: boolean | null;
+	awaitingLinkedAppeal: boolean | null;
+	costsDecision?: CostsDecision;
+	numberOfResidencesNetChange: number | null;
+	highwayLand?: boolean | null;
+	advertInPosition?: boolean | null;
+	landownerPermission?: boolean | null;
+	siteGridReferenceEasting?: string | null;
+	siteGridReferenceNorthing?: string | null;
+	isInquirySetup: boolean | null;
+	hasInquiryAddress: boolean | null;
+	enforcementReference?: string | null;
+	enforcementNoticeInvalid?: string | null;
+	isS78Expedited?: boolean;
+}
+
+interface PersonalListResponse {
+	appealId: number;
+	appealReference: string;
+	appealStatus: string;
+	completedStateList: string[];
+	appealType?: string;
+	procedureType?: string;
+	lpaQuestionnaireId?: number | null;
+	documentationSummary: DocumentationSummary;
+	dueDate: Date | undefined | null;
+	appealTimetable?: AppealTimetable;
+	isParentAppeal: boolean | null;
+	isChildAppeal: boolean | null;
+	isHearingSetup: boolean | null;
+	hasHearingAddress: boolean | null;
+	awaitingLinkedAppeal: boolean | null;
+	costsDecision?: CostsDecision;
+	numberOfResidencesNetChange: number | null;
+	isInquirySetup: boolean | null;
+	hasInquiryAddress: boolean | null;
+	enforcementNoticeInvalid?: string | null;
+	isS78Expedited?: boolean;
+}
+
+interface DocumentationSummary {
+	appellantCase?: DocumentationSummaryEntry;
+	lpaQuestionnaire?: DocumentationSummaryEntry;
+	ipComments?: DocumentationSummaryEntry;
+	lpaStatement?: DocumentationSummaryEntry;
+	rule6PartyStatements?: { [serviceUserId: string]: DocumentationSummaryEntry };
+	lpaFinalComments?: DocumentationSummaryEntry;
+	appellantFinalComments?: DocumentationSummaryEntry;
+	lpaProofOfEvidence?: DocumentationSummaryEntry;
+	appellantProofOfEvidence?: DocumentationSummaryEntry;
+	rule6PartyProofs?: { [serviceUserId: string]: DocumentationSummaryEntry };
+	appellantStatement?: DocumentationSummaryEntry;
+	inquiryDocuments?: DocumentationSummaryEntry;
+}
+
+interface DocumentationSummaryEntry {
+	status: string;
+	dueDate?: Date | string | undefined | null;
+	receivedAt?: Date | string | undefined | null;
+	representationStatus?: string | undefined | null;
+	counts?: Record<string, number>;
+	isRedacted?: boolean;
+	organisationName?: string;
+	rule6PartyId?: number;
 }
 
 interface FolderInfo {
