@@ -44,7 +44,7 @@ export const normaliseProcedureType = (procedureType) => {
  * submitted after the cutoff date to Written Part 1 if no explicit procedureType is provided.
  * @param {{ appealType?: { key?: string } | null, procedureType?: { key?: string } | null, appellantCase?: { applicationDate?: string | Date | null } | null }} appeal
  * @param {string | undefined} [procedureType]
- * @returns {string}
+ * @returns {string|undefined}
  */
 export const getEffectiveProcedureType = (appeal, procedureType) => {
 	if (procedureType) {
@@ -59,5 +59,7 @@ export const getEffectiveProcedureType = (appeal, procedureType) => {
 		Boolean(applicationDateStr) &&
 		!beforeExpeditedOriginalApplicationCutOff(applicationDateStr);
 
-	return isHasOrCasPart1 ? APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 : (appeal.procedureType?.key ?? '');
+	return isHasOrCasPart1
+		? APPEAL_CASE_PROCEDURE.WRITTEN_PART_1
+		: appeal.procedureType?.key || undefined;
 };

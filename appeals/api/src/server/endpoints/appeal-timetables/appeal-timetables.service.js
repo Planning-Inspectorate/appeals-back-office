@@ -400,7 +400,7 @@ const generateStartCaseNotifyPreviews = async (
  * @param {Object} params
  * @param {number} params.appealId
  * @param {string | undefined} params.azureAdUserId
- * @param {string} params.procedureType
+ * @param {string | undefined} params.procedureType
  * @param {string} [params.hearingStartTime]
  */
 const createStartCaseAuditTrails = async ({
