@@ -1,12 +1,14 @@
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { beforeExpeditedOriginalApplicationCutOff } from '@pins/appeals/utils/appeal-type-checks.js';
+import { checkDocument } from '@pins/appeals/utils/document-check.js';
 export const rowKeys = {
 	[APPEAL_TYPE.HOUSEHOLDER]: [
 		'originalApplicationForm',
 		'changedDescription',
 		{
 			key: 'appellantStatement',
-			condition: (data) => beforeExpeditedOriginalApplicationCutOff(data.applicationDate)
+			condition: (/** @type {{ applicationDate: string | null | undefined; }} */ data) =>
+				beforeExpeditedOriginalApplicationCutOff(data.applicationDate)
 		},
 		'appellantApplicationFolder'
 	],
@@ -99,7 +101,31 @@ export const rowKeys = {
 		'applicationDecisionLetter',
 		'planningObligation',
 		'ownershipCertificate',
-		'appellantApplicationFolder'
+		'appellantApplicationFolder',
+		{
+			key: 'designAccessStatement',
+			condition: (
+				/** @type {{ documents: { designAccessStatement: string | null | undefined; } }} */ data
+			) => checkDocument(data.documents.designAccessStatement)
+		},
+		{
+			key: 'plansDrawings',
+			condition: (
+				/** @type {{ documents: { plansDrawings: string | null | undefined; } }} */ data
+			) => checkDocument(data.documents.plansDrawings)
+		},
+		{
+			key: 'newPlansDrawings',
+			condition: (
+				/** @type {{ documents: { newPlansDrawings: string | null | undefined; } }} */ data
+			) => checkDocument(data.documents.newPlansDrawings)
+		},
+		{
+			key: 'otherNewDocuments',
+			condition: (
+				/** @type {{ documents: { otherNewDocuments: string | null | undefined; } }} */ data
+			) => checkDocument(data.documents.otherNewDocuments)
+		}
 	],
 	[APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE]: [
 		'originalApplicationForm',
