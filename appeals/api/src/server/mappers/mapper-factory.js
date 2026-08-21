@@ -397,6 +397,9 @@ function createFoldersLayout(folders, context) {
 				supportingDocuments: folders.find(
 					(f) => f.path === `general/${APPEAL_DOCUMENT_TYPE.GENERAL_SUPPORTING}`
 				),
+				inquiryDocuments: folders.find(
+					(f) => f.path === `inquiry/${APPEAL_DOCUMENT_TYPE.INQUIRY_CORE}`
+				),
 				costs: {
 					appellantApplicationFolder: folders.find(
 						(f) =>

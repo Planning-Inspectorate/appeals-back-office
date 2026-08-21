@@ -429,6 +429,7 @@ export interface WebAppeal extends SingleAppealDetailsResponse {
 	procedureType?: string | undefined;
 	appealRule6Parties?: AppealRule6Party[] | null;
 	isS78Expedited?: boolean;
+	inquiryDocuments?: FolderInfo | null;
 }
 
 export interface WebServiceUser {
