@@ -1,4 +1,5 @@
 import { mapAppellantProofOfEvidence } from '#lib/mappers/data/appeal/submappers/appellant-proof-of-evidence-and-witness.mapper.js';
+import { mapInquiryDocuments } from '#lib/mappers/data/appeal/submappers/inquiry-documents.mapper.js';
 import { mapLPAProofOfEvidence } from '#lib/mappers/data/appeal/submappers/lpa-proof-of-evidence-and-witness.mapper.js';
 import { submaps as hasSubmaps } from './has.js';
 import { mapAppellantFinalComments } from './submappers/appellant-final-comments.mapper.js';
@@ -74,5 +75,6 @@ export const submaps = {
 	appellantStatement: mapAppellantStatement,
 	caseManagementConferenceDueDate: mapCaseManagementConferenceDueDate,
 	enforcementReference: mapEnforcementReference,
-	applicationMadeUnderActSection: mapApplicationMadeUnderActSection
+	applicationMadeUnderActSection: mapApplicationMadeUnderActSection,
+	inquiryDocuments: mapInquiryDocuments
 };

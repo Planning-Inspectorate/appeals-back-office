@@ -1,3 +1,4 @@
+import inquiryDocumentsRouter from '#appeals/appeal-details/inquiry/documents/inquiry-documents.router.js';
 import { Router as createRouter } from 'express';
 import cancelInquiryRouter from './cancel/cancel-inquiry.router.js';
 import estimatesRouter from './estimates/estimates.router.js';
@@ -11,5 +12,6 @@ router.use('/setup', setUpInquiryRouter);
 router.use('/estimates', estimatesRouter);
 router.use('/change', controller.updateInquirySession, changeInquiryRouter);
 router.use('/cancel', cancelInquiryRouter);
+router.use('/documents', inquiryDocumentsRouter);
 
 export default router;
