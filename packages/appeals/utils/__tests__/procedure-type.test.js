@@ -1,6 +1,6 @@
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { PROCEDURE_TYPE_NAME } from '../../constants/common.js';
-import { normaliseProcedureType } from '../procedure-type.js';
+import { getEffectiveProcedureType, normaliseProcedureType } from '../procedure-type.js';
 
 describe('normaliseProcedureType', () => {
 	it('normalises WRITTEN_PART_1 to WRITTEN', () => {
@@ -42,5 +42,11 @@ describe('normaliseProcedureType', () => {
 
 		expect(normaliseProcedureType('testString')).toBe('testString');
 		expect(normaliseProcedureType(undefined)).toBe(undefined);
+	});
+});
+
+describe('getEffectiveProcedureType', () => {
+	it('defaults to written when procedureType and appeal.procedureType are not set', () => {
+		expect(getEffectiveProcedureType({ appealType: { key: 'H' } })).toBe(undefined);
 	});
 });
