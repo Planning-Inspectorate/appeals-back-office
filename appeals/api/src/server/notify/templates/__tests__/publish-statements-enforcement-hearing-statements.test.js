@@ -230,8 +230,6 @@ describe('publish-statements-enforcement-hearing.content.md - LPA notify', () =>
 			recipient_role: 'appellant'
 		});
 
-		console.log(content);
-
 		expect(content).toContain(
 			'We will let you know if the local planning authority submits any final comments.'
 		);
