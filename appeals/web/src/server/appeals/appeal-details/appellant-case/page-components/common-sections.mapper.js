@@ -1,4 +1,3 @@
-import config from '#environment/config.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import {
 	documentUploadUrlTemplate,
@@ -262,13 +261,8 @@ export function buildFullPlanningUploadedDocumentsCard(mappedAppellantCaseData) 
  */
 export function buildEnforcementBeforeYouStartCard(mappedAppellantCaseData) {
 	return buildSummaryListCard('before-you-start', 'Before you start', [
-		!config.featureFlags.featureFlagNewBeforeYouStart &&
-			mappedAppellantCaseData.enforcementNotice?.display?.summaryListItem,
 		mappedAppellantCaseData.localPlanningAuthority?.display?.summaryListItem,
-		config.featureFlags.featureFlagNewBeforeYouStart &&
-			mappedAppellantCaseData.applicationType?.display?.summaryListItem,
-		!config.featureFlags.featureFlagNewBeforeYouStart &&
-			mappedAppellantCaseData.enforcementNoticeListedBuilding?.display?.summaryListItem,
+		mappedAppellantCaseData.applicationType?.display?.summaryListItem,
 		mappedAppellantCaseData.enforcementIssueDate?.display?.summaryListItem,
 		mappedAppellantCaseData.enforcementEffectiveDate?.display?.summaryListItem,
 		mappedAppellantCaseData.contactPlanningInspectorateDate?.display?.summaryListItem,

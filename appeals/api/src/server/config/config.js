@@ -108,9 +108,6 @@ const { value, error } = schema.validate({
 		featureFlagEnforcementChangeProcedureLinked:
 			environment.FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED &&
 			environment.FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED === 'true',
-		featureFlagNewBeforeYouStart:
-			environment.FEATURE_FLAG_NEW_BEFORE_YOU_START &&
-			environment.FEATURE_FLAG_NEW_BEFORE_YOU_START === 'true',
 		featureFlagEnforcementChangeProcedure:
 			environment.FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE &&
 			environment.FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE === 'true',
