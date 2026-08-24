@@ -1432,7 +1432,7 @@
 				"caseId": 72,
 				"folderId": 3551,
 				"path": "appellant-case/appellantStatement",
-				"documents": []
+				"documents": ["document1.pdf"]
 			},
 			"applicationDecisionLetter": {
 				"caseId": 72,
@@ -1492,6 +1492,12 @@
 				"caseId": 72,
 				"folderId": 3558,
 				"path": "appellant-case/plansDrawings",
+				"documents": ["document1.pdf", "document2.pdf"]
+			},
+			"statementCommonGround": {
+				"caseId": 72,
+				"folderId": 3564,
+				"path": "appellant-case/statementCommonGround",
 				"documents": ["document1.pdf", "document2.pdf"]
 			}
 		}

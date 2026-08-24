@@ -1591,6 +1591,14 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
           "key": "Application for an award of appeal costs",
         },
         {
+          "html": "Unnamed document",
+          "key": "Appeal statement",
+        },
+        {
+          "html": "<ul class="govuk-list govuk-list--bullet"><li>Unnamed document</li><li>Unnamed document</li></ul>",
+          "key": "Draft statement of common ground",
+        },
+        {
           "html": "<ul class="govuk-list govuk-list--bullet"><li>Unnamed document</li><li>Unnamed document</li></ul>",
           "key": "Plans, drawings and list of plans",
         },

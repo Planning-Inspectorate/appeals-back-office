@@ -103,6 +103,18 @@ export const rowKeys = {
 		'ownershipCertificate',
 		'appellantApplicationFolder',
 		{
+			key: 'appellantStatement',
+			condition: (
+				/** @type {{ documents: { appellantStatement: string | null | undefined; } }} */ data
+			) => checkDocument(data.documents.appellantStatement)
+		},
+		{
+			key: 'statementCommonGround',
+			condition: (
+				/** @type {{ documents: { statementCommonGround: string | null | undefined; } }} */ data
+			) => checkDocument(data.documents.statementCommonGround)
+		},
+		{
 			key: 'designAccessStatement',
 			condition: (
 				/** @type {{ documents: { designAccessStatement: string | null | undefined; } }} */ data
