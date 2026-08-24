@@ -105,7 +105,6 @@ export function loadConfig() {
 		FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED,
 		FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED,
 		FEATURE_FLAG_SHARE_COSTS,
-		FEATURE_FLAG_NEW_BEFORE_YOU_START,
 		FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE
 	} = environment;
 
@@ -200,7 +199,6 @@ export function loadConfig() {
 			featureFlagEnforcementChangeProcedureLinked:
 				FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED === 'true',
 			featureFlagShareCosts: FEATURE_FLAG_SHARE_COSTS === 'true',
-			featureFlagNewBeforeYouStart: FEATURE_FLAG_NEW_BEFORE_YOU_START === 'true',
 			featureFlagEnforcementChangeProcedure: FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE === 'true',
 			featureFlagSharingHearingDocuments:
 				environment.FEATURE_FLAG_SHARING_HEARING_DOCUMENTS === 'true',

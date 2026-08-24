@@ -5,8 +5,6 @@ import applicationDevelopmentPartOrFullRouter from '#appeals/appeal-details/appe
 import contactPlanningInspectorateDateRouter from '#appeals/appeal-details/appellant-case/contact-planning-inspectorate-date/contact-planning-inspectorate-date.router.js';
 import enforcementEffectiveDateRouter from '#appeals/appeal-details/appellant-case/enforcement-effective-date/enforcement-effective-date.router.js';
 import enforcementIssueDateRouter from '#appeals/appeal-details/appellant-case/enforcement-issue-date/enforcement-issue-date.router.js';
-import enforcementNoticeListedBuildingRouter from '#appeals/appeal-details/appellant-case/enforcement-notice-listed-building/enforcement-notice-listed-building.router.js';
-import enforcementNoticeRouter from '#appeals/appeal-details/appellant-case/enforcement-notice/enforcement-notice.router.js';
 import enforcementReferenceRouter from '#appeals/appeal-details/appellant-case/enforcement-reference/enforcement-reference.router.js';
 import groundsForAppealRouter from '#appeals/appeal-details/appellant-case/grounds-for-appeal/grounds-for-appeal.router.js';
 import changeProcedureTypeRouter from '#appeals/appeal-details/change-procedure-type/change-procedure-type.router.js';
@@ -243,12 +241,6 @@ router.use(
 );
 
 router.use(
-	'/enforcement-notice',
-	validateAppealWithInclude(['appellantCase']),
-	assertUserHasPermission(permissionNames.updateCase),
-	enforcementNoticeRouter
-);
-router.use(
 	'/enforcement-issue-date',
 	validateAppealWithInclude(['appellantCase']),
 	assertUserHasPermission(permissionNames.updateCase),
@@ -265,13 +257,6 @@ router.use(
 	validateAppealWithInclude(['appellantCase']),
 	assertUserHasPermission(permissionNames.updateCase),
 	contactPlanningInspectorateDateRouter
-);
-
-router.use(
-	'/enforcement-notice-listed-building',
-	validateAppealWithInclude(['appellantCase']),
-	assertUserHasPermission(permissionNames.updateCase),
-	enforcementNoticeListedBuildingRouter
 );
 
 router.use(
