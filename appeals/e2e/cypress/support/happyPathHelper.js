@@ -194,7 +194,7 @@ export const happyPathHelper = {
 		cy.reload();
 		caseDetailsPage.basePageElements.bannerLink().click();
 		caseDetailsPage.clickButtonByText(reviewProperties.progressText);
-		caseDetailsPage.validateBannerMessage('Success', 'Statements and IP comments shared');
+		caseDetailsPage.validateBannerMessage('Success', 'Comments and statements shared');
 	},
 
 	validateBackNavigationFlow(navigationConfig) {

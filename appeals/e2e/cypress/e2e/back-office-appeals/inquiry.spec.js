@@ -686,11 +686,11 @@ it.skip('should progress to evidence stage after sharing statements and IP comme
 		cy.simulateStatementsDeadlineElapsed(caseObj);
 
 		// Share statements and transition to evidence stage
-		caseDetailsPage.validateBannerMessage('Important', 'Share IP comments and statements');
+		caseDetailsPage.validateBannerMessage('Important', 'Share comments and statements');
 		caseDetailsPage.basePageElements.bannerLink().click();
 		caseDetailsPage.clickButtonByText(CTA_TEXT.caseProgression.progressToProofOfEvidence);
 
-		caseDetailsPage.validateBannerMessage('Success', 'Statements and IP comments shared');
+		caseDetailsPage.validateBannerMessage('Success', 'Comments and statements shared');
 		caseDetailsPage.checkStatusOfCase('Evidence', 0);
 
 		// Verify notification

@@ -797,7 +797,7 @@ describe('representations', () => {
 				);
 			});
 
-			it('should show "Statements and IP comments shared" banner when at STATEMENTS status with published statements and IP comments', async () => {
+			it('should show "Comments and statements shared" banner when at STATEMENTS status with published statements and IP comments', async () => {
 				const numIpComments = 1;
 				const appealAtStatements = {
 					...appealData,
@@ -857,7 +857,7 @@ describe('representations', () => {
 				}).innerHTML;
 
 				expect(notificationBannerHtml).toContain('Success</h3>');
-				expect(notificationBannerHtml).toContain('Statements and IP comments shared');
+				expect(notificationBannerHtml).toContain('Comments and statements shared');
 			});
 			it('should show "Statements shared" banner when at STATEMENTS status with published statements and no IP comments', async () => {
 				const numIpComments = 0;

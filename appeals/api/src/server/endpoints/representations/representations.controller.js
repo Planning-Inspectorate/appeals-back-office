@@ -443,7 +443,7 @@ export async function publish(req, res) {
 	if (updatedReps.length > 0) {
 		/** @type {Record<string, string>} */
 		const replacements = {
-			[APPEAL_CASE_STATUS.STATEMENTS]: 'Statements and IP comments',
+			[APPEAL_CASE_STATUS.STATEMENTS]: 'Comments and statements',
 			[APPEAL_CASE_STATUS.FINAL_COMMENTS]: 'Final comments',
 			[APPEAL_CASE_STATUS.EVIDENCE]: 'Proof of evidence and witnesses'
 		};
