@@ -58,7 +58,11 @@ export function generateHASComponents(
 	const components = [
 		buildBeforeYouStartCard(mappedAppellantCaseData),
 		buildAppellantDetailsCard(appealDetails, mappedAppellantCaseData),
-		buildSiteDetailsCard(mappedAppellantCaseData),
+		buildSiteDetailsCard(mappedAppellantCaseData, [
+			...(isExpeditedEligible
+				? [mappedAppellantCaseData.anySignificantChanges?.display?.summaryListItem]
+				: [])
+		]),
 		buildApplicationDetailsCard(mappedAppellantCaseData),
 		isExpeditedEligible ? buildAppealDetailsCard(mappedAppellantCaseData) : null,
 		buildHASUploadedDocumentsCard(appellantCaseData, mappedAppellantCaseData),

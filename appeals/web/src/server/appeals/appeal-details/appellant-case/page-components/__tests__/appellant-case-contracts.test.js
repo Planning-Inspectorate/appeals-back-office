@@ -149,8 +149,7 @@ describe('Appellant Case Page Component Mapper Contracts', () => {
 			'Owners known',
 			'Inspector access',
 			'Safety risks',
-			'Landowner permission',
-			'Significant changes'
+			'Landowner permission'
 		]);
 		expect(extractRowKeysForCard(components, 'application-summary')).toEqual([
 			'Application date',
@@ -206,8 +205,7 @@ describe('Appellant Case Page Component Mapper Contracts', () => {
 			'Owners known',
 			'Inspector access',
 			'Safety risks',
-			'Landowner permission',
-			'Significant changes'
+			'Landowner permission'
 		]);
 		expect(extractRowKeysForCard(components, 'application-summary')).toEqual([
 			'Application date',
@@ -307,8 +305,7 @@ describe('Appellant Case Page Component Mapper Contracts', () => {
 			'Site ownership',
 			'Owners known',
 			'Inspector access',
-			'Safety risks',
-			'Significant changes'
+			'Safety risks'
 		]);
 		expect(extractRowKeysForCard(components, 'application-summary')).toEqual([
 			'Application date',
@@ -529,8 +526,7 @@ describe('Appellant Case Page Component Mapper Contracts', () => {
 			'Site ownership',
 			'Owners known',
 			'Inspector access',
-			'Safety risks',
-			'Significant changes'
+			'Safety risks'
 		]);
 		expect(extractRowKeysForCard(components, 'application-summary')).toEqual([
 			'Application date',

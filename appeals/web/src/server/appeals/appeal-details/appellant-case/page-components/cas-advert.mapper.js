@@ -57,7 +57,11 @@ export function generateCASAdvertComponents(
 	const components = [
 		buildBeforeYouStartCard(mappedAppellantCaseData),
 		buildAppellantDetailsCard(appealDetails, mappedAppellantCaseData),
-		buildAdvertSiteDetailsCard(mappedAppellantCaseData),
+		buildAdvertSiteDetailsCard(mappedAppellantCaseData, [
+			...(isExpeditedEligible
+				? [mappedAppellantCaseData.anySignificantChanges?.display?.summaryListItem]
+				: [])
+		]),
 		buildAdvertApplicationDetailsCard(mappedAppellantCaseData),
 		isExpeditedEligible ? buildAppealDetailsCard(mappedAppellantCaseData) : null,
 		buildCASAdvertUploadedDocumentsCard(appellantCaseData, mappedAppellantCaseData)

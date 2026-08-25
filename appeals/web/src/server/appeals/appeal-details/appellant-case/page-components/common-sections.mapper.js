@@ -119,7 +119,6 @@ export function buildSiteDetailsCard(mappedAppellantCaseData, additionalRows = [
 		mappedAppellantCaseData.ownersKnown?.display?.summaryListItem,
 		mappedAppellantCaseData.inspectorAccess?.display?.summaryListItem,
 		mappedAppellantCaseData.healthAndSafetyIssues?.display?.summaryListItem,
-		mappedAppellantCaseData.anySignificantChanges?.display?.summaryListItem,
 		...additionalRows
 	]);
 }
@@ -320,9 +319,10 @@ export function buildEnforcementApplicationDetailsCard(mappedAppellantCaseData) 
 /**
  * Builds the Advert "Site details" section card component.
  * @param {MappedInstructions} mappedAppellantCaseData
+ * @param {(any|undefined|null)[]} [additionalRows]
  * @returns {PageComponent|null}
  */
-export function buildAdvertSiteDetailsCard(mappedAppellantCaseData) {
+export function buildAdvertSiteDetailsCard(mappedAppellantCaseData, additionalRows = []) {
 	return buildSummaryListCard('site-details', 'Site details', [
 		mappedAppellantCaseData.siteAddress?.display?.summaryListItem,
 		mappedAppellantCaseData.highwayLand?.display?.summaryListItem,
@@ -333,7 +333,7 @@ export function buildAdvertSiteDetailsCard(mappedAppellantCaseData) {
 		mappedAppellantCaseData.inspectorAccess?.display?.summaryListItem,
 		mappedAppellantCaseData.healthAndSafetyIssues?.display?.summaryListItem,
 		mappedAppellantCaseData.landownerPermission?.display?.summaryListItem,
-		mappedAppellantCaseData.anySignificantChanges?.display?.summaryListItem
+		...additionalRows
 	]);
 }
 
