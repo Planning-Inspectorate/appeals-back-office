@@ -25,7 +25,7 @@ export const nunjucksEnv = nunjucks.configure(templatesDir, {
 });
 /**
  * @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal
- * @typedef {Record<string, string | string[] | boolean | number | Object>} Personalisation
+ * @typedef {Record<string, string | undefined | null | string[] | boolean | number | Object>} Personalisation
  */
 
 /**
