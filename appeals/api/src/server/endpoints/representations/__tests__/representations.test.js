@@ -2892,7 +2892,7 @@ describe('/appeals/:id/reps', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(4, {
 					data: {
 						appealId: mockS78Appeal.id,
-						details: 'Statements and IP comments shared',
+						details: 'Comments and statements shared',
 						loggedAt: expect.any(Date),
 						userId: 1
 					}

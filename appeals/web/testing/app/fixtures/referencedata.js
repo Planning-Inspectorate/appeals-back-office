@@ -5378,7 +5378,7 @@ export const caseAuditLog = [
 	},
 	{
 		azureAdUserId: activeDirectoryUsersData[0].id,
-		details: 'Statements and IP comments shared',
+		details: 'Comments and statements shared',
 		loggedDate: '2025-05-27T09:54:59.262Z'
 	},
 	{
