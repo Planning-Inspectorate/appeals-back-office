@@ -1048,6 +1048,10 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
  * @property {string} [inquiryTime]
  * @property {string} [inquiryExpectedDays]
  * @property {string} [inquiryAddress]
+ * @property {string | null} [hearingDate]
+ * @property {string | null} [hearingTime]
+ * @property {string | null} [hearingAddress]
+ * @property {string | null } [hearingExpectedDays]
  */
 
 /**
@@ -1065,6 +1069,10 @@ async function notifyPublished({
 	hasIpComments = false,
 	hasRule6Parties = false,
 	hasRule6Statement = false,
+	hearingDate = null,
+	hearingTime = null,
+	hearingExpectedDays = null,
+	hearingAddress = null,
 	isHearingProcedure = false,
 	isInquiryProcedure = false,
 	statementUrl = '',
@@ -1100,6 +1108,12 @@ async function notifyPublished({
 			has_statement: hasLpaStatement,
 			has_rule_6_parties: hasRule6Parties,
 			has_rule_6_statement: hasRule6Statement,
+			...(hearingDate && {
+				hearing_date: hearingDate,
+				hearing_time: hearingTime,
+				hearing_expected_days: hearingExpectedDays,
+				hearing_address: hearingAddress
+			}),
 			is_hearing_procedure: isHearingProcedure,
 			is_inquiry_procedure: isInquiryProcedure,
 			statement_url: statementUrl,
@@ -1346,8 +1360,28 @@ function notifyNoFinalComments(appeal, notifyClient, azureAdUserId, userTypeNoCo
 			? 'final-comments-none-enforcement-hearing'
 			: 'final-comments-none';
 
+	const hearingDate = appeal.hearing?.hearingStartTime
+		? dateISOStringToDisplayDate(appeal.hearing.hearingStartTime)
+		: null;
+
+	const hearingTime = appeal.hearing?.hearingStartTime
+		? formatTime12h(
+				typeof appeal.hearing.hearingStartTime === 'string'
+					? new Date(appeal.hearing.hearingStartTime)
+					: appeal.hearing.hearingStartTime
+			)
+		: null;
+	const hearingExpectedDays = appeal.hearing?.estimatedDays?.toString() ?? '';
+	const hearingAddress = appeal.hearing?.address
+		? formatAddressSingleLine(appeal.hearing.address)
+		: '';
+
 	return notifyPublished({
 		appeal,
+		hearingDate,
+		hearingTime,
+		hearingExpectedDays,
+		hearingAddress,
 		notifyClient,
 		templateName,
 		recipientEmail,
