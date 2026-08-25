@@ -87,7 +87,7 @@ If an appeal type requires custom rows in standard sections (e.g. `site-details`
 - **`buildEnforcementAppellantDetailsCard(appealDetails, mappedAppellantCaseData)`** – Builds the Enforcement "Appellant details" section card component.
 - **`buildEnforcementLandDetailsCard(mappedAppellantCaseData)`** – Builds the Enforcement "Land" section card component.
 - **`buildEnforcementApplicationDetailsCard(mappedAppellantCaseData)`** – Builds the Enforcement "Application details" section card component.
-- **`buildAdvertSiteDetailsCard(mappedAppellantCaseData)`** – Builds the Advert "Site details" section card component.
+- **`buildAdvertSiteDetailsCard(mappedAppellantCaseData, additionalRows = [])`** – Builds the Advert "Site details" section card component.
 - **`buildAdvertApplicationDetailsCard(mappedAppellantCaseData)`** – Builds the Advert "Application details" section card component.
 
 ---
