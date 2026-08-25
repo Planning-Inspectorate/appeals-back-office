@@ -51,7 +51,7 @@ describe('Progress Enforcement Appeal to Decision', () => {
 		cy.deleteAppeals(appeal);
 	});
 
-	it(`Completes an Enforcement Hearing Appeal to decision`, () => {
+	it(`Completes an Enforcement Hearing Appeal to decision with hearing cancellation`, () => {
 		cy.createCase({ ...appealsApiRequests.enforcementSubmission.casedata }).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
@@ -118,7 +118,7 @@ describe('Progress Enforcement Appeal to Decision', () => {
 		});
 	});
 
-	it(`Completes an Enforcement Appeal to decision`, () => {
+	it(`Completes an Enforcement Hearing Appeal to decision with hearing cancellation`, () => {
 		cy.createCase({ ...appealsApiRequests.enforcementSubmission.casedata }).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
