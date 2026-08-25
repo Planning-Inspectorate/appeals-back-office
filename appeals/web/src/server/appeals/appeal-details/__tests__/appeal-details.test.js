@@ -3557,13 +3557,11 @@ describe('appeal-details', () => {
 				const flagsBackup = {
 					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
 					featureFlagS78Inquiry: config.featureFlags.featureFlagS78Inquiry,
-					featureFlagS20Hearing: config.featureFlags.featureFlagS20Hearing,
 					featureFlagS20Inquiry: config.featureFlags.featureFlagS20Inquiry
 				};
 				Object.assign(config.featureFlags, {
 					featureFlagS78Written: true,
 					featureFlagS78Inquiry: true,
-					featureFlagS20Hearing: true,
 					featureFlagS20Inquiry: true
 				});
 
@@ -3599,63 +3597,15 @@ describe('appeal-details', () => {
 				}
 			});
 
-			it('Should hide procedure type change link for S20 if no alternative procedure type is available', async () => {
-				const flagsBackup = {
-					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
-					featureFlagS78Inquiry: config.featureFlags.featureFlagS78Inquiry,
-					featureFlagS20Hearing: config.featureFlags.featureFlagS20Hearing,
-					featureFlagS20Inquiry: config.featureFlags.featureFlagS20Inquiry
-				};
-				Object.assign(config.featureFlags, {
-					featureFlagS78Written: false,
-					featureFlagS78Inquiry: true,
-					featureFlagS20Hearing: false,
-					featureFlagS20Inquiry: true
-				});
-
-				try {
-					const appealId = 2;
-					nock('http://test/')
-						.get(`/appeals/${appealId}/page-details`)
-						.reply(200, {
-							...appealData,
-							appealId,
-							appealType: APPEAL_TYPE.PLANNED_LISTED_BUILDING,
-							procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
-							documentationSummary: {
-								lpaStatement: {
-									status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
-								}
-							}
-						});
-					nock('http://test/')
-						.get(/appeals\/\d+\/appellant-cases\/\d+/)
-						.reply(200, {
-							planningObligation: { hasObligation: false },
-							numberOfResidencesNetChange: null
-						});
-
-					const response = await request.get(`${baseUrl}/${appealId}`);
-
-					expect(response.text).not.toContain(
-						'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
-					);
-				} finally {
-					Object.assign(config.featureFlags, flagsBackup);
-				}
-			});
-
 			it('Should display procedure type change link for S20 if at least one alternative procedure type is available', async () => {
 				const flagsBackup = {
 					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
 					featureFlagS78Inquiry: config.featureFlags.featureFlagS78Inquiry,
-					featureFlagS20Hearing: config.featureFlags.featureFlagS20Hearing,
 					featureFlagS20Inquiry: config.featureFlags.featureFlagS20Inquiry
 				};
 				Object.assign(config.featureFlags, {
 					featureFlagS78Written: true,
 					featureFlagS78Inquiry: true,
-					featureFlagS20Hearing: false,
 					featureFlagS20Inquiry: true
 				});
 

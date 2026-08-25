@@ -24,7 +24,6 @@ describe('Change procedure type', () => {
 		Object.assign(config.featureFlags, {
 			featureFlagS78Written: true,
 			featureFlagS78Inquiry: true,
-			featureFlagS20Hearing: true,
 			featureFlagS20Inquiry: true,
 			featureFlagEnforcementNotice: true,
 			featureFlagEnforcementNoticeHearing: true,
