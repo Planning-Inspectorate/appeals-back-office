@@ -24,7 +24,8 @@ export class HearingSectionPage extends CaseDetailsPage {
 		updateAddress: () => cy.getByData('change-address'),
 		changeHearing: () => cy.get('.govuk-summary-list__actions > .govuk-link').last(),
 		keepHearing: () => cy.get('#keepHearing'),
-		cancelHearing: () => cy.get('#cancelHearing')
+		cancelHearing: () => cy.get('#cancelHearing'),
+		setUpHearing: () => cy.get('[data-cy="setup-hearing"]')
 	};
 
 	clickChangeHearingDate() {
@@ -45,6 +46,10 @@ export class HearingSectionPage extends CaseDetailsPage {
 
 	clickKeepHearing() {
 		this.hearingSectionElements.keepHearing().click();
+	}
+
+	clickSetUpHearing() {
+		this.hearingSectionElements.setUpHearing().click();
 	}
 
 	clearHearingDateAndTime() {
