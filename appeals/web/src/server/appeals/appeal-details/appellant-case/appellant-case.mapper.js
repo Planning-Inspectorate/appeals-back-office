@@ -889,16 +889,12 @@ function generateCaseTypeSpecificComponents(
 					);
 				}
 			}
-			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
-				return generateS78Components(
-					appealDetails,
-					appellantCaseData,
-					mappedAppellantCaseData,
-					userHasUpdateCasePermission
-				);
-			} else {
-				throw new Error('Feature flag inactive for S78');
-			}
+			return generateS78Components(
+				appealDetails,
+				appellantCaseData,
+				mappedAppellantCaseData,
+				userHasUpdateCasePermission
+			);
 		case APPEAL_TYPE.PLANNED_LISTED_BUILDING:
 			return generateS20Components(
 				appealDetails,

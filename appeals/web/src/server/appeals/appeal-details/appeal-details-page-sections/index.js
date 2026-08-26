@@ -23,9 +23,6 @@ export function generateAppealDetailsSections(appealDetails, mappedData, session
 		}
 		case APPEAL_TYPE.S78: //TODO: Feature flag
 		case APPEAL_TYPE.PLANNED_LISTED_BUILDING:
-			if (!isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
-				throw new Error('Feature flag inactive for S78');
-			}
 			return generateS78AppealDetailsPageComponents(appealDetails, mappedData, session);
 		case APPEAL_TYPE.ENFORCEMENT_NOTICE:
 		case APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING:

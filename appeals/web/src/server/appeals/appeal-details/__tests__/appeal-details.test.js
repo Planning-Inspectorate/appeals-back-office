@@ -3555,12 +3555,10 @@ describe('appeal-details', () => {
 
 			it('Should display procedure type change link because type is S20 and lpastatement status is not received', async () => {
 				const flagsBackup = {
-					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
 					featureFlagS78Inquiry: config.featureFlags.featureFlagS78Inquiry,
 					featureFlagS20Inquiry: config.featureFlags.featureFlagS20Inquiry
 				};
 				Object.assign(config.featureFlags, {
-					featureFlagS78Written: true,
 					featureFlagS78Inquiry: true,
 					featureFlagS20Inquiry: true
 				});
@@ -3599,12 +3597,10 @@ describe('appeal-details', () => {
 
 			it('Should display procedure type change link for S20 if at least one alternative procedure type is available', async () => {
 				const flagsBackup = {
-					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
 					featureFlagS78Inquiry: config.featureFlags.featureFlagS78Inquiry,
 					featureFlagS20Inquiry: config.featureFlags.featureFlagS20Inquiry
 				};
 				Object.assign(config.featureFlags, {
-					featureFlagS78Written: true,
 					featureFlagS78Inquiry: true,
 					featureFlagS20Inquiry: true
 				});
@@ -3643,7 +3639,6 @@ describe('appeal-details', () => {
 
 			it('Should display procedure type change link for enforcement notice when relevant flags are enabled and statements are not shared', async () => {
 				const flagsBackup = {
-					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
 					featureFlagEnforcementNoticeHearing:
 						config.featureFlags.featureFlagEnforcementNoticeHearing,
 					featureFlagEnforcementNoticeInquiry:
@@ -3652,7 +3647,6 @@ describe('appeal-details', () => {
 						config.featureFlags.featureFlagEnforcementChangeProcedure
 				};
 				Object.assign(config.featureFlags, {
-					featureFlagS78Written: true,
 					featureFlagEnforcementNoticeHearing: true,
 					featureFlagEnforcementNoticeInquiry: true,
 					featureFlagEnforcementChangeProcedure: true
@@ -3692,7 +3686,6 @@ describe('appeal-details', () => {
 
 			it('Should not display procedure type change link for enforcement notice when statements have been shared', async () => {
 				const flagsBackup = {
-					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
 					featureFlagEnforcementNoticeHearing:
 						config.featureFlags.featureFlagEnforcementNoticeHearing,
 					featureFlagEnforcementNoticeInquiry:
@@ -3701,7 +3694,6 @@ describe('appeal-details', () => {
 						config.featureFlags.featureFlagEnforcementChangeProcedure
 				};
 				Object.assign(config.featureFlags, {
-					featureFlagS78Written: true,
 					featureFlagEnforcementNoticeHearing: true,
 					featureFlagEnforcementNoticeInquiry: true,
 					featureFlagEnforcementChangeProcedure: true
@@ -3739,58 +3731,8 @@ describe('appeal-details', () => {
 				}
 			});
 
-			it('Should not display procedure type change link for enforcement notice when written, hearing and inquiry are disabled', async () => {
-				const flagsBackup = {
-					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
-					featureFlagEnforcementNoticeHearing:
-						config.featureFlags.featureFlagEnforcementNoticeHearing,
-					featureFlagEnforcementNoticeInquiry:
-						config.featureFlags.featureFlagEnforcementNoticeInquiry,
-					featureFlagEnforcementChangeProcedure:
-						config.featureFlags.featureFlagEnforcementChangeProcedure
-				};
-				Object.assign(config.featureFlags, {
-					featureFlagS78Written: false,
-					featureFlagEnforcementNoticeHearing: false,
-					featureFlagEnforcementNoticeInquiry: false,
-					featureFlagEnforcementChangeProcedure: true
-				});
-
-				try {
-					const appealId = 2;
-					nock('http://test/')
-						.get(`/appeals/${appealId}/page-details`)
-						.reply(200, {
-							...appealData,
-							appealId,
-							appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
-							procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
-							documentationSummary: {
-								lpaStatement: {
-									representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
-								}
-							}
-						});
-					nock('http://test/')
-						.get(/appeals\/\d+\/appellant-cases\/\d+/)
-						.reply(200, {
-							planningObligation: { hasObligation: false },
-							numberOfResidencesNetChange: null
-						});
-
-					const response = await request.get(`${baseUrl}/${appealId}`);
-
-					expect(response.text).not.toContain(
-						'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
-					);
-				} finally {
-					Object.assign(config.featureFlags, flagsBackup);
-				}
-			});
-
 			it('Should display procedure type change link for enforcement notice when current procedure is written, hearing is disabled and inquiry is enabled', async () => {
 				const flagsBackup = {
-					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
 					featureFlagEnforcementNoticeHearing:
 						config.featureFlags.featureFlagEnforcementNoticeHearing,
 					featureFlagEnforcementNoticeInquiry:
@@ -3799,7 +3741,6 @@ describe('appeal-details', () => {
 						config.featureFlags.featureFlagEnforcementChangeProcedure
 				};
 				Object.assign(config.featureFlags, {
-					featureFlagS78Written: true,
 					featureFlagEnforcementNoticeHearing: false,
 					featureFlagEnforcementNoticeInquiry: true,
 					featureFlagEnforcementChangeProcedure: true
@@ -3830,104 +3771,6 @@ describe('appeal-details', () => {
 					const response = await request.get(`${baseUrl}/${appealId}`);
 
 					expect(response.text).toContain(
-						'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
-					);
-				} finally {
-					Object.assign(config.featureFlags, flagsBackup);
-				}
-			});
-
-			it('Should display procedure type change link for enforcement notice when current procedure is hearing, written is disabled and inquiry is enabled', async () => {
-				const flagsBackup = {
-					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
-					featureFlagEnforcementNoticeHearing:
-						config.featureFlags.featureFlagEnforcementNoticeHearing,
-					featureFlagEnforcementNoticeInquiry:
-						config.featureFlags.featureFlagEnforcementNoticeInquiry,
-					featureFlagEnforcementChangeProcedure:
-						config.featureFlags.featureFlagEnforcementChangeProcedure
-				};
-				Object.assign(config.featureFlags, {
-					featureFlagS78Written: false,
-					featureFlagEnforcementNoticeHearing: true,
-					featureFlagEnforcementNoticeInquiry: true,
-					featureFlagEnforcementChangeProcedure: true
-				});
-
-				try {
-					const appealId = 2;
-					nock('http://test/')
-						.get(`/appeals/${appealId}/page-details`)
-						.reply(200, {
-							...appealData,
-							appealId,
-							appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
-							procedureType: APPEAL_CASE_PROCEDURE.HEARING,
-							documentationSummary: {
-								lpaStatement: {
-									representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
-								}
-							}
-						});
-					nock('http://test/')
-						.get(/appeals\/\d+\/appellant-cases\/\d+/)
-						.reply(200, {
-							planningObligation: { hasObligation: false },
-							numberOfResidencesNetChange: null
-						});
-
-					const response = await request.get(`${baseUrl}/${appealId}`);
-
-					expect(response.text).toContain(
-						'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
-					);
-				} finally {
-					Object.assign(config.featureFlags, flagsBackup);
-				}
-			});
-
-			it('Should not display procedure type change link for enforcement notice when current procedure is inquiry and written and hearing are disabled', async () => {
-				const flagsBackup = {
-					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
-					featureFlagEnforcementNoticeHearing:
-						config.featureFlags.featureFlagEnforcementNoticeHearing,
-					featureFlagEnforcementNoticeInquiry:
-						config.featureFlags.featureFlagEnforcementNoticeInquiry,
-					featureFlagEnforcementChangeProcedure:
-						config.featureFlags.featureFlagEnforcementChangeProcedure
-				};
-				Object.assign(config.featureFlags, {
-					featureFlagS78Written: false,
-					featureFlagEnforcementNoticeHearing: false,
-					featureFlagEnforcementNoticeInquiry: true,
-					featureFlagEnforcementChangeProcedure: true
-				});
-
-				try {
-					const appealId = 2;
-					nock('http://test/')
-						.get(`/appeals/${appealId}/page-details`)
-						.reply(200, {
-							...appealData,
-							appealId,
-							appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
-							procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
-							documentationSummary: {
-								lpaStatement: {
-									representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
-								}
-							}
-						});
-					nock('http://test/')
-						.get(/appeals\/\d+\/appellant-cases\/\d+/)
-						.reply(200, {
-							planningObligation: { hasObligation: false },
-							numberOfResidencesNetChange: null
-						});
-
-					const response = await request.get(`${baseUrl}/${appealId}`);
-
-					expect(response.text).not.toContain(
 						'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
 					);
 				} finally {
@@ -3937,7 +3780,6 @@ describe('appeal-details', () => {
 
 			it('Should not display procedure type change link for enforcement notice when current procedure is written and enforcement change procedure is disabled', async () => {
 				const flagsBackup = {
-					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
 					featureFlagEnforcementNoticeHearing:
 						config.featureFlags.featureFlagEnforcementNoticeHearing,
 					featureFlagEnforcementNoticeInquiry:
@@ -3946,7 +3788,6 @@ describe('appeal-details', () => {
 						config.featureFlags.featureFlagEnforcementChangeProcedure
 				};
 				Object.assign(config.featureFlags, {
-					featureFlagS78Written: true,
 					featureFlagEnforcementNoticeHearing: true,
 					featureFlagEnforcementNoticeInquiry: true,
 					featureFlagEnforcementChangeProcedure: false
@@ -3986,7 +3827,6 @@ describe('appeal-details', () => {
 
 			it('Should not display procedure type change link for enforcement notice when current procedure is hearing and enforcement change procedure is disabled', async () => {
 				const flagsBackup = {
-					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
 					featureFlagEnforcementNoticeHearing:
 						config.featureFlags.featureFlagEnforcementNoticeHearing,
 					featureFlagEnforcementNoticeInquiry:
@@ -3995,7 +3835,6 @@ describe('appeal-details', () => {
 						config.featureFlags.featureFlagEnforcementChangeProcedure
 				};
 				Object.assign(config.featureFlags, {
-					featureFlagS78Written: true,
 					featureFlagEnforcementNoticeHearing: true,
 					featureFlagEnforcementNoticeInquiry: true,
 					featureFlagEnforcementChangeProcedure: false
@@ -4035,7 +3874,6 @@ describe('appeal-details', () => {
 
 			it('Should not display procedure type change link for enforcement notice when current procedure is inquiry and enforcement change procedure is disabled', async () => {
 				const flagsBackup = {
-					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
 					featureFlagEnforcementNoticeHearing:
 						config.featureFlags.featureFlagEnforcementNoticeHearing,
 					featureFlagEnforcementNoticeInquiry:
@@ -4044,7 +3882,6 @@ describe('appeal-details', () => {
 						config.featureFlags.featureFlagEnforcementChangeProcedure
 				};
 				Object.assign(config.featureFlags, {
-					featureFlagS78Written: true,
 					featureFlagEnforcementNoticeHearing: true,
 					featureFlagEnforcementNoticeInquiry: true,
 					featureFlagEnforcementChangeProcedure: false
