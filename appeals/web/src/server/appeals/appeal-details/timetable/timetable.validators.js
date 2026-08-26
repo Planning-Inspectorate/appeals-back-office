@@ -40,10 +40,14 @@ export const selectTimetableValidators = (req, timetableTypes, session) => {
 
 	timetableTypes.forEach((timetableType) => {
 		const idText = getIdText(timetableType);
+		const hasDateInput = [
+			req.body[`${idText}-due-date-day`],
+			req.body[`${idText}-due-date-month`],
+			req.body[`${idText}-due-date-year`]
+		].some((value) => value?.trim());
 		const sessionDate = buildSessionDate(req, idText);
 		const originalDatePart = (originalTimetable[timetableType] || '').slice(0, 10);
-
-		if (!originalDatePart || sessionDate !== originalDatePart) {
+		if ((!originalDatePart && hasDateInput) || sessionDate !== originalDatePart) {
 			//only validate due dates that have changed
 			const validatorConfig = validatorsMap[timetableType];
 			const idToCompare = 'idToCompare' in validatorConfig ? validatorConfig.idToCompare : '';
