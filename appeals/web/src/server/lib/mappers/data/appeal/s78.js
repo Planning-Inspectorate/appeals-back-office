@@ -1,4 +1,5 @@
 import { mapAppellantProofOfEvidence } from '#lib/mappers/data/appeal/submappers/appellant-proof-of-evidence-and-witness.mapper.js';
+import { mapInquiryDocuments } from '#lib/mappers/data/appeal/submappers/inquiry-documents.mapper.js';
 import { mapLPAProofOfEvidence } from '#lib/mappers/data/appeal/submappers/lpa-proof-of-evidence-and-witness.mapper.js';
 import { submaps as hasSubmaps } from './has.js';
 import { mapAppellantFinalComments } from './submappers/appellant-final-comments.mapper.js';
@@ -20,6 +21,7 @@ import { mapAddInquiryEstimates } from './submappers/inquiry-add-inquiry-estimat
 import { mapCancelInquiry } from './submappers/inquiry-cancel-inquiry.js';
 import { mapInquiryDate } from './submappers/inquiry-date.mapper.js';
 import { mapInquiryDetails } from './submappers/inquiry-details.js';
+import { mapInquiryEventDocuments } from './submappers/inquiry-event-documents.mapper.js';
 import { mapInquiryEstimates } from './submappers/inquiry-inquiry-estimates.js';
 import { mapSetUpInquiry } from './submappers/inquiry-set-up-inquiry.js';
 import { mapIpCommentsDueDate } from './submappers/ip-comments-due-date.mapper.js';
@@ -74,5 +76,7 @@ export const submaps = {
 	appellantStatement: mapAppellantStatement,
 	caseManagementConferenceDueDate: mapCaseManagementConferenceDueDate,
 	enforcementReference: mapEnforcementReference,
-	applicationMadeUnderActSection: mapApplicationMadeUnderActSection
+	applicationMadeUnderActSection: mapApplicationMadeUnderActSection,
+	inquiryDocuments: mapInquiryDocuments,
+	inquiryEventDocuments: mapInquiryEventDocuments
 };

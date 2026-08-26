@@ -859,18 +859,26 @@ these [Notify Templates](../appeals/api/src/server/notify/templates):
 
 ## Final comments
 
-### Final comments done appellant
+### Final comments done appellant - non-enforcement/ldc
 
 - **Appeal type:** s78, s20
 - **Notify Subject Template:** [final-comments-done-appellant](../appeals/api/src/server/notify/templates/final-comments-done-appellant.subject.md)
 - **Notify Content Template:** [final-comments-done-appellant](../appeals/api/src/server/notify/templates/final-comments-done-appellant.content.md)
 - **Trigger:** Review final comments and mark as accepted and continue
 
-### Final comments done lpa
+### Final comments done lpa - non-enforcement/ldc
 
 - **Appeal type:** s78, s20
 - **Notify Subject Template:** [final-comments-done-lpa](../appeals/api/src/server/notify/templates/final-comments-done-lpa.subject.md)
 - **Notify Content Template:** [final-comments-done-lpa](../appeals/api/src/server/notify/templates/final-comments-done-lpa.content.md)
+- **Trigger:** Review final comments and mark as accepted and continue
+
+### Final comments received - enforcement/ldc hearing
+
+- **Appeal type:** Enforcement, ELB and LDC (hearing)
+- **Notify Subject Template:** [final-comments-received-enforcement-hearing](../appeals/api/src/server/notify/templates/final-comments-received-enforcement-hearing.subject.md)
+- **Notify Content Template:** [final-comments-received-enforcement-hearing](../appeals/api/src/server/notify/templates/final-comments-received-enforcement-hearing.content.md)
+- **GOV notify template:** [Enforcement - All final comments received (LPA and Appellant) - GOV.UK notify](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/d4343bac-c4e7-4cc4-b452-a27d9ae3758c)
 - **Trigger:** Review final comments and mark as accepted and continue
 
 ### Final comment rejected appellant

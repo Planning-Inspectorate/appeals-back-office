@@ -423,7 +423,7 @@ export const notificationBannerDefinitions = {
 	commentsAndLpaStatementShared: {
 		type: 'success',
 		pages: ['appealDetails'],
-		text: 'Statements and IP comments shared'
+		text: 'Comments and statements shared'
 	},
 	progressedToFinalComments: {
 		type: 'success',
