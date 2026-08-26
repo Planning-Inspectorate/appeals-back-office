@@ -6,9 +6,7 @@ import { mapDescriptionOfAllegedBreach } from './submappers/description-of-alleg
 import { mapEnforcementEffectiveDate } from './submappers/enforcement-effective-date.js';
 import { mapEnforcementIssueDate } from './submappers/enforcement-issue-date.js';
 import { mapEnforcementNoticeDocuments } from './submappers/enforcement-notice-documents.js';
-import { mapEnforcementNoticeListedBuilding } from './submappers/enforcement-notice-listed-building.js';
 import { mapEnforcementNoticePlanDocuments } from './submappers/enforcement-notice-plan-documents.js';
-import { mapEnforcementNotice } from './submappers/enforcement-notice.js';
 import { mapEnforcementReference } from './submappers/enforcement-reference.js';
 import { mapFactsForGrounds } from './submappers/facts-for-grounds.js';
 import { mapGroundsForAppeal } from './submappers/grounds-for-appeal.js';
@@ -19,8 +17,6 @@ import { mapSupportingDocumentsForGrounds } from './submappers/supporting-docume
 /** @type {Record<string, import('./mapper.js').SubMapper | import('./mapper.js').SubMapperList>} */
 export const submaps = {
 	...s78Submaps,
-	enforcementNotice: mapEnforcementNotice,
-	enforcementNoticeListedBuilding: mapEnforcementNoticeListedBuilding,
 	enforcementIssueDate: mapEnforcementIssueDate,
 	enforcementEffectiveDate: mapEnforcementEffectiveDate,
 	contactPlanningInspectorateDate: mapContactPlanningInspectorateDate,

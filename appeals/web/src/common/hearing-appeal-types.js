@@ -15,10 +15,7 @@ export const getEnabledHearingAppealTypes = (linked = false) => {
 		enabledHearingAppealTypes.push(APPEAL_TYPE.S78);
 	}
 
-	if (
-		isAppealTypeEnabled(APPEAL_TYPE.PLANNED_LISTED_BUILDING) &&
-		isFeatureActive(FEATURE_FLAG_NAMES.S20_HEARING)
-	) {
+	if (isAppealTypeEnabled(APPEAL_TYPE.PLANNED_LISTED_BUILDING)) {
 		enabledHearingAppealTypes.push(APPEAL_TYPE.PLANNED_LISTED_BUILDING);
 	}
 

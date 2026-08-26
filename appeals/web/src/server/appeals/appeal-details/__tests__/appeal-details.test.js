@@ -3557,13 +3557,11 @@ describe('appeal-details', () => {
 				const flagsBackup = {
 					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
 					featureFlagS78Inquiry: config.featureFlags.featureFlagS78Inquiry,
-					featureFlagS20Hearing: config.featureFlags.featureFlagS20Hearing,
 					featureFlagS20Inquiry: config.featureFlags.featureFlagS20Inquiry
 				};
 				Object.assign(config.featureFlags, {
 					featureFlagS78Written: true,
 					featureFlagS78Inquiry: true,
-					featureFlagS20Hearing: true,
 					featureFlagS20Inquiry: true
 				});
 
@@ -3599,63 +3597,15 @@ describe('appeal-details', () => {
 				}
 			});
 
-			it('Should hide procedure type change link for S20 if no alternative procedure type is available', async () => {
-				const flagsBackup = {
-					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
-					featureFlagS78Inquiry: config.featureFlags.featureFlagS78Inquiry,
-					featureFlagS20Hearing: config.featureFlags.featureFlagS20Hearing,
-					featureFlagS20Inquiry: config.featureFlags.featureFlagS20Inquiry
-				};
-				Object.assign(config.featureFlags, {
-					featureFlagS78Written: false,
-					featureFlagS78Inquiry: true,
-					featureFlagS20Hearing: false,
-					featureFlagS20Inquiry: true
-				});
-
-				try {
-					const appealId = 2;
-					nock('http://test/')
-						.get(`/appeals/${appealId}/page-details`)
-						.reply(200, {
-							...appealData,
-							appealId,
-							appealType: APPEAL_TYPE.PLANNED_LISTED_BUILDING,
-							procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
-							documentationSummary: {
-								lpaStatement: {
-									status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
-								}
-							}
-						});
-					nock('http://test/')
-						.get(/appeals\/\d+\/appellant-cases\/\d+/)
-						.reply(200, {
-							planningObligation: { hasObligation: false },
-							numberOfResidencesNetChange: null
-						});
-
-					const response = await request.get(`${baseUrl}/${appealId}`);
-
-					expect(response.text).not.toContain(
-						'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
-					);
-				} finally {
-					Object.assign(config.featureFlags, flagsBackup);
-				}
-			});
-
 			it('Should display procedure type change link for S20 if at least one alternative procedure type is available', async () => {
 				const flagsBackup = {
 					featureFlagS78Written: config.featureFlags.featureFlagS78Written,
 					featureFlagS78Inquiry: config.featureFlags.featureFlagS78Inquiry,
-					featureFlagS20Hearing: config.featureFlags.featureFlagS20Hearing,
 					featureFlagS20Inquiry: config.featureFlags.featureFlagS20Inquiry
 				};
 				Object.assign(config.featureFlags, {
 					featureFlagS78Written: true,
 					featureFlagS78Inquiry: true,
-					featureFlagS20Hearing: false,
 					featureFlagS20Inquiry: true
 				});
 
@@ -4424,41 +4374,40 @@ describe('appeal-details', () => {
 					const element = parseHtml(response.text);
 					const table = element.querySelector('#case-documentation-table');
 					expect(table.innerHTML).toMatchSnapshot();
-
 					const rows = table.querySelectorAll('.govuk-table__body .govuk-table__row');
-					expect(rows[4].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
+					expect(rows[6].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
 						'Test Rule 6 Party statement'
 					);
-					expect(rows[4].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
+					expect(rows[6].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
 						''
 					);
-					expect(rows[4].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
+					expect(rows[6].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
 						''
 					);
 					expect(
-						rows[4].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
+						rows[6].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
 					).toBe('Add<span class="govuk-visually-hidden"> Test Rule 6 Party statement</span>');
 					expect(
-						rows[4]
+						rows[6]
 							.querySelector('.govuk-table__cell:nth-child(4) a.govuk-link')
 							.getAttribute('href')
 					).toBe('/appeals-service/appeal-details/2/rule-6-party-statement/1/add-document');
-					expect(rows[8].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
+					expect(rows[10].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
 						'Test Rule 6 Party proof of evidence and witness'
 					);
-					expect(rows[8].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
+					expect(rows[10].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
 						'Awaiting proof of evidence and witness'
 					);
-					expect(rows[8].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
+					expect(rows[10].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
 						''
 					);
 					expect(
-						rows[8].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
+						rows[10].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
 					).toBe(
 						'Add<span class="govuk-visually-hidden"> Test Rule 6 Party proof of evidence</span>'
 					);
 					expect(
-						rows[8]
+						rows[10]
 							.querySelector('.govuk-table__cell:nth-child(4) a.govuk-link')
 							.getAttribute('href')
 					).toBe(
@@ -4517,41 +4466,41 @@ describe('appeal-details', () => {
 					expect(table.innerHTML).toMatchSnapshot();
 
 					const rows = table.querySelectorAll('.govuk-table__body .govuk-table__row');
-					expect(rows[4].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
+					expect(rows[6].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
 						'Test Rule 6 Party statement'
 					);
-					expect(rows[4].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
+					expect(rows[6].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
 						'Ready to review'
 					);
-					expect(rows[4].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
+					expect(rows[6].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
 						'1 January 2025'
 					);
 					expect(
-						rows[4].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
+						rows[6].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
 					).toBe('Review<span class="govuk-visually-hidden"> Test Rule 6 Party statement</span>');
 					expect(
-						rows[4]
+						rows[6]
 							.querySelector('.govuk-table__cell:nth-child(4) a.govuk-link')
 							.getAttribute('href')
 					).toBe(
 						'/appeals-service/appeal-details/2/rule-6-party-statement/1?backUrl=%2Fappeals-service%2Fappeal-details%2F2'
 					);
-					expect(rows[8].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
+					expect(rows[10].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
 						'Test Rule 6 Party proof of evidence and witness'
 					);
-					expect(rows[8].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
+					expect(rows[10].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
 						'Received'
 					);
-					expect(rows[8].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
+					expect(rows[10].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
 						'1 January 2025'
 					);
 					expect(
-						rows[8].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
+						rows[10].querySelector('.govuk-table__cell:nth-child(4) a.govuk-link').innerHTML.trim()
 					).toBe(
 						'Review<span class="govuk-visually-hidden"> Test Rule 6 Party proof of evidence</span>'
 					);
 					expect(
-						rows[8]
+						rows[10]
 							.querySelector('.govuk-table__cell:nth-child(4) a.govuk-link')
 							.getAttribute('href')
 					).toBe(
@@ -5070,6 +5019,151 @@ describe('appeal-details', () => {
 					expect(
 						unprettifiedHTML.match(/Environmental services team review<\/th>/g) || []
 					).toHaveLength(1);
+				});
+			});
+
+			describe('Inquiry documents', () => {
+				it(
+					'should render the correct rows without inquiry documents when procedure type is not' +
+						' inquiry',
+					async () => {
+						const appealId = 2;
+						const appeal = {
+							...appealDataFullPlanning,
+							appealId,
+							procedureType: PROCEDURE_TYPE_NAME.WRITTEN
+						};
+						nock('http://test/').get(`/appeals/${appealId}/page-details`).reply(200, appeal);
+						nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+						nock('http://test/')
+							.get(
+								`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence`
+							)
+							.reply(200, {
+								itemCount: 0
+							});
+
+						const response = await request.get(`${baseUrl}/${appealId}`);
+
+						expect(response.statusCode).toBe(200);
+
+						const element = parseHtml(response.text);
+						const table = element.querySelector('#case-documentation-table');
+						expect(table.innerHTML).toMatchSnapshot();
+						expect(table.innerHTML).not.toContain('Inquiry documents');
+					}
+				);
+
+				it('should render the inquiry documents row', async () => {
+					const appealId = 2;
+					const appeal = {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: PROCEDURE_TYPE_NAME.INQUIRY,
+						documentationSummary: {}
+					};
+					nock('http://test/').get(`/appeals/${appealId}/page-details`).reply(200, appeal);
+					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							itemCount: 2,
+							items: [
+								...appellantFinalCommentsAwaitingReview.items,
+								...lpaFinalCommentsAwaitingReview.items
+							]
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const element = parseHtml(response.text);
+					const table = element.querySelector('#case-documentation-table');
+					expect(table.innerHTML).toMatchSnapshot();
+					expect(table.innerHTML).toContain('Inquiry documents');
+					const rows = table.querySelectorAll('.govuk-table__body .govuk-table__row');
+					expect(rows[3].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
+						'Inquiry documents'
+					);
+					expect(rows[3].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
+						'No documents'
+					);
+					expect(rows[3].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
+						'Not applicable'
+					);
+				});
+			});
+			describe('Inquiry event documents', () => {
+				it(
+					'should render the correct rows without inquiry event documents when procedure type is not' +
+						' inquiry',
+					async () => {
+						const appealId = 2;
+						const appeal = {
+							...appealDataFullPlanning,
+							appealId,
+							procedureType: PROCEDURE_TYPE_NAME.WRITTEN
+						};
+						nock('http://test/').get(`/appeals/${appealId}/page-details`).reply(200, appeal);
+						nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+						nock('http://test/')
+							.get(
+								`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence`
+							)
+							.reply(200, {
+								itemCount: 0
+							});
+
+						const response = await request.get(`${baseUrl}/${appealId}`);
+
+						expect(response.statusCode).toBe(200);
+
+						const element = parseHtml(response.text);
+						const table = element.querySelector('#case-documentation-table');
+						expect(table.innerHTML).toMatchSnapshot();
+						expect(table.innerHTML).not.toContain('Inquiry event documents');
+					}
+				);
+
+				it('should render the inquiry event documents row', async () => {
+					const appealId = 2;
+					const appeal = {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: PROCEDURE_TYPE_NAME.INQUIRY,
+						documentationSummary: {}
+					};
+					nock('http://test/').get(`/appeals/${appealId}/page-details`).reply(200, appeal);
+					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							itemCount: 2,
+							items: [
+								...appellantFinalCommentsAwaitingReview.items,
+								...lpaFinalCommentsAwaitingReview.items
+							]
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const element = parseHtml(response.text);
+					const table = element.querySelector('#case-documentation-table');
+					expect(table.innerHTML).toMatchSnapshot();
+					expect(table.innerHTML).toContain('Inquiry event documents');
+					const rows = table.querySelectorAll('.govuk-table__body .govuk-table__row');
+					expect(rows[4].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
+						'Inquiry event documents'
+					);
+					expect(rows[4].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
+						'No documents'
+					);
+					expect(rows[4].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
+						'Not applicable'
+					);
 				});
 			});
 		});

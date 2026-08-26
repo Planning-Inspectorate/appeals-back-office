@@ -1064,6 +1064,31 @@ describe('Timetable', () => {
 						'Found. Redirecting to /appeals-service/appeal-details/1/timetable/edit/check'
 					);
 				});
+
+				it('should redirect to the timetable CYA page if some required due dates are present in the request body and some empty fields are left empty', async () => {
+					const response = await request.post(`${baseUrl}/edit`).send({
+						'lpa-questionnaire-due-date-day': '10',
+						'lpa-questionnaire-due-date-month': '10',
+						'lpa-questionnaire-due-date-year': '2050',
+						'lpa-statement-due-date-day': '10',
+						'lpa-statement-due-date-month': '10',
+						'lpa-statement-due-date-year': '2050',
+						'ip-comments-due-date-day': '10',
+						'ip-comments-due-date-month': '10',
+						'ip-comments-due-date-year': '2050',
+						'statement-of-common-ground-due-date-day': '',
+						'statement-of-common-ground-due-date-month': '',
+						'statement-of-common-ground-due-date-year': '',
+						'planning-obligation-due-date-day': '',
+						'planning-obligation-due-date-month': '',
+						'planning-obligation-due-date-year': ''
+					});
+
+					expect(response.statusCode).toBe(302);
+					expect(response.text).toBe(
+						'Found. Redirecting to /appeals-service/appeal-details/1/timetable/edit/check'
+					);
+				});
 			}
 		);
 

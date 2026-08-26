@@ -227,7 +227,7 @@ describe('audit', () => {
 				'<td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--green">Final comments</strong></td>'
 			);
 			expect(unprettifiedHtml).toContain(
-				'<td class="govuk-table__cell">Statements and IP comments shared</td>'
+				'<td class="govuk-table__cell">Comments and statements shared</td>'
 			);
 			expect(unprettifiedHtml).toContain(
 				'<td class="govuk-table__cell">Appellant final comments accepted</td>'

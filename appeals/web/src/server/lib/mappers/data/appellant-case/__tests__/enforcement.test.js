@@ -16,7 +16,6 @@ describe('Enforcement vs Enforcement Listed Building (ELB) Submap Architecture',
 		'contactAddress',
 		'interestInLand',
 		'writtenOrVerbalPermission',
-		'enforcementNotice',
 		'descriptionOfAllegedBreach'
 	];
 

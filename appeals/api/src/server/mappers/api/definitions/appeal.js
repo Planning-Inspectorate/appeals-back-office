@@ -168,6 +168,20 @@ const appeal = {
 				...Folder.properties
 			},
 			nullable: true
+		},
+		inquiryDocuments: {
+			type: 'object',
+			properties: {
+				...Folder.properties
+			},
+			nullable: true
+		},
+		inquiryEventDocuments: {
+			type: 'object',
+			properties: {
+				...Folder.properties
+			},
+			nullable: true
 		}
 	}
 };

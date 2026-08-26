@@ -27,7 +27,6 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	MANUALLY_ADD_REPS: 'featureFlagManuallyAddReps',
 	APPELLANT_STATEMENT: 'featureFlagAppellantStatement',
 	RULE_6_STATEMENT: 'featureFlagRule6Statement',
-	S20_HEARING: 'featureFlagS20Hearing',
 	S20_INQUIRY: 'featureFlagS20Inquiry',
 	ENFORCEMENT_HEARING: 'featureFlagEnforcementNoticeHearing',
 	ENFORCEMENT_INQUIRY: 'featureFlagEnforcementNoticeInquiry',
@@ -40,7 +39,9 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	ENFORCEMENT_CHANGE_PROCEDURE_LINKED: 'featureFlagEnforcementChangeProcedureLinked',
 	SHARE_COSTS: 'featureFlagShareCosts',
 	ENFORCEMENT_CHANGE_PROCEDURE: 'featureFlagEnforcementChangeProcedure',
-	SHARING_SUPPORTING_DOCUMENTS: 'featureFlagSharingSupportingDocuments'
+	SHARING_SUPPORTING_DOCUMENTS: 'featureFlagSharingSupportingDocuments',
+	FEATURE_FLAG_SHARING_INQUIRY_DOCUMENTS: 'featureFlagSharingInquiryDocuments',
+	SHARING_INQUIRY_EVENT_DOCUMENTS: 'featureFlagSharingInquiryEventDocuments'
 });
 
 export const APPEAL_TYPE = Object.freeze({
@@ -204,3 +205,9 @@ export const REPRESENTATION_ADDED_AS_DOCUMENT = 'Added as a document';
 
 export const MAX_VISIBLE_DOCUMENTS_IN_SUMMARY = 5;
 export const DOCUMENTS_PAGE_SIZE = 100;
+
+export const FRONT_OFFICE_DASHBOARD_PATH_STUBS = Object.freeze({
+	APPELLANT: 'appeals',
+	LPA: 'manage-appeals',
+	RULE_6_PARTY: 'rule-6'
+});
