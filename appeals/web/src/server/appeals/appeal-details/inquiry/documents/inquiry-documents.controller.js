@@ -308,7 +308,7 @@ export const postChangeInquiryDocumentVersionDetails = async (request, response)
 	await postChangeDocumentDetails({
 		request,
 		response,
-		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/supporting-documents/manage-documents/${request.params.folderId}/${request.params.documentId}`,
-		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/supporting-documents/manage-documents/${request.params.folderId}/${request.params.documentId}`
+		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/inquiry/documents/manage-documents/${request.params.folderId}/${request.params.documentId}`,
+		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/inquiry/documents/manage-documents/${request.params.folderId}/${request.params.documentId}`
 	});
 };

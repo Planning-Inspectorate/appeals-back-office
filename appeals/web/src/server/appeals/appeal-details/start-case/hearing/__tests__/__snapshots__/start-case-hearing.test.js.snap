@@ -565,6 +565,17 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
                 <td class="govuk-table__cell">Not applicable</td>
                 <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
             </tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Hearing documents</th>
+                <td class="govuk-table__cell">No documents</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter">
+                    <ul class="govuk-summary-list__actions-list">
+                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-hearing-documents" href="/appeals-service/appeal-details/1/hearing-documents/upload-documents/undefined">Add<span class="govuk-visually-hidden"> Hearing documents</span></a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
