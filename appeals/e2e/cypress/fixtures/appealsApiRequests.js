@@ -31,7 +31,7 @@ export const generateUniqueDocument = (baseDocument) => {
 const validLpaQuestionnaireCommon = {
 	casedata: {
 		caseReference: '6000000',
-		nearbyCaseReferences: null, //['1000000'] is a bug with displaying related appeals in case overview, see https://pins-ds.atlassian.net/browse/A2-8942 
+		nearbyCaseReferences: null, //['1000000'] is a bug with displaying related appeals in case overview, see https://pins-ds.atlassian.net/browse/A2-8942
 		lpaQuestionnaireSubmittedDate: new Date(2024, 5, 1).toISOString(),
 		siteAccessDetails: ['Here it is'],
 		siteSafetyDetails: ['Fine'],
@@ -244,6 +244,14 @@ const appealsApiRequests = {
 			appellantProcedurePreference: "inquiry",
 		}
 	},
+	S78PermissionInPrincipleAppealSubmission: {
+		casedata: {
+			...baseSubmission.casedata,
+			caseType: 'W',
+			typeOfPlanningApplication: PLANNING_APPLICATION_TYPES.PERMISSION_IN_PRINCIPLE,
+			appellantProcedurePreference: "inquiry",
+		}
+	},
 	casAdvertsSubmission: {
 		casedata: {
 			submissionId: '14960baa-3d0f-4db9-9e84-0c75be891560',
@@ -446,7 +454,7 @@ const appealsApiRequests = {
 					factsForGround: 'I like Christmas'
 				}
 			]
-		},	
+		},
 	},
 	enforcementLinkedSubmission: {
 		casedata: {
@@ -520,22 +528,22 @@ const appealsApiRequests = {
 				lastName: 'Jackerson',
 				interestInLand: 'owner',
 				writtenOrVerbalPermission: 'yes'
-			}, 
+			},
 			{
 				firstName: 'Nilay',
 				lastName: 'Nilayerson',
 				interestInLand: 'owner',
 				writtenOrVerbalPermission: 'yes'
-			}, 
-			
+			},
+
 			{
 				firstName: 'Bob',
 				lastName: 'Bobberson',
 				interestInLand: 'owner',
 				writtenOrVerbalPermission: 'yes'
-			}, 
+			},
 		],
-		},	
+		},
 	},
 	enforcementListedSubmission: {
 		casedata: {
@@ -601,8 +609,8 @@ const appealsApiRequests = {
 					factsForGround: 'I like Christmas'
 				}
 			]
-		},	
-	},		
+		},
+	},
 	lpaqSubmission: {
 		casedata: {
 			...validLpaQuestionnaireHas.casedata,

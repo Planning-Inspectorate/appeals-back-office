@@ -224,6 +224,29 @@ describe('Expedited (part1)) appeals', () => {
 			});
 		});
 
+		it('S78 permission in principle appeal submitted on 01-04-2026 should be set as expedited', () => {
+			setupTestCase({
+				appealType: APPEAL_PAYLOAD_TYPES.PERMISSION_IN_PRINCIPLE_APPEAL_SUBMISSION
+			}).then(() => {
+				// approve appellant case as valid and set a due date for the questionnaire response
+				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
+
+				// check for expected validation banners on the case details page
+				caseDetailsPage.validateBannerMessage(BANNER_TYPES.important, SUCCESS_MESSAGES.appealValid);
+				caseDetailsPage.validateBannerMessage(
+					BANNER_TYPES.success,
+					SUCCESS_MESSAGES.appealValidated
+				);
+
+				// check that part 1 is available as a procedure type option when starting case
+				caseDetailsPage.clickReadyToStartCase();
+				procedureTypePage.verifyDisplayedProcedureTypes(expectedProcedureTypesExpedited);
+
+				// check is set as expedited in appeal details
+				checkAppealDetails(caseObj, true, PLANNING_APPLICATION_TYPES.PERMISSION_IN_PRINCIPLE);
+			});
+		});
+
 		it('S78 appeal submitted after 01-04-2026 should be set as expedited', () => {
 			setupTestCase({ applicationDate: '2026-04-02T00:00:00.000Z' }).then(() => {
 				// approve appellant case as valid and set a due date for the questionnaire response
@@ -331,6 +354,30 @@ describe('Expedited (part1)) appeals', () => {
 
 				// check is set as non-expedited in appeal details
 				checkAppealDetails(caseObj, false, PLANNING_APPLICATION_TYPES.PRIOR_APPROVAL);
+			});
+		});
+
+		it('S78 permission in principle appeal submitted on 01-04-2026 as not received should not be set as expedited', () => {
+			setupTestCase({
+				applicationDecision: APPLICATION_DECISIONS.NOT_RECEIVED,
+				appealType: APPEAL_PAYLOAD_TYPES.PERMISSION_IN_PRINCIPLE_APPEAL_SUBMISSION
+			}).then(() => {
+				// approve appellant case as valid and set a due date for the questionnaire response
+				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
+
+				// check for expected validation banners on the case details page
+				caseDetailsPage.validateBannerMessage(BANNER_TYPES.important, SUCCESS_MESSAGES.appealValid);
+				caseDetailsPage.validateBannerMessage(
+					BANNER_TYPES.success,
+					SUCCESS_MESSAGES.appealValidated
+				);
+
+				// check that part 1 is not available as a procedure type option when starting case
+				caseDetailsPage.clickReadyToStartCase();
+				procedureTypePage.verifyDisplayedProcedureTypes(expectedProcedureTypesNonExpedited);
+
+				// check is set as non-expedited in appeal details
+				checkAppealDetails(caseObj, false, PLANNING_APPLICATION_TYPES.PERMISSION_IN_PRINCIPLE);
 			});
 		});
 	});
