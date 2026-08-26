@@ -410,6 +410,16 @@ describe('map-document-entity', () => {
 			expectedPublishedDocumentUri: testUri
 		},
 		{
+			desc: 'hearing document published',
+			documentType: APPEAL_DOCUMENT_TYPE.HEARING_PROCESS,
+			representationType: null,
+			caseStage: 'hearing',
+			isPublished: true,
+			expectedDocumentType: APPEAL_DOCUMENT_TYPE.HEARING_PROCESS,
+			expectedCaseStage: 'hearing',
+			expectedPublishedDocumentUri: testUri
+		},
+		{
 			desc: 'appellant case cost unpublished - still broadcast as published',
 			documentType: APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_CORRESPONDENCE,
 			representationType: null,

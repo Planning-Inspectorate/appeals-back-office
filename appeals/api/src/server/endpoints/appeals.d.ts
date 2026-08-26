@@ -150,6 +150,7 @@ interface SingleAppealDetailsResponse {
 	inquiry?: Inquiry | null;
 	inquiryEstimate?: InquiryEstimate | null;
 	inquiryDocumentsFolder?: FolderInfo | null;
+	hearingDocuments?: FolderInfo | null;
 	numberOfResidencesNetChange?: number | null;
 	enforcementNotice?: {
 		appealOutcome?: EnforcementNoticeAppealOutcome;

@@ -13,6 +13,7 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 	const caseStarted = appealDetails.startedAt;
 	const inquiryEventSetUp = appealDetails.inquiry;
 	const isInquiryProcedureType = appealDetails.procedureType === PROCEDURE_TYPE_NAME.INQUIRY;
+	const isHearingProcedureType = appealDetails.procedureType === PROCEDURE_TYPE_NAME.HEARING;
 	const isExpeditedAppealType = appealDetails.procedureType === PROCEDURE_TYPE_NAME.WRITTEN_PART_1;
 	const statementsCompleted = !APPEAL_CASE_PRE_STATEMENTS_STATUS.includes(
 		appealDetails?.appealStatus
@@ -32,6 +33,9 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 				caseStarted ? mappedData.appeal.lpaQuestionnaire.display.tableItem : undefined,
 				...(isFeatureActive(FEATURE_FLAG_NAMES.SHARING_SUPPORTING_DOCUMENTS)
 					? [mappedData.appeal.supportingDocuments.display.tableItem]
+					: []),
+				...(isFeatureActive(FEATURE_FLAG_NAMES.SHARING_HEARING_DOCUMENTS) && isHearingProcedureType
+					? [mappedData.appeal.hearingDocuments.display.tableItem]
 					: []),
 				...(isFeatureActive(FEATURE_FLAG_NAMES.FEATURE_FLAG_SHARING_INQUIRY_DOCUMENTS) &&
 				caseStarted &&

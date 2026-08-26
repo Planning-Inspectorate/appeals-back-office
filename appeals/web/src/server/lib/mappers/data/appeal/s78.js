@@ -14,6 +14,7 @@ import { mapAddHearingEstimates } from './submappers/hearing-add-hearing-estimat
 import { mapCancelHearing } from './submappers/hearing-cancel-hearing.js';
 import { mapHearingDate } from './submappers/hearing-date.mapper.js';
 import { mapHearingDetails } from './submappers/hearing-details.js';
+import { mapHearingDocuments } from './submappers/hearing-documents.mapper.js';
 import { mapHearingEstimates } from './submappers/hearing-hearing-estimates.js';
 import { mapSetUpHearing } from './submappers/hearing-set-up-hearing.js';
 import { mapHorizonReference } from './submappers/horizon-reference.mapper.js';
@@ -78,5 +79,6 @@ export const submaps = {
 	enforcementReference: mapEnforcementReference,
 	applicationMadeUnderActSection: mapApplicationMadeUnderActSection,
 	inquiryDocuments: mapInquiryDocuments,
-	inquiryEventDocuments: mapInquiryEventDocuments
+	inquiryEventDocuments: mapInquiryEventDocuments,
+	hearingDocuments: mapHearingDocuments
 };

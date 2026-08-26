@@ -4999,6 +4999,78 @@ describe('appeal-details', () => {
 					);
 				});
 			});
+			describe('Hearing documents', () => {
+				it(
+					'should render the correct rows without hearing documents when procedure type is not' +
+						' hearing',
+					async () => {
+						const appealId = 2;
+						const appeal = {
+							...appealDataFullPlanning,
+							appealId,
+							procedureType: PROCEDURE_TYPE_NAME.WRITTEN
+						};
+						nock('http://test/').get(`/appeals/${appealId}/page-details`).reply(200, appeal);
+						nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+						nock('http://test/')
+							.get(
+								`/appeals/${appealId}/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence`
+							)
+							.reply(200, {
+								itemCount: 0
+							});
+
+						const response = await request.get(`${baseUrl}/${appealId}`);
+
+						expect(response.statusCode).toBe(200);
+
+						const element = parseHtml(response.text);
+						const table = element.querySelector('#case-documentation-table');
+						expect(table.innerHTML).toMatchSnapshot();
+						expect(table.innerHTML).not.toContain('Hearing documents');
+					}
+				);
+
+				it('should render the hearing documents row', async () => {
+					const appealId = 2;
+					const appeal = {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: PROCEDURE_TYPE_NAME.HEARING,
+						documentationSummary: {}
+					};
+					nock('http://test/').get(`/appeals/${appealId}/page-details`).reply(200, appeal);
+					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							itemCount: 2,
+							items: [
+								...appellantFinalCommentsAwaitingReview.items,
+								...lpaFinalCommentsAwaitingReview.items
+							]
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const element = parseHtml(response.text);
+					const table = element.querySelector('#case-documentation-table');
+					expect(table.innerHTML).toMatchSnapshot();
+					expect(table.innerHTML).toContain('Hearing documents');
+					const rows = table.querySelectorAll('.govuk-table__body .govuk-table__row');
+					expect(rows[3].querySelector('.govuk-table__header:nth-child(1)').innerHTML.trim()).toBe(
+						'Hearing documents'
+					);
+					expect(rows[3].querySelector('.govuk-table__cell:nth-child(2)').innerHTML.trim()).toBe(
+						'No documents'
+					);
+					expect(rows[3].querySelector('.govuk-table__cell:nth-child(3)').innerHTML.trim()).toBe(
+						'Not applicable'
+					);
+				});
+			});
 		});
 
 		describe('Timetable', () => {
