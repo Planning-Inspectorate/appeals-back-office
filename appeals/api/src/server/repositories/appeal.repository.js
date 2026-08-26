@@ -1433,7 +1433,8 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 							dateReceived: true,
 							isDeleted: true,
 							stage: true,
-							documentType: true
+							documentType: true,
+							virusCheckStatus: true
 						}
 					}
 				}
