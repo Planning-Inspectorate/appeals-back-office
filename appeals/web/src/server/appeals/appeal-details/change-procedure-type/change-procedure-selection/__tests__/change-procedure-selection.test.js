@@ -22,7 +22,6 @@ const appealTypes = [
 describe('Change procedure type', () => {
 	beforeEach(() => {
 		Object.assign(config.featureFlags, {
-			featureFlagS78Written: true,
 			featureFlagS78Inquiry: true,
 			featureFlagS20Inquiry: true,
 			featureFlagEnforcementNotice: true,
