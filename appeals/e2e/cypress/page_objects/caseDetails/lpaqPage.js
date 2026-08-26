@@ -55,7 +55,10 @@ export class LpaqPage extends Page {
 		cy.get('.govuk-summary-list__key')
 			.contains(labelText)
 			.siblings('.govuk-summary-list__value')
-			.should('contain', expectedValue);
+			.invoke('text')
+			.then((text) => {
+				expect(text.trim()).to.contain(expectedValue);
+			});
 	}
 
 	assertFieldNotPresent(labelText) {
