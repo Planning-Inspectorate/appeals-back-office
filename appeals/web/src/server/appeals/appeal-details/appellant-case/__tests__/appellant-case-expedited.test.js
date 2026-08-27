@@ -167,6 +167,48 @@ describe('appellant-case-expedited', () => {
 		}
 	);
 
+	it.each([
+		{ decision: 'refused', applicationDecision: APPEAL_APPLICATION_DECISION.REFUSED },
+		{ decision: 'granted', applicationDecision: APPEAL_APPLICATION_DECISION.GRANTED }
+	])(
+		'should render expedited fields for S78 + permission-in-principle + $decision',
+		async ({ applicationDecision }) => {
+			const expeditedAppellantCaseData = {
+				...appellantCaseDataNotValidated,
+				applicationDate: '2026-04-02T00:00:00.000Z',
+				applicationDecision,
+				typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.PERMISSION_IN_PRINCIPLE,
+				reasonForAppealAppellant: 'My reason',
+				anySignificantChanges: 'No',
+				screeningOpinionIndicatesEiaRequired: false,
+				ownershipCertificate: false
+			};
+
+			nock('http://test/')
+				.get('/appeals/2?include=all')
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId: 2
+				});
+			nock('http://test/')
+				.get('/appeals/2/appellant-cases/0')
+				.reply(200, expeditedAppellantCaseData);
+
+			const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+			const element = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(element.innerHTML).toContain('Why are you appealing?');
+			expect(element.innerHTML).toContain('My reason</dd>');
+			expect(element.innerHTML).toContain(
+				'Have there been any significant changes that would affect the application?'
+			);
+			expect(element.innerHTML).toContain(
+				'Did you submit an environmental statement with the application?'
+			);
+			expect(element.innerHTML).toContain('Draft statement of common ground');
+		}
+	);
+
 	it('should not render appeal statement when ownershipCertificate is null', async () => {
 		const expeditedAppellantCaseData = {
 			...appellantCaseDataNotValidated,

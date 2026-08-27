@@ -13,7 +13,7 @@ export const isAppealTypeEnabled = (type) => {
 			return true;
 		}
 		case APPEAL_CASE_TYPE.W: {
-			return isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78);
+			return true;
 		}
 		case APPEAL_CASE_TYPE.Y: {
 			return true;

@@ -45,14 +45,10 @@ export function generateCaseTypeSpecificComponents(appealDetails, mappedLPAQData
 			}
 			throw new Error('Enforcement feature flag is disabled');
 		case APPEAL_TYPE.S78:
-			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
-				if (appealDetails.isS78Expedited) {
-					return generateS78ExpeditedLpaQuestionnaireComponents(appealDetails, mappedLPAQData);
-				}
-				return generateS78LpaQuestionnaireComponents(appealDetails, mappedLPAQData);
-			} else {
-				throw new Error('Feature flag inactive for S78');
+			if (appealDetails.isS78Expedited) {
+				return generateS78ExpeditedLpaQuestionnaireComponents(appealDetails, mappedLPAQData);
 			}
+			return generateS78LpaQuestionnaireComponents(appealDetails, mappedLPAQData);
 		case APPEAL_TYPE.PLANNED_LISTED_BUILDING:
 			return generateS20LpaQuestionnaireComponents(mappedLPAQData);
 		default:

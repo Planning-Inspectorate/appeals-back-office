@@ -8,14 +8,16 @@ export const PLANNING_APPLICATION_TYPES = {
 	FULL: 'full-appeal',
 	OUTLINE: 'outline-planning',
 	RESERVED_MATTERS: 'reserved-matters',
-	PRIOR_APPROVAL: 'prior-approval'
+	PRIOR_APPROVAL: 'prior-approval',
+	PERMISSION_IN_PRINCIPLE: 'permission-in-principle'
 };
 
 export const APPEAL_PAYLOAD_TYPES = {
 	FULL_APPEAL_SUBMISSION: 'S78FullAppealSubmission',
 	OUTLINE_PLANNING_APPEAL_SUBMISSION: 'S78OutlinePlanningAppealSubmission',
 	RESERVED_MATTERS_APPEAL_SUBMISSION: 'S78ReservedMattersAppealSubmission',
-	PRIOR_APPROVAL_APPEAL_SUBMISSION: 'S78PriorApprovalAppealSubmission'
+	PRIOR_APPROVAL_APPEAL_SUBMISSION: 'S78PriorApprovalAppealSubmission',
+	PERMISSION_IN_PRINCIPLE_APPEAL_SUBMISSION: 'S78PermissionInPrincipleAppealSubmission'
 };
 
 export const CTA_TEXT = {

@@ -125,12 +125,8 @@ export function nationalListPage(
 	}));
 	const enabledAppealTypes = getEnabledAppealCaseTypes();
 
-	let enabledAppealProcedures = [];
-
-	if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
-		enabledAppealProcedures.push(APPEAL_CASE_PROCEDURE.WRITTEN);
-	}
-	enabledAppealProcedures.push(APPEAL_CASE_PROCEDURE.HEARING);
+	/** @type {string[]} */
+	let enabledAppealProcedures = [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.HEARING];
 	if (getEnabledInquiryAppealTypes().length > 0) {
 		enabledAppealProcedures.push(APPEAL_CASE_PROCEDURE.INQUIRY);
 	}
