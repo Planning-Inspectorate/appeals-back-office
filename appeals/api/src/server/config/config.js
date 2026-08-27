@@ -50,8 +50,6 @@ const { value, error } = schema.validate({
 	},
 	cwd: url.fileURLToPath(new URL('..', import.meta.url)),
 	featureFlags: {
-		featureFlagS78Inquiry:
-			environment.FEATURE_FLAG_S78_INQUIRY && environment.FEATURE_FLAG_S78_INQUIRY === 'true',
 		featureFlagS20Inquiry:
 			environment.FEATURE_FLAG_S20_INQUIRY && environment.FEATURE_FLAG_S20_INQUIRY === 'true',
 		featureFlagLinkedAppeals:

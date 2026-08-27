@@ -22,7 +22,6 @@ const appealTypes = [
 describe('Change procedure type', () => {
 	beforeEach(() => {
 		Object.assign(config.featureFlags, {
-			featureFlagS78Inquiry: true,
 			featureFlagS20Inquiry: true,
 			featureFlagEnforcementNotice: true,
 			featureFlagEnforcementNoticeHearing: true,
@@ -167,9 +166,8 @@ describe('Change procedure type', () => {
 		}
 	);
 
-	it('should show inquiry for S20 when S20 inquiry is enabled even if S78 inquiry is disabled', async () => {
+	it('should show inquiry for S20 when S20 inquiry is enabled', async () => {
 		Object.assign(config.featureFlags, {
-			featureFlagS78Inquiry: false,
 			featureFlagS20Inquiry: true
 		});
 
@@ -195,9 +193,8 @@ describe('Change procedure type', () => {
 		);
 	});
 
-	it('should show inquiry for enforcement notice when enforcement inquiry is enabled even if S78 inquiry is disabled', async () => {
+	it('should show inquiry for enforcement notice when enforcement inquiry is enabled', async () => {
 		Object.assign(config.featureFlags, {
-			featureFlagS78Inquiry: false,
 			featureFlagEnforcementNotice: true,
 			featureFlagEnforcementNoticeInquiry: true
 		});

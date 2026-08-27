@@ -52,7 +52,6 @@ export function loadConfig() {
 		AZURE_BLOB_USE_EMULATOR,
 		BETA_FEEDBACK_URL,
 		CACHE_CONTROL_MAX_AGE,
-		FEATURE_FLAG_S78_INQUIRY,
 		FEATURE_FLAG_LINKED_APPEALS,
 		FEATURE_FLAG_LINKED_APPEALS_UNLINK,
 		FEATURE_FLAG_NOTIFY_CASE_HISTORY,
@@ -160,7 +159,6 @@ export function loadConfig() {
 		// flag name convention: featureFlag[ jira number ][feature short description]
 		// set Feature Flag default val here [default: false] - will be overwritted by values coming from the .env file
 		featureFlags: {
-			featureFlagS78Inquiry: FEATURE_FLAG_S78_INQUIRY === 'true',
 			featureFlagLinkedAppeals: FEATURE_FLAG_LINKED_APPEALS === 'true',
 			featureFlagLinkedAppealsUnlink: FEATURE_FLAG_LINKED_APPEALS_UNLINK === 'true',
 			featureFlagNotifyCaseHistory: FEATURE_FLAG_NOTIFY_CASE_HISTORY === 'true',
