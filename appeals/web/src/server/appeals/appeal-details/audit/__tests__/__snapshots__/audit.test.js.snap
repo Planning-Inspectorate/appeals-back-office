@@ -19,6 +19,256 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                 </thead>
                 <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">15 July 2025
+                            <br><span>2:48pm</span>
+                        </td>
+                        <td class="govuk-table__cell">We have corrected the appeal decision letter: 6000071 sent to agent
+                            <details                             class="govuk-details">
+                                <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> View email</span>
+                                </summary>
+                                <div class="govuk-details__text">
+                                    <div class="pins-notify-preview-border">Subject: We have corrected the appeal decision letter: 6000071
+                                        <br>
+                                    </div>
+                                    <div class="pins-notify-preview-border">We have corrected the appeal decision letter.
+                                        <br>
+                                        <h2>Appeal details</h2>
+                                        <div class="govuk-inset-text">Appeal reference number: 6000071 Address: 44 Rivervale, Bridport, DT6
+                                            5RN Planning application reference: 40845/APP/2/563702</div>
+                                        <h2>Why we corrected the appeal decision letter</h2>adsfgbhgjhftrewq3wrtghyfgdscvfhgerdfv fbgdtrfv bvnhgftrfesdcvfcb gdrfvb
+                                        bnvhgfgtv
+                                        <br><a href="http://localhost:9003/manage-appeals/6000071" class="govuk-link">Sign in to our service</a> to
+                                        view the decision letter dated .
+                                        <br>
+                                        <h2>The Planning Inspectorate’s role</h2>The Planning Inspectorate cannot change or revoke the decision. Only the
+                                        High Court can change this decision.
+                                        <br>
+                                        <h2>Feedback</h2>We welcome your feedback on our appeals service. Tell us on this short
+                                        <a                                         href="https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u"
+                                        class="govuk-link">feedback form</a>.
+                                            <br>The Planning Inspectorate
+                                            <br>caseofficers@planninginspectorate.gov.uk
+                                            <br>
+                                    </div>
+                                </div>
+                                </details>
+                        </td>
+                        <td class="govuk-table__cell">Smith, John</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">15 July 2025
+                            <br><span>2:48pm</span>
+                        </td>
+                        <td class="govuk-table__cell">We have corrected the appeal decision letter: 6000071 sent to unknown
+                            <details                             class="govuk-details">
+                                <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> View email</span>
+                                </summary>
+                                <div class="govuk-details__text">
+                                    <div class="pins-notify-preview-border">Subject: We have corrected the appeal decision letter: 6000071
+                                        <br>
+                                    </div>
+                                    <div class="pins-notify-preview-border">We have corrected the appeal decision letter.
+                                        <br>
+                                        <h2>Appeal details</h2>
+                                        <div class="govuk-inset-text">Appeal reference number: 6000071 Address: 44 Rivervale, Bridport, DT6
+                                            5RN Planning application reference: 40845/APP/2/563702</div>
+                                        <h2>Why we corrected the appeal decision letter</h2>adsfgbhgjhftrewq3wrtghyfgdscvfhgerdfv fbgdtrfv bvnhgftrfesdcvfcb gdrfvb
+                                        bnvhgfgtv
+                                        <br><a href="http://localhost:9003/manage-appeals/6000071" class="govuk-link">Sign in to our service</a> to
+                                        view the decision letter dated .
+                                        <br>
+                                        <h2>The Planning Inspectorate’s role</h2>The Planning Inspectorate cannot change or revoke the decision. Only the
+                                        High Court can change this decision.
+                                        <br>
+                                        <h2>Feedback</h2>We welcome your feedback on our appeals service. Tell us on this short
+                                        <a                                         href="https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u"
+                                        class="govuk-link">feedback form</a>.
+                                            <br>The Planning Inspectorate
+                                            <br>caseofficers@planninginspectorate.gov.uk
+                                            <br>
+                                    </div>
+                                </div>
+                                </details>
+                        </td>
+                        <td class="govuk-table__cell">Smith, John</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">15 July 2025
+                            <br><span>2:48pm</span>
+                        </td>
+                        <td class="govuk-table__cell">We have corrected the appeal decision letter: 6000071 sent to unknown
+                            <details                             class="govuk-details">
+                                <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> View email</span>
+                                </summary>
+                                <div class="govuk-details__text">
+                                    <div class="pins-notify-preview-border">Subject: We have corrected the appeal decision letter: 6000071
+                                        <br>
+                                    </div>
+                                    <div class="pins-notify-preview-border">We have corrected the appeal decision letter.
+                                        <br>
+                                        <h2>Appeal details</h2>
+                                        <div class="govuk-inset-text">Appeal reference number: 6000071 Address: 44 Rivervale, Bridport, DT6
+                                            5RN Planning application reference: 40845/APP/2/563702</div>
+                                        <h2>Why we corrected the appeal decision letter</h2>adsfgbhgjhftrewq3wrtghyfgdscvfhgerdfv fbgdtrfv bvnhgftrfesdcvfcb gdrfvb
+                                        bnvhgfgtv
+                                        <br><a href="http://localhost:9003/manage-appeals/6000071" class="govuk-link">Sign in to our service</a> to
+                                        view the decision letter dated .
+                                        <br>
+                                        <h2>The Planning Inspectorate’s role</h2>The Planning Inspectorate cannot change or revoke the decision. Only the
+                                        High Court can change this decision.
+                                        <br>
+                                        <h2>Feedback</h2>We welcome your feedback on our appeals service. Tell us on this short
+                                        <a                                         href="https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u"
+                                        class="govuk-link">feedback form</a>.
+                                            <br>The Planning Inspectorate
+                                            <br>caseofficers@planninginspectorate.gov.uk
+                                            <br>
+                                    </div>
+                                </div>
+                                </details>
+                        </td>
+                        <td class="govuk-table__cell">Smith, John</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">15 July 2025
+                            <br><span>2:45pm</span>
+                        </td>
+                        <td class="govuk-table__cell">Appeal decision: 6000071 sent to appellant
+                            <details class="govuk-details">
+                                <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> View email</span>
+                                </summary>
+                                <div class="govuk-details__text">Subject:
+                                    <div class="pins-notify-preview-border">Appeal decision: 6000071
+                                        <br>
+                                    </div>
+                                    <div class="pins-notify-preview-border">
+                                        <h2>Appeal details</h2>
+                                        <div class="govuk-inset-text">Appeal reference number: 6000071 Address: 44 Rivervale, Bridport, DT6
+                                            5RN Planning application reference: 40845/APP/2/563702</div>
+                                        <h2>Appeal decision</h2>A decision has been made on this appeal.
+                                        <br><a href="http://localhost:9003/manage-appeals/6000071" class="govuk-link">Sign in to our service</a> to
+                                        view the decision letter dated 15 July 2025.
+                                        <br>The appellant has been informed of the decision.
+                                        <br>
+                                        <h2>The Planning Inspectorate’s role</h2>The Planning Inspectorate cannot change or revoke the decision. Only the
+                                        High Court can change this decision.
+                                        <br>
+                                        <h2>Feedback</h2>We welcome your feedback on our appeals service. Tell us on this short
+                                        <a                                         href="https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u"
+                                        class="govuk-link">feedback form</a>.
+                                            <br>The Planning Inspectorate
+                                            <br>allcustomerteam@planninginspectorate.gov.uk
+                                            <br>
+                                    </div>
+                                </div>
+                            </details>
+                        </td>
+                        <td class="govuk-table__cell">Smith, John</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">15 July 2025
+                            <br><span>2:45pm</span>
+                        </td>
+                        <td class="govuk-table__cell">Appeal decision: 6000071 sent to LPA
+                            <details class="govuk-details">
+                                <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> View email</span>
+                                </summary>
+                                <div class="govuk-details__text">Subject:
+                                    <div class="pins-notify-preview-border">Appeal decision: 6000071
+                                        <br>
+                                    </div>
+                                    <div class="pins-notify-preview-border">
+                                        <h2>Appeal details</h2>
+                                        <div class="govuk-inset-text">Appeal reference number: 6000071 Address: 44 Rivervale, Bridport, DT6
+                                            5RN Planning application reference: 40845/APP/2/563702</div>
+                                        <h2>Appeal decision</h2>We have made a decision on your appeal.
+                                        <br><a href="http://localhost:9003/appeals/6000071" class="govuk-link">Sign in to our service</a> to
+                                        view the decision letter dated 15 July 2025.
+                                        <br>We have also informed the local planning authority of the decision.
+                                        <br>
+                                        <h2>The Planning Inspectorate’s role</h2>The Planning Inspectorate cannot change or revoke the decision. You can
+                                        <a                                         href="https://www.gov.uk/appeal-planning-decision/if-you-think-the-appeal-decision-is-legally-incorrect"
+                                        class="govuk-link">challenge the decision in the High Court</a>if you think the Planning
+                                            Inspectorate made a legal mistake.
+                                            <br>
+                                            <h2>Feedback</h2>We welcome your feedback on our appeals service. Tell us on this short
+                                            <a                                             href="https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u"
+                                            class="govuk-link">feedback form</a>.
+                                                <br>The Planning Inspectorate
+                                                <br><a href="https://contact-us.planninginspectorate.gov.uk/hc/en-gb/requests/new"
+                                                class="govuk-link">Get help with your appeal decision</a>
+                                                <br>
+                                    </div>
+                                </div>
+                            </details>
+                        </td>
+                        <td class="govuk-table__cell">Smith, John</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">15 July 2025
+                            <br><span>2:45pm</span>
+                        </td>
+                        <td class="govuk-table__cell">Inspector visit to appeal site: 6000071 sent to interested party
+                            <details                             class="govuk-details">
+                                <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> View email</span>
+                                </summary>
+                                <div class="govuk-details__text">Subject:
+                                    <div class="pins-notify-preview-border">Inspector visit to appeal site: 6000071
+                                        <br>
+                                    </div>
+                                    <div class="pins-notify-preview-border">
+                                        <h2>Appeal details</h2>
+                                        <div class="govuk-inset-text">Appeal reference number: 6000071 Address: 44 Rivervale, Bridport, DT6
+                                            5RN Planning application reference: 40845/APP/2/563702</div>
+                                        <h2>Site visit scheduled</h2>We have now arranged for our inspector (or their representative) to visit
+                                        44 Rivervale, Bridport, DT6 5RN.
+                                        <br>You are not required to attend the site visit.
+                                        <br>
+                                        <h2>About the visit</h2>If you see the inspector, be aware that you cannot give them any documents
+                                        or discuss the appeal with them.
+                                        <br>The inspector will carry out the inspection on their own.
+                                        <br>
+                                        <h2>Next steps</h2>We will let you know our inspector’s decision when it is available.
+                                        <br>If you need to contact us, include our reference number in any communication.
+                                        <br>The Planning Inspectorate
+                                        <br>caseofficers@planninginspectorate.gov.uk
+                                        <br>
+                                    </div>
+                                </div>
+                                </details>
+                        </td>
+                        <td class="govuk-table__cell">Smith, John</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">15 July 2025
+                            <br><span>2:44pm</span>
+                        </td>
+                        <td class="govuk-table__cell">We have received the appellant’s final comments: 6000071 sent to unknown
+                            <details                             class="govuk-details">
+                                <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> View email</span>
+                                </summary>
+                                <div class="govuk-details__text">Subject:
+                                    <div class="pins-notify-preview-border">We have received the appellant’s final comments: 6000071
+                                        <br>
+                                    </div>
+                                    <div class="pins-notify-preview-border">We have received the appellant’s final comments.
+                                        <br>
+                                        <h2>Appeal details</h2>
+                                        <div class="govuk-inset-text">Appeal reference number: 6000071 Address: 44 Rivervale, Bridport, DT6
+                                            5RN Planning application reference: 40845/APP/2/563702</div>
+                                        <h2>What happens next</h2>You can <a href="http://localhost:9003/manage-appeals/6000071" class="govuk-link">view the appellant’s final comments</a>.
+                                        <br>The inspector will visit the site and we will contact you when we have
+                                        made the decision.
+                                        <br>The Planning Inspectorate
+                                        <br>caseofficers@planninginspectorate.gov.uk
+                                        <br>
+                                    </div>
+                                </div>
+                                </details>
+                        </td>
+                        <td class="govuk-table__cell">Smith, John</td>
+                    </tr>
+                    <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
                             <br><span>10:55am</span>
                         </td>

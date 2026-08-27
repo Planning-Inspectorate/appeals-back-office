@@ -1,6 +1,5 @@
 import nunjucksEnvironments from '#app/config/nunjucks.js';
 import { getAppealCaseNotes } from '#appeals/appeal-details/case-notes/case-notes.service.js';
-import config from '#environment/config.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate, dateISOStringToDisplayTime12hr } from '#lib/dates.js';
 import { appealProcedureNameToLabelText } from '#lib/procedure-type-display-name-formatter.js';
@@ -128,55 +127,46 @@ export const renderAudit = async (request, response) => {
 
 	/** @type {NotificationArrayItem[]} */
 	let notificationsArray = [];
-	if (config.featureFlags.featureFlagNotifyCaseHistory) {
-		const ipComments = await interestedPartyCommentsService.getInterestedPartyComments(
-			request.apiClient,
-			appeal.appealId,
-			'all',
-			1,
-			9999
-		);
-		notificationsArray = await Promise.all(
-			/** @type {AuditNotifications} */ (notifications).map(async (notification) => {
-				const createdAt = utcToZonedTime(notification.dateCreated, 'Europe/London');
-				const opening = `${notification.subject} sent to ${mapEmailToRecipientType(
-					notification.recipient,
-					appeal,
-					await tryMapUsers(appeal.caseOfficer || '', request.session, request.apiClient),
-					await tryMapUsers(appeal.inspector || '', request.session, request.apiClient),
-					ipComments
-				)}`;
-				const finalHtml = await nunjucksEnvironments.render(
-					'appeals/components/page-component.njk',
-					{
-						component: {
-							type: 'details',
-							wrapperHtml: {
-								opening,
-								closing: '</div></div>'
-							},
-							parameters: {
-								summaryText: 'View email',
-								html: notification.renderedSubject + notification.renderedContent
-							}
-						}
+	const ipComments = await interestedPartyCommentsService.getInterestedPartyComments(
+		request.apiClient,
+		appeal.appealId,
+		'all',
+		1,
+		9999
+	);
+	notificationsArray = await Promise.all(
+		/** @type {AuditNotifications} */ (notifications).map(async (notification) => {
+			const createdAt = utcToZonedTime(notification.dateCreated, 'Europe/London');
+			const opening = `${notification.subject} sent to ${mapEmailToRecipientType(
+				notification.recipient,
+				appeal,
+				await tryMapUsers(appeal.caseOfficer || '', request.session, request.apiClient),
+				await tryMapUsers(appeal.inspector || '', request.session, request.apiClient),
+				ipComments
+			)}`;
+			const finalHtml = await nunjucksEnvironments.render('appeals/components/page-component.njk', {
+				component: {
+					type: 'details',
+					wrapperHtml: {
+						opening,
+						closing: '</div></div>'
+					},
+					parameters: {
+						summaryText: 'View email',
+						html: notification.renderedSubject + notification.renderedContent
 					}
-				);
-				const user = await tryMapUsers(
-					notification.sender || '',
-					request.session,
-					request.apiClient
-				);
-				return {
-					dateTime: createdAt.getTime(),
-					date: dateISOStringToDisplayDate(notification.dateCreated),
-					time: dateISOStringToDisplayTime12hr(notification.dateCreated),
-					details: finalHtml,
-					user
-				};
-			})
-		);
-	}
+				}
+			});
+			const user = await tryMapUsers(notification.sender || '', request.session, request.apiClient);
+			return {
+				dateTime: createdAt.getTime(),
+				date: dateISOStringToDisplayDate(notification.dateCreated),
+				time: dateISOStringToDisplayTime12hr(notification.dateCreated),
+				details: finalHtml,
+				user
+			};
+		})
+	);
 	const sortedCaseNotesAndAuditEntries = [
 		...auditTrails,
 		...caseNotesArray,

@@ -54,7 +54,6 @@ export function loadConfig() {
 		CACHE_CONTROL_MAX_AGE,
 		FEATURE_FLAG_LINKED_APPEALS,
 		FEATURE_FLAG_LINKED_APPEALS_UNLINK,
-		FEATURE_FLAG_NOTIFY_CASE_HISTORY,
 		FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT,
 		FEATURE_FLAG_PDF_DOWNLOAD,
 		FEATURE_FLAG_NET_RESIDENCE_S20,
@@ -161,7 +160,6 @@ export function loadConfig() {
 		featureFlags: {
 			featureFlagLinkedAppeals: FEATURE_FLAG_LINKED_APPEALS === 'true',
 			featureFlagLinkedAppealsUnlink: FEATURE_FLAG_LINKED_APPEALS_UNLINK === 'true',
-			featureFlagNotifyCaseHistory: FEATURE_FLAG_NOTIFY_CASE_HISTORY === 'true',
 			featureFlagSimplifyTeamAssignment: FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT === 'true',
 			featureFlagPdfDownload: FEATURE_FLAG_PDF_DOWNLOAD === 'true',
 			featureFlagNetResidenceS20: FEATURE_FLAG_NET_RESIDENCE_S20 === 'true',
