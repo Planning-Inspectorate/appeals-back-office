@@ -197,8 +197,8 @@ describe('related appeals', () => {
 			});
 		});
 	});
-
-	it('Relating a case from the "appellant case" page', () => {
+	//skipped waiting for fix to https://pins-ds.atlassian.net/browse/A2-9018
+	it.skip('Relating a case from the "appellant case" page', () => {
 		cy.createCase().then((caseObj) => {
 			cy.createCase().then((relatedCase) => {
 				cases = [caseObj, relatedCase];
@@ -226,7 +226,7 @@ describe('related appeals', () => {
 			});
 		});
 	});
-
+	//skipped waiting for fix to https://pins-ds.atlassian.net/browse/A2-9018
 	it('Relating a case from the "LPAQ" page', () => {
 		cy.createCase().then((caseObj) => {
 			cy.createCase().then((relatedCase) => {

@@ -93,7 +93,6 @@ export function loadConfig() {
 		FEATURE_FLAG_APPELLANT_STATEMENT,
 		FEATURE_FLAG_RULE_6_STATEMENT,
 		FEATURE_FLAG_RULE_6_COSTS,
-		FEATURE_FLAG_S20_HEARING,
 		FEATURE_FLAG_S20_INQUIRY,
 		FEATURE_FLAG_ENFORCEMENT_NOTICE_HEARING,
 		FEATURE_FLAG_ENFORCEMENT_NOTICE_INQUIRY,
@@ -105,7 +104,6 @@ export function loadConfig() {
 		FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED,
 		FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED,
 		FEATURE_FLAG_SHARE_COSTS,
-		FEATURE_FLAG_NEW_BEFORE_YOU_START,
 		FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE
 	} = environment;
 
@@ -187,7 +185,6 @@ export function loadConfig() {
 			featureFlagAppellantStatement: FEATURE_FLAG_APPELLANT_STATEMENT === 'true',
 			featureFlagRule6Statement: FEATURE_FLAG_RULE_6_STATEMENT === 'true',
 			featureFlagRule6Costs: FEATURE_FLAG_RULE_6_COSTS === 'true',
-			featureFlagS20Hearing: FEATURE_FLAG_S20_HEARING === 'true',
 			featureFlagS20Inquiry: FEATURE_FLAG_S20_INQUIRY === 'true',
 			featureFlagEnforcementNoticeHearing: FEATURE_FLAG_ENFORCEMENT_NOTICE_HEARING === 'true',
 			featureFlagEnforcementNoticeInquiry: FEATURE_FLAG_ENFORCEMENT_NOTICE_INQUIRY === 'true',
@@ -200,7 +197,6 @@ export function loadConfig() {
 			featureFlagEnforcementChangeProcedureLinked:
 				FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE_LINKED === 'true',
 			featureFlagShareCosts: FEATURE_FLAG_SHARE_COSTS === 'true',
-			featureFlagNewBeforeYouStart: FEATURE_FLAG_NEW_BEFORE_YOU_START === 'true',
 			featureFlagEnforcementChangeProcedure: FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE === 'true',
 			featureFlagSharingHearingDocuments:
 				environment.FEATURE_FLAG_SHARING_HEARING_DOCUMENTS === 'true',

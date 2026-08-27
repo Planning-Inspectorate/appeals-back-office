@@ -281,7 +281,7 @@ async function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddres
 			) {
 				const s78ExpeditedTemplate = 'lpaq-complete-s78-expedite-appellant';
 				const initialDate = setTimeInTimeZone(new Date(), DAYTIME_HOUR, DAYTIME_MINUTE);
-				const calculatedDate = addDays(initialDate, 5);
+				const calculatedDate = await addDays(initialDate, 5);
 
 				const s78ExpeditedFields = {
 					...fields,

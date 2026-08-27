@@ -11,7 +11,7 @@ import { DateTimeQuestionPage } from '../../page_objects/dateTimeQuestionPage.js
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { EstimatedDaysSection } from '../../page_objects/estimatedDaysSection.js';
 import { ProcedureTypePage } from '../../page_objects/procedureTypePage';
-import { PROCEDURE_TYPES } from '../../support/consts.js';
+import { CTA_TEXT, DEFAULT_OVERVIEW_DETAILS, PROCEDURE_TYPES } from '../../support/consts.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
 import { changeAppealProcedureTypeTimetableItems } from '../../support/timetables.js';
 import { formatDateAndTime, getDateAndTimeValues } from '../../support/utils/format';
@@ -52,12 +52,8 @@ appealTypeVariants.forEach((appealVariant) => {
 		let caseObj;
 
 		const overviewDetails = {
-			appealType: appealVariant.overviewAppealType,
-			applicationReference: '123',
-			allocationLevel: 'No allocation level for this appeal',
-			linkedAppeals: 'No linked appeals',
-			relatedAppeals: '1000000',
-			netGainResidential: 'Not provided'
+			...DEFAULT_OVERVIEW_DETAILS,
+			appealType: appealVariant.overviewAppealType
 		};
 
 		const inquiryAddress = {
@@ -259,7 +255,9 @@ appealTypeVariants.forEach((appealVariant) => {
 			happyPathHelper.startCaseWithProcedureType(caseObj, 'hearing');
 
 			// progress to statements shared status
-			happyPathHelper.reviewLPaStatement(caseObj);
+			happyPathHelper.reviewLPaStatement(caseObj, {
+				progressText: CTA_TEXT.share.shareCommentsAndStatements
+			});
 
 			// should not be able to see change procedure link
 			overviewSectionPage.verifyChangeLinkVisibility(
@@ -398,7 +396,7 @@ appealTypeVariants.forEach((appealVariant) => {
 			overviewSectionPage.clickRowChangeLink('case-procedure');
 
 			procedureTypePage.verifyHeader(procedureTypeCaption);
-			procedureTypePage.selectProcedureType('written');
+			procedureTypePage.selectProcedureType('Written representations');
 
 			// verify previous values are prepopulated
 			cy.loadAppealDetails(caseObj).then((appealDetails) => {

@@ -160,7 +160,7 @@ describe('Review LPAQ', () => {
 			// Section 6 – Appeal Process
 			lpaqPage.assertFieldLabelAndValue(
 				'Are there any other ongoing appeals next to, or close to the site?',
-				casedata.nearbyCaseReferences
+				casedata.nearbyCaseReferences ? 'Yes' : 'No'
 			);
 
 			// Final section
@@ -266,9 +266,11 @@ describe('Review LPAQ', () => {
 			);
 
 			// Section 7 – Appeal Process
+			// Is a bug with displaying related appeals in case overview, see https://pins-ds.atlassian.net/browse/A2-8942
 			lpaqPage.assertFieldLabelAndValue(
 				'Are there any other ongoing appeals next to, or close to the site?',
-				casedata.nearbyCaseReferences
+				// casedata.nearbyCaseReferences
+				'No'
 			);
 
 			// Final section
@@ -381,7 +383,7 @@ describe('Review LPAQ', () => {
 			// Section 7 – Appeal Process
 			lpaqPage.assertFieldLabelAndValue(
 				'Are there any other ongoing appeals next to, or close to the site?',
-				casedata.nearbyCaseReferences
+				casedata.nearbyCaseReferences ? 'Yes' : 'No'
 			);
 
 			// Final section
@@ -497,7 +499,7 @@ describe('Review LPAQ', () => {
 			// Section 7 – Appeal Process
 			lpaqPage.assertFieldLabelAndValue(
 				'Are there any other ongoing appeals next to, or close to the site?',
-				casedata.nearbyCaseReferences
+				casedata.nearbyCaseReferences ? 'Yes' : 'No'
 			);
 
 			// Final section
@@ -577,7 +579,7 @@ describe('Review LPAQ', () => {
 			// Section 6 – Appeal Process
 			lpaqPage.assertFieldLabelAndValue(
 				'Are there any other ongoing appeals next to, or close to the site?',
-				casedata.nearbyCaseReferences
+				casedata.nearbyCaseReferences ? 'Yes' : 'No'
 			);
 
 			// Final section

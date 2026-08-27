@@ -11,6 +11,7 @@ import {
 	getByCaseId,
 	getByCaseIdAndPaths,
 	getById,
+	getDocumentCountsByFolder,
 	getFolderSizeById,
 	getRepresentationFolderSizeById
 } from '#repositories/folder.repository.js';
@@ -120,6 +121,22 @@ export const getFoldersForAppeal = async (appealId, stage = null) => {
 	}
 
 	return await getByCaseId(appealId);
+};
+
+/**
+ * @param {number} appealId
+ */
+export const getCostDocumentCounts = async (appealId) => {
+	const paths = [
+		`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION}`,
+		`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_WITHDRAWAL}`,
+		`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_APPLICATION}`,
+		`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_WITHDRAWAL}`,
+		`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER}`,
+		`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER}`
+	];
+
+	return await getDocumentCountsByFolder(appealId, paths);
 };
 
 /**

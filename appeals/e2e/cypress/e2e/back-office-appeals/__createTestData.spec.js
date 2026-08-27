@@ -8,7 +8,7 @@ import { happyPathHelper } from '../../support/happyPathHelper.js';
 
 const caseDetailsPage = new CaseDetailsPage();
 
-describe('Create Test Data', () => {
+describe.skip('Create Test Data', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});

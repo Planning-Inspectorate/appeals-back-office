@@ -4,6 +4,7 @@ import { databaseConnector } from '#utils/database-connector.js';
 import { jest } from '@jest/globals';
 import appealRepository, {
 	appealDetailsIncludeMap,
+	appealDetailsPageDisplaySelect,
 	buildAppealInclude
 } from '../appeal.repository.js';
 
@@ -101,5 +102,111 @@ describe('getFoldersWithDocumentsAndVersions', () => {
 
 		const thirdCallArgs = databaseConnector.documentVersion.findMany.mock.calls[2][0];
 		expect(thirdCallArgs.where.documentGuid.in.length).toBe(200);
+	});
+});
+
+describe('getAppealByIdForPageDisplay', () => {
+	beforeEach(() => {
+		jest.clearAllMocks();
+	});
+
+	it('returns the appeal selected for page display', async () => {
+		const appealId = 1;
+		const parentAppeals = [
+			{
+				id: 10,
+				type: 'linked',
+				linkingDate: new Date('2024-01-01T00:00:00.000Z'),
+				parentId: 2,
+				parentRef: '7000002',
+				childId: appealId,
+				childRef: '7000001',
+				externalSource: false,
+				externalAppealType: null,
+				externalId: null,
+				parent: {
+					id: 2,
+					reference: '7000002'
+				}
+			}
+		];
+		const childAppeals = [
+			{
+				id: 11,
+				type: 'linked',
+				linkingDate: new Date('2024-01-02T00:00:00.000Z'),
+				parentId: appealId,
+				parentRef: '7000001',
+				childId: 3,
+				childRef: '7000003',
+				externalSource: true,
+				externalAppealType: 'HAS',
+				externalId: 'external-child-appeal-id',
+				child: {
+					id: 3,
+					reference: '7000003'
+				}
+			}
+		];
+		const mockAppeal = {
+			id: appealId,
+			reference: '7000001',
+			currentStatus: 'assign_case_officer',
+			parentAppeals,
+			childAppeals,
+			appealType: {
+				id: 1,
+				type: 'Planning appeal',
+				key: 'HAS'
+			}
+		};
+
+		databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
+
+		const result = await appealRepository.getAppealByIdForPageDisplay(appealId);
+
+		expect(databaseConnector.appeal.findUnique).toHaveBeenCalledWith({
+			where: {
+				id: appealId
+			},
+			select: appealDetailsPageDisplaySelect
+		});
+		expect(result).toBe(mockAppeal);
+		expect(result.parentAppeals).toEqual([
+			{
+				id: 10,
+				type: 'linked',
+				linkingDate: new Date('2024-01-01T00:00:00.000Z'),
+				parentId: 2,
+				parentRef: '7000002',
+				childId: appealId,
+				childRef: '7000001',
+				externalSource: false,
+				externalAppealType: null,
+				externalId: null,
+				parent: {
+					id: 2,
+					reference: '7000002'
+				}
+			}
+		]);
+		expect(result.childAppeals).toEqual([
+			{
+				id: 11,
+				type: 'linked',
+				linkingDate: new Date('2024-01-02T00:00:00.000Z'),
+				parentId: appealId,
+				parentRef: '7000001',
+				childId: 3,
+				childRef: '7000003',
+				externalSource: true,
+				externalAppealType: 'HAS',
+				externalId: 'external-child-appeal-id',
+				child: {
+					id: 3,
+					reference: '7000003'
+				}
+			}
+		]);
 	});
 });

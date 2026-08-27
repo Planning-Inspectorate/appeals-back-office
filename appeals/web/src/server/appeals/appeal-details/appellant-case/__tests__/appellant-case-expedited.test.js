@@ -71,7 +71,7 @@ describe('appellant-case-expedited', () => {
 		);
 		expect(element.innerHTML).toContain('Yes');
 
-		expect(element.innerHTML).not.toContain('Draft statement of common ground');
+		expect(element.innerHTML).toContain('Draft statement of common ground');
 	});
 
 	it.each([
@@ -163,7 +163,7 @@ describe('appellant-case-expedited', () => {
 			expect(element.innerHTML).toContain(
 				'Did you submit an environmental statement with the application?'
 			);
-			expect(element.innerHTML).not.toContain('Draft statement of common ground');
+			expect(element.innerHTML).toContain('Draft statement of common ground');
 		}
 	);
 

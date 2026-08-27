@@ -1,5 +1,11 @@
 import { ServiceUser } from '#server/openapi-types';
-import { Address, ContactAddress } from '@pins/appeals';
+import {
+	Address,
+	AppealTimetable,
+	ContactAddress,
+	CostsDecision,
+	DocumentationSummary
+} from '@pins/appeals';
 import { Schema } from 'index';
 import { AppealGround, Ground } from '../../database/schema';
 
@@ -72,6 +78,8 @@ interface SingleAppealDetailsResponse {
 		appellantDecisionFolder?: FolderInfo | null;
 		lpaDecisionFolder?: FolderInfo | null;
 	};
+	supportingDocuments?: FolderInfo | null;
+	inquiryEventDocuments?: FolderInfo | null;
 	costsDecision?: CostsDecision;
 	decision: {
 		folderId: number;
@@ -141,6 +149,7 @@ interface SingleAppealDetailsResponse {
 	hearing?: Hearing | null;
 	inquiry?: Inquiry | null;
 	inquiryEstimate?: InquiryEstimate | null;
+	inquiryDocumentsFolder?: FolderInfo | null;
 	numberOfResidencesNetChange?: number | null;
 	enforcementNotice?: {
 		appealOutcome?: EnforcementNoticeAppealOutcome;
@@ -663,21 +672,6 @@ interface InquiryEstimate {
 	reportingTime?: number;
 }
 
-interface AppealTimetable {
-	appealTimetableId: number;
-	caseResubmissionDueDate?: string | null;
-	lpaQuestionnaireDueDate?: string | null;
-	ipCommentsDueDate?: string | null;
-	lpaStatementDueDate?: string | null;
-	finalCommentsDueDate?: string | null;
-	s106ObligationDueDate?: string | null;
-	issueDeterminationDate?: string | null;
-	statementOfCommonGroundDueDate?: string | null;
-	planningObligationDueDate?: string | null;
-	proofOfEvidenceAndWitnessesDueDate?: string | null;
-	caseManagementConferenceDueDate?: string | null;
-}
-
 interface UpdateTimetableRequest {
 	finalCommentReviewDate?: Date;
 	issueDeterminationDate?: Date;
@@ -768,6 +762,7 @@ interface DocumentationSummary {
 	appellantProofOfEvidence?: DocumentationSummaryEntry;
 	rule6PartyProofs?: { [serviceUserId: string]: DocumentationSummaryEntry };
 	appellantStatement?: DocumentationSummaryEntry;
+	inquiryDocuments?: DocumentationSummaryEntry;
 }
 
 interface DocumentationSummaryEntry {
@@ -1088,6 +1083,7 @@ type GetCaseNoteResponse = {
 
 export interface CreateSiteVisitData {
 	appealId: number;
+	appealTypeKey: string;
 	visitDate?: Date;
 	visitEndTime?: Date;
 	visitStartTime?: Date;
@@ -1279,7 +1275,6 @@ type BankHolidayFeedDivisions =
 	| 'united-kingdom';
 
 export {
-	AppealListResponse,
 	AppealRelationshipRequest,
 	AppealSite,
 	AppealTimetable,
@@ -1299,22 +1294,20 @@ export {
 	GetAuditTrailsResponse,
 	GetCaseNoteResponse,
 	GetCaseNotesResponse,
-	HearingAddress,
 	HearingResponse,
 	IncompleteInvalidReasons,
 	IncompleteInvalidReasonsResponse,
-	InquiryAddress,
 	InquiryResponse,
 	LinkableAppealSummary,
 	LinkedAppeal,
 	ListedBuildingDetailsResponse,
 	LookupTables,
+	NeighbouringSite,
 	NotifyClient,
 	NotifyTemplate,
 	PagedDocumentInfo,
 	PagedDocumentVersionInfo,
 	PagedFolderInfo,
-	PersonalListResponse,
 	ReasonOption,
 	RelatedAppeal,
 	ServiceUserResponse,
@@ -1329,7 +1322,6 @@ export {
 	StateStub,
 	TimetableDeadlineDate,
 	UpdateAddressRequest,
-	UpdateAppealDecisionRequest,
 	UpdateAppealRequest,
 	UpdateAppellantCaseRequest,
 	UpdateAppellantCaseValidationOutcome,

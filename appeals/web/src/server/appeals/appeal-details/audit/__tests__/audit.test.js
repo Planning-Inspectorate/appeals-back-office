@@ -7,7 +7,6 @@ import {
 	tryMapRepresentationType,
 	tryMapUsers
 } from '#appeals/appeal-details/audit/audit.mapper.js';
-import { statusFormatMap } from '#appeals/appeal-details/representations/document-attachments/controller/redaction-status.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import {
 	activeDirectoryUsersData,
@@ -23,13 +22,19 @@ import {
 	AUDIT_TRIAL_RULE_6_PARTY_ID
 } from '@pins/appeals/constants/support.js';
 import { parseHtml } from '@pins/platform';
-import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
+import { APPEAL_DOCUMENT_TYPE, APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
 import nock from 'nock';
 import supertest from 'supertest';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
+
+const statusFormatMap = {
+	[APPEAL_REDACTED_STATUS.REDACTED]: 'Redacted',
+	[APPEAL_REDACTED_STATUS.NOT_REDACTED]: 'Unredacted',
+	[APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED]: 'No redaction required'
+};
 
 describe('audit', () => {
 	afterAll(() => {
@@ -200,11 +205,15 @@ describe('audit', () => {
 			expect(unprettifiedHtml).toContain(
 				'<td class="govuk-table__cell">The <a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1">LPA questionnaire</a> was received</td>'
 			);
-			expect(unprettifiedHtml).toContain('<td class="govuk-table__cell">Case updated</td>');
+			expect(unprettifiedHtml).toContain(
+				'<td class="govuk-table__cell">Appellant case updated</td>'
+			);
 			expect(unprettifiedHtml).toContain(
 				'<td class="govuk-table__cell">The case timeline was created</td>'
 			);
-			expect(unprettifiedHtml).toContain('<td class="govuk-table__cell">Case updated</td>');
+			expect(unprettifiedHtml).toContain(
+				'<td class="govuk-table__cell">Appellant case updated</td>'
+			);
 			expect(unprettifiedHtml).toContain(
 				'<td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--green">LPA questionnaire</strong></td>'
 			);
@@ -218,7 +227,7 @@ describe('audit', () => {
 				'<td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--green">Final comments</strong></td>'
 			);
 			expect(unprettifiedHtml).toContain(
-				'<td class="govuk-table__cell">Statements and IP comments shared</td>'
+				'<td class="govuk-table__cell">Comments and statements shared</td>'
 			);
 			expect(unprettifiedHtml).toContain(
 				'<td class="govuk-table__cell">Appellant final comments accepted</td>'

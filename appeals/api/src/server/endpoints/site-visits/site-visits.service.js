@@ -24,7 +24,9 @@ import logger from '#utils/logger.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
 import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
 import { AUDIT_TRAIL_SITE_VISIT_CANCELLED } from '@pins/appeals/constants/support.js';
+import { appealCaseTypeToAppealTypeMapper } from '@pins/appeals/utils/appeal-type-case.mapper.js';
 import { addDays } from '@pins/appeals/utils/business-days.js';
+import { sendSiteVisitScheduleUnaccompaniedNotify } from '@pins/appeals/utils/business-rules.js';
 import { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
 import { formatInTimeZone } from 'date-fns-tz';
@@ -54,6 +56,7 @@ export const createSiteVisit = async (
 ) => {
 	try {
 		const appealId = siteVisitData.appealId;
+		const appealType = appealCaseTypeToAppealTypeMapper(siteVisitData.appealTypeKey);
 		const visitDate = siteVisitData.visitDate;
 		const visitEndTime = siteVisitData.visitEndTime;
 		const visitStartTime = siteVisitData.visitStartTime;
@@ -83,8 +86,10 @@ export const createSiteVisit = async (
 		}
 
 		if (visitDate && visitStartTime) {
-			const notifyTemplateIds = fetchSiteVisitScheduleTemplateIds(siteVisitData.visitType.name);
-
+			const notifyTemplateIds = fetchSiteVisitScheduleTemplateIds(
+				siteVisitData.visitType.name,
+				appealType
+			);
 			const emailVariables = {
 				appeal_reference_number: siteVisitData.appealReferenceNumber,
 				lpa_reference: siteVisitData.lpaReference,
@@ -126,6 +131,9 @@ export const createSiteVisit = async (
 					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 				}
 			}
+		}
+		if (!visitDate && !visitStartTime && visitTypeId) {
+			await broadcasters.broadcastEvent(siteVisit.id, EVENT_TYPE.SITE_VISIT, EventType.Create);
 		}
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
@@ -470,9 +478,10 @@ const getRescheduleTemplateEnvVarNames = (transitionKey) => {
 
 /**
  * @param {string} visitTypeName
+ * @param {string} appealType
  * @returns {VisitNotificationTemplateIds}
  */
-const fetchSiteVisitScheduleTemplateIds = (visitTypeName) => {
+const fetchSiteVisitScheduleTemplateIds = (visitTypeName, appealType) => {
 	const visitTypeKey = visitTypeName.replace(/\s+/g, '').toLowerCase();
 
 	switch (visitTypeKey) {
@@ -486,9 +495,12 @@ const fetchSiteVisitScheduleTemplateIds = (visitTypeName) => {
 				lpa: 'site-visit-schedule-accompanied-lpa'
 			};
 		case 'unaccompanied':
-			return {
-				appellant: 'site-visit-schedule-unaccompanied-appellant'
-			};
+			if (sendSiteVisitScheduleUnaccompaniedNotify(appealType)) {
+				return {
+					appellant: 'site-visit-schedule-unaccompanied-appellant'
+				};
+			}
+			return {};
 		default:
 			return {};
 	}

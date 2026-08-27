@@ -160,7 +160,7 @@ export const AUDIT_TRAIL_SERVICE_USER_ADDRESS_UPDATED =
 	"The {replacement0}'s address details were updated";
 export const AUDIT_TRAIL_SERVICE_USER_REMOVED = 'The {replacement0} was removed';
 export const AUDIT_TRAIL_ADDRESS_UPDATED = 'Site address updated to\n{replacement0}';
-export const AUDIT_TRAIL_APPELLANT_CASE_UPDATED = 'Case updated';
+export const AUDIT_TRAIL_APPELLANT_CASE_UPDATED = 'Appellant case updated';
 export const AUDIT_TRAIL_DEVELOPMENT_TYPE_UPDATED = 'Development type updated to {replacement0}';
 export const AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED = 'Site area updated to {replacement0} m²';
 export const AUDIT_TRAIL_HIGHWAY_LAND_UPDATED =
@@ -295,6 +295,10 @@ export const AUDIT_TRAIL_HORIZON_REFERENCE_UPDATED = 'Horizon reference updated'
 
 export const AUDIT_TRAIL_ASSIGNED_TEAM_UPDATED = 'Case team {replacement0} assigned';
 export const BANK_HOLIDAY_FEED_DIVISION_ENGLAND = 'england-and-wales';
+
+// Expedited - appellant case
+export const AUDIT_TRAIL_REASON_FOR_APPEAL_APPELLANT_UPDATED =
+	"'Why are you appealing?' updated to {replacement0}";
 
 // Enforcement notice - appellant case
 export const AUDIT_TRAIL_ENFORCEMENT_NOTICE_UPDATED =
@@ -451,7 +455,7 @@ export const ERROR_REP_ONLY_STATEMENT_INCOMPLETE =
 export const ERROR_REP_PUBLISH_USING_ENDPOINT =
 	'LPA statements and final comments can only be published using the dedicated endpoint';
 export const ERROR_REP_PUBLISH_BLOCKED =
-	'Publishing of Statements and IP comments or Proofs of Evidence is blocked';
+	'Publishing of Comments and statements or Proofs of Evidence is blocked';
 export const ERROR_LINKING_APPEALS =
 	'The appeals cannot be linked as the lead or child are already linked to other appeals.';
 export const ERROR_UNLINKING_APPEALS = 'Failed to unlink appeals';
@@ -518,12 +522,6 @@ const s78timetable = {
 const s78ExpeditedTimetable = {
 	lpaQuestionnaireDueDate: {
 		daysFromStartDate: 5
-	},
-	finalCommentsDueDate: {
-		daysFromStartDate: 35
-	},
-	s106ObligationDueDate: {
-		daysFromStartDate: 35
 	}
 };
 const advertTimetable = {

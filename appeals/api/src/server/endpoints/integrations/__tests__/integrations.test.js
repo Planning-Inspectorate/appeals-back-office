@@ -130,7 +130,8 @@ describe('/appeals/case-submission', () => {
 			expect(response.status).toEqual(400);
 		});
 	});
-	describe('POST successful appeal gets ingested', () => {
+
+	describe('POST successful appeal gets ingested - non-enforcement', () => {
 		beforeEach(() => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue({});
@@ -165,21 +166,7 @@ describe('/appeals/case-submission', () => {
 				{ id: 1 },
 				1
 			],
-			['ADVERTISEMENT', appealIngestionInputAdverts, validAppellantCaseAdverts, { id: 1 }, 1],
-			[
-				'ENFORCEMENT_NOTICE',
-				appealIngestionInputEnforcementNotice,
-				validAppellantCaseEnforcementNotice,
-				{ id: 2 },
-				2
-			],
-			[
-				'ENFORCEMENT_LISTED_BUILDING',
-				appealIngestionInputEnforcementListedBuilding,
-				validAppellantCaseEnforcementListedBuilding,
-				{ id: 2 },
-				2
-			]
+			['ADVERTISEMENT', appealIngestionInputAdverts, validAppellantCaseAdverts, { id: 1 }, 1]
 		])(
 			'POST valid %s appellant case payload and create appeal',
 			async (
@@ -219,11 +206,110 @@ describe('/appeals/case-submission', () => {
 					})
 				);
 
+				expect(mockNotifySend).not.toHaveBeenCalled();
+
+				expect(databaseConnector.document.createMany).toHaveBeenCalled();
+				expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
+				expect(databaseConnector.documentVersion.findMany).toHaveBeenCalled();
+
+				expect(databaseConnector.appealGround.createMany).not.toHaveBeenCalled();
+				// Will not be called as non-enforcement appeals so no linked appeal created at this point
+				expect(databaseConnector.appealRelationship.create).not.toHaveBeenCalled();
+
+				expect(databaseConnector.appeal.findUnique).toHaveBeenCalled();
+				expect(response.status).toEqual(201);
+				expect(response.body).toEqual(result);
+			}
+		);
+	});
+
+	describe('POST successful appeal gets ingested - enforcement', () => {
+		beforeEach(() => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue({});
+		});
+		test.each([
+			[
+				'ENFORCEMENT_NOTICE',
+				appealIngestionInputEnforcementNotice,
+				validAppellantCaseEnforcementNotice,
+				{ id: 2 },
+				2,
+				1
+			],
+			[
+				'ENFORCEMENT_LISTED_BUILDING',
+				appealIngestionInputEnforcementListedBuilding,
+				validAppellantCaseEnforcementListedBuilding,
+				{ id: 2 },
+				2,
+				3
+			]
+		])(
+			'POST valid %s appellant case payload and create appeal',
+			async (
+				appealType,
+				appealIngestionInput,
+				validAppellantCase,
+				expectedTeamQueryParam,
+				expectedAssignedTeamId,
+				expectedAppealGroundId
+			) => {
+				const result = createIntegrationMocks(appealIngestionInput);
+				const payload = validAppellantCase;
+
+				const response = await request.post('/appeals/case-submission').send(payload);
+
+				expect(databaseConnector.appeal.create).toHaveBeenCalledWith({
+					data: {
+						reference: expect.any(String),
+						submissionId: expect.any(String),
+						...appealIngestionInput
+					}
+				});
+				// Will be called twice for Enforcement Notice as there is a named individual as well as appellant
+				// Therefore a child appeal is created and linked
+				expect(databaseConnector.appeal.create).toHaveBeenCalledTimes(
+					appealType === 'ENFORCEMENT_NOTICE' ? 2 : 1
+				);
+				expect(databaseConnector.appealRelationship.create).toHaveBeenCalledTimes(
+					appealType === 'ENFORCEMENT_NOTICE' ? 1 : 0
+				);
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+					where: { id: 100 },
+					data: {
+						reference: expect.any(String),
+						appealStatus: {
+							create: {
+								status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+								createdAt: expect.any(String)
+							}
+						},
+						assignedTeamId: expectedAssignedTeamId
+					}
+				});
+				expect(databaseConnector.team.findUnique).toHaveBeenCalledWith(
+					expect.objectContaining({
+						where: expectedTeamQueryParam
+					})
+				);
+
 				expect(mockNotifySend).toHaveBeenCalledTimes(appealType === 'ENFORCEMENT_NOTICE' ? 2 : 0);
 
 				expect(databaseConnector.document.createMany).toHaveBeenCalled();
 				expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
 				expect(databaseConnector.documentVersion.findMany).toHaveBeenCalled();
+
+				expect(databaseConnector.appealGround.createMany).toHaveBeenCalledWith({
+					data: [
+						{
+							appealId: 100,
+							factsForGround: validAppellantCase.casedata.appealGrounds[0].factsForGround,
+							groundId: expectedAppealGroundId
+						}
+					]
+				});
 
 				expect(databaseConnector.appeal.findUnique).toHaveBeenCalled();
 				expect(response.status).toEqual(201);

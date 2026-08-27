@@ -2,15 +2,19 @@ import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { validateCaseNoteTextArea } from '#appeals/appeal-details/appeals-details.validator.js';
 import { postCaseNote } from '#appeals/appeal-details/case-notes/case-notes.controller.js';
 import changeAppealProcedureTypeRouter from '#appeals/appeal-details/change-procedure-type/change-procedure-type.router.js';
+import representationsRouter from '#appeals/appeal-details/representations/representations.router.js';
+import { isFeatureActive } from '#common/feature-flags.js';
 import { permissionNames } from '#environment/permissions.js';
 import { clearSessionData } from '#lib/middleware/clear-session-data.js';
 import { saveBackUrl } from '#lib/middleware/save-back-url.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import allocationDetailsRouter from './allocation-details/allocation-details.router.js';
 import * as controller from './appeal-details.controller.js';
 import {
 	validateAppeal,
+	validateAppealExists,
 	validateAppealForAppealDetailsPage,
 	validateAppealWithInclude
 } from './appeal-details.middleware.js';
@@ -24,6 +28,7 @@ import appealTypeChangeRouter from './change-appeal-type/change-appeal-type.rout
 import costsRouter from './costs/costs.router.js';
 import environmentalAssessmentRouter from './environmental-assessment/environmental-assessment.router.js';
 import hearingRouter from './hearing/hearing.router.js';
+import inquiryEventDocumentsRouter from './inquiry/event-documents/inquiry-event-documents.router.js';
 import inquiryRouter from './inquiry/inquiry.router.js';
 import inspectorAccessRouter from './inspector-access/inspector-access.router.js';
 import internalCorrespondenceRouter from './internal-correspondence/internal-correspondence.router.js';
@@ -38,12 +43,12 @@ import otherAppealsRouter from './other-appeals/other-appeals.router.js';
 import finalCommentsRouter from './representations/final-comments/final-comments.router.js';
 import interestedPartyCommentsRouter from './representations/interested-party-comments/interested-party-comments.router.js';
 import proofOfEvidenceRouter from './representations/proof-of-evidence/proof-of-evidence.router.js';
-import representationsRouter from './representations/representations.router.js';
 import rule6PartiesRouter from './rule-6-parties/rule-6-parties.router.js';
 import safetyRisksRouter from './safety-risks/safety-risks.router.js';
 import serviceUserRouter from './service-user/service-user.router.js';
 import siteVisitRouter from './site-visit/site-visit.router.js';
 import startDateRouter from './start-case/start-case.router.js';
+import supportingDocumentsRouter from './supporting-documents/supporting-documents.router.js';
 import timetableRouter from './timetable/timetable.router.js';
 import updateCaseTeamRouter from './update-case-team/update-case-team.router.js';
 import updateDecisionLetterRouter from './update-decision-letter/update-decision-letter.router.js';
@@ -118,10 +123,33 @@ router.use(
 );
 router.use(
 	'/:appealId/costs',
-	validateAppeal,
+	validateAppealWithInclude(['appellantCase']),
 	assertUserHasPermission(permissionNames.viewCaseDetails, permissionNames.viewAssignedCaseDetails),
 	costsRouter
 );
+
+if (isFeatureActive(FEATURE_FLAG_NAMES.SHARING_SUPPORTING_DOCUMENTS)) {
+	router.use(
+		'/:appealId/supporting-documents',
+		validateAppealExists,
+		assertUserHasPermission(
+			permissionNames.viewCaseDetails,
+			permissionNames.viewAssignedCaseDetails
+		),
+		supportingDocumentsRouter
+	);
+}
+if (isFeatureActive(FEATURE_FLAG_NAMES.SHARING_INQUIRY_EVENT_DOCUMENTS)) {
+	router.use(
+		'/:appealId/inquiry-event-documents',
+		validateAppealExists,
+		assertUserHasPermission(
+			permissionNames.viewCaseDetails,
+			permissionNames.viewAssignedCaseDetails
+		),
+		inquiryEventDocumentsRouter
+	);
+}
 
 router.use(
 	'/:appealId/environmental-assessment',

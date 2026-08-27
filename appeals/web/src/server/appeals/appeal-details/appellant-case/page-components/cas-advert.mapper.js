@@ -1,5 +1,14 @@
+import { isFeatureActive } from '#common/feature-flags.js';
+import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { beforeExpeditedOriginalApplicationCutOff } from '@pins/appeals/utils/appeal-type-checks.js';
-import { generateHASComponents } from './has.mapper.js';
+import {
+	buildAdvertApplicationDetailsCard,
+	buildAdvertSiteDetailsCard,
+	buildAppealDetailsCard,
+	buildAppellantDetailsCard,
+	buildBeforeYouStartCard,
+	buildSummaryListCard
+} from './common-sections.mapper.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse
@@ -7,127 +16,56 @@ import { generateHASComponents } from './has.mapper.js';
  */
 
 /**
+ * Builds the CAS Advert "Uploaded documents" section card component.
+ * @param {SingleAppellantCaseResponse} appellantCaseData
+ * @param {MappedInstructions} mappedAppellantCaseData
+ * @returns {PageComponent|null}
+ */
+export function buildCASAdvertUploadedDocumentsCard(appellantCaseData, mappedAppellantCaseData) {
+	return buildSummaryListCard('uploaded-documents', 'Upload documents', [
+		mappedAppellantCaseData.applicationForm?.display?.summaryListItem,
+		...(beforeExpeditedOriginalApplicationCutOff(appellantCaseData.applicationDate)
+			? [mappedAppellantCaseData.appealStatement?.display?.summaryListItem]
+			: []),
+		mappedAppellantCaseData.costsDocument?.display?.summaryListItem,
+		...(beforeExpeditedOriginalApplicationCutOff(appellantCaseData.applicationDate)
+			? [mappedAppellantCaseData.supportingDocuments?.display?.summaryListItem]
+			: [])
+	]);
+}
+
+/**
  *
  * @param {Appeal} appealDetails
  * @param {SingleAppellantCaseResponse} appellantCaseData
  * @param {MappedInstructions} mappedAppellantCaseData
- * @param {boolean} userHasUpdateCasePermission
- * @returns {PageComponent[]}
+ * @returns {(PageComponent|null)[]}
  */
 export function generateCASAdvertComponents(
 	appealDetails,
 	appellantCaseData,
-	mappedAppellantCaseData,
-	userHasUpdateCasePermission
+	mappedAppellantCaseData
 ) {
-	const pageComponents = generateHASComponents(
-		appealDetails,
-		appellantCaseData,
-		mappedAppellantCaseData,
-		userHasUpdateCasePermission
-	);
+	const isExpeditedAppealsActive = isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS);
+	const isExpeditedEligible =
+		isExpeditedAppealsActive &&
+		(appealDetails.appealType === APPEAL_TYPE.HOUSEHOLDER ||
+			appealDetails.appealType === APPEAL_TYPE.CAS_PLANNING ||
+			appealDetails.appealType === APPEAL_TYPE.CAS_ADVERTISEMENT) &&
+		!beforeExpeditedOriginalApplicationCutOff(appellantCaseData.applicationDate);
 
-	const siteDetailsComponentIndex = pageComponents.findIndex(
-		(component) =>
-			component.type === 'summary-list' && component.parameters.attributes?.id === 'site-details'
-	);
+	const components = [
+		buildBeforeYouStartCard(mappedAppellantCaseData),
+		buildAppellantDetailsCard(appealDetails, mappedAppellantCaseData),
+		buildAdvertSiteDetailsCard(mappedAppellantCaseData, [
+			...(isExpeditedEligible
+				? [mappedAppellantCaseData.anySignificantChanges?.display?.summaryListItem]
+				: [])
+		]),
+		buildAdvertApplicationDetailsCard(mappedAppellantCaseData),
+		isExpeditedEligible ? buildAppealDetailsCard(mappedAppellantCaseData) : null,
+		buildCASAdvertUploadedDocumentsCard(appellantCaseData, mappedAppellantCaseData)
+	];
 
-	if (siteDetailsComponentIndex !== -1) {
-		const rows = pageComponents[siteDetailsComponentIndex].parameters.rows;
-
-		// remove the site area row
-		const siteAreaIndex = rows.findIndex(
-			(/** @type {{ classes: string} }} */ row) => row.classes === 'appeal-site-area'
-		);
-		if (siteAreaIndex !== -1) {
-			rows.splice(siteAreaIndex, 1);
-		}
-
-		// add the highway land row and advertisementInPosition row
-		const appealSiteAddressIndex = rows.findIndex(
-			(/** @type {{ classes: string; }} */ row) => row.classes === 'appeal-site-address'
-		);
-		const highwayLand = mappedAppellantCaseData.highwayLand.display.summaryListItem;
-
-		const advertisementInPosition =
-			mappedAppellantCaseData.advertisementInPosition.display.summaryListItem;
-
-		rows.splice(appealSiteAddressIndex + 1, 0, highwayLand, advertisementInPosition);
-
-		const landownerPermission = mappedAppellantCaseData.landownerPermission.display.summaryListItem;
-
-		rows.splice(rows.length - 1, 0, landownerPermission);
-	}
-
-	const applicationSummaryComponentIndex = pageComponents.findIndex(
-		(component) =>
-			component.type === 'summary-list' &&
-			component.parameters.attributes?.id === 'application-summary'
-	);
-
-	if (applicationSummaryComponentIndex !== -1) {
-		const rows = pageComponents[applicationSummaryComponentIndex].parameters.rows;
-
-		const developmentDescriptionIndex = rows.findIndex(
-			(/** @type {{ classes: string; }} */ row) => row.classes === 'appeal-development-description'
-		);
-		const advertisementDescription =
-			mappedAppellantCaseData.advertisementDescription.display.summaryListItem;
-		const changedAdvertisementDescriptionDoc =
-			mappedAppellantCaseData.changedAdvertisementDescriptionDocument.display.summaryListItem;
-		const indexAfterDescription = developmentDescriptionIndex + 1;
-
-		rows[developmentDescriptionIndex] = advertisementDescription;
-		rows.splice(indexAfterDescription, 0, changedAdvertisementDescriptionDoc);
-	}
-
-	const uploadedDocumentsComponentIndex = pageComponents.findIndex(
-		(component) =>
-			component.type === 'summary-list' &&
-			component.parameters.attributes?.id === 'uploaded-documents'
-	);
-
-	if (uploadedDocumentsComponentIndex !== -1) {
-		/** @type {PageComponent} */
-		const uploadedDocuments = {
-			type: 'summary-list',
-			wrapperHtml: {
-				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-				closing: '</div></div>'
-			},
-			parameters: {
-				attributes: {
-					id: 'uploaded-documents'
-				},
-				card: {
-					title: {
-						text: 'Upload documents'
-					}
-				},
-				rows: [
-					mappedAppellantCaseData.applicationForm.display.summaryListItem,
-					// we want to hide the appeal statement for appeals submitted 1st April 2026 onwards
-					...(beforeExpeditedOriginalApplicationCutOff(appellantCaseData.applicationDate)
-						? [mappedAppellantCaseData.appealStatement.display.summaryListItem]
-						: []),
-					mappedAppellantCaseData.costsDocument.display.summaryListItem,
-					...(beforeExpeditedOriginalApplicationCutOff(appellantCaseData.applicationDate)
-						? [mappedAppellantCaseData.supportingDocuments.display.summaryListItem]
-						: [])
-				]
-			}
-		};
-		pageComponents[uploadedDocumentsComponentIndex] = uploadedDocuments;
-	}
-
-	const additionalDocumentsComponentIndex = pageComponents.findIndex(
-		(component) =>
-			component.type === 'summary-list' &&
-			component.parameters.attributes?.id === 'additional-documents'
-	);
-	if (additionalDocumentsComponentIndex !== -1) {
-		pageComponents.splice(additionalDocumentsComponentIndex, 1);
-	}
-
-	return pageComponents;
+	return components.filter(Boolean);
 }

@@ -31,7 +31,7 @@ describe('Manually Add a rep', () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;
 			//Move Case to Statement Status
-			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'STATEMENTS', 'S78');
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'STATEMENTS', 'EN');
 			//Ensure no option availible
 			caseDetailsPage.verifyDocumentationValue(
 				'documentation',
@@ -190,8 +190,8 @@ describe('Manually Add a rep', () => {
 		fileUploader.uploadFiles(sampleFiles.document2);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.selectRadioButtonByValue('Redacted');
-		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Add document');
 	};
 });

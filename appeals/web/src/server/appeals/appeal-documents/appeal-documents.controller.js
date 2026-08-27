@@ -297,7 +297,8 @@ export const renderDocumentDetails = async ({
  * @param {string} [params.addButtonTextOverride]
  * @param {string} [params.dateColumnLabelTextOverride]
  * @param {string} [params.preHeadingTextOverride]
- * @param {boolean} [params.isCosts]
+ * @param {boolean} [params.canShare]
+ * @param {string} [params.shareAllLinkUrl]
  */
 export const renderManageFolder = async ({
 	request,
@@ -309,7 +310,8 @@ export const renderManageFolder = async ({
 	addButtonTextOverride,
 	dateColumnLabelTextOverride,
 	preHeadingTextOverride,
-	isCosts = false
+	canShare = false,
+	shareAllLinkUrl
 }) => {
 	const { currentFolder, currentPageNumber, originalUrl, query, errors } = request;
 
@@ -329,7 +331,8 @@ export const renderManageFolder = async ({
 		preHeadingTextOverride,
 		editable: userHasPermission(permissionNames.updateCase, request.session),
 		currentPageNumber,
-		isCosts
+		canShare,
+		shareAllLinkUrl
 	});
 
 	const urlWithoutQuery = stripQueryString(originalUrl);
@@ -360,7 +363,7 @@ export const renderManageFolder = async ({
  * @param {string} [params.dateRowLabelTextOverride]
  * @param {boolean} [params.skipChangeDocumentDetails]
  * @param {string} [params.manageDocumentPageBaseUrl]
- * @param {boolean} [params.isCosts]
+ * @param {boolean} [params.canShare]
  */
 export const renderManageDocument = async ({
 	request,
@@ -372,7 +375,7 @@ export const renderManageDocument = async ({
 	dateRowLabelTextOverride,
 	skipChangeDocumentDetails = false,
 	manageDocumentPageBaseUrl,
-	isCosts = false
+	canShare = false
 }) => {
 	const {
 		currentFolder,
@@ -410,7 +413,7 @@ export const renderManageDocument = async ({
 		editable: userHasPermission(permissionNames.updateCase, request.session),
 		skipChangeDocumentDetails,
 		baseUrl: manageDocumentPageBaseUrl,
-		isCosts
+		canShare
 	});
 
 	return response.status(200).render('appeals/documents/manage-document.njk', {

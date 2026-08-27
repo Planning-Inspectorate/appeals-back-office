@@ -1,9 +1,11 @@
+import { mapUncommittedDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import {
 	dateISOStringToDayMonthYearHourMinute,
-	dayMonthYearHourMinuteToISOString,
+	dateISOStringToDisplayDate,
 	getTodaysISOString
 } from '#lib/dates.js';
+import { editLink } from '#lib/edit-utilities.js';
 import {
 	errorAddressProvidedRadio,
 	errorEmail,
@@ -11,8 +13,11 @@ import {
 	errorLastName
 } from '#lib/error-handlers/change-screen-error-handlers.js';
 import { dateInput } from '#lib/mappers/index.js';
+import { redactionStatusIdToKey, redactionStatusIdToName } from '#lib/redaction-statuses.js';
 import config from '@pins/appeals.web/environment/config.js';
 import { ODW_SYSTEM_ID, REPRESENTATION_ADDED_AS_DOCUMENT } from '@pins/appeals/constants/common.js';
+import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
+import { capitalize } from 'lodash-es';
 import { DOCUMENT_STAGE, DOCUMENT_TYPE } from '../../document-attachments/attachments-service.js';
 
 /** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
@@ -178,34 +183,44 @@ export const uploadPage = (appealDetails, errors, backButtonUrl, folderId, fileU
 	errors
 });
 
+// This function takes session data when manually adding an ip comment as a doc
+// and extracts data for creating the representation
 /**
- * @param {{ firstName: string, lastName: string, addressProvided: string, emailAddress: string, addressLine1: string, addressLine2: string, town: string, county: string, postCode: string, redactionStatus: string, 'day': string, 'month': string, 'year': string }} values
- * @param {{ files: [{ GUID: string }] }} fileUpload
+ * @param {{ firstName: string, lastName: string, addressProvided: string, emailAddress: string, addressLine1: string, addressLine2: string, town: string, county: string, postCode: string }} values
+ * @param {{ files: [{ GUID: string, receivedDate: string, redactionStatus: number }] }} fileUpload
+ * @param {import("#appeals/appeal-documents/appeal-documents.mapper.js").RedactionStatus[]} redactionStatuses
  * @returns {RepresentationRequest}
  */
-export const mapSessionToRepresentationRequest = (values, fileUpload) => ({
-	ipDetails: {
-		firstName: values.firstName,
-		lastName: values.lastName,
-		email: values.emailAddress || ''
-	},
-	ipAddress: {
-		addressLine1: values.addressLine1 || '',
-		addressLine2: values.addressLine2 || '',
-		town: values.town || '',
-		county: values.county || '',
-		postCode: values.postCode
-	},
-	attachments: fileUpload.files.map((file) => file.GUID) || [],
-	redactionStatus: values.redactionStatus,
-	source: ODW_SYSTEM_ID,
-	dateCreated: dayMonthYearHourMinuteToISOString({
-		day: values.day,
-		month: values.month,
-		year: values.year
-	}),
-	representationText: REPRESENTATION_ADDED_AS_DOCUMENT
-});
+export const mapSessionToRepresentationRequest = (values, fileUpload, redactionStatuses) => {
+	// Representations have a dateCreated and redaction status
+	// These are pulled from the document when manually adding reps
+	// if there are multiple files we use the redaction status and date on the first document
+	const firstDocument = fileUpload.files[0];
+
+	const redactionStatus =
+		redactionStatusIdToKey(redactionStatuses, firstDocument?.redactionStatus) ||
+		APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED;
+
+	return {
+		ipDetails: {
+			firstName: values.firstName,
+			lastName: values.lastName,
+			email: values.emailAddress || ''
+		},
+		ipAddress: {
+			addressLine1: values.addressLine1 || '',
+			addressLine2: values.addressLine2 || '',
+			town: values.town || '',
+			county: values.county || '',
+			postCode: values.postCode
+		},
+		attachments: fileUpload.files.map((file) => file.GUID) || [],
+		redactionStatus: redactionStatus,
+		source: ODW_SYSTEM_ID,
+		dateCreated: firstDocument.receivedDate,
+		representationText: REPRESENTATION_ADDED_AS_DOCUMENT
+	};
+};
 
 /**
  * @param {Appeal} appealDetails
@@ -234,3 +249,108 @@ export const dateSubmitted = (appealDetails, errors, commentData, backLinkUrl) =
 		})
 	]
 });
+
+/**
+ * @param {import('#appeals/appeal-documents/appeal-documents.types.js').FileUploadInfoItem[]} uploadFiles
+ * @param {string} appealReference
+ * @param {string} baseUrl
+ * @param {import('@pins/appeals.api/src/database/schema.js').DocumentRedactionStatus[]} redactionStatuses
+ * @returns {PageComponent[]}
+ * */
+export const generateCheckAnswersCommentPageComponents = (
+	uploadFiles,
+	appealReference,
+	baseUrl,
+	redactionStatuses
+) => {
+	/** @type {PageComponent[]} */
+	let commentPageComponents = [];
+
+	const changeDocumentLinkUrl = editLink(baseUrl, 'upload');
+
+	const changeDetailsLinkUrl = editLink(baseUrl, 'add-document-details');
+
+	/** @ts-ignore */
+	uploadFiles.forEach((document, index) => {
+		/** @type {HtmlPageComponent} */
+		const htmlComponent = {
+			type: 'html',
+			parameters: {
+				html: `<h2 class="govuk-heading-m govuk-!-margin-top-${
+					index === 0 ? '5' : '8'
+				} govuk-!-margin-bottom-4">Uploaded comment${
+					uploadFiles.length > 1 ? ` ${index + 1}` : ''
+				}</h2>`
+			}
+		};
+
+		/** @type {SummaryListPageComponent} */
+		const summaryListComponent = {
+			type: 'summary-list',
+			parameters: {
+				rows: [
+					{
+						key: {
+							text: 'Interested party comment document'
+						},
+						value: {
+							html: `<a class="govuk-link" href="${mapUncommittedDocumentDownloadUrl(
+								appealReference,
+								document.GUID,
+								document.name
+							)}" target="_blank">${document.name}</a>`
+						},
+						actions: {
+							items: [
+								{
+									text: 'Change',
+									href: changeDocumentLinkUrl,
+									visuallyHiddenText: `file ${document.name}`
+								}
+							]
+						}
+					},
+					{
+						key: {
+							text: 'Date received'
+						},
+						value: {
+							text: dateISOStringToDisplayDate(document.receivedDate)
+						},
+						actions: {
+							items: [
+								{
+									text: 'Change',
+									href: changeDetailsLinkUrl,
+									visuallyHiddenText: `${document.name} date received`
+								}
+							]
+						}
+					},
+					{
+						key: {
+							text: 'Redaction status'
+						},
+						value: {
+							text: capitalize(redactionStatusIdToName(redactionStatuses, document.redactionStatus))
+						},
+						actions: {
+							items: [
+								{
+									text: 'Change',
+									href: changeDetailsLinkUrl,
+									visuallyHiddenText: `${document.name} redaction status`
+								}
+							]
+						}
+					}
+				]
+			}
+		};
+
+		commentPageComponents.push(htmlComponent);
+		commentPageComponents.push(summaryListComponent);
+	});
+
+	return commentPageComponents;
+};

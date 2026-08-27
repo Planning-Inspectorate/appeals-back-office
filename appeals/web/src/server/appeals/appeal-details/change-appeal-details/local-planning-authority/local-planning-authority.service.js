@@ -1,3 +1,4 @@
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 /**
  * @param {import('got').Got} apiClient
  * @returns {Promise <import('../../appeal-details.types.js').Lpa[]>}
@@ -13,8 +14,9 @@ export function getLpaList(apiClient) {
  * @returns {Promise <import('../../appeal-details.types.js').LpaChangeRequest>}
  */
 export function postChangeLpaRequest(apiClient, appealId, lpaId) {
+	const ids = assertValidNumericIds({ appealId });
 	return apiClient
-		.post(`appeals/${appealId}/lpa`, {
+		.post(`appeals/${ids.appealId}/lpa`, {
 			json: { newLpaId: lpaId }
 		})
 		.json();

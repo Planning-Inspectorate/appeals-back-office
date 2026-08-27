@@ -1,5 +1,5 @@
-import { getFoldersForAppeal } from '#endpoints/documents/documents.service.js';
-import { APPEAL_CASE_STAGE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { getCostDocumentCounts } from '#endpoints/documents/documents.service.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
@@ -11,10 +11,10 @@ import { APPEAL_CASE_STAGE, APPEAL_CASE_STATUS } from '@planning-inspectorate/da
  * @returns {Promise<CostsDecision>}
  * */
 export const formatCostsDecision = async (appeal) => {
-	const costsFolders = await getFoldersForAppeal(appeal.id, APPEAL_CASE_STAGE.COSTS);
-	const costsDecision = costsFolders.reduce((costsDecision, folder) => {
+	const costsFolderCounts = await getCostDocumentCounts(appeal.id);
+	const costsDecision = costsFolderCounts.reduce((costsDecision, folder) => {
 		const costsType = folder.path.replace('costs/', '');
-		const documentCount = folder.documents?.filter((doc) => !doc.isDeleted).length;
+		const documentCount = folder._count.documents;
 		return { ...costsDecision, [costsType]: documentCount };
 	}, {});
 	const appealIsCompleteOrWithdrawn =

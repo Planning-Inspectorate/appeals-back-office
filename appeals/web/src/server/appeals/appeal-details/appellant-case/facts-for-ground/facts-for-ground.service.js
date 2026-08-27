@@ -1,3 +1,8 @@
+import {
+	assertValidGroundRef,
+	assertValidNumericIds
+} from '#lib/validators/api-parameters.validator.js';
+
 /**
  *
  * @param {import('got').Got} apiClient
@@ -14,7 +19,9 @@ export function changeFactsForGround(
 	groundRef,
 	factsForGround
 ) {
-	return apiClient.patch(`appeals/${appealId}/grounds-for-appeal/${groundRef}`, {
+	const ids = assertValidNumericIds({ appealId });
+	const refs = assertValidGroundRef({ groundRef });
+	return apiClient.patch(`appeals/${ids.appealId}/grounds-for-appeal/${refs.groundRef}`, {
 		json: {
 			factsForGround
 		}

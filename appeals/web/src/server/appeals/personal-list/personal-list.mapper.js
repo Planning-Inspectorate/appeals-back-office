@@ -27,6 +27,7 @@ import * as authSession from '../../app/auth/auth-session.service.js';
 
 /** @typedef {import('@pins/appeals').PersonalList} PersonalList */
 /** @typedef {import('@pins/appeals').PersonalListItem} PersonalListItem */
+/** @typedef {import('@pins/appeals').DocumentationSummary} DocumentationSummary */
 /** @typedef {import('../../app/auth/auth.service').AccountInfo} AccountInfo */
 
 /**
@@ -304,7 +305,7 @@ export function personalListPage(
  * @param {number|null|undefined} lpaQuestionnaireId
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {string} procedureType
- * @param {import('#appeals/appeal-details/appeal-details.types.js').WebDocumentationSummary} documentationSummary
+ * @param {DocumentationSummary} documentationSummary
  * @param {boolean} isHearingSetup
  * @returns {string|undefined}
  */
@@ -478,7 +479,7 @@ function mapRequiredActionToPersonalListActionHtml(
 			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 				request,
 				`/appeals-service/appeal-details/${appealId}/share`
-			)}">Share IP comments and statements<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+			)}">Share comments and statements<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'shareIpComments': {
 			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(

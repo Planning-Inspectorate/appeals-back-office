@@ -1,5 +1,9 @@
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { PROCEDURE_TYPE_NAME } from '../constants/common.js';
+import {
+	beforeExpeditedOriginalApplicationCutOff,
+	isExpeditedAppealType
+} from './appeal-type-checks.js';
 
 /**
  * Normalises a procedure type value to the canonical data-model key.
@@ -33,4 +37,29 @@ export const normaliseProcedureType = (procedureType) => {
 	}
 
 	return procedureType;
+};
+
+/**
+ * Determines the effective procedure type for an appeal, defaulting HAS/CAS appeals
+ * submitted after the cutoff date to Written Part 1 if no explicit procedureType is provided.
+ * @param {{ appealType?: { key?: string } | null, procedureType?: { key?: string } | null, appellantCase?: { applicationDate?: string | Date | null } | null }} appeal
+ * @param {string | undefined} [procedureType]
+ * @returns {string|undefined}
+ */
+export const getEffectiveProcedureType = (appeal, procedureType) => {
+	if (procedureType) {
+		return procedureType;
+	}
+
+	const rawAppDate = appeal.appellantCase?.applicationDate;
+	const applicationDateStr = rawAppDate instanceof Date ? rawAppDate.toISOString() : rawAppDate;
+
+	const isHasOrCasPart1 =
+		isExpeditedAppealType(appeal.appealType?.key ?? null) &&
+		Boolean(applicationDateStr) &&
+		!beforeExpeditedOriginalApplicationCutOff(applicationDateStr);
+
+	return isHasOrCasPart1
+		? APPEAL_CASE_PROCEDURE.WRITTEN_PART_1
+		: appeal.procedureType?.key || undefined;
 };

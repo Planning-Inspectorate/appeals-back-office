@@ -1,4 +1,8 @@
 import logger from '#lib/logger.js';
+import {
+	assertValidNumericIds,
+	assertValidProofOfEvidenceType
+} from '#lib/validators/api-parameters.validator.js';
 
 export const DOCUMENT_STAGE = 'representation';
 export const DOCUMENT_TYPE = 'representationAttachments';
@@ -9,8 +13,9 @@ export const DOCUMENT_TYPE = 'representationAttachments';
  * @returns {Promise<import('@pins/appeals.api').Appeals.FolderInfo>}
  * */
 export const getAttachmentsFolder = async (apiClient, appealId) => {
+	const ids = assertValidNumericIds({ appealId });
 	const folders = await apiClient
-		.get(`appeals/${appealId}/document-folders?path=${DOCUMENT_STAGE}/${DOCUMENT_TYPE}`)
+		.get(`appeals/${ids.appealId}/document-folders?path=${DOCUMENT_STAGE}/${DOCUMENT_TYPE}`)
 		.json();
 	if (!(folders && folders.length > 0)) {
 		throw new Error(`failed to find folder for appeal ID ${appealId}`);
@@ -27,8 +32,9 @@ export const getAttachmentsFolder = async (apiClient, appealId) => {
  * @returns {Promise<import('@pins/appeals.api').Appeals.FolderInfo>}
  * */
 export const patchRepresentationAttachments = async (apiClient, appealId, repId, documentGUIDs) => {
+	const ids = assertValidNumericIds({ appealId, repId });
 	return apiClient
-		.patch(`appeals/${appealId}/reps/${repId}/attachments`, {
+		.patch(`appeals/${ids.appealId}/reps/${repId}/attachments`, {
 			json: {
 				attachments: documentGUIDs
 			}
@@ -50,8 +56,10 @@ export const postRepresentationProofOfEvidence = async (
 	proofOfEvidenceType
 ) => {
 	try {
+		const ids = assertValidNumericIds({ appealId });
+		const types = assertValidProofOfEvidenceType({ proofOfEvidenceType });
 		const response = await apiClient.post(
-			`appeals/${appealId}/reps/${proofOfEvidenceType}/proof-of-evidence`,
+			`appeals/${ids.appealId}/reps/${types.proofOfEvidenceType}/proof-of-evidence`,
 			{
 				json: {
 					attachments: documentGUIDs

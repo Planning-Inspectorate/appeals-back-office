@@ -95,6 +95,7 @@ describe('manage docs on appellant case', () => {
 			caseDetailsPage.checkFileNameDisplays(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
+			cy.wait(3000); //wait to stop flaky test
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.checkAdditonalDocsAppellantCase(sampleFiles.document);
 			caseDetailsPage.clickManageAdditionalDocs();
@@ -121,6 +122,7 @@ describe('manage docs on appellant case', () => {
 			caseDetailsPage.checkFileNameDisplays(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
+			cy.wait(3000); //wait to stop flaky test
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.checkAdditonalDocsAppellantCase(sampleFiles.document);
 			caseDetailsPage.clickManageAdditionalDocs();

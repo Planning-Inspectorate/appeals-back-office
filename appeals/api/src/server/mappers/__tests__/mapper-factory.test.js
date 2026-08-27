@@ -533,4 +533,76 @@ describe('appeals integration mappers', () => {
 			'anySignificantChangesLpa_courtJudgementSignificantChanges'
 		);
 	});
+
+	test('should map expedited fields in broadcast context for CAS Advert (ZA) post 1 April 2026', async () => {
+		const appealPostCutoff = {
+			...mocks.casAdvertExpediteAppeal,
+			appealType: { key: APPEAL_CASE_TYPE.ZA, type: 'CAS advert' },
+			appellantCase: { applicationDate: new Date('2026-04-02') },
+			lpaQuestionnaire: {
+				listOfDocumentsBeforeDecision: 'doc1, doc2',
+				anySignificantChangesLpa: 'Yes',
+				anySignificantChangesLpa_localPlanSignificantChanges: 'plan change'
+			},
+			folders: []
+		};
+
+		const broadcastOutput = mapCase({
+			// @ts-ignore
+			appeal: appealPostCutoff,
+			context: contextEnum.broadcast
+		});
+
+		expect(broadcastOutput).toHaveProperty('listOfDocumentsBeforeDecision', 'doc1, doc2');
+		expect(broadcastOutput).toHaveProperty('significantChangesAffectingApplicationLpa', [
+			{ value: 'adopted-a-new-local-plan', comment: 'plan change' }
+		]);
+	});
+
+	test('should not map expedited fields in broadcast context for CAS Advert (ZA) pre 1 April 2026', async () => {
+		const appealPreCutoff = {
+			...mocks.casAdvertExpediteAppeal,
+			appealType: { key: APPEAL_CASE_TYPE.ZA, type: 'CAS advert' },
+			appellantCase: { applicationDate: new Date('2026-03-30') },
+			lpaQuestionnaire: {
+				listOfDocumentsBeforeDecision: 'doc1, doc2',
+				anySignificantChangesLpa: 'Yes',
+				anySignificantChangesLpa_localPlanSignificantChanges: 'plan change'
+			},
+			folders: []
+		};
+
+		const broadcastOutput = mapCase({
+			// @ts-ignore
+			appeal: appealPreCutoff,
+			context: contextEnum.broadcast
+		});
+
+		expect(broadcastOutput).not.toHaveProperty('listOfDocumentsBeforeDecision');
+		expect(broadcastOutput).not.toHaveProperty('significantChangesAffectingApplicationLpa');
+	});
+
+	test('should map significantChangesAffectingApplicationLpa in broadcast context for CAS Planning (ZP)', async () => {
+		const casPlanningAppeal = {
+			...mocks.casPlanningAppeal,
+			appealType: { key: APPEAL_CASE_TYPE.ZP, type: 'CAS planning' },
+			lpaQuestionnaire: {
+				listOfDocumentsBeforeDecision: 'doc1, doc2',
+				anySignificantChangesLpa: 'Yes',
+				anySignificantChangesLpa_localPlanSignificantChanges: 'plan change'
+			},
+			folders: []
+		};
+
+		const broadcastOutput = mapCase({
+			// @ts-ignore
+			appeal: casPlanningAppeal,
+			context: contextEnum.broadcast
+		});
+
+		expect(broadcastOutput).toHaveProperty('listOfDocumentsBeforeDecision', 'doc1, doc2');
+		expect(broadcastOutput).toHaveProperty('significantChangesAffectingApplicationLpa', [
+			{ value: 'adopted-a-new-local-plan', comment: 'plan change' }
+		]);
+	});
 });

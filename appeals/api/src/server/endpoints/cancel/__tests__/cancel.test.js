@@ -11,10 +11,12 @@ const { databaseConnector } = await import('#utils/database-connector.js');
 describe('cancel routes', () => {
 	beforeEach(() => {
 		databaseConnector.appeal.findUnique.mockResolvedValue(enforcementNoticeAppeal);
-		databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue({
-			id: 1,
-			name: 'Invalid'
-		});
+		databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue([
+			{
+				id: 1,
+				name: 'Invalid'
+			}
+		]);
 	});
 
 	afterEach(() => {

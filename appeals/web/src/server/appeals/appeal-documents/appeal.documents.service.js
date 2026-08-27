@@ -1,5 +1,6 @@
 import logger from '#lib/logger.js';
 import { fileType } from '#lib/nunjucks-filters/mime-type.js';
+import { assertValidIds, assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.FolderInfo} FolderInfo */
 /** @typedef {import('@pins/appeals.api').Appeals.DocumentInfo} DocumentInfo */
@@ -12,7 +13,8 @@ import { fileType } from '#lib/nunjucks-filters/mime-type.js';
  */
 export const getAllCaseFolders = async (apiClient, appealId) => {
 	try {
-		const bulkLocationInfo = await apiClient.get(`appeals/${appealId}/document-folders`).json();
+		const ids = assertValidNumericIds({ appealId });
+		const bulkLocationInfo = await apiClient.get(`appeals/${ids.appealId}/document-folders`).json();
 		return bulkLocationInfo;
 	} catch {
 		return undefined;
@@ -30,12 +32,13 @@ export const getAllCaseFolders = async (apiClient, appealId) => {
  */
 export const getFolder = async (apiClient, appealId, folderId, pageNumber, pageSize, repId) => {
 	try {
+		const ids = assertValidNumericIds({ appealId, folderId });
 		const urlParams = new URLSearchParams();
 		urlParams.append('pageNumber', pageNumber.toString());
 		urlParams.append('pageSize', pageSize.toString());
 		if (repId) urlParams.append('repId', repId.toString());
 
-		const url = `appeals/${appealId}/document-folders/${folderId}?${urlParams.toString()}`;
+		const url = `appeals/${ids.appealId}/document-folders/${ids.folderId}?${urlParams.toString()}`;
 
 		const locationInfo = await apiClient.get(url).json();
 		return locationInfo;
@@ -51,8 +54,9 @@ export const getFolder = async (apiClient, appealId, folderId, pageNumber, pageS
  * @returns {Promise<FolderInfo|undefined>}
  * */
 export const getAttachmentsFolder = async (apiClient, appealId, folderPath) => {
+	const ids = assertValidNumericIds({ appealId });
 	const folders = await apiClient
-		.get(`appeals/${appealId}/document-folders?path=${folderPath}`)
+		.get(`appeals/${ids.appealId}/document-folders?path=${folderPath}`)
 		.json();
 	if (!(folders && folders.length > 0)) {
 		throw new Error(`failed to find folder for appeal ID ${appealId}`);
@@ -68,7 +72,8 @@ export const getAttachmentsFolder = async (apiClient, appealId, folderPath) => {
  */
 export const getFileInfo = async (apiClient, fileGuid) => {
 	try {
-		return await apiClient.get(`appeals/documents/${fileGuid}`).json();
+		const ids = assertValidIds({ fileGuid });
+		return await apiClient.get(`appeals/documents/${ids.fileGuid}`).json();
 	} catch {
 		return undefined;
 	}
@@ -81,7 +86,8 @@ export const getFileInfo = async (apiClient, fileGuid) => {
  */
 export const getFileVersionsInfo = async (apiClient, fileGuid) => {
 	try {
-		return await apiClient.get(`appeals/documents/${fileGuid}/versions`).json();
+		const ids = assertValidIds({ fileGuid });
+		return await apiClient.get(`appeals/documents/${ids.fileGuid}/versions`).json();
 	} catch {
 		return undefined;
 	}
@@ -146,8 +152,10 @@ export const getDocumentRedactionStatuses = async (apiClient) => {
 
 export const updateDocument = async (apiClient, appealId, documentDetail) => {
 	try {
+		const ids = assertValidNumericIds({ appealId });
+		const docIds = assertValidIds({ id: documentDetail.document.id });
 		return await apiClient
-			.patch(`appeals/${appealId}/documents/${documentDetail.document.id}`, {
+			.patch(`appeals/${ids.appealId}/documents/${docIds.id}`, {
 				json: {
 					document: documentDetail.document,
 					sharingDocumentType: documentDetail.sharingDocumentType,
@@ -190,8 +198,9 @@ export const updateDocument = async (apiClient, appealId, documentDetail) => {
  */
 export const updateDocuments = async (apiClient, appealId, documentDetails) => {
 	try {
+		const ids = assertValidNumericIds({ appealId });
 		return await apiClient
-			.patch(`appeals/${appealId}/documents`, {
+			.patch(`appeals/${ids.appealId}/documents`, {
 				json: documentDetails
 			})
 			.json();
@@ -214,8 +223,9 @@ export const updateDocuments = async (apiClient, appealId, documentDetails) => {
  */
 export const deleteDocument = async (apiClient, documentId, versionId, appellantCaseId) => {
 	try {
+		const ids = assertValidIds({ documentId, versionId });
 		return await apiClient
-			.delete(`appeals/documents/${documentId}/${versionId}`, {
+			.delete(`appeals/documents/${ids.documentId}/${ids.versionId}`, {
 				json: { appellantCaseId }
 			})
 			.json();
@@ -232,11 +242,21 @@ export const deleteDocument = async (apiClient, documentId, versionId, appellant
 /**
  * @param {import('got').Got} apiClient
  * @param {string} appealId
+ * @param {number} [pageSize]
+ * @param {number} [pageNumber]
  * @returns {Promise<*>}
  */
-export const getRepresentationAttachments = async (apiClient, appealId) => {
+export const getRepresentationAttachments = async (apiClient, appealId, pageSize, pageNumber) => {
 	try {
-		return await apiClient.get(`appeals/${appealId}/reps`).json();
+		const ids = assertValidNumericIds({ appealId });
+		const params = new URLSearchParams();
+		if (pageSize) params.append('pageSize', String(pageSize));
+		if (pageNumber) params.append('pageNumber', String(pageNumber));
+		const queryString = params.toString();
+		const url = queryString
+			? `appeals/${ids.appealId}/reps?${queryString}`
+			: `appeals/${ids.appealId}/reps`;
+		return await apiClient.get(url).json();
 	} catch (error) {
 		logger.error(
 			error,
@@ -245,4 +265,47 @@ export const getRepresentationAttachments = async (apiClient, appealId) => {
 				: `An error occurred while attempting to retrieve the representation attachments for appeal ID ${appealId}`
 		);
 	}
+};
+
+/**
+ * Retrieves all representation attachments across all pages using batched concurrency limits.
+ *
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @param {number} [pageSize=100]
+ * @param {number} [concurrencyLimit=5]
+ * @returns {Promise<Array<*>>}
+ */
+export const getAllRepresentationAttachments = async (
+	apiClient,
+	appealId,
+	pageSize = 100,
+	concurrencyLimit = 5
+) => {
+	const firstPage = await getRepresentationAttachments(apiClient, appealId, pageSize, 1);
+	const allReps = [...(firstPage?.items || [])];
+	const pageCount = firstPage?.pageCount || 1;
+
+	if (pageCount > 1) {
+		const remainingPageNumbers = [];
+		for (let page = 2; page <= pageCount; page++) {
+			remainingPageNumbers.push(page);
+		}
+
+		for (let i = 0; i < remainingPageNumbers.length; i += concurrencyLimit) {
+			const batchPageNumbers = remainingPageNumbers.slice(i, i + concurrencyLimit);
+			const batchResults = await Promise.all(
+				batchPageNumbers.map((pageNum) =>
+					getRepresentationAttachments(apiClient, appealId, pageSize, pageNum)
+				)
+			);
+			batchResults.forEach((pageData) => {
+				if (pageData?.items) {
+					allReps.push(...pageData.items);
+				}
+			});
+		}
+	}
+
+	return allReps;
 };

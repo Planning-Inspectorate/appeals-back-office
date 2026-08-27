@@ -207,9 +207,14 @@ export async function appellantCasePage(
 
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
+	const validAppealTypeComponents = appealTypeSpecificComponents.filter(
+		/** @type {(c: PageComponent|null) => c is PageComponent} */
+		(c) => Boolean(c)
+	);
+
 	// Add section numbers to the start of each card title other than before you start and additional documents
-	appealTypeSpecificComponents.forEach((component, index) => {
-		const { title } = component?.parameters?.card || {};
+	validAppealTypeComponents.forEach((component, index) => {
+		const { title } = component.parameters?.card || {};
 		switch (component.parameters.attributes.id) {
 			case 'before-you-start':
 				break;
@@ -232,7 +237,8 @@ export async function appellantCasePage(
 			...errorSummaryPageComponents,
 			...notificationBanners,
 			appellantCaseSummary,
-			...appealTypeSpecificComponents,
+			...validAppealTypeComponents,
+
 			...reviewOutcomeComponents
 		]
 	};
@@ -849,7 +855,7 @@ const isExpeditedAppealsActive = isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_AP
  * @param {SingleAppellantCaseResponse} appellantCaseData
  * @param {MappedInstructions} mappedAppellantCaseData
  * @param {boolean} userHasUpdateCasePermission
- * @returns {PageComponent[]}
+ * @returns {(PageComponent|null)[]}
  */
 function generateCaseTypeSpecificComponents(
 	appealDetails,
@@ -901,26 +907,11 @@ function generateCaseTypeSpecificComponents(
 				userHasUpdateCasePermission
 			);
 		case APPEAL_TYPE.CAS_PLANNING:
-			return generateCASComponents(
-				appealDetails,
-				appellantCaseData,
-				mappedAppellantCaseData,
-				userHasUpdateCasePermission
-			);
+			return generateCASComponents(appealDetails, appellantCaseData, mappedAppellantCaseData);
 		case APPEAL_TYPE.CAS_ADVERTISEMENT:
-			return generateCASAdvertComponents(
-				appealDetails,
-				appellantCaseData,
-				mappedAppellantCaseData,
-				userHasUpdateCasePermission
-			);
+			return generateCASAdvertComponents(appealDetails, appellantCaseData, mappedAppellantCaseData);
 		case APPEAL_TYPE.ADVERTISEMENT:
-			return generateAdvertComponents(
-				appealDetails,
-				appellantCaseData,
-				mappedAppellantCaseData,
-				userHasUpdateCasePermission
-			);
+			return generateAdvertComponents(appealDetails, appellantCaseData, mappedAppellantCaseData);
 		case APPEAL_TYPE.ENFORCEMENT_NOTICE:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE)) {
 				return generateEnforcementNoticeComponents(

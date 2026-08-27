@@ -15,6 +15,13 @@ import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
  * @returns {AppealEvent}
  */
 export const mapSiteVisitEntity = (siteVisit, updateType) => {
+	const noDateTimeSiteVisit =
+		siteVisit && siteVisit.visitStartTime === null && siteVisit.visitDate === null;
+	const isWrittenRepresentation = ['written', 'writtenPart1', 'writtenPart2'].includes(
+		siteVisit?.appeal?.procedureType?.key ?? ''
+	);
+	const noDateTimeSiteVisitAndWrittenRep = noDateTimeSiteVisit && isWrittenRepresentation;
+
 	return {
 		eventId: `${siteVisit.appeal?.reference}-1`,
 		caseReference: siteVisit.appeal?.reference ?? '',
@@ -23,10 +30,15 @@ export const mapSiteVisitEntity = (siteVisit, updateType) => {
 				siteVisit.siteVisitType.key
 			),
 		eventName: `Site visit #${siteVisit.id}`,
-		eventStatus: updateType === EventType.Delete ? 'withdrawn' : 'offered',
+		eventStatus:
+			updateType === EventType.Delete
+				? 'withdrawn'
+				: noDateTimeSiteVisitAndWrittenRep
+					? 'pending'
+					: 'offered',
 		isUrgent: false,
 		eventPublished: true,
-		eventStartDateTime: (siteVisit.visitStartTime ?? siteVisit.visitDate)?.toISOString() ?? '',
+		eventStartDateTime: (siteVisit.visitStartTime ?? siteVisit.visitDate)?.toISOString() ?? null,
 		eventEndDateTime: siteVisit.visitEndTime?.toISOString() || null,
 		notificationOfSiteVisit: null,
 		...mapEventAddress(siteVisit.appeal.address)

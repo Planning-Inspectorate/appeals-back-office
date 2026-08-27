@@ -1,9 +1,14 @@
+import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import {
 	APPEAL_CASE_PROCEDURE,
 	APPEAL_CASE_STATUS,
 	APPEAL_CASE_TYPE
 } from '@planning-inspectorate/data-model';
-import { isLdcOrDiscontinuanceOrEnforcementAppealType } from './appeal-type-checks.js';
+import { PROCEDURE_TYPE_NAME } from '../constants/common.js';
+import {
+	isLdcOrDiscontinuanceOrEnforcementAppealType,
+	isLdcOrEnforcementAppealType
+} from './appeal-type-checks.js';
 import { normaliseProcedureType } from './procedure-type.js';
 
 /**
@@ -21,7 +26,25 @@ import { normaliseProcedureType } from './procedure-type.js';
 export const displayFinalComments = (appealType, procedureType) =>
 	isLdcOrDiscontinuanceOrEnforcementAppealType(appealType) ||
 	(procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.HEARING &&
-		procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.INQUIRY);
+		procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.INQUIRY &&
+		procedureType !== APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 &&
+		procedureType !== PROCEDURE_TYPE_NAME.WRITTEN_PART_1);
+
+// display planning obligation when it 'hasObligation' for any procedure type for enforcement appeal types
+// and only hearing and inquiry otherwise
+/**
+ * @param {string | undefined} appealType
+ * @param {string | undefined} procedureType
+ * @param {boolean | undefined} hasObligation
+ * @returns {boolean}
+ */
+export const displayPlanningObligation = (appealType, procedureType, hasObligation) =>
+	(isAnyEnforcementAppealType(appealType) ||
+		[APPEAL_CASE_PROCEDURE.HEARING, APPEAL_CASE_PROCEDURE.INQUIRY].includes(
+			// @ts-ignore
+			procedureType?.toLowerCase() ?? ''
+		)) &&
+	hasObligation;
 
 /**
  * Determines the next state after the LPAQ is complete based on the appeal type and procedure type.
@@ -95,4 +118,14 @@ export const targetStateOnEventCancelled = {
 	[APPEAL_CASE_PROCEDURE.WRITTEN]: APPEAL_CASE_STATUS.FINAL_COMMENTS,
 	[APPEAL_CASE_PROCEDURE.WRITTEN_PART_1]: APPEAL_CASE_STATUS.EVENT,
 	[APPEAL_CASE_PROCEDURE.WRITTEN_PART_2]: APPEAL_CASE_STATUS.EVENT
+};
+
+/**
+ * Uses appeal type to determine whether we should be sending notifies for unaccompanied site visits
+ * We don't send them for enforcement, ELB or LDC
+ * @param {string} appealType
+ * @returns {boolean}
+ */
+export const sendSiteVisitScheduleUnaccompaniedNotify = (appealType) => {
+	return !isLdcOrEnforcementAppealType(appealType);
 };

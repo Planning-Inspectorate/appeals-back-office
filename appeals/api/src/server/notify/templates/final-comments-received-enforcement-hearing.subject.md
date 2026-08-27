@@ -1,0 +1,1 @@
+We have received the {{submitting_party}}'s final comments: {{appeal_reference_number}}

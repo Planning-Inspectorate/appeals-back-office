@@ -1,4 +1,5 @@
 import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
+import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 
 /**
@@ -6,7 +7,8 @@ import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js
  * @param {number} appealId
  */
 export async function getInvalidStatusCreatedDate(apiClient, appealId) {
-	return apiClient.get(`appeals/${appealId}/appeal-status/invalid/created-date`).json();
+	const ids = assertValidNumericIds({ appealId });
+	return apiClient.get(`appeals/${ids.appealId}/appeal-status/invalid/created-date`).json();
 }
 
 const mapIncompleteReviewOutcomeApiResponse = (/** @type {any} */ reviewOutcome) => {
@@ -109,8 +111,9 @@ export async function setReviewOutcomeForEnforcementNoticeAppellantCase(
 	appellantCaseId,
 	reviewOutcome
 ) {
+	const ids = assertValidNumericIds({ appealId, appellantCaseId });
 	return apiClient
-		.patch(`appeals/${appealId}/appellant-cases/${appellantCaseId}`, {
+		.patch(`appeals/${ids.appealId}/appellant-cases/${ids.appellantCaseId}`, {
 			json: {
 				validationOutcome: reviewOutcome.validationOutcome,
 				enforcementNoticeInvalid: reviewOutcome.enforcementNoticeInvalid,

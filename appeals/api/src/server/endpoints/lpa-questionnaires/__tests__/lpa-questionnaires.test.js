@@ -195,8 +195,8 @@ describe('lpa questionnaires routes', () => {
 						]
 					});
 				// @ts-ignore
-				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
-					lpaQuestionnaireValidationOutcomes[0]
+				databaseConnector.lPAQuestionnaireValidationOutcome.findMany.mockResolvedValue(
+					lpaQuestionnaireValidationOutcomes
 				);
 				// @ts-ignore
 				databaseConnector.lPAQuestionnaireIncompleteReason.findMany.mockResolvedValue(
@@ -417,7 +417,7 @@ describe('lpa questionnaires routes', () => {
 							lpa_reference: fullPlanningS78ExpeditedAppeal.applicationReference,
 							appeal_reference_number: fullPlanningS78ExpeditedAppeal.reference,
 							site_address: `${fullPlanningS78ExpeditedAppeal.address.addressLine1}, ${fullPlanningS78ExpeditedAppeal.address.addressLine2}, ${fullPlanningS78ExpeditedAppeal.address.addressTown}, ${fullPlanningS78ExpeditedAppeal.address.addressCounty}, ${fullPlanningS78ExpeditedAppeal.address.postcode}, ${fullPlanningS78ExpeditedAppeal.address.addressCountry}`,
-							due_date: expect.any(String),
+							due_date: expect.stringMatching(/^\d{1,2} [A-Z][a-z]+ \d{4}$/),
 							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						}
 					}
@@ -500,8 +500,8 @@ describe('lpa questionnaires routes', () => {
 						{ child: { id: 99 }, parent: { id: 35 } }
 					]);
 					// @ts-ignore
-					databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
-						lpaQuestionnaireValidationOutcomes[0]
+					databaseConnector.lPAQuestionnaireValidationOutcome.findMany.mockResolvedValue(
+						lpaQuestionnaireValidationOutcomes
 					);
 					// @ts-ignore
 					databaseConnector.documentVersion.findMany.mockResolvedValue([]);
@@ -566,8 +566,8 @@ describe('lpa questionnaires routes', () => {
 					]
 				});
 				// @ts-ignore
-				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
-					lpaQuestionnaireValidationOutcomes[0]
+				databaseConnector.lPAQuestionnaireValidationOutcome.findMany.mockResolvedValue(
+					lpaQuestionnaireValidationOutcomes
 				);
 				// @ts-ignore
 				databaseConnector.lPAQuestionnaireIncompleteReason.findMany.mockResolvedValue(
@@ -646,8 +646,8 @@ describe('lpa questionnaires routes', () => {
 					]
 				});
 				// @ts-ignore
-				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
-					lpaQuestionnaireValidationOutcomes[0]
+				databaseConnector.lPAQuestionnaireValidationOutcome.findMany.mockResolvedValue(
+					lpaQuestionnaireValidationOutcomes
 				);
 				// @ts-ignore
 				databaseConnector.lPAQuestionnaireIncompleteReason.findMany.mockResolvedValue(
@@ -698,8 +698,8 @@ describe('lpa questionnaires routes', () => {
 					]
 				});
 				// @ts-ignore
-				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
-					lpaQuestionnaireValidationOutcomes[0]
+				databaseConnector.lPAQuestionnaireValidationOutcome.findMany.mockResolvedValue(
+					lpaQuestionnaireValidationOutcomes
 				);
 				// @ts-ignore
 				databaseConnector.lPAQuestionnaireIncompleteReason.findMany.mockResolvedValue(
@@ -763,8 +763,8 @@ describe('lpa questionnaires routes', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
-				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
-					lpaQuestionnaireValidationOutcomes[1]
+				databaseConnector.lPAQuestionnaireValidationOutcome.findMany.mockResolvedValue(
+					lpaQuestionnaireValidationOutcomes
 				);
 				// @ts-ignore
 				databaseConnector.lPAQuestionnaireIncompleteReason.findMany.mockResolvedValue(
@@ -822,8 +822,8 @@ describe('lpa questionnaires routes', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
-				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
-					lpaQuestionnaireValidationOutcomes[1]
+				databaseConnector.lPAQuestionnaireValidationOutcome.findMany.mockResolvedValue(
+					lpaQuestionnaireValidationOutcomes
 				);
 				// @ts-ignore
 				databaseConnector.lPAQuestionnaireIncompleteReason.findMany.mockResolvedValue(
@@ -876,8 +876,8 @@ describe('lpa questionnaires routes', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
-				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
-					lpaQuestionnaireValidationOutcomes[1]
+				databaseConnector.lPAQuestionnaireValidationOutcome.findMany.mockResolvedValue(
+					lpaQuestionnaireValidationOutcomes
 				);
 				// @ts-ignore
 				databaseConnector.lPAQuestionnaireIncompleteReason.findMany.mockResolvedValue(
@@ -930,8 +930,8 @@ describe('lpa questionnaires routes', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
-				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
-					lpaQuestionnaireValidationOutcomes[1]
+				databaseConnector.lPAQuestionnaireValidationOutcome.findMany.mockResolvedValue(
+					lpaQuestionnaireValidationOutcomes
 				);
 				// @ts-ignore
 				databaseConnector.lPAQuestionnaireIncompleteReason.findMany.mockResolvedValue(
@@ -984,8 +984,8 @@ describe('lpa questionnaires routes', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
-				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
-					lpaQuestionnaireValidationOutcomes[1]
+				databaseConnector.lPAQuestionnaireValidationOutcome.findMany.mockResolvedValue(
+					lpaQuestionnaireValidationOutcomes
 				);
 				// @ts-ignore
 				databaseConnector.lPAQuestionnaireIncompleteReason.findMany.mockResolvedValue(
@@ -1038,8 +1038,8 @@ describe('lpa questionnaires routes', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
-				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
-					lpaQuestionnaireValidationOutcomes[1]
+				databaseConnector.lPAQuestionnaireValidationOutcome.findMany.mockResolvedValue(
+					lpaQuestionnaireValidationOutcomes
 				);
 				// @ts-ignore
 				databaseConnector.lPAQuestionnaireIncompleteReason.findMany.mockResolvedValue(
@@ -1130,8 +1130,8 @@ describe('lpa questionnaires routes', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
-				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
-					lpaQuestionnaireValidationOutcomes[1]
+				databaseConnector.lPAQuestionnaireValidationOutcome.findMany.mockResolvedValue(
+					lpaQuestionnaireValidationOutcomes
 				);
 				// @ts-ignore
 				databaseConnector.lPAQuestionnaireIncompleteReason.findMany.mockResolvedValue(
@@ -1222,8 +1222,8 @@ describe('lpa questionnaires routes', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
-				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
-					lpaQuestionnaireValidationOutcomes[1]
+				databaseConnector.lPAQuestionnaireValidationOutcome.findMany.mockResolvedValue(
+					lpaQuestionnaireValidationOutcomes
 				);
 				// @ts-ignore
 				databaseConnector.lPAQuestionnaireIncompleteReason.findMany.mockResolvedValue(
@@ -1338,8 +1338,8 @@ describe('lpa questionnaires routes', () => {
 					// @ts-ignore
 					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
 					// @ts-ignore
-					databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
-						lpaQuestionnaireValidationOutcomes[1]
+					databaseConnector.lPAQuestionnaireValidationOutcome.findMany.mockResolvedValue(
+						lpaQuestionnaireValidationOutcomes
 					);
 					// @ts-ignore
 					databaseConnector.lPAQuestionnaireIncompleteReason.findMany.mockResolvedValue(
@@ -1654,7 +1654,7 @@ describe('lpa questionnaires routes', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
-				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(undefined);
+				databaseConnector.lPAQuestionnaireValidationOutcome.findMany.mockResolvedValue([]);
 
 				const { id, lpaQuestionnaire } = householdAppeal;
 				const response = await request
@@ -1676,8 +1676,8 @@ describe('lpa questionnaires routes', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
-				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
-					lpaQuestionnaireValidationOutcomes[0]
+				databaseConnector.lPAQuestionnaireValidationOutcome.findMany.mockResolvedValue(
+					lpaQuestionnaireValidationOutcomes
 				);
 				// @ts-ignore
 				databaseConnector.lPAQuestionnaireIncompleteReason.findMany.mockResolvedValue(
@@ -2119,8 +2119,8 @@ describe('lpa questionnaires routes', () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				// @ts-ignore
-				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
-					lpaQuestionnaireValidationOutcomes[0]
+				databaseConnector.lPAQuestionnaireValidationOutcome.findMany.mockResolvedValue(
+					lpaQuestionnaireValidationOutcomes
 				);
 				// @ts-ignore
 				databaseConnector.lPAQuestionnaireIncompleteReason.findMany.mockResolvedValue(

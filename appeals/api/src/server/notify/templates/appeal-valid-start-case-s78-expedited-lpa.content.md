@@ -1,6 +1,10 @@
 You have a new {{appeal_type | lower}} appeal against the application {{lpa_reference}}.
 
-We will decide the appeal by {{procedure_type}}. You can tell us if you think a different procedure is more appropriate in the questionnaire.
+We will decide the appeal by {{procedure_type}}.
+
+There will be no local planning authority statement, interested party comments or final comments.
+
+You can tell us if you think a different procedure is more appropriate in the questionnaire.
 
 {% include 'parts/appeal-details.md' %}
 Start date: {{start_date}}
@@ -24,16 +28,11 @@ The timetable is the same for the following child appeals:
 
 Due by {{questionnaire_due_date}}.
 
-{% if planning_obligation_deadline -%}
-## Planning obligation
-
-Due by {{planning_obligation_deadline}}.
-
-{% endif -%}
-
 # What happens next
 
-[Submit your questionnaire and other documents]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}), including your appeal notification letter and a list of those notified by {{questionnaire_due_date}}.
+[Submit your questionnaire]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}), including the appropriate appeal notification letter by {{questionnaire_due_date}}.
+
+You do not need to ask interested parties for comments when you notify them.
 
 The Planning Inspectorate
 {{team_email_address}}

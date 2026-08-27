@@ -1,9 +1,9 @@
 import { generateAllPdfs } from '#app/components/download-all-generated-pdfs.component.js';
 import {
 	getAllCaseFolders,
+	getAllRepresentationAttachments,
 	getFileInfo,
-	getFileVersionsInfo,
-	getRepresentationAttachments
+	getFileVersionsInfo
 } from '#appeals/appeal-documents/appeal.documents.service.js';
 import getActiveDirectoryAccessToken from '#lib/active-directory-token.js';
 import logger from '#lib/logger.js';
@@ -49,8 +49,10 @@ const createBlobStorageClient = async (session) => {
 	if (config.useBlobEmulator === true) {
 		return new BlobStorageClient(new BlobServiceClient(config.blobEmulatorSasUrl));
 	} else {
-		const accessToken = await getActiveDirectoryAccessToken(session);
-		return BlobStorageClient.fromUrlAndToken(config.blobStorageUrl, accessToken);
+		// re-acquire per request so long downloads survive the initial token expiring
+		/** @type {import("@azure/storage-blob").StorageSharedKeyCredential | import("@azure/storage-blob").AnonymousCredential | import("@azure/core-auth").TokenCredential} */
+		const credential = { getToken: () => getActiveDirectoryAccessToken(session) };
+		return BlobStorageClient.fromUrlAndCredential(config.blobStorageUrl, credential);
 	}
 };
 
@@ -229,30 +231,49 @@ const createBlobDownloadStream = async (
 	blobStoragePath
 ) => {
 	const documentKey = blobStoragePath.startsWith('/') ? blobStoragePath.slice(1) : blobStoragePath;
+	const maxAttempts = 3;
 
-	let blobProperties;
-	try {
-		blobProperties = await blobStorageClient.getBlobProperties(blobStorageContainer, documentKey);
+	for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+		try {
+			const blobProperties = await blobStorageClient.getBlobProperties(
+				blobStorageContainer,
+				documentKey
+			);
 
-		if (!blobProperties) {
-			return null;
+			if (!blobProperties) {
+				logger.warn(`Blob properties missing for ${documentKey}`);
+				return null;
+			}
+
+			const blobDownloadResponseParsed = await blobStorageClient.downloadStream(
+				blobStorageContainer,
+				documentKey
+			);
+
+			if (!blobDownloadResponseParsed?.readableStreamBody) {
+				throw new Error(`Document ${documentKey} missing stream body`);
+			}
+
+			//@ts-ignore
+			return blobDownloadResponseParsed.readableStreamBody;
+		} catch (error) {
+			if (attempt === maxAttempts) {
+				logger.warn(
+					error,
+					`Skipping blob after failed download: ${documentKey} attempts=${maxAttempts}`
+				);
+				return null;
+			}
+
+			logger.warn(
+				error,
+				`Retrying blob download: ${documentKey} attempt=${attempt}/${maxAttempts}`
+			);
+			await new Promise((resolve) => setTimeout(resolve, 250 * attempt));
 		}
-	} catch (error) {
-		console.error(`Error getting blob properties for ${documentKey}:`, error);
-		return null;
 	}
 
-	const blobDownloadResponseParsed = await blobStorageClient.downloadStream(
-		blobStorageContainer,
-		documentKey
-	);
-
-	if (!blobDownloadResponseParsed?.readableStreamBody) {
-		throw new Error(`Document ${documentKey} missing stream body`);
-	}
-
-	// @ts-ignore
-	return blobDownloadResponseParsed.blobDownloadStream;
+	return null;
 };
 
 /**
@@ -262,34 +283,16 @@ const createBlobDownloadStream = async (
  * @param {string[]} missingFiles
  */
 const addBlobsToArchive = async (archive, blobStorageClient, bulkFileInfo, missingFiles) => {
-	let nextDownloadPromise = null;
-	for (let i = 0; i < bulkFileInfo.length; i++) {
-		const fileInfo = bulkFileInfo[i];
+	// download and append one blob at a time; idle blob streams are disconnected by Azure
+	for (const fileInfo of bulkFileInfo) {
+		const blobStream = await createBlobDownloadStream(
+			blobStorageClient,
+			fileInfo.blobStorageContainer,
+			fileInfo.blobStoragePath
+		);
 
-		let downloadPromise;
-		if (nextDownloadPromise) {
-			downloadPromise = nextDownloadPromise;
-			nextDownloadPromise = null;
-		} else {
-			downloadPromise = createBlobDownloadStream(
-				blobStorageClient,
-				fileInfo.blobStorageContainer,
-				fileInfo.blobStoragePath
-			);
-		}
-
-		// Start next download in background so it's ready when for next loop after append completes
-		if (i + 1 < bulkFileInfo.length) {
-			const nextInfo = bulkFileInfo[i + 1];
-			nextDownloadPromise = createBlobDownloadStream(
-				blobStorageClient,
-				nextInfo.blobStorageContainer,
-				nextInfo.blobStoragePath
-			);
-		}
-
-		const blobStream = await downloadPromise;
 		if (!blobStream) {
+			logger.warn(`Skipping blob for archive: fullName=${fileInfo.fullName}`);
 			missingFiles.push(fileInfo.fullName);
 			continue;
 		}
@@ -330,6 +333,10 @@ export const getBulkDocumentDownload = async (
 	{ apiClient, params, session, currentAppeal },
 	response
 ) => {
+	const start = performance.now();
+	logger.info(
+		`getBulkDocumentDownload for caseId ${params.caseId}, representationType ${params.representationType || 'all'}`
+	);
 	const { filename = '', caseId, representationType = '' } = params;
 	const zipFileName = buildZipFileName(caseId, filename);
 
@@ -382,7 +389,7 @@ export const getBulkDocumentDownload = async (
 
 	response.once('close', () => {
 		if (!response.writableFinished) {
-			logger.warn('getBulkDocumentDownload aborted');
+			logger.warn(`getBulkDocumentDownload aborted for caseId ${caseId}`);
 			return handleUnexpectedClose();
 		}
 	});
@@ -416,9 +423,18 @@ export const getBulkDocumentDownload = async (
 			archive.append(Buffer.from(JSON.stringify(missingFiles)), { name: 'missing-files.json' });
 		}
 
+		const durationMs = performance.now() - start;
+
 		// Avoid awaiting finalize despite it being a promise https://github.com/archiverjs/node-archiver/issues/772
 		// avoid calling send on response as it will end the stream potentially before archiver has finalised
-		archive.finalize().catch(handleError);
+		archive
+			.finalize()
+			.then(() => {
+				logger.info(
+					`getBulkDocumentDownload completed: caseId=${caseId} representationType=${representationType || 'all'} missingFiles=${missingFiles.length} durationMs=${durationMs.toFixed(0)}`
+				);
+			})
+			.catch(handleError);
 	} catch (error) {
 		handleError(error);
 	}
@@ -451,25 +467,26 @@ const buildZipFileName = (caseId, filename) => {
  */
 
 export const getRepresentationAttachmentFullNames = async (apiClient, caseId) => {
-	const representations = await getRepresentationAttachments(apiClient, caseId);
+	const allReps = (await getAllRepresentationAttachments(apiClient, caseId)) || [];
+
+	/** @type {Record<string, string>} */
 	const fullAttachmentNames = {};
 	const statusCounts = {};
 
-	// @ts-ignore
-	representations?.items?.forEach((representation) => {
+	allReps.forEach((representation) => {
 		// Skip comments with invalid status
 		if (representation.representationType === 'comment' && representation.status === 'invalid') {
 			return; // Skip this representation
 		}
 		let representationStatus = representation.status;
-		if (representation.status === 'valid') {
+		if (representation.status === 'valid' || representation.status === 'published') {
 			representationStatus = 'accepted';
 		} else if (representation.status === 'invalid') {
 			representationStatus = 'rejected';
 		}
 
 		// Keep a count of each representation type and status so that we can give each ip comment a unique folder name
-		const statusCountKey = `${representation.representationType}-${representation.status}`;
+		const statusCountKey = `${representation.representationType}-${representationStatus}`;
 		// @ts-ignore
 		if (statusCounts[statusCountKey] === undefined) {
 			// @ts-ignore
@@ -485,10 +502,16 @@ export const getRepresentationAttachmentFullNames = async (apiClient, caseId) =>
 				: toSentenceCase(representation.representationType).replace('Lpa', 'LPA');
 
 		// @ts-ignore
-		representation.attachments.forEach((attachment) => {
-			const { document } = attachment.documentVersion || {};
-			// @ts-ignore
-			fullAttachmentNames[document.guid] = `Representations/${representationType}/${document.name}`;
+		representation.attachments?.forEach((attachment) => {
+			const { document } = attachment?.documentVersion || {};
+			const guid = document?.guid || attachment?.documentGuid;
+			const name =
+				document?.name ||
+				attachment?.documentVersion?.fileName ||
+				attachment?.documentVersion?.originalFilename;
+			if (guid && name) {
+				fullAttachmentNames[guid] = `Representations/${representationType}/${name}`;
+			}
 		});
 	});
 	return fullAttachmentNames;

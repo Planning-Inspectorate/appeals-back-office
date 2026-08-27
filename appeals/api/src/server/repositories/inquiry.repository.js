@@ -3,7 +3,7 @@ import { databaseConnector } from '#utils/database-connector.js';
 /** @typedef {import('@pins/appeals.api').Schema.Inquiry} Inquiry */
 /** @typedef {import('@pins/appeals.api').Schema.Address} Address */
 /** @typedef {import('@pins/appeals.api').Appeals.CreateInquiry} CreateInquiry */
-/** @typedef {import('@pins/appeals.api').Appeals.InquiryAddress} InquiryAddress */
+/** @typedef {import('@pins/appeals').Address} InquiryAddress */
 /**
  * @typedef {import('#db-client/client.ts').Prisma.PrismaPromise<T>} PrismaPromise
  * @template T

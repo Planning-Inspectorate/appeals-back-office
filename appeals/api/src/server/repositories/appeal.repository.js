@@ -1106,8 +1106,16 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 	},
 	parentAppeals: {
 		select: {
+			id: true,
 			type: true,
 			linkingDate: true,
+			parentId: true,
+			parentRef: true,
+			childId: true,
+			childRef: true,
+			externalSource: true,
+			externalAppealType: true,
+			externalId: true,
 			parent: {
 				select: {
 					id: true,
@@ -1118,8 +1126,16 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 	},
 	childAppeals: {
 		select: {
+			id: true,
 			type: true,
 			linkingDate: true,
+			parentId: true,
+			parentRef: true,
+			childId: true,
+			childRef: true,
+			externalSource: true,
+			externalAppealType: true,
+			externalId: true,
 			child: {
 				select: {
 					id: true,
@@ -1364,6 +1380,7 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 	appealRule6Parties: {
 		select: {
 			id: true,
+			serviceUserId: true,
 			serviceUser: {
 				select: {
 					id: true,
@@ -1409,13 +1426,15 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 					guid: true,
 					name: true,
 					isDeleted: true,
+					createdAt: true,
 					latestDocumentVersion: {
 						select: {
 							documentGuid: true,
 							dateReceived: true,
 							isDeleted: true,
 							stage: true,
-							documentType: true
+							documentType: true,
+							virusCheckStatus: true
 						}
 					}
 				}

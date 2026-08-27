@@ -51,9 +51,57 @@ export const CASE_HISTORY_STATES = Object.freeze({
 			emailBody: ''
 		}
 	],
+	unaccompaniedSiteVisitScheduled: [
+		{
+			detail: 'Inspector visit to appeal site: {caseRef} sent to agent',
+			emailLink: 'yes',
+			emailSubject: 'Subject: Inspector visit to appeal site: {caseRef}',
+			emailBody: 'We have now arranged for our inspector (or their representative) to visit'
+		},
+		{
+			detail: 'The site visit was arranged',
+			emailLink: 'no',
+			emailSubject: '',
+			emailBody: ''
+		}
+	],
+	accessRequiredSiteVisitScheduled: [
+		{
+			detail: 'Inspector visit to appeal site: {caseRef} sent to agent',
+			emailLink: 'yes',
+			emailSubject: 'Subject: Inspector visit to appeal site: {caseRef}',
+			emailBody: 'The inspector (or their representative) will visit'
+		},
+		{
+			detail: 'The site visit was arranged',
+			emailLink: 'no',
+			emailSubject: '',
+			emailBody: ''
+		}
+	],
+	accompaniedSiteVisitScheduled: [
+		{
+			detail: 'Inspector visit to appeal site: {caseRef} sent to agent',
+			emailLink: 'yes',
+			emailSubject: 'Subject: Inspector visit to appeal site: {caseRef}',
+			emailBody: 'Our inspector (or their representative) will visit'
+		},
+		{
+			detail: 'Inspector visit to appeal site: {caseRef} sent to LPA',
+			emailLink: 'yes',
+			emailSubject: 'Subject: Inspector visit to appeal site: {caseRef}',
+			emailBody: 'Our inspector (or their representative) will visit'
+		},
+		{
+			detail: 'The site visit was arranged',
+			emailLink: 'no',
+			emailSubject: '',
+			emailBody: ''
+		}
+	],
 	missedSiteVisit: [
 		{
-			detail: 'Missed site visit: {caseRef} sent to appellant',
+			detail: 'Missed site visit: {caseRef} sent to agent',
 			emailLink: 'yes',
 			emailSubject: 'Subject: Missed site visit: {caseRef}',
 			emailBody: 'Nobody was at the site to give the inspector access.'

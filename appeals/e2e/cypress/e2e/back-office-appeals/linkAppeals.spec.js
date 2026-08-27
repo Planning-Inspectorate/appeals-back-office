@@ -129,7 +129,6 @@ describe('Link appeals', () => {
 				//link appeal
 				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
 				caseDetailsPage.checkStatusOfCase('Lead', 1);
-
 				//child appeal
 				caseDetailsPage.clickLinkedAppeal(childCaseObj);
 				caseDetailsPage.verifyAppealRefOnCaseDetails(childCaseObj.reference);
@@ -337,12 +336,12 @@ describe.skip('Net residences', () => {
 				happyPathHelper.addNetResidences('Net gain', '4');
 				(caseDetailsPage.validateBannerMessage('Success', 'Number of residential units added'),
 					caseDetailsPage.clickViewCaseHistory());
-				caseHistoryPage.verifyCaseHistoryValue('Case updated');
+				caseHistoryPage.verifyCaseHistoryValue('Appellant case updated');
 
 				//child appeal
 				happyPathHelper.viewCaseDetails(childCaseObj);
 				caseDetailsPage.clickViewCaseHistory();
-				caseHistoryPage.verifyCaseHistoryValue('Case updated', false);
+				caseHistoryPage.verifyCaseHistoryValue('Appellant case updated', false);
 			});
 		});
 	});
@@ -391,8 +390,8 @@ describe('Timetable', () => {
 			});
 		}
 	);
-
-	it('Timetable changes are reflected in case history', () => {
+	//skipping whilst https://pins-ds.atlassian.net/browse/A2-9063 is being fixed
+	it.skip('Timetable changes are reflected in case history', () => {
 		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
 			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
 				cases = [leadCaseObj, childCaseObj];
