@@ -3555,11 +3555,9 @@ describe('appeal-details', () => {
 
 			it('Should display procedure type change link because type is S20 and lpastatement status is not received', async () => {
 				const flagsBackup = {
-					featureFlagS78Inquiry: config.featureFlags.featureFlagS78Inquiry,
 					featureFlagS20Inquiry: config.featureFlags.featureFlagS20Inquiry
 				};
 				Object.assign(config.featureFlags, {
-					featureFlagS78Inquiry: true,
 					featureFlagS20Inquiry: true
 				});
 
@@ -3597,11 +3595,9 @@ describe('appeal-details', () => {
 
 			it('Should display procedure type change link for S20 if at least one alternative procedure type is available', async () => {
 				const flagsBackup = {
-					featureFlagS78Inquiry: config.featureFlags.featureFlagS78Inquiry,
 					featureFlagS20Inquiry: config.featureFlags.featureFlagS20Inquiry
 				};
 				Object.assign(config.featureFlags, {
-					featureFlagS78Inquiry: true,
 					featureFlagS20Inquiry: true
 				});
 
