@@ -15,7 +15,11 @@ import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { trimAppealType } from '#utils/string-utils.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
-import { FEATURE_FLAG_NAMES, FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
+import {
+	FEATURE_FLAG_NAMES,
+	FEEDBACK_FORM_LINKS,
+	FRONT_OFFICE_DASHBOARD_PATH_STUBS
+} from '@pins/appeals/constants/common.js';
 import {
 	AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
 	AUDIT_TRAIL_CORRECTION_NOTICE_ADDED,
@@ -145,7 +149,8 @@ export const publishDecision = async (
 				: 'decision-is-allowed-split-dismissed-appellant.content.md',
 			{
 				...personalisation,
-				feedback_link: feedbackLinkForAppellant
+				feedback_link: feedbackLinkForAppellant,
+				fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT
 			}
 		);
 		const lpaTemplate = renderTemplate(
@@ -154,7 +159,8 @@ export const publishDecision = async (
 				: 'decision-is-allowed-split-dismissed-lpa.content.md',
 			{
 				...personalisation,
-				feedback_link: feedbackLinkForLPA
+				feedback_link: feedbackLinkForLPA,
+				fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA
 			}
 		);
 		const interestedPartyTemplate = renderTemplate(
@@ -226,11 +232,13 @@ export const publishDecision = async (
 				? {
 						...personalisation,
 						has_costs_decision: hasAppellantCostsDecision,
-						feedback_link: feedbackLinkForAppellant
+						feedback_link: feedbackLinkForAppellant,
+						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT
 					}
 				: {
 						...personalisation,
-						feedback_link: feedbackLinkForAppellant
+						feedback_link: feedbackLinkForAppellant,
+						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT
 					}
 		});
 	}
@@ -247,11 +255,13 @@ export const publishDecision = async (
 				? {
 						...personalisation,
 						has_costs_decision: hasLpaCostsDecision,
-						feedback_link: feedbackLinkForLPA
+						feedback_link: feedbackLinkForLPA,
+						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA
 					}
 				: {
 						...personalisation,
-						feedback_link: feedbackLinkForLPA
+						feedback_link: feedbackLinkForLPA,
+						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA
 					}
 		});
 	}
@@ -270,11 +280,13 @@ export const publishDecision = async (
 						? {
 								...personalisation,
 								has_costs_decision: hasAppellantCostsDecision,
-								feedback_link: feedbackLinkForAppellant
+								feedback_link: feedbackLinkForAppellant,
+								fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.RULE_6_PARTY
 							}
 						: {
 								...personalisation,
-								feedback_link: feedbackLinkForAppellant
+								feedback_link: feedbackLinkForAppellant,
+								fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.RULE_6_PARTY
 							}
 				});
 			}

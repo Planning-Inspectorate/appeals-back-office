@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
+import { FRONT_OFFICE_DASHBOARD_PATH_STUBS } from '@pins/appeals/constants/common.js';
 
 describe('decision-is-invalid-appellant.md', () => {
 	let notifySendData;
@@ -21,6 +22,8 @@ describe('decision-is-invalid-appellant.md', () => {
 				lpa_reference: '12345XYZ',
 				decision_date: '01 January 2021',
 				reasons: ['Reason one', 'Reason two', 'Reason three'],
+				front_office_url: '/mock-front-office-url',
+				fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
 				feedback_link: '/mock-feedback-link'
 			}
 		};
