@@ -830,7 +830,13 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient, 
 				inspectorName
 			);
 		} else {
-			await notifyNoFinalComments(appeal, notifyClient, azureAdUserId, 'local planning authority');
+			await notifyNoFinalComments(
+				appeal,
+				notifyClient,
+				azureAdUserId,
+				'local planning authority',
+				inspectorName
+			);
 		}
 
 		if (hasAppellantFinalComment) {
@@ -841,7 +847,7 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient, 
 				inspectorName
 			);
 		} else {
-			await notifyNoFinalComments(appeal, notifyClient, azureAdUserId, 'appellant');
+			await notifyNoFinalComments(appeal, notifyClient, azureAdUserId, 'appellant', inspectorName);
 		}
 	} catch (error) {
 		logger.error(error);
@@ -1051,7 +1057,8 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
  * @property {string | null} [hearingDate]
  * @property {string | null} [hearingTime]
  * @property {string | null} [hearingAddress]
- * @property {string | null } [hearingExpectedDays]
+ * @property {string | null} [hearingExpectedDays]
+ * @property {string | null} [inspectorName]
  */
 
 /**
@@ -1073,6 +1080,7 @@ async function notifyPublished({
 	hearingTime = null,
 	hearingExpectedDays = null,
 	hearingAddress = null,
+	inspectorName = null,
 	isHearingProcedure = false,
 	isInquiryProcedure = false,
 	statementUrl = '',
@@ -1112,7 +1120,8 @@ async function notifyPublished({
 				hearing_date: hearingDate,
 				hearing_time: hearingTime,
 				hearing_expected_days: hearingExpectedDays,
-				hearing_address: hearingAddress
+				hearing_address: hearingAddress,
+				inspector_name: inspectorName
 			}),
 			is_hearing_procedure: isHearingProcedure,
 			is_inquiry_procedure: isInquiryProcedure,
@@ -1341,8 +1350,15 @@ async function notifyAppellantAboutLpaFinalComments(
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
  * @param {'appellant' | 'local planning authority'} userTypeNoCommentSubmitted
+ * @param {string | null} [inspectorName]
  */
-function notifyNoFinalComments(appeal, notifyClient, azureAdUserId, userTypeNoCommentSubmitted) {
+async function notifyNoFinalComments(
+	appeal,
+	notifyClient,
+	azureAdUserId,
+	userTypeNoCommentSubmitted,
+	inspectorName = null
+) {
 	const recipientEmail =
 		userTypeNoCommentSubmitted === 'appellant'
 			? appeal.lpa?.email
@@ -1354,16 +1370,17 @@ function notifyNoFinalComments(appeal, notifyClient, azureAdUserId, userTypeNoCo
 		);
 	}
 
-	const isEnforcementOrLdc = isLdcOrEnforcementCaseType(appeal.appealType?.key);
-	const templateName =
-		isEnforcementOrLdc && appeal.procedureType?.name === PROCEDURE_TYPE_NAME.HEARING
-			? 'final-comments-none-enforcement-hearing'
-			: 'final-comments-none';
+	const isEnforcementOrLdcHearing =
+		isLdcOrEnforcementCaseType(appeal.appealType?.key) &&
+		appeal.procedureType?.name === PROCEDURE_TYPE_NAME.HEARING;
+
+	const templateName = isEnforcementOrLdcHearing
+		? 'final-comments-none-enforcement-hearing'
+		: 'final-comments-none';
 
 	const hearingDate = appeal.hearing?.hearingStartTime
 		? dateISOStringToDisplayDate(appeal.hearing.hearingStartTime)
 		: null;
-
 	const hearingTime = appeal.hearing?.hearingStartTime
 		? formatTime12h(
 				typeof appeal.hearing.hearingStartTime === 'string'
@@ -1376,17 +1393,18 @@ function notifyNoFinalComments(appeal, notifyClient, azureAdUserId, userTypeNoCo
 		? formatAddressSingleLine(appeal.hearing.address)
 		: '';
 
-	return notifyPublished({
+	return await notifyPublished({
 		appeal,
-		hearingDate,
-		hearingTime,
-		hearingExpectedDays,
-		hearingAddress,
 		notifyClient,
 		templateName,
 		recipientEmail,
 		azureAdUserId,
-		userTypeNoCommentSubmitted
+		userTypeNoCommentSubmitted,
+		hearingDate,
+		hearingTime,
+		hearingExpectedDays,
+		hearingAddress,
+		inspectorName
 	});
 }
 

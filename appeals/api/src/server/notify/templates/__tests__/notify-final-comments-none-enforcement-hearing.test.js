@@ -17,7 +17,7 @@ describe('final-comments-none-enforcement-hearing.content.md', () => {
 				hearing_date: '01 January 2025',
 				hearing_time: '10:00am',
 				hearing_expected_days: '2',
-				inspector: 'Mr Test Inspector',
+				inspector_name: 'Mr Test Inspector',
 				hearing_address: '123 Hearing Venue, Testtown, TE5 7ST',
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
@@ -39,7 +39,6 @@ describe('final-comments-none-enforcement-hearing.content.md', () => {
 			'Expected days: 2',
 			'Inspector: Mr Test Inspector',
 			'Venue address: 123 Hearing Venue, Testtown, TE5 7ST',
-			'',
 			'',
 			'We will contact you if we make any changes to the hearing.',
 			'',
@@ -140,7 +139,6 @@ describe('final-comments-none-enforcement-hearing.content.md', () => {
 			'',
 			'^Date: 01 January 2025',
 			'Time: 10:00am',
-			'',
 			'',
 			'We will contact you if we make any changes to the hearing.',
 			'',
