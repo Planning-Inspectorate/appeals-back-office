@@ -11,7 +11,6 @@ import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 export const isLinkedAppealsActive = (appeal = null) => {
 	const isLinkedAppealsFeatureActive = isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS);
 	const isEnforcementLinkedFeatureActive =
-		isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE) &&
 		isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_LINKED) &&
 		(!appeal || appeal.appealType?.key === APPEAL_CASE_TYPE.C);
 	return isLinkedAppealsFeatureActive || isEnforcementLinkedFeatureActive;

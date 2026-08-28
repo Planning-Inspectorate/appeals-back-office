@@ -1,5 +1,4 @@
-import { isFeatureActive } from '#common/feature-flags.js';
-import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { generateAdvertLpaQuestionnaireComponents } from './advert.js';
 import { generateCasAdvertLpaQuestionnaireComponents } from './cas-advert.js';
 import { generateCasPlanningLpaQuestionnaireComponents } from './cas-planning.js';
@@ -35,15 +34,9 @@ export function generateCaseTypeSpecificComponents(appealDetails, mappedLPAQData
 		case APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE:
 			return generateLdcLpaQuestionnaireComponents(mappedLPAQData);
 		case APPEAL_TYPE.ENFORCEMENT_NOTICE:
-			if (isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE)) {
-				return generateEnforcementLpaQuestionnaireComponents(mappedLPAQData);
-			}
-			throw new Error('Enforcement feature flag is disabled');
+			return generateEnforcementLpaQuestionnaireComponents(mappedLPAQData);
 		case APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING:
-			if (isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE)) {
-				return generateEnforcementListedLpaQuestionnaireComponents(mappedLPAQData);
-			}
-			throw new Error('Enforcement feature flag is disabled');
+			return generateEnforcementListedLpaQuestionnaireComponents(mappedLPAQData);
 		case APPEAL_TYPE.S78:
 			if (appealDetails.isS78Expedited) {
 				return generateS78ExpeditedLpaQuestionnaireComponents(appealDetails, mappedLPAQData);

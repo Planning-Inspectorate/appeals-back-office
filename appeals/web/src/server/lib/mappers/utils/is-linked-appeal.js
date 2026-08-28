@@ -10,7 +10,6 @@ export const isLinkedAppealsActive = (appeal = null) => {
 	const { appealType, type = appealType } = appeal || {};
 	const isLinkedAppealsFeatureActive = config.featureFlags.featureFlagLinkedAppeals;
 	const isEnforcementLinkedFeatureActive =
-		config.featureFlags.featureFlagEnforcementNotice &&
 		config.featureFlags.featureFlagEnforcementLinked &&
 		(!appeal || type === APPEAL_TYPE.ENFORCEMENT_NOTICE);
 

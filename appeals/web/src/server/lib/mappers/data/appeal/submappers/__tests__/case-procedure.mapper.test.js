@@ -11,7 +11,6 @@ describe('case-procedure.mapper', () => {
 
 	beforeEach(() => {
 		Object.assign(config.featureFlags, {
-			featureFlagEnforcementNotice: true,
 			featureFlagEnforcementNoticeHearing: true,
 			featureFlagEnforcementNoticeInquiry: true
 		});

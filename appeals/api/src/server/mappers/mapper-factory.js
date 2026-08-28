@@ -100,9 +100,6 @@ function createDataMap(mappingRequest) {
 			return mergeMaps(caseData, advert);
 		}
 		case APPEAL_CASE_TYPE.C: {
-			if (!isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE)) {
-				return caseData;
-			}
 			const enforcement = createMap(apiMappers.apiEnforcementMappers, mappingRequest);
 			return mergeMaps(caseData, enforcement);
 		}
@@ -164,9 +161,6 @@ function createIntegrationMap(mappingRequest) {
 			return mergeMaps(caseData, advert);
 		}
 		case APPEAL_CASE_TYPE.C: {
-			if (!isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE)) {
-				return caseData;
-			}
 			const enforcement = createMap(
 				integrationMappers.integrationEnforcementMappers,
 				mappingRequest

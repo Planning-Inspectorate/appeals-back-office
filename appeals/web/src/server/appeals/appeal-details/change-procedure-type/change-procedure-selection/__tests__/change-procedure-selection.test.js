@@ -23,7 +23,6 @@ describe('Change procedure type', () => {
 	beforeEach(() => {
 		Object.assign(config.featureFlags, {
 			featureFlagS20Inquiry: true,
-			featureFlagEnforcementNotice: true,
 			featureFlagEnforcementNoticeHearing: true,
 			featureFlagEnforcementNoticeInquiry: true
 		});
@@ -195,7 +194,6 @@ describe('Change procedure type', () => {
 
 	it('should show inquiry for enforcement notice when enforcement inquiry is enabled', async () => {
 		Object.assign(config.featureFlags, {
-			featureFlagEnforcementNotice: true,
 			featureFlagEnforcementNoticeInquiry: true
 		});
 
@@ -223,7 +221,6 @@ describe('Change procedure type', () => {
 
 	it('should hide hearing option for enforcement notice when enforcement hearing flag is disabled', async () => {
 		Object.assign(config.featureFlags, {
-			featureFlagEnforcementNotice: true,
 			featureFlagEnforcementNoticeHearing: false,
 			featureFlagEnforcementNoticeInquiry: true
 		});
@@ -252,7 +249,6 @@ describe('Change procedure type', () => {
 
 	it('should hide inquiry option for enforcement notice when enforcement inquiry flag is disabled', async () => {
 		Object.assign(config.featureFlags, {
-			featureFlagEnforcementNotice: true,
 			featureFlagEnforcementNoticeHearing: true,
 			featureFlagEnforcementNoticeInquiry: false
 		});
