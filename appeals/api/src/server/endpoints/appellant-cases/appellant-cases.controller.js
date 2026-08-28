@@ -5,7 +5,7 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import { contextEnum } from '#mappers/context-enum.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { updatePersonalList } from '#utils/update-personal-list.js';
+import { setPersonalList } from '#utils/update-personal-list.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import {
@@ -206,7 +206,7 @@ const updateAppellantCaseById = async (req, res) => {
 					appeal
 				);
 
-		await updatePersonalList(appeal.id);
+		await setPersonalList({ appealId: appeal.id });
 
 		const auditTrailDetail = renderAuditTrailDetail(body);
 
