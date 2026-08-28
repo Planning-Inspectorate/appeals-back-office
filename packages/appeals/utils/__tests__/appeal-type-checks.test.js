@@ -8,6 +8,7 @@ import {
 	isAnyEnforcementAppealType,
 	isLdcOrDiscontinuanceOrEnforcementAppealType,
 	isLdcOrEnforcementCaseType,
+	isNetResidencesAppealType,
 	isS78ExpeditedAppealType
 } from '../appeal-type-checks';
 
@@ -157,5 +158,30 @@ describe('isS78ExpeditedAppealType', () => {
 				APPEAL_TYPE_OF_PLANNING_APPLICATION.HOUSEHOLDER_PLANNING
 			)
 		).toBe(false);
+	});
+});
+
+describe('isNetResidencesAppealType', () => {
+	it.each([APPEAL_TYPE.S78, APPEAL_TYPE.PLANNED_LISTED_BUILDING])(
+		'returns true for %s',
+		(appealType) => {
+			expect(isNetResidencesAppealType(appealType)).toBe(true);
+		}
+	);
+
+	it.each([
+		APPEAL_TYPE.HOUSEHOLDER,
+		APPEAL_TYPE.ADVERTISEMENT,
+		APPEAL_TYPE.CAS_PLANNING,
+		APPEAL_TYPE.CAS_ADVERTISEMENT,
+		APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE,
+		APPEAL_TYPE.DISCONTINUANCE_NOTICE,
+		APPEAL_TYPE.ENFORCEMENT_NOTICE,
+		APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		undefined,
+		null,
+		''
+	])('returns false for %s', (appealType) => {
+		expect(isNetResidencesAppealType(appealType)).toBe(false);
 	});
 });

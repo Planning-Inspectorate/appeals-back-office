@@ -57,9 +57,6 @@ const { value, error } = schema.validate({
 		featureFlagLinkedAppealsUnlink:
 			environment.FEATURE_FLAG_LINKED_APPEALS_UNLINK &&
 			environment.FEATURE_FLAG_LINKED_APPEALS_UNLINK === 'true',
-		featureFlagNetResidenceS20:
-			environment.FEATURE_FLAG_NET_RESIDENCE_S20 &&
-			environment.FEATURE_FLAG_NET_RESIDENCE_S20 === 'true',
 		featureFlagHearingPostMvp:
 			environment.FEATURE_FLAG_HEARING_POST_MVP &&
 			environment.FEATURE_FLAG_HEARING_POST_MVP === 'true',
