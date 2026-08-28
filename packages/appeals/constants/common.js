@@ -204,3 +204,9 @@ export const REPRESENTATION_ADDED_AS_DOCUMENT = 'Added as a document';
 
 export const MAX_VISIBLE_DOCUMENTS_IN_SUMMARY = 5;
 export const DOCUMENTS_PAGE_SIZE = 100;
+
+export const FRONT_OFFICE_DASHBOARD_PATH_STUBS = Object.freeze({
+	APPELLANT: 'appeals',
+	LPA: 'manage-appeals',
+	RULE_6_PARTY: 'rule-6'
+});
