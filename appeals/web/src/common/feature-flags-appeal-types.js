@@ -1,10 +1,8 @@
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
 	appealCaseTypeToAppealTypeMapper,
 	appealTypeToAppealCaseTypeMapper
 } from '@pins/appeals/utils/appeal-type-case.mapper.js';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
-import { isFeatureActive } from './feature-flags.js';
 
 /**
  *
@@ -35,7 +33,7 @@ export const isAppealCaseTypeEnabled = (appealCaseType) => {
 			return true;
 		}
 		case APPEAL_CASE_TYPE.C: {
-			return isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE);
+			return true;
 		}
 		case APPEAL_CASE_TYPE.X: {
 			return true;

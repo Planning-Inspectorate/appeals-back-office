@@ -63,9 +63,6 @@ const { value, error } = schema.validate({
 		featureFlagSearchCaseOfficer:
 			environment.FEATURE_FLAG_SEARCH_CASE_OFFICER &&
 			environment.FEATURE_FLAG_SEARCH_CASE_OFFICER === 'true',
-		featureFlagEnforcementNotice:
-			environment.FEATURE_FLAG_ENFORCEMENT_NOTICE &&
-			environment.FEATURE_FLAG_ENFORCEMENT_NOTICE === 'true',
 		featureFlagEnforcementLinked:
 			environment.FEATURE_FLAG_ENFORCEMENT_LINKED &&
 			environment.FEATURE_FLAG_ENFORCEMENT_LINKED === 'true',

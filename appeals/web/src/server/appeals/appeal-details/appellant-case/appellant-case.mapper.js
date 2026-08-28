@@ -909,16 +909,12 @@ function generateCaseTypeSpecificComponents(
 		case APPEAL_TYPE.ADVERTISEMENT:
 			return generateAdvertComponents(appealDetails, appellantCaseData, mappedAppellantCaseData);
 		case APPEAL_TYPE.ENFORCEMENT_NOTICE:
-			if (isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE)) {
-				return generateEnforcementNoticeComponents(
-					appealDetails,
-					appellantCaseData,
-					mappedAppellantCaseData,
-					userHasUpdateCasePermission
-				);
-			} else {
-				throw new Error('Feature flag inactive for Enforcement notice');
-			}
+			return generateEnforcementNoticeComponents(
+				appealDetails,
+				appellantCaseData,
+				mappedAppellantCaseData,
+				userHasUpdateCasePermission
+			);
 		case APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE:
 			return generateLdcComponents(appealDetails, appellantCaseData, mappedAppellantCaseData);
 		case APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING:

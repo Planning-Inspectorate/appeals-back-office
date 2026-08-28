@@ -1,5 +1,4 @@
-import { isFeatureActive } from '#common/feature-flags.js';
-import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { generateAppealDetailsPageComponents as generateHasAppealDetailsPageComponents } from './has.js';
 import { generateAppealDetailsPageComponents as generateS78AppealDetailsPageComponents } from './s78.js';
 
@@ -13,23 +12,14 @@ import { generateAppealDetailsPageComponents as generateS78AppealDetailsPageComp
 export function generateAppealDetailsSections(appealDetails, mappedData, session) {
 	switch (appealDetails.appealType) {
 		case APPEAL_TYPE.HOUSEHOLDER:
-			return generateHasAppealDetailsPageComponents(appealDetails, mappedData, session);
 		case APPEAL_TYPE.CAS_PLANNING:
-			return generateHasAppealDetailsPageComponents(appealDetails, mappedData, session);
 		case APPEAL_TYPE.CAS_ADVERTISEMENT:
 			return generateHasAppealDetailsPageComponents(appealDetails, mappedData, session);
-		case APPEAL_TYPE.ADVERTISEMENT: {
-			return generateS78AppealDetailsPageComponents(appealDetails, mappedData, session);
-		}
-		case APPEAL_TYPE.S78: //TODO: Feature flag
+		case APPEAL_TYPE.ADVERTISEMENT:
+		case APPEAL_TYPE.S78:
 		case APPEAL_TYPE.PLANNED_LISTED_BUILDING:
-			return generateS78AppealDetailsPageComponents(appealDetails, mappedData, session);
 		case APPEAL_TYPE.ENFORCEMENT_NOTICE:
 		case APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING:
-			if (!isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE)) {
-				throw new Error('Feature flag inactive for Enforcement Notice');
-			}
-			return generateS78AppealDetailsPageComponents(appealDetails, mappedData, session);
 		case APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE:
 			return generateS78AppealDetailsPageComponents(appealDetails, mappedData, session);
 		default:
