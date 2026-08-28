@@ -4983,6 +4983,7 @@ describe('/appeals/:id/reps', () => {
 					hearing_time: '12:00am',
 					hearing_expected_days: '',
 					hearing_address: '123 Main St, Apt 1, AA1 1AA',
+					inspector_name: null,
 					final_comments_deadline: '',
 					has_ip_comments: false,
 					has_statement: false,

@@ -57,18 +57,12 @@ Due by {{ip_comments_deadline}}.
 
 Due by {{final_comments_deadline}}.
 
-# Hearing details
-
-^Date: {{hearing_date}}
-Time: {{hearing_time}}
-{% if hearing_expected_days -%}
-Expected days: {{hearing_expected_days}}
-{% endif -%}
-{% if inspector_name -%}
-Inspector: {{inspector_name}}
-{% endif %}
+{% if hearing_date -%}
+{% include 'parts/hearing-details.md' %}
 
 We will contact you if we make any changes to the hearing.
+
+{% endif -%}
 
 # What happens next
 

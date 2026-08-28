@@ -5,19 +5,7 @@ You can [view this information in the appeal service]({{front_office_url}}/{{fo_
 {% include 'parts/appeal-details.md' %}
 
 {% if hearing_date -%}
-# Hearing details
-
-^Date: {{hearing_date}}
-Time: {{hearing_time}}
-{% if hearing_expected_days -%}
-Expected days: {{hearing_expected_days}}
-{% endif -%}
-{% if inspector_name -%}
-Inspector: {{inspector_name}}
-{% endif -%}
-{% if hearing_address -%}
-Venue address: {{hearing_address}}
-{% endif %}
+{% include 'parts/hearing-details.md' %}
 We will contact you if we make any changes to the hearing.
 {% else -%}
 We will contact you by email when we set up the hearing.
