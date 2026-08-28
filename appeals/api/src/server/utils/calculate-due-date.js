@@ -1,8 +1,8 @@
 import { calculateIssueDecisionDeadline } from '#endpoints/appeals/appeals.service.js';
 import { currentStatus } from '#utils/current-status.js';
-import { isFeatureActive } from '#utils/feature-flags.js';
-import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
+import { isNetResidencesAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { add, addBusinessDays } from 'date-fns';
 
@@ -18,19 +18,6 @@ const approxStageCompletion = {
 	STATE_TARGET_ISSUE_DETERMINATION_AFTER_SITE_VISIT: 40,
 	STATE_TARGET_STATEMENT_REVIEW: 55,
 	STATE_TARGET_FINAL_COMMENT_REVIEW: 60
-};
-
-/**
- *
- * @param {string | null | undefined } appealType
- * @returns boolean
- */
-const isNetResidencesAppealType = (appealType) => {
-	return (
-		appealType === APPEAL_TYPE.S78 ||
-		(isFeatureActive(FEATURE_FLAG_NAMES.NET_RESIDENCE_S20) &&
-			appealType === APPEAL_TYPE.PLANNED_LISTED_BUILDING)
-	);
 };
 
 /**

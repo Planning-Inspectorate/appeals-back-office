@@ -1,6 +1,6 @@
-import { isNetResidencesAppealType } from '#common/net-residences-appeal-types.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { isNetResidencesAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapNetResidenceGainOrLoss = ({
