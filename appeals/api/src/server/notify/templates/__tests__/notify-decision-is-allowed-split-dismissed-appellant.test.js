@@ -2,6 +2,7 @@
 import { notifySend } from '#notify/notify-send.js';
 import { householdAppeal } from '#tests/appeals/mocks.js';
 import { jest } from '@jest/globals';
+import { FRONT_OFFICE_DASHBOARD_PATH_STUBS } from '@pins/appeals/constants/common.js';
 
 const genericNotifySendData = {
 	doNotMockNotifySend: true,
@@ -16,6 +17,7 @@ const genericNotifySendData = {
 		lpa_reference: '12345XYZ',
 		decision_date: '01 January 2021',
 		front_office_url: '/mock-front-office-url',
+		fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
 		feedback_link: '/mock-feedback-link'
 	}
 };

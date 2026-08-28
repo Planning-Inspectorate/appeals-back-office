@@ -7,6 +7,7 @@ import appealRule6PartyRepository from '#repositories/appeal-rule-6-party.reposi
 import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { FRONT_OFFICE_DASHBOARD_PATH_STUBS } from '@pins/appeals/constants/common.js';
 import * as SUPPORT_CONSTANTS from '@pins/appeals/constants/support.js';
 import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
@@ -79,6 +80,7 @@ const addRule6Party = async (appeal, serviceUser, azureAdUserId, notifyClient) =
 						? formatDate(new Date(statementsDueDate), false)
 						: '',
 					proofs_due_date: proofsDueDate ? formatDate(new Date(proofsDueDate), false) : '',
+					fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.RULE_6_PARTY,
 					team_email_address: teamEmail
 				}
 			});
