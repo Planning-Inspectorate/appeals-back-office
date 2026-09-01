@@ -281,6 +281,23 @@ export const updateAppellantCaseValidationOutcome = async (
 		const isLdc = isLdcCaseType(appeal.appealType.key);
 		const childEnforcementWithGrounds = await getChildEnforcementsWithGrounds(appeal);
 
+		// If validating and there are child enforcement appeals, will be necessary to sweep up
+		// redaction status on child appeal documents too
+		if (childEnforcementWithGrounds.length > 0) {
+			childEnforcementWithGrounds.forEach(async (childAppeal) => {
+				if (childAppeal.reference) {
+					const updatedDocuments = await documentRepository.setRedactionStatusOnValidation(
+						childAppeal.id,
+						childAppeal.reference,
+						appeal.appealType.key,
+						noRedactionRequiredStatus
+					);
+
+					await broadcasters.broadcastDocuments(updatedDocuments, EventType.Update);
+				}
+			});
+		}
+
 		const personalisation = {
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
