@@ -4,7 +4,7 @@ import { linkedAppealStatus } from '#lib/appeals-formatter.js';
 export const mapLeadOrChild = ({ appealDetails }) => ({
 	id: 'lead-or-child',
 	display:
-		appealDetails.linkedAppeals.length > 0
+		appealDetails.linkedAppeals?.length > 0
 			? {
 					statusTag: {
 						status: linkedAppealStatus(

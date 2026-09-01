@@ -3212,6 +3212,54 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/appellant-case/": {
+			"get": {
+				"tags": ["Appellant Cases"],
+				"description": "Gets a single appellant case for an appeal by id",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Gets a single appellant case for an appeal by id",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SingleAppellantCaseResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/SingleAppellantCaseResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/appellant-cases/{appellantCaseId}": {
 			"get": {
 				"tags": ["Appellant Cases"],
@@ -3265,7 +3313,8 @@
 					"404": {
 						"description": "Not Found"
 					}
-				}
+				},
+				"deprecated": true
 			},
 			"patch": {
 				"tags": ["Appellant Cases"],

@@ -23,11 +23,12 @@ import {
 
 const router = createRouter();
 
+// replaces /:appealId/appellant-cases/:appellantCaseId, keep in line until removed
 router.get(
-	'/:appealId/appellant-cases/:appellantCaseId',
+	'/:appealId/appellant-case/',
 	/*
 		#swagger.tags = ['Appellant Cases']
-		#swagger.path = '/appeals/{appealId}/appellant-cases/{appellantCaseId}'
+		#swagger.path = '/appeals/{appealId}/appellant-case/'
 		#swagger.description = Gets a single appellant case for an appeal by id
 		#swagger.parameters['azureAdUserId'] = {
 			in: 'header',
@@ -42,22 +43,30 @@ router.get(
 		#swagger.responses[404] = {}
 	 */
 	getAppellantCaseValidator,
-	checkAppealExistsByIdAndAddPartialToRequest([
-		'appellantCase',
-		'address',
-		'agent',
-		'appellant',
-		'appealStatus',
-		'appealType',
-		'folders',
-		'lpa',
-		'procedureType',
-		'parentAppeals',
-		'childAppeals',
-		'appealGrounds',
-		'enforcementNoticeAppealOutcome'
-	]),
-	checkAppellantCaseExists,
+	asyncHandler(getAppellantCaseById)
+);
+
+/** @deprecated legacy replaced with /:appealId/appellant-case/ */
+router.get(
+	'/:appealId/appellant-cases/:appellantCaseId',
+	/*
+		#swagger.deprecated = true
+		#swagger.tags = ['Appellant Cases']
+		#swagger.path = '/appeals/{appealId}/appellant-cases/{appellantCaseId}'		
+		#swagger.description = Gets a single appellant case for an appeal by id
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[200] = {
+			description: 'Gets a single appellant case for an appeal by id',
+			schema: { $ref: '#/components/schemas/SingleAppellantCaseResponse' }
+		}
+		#swagger.responses[400] = {}
+		#swagger.responses[404] = {}
+	 */
+	getAppellantCaseValidator,
 	asyncHandler(getAppellantCaseById)
 );
 
