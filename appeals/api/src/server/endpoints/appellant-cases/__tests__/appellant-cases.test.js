@@ -217,23 +217,10 @@ describe('appellant cases routes', () => {
 				});
 			});
 
-			test('returns an error if appellantCaseId is not numeric', async () => {
-				const { id } = householdAppeal;
-				const response = await request
-					.get(`/appeals/${id}/appellant-cases/one`)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						appellantCaseId: ERROR_MUST_BE_NUMBER
-					}
-				});
-			});
-
 			test('returns an error if appellantCaseId is not found', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				const mockAppeal = structuredClone(householdAppeal);
+				mockAppeal.appellantCase = null;
+				databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
 
 				const { id } = householdAppeal;
 				const response = await request

@@ -2,7 +2,8 @@
 import {
 	appealData,
 	appealDataFullPlanning,
-	appellantCaseDataNotValidated
+	appellantCaseDataNotValidated,
+	documentRedactionStatuses
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
@@ -17,6 +18,13 @@ const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 const appellantCasePagePath = '/appellant-case';
+
+//@ts-ignore
+const mapExistsFromAppeal = (appeal) => ({
+	id: appeal.appealId,
+	appealId: appeal.appealId,
+	appealReference: appeal.appealReference
+});
 
 describe('appellant-case-expedited', () => {
 	beforeEach(installMockApi);
@@ -38,13 +46,18 @@ describe('appellant-case-expedited', () => {
 			ownershipCertificate: true
 		};
 
+		const appeal = { ...appealDataFullPlanning, appealId: 2 };
+		nock('http://test/').get('/appeals/2/exists').reply(200, mapExistsFromAppeal(appeal));
 		nock('http://test/')
-			.get('/appeals/2?include=all')
+			.get('/appeals/document-redaction-statuses')
+			.reply(200, documentRedactionStatuses);
+		nock('http://test/')
+			.get('/appeals/2/appellant-case')
 			.reply(200, {
-				...appealDataFullPlanning,
-				appealId: 2
+				...expeditedAppellantCaseData,
+				appealType: appeal.appealType,
+				documentationSummary: appeal.documentationSummary
 			});
-		nock('http://test/').get('/appeals/2/appellant-cases/0').reply(200, expeditedAppellantCaseData);
 
 		const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
 		const element = parseHtml(response.text, { skipPrettyPrint: true });
@@ -103,16 +116,22 @@ describe('appellant-case-expedited', () => {
 				...(typeOfPlanningApplication && { typeOfPlanningApplication })
 			};
 
+			const appeal = {
+				...appealData,
+				appealId: 1,
+				...(appealType && { appealType })
+			};
+			nock('http://test/').get('/appeals/1/exists').reply(200, mapExistsFromAppeal(appeal));
 			nock('http://test/')
-				.get('/appeals/1?include=all')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses);
+			nock('http://test/')
+				.get('/appeals/1/appellant-case')
 				.reply(200, {
-					...appealData,
-					appealId: 1,
-					...(appealType && { appealType })
+					...expeditedAppellantCaseData,
+					appealType: appeal.appealType,
+					documentationSummary: appeal.documentationSummary
 				});
-			nock('http://test/')
-				.get('/appeals/1/appellant-cases/0')
-				.reply(200, expeditedAppellantCaseData);
 
 			const response = await request.get(`${baseUrl}/1${appellantCasePagePath}`);
 			const element = parseHtml(response.text, { skipPrettyPrint: true });
@@ -142,15 +161,18 @@ describe('appellant-case-expedited', () => {
 				ownershipCertificate: false
 			};
 
+			const appeal = { ...appealDataFullPlanning, appealId: 2 };
+			nock('http://test/').get('/appeals/2/exists').reply(200, mapExistsFromAppeal(appeal));
 			nock('http://test/')
-				.get('/appeals/2?include=all')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses);
+			nock('http://test/')
+				.get('/appeals/2/appellant-case')
 				.reply(200, {
-					...appealDataFullPlanning,
-					appealId: 2
+					...expeditedAppellantCaseData,
+					appealType: appeal.appealType,
+					documentationSummary: appeal.documentationSummary
 				});
-			nock('http://test/')
-				.get('/appeals/2/appellant-cases/0')
-				.reply(200, expeditedAppellantCaseData);
 
 			const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
 			const element = parseHtml(response.text, { skipPrettyPrint: true });
@@ -184,15 +206,18 @@ describe('appellant-case-expedited', () => {
 				ownershipCertificate: false
 			};
 
+			const appeal = { ...appealDataFullPlanning, appealId: 2 };
+			nock('http://test/').get('/appeals/2/exists').reply(200, mapExistsFromAppeal(appeal));
 			nock('http://test/')
-				.get('/appeals/2?include=all')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses);
+			nock('http://test/')
+				.get('/appeals/2/appellant-case')
 				.reply(200, {
-					...appealDataFullPlanning,
-					appealId: 2
+					...expeditedAppellantCaseData,
+					appealType: appeal.appealType,
+					documentationSummary: appeal.documentationSummary
 				});
-			nock('http://test/')
-				.get('/appeals/2/appellant-cases/0')
-				.reply(200, expeditedAppellantCaseData);
 
 			const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
 			const element = parseHtml(response.text, { skipPrettyPrint: true });
@@ -222,13 +247,18 @@ describe('appellant-case-expedited', () => {
 			ownershipCertificate: null
 		};
 
+		const appeal = { ...appealDataFullPlanning, appealId: 2 };
+		nock('http://test/').get('/appeals/2/exists').reply(200, mapExistsFromAppeal(appeal));
 		nock('http://test/')
-			.get('/appeals/2?include=all')
+			.get('/appeals/document-redaction-statuses')
+			.reply(200, documentRedactionStatuses);
+		nock('http://test/')
+			.get('/appeals/2/appellant-case')
 			.reply(200, {
-				...appealDataFullPlanning,
-				appealId: 2
+				...expeditedAppellantCaseData,
+				appealType: appeal.appealType,
+				documentationSummary: appeal.documentationSummary
 			});
-		nock('http://test/').get('/appeals/2/appellant-cases/0').reply(200, expeditedAppellantCaseData);
 
 		const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
 		const element = parseHtml(response.text, { skipPrettyPrint: true });

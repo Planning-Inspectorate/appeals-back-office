@@ -308,7 +308,6 @@ const loadLinkedAppeals = async (appeal) => {
 	const childAppeals = appeal?.childAppeals?.filter(
 		(childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED
 	);
-	// @ts-ignore
 	if (!isLinkedAppealsActive(appeal) || (!parentAppeals?.length && !childAppeals?.length)) {
 		return [];
 	}

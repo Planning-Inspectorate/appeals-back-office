@@ -359,7 +359,11 @@ router.use(
 
 router
 	.route('/')
-	.get(validateAppeal, clearUncommittedFilesFromSession, asyncHandler(controller.getAppellantCase))
+	.get(
+		validateAppealExists,
+		clearUncommittedFilesFromSession,
+		asyncHandler(controller.getAppellantCase)
+	)
 	.post(
 		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
