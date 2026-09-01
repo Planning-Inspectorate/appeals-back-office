@@ -1,4 +1,3 @@
-import config from '#config/config.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
@@ -620,12 +619,7 @@ const sendPublishedStatementNotifiesForHearing = async (
 	const hasAppellantStatement = representations.some(
 		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT
 	);
-	const hasStatementsOrComments = hasAppellantStatement || hasLpaStatement || hasIpComments;
 	const isEnforcementOrLdc = isLdcOrEnforcementCaseType(appeal.appealType?.key);
-
-	const includeFrontOfficeUrl = isEnforcementOrLdc && !hasStatementsOrComments;
-	const lpaPath = `${config.frontOffice.url}/${FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA}/${appeal.reference}`;
-	const appellantPath = `${config.frontOffice.url}/${FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT}/${appeal.reference}`;
 
 	const hearingDate = appeal.hearing?.hearingStartTime
 		? dateISOStringToDisplayDate(appeal.hearing.hearingStartTime)
@@ -673,13 +667,13 @@ const sendPublishedStatementNotifiesForHearing = async (
 		{
 			email: appeal.lpa?.email,
 			template: lpaTemplate,
-			url: lpaPath,
+			dashboardStub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA,
 			recipientRole: 'lpa'
 		},
 		{
 			email: appeal.agent?.email || appeal.appellant?.email,
 			template: appellantTemplate,
-			url: appellantPath,
+			dashboardStub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
 			recipientRole: 'appellant'
 		}
 	];
@@ -704,9 +698,7 @@ const sendPublishedStatementNotifiesForHearing = async (
 				site_address: siteAddress,
 				...(enforcementReference && { enforcement_reference: enforcementReference }),
 				lpa_reference: lpaReference || '',
-				...(includeFrontOfficeUrl && {
-					front_office_url: isEnforcementOrLdc ? contact.url : config.frontOffice.url
-				}),
+				...(isEnforcementOrLdc && { fo_dashboard_stub: contact.dashboardStub }),
 				hearing_date: hearingDate,
 				team_email_address,
 				recipient_role: contact.recipientRole,

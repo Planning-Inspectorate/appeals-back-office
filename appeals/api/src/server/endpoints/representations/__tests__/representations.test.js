@@ -3173,6 +3173,7 @@ describe('/appeals/:id/reps', () => {
 					notifyClient: expect.anything(),
 					personalisation: {
 						...expectedEmailPayload,
+						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA,
 						recipient_role: 'lpa'
 					},
 					recipientEmail: mockEnforcementNoticeAppeal.lpa.email,
@@ -3184,6 +3185,7 @@ describe('/appeals/:id/reps', () => {
 					notifyClient: expect.anything(),
 					personalisation: {
 						...expectedEmailPayload,
+						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
 						recipient_role: 'appellant'
 					},
 					recipientEmail: 'test@136s7.com',

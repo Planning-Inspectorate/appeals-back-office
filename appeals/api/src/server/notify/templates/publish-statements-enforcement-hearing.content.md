@@ -9,7 +9,7 @@
 {% if has_ip_comments -%}
 - comments from interested parties
 {% endif %}
-You can [view this information in the appeals service]({{front_office_url}}).
+You can [view this information in the appeals service]({{front_office_url}}/{{fo_dashboard_stub}}/{{appeal_reference_number}}).
 {% if not has_lpa_statement -%}
 We did not receive a statement from the local planning authority.
 {% endif -%}
