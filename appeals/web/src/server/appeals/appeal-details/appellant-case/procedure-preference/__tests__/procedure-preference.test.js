@@ -1,7 +1,8 @@
 // @ts-nocheck
 import {
 	appealDataFullPlanning,
-	appellantCaseDataNotValidated
+	appellantCaseDataNotValidated,
+	documentRedactionStatuses
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
@@ -15,6 +16,7 @@ import {
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
+const existsResponse = { id: 2, appealId: 2, appealReference: '2' };
 
 describe('procedure-preference', () => {
 	beforeEach(() => {
@@ -25,6 +27,18 @@ describe('procedure-preference', () => {
 				...appealDataFullPlanning,
 				appealId: 2
 			})
+			.persist();
+		nock('http://test/')
+			.get('/appeals/2?include=appellantCase')
+			.reply(200, {
+				...appealDataFullPlanning,
+				appealId: 2
+			})
+			.persist();
+		nock('http://test/').get('/appeals/2/exists').reply(200, existsResponse).persist();
+		nock('http://test/')
+			.get('/appeals/document-redaction-statuses')
+			.reply(200, documentRedactionStatuses)
 			.persist();
 	});
 	afterEach(teardown);
@@ -65,8 +79,12 @@ describe('procedure-preference', () => {
 			describe(`"${testCase.labelText}" row`, () => {
 				it(`should render a summary list row for ${testCase.labelText} with "${testCase.defaultValueText}" populated in the value column if ${testCase.fieldName} is not present in the appellant case`, async () => {
 					nock('http://test/')
-						.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
-						.reply(200, appellantCaseDataNotValidated);
+						.get(`/appeals/2/appellant-case`)
+						.reply(200, {
+							...appellantCaseDataNotValidated,
+							appealType: 'Planning appeal',
+							documentationSummary: appealDataFullPlanning.documentationSummary
+						});
 
 					const response = await request.get(`${baseUrl}/2/appellant-case`);
 
@@ -79,9 +97,11 @@ describe('procedure-preference', () => {
 
 				it(`should render a summary list row for ${testCase.labelText} with "${testCase.defaultValueText}" populated in the value column if ${testCase.fieldName} is null`, async () => {
 					nock('http://test/')
-						.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
+						.get(`/appeals/2/appellant-case`)
 						.reply(200, {
 							...appellantCaseDataNotValidated,
+							appealType: 'Planning appeal',
+							documentationSummary: appealDataFullPlanning.documentationSummary,
 							[testCase.fieldName]: null
 						});
 
@@ -95,9 +115,11 @@ describe('procedure-preference', () => {
 
 				it(`should render a summary list row for ${testCase.labelText} with "${testCase.validValueText}" populated in the value column if ${testCase.fieldName} is "${testCase.validFieldValue}"`, async () => {
 					nock('http://test/')
-						.get(`/appeals/2/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
+						.get(`/appeals/2/appellant-case`)
 						.reply(200, {
 							...appellantCaseDataNotValidated,
+							appealType: 'Planning appeal',
+							documentationSummary: appealDataFullPlanning.documentationSummary,
 							[testCase.fieldName]: testCase.validFieldValue
 						});
 

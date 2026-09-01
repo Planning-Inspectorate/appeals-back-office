@@ -3,7 +3,12 @@ import { hasValueOrIsNull } from '#utils/has-value-or-null.js';
 import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import { MAX_VISIBLE_DOCUMENTS_IN_SUMMARY } from '@pins/appeals/constants/common.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_CASE_STAGE,
+	APPEAL_CASE_STATUS,
+	APPEAL_DOCUMENT_TYPE
+} from '@planning-inspectorate/data-model';
+import { contextEnum } from '../mappers/context-enum.js';
 import {
 	deleteAppealsInBatches,
 	getAppealReferencesByIds
@@ -952,14 +957,17 @@ const checkIfAppealHasAgent = async (appealId) => {
 
 /**
  * @param {number} caseId
- * @returns {Promise<any[]>}
- */
-/**
- * @param {number} caseId
  * @param {boolean} [loadAllVersions]
+ * @param {string|null} [includeStage]
+ * @param {string[]} [includePaths]
  * @returns {Promise<any[]>}
  */
-const getFoldersWithDocumentsAndVersions = async (caseId, loadAllVersions = false) => {
+const getFoldersWithDocumentsAndVersions = async (
+	caseId,
+	loadAllVersions = false,
+	includeStage = null,
+	includePaths = []
+) => {
 	if (!databaseConnector.folder) {
 		return [];
 	}
@@ -971,11 +979,26 @@ const getFoldersWithDocumentsAndVersions = async (caseId, loadAllVersions = fals
 		return [];
 	}
 
+	const filteredFolders = folders.filter((folder) => {
+		const hasStage = !!includeStage;
+		const hasPaths = includePaths?.length > 0;
+
+		if (!hasStage && !hasPaths) {
+			return true;
+		}
+
+		const matchesStage = hasStage && folder.path.startsWith(includeStage);
+
+		const matchesPath = hasPaths && includePaths.some((path) => folder.path.startsWith(path));
+
+		return matchesStage || matchesPath;
+	});
+
 	if (!databaseConnector.document) {
-		return folders.map((f) => ({ ...f, documents: [] }));
+		return filteredFolders.map((f) => ({ ...f, documents: [] }));
 	}
 
-	const folderIds = folders.map((f) => f.id);
+	const folderIds = filteredFolders.map((f) => f.id);
 	const documents = await databaseConnector.document.findMany({
 		where: {
 			folderId: { in: folderIds },
@@ -987,11 +1010,11 @@ const getFoldersWithDocumentsAndVersions = async (caseId, loadAllVersions = fals
 	});
 
 	if (!documents || documents.length === 0) {
-		return folders.map((f) => ({ ...f, documents: [] }));
+		return filteredFolders.map((f) => ({ ...f, documents: [] }));
 	}
 
 	if (!databaseConnector.documentVersion) {
-		return folders.map((f) => {
+		return filteredFolders.map((f) => {
 			const folderDocs = documents.filter((d) => d.folderId === f.id);
 			return {
 				...f,
@@ -1058,7 +1081,7 @@ const getFoldersWithDocumentsAndVersions = async (caseId, loadAllVersions = fals
 		documentsByFolderId.get(doc.folderId).push(doc);
 	}
 
-	return folders.map((folder) => ({
+	return filteredFolders.map((folder) => ({
 		...folder,
 		documents: documentsByFolderId.get(folder.id) || []
 	}));
@@ -1466,6 +1489,191 @@ const getAppealByIdForPageDisplay = async (id) => {
 	if (appeal) {
 		// @ts-ignore
 		return appeal;
+	}
+};
+
+/**
+ * @satisfies {import('#db-client/models.ts').AppealSelect}
+ */
+const appellantCaseSelect = {
+	id: true,
+	reference: true,
+	applicationReference: true,
+	currentStatus: true,
+	caseCreatedDate: true,
+	appellantCase: {
+		include: {
+			appellantCaseIncompleteReasonsSelected: {
+				include: {
+					appellantCaseIncompleteReason: true,
+					appellantCaseIncompleteReasonText: true
+				}
+			},
+			appellantCaseInvalidReasonsSelected: {
+				include: {
+					appellantCaseInvalidReason: true,
+					appellantCaseInvalidReasonText: true
+				}
+			},
+			appellantCaseEnforcementInvalidReasonsSelected: {
+				include: {
+					appellantCaseEnforcementInvalidReason: true,
+					appellantCaseEnforcementInvalidReasonText: true
+				}
+			},
+			appellantCaseEnforcementMissingDocumentsSelected: {
+				include: {
+					appellantCaseEnforcementMissingDocument: true,
+					appellantCaseEnforcementMissingDocumentText: true
+				}
+			},
+			appellantCaseEnforcementGroundsMismatchFactsSelected: {
+				include: {
+					appellantCaseEnforcementGroundsMismatchFacts: true,
+					appellantCaseEnforcementGroundsMismatchFactsText: true
+				}
+			},
+			appellantCaseValidationOutcome: true,
+			knowsOtherOwners: true,
+			knowsAllOwners: true,
+			appellantCaseAdvertDetails: true,
+			contactAddress: true
+		}
+	},
+	lpaQuestionnaire: {
+		select: {
+			id: true,
+			lpaQuestionnaireValidationOutcome: {
+				select: {
+					name: true
+				}
+			}
+		}
+	},
+	caseOfficer: {
+		select: {
+			id: true,
+			azureAdUserId: true
+		}
+	},
+	lpa: {
+		select: {
+			name: true
+		}
+	},
+	appealType: {
+		select: {
+			type: true,
+			key: true
+		}
+	},
+	address: {
+		select: {
+			id: true,
+			addressLine1: true,
+			addressLine2: true,
+			addressTown: true,
+			addressCounty: true,
+			postcode: true
+		}
+	},
+	appellant: {
+		select: {
+			id: true,
+			firstName: true,
+			lastName: true,
+			organisationName: true,
+			email: true,
+			phoneNumber: true
+		}
+	},
+	agent: {
+		select: {
+			id: true,
+			firstName: true,
+			lastName: true,
+			organisationName: true,
+			email: true,
+			phoneNumber: true
+		}
+	},
+	parentAppeals: {
+		select: {
+			id: true,
+			type: true,
+			linkingDate: true,
+			parentId: true,
+			parentRef: true,
+			childId: true,
+			childRef: true,
+			externalSource: true,
+			externalAppealType: true,
+			externalId: true,
+			parent: {
+				select: {
+					id: true,
+					reference: true
+				}
+			}
+		}
+	},
+	childAppeals: {
+		select: {
+			id: true,
+			type: true,
+			linkingDate: true,
+			parentId: true,
+			parentRef: true,
+			childId: true,
+			childRef: true,
+			externalSource: true,
+			externalAppealType: true,
+			externalId: true,
+			child: {
+				select: {
+					id: true,
+					reference: true
+				}
+			}
+		}
+	}
+};
+
+/**
+ *
+ * @param {number} appealId
+ * @param {import('../mappers/context-enum.js').contextEnum[number]} context
+ * @returns {Promise<Appeal|null>}
+ */
+export const getAppealByContext = async (appealId, context) => {
+	switch (context) {
+		case contextEnum.appellantCase: {
+			const appeal = await databaseConnector.appeal.findUnique({
+				where: {
+					id: appealId
+				},
+				select: appellantCaseSelect
+			});
+
+			if (!appeal) return null;
+
+			//@ts-expect-error
+			appeal.folders = await getFoldersWithDocumentsAndVersions(
+				appealId,
+				false,
+				APPEAL_CASE_STAGE.APPELLANT_CASE,
+				[`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION}`]
+			);
+			//@ts-expect-error
+			return appeal;
+		}
+		case contextEnum.broadcast:
+		case contextEnum.appealDetails:
+		case contextEnum.lpaQuestionnaire:
+		case contextEnum.representations:
+			throw new Error(`Unhandled context: ${context}`);
+		default:
+			throw new Error(`Unknown context: ${context}`);
 	}
 };
 
