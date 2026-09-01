@@ -1412,7 +1412,7 @@ describe('appellant cases routes', () => {
 						appeal_type: 'Enforcement Notice',
 						enforcement_reference: enforcementNoticeAppeal.appellantCase.enforcementReference,
 						appeal_grounds: ['a', 'b'],
-						other_appeals_grounds_group: [{ reference: 6000101, grounds: ['a', 'b'] }],
+						other_appeals_grounds_group: [{ reference: 6000101, id: 101, grounds: ['a', 'b'] }],
 						ground_a_barred: false,
 						other_info: 'Accio horcrux'
 					},
@@ -1432,7 +1432,7 @@ describe('appellant cases routes', () => {
 						enforcement_reference: enforcementNoticeAppeal.appellantCase.enforcementReference,
 						appeal_grounds: ['a', 'b'],
 						ground_a_barred: false,
-						other_appeals_grounds_group: [{ reference: 6000101, grounds: ['a', 'b'] }],
+						other_appeals_grounds_group: [{ reference: 6000101, id: 101, grounds: ['a', 'b'] }],
 						other_info: 'Accio horcrux',
 						appellant_contact_details: 'Lee Thornton, test@1367.com, 01234 567 890',
 						agent_contact_details: 'John Smith, test@136s7.com, 09876 543 210'
@@ -1540,8 +1540,8 @@ describe('appellant cases routes', () => {
 						enforcement_reference: enforcementNoticeAppeal.appellantCase.enforcementReference,
 						appeal_grounds: ['a', 'b'],
 						other_appeals_grounds_group: [
-							{ reference: 6000100, grounds: ['a', 'b'] },
-							{ reference: 6000101, grounds: ['a', 'b'] }
+							{ reference: 6000100, id: 100, grounds: ['a', 'b'] },
+							{ reference: 6000101, id: 101, grounds: ['a', 'b'] }
 						],
 						ground_a_barred: false,
 						other_info: 'Accio horcrux'
@@ -1563,8 +1563,8 @@ describe('appellant cases routes', () => {
 						appeal_grounds: ['a', 'b'],
 						ground_a_barred: false,
 						other_appeals_grounds_group: [
-							{ reference: 6000100, grounds: ['a', 'b'] },
-							{ reference: 6000101, grounds: ['a', 'b'] }
+							{ reference: 6000100, id: 100, grounds: ['a', 'b'] },
+							{ reference: 6000101, id: 101, grounds: ['a', 'b'] }
 						],
 						other_info: 'Accio horcrux',
 						appellant_contact_details: 'Lee Thornton, test@1367.com, 01234 567 890',

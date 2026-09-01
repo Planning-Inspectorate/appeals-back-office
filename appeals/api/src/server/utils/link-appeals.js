@@ -85,7 +85,7 @@ export const linkAppeals = async (azureAdUserId, parentAppeal, childAppeal) => {
 /**
  *
  * @param {Partial<Appeal> | undefined} appeal
- * @returns {Promise<{ reference: string | undefined, grounds: string[] }[]>}
+ * @returns {Promise<{ reference: string | undefined, id: number, grounds: string[] }[]>}
  */
 export const getChildEnforcementsWithGrounds = async (appeal) => {
 	let childEnforcementWithGrounds = [];
@@ -97,6 +97,7 @@ export const getChildEnforcementsWithGrounds = async (appeal) => {
 				]);
 				childEnforcementWithGrounds.push({
 					reference: childAppeal.reference,
+					id: Number(childAppeal.id),
 					grounds:
 						childWithInfo?.appealGrounds?.map((ground) => ground.ground?.groundRef || '').sort() ||
 						[]
