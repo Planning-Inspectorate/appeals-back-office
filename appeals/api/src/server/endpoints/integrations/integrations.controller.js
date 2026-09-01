@@ -31,6 +31,7 @@ import { EventType } from '@pins/event-client';
 import {
 	APPEAL_APPELLANT_PROCEDURE_PREFERENCE,
 	APPEAL_CASE_TYPE,
+	APPEAL_DOCUMENT_TYPE,
 	SERVICE_USER_TYPE
 } from '@planning-inspectorate/data-model';
 import { broadcasters } from './integrations.broadcasters.js';
@@ -45,6 +46,17 @@ import { integrationService } from './integrations.service.js';
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealRepresentationSubmission} AppealRepresentationSubmission */
+
+// Only need grounds a-g for Enforcement Notice appeals
+const enforcementNoticeGroundsSupportingDocuments = [
+	APPEAL_DOCUMENT_TYPE.GROUND_A_SUPPORTING,
+	APPEAL_DOCUMENT_TYPE.GROUND_B_SUPPORTING,
+	APPEAL_DOCUMENT_TYPE.GROUND_C_SUPPORTING,
+	APPEAL_DOCUMENT_TYPE.GROUND_D_SUPPORTING,
+	APPEAL_DOCUMENT_TYPE.GROUND_E_SUPPORTING,
+	APPEAL_DOCUMENT_TYPE.GROUND_F_SUPPORTING,
+	APPEAL_DOCUMENT_TYPE.GROUND_G_SUPPORTING
+];
 
 /**
  *
@@ -188,11 +200,19 @@ export const importAppeal = async (req, res) => {
 		if (!isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_LINKED)) {
 			await markAwaitingTransfer(id, appealTypeId, AUDIT_TRIAL_APPELLANT_UUID);
 		}
+
+		// When importing a child linked appeal for enforcement with multiple appellants
+		// only import copies of the grounds of appeal supporting documents for each child
+		const supportingDocuments = documents.filter((document) =>
+			// @ts-ignore
+			enforcementNoticeGroundsSupportingDocuments.includes(document.documentType)
+		);
+
 		const childResults = await importNamedIndividuals({
 			// @ts-ignore
 			parentAppeal: parentResult,
 			casedata,
-			documents,
+			documents: supportingDocuments,
 			users
 		});
 
