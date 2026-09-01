@@ -14,6 +14,7 @@ import {
 } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { jest } from '@jest/globals';
+import { FRONT_OFFICE_DASHBOARD_PATH_STUBS } from '@pins/appeals/constants/common.js';
 import {
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED,
@@ -3168,6 +3169,7 @@ describe('/appeals/:id/reps', () => {
 					notifyClient: expect.anything(),
 					personalisation: {
 						...expectedEmailPayload,
+						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA,
 						recipient_role: 'lpa'
 					},
 					recipientEmail: mockEnforcementNoticeAppeal.lpa.email,
@@ -3179,6 +3181,7 @@ describe('/appeals/:id/reps', () => {
 					notifyClient: expect.anything(),
 					personalisation: {
 						...expectedEmailPayload,
+						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
 						recipient_role: 'appellant'
 					},
 					recipientEmail: 'test@136s7.com',
