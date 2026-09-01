@@ -1,3 +1,17 @@
+resource "azurerm_monitor_action_group" "critical_alerts_group" {
+  name                = "${local.org}-ag-critical-alerts-${local.resource_suffix}"
+  resource_group_name = azurerm_resource_group.primary.name
+  short_name          = "CritAlert"
+  tags                = local.tags
+
+  lifecycle {
+    ignore_changes = [
+      email_receiver
+    ]
+  }
+}
+
+
 resource "azurerm_log_analytics_workspace" "main" {
   name                = "${local.org}-log-${local.resource_suffix}"
   location            = module.primary_region.location
@@ -93,6 +107,10 @@ resource "azurerm_monitor_metric_alert" "web_availability" {
   action {
     action_group_id = local.action_group_ids.its
   }
+
+  action {
+    action_group_id = azurerm_monitor_action_group.critical_alerts_group.id
+  }
 }
 
 # Log cap alert using scheduled query rules
@@ -127,4 +145,52 @@ resource "azurerm_monitor_scheduled_query_rules_alert_v2" "log_cap" {
   action {
     action_groups = [local.action_group_ids.tech]
   }
+}
+
+locals {
+  critical_alert_apps = {
+    "web" = "pins-app-${local.service_name}-web-${var.environment}"
+    "api" = "pins-app-${local.service_name}-api-${var.environment}"
+  }
+}
+
+resource "azurerm_monitor_scheduled_query_rules_alert_v2" "app_down_critical" {
+  for_each = local.critical_alert_apps
+
+  name         = "CRITICAL - App Down ${each.key} - ${local.resource_suffix}"
+  display_name = "CRITICAL - App Down ${each.key} - ${local.resource_suffix}"
+  description  = "Critical alert: ${each.key} experiencing sustained high failure rate"
+
+  location            = module.primary_region.location
+  resource_group_name = azurerm_resource_group.primary.name
+  scopes              = [azurerm_application_insights.main.id]
+
+  enabled                 = true
+  auto_mitigation_enabled = true
+
+  evaluation_frequency = "PT5M"
+  window_duration      = "PT10M"
+
+  criteria {
+    query = <<-QUERY
+      requests
+      | where cloud_RoleName =~ '${each.value}'
+      | where resultCode != 404
+      | summarize TotalCount=count(), FailedCount=countif(success == false)
+      | where TotalCount > 0
+      | extend FailureRate = (FailedCount * 100.0 / TotalCount)
+      | where FailureRate >= 90
+      QUERY
+
+    time_aggregation_method = "Count"
+    threshold               = 0
+    operator                = "GreaterThan"
+  }
+
+  severity = 0
+  action {
+    action_groups = [azurerm_monitor_action_group.critical_alerts_group.id, local.action_group_ids.tech]
+  }
+
+  tags = local.tags
 }
