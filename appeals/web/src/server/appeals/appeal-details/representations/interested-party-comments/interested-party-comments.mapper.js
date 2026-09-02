@@ -1,5 +1,4 @@
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
-import { isFeatureActive } from '#common/feature-flags.js';
 import { addressToString } from '#lib/address-formatter.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
@@ -13,7 +12,6 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { highlightRedactedSections } from '#lib/redaction-string-formatter.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /**
@@ -240,7 +238,7 @@ export function sharedIpCommentsPage(
 			}
 		),
 		...notificationBanners,
-		...(isFeatureActive(FEATURE_FLAG_NAMES.MANUALLY_ADD_REPS) && !disableAddIPComment
+		...(!disableAddIPComment
 			? [
 					wrapComponents(
 						[
