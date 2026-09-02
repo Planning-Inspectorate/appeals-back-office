@@ -1,4 +1,3 @@
-import { textSummaryListItem } from '#lib/mappers/components/index.js';
 import { button } from '#lib/mappers/components/instructions/button.js';
 
 /** @type {import('../mapper.js').SubMapper} */
@@ -15,16 +14,3 @@ export const mapSiteVisit = ({ currentRoute, userHasUpdateCasePermission }) => {
 		}
 	});
 };
-
-/** @type {import('../mapper.js').SubMapper} */
-export const mapSiteVisitOld = ({ appealDetails, userHasUpdateCasePermission }) =>
-	textSummaryListItem({
-		id: 'site-visit',
-		text: 'Site visit',
-		value: {
-			html: 'Not set up'
-		},
-		link: `/appeals-service/appeal-details/${appealDetails.appealId}/site-visit/schedule-visit`,
-		editable: userHasUpdateCasePermission,
-		actionText: 'Set up'
-	});

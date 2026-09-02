@@ -1,4 +1,3 @@
-import config from '#environment/config.js';
 import { dateISOStringToDisplayDate, dateISOStringToDisplayTime12hr } from '#lib/dates.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
@@ -29,7 +28,7 @@ export const mapSiteVisitStartTime = ({ appealDetails, userHasUpdateCasePermissi
 	);
 	return textSummaryListItem({
 		id: 'site-visit-start-time',
-		text: config.featureFlags.featureFlagCancelSiteVisit ? 'Time' : 'Start time',
+		text: 'Time',
 		value: {
 			html: appealDetails.siteVisit?.visitStartTime
 				? dateISOStringToDisplayTime12hr(appealDetails.siteVisit?.visitStartTime)

@@ -1,4 +1,3 @@
-import config from '#environment/config.js';
 import { permissionNames } from '#environment/permissions.js';
 import { textSummaryListItem, userHasPermission } from '#lib/mappers/index.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
@@ -7,7 +6,7 @@ import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 export const mapVisitType = ({ appealDetails, currentRoute, session, request }) =>
 	textSummaryListItem({
 		id: 'set-visit-type',
-		text: config.featureFlags.featureFlagCancelSiteVisit ? 'Type' : 'Visit type',
+		text: 'Type',
 		value: appealDetails.siteVisit?.visitType || '',
 		link: addBackLinkQueryToUrl(request, `${currentRoute}/site-visit/schedule-visit`),
 		editable: userHasPermission(permissionNames.setEvents, session),
