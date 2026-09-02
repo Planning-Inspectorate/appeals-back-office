@@ -244,6 +244,14 @@ const appealsApiRequests = {
 			appellantProcedurePreference: "inquiry",
 		}
 	},
+	S78RemovalOrVariationOfConditionsAppealSubmission: {	
+		casedata: {
+			...baseSubmission.casedata,
+			caseType: 'W',
+			typeOfPlanningApplication: PLANNING_APPLICATION_TYPES.REMOVAL_OR_VARIATION_OF_CONDITIONS,
+			appellantProcedurePreference: "inquiry",
+		}
+	},
 	S78PermissionInPrincipleAppealSubmission: {
 		casedata: {
 			...baseSubmission.casedata,
