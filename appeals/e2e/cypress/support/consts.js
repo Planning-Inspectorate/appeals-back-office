@@ -9,7 +9,8 @@ export const PLANNING_APPLICATION_TYPES = {
 	OUTLINE: 'outline-planning',
 	RESERVED_MATTERS: 'reserved-matters',
 	PRIOR_APPROVAL: 'prior-approval',
-	PERMISSION_IN_PRINCIPLE: 'permission-in-principle'
+	PERMISSION_IN_PRINCIPLE: 'permission-in-principle',
+	REMOVAL_OR_VARIATION_OF_CONDITIONS: 'removal-or-variation-of-conditions'
 };
 
 export const APPEAL_PAYLOAD_TYPES = {
@@ -17,7 +18,9 @@ export const APPEAL_PAYLOAD_TYPES = {
 	OUTLINE_PLANNING_APPEAL_SUBMISSION: 'S78OutlinePlanningAppealSubmission',
 	RESERVED_MATTERS_APPEAL_SUBMISSION: 'S78ReservedMattersAppealSubmission',
 	PRIOR_APPROVAL_APPEAL_SUBMISSION: 'S78PriorApprovalAppealSubmission',
-	PERMISSION_IN_PRINCIPLE_APPEAL_SUBMISSION: 'S78PermissionInPrincipleAppealSubmission'
+	PERMISSION_IN_PRINCIPLE_APPEAL_SUBMISSION: 'S78PermissionInPrincipleAppealSubmission',
+	REMOVAL_OR_VARIATION_OF_CONDITIONS_APPEAL_SUBMISSION:
+		'S78RemovalOrVariationOfConditionsAppealSubmission'
 };
 
 export const CTA_TEXT = {
