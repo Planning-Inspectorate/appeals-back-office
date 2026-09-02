@@ -44,7 +44,7 @@ describe('Expedited (part1)) appeals', () => {
 	];
 
 	afterEach(() => {
-		//cy.deleteAppeals(appeal);
+		cy.deleteAppeals(appeal);
 	});
 
 	let caseObj;
