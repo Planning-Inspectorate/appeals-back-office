@@ -97,6 +97,7 @@ variable "apps_config" {
       featureFlagEnforcementChangeProcedureLinked = bool
       featureFlagShareCosts                       = bool
       featureFlagExpeditedAppealsLpaq             = bool
+      featureFlagExpeditedAppealsChangeProcedure  = bool
       featureFlagNewBeforeYouStart                = bool
       featureFlagEnforcementChangeProcedure       = bool
       featureFlagSharingHearingDocuments          = bool
