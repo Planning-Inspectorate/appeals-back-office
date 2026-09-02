@@ -88,6 +88,7 @@ apps_config = {
     featureFlagEnforcementChangeProcedureLinked = true
     featureFlagShareCosts                       = true
     featureFlagExpeditedAppealsLpaq             = true
+    featureFlagExpeditedAppealsChangeProcedure  = true
     featureFlagNewBeforeYouStart                = true
     featureFlagEnforcementChangeProcedure       = true
     featureFlagSharingHearingDocuments          = true

@@ -59,6 +59,7 @@ export function loadConfig() {
 		FEATURE_FLAG_HEARING_POST_MVP,
 		FEATURE_FLAG_EXPEDITED_APPEALS,
 		FEATURE_FLAG_EXPEDITED_APPEALS_LPAQ,
+		FEATURE_FLAG_EXPEDITED_APPEALS_CHANGE_PROCEDURE,
 		GOOGLE_ANALYTICS_ID,
 		MICROSOFT_CLARITY_ID,
 		HORIZON_APPEAL_BASE_URL,
@@ -170,6 +171,8 @@ export function loadConfig() {
 			featureFlagRule6PoE: FEATURE_FLAG_RULE_6_POE === 'true',
 			featureFlagExpeditedAppeals: FEATURE_FLAG_EXPEDITED_APPEALS === 'true',
 			featureFlagExpeditedAppealsLpaq: FEATURE_FLAG_EXPEDITED_APPEALS_LPAQ === 'true',
+			featureFlagExpeditedAppealsChangeProcedure:
+				FEATURE_FLAG_EXPEDITED_APPEALS_CHANGE_PROCEDURE === 'true',
 			featureFlagAppellantStatement: FEATURE_FLAG_APPELLANT_STATEMENT === 'true',
 			featureFlagRule6Statement: FEATURE_FLAG_RULE_6_STATEMENT === 'true',
 			featureFlagRule6Costs: FEATURE_FLAG_RULE_6_COSTS === 'true',
