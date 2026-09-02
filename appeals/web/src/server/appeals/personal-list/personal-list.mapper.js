@@ -78,8 +78,8 @@ export function personalListPage(
 			text: 'Search all cases'
 		}
 	};
-	const existingQueryParams = Object.entries(request.query)
-		.filter(([key]) => key !== 'appealStatusFilter')
+	const existingCaseOfficerParams = Object.entries(request.query)
+		.filter(([key]) => key === 'caseOfficerId')
 		.map(([key, value]) => `<input type="hidden" name="${key}" value="${value}">`)
 		.join('');
 
@@ -101,7 +101,7 @@ export function personalListPage(
 				{
 					type: 'html',
 					parameters: {
-						html: `<form method="GET">${existingQueryParams}`
+						html: `<form method="GET">${existingCaseOfficerParams}`
 					}
 				},
 				{

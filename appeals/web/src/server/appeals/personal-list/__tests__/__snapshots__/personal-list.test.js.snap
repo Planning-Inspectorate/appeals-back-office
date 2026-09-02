@@ -18,8 +18,6 @@ exports[`personal-list GET / should render a child status tag in the lead or chi
                 </summary>
                 <div class="govuk-details__text">
                     <form method="GET">
-                        <input type="hidden" name="pageNumber" value="1">
-                        <input type="hidden" name="pageSize" value="30">
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="filters-select">Show cases with status</label>
                             <select class="govuk-select" id="filters-select"
@@ -151,8 +149,6 @@ exports[`personal-list GET / should render a lead status tag in the lead or chil
                 </summary>
                 <div class="govuk-details__text">
                     <form method="GET">
-                        <input type="hidden" name="pageNumber" value="1">
-                        <input type="hidden" name="pageSize" value="30">
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="filters-select">Show cases with status</label>
                             <select class="govuk-select" id="filters-select"
@@ -303,8 +299,6 @@ exports[`personal-list GET / should render an empty cell in the lead or child co
                 </summary>
                 <div class="govuk-details__text">
                     <form method="GET">
-                        <input type="hidden" name="pageNumber" value="1">
-                        <input type="hidden" name="pageSize" value="30">
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="filters-select">Show cases with status</label>
                             <select class="govuk-select" id="filters-select"
@@ -455,8 +449,6 @@ exports[`personal-list GET / should render the first page of another case office
                 </summary>
                 <div class="govuk-details__text">
                     <form method="GET">
-                        <input type="hidden" name="pageNumber" value="2">
-                        <input type="hidden" name="pageSize" value="1">
                         <input type="hidden" name="caseOfficerId" value="abac693e-4332-4a02-bb21-af05b9fee854">
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="filters-select">Show cases with status</label>
@@ -589,8 +581,6 @@ exports[`personal-list GET / should render the first page of another case office
                 </summary>
                 <div class="govuk-details__text">
                     <form method="GET">
-                        <input type="hidden" name="pageNumber" value="1">
-                        <input type="hidden" name="pageSize" value="5">
                         <input type="hidden" name="caseOfficerId" value="abac693e-4332-4a02-bb21-af05b9fee854">
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="filters-select">Show cases with status</label>
@@ -676,8 +666,6 @@ exports[`personal-list GET / should render the first page of the personal list w
                 </summary>
                 <div class="govuk-details__text">
                     <form method="GET">
-                        <input type="hidden" name="pageNumber" value="1">
-                        <input type="hidden" name="pageSize" value="5">
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="filters-select">Show cases with status</label>
                             <select class="govuk-select" id="filters-select"
@@ -836,8 +824,6 @@ exports[`personal-list GET / should render the second page of the personal list 
                 </summary>
                 <div class="govuk-details__text">
                     <form method="GET">
-                        <input type="hidden" name="pageNumber" value="2">
-                        <input type="hidden" name="pageSize" value="1">
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="filters-select">Show cases with status</label>
                             <select class="govuk-select" id="filters-select"
@@ -969,8 +955,6 @@ exports[`personal-list GET / should render the second page of the personal list 
                 </summary>
                 <div class="govuk-details__text">
                     <form method="GET">
-                        <input type="hidden" name="pageNumber" value="2">
-                        <input type="hidden" name="pageSize" value="5">
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="filters-select">Show cases with status</label>
                             <select class="govuk-select" id="filters-select"
