@@ -526,6 +526,24 @@ const s78ExpeditedTimetable = {
 };
 const advertTimetable = {
 	lpaQuestionnaireDueDate: {
+		daysFromStartDate: 5
+	},
+	ipCommentsDueDate: {
+		daysFromStartDate: 25
+	},
+	lpaStatementDueDate: {
+		daysFromStartDate: 25
+	},
+	finalCommentsDueDate: {
+		daysFromStartDate: 35
+	},
+	s106ObligationDueDate: {
+		daysFromStartDate: 30
+	}
+};
+
+const enforcementNoticeTimetable = {
+	lpaQuestionnaireDueDate: {
 		daysFromStartDate: 10
 	},
 	ipCommentsDueDate: {
@@ -537,14 +555,10 @@ const advertTimetable = {
 	finalCommentsDueDate: {
 		daysFromStartDate: 45
 	},
-	s106ObligationDueDate: {
-		daysFromStartDate: 30
-	}
-};
-
-const enforcementNoticeTimetable = {
-	...advertTimetable,
 	planningObligationDueDate: {
+		daysFromStartDate: 30
+	},
+	s106ObligationDueDate: {
 		daysFromStartDate: 30
 	}
 };
