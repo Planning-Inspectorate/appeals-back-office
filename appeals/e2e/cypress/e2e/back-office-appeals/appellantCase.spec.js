@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 /// <reference types="cypress"/>
 
 import { appealsApiRequests } from '../../fixtures/appealsApiRequests';
@@ -12,6 +12,9 @@ const caseDetailsPage = new CaseDetailsPage();
 const appellantCasePage = new AppellantCasePage();
 
 const { users: apiUsers, casedata, casAdvertsCasedata } = appealsApiRequests.caseSubmission;
+const hasExpeditedData = appealsApiRequests.hasExpeditedSubmission.casedata;
+const casPlanningExpeditedData = appealsApiRequests.casPlanningExpeditedSubmission.casedata;
+const casAdvertExpeditedData = appealsApiRequests.casAdvertsExpeditedSubmission.casedata;
 const casAdvertData = appealsApiRequests.casAdvertsSubmission.casedata;
 const fullAdvertData = appealsApiRequests.advertsSubmission.casedata;
 
@@ -119,6 +122,88 @@ describe('Managing Appellant Case Details', () => {
 				''
 			);
 			appellantCasePage.assertFieldLabelAndValue('Appeal statement', '');
+			appellantCasePage.assertFieldLabelAndValue('Application for an award of appeal costs', '');
+			appellantCasePage.assertFieldLabelAndValue('Additional documents', '');
+		});
+	});
+
+	it('HAS - expedited appellant form', () => {
+		cy.createCase({ ...hasExpeditedData }).then((caseObj) => {
+			appeal = caseObj;
+			appellantCasePage.navigateToAppellantCase(caseObj);
+
+			// Base questions
+			assertBaseQuestions(hasExpeditedData);
+
+			// 1 Site details
+			appellantCasePage.assertFieldLabelAndValue(
+				'What is the area of the appeal site?',
+				`${hasExpeditedData.siteAreaSquareMetres} m²`
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Have there been any significant changes that would affect the application?',
+				'Yes'
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Have there been any significant changes that would affect the application?',
+				'Local plan: Local plan changes'
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Have there been any significant changes that would affect the application?',
+				'National policy: National policy changes'
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Have there been any significant changes that would affect the application?',
+				'Court judgment: Court judgment changes'
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Have there been any significant changes that would affect the application?',
+				'Other: Other changes'
+			);
+
+			// 2 Application details
+			appellantCasePage.assertFieldLabelAndValue(
+				'What is the application reference number?',
+				hasExpeditedData.applicationReference
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'What date did you submit your application?',
+				formatDate(hasExpeditedData.applicationDate)
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Enter the description of development that you submitted in your application',
+				hasExpeditedData.originalDevelopmentDescription
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Are there other appeals linked to your development?',
+				hasExpeditedData.nearbyCaseReferences.length ? 'Yes' : 'No'
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Was your application granted or refused?',
+				capitalize(hasExpeditedData.applicationDecision)
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'What’s the date on the decision letter from the local planning authority?​',
+				formatDate(hasExpeditedData.applicationDecisionDate)
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Decision letter from the local planning authority',
+				'No documents'
+			);
+
+			// 3 Appeal details
+			appellantCasePage.assertFieldLabelAndValue(
+				'Why are you appealing?',
+				hasExpeditedData.reasonForAppealAppellant
+			);
+
+			// 4 Upload docs (No appeal statement)
+			appellantCasePage.assertFieldLabelAndValue('Application form', '');
+			appellantCasePage.assertFieldLabelAndValue(
+				'Agreement to change the description of development',
+				''
+			);
+			appellantCasePage.assertFieldNotPresent('Appeal statement');
 			appellantCasePage.assertFieldLabelAndValue('Application for an award of appeal costs', '');
 			appellantCasePage.assertFieldLabelAndValue('Additional documents', '');
 		});
@@ -368,6 +453,100 @@ describe('Managing Appellant Case Details', () => {
 		});
 	});
 
+	it('CAS Advert - expedited appellant form', () => {
+		cy.createCase({ ...casAdvertExpeditedData }).then((caseObj) => {
+			appeal = caseObj;
+			appellantCasePage.navigateToAppellantCase(caseObj);
+
+			// Base questions for CAS adverts
+			assertBaseQuestions(casAdvertExpeditedData);
+
+			// Not present
+			appellantCasePage.assertFieldNotPresent('What is the area of the appeal site?');
+			appellantCasePage.assertFieldNotPresent('Additional documents');
+
+			// Advert specific site details + significant changes
+			appellantCasePage.assertFieldLabelAndValue(
+				'Is the appeal site on highway land?',
+				casAdvertExpeditedData.advertDetails[0].isSiteOnHighwayLand ? 'Yes' : 'No'
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Is the advertisement in position?',
+				casAdvertExpeditedData.advertDetails[0].isAdvertInPosition ? 'Yes' : 'No'
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				"Do you have the landowner's permission?",
+				casAdvertExpeditedData.hasLandownersPermission ? 'Yes' : 'No'
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Have there been any significant changes that would affect the application?',
+				'Yes'
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Have there been any significant changes that would affect the application?',
+				'Local plan: Local plan changes'
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Have there been any significant changes that would affect the application?',
+				'National policy: National policy changes'
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Have there been any significant changes that would affect the application?',
+				'Court judgment: Court judgment changes'
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Have there been any significant changes that would affect the application?',
+				'Other: Other changes'
+			);
+
+			// Application details
+			appellantCasePage.assertFieldLabelAndValue(
+				'What is the application reference number?',
+				casAdvertExpeditedData.applicationReference
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'What date did you submit your application?',
+				formatDate(casAdvertExpeditedData.applicationDate)
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Enter the description of the advertisement',
+				casAdvertExpeditedData.originalDevelopmentDescription
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Are there other appeals linked to your development?',
+				casAdvertExpeditedData.nearbyCaseReferences.length ? 'Yes' : 'No'
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Was your application granted or refused?',
+				capitalize(casAdvertExpeditedData.applicationDecision)
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'What’s the date on the decision letter from the local planning authority?​',
+				formatDate(casAdvertExpeditedData.applicationDecisionDate)
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Decision letter from the local planning authority',
+				'No documents'
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Agreement to change the description of the advertisement',
+				'No documents'
+			);
+
+			// Appeal details
+			appellantCasePage.assertFieldLabelAndValue(
+				'Why are you appealing?',
+				casAdvertExpeditedData.reasonForAppealAppellant
+			);
+
+			// Upload document labels (No appeal statement, no supporting docs)
+			appellantCasePage.assertFieldLabelAndValue('Application form', '');
+			appellantCasePage.assertFieldNotPresent('Appeal statement');
+			appellantCasePage.assertFieldLabelAndValue('Application for an award of appeal costs', '');
+			appellantCasePage.assertFieldNotPresent('Other new supporting documents');
+		});
+	});
+
 	it('CAS Planning - appellant form', () => {
 		cy.createCase({ caseType: 'ZP' }).then((caseObj) => {
 			appeal = caseObj;
@@ -424,6 +603,92 @@ describe('Managing Appellant Case Details', () => {
 				'Plans, drawings and list of plans',
 				'No documents'
 			);
+
+			appellantCasePage.assertFieldNotPresent('Additional documents');
+		});
+	});
+
+	it('CAS Planning - expedited appellant form', () => {
+		cy.createCase({ ...casPlanningExpeditedData }).then((caseObj) => {
+			appeal = caseObj;
+			appellantCasePage.navigateToAppellantCase(caseObj);
+
+			// Base questions
+			assertBaseQuestions(casPlanningExpeditedData);
+
+			// 1 Site details
+			appellantCasePage.assertFieldLabelAndValue(
+				'What is the area of the appeal site?',
+				`${casPlanningExpeditedData.siteAreaSquareMetres} m²`
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Have there been any significant changes that would affect the application?',
+				'Yes'
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Have there been any significant changes that would affect the application?',
+				'Local plan: Local plan changes'
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Have there been any significant changes that would affect the application?',
+				'National policy: National policy changes'
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Have there been any significant changes that would affect the application?',
+				'Court judgment: Court judgment changes'
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Have there been any significant changes that would affect the application?',
+				'Other: Other changes'
+			);
+
+			// 2 Application details
+			appellantCasePage.assertFieldLabelAndValue(
+				'What is the application reference number?',
+				casPlanningExpeditedData.applicationReference
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'What date did you submit your application?',
+				formatDate(casPlanningExpeditedData.applicationDate)
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Enter the description of development that you submitted in your application',
+				casPlanningExpeditedData.originalDevelopmentDescription
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Are there other appeals linked to your development?',
+				casPlanningExpeditedData.nearbyCaseReferences.length ? 'Yes' : 'No'
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Was your application granted or refused?',
+				capitalize(casPlanningExpeditedData.applicationDecision)
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'What’s the date on the decision letter from the local planning authority?​',
+				formatDate(casPlanningExpeditedData.applicationDecisionDate)
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Decision letter from the local planning authority',
+				'No documents'
+			);
+
+			// 3 Appeal details
+			appellantCasePage.assertFieldLabelAndValue(
+				'Why are you appealing?',
+				casPlanningExpeditedData.reasonForAppealAppellant
+			);
+
+			// 4 Upload docs (No appeal statement, no design & access, no supporting docs)
+			appellantCasePage.assertFieldLabelAndValue('Application form', '');
+			appellantCasePage.assertFieldLabelAndValue(
+				'Agreement to change the description of development',
+				''
+			);
+			appellantCasePage.assertFieldNotPresent('Appeal statement');
+			appellantCasePage.assertFieldLabelAndValue('Application for an award of appeal costs', '');
+			appellantCasePage.assertFieldNotPresent('Design and access statement');
+			appellantCasePage.assertFieldNotPresent('Plans, drawings and list of plans');
+			appellantCasePage.assertFieldNotPresent('Other new supporting documents');
 
 			appellantCasePage.assertFieldNotPresent('Additional documents');
 		});
@@ -538,6 +803,12 @@ describe('Managing Appellant Case Details', () => {
 	}
 
 	const assertBaseQuestions = (submissionType) => {
+		// Before you start
+		appellantCasePage.assertFieldLabelAndValue(
+			'Local planning authority',
+			'System Test Borough Council'
+		);
+
 		// Appellant section
 		appellantCasePage.assertAppellantDetails({
 			firstName: apiUsers[0].firstName,

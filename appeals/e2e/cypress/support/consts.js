@@ -10,7 +10,9 @@ export const PLANNING_APPLICATION_TYPES = {
 	RESERVED_MATTERS: 'reserved-matters',
 	PRIOR_APPROVAL: 'prior-approval',
 	PERMISSION_IN_PRINCIPLE: 'permission-in-principle',
-	REMOVAL_OR_VARIATION_OF_CONDITIONS: 'removal-or-variation-of-conditions'
+	REMOVAL_OR_VARIATION_OF_CONDITIONS: 'removal-or-variation-of-conditions',
+	MINOR_COMMERCIAL: 'minor-commercial-development',
+	ADVERTISEMENT: 'advertisement'
 };
 
 export const APPEAL_PAYLOAD_TYPES = {
