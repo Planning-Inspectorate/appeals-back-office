@@ -45,6 +45,7 @@ import { EventType } from '@pins/event-client';
 import {
 	APPEAL_CASE_PROCEDURE,
 	APPEAL_CASE_STATUS,
+	APPEAL_CASE_TYPE,
 	APPEAL_REDACTED_STATUS
 } from '@planning-inspectorate/data-model';
 
@@ -742,17 +743,27 @@ const sendPublishedStatementNotifiesForWrittenReps = async (
 		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
 	);
 
-	let lpaTemplate = 'publish-statements-written-reps-lpa';
-	let appellantTemplate = 'publish-statements-written-reps-appellant';
+	const isEnforcement = appeal.appealType?.key === APPEAL_CASE_TYPE.C; //Update here for LDC and ELB appeals
+
+	let lpaTemplate = isEnforcement
+		? 'publish-statements-enforcement-written-reps'
+		: 'publish-statements-written-reps-lpa';
+	let appellantTemplate = isEnforcement
+		? 'publish-statements-enforcement-written-reps'
+		: 'publish-statements-written-reps-appellant';
 
 	const contacts = [
 		{
 			email: appeal.lpa?.email,
-			template: lpaTemplate
+			template: lpaTemplate,
+			dashboardStub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA,
+			recipientRole: 'lpa'
 		},
 		{
 			email: appeal.agent?.email || appeal.appellant?.email,
-			template: appellantTemplate
+			template: appellantTemplate,
+			dashboardStub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
+			recipientRole: 'appellant'
 		}
 	];
 
@@ -778,8 +789,12 @@ const sendPublishedStatementNotifiesForWrittenReps = async (
 				site_address: siteAddress,
 				...(enforcementReference && { enforcement_reference: enforcementReference }),
 				lpa_reference: lpaReference || '',
+				...(isEnforcement && { fo_dashboard_stub: contact.dashboardStub }),
 				final_comments_due_date: finalCommentsDueDate,
-				team_email_address
+				team_email_address,
+				...(isEnforcement && {
+					recipient_role: contact.recipientRole
+				})
 			}
 		});
 	});
