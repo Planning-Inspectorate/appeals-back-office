@@ -14,6 +14,7 @@ import {
 } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { jest } from '@jest/globals';
+import { FRONT_OFFICE_DASHBOARD_PATH_STUBS } from '@pins/appeals/constants/common.js';
 import {
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED,
@@ -2970,10 +2971,12 @@ describe('/appeals/:id/reps', () => {
 						has_lpa_statement: true,
 						has_ip_comments: true,
 						has_appellant_statement: false,
+						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA,
+						recipient_role: 'lpa',
 						team_email_address: expect.any(String)
 					},
 					recipientEmail: mockEnforcementNoticeAppeal.lpa.email,
-					templateName: 'publish-statements-written-reps-lpa'
+					templateName: 'publish-statements-enforcement-written-reps'
 				});
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
@@ -2984,10 +2987,12 @@ describe('/appeals/:id/reps', () => {
 						has_lpa_statement: true,
 						has_ip_comments: true,
 						has_appellant_statement: false,
+						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
+						recipient_role: 'appellant',
 						team_email_address: expect.any(String)
 					},
 					recipientEmail: 'test@136s7.com',
-					templateName: 'publish-statements-written-reps-appellant'
+					templateName: 'publish-statements-enforcement-written-reps'
 				});
 			});
 

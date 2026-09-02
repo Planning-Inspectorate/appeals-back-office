@@ -518,6 +518,23 @@ these [Notify Templates](../appeals/api/src/server/notify/templates):
 - **Notify Content Template:** [publish-statements-written-reps-appellant](../appeals/api/src/server/notify/templates/publish-statements-written-reps-appellant.content.md)
 - **Trigger:** Publish representations when the appeal is in the statements stage. Sent to appellant/agent.
 
+### Statements published - ELB/Enforcement/LDC written reps with either statements or comments received
+
+- **Appeal type:** Enforcement (currently enabled), Enforcement Listed Building (future), Lawful Development Certificate (future)
+- **Procedure:** Written
+- **Notify Subject Template:** [publish-statements-enforcement-written-reps](../appeals/api/src/server/notify/templates/publish-statements-enforcement-written-reps.subject.md)
+- **Notify Content Template:** [publish-statements-enforcement-written-reps](../appeals/api/src/server/notify/templates/publish-statements-enforcement-written-reps.content.md)
+- **GOV notify template:**
+  - [Yes LPA statement, Yes appellant statement, Yes comments](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/8b1115bf-349f-43b6-96ec-c5d9bf76cb36)
+  - [Yes LPA statement, Yes appellant statement, No comments](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/2b083375-341e-4cb8-9f20-8c201659930f)
+  - [Yes LPA statement, No appellant statement, No comments](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/eb8c919d-7df0-4b19-9cf7-21a4f004b2b2)
+  - [Yes LPA statement, No appellant statement, Yes comments](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/76fca554-4777-4dc4-b74c-473d0a4e70ff)
+  - [No LPA statement, Yes appellant statement, Yes comments](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/25d97aa5-6d60-4965-ab35-26fa5d209930)
+  - [No LPA statement, Yes appellant statement, No comments](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/48625e83-7472-4752-94f4-5f1ea3ff8497)
+  - [No LPA statement, No appellant statement, Yes comments](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/5bca49b5-472d-45db-9a1d-a0e08f5d0505)
+  - [No LPA statement, No appellant statement, No comments](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/bcf281c0-0f2c-47ea-a9c1-413158c35e72)
+- **Trigger:** Publish representations or progress case when the appeal is in the statements stage. Sent to appellant/agent and LPA.
+
 ### Statements published - hearing lpa
 
 - **Appeal type:** All
