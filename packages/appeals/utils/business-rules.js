@@ -4,7 +4,7 @@ import {
 	APPEAL_CASE_STATUS,
 	APPEAL_CASE_TYPE
 } from '@planning-inspectorate/data-model';
-import { PROCEDURE_TYPE_NAME } from '../constants/common.js';
+import { APPEAL_TYPE, PROCEDURE_TYPE_NAME } from '../constants/common.js';
 import {
 	isLdcOrDiscontinuanceOrEnforcementAppealType,
 	isLdcOrEnforcementAppealType
@@ -29,6 +29,82 @@ export const displayFinalComments = (appealType, procedureType) =>
 		procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.INQUIRY &&
 		procedureType !== APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 &&
 		procedureType !== PROCEDURE_TYPE_NAME.WRITTEN_PART_1);
+
+/**
+ * Checks if an expedited S78 appeal can have its procedure changed.
+ * Allows changes when feature flag is active, appeal type is S78, the procedure is Part 1 / writtenPart1, and at an allowed stage.
+ * @param {Object} params
+ * @param {string | null | undefined} [params.appealType]
+ * @param {string | undefined} params.procedureType
+ * @param {string | undefined} [params.currentStage]
+ * @param {boolean} [params.isExpeditedCopFeatureActive]
+ * @returns {boolean}
+ */
+export const canChangeS78ExpeditedAppealProcedure = ({
+	appealType,
+	procedureType,
+	currentStage,
+	isExpeditedCopFeatureActive = false
+}) => {
+	if (!isExpeditedCopFeatureActive) {
+		return false;
+	}
+
+	if (appealType && appealType !== APPEAL_TYPE.S78 && appealType !== APPEAL_CASE_TYPE.W) {
+		return false;
+	}
+
+	const normalised = procedureType?.toLowerCase();
+	if (normalised !== PROCEDURE_TYPE_NAME.WRITTEN_PART_1.toLowerCase()) {
+		return false;
+	}
+
+	return [APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE].includes(/** @type {any} */ (currentStage));
+};
+
+/**
+ * Checks if an expedited appeal can change to a specific target procedure type at the current stage.
+ * Update based on allowed stages for changing procedure type
+ * @param {Object} params
+ * @param {string} params.targetProcedure
+ * @param {string | null | undefined} params.appealType
+ * @param {string | undefined} params.currentProcedureType
+ * @param {string | undefined} [params.currentStage]
+ * @param {boolean} [params.isExpeditedCopFeatureActive]
+ * @returns {boolean}
+ */
+export const canChangeS78ExpeditedToTargetProcedure = ({
+	targetProcedure,
+	appealType,
+	currentProcedureType,
+	currentStage,
+	isExpeditedCopFeatureActive = false
+}) => {
+	if (
+		!canChangeS78ExpeditedAppealProcedure({
+			appealType,
+			procedureType: currentProcedureType,
+			currentStage,
+			isExpeditedCopFeatureActive
+		})
+	) {
+		return false;
+	}
+
+	switch (targetProcedure) {
+		case APPEAL_CASE_PROCEDURE.WRITTEN:
+			// Stage 1: Up to LPAQ complete allows changing to Written
+			return [APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE].includes(/** @type {any} */ (currentStage));
+		case APPEAL_CASE_PROCEDURE.HEARING:
+			// Future Dev Work: Hearing
+			return false;
+		case APPEAL_CASE_PROCEDURE.INQUIRY:
+			// Future Dev Work: Inquiry
+			return false;
+		default:
+			return false;
+	}
+};
 
 // display planning obligation when it 'hasObligation' for any procedure type for enforcement appeal types
 // and only hearing and inquiry otherwise

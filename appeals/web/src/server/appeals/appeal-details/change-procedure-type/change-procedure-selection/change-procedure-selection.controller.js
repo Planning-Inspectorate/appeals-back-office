@@ -19,7 +19,7 @@ export const getSelectProcedure = async (request, response) => {
  */
 const renderSelectProcedure = async (request, response) => {
 	const {
-		currentAppeal: { appealReference, appealType },
+		currentAppeal,
 		params: { appealId },
 		errors
 	} = request;
@@ -30,8 +30,8 @@ const renderSelectProcedure = async (request, response) => {
 	const backUrl = getBackLinkUrl(request, null, cyaUrl);
 
 	const mappedPageContent = selectProcedurePage(
-		appealReference,
-		appealType,
+		currentAppeal.appealReference,
+		currentAppeal,
 		backUrl,
 		sessionValues.appealProcedure,
 		errors ? errors['appealProcedure']?.msg : undefined

@@ -1188,7 +1188,10 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 			applicationMadeUnderActSection: true,
 			planningObligation: true,
 			statusPlanningObligation: true,
-			enforcementReference: true
+			enforcementReference: true,
+			applicationDate: true,
+			applicationDecision: true,
+			typeOfPlanningApplication: true
 		}
 	},
 	appellant: {
