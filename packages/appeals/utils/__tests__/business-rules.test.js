@@ -3,8 +3,10 @@ import {
 	APPEAL_CASE_STATUS,
 	APPEAL_CASE_TYPE
 } from '@planning-inspectorate/data-model';
-import { APPEAL_TYPE } from '../../constants/common';
+import { APPEAL_TYPE, PROCEDURE_TYPE_NAME } from '../../constants/common';
 import {
+	canChangeS78ExpeditedAppealProcedure,
+	canChangeS78ExpeditedToTargetProcedure,
 	displayFinalComments,
 	displayPlanningObligation,
 	sendSiteVisitScheduleUnaccompaniedNotify,
@@ -245,5 +247,173 @@ describe('sendSiteVisitScheduleUnaccompaniedNotify', () => {
 		APPEAL_TYPE.DISCONTINUANCE_NOTICE
 	])('returns true for appeal type %s', (appealType) => {
 		expect(sendSiteVisitScheduleUnaccompaniedNotify(appealType)).toBe(true);
+	});
+});
+
+describe('canChangeS78ExpeditedAppealProcedure', () => {
+	it('returns false if isExpeditedCopFeatureActive is false', () => {
+		expect(
+			canChangeS78ExpeditedAppealProcedure({
+				procedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
+				currentStage: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				isExpeditedCopFeatureActive: false
+			})
+		).toBe(false);
+	});
+
+	it('returns false if isExpeditedCopFeatureActive is not provided', () => {
+		expect(
+			canChangeS78ExpeditedAppealProcedure({
+				procedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
+				currentStage: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
+			})
+		).toBe(false);
+	});
+
+	it('returns true when feature flag is active, procedure is Part 1, and stage is lpa_questionnaire', () => {
+		expect(
+			canChangeS78ExpeditedAppealProcedure({
+				procedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
+				currentStage: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				isExpeditedCopFeatureActive: true
+			})
+		).toBe(true);
+	});
+
+	it('returns false when stage is not lpa_questionnaire', () => {
+		expect(
+			canChangeS78ExpeditedAppealProcedure({
+				procedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
+				currentStage: APPEAL_CASE_STATUS.EVENT,
+				isExpeditedCopFeatureActive: true
+			})
+		).toBe(false);
+
+		expect(
+			canChangeS78ExpeditedAppealProcedure({
+				procedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
+				currentStage: undefined,
+				isExpeditedCopFeatureActive: true
+			})
+		).toBe(false);
+	});
+
+	it.each([
+		APPEAL_CASE_PROCEDURE.WRITTEN,
+		APPEAL_CASE_PROCEDURE.HEARING,
+		APPEAL_CASE_PROCEDURE.INQUIRY
+	])('returns false when procedure is %s even if feature flag is active', (procedureType) => {
+		expect(
+			canChangeS78ExpeditedAppealProcedure({
+				procedureType,
+				currentStage: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				isExpeditedCopFeatureActive: true
+			})
+		).toBe(false);
+	});
+
+	it('returns true when appealType is S78 and procedure is Part 1', () => {
+		expect(
+			canChangeS78ExpeditedAppealProcedure({
+				appealType: APPEAL_TYPE.S78,
+				procedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
+				currentStage: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				isExpeditedCopFeatureActive: true
+			})
+		).toBe(true);
+	});
+
+	it('returns true when appealType is APPEAL_CASE_TYPE.W and procedure is Part 1', () => {
+		expect(
+			canChangeS78ExpeditedAppealProcedure({
+				appealType: APPEAL_CASE_TYPE.W,
+				procedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
+				currentStage: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				isExpeditedCopFeatureActive: true
+			})
+		).toBe(true);
+	});
+
+	it('returns false when appealType is not S78', () => {
+		expect(
+			canChangeS78ExpeditedAppealProcedure({
+				appealType: APPEAL_TYPE.HOUSEHOLDER,
+				procedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
+				currentStage: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				isExpeditedCopFeatureActive: true
+			})
+		).toBe(false);
+	});
+});
+
+describe('canChangeS78ExpeditedToTargetProcedure', () => {
+	it('returns false when isExpeditedCopFeatureActive is false', () => {
+		expect(
+			canChangeS78ExpeditedToTargetProcedure({
+				targetProcedure: APPEAL_CASE_PROCEDURE.WRITTEN,
+				appealType: APPEAL_TYPE.S78,
+				currentProcedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
+				currentStage: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				isExpeditedCopFeatureActive: false
+			})
+		).toBe(false);
+	});
+
+	it('returns true for Written at lpa_questionnaire stage when flag is active', () => {
+		expect(
+			canChangeS78ExpeditedToTargetProcedure({
+				targetProcedure: APPEAL_CASE_PROCEDURE.WRITTEN,
+				appealType: APPEAL_TYPE.S78,
+				currentProcedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
+				currentStage: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				isExpeditedCopFeatureActive: true
+			})
+		).toBe(true);
+	});
+	//add additional tests here when expanding avilable stages
+	it('returns false for Written when stage is not lpa_questionnaire', () => {
+		expect(
+			canChangeS78ExpeditedToTargetProcedure({
+				targetProcedure: APPEAL_CASE_PROCEDURE.WRITTEN,
+				appealType: APPEAL_TYPE.S78,
+				currentProcedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
+				currentStage: APPEAL_CASE_STATUS.READY_TO_START,
+				isExpeditedCopFeatureActive: true
+			})
+		).toBe(false);
+	});
+
+	it('returns false for Written when past LPAQ stage (e.g. event)', () => {
+		expect(
+			canChangeS78ExpeditedToTargetProcedure({
+				targetProcedure: APPEAL_CASE_PROCEDURE.WRITTEN,
+				appealType: APPEAL_TYPE.S78,
+				currentProcedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
+				currentStage: APPEAL_CASE_STATUS.EVENT,
+				isExpeditedCopFeatureActive: true
+			})
+		).toBe(false);
+	});
+	//update when changing for hearing/inquiry
+	it('returns false for Hearing and Inquiry for current stage', () => {
+		expect(
+			canChangeS78ExpeditedToTargetProcedure({
+				targetProcedure: APPEAL_CASE_PROCEDURE.HEARING,
+				appealType: APPEAL_TYPE.S78,
+				currentProcedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
+				currentStage: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				isExpeditedCopFeatureActive: true
+			})
+		).toBe(false);
+
+		expect(
+			canChangeS78ExpeditedToTargetProcedure({
+				targetProcedure: APPEAL_CASE_PROCEDURE.INQUIRY,
+				appealType: APPEAL_TYPE.S78,
+				currentProcedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
+				currentStage: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				isExpeditedCopFeatureActive: true
+			})
+		).toBe(false);
 	});
 });

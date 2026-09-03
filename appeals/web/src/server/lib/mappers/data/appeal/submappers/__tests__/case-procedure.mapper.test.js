@@ -146,4 +146,64 @@ describe('case-procedure.mapper', () => {
 			id: 'case-procedure'
 		});
 	});
+
+	it('Should display change link for expedited Part 1 appeal when featureFlagExpeditedAppealsChangeProcedure is active and stage is lpa_questionnaire', () => {
+		Object.assign(config.featureFlags, {
+			featureFlagExpeditedAppealsChangeProcedure: true
+		});
+		params.appealDetails.procedureType = PROCEDURE_TYPE_NAME.WRITTEN_PART_1;
+		params.appealDetails.appealStatus = 'lpa_questionnaire';
+		params.appellantCase = {
+			applicationDate: '2026-05-01',
+			applicationDecision: 'refused',
+			typeOfPlanningApplication: 'full-appeal'
+		};
+
+		const result = mapCaseProcedure(params);
+
+		expect(result?.display?.summaryListItem?.actions?.items).toEqual([
+			{
+				attributes: {
+					'data-cy': 'change-case-procedure'
+				},
+				href: '/appeal-questionnaire/change-appeal-procedure-type/change-selected-procedure-type',
+				text: 'Change',
+				visuallyHiddenText: 'Appeal procedure'
+			}
+		]);
+	});
+
+	it('Should not display change link for expedited Part 1 appeal when featureFlagExpeditedAppealsChangeProcedure is disabled', () => {
+		Object.assign(config.featureFlags, {
+			featureFlagExpeditedAppealsChangeProcedure: false
+		});
+		params.appealDetails.procedureType = PROCEDURE_TYPE_NAME.WRITTEN_PART_1;
+		params.appealDetails.appealStatus = 'lpa_questionnaire';
+		params.appellantCase = {
+			applicationDate: '2026-05-01',
+			applicationDecision: 'refused',
+			typeOfPlanningApplication: 'full-appeal'
+		};
+
+		const result = mapCaseProcedure(params);
+
+		expect(result?.display?.summaryListItem?.actions?.items).toEqual([]);
+	});
+
+	it('Should not display change link for expedited Part 1 appeal when appeal is not in an allowed stage (e.g. event)', () => {
+		Object.assign(config.featureFlags, {
+			featureFlagExpeditedAppealsChangeProcedure: true
+		});
+		params.appealDetails.procedureType = PROCEDURE_TYPE_NAME.WRITTEN_PART_1;
+		params.appealDetails.appealStatus = 'event';
+		params.appellantCase = {
+			applicationDate: '2026-05-01',
+			applicationDecision: 'refused',
+			typeOfPlanningApplication: 'full-appeal'
+		};
+
+		const result = mapCaseProcedure(params);
+
+		expect(result?.display?.summaryListItem?.actions?.items).toEqual([]);
+	});
 });

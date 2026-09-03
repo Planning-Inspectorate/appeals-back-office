@@ -275,6 +275,9 @@ function createDataLayout(caseMap, mappingRequest) {
 					applicationMadeUnderActSection:
 						appeal.appellantCase?.applicationMadeUnderActSection ?? null,
 					isEnforcementChild: appellantCase?.isEnforcementChild ?? false,
+					applicationDate: appeal.appellantCase?.applicationDate?.toISOString() ?? null,
+					applicationDecision: appeal.appellantCase?.applicationDecision ?? null,
+					typeOfPlanningApplication: appeal.appellantCase?.typeOfPlanningApplication ?? null,
 					planningObligation:
 						appeal.appellantCase?.planningObligation !== undefined
 							? {

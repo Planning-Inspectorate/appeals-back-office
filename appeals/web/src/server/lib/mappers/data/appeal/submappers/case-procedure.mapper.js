@@ -4,20 +4,33 @@ import isLinkedAppeal from '#lib/mappers/utils/is-linked-appeal.js';
 import { appealProcedureNameToLabelText } from '#lib/procedure-type-display-name-formatter.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { isS78ExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import { canChangeS78ExpeditedAppealProcedure } from '@pins/appeals/utils/business-rules.js';
 
 /**
- * @param {string | null | undefined} appealType
+ * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
+ * @param {boolean} [isS78Expedited]
  * @returns {boolean}
  */
-const canEditEnforcementNoticeProcedure = (appealType) => {
-	if (appealType !== APPEAL_TYPE.ENFORCEMENT_NOTICE) {
-		return true;
+const canEditProcedure = (appealDetails, isS78Expedited = false) => {
+	if (isS78Expedited) {
+		return canChangeS78ExpeditedAppealProcedure({
+			appealType: appealDetails.appealType,
+			procedureType: appealDetails.procedureType,
+			currentStage: appealDetails.appealStatus,
+			isExpeditedCopFeatureActive: featureFlags.isFeatureActive(
+				FEATURE_FLAG_NAMES.EXPEDITED_APPEALS_CHANGE_PROCEDURE
+			)
+		});
 	}
 
-	return (
-		featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_HEARING) ||
-		featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_INQUIRY)
-	);
+	if (appealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE) {
+		return (
+			featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_HEARING) ||
+			featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_INQUIRY)
+		);
+	}
+
+	return true;
 };
 
 /** @type {import('../mapper.js').SubMapper} */
@@ -30,7 +43,7 @@ export const mapCaseProcedure = ({
 	if (!appealDetails.appealTimetable) {
 		return { id: 'case-procedure', display: {} };
 	}
-	const showPart2 = isS78ExpeditedAppealType(
+	const isS78Expedited = isS78ExpeditedAppealType(
 		appealDetails.appealType,
 		appellantCase?.applicationDate,
 		appellantCase?.applicationDecision,
@@ -40,12 +53,13 @@ export const mapCaseProcedure = ({
 		id: 'case-procedure',
 		text: 'Appeal procedure',
 		value:
-			appealProcedureNameToLabelText(appealDetails.procedureType || '', showPart2) || 'No data',
+			appealProcedureNameToLabelText(appealDetails.procedureType || '', isS78Expedited) ||
+			'No data',
 		link: `${currentRoute}/change-appeal-procedure-type/change-selected-procedure-type`,
 		editable:
 			userHasUpdateCasePermission &&
 			!isLinkedAppeal(appealDetails) &&
-			canEditEnforcementNoticeProcedure(appealDetails.appealType),
+			canEditProcedure(appealDetails, isS78Expedited),
 		classes: 'appeal-case-procedure'
 	});
 };
