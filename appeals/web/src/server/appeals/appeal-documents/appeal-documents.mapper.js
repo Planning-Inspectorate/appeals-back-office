@@ -1025,7 +1025,7 @@ export function manageFolderPage({
 			...errorSummaryPageComponents,
 			...(hasMultipleButtons ? [buttonWrapperOpen] : []),
 			...(editable ? [buttonComponent] : []),
-			...(shareAllLinkUrl ? [shareAllButtonComponent] : []),
+			...(editable && shareAllLinkUrl ? [shareAllButtonComponent] : []),
 			...(hasMultipleButtons ? [buttonWrapperClose] : []),
 			{
 				type: 'table',

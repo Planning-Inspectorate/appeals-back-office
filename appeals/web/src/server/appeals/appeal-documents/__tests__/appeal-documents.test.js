@@ -7,7 +7,11 @@ import { parseHtml } from '@pins/platform';
 import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
 import nock from 'nock';
 import supertest from 'supertest';
-import { mapDocumentDownloadUrl, mapRedactionStatusKeyToName } from '../appeal-documents.mapper.js';
+import {
+	manageFolderPage,
+	mapDocumentDownloadUrl,
+	mapRedactionStatusKeyToName
+} from '../appeal-documents.mapper.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -353,6 +357,90 @@ describe('appeal-documents', () => {
 		it('Should return empty string when the redaction status key is not valid redaction status key', async () => {
 			const result = mapRedactionStatusKeyToName('123');
 			expect(result).toBe('');
+		});
+	});
+
+	describe('manageFolderPage', () => {
+		it('renders Share all documents button when editable and shareAllLinkUrl provided', () => {
+			const folder = {
+				folderId: validFolderId,
+				path: 'appellantCase/newSupportingDocuments',
+				caseId: validAppealId,
+				documents: [],
+				totalFolderSize: 1
+			};
+			const fakeRequest = { currentAppeal: { appealType: 'some' }, session: {} };
+
+			const page = manageFolderPage({
+				backLinkUrl: '/',
+				viewAndEditUrl: '/view/{{folderId}}/{{documentId}}',
+				addButtonUrl: '/add/{{folderId}}',
+				// @ts-ignore
+				folder,
+				// @ts-ignore
+				request: fakeRequest,
+				currentPageNumber: 1,
+				editable: true,
+				canShare: true,
+				shareAllLinkUrl: '/share/{{folderId}}'
+			});
+
+			// @ts-ignore
+			const hasShareAll = page.pageComponents.some(
+				(c) => c.type === 'button' && c.parameters && c.parameters.text === 'Share all documents'
+			);
+			expect(hasShareAll).toBe(true);
+		});
+
+		it('does not render Share all documents button when shareAllLinkUrl is missing or not editable', () => {
+			const folder = {
+				folderId: validFolderId,
+				path: 'appellantCase/newSupportingDocuments',
+				caseId: validAppealId,
+				documents: [],
+				totalFolderSize: 1
+			};
+			const fakeRequest = { currentAppeal: { appealType: 'some' }, session: {} };
+
+			const noLink = manageFolderPage({
+				backLinkUrl: '/',
+				viewAndEditUrl: '/view/{{folderId}}/{{documentId}}',
+				addButtonUrl: '/add/{{folderId}}',
+				// @ts-ignore
+				folder,
+				// @ts-ignore
+				request: fakeRequest,
+				currentPageNumber: 1,
+				editable: true,
+				canShare: true,
+				shareAllLinkUrl: undefined
+			});
+
+			const notEditable = manageFolderPage({
+				backLinkUrl: '/',
+				viewAndEditUrl: '/view/{{folderId}}/{{documentId}}',
+				addButtonUrl: '/add/{{folderId}}',
+				// @ts-ignore
+				folder,
+				// @ts-ignore
+				request: fakeRequest,
+				currentPageNumber: 1,
+				editable: false,
+				canShare: true,
+				shareAllLinkUrl: '/share/{{folderId}}'
+			});
+
+			// @ts-ignore
+			const hasShareAllNoLink = noLink.pageComponents.some(
+				(c) => c.type === 'button' && c.parameters && c.parameters.text === 'Share all documents'
+			);
+			// @ts-ignore
+			const hasShareAllNotEditable = notEditable.pageComponents.some(
+				(c) => c.type === 'button' && c.parameters && c.parameters.text === 'Share all documents'
+			);
+
+			expect(hasShareAllNoLink).toBe(false);
+			expect(hasShareAllNotEditable).toBe(false);
 		});
 	});
 });

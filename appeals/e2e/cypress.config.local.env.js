@@ -14,6 +14,8 @@ if (!baseConfig.e2e.apiBaseUrl) {
 }
 
 module.exports = defineConfig({
+	reporter: baseConfig.reporter,
+	reporterOptions: baseConfig.reporterOptions,
 	e2e: {
 		...baseConfig.e2e
 	},
