@@ -82,6 +82,9 @@ const { value, error } = schema.validate({
 		featureFlagExpeditedAppealsLpaq:
 			environment.FEATURE_FLAG_EXPEDITED_APPEALS_LPAQ &&
 			environment.FEATURE_FLAG_EXPEDITED_APPEALS_LPAQ === 'true',
+		featureFlagExpeditedAppealsChangeProcedure:
+			environment.FEATURE_FLAG_EXPEDITED_APPEALS_CHANGE_PROCEDURE &&
+			environment.FEATURE_FLAG_EXPEDITED_APPEALS_CHANGE_PROCEDURE === 'true',
 		featureFlagRule6Costs:
 			environment.FEATURE_FLAG_RULE_6_COSTS && environment.FEATURE_FLAG_RULE_6_COSTS === 'true',
 		featureFlagAppellantStatement:

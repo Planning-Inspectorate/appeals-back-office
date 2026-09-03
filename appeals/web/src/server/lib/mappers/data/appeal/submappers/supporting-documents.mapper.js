@@ -1,7 +1,12 @@
-import { actionsHtml, documentationFolderTableItem } from '#lib/mappers/index.js';
+import { permissionNames } from '#environment/permissions.js';
+import {
+	actionsHtml,
+	documentationFolderTableItem,
+	userHasPermission
+} from '#lib/mappers/index.js';
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapSupportingDocuments = ({ appealDetails, currentRoute }) => {
+export const mapSupportingDocuments = ({ appealDetails, currentRoute, session }) => {
 	const id = 'supporting-documents';
 	const folderInfo = appealDetails.supportingDocuments;
 	const folderId = folderInfo?.folderId;
@@ -28,7 +33,7 @@ export const mapSupportingDocuments = ({ appealDetails, currentRoute }) => {
 					text: 'Supporting documents',
 					hasDocuments,
 					link: `${currentRoute}/${id}`,
-					editable: true,
+					editable: userHasPermission(permissionNames.updateCase, session),
 					folderId
 				})
 			: '',
