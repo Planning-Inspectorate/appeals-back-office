@@ -252,9 +252,7 @@ export function personalListPage(
 		pageComponents: []
 	};
 
-	config.featureFlags.featureFlagSearchCaseOfficer
-		? pageContent.pageComponents?.push(searchOtherCOLink)
-		: null;
+	pageContent.pageComponents?.push(searchOtherCOLink);
 
 	if (
 		appealsAssignedToCurrentUser &&
