@@ -831,7 +831,7 @@ describe('Expedited (part1)) appeals', () => {
 			});
 		});
 
-		it.only('S78 outline planning appeal submitted on 01-04-2026 as not received should not be set as expedited', () => {
+		it('S78 outline planning appeal submitted on 01-04-2026 as not received should not be set as expedited', () => {
 			setupTestCase({
 				applicationDecision: APPLICATION_DECISIONS.NOT_RECEIVED,
 				appealType: APPEAL_PAYLOAD_TYPES.OUTLINE_PLANNING_APPEAL_SUBMISSION
