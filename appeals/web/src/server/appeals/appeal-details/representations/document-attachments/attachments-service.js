@@ -69,6 +69,6 @@ export const postRepresentationProofOfEvidence = async (
 		return response.body;
 	} catch (error) {
 		logger.error('Error posting representation proof of evidence:', error);
-		throw new Error('Failed to post representation proof of evidence');
+		throw new Error('Failed to post representation proof of evidence', { cause: error });
 	}
 };
