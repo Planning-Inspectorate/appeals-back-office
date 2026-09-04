@@ -111,7 +111,7 @@ router.route('/case/:caseReference').get((req, res) => {
 		if (id > 0) {
 			return res.redirect(`/appeals-service/appeal-details/${id}`);
 		}
-	} catch (error) {
+	} catch {
 		logger.debug(`Trying to redirect to case reference ${caseReference}, which was not found`);
 	}
 

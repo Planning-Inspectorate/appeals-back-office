@@ -113,7 +113,7 @@ export const createSiteVisit = async (
 						recipientEmail: siteVisitData.appellantEmail,
 						personalisation: emailVariables
 					});
-				} catch (error) {
+				} catch {
 					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 				}
 			}
@@ -127,7 +127,7 @@ export const createSiteVisit = async (
 						recipientEmail: siteVisitData.lpaEmail,
 						personalisation: emailVariables
 					});
-				} catch (error) {
+				} catch {
 					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 				}
 			}
@@ -135,7 +135,7 @@ export const createSiteVisit = async (
 		if (!visitDate && !visitStartTime && visitTypeId) {
 			await broadcasters.broadcastEvent(siteVisit.id, EVENT_TYPE.SITE_VISIT, EventType.Create);
 		}
-	} catch (error) {
+	} catch {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
 };
@@ -272,7 +272,7 @@ const updateSiteVisit = async (
 						recipientEmail: updateSiteVisitData.appellantEmail,
 						personalisation: emailVariables
 					});
-				} catch (error) {
+				} catch {
 					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 				}
 			}
@@ -286,13 +286,13 @@ const updateSiteVisit = async (
 						recipientEmail: updateSiteVisitData.lpaEmail,
 						personalisation: emailVariables
 					});
-				} catch (error) {
+				} catch {
 					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 				}
 			}
 		}
 		return result;
-	} catch (error) {
+	} catch {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
 };
@@ -377,7 +377,7 @@ const updateWhenSiteVisitMissed = async (
 					recipientEmail: updateSiteVisitData.appellantEmail,
 					personalisation: emailVariables
 				});
-			} catch (error) {
+			} catch {
 				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 			}
 		}
@@ -391,12 +391,12 @@ const updateWhenSiteVisitMissed = async (
 					recipientEmail: updateSiteVisitData.lpaEmail,
 					personalisation: emailVariables
 				});
-			} catch (error) {
+			} catch {
 				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 			}
 		}
 		return result;
-	} catch (error) {
+	} catch {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
 };
