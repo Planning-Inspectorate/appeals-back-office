@@ -1,4 +1,5 @@
-const { isRegExp } = require('lodash');
+import { commitlintConfig } from '@planning-inspectorate/coding-standards';
+import lodash from 'lodash';
 
 const scopes = [
 	'appeals',
@@ -17,8 +18,8 @@ const scopes = [
 const dependabotScopes = ['deps', 'deps-dev'];
 
 /** @type {import('@commitlint/types').UserConfig} */
-module.exports = {
-	extends: ['@commitlint/config-conventional'],
+export default {
+	...commitlintConfig,
 	parserPreset: {
 		parserOpts: {
 			headerPattern:
@@ -82,7 +83,7 @@ module.exports = {
 					// or a regular expression
 					if (
 						allowedScopes.some((allowedScope) => {
-							if (isRegExp(allowedScope)) {
+							if (lodash.isRegExp(allowedScope)) {
 								if (scope == null) {
 									return false;
 								}
