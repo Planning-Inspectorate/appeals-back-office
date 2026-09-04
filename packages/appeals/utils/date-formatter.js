@@ -75,7 +75,7 @@ export function dateISOStringToDisplayDate(dateISOString, fallback = '') {
 		displayDateString = formatInTimeZone(dateISOString, DEFAULT_TIMEZONE, 'd MMMM yyyy', {
 			locale: enGB
 		});
-	} catch (e) {
+	} catch {
 		displayDateString = '';
 	}
 

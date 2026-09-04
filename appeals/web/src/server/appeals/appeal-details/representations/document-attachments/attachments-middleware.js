@@ -33,7 +33,7 @@ export const getRepresentationAttachmentsFolder = async (req, res, next) => {
 			req.currentFolder?.documents,
 			req.currentRepresentation?.attachments
 		);
-	} catch (/** @type {any} */ error) {
+	} catch {
 		return res.status(500).render('app/500.njk');
 	}
 
