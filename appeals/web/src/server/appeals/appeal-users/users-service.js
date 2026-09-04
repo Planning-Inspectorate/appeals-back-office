@@ -111,7 +111,7 @@ const fetchRolesAndUsersFromGraph = async (roleName, session) => {
 			data.push(...page.value);
 
 			if (++numberOfPagesReturned > maximumNumberOfPages) {
-				gotAllPages = true;
+				// maximum pages reached, so break out of the loop
 				break;
 			}
 
