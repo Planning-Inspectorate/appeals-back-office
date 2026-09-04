@@ -91,7 +91,7 @@ export const changeProcedureToWritten = async (data, appealId) => {
 				result.existingHearing
 			);
 		}
-	} catch (error) {
+	} catch {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
 };
@@ -193,7 +193,7 @@ export const changeProcedureToHearing = async (data, appealId) => {
 				data.appealProcedure === data.existingAppealProcedure ? EventType.Update : EventType.Create
 			);
 		}
-	} catch (error) {
+	} catch {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
 };
@@ -328,7 +328,7 @@ export const changeProcedureToInquiry = async (data, appealId) => {
 		}
 	} catch (error) {
 		logger.error(error);
-		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+		throw new Error(ERROR_FAILED_TO_SAVE_DATA, { cause: error });
 	}
 };
 
@@ -482,7 +482,7 @@ function dateISOStringToDisplayTime12hr(dateISOString) {
 
 	try {
 		displayTimeString = formatInTimeZone(dateISOString, DEFAULT_TIMEZONE, `h:mmaaa`);
-	} catch (e) {
+	} catch {
 		displayTimeString = '';
 	}
 

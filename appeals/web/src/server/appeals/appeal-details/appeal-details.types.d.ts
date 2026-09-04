@@ -347,6 +347,7 @@ export interface SingleLPAQuestionnaireResponse {
 	anySignificantChangesLpa_courtJudgementSignificantChanges?: string | null;
 }
 
+/* eslint-disable-next-line  @typescript-eslint/no-wrapper-object-types */
 export type BodyValidationOutcome = Object<string, string | string[]>;
 
 // The following types are required because the corresponding types defined in the API specify Date fields, but the dates are formatted as strings in the API response data

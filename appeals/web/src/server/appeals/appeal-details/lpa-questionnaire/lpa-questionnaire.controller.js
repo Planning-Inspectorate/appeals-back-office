@@ -270,7 +270,8 @@ const renderCheckAndConfirm = async (request, response) => {
 		});
 	} catch (/** @type {*} */ error) {
 		throw new Error(
-			`Something went wrong when completing lpa questionnaire review: ${error.message}`
+			`Something went wrong when completing lpa questionnaire review: ${error.message}`,
+			{ cause: error }
 		);
 	}
 };
@@ -326,7 +327,8 @@ export const postCheckAndConfirm = async (request, response) => {
 		return response.redirect(`/appeals-service/appeal-details/${currentAppeal.appealId}`);
 	} catch (/** @type {*} */ error) {
 		throw new Error(
-			`Something went wrong when completing lpa questionnaire review: ${error.message}`
+			`Something went wrong when completing lpa questionnaire review: ${error.message}`,
+			{ cause: error }
 		);
 	}
 };
@@ -476,7 +478,8 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 		});
 	} catch (/** @type {*} */ error) {
 		throw new Error(
-			`Something went wrong when adding documents to lpa questionnaire: ${error.message}`
+			`Something went wrong when adding documents to lpa questionnaire: ${error.message}`,
+			{ cause: error }
 		);
 	}
 };
@@ -497,7 +500,8 @@ export const postAddDocumentVersionCheckAndConfirm = async (request, response) =
 		});
 	} catch (/** @type {*} */ error) {
 		throw new Error(
-			`Something went wrong when adding document version to lpa questionnaire: ${error.message}`
+			`Something went wrong when adding document version to lpa questionnaire: ${error.message}`,
+			{ cause: error }
 		);
 	}
 };

@@ -202,6 +202,6 @@ export async function postRepresentation(apiClient, appealId, payload, represent
 		return response.body;
 	} catch (error) {
 		logger.error('Error posting representation:', error);
-		throw new Error('Failed to post representation');
+		throw new Error('Failed to post representation', { cause: error });
 	}
 }

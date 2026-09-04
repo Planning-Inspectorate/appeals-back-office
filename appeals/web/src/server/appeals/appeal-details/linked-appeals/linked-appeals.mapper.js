@@ -24,11 +24,11 @@ export function manageLinkedAppealsPage(appealData, session) {
 
 	const rows = linkedAppeals.map((linkedAppeal) => {
 		const unlinkUrl =
-			`/appeals-service/appeal-details/${appealData.appealId}/linked-appeals${linkedAppeal.isParentAppeal}` &&
+			`/appeals-service/appeal-details/${appealData.appealId}/linked-appeals${linkedAppeal.isParentAppeal}` +
 			// @ts-ignore
-			linkedAppeal.linkedAppeals?.length > 1
+			(linkedAppeal.linkedAppeals?.length > 1
 				? 'unlink-lead-appeal'
-				: `unlink-appeal/${linkedAppeal.appealId}`;
+				: `unlink-appeal/${linkedAppeal.appealId}`);
 		const childAppealRef = appealShortReference(linkedAppeal?.appealReference) || '';
 		const hiddenText = `appeal ${numberToAccessibleDigitLabel(childAppealRef)}`;
 

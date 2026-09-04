@@ -55,7 +55,7 @@ export async function postRepresentationProofOfEvidence(
 		return response.body;
 	} catch (error) {
 		logger.error('Error posting proof of evidence:', error);
-		throw new Error('Failed to post proof of evidence representation');
+		throw new Error('Failed to post proof of evidence representation', { cause: error });
 	}
 }
 

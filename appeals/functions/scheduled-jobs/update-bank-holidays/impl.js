@@ -88,7 +88,7 @@ export function updateBankHolidays(service) {
 				message = error.message;
 			}
 
-			throw new Error('Error during fetching bank holidays run: ' + message);
+			throw new Error('Error during fetching bank holidays run: ' + message, { cause: error });
 		}
 	};
 }

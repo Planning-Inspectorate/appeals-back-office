@@ -150,7 +150,7 @@ export const notifySend = async (options) => {
 		}
 	} catch (error) {
 		logger.error(error);
-		throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+		throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL, { cause: error });
 	}
 };
 
@@ -179,25 +179,29 @@ export const renderTemplate = (name, personalisation) => {
 				throw new Error(
 					stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
 						`missing parameter at line #${line} and column #${column} in template: ${name}`
-					])
+					]),
+					{ cause: e }
 				);
 			}
 			throw new Error(
 				stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
 					`'${errorMessage}' at line #${line} and column #${column} in template: ${name}`
-				])
+				]),
+				{ cause: e }
 			);
 		} else if (message.includes('template not found')) {
 			throw new Error(
 				stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
 					`template not found: ${name}`
-				])
+				]),
+				{ cause: e }
 			);
 		}
 		throw new Error(
 			stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
 				`unknown error: ${message}`
-			])
+			]),
+			{ cause: e }
 		);
 	}
 };

@@ -125,8 +125,6 @@ export const renderAudit = async (request, response) => {
 		})
 	);
 
-	/** @type {NotificationArrayItem[]} */
-	let notificationsArray = [];
 	const ipComments = await interestedPartyCommentsService.getInterestedPartyComments(
 		request.apiClient,
 		appeal.appealId,
@@ -134,7 +132,8 @@ export const renderAudit = async (request, response) => {
 		1,
 		9999
 	);
-	notificationsArray = await Promise.all(
+	/** @type {NotificationArrayItem[]} */
+	const notificationsArray = await Promise.all(
 		/** @type {AuditNotifications} */ (notifications).map(async (notification) => {
 			const createdAt = utcToZonedTime(notification.dateCreated, 'Europe/London');
 			const opening = `${notification.subject} sent to ${mapEmailToRecipientType(
