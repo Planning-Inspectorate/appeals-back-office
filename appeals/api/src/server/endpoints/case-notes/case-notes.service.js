@@ -25,7 +25,7 @@ const postCaseNote = async (appealId, azureAdUserId, comment) => {
 		}
 	} catch (error) {
 		logger.error(error);
-		throw new Error('Failed to create comment');
+		throw new Error('Failed to create comment', { cause: error });
 	}
 };
 

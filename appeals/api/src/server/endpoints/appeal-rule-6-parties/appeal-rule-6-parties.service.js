@@ -111,7 +111,7 @@ const addRule6Party = async (appeal, serviceUser, azureAdUserId, notifyClient) =
 		return result;
 	} catch (error) {
 		logger.error(error, 'Failed to add rule 6 party');
-		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+		throw new Error(ERROR_FAILED_TO_SAVE_DATA, { cause: error });
 	}
 };
 
@@ -170,7 +170,7 @@ const updateRule6Party = async (appeal, rule6PartyId, serviceUser, azureAdUserId
 		return result;
 	} catch (error) {
 		logger.error(error, 'Failed to update rule 6 party');
-		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+		throw new Error(ERROR_FAILED_TO_SAVE_DATA, { cause: error });
 	}
 };
 
@@ -207,7 +207,7 @@ const deleteRule6Party = async (appealReference, rule6PartyId, azureAdUserId) =>
 		return result;
 	} catch (error) {
 		logger.error(error, 'Failed to delete rule 6 party');
-		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+		throw new Error(ERROR_FAILED_TO_SAVE_DATA, { cause: error });
 	}
 };
 

@@ -569,7 +569,7 @@ const deleteSiteVisit = async (appeal, notifyClient, azureAdUserId, appealIdsToU
 		});
 	} catch (error) {
 		logger.error(error, 'Failed to delete site visit');
-		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+		throw new Error(ERROR_FAILED_TO_SAVE_DATA, { cause: error });
 	}
 };
 

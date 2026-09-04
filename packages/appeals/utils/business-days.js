@@ -64,7 +64,7 @@ export const fetchBankHolidaysForDivision = async (
 
 		return getCache(cacheKey)[division].events;
 	} catch (error) {
-		throw new Error(String(error));
+		throw new Error(String(error), { cause: error });
 	}
 };
 
