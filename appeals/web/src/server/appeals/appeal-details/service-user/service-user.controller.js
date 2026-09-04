@@ -206,7 +206,7 @@ export const postRemoveServiceUser = async (request, response) => {
 		delete request.session.updatedServiceUser;
 
 		return response.redirect(backToMenuUrl);
-	} catch (error) {
+	} catch {
 		return response.status(500).render('app/500.njk');
 	}
 };
