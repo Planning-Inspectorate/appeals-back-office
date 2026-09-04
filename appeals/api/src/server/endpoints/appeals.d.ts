@@ -694,7 +694,7 @@ interface ValidationOutcomeResponse {
 	invalidReasons?: IncompleteInvalidReasonsResponse[];
 }
 
-interface AppealListResponse {
+export interface AppealListResponse {
 	appealId: number;
 	appealReference: string;
 	appealSite: AppealSite;
@@ -727,7 +727,7 @@ interface AppealListResponse {
 	isS78Expedited?: boolean;
 }
 
-interface PersonalListResponse {
+export interface PersonalListResponse {
 	appealId: number;
 	appealReference: string;
 	appealStatus: string;

@@ -23,10 +23,12 @@ export function manageLinkedAppealsPage(appealData, session) {
 	const linkedAppeals = [appealData, ...appealData.linkedAppeals];
 
 	const rows = linkedAppeals.map((linkedAppeal) => {
+		// TODO: should this be an absolute URL?
+		// previous implementation used a full URL but in a ternary so it was not used
+		// /appeals-service/appeal-details/${appealData.appealId}/linked-appeals
 		const unlinkUrl =
-			`/appeals-service/appeal-details/${appealData.appealId}/linked-appeals${linkedAppeal.isParentAppeal}` &&
-			// @ts-ignore
-			linkedAppeal.linkedAppeals?.length > 1
+			// @ts-expect-error - linkedAppeals can be present on this type
+			linkedAppeal.isParentAppeal && linkedAppeal.linkedAppeals?.length > 1
 				? 'unlink-lead-appeal'
 				: `unlink-appeal/${linkedAppeal.appealId}`;
 		const childAppealRef = appealShortReference(linkedAppeal?.appealReference) || '';

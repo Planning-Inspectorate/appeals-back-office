@@ -117,7 +117,7 @@ export interface UploadRequest {
 }
 
 export interface DecisionDatesObject {
-	originalLetterDate: String;
-	latestLetterDate: String;
+	originalLetterDate: string;
+	latestLetterDate: string;
 	latestFileVersion: BlobInfo;
 }
