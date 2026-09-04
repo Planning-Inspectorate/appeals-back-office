@@ -78,7 +78,7 @@ export const DEFAULT_OVERVIEW_DETAILS = {
 	applicationReference: '123',
 	allocationLevel: 'No allocation level for this appeal',
 	linkedAppeals: 'No linked appeals',
-	relatedAppeals: 'No', //'1000000' is a bug with displaying related appeals in case overview, see https://pins-ds.atlassian.net/browse/A2-8942
+	relatedAppeals: '1000000',
 	netGainResidential: 'Not provided'
 };
 

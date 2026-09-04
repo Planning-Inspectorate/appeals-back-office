@@ -27,6 +27,7 @@ describe('Manually Add a rep', () => {
 	});
 
 	let sampleFiles = caseDetailsPage.sampleFiles;
+
 	it('Manually Add LPA Statement', () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;
@@ -105,7 +106,7 @@ describe('Manually Add a rep', () => {
 		});
 	});
 
-	it('Manually LPA Add Final Comments', () => {
+	it('Manually Add LPA Final Comments', () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;
 			//Move Case to Statement Status
@@ -187,11 +188,19 @@ describe('Manually Add a rep', () => {
 	});
 
 	const uploadMannuallyAddRep = () => {
+		// make add button click optional
+		const addButtonClick = false;
+
 		fileUploader.uploadFiles(sampleFiles.document2);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.selectRadioButtonByValue('Redacted');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Confirm');
-		caseDetailsPage.clickButtonByText('Add document');
+
+		// this step seems to have been removed from the flow, i.e. document is now added after clicking confirm,
+		// leaving it here as optional though in case it is needed/restored in the future
+		if (addButtonClick) {
+			caseDetailsPage.clickButtonByText('Add');
+		}
 	};
 });
