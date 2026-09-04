@@ -203,10 +203,12 @@ describe('link-appeals utils', () => {
 			expect(result).toEqual([
 				{
 					reference: '100001',
+					id: 2,
 					grounds: ['a', 'g'] // Sorted alphabetically
 				},
 				{
 					reference: '100002',
+					id: 3,
 					grounds: ['b', 'f'] // Sorted alphabetically
 				}
 			]);
@@ -248,6 +250,7 @@ describe('link-appeals utils', () => {
 			expect(result).toEqual([
 				{
 					reference: '100001',
+					id: 2,
 					grounds: ['A']
 				}
 			]);
@@ -281,6 +284,7 @@ describe('link-appeals utils', () => {
 			expect(result).toEqual([
 				{
 					reference: '100001',
+					id: 2,
 					grounds: []
 				}
 			]);
@@ -309,6 +313,7 @@ describe('link-appeals utils', () => {
 			expect(result).toEqual([
 				{
 					reference: '100001',
+					id: 2,
 					grounds: []
 				}
 			]);
@@ -347,6 +352,7 @@ describe('link-appeals utils', () => {
 			expect(result).toEqual([
 				{
 					reference: '100001',
+					id: 2,
 					grounds: ['', '', 'A', 'B'] // Empty strings for missing refs, sorted
 				}
 			]);
@@ -388,9 +394,9 @@ describe('link-appeals utils', () => {
 			const result = await getChildEnforcementsWithGrounds(appeal);
 
 			expect(result).toEqual([
-				{ reference: '100000', grounds: [] },
-				{ reference: '100001', grounds: [] },
-				{ reference: '100002', grounds: [] }
+				{ reference: '100000', id: 3, grounds: [] },
+				{ reference: '100001', id: 4, grounds: [] },
+				{ reference: '100002', id: 2, grounds: [] }
 			]);
 		});
 	});

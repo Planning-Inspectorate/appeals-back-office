@@ -2475,8 +2475,8 @@ describe('appeal timetables routes', () => {
 									statement_of_common_ground_deadline: '',
 									appeal_grounds: ['a', 'b', 'c'],
 									other_appeals_grounds_group: [
-										{ reference: 6000100, grounds: ['a', 'b', 'c'] },
-										{ reference: 6000101, grounds: ['a', 'b', 'c'] }
+										{ reference: 6000100, id: 100, grounds: ['a', 'b', 'c'] },
+										{ reference: 6000101, id: 101, grounds: ['a', 'b', 'c'] }
 									],
 									enforcement_reference: appeal.appellantCase.enforcementReference,
 									team_email_address: 'caseofficers@planninginspectorate.gov.uk'
@@ -2518,8 +2518,8 @@ describe('appeal timetables routes', () => {
 									statement_of_common_ground_deadline: '',
 									appeal_grounds: ['a', 'b', 'c'],
 									other_appeals_grounds_group: [
-										{ reference: 6000100, grounds: ['a', 'b', 'c'] },
-										{ reference: 6000101, grounds: ['a', 'b', 'c'] }
+										{ reference: 6000100, id: 100, grounds: ['a', 'b', 'c'] },
+										{ reference: 6000101, id: 101, grounds: ['a', 'b', 'c'] }
 									],
 									enforcement_reference: appeal.appellantCase.enforcementReference,
 									team_email_address: 'caseofficers@planninginspectorate.gov.uk'
