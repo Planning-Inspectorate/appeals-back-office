@@ -103,7 +103,7 @@ const assignUser = async (
 
 	const typeOfAssignedUser = assignedUserType({ caseOfficer, inspector, padsInspector });
 	if (typeOfAssignedUser) {
-		let userId = null;
+		let userId;
 
 		if (typeOfAssignedUser) {
 			userId = assignedUserId
