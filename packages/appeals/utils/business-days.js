@@ -106,7 +106,7 @@ export const recalculateDateForBankHolidays = (
  * @returns {Date}
  */
 const addBankHolidayDays = (startedAt, calculatedDate, bankHolidays) => {
-	let bankHolidayCount = 0;
+	let bankHolidayCount;
 	const isBackward = isBefore(new Date(calculatedDate), new Date(startedAt));
 
 	({ bankHolidayCount, calculatedDate } = recalculateDateForBankHolidays(

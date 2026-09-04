@@ -50,7 +50,7 @@ export const getDocumentUpload = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	let uploadPageHeadingText = '';
+	let uploadPageHeadingText;
 	let documentTitle = undefined;
 	switch (costsCategory) {
 		case 'lpa':

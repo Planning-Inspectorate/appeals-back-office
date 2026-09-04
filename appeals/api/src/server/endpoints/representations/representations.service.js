@@ -646,8 +646,8 @@ const sendPublishedStatementNotifiesForHearing = async (
 		false
 	);
 
-	let lpaTemplate = '';
-	let appellantTemplate = '';
+	let lpaTemplate;
+	let appellantTemplate;
 	let additionalEmailValues = {};
 
 	if (isEnforcementOrLdc) {
