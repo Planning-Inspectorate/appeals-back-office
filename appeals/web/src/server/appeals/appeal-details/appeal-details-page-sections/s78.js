@@ -1,5 +1,4 @@
 import { getCaseDocumentation } from '#appeals/appeal-details/appeal-details-page-sections/common/case-documentation.js';
-import config from '#environment/config.js';
 import { permissionNames } from '#environment/permissions.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { userHasPermission } from '#lib/mappers/index.js';
@@ -11,7 +10,6 @@ import { getCaseCosts } from './common/case-costs.js';
 import { getCaseManagement } from './common/case-management.js';
 import { getCaseOverview } from './common/case-overview.js';
 import { getCaseTeam } from './common/case-team.js';
-import { getSiteDetails as getSiteDetailsLegacy } from './common/site-details-legacy.js';
 import { getSiteDetails } from './common/site-details.js';
 import { getCaseHearing } from './s78/case-hearing.js';
 import { getCaseInquiry } from './s78/case-inquiry.js';
@@ -33,11 +31,7 @@ export function generateAppealDetailsPageComponents(appealDetails, mappedData, s
 		appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING ||
 		appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY;
 
-	const siteDetails = siteDetailsShouldBeHidden
-		? []
-		: config.featureFlags.featureFlagCancelSiteVisit
-			? getSiteDetails(mappedData, appealDetails)
-			: getSiteDetailsLegacy(mappedData, appealDetails);
+	const siteDetails = siteDetailsShouldBeHidden ? [] : getSiteDetails(mappedData, appealDetails);
 	/** @type {PageComponent[]} */
 	const caseTimetable = [
 		{

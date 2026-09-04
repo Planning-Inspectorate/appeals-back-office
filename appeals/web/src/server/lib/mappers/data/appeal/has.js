@@ -1,4 +1,3 @@
-import config from '#environment/config.js';
 import { mapAgent } from './submappers/agent.mapper.js';
 import { mapAllocationDetails } from './submappers/allocation-details.mapper.js';
 import { mapAppealDecision } from './submappers/appeal-decision.mapper.js';
@@ -45,7 +44,7 @@ import {
 	mapSiteVisitStartTime
 } from './submappers/site-visit-datetime.mapper.js';
 import { mapSiteVisitTimetable } from './submappers/site-visit-timetable.mapper.js';
-import { mapSiteVisit, mapSiteVisitOld } from './submappers/site-visit.mapper.js';
+import { mapSiteVisit } from './submappers/site-visit.mapper.js';
 import { mapStartedAt } from './submappers/started-at.mapper.js';
 import { mapSupportingDocuments } from './submappers/supporting-documents.mapper.js';
 import { mapCaseTeam } from './submappers/team.mapper.js';
@@ -75,7 +74,7 @@ export const submaps = {
 	startedAt: mapStartedAt,
 	lpaQuestionnaireDueDate: mapLpaQuestionnaireDueDate,
 	siteVisitTimetable: mapSiteVisitTimetable,
-	siteVisit: config.featureFlags.featureFlagCancelSiteVisit ? mapSiteVisit : mapSiteVisitOld,
+	siteVisit: mapSiteVisit,
 	siteVisitDate: mapSiteVisitDate,
 	siteVisitStartTime: mapSiteVisitStartTime,
 	siteVisitEndTime: mapSiteVisitEndTime,

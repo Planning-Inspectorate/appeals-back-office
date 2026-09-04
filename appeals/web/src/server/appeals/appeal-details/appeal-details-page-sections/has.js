@@ -1,4 +1,3 @@
-import config from '#environment/config.js';
 import { permissionNames } from '#environment/permissions.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { userHasPermission } from '#lib/mappers/index.js';
@@ -10,7 +9,6 @@ import { getCaseCosts } from './common/case-costs.js';
 import { getCaseManagement } from './common/case-management.js';
 import { getCaseOverview } from './common/case-overview.js';
 import { getCaseTeam } from './common/case-team.js';
-import { getSiteDetails as getSiteDetailsLegacy } from './common/site-details-legacy.js';
 import { getSiteDetails } from './common/site-details.js';
 import { removeAppealDetailsSectionComponentsActions } from './utils/index.js';
 
@@ -27,11 +25,7 @@ export function generateAppealDetailsPageComponents(appealDetails, mappedData, s
 		isChildAppeal(appealDetails) ||
 		!isStatePassed(appealDetails, APPEAL_CASE_STATUS.READY_TO_START);
 
-	const siteDetails = siteDetailsShouldBeHidden
-		? []
-		: config.featureFlags.featureFlagCancelSiteVisit
-			? getSiteDetails(mappedData, appealDetails)
-			: getSiteDetailsLegacy(mappedData, appealDetails);
+	const siteDetails = siteDetailsShouldBeHidden ? [] : getSiteDetails(mappedData, appealDetails);
 
 	/** @type {PageComponent[]} */
 	const caseTimetable = appealDetails.startedAt
