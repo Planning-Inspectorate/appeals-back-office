@@ -328,7 +328,7 @@ export const changeProcedureToInquiry = async (data, appealId) => {
 		}
 	} catch (error) {
 		logger.error(error);
-		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+		throw new Error(ERROR_FAILED_TO_SAVE_DATA, { cause: error });
 	}
 };
 

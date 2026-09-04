@@ -861,7 +861,7 @@ export const putContactAddress = async (params) => {
 		logger.error(error);
 		if (error instanceof Prisma.PrismaClientKnownRequestError) {
 			if (error.code === 'P2025') {
-				throw new Error(ERROR_NOT_FOUND);
+				throw new Error(ERROR_NOT_FOUND, { cause: error });
 			}
 		}
 		throw error;
