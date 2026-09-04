@@ -143,7 +143,7 @@ export const getIdText = (timetableType) => {
  */
 export const getAppealTimetableTypes = (appeal, appellantCase) => {
 	/** @type {AppealTimetableType[]} */
-	let validAppealTimetableType = [];
+	let validAppealTimetableType;
 
 	const caseType = appealTypeToAppealCaseTypeMapper(appeal.appealType);
 	if (isExpeditedAppealType(caseType)) {

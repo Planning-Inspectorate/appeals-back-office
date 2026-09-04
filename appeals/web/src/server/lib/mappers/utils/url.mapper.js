@@ -11,7 +11,7 @@ export const constructUrl = (url = '/', appealId = undefined) => {
 		'/signin': '/auth/signin'
 	};
 
-	let constructedUrl = '';
+	let constructedUrl;
 
 	if (urlMap[url]) {
 		// if found in map - return the map value
