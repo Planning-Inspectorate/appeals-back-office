@@ -1,5 +1,4 @@
 import usersService from '#appeals/appeal-users/users-service.js';
-import config from '#environment/config.js';
 import logger from '#lib/logger.js';
 import { mapPagination } from '#lib/mappers/index.js';
 import { getPaginationParametersFromQuery } from '#lib/pagination-utilities.js';
@@ -19,8 +18,7 @@ export const viewPersonalList = async (request, response) => {
 	const appealStatusFilter = query.appealStatusFilter && String(query.appealStatusFilter);
 	const urlWithoutQuery = stripQueryString(originalUrl);
 	const paginationParameters = getPaginationParametersFromQuery(query);
-	const isSearchedCO =
-		(query?.caseOfficerId && config.featureFlags.featureFlagSearchCaseOfficer) || false;
+	const isSearchedCO = !!query?.caseOfficerId || false;
 
 	const caseOfficer = isSearchedCO
 		? (await usersService.getUserById(String(query.caseOfficerId), session)) || null
