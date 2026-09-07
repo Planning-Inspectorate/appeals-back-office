@@ -9,6 +9,7 @@ import {
 } from '../../appeal-documents/appeal-documents.middleware.js';
 import * as documentsValidators from '../../appeal-documents/appeal-documents.validators.js';
 import * as controller from './hearing-documents.controller.js';
+import { validateInviteMainPartyComments } from './hearing-documents.validators.js';
 
 const router = createRouter({ mergeParams: true });
 router.param('folderId', (req, res, next) => {
@@ -149,6 +150,28 @@ router
 	.post(
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.postAddDocumentVersionCheckAndConfirm)
+	);
+router
+	.route(['/manage-documents/:folderId/:documentId/invite-main-party-comments'])
+	.get(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.getInviteMainPartyComments)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.updateCase),
+		validateInviteMainPartyComments,
+		asyncHandler(controller.postInviteMainPartyComments)
+	);
+
+router
+	.route(['/manage-documents/:folderId/:documentId/check-your-answers'])
+	.get(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.getShareDocumentCheckAndConfirm)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.postShareDocumentCheckAndConfirm)
 	);
 
 export default router;

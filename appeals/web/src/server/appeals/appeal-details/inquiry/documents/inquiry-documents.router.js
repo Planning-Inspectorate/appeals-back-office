@@ -6,6 +6,7 @@ import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as documentsValidators from '../../../appeal-documents/appeal-documents.validators.js';
 import * as controller from './inquiry-documents.controller.js';
+import { validateInviteMainPartyComments } from './inquiry-documents.validators.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -109,6 +110,28 @@ router
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
 		extractAndProcessDocumentDateErrors(),
 		asyncHandler(controller.postChangeInquiryDocumentVersionDetails)
+	);
+router
+	.route(['/manage-documents/:folderId/:documentId/invite-main-party-comments'])
+	.get(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.getInviteMainPartyComments)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.updateCase),
+		validateInviteMainPartyComments,
+		asyncHandler(controller.postInviteMainPartyComments)
+	);
+
+router
+	.route(['/manage-documents/:folderId/:documentId/check-your-answers'])
+	.get(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.getShareDocumentCheckAndConfirm)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.postShareDocumentCheckAndConfirm)
 	);
 
 export default router;

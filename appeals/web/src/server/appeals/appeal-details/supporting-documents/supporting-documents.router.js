@@ -9,7 +9,7 @@ import {
 } from '../../appeal-documents/appeal-documents.middleware.js';
 import * as documentsValidators from '../../appeal-documents/appeal-documents.validators.js';
 import * as controller from './supporting-documents.controller.js';
-import { validateInviteResponses } from './supporting-documents.validators.js';
+import { validateInviteMainPartyComments } from './supporting-documents.validators.js';
 
 const router = createRouter({ mergeParams: true });
 router.param('folderId', (req, res, next) => {
@@ -153,15 +153,15 @@ router
 	);
 
 router
-	.route(['/manage-documents/:folderId/:documentId/invite-responses'])
+	.route(['/manage-documents/:folderId/:documentId/invite-main-party-comments'])
 	.get(
 		assertUserHasPermission(permissionNames.updateCase),
-		asyncHandler(controller.getInviteResponses)
+		asyncHandler(controller.getInviteMainPartyComments)
 	)
 	.post(
 		assertUserHasPermission(permissionNames.updateCase),
-		validateInviteResponses,
-		asyncHandler(controller.postInviteResponses)
+		validateInviteMainPartyComments,
+		asyncHandler(controller.postInviteMainPartyComments)
 	);
 
 router

@@ -26,7 +26,7 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import {
-	inviteResponsesPage,
+	inviteMainPartyCommentsPage,
 	shareDocumentCheckAndConfirmPage
 } from './supporting-documents.mapper.js';
 
@@ -385,46 +385,44 @@ export const postChangeDocumentVersionDetails = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const getInviteResponses = async (request, response) => {
+export const getInviteMainPartyComments = async (request, response) => {
 	const { appealId, folderId, documentId } = request.params;
 	const backLinkUrl = `/appeals-service/appeal-details/${appealId}/supporting-documents/manage-documents/${folderId}/${documentId}`;
 
 	if (request.session.appealId && request.session.appealId !== appealId) {
 		delete request.session.appealId;
-		delete request.session.inviteResponses;
+		delete request.session.inviteMainPartyComments;
 	}
 
-	const inviteResponses =
-		appealId === request.session.appealId ? request.session.inviteResponses : undefined;
-	const pageContent = inviteResponsesPage(backLinkUrl, inviteResponses);
+	const inviteMainPartyComments =
+		appealId === request.session.appealId ? request.session.inviteMainPartyComments : undefined;
+	const pageContent = inviteMainPartyCommentsPage(backLinkUrl, inviteMainPartyComments);
 
 	return response.render('patterns/change-page.pattern.njk', {
 		pageContent,
 		errors: request.errors
 	});
 };
-
 /**
  *
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const postInviteResponses = async (request, response) => {
+export const postInviteMainPartyComments = async (request, response) => {
 	const { errors, body } = request;
 	const { appealId, folderId, documentId } = request.params;
 
 	if (errors) {
-		return getInviteResponses(request, response);
+		return getInviteMainPartyComments(request, response);
 	}
 
-	request.session.inviteResponses = body['invite-responses'];
+	request.session.inviteMainPartyComments = body['invite-main-party-comments'];
 	request.session.appealId = appealId;
 
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/supporting-documents/manage-documents/${folderId}/${documentId}/check-your-answers`
 	);
 };
-
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
@@ -438,7 +436,7 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	const backLinkUrl = `/appeals-service/appeal-details/${appealId}/supporting-documents/manage-documents/${folderId}/${documentId}/invite-responses`;
+	const backLinkUrl = `/appeals-service/appeal-details/${appealId}/supporting-documents/manage-documents/${folderId}/${documentId}/invite-main-party-comments`;
 
 	// const { email } = await getTeamFromAppealId(request.apiClient, appealId);
 	// const address = appealSiteToAddressString(currentAppeal?.appealSite);
@@ -462,7 +460,7 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
 		backLinkUrl,
 		documentInfo.latestDocumentVersion,
 		null,
-		session.inviteResponses
+		session.inviteMainPartyComments
 	);
 
 	return response.render('patterns/change-page.pattern.njk', {
@@ -478,13 +476,12 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
 export const postShareDocumentCheckAndConfirm = async (request, response) => {
 	const { appealId, documentId } = request.params;
 	try {
-		/** @type {import('#appeals/appeal-documents/appeal.documents.service.js').DocumentDetailAPIPatchRequest} */
 		const apiRequest = {
 			document: {
 				id: documentId,
 				isShared: true
 			},
-			inviteResponses: request.session?.inviteResponses === 'yes',
+			inviteMainPartyComments: request.session?.inviteMainPartyComments === 'yes',
 			sharingDocumentType: `supporting-document`
 		};
 
@@ -498,7 +495,7 @@ export const postShareDocumentCheckAndConfirm = async (request, response) => {
 		);
 	}
 
-	delete request.session.inviteResponses;
+	delete request.session.inviteMainPartyComments;
 
 	addNotificationBannerToSession({
 		session: request.session,

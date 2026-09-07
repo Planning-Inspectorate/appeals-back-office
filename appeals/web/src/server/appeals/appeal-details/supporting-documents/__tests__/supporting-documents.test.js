@@ -16,6 +16,7 @@ import {
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
+import { APPEAL_DOCUMENT_TYPE, REDACTION_STATUS } from '@planning-inspectorate/data-model';
 import nock from 'nock';
 import supertest from 'supertest';
 
@@ -1318,6 +1319,8 @@ describe('supporting documents', () => {
 
 				const unsharedDocumentVersionsInfo = structuredClone(documentFileVersionsInfoChecked);
 				unsharedDocumentVersionsInfo.latestDocumentVersion.published = false;
+				unsharedDocumentVersionsInfo.latestDocumentVersion.documentType =
+					APPEAL_DOCUMENT_TYPE.GENERAL_SUPPORTING;
 
 				nock('http://test/')
 					.get('/appeals/documents/1/versions')
@@ -1326,17 +1329,55 @@ describe('supporting documents', () => {
 				const response = await request.get(
 					`${baseUrl}/1/supporting-documents/manage-documents/${supportingDocsFolderId}/1`
 				);
-
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 				expect(unprettifiedElement.innerHTML).toContain('Current version</h2>');
 				expect(unprettifiedElement.innerHTML).toContain('This document is not shared</p>');
 
-				const expectedHref = `/appeals-service/appeal-details/1/supporting-documents/manage-documents/${supportingDocsFolderId}/1/invite-responses`;
+				const expectedHref = `/appeals-service/appeal-details/1/supporting-documents/manage-documents/${supportingDocsFolderId}/1/invite-main-party-comments`;
 
 				expect(unprettifiedElement.innerHTML).toContain(`href="${expectedHref}"`);
 				expect(unprettifiedElement.innerHTML).toContain('Share document</a>');
+			});
+			it(`should render 'Document details' and 'Redact' button with correct link if document is NOT shared and redaction status is Unredacted`, async () => {
+				nock.cleanAll();
+				nock('http://test/').get('/appeals/1/exists').reply(200, appealData).persist();
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses)
+					.persist();
+
+				nock('http://test/')
+					.get(getFolderApiUrl(supportingDocsFolderId))
+					.reply(200, supportingDocumentsFolderInfo);
+
+				nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
+
+				const unsharedDocumentVersionsInfo = structuredClone(documentFileVersionsInfoChecked);
+				unsharedDocumentVersionsInfo.latestDocumentVersion.published = false;
+				unsharedDocumentVersionsInfo.latestDocumentVersion.documentType =
+					APPEAL_DOCUMENT_TYPE.GENERAL_SUPPORTING;
+				unsharedDocumentVersionsInfo.latestDocumentVersion.redactionStatus =
+					REDACTION_STATUS.UNREDACTED;
+
+				nock('http://test/')
+					.get('/appeals/documents/1/versions')
+					.reply(200, unsharedDocumentVersionsInfo);
+
+				const response = await request.get(
+					`${baseUrl}/1/supporting-documents/manage-documents/${supportingDocsFolderId}/1`
+				);
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
+				expect(unprettifiedElement.innerHTML).toContain('Current version</h2>');
+				expect(unprettifiedElement.innerHTML).toContain('This document is not shared</p>');
+
+				const expectedHref = `/appeals-service/appeal-details/1/supporting-documents/manage-documents/${supportingDocsFolderId}/1/invite-main-party-comments`;
+
+				expect(unprettifiedElement.innerHTML).toContain(`href="${expectedHref}"`);
+				expect(unprettifiedElement.innerHTML).toContain('Redact</a>');
 			});
 		});
 
@@ -1546,7 +1587,7 @@ describe('supporting documents', () => {
 		});
 	});
 
-	describe('GET and POST /supporting-documents/manage-documents/:folderId/:documentId/invite-responses', () => {
+	describe('GET and POST /supporting-documents/manage-documents/:folderId/:documentId/invite-main-party-comments', () => {
 		beforeEach(() => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1/exists').reply(200, appealData).persist();
@@ -1556,45 +1597,47 @@ describe('supporting documents', () => {
 				.persist();
 		});
 
-		it(`should render the invite responses page`, async () => {
+		it(`should render the invite main party comments page`, async () => {
 			const response = await request.get(
-				`${baseUrl}/1/supporting-documents/manage-documents/${supportingDocsFolderId}/1/invite-responses`
+				`${baseUrl}/1/supporting-documents/manage-documents/${supportingDocsFolderId}/1/invite-main-party-comments`
 			);
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(response.statusCode).toBe(200);
-			expect(unprettifiedElement.innerHTML).toContain('Do you want to invite responses?</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="invite-responses" type="radio" value="yes"'
+				'Do you want to invite comments from main parties on this document?</h1>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="invite-responses" type="radio" value="no"'
+				'name="invite-main-party-comments" type="radio" value="yes"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Confirm and share document</button>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="invite-main-party-comments" type="radio" value="no"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 
-		it(`should render the invite responses page with pre-selected option`, async () => {
+		it(`should render the invite main party comments page with pre-selected option`, async () => {
 			await request
 				.post(
-					`${baseUrl}/1/supporting-documents/manage-documents/${supportingDocsFolderId}/1/invite-responses`
+					`${baseUrl}/1/supporting-documents/manage-documents/${supportingDocsFolderId}/1/invite-main-party-comments`
 				)
-				.send({ 'invite-responses': 'yes' });
+				.send({ 'invite-main-party-comments': 'yes' });
 			const response = await request.get(
-				`${baseUrl}/1/supporting-documents/manage-documents/${supportingDocsFolderId}/1/invite-responses`
+				`${baseUrl}/1/supporting-documents/manage-documents/${supportingDocsFolderId}/1/invite-main-party-comments`
 			);
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="invite-responses" type="radio" value="yes" checked'
+				'name="invite-main-party-comments" type="radio" value="yes" checked'
 			);
 		});
 
 		it(`should return a validation error if no option is selected on POST`, async () => {
 			const response = await request
 				.post(
-					`${baseUrl}/1/supporting-documents/manage-documents/${supportingDocsFolderId}/1/invite-responses`
+					`${baseUrl}/1/supporting-documents/manage-documents/${supportingDocsFolderId}/1/invite-main-party-comments`
 				)
 				.send({});
 
@@ -1607,9 +1650,9 @@ describe('supporting documents', () => {
 		it(`should redirect to check-your-answers if an option is selected on POST`, async () => {
 			const response = await request
 				.post(
-					`${baseUrl}/1/supporting-documents/manage-documents/${supportingDocsFolderId}/1/invite-responses`
+					`${baseUrl}/1/supporting-documents/manage-documents/${supportingDocsFolderId}/1/invite-main-party-comments`
 				)
-				.send({ 'invite-responses': 'yes' });
+				.send({ 'invite-main-party-comments': 'yes' });
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toContain(
@@ -1667,7 +1710,7 @@ describe('supporting documents', () => {
 					skipPrettyPrint: true
 				});
 
-				const expectedHref = `/appeals-service/appeal-details/1/supporting-documents/manage-documents/${supportingDocsFolderId}/1/invite-responses`;
+				const expectedHref = `/appeals-service/appeal-details/1/supporting-documents/manage-documents/${supportingDocsFolderId}/1/invite-main-party-comments`;
 
 				expect(backLinkElement.innerHTML).toContain(`href="${expectedHref}"`);
 			});
