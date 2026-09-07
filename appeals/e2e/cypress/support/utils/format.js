@@ -44,12 +44,19 @@ export const getFileProperties = (fileName) => {
 };
 
 /**
- * Takes a date object and returns formatted date and time
- * @param {Date} date - Date to format
- * @param {boolean} isOrdinal - Whether to use ordinal format (short month, 24-hour time)
- * @returns {Object} Formatted date and time
- * @throws {Error} When invalid date object is provided
+ * @typedef {Object} FormattedDate
+ * @property {string} date - The formatted date. e.g. "22 October 2025"
+ * @property {string} shortDate - The short form of the formatted date, e.g "22 Oct 2025".
+ * @property {string} time - The formatted time.
  */
+
+/**
+Takes a date object and returns formatted date and time.
+@param {Date} date - Date to format
+@param {boolean} isOrdinal - Whether to use ordinal format (short month, 24-hour time)
+@returns {FormattedDate} Formatted date and time containing date, shortDate, and time properties 
+@throws {Error} When an invalid date object is provided
+*/
 export function formatDateAndTime(date, isOrdinal = false) {
 	if (!(date instanceof Date)) {
 		throw new Error('Invalid date object');

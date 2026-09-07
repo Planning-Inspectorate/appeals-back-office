@@ -18,7 +18,10 @@ export class CYASection extends CaseDetailsPage {
 			'Reason for rejecting the appellant proof of evidence and witnesses',
 		reasonForRejectLPAPOE: 'Reason for rejecting the LPA proof of evidence and witnesses',
 		rule6PartyName: 'Rule 6 party name',
-		rule6PartyEmailAddress: 'Rule 6 party email address'
+		rule6PartyEmailAddress: 'Rule 6 party email address',
+		file: 'File',
+		dateReceived: 'Date received',
+		redactionStatus: 'Redaction status'
 	};
 
 	previewEmailSummary = {

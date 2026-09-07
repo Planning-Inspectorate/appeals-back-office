@@ -197,6 +197,15 @@ export const happyPathHelper = {
 		caseDetailsPage.validateBannerMessage('Success', 'Comments and statements shared');
 	},
 
+	relateAppeals(caseObj, caseObjToLink) {
+		caseDetailsPage.clickAddRelatedAppeals();
+		caseDetailsPage.fillInput(caseObjToLink.reference);
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseObj.reference);
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.validateBannerMessage('Success', 'Related appeal added');
+	},
+
 	validateBackNavigationFlow(navigationConfig) {
 		cy.writeLog(`Validating back navigation flow with config: ${JSON.stringify(navigationConfig)}`);
 

@@ -58,11 +58,19 @@ export class DateTimeSection extends Page {
 
 	// A C T I O N S
 
-	checkDateIsPrefilled() {
-		cy.get('#date-day').invoke('val').should('not.be.empty');
-		cy.get('#date-month').invoke('val').should('not.be.empty');
-		cy.get('#date-year').invoke('val').should('not.be.empty');
+	checkDateIsPrefilled(dateSelectorPrefix = null, expectedDate = null) {
+		cy.get(`#${dateSelectorPrefix}date-day`).invoke('val').should('not.be.empty');
+		cy.get(`#${dateSelectorPrefix}date-month`).invoke('val').should('not.be.empty');
+		cy.get(`#${dateSelectorPrefix}date-year`).invoke('val').should('not.be.empty');
+
+		// if expectedDate is provided, check that the date fields match the expected values
+		if (expectedDate) {
+			cy.get(`#${dateSelectorPrefix}date-day`).invoke('val').should('eq', expectedDate.day);
+			cy.get(`#${dateSelectorPrefix}date-month`).invoke('val').should('eq', expectedDate.month);
+			cy.get(`#${dateSelectorPrefix}date-year`).invoke('val').should('eq', expectedDate.year);
+		}
 	}
+
 	enterDate(date) {
 		this.#setAllDateFields(this.selectorPrefix.dueDate, date);
 	}
