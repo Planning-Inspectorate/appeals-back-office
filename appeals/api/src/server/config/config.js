@@ -60,9 +60,6 @@ const { value, error } = schema.validate({
 		featureFlagHearingPostMvp:
 			environment.FEATURE_FLAG_HEARING_POST_MVP &&
 			environment.FEATURE_FLAG_HEARING_POST_MVP === 'true',
-		featureFlagSearchCaseOfficer:
-			environment.FEATURE_FLAG_SEARCH_CASE_OFFICER &&
-			environment.FEATURE_FLAG_SEARCH_CASE_OFFICER === 'true',
 		featureFlagEnforcementLinked:
 			environment.FEATURE_FLAG_ENFORCEMENT_LINKED &&
 			environment.FEATURE_FLAG_ENFORCEMENT_LINKED === 'true',
