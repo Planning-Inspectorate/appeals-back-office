@@ -3,8 +3,12 @@ import usersService from '#appeals/appeal-users/users-service.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import {
 	activeDirectoryUsersData,
+	appealData,
 	documentFileInfo,
 	documentFileVersionsInfo,
+	documentFileVersionsInfoChecked,
+	documentFileVersionsInfoNotChecked,
+	documentFileVersionsInfoVirusFound,
 	documentRedactionStatuses,
 	fileUploadInfo,
 	inquiryEventDocumentsFolderInfo
@@ -12,6 +16,7 @@ import {
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
+import { APPEAL_DOCUMENT_TYPE, REDACTION_STATUS } from '@planning-inspectorate/data-model';
 import nock from 'nock';
 import supertest from 'supertest';
 
@@ -1103,6 +1108,617 @@ describe('inquiry event documents', () => {
 				expect(unprettifiedElement.innerHTML).toContain(
 					`<a href="/appeals-service/appeal-details/1/inquiry-event-documents/upload-documents/${inquiryEventDocsFolderId}" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button"> Add document</a>`
 				);
+			});
+		});
+		describe('GET /inquiry-event-documents/manage-documents/:folderId/:documentId', () => {
+			beforeEach(() => {
+				usersService.getUsersByRole = jest.fn().mockResolvedValue(activeDirectoryUsersData);
+				usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
+				usersService.getUserById = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
+			});
+
+			it(`should render a 404 error page if the folderId is not valid`, async () => {
+				nock('http://test/')
+					.get('/appeals/documents/1/versions')
+					.reply(200, documentFileVersionsInfo);
+
+				const response = await request.get(
+					`${baseUrl}/1/inquiry-event-documents/manage-documents/99/1`
+				);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Page not found');
+			});
+
+			it(`should render a 404 error page if the documentId is not valid`, async () => {
+				nock('http://test/')
+					.get('/appeals/documents/1/versions')
+					.reply(200, documentFileVersionsInfo);
+
+				const response = await request.get(
+					`${baseUrl}/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/99`
+				);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Page not found');
+			});
+
+			it(`should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is null`, async () => {
+				nock('http://test/')
+					.get('/appeals/documents/1/versions')
+					.reply(200, documentFileVersionsInfo);
+
+				const response = await request.get(
+					`${baseUrl}/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1`
+				);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
+				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
+				);
+				expect(unprettifiedElement.innerHTML).not.toContain('Upload a new version');
+				expect(unprettifiedElement.innerHTML).not.toContain('Remove current version');
+			});
+
+			it(`should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "not_scanned"`, async () => {
+				nock('http://test/')
+					.get('/appeals/documents/1/versions')
+					.reply(200, documentFileVersionsInfoNotChecked);
+
+				const response = await request.get(
+					`${baseUrl}/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1`
+				);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
+				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
+				);
+				expect(unprettifiedElement.innerHTML).not.toContain('Upload a new version');
+				expect(unprettifiedElement.innerHTML).not.toContain('Remove current version');
+			});
+
+			it(`should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "affected"`, async () => {
+				nock('http://test/')
+					.get('/appeals/documents/1/versions')
+					.reply(200, documentFileVersionsInfoVirusFound);
+
+				const response = await request.get(
+					`${baseUrl}/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1`
+				);
+
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
+				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<strong class="govuk-tag govuk-tag--red">Virus detected</strong>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('Upload a new version');
+				expect(unprettifiedElement.innerHTML).toContain('Remove current version');
+
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
+
+				expect(errorSummaryElement.innerHTML).toContain(
+					'The selected file contains a virus. Upload a different version.'
+				);
+			});
+
+			it(`should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned"`, async () => {
+				nock('http://test/')
+					.get('/appeals/documents/1/versions')
+					.reply(200, documentFileVersionsInfoChecked);
+
+				const response = await request.get(
+					`${baseUrl}/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1`
+				);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
+				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
+				expect(unprettifiedElement.innerHTML).not.toContain(
+					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
+				);
+				expect(unprettifiedElement.innerHTML).not.toContain(
+					'<strong class="govuk-tag govuk-tag--red">Virus detected</strong>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('Upload a new version');
+				expect(unprettifiedElement.innerHTML).toContain('Remove current version');
+			});
+
+			it(`should render 'Shared' tags under the Version Summary and in Version History if document IS shared`, async () => {
+				nock.cleanAll();
+				nock('http://test/').get('/appeals/1/exists').reply(200, appealData).persist();
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses)
+					.persist();
+				nock('http://test/')
+					.get(getFolderApiUrl(inquiryEventDocsFolderId))
+					.reply(200, inquiryEventDocumentsFolderInfo);
+				nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
+
+				const sharedDocumentVersionsInfo = structuredClone(documentFileVersionsInfoChecked);
+				sharedDocumentVersionsInfo.latestDocumentVersion.published = true;
+				sharedDocumentVersionsInfo.allVersions.forEach((version) => {
+					version.published = true;
+				});
+
+				nock('http://test/')
+					.get('/appeals/documents/1/versions')
+					.reply(200, sharedDocumentVersionsInfo);
+
+				const response = await request.get(
+					`${baseUrl}/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1`
+				);
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<br><strong class="govuk-tag govuk-tag--blue govuk-!-margin-top-1">Shared</strong>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong><a class="govuk-link"'
+				);
+			});
+
+			it(`should render 'Document details' and 'Share document' button with correct link if document is NOT shared`, async () => {
+				nock.cleanAll();
+				nock('http://test/').get('/appeals/1/exists').reply(200, appealData).persist();
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses)
+					.persist();
+
+				nock('http://test/')
+					.get(getFolderApiUrl(inquiryEventDocsFolderId))
+					.reply(200, inquiryEventDocumentsFolderInfo);
+
+				nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
+
+				const unsharedDocumentVersionsInfo = structuredClone(documentFileVersionsInfoChecked);
+				unsharedDocumentVersionsInfo.latestDocumentVersion.published = false;
+				unsharedDocumentVersionsInfo.latestDocumentVersion.documentType =
+					APPEAL_DOCUMENT_TYPE.INQUIRY_POST_EVENT;
+
+				nock('http://test/')
+					.get('/appeals/documents/1/versions')
+					.reply(200, unsharedDocumentVersionsInfo);
+
+				const response = await request.get(
+					`${baseUrl}/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1`
+				);
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
+				expect(unprettifiedElement.innerHTML).toContain('Current version</h2>');
+				expect(unprettifiedElement.innerHTML).toContain('This document is not shared</p>');
+
+				const expectedHref = `/appeals-service/appeal-details/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1/invite-main-party-comments`;
+
+				expect(unprettifiedElement.innerHTML).toContain(`href="${expectedHref}"`);
+				expect(unprettifiedElement.innerHTML).toContain('Share document</a>');
+			});
+			it(`should render 'Document details' and 'Redact' button with correct link if document is NOT shared and redaction status is Unredacted`, async () => {
+				nock.cleanAll();
+				nock('http://test/').get('/appeals/1/exists').reply(200, appealData).persist();
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses)
+					.persist();
+
+				nock('http://test/')
+					.get(getFolderApiUrl(inquiryEventDocsFolderId))
+					.reply(200, inquiryEventDocumentsFolderInfo);
+
+				nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
+
+				const unsharedDocumentVersionsInfo = structuredClone(documentFileVersionsInfoChecked);
+				unsharedDocumentVersionsInfo.latestDocumentVersion.published = false;
+				unsharedDocumentVersionsInfo.latestDocumentVersion.documentType =
+					APPEAL_DOCUMENT_TYPE.INQUIRY_POST_EVENT;
+				unsharedDocumentVersionsInfo.latestDocumentVersion.redactionStatus =
+					REDACTION_STATUS.UNREDACTED;
+
+				nock('http://test/')
+					.get('/appeals/documents/1/versions')
+					.reply(200, unsharedDocumentVersionsInfo);
+
+				const response = await request.get(
+					`${baseUrl}/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1`
+				);
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
+				expect(unprettifiedElement.innerHTML).toContain('Current version</h2>');
+				expect(unprettifiedElement.innerHTML).toContain('This document is not shared</p>');
+
+				const expectedHref = `/appeals-service/appeal-details/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1/invite-main-party-comments`;
+
+				expect(unprettifiedElement.innerHTML).toContain(`href="${expectedHref}"`);
+				expect(unprettifiedElement.innerHTML).toContain('Redact</a>');
+			});
+		});
+
+		describe('GET /inquiry-event-documents/manage-documents/:folderId/:documentId/:versionId/delete', () => {
+			it(`should render the delete document page with the expected content when there is a single document version`, async () => {
+				nock('http://test/')
+					.get('/appeals/documents/1/versions')
+					.reply(200, documentFileVersionsInfoChecked);
+
+				const response = await request.get(
+					`${baseUrl}/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1/1/delete`
+				);
+
+				const element = parseHtml(response.text);
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Are you sure you want to remove this version?</h1>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('class="govuk-warning-text"');
+
+				const warningTextElement = parseHtml(response.text, {
+					rootElement: '.govuk-warning-text',
+					skipPrettyPrint: true
+				});
+
+				expect(warningTextElement.innerHTML).toContain(
+					'Removing the only version of a document will delete the document from the case'
+				);
+
+				const radiosElement = parseHtml(response.text, {
+					rootElement: '.govuk-radios',
+					skipPrettyPrint: true
+				});
+
+				expect(radiosElement.innerHTML).toContain(
+					'name="delete-file-answer" type="radio" value="yes"'
+				);
+				expect(radiosElement.innerHTML).toContain(
+					'name="delete-file-answer" type="radio" value="no"'
+				);
+			});
+
+			it(`should render the delete document page with the expected content when there are multiple document versions`, async () => {
+				const multipleVersionsDocument = structuredClone(documentFileVersionsInfoChecked);
+				multipleVersionsDocument.allVersions.push(multipleVersionsDocument.allVersions[0]);
+
+				nock('http://test/')
+					.get('/appeals/documents/1/versions')
+					.reply(200, multipleVersionsDocument);
+
+				const response = await request.get(
+					`${baseUrl}/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1/1/delete`
+				);
+
+				const element = parseHtml(response.text);
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Are you sure you want to remove this version?</h1>'
+				);
+				expect(unprettifiedElement.innerHTML).not.toContain('class="govuk-warning-text"');
+
+				const radiosElement = parseHtml(response.text, {
+					rootElement: '.govuk-radios',
+					skipPrettyPrint: true
+				});
+
+				expect(radiosElement.innerHTML).toContain(
+					'name="delete-file-answer" type="radio" value="yes"'
+				);
+				expect(radiosElement.innerHTML).toContain(
+					'name="delete-file-answer" type="radio" value="no"'
+				);
+			});
+		});
+
+		describe('POST /inquiry-event-documents/manage-documents/:folderId/:documentId/:versionId/delete', () => {
+			beforeEach(() => {
+				nock('http://test/').delete('/appeals/documents/1/1').reply(200, {
+					guid: '15d19184-155b-4b6c-bba6-2bd2a61ca9a3',
+					name: 'test-pdf-documentFileVersionsInfo.pdf',
+					folderId: 1,
+					createdAt: '2024-04-09T13:10:07.517Z',
+					isDeleted: true,
+					latestVersionId: null,
+					caseId: 1,
+					latestDocumentVersion: null
+				});
+			});
+
+			it(`should re-render the delete document page with the expected error message if answer was not provided`, async () => {
+				nock('http://test/')
+					.get('/appeals/documents/1/versions')
+					.reply(200, documentFileVersionsInfo);
+
+				const response = await request
+					.post(
+						`${baseUrl}/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1/1/delete`
+					)
+					.send({});
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Are you sure you want to remove this version?</h1>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('class="govuk-error-summary"');
+
+				const errorSummaryElement = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary'
+				});
+
+				expect(errorSummaryElement.innerHTML).toContain(
+					'Select yes if you are sure you want to remove this version'
+				);
+			});
+
+			it(`should not send an API request to delete the document, and should redirect to the manage document page, if answer "no" was provided`, async () => {
+				nock('http://test/')
+					.get('/appeals/documents/1/versions')
+					.reply(200, documentFileVersionsInfo);
+
+				const response = await request
+					.post(
+						`${baseUrl}/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1/1/delete`
+					)
+					.send({
+						'delete-file-answer': 'no'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toContain('Found. Redirecting to ');
+				expect(response.text).toContain(
+					`/appeals-service/appeal-details/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1`
+				);
+			});
+
+			it(`should send an API request to delete the document, and redirect to the case details page, if answer "yes" was provided`, async () => {
+				nock('http://test/')
+					.get('/appeals/documents/1/versions')
+					.reply(200, documentFileVersionsInfo);
+
+				const response = await request
+					.post(
+						`${baseUrl}/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1/1/delete`
+					)
+					.send({
+						'delete-file-answer': 'yes'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toContain('Found. Redirecting to ');
+				expect(response.text).toContain('/appeals-service/appeal-details/1');
+			});
+		});
+
+		describe('GET /inquiry-event-documents/change-document-name/:folderId/:documentId', () => {
+			beforeEach(() => {
+				nock('http://test/')
+					.get('/appeals/documents/1/versions')
+					.reply(200, documentFileVersionsInfoChecked);
+			});
+			it('should render the change document name page with the expected content', async () => {
+				const response = await request.get(
+					`${baseUrl}/1/inquiry-event-documents/change-document-name/1/1`
+				);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
+				expect(unprettifiedElement.innerHTML).toContain('File name');
+				expect(unprettifiedElement.innerHTML).toContain('value="ph0-documentFileInfo">');
+			});
+		});
+
+		describe('POST /inquiry-event-documents/change-document-name/:folderId/:documentId', () => {
+			beforeEach(() => {
+				nock('http://test/').get('/appeals/document-redaction-statuses').reply(200, []);
+				nock('http://test/').patch('/appeals/1/documents/1').reply(200, {});
+				nock('http://test/')
+					.get('/appeals/documents/1/versions')
+					.reply(200, documentFileVersionsInfoChecked);
+			});
+
+			it('should redirect to manage documents page after change document name success', async () => {
+				const fullUrl = `/appeals-service/appeal-details/1/inquiry-event-documents/change-document-name/1/1`;
+				const response = await request
+					.post(`${baseUrl}/1/inquiry-event-documents/change-document-name/1/1`)
+					.send({ fileName: 'new-name', documentId: '1' });
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toContain(
+					`Found. Redirecting to ${fullUrl.replace('change-document-name', 'manage-documents')}`
+				);
+			});
+		});
+	});
+
+	describe('GET and POST /inquiry-event-documents/manage-documents/:folderId/:documentId/invite-main-party-comments', () => {
+		beforeEach(() => {
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1/exists').reply(200, appealData).persist();
+			nock('http://test/')
+				.get(getFolderApiUrl(inquiryEventDocsFolderId))
+				.reply(200, inquiryEventDocumentsFolderInfo)
+				.persist();
+		});
+
+		it(`should render the invite main party comments page`, async () => {
+			const response = await request.get(
+				`${baseUrl}/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1/invite-main-party-comments`
+			);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(response.statusCode).toBe(200);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Do you want to invite comments from main parties on this document?</h1>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="invite-main-party-comments" type="radio" value="yes"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="invite-main-party-comments" type="radio" value="no"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+		});
+
+		it(`should render the invite main party comments page with pre-selected option`, async () => {
+			await request
+				.post(
+					`${baseUrl}/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1/invite-main-party-comments`
+				)
+				.send({ 'invite-main-party-comments': 'yes' });
+			const response = await request.get(
+				`${baseUrl}/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1/invite-main-party-comments`
+			);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="invite-main-party-comments" type="radio" value="yes" checked'
+			);
+		});
+
+		it(`should return a validation error if no option is selected on POST`, async () => {
+			const response = await request
+				.post(
+					`${baseUrl}/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1/invite-main-party-comments`
+				)
+				.send({});
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(response.statusCode).toBe(200);
+			expect(unprettifiedElement.innerHTML).toContain('Select yes if you want to invite responses');
+		});
+
+		it(`should redirect to check-your-answers if an option is selected on POST`, async () => {
+			const response = await request
+				.post(
+					`${baseUrl}/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1/invite-main-party-comments`
+				)
+				.send({ 'invite-main-party-comments': 'yes' });
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toContain(
+				`Found. Redirecting to /appeals-service/appeal-details/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1/check-your-answers`
+			);
+		});
+	});
+
+	describe('GET and POST /inquiry-event-documents/manage-documents/:folderId/:documentId/check-your-answers', () => {
+		describe(`Testing Share CYA for inquiry documents`, () => {
+			beforeEach(() => {
+				// const templateName = 'shared-inquiry-event-document.content.md';
+
+				nock.cleanAll();
+				nock('http://test/').get('/appeals/1/exists').reply(200, appealData).persist();
+				nock('http://test/')
+					.get(getFolderApiUrl(inquiryEventDocsFolderId))
+					.reply(200, inquiryEventDocumentsFolderInfo)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/documents/1/versions')
+					.reply(200, documentFileVersionsInfoChecked)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/1/case-team-email')
+					.reply(200, { email: 'test@example.com' })
+					.persist();
+				// nock('http://test/')
+				// 	.post(`/appeals/notify-preview/${templateName}`)
+				// 	.reply(200, { renderedHtml: '<p>Test notification</p>' })
+				// 	.persist();
+			});
+
+			it(`should render the check your answers page`, async () => {
+				const response = await request.get(
+					`${baseUrl}/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1/check-your-answers`
+				);
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(response.statusCode).toBe(200);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Confirm you want to share test-pdf-documentFileVersionsInfo.pdf with the main parties</h1>'
+				);
+				expect(unprettifiedElement.innerHTML).toContain('Confirm and share document</button>');
+			});
+
+			it(`should route the backlink properly depending on the document type`, async () => {
+				const response = await request.get(
+					`${baseUrl}/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1/check-your-answers`
+				);
+
+				const backLinkElement = parseHtml(response.text, {
+					rootElement: '.govuk-back-link',
+					skipPrettyPrint: true
+				});
+
+				const expectedHref = `/appeals-service/appeal-details/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1/invite-main-party-comments`;
+
+				expect(backLinkElement.innerHTML).toContain(`href="${expectedHref}"`);
+			});
+
+			it(`should redirect to the case details page on successful share`, async () => {
+				const mockPatchEndpoint = nock('http://test/')
+					.patch('/appeals/1/documents/1', (body) => {
+						return body.document && body.document.isShared === true;
+					})
+					.reply(200);
+
+				const response = await request
+					.post(
+						`${baseUrl}/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1/check-your-answers`
+					)
+					.send({});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toContain(`Found. Redirecting to /appeals-service/appeal-details/1`);
+				expect(mockPatchEndpoint.isDone()).toBe(true);
 			});
 		});
 	});

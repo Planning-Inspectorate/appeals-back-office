@@ -23,7 +23,8 @@ import { APPEAL_TYPE, DOCUMENTS_PAGE_SIZE } from '@pins/appeals/constants/common
 import {
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_REDACTED_STATUS,
-	APPEAL_VIRUS_CHECK_STATUS
+	APPEAL_VIRUS_CHECK_STATUS,
+	REDACTION_STATUS
 } from '@planning-inspectorate/data-model';
 import { capitalize } from 'lodash-es';
 
@@ -1343,13 +1344,47 @@ export async function manageDocumentPage({
 	}
 
 	const isShared = latestVersion?.published;
+	const isUnredacted = REDACTION_STATUS.UNREDACTED === latestVersion?.redactionStatus.toLowerCase();
+
+	/** @type {string[]} */
+	const supportingHearingInquiryInquiryEventDocType = [
+		APPEAL_DOCUMENT_TYPE.GENERAL_SUPPORTING,
+		APPEAL_DOCUMENT_TYPE.HEARING_PROCESS,
+		APPEAL_DOCUMENT_TYPE.INQUIRY_CORE,
+		APPEAL_DOCUMENT_TYPE.INQUIRY_POST_EVENT
+	];
+	/**
+	 *
+	 * @param {Object} params
+	 * @param {string} params.costsDocumentType
+	 * @param {string | undefined} params.latestVersionDocumentType
+	 * @returns {string}
+	 */
+	function getUrlSuffix({ costsDocumentType, latestVersionDocumentType }) {
+		// costsDocumentType is for costs and latestVersionDocument is for checking if
+		// the document type is supporting, inquiry, inquiry event or hearing
+		if (costsDocumentType === 'withdrawal') return '/check-your-answers';
+		if (
+			latestVersionDocumentType &&
+			supportingHearingInquiryInquiryEventDocType.includes(latestVersionDocumentType)
+		)
+			return '/invite-main-party-comments';
+		return '/invite-responses';
+	}
 
 	if (canShare && !isShared) {
 		const { costsDocumentType } = request.params;
+		const { documentType: latestVersionDocumentType } = latestVersion ?? {};
+
+		const isSupportingHearingInquiryInquiryEventDocType =
+			latestVersionDocumentType &&
+			supportingHearingInquiryInquiryEventDocType.includes(latestVersionDocumentType);
+
 		const shareUrl =
-			costsDocumentType === 'withdrawal'
-				? request.originalUrl + '/check-your-answers'
-				: request.originalUrl + '/invite-responses';
+			request.originalUrl + getUrlSuffix({ costsDocumentType, latestVersionDocumentType });
+
+		const buttonText =
+			isUnredacted && isSupportingHearingInquiryInquiryEventDocType ? 'Redact' : 'Share document';
 
 		pageComponents.push(
 			{
@@ -1363,7 +1398,7 @@ export async function manageDocumentPage({
 			{
 				type: 'button',
 				parameters: {
-					text: 'Share document',
+					text: buttonText,
 					href: shareUrl,
 					classes: 'govuk-!-margin-bottom-7'
 				}
