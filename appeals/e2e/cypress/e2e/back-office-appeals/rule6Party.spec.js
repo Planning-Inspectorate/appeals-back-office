@@ -12,9 +12,9 @@ import { ContactDetailsPage } from '../../page_objects/contactDetailsPage.js';
 import { CyaPoePage } from '../../page_objects/CYApage/POE/cyaPoePage';
 import { CYASection } from '../../page_objects/cyaSection.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
+import { FileDateAndRedactionStatusComponent } from '../../page_objects/fileDateAndRedactionStatusComponent.js';
 import { FileUploaderSection } from '../../page_objects/fileUploadSection.js';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
-import { RedactionStatusPage } from '../../page_objects/redactionStatusPage';
 import { happyPathHelper } from '../../support/happyPathHelper';
 import { urlPaths } from '../../support/urlPaths';
 import { formatDateAndTime } from '../../support/utils/format';
@@ -28,7 +28,7 @@ const rule6PartyContact = appealsApiRequests.rule6Party.serviceUser;
 const documentationSectionPage = new DocumentationSectionPage();
 const costsSectionPage = new CostsSectionPage();
 const fileUploaderSection = new FileUploaderSection();
-const redactionStatusPage = new RedactionStatusPage();
+const fileDateAndRedactionStatusComponent = new FileDateAndRedactionStatusComponent();
 const dateTimeSection = new DateTimeSection();
 const caseHistoryPage = new CaseHistoryPage();
 const cyaPoePage = new CyaPoePage();
@@ -447,6 +447,7 @@ it('should change rule 6 party contact', () => {
 });
 
 let sampleFiles = caseDetailsPage.sampleFiles;
+
 it('add a rule 6 POE', () => {
 	// Verify no rule 6 party is added
 	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', 'No rule 6 party');
@@ -456,26 +457,42 @@ it('add a rule 6 POE', () => {
 
 	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', rule6PartyContact.email);
 	const organisationName = rule6PartyContact.organisationName;
-	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', organisationName);
+	const redactionStatus = 'noRedactionRequired';
+	const redactionStatusLabel =
+		fileDateAndRedactionStatusComponent.getRedactionStatusLabel(redactionStatus);
+	const fileDate = new Date(); // date field should be pre-populated with the current date and time
+	const formattedFileDate = formatDateAndTime(fileDate);
 
+	caseDetailsPage.verifyCheckYourAnswers('Rule 6 parties', organisationName);
 	documentationSectionPage.selectAddDocument('rule-6-party-proofs-evidence');
 
 	caseDetailsPage.checkHeading('Upload new proof of evidence and witnesses document');
 	fileUploaderSection.uploadFile(sampleFiles.document);
-	caseDetailsPage.clickButtonByText('Continue');
+	fileDateAndRedactionStatusComponent.clickButtonByText('Continue');
 
-	caseDetailsPage.checkHeading('Redaction status');
-	redactionStatusPage.selectRedactionOption('noRedactionRequired');
-	caseDetailsPage.clickButtonByText('Continue');
+	// is now a new flow when uploading a representation file, where the user is asked to confirm the date and redaction status of the file
+	// then is directed to a check your answers page before confirming the upload
+	fileDateAndRedactionStatusComponent.checkDateIsPopulated(fileDate);
+	fileDateAndRedactionStatusComponent.selectRedactionOption(redactionStatus);
+	fileDateAndRedactionStatusComponent.clickButtonByText('Confirm');
 
-	caseDetailsPage.checkHeading('Received date');
-	dateTimeSection.checkDateIsPrefilled();
-	caseDetailsPage.clickButtonByText('Continue');
+	// verify file upload details on cya page
+	cyaSection.checkHeading(`Check your answers`);
 
-	caseDetailsPage.checkHeading(
-		`Check details and add ${organisationName} proof of evidence and witnesses`
-	);
-	cyaSection.clickButtonByText(`Add ${organisationName} proof of evidence and witnesses`);
+	cyaSection.verifyAnswerUpdated({
+		field: cyaSection.cyaSectionFields.file,
+		value: sampleFiles.document
+	});
+	cyaSection.verifyAnswerUpdated({
+		field: cyaSection.cyaSectionFields.dateReceived,
+		value: formattedFileDate.date
+	});
+	cyaSection.verifyAnswerUpdated({
+		field: cyaSection.cyaSectionFields.redactionStatus,
+		value: redactionStatusLabel
+	});
+
+	cyaSection.clickButtonByText('Confirm');
 
 	caseDetailsPage.validateBannerMessage(
 		'Success',

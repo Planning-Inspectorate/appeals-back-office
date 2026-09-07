@@ -131,6 +131,7 @@ describe('Expedited (part1)) appeals', () => {
 				overviewSectionPage.verifyCaseOverviewDetails(
 					{
 						...DEFAULT_OVERVIEW_DETAILS,
+						relatedAppeals: 'No',
 						appealProcedure: 'Written representations (Part 1)'
 					},
 					false
@@ -298,6 +299,7 @@ describe('Expedited (part1)) appeals', () => {
 				overviewSectionPage.verifyCaseOverviewDetails(
 					{
 						...DEFAULT_OVERVIEW_DETAILS,
+						relatedAppeals: 'No',
 						appealProcedure: 'Written representations (Part 1)'
 					},
 					false
@@ -470,6 +472,7 @@ describe('Expedited (part1)) appeals', () => {
 				overviewSectionPage.verifyCaseOverviewDetails(
 					{
 						...DEFAULT_OVERVIEW_DETAILS,
+						relatedAppeals: 'No',
 						appealProcedure: 'Written representations (Part 1)'
 					},
 					false
