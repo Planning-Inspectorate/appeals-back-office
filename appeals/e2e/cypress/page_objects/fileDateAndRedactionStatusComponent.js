@@ -13,7 +13,7 @@ const dateTimeSection = new DateTimeSection();
 
 export class FileDateAndRedactionStatusComponent extends CaseDetailsPage {
 	// as element ids contains square brackets, need to escape them with double backslash
-	redactionPageSelectorsMap = {
+	redactionSelectorsMap = {
 		redacted: {
 			selector: '\\[redactionStatus\\][0]',
 			label: 'Redacted'
@@ -58,16 +58,16 @@ export class FileDateAndRedactionStatusComponent extends CaseDetailsPage {
 	}
 
 	getRedactionStatusLabel(optionToSelect) {
-		if (!this.redactionPageSelectorsMap[optionToSelect]) {
+		if (!this.redactionSelectorsMap[optionToSelect]) {
 			throw new Error(
-				`Invalid redaction option: ${optionToSelect}. Valid options are: ${Object.keys(this.redactionPageSelectorsMap).join(', ')}`
+				`Invalid redaction option: ${optionToSelect}. Valid options are: ${Object.keys(this.redactionSelectorsMap).join(', ')}`
 			);
 		}
-		return this.redactionPageSelectorsMap[optionToSelect].label;
+		return this.redactionSelectorsMap[optionToSelect].label;
 	}
 
 	generateRedactionStatusSelector(optionToSelect) {
 		// as element id contains square brackets, need to escape them with double backslash
-		return `#items\\[${this.fileUploadIndex}\\]${this.redactionPageSelectorsMap[optionToSelect].selector}.govuk-radios__input`;
+		return `#items\\[${this.fileUploadIndex}\\]${this.redactionSelectorsMap[optionToSelect].selector}.govuk-radios__input`;
 	}
 }
