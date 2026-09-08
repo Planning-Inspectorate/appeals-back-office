@@ -97,7 +97,10 @@ export const canChangeS78ExpeditedToTargetProcedure = ({
 			return [APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE].includes(/** @type {any} */ (currentStage));
 		case APPEAL_CASE_PROCEDURE.HEARING:
 			// Future Dev Work: Hearing
-			return false;
+			// Commented out next steps
+			return [
+				APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE /** ,APPEAL_CASE_STATUS.EVENT*/ /**,APPEAL_CASE_STATUS.AWAITING_EVENT*/
+			].includes(/** @type {any} */ (currentStage));
 		case APPEAL_CASE_PROCEDURE.INQUIRY:
 			// Future Dev Work: Inquiry
 			return false;
