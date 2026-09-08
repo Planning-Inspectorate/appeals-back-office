@@ -1094,7 +1094,7 @@ describe('supporting documents', () => {
 
 				expect(unprettifiedElement.innerHTML).toContain('Manage and share');
 				expect(unprettifiedElement.innerHTML).not.toContain(
-					'<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong>'
+					'<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1" aria-label="Shared document">Shared</strong>'
 				);
 			});
 
@@ -1117,7 +1117,7 @@ describe('supporting documents', () => {
 					'Manage <span class="govuk-visually-hidden">'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong>'
+					'<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1" aria-label="Shared document">Shared</strong>'
 				);
 			});
 		});
@@ -1296,10 +1296,10 @@ describe('supporting documents', () => {
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<br><strong class="govuk-tag govuk-tag--blue govuk-!-margin-top-1">Shared</strong>'
+					'<br><strong class="govuk-tag govuk-tag--blue govuk-!-margin-top-1" aria-label="Shared document">Shared</strong>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong><a class="govuk-link"'
+					'<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1" aria-label="Shared document">Shared</strong><a class="govuk-link"'
 				);
 			});
 
