@@ -798,7 +798,7 @@ export function mapFolderDocumentInformationHtmlProperty(
 	const isShared = document?.latestDocumentVersion?.published;
 	const sharedTagHtml =
 		canShare && isShared
-			? `<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong>`
+			? `<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1" aria-label="Shared document">Shared</strong>`
 			: '';
 
 	if (document?.id) {
@@ -1185,7 +1185,7 @@ function mapDocumentNameHtmlProperty(document, documentVersion, canShare = false
 	const isShared = documentVersion.published;
 	const sharedTagHtml =
 		canShare && isShared
-			? `<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong>`
+			? `<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1" aria-label="Shared document">Shared</strong>`
 			: '';
 
 	if (virusCheckStatus.checked && virusCheckStatus.safe) {
@@ -1437,7 +1437,7 @@ export async function manageDocumentPage({
 				{
 					key: { text: 'Version' },
 					value: {
-						html: `${versionId} ${canShare && isShared ? '<br><strong class="govuk-tag govuk-tag--blue govuk-!-margin-top-1">Shared</strong>' : ''}`
+						html: `${versionId} ${canShare && isShared ? '<br><strong class="govuk-tag govuk-tag--blue govuk-!-margin-top-1" aria-label="Shared document">Shared</strong>' : ''}`
 					}
 				}
 			]
