@@ -829,6 +829,10 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient, 
 			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
 		);
 
+		const isEnforcementOrLdcHearing =
+			isLdcOrEnforcementCaseType(appeal.appealType?.key) &&
+			appeal.procedureType?.name === PROCEDURE_TYPE_NAME.HEARING;
+
 		if (hasLpaFinalComment) {
 			await notifyAppellantAboutLpaFinalComments(
 				appeal,
@@ -837,13 +841,15 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient, 
 				inspectorName
 			);
 		} else {
-			await notifyNoFinalComments(
-				appeal,
-				notifyClient,
-				azureAdUserId,
-				'local planning authority',
-				inspectorName
-			);
+			if (!isEnforcementOrLdcHearing) {
+				await notifyNoFinalComments(
+					appeal,
+					notifyClient,
+					azureAdUserId,
+					'local planning authority',
+					inspectorName
+				);
+			}
 		}
 
 		if (hasAppellantFinalComment) {
@@ -854,6 +860,26 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient, 
 				inspectorName
 			);
 		} else {
+			if (!isEnforcementOrLdcHearing) {
+				await notifyNoFinalComments(
+					appeal,
+					notifyClient,
+					azureAdUserId,
+					'appellant',
+					inspectorName
+				);
+			}
+		}
+
+		// for enforcement and ldc hearings, the none received is sent if neither party submits FCs
+		if (isEnforcementOrLdcHearing && !hasLpaFinalComment && !hasAppellantFinalComment) {
+			await notifyNoFinalComments(
+				appeal,
+				notifyClient,
+				azureAdUserId,
+				'local planning authority',
+				inspectorName
+			);
 			await notifyNoFinalComments(appeal, notifyClient, azureAdUserId, 'appellant', inspectorName);
 		}
 	} catch (error) {
