@@ -11,5 +11,5 @@ We will contact you if we make any changes to the hearing.
 We will contact you by email when we set up the hearing.
 {% endif %}
 
-The Planning Inspectorate
+Planning Inspectorate
 {{team_email_address}}
