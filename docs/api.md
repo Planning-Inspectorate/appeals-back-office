@@ -1,6 +1,6 @@
 # API Back-end
 
-Once configured, the API will run locally over the `http://localhost:3000` endpoint.
+Once configured, the API will run locally over the `http://localhost:3999` endpoint.
 
 ## API Documentation
 
@@ -12,7 +12,7 @@ To generate up-to-date documentation, run:
 appeals/api> npm run gen-api-spec
 ```
 
-This will re-generate the `appeals/api/src/server/swagger-output.json` file. This spec is hosted by the api, and can be found at `http://localhost:3000/api-docs/`.
+This will re-generate the `appeals/api/src/server/swagger-output.json` file. This spec is hosted by the api, and can be found at `http://localhost:3999/api-docs/`.
 
 ## Running DB migrations
 

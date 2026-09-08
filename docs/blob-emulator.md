@@ -51,3 +51,5 @@ AZURE_BLOB_STORE_HOST=https://127.0.0.1:10000/devstoreaccount1/
 AZURE_BLOB_USE_EMULATOR=true
 NODE_TLS_REJECT_UNAUTHORIZED=0
 ```
+
+use `pins_azurite` instead of `127.0.0.1` in api
