@@ -1,7 +1,7 @@
 import { appealData as baseAppealData } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common';
+import { APPEAL_TYPE, PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common';
 import { parseHtml } from '@pins/platform';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import nock from 'nock';
@@ -227,6 +227,135 @@ describe('Change procedure timetable', () => {
 					);
 				});
 			});
+		});
+
+		it('should prepopulate statement, IP comments and final comments due dates when transitioning from Part 1 to written', async () => {
+			const appealData = {
+				...baseAppealData,
+				appealType: APPEAL_TYPE.S78,
+				procedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
+				appealStatus: 'lpa_questionnaire',
+				appealTimetable: {
+					appealTimetableId: 1,
+					lpaStatementDueDate: '2025-07-25T22:59:00.000Z',
+					ipCommentsDueDate: '2025-08-26T22:59:00.000Z',
+					finalCommentsDueDate: '2025-09-10T22:59:00.000Z'
+				}
+			};
+
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, { planningObligation: { hasObligation: false } })
+				.persist();
+
+			const session = supertest.agent(app);
+
+			await session
+				.post(`${baseUrl}/change-selected-procedure-type`)
+				.send({ appealProcedure: APPEAL_CASE_PROCEDURE.WRITTEN });
+
+			const response = await session.get(
+				`${baseUrl}/${APPEAL_CASE_PROCEDURE.WRITTEN}/change-timetable`
+			);
+			const element = parseHtml(response.text);
+
+			const lpaQuestionnaireDay = element.querySelector(
+				'input[name="lpa-questionnaire-due-date-day"]'
+			);
+			expect(lpaQuestionnaireDay).toBeNull();
+
+			const lpaStatementDay = element.querySelector('input[name="lpa-statement-due-date-day"]');
+			const lpaStatementMonth = element.querySelector('input[name="lpa-statement-due-date-month"]');
+			const lpaStatementYear = element.querySelector('input[name="lpa-statement-due-date-year"]');
+			expect(lpaStatementDay?.getAttribute('value')).toBe('25');
+			expect(lpaStatementMonth?.getAttribute('value')).toBe('7');
+			expect(lpaStatementYear?.getAttribute('value')).toBe('2025');
+
+			const ipCommentsDay = element.querySelector('input[name="ip-comments-due-date-day"]');
+			const ipCommentsMonth = element.querySelector('input[name="ip-comments-due-date-month"]');
+			const ipCommentsYear = element.querySelector('input[name="ip-comments-due-date-year"]');
+			expect(ipCommentsDay?.getAttribute('value')).toBe('26');
+			expect(ipCommentsMonth?.getAttribute('value')).toBe('8');
+			expect(ipCommentsYear?.getAttribute('value')).toBe('2025');
+
+			const finalCommentsDay = element.querySelector('input[name="final-comments-due-date-day"]');
+			const finalCommentsMonth = element.querySelector(
+				'input[name="final-comments-due-date-month"]'
+			);
+			const finalCommentsYear = element.querySelector('input[name="final-comments-due-date-year"]');
+			expect(finalCommentsDay?.getAttribute('value')).toBe('10');
+			expect(finalCommentsMonth?.getAttribute('value')).toBe('9');
+			expect(finalCommentsYear?.getAttribute('value')).toBe('2025');
+		});
+
+		it('should dynamically calculate and prepopulate statement, IP comments and final comments when Part 1 appeal has no prior dates', async () => {
+			nock('https://www.gov.uk')
+				.get('/bank-holidays.json')
+				.reply(200, {
+					'england-and-wales': {
+						division: 'england-and-wales',
+						events: []
+					}
+				})
+				.persist();
+
+			const appealData = {
+				...baseAppealData,
+				appealType: APPEAL_TYPE.S78,
+				procedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
+				appealStatus: 'lpa_questionnaire',
+				startedAt: '2025-01-06T00:00:00.000Z',
+				appealTimetable: {
+					appealTimetableId: 1,
+					lpaQuestionnaireDueDate: '2025-01-13T22:59:00.000Z'
+				}
+			};
+
+			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, { planningObligation: { hasObligation: false } })
+				.persist();
+
+			const session = supertest.agent(app);
+
+			await session
+				.post(`${baseUrl}/change-selected-procedure-type`)
+				.send({ appealProcedure: APPEAL_CASE_PROCEDURE.WRITTEN });
+
+			const response = await session.get(
+				`${baseUrl}/${APPEAL_CASE_PROCEDURE.WRITTEN}/change-timetable`
+			);
+			const element = parseHtml(response.text);
+
+			const lpaQuestionnaireDay = element.querySelector(
+				'input[name="lpa-questionnaire-due-date-day"]'
+			);
+			expect(lpaQuestionnaireDay).toBeNull();
+
+			const lpaStatementDay = element.querySelector('input[name="lpa-statement-due-date-day"]');
+			const lpaStatementMonth = element.querySelector('input[name="lpa-statement-due-date-month"]');
+			const lpaStatementYear = element.querySelector('input[name="lpa-statement-due-date-year"]');
+			expect(lpaStatementDay?.getAttribute('value')).toBeTruthy();
+			expect(lpaStatementMonth?.getAttribute('value')).toBeTruthy();
+			expect(lpaStatementYear?.getAttribute('value')).toBeTruthy();
+
+			const ipCommentsDay = element.querySelector('input[name="ip-comments-due-date-day"]');
+			const ipCommentsMonth = element.querySelector('input[name="ip-comments-due-date-month"]');
+			const ipCommentsYear = element.querySelector('input[name="ip-comments-due-date-year"]');
+			expect(ipCommentsDay?.getAttribute('value')).toBeTruthy();
+			expect(ipCommentsMonth?.getAttribute('value')).toBeTruthy();
+			expect(ipCommentsYear?.getAttribute('value')).toBeTruthy();
+
+			const finalCommentsDay = element.querySelector('input[name="final-comments-due-date-day"]');
+			const finalCommentsMonth = element.querySelector(
+				'input[name="final-comments-due-date-month"]'
+			);
+			const finalCommentsYear = element.querySelector('input[name="final-comments-due-date-year"]');
+			expect(finalCommentsDay?.getAttribute('value')).toBeTruthy();
+			expect(finalCommentsMonth?.getAttribute('value')).toBeTruthy();
+			expect(finalCommentsYear?.getAttribute('value')).toBeTruthy();
 		});
 	});
 

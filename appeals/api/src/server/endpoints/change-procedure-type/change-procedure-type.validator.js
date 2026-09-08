@@ -29,8 +29,8 @@ export const postChangeProcedureTypeValidator = composeMiddleware(
 	body('existingAppealProcedure')
 		.notEmpty()
 		.withMessage('existingAppealProcedure is required')
-		.isIn(['hearing', 'inquiry', 'written'])
-		.withMessage('existingAppealProcedure must be one of hearing, inquiry, or written'),
+		.isIn(['hearing', 'inquiry', 'written', 'part 1'])
+		.withMessage('existingAppealProcedure must be one of hearing, inquiry, written, or part 1'),
 
 	body('eventDate')
 		.if((_, { req }) => req.body.appealProcedure === 'inquiry')
