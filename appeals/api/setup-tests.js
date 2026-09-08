@@ -3,7 +3,10 @@ import config from '#config/config.js';
 import notify from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
 import { NODE_ENV_PRODUCTION } from '@pins/appeals/constants/support.js';
+import nock from 'nock';
 
+nock.disableNetConnect();
+nock.enableNetConnect('127.0.0.1');
 const mockValidateBlob = jest.fn().mockResolvedValue(true);
 const mockRepGetById = jest.fn().mockResolvedValue({});
 const mockRepUpdateById = jest.fn().mockResolvedValue({});
