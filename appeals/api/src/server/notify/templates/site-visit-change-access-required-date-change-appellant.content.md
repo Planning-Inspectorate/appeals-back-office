@@ -16,7 +16,9 @@ Include our appeal reference number in any communication.
 
 You cannot give the inspector any documents or discuss the appeal with them.
 
+For health and safety reasons, make sure any pets are safely secured during the site visit. 
+
 The inspector will carry out the inspection on their own.
 
-The Planning Inspectorate
+Planning Inspectorate
 {{team_email_address}}
