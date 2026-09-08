@@ -52,8 +52,36 @@ export const postChangeProcedureTypeValidator = composeMiddleware(
 		.withMessage('estimationDays must be a positive integer'),
 
 	validateDateParameter({ parameterName: 'lpaQuestionnaireDueDate', isRequired: true }),
-	validateDateParameter({ parameterName: 'lpaStatementDueDate', isRequired: true }),
-	validateDateParameter({ parameterName: 'ipCommentsDueDate', isRequired: true }),
+
+	body('lpaStatementDueDate')
+		.if(
+			(_, { req }) =>
+				['written', 'inquiry', 'hearing'].includes(req.body.existingAppealProcedure) ||
+				(req.body.existingAppealProcedure !== 'part 1' &&
+					req.body.statementOfCommonGroundDueDate !== '')
+		)
+		.custom(({ req }) => {
+			return validateDateParameter({ parameterName: 'lpaStatementDueDate', isRequired: true })(
+				req,
+				{},
+				() => {}
+			);
+		}),
+
+	body('ipCommentsDueDate')
+		.if(
+			(_, { req }) =>
+				['written', 'inquiry', 'hearing'].includes(req.body.existingAppealProcedure) ||
+				(req.body.existingAppealProcedure !== 'part 1' &&
+					req.body.statementOfCommonGroundDueDate !== '')
+		)
+		.custom(({ req }) => {
+			return validateDateParameter({ parameterName: 'ipCommentsDueDate', isRequired: true })(
+				req,
+				{},
+				() => {}
+			);
+		}),
 
 	body('planningObligationDueDate')
 		.optional({ checkFalsy: true })
@@ -61,11 +89,23 @@ export const postChangeProcedureTypeValidator = composeMiddleware(
 		.withMessage('planningObligationDueDate must be a valid date'),
 
 	body('finalCommentsDueDate')
-		.if((_, { req }) => req.body.appealProcedure === 'written')
+		.if(
+			(_, { req }) =>
+				req.body.appealProcedure === 'written' &&
+				(['written', 'inquiry', 'hearing'].includes(req.body.existingAppealProcedure) ||
+					(req.body.existingAppealProcedure !== 'part 1' &&
+						req.body.statementOfCommonGroundDueDate !== ''))
+		)
 		.isISO8601()
 		.withMessage('finalCommentsDueDate must be a valid date'),
 	body('statementOfCommonGroundDueDate')
-		.if((_, { req }) => ['inquiry', 'hearing'].includes(req.body.appealProcedure))
+		.if(
+			(_, { req }) =>
+				['inquiry', 'hearing'].includes(req.body.appealProcedure) &&
+				(['written', 'inquiry', 'hearing'].includes(req.body.existingAppealProcedure) ||
+					(req.body.existingAppealProcedure !== 'part 1' &&
+						req.body.statementOfCommonGroundDueDate !== ''))
+		)
 		.isISO8601()
 		.withMessage('statementOfCommonGroundDueDate must be a valid date'),
 	body('proofOfEvidenceAndWitnessesDueDate')

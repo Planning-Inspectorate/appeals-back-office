@@ -515,6 +515,14 @@ export const appealDataFullPlanning = {
 	...appealData,
 	appealType: 'Planning appeal'
 };
+export const appealDataFullPlanningExpedited = {
+	...appealData,
+	appealType: 'Planning appeal',
+	isExpedited: true,
+	createdAt: '2026-05-21T10:27:06.626Z',
+	startedAt: '2026-05-23T10:27:06.626Z',
+	validAt: '2026-05-23T10:27:06.626Z'
+};
 
 export const appealDataListedBuilding = {
 	...appealData,

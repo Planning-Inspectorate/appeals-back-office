@@ -622,6 +622,47 @@ describe('Change appeal procedure type route', () => {
 					templateName: 'change-procedure-type'
 				});
 			});
+
+			test('returns 201 if changing from part 1 to hearing', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/procedure-type-change-request`)
+					.send({
+						existingAppealProcedure: 'part 1',
+						appealProcedure: 'hearing',
+						lpaQuestionnaireDueDate: '2026-11-03T00:00:00.000Z',
+						ipCommentsDueDate: '2026-12-01T00:00:00.000Z',
+						lpaStatementDueDate: '2026-12-01T00:00:00.000Z',
+						statementOfCommonGroundDueDate: '2026-12-05T00:00:00.000Z',
+						planningObligationDueDate: '2026-12-10T00:00:00.000Z'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+				expect(mockTx.appeal.update).toHaveBeenCalledTimes(1);
+				expect(mockTx.appeal.update).toHaveBeenCalledWith({
+					where: { id: fullPlanningAppeal.id },
+					data: { procedureTypeId: 1 }
+				});
+
+				expect(mockTx.inquiry.deleteMany).not.toHaveBeenCalled();
+
+				// verify transaction itself was called
+				expect(databaseConnector.$transaction).toHaveBeenCalled();
+
+				expect(mockTx.appealTimetable.update).toHaveBeenCalledWith({
+					where: { appealId: fullPlanningAppeal.id },
+					data: {
+						ipCommentsDueDate: '2026-12-01T00:00:00.000Z',
+						lpaQuestionnaireDueDate: '2026-11-03T00:00:00.000Z',
+						lpaStatementDueDate: '2026-12-01T00:00:00.000Z',
+						planningObligationDueDate: '2026-12-10T00:00:00.000Z',
+						statementOfCommonGroundDueDate: '2026-12-05T00:00:00.000Z'
+					}
+				});
+
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledTimes(1);
+			});
 		});
 
 		describe('Change to Inquiry', () => {
