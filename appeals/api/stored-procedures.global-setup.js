@@ -1,4 +1,4 @@
-import { bootstrapStoredProcedureTestDatabase } from '#tests/stored-procedures/test-database.js';
+import { bootstrapStoredProcedureTestDatabase } from './src/database/stored-procedures/__tests__/test-database.js';
 
 export default async () => {
 	process.env.TZ = 'UTC';

@@ -15,7 +15,7 @@ const storedProcedureStatePath = path.join(
 );
 const storedProcedureSqlPath = path.join(
 	apiRoot,
-	'src/database/migrations/20260320113501_add_procedure_sp_set_personal_list/migration.sql'
+	'src/database/stored-procedures/spSetPersonalList.sql'
 );
 
 const sqlEdgeImage = 'mcr.microsoft.com/azure-sql-edge:latest';
@@ -179,6 +179,7 @@ const ensureTestDatabaseExists = async (masterConnectionString) => {
 };
 
 /**
+ * Run all the Prisma Migrations inc the stored procedure ones
  * @param {string} connectionString
  */
 const runPrismaMigrations = (connectionString) => {

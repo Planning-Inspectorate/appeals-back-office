@@ -952,10 +952,13 @@ export const representationRejectionReasons = [
  * Seed static data into the database. Does not disconnect from the database or handle errors.
  *
  * @param {import('../../server/utils/db-client/client.ts').PrismaClient} databaseConnector
+ * @param {boolean} [forceLocalListedBuildingData=false] - If true, Forces use of the local test Listed Building dataset instead of downloading from the Gov URL
  */
-export async function seedStaticData(databaseConnector) {
+export async function seedStaticData(databaseConnector, forceLocalListedBuildingData = false) {
 	await importListedBuildingsDataset(
-		'https://files.planning.data.gov.uk/dataset/listed-building.json'
+		databaseConnector,
+		'https://files.planning.data.gov.uk/dataset/listed-building.json',
+		forceLocalListedBuildingData
 	);
 
 	const systemUserId = '00000000-0000-0000-0000-000000000000';
