@@ -17,7 +17,7 @@ export const getChangeAppealTimetable = async (request, response) => {
 };
 
 /**
- * This function populates default timetable dates for appeals that are transitioning from procedure type 'Part 1' to 'Written'.
+ * This function populates default timetable dates for appeals that are transitioning from procedure type 'Part 1'.
  * @param {ChangeProcedureTypeSession} sessionValues
  * @param {import('../../appeal-details.types.js').WebAppeal} currentAppeal
  */

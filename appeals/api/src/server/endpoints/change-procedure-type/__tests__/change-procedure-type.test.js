@@ -342,10 +342,10 @@ describe('Change appeal procedure type route', () => {
 					.send({
 						existingAppealProcedure: 'part 1',
 						appealProcedure: 'written',
-						lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',
-						ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
-						lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
-						finalCommentsDueDate: '2025-12-15T00:00:00.000Z'
+						lpaQuestionnaireDueDate: '2026-11-03T00:00:00.000Z',
+						ipCommentsDueDate: '2026-12-01T00:00:00.000Z',
+						lpaStatementDueDate: '2026-12-01T00:00:00.000Z',
+						finalCommentsDueDate: '2026-12-15T00:00:00.000Z'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -362,10 +362,10 @@ describe('Change appeal procedure type route', () => {
 				expect(mockTx.appealTimetable.update).toHaveBeenCalledWith({
 					where: { appealId: fullPlanningAppeal.id },
 					data: {
-						finalCommentsDueDate: '2025-12-15T00:00:00.000Z',
-						ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
-						lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',
-						lpaStatementDueDate: '2025-12-01T00:00:00.000Z'
+						finalCommentsDueDate: '2026-12-15T00:00:00.000Z',
+						ipCommentsDueDate: '2026-12-01T00:00:00.000Z',
+						lpaQuestionnaireDueDate: '2026-11-03T00:00:00.000Z',
+						lpaStatementDueDate: '2026-12-01T00:00:00.000Z'
 					}
 				});
 
