@@ -1,7 +1,7 @@
 import {
 	applyStoredProcedureTestEnvironment,
 	loadStoredProcedureTestState
-} from '#tests/stored-procedures/test-database.js';
+} from './src/database/stored-procedures/__tests__/test-database.js';
 
 process.env.TZ = 'UTC';
 applyStoredProcedureTestEnvironment(loadStoredProcedureTestState());

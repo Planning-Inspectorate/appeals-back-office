@@ -98,6 +98,13 @@ describe('transitionState', () => {
 					valid: true
 				})
 			});
+
+			// Test that the correct DB stored proc was called
+			expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalled();
+			expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledWith(
+				expect.stringContaining('EXEC dbo.spSetPersonalList')
+			);
+
 			expect(result).toEqual(true);
 		});
 
@@ -121,6 +128,7 @@ describe('transitionState', () => {
 
 				expect(databaseConnector.appealStatus.create).toHaveBeenCalledTimes(expectCreate ? 1 : 0);
 
+				// Test that the correct DB stored proc was called
 				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledTimes(1);
 				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledWith(
 					expect.stringContaining('EXEC dbo.spSetPersonalList')
@@ -161,6 +169,8 @@ describe('transitionState', () => {
 			const result = await transitionState(22, 'user-xyz', VALIDATION_OUTCOME_INCOMPLETE);
 			expect(appealStatusRepository.updateAppealStatusByAppealId).not.toHaveBeenCalled();
 			expect(appealStatusRepository.rollBackAppealStatusTo).not.toHaveBeenCalled();
+
+			// Test that the correct DB stored proc was called
 			expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalled();
 			expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledWith(
 				expect.stringContaining('EXEC dbo.spSetPersonalList')
@@ -180,6 +190,13 @@ describe('transitionState', () => {
 				const result = await transitionState(11, 'user-123', VALIDATION_OUTCOME_VALID);
 
 				expect(appealStatusRepository.updateAppealStatusByAppealId).toHaveBeenCalled();
+
+				// Test that the correct DB stored proc was called
+				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalled();
+				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledWith(
+					expect.stringContaining('EXEC dbo.spSetPersonalList')
+				);
+
 				expect(result).toEqual(true);
 			});
 
