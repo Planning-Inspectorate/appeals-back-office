@@ -20,6 +20,7 @@ export class CYASection extends CaseDetailsPage {
 		rule6PartyName: 'Rule 6 party name',
 		rule6PartyEmailAddress: 'Rule 6 party email address',
 		file: 'File',
+		ipCommentFile: 'Interested party comment document',
 		dateReceived: 'Date received',
 		redactionStatus: 'Redaction status'
 	};
