@@ -1008,7 +1008,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'Y2430',
 		name: 'Melton Borough Council',
-		email: 'externaldevelopmentcontrol@melton.gov.uk',
+		email: 'planningappeals@melton.gov.uk',
 		teamId: 17, // North3
 		enforcementTeamId: 3 // Enforcement Appeals Team - Team 1
 	},
