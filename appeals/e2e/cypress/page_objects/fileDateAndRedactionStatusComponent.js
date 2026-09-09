@@ -15,7 +15,7 @@ export class FileDateAndRedactionStatusComponent extends CaseDetailsPage {
 	// as element ids contains square brackets, need to escape them with double backslash
 	redactionSelectorsMap = {
 		redacted: {
-			selector: '\\[redactionStatus\\][0]',
+			selector: '\\[redactionStatus\\]',
 			label: 'Redacted'
 		},
 		unredacted: {

@@ -3,12 +3,21 @@
 import { users } from '../fixtures/users';
 import { Page } from '../page_objects/basePage.js';
 import { CaseDetailsPage } from '../page_objects/caseDetailsPage.js';
+import { CYASection } from '../page_objects/cyaSection.js';
 import { DateTimeSection } from '../page_objects/dateTimeSection';
+import { FileDateAndRedactionStatusComponent } from '../page_objects/fileDateAndRedactionStatusComponent.js';
 import { ListCasesPage } from '../page_objects/listCasesPage';
 import { ProcedureTypePage } from '../page_objects/procedureTypePage';
 import { FileUploader } from '../page_objects/shared.js';
 import { FLOWS, STATUSES } from './flows';
 import { urlPaths } from './urlPaths.js';
+import { formatDateAndTime } from './utils/format.js';
+
+// import type definitions for use as parameter types for better autocompletion and type checking
+/** @typedef {import("./typeDefinitions.js").RepresentationUploadOptions} RepresentationUploadOptions */
+/** @typedef {import("./typeDefinitions.js").Status} Status */
+/** @typedef {import("./typeDefinitions.js").AppealType} AppealType */
+/** @typedef {import("./typeDefinitions.js").ProcedureType} ProcedureType */
 
 const basePage = new Page();
 const caseDetailsPage = new CaseDetailsPage();
@@ -16,6 +25,8 @@ const dateTimeSection = new DateTimeSection();
 const listCasesPage = new ListCasesPage();
 const fileUploader = new FileUploader();
 const procedureTypePage = new ProcedureTypePage();
+const fileDateAndRedactionStatusComponent = new FileDateAndRedactionStatusComponent();
+const cyaSection = new CYASection();
 
 let sampleFiles = fileUploader.sampleFiles;
 let pdf = sampleFiles.pdf;
@@ -65,6 +76,7 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Mark appeal as valid');
 	},
+
 	reviewLpaq(caseObj, state = 'Complete') {
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
 		caseDetailsPage.clickReviewLpaq();
@@ -224,6 +236,66 @@ export const happyPathHelper = {
 				caseDetailsPage.clickBackLink();
 			}
 		});
+	},
+
+	/**
+	 * Uploads a representation document with the specified options.
+	 * @param {RepresentationUploadOptions} - The options for uploading a representation document.
+	 */
+	uploadRepresentation({
+		fileName = sampleFiles.document,
+		fileDate = new Date(),
+		redactionStatus = 'redacted',
+		cyaHeading = 'Check your answers',
+		cyaCTAText = 'Confirm',
+		cyaFileNameField = cyaSection.cyaSectionFields.file
+	} = {}) {
+		cy.writeLog(
+			`Uploading representation with:
+			file: ${fileName}
+			date: ${fileDate}
+			redaction status: ${redactionStatus}
+			CYA heading: ${cyaHeading}
+			CYA file name field: ${cyaFileNameField}
+			CYA CTA text: ${cyaCTAText}`
+		);
+
+		// get date and redaction status values to use for verification on the CYA page
+		const formattedFileDate = formatDateAndTime(fileDate);
+		const redactionStatusLabel =
+			fileDateAndRedactionStatusComponent.getRedactionStatusLabel(redactionStatus);
+
+		// upload the file and click continue to go to the date and redaction status page
+		fileUploader.uploadFiles(fileName);
+		fileDateAndRedactionStatusComponent.clickButtonByText('Continue');
+
+		// check that the date field is pre-populated with the current date and time, and select redaction status
+		// then proceed to the CYA page
+		fileDateAndRedactionStatusComponent.checkDateIsPopulated(fileDate);
+		fileDateAndRedactionStatusComponent.selectRedactionOption(redactionStatus);
+		fileDateAndRedactionStatusComponent.clickButtonByText('Confirm');
+
+		// verify heading on cya page
+		cyaSection.checkHeading(cyaHeading);
+
+		/* verify the file name, date received and redaction status on the CYA page 
+		The file name field is passed in as a parameter to allow for different field names 
+		depending on the type of representation being uploaded */
+		cyaSection.verifyAnswerUpdated({
+			field: cyaFileNameField,
+			value: fileName
+		});
+		cyaSection.verifyAnswerUpdated({
+			field: cyaSection.cyaSectionFields.dateReceived,
+			value: formattedFileDate.date
+		});
+		cyaSection.verifyAnswerUpdated({
+			field: cyaSection.cyaSectionFields.redactionStatus,
+			value: redactionStatusLabel
+		});
+
+		// click the confirm button on the CYA page to complete the upload
+		cyaSection.clickButtonByText(cyaCTAText);
 	},
 
 	changeStartDate(caseObj) {
@@ -649,10 +721,10 @@ export const happyPathHelper = {
 
 	/**
 	 * @param {*} caseObj
-	 * @param {import('./flows').Status} currentStatus
-	 * @param {import('./flows').Status} targetStatus
-	 * @param {import('./flows').AppealType} appealType
-	 * @param {import('./flows').ProcedureType} procedureType
+	 * @param {Status} currentStatus current status of the case
+	 * @param {Status} targetStatus target status to advance the case to
+	 * @param {AppealType} appealType type of appeal (e.g. 'HOUSEHOLDER', 'ENFORCEMENT', etc.) to determine the flow to use for advancing the case
+	 * @param {ProcedureType} procedureType type of procedure (e.g. 'WRITTEN', 'HEARING', 'INQUIRY') to determine the flow to use for advancing the case
 	 * @param {boolean} [loadCaseDetails=true] whether or not to load case details page after advancing to a status
 	 */
 

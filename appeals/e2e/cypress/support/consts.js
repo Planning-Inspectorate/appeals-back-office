@@ -28,7 +28,8 @@ export const APPEAL_PAYLOAD_TYPES = {
 export const CTA_TEXT = {
 	documents: {
 		viewEdit: 'View and edit',
-		manageShare: 'Manage and share'
+		manageShare: 'Manage and share',
+		addComment: 'Add comment'
 	},
 	caseProgression: {
 		progressToProofOfEvidence: 'Progress to proof of evidence and witnesses'
@@ -38,11 +39,23 @@ export const CTA_TEXT = {
 	}
 };
 
+export const HEADINGS = {
+	cya: {
+		ipComment: 'Check details and add interested party comment'
+	}
+};
+
 export const PROCEDURE_TYPES = {
 	hearing: 'Hearing',
 	inquiry: 'Inquiry',
 	written: 'Written representations',
 	writtenPart2: 'Written representations (Part 2)'
+};
+
+export const REDACTION_STATUSES = {
+	redacted: 'redacted',
+	noRedactionRequired: 'noRedactionRequired',
+	unredacted: 'unredacted'
 };
 
 export const BANNER_TYPES = {
