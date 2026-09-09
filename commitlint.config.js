@@ -1,5 +1,5 @@
 import { commitlintConfig } from '@planning-inspectorate/coding-standards';
-import lodash from 'lodash';
+import isRegExp from 'lodash/isRegExp.js';
 
 const scopes = [
 	'appeals',
@@ -83,7 +83,7 @@ export default {
 					// or a regular expression
 					if (
 						allowedScopes.some((allowedScope) => {
-							if (lodash.isRegExp(allowedScope)) {
+							if (isRegExp(allowedScope)) {
 								if (scope == null) {
 									return false;
 								}
