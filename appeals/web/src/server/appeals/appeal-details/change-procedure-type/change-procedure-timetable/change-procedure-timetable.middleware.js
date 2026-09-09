@@ -16,7 +16,8 @@ export const runTimetableValidators = async (req, res, next) => {
 	const timetableTypes = getTimetableTypes(
 		currentAppeal.appealType,
 		appellantCase.planningObligation?.hasObligation,
-		sessionValues?.appealProcedure
+		sessionValues?.appealProcedure,
+		sessionValues?.existingAppealProcedure
 	);
 	const validators = selectTimetableValidators(req, timetableTypes, sessionValues);
 	let index = 0;

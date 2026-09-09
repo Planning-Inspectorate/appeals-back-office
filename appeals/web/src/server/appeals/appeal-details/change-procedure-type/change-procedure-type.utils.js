@@ -2,7 +2,7 @@ import { getEnabledAppealTypes } from '#common/feature-flags-appeal-types.js';
 import featureFlags from '#common/feature-flags.js';
 import { getEnabledHearingAppealTypes } from '#common/hearing-appeal-types.js';
 import { getEnabledInquiryAppealTypes } from '#common/inquiry-appeal-types.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { FEATURE_FLAG_NAMES, PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common.js';
 import { isS78ExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { canChangeS78ExpeditedToTargetProcedure } from '@pins/appeals/utils/business-rules.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
@@ -32,14 +32,17 @@ export const getAvailableProcedureTypes = ({
 		return [];
 	}
 
+	const isPart1 = procedureType?.toLowerCase() === PROCEDURE_TYPE_NAME.WRITTEN_PART_1.toLowerCase();
+
 	const resolvedIsS78Expedited =
-		isS78Expedited ||
-		isS78ExpeditedAppealType(
-			appealType,
-			appellantCase?.applicationDate,
-			appellantCase?.applicationDecision,
-			appellantCase?.typeOfPlanningApplication
-		);
+		isPart1 &&
+		(isS78Expedited ||
+			isS78ExpeditedAppealType(
+				appealType,
+				appellantCase?.applicationDate,
+				appellantCase?.applicationDecision,
+				appellantCase?.typeOfPlanningApplication
+			));
 
 	const isExpeditedCopFeatureActive = featureFlags.isFeatureActive(
 		FEATURE_FLAG_NAMES.EXPEDITED_APPEALS_CHANGE_PROCEDURE

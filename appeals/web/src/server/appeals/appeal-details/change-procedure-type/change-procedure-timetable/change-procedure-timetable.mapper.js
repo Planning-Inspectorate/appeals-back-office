@@ -9,6 +9,8 @@ import { isDefined } from '#lib/ts-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
+import { PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common.js';
+
 /**
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
  */
@@ -49,7 +51,8 @@ export const mapChangeTimetablePage = (
 	const timetableTypes = getTimetableTypes(
 		appealDetails.appealType,
 		appellantCase.planningObligation?.hasObligation ?? false,
-		session.appealProcedure
+		session.appealProcedure,
+		session.existingAppealProcedure
 	);
 
 	/** @type {PageContent} */
@@ -107,9 +110,18 @@ export const mapChangeTimetablePage = (
  * @param {string|undefined|null} appealType
  * @param {boolean} hasObligation
  * @param {string} newProcedureType
+ * @param {string} [existingProcedureType]
  * @returns {AppealTimetableType[]}
  */
-export const getTimetableTypes = (appealType, hasObligation, newProcedureType) => {
+export const getTimetableTypes = (
+	appealType,
+	hasObligation,
+	newProcedureType,
+	existingProcedureType = ''
+) => {
+	const isPart1 =
+		existingProcedureType?.toLowerCase() === PROCEDURE_TYPE_NAME.WRITTEN_PART_1.toLowerCase();
+
 	/** @type {AppealTimetableType[]} */
 	let validAppealTimetableType = [];
 
@@ -122,6 +134,11 @@ export const getTimetableTypes = (appealType, hasObligation, newProcedureType) =
 				'lpaStatementDueDate',
 				'ipCommentsDueDate'
 			];
+			if (isPart1) {
+				validAppealTimetableType = validAppealTimetableType.filter(
+					(type) => type !== 'lpaQuestionnaireDueDate'
+				);
+			}
 			if (newProcedureType.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN) {
 				validAppealTimetableType.push('finalCommentsDueDate');
 			}
