@@ -23,6 +23,7 @@ We did not receive comments from interested parties.
 We did not receive a statement from the local planning authority, the appellant or any comments from interested parties.
 {% endif -%}
 {% include 'parts/appeal-details.md' %}
+
 {% if final_comments_due_date -%}
 {% if has_appellant_statement or has_lpa_statement or has_ip_comments -%}
 # What happens next

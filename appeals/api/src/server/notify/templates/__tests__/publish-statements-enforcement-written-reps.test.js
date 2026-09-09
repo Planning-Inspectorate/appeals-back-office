@@ -42,7 +42,8 @@ describe('publish-statements-enforcement-written-reps.content.md', () => {
 		'',
 		`^Appeal reference number: ${basePersonalisation.appeal_reference_number}`,
 		`Address: ${basePersonalisation.site_address}`,
-		`Enforcement notice reference: ${basePersonalisation.enforcement_reference}`
+		`Enforcement notice reference: ${basePersonalisation.enforcement_reference}`,
+		''
 	];
 
 	const defaultNextStepsLines = [
