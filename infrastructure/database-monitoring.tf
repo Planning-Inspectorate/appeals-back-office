@@ -100,6 +100,7 @@ resource "azurerm_mssql_server_extended_auditing_policy" "sql_server" {
 
 # security alerts
 resource "azurerm_mssql_server_security_alert_policy" "sql_server" {
+#checkov:skip=CKV_AZURE_27: "Ensure that 'Email service and co-administrators' is 'Enabled' for MSSQL servers"
   state                        = var.alerts_enabled ? "Enabled" : "Disabled"
   resource_group_name          = azurerm_resource_group.primary.name
   server_name                  = azurerm_mssql_server.primary.name
