@@ -97,13 +97,13 @@ data "azurerm_role_definition" "custom_blob_role" {
 # read/write access
 resource "azurerm_role_assignment" "case_officer_documents_access" {
   scope              = azurerm_storage_container.appeal_documents.id
-  role_definition_id = data.azurerm_role_definition.custom_blob_role.role_definition_id
+  role_definition_id = data.azurerm_role_definition.custom_blob_role.id
   principal_id       = var.apps_config.auth.group_ids.case_officer
 }
 
 resource "azurerm_role_assignment" "inspector_documents_access" {
   scope              = azurerm_storage_container.appeal_documents.id
-  role_definition_id = data.azurerm_role_definition.custom_blob_role.role_definition_id
+  role_definition_id = data.azurerm_role_definition.custom_blob_role.id
   principal_id       = var.apps_config.auth.group_ids.inspector
 }
 
