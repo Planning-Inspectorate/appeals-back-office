@@ -13,5 +13,5 @@ data "azurerm_storage_container" "front_office_documents" {
   count = var.front_office_infra_config.deploy_connections ? 1 : 0
 
   name               = "uploads"
-  storage_account_id = replace("pinsstdocs${var.environment}ukw001", "-", "")
+  storage_account_id = "${data.azurerm_subscription.current.id}/resourceGroups/${var.front_office_infra_config.network.rg}/providers/Microsoft.Storage/storageAccounts/${replace("pinsstdocs${var.environment}ukw001", "-", "")}"
 }
