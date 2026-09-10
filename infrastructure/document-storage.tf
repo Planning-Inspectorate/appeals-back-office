@@ -51,7 +51,7 @@ resource "azurerm_storage_container" "appeal_documents" {
   #TODO: Logging
   #checkov:skip=CKV2_AZURE_21 Logging not implemented yet
   name                  = "appeals-bo-documents"
-  storage_account_name  = azurerm_storage_account.documents.name
+  storage_account_id    = azurerm_storage_account.documents.id
   container_access_type = "private"
 }
 
@@ -96,38 +96,38 @@ data "azurerm_role_definition" "custom_blob_role" {
 
 # read/write access
 resource "azurerm_role_assignment" "case_officer_documents_access" {
-  scope              = azurerm_storage_container.appeal_documents.resource_manager_id
+  scope              = azurerm_storage_container.appeal_documents.id
   role_definition_id = data.azurerm_role_definition.custom_blob_role.role_definition_id
   principal_id       = var.apps_config.auth.group_ids.case_officer
 }
 
 resource "azurerm_role_assignment" "inspector_documents_access" {
-  scope              = azurerm_storage_container.appeal_documents.resource_manager_id
+  scope              = azurerm_storage_container.appeal_documents.id
   role_definition_id = data.azurerm_role_definition.custom_blob_role.role_definition_id
   principal_id       = var.apps_config.auth.group_ids.inspector
 }
 
 # read only access
 resource "azurerm_role_assignment" "cs_team_documents_access" {
-  scope                = azurerm_storage_container.appeal_documents.resource_manager_id
+  scope                = azurerm_storage_container.appeal_documents.id
   role_definition_name = "Storage Blob Data Reader"
   principal_id         = var.apps_config.auth.group_ids.cs_team
 }
 
 resource "azurerm_role_assignment" "legal_documents_access" {
-  scope                = azurerm_storage_container.appeal_documents.resource_manager_id
+  scope                = azurerm_storage_container.appeal_documents.id
   role_definition_name = "Storage Blob Data Reader"
   principal_id         = var.apps_config.auth.group_ids.legal
 }
 
 resource "azurerm_role_assignment" "api_document_validation" {
-  scope                = azurerm_storage_container.appeal_documents.resource_manager_id
+  scope                = azurerm_storage_container.appeal_documents.id
   role_definition_name = "Storage Blob Data Reader"
   principal_id         = module.app_api.principal_id
 }
 
 resource "azurerm_role_assignment" "read_only_documents_access" {
-  scope                = azurerm_storage_container.appeal_documents.resource_manager_id
+  scope                = azurerm_storage_container.appeal_documents.id
   role_definition_name = "Storage Blob Data Reader"
   principal_id         = var.apps_config.auth.group_ids.read_only
 }
