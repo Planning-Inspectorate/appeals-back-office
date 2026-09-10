@@ -16,6 +16,7 @@ describe('site-visit-change-access-required-date-change-appellant.md', () => {
 				lpa_reference: 'REF-67890',
 				visit_date: '12 June 2025',
 				start_time: '10:30am',
+				end_time: '11:30am',
 				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
@@ -29,7 +30,7 @@ describe('site-visit-change-access-required-date-change-appellant.md', () => {
 			'',
 			'# The site visit has changed',
 			'',
-			'Our inspector (or their representative) will now visit 22, Example Lane at 10:30am on 12 June 2025.',
+			'Our inspector (or their representative) will now visit 22, Example Lane between 10:30am and 11:30am on 12 June 2025.',
 			'',
 			'# Giving the inspector access to the site',
 			'',

@@ -2,7 +2,7 @@
 
 # The site visit has changed
 
-Our inspector (or their representative) will now visit {{site_address}} at {{start_time}} on {{visit_date}}.
+Our inspector (or their representative) will now visit {{site_address}} between {{start_time}} and {{end_time}} on {{visit_date}}.
 
 # Giving the inspector access to the site
 
