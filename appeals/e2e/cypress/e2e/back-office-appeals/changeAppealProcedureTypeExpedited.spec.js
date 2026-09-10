@@ -7,6 +7,7 @@ import { OverviewSectionPage } from '../../page_objects/caseDetails/overviewSect
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.js';
 import { CYASection } from '../../page_objects/cyaSection.js';
+import { DateTimeQuestionPage } from '../../page_objects/dateTimeQuestionPage.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ProcedureTypePage } from '../../page_objects/procedureTypePage';
 import {
@@ -23,6 +24,8 @@ const dateTimeSection = new DateTimeSection();
 const overviewSectionPage = new OverviewSectionPage();
 const caseHistoryPage = new CaseHistoryPage();
 const cyaSection = new CYASection();
+const dateTimeQuestionPage = new DateTimeQuestionPage();
+const currentDate = new Date();
 
 describe('Change appeal procedure type - Expedited', () => {
 	let caseObj;
@@ -80,6 +83,7 @@ describe('Change appeal procedure type - Expedited', () => {
 			overviewSectionPage.verifyCaseOverviewDetails(
 				{
 					...DEFAULT_OVERVIEW_DETAILS,
+					relatedAppeals: 'No',
 					appealProcedure: 'Written representations (Part 1)'
 				},
 				false
@@ -87,7 +91,10 @@ describe('Change appeal procedure type - Expedited', () => {
 
 			overviewSectionPage.clickRowChangeLink('case-procedure');
 			procedureTypePage.verifyHeader(procedureTypeCaption(caseObj.reference));
-			procedureTypePage.verifyDisplayedProcedureTypes([{ name: 'written', visible: true }]);
+			procedureTypePage.verifyDisplayedProcedureTypes([
+				{ name: 'written', visible: true },
+				{ name: 'hearing', visible: true }
+			]);
 
 			procedureTypePage.selectProcedureType('Written representations');
 
@@ -144,6 +151,7 @@ describe('Change appeal procedure type - Expedited', () => {
 						overviewSectionPage.verifyCaseOverviewDetails(
 							{
 								...DEFAULT_OVERVIEW_DETAILS,
+								relatedAppeals: 'No',
 								appealProcedure: 'Written representations (Part 2)'
 							},
 							false
@@ -174,6 +182,7 @@ describe('Change appeal procedure type - Expedited', () => {
 			overviewSectionPage.verifyCaseOverviewDetails(
 				{
 					...DEFAULT_OVERVIEW_DETAILS,
+					relatedAppeals: 'No',
 					appealProcedure: 'Written representations (Part 1)'
 				},
 				false
@@ -181,9 +190,19 @@ describe('Change appeal procedure type - Expedited', () => {
 
 			overviewSectionPage.clickRowChangeLink('case-procedure');
 			procedureTypePage.verifyHeader(procedureTypeCaption(caseObj.reference));
-			procedureTypePage.verifyDisplayedProcedureTypes([{ name: 'hearing', visible: true }]);
+			procedureTypePage.verifyDisplayedProcedureTypes([
+				{ name: 'written', visible: true },
+				{ name: 'hearing', visible: true }
+			]);
 
-			procedureTypePage.selectProcedureType('Hearing representations');
+			procedureTypePage.selectProcedureType('Hearing');
+			dateTimeQuestionPage.selectDateTimeOption('Yes');
+			dateTimeQuestionPage.clickButtonByText('Continue');
+
+			cy.getBusinessActualDate(currentDate, 1).then((date) => {
+				dateTimeSection.enterEventDate(date);
+				dateTimeSection.clickButtonByText('Continue');
+			});
 
 			cy.get('#lpa-questionnaire-due-date-day').should('not.exist');
 
@@ -191,64 +210,52 @@ describe('Change appeal procedure type - Expedited', () => {
 				const startDate = new Date(appealDetails.startedAt);
 
 				cy.getBusinessActualDate(startDate, 25).then((statementsAndIpDate) => {
-					cy.getBusinessActualDate(startDate, 35).then((finalCommentsDate) => {
-						const lpaStatementDueDate = statementsAndIpDate;
-						const ipCommentsDueDate = statementsAndIpDate;
-						const finalCommentsDueDate = finalCommentsDate;
+					const lpaStatementDueDate = statementsAndIpDate;
+					const ipCommentsDueDate = statementsAndIpDate;
 
-						dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-							'lpaStatementDueDate',
-							getDateAndTimeValues(lpaStatementDueDate)
-						);
-						dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-							'ipCommentsDueDate',
-							getDateAndTimeValues(ipCommentsDueDate)
-						);
-						dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-							'finalCommentsDueDate',
-							getDateAndTimeValues(finalCommentsDueDate)
-						);
+					dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+						'lpaStatementDueDate',
+						getDateAndTimeValues(lpaStatementDueDate)
+					);
+					dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+						'ipCommentsDueDate',
+						getDateAndTimeValues(ipCommentsDueDate)
+					);
 
-						dateTimeSection.clickButtonByText('Continue');
+					dateTimeSection.clickButtonByText('Continue');
 
-						cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Hearing representations');
-						cy.contains('dt.govuk-summary-list__key', 'LPA questionnaire due').should('not.exist');
-						cyaSection.verifyCheckYourAnswers(
-							'Statements due',
-							formatDateAndTime(lpaStatementDueDate).date
-						);
-						cyaSection.verifyCheckYourAnswers(
-							'Interested party comments due',
-							formatDateAndTime(ipCommentsDueDate).date
-						);
-						cyaSection.verifyCheckYourAnswers(
-							'Final comments due',
-							formatDateAndTime(finalCommentsDueDate).date
-						);
+					cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Hearing');
+					cy.contains('dt.govuk-summary-list__key', 'LPA questionnaire due').should('not.exist');
+					cyaSection.verifyCheckYourAnswers(
+						'Statements due',
+						formatDateAndTime(lpaStatementDueDate).date
+					);
+					cyaSection.verifyCheckYourAnswers(
+						'Interested party comments due',
+						formatDateAndTime(ipCommentsDueDate).date
+					);
 
-						cy.contains(
-							'p',
-							"We’ll send an email to the appellant and LPA to tell them that we've changed the procedure."
-						).should('be.visible');
+					cy.contains(
+						'p',
+						"We’ll send an email to the appellant and LPA to tell them that we've changed the procedure."
+					).should('be.visible');
 
-						caseDetailsPage.clickButtonByText('Update appeal procedure');
+					caseDetailsPage.clickButtonByText('Update appeal procedure');
 
-						caseDetailsPage.validateBannerMessage(BANNER_TYPES.success, 'Appeal procedure updated');
+					caseDetailsPage.validateBannerMessage(BANNER_TYPES.success, 'Appeal procedure updated');
 
-						overviewSectionPage.verifyCaseOverviewDetails(
-							{
-								...DEFAULT_OVERVIEW_DETAILS,
-								appealProcedure: 'Hearing'
-							},
-							false
-						);
+					overviewSectionPage.verifyCaseOverviewDetails(
+						{
+							...DEFAULT_OVERVIEW_DETAILS,
+							relatedAppeals: 'No',
+							appealProcedure: 'Hearing'
+						},
+						false
+					);
 
-						caseDetailsPage.clickViewCaseHistory();
-						cy.location('pathname').should('include', '/audit');
-						caseHistoryPage.verifyCaseHistoryValue(
-							'Appeal procedure updated to hearing representations'
-						);
-					});
+					caseDetailsPage.clickViewCaseHistory();
+					cy.location('pathname').should('include', '/audit');
+					caseHistoryPage.verifyCaseHistoryValue('Appeal procedure updated to hearing');
 				});
 			});
 		});
