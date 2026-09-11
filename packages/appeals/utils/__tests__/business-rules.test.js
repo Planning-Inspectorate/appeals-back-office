@@ -407,14 +407,25 @@ describe('canChangeS78ExpeditedToTargetProcedure', () => {
 		).toBe(true);
 	});
 
-	//update when changing for hearing/inquiry
-	it('returns false for Inquiry for current stage', () => {
+	it('returns true for Inquiry when appeal is at LPAQ stahe', () => {
 		expect(
 			canChangeS78ExpeditedToTargetProcedure({
 				targetProcedure: APPEAL_CASE_PROCEDURE.INQUIRY,
 				appealType: APPEAL_TYPE.S78,
 				currentProcedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
 				currentStage: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				isExpeditedCopFeatureActive: true
+			})
+		).toBe(true);
+	});
+	//add additional tests here when expanding available stages
+	it('returns false for Inquiry when stage is not lpa_questionnaire', () => {
+		expect(
+			canChangeS78ExpeditedToTargetProcedure({
+				targetProcedure: APPEAL_CASE_PROCEDURE.INQUIRY,
+				appealType: APPEAL_TYPE.S78,
+				currentProcedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
+				currentStage: APPEAL_CASE_STATUS.READY_TO_START,
 				isExpeditedCopFeatureActive: true
 			})
 		).toBe(false);
