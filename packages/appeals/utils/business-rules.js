@@ -97,23 +97,14 @@ export const canChangeS78ExpeditedToTargetProcedure = ({
 
 	switch (targetProcedure) {
 		case APPEAL_CASE_PROCEDURE.WRITTEN:
-			// Stage 1: Up to LPAQ complete allows changing to Written
-			return [
-				APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
-				APPEAL_CASE_STATUS.EVENT,
-				APPEAL_CASE_STATUS.AWAITING_EVENT,
-				APPEAL_CASE_STATUS.ISSUE_DETERMINATION
-			].includes(/** @type {any} */ (currentStage));
 		case APPEAL_CASE_PROCEDURE.HEARING:
+		case APPEAL_CASE_PROCEDURE.INQUIRY:
 			return [
 				APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 				APPEAL_CASE_STATUS.EVENT,
 				APPEAL_CASE_STATUS.AWAITING_EVENT,
 				APPEAL_CASE_STATUS.ISSUE_DETERMINATION
 			].includes(/** @type {any} */ (currentStage));
-		case APPEAL_CASE_PROCEDURE.INQUIRY:
-			// Future Dev Work: Inquiry
-			return false;
 		default:
 			return false;
 	}
@@ -248,6 +239,7 @@ export const targetStateOnChangeProcedure = ({
 			case APPEAL_CASE_PROCEDURE.WRITTEN.toLowerCase():
 			case PROCEDURE_TYPE_NAME.WRITTEN_PART_2.toLowerCase():
 			case APPEAL_CASE_PROCEDURE.HEARING.toLowerCase():
+			case APPEAL_CASE_PROCEDURE.INQUIRY.toLowerCase():
 				if (
 					[
 						APPEAL_CASE_STATUS.EVENT,

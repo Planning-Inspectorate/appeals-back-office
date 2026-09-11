@@ -7,6 +7,7 @@ import {
 } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { jest } from '@jest/globals';
+import { buildChangeProcedureTypeMessage } from '../change-procedure-type.service.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -97,6 +98,7 @@ describe('Change appeal procedure type route', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
 	});
+
 	describe('POST', () => {
 		describe('Change to Written', () => {
 			test('returns 400 if any timetable date is missing', async () => {
@@ -1108,6 +1110,92 @@ describe('Change appeal procedure type route', () => {
 					templateName: 'change-procedure-type'
 				});
 			});
+
+			test.each([
+				['lpa_questionnaire', [{ status: 'lpa_questionnaire', valid: true }], false],
+				[
+					'event',
+					[
+						{ status: 'lpa_questionnaire', valid: false },
+						{ status: 'event', valid: true }
+					],
+					true
+				],
+				[
+					'awaiting_event',
+					[
+						{ status: 'lpa_questionnaire', valid: false },
+						{ status: 'awaiting_event', valid: true }
+					],
+					true
+				],
+				[
+					'issue_determination',
+					[
+						{ status: 'lpa_questionnaire', valid: false },
+						{ status: 'event', valid: false },
+						{ status: 'issue_determination', valid: true }
+					],
+					true
+				]
+			])(
+				'returns 201 when changing from part 1 to inquiry at %s stage',
+				async (status, appealStatus, shouldTransition) => {
+					fullPlanningAppeal.currentStatus = status;
+					fullPlanningAppeal.appealStatus = appealStatus;
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+					const response = await request
+						.post(`/appeals/${fullPlanningAppeal.id}/procedure-type-change-request`)
+						.send({
+							existingAppealProcedure: 'part 1',
+							appealProcedure: 'inquiry',
+							eventDate: '2026-12-20T00:00:00.000Z',
+							lpaQuestionnaireDueDate: '2026-11-03T00:00:00.000Z',
+							ipCommentsDueDate: '2026-12-01T00:00:00.000Z',
+							lpaStatementDueDate: '2026-12-01T00:00:00.000Z',
+							statementOfCommonGroundDueDate: '2026-12-05T00:00:00.000Z',
+							proofOfEvidenceAndWitnessesDueDate: '2026-12-15T00:00:00.000Z',
+							caseManagementConferenceDueDate: '2026-12-15T00:00:00.000Z'
+						})
+						.set('azureAdUserId', azureAdUserId);
+					expect(response.status).toEqual(201);
+					expect(mockTx.hearing.deleteMany).not.toHaveBeenCalled();
+					expect(mockTx.inquiry.deleteMany).not.toHaveBeenCalled();
+					expect(mockTx.siteVisit.deleteMany).toHaveBeenCalledWith({
+						where: { appealId: fullPlanningAppeal.id }
+					});
+					expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(3, 'siteVisit', 'Delete', {
+						id: 3
+					});
+
+					expect(mockTx.appeal.update).toHaveBeenCalledWith({
+						where: { id: fullPlanningAppeal.id },
+						data: { procedureTypeId: 1 }
+					});
+
+					expect(mockTx.appealTimetable.update).toHaveBeenCalledWith({
+						where: { appealId: fullPlanningAppeal.id },
+						data: {
+							ipCommentsDueDate: '2026-12-01T00:00:00.000Z',
+							lpaQuestionnaireDueDate: '2026-11-03T00:00:00.000Z',
+							lpaStatementDueDate: '2026-12-01T00:00:00.000Z',
+							planningObligationDueDate: null,
+							proofOfEvidenceAndWitnessesDueDate: '2026-12-15T00:00:00.000Z',
+							caseManagementConferenceDueDate: '2026-12-15T00:00:00.000Z',
+							statementOfCommonGroundDueDate: '2026-12-05T00:00:00.000Z'
+						}
+					});
+
+					if (shouldTransition) {
+						expect(mockTx.appealStatus.findFirst).toHaveBeenCalledWith({
+							where: { appealId: fullPlanningAppeal.id, status: 'lpa_questionnaire' }
+						});
+					}
+
+					expect(databaseConnector.$transaction).toHaveBeenCalled();
+				}
+			);
 		});
 
 		describe('S20 parity', () => {
@@ -1559,6 +1647,42 @@ describe('Change appeal procedure type route', () => {
 				expect(mockNotifySend).not.toHaveBeenCalled();
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'inquiry', 'Update');
 			});
+		});
+	});
+
+	describe('buildChangeProcedureTypeMessage', () => {
+		test('returns written representations and hearing cancellation when hearing exists', () => {
+			const message = buildChangeProcedureTypeMessage({ hearing: { id: 1 } }, 'written', 'hearing');
+
+			expect(message).toBe(
+				'We have changed your appeal procedure to written representations and cancelled your hearing.'
+			);
+		});
+
+		test('returns inquiry cancellation when inquiry exists', () => {
+			const message = buildChangeProcedureTypeMessage({ inquiry: { id: 2 } }, 'hearing', 'inquiry');
+
+			expect(message).toBe(
+				'We have changed your appeal procedure to hearing and cancelled your inquiry.'
+			);
+		});
+
+		test('returns site visit cancellation when changing from written and site visit exists', () => {
+			const message = buildChangeProcedureTypeMessage(
+				{ siteVisit: { id: 3 } },
+				'inquiry',
+				'written'
+			);
+
+			expect(message).toBe(
+				'We have changed your appeal procedure to inquiry and cancelled your site visit.'
+			);
+		});
+
+		test('does not include cancellation when matching record does not exist', () => {
+			const message = buildChangeProcedureTypeMessage({}, 'written', 'hearing');
+
+			expect(message).toBe('We have changed your appeal procedure to written representations.');
 		});
 	});
 });
