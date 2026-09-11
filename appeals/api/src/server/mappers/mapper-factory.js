@@ -249,8 +249,15 @@ function createDataLayout(caseMap, mappingRequest) {
 			};
 		case contextEnum.lpaQuestionnaire:
 			return {
-				lpaQuestionnaireId: appeal.lpaQuestionnaire?.id,
 				...appealSummary,
+				...team,
+				...appealDetails,
+				appellantCaseId: appeal.appellantCase?.id,
+				...appellantCase,
+				...appealRelationships,
+				...otherAppellants,
+				...appealGrounds,
+				lpaQuestionnaireId: appeal.lpaQuestionnaire?.id,
 				...lpaQuestionnaire,
 				transferStatus: appealTransferStatus,
 				...createFoldersLayout(folders, contextEnum.lpaQuestionnaire)
