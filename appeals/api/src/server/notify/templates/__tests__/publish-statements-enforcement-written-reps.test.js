@@ -49,19 +49,22 @@ describe('publish-statements-enforcement-written-reps.content.md', () => {
 	const defaultNextStepsLines = [
 		HEADER_WHAT_HAPPENS_NEXT,
 		'',
-		`You need to submit any final comments by ${basePersonalisation.final_comments_due_date}.`
+		`You need to submit any final comments by ${basePersonalisation.final_comments_due_date}.`,
+		''
 	];
 
 	const onlyAppellantStatementSubmittedAppellantNextStepsLines = [
 		HEADER_WHAT_HAPPENS_NEXT,
 		'',
-		MSG_LPA_SUBMITS_FINAL_COMMENTS
+		MSG_LPA_SUBMITS_FINAL_COMMENTS,
+		''
 	];
 
 	const onlyLpaStatementSubmittedLpaNextStepsLines = [
 		HEADER_WHAT_HAPPENS_NEXT,
 		'',
-		MSG_APPELLANT_SUBMITS_FINAL_COMMENTS
+		MSG_APPELLANT_SUBMITS_FINAL_COMMENTS,
+		''
 	];
 
 	const footerLines = ['Planning Inspectorate', basePersonalisation.team_email_address];

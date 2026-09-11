@@ -40,7 +40,7 @@ We will let you know if the appellant submits any final comments.
 {% else -%}
 You need to submit any final comments by {{final_comments_due_date}}.
 {% endif -%}
-{% endif -%}
+{% endif %}
 {% endif -%}
 {% endif -%}
 
