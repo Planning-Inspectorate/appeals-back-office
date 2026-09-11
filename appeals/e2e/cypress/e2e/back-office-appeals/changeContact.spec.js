@@ -26,7 +26,7 @@ describe('change contacts', () => {
 
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
-		caseDetailsPage.navigateToAppealsService();
+		caseDetailsPage.navigateToAppealsList();
 		listCasesPage.clickAppealByRef(caseObj);
 		caseDetailsPage.clickCaseNotes();
 	});
