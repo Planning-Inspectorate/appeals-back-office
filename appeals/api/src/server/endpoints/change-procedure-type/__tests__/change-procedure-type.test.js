@@ -45,8 +45,16 @@ describe('Change appeal procedure type route', () => {
 			appeal: { update: jest.fn() },
 			appealTimetable: { update: jest.fn() },
 			address: { update: jest.fn(), create: jest.fn() },
-			siteVisit: { deleteMany: jest.fn(), findFirst: jest.fn() }
+			siteVisit: { deleteMany: jest.fn(), findFirst: jest.fn() },
+			appealStatus: {
+				deleteMany: jest.fn(),
+				findFirst: jest.fn(),
+				create: jest.fn(),
+				update: jest.fn(),
+				updateMany: jest.fn()
+			}
 		};
+		mockTx.appealStatus.updateMany.mockResolvedValue({});
 		mockTx.hearing.deleteMany.mockResolvedValue({});
 		mockTx.hearingEstimate.deleteMany.mockResolvedValue({});
 		mockTx.inquiry.deleteMany.mockResolvedValue({});
@@ -64,6 +72,16 @@ describe('Change appeal procedure type route', () => {
 		mockTx.siteVisit.findFirst.mockResolvedValue({ id: 3 });
 		mockTx.inquiry.findFirst.mockResolvedValue({ id: 3 });
 		mockTx.hearing.findFirst.mockResolvedValue({ id: 3 });
+		mockTx.appealStatus.findFirst.mockResolvedValue({
+			id: 1,
+			appealId: 2,
+			status: 'lpa_questionnaire',
+			valid: false,
+			createdAt: new Date('2024-01-01')
+		});
+		mockTx.appealStatus.deleteMany.mockResolvedValue({});
+		mockTx.appealStatus.create.mockResolvedValue({ id: 2 });
+		mockTx.appealStatus.update.mockResolvedValue({ id: 1 });
 		const inquiry = {
 			...fullPlanningAppealData.inquiry,
 			inquiryStartTime: new Date('2999-01-01T12:00:00.000Z'),
@@ -335,43 +353,86 @@ describe('Change appeal procedure type route', () => {
 				expect(databaseConnector.$transaction).toHaveBeenCalled();
 			});
 
-			test('returns 201 if changing from part 1 to written', async () => {
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
-				const response = await request
-					.post(`/appeals/${fullPlanningAppeal.id}/procedure-type-change-request`)
-					.send({
-						existingAppealProcedure: 'part 1',
-						appealProcedure: 'written',
-						lpaQuestionnaireDueDate: '2026-11-03T00:00:00.000Z',
-						ipCommentsDueDate: '2026-12-01T00:00:00.000Z',
-						lpaStatementDueDate: '2026-12-01T00:00:00.000Z',
-						finalCommentsDueDate: '2026-12-15T00:00:00.000Z'
-					})
-					.set('azureAdUserId', azureAdUserId);
+			test.each([
+				['lpa_questionnaire', [{ status: 'lpa_questionnaire', valid: true }], false],
+				[
+					'event',
+					[
+						{ status: 'lpa_questionnaire', valid: false },
+						{ status: 'event', valid: true }
+					],
+					true
+				],
+				[
+					'awaiting_event',
+					[
+						{ status: 'lpa_questionnaire', valid: false },
+						{ status: 'awaiting_event', valid: true }
+					],
+					true
+				],
+				[
+					'issue_determination',
+					[
+						{ status: 'lpa_questionnaire', valid: false },
+						{ status: 'event', valid: false },
+						{ status: 'issue_determination', valid: true }
+					],
+					true
+				]
+			])(
+				'returns 201 when changing from part 1 to written at %s stage',
+				async (status, appealStatus, shouldTransition) => {
+					fullPlanningAppeal.currentStatus = status;
+					fullPlanningAppeal.appealStatus = appealStatus;
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 
-				expect(response.status).toEqual(201);
-				expect(mockTx.hearing.deleteMany).not.toHaveBeenCalled();
-				expect(mockTx.inquiry.deleteMany).not.toHaveBeenCalled();
+					const response = await request
+						.post(`/appeals/${fullPlanningAppeal.id}/procedure-type-change-request`)
+						.send({
+							existingAppealProcedure: 'part 1',
+							appealProcedure: 'written',
+							lpaQuestionnaireDueDate: '2026-11-03T00:00:00.000Z',
+							ipCommentsDueDate: '2026-12-01T00:00:00.000Z',
+							lpaStatementDueDate: '2026-12-01T00:00:00.000Z',
+							finalCommentsDueDate: '2026-12-15T00:00:00.000Z'
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-				expect(mockTx.appeal.update).toHaveBeenCalledTimes(1);
-				expect(mockTx.appeal.update).toHaveBeenCalledWith({
-					where: { id: fullPlanningAppeal.id },
-					data: { procedureTypeId: 1 }
-				});
+					expect(response.status).toEqual(201);
+					expect(mockTx.hearing.deleteMany).not.toHaveBeenCalled();
+					expect(mockTx.inquiry.deleteMany).not.toHaveBeenCalled();
+					expect(mockTx.siteVisit.deleteMany).toHaveBeenCalledWith({
+						where: { appealId: fullPlanningAppeal.id }
+					});
+					expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(3, 'siteVisit', 'Delete', {
+						id: 3
+					});
 
-				expect(mockTx.appealTimetable.update).toHaveBeenCalledWith({
-					where: { appealId: fullPlanningAppeal.id },
-					data: {
-						finalCommentsDueDate: '2026-12-15T00:00:00.000Z',
-						ipCommentsDueDate: '2026-12-01T00:00:00.000Z',
-						lpaQuestionnaireDueDate: '2026-11-03T00:00:00.000Z',
-						lpaStatementDueDate: '2026-12-01T00:00:00.000Z'
+					expect(mockTx.appeal.update).toHaveBeenCalledWith({
+						where: { id: fullPlanningAppeal.id },
+						data: { procedureTypeId: 1 }
+					});
+
+					expect(mockTx.appealTimetable.update).toHaveBeenCalledWith({
+						where: { appealId: fullPlanningAppeal.id },
+						data: {
+							finalCommentsDueDate: '2026-12-15T00:00:00.000Z',
+							ipCommentsDueDate: '2026-12-01T00:00:00.000Z',
+							lpaQuestionnaireDueDate: '2026-11-03T00:00:00.000Z',
+							lpaStatementDueDate: '2026-12-01T00:00:00.000Z'
+						}
+					});
+
+					if (shouldTransition) {
+						expect(mockTx.appealStatus.findFirst).toHaveBeenCalledWith({
+							where: { appealId: fullPlanningAppeal.id, status: 'lpa_questionnaire' }
+						});
 					}
-				});
 
-				// verify transaction itself was called
-				expect(databaseConnector.$transaction).toHaveBeenCalled();
-			});
+					expect(databaseConnector.$transaction).toHaveBeenCalled();
+				}
+			);
 		});
 
 		describe('Change to Hearing', () => {
