@@ -93,7 +93,7 @@
 		"prisma": "7.5.0",
 		"rimraf": "^6.0.1",
 		"stream-chain": "^3.4.0",
-		"stream-json": "^1.9.1",
+		"stream-json": "^3.5.0",
 		"supertest": "7.0.0",
 		"swagger-autogen": "^2.21.4",
 		"swagger-typescript-api": "^13.2.16"
