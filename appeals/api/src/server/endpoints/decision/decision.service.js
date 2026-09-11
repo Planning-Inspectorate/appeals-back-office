@@ -19,7 +19,8 @@ import {
 	FEATURE_FLAG_NAMES,
 	FEEDBACK_FORM_LINKS,
 	FRONT_OFFICE_DASHBOARD_PATH_STUBS
-} from '@pins/appeals/constants/common.js';import {
+} from '@pins/appeals/constants/common.js';
+import {
 	AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
 	AUDIT_TRAIL_CORRECTION_NOTICE_ADDED,
 	AUDIT_TRAIL_DECISION_ISSUED,
