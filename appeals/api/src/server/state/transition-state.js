@@ -13,6 +13,7 @@ import {
 	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
 import {
+	ACTION_CHANGE_PROCEDURE_TYPE,
 	AUDIT_TRAIL_PROGRESSED_TO_STATUS,
 	AUDIT_TRIAL_AUTOMATIC_EVENT_UUID,
 	CASE_RELATIONSHIP_LINKED,
@@ -40,9 +41,12 @@ import createStateMachine from './create-state-machine.js';
  * @param {number} appealId
  * @param {string} azureAdUserId
  * @param {string} trigger
+ * @param {object} [options]
+ * @param {string} [options.targetProcedureType]
+ * @param {string} [options.previousProcedureType]
  * @returns {Promise<boolean>} true if the state was transitioned
  */
-const transitionState = async (appealId, azureAdUserId, trigger) => {
+const transitionState = async (appealId, azureAdUserId, trigger, options = {}) => {
 	const appeal = await appealRepository.getAppealById(appealId, true, [
 		'appealStatus',
 		'appealType',
@@ -84,7 +88,9 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 		procedureKey,
 		currentState,
 		eventElapsed,
-		isLdcOrDiscontinuanceOrEnforcement
+		isLdcOrDiscontinuanceOrEnforcement,
+		options.targetProcedureType,
+		options.previousProcedureType
 	);
 	const stateMachineService = interpret(stateMachine);
 
@@ -106,7 +112,16 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 		return false;
 	}
 
-	if (isStatePassed(appeal, newState)) {
+	if (trigger === ACTION_CHANGE_PROCEDURE_TYPE) {
+		switch (newState) {
+			case APPEAL_CASE_STATUS.STATEMENTS:
+				await appealStatusRepository.rollBackAppealStatusTo(
+					appealId,
+					newState,
+					APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
+				);
+		}
+	} else if (isStatePassed(appeal, newState)) {
 		await appealStatusRepository.rollBackAppealStatusTo(appealId, newState);
 	} else {
 		await appealStatusRepository.updateAppealStatusByAppealId(appealId, newState);
