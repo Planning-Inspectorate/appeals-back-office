@@ -275,7 +275,7 @@ router.use(
 router
 	.route('/:lpaQuestionnaireId')
 	.get(
-		validateAppeal,
+		validateAppealExists,
 		clearUncommittedFilesFromSession,
 		asyncHandler(controller.getLpaQuestionnaire)
 	)

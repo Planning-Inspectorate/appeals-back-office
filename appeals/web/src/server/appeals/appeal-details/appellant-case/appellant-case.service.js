@@ -8,11 +8,16 @@ import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.
 /**
  * @param {import('got').Got} apiClient
  * @param {number|string} appealId
- * @param {number|string} appellantCaseId
+ * @param {number|string} [appellantCaseId]
  */
 export function getAppellantCaseFromAppealId(apiClient, appealId, appellantCaseId) {
-	const ids = assertValidNumericIds({ appealId, appellantCaseId });
-	return apiClient.get(`appeals/${ids.appealId}/appellant-cases/${ids.appellantCaseId}`).json();
+	const ids = assertValidNumericIds({ appealId, appellantCaseId: appellantCaseId ?? 0 });
+
+	if (appellantCaseId !== undefined) {
+		return apiClient.get(`appeals/${ids.appealId}/appellant-cases/${ids.appellantCaseId}`).json();
+	}
+
+	return apiClient.get(`appeals/${ids.appealId}/appellant-case`).json();
 }
 
 /**

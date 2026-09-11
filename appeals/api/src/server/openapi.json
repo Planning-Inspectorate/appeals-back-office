@@ -3212,6 +3212,54 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/appellant-case/": {
+			"get": {
+				"tags": ["Appellant Cases"],
+				"description": "Gets a single appellant case for an appeal by id",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Gets a single appellant case for an appeal by id",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SingleAppellantCaseResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/SingleAppellantCaseResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/appellant-cases/{appellantCaseId}": {
 			"get": {
 				"tags": ["Appellant Cases"],
@@ -3265,7 +3313,8 @@
 					"404": {
 						"description": "Not Found"
 					}
-				}
+				},
+				"deprecated": true
 			},
 			"patch": {
 				"tags": ["Appellant Cases"],
@@ -4120,6 +4169,54 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/lpa-questionnaire": {
+			"get": {
+				"tags": ["LPA Questionnaires"],
+				"description": "Gets a single LPA questionnaire for an appeal by id",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Gets a single LPA questionnaire for an appeal by id",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SingleLPAQuestionnaireResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/SingleLPAQuestionnaireResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/lpa-questionnaires/{lpaQuestionnaireId}": {
 			"get": {
 				"tags": ["LPA Questionnaires"],
@@ -4173,7 +4270,8 @@
 					"404": {
 						"description": "Not Found"
 					}
-				}
+				},
+				"deprecated": true
 			},
 			"patch": {
 				"tags": ["LPA Questionnaires"],
@@ -13988,6 +14086,421 @@
 					"anySignificantChangesLpa_courtJudgementSignificantChanges": {
 						"type": "string",
 						"example": "Court judgement significant changes"
+					},
+					"agent": {
+						"type": "object",
+						"properties": {
+							"email": {
+								"type": "string",
+								"example": "test@136s7.com"
+							},
+							"firstName": {
+								"type": "string",
+								"example": "John"
+							},
+							"lastName": {
+								"type": "string",
+								"example": "Smith"
+							},
+							"organisationName": {
+								"type": "string",
+								"example": "Smith Inc."
+							},
+							"phoneNumber": {
+								"type": "string",
+								"example": "09876 543 210"
+							},
+							"serviceUserId": {
+								"type": "number",
+								"example": 1
+							}
+						}
+					},
+					"anySignificantChanges": {},
+					"anySignificantChanges_courtJudgementSignificantChanges": {},
+					"anySignificantChanges_localPlanSignificantChanges": {},
+					"anySignificantChanges_nationalPolicySignificantChanges": {},
+					"anySignificantChanges_otherSignificantChanges": {},
+					"appealRule6Parties": {
+						"type": "object",
+						"properties": {}
+					},
+					"appealStatus": {
+						"type": "string",
+						"example": "assign_case_officer"
+					},
+					"appealType": {
+						"type": "string",
+						"example": "Householder"
+					},
+					"appellant": {
+						"type": "object",
+						"properties": {
+							"email": {
+								"type": "string",
+								"example": "test@1367.com"
+							},
+							"firstName": {
+								"type": "string",
+								"example": "Lee"
+							},
+							"lastName": {
+								"type": "string",
+								"example": "Thornton"
+							},
+							"organisationName": {
+								"type": "string",
+								"example": "Thornton LTD"
+							},
+							"phoneNumber": {
+								"type": "string",
+								"example": "01234 567 890"
+							},
+							"serviceUserId": {
+								"type": "number",
+								"example": 1
+							}
+						}
+					},
+					"appellantCaseId": {
+						"type": "number",
+						"example": 1
+					},
+					"appellantCostsAppliedFor": {},
+					"applicant": {
+						"type": "object",
+						"properties": {
+							"firstName": {
+								"type": "string",
+								"example": "Lee"
+							},
+							"surname": {
+								"type": "string",
+								"example": "Thornton"
+							}
+						}
+					},
+					"applicationDate": {
+						"type": "string",
+						"example": "2022-03-18T00:00:00.000Z"
+					},
+					"applicationDecision": {
+						"type": "string",
+						"example": "refused"
+					},
+					"applicationDecisionDate": {
+						"type": "string",
+						"example": "2022-03-18T00:00:00.000Z"
+					},
+					"awaitingLinkedAppeal": {
+						"type": "boolean",
+						"example": false
+					},
+					"caseOfficer": {
+						"type": "string",
+						"example": "a8973f33-4d2e-486b-87b0-d068343ad9eb"
+					},
+					"completedStateList": {
+						"type": "array",
+						"example": [],
+						"items": {}
+					},
+					"costsAppliedFor": {
+						"type": "boolean",
+						"example": false
+					},
+					"costsDecision": {
+						"type": "object",
+						"properties": {
+							"awaitingAppellantCostsDecision": {
+								"type": "boolean",
+								"example": false
+							},
+							"awaitingLpaCostsDecision": {
+								"type": "boolean",
+								"example": false
+							}
+						}
+					},
+					"createdAt": {
+						"type": "string",
+						"example": "2024-03-25T23:59:59.999Z"
+					},
+					"documentationSummary": {
+						"type": "object",
+						"properties": {
+							"appellantCase": {
+								"type": "object",
+								"properties": {
+									"receivedAt": {
+										"type": "string",
+										"example": "2024-03-25T23:59:59.999Z"
+									},
+									"status": {
+										"type": "string",
+										"example": "received"
+									}
+								}
+							},
+							"lpaQuestionnaire": {
+								"type": "object",
+								"properties": {
+									"receivedAt": {
+										"type": "string",
+										"example": "2024-06-24T00:00:00.000Z"
+									},
+									"status": {
+										"type": "string",
+										"example": "Complete"
+									}
+								}
+							}
+						}
+					},
+					"floorSpaceSquareMetres": {},
+					"hasAdvertisedAppeal": {
+						"type": "boolean",
+						"example": true
+					},
+					"healthAndSafety": {
+						"type": "object",
+						"properties": {
+							"details": {
+								"type": "string",
+								"example": "There may be no mobile reception at the site"
+							},
+							"hasIssues": {
+								"type": "boolean",
+								"example": true
+							}
+						}
+					},
+					"hearing": {
+						"type": "object",
+						"properties": {
+							"address": {
+								"type": "object",
+								"properties": {
+									"addressLine1": {
+										"type": "string",
+										"example": "96 The Avenue"
+									},
+									"addressLine2": {
+										"type": "string",
+										"example": "Leftfield"
+									},
+									"county": {
+										"type": "string",
+										"example": "Kent"
+									},
+									"postcode": {
+										"type": "string",
+										"example": "MD21 5XY"
+									},
+									"town": {
+										"type": "string",
+										"example": "Maidstone"
+									}
+								}
+							},
+							"addressId": {
+								"type": "number",
+								"example": 1
+							},
+							"estimatedDays": {
+								"type": "number",
+								"example": 1
+							},
+							"hearingEndTime": {
+								"type": "string",
+								"example": "2022-03-31T03:00:00.000Z"
+							},
+							"hearingId": {
+								"type": "number",
+								"example": 1
+							},
+							"hearingStartTime": {
+								"type": "string",
+								"example": "2022-03-31T01:00:00.000Z"
+							}
+						}
+					},
+					"inquiry": {
+						"type": "object",
+						"properties": {
+							"address": {
+								"type": "object",
+								"properties": {
+									"addressLine1": {
+										"type": "string",
+										"example": "96 The Avenue"
+									},
+									"addressLine2": {
+										"type": "string",
+										"example": "Leftfield"
+									},
+									"county": {
+										"type": "string",
+										"example": "Kent"
+									},
+									"postcode": {
+										"type": "string",
+										"example": "MD21 5XY"
+									},
+									"town": {
+										"type": "string",
+										"example": "Maidstone"
+									}
+								}
+							},
+							"addressId": {
+								"type": "number",
+								"example": 1
+							},
+							"estimatedDays": {
+								"type": "number",
+								"example": 6
+							},
+							"inquiryEndTime": {
+								"type": "string",
+								"example": "2022-03-31T03:00:00.000Z"
+							},
+							"inquiryId": {
+								"type": "number",
+								"example": 1
+							},
+							"inquiryStartTime": {
+								"type": "string",
+								"example": "2022-03-31T01:00:00.000Z"
+							}
+						}
+					},
+					"inspector": {
+						"type": "string",
+						"example": "e8f89175-d02c-4a60-870e-dc954d5b530a"
+					},
+					"isAppellantNamedOnApplication": {
+						"type": "boolean",
+						"example": false
+					},
+					"isChildAppeal": {
+						"type": "boolean",
+						"example": false
+					},
+					"isParentAppeal": {
+						"type": "boolean",
+						"example": false
+					},
+					"isS78Expedited": {
+						"type": "boolean",
+						"example": false
+					},
+					"linkedAppeals": {
+						"type": "array",
+						"example": [],
+						"items": {}
+					},
+					"neighbouringSites": {
+						"type": "array",
+						"example": [],
+						"items": {}
+					},
+					"numberOfResidencesNetChange": {
+						"type": "number",
+						"example": 5
+					},
+					"ownershipCertificate": {},
+					"padsInspector": {},
+					"planningApplicationReference": {
+						"type": "string",
+						"example": "48269/APP/2021/1482"
+					},
+					"reasonForAppealAppellant": {},
+					"receivedAt": {
+						"type": "string",
+						"example": "2024-06-24T00:00:00.000Z"
+					},
+					"screeningOpinionIndicatesEiaRequired": {},
+					"siteAccessRequired": {
+						"type": "object",
+						"properties": {
+							"details": {
+								"type": "string",
+								"example": "There is a tall hedge around the site which obstructs the view of the site"
+							},
+							"isRequired": {
+								"type": "boolean",
+								"example": true
+							}
+						}
+					},
+					"siteOwnership": {
+						"type": "object",
+						"properties": {
+							"areAllOwnersKnown": {},
+							"knowsOtherLandowners": {},
+							"ownersInformed": {
+								"type": "boolean",
+								"example": true
+							},
+							"ownsAllLand": {
+								"type": "boolean",
+								"example": true
+							},
+							"ownsSomeLand": {
+								"type": "boolean",
+								"example": true
+							}
+						}
+					},
+					"siteVisit": {
+						"type": "object",
+						"properties": {
+							"siteVisitId": {
+								"type": "number",
+								"example": 1
+							},
+							"visitDate": {
+								"type": "string",
+								"example": "2022-03-31T01:00:00.000Z"
+							},
+							"visitEndTime": {
+								"type": "string",
+								"example": "2022-03-31T03:00:00.000Z"
+							},
+							"visitStartTime": {
+								"type": "string",
+								"example": "2022-03-31T01:00:00.000Z"
+							},
+							"visitType": {
+								"type": "string",
+								"example": "Access required"
+							}
+						}
+					},
+					"stateList": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"completed": {
+									"type": "boolean",
+									"example": false
+								},
+								"key": {
+									"type": "string",
+									"example": "complete"
+								}
+							}
+						}
+					},
+					"submittedAt": {
+						"type": "string",
+						"example": "2024-06-24T00:00:00.000Z"
+					},
+					"typeOfPlanningApplication": {
+						"type": "string",
+						"example": "householder-planning"
 					}
 				},
 				"xml": {

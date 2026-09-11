@@ -5,6 +5,7 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal */
 /** @typedef {import('#appeals/personal-list/personal-list.mapper').PersonalListItem} PersonalListItem */
+/** @typedef {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} LPAQuestionnaire */
 
 /**
  * @param {string} appealStatus
@@ -49,7 +50,7 @@ export function mapAppealProcedureTypeToEventName(appealProcedureType) {
 /**
  * Returns true if the given state was previously passed through.
  *
- * @param {WebAppeal|PersonalListItem} appeal
+ * @param {WebAppeal|PersonalListItem|LPAQuestionnaire} appeal
  * @param {string} state
  * @returns {boolean}
  * */

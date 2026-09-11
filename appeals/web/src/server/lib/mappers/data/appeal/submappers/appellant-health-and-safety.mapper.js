@@ -9,8 +9,8 @@ export const mapAppellantHealthAndSafety = ({
 	booleanWithDetailsSummaryListItem({
 		id: 'appellant-case-health-and-safety',
 		text: 'Potential safety risks (appellant answer)',
-		value: appealDetails.healthAndSafety.appellantCase.hasIssues,
-		valueDetails: appealDetails.healthAndSafety.appellantCase.details,
+		value: appealDetails.healthAndSafety?.appellantCase?.hasIssues,
+		valueDetails: appealDetails.healthAndSafety?.appellantCase?.details,
 		defaultText: 'No answer provided',
 		link: `${currentRoute}/safety-risks/change/appellant`,
 		editable: userHasUpdateCasePermission,

@@ -20,7 +20,7 @@ import { submaps as s78Submaps } from './s78.js';
 /**
  * @typedef {Object} SubMapperParams
  * @property {SingleLPAQuestionnaireResponse} lpaQuestionnaireData
- * @property {WebAppeal} appealDetails
+ * @property {WebAppeal|SingleLPAQuestionnaireResponse} appealDetails
  * @property {string} currentRoute
  * @property {SessionWithAuth} session
  * @property {boolean} userHasUpdateCase
@@ -45,7 +45,7 @@ const submaps = {
 
 /**
  * @param {SingleLPAQuestionnaireResponse} lpaQuestionnaireData
- * @param {WebAppeal} appealDetails
+ * @param {WebAppeal|SingleLPAQuestionnaireResponse} appealDetails
  * @param {string} currentRoute
  * @param {SessionWithAuth} session
  * @returns {{lpaq: MappedInstructions}}

@@ -32,7 +32,6 @@ import { body } from 'express-validator';
 
 const getAppellantCaseValidator = composeMiddleware(
 	validateIdParameter('appealId'),
-	validateIdParameter('appellantCaseId'),
 	validationErrorHandler
 );
 

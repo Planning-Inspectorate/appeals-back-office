@@ -2358,6 +2358,208 @@ export interface SingleLPAQuestionnaireResponse {
 	anySignificantChangesLpa_nationalPolicySignificantChanges?: string;
 	/** @example "Court judgement significant changes" */
 	anySignificantChangesLpa_courtJudgementSignificantChanges?: string;
+	agent?: {
+		/** @example "test@136s7.com" */
+		email?: string;
+		/** @example "John" */
+		firstName?: string;
+		/** @example "Smith" */
+		lastName?: string;
+		/** @example "Smith Inc." */
+		organisationName?: string;
+		/** @example "09876 543 210" */
+		phoneNumber?: string;
+		/** @example 1 */
+		serviceUserId?: number;
+	};
+	anySignificantChanges?: any;
+	anySignificantChanges_courtJudgementSignificantChanges?: any;
+	anySignificantChanges_localPlanSignificantChanges?: any;
+	anySignificantChanges_nationalPolicySignificantChanges?: any;
+	anySignificantChanges_otherSignificantChanges?: any;
+	appealRule6Parties?: object;
+	/** @example "assign_case_officer" */
+	appealStatus?: string;
+	/** @example "Householder" */
+	appealType?: string;
+	appellant?: {
+		/** @example "test@1367.com" */
+		email?: string;
+		/** @example "Lee" */
+		firstName?: string;
+		/** @example "Thornton" */
+		lastName?: string;
+		/** @example "Thornton LTD" */
+		organisationName?: string;
+		/** @example "01234 567 890" */
+		phoneNumber?: string;
+		/** @example 1 */
+		serviceUserId?: number;
+	};
+	/** @example 1 */
+	appellantCaseId?: number;
+	appellantCostsAppliedFor?: any;
+	applicant?: {
+		/** @example "Lee" */
+		firstName?: string;
+		/** @example "Thornton" */
+		surname?: string;
+	};
+	/** @example "2022-03-18T00:00:00.000Z" */
+	applicationDate?: string;
+	/** @example "refused" */
+	applicationDecision?: string;
+	/** @example "2022-03-18T00:00:00.000Z" */
+	applicationDecisionDate?: string;
+	/** @example false */
+	awaitingLinkedAppeal?: boolean;
+	/** @example "a8973f33-4d2e-486b-87b0-d068343ad9eb" */
+	caseOfficer?: string;
+	/** @example [] */
+	completedStateList?: any[];
+	/** @example false */
+	costsAppliedFor?: boolean;
+	costsDecision?: {
+		/** @example false */
+		awaitingAppellantCostsDecision?: boolean;
+		/** @example false */
+		awaitingLpaCostsDecision?: boolean;
+	};
+	/** @example "2024-03-25T23:59:59.999Z" */
+	createdAt?: string;
+	documentationSummary?: {
+		appellantCase?: {
+			/** @example "2024-03-25T23:59:59.999Z" */
+			receivedAt?: string;
+			/** @example "received" */
+			status?: string;
+		};
+		lpaQuestionnaire?: {
+			/** @example "2024-06-24T00:00:00.000Z" */
+			receivedAt?: string;
+			/** @example "Complete" */
+			status?: string;
+		};
+	};
+	floorSpaceSquareMetres?: any;
+	/** @example true */
+	hasAdvertisedAppeal?: boolean;
+	healthAndSafety?: {
+		/** @example "There may be no mobile reception at the site" */
+		details?: string;
+		/** @example true */
+		hasIssues?: boolean;
+	};
+	hearing?: {
+		address?: {
+			/** @example "96 The Avenue" */
+			addressLine1?: string;
+			/** @example "Leftfield" */
+			addressLine2?: string;
+			/** @example "Kent" */
+			county?: string;
+			/** @example "MD21 5XY" */
+			postcode?: string;
+			/** @example "Maidstone" */
+			town?: string;
+		};
+		/** @example 1 */
+		addressId?: number;
+		/** @example 1 */
+		estimatedDays?: number;
+		/** @example "2022-03-31T03:00:00.000Z" */
+		hearingEndTime?: string;
+		/** @example 1 */
+		hearingId?: number;
+		/** @example "2022-03-31T01:00:00.000Z" */
+		hearingStartTime?: string;
+	};
+	inquiry?: {
+		address?: {
+			/** @example "96 The Avenue" */
+			addressLine1?: string;
+			/** @example "Leftfield" */
+			addressLine2?: string;
+			/** @example "Kent" */
+			county?: string;
+			/** @example "MD21 5XY" */
+			postcode?: string;
+			/** @example "Maidstone" */
+			town?: string;
+		};
+		/** @example 1 */
+		addressId?: number;
+		/** @example 6 */
+		estimatedDays?: number;
+		/** @example "2022-03-31T03:00:00.000Z" */
+		inquiryEndTime?: string;
+		/** @example 1 */
+		inquiryId?: number;
+		/** @example "2022-03-31T01:00:00.000Z" */
+		inquiryStartTime?: string;
+	};
+	/** @example "e8f89175-d02c-4a60-870e-dc954d5b530a" */
+	inspector?: string;
+	/** @example false */
+	isAppellantNamedOnApplication?: boolean;
+	/** @example false */
+	isChildAppeal?: boolean;
+	/** @example false */
+	isParentAppeal?: boolean;
+	/** @example false */
+	isS78Expedited?: boolean;
+	/** @example [] */
+	linkedAppeals?: any[];
+	/** @example [] */
+	neighbouringSites?: any[];
+	/** @example 5 */
+	numberOfResidencesNetChange?: number;
+	ownershipCertificate?: any;
+	padsInspector?: any;
+	/** @example "48269/APP/2021/1482" */
+	planningApplicationReference?: string;
+	reasonForAppealAppellant?: any;
+	/** @example "2024-06-24T00:00:00.000Z" */
+	receivedAt?: string;
+	screeningOpinionIndicatesEiaRequired?: any;
+	siteAccessRequired?: {
+		/** @example "There is a tall hedge around the site which obstructs the view of the site" */
+		details?: string;
+		/** @example true */
+		isRequired?: boolean;
+	};
+	siteOwnership?: {
+		areAllOwnersKnown?: any;
+		knowsOtherLandowners?: any;
+		/** @example true */
+		ownersInformed?: boolean;
+		/** @example true */
+		ownsAllLand?: boolean;
+		/** @example true */
+		ownsSomeLand?: boolean;
+	};
+	siteVisit?: {
+		/** @example 1 */
+		siteVisitId?: number;
+		/** @example "2022-03-31T01:00:00.000Z" */
+		visitDate?: string;
+		/** @example "2022-03-31T03:00:00.000Z" */
+		visitEndTime?: string;
+		/** @example "2022-03-31T01:00:00.000Z" */
+		visitStartTime?: string;
+		/** @example "Access required" */
+		visitType?: string;
+	};
+	stateList?: {
+		/** @example false */
+		completed?: boolean;
+		/** @example "complete" */
+		key?: string;
+	}[];
+	/** @example "2024-06-24T00:00:00.000Z" */
+	submittedAt?: string;
+	/** @example "householder-planning" */
+	typeOfPlanningApplication?: string;
 }
 
 export interface UpdateAppellantCaseRequest {
