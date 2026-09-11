@@ -1,6 +1,6 @@
 import { APPEAL_CASE_PRE_STATEMENTS_STATUS } from '#appeals/appeal.constants.js';
 import { isFeatureActive } from '#common/feature-flags.js';
-import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import { isChildAppeal, isEnforcementChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { isDefined } from '#lib/ts-utilities.js';
 import { FEATURE_FLAG_NAMES, PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common.js';
 
@@ -34,7 +34,9 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 				...(isFeatureActive(FEATURE_FLAG_NAMES.SHARING_SUPPORTING_DOCUMENTS)
 					? [mappedData.appeal.supportingDocuments.display.tableItem]
 					: []),
-				...(isFeatureActive(FEATURE_FLAG_NAMES.SHARING_HEARING_DOCUMENTS) && isHearingProcedureType
+				...(isFeatureActive(FEATURE_FLAG_NAMES.SHARING_HEARING_DOCUMENTS) &&
+				isHearingProcedureType &&
+				!isEnforcementChildAppeal(appealDetails)
 					? [mappedData.appeal.hearingDocuments.display.tableItem]
 					: []),
 				...(isFeatureActive(FEATURE_FLAG_NAMES.FEATURE_FLAG_SHARING_INQUIRY_DOCUMENTS) &&
