@@ -98,7 +98,8 @@ export default defineConfig([
 			'appeals/api/src/database/seed/{LPAs,PADs}/**/*.{ts,js}',
 			// allow these existing non-compliant names
 			'appeals/api/src/server/endpoints/Inquiry/**/*.{ts,js}',
-			'appeals/api/src/server/endpoints/integrations/integrations.broadcasters/**/*.{ts,js}'
+			'appeals/api/src/server/endpoints/integrations/integrations.broadcasters/**/*.{ts,js}',
+			'appeals/api/src/database/stored-procedures/__tests__/*'
 		],
 		rules: {
 			'check-file/folder-naming-convention': 'off'
