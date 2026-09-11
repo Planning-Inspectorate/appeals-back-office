@@ -7,6 +7,7 @@ import {
 } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { jest } from '@jest/globals';
+import { buildChangeProcedureTypeMessage } from '../change-procedure-type.service.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -79,6 +80,7 @@ describe('Change appeal procedure type route', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
 	});
+
 	describe('POST', () => {
 		describe('Change to Written', () => {
 			test('returns 400 if any timetable date is missing', async () => {
@@ -1407,6 +1409,42 @@ describe('Change appeal procedure type route', () => {
 				expect(mockNotifySend).not.toHaveBeenCalled();
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'inquiry', 'Update');
 			});
+		});
+	});
+
+	describe('buildChangeProcedureTypeMessage', () => {
+		test('returns written representations and hearing cancellation when hearing exists', () => {
+			const message = buildChangeProcedureTypeMessage({ hearing: { id: 1 } }, 'written', 'hearing');
+
+			expect(message).toBe(
+				'We have changed your appeal procedure to written representations and cancelled your hearing.'
+			);
+		});
+
+		test('returns inquiry cancellation when inquiry exists', () => {
+			const message = buildChangeProcedureTypeMessage({ inquiry: { id: 2 } }, 'hearing', 'inquiry');
+
+			expect(message).toBe(
+				'We have changed your appeal procedure to hearing and cancelled your inquiry.'
+			);
+		});
+
+		test('returns site visit cancellation when changing from written and site visit exists', () => {
+			const message = buildChangeProcedureTypeMessage(
+				{ siteVisit: { id: 3 } },
+				'inquiry',
+				'written'
+			);
+
+			expect(message).toBe(
+				'We have changed your appeal procedure to inquiry and cancelled your site visit.'
+			);
+		});
+
+		test('does not include cancellation when matching record does not exist', () => {
+			const message = buildChangeProcedureTypeMessage({}, 'written', 'hearing');
+
+			expect(message).toBe('We have changed your appeal procedure to written representations.');
 		});
 	});
 });

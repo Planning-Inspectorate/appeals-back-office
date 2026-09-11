@@ -102,8 +102,8 @@ export const canChangeS78ExpeditedToTargetProcedure = ({
 				APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE /** ,APPEAL_CASE_STATUS.EVENT*/ /**,APPEAL_CASE_STATUS.AWAITING_EVENT*/
 			].includes(/** @type {any} */ (currentStage));
 		case APPEAL_CASE_PROCEDURE.INQUIRY:
-			// Future Dev Work: Inquiry
-			return false;
+			// Stage 3: Up to LPAQ complete allows changing to Inquiry
+			return [APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE].includes(/** @type {any} */ (currentStage));
 		default:
 			return false;
 	}

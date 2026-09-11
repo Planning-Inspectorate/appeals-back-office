@@ -335,6 +335,32 @@ export const changeProcedureToInquiry = async (data, appealId) => {
 };
 
 /**
+ * @param {Appeal} appeal
+ * @param {string} appealProcedure
+ * @param {string | undefined} existingAppealProcedure
+ * @returns {string}
+ */
+export const buildChangeProcedureTypeMessage = (
+	appeal,
+	appealProcedure,
+	existingAppealProcedure
+) => {
+	const newProcedureLabel =
+		appealProcedure === 'written' ? 'written representations' : appealProcedure;
+
+	const cancellationMessage =
+		existingAppealProcedure === 'hearing' && appeal.hearing
+			? ' and cancelled your hearing'
+			: existingAppealProcedure === 'inquiry' && appeal.inquiry
+				? ' and cancelled your inquiry'
+				: existingAppealProcedure === 'written' && appeal.siteVisit
+					? ' and cancelled your site visit'
+					: '';
+
+	return `We have changed your appeal procedure to ${newProcedureLabel}${cancellationMessage}.`;
+};
+
+/**
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} templateName
  * @param {Appeal} appeal
@@ -375,17 +401,11 @@ export const sendChangeProcedureTypeNotifications = async (
 	const enforcementReference = await getEnforcementReference(appeal);
 
 	const personalisation = {
-		change_message: `We have changed your appeal procedure to ${
-			appealProcedure === 'written' ? 'written representations' : appealProcedure
-		} ${
-			existingAppealProcedure === 'hearing' && appeal.hearing
-				? `and cancelled your hearing`
-				: existingAppealProcedure === 'inquiry' && appeal.inquiry
-					? `and cancelled your inquiry`
-					: existingAppealProcedure === 'written' && appeal.siteVisit
-						? 'and cancelled your site visit'
-						: ''
-		}.`,
+		change_message: buildChangeProcedureTypeMessage(
+			appeal,
+			appealProcedure,
+			existingAppealProcedure
+		),
 		appeal_procedure: appealProcedure,
 		team_email_address: await getTeamEmailFromAppealId(appeal.id),
 		inquiry_date: dateISOStringToDisplayDate(
