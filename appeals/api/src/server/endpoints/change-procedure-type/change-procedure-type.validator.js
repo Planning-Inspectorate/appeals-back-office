@@ -109,11 +109,23 @@ export const postChangeProcedureTypeValidator = composeMiddleware(
 		.isISO8601()
 		.withMessage('statementOfCommonGroundDueDate must be a valid date'),
 	body('proofOfEvidenceAndWitnessesDueDate')
-		.if((_, { req }) => req.body.appealProcedure === 'inquiry')
+		.if(
+			(_, { req }) =>
+				['inquiry'].includes(req.body.appealProcedure) &&
+				(['written', 'inquiry', 'hearing'].includes(req.body.existingAppealProcedure) ||
+					(req.body.existingAppealProcedure !== 'part 1' &&
+						req.body.proofOfEvidenceAndWitnessesDueDate !== ''))
+		)
 		.isISO8601()
 		.withMessage('proofOfEvidenceAndWitnessesDueDate must be a valid date'),
 	body('caseManagementConferenceDueDate')
-		.if((_, { req }) => req.body.appealProcedure === 'inquiry')
+		.if(
+			(_, { req }) =>
+				['inquiry'].includes(req.body.appealProcedure) &&
+				(['written', 'inquiry', 'hearing'].includes(req.body.existingAppealProcedure) ||
+					(req.body.existingAppealProcedure !== 'part 1' &&
+						req.body.caseManagementConferenceDueDate !== ''))
+		)
 		.isISO8601()
 		.withMessage('caseManagementConferenceDueDate must be a valid date'),
 	body('address')
