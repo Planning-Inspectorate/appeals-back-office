@@ -58,8 +58,12 @@ export const canChangeS78ExpeditedAppealProcedure = ({
 	if (normalised !== PROCEDURE_TYPE_NAME.WRITTEN_PART_1.toLowerCase()) {
 		return false;
 	}
-
-	return [APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE].includes(/** @type {any} */ (currentStage));
+	return /** @type {(string | undefined)[]} */ ([
+		APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+		APPEAL_CASE_STATUS.EVENT,
+		APPEAL_CASE_STATUS.AWAITING_EVENT,
+		APPEAL_CASE_STATUS.ISSUE_DETERMINATION
+	]).includes(currentStage);
 };
 
 /**
@@ -94,7 +98,12 @@ export const canChangeS78ExpeditedToTargetProcedure = ({
 	switch (targetProcedure) {
 		case APPEAL_CASE_PROCEDURE.WRITTEN:
 			// Stage 1: Up to LPAQ complete allows changing to Written
-			return [APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE].includes(/** @type {any} */ (currentStage));
+			return [
+				APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				APPEAL_CASE_STATUS.EVENT,
+				APPEAL_CASE_STATUS.AWAITING_EVENT,
+				APPEAL_CASE_STATUS.ISSUE_DETERMINATION
+			].includes(/** @type {any} */ (currentStage));
 		case APPEAL_CASE_PROCEDURE.HEARING:
 			// Future Dev Work: Hearing
 			// Commented out next steps
@@ -207,4 +216,46 @@ export const targetStateOnEventCancelled = {
  */
 export const sendSiteVisitScheduleUnaccompaniedNotify = (appealType) => {
 	return !isLdcOrEnforcementAppealType(appealType);
+};
+
+/**
+ * Determines the target state when changing procedure type.
+ * Supports future procedure transitions and logic, but currently only supports changing from Part 1 to Written Reps.
+ * @param {Object} params
+ * @param {ProcedureType} params.currentProcedure
+ * @param {ProcedureType} params.targetProcedure
+ * @param {CaseStatus} params.currentStatus
+ * @param {AppealTypeKey} [params.appealType] NOTE - at present implementations only pass 'W' or 's78' to this function
+ * @returns {CaseStatus}
+ */
+export const targetStateOnChangeProcedure = ({
+	currentProcedure,
+	targetProcedure,
+	currentStatus,
+	appealType
+}) => {
+	const isS78 = !appealType || appealType === APPEAL_CASE_TYPE.W || appealType === APPEAL_TYPE.S78;
+
+	const normalisedCurrent = currentProcedure?.toLowerCase();
+	const isPart1 =
+		normalisedCurrent === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1.toLowerCase() ||
+		normalisedCurrent === PROCEDURE_TYPE_NAME.WRITTEN_PART_1.toLowerCase();
+	const normalisedTarget = targetProcedure?.toLowerCase();
+	const isTargetWritten =
+		normalisedTarget === APPEAL_CASE_PROCEDURE.WRITTEN.toLowerCase() ||
+		normalisedTarget === PROCEDURE_TYPE_NAME.WRITTEN_PART_2.toLowerCase();
+
+	if (isPart1 && isTargetWritten && isS78) {
+		if (
+			[
+				APPEAL_CASE_STATUS.EVENT,
+				APPEAL_CASE_STATUS.AWAITING_EVENT,
+				APPEAL_CASE_STATUS.ISSUE_DETERMINATION
+			].includes(/** @type {any} */ (currentStatus))
+		) {
+			return APPEAL_CASE_STATUS.STATEMENTS;
+		}
+	}
+
+	return currentStatus;
 };

@@ -7,12 +7,19 @@ import {
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
+import transitionState from '#state/transition-state.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import logger from '#utils/logger.js';
-import { APPEAL_REPRESENTATION_TYPE, EVENT_TYPE } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_REPRESENTATION_TYPE,
+	EVENT_TYPE,
+	PROCEDURE_TYPE_KEY,
+	PROCEDURE_TYPE_NAME
+} from '@pins/appeals/constants/common.js';
 import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
 import {
+	ACTION_CHANGE_PROCEDURE_TYPE,
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_NO_RECIPIENT_EMAIL
 } from '@pins/appeals/constants/support.js';
@@ -23,9 +30,10 @@ import { formatInTimeZone } from 'date-fns-tz';
 /**
  * @param {import('src/server/openapi-types.js').ChangeProcedureTypeRequest} data
  * @param {number} appealId
+ * @param {string} [azureAdUserId]
  * @returns {Promise<void>}
  */
-export const changeProcedureToWritten = async (data, appealId) => {
+export const changeProcedureToWritten = async (data, appealId, azureAdUserId = '') => {
 	try {
 		const result = await databaseConnector.$transaction(async (tx) => {
 			const procedureType = await tx.procedureType.findFirst({
@@ -51,28 +59,21 @@ export const changeProcedureToWritten = async (data, appealId) => {
 
 			let existingHearing;
 			let existingInquiry;
-			if (data.existingAppealProcedure === 'hearing') {
-				existingHearing = await tx.hearing.findFirst({
-					where: { appealId }
-				});
-				await tx.hearing.deleteMany({
-					where: { appealId }
-				});
-				await tx.hearingEstimate.deleteMany({
-					where: { appealId }
-				});
-			} else if (data.existingAppealProcedure === 'inquiry') {
-				existingInquiry = await tx.inquiry.findFirst({
-					where: { appealId }
-				});
-				await tx.inquiry.deleteMany({
-					where: { appealId }
-				});
-				await tx.inquiryEstimate.deleteMany({
-					where: { appealId }
-				});
+			let existingSiteVisit;
+
+			switch (data.existingAppealProcedure?.toLowerCase()) {
+				case 'hearing':
+					existingHearing = await deleteHearing(tx, appealId);
+					break;
+				case 'inquiry':
+					existingInquiry = await deleteInquiry(tx, appealId);
+					break;
+				case PROCEDURE_TYPE_NAME.WRITTEN_PART_1.toLowerCase():
+					existingSiteVisit = await deleteSiteVisit(tx, appealId);
+					break;
 			}
-			return { updatedAppeal, existingHearing, existingInquiry };
+
+			return { updatedAppeal, existingHearing, existingInquiry, existingSiteVisit };
 		});
 
 		if (result.existingInquiry) {
@@ -90,6 +91,24 @@ export const changeProcedureToWritten = async (data, appealId) => {
 				EventType.Delete,
 				result.existingHearing
 			);
+		}
+		if (result.existingSiteVisit) {
+			await broadcasters.broadcastEvent(
+				result.existingSiteVisit.id,
+				EVENT_TYPE.SITE_VISIT,
+				EventType.Delete,
+				result.existingSiteVisit
+			);
+		}
+
+		if (
+			data.existingAppealProcedure?.toLowerCase() !==
+			PROCEDURE_TYPE_KEY.WRITTEN_PART_1.toLowerCase()
+		) {
+			await transitionState(appealId, azureAdUserId, ACTION_CHANGE_PROCEDURE_TYPE, {
+				previousProcedureType: data.existingAppealProcedure,
+				targetProcedureType: data.appealProcedure
+			});
 		}
 	} catch {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
@@ -490,3 +509,66 @@ function dateISOStringToDisplayTime12hr(dateISOString) {
 
 	return displayTimeString;
 }
+
+/**
+ * @param {any} tx
+ * @param {number} appealId
+ * @returns {Promise<import('@pins/appeals.api').Schema.Hearing | null>}
+ */
+const deleteHearing = async (tx, appealId) => {
+	const existingHearing = await tx.hearing.findFirst({
+		where: { appealId }
+	});
+
+	if (existingHearing) {
+		await tx.hearing.deleteMany({
+			where: { appealId }
+		});
+		await tx.hearingEstimate.deleteMany({
+			where: { appealId }
+		});
+	}
+
+	return existingHearing;
+};
+
+/**
+ * @param {any} tx
+ * @param {number} appealId
+ * @returns {Promise<import('@pins/appeals.api').Schema.Inquiry | null>}
+ */
+const deleteInquiry = async (tx, appealId) => {
+	const existingInquiry = await tx.inquiry.findFirst({
+		where: { appealId }
+	});
+
+	if (existingInquiry) {
+		await tx.inquiry.deleteMany({
+			where: { appealId }
+		});
+		await tx.inquiryEstimate.deleteMany({
+			where: { appealId }
+		});
+	}
+
+	return existingInquiry;
+};
+
+/**
+ * @param {any} tx
+ * @param {number} appealId
+ * @returns {Promise<import('@pins/appeals.api').Schema.SiteVisit | null>}
+ */
+const deleteSiteVisit = async (tx, appealId) => {
+	const existingSiteVisit = await tx.siteVisit.findFirst({
+		where: { appealId }
+	});
+
+	if (existingSiteVisit) {
+		await tx.siteVisit.deleteMany({
+			where: { appealId }
+		});
+	}
+
+	return existingSiteVisit;
+};

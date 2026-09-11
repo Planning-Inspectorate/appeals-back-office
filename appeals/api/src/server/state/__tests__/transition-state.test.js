@@ -6,6 +6,7 @@ import {
 	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
 import {
+	ACTION_CHANGE_PROCEDURE_TYPE,
 	CASE_RELATIONSHIP_LINKED,
 	VALIDATION_OUTCOME_COMPLETE,
 	VALIDATION_OUTCOME_INCOMPLETE,
@@ -793,6 +794,67 @@ describe('transitionState', () => {
 				});
 			}
 		);
+	});
+
+	describe('ACTION_CHANGE_PROCEDURE_TYPE transitions', () => {
+		beforeEach(() => {
+			jest.clearAllMocks();
+			jest.spyOn(appealStatusRepository, 'rollBackAppealStatusTo').mockResolvedValue({});
+		});
+
+		test.each([
+			{ status: APPEAL_CASE_STATUS.EVENT, procedureKey: 'part 1' },
+			{ status: APPEAL_CASE_STATUS.AWAITING_EVENT, procedureKey: 'part 1' },
+			{ status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION, procedureKey: 'part 1' }
+		])(
+			'resets status after LPAQ to statements when transitioning from $status with procedure $procedureKey',
+			async ({ status, procedureKey }) => {
+				const appeal = {
+					id: 501,
+					reference: 'APP/501',
+					currentStatus: status,
+					appealStatus: [
+						{ status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, valid: false },
+						{ status, valid: true }
+					],
+					appealType: { key: APPEAL_CASE_TYPE.W },
+					procedureType: { key: procedureKey }
+				};
+
+				jest.spyOn(appealRepository, 'getAppealById').mockResolvedValue(appeal);
+
+				const result = await transitionState(appeal.id, 'user-123', ACTION_CHANGE_PROCEDURE_TYPE, {
+					targetProcedureType: APPEAL_CASE_PROCEDURE.WRITTEN
+				});
+
+				expect(appealStatusRepository.rollBackAppealStatusTo).toHaveBeenCalledWith(
+					appeal.id,
+					APPEAL_CASE_STATUS.STATEMENTS,
+					APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
+				);
+				expect(result).toEqual(true);
+			}
+		);
+
+		test('does not transition or rollback status if appeal is at LPA_QUESTIONNAIRE stage', async () => {
+			const appeal = {
+				id: 502,
+				reference: 'APP/502',
+				currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				appealStatus: [{ status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, valid: true }],
+				appealType: { key: APPEAL_CASE_TYPE.W },
+				procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 }
+			};
+
+			jest.spyOn(appealRepository, 'getAppealById').mockResolvedValue(appeal);
+
+			const result = await transitionState(appeal.id, 'user-123', ACTION_CHANGE_PROCEDURE_TYPE, {
+				targetProcedureType: APPEAL_CASE_PROCEDURE.WRITTEN
+			});
+
+			expect(appealStatusRepository.rollBackAppealStatusTo).not.toHaveBeenCalled();
+			expect(result).toEqual(false);
+		});
 	});
 });
 

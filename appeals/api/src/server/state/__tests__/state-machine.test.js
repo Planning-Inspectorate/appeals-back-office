@@ -1,4 +1,5 @@
 import {
+	ACTION_CHANGE_PROCEDURE_TYPE,
 	VALIDATION_OUTCOME_CANCEL,
 	VALIDATION_OUTCOME_COMPLETE,
 	VALIDATION_OUTCOME_INCOMPLETE,
@@ -995,6 +996,72 @@ describe('State Machine Transitions', () => {
 			expect(
 				nextStateExpeditedPart2(APPEAL_CASE_STATUS.STATEMENTS, VALIDATION_OUTCOME_COMPLETE)
 			).toBe(APPEAL_CASE_STATUS.FINAL_COMMENTS);
+		});
+	});
+
+	describe('Change procedure type transitions', () => {
+		/**
+		 * @param {string} initial
+		 * @param {string} currentProcedure
+		 * @param {string} targetProcedure
+		 * @return {import('xstate').StateValue}
+		 */
+		const nextStateOnChangeProcedure = (initial, currentProcedure, targetProcedure) => {
+			const machine = createStateMachine(
+				APPEAL_CASE_TYPE.W,
+				currentProcedure,
+				initial,
+				false,
+				false,
+				targetProcedure
+			);
+			const service = interpret(machine).start();
+
+			service.send(ACTION_CHANGE_PROCEDURE_TYPE);
+			return service.state.value;
+		};
+		it.each([
+			APPEAL_CASE_STATUS.EVENT,
+			APPEAL_CASE_STATUS.AWAITING_EVENT,
+			APPEAL_CASE_STATUS.ISSUE_DETERMINATION
+		])(
+			'transitions from %s to statements when changing Part 1 (DB display string "Part 1") to Written',
+			(initial) => {
+				expect(nextStateOnChangeProcedure(initial, 'Part 1', APPEAL_CASE_PROCEDURE.WRITTEN)).toBe(
+					APPEAL_CASE_STATUS.STATEMENTS
+				);
+			}
+		);
+
+		it('remains in LPA_QUESTIONNAIRE when changing procedure type at LPA_QUESTIONNAIRE stage', () => {
+			const machine = createStateMachine(
+				APPEAL_CASE_TYPE.W,
+				APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
+				APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				false,
+				false,
+				APPEAL_CASE_PROCEDURE.WRITTEN
+			);
+			const service = interpret(machine).start();
+
+			service.send(ACTION_CHANGE_PROCEDURE_TYPE);
+			expect(service.state.value).toBe(APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE);
+		});
+
+		it('transitions to statements using previousProcedureType override when procedureType has already been updated to written', () => {
+			const machine = createStateMachine(
+				APPEAL_CASE_TYPE.W,
+				APPEAL_CASE_PROCEDURE.WRITTEN,
+				APPEAL_CASE_STATUS.EVENT,
+				false,
+				false,
+				APPEAL_CASE_PROCEDURE.WRITTEN,
+				APPEAL_CASE_PROCEDURE.WRITTEN_PART_1
+			);
+			const service = interpret(machine).start();
+
+			service.send(ACTION_CHANGE_PROCEDURE_TYPE);
+			expect(service.state.value).toBe(APPEAL_CASE_STATUS.STATEMENTS);
 		});
 	});
 });
