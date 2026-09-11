@@ -1,6 +1,6 @@
 module "function_scheduled_jobs" {
   #checkov:skip=CKV_TF_1: Use of commit hash are not required for our Terraform modules
-  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-function-app?ref=1.55"
+  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-function-app?ref=1.57"
 
   resource_group_name = azurerm_resource_group.primary.name
   location            = module.primary_region.location
@@ -46,7 +46,7 @@ module "function_scheduled_jobs" {
 
 # RBAC for documents
 resource "azurerm_role_assignment" "function_scheduled_jobs_writer" {
-  scope                = azurerm_storage_container.appeal_documents.resource_manager_id
+  scope                = azurerm_storage_container.appeal_documents.id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = module.function_scheduled_jobs.principal_id
 }

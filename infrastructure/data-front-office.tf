@@ -12,6 +12,6 @@ data "azurerm_storage_container" "front_office_documents" {
   # only include if configured to connect to front office
   count = var.front_office_infra_config.deploy_connections ? 1 : 0
 
-  name                 = "uploads"
-  storage_account_name = replace("pinsstdocs${var.environment}ukw001", "-", "")
+  name               = "uploads"
+  storage_account_id = "${data.azurerm_subscription.current.id}/resourceGroups/${var.front_office_infra_config.network.rg}/providers/Microsoft.Storage/storageAccounts/${replace("pinsstdocs${var.environment}ukw001", "-", "")}"
 }
