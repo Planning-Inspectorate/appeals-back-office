@@ -224,7 +224,7 @@ export const changeProcedureToHearing = async (data, appealId, azureAdUserId = '
  * @param {number} appealId
  * @returns {Promise<void>}
  */
-export const changeProcedureToInquiry = async (data, appealId) => {
+export const changeProcedureToInquiry = async (data, appealId, azureAdUserId = '') => {
 	try {
 		const result = await databaseConnector.$transaction(async (tx) => {
 			const procedureType = await tx.procedureType.findFirst({
@@ -293,33 +293,31 @@ export const changeProcedureToInquiry = async (data, appealId) => {
 				where: { appealId },
 				data: {
 					lpaQuestionnaireDueDate: data.lpaQuestionnaireDueDate,
-					lpaStatementDueDate: data.lpaStatementDueDate,
-					ipCommentsDueDate: data.ipCommentsDueDate,
-					statementOfCommonGroundDueDate: data.statementOfCommonGroundDueDate,
-					planningObligationDueDate: data.planningObligationDueDate,
-					proofOfEvidenceAndWitnessesDueDate: data.proofOfEvidenceAndWitnessesDueDate,
+					lpaStatementDueDate: data.lpaStatementDueDate ? data.lpaStatementDueDate : null,
+					ipCommentsDueDate: data.ipCommentsDueDate ? data.ipCommentsDueDate : null,
+					statementOfCommonGroundDueDate: data.statementOfCommonGroundDueDate
+						? data.statementOfCommonGroundDueDate
+						: null,
+					planningObligationDueDate: data.planningObligationDueDate
+						? data.planningObligationDueDate
+						: null,
+					proofOfEvidenceAndWitnessesDueDate: data.proofOfEvidenceAndWitnessesDueDate
+						? data.proofOfEvidenceAndWitnessesDueDate
+						: null,
 					caseManagementConferenceDueDate: data.caseManagementConferenceDueDate
+						? data.caseManagementConferenceDueDate
+						: null
 				}
 			});
 			let existingHearing;
 			let existingSiteVisit;
-			if (data.existingAppealProcedure === 'hearing') {
-				existingHearing = await tx.hearing.findFirst({
-					where: { appealId }
-				});
-				await tx.hearing.deleteMany({
-					where: { appealId }
-				});
-				await tx.hearingEstimate.deleteMany({
-					where: { appealId }
-				});
-			} else if (data.existingAppealProcedure === 'written') {
-				existingSiteVisit = await tx.siteVisit.findFirst({
-					where: { appealId }
-				});
-				await tx.siteVisit.deleteMany({
-					where: { appealId }
-				});
+			if (data.existingAppealProcedure === PROCEDURE_TYPE_NAME.HEARING.toLowerCase()) {
+				existingHearing = await deleteHearing(tx, appealId);
+			} else if (
+				data.existingAppealProcedure === PROCEDURE_TYPE_NAME.WRITTEN_PART_2.toLowerCase() ||
+				data.existingAppealProcedure === PROCEDURE_TYPE_NAME.WRITTEN_PART_1.toLowerCase()
+			) {
+				existingSiteVisit = await deleteSiteVisit(tx, appealId);
 			}
 			return { updatedAppeal, updatedInquiry, existingHearing, existingSiteVisit };
 		});
@@ -347,10 +345,45 @@ export const changeProcedureToInquiry = async (data, appealId) => {
 				data.appealProcedure === data.existingAppealProcedure ? EventType.Update : EventType.Create
 			);
 		}
+		if (
+			data.existingAppealProcedure?.toLowerCase() ===
+			PROCEDURE_TYPE_NAME.WRITTEN_PART_1.toLowerCase()
+		) {
+			await transitionState(appealId, azureAdUserId, ACTION_CHANGE_PROCEDURE_TYPE, {
+				previousProcedureType: data.existingAppealProcedure,
+				targetProcedureType: data.appealProcedure
+			});
+		}
 	} catch (error) {
 		logger.error(error);
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA, { cause: error });
 	}
+};
+
+/**
+ * @param {Appeal} appeal
+ * @param {string} appealProcedure
+ * @param {string | undefined} existingAppealProcedure
+ * @returns {string}
+ */
+export const buildChangeProcedureTypeMessage = (
+	appeal,
+	appealProcedure,
+	existingAppealProcedure
+) => {
+	const newProcedureLabel =
+		appealProcedure === 'written' ? 'written representations' : appealProcedure;
+
+	const cancellationMessage =
+		existingAppealProcedure === 'hearing' && appeal.hearing
+			? ' and cancelled your hearing'
+			: existingAppealProcedure === 'inquiry' && appeal.inquiry
+				? ' and cancelled your inquiry'
+				: existingAppealProcedure === 'written' && appeal.siteVisit
+					? ' and cancelled your site visit'
+					: '';
+
+	return `We have changed your appeal procedure to ${newProcedureLabel}${cancellationMessage}.`;
 };
 
 /**
@@ -394,17 +427,11 @@ export const sendChangeProcedureTypeNotifications = async (
 	const enforcementReference = await getEnforcementReference(appeal);
 
 	const personalisation = {
-		change_message: `We have changed your appeal procedure to ${
-			appealProcedure === 'written' ? 'written representations' : appealProcedure
-		} ${
-			existingAppealProcedure === 'hearing' && appeal.hearing
-				? `and cancelled your hearing`
-				: existingAppealProcedure === 'inquiry' && appeal.inquiry
-					? `and cancelled your inquiry`
-					: existingAppealProcedure === 'written' && appeal.siteVisit
-						? 'and cancelled your site visit'
-						: ''
-		}.`,
+		change_message: buildChangeProcedureTypeMessage(
+			appeal,
+			appealProcedure,
+			existingAppealProcedure
+		),
 		appeal_procedure: appealProcedure,
 		team_email_address: await getTeamEmailFromAppealId(appeal.id),
 		inquiry_date: dateISOStringToDisplayDate(

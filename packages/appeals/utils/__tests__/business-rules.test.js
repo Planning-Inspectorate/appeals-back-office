@@ -436,86 +436,100 @@ describe('canChangeS78ExpeditedToTargetProcedure', () => {
 	});
 
 	it('returns false for Inquiry for current stage', () => {
-		expect(
-			canChangeS78ExpeditedToTargetProcedure({
-				targetProcedure: APPEAL_CASE_PROCEDURE.INQUIRY,
-				appealType: APPEAL_TYPE.S78,
-				currentProcedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
-				currentStage: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
-				isExpeditedCopFeatureActive: true
-			})
-		).toBe(false);
-	});
-});
-
-describe('targetStateOnChangeProcedure', () => {
-	it.each([
-		APPEAL_CASE_STATUS.EVENT,
-		APPEAL_CASE_STATUS.AWAITING_EVENT,
-		APPEAL_CASE_STATUS.ISSUE_DETERMINATION
-	])('transitions from %s to statements when changing Part 1 to Written', (currentStatus) => {
-		const result = targetStateOnChangeProcedure({
-			currentProcedure: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
-			targetProcedure: APPEAL_CASE_PROCEDURE.WRITTEN,
-			currentStatus,
-			appealType: APPEAL_TYPE.S78
+		it('returns true for Inquiry when appeal is at LPAQ stage', () => {
+			expect(
+				canChangeS78ExpeditedToTargetProcedure({
+					targetProcedure: APPEAL_CASE_PROCEDURE.INQUIRY,
+					appealType: APPEAL_TYPE.S78,
+					currentProcedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
+					currentStage: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+					isExpeditedCopFeatureActive: true
+				})
+			).toBe(true);
 		});
-
-		expect(result).toBe(APPEAL_CASE_STATUS.STATEMENTS);
+		//add additional tests here when expanding available stages
+		it('returns false for Inquiry when stage is not lpa_questionnaire', () => {
+			expect(
+				canChangeS78ExpeditedToTargetProcedure({
+					targetProcedure: APPEAL_CASE_PROCEDURE.INQUIRY,
+					appealType: APPEAL_TYPE.S78,
+					currentProcedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
+					currentStage: APPEAL_CASE_STATUS.READY_TO_START,
+					isExpeditedCopFeatureActive: true
+				})
+			).toBe(false);
+		});
 	});
 
-	it('supports PROCEDURE_TYPE_NAME values for Part 1 and Written', () => {
-		const result = targetStateOnChangeProcedure({
-			currentProcedure: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
-			targetProcedure: PROCEDURE_TYPE_NAME.WRITTEN_PART_2,
-			currentStatus: APPEAL_CASE_STATUS.EVENT,
-			appealType: APPEAL_TYPE.S78
+	describe('targetStateOnChangeProcedure', () => {
+		it.each([
+			APPEAL_CASE_STATUS.EVENT,
+			APPEAL_CASE_STATUS.AWAITING_EVENT,
+			APPEAL_CASE_STATUS.ISSUE_DETERMINATION
+		])('transitions from %s to statements when changing Part 1 to Written', (currentStatus) => {
+			const result = targetStateOnChangeProcedure({
+				currentProcedure: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
+				targetProcedure: APPEAL_CASE_PROCEDURE.WRITTEN,
+				currentStatus,
+				appealType: APPEAL_TYPE.S78
+			});
+
+			expect(result).toBe(APPEAL_CASE_STATUS.STATEMENTS);
 		});
 
-		expect(result).toBe(APPEAL_CASE_STATUS.STATEMENTS);
-	});
+		it('supports PROCEDURE_TYPE_NAME values for Part 1 and Written', () => {
+			const result = targetStateOnChangeProcedure({
+				currentProcedure: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
+				targetProcedure: PROCEDURE_TYPE_NAME.WRITTEN_PART_2,
+				currentStatus: APPEAL_CASE_STATUS.EVENT,
+				appealType: APPEAL_TYPE.S78
+			});
 
-	it('returns currentStatus if procedure is not Part 1', () => {
-		const result = targetStateOnChangeProcedure({
-			currentProcedure: APPEAL_CASE_PROCEDURE.HEARING,
-			targetProcedure: APPEAL_CASE_PROCEDURE.WRITTEN,
-			currentStatus: APPEAL_CASE_STATUS.EVENT,
-			appealType: APPEAL_TYPE.S78
+			expect(result).toBe(APPEAL_CASE_STATUS.STATEMENTS);
 		});
 
-		expect(result).toBe(APPEAL_CASE_STATUS.EVENT);
-	});
+		it('returns currentStatus if procedure is not Part 1', () => {
+			const result = targetStateOnChangeProcedure({
+				currentProcedure: APPEAL_CASE_PROCEDURE.HEARING,
+				targetProcedure: APPEAL_CASE_PROCEDURE.WRITTEN,
+				currentStatus: APPEAL_CASE_STATUS.EVENT,
+				appealType: APPEAL_TYPE.S78
+			});
 
-	it('returns currentStatus if target procedure is not Written', () => {
-		const result = targetStateOnChangeProcedure({
-			currentProcedure: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
-			targetProcedure: APPEAL_CASE_PROCEDURE.HEARING,
-			currentStatus: APPEAL_CASE_STATUS.EVENT,
-			appealType: APPEAL_TYPE.S78
+			expect(result).toBe(APPEAL_CASE_STATUS.EVENT);
 		});
 
-		expect(result).toBe(APPEAL_CASE_STATUS.EVENT);
-	});
+		it('returns currentStatus if target procedure is not Written', () => {
+			const result = targetStateOnChangeProcedure({
+				currentProcedure: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
+				targetProcedure: APPEAL_CASE_PROCEDURE.HEARING,
+				currentStatus: APPEAL_CASE_STATUS.EVENT,
+				appealType: APPEAL_TYPE.S78
+			});
 
-	it('returns currentStatus if appealType is unsupported', () => {
-		const result = targetStateOnChangeProcedure({
-			currentProcedure: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
-			targetProcedure: APPEAL_CASE_PROCEDURE.WRITTEN,
-			currentStatus: APPEAL_CASE_STATUS.EVENT,
-			appealType: APPEAL_TYPE.HOUSEHOLDER
+			expect(result).toBe(APPEAL_CASE_STATUS.EVENT);
 		});
 
-		expect(result).toBe(APPEAL_CASE_STATUS.EVENT);
-	});
+		it('returns currentStatus if appealType is unsupported', () => {
+			const result = targetStateOnChangeProcedure({
+				currentProcedure: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
+				targetProcedure: APPEAL_CASE_PROCEDURE.WRITTEN,
+				currentStatus: APPEAL_CASE_STATUS.EVENT,
+				appealType: APPEAL_TYPE.HOUSEHOLDER
+			});
 
-	it('returns currentStatus if currentStatus is not event, awaiting_event, or issue_determination', () => {
-		const result = targetStateOnChangeProcedure({
-			currentProcedure: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
-			targetProcedure: APPEAL_CASE_PROCEDURE.WRITTEN,
-			currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
-			appealType: APPEAL_TYPE.S78
+			expect(result).toBe(APPEAL_CASE_STATUS.EVENT);
 		});
 
-		expect(result).toBe(APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE);
+		it('returns currentStatus if currentStatus is not event, awaiting_event, or issue_determination', () => {
+			const result = targetStateOnChangeProcedure({
+				currentProcedure: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
+				targetProcedure: APPEAL_CASE_PROCEDURE.WRITTEN,
+				currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				appealType: APPEAL_TYPE.S78
+			});
+
+			expect(result).toBe(APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE);
+		});
 	});
 });
