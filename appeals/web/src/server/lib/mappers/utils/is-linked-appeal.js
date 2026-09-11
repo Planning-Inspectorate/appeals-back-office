@@ -30,6 +30,18 @@ export function isChildAppeal(appeal) {
  * @param {*} appeal
  * @returns {boolean}
  */
+export function isEnforcementChildAppeal(appeal) {
+	const { appealType, type = appealType } = appeal || {};
+	return (
+		appeal.isChildAppeal && isLinkedAppealsActive(appeal) && type === APPEAL_TYPE.ENFORCEMENT_NOTICE
+	);
+}
+
+/**
+ *
+ * @param {*} appeal
+ * @returns {boolean}
+ */
 export function isParentAppeal(appeal) {
 	return appeal.isParentAppeal && isLinkedAppealsActive(appeal);
 }

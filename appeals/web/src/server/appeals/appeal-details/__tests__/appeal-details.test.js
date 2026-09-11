@@ -5031,6 +5031,39 @@ describe('appeal-details', () => {
 					}
 				);
 
+				it('should not render the hearing documents row if the appeal is an enforcementChildAppeal', async () => {
+					const appeal = {
+						...appealDataEnforcementNotice,
+						isChildAppeal: true,
+						procedureType: PROCEDURE_TYPE_NAME.HEARING,
+						documentationSummary: {}
+					};
+					nock('http://test/')
+						.get(`/appeals/${appealDataEnforcementNotice.appealId}/page-details`)
+						.reply(200, appeal);
+					nock('http://test/')
+						.get(`/appeals/${appealDataEnforcementNotice.appealId}/case-notes`)
+						.reply(200, caseNotes);
+					nock('http://test/')
+						.get(`/appeals/${appealDataEnforcementNotice.appealId}`)
+						.reply(200, {
+							itemCount: 2,
+							items: [
+								...appellantFinalCommentsAwaitingReview.items,
+								...lpaFinalCommentsAwaitingReview.items
+							]
+						});
+
+					const response = await request.get(`${baseUrl}/${appealDataEnforcementNotice.appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const element = parseHtml(response.text);
+					const table = element.querySelector('#case-documentation-table');
+					expect(table.innerHTML).toMatchSnapshot();
+					expect(table.innerHTML).not.toContain('Hearing documents');
+				});
+
 				it('should render the hearing documents row', async () => {
 					const appealId = 2;
 					const appeal = {
