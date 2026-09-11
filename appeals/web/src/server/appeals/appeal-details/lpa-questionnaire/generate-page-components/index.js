@@ -12,11 +12,12 @@ import { generateS78LpaQuestionnaireComponents } from './s78.js';
 
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} Appeal
+ * @typedef {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} LPAQuestionnaireResponse
  */
 
 /**
  *
- * @param {Appeal} appealDetails
+ * @param {Appeal|LPAQuestionnaireResponse} appealDetails
  * @param {{lpaq: MappedInstructions}} mappedLPAQData
  * @param {String|undefined|null} applicationDate
  * @returns {PageComponent[]}

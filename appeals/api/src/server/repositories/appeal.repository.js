@@ -1643,6 +1643,151 @@ const appellantCaseSelect = {
 };
 
 /**
+ * @satisfies {import('#db-client/models.ts').AppealSelect}
+ */
+const lpaQuestionnaireCaseSelect = {
+	id: true,
+	reference: true,
+	applicationReference: true,
+	currentStatus: true,
+	caseCreatedDate: true,
+	appellantCase: {
+		select: {
+			id: true,
+			applicationDate: true
+		}
+	},
+	lpaQuestionnaire: {
+		include: {
+			listedBuildingDetails: {
+				include: {
+					listedBuilding: true
+				}
+			},
+			designatedSiteNames: {
+				include: {
+					designatedSite: true
+				}
+			},
+			lpaNotificationMethods: {
+				include: {
+					lpaNotificationMethod: true
+				}
+			},
+			lpaQuestionnaireIncompleteReasonsSelected: {
+				include: {
+					lpaQuestionnaireIncompleteReason: true,
+					lpaQuestionnaireIncompleteReasonText: true
+				}
+			},
+			lpaQuestionnaireValidationOutcome: true
+		}
+	},
+	caseOfficer: {
+		select: {
+			id: true,
+			azureAdUserId: true
+		}
+	},
+	lpa: {
+		select: {
+			name: true
+		}
+	},
+	appealType: {
+		select: {
+			type: true,
+			key: true
+		}
+	},
+	address: {
+		select: {
+			id: true,
+			addressLine1: true,
+			addressLine2: true,
+			addressTown: true,
+			addressCounty: true,
+			postcode: true
+		}
+	},
+	neighbouringSites: {
+		select: {
+			id: true,
+			source: true,
+			address: {
+				select: {
+					addressLine1: true,
+					addressLine2: true,
+					addressTown: true,
+					addressCounty: true,
+					postcode: true
+				}
+			}
+		}
+	},
+	appellant: {
+		select: {
+			id: true,
+			firstName: true,
+			lastName: true,
+			organisationName: true,
+			email: true,
+			phoneNumber: true
+		}
+	},
+	agent: {
+		select: {
+			id: true,
+			firstName: true,
+			lastName: true,
+			organisationName: true,
+			email: true,
+			phoneNumber: true
+		}
+	},
+	parentAppeals: {
+		select: {
+			id: true,
+			type: true,
+			linkingDate: true,
+			parentId: true,
+			parentRef: true,
+			childId: true,
+			childRef: true,
+			externalSource: true,
+			externalAppealType: true,
+			externalId: true,
+			parent: {
+				select: {
+					id: true,
+					reference: true
+				}
+			}
+		}
+	},
+	childAppeals: {
+		select: {
+			id: true,
+			type: true,
+			linkingDate: true,
+			parentId: true,
+			parentRef: true,
+			childId: true,
+			childRef: true,
+			externalSource: true,
+			externalAppealType: true,
+			externalId: true,
+			child: {
+				select: {
+					id: true,
+					reference: true
+				}
+			}
+		}
+	}
+};
+
+/**
  *
  * @param {number} appealId
  * @param {import('../mappers/context-enum.js').contextEnum[number]} context
@@ -1670,9 +1815,28 @@ export const getAppealByContext = async (appealId, context) => {
 			//@ts-expect-error
 			return appeal;
 		}
+		case contextEnum.lpaQuestionnaire: {
+			const appeal = await databaseConnector.appeal.findUnique({
+				where: {
+					id: appealId
+				},
+				select: lpaQuestionnaireCaseSelect
+			});
+
+			if (!appeal) return null;
+
+			//@ts-expect-error
+			appeal.folders = await getFoldersWithDocumentsAndVersions(
+				appealId,
+				false,
+				APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE
+			);
+			//@ts-expect-error
+			return appeal;
+		}
+
 		case contextEnum.broadcast:
 		case contextEnum.appealDetails:
-		case contextEnum.lpaQuestionnaire:
 		case contextEnum.representations:
 			throw new Error(`Unhandled context: ${context}`);
 		default:

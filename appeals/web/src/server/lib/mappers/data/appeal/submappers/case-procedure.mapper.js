@@ -7,7 +7,12 @@ import { isS78ExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks
 import { canChangeS78ExpeditedAppealProcedure } from '@pins/appeals/utils/business-rules.js';
 
 /**
- * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
+ * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal
+ * @typedef {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} LPAQuestionnaireResponse
+ */
+
+/**
+ * @param {WebAppeal|LPAQuestionnaireResponse} appealDetails
  * @param {boolean} [isS78Expedited]
  * @returns {boolean}
  */

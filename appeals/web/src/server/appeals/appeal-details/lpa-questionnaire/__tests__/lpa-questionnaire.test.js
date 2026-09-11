@@ -17,10 +17,10 @@ import {
 	fileUploadInfo,
 	lpaDesignatedSites,
 	lpaNotificationMethodsData,
-	lpaQuestionnaireData,
-	lpaQuestionnaireDataCompleteOutcome,
-	lpaQuestionnaireDataIncompleteOutcome,
-	lpaQuestionnaireDataNotValidated,
+	lpaQuestionnaireDataCompleteOutcome as lpaQuestionnaireDataCompleteOutcomeFixture,
+	lpaQuestionnaireData as lpaQuestionnaireDataFixture,
+	lpaQuestionnaireDataIncompleteOutcome as lpaQuestionnaireDataIncompleteOutcomeFixture,
+	lpaQuestionnaireDataNotValidated as lpaQuestionnaireDataNotValidatedFixture,
 	lpaQuestionnaireIncompleteReasons,
 	notCheckedDocumentFolderInfoDocuments,
 	text300Characters,
@@ -70,6 +70,23 @@ const lpaqAppealData = {
 			status: 'received'
 		}
 	}
+};
+
+const lpaQuestionnaireData = {
+	...lpaqAppealData,
+	...lpaQuestionnaireDataFixture
+};
+const lpaQuestionnaireDataCompleteOutcome = {
+	...lpaqAppealData,
+	...lpaQuestionnaireDataCompleteOutcomeFixture
+};
+const lpaQuestionnaireDataIncompleteOutcome = {
+	...lpaqAppealData,
+	...lpaQuestionnaireDataIncompleteOutcomeFixture
+};
+const lpaQuestionnaireDataNotValidated = {
+	...lpaqAppealData,
+	...lpaQuestionnaireDataNotValidatedFixture
 };
 
 const appealDataFullPlanning = {
@@ -137,10 +154,22 @@ describe('LPA Questionnaire review', () => {
 		nock.restore();
 		jest.clearAllMocks();
 	});
-	beforeAll(teardown);
 	beforeEach(() => {
 		installMockApi();
-		nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse).persist();
+		nock('http://test/')
+			.get(/\/appeals\/\d+\/exists/)
+			.reply((uri) => {
+				const appealId = Number(uri.match(/\/appeals\/(\d+)\/exists/)?.[1]);
+				return [
+					200,
+					{
+						...existsResponse,
+						id: appealId,
+						appealId
+					}
+				];
+			})
+			.persist();
 	});
 	afterEach(teardown);
 
@@ -149,7 +178,7 @@ describe('LPA Questionnaire review', () => {
 		const lpaqId = 200;
 
 		nock('http://test/')
-			.get(new RegExp(`/appeals/${appealId}/lpa-questionnaires/${lpaqId}`))
+			.get(`/appeals/${appealId}/lpa-questionnaire`)
 			.reply(200, {
 				...lpaQuestionnaireData,
 				appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
@@ -188,7 +217,7 @@ describe('LPA Questionnaire review', () => {
 		const lpaqId = 200;
 
 		nock('http://test/')
-			.get(new RegExp(`/appeals/${appealId}/lpa-questionnaires/${lpaqId}`))
+			.get(`/appeals/${appealId}/lpa-questionnaire`)
 			.reply(200, {
 				...lpaQuestionnaireData,
 				appealType: APPEAL_TYPE.ENFORCEMENT_NOTICE,
@@ -224,7 +253,7 @@ describe('LPA Questionnaire review', () => {
 		const lpaqId = 201;
 
 		nock('http://test/')
-			.get(new RegExp(`/appeals/${appealId}/lpa-questionnaires/${lpaqId}`))
+			.get(`/appeals/${appealId}/lpa-questionnaire`)
 			.reply(200, {
 				...lpaQuestionnaireData,
 				appealType: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
@@ -264,7 +293,7 @@ describe('LPA Questionnaire review', () => {
 		it('should render a success notification banner when "is correct appeal type" is updated', async () => {
 			nock('http://test/').patch(`/appeals/1/lpa-questionnaires/2`).reply(200, {});
 			nock('http://test/')
-				.get(`/appeals/1/lpa-questionnaires/2`)
+				.get(`/appeals/1/lpa-questionnaire`)
 				.reply(200, lpaQuestionnaireData)
 				.persist();
 
@@ -290,9 +319,13 @@ describe('LPA Questionnaire review', () => {
 			const appealId = lpaqAppealData.appealId.toString();
 			const lpaQuestionnaireId = lpaqAppealData.lpaQuestionnaireId;
 			const lpaQuestionnaireUrl = `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`;
-			const apiUrl = `/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`;
-			nock('http://test/').get(apiUrl).reply(200, lpaQuestionnaireData).persist();
-			nock('http://test/').patch(apiUrl).reply(200, {});
+			nock('http://test/')
+				.get(`/appeals/${appealId}/lpa-questionnaire`)
+				.reply(200, lpaQuestionnaireData)
+				.persist();
+			nock('http://test/')
+				.patch(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
+				.reply(200, {});
 
 			const validData = {
 				greenBeltRadio: 'yes'
@@ -319,7 +352,7 @@ describe('LPA Questionnaire review', () => {
 			};
 
 			nock('http://test/')
-				.get('/appeals/1/lpa-questionnaires/2')
+				.get('/appeals/1/lpa-questionnaire')
 				.reply(200, lpaQuestionnaireDataNotValidated);
 
 			nock('http://test/')
@@ -349,7 +382,7 @@ describe('LPA Questionnaire review', () => {
 			};
 
 			nock('http://test/')
-				.get('/appeals/1/lpa-questionnaires/2')
+				.get('/appeals/1/lpa-questionnaire')
 				.reply(200, lpaQuestionnaireDataNotValidated);
 
 			nock('http://test/')
@@ -375,7 +408,7 @@ describe('LPA Questionnaire review', () => {
 		it('should render a "Address added" success notification banner when a neighbouring site was added', async () => {
 			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
-				.get(`/appeals/1/lpa-questionnaires/2`)
+				.get(`/appeals/1/lpa-questionnaire`)
 				.reply(200, lpaQuestionnaireData)
 				.persist();
 			nock('http://test/')
@@ -417,7 +450,7 @@ describe('LPA Questionnaire review', () => {
 			});
 			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
-				.get(`/appeals/1/lpa-questionnaires/2`)
+				.get(`/appeals/1/lpa-questionnaire`)
 				.reply(200, lpaQuestionnaireData)
 				.persist();
 
@@ -448,7 +481,7 @@ describe('LPA Questionnaire review', () => {
 			});
 			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
-				.get(`/appeals/1/lpa-questionnaires/2`)
+				.get(`/appeals/1/lpa-questionnaire`)
 				.reply(200, lpaQuestionnaireData)
 				.persist();
 			await request.post(`${baseUrl}/neighbouring-sites/remove/site/1`).send({
@@ -467,7 +500,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render an "LPA questionnaire incomplete" notification banner, including the LPA questionnaire due date, when the LPA questionnaire is marked as incomplete', async () => {
 			nock('http://test/')
-				.get('/appeals/1/lpa-questionnaires/2')
+				.get('/appeals/1/lpa-questionnaire')
 				.reply(200, lpaQuestionnaireDataIncompleteOutcome);
 
 			const response = await request.get(baseUrl);
@@ -502,7 +535,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should not render an "LPA questionnaire incomplete" notification banner when the LPA questionnaire is marked as incomplete and then marked as complete', async () => {
 			nock('http://test/')
-				.get('/appeals/1/lpa-questionnaires/2')
+				.get('/appeals/1/lpa-questionnaire')
 				.reply(200, lpaQuestionnaireDataIncompleteOutcome);
 
 			const incompleteOutcomeResponse = await request.get(baseUrl);
@@ -532,7 +565,7 @@ describe('LPA Questionnaire review', () => {
 		it('should render a "Notification methods updated" success notification banner when notification methods are changed', async () => {
 			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
-				.get(`/appeals/1/lpa-questionnaires/2`)
+				.get(`/appeals/1/lpa-questionnaire`)
 				.reply(200, lpaQuestionnaireData)
 				.persist();
 			nock('http://test/')
@@ -555,7 +588,7 @@ describe('LPA Questionnaire review', () => {
 		it('should render a "Column 2 threshold criteria status changed" success notification banner when meets eia column two threshold is changed', async () => {
 			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
-				.get(`/appeals/1/lpa-questionnaires/2`)
+				.get(`/appeals/1/lpa-questionnaire`)
 				.reply(200, lpaQuestionnaireDataNotValidated)
 				.persist();
 			nock('http://test/').patch(`/appeals/1/lpa-questionnaires/2`).reply(200, {});
@@ -579,7 +612,7 @@ describe('LPA Questionnaire review', () => {
 		it('should render an "Environmental statement status changed" success notification banner when eia requires environmental statement is changed', async () => {
 			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
-				.get(`/appeals/1/lpa-questionnaires/2`)
+				.get(`/appeals/1/lpa-questionnaire`)
 				.reply(200, lpaQuestionnaireDataNotValidated)
 				.persist();
 			nock('http://test/').patch(`/appeals/1/lpa-questionnaires/2`).reply(200, {});
@@ -603,7 +636,7 @@ describe('LPA Questionnaire review', () => {
 		it('should render a "Description of development updated" success notification banner when eia development description is changed', async () => {
 			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
-				.get(`/appeals/1/lpa-questionnaires/2`)
+				.get(`/appeals/1/lpa-questionnaire`)
 				.reply(200, lpaQuestionnaireDataNotValidated)
 				.persist();
 			nock('http://test/').patch(`/appeals/1/lpa-questionnaires/2`).reply(200, {});
@@ -625,7 +658,7 @@ describe('LPA Questionnaire review', () => {
 		it('should render a "Development category updated" success notification banner when eia environmental impact schedule is changed', async () => {
 			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
-				.get(`/appeals/1/lpa-questionnaires/2`)
+				.get(`/appeals/1/lpa-questionnaire`)
 				.reply(200, lpaQuestionnaireDataNotValidated)
 				.persist();
 			nock('http://test/').patch(`/appeals/1/lpa-questionnaires/2`).reply(200, {});
@@ -647,6 +680,10 @@ describe('LPA Questionnaire review', () => {
 		it('should render an "In, near or likely to effect designated sites changed" success notification banner when designated sites are changed', async () => {
 			nock.cleanAll();
 			nock('http://test/')
+				.get('/appeals/2/exists')
+				.reply(200, { ...existsResponse, id: 2, appealId: 2 })
+				.persist();
+			nock('http://test/')
 				.get('/appeals/2?include=all')
 				.reply(200, {
 					...appealDataFullPlanning,
@@ -655,9 +692,11 @@ describe('LPA Questionnaire review', () => {
 				.persist();
 			nock('http://test/').get('/appeals/lpa-designated-sites').reply(200, lpaDesignatedSites);
 			nock('http://test/')
-				.get('/appeals/2/lpa-questionnaires/1')
+				.get('/appeals/2/lpa-questionnaire')
 				.reply(200, {
 					...lpaQuestionnaireDataNotValidated,
+					...appealDataFullPlanning,
+					appealId: 2,
 					lpaQuestionnaireId: 1,
 					designatedSiteNames: []
 				})
@@ -693,7 +732,7 @@ describe('LPA Questionnaire review', () => {
 				const lpaQuestionnaireId = lpaqAppealData.lpaQuestionnaireId;
 
 				nock('http://test/')
-					.get(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
+					.get(`/appeals/${appealId}/lpa-questionnaire`)
 					.reply(200, lpaQuestionnaireDataIncompleteOutcome);
 				nock('http://test/')
 					.patch(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
@@ -846,9 +885,10 @@ describe('LPA Questionnaire review', () => {
 					})
 					.persist();
 				nock('http://test/')
-					.get(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
+					.get(`/appeals/${appealId}/lpa-questionnaire`)
 					.reply(200, {
 						...lpaQuestionnaireData,
+						...lpaqAppealData,
 						appealId,
 						lpaQuestionnaireId
 					});
@@ -948,15 +988,11 @@ describe('LPA Questionnaire review', () => {
 			describe(`${text} Field`, () => {
 				it(`should display "No" when ${fieldName} is false`, async () => {
 					nock('http://test/')
-						.get('/appeals/2?include=all')
-						.reply(200, {
-							...appealDataFullPlanning,
-							appealId: 2
-						});
-					nock('http://test/')
-						.get('/appeals/2/lpa-questionnaires/1')
+						.get('/appeals/2/lpa-questionnaire')
 						.reply(200, {
 							...lpaQuestionnaireData,
+							...appealDataFullPlanning,
+							appealId: 2,
 							lpaQuestionnaireId: 1,
 							eiaEnvironmentalImpactSchedule: 'schedule-2',
 							[fieldName]: false
@@ -974,15 +1010,11 @@ describe('LPA Questionnaire review', () => {
 
 				it(`should display "Yes" when ${fieldName} is true`, async () => {
 					nock('http://test/')
-						.get('/appeals/2?include=all')
-						.reply(200, {
-							...appealDataFullPlanning,
-							appealId: 2
-						});
-					nock('http://test/')
-						.get('/appeals/2/lpa-questionnaires/1')
+						.get('/appeals/2/lpa-questionnaire')
 						.reply(200, {
 							...lpaQuestionnaireData,
+							...appealDataFullPlanning,
+							appealId: 2,
 							lpaQuestionnaireId: 1,
 							eiaEnvironmentalImpactSchedule: 'schedule-2',
 							[fieldName]: true
@@ -1001,15 +1033,11 @@ describe('LPA Questionnaire review', () => {
 
 				it(`should display ${undefinedValue} when ${fieldName} is undefined`, async () => {
 					nock('http://test/')
-						.get('/appeals/2?include=all')
-						.reply(200, {
-							...appealDataFullPlanning,
-							appealId: 2
-						});
-					nock('http://test/')
-						.get('/appeals/2/lpa-questionnaires/1')
+						.get('/appeals/2/lpa-questionnaire')
 						.reply(200, {
 							...lpaQuestionnaireData,
+							...appealDataFullPlanning,
+							appealId: 2,
 							lpaQuestionnaireId: 1,
 							eiaEnvironmentalImpactSchedule: 'schedule-2',
 							[fieldName]: undefined
@@ -1028,15 +1056,11 @@ describe('LPA Questionnaire review', () => {
 
 				it(`should display ${undefinedValue} when ${fieldName} is null`, async () => {
 					nock('http://test/')
-						.get('/appeals/2?include=all')
-						.reply(200, {
-							...appealDataFullPlanning,
-							appealId: 2
-						});
-					nock('http://test/')
-						.get('/appeals/2/lpa-questionnaires/1')
+						.get('/appeals/2/lpa-questionnaire')
 						.reply(200, {
 							...lpaQuestionnaireData,
+							...appealDataFullPlanning,
+							appealId: 2,
 							lpaQuestionnaireId: 1,
 							eiaEnvironmentalImpactSchedule: 'schedule-2',
 							[fieldName]: null
@@ -1056,15 +1080,11 @@ describe('LPA Questionnaire review', () => {
 
 		it('should display the mapped EIA development description when value exists', async () => {
 			nock('http://test/')
-				.get('/appeals/2?include=all')
-				.reply(200, {
-					...appealDataFullPlanning,
-					appealId: 2
-				});
-			nock('http://test/')
-				.get('/appeals/2/lpa-questionnaires/1')
+				.get('/appeals/2/lpa-questionnaire')
 				.reply(200, {
 					...lpaQuestionnaireData,
+					...appealDataFullPlanning,
+					appealId: 2,
 					lpaQuestionnaireId: 1,
 					eiaEnvironmentalImpactSchedule: 'schedule-2',
 					eiaDevelopmentDescription: 'other-projects'
@@ -1078,15 +1098,11 @@ describe('LPA Questionnaire review', () => {
 		});
 		it('should display "No Data" when EIA development description is missing', async () => {
 			nock('http://test/')
-				.get('/appeals/2?include=all')
-				.reply(200, {
-					...appealDataFullPlanning,
-					appealId: 2
-				});
-			nock('http://test/')
-				.get('/appeals/2/lpa-questionnaires/1')
+				.get('/appeals/2/lpa-questionnaire')
 				.reply(200, {
 					...lpaQuestionnaireDataNotValidated,
+					...appealDataFullPlanning,
+					appealId: 2,
 					lpaQuestionnaireId: 1,
 					eiaEnvironmentalImpactSchedule: 'schedule-2',
 					eiaDevelopmentDescription: undefined
@@ -1103,7 +1119,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render the Householder LPA Questionnaire page with the expected content', async () => {
 			nock('http://test/')
-				.get('/appeals/1/lpa-questionnaires/2')
+				.get('/appeals/1/lpa-questionnaire')
 				.reply(200, lpaQuestionnaireDataNotValidated);
 
 			const response = await request.get(baseUrl);
@@ -1166,15 +1182,11 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render the S78 LPA Questionnaire page with the expected content', async () => {
 			nock('http://test/')
-				.get('/appeals/2?include=all')
-				.reply(200, {
-					...appealDataFullPlanning,
-					appealId: 2
-				});
-			nock('http://test/')
-				.get('/appeals/2/lpa-questionnaires/1')
+				.get('/appeals/2/lpa-questionnaire')
 				.reply(200, {
 					...lpaQuestionnaireDataNotValidated,
+					...appealDataFullPlanning,
+					appealId: 2,
 					lpaQuestionnaireId: 1
 				});
 
@@ -1197,16 +1209,12 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render the S78 expedited LPA Questionnaire page with the expected content', async () => {
 			nock('http://test/')
-				.get('/appeals/2?include=all')
-				.reply(200, {
-					...appealDataFullPlanning,
-					appealId: 2,
-					isS78Expedited: true
-				});
-			nock('http://test/')
-				.get('/appeals/2/lpa-questionnaires/1')
+				.get('/appeals/2/lpa-questionnaire')
 				.reply(200, {
 					...lpaQuestionnaireDataNotValidated,
+					...appealDataFullPlanning,
+					appealId: 2,
+					isS78Expedited: true,
 					lpaQuestionnaireId: 1
 				});
 
@@ -1233,15 +1241,11 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render the CAS planning LPA Questionnaire page with the expected content', async () => {
 			nock('http://test/')
-				.get('/appeals/3?include=all')
-				.reply(200, {
-					...appealDataCasPlanning,
-					appealId: 3
-				});
-			nock('http://test/')
-				.get('/appeals/3/lpa-questionnaires/1')
+				.get('/appeals/3/lpa-questionnaire')
 				.reply(200, {
 					...lpaQuestionnaireDataNotValidated,
+					...appealDataCasPlanning,
+					appealId: 3,
 					lpaQuestionnaireId: 1
 				});
 
@@ -1305,15 +1309,11 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render the Cas Advert LPA Questionnaire page with the expected content', async () => {
 			nock('http://test/')
-				.get('/appeals/4?include=all')
-				.reply(200, {
-					...appealDataCasAdvert,
-					appealId: 4
-				});
-			nock('http://test/')
-				.get('/appeals/4/lpa-questionnaires/1')
+				.get('/appeals/4/lpa-questionnaire')
 				.reply(200, {
 					...lpaQuestionnaireDataNotValidated,
+					...appealDataCasAdvert,
+					appealId: 4,
 					lpaQuestionnaireId: 1
 				});
 
@@ -1404,27 +1404,20 @@ describe('LPA Questionnaire review', () => {
 
 			expect(element.innerHTML).toContain('Additional documents</h2>');
 		}, 10000);
-		it('should render the Cas Planning expedite LPA Questionnaire page with the expected content', async () => {
-			nock('http://test/')
-				.get('/appeals/4?include=all')
-				.reply(200, {
-					...appealDataCasPlanning,
-					appealId: 4
-				});
 
+		it('should render the Cas Planning expedite LPA Questionnaire page with the expected content', async () => {
 			const expeditedAppellantCaseData = {
 				applicationDate: '2026-04-02T00:00:00.000Z'
 			};
 
 			nock('http://test/')
-				.get('/appeals/4/appellant-cases/0')
-				.reply(200, expeditedAppellantCaseData);
-
-			nock('http://test/')
-				.get('/appeals/4/lpa-questionnaires/1')
+				.get('/appeals/4/lpa-questionnaire')
 				.reply(200, {
 					...lpaQuestionnaireDataNotValidated,
-					lpaQuestionnaireId: 1
+					...appealDataCasPlanning,
+					appealId: 4,
+					lpaQuestionnaireId: 1,
+					applicationDate: expeditedAppellantCaseData.applicationDate
 				});
 
 			const response = await request.get('/appeals-service/appeal-details/4/lpa-questionnaire/1');
@@ -1502,26 +1495,18 @@ describe('LPA Questionnaire review', () => {
 		}, 10000);
 
 		it('should render the Cas Advert expedite LPA Questionnaire page with the expected content', async () => {
-			nock('http://test/')
-				.get('/appeals/4?include=all')
-				.reply(200, {
-					...appealDataCasAdvert,
-					appealId: 4
-				});
-
 			const expeditedAppellantCaseData = {
 				applicationDate: '2026-04-02T00:00:00.000Z'
 			};
 
 			nock('http://test/')
-				.get('/appeals/4/appellant-cases/0')
-				.reply(200, expeditedAppellantCaseData);
-
-			nock('http://test/')
-				.get('/appeals/4/lpa-questionnaires/1')
+				.get('/appeals/4/lpa-questionnaire')
 				.reply(200, {
 					...lpaQuestionnaireDataNotValidated,
-					lpaQuestionnaireId: 1
+					...appealDataCasAdvert,
+					appealId: 4,
+					lpaQuestionnaireId: 1,
+					applicationDate: expeditedAppellantCaseData.applicationDate
 				});
 
 			const response = await request.get('/appeals-service/appeal-details/4/lpa-questionnaire/1');
@@ -1626,15 +1611,11 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render the Ldc LPA Questionnaire page with the expected content', async () => {
 			nock('http://test/')
-				.get('/appeals/5?include=all')
-				.reply(200, {
-					...appealDataLdc,
-					appealId: 6
-				});
-			nock('http://test/')
-				.get('/appeals/6/lpa-questionnaires/1')
+				.get('/appeals/5/lpa-questionnaire')
 				.reply(200, {
 					...lpaQuestionnaireDataNotValidated,
+					...appealDataLdc,
+					appealId: 6,
 					lpaQuestionnaireId: 1
 				});
 
@@ -1701,15 +1682,11 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render the advert LPA Questionnaire page with the expected content', async () => {
 			nock('http://test/')
-				.get('/appeals/5?include=all')
-				.reply(200, {
-					...appealDataAdvert,
-					appealId: 5
-				});
-			nock('http://test/')
-				.get('/appeals/5/lpa-questionnaires/1')
+				.get('/appeals/5/lpa-questionnaire')
 				.reply(200, {
 					...lpaQuestionnaireDataNotValidated,
+					...appealDataAdvert,
+					appealId: 5,
 					lpaQuestionnaireId: 1
 				});
 
@@ -1802,15 +1779,13 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render review outcome form fields and controls when the appeal is in "LPA Questionnaire" status', async () => {
 			nock('http://test/')
-				.get(`/appeals/2?include=all`)
+				.get('/appeals/2/lpa-questionnaire')
 				.reply(200, {
+					...lpaQuestionnaireDataNotValidated,
 					...lpaqAppealData,
 					appealId: 2,
 					appealStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
 				});
-			nock('http://test/')
-				.get('/appeals/2/lpa-questionnaires/2')
-				.reply(200, lpaQuestionnaireDataNotValidated);
 
 			const response = await request.get('/appeals-service/appeal-details/2/lpa-questionnaire/2');
 			const element = parseHtml(response.text);
@@ -1848,7 +1823,7 @@ describe('LPA Questionnaire review', () => {
 						appealStatus
 					});
 				nock('http://test/')
-					.get('/appeals/3/lpa-questionnaires/3')
+					.get('/appeals/3/lpa-questionnaire')
 					.reply(200, lpaQuestionnaireDataNotValidated);
 
 				const response = await request.get('/appeals-service/appeal-details/3/lpa-questionnaire/3');
@@ -1874,7 +1849,7 @@ describe('LPA Questionnaire review', () => {
 			describe('site access required', () => {
 				it('should not render a "show more" component on the "site access required" row if the associated value is less than or equal to 300 characters in length', async () => {
 					nock('http://test/')
-						.get('/appeals/1/lpa-questionnaires/2')
+						.get('/appeals/1/lpa-questionnaire')
 						.reply(200, {
 							...lpaQuestionnaireDataNotValidated,
 							siteAccessRequired: {
@@ -1897,7 +1872,7 @@ describe('LPA Questionnaire review', () => {
 
 				it('should render a "show more" component with the expected HTML on the "site access required" row if the associated value is over 300 characters in length', async () => {
 					nock('http://test/')
-						.get('/appeals/1/lpa-questionnaires/2')
+						.get('/appeals/1/lpa-questionnaire')
 						.reply(200, {
 							...lpaQuestionnaireDataNotValidated,
 							siteAccessRequired: {
@@ -1921,7 +1896,7 @@ describe('LPA Questionnaire review', () => {
 			describe('potential safety risks', () => {
 				it('should not render a "show more" component on the "potential safety risks" row if the associated value is less than or equal to 300 characters in length', async () => {
 					nock('http://test/')
-						.get('/appeals/1/lpa-questionnaires/2')
+						.get('/appeals/1/lpa-questionnaire')
 						.reply(200, {
 							...lpaQuestionnaireDataNotValidated,
 							healthAndSafety: {
@@ -1944,7 +1919,7 @@ describe('LPA Questionnaire review', () => {
 
 				it('should render a "show more" component with the expected HTML on the "potential safety risks" row if the associated value is over 300 characters in length', async () => {
 					nock('http://test/')
-						.get('/appeals/1/lpa-questionnaires/2')
+						.get('/appeals/1/lpa-questionnaire')
 						.reply(200, {
 							...lpaQuestionnaireDataNotValidated,
 							healthAndSafety: {
@@ -1968,7 +1943,7 @@ describe('LPA Questionnaire review', () => {
 			describe('extra conditions', () => {
 				it('should not render a "show more" component on the "extra conditions" row if the associated value is less than or equal to 300 characters in length', async () => {
 					nock('http://test/')
-						.get('/appeals/1/lpa-questionnaires/2')
+						.get('/appeals/1/lpa-questionnaire')
 						.reply(200, {
 							...lpaQuestionnaireDataNotValidated,
 							hasExtraConditions: true,
@@ -1989,7 +1964,7 @@ describe('LPA Questionnaire review', () => {
 
 				it('should render a "show more" component with the expected HTML on the "extra conditions" row if the associated value is over 300 characters in length', async () => {
 					nock('http://test/')
-						.get('/appeals/1/lpa-questionnaires/2')
+						.get('/appeals/1/lpa-questionnaire')
 						.reply(200, {
 							...lpaQuestionnaireDataNotValidated,
 							hasExtraConditions: true,
@@ -2012,7 +1987,7 @@ describe('LPA Questionnaire review', () => {
 		describe('designated-sites', () => {
 			it('should not render a designated sites row in the LPAQ for householder appeals', async () => {
 				nock('http://test/')
-					.get('/appeals/1/lpa-questionnaires/2')
+					.get('/appeals/1/lpa-questionnaire')
 					.reply(200, lpaQuestionnaireDataNotValidated);
 
 				const response = await request.get(baseUrl);
@@ -2026,15 +2001,10 @@ describe('LPA Questionnaire review', () => {
 
 			it('should render a designated sites row with the expected label for s78/full planning appeals', async () => {
 				nock('http://test/')
-					.get('/appeals/2?include=all')
-					.reply(200, {
-						...appealDataFullPlanning,
-						appealId: 2
-					});
-				nock('http://test/')
-					.get('/appeals/2/lpa-questionnaires/1')
+					.get('/appeals/2/lpa-questionnaire')
 					.reply(200, {
 						...lpaQuestionnaireDataNotValidated,
+						...appealDataFullPlanning,
 						lpaQuestionnaireId: 1,
 						designatedSiteNames
 					});
@@ -2053,15 +2023,10 @@ describe('LPA Questionnaire review', () => {
 
 			it('should render a designated sites row with the expected value of "No" as plaintext if LPAQ designatedSiteNames array is empty', async () => {
 				nock('http://test/')
-					.get('/appeals/2?include=all')
-					.reply(200, {
-						...appealDataFullPlanning,
-						appealId: 2
-					});
-				nock('http://test/')
-					.get('/appeals/2/lpa-questionnaires/1')
+					.get('/appeals/2/lpa-questionnaire')
 					.reply(200, {
 						...lpaQuestionnaireDataNotValidated,
+						...appealDataFullPlanning,
 						lpaQuestionnaireId: 1,
 						designatedSiteNames: []
 					});
@@ -2078,15 +2043,10 @@ describe('LPA Questionnaire review', () => {
 
 			it('should render a designated sites row with the expected value as plaintext if LPAQ designatedSiteNames array contains a single designated site item', async () => {
 				nock('http://test/')
-					.get('/appeals/2?include=all')
-					.reply(200, {
-						...appealDataFullPlanning,
-						appealId: 2
-					});
-				nock('http://test/')
-					.get('/appeals/2/lpa-questionnaires/1')
+					.get('/appeals/2/lpa-questionnaire')
 					.reply(200, {
 						...lpaQuestionnaireDataNotValidated,
+						...appealDataFullPlanning,
 						lpaQuestionnaireId: 1,
 						designatedSiteNames: [designatedSiteNames[0]]
 					});
@@ -2103,15 +2063,10 @@ describe('LPA Questionnaire review', () => {
 
 			it('should render a designated sites row with the expected values contained in a list if LPAQ designatedSiteNames array contains multiple designated site items', async () => {
 				nock('http://test/')
-					.get('/appeals/2?include=all')
-					.reply(200, {
-						...appealDataFullPlanning,
-						appealId: 2
-					});
-				nock('http://test/')
-					.get('/appeals/2/lpa-questionnaires/1')
+					.get('/appeals/2/lpa-questionnaire')
 					.reply(200, {
 						...lpaQuestionnaireDataNotValidated,
+						...appealDataFullPlanning,
 						lpaQuestionnaireId: 1,
 						designatedSiteNames
 					});
@@ -2130,15 +2085,10 @@ describe('LPA Questionnaire review', () => {
 
 			it('should render a designated sites row with the expected value of "Other: <custom designated site name>" if LPAQ designatedSiteNames array contains a custom item', async () => {
 				nock('http://test/')
-					.get('/appeals/2?include=all')
-					.reply(200, {
-						...appealDataFullPlanning,
-						appealId: 2
-					});
-				nock('http://test/')
-					.get('/appeals/2/lpa-questionnaires/1')
+					.get('/appeals/2/lpa-questionnaire')
 					.reply(200, {
 						...lpaQuestionnaireDataNotValidated,
+						...appealDataFullPlanning,
 						lpaQuestionnaireId: 1,
 						designatedSiteNames: [designatedSiteNames[1]]
 					});
@@ -2175,9 +2125,11 @@ describe('LPA Questionnaire review', () => {
 					.persist();
 
 				nock('http://test/')
-					.get('/appeals/10/lpa-questionnaires/20')
+					.get('/appeals/10/lpa-questionnaire')
 					.reply(200, {
 						...lpaQuestionnaireDataNotValidated,
+						...lpaqAppealData,
+						appealType: appealTypeEnum,
 						lpaQuestionnaireId: 20,
 						eiaEnvironmentalImpactSchedule: 'other'
 					});
@@ -2212,9 +2164,11 @@ describe('LPA Questionnaire review', () => {
 					.persist();
 
 				nock('http://test/')
-					.get('/appeals/11/lpa-questionnaires/21')
+					.get('/appeals/11/lpa-questionnaire')
 					.reply(200, {
 						...lpaQuestionnaireDataNotValidated,
+						...lpaqAppealData,
+						appealType: appealTypeEnum,
 						lpaQuestionnaireId: 21,
 						eiaEnvironmentalImpactSchedule: 'schedule-2',
 						eiaColumnTwoThreshold: true,
@@ -2245,6 +2199,10 @@ describe('LPA Questionnaire review', () => {
 		beforeEach(() => {
 			nock.cleanAll();
 			nock('http://test/')
+				.get(`/appeals/${lpaqAppealData.appealId}/exists`)
+				.reply(200, existsResponse)
+				.persist();
+			nock('http://test/')
 				.get(`/appeals/${lpaqAppealData.appealId}?include=all`)
 				.reply(200, lpaqAppealData)
 				.persist();
@@ -2257,7 +2215,7 @@ describe('LPA Questionnaire review', () => {
 				notCheckedDocumentFolderInfoDocuments
 			);
 			nock('http://test/')
-				.get('/appeals/1/lpa-questionnaires/2')
+				.get('/appeals/1/lpa-questionnaire')
 				.reply(200, updatedLPAQuestionnaireData);
 
 			const response = await request.get(`${baseUrl}`);
@@ -2284,7 +2242,7 @@ describe('LPA Questionnaire review', () => {
 				}
 			});
 			nock('http://test/')
-				.get('/appeals/1/lpa-questionnaires/2')
+				.get('/appeals/1/lpa-questionnaire')
 				.reply(200, updatedLPAQuestionnaireData);
 
 			const response = await request.get(`${baseUrl}`);
@@ -2305,7 +2263,7 @@ describe('LPA Questionnaire review', () => {
 	describe('POST /', () => {
 		it('should render LPA Questionnaire review with error (no answer provided)', async () => {
 			nock('http://test/')
-				.get('/appeals/1/lpa-questionnaires/2')
+				.get('/appeals/1/lpa-questionnaire')
 				.reply(200, lpaQuestionnaireDataIncompleteOutcome);
 
 			const response = await request.post(baseUrl).send({
@@ -4469,7 +4427,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should display a "document added" notification banner on the LPA questionnaire page after a document was uploaded', async () => {
 			nock('http://test/')
-				.get('/appeals/1/lpa-questionnaires/2')
+				.get('/appeals/1/lpa-questionnaire')
 				.reply(200, lpaQuestionnaireDataNotValidated);
 			nock('http://test/').post('/appeals/1/documents').reply(200);
 
@@ -4614,7 +4572,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should send an API request to update the document, redirect to the appellant case page, and display a "Document updated" notification banner', async () => {
 			nock('http://test/')
-				.get('/appeals/1/lpa-questionnaires/2')
+				.get('/appeals/1/lpa-questionnaire')
 				.reply(200, lpaQuestionnaireDataIncompleteOutcome);
 
 			const mockDocumentsEndpoint = nock('http://test/').post('/appeals/1/documents/1').reply(200);
