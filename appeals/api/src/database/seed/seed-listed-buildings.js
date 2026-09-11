@@ -2,7 +2,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import { Readable } from 'node:stream';
-import { createPrismaClient } from '../create-client.js';
 
 // json streaming
 import { chain } from 'stream-chain';
@@ -28,28 +27,28 @@ const LOCAL_LISTED_BUILDINGS = [
 const loadAllListedBuildings =
 	process.env.TF_BUILD === 'True' && process.env.CI_E2E_TEST_SEED !== 'True';
 
-/**
- *
+/** Seeds the Listed Buildings dataset into the database, using either Gov data from the url, or a local test subset.
+ *  If running in an Azure pipeline, it will download the full dataset from the provided URL. Otherwise, it will insert a reduced dataset of 10 records for local development and testing.
+ * @param {import('../../server/utils/db-client/client.ts').PrismaClient} databaseConnector
  * @param {string} url
+ * @param {boolean} [forceLocal=false] - If true, overrides to force the use of the local dataset instead of downloading from the URL
  */
-export const importListedBuildingsDataset = async (url) => {
-	const databaseConnector = createPrismaClient();
-
+export const importListedBuildingsDataset = async (databaseConnector, url, forceLocal = false) => {
 	let result;
 
-	if (loadAllListedBuildings) {
-		console.log('Starting download of listed buildings dataset...\n\n');
+	if (loadAllListedBuildings && !forceLocal) {
+		console.log('Starting download of listed buildings dataset...');
 		const response = await fetch(url);
 		if (response.body) {
 			result = await importListedBuildings(Readable.from(response.body), databaseConnector);
 		}
 	} else {
-		console.log('Insert reduced listed buildings dataset (10 records)...\n\n');
+		console.log('Insert reduced listed buildings dataset (10 records)...');
 		result = await seedListedBuildings(LOCAL_LISTED_BUILDINGS, databaseConnector);
 	}
 
 	if (result) {
-		console.log('\n\nComplete!');
+		console.log('Listed Building dataset update complete!');
 		console.log(`Total records processed: ${result.processed}`);
 		console.log(`Total inserted: ${result.inserted}`);
 		console.log(`Total updated: ${result.updated}`);
