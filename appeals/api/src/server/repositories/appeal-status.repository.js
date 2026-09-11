@@ -28,37 +28,63 @@ const updateAppealStatusByAppealId = (appealId, status) =>
 	]);
 
 /**
+ * Rolls back an appeal's status history to a specified point in time and transitions to a target status.
+ *
+ * Process:
+ * 1. Locates the `fromStatus` record (defaults to `targetStatus`) to act as the timeline anchor.
+ * 2. Deletes all status records after the from status
+ * 3. Updates `appeal.currentStatus` to `targetStatus`.
+ * 4. Resolves the active status record:
+ *    - If `fromStatus === targetStatus`: Reactivates the existing record (`valid: true`).
+ *    - If `fromStatus !== targetStatus`: Creates a new valid record for `targetStatus`
  * @param {number} appealId
- * @param {string} status
+ * @param {string} targetStatus
+ * @param {string} [fromStatus] Status anchor after which subsequent records are purged (defaults to targetStatus)
  * @returns {Promise<object>}
  */
-const rollBackAppealStatusTo = (appealId, status) =>
+const rollBackAppealStatusTo = (appealId, targetStatus, fromStatus = targetStatus) =>
 	databaseConnector.$transaction(async (tx) => {
-		const prevStatus = await tx.appealStatus.findFirst({
-			where: { appealId, status }
+		const baseStatus = await tx.appealStatus.findFirst({
+			where: { appealId, status: fromStatus }
 		});
 
-		if (!prevStatus) {
-			throw new Error(`Appeal status ${status} not found for appeal ${appealId}`);
+		if (!baseStatus) {
+			throw new Error(`Appeal status ${fromStatus} not found for appeal ${appealId}`);
 		}
 
 		await tx.appealStatus.deleteMany({
 			where: {
-				appealId: prevStatus.appealId,
+				appealId: baseStatus.appealId,
 				createdAt: {
-					gt: prevStatus.createdAt
+					gt: baseStatus.createdAt
 				}
 			}
 		});
 
 		await tx.appeal.update({
-			where: { id: prevStatus.appealId },
-			data: { currentStatus: prevStatus.status }
+			where: { id: baseStatus.appealId },
+			data: { currentStatus: targetStatus }
 		});
 
-		return await tx.appealStatus.update({
-			where: { id: prevStatus.id },
-			data: { valid: true }
+		if (fromStatus === targetStatus) {
+			return await tx.appealStatus.update({
+				where: { id: baseStatus.id },
+				data: { valid: true }
+			});
+		}
+
+		await tx.appealStatus.updateMany({
+			where: { appealId, valid: true },
+			data: { valid: false }
+		});
+
+		return await tx.appealStatus.create({
+			data: {
+				appealId,
+				createdAt: new Date(),
+				status: targetStatus,
+				valid: true
+			}
 		});
 	});
 
@@ -80,4 +106,8 @@ const getAppealStatusCreatedDate = async (appealId, status) => {
 	}
 };
 
-export default { updateAppealStatusByAppealId, rollBackAppealStatusTo, getAppealStatusCreatedDate };
+export default {
+	updateAppealStatusByAppealId,
+	rollBackAppealStatusTo,
+	getAppealStatusCreatedDate
+};

@@ -13,6 +13,7 @@ export const VALIDATION_OUTCOME_INCOMPLETE = 'Incomplete';
 export const VALIDATION_OUTCOME_INVALID = 'Invalid';
 export const VALIDATION_OUTCOME_VALID = 'Valid';
 export const VALIDATION_OUTCOME_CANCEL = 'Cancel';
+export const ACTION_CHANGE_PROCEDURE_TYPE = 'CHANGE_PROCEDURE_TYPE';
 
 export const CHANGE_APPEAL_TYPE_INVALID_REASON = 'Wrong appeal type';
 export const INVALID_APPEAL_OTHER_REASON = 'Other reason';
