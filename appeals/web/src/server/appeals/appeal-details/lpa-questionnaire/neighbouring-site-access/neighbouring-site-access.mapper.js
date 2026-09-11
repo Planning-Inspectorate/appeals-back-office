@@ -3,7 +3,7 @@ import { yesNoInput } from '#lib/mappers/index.js';
 
 /**
  * @param {import('../../appeal-details.types.js').WebAppeal} appealData
- * @param {string|null} existingValue
+ * @param {string|null|undefined} existingValue
  * @param {string|undefined} [sessionRadioValue]
  * @param {string|undefined} [sessionDetailsValue]
  * @returns {PageContent}
