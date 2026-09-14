@@ -18,6 +18,7 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 	const statementsCompleted = !APPEAL_CASE_PRE_STATEMENTS_STATUS.includes(
 		appealDetails?.appealStatus
 	);
+	const isEnforcementChild = isEnforcementChildAppeal(appealDetails);
 
 	return {
 		type: 'table',
@@ -31,12 +32,12 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 			rows: [
 				mappedData.appeal.appellantCase.display.tableItem,
 				caseStarted ? mappedData.appeal.lpaQuestionnaire.display.tableItem : undefined,
-				...(isFeatureActive(FEATURE_FLAG_NAMES.SHARING_SUPPORTING_DOCUMENTS)
+				...(isFeatureActive(FEATURE_FLAG_NAMES.SHARING_SUPPORTING_DOCUMENTS) && !isEnforcementChild
 					? [mappedData.appeal.supportingDocuments.display.tableItem]
 					: []),
 				...(isFeatureActive(FEATURE_FLAG_NAMES.SHARING_HEARING_DOCUMENTS) &&
 				isHearingProcedureType &&
-				!isEnforcementChildAppeal(appealDetails)
+				!isEnforcementChild
 					? [mappedData.appeal.hearingDocuments.display.tableItem]
 					: []),
 				...(isFeatureActive(FEATURE_FLAG_NAMES.FEATURE_FLAG_SHARING_INQUIRY_DOCUMENTS) &&
