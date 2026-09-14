@@ -4173,6 +4173,74 @@ describe('appeal-details', () => {
 				});
 			});
 
+			describe('Supporting documents', () => {
+				it('should not render the supporting documents row if the appeal is an enforcementChildAppeal', async () => {
+					const mappedData = {
+						appeal: {
+							appellantCase: {
+								display: { tableItem: ['Appeal', 'Submitted', '2026-05-21', 'View'] }
+							},
+							lpaQuestionnaire: {
+								display: { tableItem: ['LPA questionnaire', 'Received', '2026-05-20', 'View'] }
+							},
+							supportingDocuments: {
+								display: {
+									tableItem: ['Supporting documents', 'No documents', 'Not applicable', 'Add']
+								}
+							},
+							appellantStatement: { display: { tableItem: undefined } },
+							lpaStatement: { display: { tableItem: undefined } },
+							rule6PartyStatements: { display: { tableItems: [] } },
+							ipComments: { display: { tableItem: undefined } },
+							appellantFinalComments: { display: { tableItem: undefined } },
+							lpaFinalComments: { display: { tableItem: undefined } },
+							appellantProofOfEvidence: { display: { tableItem: undefined } },
+							lpaProofOfEvidence: { display: { tableItem: undefined } },
+							rule6PartyProofs: { display: { tableItems: [] } },
+							environmentalAssessment: { display: { tableItem: undefined } }
+						}
+					};
+
+					const appeal = {
+						...appealDataEnforcementNotice,
+						isChildAppeal: true,
+						procedureType: PROCEDURE_TYPE_NAME.WRITTEN_REPRESENTATION
+					};
+
+					const result = getCaseDocumentation(mappedData, appeal);
+					expect(result.parameters.rows.length).toBe(2);
+					const rowTexts = result.parameters.rows.map((row) => row[0]);
+					expect(rowTexts).toContain('Appeal');
+					expect(rowTexts).toContain('LPA questionnaire');
+					expect(rowTexts).not.toContain('Supporting documents');
+
+					nock('http://test/')
+						.get(`/appeals/${appealDataEnforcementNotice.appealId}/page-details`)
+						.reply(200, appeal);
+					nock('http://test/')
+						.get(`/appeals/${appealDataEnforcementNotice.appealId}/case-notes`)
+						.reply(200, caseNotes);
+					nock('http://test/')
+						.get(`/appeals/${appealDataEnforcementNotice.appealId}`)
+						.reply(200, {
+							itemCount: 2,
+							items: [
+								...appellantFinalCommentsAwaitingReview.items,
+								...lpaFinalCommentsAwaitingReview.items
+							]
+						});
+
+					const response = await request.get(`${baseUrl}/${appealDataEnforcementNotice.appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const element = parseHtml(response.text);
+					const table = element.querySelector('#case-documentation-table');
+					expect(table.innerHTML).toMatchSnapshot();
+					expect(table.innerHTML).not.toContain('Supporting documents');
+				});
+			});
+
 			describe('Rule 6 party statements and proofs', () => {
 				it('should render the correct rows without rule 6 party statements or proofs', async () => {
 					const appealId = 2;

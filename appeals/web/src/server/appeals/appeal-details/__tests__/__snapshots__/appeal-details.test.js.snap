@@ -320,12 +320,6 @@ exports[`appeal-details GET /:appealId Documentation Hearing documents should no
                     data-cy="review-appellant-case" class="govuk-link">View<span class="govuk-visually-hidden"> appellant case</span></a>
                 </td>
             </tr>
-            <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">Supporting documents</th>
-                <td class="govuk-table__cell">No documents</td>
-                <td class="govuk-table__cell">Not applicable</td>
-                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
-            </tr>
         </tbody>
     "
 `;
@@ -947,6 +941,29 @@ exports[`appeal-details GET /:appealId Documentation Rule 6 party statements and
                 <td class="govuk-table__cell"></td>
                 <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/2/proof-of-evidence/rule-6-party/1/add-representation?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
                     data-cy="add-rule-6-party-proofs-evidence" class="govuk-link">Add<span class="govuk-visually-hidden"> Test Rule 6 Party proof of evidence</span></a>
+                </td>
+            </tr>
+        </tbody>
+    "
+`;
+
+exports[`appeal-details GET /:appealId Documentation Supporting documents should not render the supporting documents row if the appeal is an enforcementChildAppeal 1`] = `
+"
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Documentation</th>
+                <th scope="col" class="govuk-table__header">Status</th>
+                <th scope="col" class="govuk-table__header">Date</th>
+                <th scope="col" class="govuk-table__header govuk-!-text-align-right">Action</th>
+            </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Appeal</th>
+                <td class="govuk-table__cell">Ready to review</td>
+                <td class="govuk-table__cell">2 August 2024</td>
+                <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/5623/appellant-case?backUrl=%2Fappeals-service%2Fappeal-details%2F5623"
+                    data-cy="review-appellant-case" class="govuk-link">Review<span class="govuk-visually-hidden"> appellant case</span></a>
                 </td>
             </tr>
         </tbody>
