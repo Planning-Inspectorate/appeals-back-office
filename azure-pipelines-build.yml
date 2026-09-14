@@ -57,14 +57,12 @@ extends:
             displayName: Cache NPM
           - template: ../steps/node_script.yml
             parameters:
-              displayName: Install npm dependencies
               nodeVersion: 22
               script: npm ci
               environmentVariables:
                 npm_config_cache: $(npm_config_cache)
           - template: ../steps/node_script.yml
             parameters:
-              displayName: Run TypeScript checks
               nodeVersion: 22
               script: npm run tscheck
               environmentVariables:
@@ -72,12 +70,10 @@ extends:
                 TURBO_API: $(TURBO_API)
           - template: ../steps/node_script.yml
             parameters:
-              displayName: Run JavaScript linting
               nodeVersion: 22
               script: npm run lint:js
           - template: ../steps/node_script.yml
             parameters:
-              displayName: Run unit and integration tests
               nodeVersion: 22
               script: npm run test
               environmentVariables:
@@ -86,7 +82,6 @@ extends:
                 TURBO_TOKEN: $(TURBO_TOKEN)
           - template: ../steps/node_script.yml
             parameters:
-              displayName: Run database stored procedure tests
               nodeVersion: 22
               script: npm run test:stored-procedures --workspace=@pins/appeals.api
               environmentVariables:
