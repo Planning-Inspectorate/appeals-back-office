@@ -812,7 +812,182 @@ export const spec = {
 			anySignificantChangesLpa_nationalPolicySignificantChanges:
 				'National policy significant changes',
 			anySignificantChangesLpa_courtJudgementSignificantChanges:
-				'Court judgement significant changes'
+				'Court judgement significant changes',
+
+			agent: {
+				email: 'test@136s7.com',
+				firstName: 'John',
+				lastName: 'Smith',
+				organisationName: 'Smith Inc.',
+				phoneNumber: '09876 543 210',
+				serviceUserId: 1
+			},
+			anySignificantChanges: null,
+			anySignificantChanges_courtJudgementSignificantChanges: null,
+			anySignificantChanges_localPlanSignificantChanges: null,
+			anySignificantChanges_nationalPolicySignificantChanges: null,
+			anySignificantChanges_otherSignificantChanges: null,
+			appealRule6Parties: {},
+			appealStatus: 'assign_case_officer',
+			appealType: 'Householder',
+			appellant: {
+				email: 'test@1367.com',
+				firstName: 'Lee',
+				lastName: 'Thornton',
+				organisationName: 'Thornton LTD',
+				phoneNumber: '01234 567 890',
+				serviceUserId: 1
+			},
+			appellantCaseId: 1,
+			appellantCostsAppliedFor: null,
+			applicant: {
+				firstName: 'Lee',
+				surname: 'Thornton'
+			},
+			applicationDate: '2022-03-18T00:00:00.000Z',
+			applicationDecision: 'refused',
+			applicationDecisionDate: '2022-03-18T00:00:00.000Z',
+			awaitingLinkedAppeal: false,
+			caseOfficer: 'a8973f33-4d2e-486b-87b0-d068343ad9eb',
+			completedStateList: [],
+			costsAppliedFor: false,
+			costsDecision: {
+				awaitingAppellantCostsDecision: false,
+				awaitingLpaCostsDecision: false
+			},
+			createdAt: '2024-03-25T23:59:59.999Z',
+			documentationSummary: {
+				appellantCase: {
+					receivedAt: '2024-03-25T23:59:59.999Z',
+					status: 'received'
+				},
+				lpaQuestionnaire: {
+					receivedAt: '2024-06-24T00:00:00.000Z',
+					status: 'Complete'
+				}
+			},
+			floorSpaceSquareMetres: null,
+			hasAdvertisedAppeal: true,
+			healthAndSafety: {
+				details: 'There may be no mobile reception at the site',
+				hasIssues: true
+			},
+			hearing: {
+				address: {
+					addressLine1: '96 The Avenue',
+					addressLine2: 'Leftfield',
+					county: 'Kent',
+					postcode: 'MD21 5XY',
+					town: 'Maidstone'
+				},
+				addressId: 1,
+				estimatedDays: 1,
+				hearingEndTime: '2022-03-31T03:00:00.000Z',
+				hearingId: 1,
+				hearingStartTime: '2022-03-31T01:00:00.000Z'
+			},
+			inquiry: {
+				address: {
+					addressLine1: '96 The Avenue',
+					addressLine2: 'Leftfield',
+					county: 'Kent',
+					postcode: 'MD21 5XY',
+					town: 'Maidstone'
+				},
+				addressId: 1,
+				estimatedDays: 6,
+				inquiryEndTime: '2022-03-31T03:00:00.000Z',
+				inquiryId: 1,
+				inquiryStartTime: '2022-03-31T01:00:00.000Z'
+			},
+			inspector: 'e8f89175-d02c-4a60-870e-dc954d5b530a',
+			isAppellantNamedOnApplication: false,
+			isChildAppeal: false,
+			isParentAppeal: false,
+			isS78Expedited: false,
+			linkedAppeals: [],
+			neighbouringSites: [],
+			numberOfResidencesNetChange: 5,
+			ownershipCertificate: null,
+			padsInspector: null,
+			planningApplicationReference: '48269/APP/2021/1482',
+			reasonForAppealAppellant: null,
+			receivedAt: '2024-06-24T00:00:00.000Z',
+			screeningOpinionIndicatesEiaRequired: null,
+			siteAccessRequired: {
+				details: 'There is a tall hedge around the site which obstructs the view of the site',
+				isRequired: true
+			},
+			siteOwnership: {
+				areAllOwnersKnown: null,
+				knowsOtherLandowners: null,
+				ownersInformed: true,
+				ownsAllLand: true,
+				ownsSomeLand: true
+			},
+			siteVisit: {
+				siteVisitId: 1,
+				visitDate: '2022-03-31T01:00:00.000Z',
+				visitEndTime: '2022-03-31T03:00:00.000Z',
+				visitStartTime: '2022-03-31T01:00:00.000Z',
+				visitType: 'Access required'
+			},
+			stateList: [
+				{
+					completed: false,
+					key: 'assign_case_officer'
+				},
+				{
+					completed: false,
+					key: 'validation'
+				},
+				{
+					completed: false,
+					key: 'ready_to_start'
+				},
+				{
+					completed: false,
+					key: 'lpa_questionnaire'
+				},
+				{
+					completed: false,
+					key: 'event'
+				},
+				{
+					completed: false,
+					key: 'awaiting_event'
+				},
+				{
+					completed: false,
+					key: 'issue_determination'
+				},
+				{
+					completed: false,
+					key: 'awaiting_transfer'
+				},
+				{
+					completed: false,
+					key: 'invalid'
+				},
+				{
+					completed: false,
+					key: 'transferred'
+				},
+				{
+					completed: false,
+					key: 'closed'
+				},
+				{
+					completed: false,
+					key: 'withdrawn'
+				},
+				{
+					completed: false,
+					key: 'complete'
+				}
+			],
+			submittedAt: '2024-06-24T00:00:00.000Z',
+			typeOfPlanningApplication: 'householder-planning'
 		},
 		UpdateAppellantCaseRequest: {
 			appealDueDate: '2024-12-13',
