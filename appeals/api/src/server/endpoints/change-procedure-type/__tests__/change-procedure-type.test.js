@@ -722,8 +722,91 @@ describe('Change appeal procedure type route', () => {
 					}
 				});
 
-				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledTimes(1);
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledTimes(2);
 			});
+
+			test.each([
+				['lpa_questionnaire', [{ status: 'lpa_questionnaire', valid: true }], false],
+				[
+					'event',
+					[
+						{ status: 'lpa_questionnaire', valid: false },
+						{ status: 'event', valid: true }
+					],
+					true
+				],
+				[
+					'awaiting_event',
+					[
+						{ status: 'lpa_questionnaire', valid: false },
+						{ status: 'awaiting_event', valid: true }
+					],
+					true
+				],
+				[
+					'issue_determination',
+					[
+						{ status: 'lpa_questionnaire', valid: false },
+						{ status: 'event', valid: false },
+						{ status: 'issue_determination', valid: true }
+					],
+					true
+				]
+			])(
+				'returns 201 when changing from part 1 to hearing at %s stage',
+				async (status, appealStatus, shouldTransition) => {
+					fullPlanningAppeal.currentStatus = status;
+					fullPlanningAppeal.appealStatus = appealStatus;
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+					const response = await request
+						.post(`/appeals/${fullPlanningAppeal.id}/procedure-type-change-request`)
+						.send({
+							existingAppealProcedure: 'part 1',
+							appealProcedure: 'hearing',
+							lpaQuestionnaireDueDate: '2026-11-03T00:00:00.000Z',
+							ipCommentsDueDate: '2026-12-01T00:00:00.000Z',
+							lpaStatementDueDate: '2026-12-01T00:00:00.000Z',
+							statementOfCommonGroundDueDate: '2026-12-05T00:00:00.000Z',
+							planningObligationDueDate: '2026-12-10T00:00:00.000Z'
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(response.status).toEqual(201);
+					expect(mockTx.hearing.deleteMany).not.toHaveBeenCalled();
+					expect(mockTx.inquiry.deleteMany).not.toHaveBeenCalled();
+					expect(mockTx.siteVisit.deleteMany).toHaveBeenCalledWith({
+						where: { appealId: fullPlanningAppeal.id }
+					});
+					expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(3, 'siteVisit', 'Delete', {
+						id: 3
+					});
+
+					expect(mockTx.appeal.update).toHaveBeenCalledWith({
+						where: { id: fullPlanningAppeal.id },
+						data: { procedureTypeId: 1 }
+					});
+
+					expect(mockTx.appealTimetable.update).toHaveBeenCalledWith({
+						where: { appealId: fullPlanningAppeal.id },
+						data: {
+							ipCommentsDueDate: '2026-12-01T00:00:00.000Z',
+							lpaQuestionnaireDueDate: '2026-11-03T00:00:00.000Z',
+							lpaStatementDueDate: '2026-12-01T00:00:00.000Z',
+							planningObligationDueDate: '2026-12-10T00:00:00.000Z',
+							statementOfCommonGroundDueDate: '2026-12-05T00:00:00.000Z'
+						}
+					});
+
+					if (shouldTransition) {
+						expect(mockTx.appealStatus.findFirst).toHaveBeenCalledWith({
+							where: { appealId: fullPlanningAppeal.id, status: 'lpa_questionnaire' }
+						});
+					}
+
+					expect(databaseConnector.$transaction).toHaveBeenCalled();
+				}
+			);
 		});
 
 		describe('Change to Inquiry', () => {

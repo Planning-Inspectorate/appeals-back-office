@@ -120,9 +120,10 @@ export const changeProcedureToWritten = async (data, appealId, azureAdUserId = '
 /**
  * @param {import('src/server/openapi-types.js').ChangeProcedureTypeRequest} data
  * @param {number} appealId
+ * @param {string} azureAdUserId
  * @returns {Promise<void>}
  */
-export const changeProcedureToHearing = async (data, appealId) => {
+export const changeProcedureToHearing = async (data, appealId, azureAdUserId = '') => {
 	try {
 		const result = await databaseConnector.$transaction(async (tx) => {
 			const procedureType = await tx.procedureType.findFirst({
@@ -170,24 +171,15 @@ export const changeProcedureToHearing = async (data, appealId) => {
 			});
 			let existingSiteVisit;
 			let existingInquiry;
-			if (data.existingAppealProcedure === 'written') {
-				existingSiteVisit = await tx.siteVisit.findFirst({
-					where: { appealId }
-				});
-				await tx.siteVisit.deleteMany({
-					where: { appealId }
-				});
+			if (
+				data.existingAppealProcedure === 'written' ||
+				data.existingAppealProcedure === PROCEDURE_TYPE_NAME.WRITTEN_PART_1.toLowerCase()
+			) {
+				existingSiteVisit = await deleteSiteVisit(tx, appealId);
 			} else if (data.existingAppealProcedure === 'inquiry') {
-				existingInquiry = await tx.inquiry.findFirst({
-					where: { appealId }
-				});
-				await tx.inquiry.deleteMany({
-					where: { appealId }
-				});
-				await tx.inquiryEstimate.deleteMany({
-					where: { appealId }
-				});
+				existingInquiry = await deleteInquiry(tx, appealId);
 			}
+
 			return { updatedAppeal, updatedHearing, existingInquiry, existingSiteVisit };
 		});
 
@@ -213,6 +205,15 @@ export const changeProcedureToHearing = async (data, appealId) => {
 				EVENT_TYPE.HEARING,
 				data.appealProcedure === data.existingAppealProcedure ? EventType.Update : EventType.Create
 			);
+		}
+		if (
+			data.existingAppealProcedure?.toLowerCase() !==
+			PROCEDURE_TYPE_KEY.WRITTEN_PART_1.toLowerCase()
+		) {
+			await transitionState(appealId, azureAdUserId, ACTION_CHANGE_PROCEDURE_TYPE, {
+				previousProcedureType: data.existingAppealProcedure,
+				targetProcedureType: data.appealProcedure
+			});
 		}
 	} catch {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
