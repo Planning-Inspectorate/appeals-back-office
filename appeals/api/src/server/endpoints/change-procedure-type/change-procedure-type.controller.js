@@ -35,7 +35,7 @@ export const requestChangeOfProcedureType = async (req, res) => {
 				await changeProcedureToWritten(data, appealId, azureAdUserId);
 				break;
 			case 'hearing':
-				await changeProcedureToHearing(data, appealId);
+				await changeProcedureToHearing(data, appealId, azureAdUserId);
 				break;
 			case 'inquiry':
 				await changeProcedureToInquiry(data, appealId);
