@@ -129,10 +129,9 @@ data "azurerm_private_dns_zone" "app_config" {
   provider = azurerm.tooling
 }
 resource "azurerm_private_dns_zone_virtual_network_link" "app_config" {
-  name                  = "${local.org}-vnetlink-app-config-${local.resource_suffix}"
-  resource_group_name   = var.tooling_config.network_rg
-  private_dns_zone_name = data.azurerm_private_dns_zone.app_config.name
-  virtual_network_id    = azurerm_virtual_network.main.id
+  name                = "${local.org}-vnetlink-app-config-${local.resource_suffix}"
+  private_dns_zone_id = data.azurerm_private_dns_zone.app_config.id
+  virtual_network_id  = azurerm_virtual_network.main.id
 
   provider = azurerm.tooling
 }
@@ -144,10 +143,9 @@ data "azurerm_private_dns_zone" "app_service" {
   provider = azurerm.tooling
 }
 resource "azurerm_private_dns_zone_virtual_network_link" "app_service" {
-  name                  = "${local.org}-vnetlink-app-service-${local.resource_suffix}"
-  resource_group_name   = var.tooling_config.network_rg
-  private_dns_zone_name = data.azurerm_private_dns_zone.app_service.name
-  virtual_network_id    = azurerm_virtual_network.main.id
+  name                = "${local.org}-vnetlink-app-service-${local.resource_suffix}"
+  private_dns_zone_id = data.azurerm_private_dns_zone.app_service.id
+  virtual_network_id  = azurerm_virtual_network.main.id
 
   provider = azurerm.tooling
 }
@@ -159,10 +157,9 @@ data "azurerm_private_dns_zone" "database" {
   provider = azurerm.tooling
 }
 resource "azurerm_private_dns_zone_virtual_network_link" "database" {
-  name                  = "${local.org}-vnetlink-db-${local.resource_suffix}"
-  resource_group_name   = var.tooling_config.network_rg
-  private_dns_zone_name = data.azurerm_private_dns_zone.database.name
-  virtual_network_id    = azurerm_virtual_network.main.id
+  name                = "${local.org}-vnetlink-db-${local.resource_suffix}"
+  private_dns_zone_id = data.azurerm_private_dns_zone.database.id
+  virtual_network_id  = azurerm_virtual_network.main.id
 
   provider = azurerm.tooling
 }
@@ -174,10 +171,9 @@ data "azurerm_private_dns_zone" "redis_cache" {
   provider = azurerm.tooling
 }
 resource "azurerm_private_dns_zone_virtual_network_link" "redis_cache" {
-  name                  = "${local.org}-vnetlink-redis-cache-${local.resource_suffix}"
-  resource_group_name   = var.tooling_config.network_rg
-  private_dns_zone_name = data.azurerm_private_dns_zone.redis_cache.name
-  virtual_network_id    = azurerm_virtual_network.main.id
+  name                = "${local.org}-vnetlink-redis-cache-${local.resource_suffix}"
+  private_dns_zone_id = data.azurerm_private_dns_zone.redis_cache.id
+  virtual_network_id  = azurerm_virtual_network.main.id
 
   provider = azurerm.tooling
 }
@@ -189,10 +185,9 @@ data "azurerm_private_dns_zone" "service_bus" {
   provider = azurerm.tooling
 }
 resource "azurerm_private_dns_zone_virtual_network_link" "service_bus" {
-  name                  = "${local.org}-vnetlink-service-bus-${local.resource_suffix}"
-  resource_group_name   = var.tooling_config.network_rg
-  private_dns_zone_name = data.azurerm_private_dns_zone.service_bus.name
-  virtual_network_id    = azurerm_virtual_network.main.id
+  name                = "${local.org}-vnetlink-service-bus-${local.resource_suffix}"
+  private_dns_zone_id = data.azurerm_private_dns_zone.service_bus.id
+  virtual_network_id  = azurerm_virtual_network.main.id
 
   provider = azurerm.tooling
 }
@@ -204,19 +199,17 @@ data "azurerm_private_dns_zone" "synapse" {
   provider = azurerm.tooling
 }
 resource "azurerm_private_dns_zone_virtual_network_link" "synapse" {
-  name                  = "${local.org}-vnetlink-synapse-${local.resource_suffix}"
-  resource_group_name   = var.tooling_config.network_rg
-  private_dns_zone_name = data.azurerm_private_dns_zone.synapse.name
-  virtual_network_id    = azurerm_virtual_network.main.id
+  name                = "${local.org}-vnetlink-synapse-${local.resource_suffix}"
+  private_dns_zone_id = data.azurerm_private_dns_zone.synapse.id
+  virtual_network_id  = azurerm_virtual_network.main.id
 
   provider = azurerm.tooling
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "keyvault" {
-  name                  = "${local.org}-vnetlink-keyvault-${local.resource_suffix}"
-  resource_group_name   = var.tooling_config.network_rg
-  private_dns_zone_name = data.azurerm_private_dns_zone.keyvault.name
-  virtual_network_id    = azurerm_virtual_network.main.id
+  name                = "${local.org}-vnetlink-keyvault-${local.resource_suffix}"
+  private_dns_zone_id = data.azurerm_private_dns_zone.keyvault.id
+  virtual_network_id  = azurerm_virtual_network.main.id
 
   tags = local.tags
 
@@ -224,11 +217,10 @@ resource "azurerm_private_dns_zone_virtual_network_link" "keyvault" {
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "storage" {
-  name                  = "${local.org}-vnetlink-storage-${local.resource_suffix}"
-  resource_group_name   = var.tooling_config.network_rg
-  private_dns_zone_name = data.azurerm_private_dns_zone.storage.name
-  virtual_network_id    = azurerm_virtual_network.main.id
-  resolution_policy     = "NxDomainRedirect"
+  name                = "${local.org}-vnetlink-storage-${local.resource_suffix}"
+  private_dns_zone_id = data.azurerm_private_dns_zone.storage.id
+  virtual_network_id  = azurerm_virtual_network.main.id
+  resolution_policy   = "NxDomainRedirect"
 
   provider = azurerm.tooling
 }
