@@ -1033,7 +1033,7 @@ describe('State Machine Transitions', () => {
 			}
 		);
 
-		it('remains in LPA_QUESTIONNAIRE when changing procedure type at LPA_QUESTIONNAIRE stage', () => {
+		it('remains in LPA_QUESTIONNAIRE when changing procedure type at LPA_QUESTIONNAIRE stage for Written procedure', () => {
 			const machine = createStateMachine(
 				APPEAL_CASE_TYPE.W,
 				APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
@@ -1062,6 +1062,34 @@ describe('State Machine Transitions', () => {
 
 			service.send(ACTION_CHANGE_PROCEDURE_TYPE);
 			expect(service.state.value).toBe(APPEAL_CASE_STATUS.STATEMENTS);
+		});
+
+		it.each([
+			APPEAL_CASE_STATUS.EVENT,
+			APPEAL_CASE_STATUS.AWAITING_EVENT,
+			APPEAL_CASE_STATUS.ISSUE_DETERMINATION
+		])(
+			'transitions from %s to statements when changing Part 1 (DB display string "Part 1") to Hearing',
+			(initial) => {
+				expect(nextStateOnChangeProcedure(initial, 'Part 1', APPEAL_CASE_PROCEDURE.HEARING)).toBe(
+					APPEAL_CASE_STATUS.STATEMENTS
+				);
+			}
+		);
+
+		it('remains in LPA_QUESTIONNAIRE when changing procedure type at LPA_QUESTIONNAIRE stage for Hearing procedure', () => {
+			const machine = createStateMachine(
+				APPEAL_CASE_TYPE.W,
+				APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
+				APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				false,
+				false,
+				APPEAL_CASE_PROCEDURE.HEARING
+			);
+			const service = interpret(machine).start();
+
+			service.send(ACTION_CHANGE_PROCEDURE_TYPE);
+			expect(service.state.value).toBe(APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE);
 		});
 	});
 });

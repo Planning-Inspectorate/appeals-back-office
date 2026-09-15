@@ -105,10 +105,11 @@ export const canChangeS78ExpeditedToTargetProcedure = ({
 				APPEAL_CASE_STATUS.ISSUE_DETERMINATION
 			].includes(/** @type {any} */ (currentStage));
 		case APPEAL_CASE_PROCEDURE.HEARING:
-			// Future Dev Work: Hearing
-			// Commented out next steps
 			return [
-				APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE /** ,APPEAL_CASE_STATUS.EVENT*/ /**,APPEAL_CASE_STATUS.AWAITING_EVENT*/
+				APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				APPEAL_CASE_STATUS.EVENT,
+				APPEAL_CASE_STATUS.AWAITING_EVENT,
+				APPEAL_CASE_STATUS.ISSUE_DETERMINATION
 			].includes(/** @type {any} */ (currentStage));
 		case APPEAL_CASE_PROCEDURE.INQUIRY:
 			// Future Dev Work: Inquiry
@@ -241,19 +242,21 @@ export const targetStateOnChangeProcedure = ({
 		normalisedCurrent === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1.toLowerCase() ||
 		normalisedCurrent === PROCEDURE_TYPE_NAME.WRITTEN_PART_1.toLowerCase();
 	const normalisedTarget = targetProcedure?.toLowerCase();
-	const isTargetWritten =
-		normalisedTarget === APPEAL_CASE_PROCEDURE.WRITTEN.toLowerCase() ||
-		normalisedTarget === PROCEDURE_TYPE_NAME.WRITTEN_PART_2.toLowerCase();
 
-	if (isPart1 && isTargetWritten && isS78) {
-		if (
-			[
-				APPEAL_CASE_STATUS.EVENT,
-				APPEAL_CASE_STATUS.AWAITING_EVENT,
-				APPEAL_CASE_STATUS.ISSUE_DETERMINATION
-			].includes(/** @type {any} */ (currentStatus))
-		) {
-			return APPEAL_CASE_STATUS.STATEMENTS;
+	if (isPart1 && isS78) {
+		switch (normalisedTarget) {
+			case APPEAL_CASE_PROCEDURE.WRITTEN.toLowerCase():
+			case PROCEDURE_TYPE_NAME.WRITTEN_PART_2.toLowerCase():
+			case APPEAL_CASE_PROCEDURE.HEARING.toLowerCase():
+				if (
+					[
+						APPEAL_CASE_STATUS.EVENT,
+						APPEAL_CASE_STATUS.AWAITING_EVENT,
+						APPEAL_CASE_STATUS.ISSUE_DETERMINATION
+					].includes(/** @type {any} */ (currentStatus))
+				) {
+					return APPEAL_CASE_STATUS.STATEMENTS;
+				}
 		}
 	}
 
