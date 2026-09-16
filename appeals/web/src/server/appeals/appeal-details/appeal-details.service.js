@@ -51,7 +51,7 @@ export function deprecatedGetAppealDetailsFromId(apiClient, appealId) {
  *
  * @param {import('got').Got} apiClient
  * @param {string} appealId
- * @returns {Promise<{id: number}>}
+ * @returns {Promise<{id: number, appealId: number, appealReference: string}>}
  */
 export function checkAppealExists(apiClient, appealId) {
 	const ids = assertValidNumericIds({ appealId });
