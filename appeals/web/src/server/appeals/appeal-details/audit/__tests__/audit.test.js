@@ -106,15 +106,21 @@ describe('audit', () => {
 			documentGuid: 'efac1b7f-71c6-4780-bf22-edd0b0531914',
 			stage: 'representation',
 			folderId: 61306,
-			documentType: 'representationAttachments'
+			documentType: 'representationAttachments',
+			representationId: 257,
+			representationType: 'comment'
 		};
 
-		it('should return audit trail entry with doc GUID removed from a supporting doc display name', async () => {
-			const result = await tryMapDocument(1, auditTrailEntryText, docInfo, null);
-			expect(result).toEqual(
-				`Document <a class="govuk-link" href="#">docstuff.docx</a> uploaded (version 1, ${randomRedactStatus})`
-			);
-		});
+		it(
+			'should return audit trail entry with doc GUID removed from a supporting doc display' +
+				' name',
+			async () => {
+				const result = await tryMapDocument(1, auditTrailEntryText, docInfo, null);
+				expect(result).toEqual(
+					`Document <a class="govuk-link" href="/appeals-service/appeal-details/1/interested-party-comments/257/manage-documents/61306">docstuff.docx</a> uploaded (version 1, ${randomRedactStatus})`
+				);
+			}
+		);
 
 		it('should include the redaction status in the audit log display text for a supporting document', async () => {
 			const result = await tryMapDocument(1, auditTrailEntryText, docInfo, null);
