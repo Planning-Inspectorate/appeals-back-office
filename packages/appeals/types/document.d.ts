@@ -3,6 +3,7 @@ export interface AddDocumentsRequest {
 	blobStorageContainer: string;
 	appellantCaseId?: number | null;
 	documents: MappedDocument[];
+	representationType?: string | null;
 }
 
 export interface AddDocumentVersionRequest {
