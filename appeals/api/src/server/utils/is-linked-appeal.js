@@ -1,5 +1,5 @@
 import { isFeatureActive } from '#utils/feature-flags.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
@@ -15,6 +15,21 @@ export const isLinkedAppealsActive = (appeal = null) => {
 		(!appeal || appeal.appealType?.key === APPEAL_CASE_TYPE.C);
 	return isLinkedAppealsFeatureActive || isEnforcementLinkedFeatureActive;
 };
+
+/**
+ *
+ * @param {*} appeal
+ * @param {*} isChildAppeal
+ * @returns {boolean}
+ */
+export function isEnforcementChildAppeal(appeal, isChildAppeal = appeal?.isChildAppeal) {
+	const { appealType } = appeal || {};
+	return (
+		isChildAppeal &&
+		isLinkedAppealsActive(appeal) &&
+		appealType.type === APPEAL_TYPE.ENFORCEMENT_NOTICE
+	);
+}
 
 /**
  *
