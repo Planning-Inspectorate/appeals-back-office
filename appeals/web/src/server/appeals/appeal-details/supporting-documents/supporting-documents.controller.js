@@ -481,7 +481,7 @@ export const postShareDocumentCheckAndConfirm = async (request, response) => {
 				id: documentId,
 				isShared: true
 			},
-			inviteMainPartyComments: request.session?.inviteMainPartyComments === 'yes',
+			inviteResponses: request.session?.inviteMainPartyComments === 'yes',
 			sharingDocumentType: `supporting-document`
 		};
 
