@@ -406,7 +406,7 @@ describe('map-document-entity', () => {
 			caseStage: 'inquiry',
 			isPublished: true,
 			expectedDocumentType: APPEAL_DOCUMENT_TYPE.INQUIRY_POST_EVENT,
-			expectedCaseStage: 'inquiry',
+			expectedCaseStage: null,
 			expectedPublishedDocumentUri: testUri
 		},
 		{
@@ -416,7 +416,7 @@ describe('map-document-entity', () => {
 			caseStage: 'hearing',
 			isPublished: true,
 			expectedDocumentType: APPEAL_DOCUMENT_TYPE.HEARING_PROCESS,
-			expectedCaseStage: 'hearing',
+			expectedCaseStage: null,
 			expectedPublishedDocumentUri: testUri
 		},
 		{
