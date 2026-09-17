@@ -8,7 +8,7 @@ import {
 	dateISOStringToDisplayTime24hr,
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
-import { folderIsAdditionalDocuments } from '#lib/documents.js';
+import { folderIsAdditionalDocuments, getUrlSuffix } from '#lib/documents.js';
 import {
 	createNotificationBanner,
 	documentDateInput,
@@ -1299,7 +1299,7 @@ export async function manageDocumentPage({
 		`${baseUrl}change-document-name`
 	);
 
-	const headingText = canShare ? 'Document details' : document?.name || '';
+	const headingText = document?.name || 'Document details';
 
 	const session = request.session;
 	const latestVersion = getDocumentLatestVersion(document);
@@ -1348,46 +1348,52 @@ export async function manageDocumentPage({
 		REDACTION_STATUS.UNREDACTED === latestVersion?.redactionStatus.toLowerCase() ||
 		latestVersion?.redactionStatus === null;
 
-	/** @type {string[]} */
-	const supportingHearingInquiryInquiryEventDocType = [
-		APPEAL_DOCUMENT_TYPE.GENERAL_SUPPORTING,
-		APPEAL_DOCUMENT_TYPE.HEARING_PROCESS,
-		APPEAL_DOCUMENT_TYPE.INQUIRY_CORE,
-		APPEAL_DOCUMENT_TYPE.INQUIRY_POST_EVENT
-	];
-	/**
-	 *
-	 * @param {Object} params
-	 * @param {string} params.costsDocumentType
-	 * @param {string | undefined} params.latestVersionDocumentType
-	 * @returns {string}
-	 */
-	function getUrlSuffix({ costsDocumentType, latestVersionDocumentType }) {
-		// costsDocumentType is for costs and latestVersionDocument is for checking if
-		// the document type is supporting, inquiry, inquiry event or hearing
-		if (costsDocumentType === 'withdrawal') return '/check-your-answers';
-		if (
-			latestVersionDocumentType &&
-			supportingHearingInquiryInquiryEventDocType.includes(latestVersionDocumentType)
-		)
-			return '/invite-main-party-comments';
-		return '/invite-responses';
-	}
-
 	if (canShare && !isShared) {
 		const { costsDocumentType } = request.params;
 		const { documentType: latestVersionDocumentType } = latestVersion ?? {};
 
-		const isSupportingHearingInquiryInquiryEventDocType =
-			latestVersionDocumentType &&
-			supportingHearingInquiryInquiryEventDocType.includes(latestVersionDocumentType);
-
 		const shareUrl =
 			request.originalUrl + getUrlSuffix({ costsDocumentType, latestVersionDocumentType });
 
-		const buttonText =
-			isUnredacted && isSupportingHearingInquiryInquiryEventDocType ? 'Redact' : 'Share document';
+		/** @type {PageComponent} */
+		const shareDocumentButton = {
+			type: 'button',
+			parameters: {
+				text: 'Share document',
+				href: shareUrl,
+				classes: 'govuk-button--secondary'
+			}
+		};
 
+		/** @type {PageComponent} */
+		const redactDocumentButton = {
+			type: 'button',
+			parameters: {
+				text: 'Redact document',
+				href: changeDetailsUrl,
+				classes: 'govuk-button--secondary'
+			}
+		};
+
+		pageComponents.push(
+			{
+				type: 'html',
+				parameters: { html: '<h2 class="govuk-heading-m">Current version</h2>' }
+			},
+			isUnredacted
+				? {
+						type: 'html',
+						parameters: {
+							html: '<p class="govuk-body">This document is unredacted and cannot be shared.</p>'
+						}
+					}
+				: {
+						type: 'html',
+						parameters: { html: '<p class="govuk-body">This document is not shared.</p>' }
+					},
+			isUnredacted ? redactDocumentButton : shareDocumentButton
+		);
+	} else if (canShare && isShared) {
 		pageComponents.push(
 			{
 				type: 'html',
@@ -1395,14 +1401,8 @@ export async function manageDocumentPage({
 			},
 			{
 				type: 'html',
-				parameters: { html: '<p class="govuk-body">This document is not shared</p>' }
-			},
-			{
-				type: 'button',
 				parameters: {
-					text: buttonText,
-					href: shareUrl,
-					classes: 'govuk-!-margin-bottom-7'
+					html: '<strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-4" aria-label="Shared document">Shared</strong>'
 				}
 			}
 		);
@@ -1437,7 +1437,7 @@ export async function manageDocumentPage({
 				{
 					key: { text: 'Version' },
 					value: {
-						html: `${versionId} ${canShare && isShared ? '<br><strong class="govuk-tag govuk-tag--blue govuk-!-margin-top-1" aria-label="Shared document">Shared</strong>' : ''}`
+						html: `${versionId}`
 					}
 				}
 			]
@@ -1533,7 +1533,7 @@ export async function manageDocumentPage({
 			parameters: {
 				id: 'upload-updated-document',
 				href: uploadNewVersionUrl,
-				classes: 'govuk-!-margin-right-2',
+				classes: `govuk-!-margin-right-2${canShare ? ' govuk-button--secondary' : ''}`,
 				html: `Upload a new version<span class="govuk-visually-hidden"> of ${document.name}</span>`
 			}
 		};
