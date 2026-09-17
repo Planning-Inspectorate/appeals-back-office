@@ -520,7 +520,7 @@ these [Notify Templates](../appeals/api/src/server/notify/templates):
 
 ### Statements published - ELB/Enforcement/LDC written reps with either statements or comments received
 
-- **Appeal type:** Enforcement (currently enabled), Enforcement Listed Building (future), Lawful Development Certificate (future)
+- **Appeal type:** Enforcement (currently enabled), Enforcement Listed Building (future), Lawful Development Certificate (currently enabled)
 - **Procedure:** Written
 - **Notify Subject Template:** [publish-statements-enforcement-written-reps](../appeals/api/src/server/notify/templates/publish-statements-enforcement-written-reps.subject.md)
 - **Notify Content Template:** [publish-statements-enforcement-written-reps](../appeals/api/src/server/notify/templates/publish-statements-enforcement-written-reps.content.md)
