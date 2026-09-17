@@ -735,12 +735,13 @@ const sendPublishedStatementNotifiesForWrittenReps = async (
 		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
 	);
 
-	const isEnforcement = appeal.appealType?.key === APPEAL_CASE_TYPE.C; //Update here for LDC and ELB appeals
+	const isEnforcementNoticeOrLdc =
+		appeal.appealType?.key === APPEAL_CASE_TYPE.C || appeal.appealType?.key === APPEAL_CASE_TYPE.X; //Update here for ELB appeals and then use appeal-type-check util
 
-	let lpaTemplate = isEnforcement
+	let lpaTemplate = isEnforcementNoticeOrLdc
 		? 'publish-statements-enforcement-written-reps'
 		: 'publish-statements-written-reps-lpa';
-	let appellantTemplate = isEnforcement
+	let appellantTemplate = isEnforcementNoticeOrLdc
 		? 'publish-statements-enforcement-written-reps'
 		: 'publish-statements-written-reps-appellant';
 
@@ -781,10 +782,10 @@ const sendPublishedStatementNotifiesForWrittenReps = async (
 				site_address: siteAddress,
 				...(enforcementReference && { enforcement_reference: enforcementReference }),
 				lpa_reference: lpaReference || '',
-				...(isEnforcement && { fo_dashboard_stub: contact.dashboardStub }),
+				...(isEnforcementNoticeOrLdc && { fo_dashboard_stub: contact.dashboardStub }),
 				final_comments_due_date: finalCommentsDueDate,
 				team_email_address,
-				...(isEnforcement && {
+				...(isEnforcementNoticeOrLdc && {
 					recipient_role: contact.recipientRole
 				})
 			}
