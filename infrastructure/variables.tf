@@ -183,6 +183,18 @@ variable "front_office_infra_config" {
   })
 }
 
+variable "front_office_subscription_id" {
+  description = "Optional subscription ID where front office resources live. If empty, uses current subscription."
+  type        = string
+  default     = ""
+}
+
+variable "front_office_storage_account_rg" {
+  description = "Optional resource group name containing the front office storage account. If empty, falls back to front_office_infra_config.network.rg."
+  type        = string
+  default     = ""
+}
+
 variable "health_check_eviction_time_in_min" {
   description = "The eviction time in minutes for the health check"
   type        = number
