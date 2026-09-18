@@ -1273,10 +1273,347 @@ function mapDocumentNameHtmlProperty(document, documentVersion, canShare = false
  * @param {boolean} [params.editable]
  * @param {boolean} [params.skipChangeDocumentDetails]
  * @param {string} [params.baseUrl]
- * @param {boolean} [params.canShare]
  * @returns {Promise<PageContent>}
  */
 export async function manageDocumentPage({
+	appealId,
+	backLinkUrl,
+	uploadUpdatedDocumentUrl,
+	removeDocumentUrl,
+	document,
+	folder,
+	request,
+	pageTitleTextOverride,
+	dateRowLabelTextOverride,
+	editable,
+	skipChangeDocumentDetails,
+	baseUrl = ''
+}) {
+	const changeDetailsUrl =
+		!skipChangeDocumentDetails &&
+		request.originalUrl.replace('manage-documents', `${baseUrl}change-document-details`);
+	const changeNameUrl = request.originalUrl.replace(
+		'manage-documents',
+		`${baseUrl}change-document-name`
+	);
+
+	const headingText = document?.name || '';
+
+	const session = request.session;
+	const latestVersion = getDocumentLatestVersion(document);
+	const virusCheckStatus = mapDocumentVersionDetailsVirusCheckStatus(latestVersion);
+
+	/** @type {PageComponent[]} */
+	const notificationBanners = mapNotificationBannersFromSession(
+		session,
+		'manageDocuments',
+		Number(appealId)
+	);
+
+	if (!virusCheckStatus.checked) {
+		notificationBanners.unshift(
+			createNotificationBanner({ bannerDefinitionKey: 'notCheckedDocument' })
+		);
+	}
+
+	const versionId = latestVersion?.version?.toString() || '';
+	const uploadNewVersionUrl = uploadUpdatedDocumentUrl
+		.replace('{{folderId}}', folder.folderId.toString())
+		.replace('{{documentId}}', document.id || '');
+
+	/** @type {PageComponent[]} */
+	const pageComponents = [...notificationBanners];
+
+	if (virusCheckStatus.checked && !virusCheckStatus.safe) {
+		/** @type {PageComponent} */
+		const errorSummaryComponent = {
+			type: 'error-summary',
+			parameters: {
+				titleText: 'There is a problem',
+				errorList: [
+					{
+						text: 'The selected file contains a virus. Upload a different version.',
+						href: uploadNewVersionUrl
+					}
+				]
+			}
+		};
+		pageComponents.push(errorSummaryComponent);
+	}
+
+	/** @type {PageComponent} */
+	const documentSummary = {
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds">',
+			closing: '</div></div>'
+		},
+		type: 'summary-list',
+		parameters: {
+			rows: [
+				{
+					key: { text: 'Name' },
+					value: mapVersionDocumentInformationHtmlProperty(document, latestVersion),
+					actions: {
+						items: [
+							...(editable
+								? [
+										{
+											text: 'Change',
+											href: changeNameUrl,
+											visuallyHiddenText: `${document.name} name`
+										}
+									]
+								: [])
+						]
+					}
+				},
+				{
+					key: { text: 'Version' },
+					value: {
+						html: `${versionId}`
+					}
+				}
+			]
+		}
+	};
+
+	if (changeDetailsUrl) {
+		documentSummary.parameters.rows.push({
+			key: { text: dateRowLabelTextOverride || 'Date received' },
+			value:
+				folderIsAdditionalDocuments(folder.path) && latestVersion?.isLateEntry
+					? {
+							html: '',
+							pageComponents: [
+								{
+									type: 'html',
+									parameters: {
+										html: '',
+										pageComponents: [
+											{
+												wrapperHtml: {
+													opening: '<div class="govuk-!-margin-bottom-2">',
+													closing: '</div>'
+												},
+												type: 'html',
+												parameters: {
+													html: dateISOStringToDisplayDate(latestVersion?.dateReceived)
+												}
+											},
+											{
+												wrapperHtml: {
+													opening: '<div class="govuk-!-margin-bottom-1">',
+													closing: '</div>'
+												},
+												type: 'status-tag',
+												parameters: {
+													status: 'late_entry'
+												}
+											}
+										]
+									}
+								}
+							]
+						}
+					: {
+							text: dateISOStringToDisplayDate(latestVersion?.dateReceived)
+						},
+			actions: {
+				items: [
+					...(editable
+						? [
+								{
+									text: 'Change',
+									href: changeDetailsUrl,
+									visuallyHiddenText: `${document.name} date received`
+								}
+							]
+						: [])
+				]
+			}
+		});
+		documentSummary.parameters.rows.push({
+			key: { text: 'Redaction status' },
+			value: {
+				text: getDocumentLatestVersion(document)?.redactionStatus
+			},
+			actions: {
+				items: [
+					...(editable
+						? [
+								{
+									text: 'Change',
+									href: changeDetailsUrl,
+									visuallyHiddenText: `${document.name} redaction status`
+								}
+							]
+						: [])
+				]
+			}
+		});
+	}
+
+	pageComponents.push(documentSummary);
+
+	if (virusCheckStatus.checked) {
+		/** @type {PageComponent} */
+		const uploadUpdatedDocumentButton = {
+			wrapperHtml: {
+				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds">',
+				closing: ''
+			},
+			type: 'button',
+			parameters: {
+				id: 'upload-updated-document',
+				href: uploadNewVersionUrl,
+				classes: 'govuk-!-margin-right-2',
+				html: `Upload a new version<span class="govuk-visually-hidden"> of ${document.name}</span>`
+			}
+		};
+
+		const removeDocumentUrlProcessed = removeDocumentUrl
+			?.replace('{{folderId}}', folder.folderId.toString())
+			.replace('{{documentId}}', document.id || '')
+			.replace('{{versionId}}', versionId);
+
+		/** @type {PageComponent} */
+		const removeDocumentButton = {
+			wrapperHtml: {
+				opening: '',
+				closing: '</div></div>'
+			},
+			type: 'button',
+			parameters: {
+				id: 'remove-document',
+				href: removeDocumentUrlProcessed,
+				classes: 'govuk-button--secondary',
+				html: `Remove current version<span class="govuk-visually-hidden"> of ${document.name}</span>`
+			}
+		};
+
+		if (editable) {
+			pageComponents.push(uploadUpdatedDocumentButton);
+			pageComponents.push(removeDocumentButton);
+		}
+	}
+
+	/** @type {PageComponent} */
+	const documentHistoryDetails = {
+		wrapperHtml: {
+			opening:
+				'<div class="govuk-grid-row"><div class="govuk-grid-column-full"><h2>Document versions</h2><p class="govuk-body">View and remove versions of this document</p>',
+			closing: '</div></div>'
+		},
+		type: 'details',
+		parameters: {
+			summaryText: 'Version history',
+			html: '',
+			pageComponents: [
+				{
+					type: 'table',
+					parameters: {
+						head: [
+							{
+								text: 'Version'
+							},
+							{
+								text: 'Name'
+							},
+							{
+								text: 'Activity'
+							},
+							{
+								text: 'Redaction status'
+							},
+							{
+								text: 'Action'
+							}
+						],
+						rows: await Promise.all(
+							(document.allVersions || []).map(async (documentVersion) => {
+								const versionVirusCheckStatus =
+									mapDocumentVersionDetailsVirusCheckStatus(documentVersion);
+								const versionNumberText = documentVersion.version?.toString() || '';
+
+								return [
+									{
+										text: documentVersion.version?.toString() || ''
+									},
+									mapDocumentNameHtmlProperty(document, documentVersion),
+									{
+										html: await mapDocumentVersionToAuditActivityHtml(
+											documentVersion,
+											document.versionAudit || [],
+											session
+										)
+									},
+									{
+										text: documentVersion.redactionStatus
+									},
+									{
+										html:
+											documentVersion.isDeleted || !versionVirusCheckStatus.checked || !editable
+												? ''
+												: `<a class="govuk-link" href="${removeDocumentUrl
+														?.replace('{{folderId}}', folder.folderId.toString())
+														.replace('{{documentId}}', document.id || '')
+														.replace(
+															'{{versionId}}',
+															versionNumberText
+														)}">Remove <span class="govuk-visually-hidden"> version ${versionNumberText} of ${
+														document.name
+													}</span></a>`
+									}
+								];
+							})
+						).then((result) =>
+							result.sort((a, b) => parseInt(b[0].text, 10) - parseInt(a[0].text, 10))
+						)
+					}
+				}
+			]
+		}
+	};
+
+	pageComponents.push(documentHistoryDetails);
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title: pageTitleTextOverride || 'Manage document',
+		backLinkText: 'Back',
+		backLinkUrl: backLinkUrl
+			?.replace('{{folderId}}', folder.folderId.toString())
+			.replace('{{documentId}}', document.id || ''),
+		preHeading: pageTitleTextOverride || 'Manage document',
+		heading: headingText,
+		pageComponents
+	};
+
+	if (pageContent.pageComponents) {
+		preRenderPageComponents(pageContent.pageComponents);
+	}
+
+	return pageContent;
+}
+
+/**
+ * @param {Object} params
+ * @param {string|number} params.appealId
+ * @param {string} params.backLinkUrl
+ * @param {string} params.uploadUpdatedDocumentUrl
+ * @param {string} params.removeDocumentUrl
+ * @param {DocumentInfo} params.document
+ * @param {FolderInfo} params.folder
+ * @param {import('@pins/express/types/express.js').Request} params.request
+ * @param {string} [params.pageTitleTextOverride]
+ * @param {string} [params.dateRowLabelTextOverride]
+ * @param {boolean} [params.editable]
+ * @param {boolean} [params.skipChangeDocumentDetails]
+ * @param {string} [params.baseUrl]
+ * @param {boolean} [params.canShare]
+ * @returns {Promise<PageContent>}
+ */
+export async function manageShareableDocumentPage({
 	appealId,
 	backLinkUrl,
 	uploadUpdatedDocumentUrl,
@@ -1299,7 +1636,7 @@ export async function manageDocumentPage({
 		`${baseUrl}change-document-name`
 	);
 
-	const headingText = canShare ? 'Document details' : document?.name || '';
+	const headingText = document?.name || 'Document details';
 
 	const session = request.session;
 	const latestVersion = getDocumentLatestVersion(document);
@@ -1378,16 +1715,48 @@ export async function manageDocumentPage({
 		const { costsDocumentType } = request.params;
 		const { documentType: latestVersionDocumentType } = latestVersion ?? {};
 
-		const isSupportingHearingInquiryInquiryEventDocType =
-			latestVersionDocumentType &&
-			supportingHearingInquiryInquiryEventDocType.includes(latestVersionDocumentType);
-
 		const shareUrl =
 			request.originalUrl + getUrlSuffix({ costsDocumentType, latestVersionDocumentType });
 
-		const buttonText =
-			isUnredacted && isSupportingHearingInquiryInquiryEventDocType ? 'Redact' : 'Share document';
+		/** @type {PageComponent} */
+		const shareDocumentButton = {
+			type: 'button',
+			parameters: {
+				text: 'Share document',
+				href: shareUrl,
+				classes: 'govuk-button--secondary'
+			}
+		};
 
+		/** @type {PageComponent} */
+		const redactDocumentButton = {
+			type: 'button',
+			parameters: {
+				text: 'Redact document',
+				href: request.baseUrl + request.url.replace('manage-documents', 'change-document-details'),
+				classes: 'govuk-button--secondary'
+			}
+		};
+
+		pageComponents.push(
+			{
+				type: 'html',
+				parameters: { html: '<h2 class="govuk-heading-m">Current version</h2>' }
+			},
+			isUnredacted
+				? {
+						type: 'html',
+						parameters: {
+							html: '<p class="govuk-body">This document is unredacted and cannot be shared.</p>'
+						}
+					}
+				: {
+						type: 'html',
+						parameters: { html: '<p class="govuk-body">This document is not shared.</p>' }
+					},
+			isUnredacted ? redactDocumentButton : shareDocumentButton
+		);
+	} else {
 		pageComponents.push(
 			{
 				type: 'html',
@@ -1395,14 +1764,11 @@ export async function manageDocumentPage({
 			},
 			{
 				type: 'html',
-				parameters: { html: '<p class="govuk-body">This document is not shared</p>' }
-			},
-			{
-				type: 'button',
 				parameters: {
-					text: buttonText,
-					href: shareUrl,
-					classes: 'govuk-!-margin-bottom-7'
+					html:
+						canShare && isShared
+							? '<strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-4" aria-label="Shared document">Shared</strong>'
+							: ''
 				}
 			}
 		);
@@ -1533,7 +1899,7 @@ export async function manageDocumentPage({
 			parameters: {
 				id: 'upload-updated-document',
 				href: uploadNewVersionUrl,
-				classes: 'govuk-!-margin-right-2',
+				classes: 'govuk-!-margin-right-2 govuk-button--secondary',
 				html: `Upload a new version<span class="govuk-visually-hidden"> of ${document.name}</span>`
 			}
 		};

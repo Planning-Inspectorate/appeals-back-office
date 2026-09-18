@@ -652,6 +652,7 @@ describe('inquiry documents', () => {
 			console.log('Pending mocks:', nock.pendingMocks());
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
+			expect(unprettifiedElement.innerHTML).toContain('Current version</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<br><strong class="govuk-tag govuk-tag--blue govuk-!-margin-top-1" aria-label="Shared document">Shared</strong>'
 			);
@@ -660,7 +661,7 @@ describe('inquiry documents', () => {
 			);
 		});
 
-		it(`should render 'Document details' and 'Share document' button with correct link if document is NOT shared`, async () => {
+		it(`should render 'Share document' button with correct link if document is NOT shared`, async () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 			nock('http://test/').get('/appeals/1/exists').reply(200, appealData).persist();
@@ -689,16 +690,15 @@ describe('inquiry documents', () => {
 			);
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('Current version</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('This document is not shared</p>');
+			expect(unprettifiedElement.innerHTML).toContain('This document is not shared.</p>');
 
 			const expectedHref = `/appeals-service/appeal-details/1/inquiry/documents/manage-documents/${inquiryDocsFolderId}/1/invite-main-party-comments`;
 
 			expect(unprettifiedElement.innerHTML).toContain(`href="${expectedHref}"`);
 			expect(unprettifiedElement.innerHTML).toContain('Share document</a>');
 		});
-		it(`should render 'Document details' and 'Redact' button with correct link if document is NOT shared and redaction status is Unredacted`, async () => {
+		it(`should render 'Redact' button with correct link if document is NOT shared and redaction status is Unredacted`, async () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
 			nock('http://test/').get('/appeals/1/exists').reply(200, appealData).persist();
@@ -729,14 +729,15 @@ describe('inquiry documents', () => {
 			);
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('Current version</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('This document is not shared</p>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'This document is unredacted and cannot be shared.</p>'
+			);
 
-			const expectedHref = `/appeals-service/appeal-details/1/inquiry/documents/manage-documents/${inquiryDocsFolderId}/1/invite-main-party-comments`;
+			const expectedHref = `/appeals-service/appeal-details/1/inquiry/documents/change-document-details/${inquiryDocsFolderId}/1`;
 
 			expect(unprettifiedElement.innerHTML).toContain(`href="${expectedHref}"`);
-			expect(unprettifiedElement.innerHTML).toContain('Redact</a>');
+			expect(unprettifiedElement.innerHTML).toContain('Redact document</a>');
 		});
 	});
 
