@@ -7,7 +7,7 @@ import {
 	dayMonthYearHourMinuteToDisplayDate,
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
-import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
+import { initialiseAndMapAppealDataForCaseSummary } from '#lib/mappers/data/appeal/mapper.js';
 import { initialiseAndMapLPAQData } from '#lib/mappers/data/lpa-questionnaire/mapper.js';
 import {
 	createNotificationBanner,
@@ -43,7 +43,7 @@ import { generateCaseTypeSpecificComponents } from './generate-page-components/i
 
 /**
  * @param {LPAQuestionnaire} lpaqDetails
- * @param {Appeal} appealDetails
+ * @param {LPAQuestionnaire} appealDetails
  * @param {string} currentRoute
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @param {import('@pins/express/types/express.js').Request} request
@@ -69,13 +69,11 @@ export async function lpaQuestionnairePage(
 
 	const baseAppealRoute = `/appeals-service/appeal-details/${appealDetails.appealId}`;
 
-	const mappedAppealDetails = await initialiseAndMapAppealData(
+	const mappedAppealDetails = await initialiseAndMapAppealDataForCaseSummary(
 		appealDetails,
 		baseAppealRoute,
 		session,
-		request,
-		false,
-		true
+		request
 	);
 	const caseSummary = generateCaseSummary(mappedAppealDetails);
 
