@@ -28,6 +28,7 @@ import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import logger from '#lib/logger.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { FRONT_OFFICE_DASHBOARD_PATH_STUBS } from '@pins/appeals/constants/common.js';
 import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { addWeeks, format } from 'date-fns';
 import { capitalize, upperCase } from 'lodash-es';
@@ -731,7 +732,7 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
 		contact_email: email || '',
 		deadline: deadline,
 		responses_invited: inviteResponses,
-		dashboard_link: 'appeals'
+		dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APELLANT
 	});
 
 	const pageContent = shareDocumentCheckAndConfirmPage(
