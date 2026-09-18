@@ -254,6 +254,46 @@ describe('/appeals/:appealId/documents/:documentId', () => {
 				type: 'costs-withdrawal',
 				expectedTemplate: 'shared-cost-application-withdrawal',
 				inviteResponses: false
+			},
+			{
+				type: 'supporting-document',
+				expectedTemplate: 'document-received',
+				inviteResponses: true
+			},
+			{
+				type: 'supporting-document',
+				expectedTemplate: 'document-received',
+				inviteResponses: false
+			},
+			{
+				type: 'hearing-document',
+				expectedTemplate: 'document-received',
+				inviteResponses: true
+			},
+			{
+				type: 'hearing-document',
+				expectedTemplate: 'document-received',
+				inviteResponses: false
+			},
+			{
+				type: 'inquiry-document',
+				expectedTemplate: 'document-received',
+				inviteResponses: true
+			},
+			{
+				type: 'inquiry-document',
+				expectedTemplate: 'document-received',
+				inviteResponses: false
+			},
+			{
+				type: 'inquiry-event-document',
+				expectedTemplate: 'document-received',
+				inviteResponses: true
+			},
+			{
+				type: 'inquiry-event-document',
+				expectedTemplate: 'document-received',
+				inviteResponses: false
 			}
 		];
 
@@ -277,8 +317,8 @@ describe('/appeals/:appealId/documents/:documentId', () => {
 					})
 					.set('azureAdUserId', azureAdUserId);
 
-				expect(notifySend).toHaveBeenCalledTimes(2);
-				expect(notifySend).toHaveBeenCalledWith(
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				expect(mockNotifySend).toHaveBeenCalledWith(
 					expect.objectContaining({
 						templateName: expectedTemplate,
 						personalisation: expect.objectContaining({

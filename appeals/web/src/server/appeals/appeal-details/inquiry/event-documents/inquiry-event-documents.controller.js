@@ -1,3 +1,4 @@
+import { getTeamFromAppealId } from '#appeals/appeal-details/update-case-team/update-case-team.service.js';
 import {
 	postChangeDocumentDetails,
 	postChangeDocumentFileName,
@@ -20,11 +21,15 @@ import {
 	getFileVersionsInfo,
 	updateDocument
 } from '#appeals/appeal-documents/appeal.documents.service.js';
+import { appealSiteToAddressString } from '#lib/address-formatter.js';
+import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import logger from '#lib/logger.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { FRONT_OFFICE_DASHBOARD_PATH_STUBS } from '@pins/appeals/constants/common.js';
 import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
+import { addWeeks, format } from 'date-fns';
 import {
 	inviteMainPartyCommentsPage,
 	shareDocumentCheckAndConfirmPage
@@ -429,18 +434,35 @@ export const postInviteMainPartyComments = async (request, response) => {
 export const getShareDocumentCheckAndConfirm = async (request, response) => {
 	const { appealId, folderId, documentId } = request.params;
 	const session = request.session;
-	// const { currentAppeal } = request;
+	const { currentAppeal } = request;
 	const documentInfo = await getFileVersionsInfo(request.apiClient, documentId);
 	if (!documentInfo || !documentInfo.latestDocumentVersion) {
 		return response.status(404).render('app/404.njk');
 	}
 
 	const backLinkUrl = `/appeals-service/appeal-details/${appealId}/inquiry-event-documents/manage-documents/${folderId}/${documentId}/invite-main-party-comments`;
+	const { email } = await getTeamFromAppealId(request.apiClient, appealId);
+	const address = appealSiteToAddressString(currentAppeal?.appealSite);
+	const deadline = format(addWeeks(new Date(), 1), 'd MMMM yyyy');
+	const notifyTemplateName = 'document-received.content.md';
+
+	const inviteResponses = session?.inviteMainPartyComments?.toLowerCase() === 'yes';
+
+	const notifyPreview = await generateNotifyPreview(request.apiClient, notifyTemplateName, {
+		appeal_reference_number: currentAppeal?.appealReference,
+		site_address: address || '',
+		contact_email: email || '',
+		deadline: deadline,
+		responses_invited: inviteResponses,
+		dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
+		document_name: documentInfo.name || '',
+		document_type: 'inquiry-event-documents'
+	});
 
 	const pageContent = shareDocumentCheckAndConfirmPage(
 		backLinkUrl,
 		documentInfo.latestDocumentVersion,
-		null,
+		notifyPreview,
 		session.inviteMainPartyComments
 	);
 
