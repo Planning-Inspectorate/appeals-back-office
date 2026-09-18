@@ -22,7 +22,12 @@ import {
 import { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { formatHearing } from './hearing.formatter.js';
-import { createHearing, deleteHearing, updateHearing } from './hearing.service.js';
+import {
+	checkUpdatedHearingValues,
+	createHearing,
+	deleteHearing,
+	updateHearing
+} from './hearing.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -124,6 +129,8 @@ export const rearrangeHearing = async (req, res) => {
 		/** @type {Hearing | undefined} */
 		const currentHearing = await hearingRepository.getHearingById(hearingId);
 		const existingAddressId = currentHearing?.addressId;
+		const existingHearing = req.appeal.hearing;
+		const updatedHearingValues = checkUpdatedHearingValues(existingHearing, req.body);
 
 		await updateHearing(
 			{
@@ -152,8 +159,7 @@ export const rearrangeHearing = async (req, res) => {
 			}
 		}
 
-		const existingHearing = req.appeal.hearing;
-		if (existingHearing?.hearingStartTime !== hearingStartTime) {
+		if (!updatedHearingValues.isOnlyAddressUpdated && updatedHearingValues.isDateChanged) {
 			await createAuditTrail({
 				appealId: appeal.id,
 				azureAdUserId,
