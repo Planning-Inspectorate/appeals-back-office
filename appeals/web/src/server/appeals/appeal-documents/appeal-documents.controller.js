@@ -25,6 +25,7 @@ import {
 	documentUploadPage,
 	manageDocumentPage,
 	manageFolderPage,
+	manageShareableDocumentPage,
 	mapDocumentDetailsFormDataToAPIRequest,
 	mapDocumentFileNameFormDataToAPIRequest
 } from './appeal-documents.mapper.js';
@@ -400,7 +401,7 @@ export const renderManageDocument = async ({
 		return response.status(500).render('app/500.njk');
 	}
 
-	const mappedPageContent = await manageDocumentPage({
+	const pageContent = {
 		appealId,
 		backLinkUrl,
 		uploadUpdatedDocumentUrl,
@@ -412,9 +413,12 @@ export const renderManageDocument = async ({
 		dateRowLabelTextOverride,
 		editable: userHasPermission(permissionNames.updateCase, request.session),
 		skipChangeDocumentDetails,
-		baseUrl: manageDocumentPageBaseUrl,
-		canShare
-	});
+		baseUrl: manageDocumentPageBaseUrl
+	};
+
+	const mappedPageContent = canShare
+		? await manageShareableDocumentPage({ ...pageContent, canShare })
+		: await manageDocumentPage(pageContent);
 
 	return response.status(200).render('appeals/documents/manage-document.njk', {
 		pageContent: mappedPageContent,

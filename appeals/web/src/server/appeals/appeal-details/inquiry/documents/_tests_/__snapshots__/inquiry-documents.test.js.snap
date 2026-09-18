@@ -173,12 +173,12 @@ exports[`inquiry documents GET /inquiry/documents/manage-documents/:folderId/:do
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Inquiry documents</span>
-            <h1 class="govuk-heading-l">Document details</h1>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
-    <p class="govuk-body">This document is not shared</p><a href="/appeals-service/appeal-details/1/inquiry/documents/manage-documents/1/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-!-margin-bottom-7"
+    <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/inquiry/documents/manage-documents/1/1/invite-responses"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">

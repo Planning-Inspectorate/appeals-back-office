@@ -1598,7 +1598,6 @@ describe('costs', () => {
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-						expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 						expect(unprettifiedElement.innerHTML).toContain(
 							'test-pdf-documentFileVersionsInfo.pdf'
 						);
@@ -1623,7 +1622,6 @@ describe('costs', () => {
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-						expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 						expect(unprettifiedElement.innerHTML).toContain(
 							'test-pdf-documentFileVersionsInfo.pdf'
 						);
@@ -1649,7 +1647,6 @@ describe('costs', () => {
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-						expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 						expect(unprettifiedElement.innerHTML).toContain(
 							'test-pdf-documentFileVersionsInfo.pdf'
 						);
@@ -1682,7 +1679,6 @@ describe('costs', () => {
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-						expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 						expect(unprettifiedElement.innerHTML).toContain(
 							'test-pdf-documentFileVersionsInfo.pdf'
 						);
@@ -1761,9 +1757,8 @@ describe('costs', () => {
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-						expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 						expect(unprettifiedElement.innerHTML).toContain('Current version</h2>');
-						expect(unprettifiedElement.innerHTML).toContain('This document is not shared</p>');
+						expect(unprettifiedElement.innerHTML).toContain('This document is not shared.</p>');
 
 						const expectedHref =
 							costsDocumentType === 'withdrawal'
@@ -3305,7 +3300,6 @@ describe('costs', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
@@ -3328,7 +3322,6 @@ describe('costs', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
@@ -3352,7 +3345,6 @@ describe('costs', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<strong class="govuk-tag govuk-tag--red">Virus detected</strong>'
@@ -3383,7 +3375,6 @@ describe('costs', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
 				expect(unprettifiedElement.innerHTML).not.toContain(
 					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
