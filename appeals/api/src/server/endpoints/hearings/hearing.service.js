@@ -5,6 +5,7 @@ import { notifySend } from '#notify/notify-send.js';
 import hearingRepository from '#repositories/hearing.repository.js';
 import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import logger from '#utils/logger.js';
+import { toTime } from '#utils/to-time.js';
 import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
 import {
 	ERROR_FAILED_TO_SAVE_DATA,
@@ -42,6 +43,32 @@ const checkHearingExists = async (req, res, next) => {
 	}
 
 	next();
+};
+
+/**
+ * @param {Hearing | null | undefined} existingHearing
+ * @param {UpdateHearing} updatedHearing
+ * @returns {{isDateChanged: boolean, isEndTimeChanged: boolean, isEstimatedDaysChanged: boolean, isOnlyAddressUpdated: boolean}}
+ */
+const checkUpdatedHearingValues = (existingHearing, updatedHearing) => {
+	const existingEstimatedDays = existingHearing?.estimatedDays?.d?.[0];
+	const isDateChanged =
+		toTime(existingHearing?.hearingStartTime) !== toTime(updatedHearing.hearingStartTime);
+	const isEndTimeChanged =
+		toTime(existingHearing?.hearingEndTime) !== toTime(updatedHearing.hearingEndTime);
+	const isEstimatedDaysChanged =
+		(existingEstimatedDays ?? null) !== (updatedHearing.estimatedDays ?? null);
+	const isOnlyAddressUpdated =
+		updatedHearing.address !== undefined &&
+		!isDateChanged &&
+		!isEndTimeChanged &&
+		!isEstimatedDaysChanged;
+	return {
+		isDateChanged,
+		isEndTimeChanged,
+		isEstimatedDaysChanged,
+		isOnlyAddressUpdated
+	};
 };
 
 /**
@@ -278,4 +305,10 @@ const deleteHearing = async (deleteHearingData, notifyClient, appeal, azureAdUse
 	}
 };
 
-export { checkHearingExists, createHearing, deleteHearing, updateHearing };
+export {
+	checkHearingExists,
+	checkUpdatedHearingValues,
+	createHearing,
+	deleteHearing,
+	updateHearing
+};
