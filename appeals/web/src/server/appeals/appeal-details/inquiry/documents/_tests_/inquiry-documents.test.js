@@ -817,6 +817,7 @@ describe('inquiry documents', () => {
 	});
 	describe('GET and POST /inquiry/documents/manage-documents/:folderId/:documentId/check-your-answers', () => {
 		describe(`Testing Share CYA for inquiry documents`, () => {
+			const templateName = 'document-received.content.md';
 			beforeEach(() => {
 				nock.cleanAll();
 				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
@@ -833,10 +834,10 @@ describe('inquiry documents', () => {
 					.get('/appeals/1/case-team-email')
 					.reply(200, { email: 'test@example.com' })
 					.persist();
-				// nock('http://test/')
-				// 	.post(`/appeals/notify-preview/${templateName}`)
-				// 	.reply(200, { renderedHtml: '<p>Test notification</p>' })
-				// 	.persist();
+				nock('http://test/')
+					.post(`/appeals/notify-preview/${templateName}`)
+					.reply(200, { renderedHtml: '<p>Test notification</p>' })
+					.persist();
 			});
 
 			it(`should render the check your answers page`, async () => {

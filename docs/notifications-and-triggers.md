@@ -1082,3 +1082,10 @@ these [Notify Templates](../appeals/api/src/server/notify/templates):
 - **Notify Subject Template:** [shared-cost-application-withdrawal](../appeals/api/src/server/notify/templates/shared-cost-application-withdrawal.subject.md)
 - **Notify Content Template:** [shared-cost-application-withdrawal](../appeals/api/src/server/notify/templates/shared-cost-application-withdrawal.content.md)
 - **Trigger:**
+
+### Shared supporting, hearing, inquiry document
+
+- **Appeal type:** all
+- **Notify Subject Template:** [document-received](../appeals/api/src/server/notify/templates/document-received.subject.md)
+- **Notify Content Template:** [document-received](../appeals/api/src/server/notify/templates/document-received.content.md)
+- **Trigger:** Shared docuement

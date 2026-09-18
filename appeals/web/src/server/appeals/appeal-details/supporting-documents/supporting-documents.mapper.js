@@ -87,14 +87,22 @@ export function shareDocumentCheckAndConfirmPage(
 	}
 
 	if (notifyPreview) {
-		pageContent.pageComponents?.push({
-			type: 'details',
-			parameters: {
-				summaryText: 'Preview email to LPA and appellant',
-				html: notifyPreview.renderedHtml
+		pageContent.pageComponents?.push(
+			{
+				type: 'details',
+				parameters: {
+					summaryText: 'Preview email to appellant',
+					html: notifyPreview.renderedHtml
+				}
+			},
+			{
+				type: 'details',
+				parameters: {
+					summaryText: 'Preview email to LPA',
+					html: notifyPreview.renderedHtml
+				}
 			}
-		});
+		);
 	}
-
 	return pageContent;
 }

@@ -436,6 +436,12 @@ export const updateDocument = async (req, res) => {
 					case 'costs-withdrawal':
 						notifyTemplateName = 'shared-cost-application-withdrawal';
 						break;
+					case 'supporting-document':
+					case 'hearing-document':
+					case 'inquiry-document':
+					case 'inquiry-event-document':
+						notifyTemplateName = 'document-received';
+						break;
 				}
 
 				if (notifyTemplateName) {
@@ -443,7 +449,9 @@ export const updateDocument = async (req, res) => {
 						req.notifyClient,
 						appeal,
 						notifyTemplateName,
-						inviteResponses
+						inviteResponses,
+						latestDocument?.name,
+						sharingDocumentType
 					);
 				}
 			}
@@ -471,12 +479,16 @@ export const updateDocument = async (req, res) => {
  * @param {import('@pins/appeals.api').Schema.Appeal} appeal
  * @param {string} notifyTemplateName
  * @param {boolean} inviteResponses
+ * @param {string} documentName
+ * @param {string} sharingDocumentType
  */
 const sendShareDocumentEmails = async (
 	notifyClient,
 	appeal,
 	notifyTemplateName,
-	inviteResponses
+	inviteResponses,
+	documentName,
+	sharingDocumentType
 ) => {
 	const teamEmail = await getTeamEmailFromAppealId(appeal.id);
 	const deadline = format(addWeeks(new Date(), 1), 'd MMMM yyyy');
@@ -491,7 +503,9 @@ const sendShareDocumentEmails = async (
 		enforcement_reference: appeal?.appellantCase?.enforcementReference || '',
 		contact_email: teamEmail || '',
 		deadline: deadline,
-		responses_invited: !!inviteResponses
+		responses_invited: !!inviteResponses,
+		document_name: documentName || '',
+		document_type: sharingDocumentType || ''
 	};
 
 	const appellantEmail = appeal.agent?.email ?? appeal.appellant?.email;

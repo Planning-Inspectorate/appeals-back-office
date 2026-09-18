@@ -1201,7 +1201,6 @@ describe('hearing documents', () => {
 			});
 
 			it(`should render 'Shared' tags under the Version Summary and in Version History if document IS shared`, async () => {
-				nock.cleanAll();
 				nock('http://test/').get('/appeals/1/exists').reply(200, appealData).persist();
 				nock('http://test/')
 					.get('/appeals/document-redaction-statuses')
@@ -1237,7 +1236,6 @@ describe('hearing documents', () => {
 			});
 
 			it(`should render 'Document details' and 'Share document' button with correct link if document is NOT shared`, async () => {
-				nock.cleanAll();
 				nock('http://test/').get('/appeals/1/exists').reply(200, appealData).persist();
 				nock('http://test/')
 					.get('/appeals/document-redaction-statuses')
@@ -1274,7 +1272,6 @@ describe('hearing documents', () => {
 				expect(unprettifiedElement.innerHTML).toContain('Share document</a>');
 			});
 			it(`should render 'Document details' and 'Redact' button with correct link if document is NOT shared and redaction status is Unredacted`, async () => {
-				nock.cleanAll();
 				nock('http://test/').get('/appeals/1/exists').reply(200, appealData).persist();
 				nock('http://test/')
 					.get('/appeals/document-redaction-statuses')
@@ -1516,7 +1513,6 @@ describe('hearing documents', () => {
 
 	describe('GET and POST /hearing-documents/manage-documents/:folderId/:documentId/invite-main-party-comments', () => {
 		beforeEach(() => {
-			nock.cleanAll();
 			nock('http://test/').get('/appeals/1/exists').reply(200, appealData).persist();
 			nock('http://test/')
 				.get(getFolderApiUrl(hearingDocsFolderId))
@@ -1591,9 +1587,8 @@ describe('hearing documents', () => {
 	describe('GET and POST /hearing-documents/manage-documents/:folderId/:documentId/check-your-answers', () => {
 		describe(`Testing Share CYA for hearing documents`, () => {
 			beforeEach(() => {
-				// const templateName = 'shared-hearing-document.content.md';
+				const templateName = 'document-received.content.md';
 
-				nock.cleanAll();
 				nock('http://test/').get('/appeals/1/exists').reply(200, appealData).persist();
 				nock('http://test/')
 					.get(getFolderApiUrl(hearingDocsFolderId))
@@ -1607,17 +1602,16 @@ describe('hearing documents', () => {
 					.get('/appeals/1/case-team-email')
 					.reply(200, { email: 'test@example.com' })
 					.persist();
-				// nock('http://test/')
-				// 	.post(`/appeals/notify-preview/${templateName}`)
-				// 	.reply(200, { renderedHtml: '<p>Test notification</p>' })
-				// 	.persist();
+				nock('http://test/')
+					.post(`/appeals/notify-preview/${templateName}`)
+					.reply(200, { renderedHtml: '<p>Test notification</p>' })
+					.persist();
 			});
 
 			it(`should render the check your answers page`, async () => {
 				const response = await request.get(
 					`${baseUrl}/1/hearing-documents/manage-documents/${hearingDocsFolderId}/1/check-your-answers`
 				);
-
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(response.statusCode).toBe(200);
