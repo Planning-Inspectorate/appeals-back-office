@@ -155,6 +155,10 @@ front_office_infra_config = {
   }
 }
 
+# front-office storage account lives in a different resource group/subscription
+front_office_storage_account_rg = "pins-rg-appeals-service-dev-ukw-001"
+front_office_subscription_id    = "962e477c-0f3b-4372-97fc-a198a58e259e"
+
 horizon_infra_config = {
   deploy_connections = false
   # this isn't needed, but providers cannot be optional
