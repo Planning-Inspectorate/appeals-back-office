@@ -18,7 +18,7 @@ import {
 } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('#app/auth/auth-session.service').SessionWithAuth} SessionWithAuth */
-/** @typedef {{ documentGuid: string, name: string, stage: string, folderId: number, documentType: string }} DocInfo */
+/** @typedef {{ documentGuid: string, name: string, stage: string, folderId: number, documentType: string, representationId?: number, representationType?: string, }} DocInfo */
 
 /**
  * @param {import('../appeal-details.types.js').WebAppeal} appeal
@@ -40,6 +40,7 @@ export const mapMessageContent = async (appeal, log, docInfo, session, apiClient
 	result = tryMapDocumentRedactionStatus(result);
 	result = tryMapDocument(appeal.appealId, result, docInfo, appeal?.lpaQuestionnaireId || null);
 
+	// representation type not recorded in log/details
 	result = tryMapRepresentationType(appeal.appealId, result);
 	result = tryMapStatus(result, appeal.appealType, appeal.procedureType);
 
@@ -200,8 +201,28 @@ export const tryMapDocument = (appealId, log, docInfo, lpaqId) => {
 			return log.replace(name, `<a class="govuk-link" href="${url}">${name}</a>`);
 		}
 		case 'representation': {
-			const repAuditDisplayName = name.replace(/[a-f\d-]{36}_/, '');
-			return log.replace(name, `<a class="govuk-link" href="#">${repAuditDisplayName}</a>`);
+			const repType = docInfo?.representationType;
+			if (!repType) break;
+
+			const source = repType.includes('final_comment')
+				? ['appellant', 'lpa'].find((s) => repType.includes(s))
+				: undefined;
+			const isIpComment = !source && repType.includes('comment');
+			const base = isIpComment
+				? 'interested-party-comments'
+				: repType.replace(source ? `${source}_` : '', '').replace(/_/g, '-');
+
+			const representationPath = isIpComment
+				? `${base}/${docInfo?.representationId}`
+				: source
+					? `${base}s/${source}`
+					: base;
+
+			const url = `/appeals-service/appeal-details/${appealId}/${representationPath}/manage-documents/${folderId}`;
+			return log.replace(
+				name,
+				`<a class="govuk-link" href="${url}">${name.replace(/[a-f\d-]{36}_/, '')}</a>`
+			);
 		}
 		case APPEAL_CASE_STAGE.CANCELLATION: {
 			const url = `/documents/${appealId}/download/${documentGuid}/${name}`;

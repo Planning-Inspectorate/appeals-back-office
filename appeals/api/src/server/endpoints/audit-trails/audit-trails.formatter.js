@@ -21,7 +21,9 @@ const formatAuditTrail = (auditTrail, appealTypeKey) =>
 							stage: doc.document?.latestDocumentVersion?.stage || '',
 							folderId: doc.document?.folderId ?? 0,
 							documentType: doc.document?.latestDocumentVersion?.documentType || '',
-							redactionStatus: doc.document?.latestDocumentVersion?.redactionStatus?.key
+							redactionStatus: doc.document?.latestDocumentVersion?.redactionStatus?.key,
+							representationId: doc.representation?.id || null,
+							representationType: doc.representation?.representationType || null
 						}
 					: undefined
 			}))
