@@ -49,7 +49,6 @@ const formatAppeal = (appeal) => {
 		procedureType: appeal.procedureType?.name,
 		createdAt: appeal.caseCreatedDate,
 		localPlanningDepartment: appeal.lpa?.name || '',
-		documentationSummary: formatDocumentationSummary(appeal),
 		appealTimetable: formatAppealTimetable(appeal),
 		planningApplicationReference: appeal.applicationReference,
 		isHearingSetup: !!appeal.hearing,
@@ -124,7 +123,7 @@ const formatPersonalListItem = async ({
 };
 
 /**
- * @param {AppealListSelected|PersonalListAppeal} appeal
+ * @param {PersonalListAppeal} appeal
  * @returns {DocumentationSummary}
  * */
 const formatDocumentationSummary = (appeal) => {
