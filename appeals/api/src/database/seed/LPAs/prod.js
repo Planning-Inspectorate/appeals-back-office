@@ -178,7 +178,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'E5330',
 		name: 'Greenwich',
 		email: 'planning-enforcement@royalgreenwich.gov.uk',
-		teamId: 9, // West3
+		teamId: 8, // West2
 		enforcementTeamId: 6 // Enforcement Appeals Team - Team 4
 	},
 	{
@@ -521,7 +521,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'H1840',
 		name: 'Wychavon District Council',
 		email: 'Planning.Appeals@wychavon.gov.uk',
-		teamId: 9, // West3
+		teamId: 10, // West4
 		enforcementTeamId: 3 // Enforcement Appeals Team - Team 1
 	},
 	{
@@ -1464,7 +1464,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'C3105',
 		name: 'Cherwell District Council',
 		email: 'submit.appeal@cherwell-dc.gov.uk',
-		teamId: 9, //West3
+		teamId: 8, //West2
 		enforcementTeamId: 3 // Enforcement Appeals Team - Team 1
 	},
 	{
@@ -1478,7 +1478,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'M1710',
 		name: 'East Hampshire District Council',
 		email: 'planning.appeals@easthants.gov.uk',
-		teamId: 7, //West1
+		teamId: 9, //West3
 		enforcementTeamId: 6 // Enforcement Appeals Team - Team 4
 	},
 	{
@@ -1583,7 +1583,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'T0355',
 		name: 'Royal Borough of Windsor and Maidenhead',
 		email: 'planning.appeals@rbwm.gov.uk',
-		teamId: 7, //West1
+		teamId: 10, //West4
 		enforcementTeamId: 6 // Enforcement Appeals Team - Team 4
 	},
 	{
