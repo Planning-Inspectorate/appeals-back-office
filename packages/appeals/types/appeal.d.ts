@@ -69,7 +69,6 @@ export interface AppealListItem {
 	createdAt: Date;
 	localPlanningDepartment: string;
 	appealTimetable?: AppealTimetable;
-	documentationSummary: DocumentationSummary;
 	planningApplicationReference: string | null;
 	isHearingSetup: boolean | null;
 	hasHearingAddress: boolean | null;
