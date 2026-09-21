@@ -62,7 +62,7 @@ resource "azurerm_storage_container" "sql_server" {
   #TODO: Logging
   #checkov:skip=CKV2_AZURE_21 Logging not implemented yet
   name                  = "sqlvulnerabilityassessment"
-  storage_account_name  = azurerm_storage_account.sql_server.name
+  storage_account_id    = azurerm_storage_account.sql_server.id
   container_access_type = "private"
 }
 
@@ -87,7 +87,7 @@ resource "azurerm_role_assignment" "sql_server_storage" {
 # auditing policy
 resource "azurerm_mssql_server_extended_auditing_policy" "sql_server" {
   enabled                = true
-  storage_endpoint       = azurerm_storage_account.sql_server.primary_blob_endpoint
+  blob_storage_endpoint  = azurerm_storage_account.sql_server.primary_blob_endpoint
   server_id              = azurerm_mssql_server.primary.id
   retention_in_days      = var.sql_config.retention.audit_days
   log_monitoring_enabled = false
@@ -100,14 +100,15 @@ resource "azurerm_mssql_server_extended_auditing_policy" "sql_server" {
 
 # security alerts
 resource "azurerm_mssql_server_security_alert_policy" "sql_server" {
-  state                      = var.alerts_enabled ? "Enabled" : "Disabled"
-  resource_group_name        = azurerm_resource_group.primary.name
-  server_name                = azurerm_mssql_server.primary.name
-  storage_endpoint           = azurerm_storage_account.sql_server.primary_blob_endpoint
-  storage_account_access_key = azurerm_storage_account.sql_server.primary_access_key
-  retention_days             = var.sql_config.retention.audit_days
-  email_account_admins       = true
-  email_addresses            = local.tech_emails
+  #checkov:skip=CKV_AZURE_27: "Ensure that 'Email service and co-administrators' is 'Enabled' for MSSQL servers"
+  state                        = var.alerts_enabled ? "Enabled" : "Disabled"
+  resource_group_name          = azurerm_resource_group.primary.name
+  server_name                  = azurerm_mssql_server.primary.name
+  storage_endpoint             = azurerm_storage_account.sql_server.primary_blob_endpoint
+  storage_account_access_key   = azurerm_storage_account.sql_server.primary_access_key
+  retention_days               = var.sql_config.retention.audit_days
+  email_account_admins_enabled = true
+  email_addresses              = local.tech_emails
 }
 
 # vulnerabilty assesment
