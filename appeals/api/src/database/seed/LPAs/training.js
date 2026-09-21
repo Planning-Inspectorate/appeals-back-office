@@ -179,7 +179,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'E5330',
 		name: 'Greenwich',
 		email: 'planning-enforcement@example.gov.uk',
-		teamId: 10, // West4
+		teamId: 8, // West2
 		enforcementTeamId: 6 // Enforcement Appeals Team - Team 4
 	},
 	{
@@ -522,7 +522,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'H1840',
 		name: 'Wychavon District Council',
 		email: 'Planning.Appeals@example.gov.uk',
-		teamId: 9, // West3
+		teamId: 10, // West4
 		enforcementTeamId: 3 // Enforcement Appeals Team - Team 1
 	},
 	{
@@ -1465,7 +1465,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'C3105',
 		name: 'Cherwell District Council',
 		email: 'submit.appeal@example.gov.uk',
-		teamId: 9, //West3
+		teamId: 8, //West2
 		enforcementTeamId: 3 // Enforcement Appeals Team - Team 1
 	},
 	{
@@ -1479,7 +1479,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'M1710',
 		name: 'East Hampshire District Council',
 		email: 'planning.appeals@example.gov.ukuk',
-		teamId: 7, //West1
+		teamId: 9, //West3
 		enforcementTeamId: 6 // Enforcement Appeals Team - Team 4
 	},
 	{
