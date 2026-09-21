@@ -5,6 +5,7 @@ import { isCaseInvalid } from '#utils/case-invalid.js';
 import { findStatusDate } from '#utils/mapping/map-dates.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import { REP_ATTACHMENT_DOCTYPE } from '@pins/appeals/constants/documents.js';
+import { EventType } from '@pins/event-client';
 import {
 	APPEAL_CASE_STAGE,
 	APPEAL_CASE_STATUS,
@@ -14,7 +15,9 @@ import {
 import { mapAppellantCaseIn } from '../commands/appellant-case.mapper.js';
 import { mapDesignatedSiteNames, mapQuestionnaireIn } from '../commands/questionnaire.mapper.js';
 import { mapDocumentEntity } from '../map-document-entity.js';
+import { mapSiteVisitEntity } from '../map-event-entity.js';
 import { mapCaseDates } from '../shared/s20s78/map-case-dates.js';
+
 describe('appeals generic mappers', () => {
 	test('map case validation date on invalid appeal', async () => {
 		const input = {
@@ -244,6 +247,41 @@ describe('mapCaseDates', () => {
 			lpaProofsSubmittedDate: '2025-03-19T09:12:33.334Z',
 			appellantProofsSubmittedDate: '2025-03-20T09:12:33.334Z',
 			siteNoticesSentDate: null
+		});
+	});
+});
+
+describe('map-event-entity', () => {
+	const input = {
+		id: 2160,
+		appealId: 7179,
+		appeal: { reference: '6007179', address: undefined },
+		siteVisitType: { id: 3, key: 'site_visit_unaccompanied', name: 'Unaccompanied' },
+		siteVisitTypeId: null,
+		visitDate: '2026-09-20T23:00:00.000Z',
+		visitStartTime: '2026-09-20T23:00:00.000Z',
+		visitEndTime: '2026-10-20T23:00:00.000Z',
+		whoMissedSiteVisit: null
+	};
+
+	test('map event entity should map and create correct message for when site visit is deleted', async () => {
+		const result = mapSiteVisitEntity(input, EventType.Delete);
+		expect(result).toEqual({
+			addressCounty: '',
+			addressLine1: '',
+			addressLine2: '',
+			addressPostcode: '',
+			addressTown: '',
+			caseReference: '6007179',
+			eventEndDateTime: null,
+			eventId: '6007179-1',
+			eventName: 'Site visit #2160',
+			eventPublished: true,
+			eventStartDateTime: null,
+			eventStatus: 'withdrawn',
+			eventType: 'site_visit_unaccompanied',
+			isUrgent: false,
+			notificationOfSiteVisit: null
 		});
 	});
 });
