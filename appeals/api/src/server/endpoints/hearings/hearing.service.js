@@ -60,6 +60,7 @@ const checkUpdatedHearingValues = (existingHearing, updatedHearing) => {
 		(existingEstimatedDays ?? null) !== (updatedHearing.estimatedDays ?? null);
 	const isOnlyAddressUpdated =
 		updatedHearing.address !== undefined &&
+		existingHearing?.address !== updatedHearing.address &&
 		!isDateChanged &&
 		!isEndTimeChanged &&
 		!isEstimatedDaysChanged;
