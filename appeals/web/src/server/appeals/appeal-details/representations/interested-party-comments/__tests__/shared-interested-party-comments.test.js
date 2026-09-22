@@ -60,24 +60,57 @@ describe('Interested Party Comments (Shared/Published View)', () => {
 				'/documents/2/bulk-download/ip-comments/case-SHAREDTEST-ip-comments.zip';
 			expect(downloadLinkInnerHtml).toContain(`href="${downloadLinkUrl}`);
 
-			//check number of table rows
-			const tableRows = dom.querySelectorAll('.govuk-table__body tr');
-			expect(tableRows).toHaveLength(interestedPartyCommentsPublished.itemCount);
+			const headings = dom.querySelectorAll('h3');
+			expect(headings).toHaveLength(interestedPartyCommentsPublished.itemCount);
+			expect(headings[0].textContent?.trim()).toBe('Interested party 1');
+			expect(headings[1].textContent?.trim()).toBe('Interested party 2');
 
-			//check content of table rows
-			const firstRow = parseHtml(response.text).querySelector(
-				'.govuk-table__body .govuk-table__row'
+			const summaryLists = dom.querySelectorAll('.govuk-summary-list');
+			expect(summaryLists).toHaveLength(interestedPartyCommentsPublished.itemCount);
+
+			const firstListRows = summaryLists[0].querySelectorAll('.govuk-summary-list__row');
+			expect(firstListRows).toHaveLength(6);
+			expect(firstListRows[0].querySelector('.govuk-summary-list__key')?.textContent?.trim()).toBe(
+				'Interested party'
 			);
-			const row1columns = firstRow?.querySelectorAll('.govuk-table__cell');
-			expect(firstRow).not.toBeNull();
-			expect(row1columns?.[1].textContent?.trim()).toBe('Comment 1');
+			expect(
+				firstListRows[0].querySelector('.govuk-summary-list__value')?.textContent?.trim()
+			).toBe('Lee Thornton');
+			expect(firstListRows[1].querySelector('.govuk-summary-list__key')?.textContent?.trim()).toBe(
+				'Date received'
+			);
+			expect(
+				firstListRows[1].querySelector('.govuk-summary-list__value')?.textContent?.trim()
+			).toBe('1 April 2025, 10:15');
+			expect(firstListRows[2].querySelector('.govuk-summary-list__key')?.textContent?.trim()).toBe(
+				'Email'
+			);
+			expect(
+				firstListRows[2].querySelector('.govuk-summary-list__value')?.textContent?.trim()
+			).toBe('test1@example.com');
+			expect(firstListRows[3].querySelector('.govuk-summary-list__key')?.textContent?.trim()).toBe(
+				'Address'
+			);
+			expect(
+				firstListRows[3].querySelector('.govuk-summary-list__value')?.textContent?.trim()
+			).toBe('No address');
+			expect(firstListRows[4].querySelector('.govuk-summary-list__key')?.textContent?.trim()).toBe(
+				'Comment'
+			);
+			expect(
+				firstListRows[4].querySelector('.govuk-summary-list__value')?.textContent?.trim()
+			).toBe('Comment 1');
+			expect(firstListRows[5].querySelector('.govuk-summary-list__key')?.textContent?.trim()).toBe(
+				'Supporting documents'
+			);
+			expect(
+				firstListRows[5].querySelector('.govuk-summary-list__value')?.textContent?.trim()
+			).toBe('No documents');
 
-			expect(row1columns?.[2].innerHTML).not.toContain('govuk-!-padding-left-0');
-
-			const nextRow = firstRow?.nextElementSibling;
-			expect(nextRow).not.toBeNull();
-			const row2columns = nextRow?.querySelectorAll('.govuk-table__cell');
-			expect(row2columns?.[1].textContent?.trim()).toBe('Comment 2');
+			const secondListRows = summaryLists[1].querySelectorAll('.govuk-summary-list__row');
+			expect(
+				secondListRows[4].querySelector('.govuk-summary-list__value')?.textContent?.trim()
+			).toBe('Comment 2');
 			expect(dom.innerHTML).toMatchSnapshot();
 		});
 
@@ -89,6 +122,131 @@ describe('Interested Party Comments (Shared/Published View)', () => {
 			expect(response.statusCode).toEqual(200);
 			const backLinkUrl = '/appeals-service/appeal-details/2';
 			expect(backLinkInnerHtml).toContain(`href="${backLinkUrl}`);
+		});
+	});
+	describe('GET /interested-party-comments with site visit requested, long comment, and fallbacks', () => {
+		const detailedComments = {
+			itemCount: 2,
+			items: [
+				{
+					id: 6001,
+					author: 'Sarah Philips',
+					status: 'published',
+					originalRepresentation: 'A'.repeat(350),
+					redactedRepresentation: '',
+					created: '2026-03-09T13:59:00.000Z',
+					siteVisitRequested: true,
+					attachments: [
+						{
+							version: 1,
+							documentVersion: {
+								document: {
+									caseId: 2,
+									guid: 'doc-guid-1',
+									name: 'document1.pdf'
+								}
+							}
+						},
+						{
+							version: 1,
+							documentVersion: {
+								document: {
+									caseId: 2,
+									guid: 'doc-guid-2',
+									name: 'document2.pdf'
+								}
+							}
+						}
+					],
+					represented: {
+						id: 4001,
+						name: 'Sarah Philips',
+						email: 'sarah.phillips@example.com',
+						address: {
+							addressLine1: '72 Guild Street',
+							town: 'London',
+							postCode: 'SE23 6FH'
+						}
+					}
+				},
+				{
+					id: 6002,
+					author: 'Jane Doe',
+					status: 'published',
+					originalRepresentation: 'Short comment',
+					created: '2026-03-10T23:59:00.000Z',
+					siteVisitRequested: false,
+					attachments: [],
+					represented: {
+						id: 4002,
+						name: 'Jane Doe',
+						email: '',
+						address: {}
+					}
+				}
+			],
+			page: 1,
+			pageCount: 1,
+			pageSize: 25
+		};
+
+		beforeEach(() => {
+			nock('http://test/')
+				.get('/appeals/2/reps')
+				.query({
+					type: 'comment',
+					status: 'published',
+					pageNumber: paginationParameters.pageNumber,
+					pageSize: paginationParameters.pageSize
+				})
+				.reply(200, detailedComments);
+		});
+
+		it('should render site visit requested tag, address, documents list, and No email/No address fallbacks', async () => {
+			const response = await request.get(`${baseUrl}/2/interested-party-comments`);
+			expect(response.statusCode).toEqual(200);
+
+			const dom = parseHtml(response.text);
+
+			const tag = dom.querySelector('.govuk-tag--blue');
+			expect(tag).not.toBeNull();
+			expect(tag?.textContent?.trim()).toBe('Site visit requested');
+
+			const summaryLists = dom.querySelectorAll('.govuk-summary-list');
+			expect(summaryLists).toHaveLength(2);
+
+			const list1Rows = summaryLists[0].querySelectorAll('.govuk-summary-list__row');
+			expect(list1Rows[0].querySelector('.govuk-summary-list__value')?.textContent?.trim()).toBe(
+				'Sarah Philips'
+			);
+			expect(list1Rows[1].querySelector('.govuk-summary-list__value')?.textContent?.trim()).toBe(
+				'9 March 2026, 13:59'
+			);
+			expect(list1Rows[2].querySelector('.govuk-summary-list__value')?.textContent?.trim()).toBe(
+				'sarah.phillips@example.com'
+			);
+			expect(list1Rows[3].querySelector('.govuk-summary-list__value')?.textContent?.trim()).toBe(
+				'72 Guild Street, London, SE23 6FH'
+			);
+			expect(list1Rows[4].querySelector('.pins-show-more')).not.toBeNull();
+			expect(list1Rows[4].querySelector('.pins-show-more')?.getAttribute('data-label')).toBe(
+				'Read more'
+			);
+			const docLinks = list1Rows[5].querySelectorAll('a');
+			expect(docLinks).toHaveLength(2);
+			expect(docLinks[0].textContent?.trim()).toBe('document1.pdf');
+			expect(docLinks[1].textContent?.trim()).toBe('document2.pdf');
+
+			const list2Rows = summaryLists[1].querySelectorAll('.govuk-summary-list__row');
+			expect(list2Rows[2].querySelector('.govuk-summary-list__value')?.textContent?.trim()).toBe(
+				'No email'
+			);
+			expect(list2Rows[3].querySelector('.govuk-summary-list__value')?.textContent?.trim()).toBe(
+				'No address'
+			);
+			expect(list2Rows[5].querySelector('.govuk-summary-list__value')?.textContent?.trim()).toBe(
+				'No documents'
+			);
 		});
 	});
 	describe('GET /interested-party-comments when item count is 0', () => {
@@ -128,15 +286,8 @@ describe('Interested Party Comments (Shared/Published View)', () => {
 				'/documents/2/bulk-download/ip-comments/case-SHAREDTEST-ip-comments.zip';
 			expect(downloadLinkInnerHtml).toContain(`href="${downloadLinkUrl}`);
 
-			//check number of table rows
-			const tableRows = dom.querySelectorAll('.govuk-table__body tr');
-			expect(tableRows).toHaveLength(0);
-
-			//check content of table rows
-			const firstRow = parseHtml(response.text).querySelector(
-				'.govuk-table__body .govuk-table__row'
-			);
-			expect(firstRow).toBeNull();
+			const summaryLists = dom.querySelectorAll('.govuk-summary-list');
+			expect(summaryLists).toHaveLength(0);
 			expect(dom.innerHTML).toMatchSnapshot();
 		});
 	});
@@ -181,22 +332,14 @@ describe.each([
 
 			expect(response.text).not.toContain('Add interested party comment');
 
-			const tableRows = dom.querySelectorAll('.govuk-table__body tr');
-			expect(tableRows).toHaveLength(interestedPartyCommentsPublished.itemCount);
+			const summaryLists = dom.querySelectorAll('.govuk-summary-list');
+			expect(summaryLists).toHaveLength(interestedPartyCommentsPublished.itemCount);
 
-			const firstRow = parseHtml(response.text).querySelector(
-				'.govuk-table__body .govuk-table__row'
-			);
-			const row1columns = firstRow?.querySelectorAll('.govuk-table__cell');
-			expect(firstRow).not.toBeNull();
-			expect(row1columns?.[1].textContent?.trim()).toBe('Comment 1');
+			const headings = dom.querySelectorAll('h3');
+			expect(headings).toHaveLength(interestedPartyCommentsPublished.itemCount);
+			expect(headings[0].textContent?.trim()).toBe('Interested party 1');
+			expect(headings[1].textContent?.trim()).toBe('Interested party 2');
 
-			expect(row1columns?.[2].innerHTML).not.toContain('govuk-!-padding-left-0');
-
-			const nextRow = firstRow?.nextElementSibling;
-			expect(nextRow).not.toBeNull();
-			const row2columns = nextRow?.querySelectorAll('.govuk-table__cell');
-			expect(row2columns?.[1].textContent?.trim()).toBe('Comment 2');
 			expect(dom.innerHTML).toMatchSnapshot();
 		});
 	}

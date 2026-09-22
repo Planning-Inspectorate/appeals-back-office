@@ -11,31 +11,53 @@ exports[`GET /interested-party-comments without add IP comment link when appeal 
         class="govuk-link">Download all documents</a>
     </p>
     <h2>Shared IP comments</h2>
-    <table class="govuk-table">
-        <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Address</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-half">Comment</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Supporting documents</th>
-            </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-            <tr class="govuk-table__row">
-                <td class="govuk-table__cell">No address</td>
-                <td class="govuk-table__cell">
-                    <div class="pins-show-more" data-label="Read more" data-mode="html">Comment 1</div>
-                </td>
-                <td class="govuk-table__cell">No documents</td>
-            </tr>
-            <tr class="govuk-table__row">
-                <td class="govuk-table__cell">No address</td>
-                <td class="govuk-table__cell">
-                    <div class="pins-show-more" data-label="Read more" data-mode="html">Comment 2</div>
-                </td>
-                <td class="govuk-table__cell">No documents</td>
-            </tr>
-        </tbody>
-    </table>
+    <h3>Interested party 1</h3>
+    <dl class="govuk-summary-list govuk-summary-list--no-border">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party</dt>
+            <dd class="govuk-summary-list__value">Lee Thornton</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date received</dt>
+            <dd class="govuk-summary-list__value">1 April 2025, 10:15</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Email</dt>
+            <dd class="govuk-summary-list__value">test1@example.com</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
+            <dd class="govuk-summary-list__value">No address</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
+            <dd class="govuk-summary-list__value">
+                <div class="pins-show-more" data-label="Read more" data-mode="html">Comment 1</div>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+            <dd class="govuk-summary-list__value">No documents</dd>
+        </div>
+    </dl>
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    <h3>Interested party 2</h3>
+    <dl class="govuk-summary-list govuk-summary-list--no-border">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party</dt>
+            <dd class="govuk-summary-list__value">Lee Thornton</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date received</dt>
+            <dd class="govuk-summary-list__value">2 April 2025, 15:05</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Email</dt>
+            <dd class="govuk-summary-list__value">test1@example.com</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
+            <dd class="govuk-summary-list__value">No address</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
+            <dd class="govuk-summary-list__value">
+                <div class="pins-show-more" data-label="Read more" data-mode="html">Comment 2</div>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+            <dd class="govuk-summary-list__value">No documents</dd>
+        </div>
+    </dl>
 </main>"
 `;
 
@@ -50,31 +72,53 @@ exports[`GET /interested-party-comments without add IP comment link when appeal 
         class="govuk-link">Download all documents</a>
     </p>
     <h2>Shared IP comments</h2>
-    <table class="govuk-table">
-        <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Address</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-half">Comment</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Supporting documents</th>
-            </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-            <tr class="govuk-table__row">
-                <td class="govuk-table__cell">No address</td>
-                <td class="govuk-table__cell">
-                    <div class="pins-show-more" data-label="Read more" data-mode="html">Comment 1</div>
-                </td>
-                <td class="govuk-table__cell">No documents</td>
-            </tr>
-            <tr class="govuk-table__row">
-                <td class="govuk-table__cell">No address</td>
-                <td class="govuk-table__cell">
-                    <div class="pins-show-more" data-label="Read more" data-mode="html">Comment 2</div>
-                </td>
-                <td class="govuk-table__cell">No documents</td>
-            </tr>
-        </tbody>
-    </table>
+    <h3>Interested party 1</h3>
+    <dl class="govuk-summary-list govuk-summary-list--no-border">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party</dt>
+            <dd class="govuk-summary-list__value">Lee Thornton</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date received</dt>
+            <dd class="govuk-summary-list__value">1 April 2025, 10:15</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Email</dt>
+            <dd class="govuk-summary-list__value">test1@example.com</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
+            <dd class="govuk-summary-list__value">No address</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
+            <dd class="govuk-summary-list__value">
+                <div class="pins-show-more" data-label="Read more" data-mode="html">Comment 1</div>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+            <dd class="govuk-summary-list__value">No documents</dd>
+        </div>
+    </dl>
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    <h3>Interested party 2</h3>
+    <dl class="govuk-summary-list govuk-summary-list--no-border">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party</dt>
+            <dd class="govuk-summary-list__value">Lee Thornton</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date received</dt>
+            <dd class="govuk-summary-list__value">2 April 2025, 15:05</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Email</dt>
+            <dd class="govuk-summary-list__value">test1@example.com</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
+            <dd class="govuk-summary-list__value">No address</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
+            <dd class="govuk-summary-list__value">
+                <div class="pins-show-more" data-label="Read more" data-mode="html">Comment 2</div>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+            <dd class="govuk-summary-list__value">No documents</dd>
+        </div>
+    </dl>
 </main>"
 `;
 
@@ -89,31 +133,53 @@ exports[`GET /interested-party-comments without add IP comment link when appeal 
         class="govuk-link">Download all documents</a>
     </p>
     <h2>Shared IP comments</h2>
-    <table class="govuk-table">
-        <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Address</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-half">Comment</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Supporting documents</th>
-            </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-            <tr class="govuk-table__row">
-                <td class="govuk-table__cell">No address</td>
-                <td class="govuk-table__cell">
-                    <div class="pins-show-more" data-label="Read more" data-mode="html">Comment 1</div>
-                </td>
-                <td class="govuk-table__cell">No documents</td>
-            </tr>
-            <tr class="govuk-table__row">
-                <td class="govuk-table__cell">No address</td>
-                <td class="govuk-table__cell">
-                    <div class="pins-show-more" data-label="Read more" data-mode="html">Comment 2</div>
-                </td>
-                <td class="govuk-table__cell">No documents</td>
-            </tr>
-        </tbody>
-    </table>
+    <h3>Interested party 1</h3>
+    <dl class="govuk-summary-list govuk-summary-list--no-border">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party</dt>
+            <dd class="govuk-summary-list__value">Lee Thornton</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date received</dt>
+            <dd class="govuk-summary-list__value">1 April 2025, 10:15</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Email</dt>
+            <dd class="govuk-summary-list__value">test1@example.com</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
+            <dd class="govuk-summary-list__value">No address</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
+            <dd class="govuk-summary-list__value">
+                <div class="pins-show-more" data-label="Read more" data-mode="html">Comment 1</div>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+            <dd class="govuk-summary-list__value">No documents</dd>
+        </div>
+    </dl>
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    <h3>Interested party 2</h3>
+    <dl class="govuk-summary-list govuk-summary-list--no-border">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party</dt>
+            <dd class="govuk-summary-list__value">Lee Thornton</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date received</dt>
+            <dd class="govuk-summary-list__value">2 April 2025, 15:05</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Email</dt>
+            <dd class="govuk-summary-list__value">test1@example.com</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
+            <dd class="govuk-summary-list__value">No address</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
+            <dd class="govuk-summary-list__value">
+                <div class="pins-show-more" data-label="Read more" data-mode="html">Comment 2</div>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+            <dd class="govuk-summary-list__value">No documents</dd>
+        </div>
+    </dl>
 </main>"
 `;
 
@@ -128,31 +194,53 @@ exports[`GET /interested-party-comments without add IP comment link when appeal 
         class="govuk-link">Download all documents</a>
     </p>
     <h2>Shared IP comments</h2>
-    <table class="govuk-table">
-        <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Address</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-half">Comment</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Supporting documents</th>
-            </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-            <tr class="govuk-table__row">
-                <td class="govuk-table__cell">No address</td>
-                <td class="govuk-table__cell">
-                    <div class="pins-show-more" data-label="Read more" data-mode="html">Comment 1</div>
-                </td>
-                <td class="govuk-table__cell">No documents</td>
-            </tr>
-            <tr class="govuk-table__row">
-                <td class="govuk-table__cell">No address</td>
-                <td class="govuk-table__cell">
-                    <div class="pins-show-more" data-label="Read more" data-mode="html">Comment 2</div>
-                </td>
-                <td class="govuk-table__cell">No documents</td>
-            </tr>
-        </tbody>
-    </table>
+    <h3>Interested party 1</h3>
+    <dl class="govuk-summary-list govuk-summary-list--no-border">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party</dt>
+            <dd class="govuk-summary-list__value">Lee Thornton</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date received</dt>
+            <dd class="govuk-summary-list__value">1 April 2025, 10:15</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Email</dt>
+            <dd class="govuk-summary-list__value">test1@example.com</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
+            <dd class="govuk-summary-list__value">No address</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
+            <dd class="govuk-summary-list__value">
+                <div class="pins-show-more" data-label="Read more" data-mode="html">Comment 1</div>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+            <dd class="govuk-summary-list__value">No documents</dd>
+        </div>
+    </dl>
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    <h3>Interested party 2</h3>
+    <dl class="govuk-summary-list govuk-summary-list--no-border">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party</dt>
+            <dd class="govuk-summary-list__value">Lee Thornton</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date received</dt>
+            <dd class="govuk-summary-list__value">2 April 2025, 15:05</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Email</dt>
+            <dd class="govuk-summary-list__value">test1@example.com</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
+            <dd class="govuk-summary-list__value">No address</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
+            <dd class="govuk-summary-list__value">
+                <div class="pins-show-more" data-label="Read more" data-mode="html">Comment 2</div>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+            <dd class="govuk-summary-list__value">No documents</dd>
+        </div>
+    </dl>
 </main>"
 `;
 
@@ -170,16 +258,6 @@ exports[`Interested Party Comments (Shared/Published View) GET /interested-party
         class="govuk-link">Add interested party comment</a>
     </p>
     <h2>Shared IP comments</h2>
-    <table class="govuk-table">
-        <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Address</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-half">Comment</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Supporting documents</th>
-            </tr>
-        </thead>
-        <tbody class="govuk-table__body"></tbody>
-    </table>
 </main>"
 `;
 
@@ -197,30 +275,52 @@ exports[`Interested Party Comments (Shared/Published View) GET /interested-party
         class="govuk-link">Add interested party comment</a>
     </p>
     <h2>Shared IP comments</h2>
-    <table class="govuk-table">
-        <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Address</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-half">Comment</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Supporting documents</th>
-            </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-            <tr class="govuk-table__row">
-                <td class="govuk-table__cell">No address</td>
-                <td class="govuk-table__cell">
-                    <div class="pins-show-more" data-label="Read more" data-mode="html">Comment 1</div>
-                </td>
-                <td class="govuk-table__cell">No documents</td>
-            </tr>
-            <tr class="govuk-table__row">
-                <td class="govuk-table__cell">No address</td>
-                <td class="govuk-table__cell">
-                    <div class="pins-show-more" data-label="Read more" data-mode="html">Comment 2</div>
-                </td>
-                <td class="govuk-table__cell">No documents</td>
-            </tr>
-        </tbody>
-    </table>
+    <h3>Interested party 1</h3>
+    <dl class="govuk-summary-list govuk-summary-list--no-border">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party</dt>
+            <dd class="govuk-summary-list__value">Lee Thornton</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date received</dt>
+            <dd class="govuk-summary-list__value">1 April 2025, 10:15</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Email</dt>
+            <dd class="govuk-summary-list__value">test1@example.com</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
+            <dd class="govuk-summary-list__value">No address</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
+            <dd class="govuk-summary-list__value">
+                <div class="pins-show-more" data-label="Read more" data-mode="html">Comment 1</div>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+            <dd class="govuk-summary-list__value">No documents</dd>
+        </div>
+    </dl>
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    <h3>Interested party 2</h3>
+    <dl class="govuk-summary-list govuk-summary-list--no-border">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party</dt>
+            <dd class="govuk-summary-list__value">Lee Thornton</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date received</dt>
+            <dd class="govuk-summary-list__value">2 April 2025, 15:05</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Email</dt>
+            <dd class="govuk-summary-list__value">test1@example.com</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
+            <dd class="govuk-summary-list__value">No address</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
+            <dd class="govuk-summary-list__value">
+                <div class="pins-show-more" data-label="Read more" data-mode="html">Comment 2</div>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+            <dd class="govuk-summary-list__value">No documents</dd>
+        </div>
+    </dl>
 </main>"
 `;
