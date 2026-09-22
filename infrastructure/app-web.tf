@@ -91,21 +91,14 @@ module "app_web" {
     RETRY_STATUS_CODES = "408,413,429,500,502,503,504,521,522,524"
 
     #feature flags
-    FEATURE_FLAG_S78_WRITTEN                         = var.apps_config.featureFlags.featureFlagS78Written
-    FEATURE_FLAG_S78_INQUIRY                         = var.apps_config.featureFlags.featureFlagS78Inquiry
     FEATURE_FLAG_LINKED_APPEALS                      = var.apps_config.featureFlags.featureFlagLinkedAppeals
     FEATURE_FLAG_LINKED_APPEALS_UNLINK               = var.apps_config.featureFlags.featureFlagLinkedAppealsUnlink
     FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT            = var.apps_config.featureFlags.featureFlagSimplifyTeamAssignment
     FEATURE_FLAG_PDF_DOWNLOAD                        = var.apps_config.featureFlags.featureFlagPdfDownload
-    FEATURE_FLAG_NOTIFY_CASE_HISTORY                 = var.apps_config.featureFlags.featureFlagNotifyCaseHistory
-    FEATURE_FLAG_NET_RESIDENCE_S20                   = var.apps_config.featureFlags.featureFlagNetResidenceS20
     FEATURE_FLAG_CANCEL_CASE                         = var.apps_config.featureFlags.featureFlagCancelCase
     FEATURE_FLAG_CHANGE_PROCEDURE_TYPE               = var.apps_config.featureFlags.featureFlagChangeProcedureType
     FEATURE_FLAG_HEARING_POST_MVP                    = var.apps_config.featureFlags.featureFlagHearingPostMvp
     FEATURE_FLAG_AUTO_ASSIGN_TEAM                    = var.apps_config.featureFlags.featureFlagAutoAssignTeam
-    FEATURE_FLAG_CANCEL_SITE_VISIT                   = var.apps_config.featureFlags.featureFlagCancelSiteVisit
-    FEATURE_FLAG_SEARCH_CASE_OFFICER                 = var.apps_config.featureFlags.featureFlagSearchCaseOfficer
-    FEATURE_FLAG_ENFORCEMENT_NOTICE                  = var.apps_config.featureFlags.featureFlagEnforcementNotice
     FEATURE_FLAG_ENFORCEMENT_LINKED                  = var.apps_config.featureFlags.featureFlagEnforcementLinked
     FEATURE_FLAG_ENFORCEMENT_LEAD_CAN_START          = var.apps_config.featureFlags.featureFlagEnforcementLeadCanStart
     FEATURE_FLAG_ENFORCEMENT_CANCEL                  = var.apps_config.featureFlags.featureFlagEnforcementCancel
@@ -113,12 +106,10 @@ module "app_web" {
     FEATURE_FLAG_RULE_6_MVP                          = var.apps_config.featureFlags.featureFlagRule6Mvp
     FEATURE_FLAG_RULE_6_POE                          = var.apps_config.featureFlags.featureFlagRule6PoE
     FEATURE_FLAG_EXPEDITED_APPEALS                   = var.apps_config.featureFlags.featureFlagExpeditedAppeals
-    FEATURE_FLAG_MANUALLY_ADD_REP                    = var.apps_config.featureFlags.featureFlagManuallyAddReps
     FEATURE_FLAG_APPELLANT_STATEMENT                 = var.apps_config.featureFlags.featureFlagAppellantStatement
     FEATURE_FLAG_RULE_6_STATEMENT                    = var.apps_config.featureFlags.featureFlagRule6Statement
     FEATURE_FLAG_RULE_6_COSTS                        = var.apps_config.featureFlags.featureFlagRule6Costs
     FEATURE_FLAG_LDC                                 = var.apps_config.featureFlags.featureFlagLDC
-    FEATURE_FLAG_S20_HEARING                         = var.apps_config.featureFlags.featureFlagS20Hearing
     FEATURE_FLAG_S20_INQUIRY                         = var.apps_config.featureFlags.featureFlagS20Inquiry
     FEATURE_FLAG_ENFORCEMENT_NOTICE_HEARING          = var.apps_config.featureFlags.featureFlagEnforcementNoticeHearing
     FEATURE_FLAG_ENFORCEMENT_NOTICE_INQUIRY          = var.apps_config.featureFlags.featureFlagEnforcementNoticeInquiry
@@ -132,7 +123,6 @@ module "app_web" {
     FEATURE_FLAG_EXPEDITED_APPEALS_LPAQ              = var.apps_config.featureFlags.featureFlagExpeditedAppealsLpaq
     FEATURE_FLAG_EXPEDITED_APPEALS_CHANGE_PROCEDURE  = var.apps_config.featureFlags.featureFlagExpeditedAppealsChangeProcedure
     FEATURE_FLAG_SHARE_COSTS                         = var.apps_config.featureFlags.featureFlagShareCosts
-    FEATURE_FLAG_NEW_BEFORE_YOU_START                = var.apps_config.featureFlags.featureFlagNewBeforeYouStart
     FEATURE_FLAG_ENFORCEMENT_CHANGE_PROCEDURE        = var.apps_config.featureFlags.featureFlagEnforcementChangeProcedure
     FEATURE_FLAG_SHARING_HEARING_DOCUMENTS           = var.apps_config.featureFlags.featureFlagSharingHearingDocuments
     FEATURE_FLAG_SHARING_INQUIRY_EVENT_DOCUMENTS     = var.apps_config.featureFlags.featureFlagSharingInquiryEventDocuments
