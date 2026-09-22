@@ -435,6 +435,7 @@ model AppellantCaseIncompleteReasonsSelected {
   appellantCaseIncompleteReasonText AppellantCaseIncompleteReasonText[]
 
   @@id([appellantCaseIncompleteReasonId, appellantCaseId])
+  @@index([appellantCaseId, appellantCaseIncompleteReasonId])
 }
 
 /// AppellantCaseInvalidReasonsSelected model
@@ -447,6 +448,7 @@ model AppellantCaseInvalidReasonsSelected {
   appellantCaseInvalidReasonText AppellantCaseInvalidReasonText[]
 
   @@id([appellantCaseInvalidReasonId, appellantCaseId])
+  @@index([appellantCaseId, appellantCaseInvalidReasonId])
 }
 
 /// AppellantCaseIncompleteReasonText model
@@ -494,6 +496,7 @@ model AppellantCaseEnforcementInvalidReasonsSelected {
   appellantCaseEnforcementInvalidReasonText AppellantCaseEnforcementInvalidReasonText[]
 
   @@id([appellantCaseEnforcementInvalidReasonId, appellantCaseId])
+  @@index([appellantCaseId, appellantCaseEnforcementInvalidReasonId])
 }
 
 /// AppellantCaseEnforcementInvalidReasonText model
@@ -528,6 +531,7 @@ model AppellantCaseEnforcementMissingDocumentsSelected {
   appellantCaseEnforcementMissingDocumentText AppellantCaseEnforcementMissingDocumentText[]
 
   @@id([appellantCaseEnforcementMissingDocumentId, appellantCaseId])
+  @@index([appellantCaseId, appellantCaseEnforcementMissingDocumentId])
 }
 
 /// AppellantCaseEnforcementMissingDocumentText model
@@ -562,6 +566,7 @@ model AppellantCaseEnforcementGroundsMismatchFactsSelected {
   appellantCaseEnforcementGroundsMismatchFactsText AppellantCaseEnforcementGroundsMismatchFactsText[]
 
   @@id([appellantCaseEnforcementGroundsMismatchFactsId, appellantCaseId])
+  @@index([appellantCaseId, appellantCaseEnforcementGroundsMismatchFactsId])
 }
 
 /// AppellantCaseEnforcementMissingDocumentText model
@@ -717,6 +722,7 @@ model LPAQuestionnaireIncompleteReasonsSelected {
   lpaQuestionnaireIncompleteReasonText LPAQuestionnaireIncompleteReasonText[]
 
   @@id([lpaQuestionnaireIncompleteReasonId, lpaQuestionnaireId])
+  @@index([lpaQuestionnaireId, lpaQuestionnaireIncompleteReasonId])
 }
 
 /// LPAQuestionnaireIncompleteReasonText model
@@ -727,6 +733,8 @@ model LPAQuestionnaireIncompleteReasonText {
   lPAQuestionnaireIncompleteReasonsSelected LPAQuestionnaireIncompleteReasonsSelected @relation(fields: [lpaQuestionnaireIncompleteReasonId, lpaQuestionnaireId], references: [lpaQuestionnaireIncompleteReasonId, lpaQuestionnaireId])
   lpaQuestionnaireIncompleteReasonId        Int
   lpaQuestionnaireId                        Int
+
+  @@index([lpaQuestionnaireId, lpaQuestionnaireIncompleteReasonId])
 }
 
 /// ListedBuildingDetails model
@@ -739,6 +747,8 @@ model ListedBuildingSelected {
   listedBuilding        ListedBuilding    @relation(fields: [listEntry], references: [reference], onUpdate: NoAction, onDelete: NoAction)
   affectsListedBuilding Boolean           @default(true)
   lpaQuestionnaire      LPAQuestionnaire? @relation(fields: [lpaQuestionnaireId], references: [id])
+
+  @@index([lpaQuestionnaireId, listEntry])
 }
 
 /// LPANotificationMethods model
@@ -780,6 +790,7 @@ model DesignatedSiteSelected {
   lpaQuestionnaireId Int
 
   @@id([designatedSiteId, lpaQuestionnaireId])
+  @@index([lpaQuestionnaireId, designatedSiteId])
 }
 
 /// SiteVisit model
@@ -855,6 +866,7 @@ model Document {
   @@unique([guid, latestVersionId])
   @@index([caseId, folderId])
   @@index([folderId])
+  @@index([folderId, isDeleted, createdAt])
 }
 
 /// DocumentVersion model
@@ -897,7 +909,6 @@ model DocumentVersion {
 
   @@id([documentGuid, version])
   @@index([documentGuid], map: "documentGuid")
-  @@index([documentURI])
   @@index([documentType])
   @@index([stage])
 }
@@ -926,6 +937,8 @@ model DocumentVersionAudit {
   auditTrail   AuditTrail? @relation("auditTrails", fields: [auditTrailId], references: [id], onUpdate: NoAction, onDelete: NoAction)
   auditTrailId Int         @unique
   action       String
+
+  @@index([documentGuid])
 }
 
 /// DocumentRedactionStatus model
@@ -1017,6 +1030,7 @@ model RepresentationRejectionReasonsSelected {
   representationRejectionReasonText RepresentationRejectionReasonText[]
 
   @@id([representationRejectionReasonId, representationId])
+  @@index([representationId, representationRejectionReasonId])
 }
 
 /// RepresentationRejectionReasonText model
@@ -1027,6 +1041,8 @@ model RepresentationRejectionReasonText {
   representationRejectionReasonsSelected RepresentationRejectionReasonsSelected @relation(fields: [representationRejectionReasonId, representationId], references: [representationRejectionReasonId, representationId])
   representationRejectionReasonId        Int
   representationId                       Int
+
+  @@index([representationId])
 }
 
 /// Comment model
@@ -1143,6 +1159,7 @@ model PersonalList {
   appeal       Appeal    @relation("appeal", fields: [appealId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([dueDate, leadAppealId, linkType(sort: Desc), appealId])
+  @@index([leadAppealId, dueDate])
 }
 
 /// AppellantCaseAdvertDetails model
