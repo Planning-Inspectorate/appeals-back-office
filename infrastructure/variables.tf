@@ -57,21 +57,14 @@ variable "apps_config" {
     })
 
     featureFlags = object({
-      featureFlagS78Written                       = bool
-      featureFlagS78Inquiry                       = bool
       featureFlagLinkedAppeals                    = bool
       featureFlagLinkedAppealsUnlink              = bool
-      featureFlagNotifyCaseHistory                = bool
       featureFlagSimplifyTeamAssignment           = bool
       featureFlagPdfDownload                      = bool
-      featureFlagNetResidenceS20                  = bool
       featureFlagCancelCase                       = bool
       featureFlagChangeProcedureType              = bool
       featureFlagHearingPostMvp                   = bool
       featureFlagAutoAssignTeam                   = bool
-      featureFlagCancelSiteVisit                  = bool
-      featureFlagSearchCaseOfficer                = bool
-      featureFlagEnforcementNotice                = bool
       featureFlagEnforcementLinked                = bool
       featureFlagEnforcementLeadCanStart          = bool
       featureFlagEnforcementCancel                = bool
@@ -79,12 +72,10 @@ variable "apps_config" {
       featureFlagRule6Mvp                         = bool
       featureFlagRule6PoE                         = bool
       featureFlagExpeditedAppeals                 = bool
-      featureFlagManuallyAddReps                  = bool
       featureFlagAppellantStatement               = bool
       featureFlagRule6Statement                   = bool
       featureFlagLDC                              = bool
       featureFlagRule6Costs                       = bool
-      featureFlagS20Hearing                       = bool
       featureFlagS20Inquiry                       = bool
       featureFlagEnforcementNoticeHearing         = bool
       featureFlagEnforcementNoticeInquiry         = bool
@@ -98,7 +89,6 @@ variable "apps_config" {
       featureFlagShareCosts                       = bool
       featureFlagExpeditedAppealsLpaq             = bool
       featureFlagExpeditedAppealsChangeProcedure  = bool
-      featureFlagNewBeforeYouStart                = bool
       featureFlagEnforcementChangeProcedure       = bool
       featureFlagSharingHearingDocuments          = bool
       featureFlagSharingInquiryEventDocuments     = bool
