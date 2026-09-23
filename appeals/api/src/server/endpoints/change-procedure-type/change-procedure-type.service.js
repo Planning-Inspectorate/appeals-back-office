@@ -14,6 +14,7 @@ import logger from '#utils/logger.js';
 import {
 	APPEAL_REPRESENTATION_TYPE,
 	EVENT_TYPE,
+	FRONT_OFFICE_DASHBOARD_PATH_STUBS,
 	PROCEDURE_TYPE_NAME
 } from '@pins/appeals/constants/common.js';
 import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
@@ -514,6 +515,9 @@ const sendNotifications = async (
 				lpa_reference: appeal.applicationReference ?? '',
 				...(enforcementReference && { enforcement_reference: enforcementReference }),
 				is_lpa: item.isLpa,
+				fo_dashboard_stub: item.isLpa
+					? FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA
+					: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
 				lpa_statement_exists: lpaStatement ? true : false,
 				subject,
 				...personalisation

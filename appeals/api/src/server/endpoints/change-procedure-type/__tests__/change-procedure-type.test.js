@@ -208,6 +208,7 @@ describe('Change appeal procedure type route', () => {
 					personalisation: {
 						...personalisation,
 						is_lpa: false,
+						fo_dashboard_stub: 'appeals',
 						subject: 'We have changed your appeal procedure: 1345264',
 						existing_appeal_procedure: 'hearing',
 						week_before_conference_date: '25 December 2998'
@@ -221,6 +222,7 @@ describe('Change appeal procedure type route', () => {
 					personalisation: {
 						...personalisation,
 						is_lpa: true,
+						fo_dashboard_stub: 'manage-appeals',
 						subject: 'We have changed the appeal procedure: 1345264',
 						existing_appeal_procedure: 'hearing',
 						week_before_conference_date: '25 December 2998'
@@ -299,6 +301,7 @@ describe('Change appeal procedure type route', () => {
 					personalisation: {
 						...personalisation,
 						is_lpa: false,
+						fo_dashboard_stub: 'appeals',
 						subject: 'We have changed your appeal procedure: 1345264'
 					},
 					recipientEmail: fullPlanningAppeal.agent.email,
@@ -310,6 +313,7 @@ describe('Change appeal procedure type route', () => {
 					personalisation: {
 						...personalisation,
 						is_lpa: true,
+						fo_dashboard_stub: 'manage-appeals',
 						subject: 'We have changed the appeal procedure: 1345264'
 					},
 					recipientEmail: fullPlanningAppeal.lpa.email,
@@ -572,6 +576,7 @@ describe('Change appeal procedure type route', () => {
 					personalisation: {
 						...personalisation,
 						is_lpa: false,
+						fo_dashboard_stub: 'appeals',
 						subject: 'We have changed your appeal procedure: 1345264',
 						existing_appeal_procedure: 'inquiry',
 						week_before_conference_date: '25 December 2998'
@@ -585,6 +590,7 @@ describe('Change appeal procedure type route', () => {
 					personalisation: {
 						...personalisation,
 						is_lpa: true,
+						fo_dashboard_stub: 'manage-appeals',
 						subject: 'We have changed the appeal procedure: 1345264',
 						existing_appeal_procedure: 'inquiry',
 						week_before_conference_date: '25 December 2998'
@@ -664,6 +670,7 @@ describe('Change appeal procedure type route', () => {
 					personalisation: {
 						...personalisation,
 						is_lpa: false,
+						fo_dashboard_stub: 'appeals',
 						subject: 'We have changed your appeal procedure: 1345264',
 						existing_appeal_procedure: 'written',
 						week_before_conference_date: '25 December 2998'
@@ -677,6 +684,7 @@ describe('Change appeal procedure type route', () => {
 					personalisation: {
 						...personalisation,
 						is_lpa: true,
+						fo_dashboard_stub: 'manage-appeals',
 						subject: 'We have changed the appeal procedure: 1345264',
 						existing_appeal_procedure: 'written',
 						week_before_conference_date: '25 December 2998'
@@ -938,6 +946,7 @@ describe('Change appeal procedure type route', () => {
 					personalisation: {
 						...personalisation,
 						is_lpa: false,
+						fo_dashboard_stub: 'appeals',
 						subject: 'We have changed your appeal procedure: 1345264',
 						existing_appeal_procedure: 'hearing',
 						week_before_conference_date: '25 December 2998'
@@ -951,6 +960,7 @@ describe('Change appeal procedure type route', () => {
 					personalisation: {
 						...personalisation,
 						is_lpa: true,
+						fo_dashboard_stub: 'manage-appeals',
 						subject: 'We have changed the appeal procedure: 1345264',
 						existing_appeal_procedure: 'hearing',
 						week_before_conference_date: '25 December 2998'
@@ -1089,6 +1099,7 @@ describe('Change appeal procedure type route', () => {
 					personalisation: {
 						...personalisation,
 						is_lpa: false,
+						fo_dashboard_stub: 'appeals',
 						subject: 'We have changed your appeal procedure: 1345264',
 						existing_appeal_procedure: 'written',
 						week_before_conference_date: '25 December 2998',
@@ -1103,6 +1114,7 @@ describe('Change appeal procedure type route', () => {
 					personalisation: {
 						...personalisation,
 						is_lpa: true,
+						fo_dashboard_stub: 'manage-appeals',
 						subject: 'We have changed the appeal procedure: 1345264',
 						week_before_conference_date: '25 December 2998'
 					},
