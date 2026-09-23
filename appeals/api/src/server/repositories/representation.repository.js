@@ -130,6 +130,7 @@ const getRepresentations = async (appealIds, options, pageNumber, pageSize) => {
 				representationType: true,
 				status: true,
 				dateCreated: true,
+				dateLastUpdated: true,
 				originalRepresentation: true,
 				source: true,
 				redactedRepresentation: true,
