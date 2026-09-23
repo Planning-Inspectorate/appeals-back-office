@@ -18,7 +18,7 @@ We have informed the appellant and local planning authority about the decision.
 
 # Costs decision
 
-[Sign in to our service]({{front_office_url}}/appeals/{{appeal_reference_number}}) to view the costs decision.
+[Access our service]({{front_office_url}}/comment-planning-appeal/appeals/{{appeal_reference_number}}) to view the costs decision.
 {% endif %}
 
 # Feedback
