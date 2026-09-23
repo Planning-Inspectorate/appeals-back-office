@@ -87,6 +87,8 @@ export interface RepResponse {
 	redactedRepresentation?: string;
 	/** @example "2024-08-15T13:30:44.434Z" */
 	created?: string;
+	/** @example "2024-08-15T13:30:44.434Z" */
+	lastUpdated?: string;
 	/** @example "" */
 	notes?: string;
 	/** @example [] */

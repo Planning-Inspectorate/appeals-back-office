@@ -28,6 +28,7 @@ export const formatRepresentation = (rep) => {
 		originalRepresentation: rep.originalRepresentation || '',
 		redactedRepresentation: rep.redactedRepresentation || '',
 		created: rep.dateCreated.toISOString(),
+		lastUpdated: rep.dateLastUpdated?.toISOString(),
 		notes: rep.notes || '',
 		attachments: (() => {
 			if (!repHasAttachments(rep)) {

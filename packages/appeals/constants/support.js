@@ -76,6 +76,7 @@ export const AUDIT_TRAIL_RULE_6_PARTY_PROOFS_EVIDENCE_UPDATED =
 
 //Interested party comment rep logs
 export const AUDIT_TRAIL_REP_COMMENT_STATUS_VALID = 'Interested party comment accepted';
+// Note: If changing this constant, add the previous value to REJECTED_COMMENT_AUDIT_STRINGS in audit.controller.js to preserve historical audit trail matching.
 export const AUDIT_TRAIL_REP_COMMENT_STATUS_INVALID = 'Interested party comment rejected';
 export const AUDIT_TRAIL_REP_COMMENT_STATUS_REDACTED_AND_ACCEPTED =
 	'Interested party comment redacted and accepted';
