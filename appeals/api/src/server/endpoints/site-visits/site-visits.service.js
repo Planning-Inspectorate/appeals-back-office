@@ -1,10 +1,20 @@
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { notifySend } from '#notify/notify-send.js';
+import appealRepository from '#repositories/appeal.repository.js';
 import siteVisitRepository from '#repositories/site-visit.repository.js';
+import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
+import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { setPersonalList } from '#utils/update-personal-list.js';
 import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
+import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
 import {
 	AUDIT_TRAIL_RECORD_MISSED_SITE_VISIT,
 	AUDIT_TRAIL_SITE_VISIT_ARRANGED,
+	AUDIT_TRAIL_SITE_VISIT_CANCELLED,
 	AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
 	CASE_RELATIONSHIP_LINKED,
 	DEFAULT_DATE_FORMAT_AUDIT_TRAIL,
@@ -12,22 +22,13 @@ import {
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import formatDate, { formatTime } from '@pins/appeals/utils/date-formatter.js';
-// eslint-disable-next-line no-unused-vars
-import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
-import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
-import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import { notifySend } from '#notify/notify-send.js';
-import appealRepository from '#repositories/appeal.repository.js';
-import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
-import logger from '#utils/logger.js';
-import { setPersonalList } from '#utils/update-personal-list.js';
-import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
-import { AUDIT_TRAIL_SITE_VISIT_CANCELLED } from '@pins/appeals/constants/support.js';
 import { appealCaseTypeToAppealTypeMapper } from '@pins/appeals/utils/appeal-type-case.mapper.js';
 import { addDays } from '@pins/appeals/utils/business-days.js';
 import { sendSiteVisitScheduleUnaccompaniedNotify } from '@pins/appeals/utils/business-rules.js';
-import { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
+import formatDate, {
+	dateISOStringToDisplayDate,
+	formatTime
+} from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
 import { formatInTimeZone } from 'date-fns-tz';
 import { capitalize, upperCase } from 'lodash-es';
@@ -195,12 +196,14 @@ const checkSiteVisitExists = async (req, res, next) => {
  * @param {UpdateSiteVisitData} updateSiteVisitData
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {number[]} appealIdsToUpdate
+ * @param {boolean} isCompletingSiteVisitSetup
  */
 const updateSiteVisit = async (
 	azureAdUserId,
 	updateSiteVisitData,
 	notifyClient,
-	appealIdsToUpdate
+	appealIdsToUpdate,
+	isCompletingSiteVisitSetup
 ) => {
 	try {
 		const visitDate = updateSiteVisitData.visitDate;
@@ -216,10 +219,12 @@ const updateSiteVisit = async (
 		};
 
 		const appealId = Number(updateSiteVisitData.appealId);
+
 		const notifyTemplateIds = fetchRescheduleTemplateIds(
 			updateSiteVisitData.visitType.name,
 			updateSiteVisitData.previousVisitType,
-			updateSiteVisitData.siteVisitChangeType
+			updateSiteVisitData.siteVisitChangeType,
+			isCompletingSiteVisitSetup
 		);
 
 		const result = await siteVisitRepository.updateMultiSiteVisitByAppealId(
@@ -284,6 +289,32 @@ const updateSiteVisit = async (
 						templateName: notifyTemplateIds.lpa,
 						notifyClient,
 						recipientEmail: updateSiteVisitData.lpaEmail,
+						personalisation: emailVariables
+					});
+				} catch {
+					throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+				}
+			}
+		} else if (visitDate && updateSiteVisitData.visitType.name === 'Unaccompanied') {
+			const emailVariables = {
+				appeal_reference_number: updateSiteVisitData.appealReferenceNumber,
+				lpa_reference: updateSiteVisitData.lpaReference,
+				...(updateSiteVisitData.enforcementReference && {
+					enforcement_reference: updateSiteVisitData.enforcementReference
+				}),
+				site_address: updateSiteVisitData.siteAddress,
+				start_time: formatTime(updateSiteVisitData.visitStartTime) || '',
+				visit_date: formatDate(new Date(updateSiteVisitData.visitDate || ''), false),
+				inspector_name: updateSiteVisitData.inspectorName || '',
+				team_email_address: await getTeamEmailFromAppealId(appealId)
+			};
+			if (notifyTemplateIds.appellant && updateSiteVisitData.appellantEmail) {
+				try {
+					await notifySend({
+						azureAdUserId,
+						templateName: notifyTemplateIds.appellant,
+						notifyClient,
+						recipientEmail: updateSiteVisitData.appellantEmail,
 						personalisation: emailVariables
 					});
 				} catch {
@@ -405,25 +436,51 @@ const updateWhenSiteVisitMissed = async (
  * @param {string} visitType
  * @param {string} previousVisitType
  * @param {string} siteVisitChangeType
+ * @param {boolean} isCompletingSiteVisitSetup
  *
  * @returns {VisitNotificationTemplateIds}
  */
-const fetchRescheduleTemplateIds = (visitType, previousVisitType, siteVisitChangeType) => {
+const fetchRescheduleTemplateIds = (
+	visitType,
+	previousVisitType,
+	siteVisitChangeType,
+	isCompletingSiteVisitSetup
+) => {
 	switch (siteVisitChangeType) {
 		case 'unchanged':
 			return {};
 
 		case 'date-time':
 			if (visitType === 'Access required') {
-				return {
-					appellant: 'site-visit-change-access-required-date-change-appellant'
-				};
+				if (isCompletingSiteVisitSetup) {
+					return {
+						appellant: 'site-visit-schedule-access-required-appellant'
+					};
+				} else {
+					return {
+						appellant: 'site-visit-change-access-required-date-change-appellant'
+					};
+				}
 			} else if (visitType === 'Accompanied') {
-				return {
-					appellant: 'site-visit-change-accompanied-date-change-appellant',
-					lpa: 'site-visit-change-accompanied-date-change-lpa'
-				};
+				if (isCompletingSiteVisitSetup) {
+					return {
+						appellant: 'site-visit-schedule-accompanied-appellant',
+						lpa: 'site-visit-schedule-accompanied-lpa'
+					};
+				} else {
+					return {
+						appellant: 'site-visit-change-accompanied-date-change-appellant',
+						lpa: 'site-visit-change-accompanied-date-change-lpa'
+					};
+				}
+			} else if (visitType === 'Unaccompanied') {
+				if (isCompletingSiteVisitSetup) {
+					return {
+						appellant: 'site-visit-schedule-unaccompanied-appellant'
+					};
+				}
 			}
+
 			return {};
 
 		case 'all':
