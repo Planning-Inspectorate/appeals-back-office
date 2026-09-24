@@ -203,6 +203,54 @@ describe('Setup hearing and add hearing estimates', () => {
 		hearingSectionPage.verifyHearingValues('address', 'Yes', true, Object.values(originalAddress));
 	});
 
+	it('should cancel hearing on child appeals - should not show hearing details on unlinked child appeal if hearing cancelled', () => {
+		const childAppeal = {
+			reference: String(Number(appeal.reference) + 1),
+			id: String(Number(appeal.id) + 1)
+		};
+
+		cy.getBusinessActualDate(new Date(), 2).then((date) => {
+			const estimatedDays = 6;
+			const formattedDate = formatDateAndTime(date);
+			happyPathHelper.startS78HearingCase(caseObj, 'hearing', {
+				date,
+				setEstimatedDays: true,
+				estimatedDays,
+				startCase: true
+			});
+
+			hearingSectionPage.verifyHearingValues(
+				'estimated-days',
+				String(Number(estimatedDays)) + ' Days'
+			);
+			hearingSectionPage.verifyHearingValues('date', formattedDate.date);
+			hearingSectionPage.verifyHearingValues('time', formattedDate.time);
+
+			hearingSectionPage.clickCancelHearing();
+			hearingSectionPage.verifyHearingHeader(headers.hearing.confirmHearingCancellation);
+			hearingSectionPage.clickCancelHearing();
+			hearingSectionPage.verifyHearingIsDisplayed(false);
+
+			happyPathHelper.unlinkFirstChildEnforcementAppeal(appeal.reference);
+
+			happyPathHelper.viewCaseDetails(childAppeal);
+			caseDetailsPage.verifyAppealRefOnCaseDetails(`Appeal ${childAppeal.reference}`);
+			const expectedSections = [
+				'Overview',
+				'Timetable',
+				'Hearing',
+				'Documentation',
+				'Costs',
+				'Contacts',
+				'Team',
+				'Case management'
+			];
+
+			caseDetailsPage.verifyCaseDetailsSection(expectedSections);
+			hearingSectionPage.verifyHearingIsDisplayed(false);
+		});
+	});
+
 	const setupTestCase = () => {
 		cy.login(users.appeals.caseAdmin);
 		cy.createCase({ ...appealsApiRequests.enforcementLinkedSubmission.casedata }).then((ref) => {
