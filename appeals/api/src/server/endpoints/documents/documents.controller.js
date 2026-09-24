@@ -396,7 +396,7 @@ export const updateDocuments = async (req, res) => {
  */
 export const updateDocument = async (req, res) => {
 	const { body, appeal, params } = req;
-	const { document, inviteResponses, sharingDocumentType } = body;
+	const { document, inviteResponses, sharingDocumentType, costsCategory = null } = body;
 	const { documentId } = params;
 	try {
 		const latestDocument = await documentRepository.getDocumentById(documentId);
@@ -451,6 +451,7 @@ export const updateDocument = async (req, res) => {
 						appeal,
 						notifyTemplateName,
 						inviteResponses,
+						costsCategory,
 						latestDocument?.name,
 						sharingDocumentType
 					);
@@ -480,6 +481,7 @@ export const updateDocument = async (req, res) => {
  * @param {import('@pins/appeals.api').Schema.Appeal} appeal
  * @param {string} notifyTemplateName
  * @param {boolean} inviteResponses
+ * @param {string} costsCategory
  * @param {string} documentName
  * @param {string} sharingDocumentType
  */
@@ -487,6 +489,8 @@ const sendShareDocumentEmails = async (
 	notifyClient,
 	appeal,
 	notifyTemplateName,
+	inviteResponses,
+	costsCategory
 	inviteResponses,
 	documentName,
 	sharingDocumentType
@@ -513,23 +517,30 @@ const sendShareDocumentEmails = async (
 	const lpaEmail = appeal.lpa?.email;
 
 	if (appellantEmail) {
+		const inviteComments = inviteResponses && costsCategory === 'lpa';
 		await notifySend({
 			templateName: notifyTemplateName,
 			notifyClient: notifyClient,
 			recipientEmail: appellantEmail,
 			personalisation: {
 				dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
-				...personalisation
+				...personalisation,
+				responses_invited: !!inviteComments
 			}
 		});
 	}
 
 	if (lpaEmail) {
+		const inviteComments = inviteResponses && costsCategory === 'appellant';
 		await notifySend({
 			templateName: notifyTemplateName,
 			notifyClient: notifyClient,
 			recipientEmail: lpaEmail,
-			personalisation: { dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA, ...personalisation }
+			personalisation: {
+				dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA,
+				...personalisation,
+				responses_invited: !!inviteComments
+			}
 		});
 	}
 };
