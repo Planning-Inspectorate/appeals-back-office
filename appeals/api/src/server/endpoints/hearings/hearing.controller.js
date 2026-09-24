@@ -195,16 +195,15 @@ export const rearrangeHearing = async (req, res) => {
  */
 export const cancelHearing = async (req, res) => {
 	const {
-		params: { appealId, hearingId }
+		params: { appealId, hearingId },
+		appeal,
+		notifyClient
 	} = req;
 	const azureAdUserId = String(req.get('azureAdUserId'));
+	// const childAppeals = appeal.childAppeals;
+
 	try {
-		await deleteHearing(
-			{ hearingId: Number(hearingId) },
-			req.notifyClient,
-			req.appeal,
-			azureAdUserId
-		);
+		await deleteHearing({ hearingId: Number(hearingId) }, notifyClient, appeal, azureAdUserId);
 		await transitionState(Number(appealId), azureAdUserId, VALIDATION_OUTCOME_CANCEL);
 		await createAuditTrail({
 			appealId: Number(appealId),
