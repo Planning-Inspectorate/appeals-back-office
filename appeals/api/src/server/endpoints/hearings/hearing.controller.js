@@ -212,19 +212,34 @@ export const rearrangeHearing = async (req, res) => {
  */
 export const cancelHearing = async (req, res) => {
 	const {
-		params: { appealId, hearingId }
+		params: { appealId, hearingId },
+		appeal,
+		notifyClient
 	} = req;
-	const azureAdUserId = String(req.get('azureAdUserId'));
+	const azureAdUserId = String(req.get('azureAdUserId')) || '';
+	const childAppeals = appeal.childAppeals;
+
 	try {
-		await deleteHearing(
-			{ hearingId: Number(hearingId) },
-			req.notifyClient,
-			req.appeal,
-			azureAdUserId
-		);
-		await transitionState(Number(appealId), azureAdUserId, VALIDATION_OUTCOME_CANCEL);
+		let appealsToUpdate = [appeal.id];
+
+		if (isLinkedAppealsActive(appeal)) {
+			// we also want to delete the hearings associated with the child appeals
+			childAppeals?.forEach((childAppeal) => {
+				if (childAppeal.type === CASE_RELATIONSHIP_LINKED && childAppeal.childId !== null) {
+					appealsToUpdate.push(childAppeal.childId);
+				}
+			});
+		}
+
+		await deleteHearing(appealsToUpdate, notifyClient, appeal, azureAdUserId);
+
+		if (isLinkedAppealsActive(appeal)) {
+			await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_INCOMPLETE);
+		}
+		await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_CANCEL);
+
 		await createAuditTrail({
-			appealId: Number(appealId),
+			appealId: appeal.id,
 			azureAdUserId,
 			details: AUDIT_TRAIL_HEARING_CANCELLED
 		});
