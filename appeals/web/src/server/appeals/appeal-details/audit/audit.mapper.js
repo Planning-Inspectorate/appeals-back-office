@@ -40,7 +40,6 @@ export const mapMessageContent = async (appeal, log, docInfo, session, apiClient
 	result = tryMapDocumentRedactionStatus(result);
 	result = tryMapDocument(appeal.appealId, result, docInfo, appeal?.lpaQuestionnaireId || null);
 
-	// representation type not recorded in log/details
 	result = tryMapRepresentationType(appeal.appealId, result);
 	result = tryMapStatus(result, appeal.appealType, appeal.procedureType);
 
@@ -180,7 +179,7 @@ export const tryMapDocument = (appealId, log, docInfo, lpaqId) => {
 			return log.replace(name, `<a class="govuk-link" href="${url}">${name}</a>`);
 		}
 		case APPEAL_CASE_STAGE.INTERNAL: {
-			const internalTypes = ['appellant', 'cross-team', 'inspector'];
+			const internalTypes = ['appellant', 'cross-team', 'inspector', 'main-party'];
 			let internalDocsPath = '';
 			switch (documentType) {
 				case APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_CORRESPONDENCE: {
@@ -193,6 +192,10 @@ export const tryMapDocument = (appealId, log, docInfo, lpaqId) => {
 				}
 				case APPEAL_DOCUMENT_TYPE.INSPECTOR_CORRESPONDENCE: {
 					internalDocsPath = `internal-correspondence/${internalTypes[2]}`;
+					break;
+				}
+				case APPEAL_DOCUMENT_TYPE.MAIN_PARTY_CORRESPONDENCE: {
+					internalDocsPath = `internal-correspondence/${internalTypes[3]}`;
 					break;
 				}
 			}
