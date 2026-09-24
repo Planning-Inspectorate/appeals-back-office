@@ -722,7 +722,9 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
 			break;
 	}
 
+	const senderIsLpa = costsCategory === 'lpa';
 	const inviteResponses = session?.inviteResponses?.toLowerCase() === 'yes';
+	const inviteCommentsForPreview = inviteResponses && senderIsLpa;
 
 	const notifyPreview = await generateNotifyPreview(request.apiClient, notifyTemplateName, {
 		appeal_reference_number: currentAppeal?.appealReference,
@@ -731,8 +733,8 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
 		enforcement_reference: currentAppeal.enforcementNotice?.appellantCase?.reference || '',
 		contact_email: email || '',
 		deadline: deadline,
-		responses_invited: inviteResponses,
-		dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APELLANT
+		responses_invited: !!inviteCommentsForPreview,
+		dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT
 	});
 
 	const pageContent = shareDocumentCheckAndConfirmPage(
@@ -753,7 +755,7 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postShareDocumentCheckAndConfirm = async (request, response) => {
-	const { appealId, documentId, costsDocumentType } = request.params;
+	const { appealId, documentId, costsDocumentType, costsCategory } = request.params;
 	try {
 		/** @type {import('#appeals/appeal-documents/appeal.documents.service.js').DocumentDetailAPIPatchRequest} */
 		const apiRequest = {
@@ -762,6 +764,7 @@ export const postShareDocumentCheckAndConfirm = async (request, response) => {
 				isShared: true
 			},
 			inviteResponses: request.session?.inviteResponses === 'yes',
+			costsCategory: costsCategory,
 			sharingDocumentType: `costs-${costsDocumentType}`
 		};
 
