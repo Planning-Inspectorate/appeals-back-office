@@ -290,6 +290,49 @@ describe('Interested Party Comments (Shared/Published View)', () => {
 			expect(summaryLists).toHaveLength(0);
 			expect(dom.innerHTML).toMatchSnapshot();
 		});
+
+		it('should render the shared interested party comments page when statements completed and 0 published comments (e.g. only rejected)', async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/2?include=all')
+				.reply(200, {
+					...publishedAppealData,
+					appealStatus: APPEAL_CASE_STATUS.FINAL_COMMENTS,
+					documentationSummary: {
+						ipComments: {
+							status: 'received',
+							counts: {
+								published: 0,
+								awaiting_review: 0,
+								valid: 0,
+								invalid: 1
+							}
+						}
+					}
+				});
+			nock('http://test/')
+				.get('/appeals/2/reps')
+				.query({
+					type: 'comment',
+					status: 'published',
+					pageNumber: paginationParameters.pageNumber,
+					pageSize: paginationParameters.pageSize
+				})
+				.reply(200, {
+					itemCount: 0,
+					items: [],
+					page: 1,
+					pageCount: 0,
+					pageSize: paginationParameters.pageSize
+				});
+
+			const response = await request.get(`${baseUrl}/2/interested-party-comments`);
+			expect(response.statusCode).toEqual(200);
+
+			const page = parseHtml(response.text);
+			expect(page.querySelector('h2')?.textContent?.trim()).toBe('Shared IP comments');
+			expect(page.querySelector('.govuk-tabs')).toBeNull();
+		});
 	});
 });
 describe.each([
