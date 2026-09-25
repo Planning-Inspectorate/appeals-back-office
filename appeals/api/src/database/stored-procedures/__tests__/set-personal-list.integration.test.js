@@ -2,7 +2,7 @@ import { add } from 'date-fns';
 import { seedStaticData } from '../../seed/data-static.js';
 import {
 	addTestLPA,
-	caseTypes,
+	appealTypes,
 	createTestAppeal,
 	createTestAppealAndRelatedData,
 	deleteTestAppeals,
@@ -25,7 +25,7 @@ describe('spSetPersonalList stored procedure', () => {
 
 	/** @type {number} */
 	let incompleteOutcomeId;
-	/** @type {Awaited<ReturnType<typeof caseTypes>>} */
+	/** @type {Awaited<ReturnType<typeof appealTypes>>} */
 	let testDBCaseTypes;
 	/** @type {Awaited<ReturnType<typeof procedureTypes>>} */
 	let testDBProcedureTypes;
@@ -44,7 +44,7 @@ describe('spSetPersonalList stored procedure', () => {
 		// Patch the base appeal test cases with fields that have to be read from the DB
 
 		// Set up the appeal types for the example appeal data, reading appeal type id from DB
-		testDBCaseTypes = await caseTypes(prisma);
+		testDBCaseTypes = await appealTypes(prisma);
 		enforcementAppealData.appeal.appealTypeId = testDBCaseTypes.S78_ENFORCEMENT_NOTICE;
 		planningAppealData.appeal.appealTypeId = testDBCaseTypes.S78_APPEAL;
 
@@ -132,13 +132,20 @@ describe('spSetPersonalList stored procedure', () => {
 				orderBy: { appealId: 'asc' }
 			});
 
+			// appeal 2 uses x business to calc ready to start due date
+			const expectedDueDate2 = await getExpectedNextBusinessDateDueDate(
+				prisma,
+				secondAppeal.caseCreatedDate,
+				stageDueDatesToAdd.STATE_TARGET_READY_TO_START_NOT_YET_VALID
+			);
+
 			expect(entries).toHaveLength(2);
 			expect(entries.map((entry) => entry.appealId)).toEqual([firstAppeal.id, secondAppeal.id]);
 			expect(entries.map((entry) => entry.dueDate?.toISOString())).toEqual([
 				add(createdDate1, {
 					days: stageDueDatesToAdd.STATE_TARGET_ASSIGN_CASE_OFFICER
 				}).toISOString(),
-				add(createdDate2, { days: stageDueDatesToAdd.STATE_TARGET_READY_TO_START }).toISOString()
+				expectedDueDate2.toISOString()
 			]);
 		});
 
@@ -286,13 +293,14 @@ describe('spSetPersonalList stored procedure', () => {
 	});
 
 	describe('Ready to start', () => {
-		test('uses the extension date for Incomplete ready-to-start appeals', async () => {
+		test('if case has a valid date for ready-to-start appeals', async () => {
 			const appealData = {
 				...planningAppealData,
 				appeal: {
 					...planningAppealData.appeal,
 					reference: 1000001,
-					caseExtensionDate: appealDataDates.extensionDate,
+					caseExtensionDate: null,
+					caseValidDate: appealDataDates.validDate,
 					status: 'ready_to_start'
 				},
 				appellantCase: {
@@ -317,16 +325,23 @@ describe('spSetPersonalList stored procedure', () => {
 				linkType: null,
 				leadAppealId: null
 			});
-			expect(dueDate).toBe(appealDataDates.extensionDate.toISOString());
+
+			const expectedDueDate = await getExpectedNextBusinessDateDueDate(
+				prisma,
+				appealData.appeal.caseValidDate,
+				stageDueDatesToAdd.STATE_TARGET_READY_TO_START
+			);
+			expect(dueDate).toBe(expectedDueDate.toISOString());
 		});
 
-		test('with no extension date it uses the case created date +x', async () => {
+		test(`with no case valid date it uses the case created date +${stageDueDatesToAdd.STATE_TARGET_READY_TO_START_NOT_YET_VALID} business days`, async () => {
 			const appealData = {
 				...planningAppealData,
 				appeal: {
 					...planningAppealData.appeal,
 					reference: 1000002,
 					caseExtensionDate: null,
+					caseValidDate: null,
 					status: 'ready_to_start'
 				},
 				appellantCase: {
@@ -343,15 +358,15 @@ describe('spSetPersonalList stored procedure', () => {
 			const personalListEntry = await prisma.personalList.findUnique({
 				where: { appealId: appeal.id }
 			});
+			expect(personalListEntry).not.toBeNull();
 
 			const dueDate = personalListEntry?.dueDate?.toISOString();
-
-			expect(personalListEntry).not.toBeNull();
-			expect(dueDate).toBe(
-				add(appealDataDates.createdDate, {
-					days: stageDueDatesToAdd.STATE_TARGET_READY_TO_START
-				}).toISOString()
+			const expectedDueDate = await getExpectedNextBusinessDateDueDate(
+				prisma,
+				appealData.appeal.caseCreatedDate,
+				stageDueDatesToAdd.STATE_TARGET_READY_TO_START_NOT_YET_VALID
 			);
+			expect(dueDate).toBe(expectedDueDate.toISOString());
 		});
 	});
 
@@ -502,13 +517,15 @@ describe('spSetPersonalList stored procedure', () => {
 			);
 		});
 
-		test('uses caseCreatedDate + state target when lpaQuestionnaireDueDate is missing', async () => {
+		test('uses caseStartedDate + state target when lpaQuestionnaireDueDate is missing - New Regs', async () => {
+			// Full 78 Planning is under New Regs
 			const appealData = {
 				...planningAppealData,
 				appeal: {
 					...planningAppealData.appeal,
 					reference: 1200002,
-					status: 'lpa_questionnaire'
+					status: 'lpa_questionnaire',
+					caseStartedDate: appealDataDates.startedDate
 				},
 				appealTimetable: {
 					...planningAppealData.appealTimetable,
@@ -524,13 +541,50 @@ describe('spSetPersonalList stored procedure', () => {
 			const personalListEntry = await prisma.personalList.findUnique({
 				where: { appealId: appeal.id }
 			});
-
 			expect(personalListEntry).not.toBeNull();
-			expect(personalListEntry?.dueDate?.toISOString()).toBe(
-				add(appealDataDates.createdDate, {
-					days: stageDueDatesToAdd.STATE_TARGET_LPA_QUESTIONNAIRE_DUE
-				}).toISOString()
+			const dueDate = personalListEntry?.dueDate?.toISOString();
+
+			const expectedDueDate = await getExpectedNextBusinessDateDueDate(
+				prisma,
+				appealData.appeal.caseStartedDate,
+				stageDueDatesToAdd.STATE_TARGET_LPA_QUESTIONNAIRE_DUE_NEW_REGS
 			);
+			expect(dueDate).toBe(expectedDueDate.toISOString());
+		});
+
+		test('uses caseCreatedDate + state target when lpaQuestionnaireDueDate is missing - Old Regs', async () => {
+			// Enforcement is under Old Regs
+			const appealData = {
+				...enforcementAppealData,
+				appeal: {
+					...enforcementAppealData.appeal,
+					reference: 1200003,
+					status: 'lpa_questionnaire',
+					caseStartedDate: appealDataDates.startedDate
+				},
+				appealTimetable: {
+					...enforcementAppealData.appealTimetable,
+					lpaQuestionnaireDueDate: null
+				}
+			};
+
+			const appeal = await createTestAppealAndRelatedData(prisma, appealData);
+			createdAppealIds.push(appeal.id);
+
+			await executeSpSetPersonalList(prisma, { appealId: appeal.id });
+
+			const personalListEntry = await prisma.personalList.findUnique({
+				where: { appealId: appeal.id }
+			});
+			expect(personalListEntry).not.toBeNull();
+			const dueDate = personalListEntry?.dueDate?.toISOString();
+
+			const expectedDueDate = await getExpectedNextBusinessDateDueDate(
+				prisma,
+				appealData.appeal.caseStartedDate,
+				stageDueDatesToAdd.STATE_TARGET_LPA_QUESTIONNAIRE_DUE_OLD_REGS
+			);
+			expect(dueDate).toBe(expectedDueDate.toISOString());
 		});
 	});
 
@@ -545,8 +599,8 @@ describe('spSetPersonalList stored procedure', () => {
 				},
 				appealTimetable: {
 					...planningAppealData.appealTimetable,
-					lpaStatementDueDate: appealDataDates.lpaStatementsDueDate,
-					ipCommentsDueDate: add(appealDataDates.lpaStatementsDueDate, { days: 1 }), // lpa statement due date now less than ip comments due date
+					lpaStatementDueDate: appealDataDates.lpaStatementDueDate,
+					ipCommentsDueDate: add(appealDataDates.lpaStatementDueDate, { days: 1 }), // lpa statement due date now less than ip comments due date
 					appellantStatementDueDate: null
 				}
 			};
@@ -562,7 +616,7 @@ describe('spSetPersonalList stored procedure', () => {
 
 			expect(personalListEntry).not.toBeNull();
 			expect(personalListEntry?.dueDate?.toISOString()).toBe(
-				appealDataDates.lpaStatementsDueDate.toISOString()
+				appealDataDates.lpaStatementDueDate.toISOString()
 			);
 		});
 
@@ -607,7 +661,7 @@ describe('spSetPersonalList stored procedure', () => {
 				},
 				appealTimetable: {
 					...planningAppealData.appealTimetable,
-					lpaStatementDueDate: appealDataDates.lpaStatementsDueDate,
+					lpaStatementDueDate: appealDataDates.lpaStatementDueDate,
 					ipCommentsDueDate: null,
 					appellantStatementDueDate: null
 				}
@@ -624,7 +678,7 @@ describe('spSetPersonalList stored procedure', () => {
 
 			expect(personalListEntry).not.toBeNull();
 			expect(personalListEntry?.dueDate?.toISOString()).toBe(
-				appealDataDates.lpaStatementsDueDate.toISOString()
+				appealDataDates.lpaStatementDueDate.toISOString()
 			);
 		});
 
@@ -659,13 +713,50 @@ describe('spSetPersonalList stored procedure', () => {
 			);
 		});
 
-		test('uses appellantStatementDueDate when only appellant statement due date is set', async () => {
+		test('uses case start date + 30 business days when no due dates are set - Old Regs', async () => {
+			const appealData = {
+				...enforcementAppealData,
+				appeal: {
+					...enforcementAppealData.appeal,
+					reference: 1300005,
+					status: 'statements',
+					caseStartedDate: appealDataDates.startedDate
+				},
+				appealTimetable: {
+					...enforcementAppealData.appealTimetable,
+					lpaStatementDueDate: null,
+					ipCommentsDueDate: null,
+					appellantStatementDueDate: appealDataDates.appellantStatementDueDate
+				}
+			};
+
+			const appeal = await createTestAppealAndRelatedData(prisma, appealData);
+			createdAppealIds.push(appeal.id);
+
+			await executeSpSetPersonalList(prisma, { appealId: appeal.id });
+
+			const personalListEntry = await prisma.personalList.findUnique({
+				where: { appealId: appeal.id }
+			});
+			expect(personalListEntry).not.toBeNull();
+			const dueDate = personalListEntry?.dueDate?.toISOString();
+
+			const expectedDueDate = await getExpectedNextBusinessDateDueDate(
+				prisma,
+				appealData.appeal.caseStartedDate,
+				stageDueDatesToAdd.STATE_TARGET_STATEMENT_OLD_REGS
+			);
+			expect(dueDate).toBe(expectedDueDate.toISOString());
+		});
+
+		test('uses case start date + 25 business days when no due dates are set - New Regs', async () => {
 			const appealData = {
 				...planningAppealData,
 				appeal: {
 					...planningAppealData.appeal,
-					reference: 1300005,
-					status: 'statements'
+					reference: 1300006,
+					status: 'statements',
+					caseStartedDate: appealDataDates.startedDate
 				},
 				appealTimetable: {
 					...planningAppealData.appealTimetable,
@@ -683,49 +774,15 @@ describe('spSetPersonalList stored procedure', () => {
 			const personalListEntry = await prisma.personalList.findUnique({
 				where: { appealId: appeal.id }
 			});
-
 			expect(personalListEntry).not.toBeNull();
-			expect(personalListEntry?.dueDate?.toISOString()).toBe(
-				appealDataDates.appellantStatementDueDate.toISOString()
+			const dueDate = personalListEntry?.dueDate?.toISOString();
+
+			const expectedDueDate = await getExpectedNextBusinessDateDueDate(
+				prisma,
+				appealData.appeal.caseStartedDate,
+				stageDueDatesToAdd.STATE_TARGET_STATEMENT_NEW_REGS
 			);
-		});
-
-		test('uses caseCreatedDate + statement review target when no statement dates are set', async () => {
-			const appealData = {
-				...planningAppealData,
-				appeal: {
-					...planningAppealData.appeal,
-					reference: 1300006,
-					status: 'statements',
-					caseCreatedDate: appealDataDates.createdDate
-				},
-				appellantCase: {
-					...planningAppealData.appellantCase,
-					caseSubmittedDate: appealDataDates.createdDate
-				},
-				appealTimetable: {
-					...planningAppealData.appealTimetable,
-					lpaStatementDueDate: null,
-					ipCommentsDueDate: null,
-					appellantStatementDueDate: null
-				}
-			};
-
-			const appeal = await createTestAppealAndRelatedData(prisma, appealData);
-			createdAppealIds.push(appeal.id);
-
-			await executeSpSetPersonalList(prisma, { appealId: appeal.id });
-
-			const personalListEntry = await prisma.personalList.findUnique({
-				where: { appealId: appeal.id }
-			});
-
-			expect(personalListEntry).not.toBeNull();
-			expect(personalListEntry?.dueDate?.toISOString()).toBe(
-				add(appealDataDates.createdDate, {
-					days: stageDueDatesToAdd.STATE_TARGET_STATEMENT_REVIEW
-				}).toISOString()
-			);
+			expect(dueDate).toBe(expectedDueDate.toISOString());
 		});
 	});
 
@@ -759,13 +816,49 @@ describe('spSetPersonalList stored procedure', () => {
 			);
 		});
 
-		test('uses caseCreatedDate + final comment review target when finalCommentsDueDate is missing', async () => {
+		test('uses caseStartedDate + 45 business days when finalCommentsDueDate is missing - Old Regs', async () => {
+			const appealData = {
+				...enforcementAppealData,
+				appeal: {
+					...enforcementAppealData.appeal,
+					reference: 1400002,
+					status: 'final_comments',
+					caseStartedDate: appealDataDates.startedDate
+				},
+				appealTimetable: {
+					...enforcementAppealData.appealTimetable,
+					finalCommentsDueDate: null
+				}
+			};
+
+			const appeal = await createTestAppealAndRelatedData(prisma, appealData);
+			createdAppealIds.push(appeal.id);
+
+			await executeSpSetPersonalList(prisma, { appealId: appeal.id });
+
+			const personalListEntry = await prisma.personalList.findUnique({
+				where: { appealId: appeal.id }
+			});
+
+			expect(personalListEntry).not.toBeNull();
+			const dueDate = personalListEntry?.dueDate?.toISOString();
+
+			const expectedDueDate = await getExpectedNextBusinessDateDueDate(
+				prisma,
+				appealData.appeal.caseStartedDate,
+				stageDueDatesToAdd.STATE_TARGET_FINAL_COMMENT_OLD_REGS
+			);
+			expect(dueDate).toBe(expectedDueDate.toISOString());
+		});
+
+		test('uses caseStartedDate + 35 business days when finalCommentsDueDate is missing - New Regs', async () => {
 			const appealData = {
 				...planningAppealData,
 				appeal: {
 					...planningAppealData.appeal,
-					reference: 1400002,
-					status: 'final_comments'
+					reference: 1400003,
+					status: 'final_comments',
+					caseStartedDate: appealDataDates.startedDate
 				},
 				appealTimetable: {
 					...planningAppealData.appealTimetable,
@@ -783,16 +876,19 @@ describe('spSetPersonalList stored procedure', () => {
 			});
 
 			expect(personalListEntry).not.toBeNull();
-			expect(personalListEntry?.dueDate?.toISOString()).toBe(
-				add(appealDataDates.createdDate, {
-					days: stageDueDatesToAdd.STATE_TARGET_FINAL_COMMENT_REVIEW
-				}).toISOString()
+			const dueDate = personalListEntry?.dueDate?.toISOString();
+
+			const expectedDueDate = await getExpectedNextBusinessDateDueDate(
+				prisma,
+				appealData.appeal.caseStartedDate,
+				stageDueDatesToAdd.STATE_TARGET_FINAL_COMMENT_NEW_REGS
 			);
+			expect(dueDate).toBe(expectedDueDate.toISOString());
 		});
 	});
 
 	describe('Event', () => {
-		test('uses finalCommentsDueDate when both finalCommentsDueDate and lpaQuestionnaireDueDate are present', async () => {
+		test('uses proofOfEvidenceAndWitnessesDueDate if it is present', async () => {
 			const appealData = {
 				...planningAppealData,
 				appeal: {
@@ -803,7 +899,39 @@ describe('spSetPersonalList stored procedure', () => {
 				appealTimetable: {
 					...planningAppealData.appealTimetable,
 					lpaQuestionnaireDueDate: appealDataDates.lpaQuestionnaireDueDate,
-					finalCommentsDueDate: appealDataDates.finalCommentsDueDate
+					finalCommentsDueDate: appealDataDates.finalCommentsDueDate,
+					proofOfEvidenceAndWitnessesDueDate: appealDataDates.proofOfEvidenceAndWitnessesDueDate
+				}
+			};
+
+			const appeal = await createTestAppealAndRelatedData(prisma, appealData);
+			createdAppealIds.push(appeal.id);
+
+			await executeSpSetPersonalList(prisma, { appealId: appeal.id });
+
+			const personalListEntry = await prisma.personalList.findUnique({
+				where: { appealId: appeal.id }
+			});
+
+			expect(personalListEntry).not.toBeNull();
+			expect(personalListEntry?.dueDate?.toISOString()).toBe(
+				appealDataDates.proofOfEvidenceAndWitnessesDueDate.toISOString()
+			);
+		});
+
+		test('uses finalCommentsDueDate if it is present and proofOfEvidenceAndWitnessesDueDate is missing', async () => {
+			const appealData = {
+				...planningAppealData,
+				appeal: {
+					...planningAppealData.appeal,
+					reference: 1500002,
+					status: 'event'
+				},
+				appealTimetable: {
+					...planningAppealData.appealTimetable,
+					lpaQuestionnaireDueDate: appealDataDates.lpaQuestionnaireDueDate,
+					finalCommentsDueDate: appealDataDates.finalCommentsDueDate,
+					proofOfEvidenceAndWitnessesDueDate: null
 				}
 			};
 
@@ -822,18 +950,52 @@ describe('spSetPersonalList stored procedure', () => {
 			);
 		});
 
-		test('uses lpaQuestionnaireDueDate when finalCommentsDueDate is missing', async () => {
+		test('uses lpaStatementDueDate if it is present and proofOfEvidenceAndWitnessesDueDate and finalCommentsDueDate are missing', async () => {
 			const appealData = {
 				...planningAppealData,
 				appeal: {
 					...planningAppealData.appeal,
-					reference: 1500002,
+					reference: 1500003,
+					status: 'event'
+				},
+				appealTimetable: {
+					...planningAppealData.appealTimetable,
+					lpaQuestionnaireDueDate: null,
+					lpaStatementDueDate: appealDataDates.lpaStatementDueDate,
+					finalCommentsDueDate: null,
+					proofOfEvidenceAndWitnessesDueDate: null
+				}
+			};
+
+			const appeal = await createTestAppealAndRelatedData(prisma, appealData);
+			createdAppealIds.push(appeal.id);
+
+			await executeSpSetPersonalList(prisma, { appealId: appeal.id });
+
+			const personalListEntry = await prisma.personalList.findUnique({
+				where: { appealId: appeal.id }
+			});
+
+			expect(personalListEntry).not.toBeNull();
+			expect(personalListEntry?.dueDate?.toISOString()).toBe(
+				appealDataDates.lpaStatementDueDate.toISOString()
+			);
+		});
+
+		test('uses lpaQuestionnaireDueDate if it is present and proofOfEvidenceAndWitnessesDueDate, finalCommentsDueDate and lpaStatementDueDate are missing', async () => {
+			const appealData = {
+				...planningAppealData,
+				appeal: {
+					...planningAppealData.appeal,
+					reference: 1500004,
 					status: 'event'
 				},
 				appealTimetable: {
 					...planningAppealData.appealTimetable,
 					lpaQuestionnaireDueDate: appealDataDates.lpaQuestionnaireDueDate,
-					finalCommentsDueDate: null
+					lpaStatementDueDate: null,
+					finalCommentsDueDate: null,
+					proofOfEvidenceAndWitnessesDueDate: null
 				}
 			};
 
@@ -852,18 +1014,21 @@ describe('spSetPersonalList stored procedure', () => {
 			);
 		});
 
-		test('uses unix epoch date when finalCommentsDueDate and lpaQuestionnaireDueDate are missing', async () => {
+		test('uses uses caseStartedDate + 45 business days when due date fields are missing', async () => {
 			const appealData = {
 				...planningAppealData,
 				appeal: {
 					...planningAppealData.appeal,
-					reference: 1500003,
-					status: 'event'
+					reference: 1500005,
+					status: 'event',
+					caseStartedDate: appealDataDates.startedDate
 				},
 				appealTimetable: {
 					...planningAppealData.appealTimetable,
 					lpaQuestionnaireDueDate: null,
-					finalCommentsDueDate: null
+					lpaStatementDueDate: null,
+					finalCommentsDueDate: null,
+					proofOfEvidenceAndWitnessesDueDate: null
 				}
 			};
 
@@ -875,9 +1040,15 @@ describe('spSetPersonalList stored procedure', () => {
 			const personalListEntry = await prisma.personalList.findUnique({
 				where: { appealId: appeal.id }
 			});
-
 			expect(personalListEntry).not.toBeNull();
-			expect(personalListEntry?.dueDate?.toISOString()).toBe(unixZeroDate.toISOString());
+			const dueDate = personalListEntry?.dueDate?.toISOString();
+
+			const expectedDueDate = await getExpectedNextBusinessDateDueDate(
+				prisma,
+				appealData.appeal.caseStartedDate,
+				stageDueDatesToAdd.STATE_TARGET_45_BUSINESS_DAYS
+			);
+			expect(dueDate).toBe(expectedDueDate.toISOString());
 		});
 	});
 
@@ -913,13 +1084,42 @@ describe('spSetPersonalList stored procedure', () => {
 			);
 		});
 
+		test('uses unix epoch when procedure type is hearing but hearingStartTime is missing', async () => {
+			const appealData = {
+				...planningAppealData,
+				appeal: {
+					...planningAppealData.appeal,
+					reference: 1600002,
+					status: 'awaiting_event',
+					procedureTypeId: testDBProcedureTypes.HEARING
+				},
+				hearing: {
+					hearingStartTime: null
+				},
+				inquiry: null,
+				siteVisit: null
+			};
+
+			const appeal = await createTestAppealAndRelatedData(prisma, appealData);
+			createdAppealIds.push(appeal.id);
+
+			await executeSpSetPersonalList(prisma, { appealId: appeal.id });
+
+			const personalListEntry = await prisma.personalList.findUnique({
+				where: { appealId: appeal.id }
+			});
+
+			expect(personalListEntry).not.toBeNull();
+			expect(personalListEntry?.dueDate?.toISOString()).toBe(unixZeroDate.toISOString());
+		});
+
 		test('uses inquiryStartTime + estimatedDays when procedure type is inquiry', async () => {
 			const estimatedDays = 2;
 			const appealData = {
 				...planningAppealData,
 				appeal: {
 					...planningAppealData.appeal,
-					reference: 1600002,
+					reference: 1600003,
 					status: 'awaiting_event',
 					procedureTypeId: testDBProcedureTypes.INQUIRY
 				},
@@ -950,20 +1150,20 @@ describe('spSetPersonalList stored procedure', () => {
 			);
 		});
 
-		test('uses siteVisitDate when procedure type is neither hearing nor inquiry', async () => {
+		test('uses visitDate when procedure type is neither hearing nor inquiry', async () => {
 			const appealData = {
 				...planningAppealData,
 				appeal: {
 					...planningAppealData.appeal,
-					reference: 1600003,
+					reference: 1600004,
 					status: 'awaiting_event',
 					procedureTypeId: testDBProcedureTypes.WRITTEN_REPRESENTATION
 				},
 				hearing: null,
 				inquiry: null,
 				siteVisit: {
-					siteVisitDate: appealDataDates.siteVisitDate,
-					visitEndTime: appealDataDates.siteVisitDate
+					visitDate: appealDataDates.visitDate,
+					visitEndTime: appealDataDates.visitDate
 				}
 			};
 
@@ -978,13 +1178,13 @@ describe('spSetPersonalList stored procedure', () => {
 
 			expect(personalListEntry).not.toBeNull();
 			expect(personalListEntry?.dueDate?.toISOString()).toBe(
-				appealDataDates.siteVisitDate.toISOString()
+				appealDataDates.visitDate.toISOString()
 			);
 		});
 	});
 
 	describe('Issue determination', () => {
-		test('uses siteVisitEndTime + 40 business days when both site visit date and end time are present', async () => {
+		test('uses site visitEndTime + 40 business days when both site visit date and end time are present', async () => {
 			const appealData = {
 				...planningAppealData,
 				appeal: {
@@ -993,8 +1193,8 @@ describe('spSetPersonalList stored procedure', () => {
 					status: 'issue_determination'
 				},
 				siteVisit: {
-					siteVisitDate: appealDataDates.siteVisitDate,
-					visitEndTime: appealDataDates.siteVisitEndTime
+					visitDate: appealDataDates.visitDate,
+					visitEndTime: appealDataDates.visitEndTime
 				}
 			};
 
@@ -1008,7 +1208,7 @@ describe('spSetPersonalList stored procedure', () => {
 			});
 			const expectedDueDate = await getExpectedNextBusinessDateDueDate(
 				prisma,
-				appealDataDates.siteVisitEndTime,
+				appealDataDates.visitEndTime,
 				stageDueDatesToAdd.STATE_TARGET_ISSUE_DETERMINATION_AFTER_SITE_VISIT
 			);
 
@@ -1016,7 +1216,7 @@ describe('spSetPersonalList stored procedure', () => {
 			expect(personalListEntry?.dueDate?.toISOString()).toBe(expectedDueDate.toISOString());
 		});
 
-		test('uses siteVisitDate + 40 business days when site visit end time is missing', async () => {
+		test('uses visitDate + 40 business days when site visit end time is missing', async () => {
 			const appealData = {
 				...planningAppealData,
 				appeal: {
@@ -1025,7 +1225,7 @@ describe('spSetPersonalList stored procedure', () => {
 					status: 'issue_determination'
 				},
 				siteVisit: {
-					siteVisitDate: appealDataDates.siteVisitDate,
+					visitDate: appealDataDates.visitDate,
 					visitEndTime: null
 				}
 			};
@@ -1040,7 +1240,7 @@ describe('spSetPersonalList stored procedure', () => {
 			});
 			const expectedDueDate = await getExpectedNextBusinessDateDueDate(
 				prisma,
-				appealDataDates.siteVisitDate,
+				appealDataDates.visitDate,
 				stageDueDatesToAdd.STATE_TARGET_ISSUE_DETERMINATION_AFTER_SITE_VISIT
 			);
 
@@ -1048,12 +1248,40 @@ describe('spSetPersonalList stored procedure', () => {
 			expect(personalListEntry?.dueDate?.toISOString()).toBe(expectedDueDate.toISOString());
 		});
 
-		test('uses caseCreatedDate + 30 business days when no site visit date exists', async () => {
+		test('uses unix epoch when there is a site visit record but dates are missing', async () => {
+			/** @type {Parameters<typeof createTestAppealAndRelatedData>[1]} */
 			const appealData = {
 				...planningAppealData,
 				appeal: {
 					...planningAppealData.appeal,
 					reference: 1700003,
+					status: 'issue_determination'
+				},
+				siteVisit: {
+					visitDate: null,
+					visitEndTime: null
+				}
+			};
+
+			const appeal = await createTestAppealAndRelatedData(prisma, appealData);
+			createdAppealIds.push(appeal.id);
+
+			await executeSpSetPersonalList(prisma, { appealId: appeal.id });
+
+			const personalListEntry = await prisma.personalList.findUnique({
+				where: { appealId: appeal.id }
+			});
+
+			expect(personalListEntry).not.toBeNull();
+			expect(personalListEntry?.dueDate?.toISOString()).toBe(unixZeroDate.toISOString());
+		});
+
+		test('uses caseCreatedDate + 30 business days when no site visit date exists', async () => {
+			const appealData = {
+				...planningAppealData,
+				appeal: {
+					...planningAppealData.appeal,
+					reference: 1700004,
 					status: 'issue_determination',
 					caseCreatedDate: appealDataDates.createdDate
 				},
@@ -1080,7 +1308,9 @@ describe('spSetPersonalList stored procedure', () => {
 	});
 
 	describe('Complete', () => {
-		/** @param {number} appealId @param {string} path @param {string} name */
+		/** @param {number} appealId
+		 * @param {string} path
+		 * @param {string} name */
 		const createCostsDocument = async (appealId, path, name) => {
 			const folder = await prisma.folder.create({
 				data: {
@@ -1337,7 +1567,9 @@ describe('spSetPersonalList stored procedure', () => {
 	});
 
 	describe('Withdrawn', () => {
-		/** @param {number} appealId @param {string} path @param {string} name */
+		/** @param {number} appealId
+		 * @param {string} path
+		 * @param {string} name */
 		const createCostsDocument = async (appealId, path, name) => {
 			const folder = await prisma.folder.create({
 				data: {
