@@ -1,5 +1,5 @@
 import * as caseTeamRepository from '#repositories/team.repository.js';
-import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
+import { isLinkedAppealsActiveForAppealOrCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 import {
 	getTeamEmailFromAppealId,
 	setAssignedTeamId,
@@ -46,7 +46,7 @@ export const updateAssignedTeamId = async (req, res) => {
 	}
 
 	const result = await setAssignedTeamId(appealId, teamId, azureAdUserId);
-	if (Object.hasOwn(result, 'assignedTeamId') && isLinkedAppealsActive()) {
+	if (Object.hasOwn(result, 'assignedTeamId') && isLinkedAppealsActiveForAppealOrCaseType()) {
 		await setAssignedTeamIdForLinkedAppeals(appealId, teamId, azureAdUserId);
 	}
 

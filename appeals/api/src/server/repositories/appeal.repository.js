@@ -1,8 +1,8 @@
 import { databaseConnector } from '#utils/database-connector.js';
 import { hasValueOrIsNull } from '#utils/has-value-or-null.js';
-import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import { MAX_VISIBLE_DOCUMENTS_IN_SUMMARY } from '@pins/appeals/constants/common.js';
+import { isLinkedAppealsActiveForAppealOrCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 import {
 	APPEAL_CASE_STAGE,
 	APPEAL_CASE_STATUS,
@@ -30,7 +30,7 @@ import {
  * @template T
  */
 
-const linkedAppealsInclude = isLinkedAppealsActive()
+const linkedAppealsInclude = isLinkedAppealsActiveForAppealOrCaseType()
 	? {
 			appealType: true,
 			appealStatus: true,
@@ -876,6 +876,7 @@ const getAppealsWithCompletedEvents = () =>
 		},
 		select: {
 			id: true,
+			appealType: true,
 			currentStatus: true,
 			childAppeals: {
 				select: {

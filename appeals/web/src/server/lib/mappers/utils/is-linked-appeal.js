@@ -1,20 +1,5 @@
-import config from '#environment/config.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-
-/**
- *
- * @param {*} [appeal]
- * @returns {boolean}
- */
-export const isLinkedAppealsActive = (appeal = null) => {
-	const { appealType, type = appealType } = appeal || {};
-	const isLinkedAppealsFeatureActive = config.featureFlags.featureFlagLinkedAppeals;
-	const isEnforcementLinkedFeatureActive =
-		config.featureFlags.featureFlagEnforcementLinked &&
-		(!appeal || type === APPEAL_TYPE.ENFORCEMENT_NOTICE);
-
-	return isLinkedAppealsFeatureActive || isEnforcementLinkedFeatureActive;
-};
+import { isLinkedAppealsActiveForAppealOrCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 
 /**
  *
@@ -22,7 +7,7 @@ export const isLinkedAppealsActive = (appeal = null) => {
  * @returns {boolean}
  */
 export function isChildAppeal(appeal) {
-	return appeal.isChildAppeal && isLinkedAppealsActive(appeal);
+	return appeal.isChildAppeal && isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType);
 }
 
 /**
@@ -33,7 +18,9 @@ export function isChildAppeal(appeal) {
 export function isEnforcementChildAppeal(appeal) {
 	const { appealType, type = appealType } = appeal || {};
 	return (
-		appeal.isChildAppeal && isLinkedAppealsActive(appeal) && type === APPEAL_TYPE.ENFORCEMENT_NOTICE
+		appeal.isChildAppeal &&
+		isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType) &&
+		type === APPEAL_TYPE.ENFORCEMENT_NOTICE
 	);
 }
 
@@ -43,7 +30,7 @@ export function isEnforcementChildAppeal(appeal) {
  * @returns {boolean}
  */
 export function isParentAppeal(appeal) {
-	return appeal.isParentAppeal && isLinkedAppealsActive(appeal);
+	return appeal.isParentAppeal && isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType);
 }
 
 /**
@@ -61,8 +48,8 @@ export default function isLinkedAppeal(appeal) {
  * @returns {boolean}
  */
 export function isAwaitingLinkedAppeal(appeal) {
-	const { appealType, type, ...rest } = appeal || {};
+	const { appealType, type } = appeal || {};
 	return (
-		appeal.awaitingLinkedAppeal && isLinkedAppealsActive({ ...rest, type: type || appealType })
+		appeal.awaitingLinkedAppeal && isLinkedAppealsActiveForAppealOrCaseType(type || appealType)
 	);
 }

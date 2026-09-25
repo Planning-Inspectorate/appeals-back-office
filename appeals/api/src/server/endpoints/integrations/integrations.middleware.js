@@ -2,7 +2,6 @@ import { serviceUserIdStartRange } from '#mappers/integration/map-service-user-e
 import { databaseConnector } from '#utils/database-connector.js';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
-import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import { default as logger, default as pino } from '#utils/logger.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
@@ -13,7 +12,10 @@ import {
 	ERROR_INVALID_REP_DATA,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import { isExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import {
+	isExpeditedAppealType,
+	isLinkedAppealsActiveForAppealOrCaseType
+} from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@planning-inspectorate/data-model';
 import { schemas, validateFromSchema } from './integrations.validators.js';
 
@@ -142,7 +144,8 @@ export const validateRepresentation = async (req, res, next) => {
 
 	// Use lead appeal if linked and the representation type is not an ip comment
 	const useLeadAppealIfLinked =
-		isLinkedAppealsActive() && body?.representationType !== APPEAL_REPRESENTATION_TYPE.COMMENT;
+		isLinkedAppealsActiveForAppealOrCaseType() &&
+		body?.representationType !== APPEAL_REPRESENTATION_TYPE.COMMENT;
 	const referenceData = await loadReferenceData(body?.caseReference, useLeadAppealIfLinked);
 	if (!referenceData?.appeal) {
 		pino.error(

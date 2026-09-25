@@ -1,20 +1,6 @@
-import { isFeatureActive } from '#utils/feature-flags.js';
-import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
-
-/**
- *
- * @param {*} [appeal]
- * @returns {boolean}
- */
-export const isLinkedAppealsActive = (appeal = null) => {
-	const isLinkedAppealsFeatureActive = isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS);
-	const isEnforcementLinkedFeatureActive =
-		isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_LINKED) &&
-		(!appeal || appeal.appealType?.key === APPEAL_CASE_TYPE.C);
-	return isLinkedAppealsFeatureActive || isEnforcementLinkedFeatureActive;
-};
+import { isLinkedAppealsActiveForAppealOrCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 
 /**
  *
@@ -26,7 +12,7 @@ export function isEnforcementChildAppeal(appeal, isChildAppeal = appeal?.isChild
 	const { appealType } = appeal || {};
 	return (
 		isChildAppeal &&
-		isLinkedAppealsActive(appeal) &&
+		isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType?.key) &&
 		appealType.type === APPEAL_TYPE.ENFORCEMENT_NOTICE
 	);
 }
@@ -37,7 +23,7 @@ export function isEnforcementChildAppeal(appeal, isChildAppeal = appeal?.isChild
  * @returns {boolean}
  */
 export const hasChildLinkedAppeals = (appeal) =>
-	isLinkedAppealsActive(appeal) &&
+	isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType?.key) &&
 	appeal.childAppeals?.filter(
 		//@ts-ignore
 		(childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED
@@ -50,7 +36,7 @@ export const hasChildLinkedAppeals = (appeal) =>
  */
 export const isChildAppeal = (appeal) => {
 	return (
-		isLinkedAppealsActive(appeal) &&
+		isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType?.key) &&
 		// @ts-ignore
 		appeal.parentAppeals?.some((linkedAppeal) => linkedAppeal.type === CASE_RELATIONSHIP_LINKED)
 	);
@@ -63,7 +49,7 @@ export const isChildAppeal = (appeal) => {
  */
 export const isParentAppeal = (appeal) => {
 	return (
-		isLinkedAppealsActive(appeal) &&
+		isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType?.key) &&
 		// @ts-ignore
 		appeal?.childAppeals?.some((linkedAppeal) => linkedAppeal.type === CASE_RELATIONSHIP_LINKED)
 	);

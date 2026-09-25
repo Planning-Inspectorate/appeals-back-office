@@ -4,11 +4,12 @@
 /** @typedef {import('@pins/appeals').Address} Address */
 
 import { isAwaitingLinkedAppeal } from '#utils/is-awaiting-linked-appeal.js';
-import { hasChildLinkedAppeals, isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
+import { hasChildLinkedAppeals } from '#utils/is-linked-appeal.js';
 import {
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED
 } from '@pins/appeals/constants/support.js';
+import { isLinkedAppealsActiveForAppealOrCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 
 /**
  *
@@ -21,7 +22,8 @@ export const mapAppealRelationships = (data) => {
 	const appealRelationships = [...(appeal.parentAppeals || []), ...(appeal.childAppeals || [])];
 
 	const parentAppeals =
-		isLinkedAppealsActive(appeal) && appeal.parentAppeals?.length
+		isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType?.key) &&
+		appeal.parentAppeals?.length
 			? appeal.parentAppeals
 					.filter((relationship) => relationship.type === CASE_RELATIONSHIP_LINKED)
 					.map((relationship) => {
@@ -41,7 +43,7 @@ export const mapAppealRelationships = (data) => {
 	const linkedAppeals = [...parentAppeals, ...childAppeals];
 
 	const awaitingLinkedAppeal = Boolean(
-		isLinkedAppealsActive(appeal) &&
+		isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType?.key) &&
 		data.linkedAppeals?.length &&
 		// @ts-ignore
 		isAwaitingLinkedAppeal(appeal, [

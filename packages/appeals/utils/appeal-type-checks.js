@@ -6,6 +6,8 @@ import {
 import { APPEAL_TYPE } from '../constants/common.js';
 import { EXPEDITED_ORIGINAL_APPLICATION_CUTOFF } from '../constants/dates.js';
 
+import { isFeatureActive } from '@pins/appeals.api/src/server/utils/feature-flags.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { appealTypeToAppealCaseTypeMapper } from './appeal-type-case.mapper.js';
 import { dateIsOnOrAfterDate } from './date-utils.js';
 
@@ -41,7 +43,7 @@ const baseCaseType = {
 };
 
 /**
- * @param {string | null} appealType
+ * @param {string | null | undefined} appealType
  * @returns {boolean}
  */
 export const isExpeditedAppealType = (appealType) => {
@@ -56,7 +58,7 @@ export const isExpeditedAppealType = (appealType) => {
 };
 
 /**
- * @param {string | null} appealType
+ * @param {string | null | undefined} appealType
  * @param {string} caseSubmissionDate
  * @param {string} applicationDecision
  * @param {string} typeOfPlanningApplication
@@ -164,3 +166,17 @@ export const isLdcOrEnforcementAppealType = (appealType) =>
  */
 export const isNetResidencesAppealType = (appealType) =>
 	appealType === APPEAL_TYPE.S78 || appealType === APPEAL_TYPE.PLANNED_LISTED_BUILDING;
+
+/**
+ *
+ * @param {string | null | undefined } type
+ * @returns {boolean}
+ */
+export const isLinkedAppealsActiveForAppealOrCaseType = (type = null) => {
+	const isLinkedAppealsFeatureActive = isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS);
+	const isEnforcementLinkedFeatureActive =
+		isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_LINKED) &&
+		(!type || type === APPEAL_TYPE.ENFORCEMENT_NOTICE || type === APPEAL_CASE_TYPE.C);
+
+	return isLinkedAppealsFeatureActive || isEnforcementLinkedFeatureActive;
+};

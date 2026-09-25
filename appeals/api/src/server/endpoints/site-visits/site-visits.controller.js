@@ -3,7 +3,6 @@ import transitionState, { transitionLinkedChildAppealsState } from '#state/trans
 import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
 import { currentStatus } from '#utils/current-status.js';
 import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
-import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import {
 	CASE_RELATIONSHIP_LINKED,
@@ -11,6 +10,7 @@ import {
 	VALIDATION_OUTCOME_COMPLETE,
 	VALIDATION_OUTCOME_INCOMPLETE
 } from '@pins/appeals/constants/support.js';
+import { isLinkedAppealsActiveForAppealOrCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { formatSiteVisit } from './site-visits.formatter.js';
 import {
@@ -95,7 +95,7 @@ const postSiteVisit = async (req, res) => {
 
 	try {
 		await createSiteVisit(azureAdUserId, siteVisitData, notifyClient);
-		if (isLinkedAppealsActive(appeal)) {
+		if (isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType?.key)) {
 			await createSiteVisitForLinkedChildAppeals(azureAdUserId, siteVisitData, notifyClient);
 		}
 	} catch (error) {
@@ -104,7 +104,7 @@ const postSiteVisit = async (req, res) => {
 	}
 
 	if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT)) {
-		if (isLinkedAppealsActive(appeal)) {
+		if (isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType?.key)) {
 			await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 		}
 		await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
@@ -174,7 +174,7 @@ const rearrangeSiteVisit = async (req, res) => {
 
 	try {
 		let appealsToUpdate = [appeal.id];
-		if (isLinkedAppealsActive(appeal)) {
+		if (isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType?.key)) {
 			// we also want to update the site visits associated with the child appeals
 			childAppeals?.forEach((childAppeal) => {
 				if (childAppeal.type === CASE_RELATIONSHIP_LINKED && childAppeal.childId !== null) {
@@ -186,7 +186,7 @@ const rearrangeSiteVisit = async (req, res) => {
 		await updateSiteVisit(azureAdUserId, updateSiteVisitData, notifyClient, appealsToUpdate);
 
 		if (visitDate && arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT)) {
-			if (isLinkedAppealsActive(appeal)) {
+			if (isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType?.key)) {
 				await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 			}
 			await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
@@ -252,7 +252,7 @@ const rearrangeMissedSiteVisit = async (req, res) => {
 
 	try {
 		let appealsToUpdate = [appeal.id];
-		if (isLinkedAppealsActive(appeal)) {
+		if (isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType?.key)) {
 			childAppeals?.forEach((childAppeal) => {
 				if (childAppeal.type === CASE_RELATIONSHIP_LINKED && childAppeal.childId !== null) {
 					appealsToUpdate.push(childAppeal.childId);
@@ -268,7 +268,7 @@ const rearrangeMissedSiteVisit = async (req, res) => {
 		);
 
 		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT)) {
-			if (isLinkedAppealsActive(appeal)) {
+			if (isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType?.key)) {
 				await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 			}
 			await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
@@ -298,7 +298,7 @@ const cancelSiteVisit = async (req, res) => {
 	const azureAdUserId = req.get('azureAdUserId') || '';
 	try {
 		let appealsToUpdate = [appeal.id];
-		if (isLinkedAppealsActive(appeal)) {
+		if (isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType?.key)) {
 			// we also want to delete the site visits associated with the child appeals
 			childAppeals?.forEach((childAppeal) => {
 				if (childAppeal.type === CASE_RELATIONSHIP_LINKED && childAppeal.childId !== null) {
@@ -310,7 +310,7 @@ const cancelSiteVisit = async (req, res) => {
 
 		const currentAppealStatus = currentStatus(appeal);
 		if (currentAppealStatus === APPEAL_CASE_STATUS.AWAITING_EVENT) {
-			if (isLinkedAppealsActive(appeal)) {
+			if (isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType?.key)) {
 				await transitionLinkedChildAppealsState(
 					appeal,
 					azureAdUserId,
@@ -346,7 +346,7 @@ const postSiteVisitMissed = async (req, res) => {
 	const azureAdUserId = req.get('azureAdUserId') || '';
 	try {
 		let appealsToUpdate = [appeal.id];
-		if (isLinkedAppealsActive(appeal)) {
+		if (isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType?.key)) {
 			// we also want to update the site visits associated with the linked child appeals
 			childAppeals?.forEach((childAppeal) => {
 				if (childAppeal.type === CASE_RELATIONSHIP_LINKED && childAppeal.childId !== null) {
@@ -372,7 +372,7 @@ const postSiteVisitMissed = async (req, res) => {
 			currentAppealStatus === APPEAL_CASE_STATUS.AWAITING_EVENT ||
 			currentAppealStatus === APPEAL_CASE_STATUS.ISSUE_DETERMINATION
 		) {
-			if (isLinkedAppealsActive(appeal)) {
+			if (isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType?.key)) {
 				await transitionLinkedChildAppealsState(
 					appeal,
 					azureAdUserId,

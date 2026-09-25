@@ -1,9 +1,9 @@
 import { mapVirusCheckStatus } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
-import { isLinkedAppealsActive } from '#lib/mappers/utils/is-linked-appeal.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { isLinkedAppealsActiveForAppealOrCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { decisionOutcomeToDisplayText } from '@pins/appeals/utils/decision-outcome-display-text.js';
 import { APPEAL_CASE_STATUS, APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
 
@@ -27,7 +27,7 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 		});
 	}
 
-	if (isLinkedAppealsActive()) {
+	if (isLinkedAppealsActiveForAppealOrCaseType()) {
 		if (mappedData.appeal.leadOrChild.display?.statusTag) {
 			statusTags.push({
 				type: 'status-tag',

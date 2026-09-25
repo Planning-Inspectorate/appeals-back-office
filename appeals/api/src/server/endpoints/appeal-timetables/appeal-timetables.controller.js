@@ -1,16 +1,13 @@
 import appealRepository from '#repositories/appeal.repository.js';
 import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
-import {
-	hasChildLinkedAppeals,
-	isLinkedAppeal,
-	isLinkedAppealsActive
-} from '#utils/is-linked-appeal.js';
+import { hasChildLinkedAppeals, isLinkedAppeal } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL,
 	ERROR_FAILED_TO_SAVE_DATA
 } from '@pins/appeals/constants/support.js';
+import { isLinkedAppealsActiveForAppealOrCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 import {
 	calculateAppealTimetable,
 	getStartCaseNotifyPreviews,
@@ -37,7 +34,7 @@ const startAppeal = async (req, res) => {
 
 		const notifyClient = req.notifyClient;
 
-		if (isLinkedAppealsActive(appeal)) {
+		if (isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType?.key)) {
 			// In the case of an appeal that is not linked, it will be the only appeal to start
 			const appealsToStart = isLinkedAppeal(appeal)
 				? await buildListOfLinkedAppeals(appeal)

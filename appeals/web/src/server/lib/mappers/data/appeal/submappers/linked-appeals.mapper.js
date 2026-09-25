@@ -1,8 +1,9 @@
 import { permissionNames } from '#environment/permissions.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { mapActionComponent } from '#lib/mappers/index.js';
-import { isChildAppeal, isLinkedAppealsActive } from '#lib/mappers/utils/is-linked-appeal.js';
+import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { isLinkedAppealsActiveForAppealOrCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /**
@@ -11,7 +12,7 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapLinkedAppeals = ({ appealDetails, session }) => {
-	if (!isLinkedAppealsActive(appealDetails)) {
+	if (!isLinkedAppealsActiveForAppealOrCaseType(appealDetails.appealType)) {
 		return { id: '', display: {} };
 	}
 
@@ -27,7 +28,7 @@ export const mapLinkedAppeals = ({ appealDetails, session }) => {
 		].includes(appealDetails.appealStatus);
 
 	const hasItems =
-		isLinkedAppealsActive(appealDetails) &&
+		isLinkedAppealsActiveForAppealOrCaseType(appealDetails.appealType) &&
 		appealDetails.linkedAppeals?.every(
 			(linkedAppeal) => !linkedAppeal.externalSource && !linkedAppeal.isParentAppeal
 		);

@@ -1,6 +1,6 @@
 import { canLinkAppeals } from '#endpoints/link-appeals/link-appeals.service.js';
-import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
+import { isLinkedAppealsActiveForAppealOrCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { getLinkableAppealSummaryByCaseReference } from './linkable-appeal.service.js';
 
 /** @typedef {import('express').Request} Request */
@@ -25,7 +25,7 @@ export const getLinkableAppealById = async (req, res) => {
 		}
 
 		if (
-			isLinkedAppealsActive() &&
+			isLinkedAppealsActiveForAppealOrCaseType() &&
 			linkableType === CASE_RELATIONSHIP_LINKED &&
 			!canLinkAppeals(linkableAppeal, linkableType, 'lead')
 		) {

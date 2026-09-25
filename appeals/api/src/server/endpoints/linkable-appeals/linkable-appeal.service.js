@@ -1,10 +1,10 @@
 import appealRepository from '#repositories/appeal.repository.js';
 import { currentStatus } from '#utils/current-status.js';
 import { getAppealFromHorizon } from '#utils/horizon-gateway.js';
-import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import { formatHorizonGetCaseData } from '#utils/mapping/map-horizon.js';
 import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
+import { isLinkedAppealsActiveForAppealOrCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { formatLinkableAppealSummary } from './linkable-appeal.formatter.js';
 
@@ -32,7 +32,7 @@ export const getLinkableAppealSummaryByCaseReference = async (appealReference, l
 		});
 		return formatHorizonGetCaseData(horizonAppeal);
 	} else if (
-		isLinkedAppealsActive(appeal) &&
+		isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType?.key) &&
 		linkableType === CASE_RELATIONSHIP_LINKED &&
 		//@ts-ignore
 		!linkableCaseStatuses.includes(currentStatus(appeal))

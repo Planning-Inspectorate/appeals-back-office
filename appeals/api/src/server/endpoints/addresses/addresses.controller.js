@@ -1,7 +1,6 @@
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import addressRepository from '#repositories/address.repository.js';
-import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import { getChildAppeals } from '#utils/link-appeals.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
@@ -9,6 +8,7 @@ import {
 	AUDIT_TRAIL_ADDRESS_UPDATED,
 	ERROR_FAILED_TO_SAVE_DATA
 } from '@pins/appeals/constants/support.js';
+import { isLinkedAppealsActiveForAppealOrCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { formatAddress, formatAddressMultiline } from './addresses.formatter.js';
 
 /** @typedef {import('express').Request} Request */
@@ -50,7 +50,7 @@ const updateAddressById = async (req, res) => {
 	let updatedAddress;
 	try {
 		updatedAddress = await addressRepository.updateAddressById(Number(addressId), updateAddress);
-		if (isLinkedAppealsActive(currentAppeal)) {
+		if (isLinkedAppealsActiveForAppealOrCaseType(currentAppeal?.appealType?.key)) {
 			const linkedChildAppeals = getChildAppeals(currentAppeal);
 			Promise.all(
 				linkedChildAppeals.map(async (appeal) => {

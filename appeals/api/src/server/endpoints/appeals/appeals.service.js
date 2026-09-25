@@ -6,8 +6,8 @@ import lpaRepository from '#repositories/lpa.repository.js';
 import padsUserRepository from '#repositories/pads-user.repository.js';
 import userRepository from '#repositories/user.repository.js';
 import transitionState, { transitionLinkedChildAppealsState } from '#state/transition-state.js';
-import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import { VALIDATION_OUTCOME_COMPLETE } from '@pins/appeals/constants/support.js';
+import { isLinkedAppealsActiveForAppealOrCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 import {
 	fetchBankHolidaysForDivision,
 	getNumberOfBankHolidaysBetweenDates
@@ -186,7 +186,7 @@ async function updateCompletedEvents(azureAdUserId) {
 	const toBroadcast = new Set();
 	await Promise.all(
 		appealsToUpdate.map(async (appeal) => {
-			if (isLinkedAppealsActive(appeal)) {
+			if (isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType?.key)) {
 				const results = await transitionLinkedChildAppealsState(
 					// @ts-ignore
 					appeal,

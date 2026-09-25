@@ -9,7 +9,7 @@ import appealTimetableRepository from '#repositories/appeal-timetable.repository
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
 import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
-import { isEnforcementChildAppeal, isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
+import { isEnforcementChildAppeal } from '#utils/is-linked-appeal.js';
 import { getChildEnforcementsWithGrounds } from '#utils/link-appeals.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
@@ -32,6 +32,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import {
 	isEnforcementCaseType,
+	isLinkedAppealsActiveForAppealOrCaseType,
 	isS78ExpeditedAppealType
 } from '@pins/appeals/utils/appeal-type-checks.js';
 import {
@@ -467,7 +468,7 @@ const startCase = async (
 		}
 
 		const isChildAppeal =
-			isLinkedAppealsActive(appeal) &&
+			isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType?.key) &&
 			Boolean(
 				appeal?.parentAppeals?.filter(
 					(parentAppeal) => parentAppeal.type === CASE_RELATIONSHIP_LINKED
@@ -578,7 +579,7 @@ const getStartCaseNotifyPreviews = async (
 ) => {
 	try {
 		const isChildAppeal =
-			isLinkedAppealsActive(appeal) &&
+			isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType?.key) &&
 			Boolean(
 				appeal?.parentAppeals?.filter(
 					(parentAppeal) => parentAppeal.type === CASE_RELATIONSHIP_LINKED

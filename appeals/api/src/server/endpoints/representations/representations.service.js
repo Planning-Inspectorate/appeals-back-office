@@ -14,7 +14,6 @@ import BackOfficeAppError from '#utils/app-error.js';
 import { isCurrentStatus } from '#utils/current-status.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
-import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
@@ -33,7 +32,8 @@ import {
 } from '@pins/appeals/constants/support.js';
 import {
 	isEnforcementCaseType,
-	isLdcOrEnforcementCaseType
+	isLdcOrEnforcementCaseType,
+	isLinkedAppealsActiveForAppealOrCaseType
 } from '@pins/appeals/utils/appeal-type-checks.js';
 import formatDate, {
 	dateISOStringToDisplayDate,
@@ -474,7 +474,7 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient, ins
 		}
 	);
 
-	if (isLinkedAppealsActive(appeal)) {
+	if (isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType?.key)) {
 		await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 	}
 
@@ -817,7 +817,7 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient, 
 		}
 	);
 
-	if (isLinkedAppealsActive(appeal)) {
+	if (isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType?.key)) {
 		await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 	}
 	await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
@@ -926,7 +926,7 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 		}
 	);
 
-	if (isLinkedAppealsActive(appeal)) {
+	if (isLinkedAppealsActiveForAppealOrCaseType(appeal?.appealType?.key)) {
 		await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 	}
 	await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);

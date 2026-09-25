@@ -9,11 +9,7 @@ import {
 import { appealShortReference, linkedAppealStatus } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { canDisplayAction, removeSummaryListActions } from '#lib/mappers/index.js';
-import {
-	isChildAppeal,
-	isLinkedAppealsActive,
-	isParentAppeal
-} from '#lib/mappers/utils/is-linked-appeal.js';
+import { isChildAppeal, isParentAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { getRequiredActionsForAppeal } from '#lib/mappers/utils/required-actions.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
@@ -22,6 +18,7 @@ import {
 	FEATURE_FLAG_NAMES
 } from '@pins/appeals/constants/common.js';
 import { DOCUMENT_STATUS_NOT_RECEIVED } from '@pins/appeals/constants/support.js';
+import { isLinkedAppealsActiveForAppealOrCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import * as authSession from '../../app/auth/auth-session.service.js';
 
@@ -188,7 +185,8 @@ export function personalListPage(
 					{
 						html: '',
 						pageComponents:
-							isLinkedAppealsActive(appeal) && linkedAppealStatusText !== ''
+							isLinkedAppealsActiveForAppealOrCaseType(appeal.appealType) &&
+							linkedAppealStatusText !== ''
 								? [
 										{
 											type: 'status-tag',
