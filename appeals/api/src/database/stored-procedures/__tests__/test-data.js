@@ -4,16 +4,18 @@
 export const appealDataDates = {
 	createdDate: new Date('2026-04-01T09:00:00.000Z'),
 	extensionDate: new Date('2026-05-14T09:00:00.000Z'),
+	validDate: new Date('2026-05-18T09:00:00.000Z'),
+	startedDate: new Date('2026-05-25T09:00:00.000Z'),
 	enforcementGroundFeeDate: new Date('2026-05-01T09:00:00.000Z'),
 	lpaQuestionnaireDueDate: new Date('2026-06-01T09:00:00.000Z'),
-	lpaStatementsDueDate: new Date('2026-06-07T09:00:00.000Z'),
+	lpaStatementDueDate: new Date('2026-06-07T09:00:00.000Z'),
 	ipCommentsDueDate: new Date('2026-06-08T09:00:00.000Z'),
 	appellantStatementDueDate: new Date('2026-06-10T09:00:00.000Z'),
 	finalCommentsDueDate: new Date('2026-06-11T09:00:00.000Z'),
 	hearingStartTime: new Date('2026-06-15T09:00:00.000Z'),
 	inquiryStartTime: new Date('2026-06-16T09:00:00.000Z'),
-	siteVisitDate: new Date('2026-06-17T09:00:00.000Z'),
-	siteVisitEndTime: new Date('2026-06T18:00:00.000Z'),
+	visitDate: new Date('2026-06-17T09:00:00.000Z'),
+	visitEndTime: new Date('2026-06T18:00:00.000Z'),
 	proofOfEvidenceAndWitnessesDueDate: new Date('2026-06-19T09:00:00.000Z')
 };
 
@@ -22,6 +24,8 @@ export let enforcementAppealData = {
 		reference: 1000000,
 		caseCreatedDate: appealDataDates.createdDate,
 		caseExtensionDate: appealDataDates.extensionDate,
+		caseValidDate: appealDataDates.validDate,
+		caseStartedDate: null,
 		status: 'validation',
 		appealTypeId: /** @type {number | null} */ (null), // too early to assign here
 		procedureTypeId: /** @type {number | null} */ (null), // too early to assign here
@@ -35,7 +39,7 @@ export let enforcementAppealData = {
 		groundAFeeReceiptDueDate: appealDataDates.enforcementGroundFeeDate
 	},
 	appealTimetable: {
-		lpaStatementDueDate: appealDataDates.lpaStatementsDueDate,
+		lpaStatementDueDate: appealDataDates.lpaStatementDueDate,
 		lpaQuestionnaireDueDate: appealDataDates.lpaQuestionnaireDueDate,
 		ipCommentsDueDate: appealDataDates.ipCommentsDueDate,
 		appellantStatementDueDate: appealDataDates.appellantStatementDueDate,
@@ -51,6 +55,8 @@ export const planningAppealData = {
 		reference: 1100001,
 		caseCreatedDate: appealDataDates.createdDate,
 		caseExtensionDate: appealDataDates.extensionDate,
+		caseValidDate: appealDataDates.validDate,
+		caseStartedDate: null,
 		status: 'validation',
 		appealTypeId: /** @type {number | null} */ (null), // too early to assign here
 		procedureTypeId: /** @type {number | null} */ (null), // too early to assign here
@@ -62,7 +68,7 @@ export const planningAppealData = {
 	},
 	enforcementNoticeAppealOutcome: null,
 	appealTimetable: {
-		lpaStatementDueDate: appealDataDates.lpaStatementsDueDate,
+		lpaStatementDueDate: appealDataDates.lpaStatementDueDate,
 		lpaQuestionnaireDueDate: appealDataDates.lpaQuestionnaireDueDate,
 		ipCommentsDueDate: appealDataDates.ipCommentsDueDate,
 		appellantStatementDueDate: appealDataDates.appellantStatementDueDate,
@@ -70,8 +76,8 @@ export const planningAppealData = {
 		proofOfEvidenceAndWitnessesDueDate: appealDataDates.proofOfEvidenceAndWitnessesDueDate
 	},
 	siteVisit: {
-		siteVisitDate: appealDataDates.siteVisitDate,
-		visitEndTime: appealDataDates.siteVisitEndTime
+		visitDate: appealDataDates.visitDate,
+		visitEndTime: appealDataDates.visitEndTime
 	},
 	hearing: {
 		hearingStartTime: appealDataDates.hearingStartTime

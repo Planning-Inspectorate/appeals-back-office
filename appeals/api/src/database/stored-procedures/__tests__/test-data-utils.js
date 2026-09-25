@@ -8,6 +8,8 @@
  * @property {Date} caseCreatedDate
  * @property {string} status
  * @property {Date | null} [caseExtensionDate]
+ * @property {Date | null} [caseValidDate]
+ * @property {Date | null} [caseStartedDate]
  * @property {number | null} [appealTypeId]
  * @property {number | null} [procedureTypeId]
  * @property {number | null} [lpaId]
@@ -37,7 +39,7 @@
 /**
  * @typedef {Object} siteVisitParamData
  * @property {Date | null} visitEndTime
- * @property {Date} siteVisitDate
+ * @property {Date | null} visitDate
  */
 
 /**
@@ -61,35 +63,75 @@
  * @property {inquiryParamData | null} inquiry
  */
 
+/**
+ * @typedef {Object} appealTypeIds
+ * @property {Number} S78_APPEAL
+ * @property {Number} PLANNING_LISTED_BUILDING
+ * @property {Number} S78_ENFORCEMENT_NOTICE
+ * @property {Number} ENFORCEMENT_LISTED_BUILDING
+ * @property {Number} LAWFUL_DEVELOPMENT_CERTIFICATE
+ * @property {Number} ADVERTISEMENT
+ */
+
 export const stageDueDatesToAdd = {
 	STATE_TARGET_READY_TO_START: 5,
+	STATE_TARGET_READY_TO_START_NOT_YET_VALID: 10,
 	STATE_TARGET_5_BUSINESS_DAYS: 5,
-	STATE_TARGET_LPA_QUESTIONNAIRE_DUE: 10,
+	STATE_TARGET_LPA_QUESTIONNAIRE_DUE_NEW_REGS: 5,
+	STATE_TARGET_LPA_QUESTIONNAIRE_DUE_OLD_REGS: 10,
 	STATE_TARGET_ASSIGN_CASE_OFFICER: 15,
 	STATE_TARGET_ISSUE_DETERMINATION: 30,
 	STATE_TARGET_ISSUE_DETERMINATION_AFTER_SITE_VISIT: 40,
-	STATE_TARGET_STATEMENT_REVIEW: 55,
-	STATE_TARGET_FINAL_COMMENT_REVIEW: 60
+	STATE_TARGET_STATEMENT_NEW_REGS: 25,
+	STATE_TARGET_STATEMENT_OLD_REGS: 30,
+	STATE_TARGET_FINAL_COMMENT_NEW_REGS: 35,
+	STATE_TARGET_FINAL_COMMENT_OLD_REGS: 45,
+	STATE_TARGET_45_BUSINESS_DAYS: 45
 };
 
 /**
  * returns a set of case type ids from the Test DB
  * @param {import('#db-client/client.js').PrismaClient} prisma
+ * @returns {Promise<appealTypeIds>}
  */
-export const caseTypes = async (prisma) => {
+export const appealTypes = async (prisma) => {
 	const planningAppealType = await prisma.appealType.findUnique({
 		where: { type: 'Planning appeal' }
+	});
+	const planningLBType = await prisma.appealType.findUnique({
+		where: { type: 'Planning listed building and conservation area appeal' }
 	});
 	const enforcementNoticeAppealType = await prisma.appealType.findUnique({
 		where: { type: 'Enforcement notice appeal' }
 	});
-	if (!planningAppealType || !enforcementNoticeAppealType) {
+	const enforcementLBType = await prisma.appealType.findUnique({
+		where: { type: 'Enforcement listed building and conservation area appeal' }
+	});
+	const ldcType = await prisma.appealType.findUnique({
+		where: { type: 'Lawful development certificate appeal' }
+	});
+	const advertType = await prisma.appealType.findUnique({
+		where: { type: 'Advertisement' }
+	});
+
+	if (
+		!planningAppealType ||
+		!planningLBType ||
+		!enforcementNoticeAppealType ||
+		!enforcementLBType ||
+		!ldcType ||
+		!advertType
+	) {
 		throw new Error('Missing required appeal types in test seed data');
 	}
 
 	return {
 		S78_APPEAL: planningAppealType.id,
-		S78_ENFORCEMENT_NOTICE: enforcementNoticeAppealType.id
+		PLANNING_LISTED_BUILDING: planningLBType.id,
+		S78_ENFORCEMENT_NOTICE: enforcementNoticeAppealType.id,
+		ENFORCEMENT_LISTED_BUILDING: enforcementLBType.id,
+		LAWFUL_DEVELOPMENT_CERTIFICATE: ldcType.id,
+		ADVERTISEMENT: advertType.id
 	};
 };
 
@@ -206,6 +248,8 @@ export const createTestAppeal = async (prisma, appealData) => {
 		caseCreatedDate,
 		status,
 		caseExtensionDate,
+		caseValidDate,
+		caseStartedDate,
 		appealTypeId,
 		procedureTypeId,
 		lpaId
@@ -218,6 +262,8 @@ export const createTestAppeal = async (prisma, appealData) => {
 			caseCreatedDate,
 			caseUpdatedDate: caseCreatedDate,
 			...(caseExtensionDate ? { caseExtensionDate } : {}),
+			...(caseValidDate ? { caseValidDate } : {}),
+			...(caseStartedDate ? { caseStartedDate } : {}),
 			appealTypeId,
 			procedureTypeId
 		}
@@ -281,7 +327,7 @@ export const createTestAppealAndRelatedData = async (prisma, appealData) => {
 		await prisma.siteVisit.create({
 			data: {
 				appealId: appeal.id,
-				visitDate: appealData.siteVisit.siteVisitDate ?? null,
+				visitDate: appealData.siteVisit.visitDate ?? null,
 				visitEndTime: appealData.siteVisit.visitEndTime ?? undefined
 			}
 		});
