@@ -443,7 +443,18 @@ const checkAppealExistsById = async (id) => {
 const deprecatedGetAppealById = async (id, options) => {
 	const massInclude = {
 		...appealDetailsInclude,
-		...(options?.omitRepresentations && { representations: false })
+		representations: options?.omitRepresentations
+			? false
+			: {
+					select: {
+						id: true,
+						representationType: true,
+						representedId: true,
+						status: true,
+						dateCreated: true,
+						isRedacted: true
+					}
+				}
 	};
 	const appeal = await databaseConnector.appeal.findUnique({
 		where: {
@@ -458,7 +469,16 @@ const deprecatedGetAppealById = async (id, options) => {
 				// @ts-ignore
 				appeal.folders = [];
 			} else {
-				const folders = await getFoldersWithDocumentsAndVersions(id);
+				const folders = await getFoldersWithDocumentsAndVersions(
+					id,
+					false,
+					APPEAL_CASE_STAGE.COSTS,
+					[
+						`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_WITHDRAWAL_LETTER}`,
+						`${APPEAL_CASE_STAGE.APPEAL_DECISION}`,
+						`${APPEAL_CASE_STAGE.CANCELLATION}`
+					]
+				);
 				// @ts-ignore
 				appeal.folders = folders;
 			}
