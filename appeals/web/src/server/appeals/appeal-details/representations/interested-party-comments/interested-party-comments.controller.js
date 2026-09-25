@@ -1,3 +1,4 @@
+import { APPEAL_CASE_PRE_STATEMENTS_STATUS } from '#appeals/appeal.constants.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
@@ -23,11 +24,18 @@ const paginationParameters = {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const handleInterestedPartyComments = (request, response) =>
-	((request.currentAppeal?.documentationSummary?.ipComments?.counts?.published ?? 0) === 0 ||
-		isStatePassed(request.currentAppeal?.appealStatus, APPEAL_CASE_STATUS.STATEMENTS)
-		? renderInterestedPartyComments
-		: renderSharedInterestedPartyComments)(request, response);
+export const handleInterestedPartyComments = (request, response) => {
+	const statementsCompleted =
+		!APPEAL_CASE_PRE_STATEMENTS_STATUS.includes(request.currentAppeal?.appealStatus) ||
+		isStatePassed(request.currentAppeal, APPEAL_CASE_STATUS.STATEMENTS);
+
+	return (
+		statementsCompleted ||
+			(request.currentAppeal?.documentationSummary?.ipComments?.counts?.published ?? 0) > 0
+			? renderSharedInterestedPartyComments
+			: renderInterestedPartyComments
+	)(request, response);
+};
 
 /**
  *
