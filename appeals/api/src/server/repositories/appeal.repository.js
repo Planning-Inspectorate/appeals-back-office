@@ -1639,6 +1639,21 @@ const appellantCaseSelect = {
 				}
 			}
 		}
+	},
+	appealGrounds: {
+		where: {
+			isDeleted: false
+		},
+		select: {
+			factsForGround: true,
+			isDeleted: true,
+			ground: {
+				select: {
+					groundRef: true,
+					groundDescription: true
+				}
+			}
+		}
 	}
 };
 
