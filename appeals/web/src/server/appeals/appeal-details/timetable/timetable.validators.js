@@ -47,8 +47,12 @@ export const selectTimetableValidators = (req, timetableTypes, session) => {
 		].some((value) => value?.trim());
 		const sessionDate = buildSessionDate(req, idText);
 		const originalDatePart = (originalTimetable[timetableType] || '').slice(0, 10);
-		if ((!originalDatePart && hasDateInput) || sessionDate !== originalDatePart) {
-			//only validate due dates that have changed
+		const isChangeOfProcedure = session?.appealProcedure !== session?.existingAppealProcedure;
+		const shouldValidate = isChangeOfProcedure
+			? !originalDatePart || sessionDate !== originalDatePart
+			: (!originalDatePart && hasDateInput) || sessionDate !== originalDatePart;
+
+		if (shouldValidate) {
 			const validatorConfig = validatorsMap[timetableType];
 			const idToCompare = 'idToCompare' in validatorConfig ? validatorConfig.idToCompare : '';
 			const labelToCompare =
@@ -62,6 +66,7 @@ export const selectTimetableValidators = (req, timetableTypes, session) => {
 				)
 			);
 		}
+
 		session.appealTimetable[timetableType] = sessionDate;
 	});
 	validatorsList.push(...getAllDateErrorExtractors());
