@@ -1,11 +1,13 @@
 import { getTeamFromAppealId } from '#appeals/appeal-details/update-case-team/update-case-team.service.js';
 import {
 	postChangeDocumentDetails,
+	postDeleteDocument,
 	postDocumentDetails,
 	postDocumentUpload,
 	postUploadDocumentsCheckAndConfirm,
 	postUploadDocumentVersionCheckAndConfirm,
 	renderChangeDocumentDetails,
+	renderDeleteDocument,
 	renderDocumentDetails,
 	renderDocumentUpload,
 	renderManageDocument,
@@ -76,6 +78,38 @@ export const getManageDocument = async (request, response) => {
 		uploadUpdatedDocumentUrl: `${baseUrl}/upload-documents/{{folderId}}/{{documentId}}`,
 		removeDocumentUrl: `${baseUrl}/manage-documents/{{folderId}}/{{documentId}}/{{versionId}}/delete`,
 		canShare: true
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const getDeleteInquiryDocument = async (request, response) => {
+	const { currentFolder } = request;
+
+	if (!currentFolder) {
+		return response.status(404).render('app/404.njk');
+	}
+
+	await renderDeleteDocument({
+		request,
+		response,
+		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/inquiry-documents/manage-documents/${currentFolder.folderId}/{{documentId}}`
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postDeleteInquiryDocument = async (request, response) => {
+	const { currentAppeal, currentFolder } = request;
+
+	if (!currentAppeal || !currentFolder) {
+		return response.status(404).render('app/404.njk');
+	}
+
+	await postDeleteDocument({
+		request,
+		response,
+		returnUrl: `/appeals-service/appeal-details/${request.params.appealId}`,
+		cancelUrl: `/appeals-service/appeal-details/${request.params.appealId}/inquiry-documents/manage-documents/{{folderId}}/{{documentId}}`,
+		uploadNewDocumentUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/inquiry-documents/upload-documents/{{folderId}}`
 	});
 };
 

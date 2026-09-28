@@ -1517,10 +1517,12 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                 <td class="govuk-table__cell">Due by 11 October 2023</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Supporting documents</th>
+                <td class="govuk-table__cell">No documents</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
+            </tr>
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Contacts</h2>
@@ -1818,10 +1820,12 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
                 <td class="govuk-table__cell">Due by 11 October 2023</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Supporting documents</th>
+                <td class="govuk-table__cell">No documents</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
+            </tr>
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
@@ -2157,10 +2161,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                 <td class="govuk-table__cell">Due by 11 October 2023</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Supporting documents</th>
+                <td class="govuk-table__cell">No documents</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
+            </tr>
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Contacts</h2>
@@ -2452,10 +2458,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
                 <td class="govuk-table__cell">Due by 11 October 2023</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Supporting documents</th>
+                <td class="govuk-table__cell">No documents</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
+            </tr>
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
@@ -2866,10 +2874,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
                 <td class="govuk-table__cell">Due by 11 October 2023</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Supporting documents</th>
+                <td class="govuk-table__cell">No documents</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
+            </tr>
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
@@ -3283,10 +3293,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
                 <td class="govuk-table__cell">Due by 11 October 2023</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Supporting documents</th>
+                <td class="govuk-table__cell">No documents</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
+            </tr>
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
@@ -3698,10 +3710,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
                 <td class="govuk-table__cell">Due by 11 October 2023</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Supporting documents</th>
+                <td class="govuk-table__cell">No documents</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
+            </tr>
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
@@ -4113,10 +4127,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
                 <td class="govuk-table__cell">Due by 11 October 2023</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Supporting documents</th>
+                <td class="govuk-table__cell">No documents</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
+            </tr>
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
@@ -4542,10 +4558,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                 <td class="govuk-table__cell">Due by 11 October 2023</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Supporting documents</th>
+                <td class="govuk-table__cell">No documents</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
+            </tr>
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
@@ -4898,10 +4916,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                 <td class="govuk-table__cell">Due by 11 October 2023</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Supporting documents</th>
+                <td class="govuk-table__cell">No documents</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
+            </tr>
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
@@ -5313,10 +5333,12 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                 <td class="govuk-table__cell">Due by 11 October 2023</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Supporting documents</th>
+                <td class="govuk-table__cell">No documents</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
+            </tr>
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
@@ -5841,10 +5863,12 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
                 <td class="govuk-table__cell">Due by 11 October 2023</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Supporting documents</th>
+                <td class="govuk-table__cell">No documents</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
+            </tr>
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
@@ -6799,10 +6823,12 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                 <td class="govuk-table__cell">Due by 11 October 2023</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Supporting documents</th>
+                <td class="govuk-table__cell">No documents</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
+            </tr>
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
@@ -7156,10 +7182,12 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                 <td class="govuk-table__cell">Due by 11 October 2023</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Supporting documents</th>
+                <td class="govuk-table__cell">No documents</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
+            </tr>
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
@@ -7519,10 +7547,12 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                 <td class="govuk-table__cell">Due by 11 October 2023</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Supporting documents</th>
+                <td class="govuk-table__cell">No documents</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
+            </tr>
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
@@ -7876,10 +7906,12 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                 <td class="govuk-table__cell">Due by 11 October 2023</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Supporting documents</th>
+                <td class="govuk-table__cell">No documents</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
+            </tr>
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
@@ -8244,10 +8276,12 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                 <td class="govuk-table__cell"></td>
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Supporting documents</th>
+                <td class="govuk-table__cell">No documents</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
+            </tr>
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
@@ -8600,10 +8634,12 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                 <td class="govuk-table__cell"></td>
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
             </tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
-            <tr class="govuk-table__row"></tr>
+            <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">Supporting documents</th>
+                <td class="govuk-table__cell">No documents</td>
+                <td class="govuk-table__cell">Not applicable</td>
+                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
+            </tr>
         </tbody>
     </table>
     <h2 class="govuk-heading-l">Costs</h2>
@@ -9387,10 +9423,12 @@ exports[`appeal-details should not render a back button 1`] = `
                             <td class="govuk-table__cell">Due by 11 October 2023</td>
                             <td class="govuk-table__cell govuk-!-text-align-right"></td>
                         </tr>
-                        <tr class="govuk-table__row"></tr>
-                        <tr class="govuk-table__row"></tr>
-                        <tr class="govuk-table__row"></tr>
-                        <tr class="govuk-table__row"></tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Supporting documents</th>
+                            <td class="govuk-table__cell">No documents</td>
+                            <td class="govuk-table__cell">Not applicable</td>
+                            <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
+                        </tr>
                     </tbody>
                 </table>
                 <h2 class="govuk-heading-l">Costs</h2>
