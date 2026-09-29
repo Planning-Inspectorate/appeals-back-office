@@ -18,6 +18,7 @@
 		"test:watch": "jest --watchAll --runInBand"
 	},
 	"dependencies": {
+		"@pins/appeals": "^0.0.0",
 		"@pins/platform": "^0.0.0",
 		"applicationinsights": "*",
 		"body-parser": "^1.20.6",
