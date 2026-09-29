@@ -24,6 +24,14 @@ describe('procedure-preference', () => {
 				appealId: 2
 			})
 			.persist();
+		nock('http://test/')
+			.get('/appeals/2/exists')
+			.reply(200, {
+				id: 2,
+				appealId: 2,
+				appealReference: appealDataFullPlanning.appealReference
+			})
+			.persist();
 	});
 	afterEach(teardown);
 
@@ -72,8 +80,8 @@ describe('procedure-preference', () => {
 			describe(`"${testCase.labelText}" row`, () => {
 				it(`should render a summary list row for ${testCase.labelText} with "${testCase.defaultValueText}" populated in the value column if ${testCase.fieldName} is not present in the LPA questionnaire`, async () => {
 					nock('http://test/')
-						.get(`/appeals/2/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
-						.reply(200, lpaQuestionnaireDataNotValidated);
+						.get(`/appeals/2/lpa-questionnaire`)
+						.reply(200, { ...lpaQuestionnaireDataNotValidated, ...appealDataFullPlanning });
 
 					const response = await request.get(
 						`${baseUrl}/2/lpa-questionnaire/${appealDataFullPlanning.lpaQuestionnaireId}`
@@ -88,9 +96,10 @@ describe('procedure-preference', () => {
 
 				it(`should render a summary list row for ${testCase.labelText} with "${testCase.defaultValueText}" populated in the value column if ${testCase.fieldName} is null`, async () => {
 					nock('http://test/')
-						.get(`/appeals/2/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
+						.get(`/appeals/2/lpa-questionnaire`)
 						.reply(200, {
 							...lpaQuestionnaireDataNotValidated,
+							...appealDataFullPlanning,
 							[testCase.fieldName]: null
 						});
 
@@ -107,9 +116,10 @@ describe('procedure-preference', () => {
 				for (const validDatum of testCase.validData) {
 					it(`should render a summary list row for ${testCase.labelText} with "${validDatum.expectedText}" populated in the value column if ${testCase.fieldName} is "${validDatum.value}"`, async () => {
 						nock('http://test/')
-							.get(`/appeals/2/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
+							.get(`/appeals/2/lpa-questionnaire`)
 							.reply(200, {
 								...lpaQuestionnaireDataNotValidated,
+								...appealDataFullPlanning,
 								[testCase.fieldName]: validDatum.value
 							});
 
@@ -227,6 +237,9 @@ describe('procedure-preference', () => {
 			nock('http://test/')
 				.get(`/appeals/2/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
 				.reply(200, lpaQuestionnaireDataNotValidated);
+			nock('http://test/')
+				.get(`/appeals/2/lpa-questionnaire`)
+				.reply(200, lpaQuestionnaireDataNotValidated);
 
 			const response = await request.get(
 				`${baseUrl}/2/lpa-questionnaire/${appealDataFullPlanning.lpaQuestionnaireId}/procedure-preference/details/change`
@@ -249,6 +262,12 @@ describe('procedure-preference', () => {
 		it('should render the change reason for preference page with "procedurePreferenceDetailsTextarea" textarea populated with the expected content if lpaProcedurePreferenceDetails is populated in the LPA questionnaire data', async () => {
 			nock('http://test/')
 				.get(`/appeals/2/lpa-questionnaires/${appealDataFullPlanning.lpaQuestionnaireId}`)
+				.reply(200, {
+					...lpaQuestionnaireDataNotValidated,
+					lpaProcedurePreferenceDetails: 'Example procedure preference details text'
+				});
+			nock('http://test/')
+				.get(`/appeals/2/lpa-questionnaire`)
 				.reply(200, {
 					...lpaQuestionnaireDataNotValidated,
 					lpaProcedurePreferenceDetails: 'Example procedure preference details text'

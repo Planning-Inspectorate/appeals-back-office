@@ -19,7 +19,7 @@ import { APPEAL_CASE_DECISION_OUTCOME } from '@planning-inspectorate/data-model'
 
 /**
  *
- * @param {WebAppeal|{appealId:string}} currentAppeal
+ * @param {WebAppeal|{appealId:string|number}} currentAppeal
  * @returns {string}
  */
 export function baseUrl(currentAppeal) {

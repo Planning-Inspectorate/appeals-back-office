@@ -8,7 +8,7 @@ export const mapProcedurePreferenceDuration = ({ lpaQuestionnaireData, currentRo
 		editable: true,
 		value:
 			'lpaProcedurePreferenceDuration' in lpaQuestionnaireData &&
-			lpaQuestionnaireData?.lpaProcedurePreferenceDuration !== null
+			lpaQuestionnaireData?.lpaProcedurePreferenceDuration != null
 				? `${lpaQuestionnaireData.lpaProcedurePreferenceDuration} day${
 						lpaQuestionnaireData.lpaProcedurePreferenceDuration > 1 ? 's' : ''
 					}`

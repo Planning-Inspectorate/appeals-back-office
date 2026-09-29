@@ -14,6 +14,7 @@ import {
 import { APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal
+ * @typedef {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} LPAQuestionnaireResponse
  */
 /**
  * @typedef {{folderId: number, invalidReason?: string | null, documentId?: string | null,
@@ -64,7 +65,7 @@ export const buildDecisionDocumentLinkHtml = (appealId, decision, linkText) => {
 };
 
 /**
- * @param {WebAppeal} appealDetails
+ * @param {WebAppeal|LPAQuestionnaireResponse} appealDetails
  * @param {string} [status]
  * @param {string | null} [representationStatus]
  * @param {boolean} [isRedacted]
@@ -99,8 +100,8 @@ export const statementStatusText = (appealDetails, status, representationStatus,
 };
 
 /**
- * @param {WebAppeal} appealDetails
- * @param {{status: string, receivedAt?: string | Date | null} | undefined} statement
+ * @param {WebAppeal|LPAQuestionnaireResponse} appealDetails
+ * @param {{status: string, receivedAt?: string | Date | null} | null | undefined} statement
  * @returns {string}
  */
 export const statementReceivedText = (appealDetails, statement) => {

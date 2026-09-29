@@ -10,8 +10,8 @@ export const mapLpaHealthAndSafety = ({
 	booleanWithDetailsSummaryListItem({
 		id: 'lpa-health-and-safety',
 		text: 'Potential safety risks (LPA answer)',
-		value: appealDetails.healthAndSafety.lpaQuestionnaire?.hasIssues,
-		valueDetails: appealDetails.healthAndSafety.lpaQuestionnaire?.details,
+		value: appealDetails.healthAndSafety?.lpaQuestionnaire?.hasIssues,
+		valueDetails: appealDetails.healthAndSafety?.lpaQuestionnaire?.details,
 		defaultText: 'No answer provided',
 		link: `${currentRoute}/safety-risks/change/lpa`,
 		editable:

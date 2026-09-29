@@ -4,7 +4,8 @@ import {
 	AppealTimetable,
 	ContactAddress,
 	CostsDecision,
-	DocumentationSummary
+	DocumentationSummary,
+	DocumentationSummaryEntry
 } from '@pins/appeals';
 import { Schema } from 'index';
 import { AppealGround, Ground } from '../../database/schema';
@@ -428,28 +429,36 @@ interface SingleLPAQuestionnaireResponse {
 		otherRelevantPolicies?: FolderInfo | null;
 		appealNotification?: FolderInfo | null;
 		historicEnglandConsultation?: FolderInfo | null;
-		relatedApplications: FolderInfo | null;
-		otherRelevantMatters: FolderInfo | null;
+		relatedApplications?: FolderInfo | null;
+		otherRelevantMatters?: FolderInfo | null;
 		// Enforcement
 		enforcementList?: FolderInfo | null;
 		stopNotice?: FolderInfo | null;
 		article4Direction?: FolderInfo | null;
 		localDevelopmentOrder?: FolderInfo | null;
-		planningPermission: FolderInfo | null;
-		lpaEnforcementNotice: FolderInfo | null;
-		lpaEnforcementNoticePlan: FolderInfo | null;
-		planningContraventionNotice: FolderInfo | null;
+		planningPermission?: FolderInfo | null;
+		lpaEnforcementNotice?: FolderInfo | null;
+		lpaEnforcementNoticePlan?: FolderInfo | null;
+		planningContraventionNotice?: FolderInfo | null;
 	};
-	validation: ValidationOutcomeResponse | null;
+	validation?: ValidationOutcomeResponse | null;
 	lpaNotificationMethods?: LPANotificationMethodDetails[] | null;
 	listedBuildingDetails?: ListedBuildingDetailsResponse[] | null;
 	healthAndSafety?: {
-		hasIssues: boolean;
-		details: string;
+		appellantCase?: {
+			details?: string | null;
+			hasIssues: boolean;
+		};
+		lpaQuestionnaire?: {
+			details?: string | null;
+			hasIssues: boolean;
+		};
+		details?: string | null;
+		hasIssues?: boolean;
 	} | null;
 	siteAccessRequired?: {
 		isRequired: boolean;
-		details: string;
+		details: string | null;
 	} | null;
 	doesSiteHaveHealthAndSafetyIssues?: boolean | null;
 	inspectorAccessDetails?: string | null;
@@ -457,9 +466,8 @@ interface SingleLPAQuestionnaireResponse {
 	isConservationArea?: boolean | null;
 	isGreenBelt?: boolean | null;
 	isCorrectAppealType?: boolean | null;
-	submittedAt?: Date | null;
-	receivedAt: Date;
-	otherAppeals?: RelatedAppeal[] | null;
+	submittedAt?: string | null;
+	receivedAt?: string | null;
 	costsAppliedFor?: boolean | null;
 	lpaStatement?: string | null;
 	extraConditions?: string | null;
@@ -468,20 +476,20 @@ interface SingleLPAQuestionnaireResponse {
 	eiaRequiresEnvironmentalStatement?: boolean | null;
 	eiaEnvironmentalImpactSchedule?: string | null;
 	eiaDevelopmentDescription?: string | null;
-	affectsScheduledMonument?: boolean;
-	hasProtectedSpecies?: boolean;
-	isAonbNationalLandscape?: boolean;
-	isGypsyOrTravellerSite?: boolean;
-	hasInfrastructureLevy?: boolean;
-	isInfrastructureLevyFormallyAdopted?: boolean;
-	infrastructureLevyAdoptedDate: string | null;
-	infrastructureLevyExpectedDate: string | null;
-	lpaProcedurePreference: string | null;
-	lpaProcedurePreferenceDetails: string | null;
-	lpaProcedurePreferenceDuration: number | null;
-	eiaSensitiveAreaDetails: string | null;
-	consultedBodiesDetails: string | null;
-	reasonForNeighbourVisits: string | null;
+	affectsScheduledMonument?: boolean | null;
+	hasProtectedSpecies?: boolean | null;
+	isAonbNationalLandscape?: boolean | null;
+	isGypsyOrTravellerSite?: boolean | null;
+	hasInfrastructureLevy?: boolean | null;
+	isInfrastructureLevyFormallyAdopted?: boolean | null;
+	infrastructureLevyAdoptedDate?: string | null;
+	infrastructureLevyExpectedDate?: string | null;
+	lpaProcedurePreference?: string | null;
+	lpaProcedurePreferenceDetails?: string | null;
+	lpaProcedurePreferenceDuration?: number | null;
+	eiaSensitiveAreaDetails?: string | null;
+	consultedBodiesDetails?: string | null;
+	reasonForNeighbourVisits?: string | null;
 	preserveGrantLoan?: boolean;
 	isSiteInAreaOfSpecialControlAdverts?: boolean;
 	wasApplicationRefusedDueToHighwayOrTraffic?: boolean;
@@ -508,6 +516,217 @@ interface SingleLPAQuestionnaireResponse {
 	anySignificantChangesLpa_localPlanSignificantChanges?: string | null;
 	anySignificantChangesLpa_nationalPolicySignificantChanges?: string | null;
 	anySignificantChangesLpa_courtJudgementSignificantChanges?: string | null;
+	agent?: ServiceUserResponse;
+	anySignificantChanges?: any;
+	anySignificantChanges_courtJudgementSignificantChanges?: any;
+	anySignificantChanges_localPlanSignificantChanges?: any;
+	anySignificantChanges_nationalPolicySignificantChanges?: any;
+	anySignificantChanges_otherSignificantChanges?: any;
+	/** @example "assign_case_officer" */
+	appealStatus?: string;
+	/** @example "Householder" */
+	appealType?: string;
+	appellant?: ServiceUserResponse;
+	/** @example 1 */
+	appellantCaseId?: number;
+	appellantCostsAppliedFor?: any;
+	applicant?: {
+		/** @example "Lee" */
+		firstName?: string;
+		/** @example "Thornton" */
+		surname?: string;
+	};
+	/** @example "2022-03-18T00:00:00.000Z" */
+	applicationDate?: string;
+	/** @example "refused" */
+	applicationDecision?: string;
+	/** @example "2022-03-18T00:00:00.000Z" */
+	applicationDecisionDate?: string;
+	/** @example false */
+	awaitingLinkedAppeal?: boolean;
+	/** @example "a8973f33-4d2e-486b-87b0-d068343ad9eb" */
+	caseOfficer?: string;
+	/** @example [] */
+	completedStateList?: any[];
+	/** @example false */
+	costsAppliedFor?: boolean;
+	costsDecision?: {
+		/** @example false */
+		awaitingAppellantCostsDecision?: boolean;
+		/** @example false */
+		awaitingLpaCostsDecision?: boolean;
+	};
+	/** @example "2024-03-25T23:59:59.999Z" */
+	createdAt?: string;
+	documentationSummary: {
+		appellantCase?: {
+			/** @example "2024-03-25T23:59:59.999Z" */
+			receivedAt?: string;
+			/** @example "received" */
+			status?: string;
+		};
+		lpaQuestionnaire?: {
+			/** @example "2024-06-24T00:00:00.000Z" */
+			receivedAt?: string;
+			/** @example "Complete" */
+			status?: string;
+		};
+		appellantFinalComments?: DocumentationSummaryEntry;
+		appellantProofOfEvidence?: DocumentationSummaryEntry;
+		appellantStatement?: DocumentationSummaryEntry;
+		lpaFinalComments?: DocumentationSummaryEntry;
+		lpaProofOfEvidence?: DocumentationSummaryEntry;
+		lpaStatement?: DocumentationSummaryEntry;
+		ipComments?: DocumentationSummaryEntry;
+		rule6PartyStatements?: Record<string, DocumentationSummaryEntry>;
+		rule6PartyProofs?: Record<string, DocumentationSummaryEntry>;
+	};
+	floorSpaceSquareMetres?: any;
+	/** @example true */
+	hasAdvertisedAppeal?: boolean;
+	hearing?: {
+		address?: {
+			/** @example "96 The Avenue" */
+			addressLine1?: string;
+			/** @example "Leftfield" */
+			addressLine2?: string;
+			/** @example "Kent" */
+			county?: string;
+			/** @example "MD21 5XY" */
+			postcode?: string;
+			/** @example "Maidstone" */
+			town?: string;
+		};
+		/** @example 1 */
+		addressId?: number;
+		/** @example 1 */
+		estimatedDays?: number;
+		/** @example "2022-03-31T03:00:00.000Z" */
+		hearingEndTime?: string;
+		/** @example 1 */
+		hearingId?: number;
+		/** @example "2022-03-31T01:00:00.000Z" */
+		hearingStartTime?: string;
+	};
+	inquiry?: {
+		address?: {
+			/** @example "96 The Avenue" */
+			addressLine1?: string;
+			/** @example "Leftfield" */
+			addressLine2?: string;
+			/** @example "Kent" */
+			county?: string;
+			/** @example "MD21 5XY" */
+			postcode?: string;
+			/** @example "Maidstone" */
+			town?: string;
+		};
+		/** @example 1 */
+		addressId?: number;
+		/** @example 6 */
+		estimatedDays?: number;
+		/** @example "2022-03-31T03:00:00.000Z" */
+		inquiryEndTime?: string;
+		/** @example 1 */
+		inquiryId?: number;
+		/** @example "2022-03-31T01:00:00.000Z" */
+		inquiryStartTime?: string;
+	};
+	/** @example "e8f89175-d02c-4a60-870e-dc954d5b530a" */
+	inspector?: string;
+	/** @example false */
+	isAppellantNamedOnApplication?: boolean;
+	/** @example false */
+	isChildAppeal?: boolean;
+	/** @example false */
+	isParentAppeal?: boolean;
+	/** @example false */
+	isS78Expedited?: boolean;
+	/** @example [] */
+	linkedAppeals: LinkedAppeal[];
+	otherAppeals: RelatedAppeal[];
+	/** @example [] */
+	neighbouringSites?: any[];
+	/** @example 5 */
+	numberOfResidencesNetChange?: number;
+	ownershipCertificate?: any;
+	padsInspector?: any;
+	/** @example "48269/APP/2021/1482" */
+	planningApplicationReference?: string;
+	reasonForAppealAppellant?: any;
+	/** @example "2024-06-24T00:00:00.000Z" */
+	receivedAt?: string;
+	screeningOpinionIndicatesEiaRequired?: any;
+	siteAccessRequired?: {
+		/** @example "There is a tall hedge around the site which obstructs the view of the site" */
+		details?: string;
+		/** @example true */
+		isRequired?: boolean;
+	};
+	siteOwnership?: {
+		areAllOwnersKnown?: any;
+		knowsOtherLandowners?: any;
+		/** @example true */
+		ownersInformed?: boolean;
+		/** @example true */
+		ownsAllLand?: boolean;
+		/** @example true */
+		ownsSomeLand?: boolean;
+	};
+	siteVisit?: {
+		/** @example 1 */
+		siteVisitId?: number;
+		/** @example "2022-03-31T01:00:00.000Z" */
+		visitDate?: string;
+		/** @example "2022-03-31T03:00:00.000Z" */
+		visitEndTime?: string;
+		/** @example "2022-03-31T01:00:00.000Z" */
+		visitStartTime?: string;
+		/** @example "Access required" */
+		visitType?: string;
+	};
+	stateList?: {
+		/** @example false */
+		completed?: boolean;
+		/** @example "complete" */
+		key?: string;
+	}[];
+	/** @example "2024-06-24T00:00:00.000Z" */
+	submittedAt?: string;
+	/** @example "householder-planning" */
+	typeOfPlanningApplication?: string;
+	appealTimetable?: (AppealTimetable & { completeDate?: string | null }) | null;
+	startedAt?: string | null;
+	assignedTeam?: { name: string | null; email: string | null } | null;
+	validAt?: string | null;
+	supportingDocuments?: FolderInfo | null;
+	hearingDocuments?: FolderInfo | null;
+	inquiryDocuments?: FolderInfo | null;
+	inquiryEventDocuments?: FolderInfo | null;
+	internalCorrespondence?: Record<string, FolderInfo | null> | null;
+	hearingEstimate?: HearingEstimate | null;
+	inquiryEstimate?: InquiryEstimate | null;
+	transferStatus?: { transferredAppealType: string; transferredAppealReference: string } | null;
+	lpaEmailAddress?: string | null;
+	allocationDetails?: AppealAllocation | null;
+	decision?: SingleAppealDetailsResponse['decision'] | null;
+	costs?: SingleAppealDetailsResponse['costs'] | null;
+	appealRule6Parties?:
+		| {
+				id: number;
+				serviceUserId: number;
+				serviceUser: ServiceUserResponse;
+		  }[]
+		| null;
+	eiaScreeningRequired?: boolean | null;
+	environmentalAssessment?: FolderInfo | null;
+	withdrawal?: {
+		withdrawalFolder?: FolderInfo | null;
+		withdrawalRequestDate?: string | null;
+	} | null;
+	cancellation?: {
+		cancellationFolder?: FolderInfo | null;
+	} | null;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -768,8 +987,8 @@ interface DocumentationSummary {
 
 interface DocumentationSummaryEntry {
 	status: string;
-	dueDate?: Date | string | undefined | null;
-	receivedAt?: Date | string | undefined | null;
+	dueDate?: string | undefined | null;
+	receivedAt?: string | undefined | null;
 	representationStatus?: string | undefined | null;
 	counts?: Record<string, number>;
 	isRedacted?: boolean;

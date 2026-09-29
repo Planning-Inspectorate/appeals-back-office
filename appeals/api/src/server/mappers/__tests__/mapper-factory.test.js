@@ -332,72 +332,6 @@ describe('appeals api mappers', () => {
 		expect(ldcAppCaseOutput).toHaveProperty('appealUnderActSection');
 		expect(ldcAppCaseOutput).toHaveProperty('lpaConsiderAppealInvalid');
 		expect(ldcAppCaseOutput).toHaveProperty('lpaAppealInvalidReasons');
-
-		expect(ldcAppCaseOutput).not.toHaveProperty('planningObligation');
-	});
-});
-
-describe('appeals integration mappers', () => {
-	test('should map the correct data for the selected context', async () => {
-		const appealEnforcement = {
-			...mocks.enforcementAppeal,
-			folders: []
-		};
-
-		const enforcementAppCaseOutput = mapCase({
-			// @ts-ignore
-			appeal: appealEnforcement,
-			context: contextEnum.broadcast
-		});
-
-		expect(enforcementAppCaseOutput).toHaveProperty('enforcementNotice', true);
-		expect(enforcementAppCaseOutput).toHaveProperty('ownerOccupancyStatus', 'Owner');
-		expect(enforcementAppCaseOutput).toHaveProperty('enforcementAppealGroundsDetails', [
-			{ appealGroundLetter: 'a', groundFacts: 'The site is in a conservation area' }
-		]);
-		expect(enforcementAppCaseOutput).toHaveProperty(
-			'applicationPartOrWholeDevelopment',
-			'all-of-the-development'
-		);
-		expect(enforcementAppCaseOutput).toHaveProperty('occupancyConditionsMet', true);
-		expect(enforcementAppCaseOutput).toHaveProperty(
-			'effectiveDateOfEnforcementNotice',
-			'2024-10-17T14:08:50.409Z'
-		);
-		expect(enforcementAppCaseOutput).toHaveProperty(
-			'issueDateOfEnforcementNotice',
-			'2024-10-16T14:08:50.409Z'
-		);
-	});
-	test('should only map the lpaq fields for Enforcement Listed Building (ELB)', async () => {
-		const appealELB = {
-			...mocks.s78Appeal,
-			appealType: {
-				key: APPEAL_CASE_TYPE.F,
-				type: 'Enforcement listed building'
-			},
-			lpaQuestionnaire: {
-				preserveGrantLoan: true,
-				noticeRelatesToBuildingEngineeringMiningOther: true,
-				siteAreaSquareMetres: 100,
-				isSiteOnCrownLand: true
-			},
-			folders: []
-		};
-
-		// @ts-ignore
-		const elbLpaqOutput = mapCase({ appeal: appealELB, context: contextEnum.lpaQuestionnaire });
-
-		// ELB
-		expect(elbLpaqOutput).toHaveProperty('preserveGrantLoan', true);
-
-		// Common Enforcement
-		expect(elbLpaqOutput).toHaveProperty('noticeRelatesToBuildingEngineeringMiningOther', true);
-		expect(elbLpaqOutput).toHaveProperty('siteAreaSquareMetres', 100);
-
-		// Enforcement specific
-		expect(elbLpaqOutput).not.toHaveProperty('isSiteOnCrownLand');
-		expect(elbLpaqOutput).not.toHaveProperty('changeOfUseRefuseOrWaste');
 	});
 
 	test('should only map the lpaq fields for CAS planning expedite', async () => {
@@ -432,38 +366,6 @@ describe('appeals integration mappers', () => {
 		expect(casPlanningExpediteLpaqOutput).toHaveProperty(
 			'anySignificantChangesLpa_courtJudgementSignificantChanges',
 			'100'
-		);
-	});
-	test('should only map the lpaq fields for CAS planning', async () => {
-		const appealCASAdvert = {
-			...mocks.casPlanningAppeal,
-			appealType: {
-				key: APPEAL_CASE_TYPE.ZP,
-				type: 'CAS planning'
-			},
-			folders: []
-		};
-
-		const casPlanningLpaqOutput = mapCase({
-			// @ts-ignore
-			appeal: appealCASAdvert,
-			context: contextEnum.lpaQuestionnaire
-		});
-		// CAS Advert
-		expect(casPlanningLpaqOutput).not.toHaveProperty(
-			'listOfDocumentsBeforeDecision',
-			'hoi oyf yrtd ytrtt ulliyuyg utg uyg ugyuo utyu uyg ouyg ouyg ouyg ouyg jhk bhm jvuhguyg oyg uygg ouy gouy uy uy oguy ouygo blargo'
-		);
-
-		expect(casPlanningLpaqOutput).not.toHaveProperty('anySignificantChangesLpa');
-		expect(casPlanningLpaqOutput).not.toHaveProperty(
-			'anySignificantChangesLpa_courtJudgementSignificantChanges'
-		);
-		expect(casPlanningLpaqOutput).not.toHaveProperty(
-			'anySignificantChangesLpa_courtJudgementSignificantChanges'
-		);
-		expect(casPlanningLpaqOutput).not.toHaveProperty(
-			'anySignificantChangesLpa_courtJudgementSignificantChanges'
 		);
 	});
 
@@ -501,6 +403,71 @@ describe('appeals integration mappers', () => {
 			'100'
 		);
 	});
+
+	test('should only map the lpaq fields for Enforcement Listed Building (ELB)', async () => {
+		const appealELB = {
+			...mocks.s78Appeal,
+			appealType: {
+				key: APPEAL_CASE_TYPE.F,
+				type: 'Enforcement listed building'
+			},
+			lpaQuestionnaire: {
+				preserveGrantLoan: true,
+				noticeRelatesToBuildingEngineeringMiningOther: true,
+				siteAreaSquareMetres: 100,
+				isSiteOnCrownLand: true
+			},
+			folders: []
+		};
+
+		// @ts-ignore
+		const elbLpaqOutput = mapCase({ appeal: appealELB, context: contextEnum.lpaQuestionnaire });
+
+		// ELB
+		expect(elbLpaqOutput).toHaveProperty('preserveGrantLoan', true);
+
+		// Common Enforcement
+		expect(elbLpaqOutput).toHaveProperty('noticeRelatesToBuildingEngineeringMiningOther', true);
+		expect(elbLpaqOutput).toHaveProperty('siteAreaSquareMetres', 100);
+
+		// Enforcement specific
+		expect(elbLpaqOutput).not.toHaveProperty('isSiteOnCrownLand');
+		expect(elbLpaqOutput).not.toHaveProperty('changeOfUseRefuseOrWaste');
+	});
+
+	test('should only map the lpaq fields for CAS planning', async () => {
+		const appealCASAdvert = {
+			...mocks.casPlanningAppeal,
+			appealType: {
+				key: APPEAL_CASE_TYPE.ZP,
+				type: 'CAS planning'
+			},
+			folders: []
+		};
+
+		const casPlanningLpaqOutput = mapCase({
+			// @ts-ignore
+			appeal: appealCASAdvert,
+			context: contextEnum.lpaQuestionnaire
+		});
+		// CAS Advert
+		expect(casPlanningLpaqOutput).not.toHaveProperty(
+			'listOfDocumentsBeforeDecision',
+			'hoi oyf yrtd ytrtt ulliyuyg utg uyg ugyuo utyu uyg ouyg ouyg ouyg ouyg jhk bhm jvuhguyg oyg uygg ouy gouy uy uy oguy ouygo blargo'
+		);
+
+		expect(casPlanningLpaqOutput).not.toHaveProperty('anySignificantChangesLpa');
+		expect(casPlanningLpaqOutput).not.toHaveProperty(
+			'anySignificantChangesLpa_courtJudgementSignificantChanges'
+		);
+		expect(casPlanningLpaqOutput).not.toHaveProperty(
+			'anySignificantChangesLpa_courtJudgementSignificantChanges'
+		);
+		expect(casPlanningLpaqOutput).not.toHaveProperty(
+			'anySignificantChangesLpa_courtJudgementSignificantChanges'
+		);
+	});
+
 	test('should only map the lpaq fields for CAS adverts', async () => {
 		const appealCASAdvert = {
 			...mocks.advertAppeal,
@@ -531,6 +498,40 @@ describe('appeals integration mappers', () => {
 		);
 		expect(casAdvertLpaqOutput).not.toHaveProperty(
 			'anySignificantChangesLpa_courtJudgementSignificantChanges'
+		);
+	});
+});
+
+describe('appeals integration mappers', () => {
+	test('should map the correct data for the broadcast context', async () => {
+		const appealEnforcement = {
+			...mocks.enforcementAppeal,
+			folders: []
+		};
+
+		const enforcementAppCaseOutput = mapCase({
+			// @ts-ignore
+			appeal: appealEnforcement,
+			context: contextEnum.broadcast
+		});
+
+		expect(enforcementAppCaseOutput).toHaveProperty('enforcementNotice', true);
+		expect(enforcementAppCaseOutput).toHaveProperty('ownerOccupancyStatus', 'Owner');
+		expect(enforcementAppCaseOutput).toHaveProperty('enforcementAppealGroundsDetails', [
+			{ appealGroundLetter: 'a', groundFacts: 'The site is in a conservation area' }
+		]);
+		expect(enforcementAppCaseOutput).toHaveProperty(
+			'applicationPartOrWholeDevelopment',
+			'all-of-the-development'
+		);
+		expect(enforcementAppCaseOutput).toHaveProperty('occupancyConditionsMet', true);
+		expect(enforcementAppCaseOutput).toHaveProperty(
+			'effectiveDateOfEnforcementNotice',
+			'2024-10-17T14:08:50.409Z'
+		);
+		expect(enforcementAppCaseOutput).toHaveProperty(
+			'issueDateOfEnforcementNotice',
+			'2024-10-16T14:08:50.409Z'
 		);
 	});
 

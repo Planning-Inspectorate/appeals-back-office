@@ -60,6 +60,103 @@ describe('lpa questionnaires routes', () => {
 		jest.clearAllMocks();
 	});
 
+	describe('/appeals/:appealId/lpa-questionnaire', () => {
+		describe('GET', () => {
+			test('gets a single lpa questionnaire with no outcome', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				databaseConnector.folder.findMany.mockResolvedValue([]);
+
+				const { id } = householdAppeal;
+				const response = await request
+					.get(`/appeals/${id}/lpa-questionnaire`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toMatchSnapshot();
+			});
+
+			test('gets a single lpa questionnaire with an outcome of Complete', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(
+					householdAppealLPAQuestionnaireComplete
+				);
+
+				const { id } = householdAppealLPAQuestionnaireComplete;
+				const response = await request
+					.get(`/appeals/${id}/lpa-questionnaire`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toMatchSnapshot();
+			});
+
+			test('gets a single lpa questionnaire with an outcome of Incomplete', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(
+					householdAppealLPAQuestionnaireIncomplete
+				);
+				databaseConnector.folder.findMany.mockResolvedValue([]);
+
+				const { id } = householdAppealLPAQuestionnaireIncomplete;
+				const response = await request
+					.get(`/appeals/${id}/lpa-questionnaire`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toMatchSnapshot();
+			});
+
+			test('returns an error if appealId is not numeric', async () => {
+				const response = await request
+					.get(`/appeals/one/lpa-questionnaire`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						appealId: ERROR_MUST_BE_NUMBER
+					}
+				});
+			});
+
+			test('returns an error if appealId is not found', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+				const response = await request
+					.get(`/appeals/3/lpa-questionnaire`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(404);
+				expect(response.body).toEqual({
+					errors: {
+						appealId: ERROR_NOT_FOUND
+					}
+				});
+			});
+
+			test('returns an error if lpaQuestionnaireId is not found', async () => {
+				const data = structuredClone(householdAppeal);
+				data.lpaQuestionnaire = undefined;
+				databaseConnector.appeal.findUnique.mockResolvedValue(data);
+				databaseConnector.folder.findMany.mockResolvedValue([]);
+
+				const { id } = householdAppeal;
+				const response = await request
+					.get(`/appeals/${id}/lpa-questionnaire`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(404);
+				expect(response.body).toEqual({
+					errors: {
+						lpaQuestionnaireId: ERROR_NOT_FOUND
+					}
+				});
+			});
+		});
+	});
+
 	describe('/appeals/:appealId/lpa-questionnaires/:lpaQuestionnaireId', () => {
 		describe('GET', () => {
 			test('gets a single lpa questionnaire with no outcome', async () => {
@@ -137,23 +234,10 @@ describe('lpa questionnaires routes', () => {
 				});
 			});
 
-			test('returns an error if lpaQuestionnaireId is not numeric', async () => {
-				const { id } = householdAppeal;
-				const response = await request
-					.get(`/appeals/${id}/lpa-questionnaires/one`)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						lpaQuestionnaireId: ERROR_MUST_BE_NUMBER
-					}
-				});
-			});
-
 			test('returns an error if lpaQuestionnaireId is not found', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				const data = structuredClone(householdAppeal);
+				data.lpaQuestionnaire = undefined;
+				databaseConnector.appeal.findUnique.mockResolvedValue(data);
 				databaseConnector.folder.findMany.mockResolvedValue([]);
 
 				const { id } = householdAppeal;
