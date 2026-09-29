@@ -195,7 +195,6 @@ router.use(
 );
 router.use(
 	'/:appealId/internal-correspondence',
-	validateAppeal,
 	assertUserHasPermission(permissionNames.viewCaseList),
 	internalCorrespondenceRouter
 );
