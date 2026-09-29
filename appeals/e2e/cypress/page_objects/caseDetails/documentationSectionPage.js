@@ -33,4 +33,14 @@ export class DocumentationSectionPage extends CaseDetailsPage {
 				cy.contains('a', 'Add').click();
 			});
 	}
+
+	manageDocumentFromRow(documentName) {
+		cy.get('#case-documentation-table')
+			.find('tr')
+			.filter((_, tr) => tr.innerText.includes(documentName))
+			.first()
+			.within(() => {
+				cy.contains('a', 'Manage').click();
+			});
+	}
 }
