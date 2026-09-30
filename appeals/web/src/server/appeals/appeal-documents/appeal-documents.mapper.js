@@ -17,7 +17,10 @@ import {
 } from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
-import { redactionStatusIdToName } from '#lib/redaction-statuses.js';
+import {
+	getDocumentDisplayRedactionStatus,
+	redactionStatusIdToName
+} from '#lib/redaction-statuses.js';
 import config from '@pins/appeals.web/environment/config.js';
 import { APPEAL_TYPE, DOCUMENTS_PAGE_SIZE } from '@pins/appeals/constants/common.js';
 import {
@@ -1079,7 +1082,7 @@ export function manageFolderPage({
 									text: dateISOStringToDisplayDate(document?.latestDocumentVersion?.dateReceived)
 								},
 						...(canViewRedactionColumn
-							? [{ text: document?.latestDocumentVersion?.redactionStatus }]
+							? [{ text: getDocumentDisplayRedactionStatus(document, folder?.path) }]
 							: []),
 						...(editable
 							? [mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEditUrl, canShare)]
@@ -1502,7 +1505,7 @@ export async function manageDocumentPage({
 		documentSummary.parameters.rows.push({
 			key: { text: 'Redaction status' },
 			value: {
-				text: getDocumentLatestVersion(document)?.redactionStatus
+				text: getDocumentDisplayRedactionStatus(document, folder?.path)
 			},
 			actions: {
 				items: [
