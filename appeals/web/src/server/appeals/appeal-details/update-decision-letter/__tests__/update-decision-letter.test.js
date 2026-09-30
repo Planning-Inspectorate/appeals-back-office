@@ -281,6 +281,31 @@ describe('update-decision-letter', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Update decision letter');
 		});
 
+		it('escapes uploaded filenames on the check details page', async () => {
+			const filename = 'decision<img src=x>.pdf';
+			const uploadedFiles = JSON.parse(fileUploadInfo2);
+			uploadedFiles[0].name = filename;
+			await request
+				.post(`${baseUrl}/1/update-decision-letter/upload-decision-letter`)
+				.send({ 'upload-info': JSON.stringify(uploadedFiles) })
+				.expect(302);
+
+			nock('http://test/')
+				.get('/appeals/1/case-team-email')
+				.reply(200, {
+					id: 1,
+					email: 'caseofficers@planninginspectorate.gov.uk',
+					name: 'standard email'
+				})
+				.persist();
+			const response = await request.get(`${baseUrl}/1/update-decision-letter/check-details`);
+			const element = parseHtml(response.text, { skipPrettyPrint: true });
+			const fileLink = element.querySelector('a[href*="download-uncommitted"]');
+
+			expect(fileLink.textContent).toBe(filename);
+			expect(fileLink.querySelector('img')).toBeNull();
+		});
+
 		it('should use the new file upload date in the notifies', async () => {
 			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
 			expect(correctionNoticeResponse.statusCode).toBe(302);

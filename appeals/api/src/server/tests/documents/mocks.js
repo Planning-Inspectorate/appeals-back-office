@@ -1,4 +1,3 @@
-import { mapCaseReferenceForStorageUrl } from '#endpoints/documents/documents.mapper.js';
 import { householdAppeal } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 
@@ -7,9 +6,7 @@ const version = 1;
 const originalFileName = 'mydoc.pdf';
 const fileName = 'mydoc.pdf';
 const folderId = 23;
-const blobStoreUrl = `appeal/${mapCaseReferenceForStorageUrl(
-	householdAppeal.reference
-)}/${guid}/v1/${fileName}`;
+const blobStoreUrl = `appeal/${householdAppeal.reference}/${guid}/v1/${fileName}`;
 
 export const documentVersion = {
 	documentId: guid,
@@ -105,12 +102,14 @@ export const documentVersionUpdated = {
 export const documentVersionCreated = {
 	documentGuid: guid,
 	fileName,
+	originalFilename: originalFileName,
 	version
 };
 
 export const documentVersionRetrieved = {
 	documentGuid: guid,
 	fileName,
+	originalFilename: originalFileName,
 	version,
 	parentDocument: documentUpdated
 };

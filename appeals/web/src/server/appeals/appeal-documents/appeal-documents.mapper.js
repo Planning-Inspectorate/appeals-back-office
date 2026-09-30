@@ -174,7 +174,7 @@ export const mapUncommittedDocumentDownloadUrl = (
 	filename,
 	documentVersion
 ) => {
-	return `/documents/${appealReference}/download-uncommitted/${documentId}/${filename}${
+	return `/documents/${appealReference}/download-uncommitted/${documentId}/${encodeURIComponent(filename)}${
 		documentVersion ? `/${documentVersion}` : ''
 	}`;
 };
@@ -647,7 +647,6 @@ function mapDocumentNameItemToDocumentNamePageComponents(item, fileName) {
  * @param {FileUploadInfoItem[]} params.uncommittedFiles
  * @param {RedactionStatus[]} params.redactionStatuses
  * @param {number} [params.documentVersion] current version being uploaded (if uploading a new version of an existing document)
- * @param {string} [params.documentFileName] filename of existing document, not new version being uploaded (if uploading a new version of an existing document)
  * @param {string} [params.titleTextOverride]
  * @param {string} [params.summaryListNameLabelOverride]
  * @param {string} [params.summaryListDateLabelOverride]
@@ -663,7 +662,6 @@ export function addDocumentsCheckAndConfirmPage({
 	uncommittedFiles,
 	redactionStatuses,
 	documentVersion,
-	documentFileName,
 	titleTextOverride,
 	summaryListNameLabelOverride,
 	summaryListDateLabelOverride,
@@ -715,7 +713,7 @@ export function addDocumentsCheckAndConfirmPage({
 							html: `<a class="govuk-link" href="${mapUncommittedDocumentDownloadUrl(
 								appealReference,
 								uncommittedFile.GUID,
-								documentFileName || uncommittedFile.name,
+								uncommittedFile.name,
 								documentVersion
 							)}" target="_blank">${uncommittedFile.name}</a>`
 						},

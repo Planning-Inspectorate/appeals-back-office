@@ -13,6 +13,7 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import config from '@pins/appeals.web/environment/config.js';
 import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
+import { escape } from 'lodash-es';
 import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
 import { correctionNoticePage } from './update-decision-letter.mapper.js';
 import { updateCaseDecisionOutcomeDate } from './update-decision-letter.service.js';
@@ -79,7 +80,6 @@ export const renderUpdateDocumentCheckDetails = async (request, response) => {
 	}
 
 	const documentVersion = fileInfo.latestDocumentVersion.version + 1;
-	const documentName = fileInfo.name;
 	const { email: assignedTeamEmail } = await getTeamFromAppealId(request.apiClient, appealId);
 	const personalisation = {
 		appeal_reference_number: appealReference,
@@ -125,9 +125,9 @@ export const renderUpdateDocumentCheckDetails = async (request, response) => {
 					html: `<a href="${mapUncommittedDocumentDownloadUrl(
 						appealReference,
 						file.GUID,
-						documentName,
+						file.name,
 						documentVersion
-					)}" class="govuk-link">${documentName}</a>`,
+					)}" class="govuk-link">${escape(file.name)}</a>`,
 					actions: {
 						Change: {
 							href: `${addBackLinkQueryToUrl(request, `${baseUrl}/upload-decision-letter`)}`,
