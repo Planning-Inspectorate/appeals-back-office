@@ -17,7 +17,7 @@ router.param('folderId', (req, res, next) => {
 });
 
 router
-	.route(['/upload-documents/:folderId', '/upload-documents/:folderId'])
+	.route('/upload-documents/:folderId')
 	.get(
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getDocumentUpload)
@@ -28,7 +28,7 @@ router
 	);
 
 router
-	.route(['/upload-documents/:folderId/:documentId', '/upload-documents/:folderId/:documentId'])
+	.route('/upload-documents/:folderId/:documentId')
 	.get(asyncHandler(controller.getDocumentVersionUpload))
 	.post(
 		assertUserHasPermission(permissionNames.updateCase),
@@ -36,12 +36,7 @@ router
 	);
 
 router
-	.route([
-		'/add-document-details/:folderId',
-		'/add-document-details/:folderId/:documentId',
-		'/add-document-details/:folderId',
-		'/add-document-details/:folderId/:documentId'
-	])
+	.route(['/add-document-details/:folderId', '/add-document-details/:folderId/:documentId'])
 	.get(
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getAddDocumentDetails)
@@ -80,18 +75,24 @@ router
 	);
 
 router
-	.route(['/manage-documents/:folderId', '/manage-documents/:folderId'])
-	.get(asyncHandler(controller.getManageFolder));
+	.route('/manage-documents/:folderId/share-all')
+	.get(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.getShareAllDocuments)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.postShareAllDocuments)
+	);
+
+router.route('/manage-documents/:folderId').get(asyncHandler(controller.getManageFolder));
 
 router
-	.route(['/manage-documents/:folderId/:documentId', '/manage-documents/:folderId/:documentId'])
+	.route('/manage-documents/:folderId/:documentId')
 	.get(asyncHandler(controller.getManageDocument));
 
 router
-	.route([
-		'/manage-documents/:folderId/:documentId/:versionId/delete',
-		'/manage-documents/:folderId/:documentId/:versionId/delete'
-	])
+	.route('/manage-documents/:folderId/:documentId/:versionId/delete')
 	.get(
 		validateCaseDocumentId,
 		assertUserHasPermission(permissionNames.updateCase),
@@ -105,12 +106,8 @@ router
 	);
 
 router
-	.route([
-		'/change-document-name/:folderId/:documentId',
-		'/change-document-name/:folderId/:documentId'
-	])
+	.route('/change-document-name/:folderId/:documentId')
 	.get(
-		assertUserHasPermission(permissionNames.updateCase),
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getChangeDocumentFileNameDetails)
 	)
@@ -122,10 +119,7 @@ router
 	);
 
 router
-	.route([
-		'/change-document-details/:folderId/:documentId',
-		'/change-document-details/:folderId/:documentId'
-	])
+	.route('/change-document-details/:folderId/:documentId')
 	.get(
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getChangeDocumentVersionDetails)

@@ -1098,6 +1098,94 @@ export function manageFolderPage({
 }
 
 /**
+ * @param {Object} params
+ * @param {import('@pins/express/types/express.js').Request} params.request
+ * @param {number} params.numShareableDocuments
+ * @param {number} params.totalFolderSize
+ * @param {string} params.backLinkUrl
+ * @param {{renderedHtml: string} | undefined} params.notifyPreview
+ * @returns {PageContent}
+ */
+export function shareAllDocumentsPage({
+	request,
+	numShareableDocuments,
+	totalFolderSize,
+	backLinkUrl,
+	notifyPreview
+}) {
+	if (numShareableDocuments < 1) {
+		/** @type {PageContent} */
+		const noShareableDocumentsPageContent = {
+			title: 'Check your answers',
+			backLinkText: 'Back',
+			backLinkUrl: backLinkUrl,
+			heading: `You cannot share any documents`,
+			pageComponents: []
+		};
+		noShareableDocumentsPageContent.pageComponents?.push(
+			{
+				type: 'html',
+				parameters: {
+					html: '<p class="govuk-body">You can only share documents that are set to redacted or redaction not needed.</p>'
+				}
+			},
+			{
+				type: 'html',
+				parameters: {
+					html: `<a href="${backLinkUrl}">Review redaction statuses</a>`
+				}
+			}
+		);
+		return noShareableDocumentsPageContent;
+	} else {
+		/** @type {PageContent} */
+		const pageContent = {
+			title: 'Check your answers',
+			backLinkText: 'Back',
+			backLinkUrl: backLinkUrl,
+			heading: `Confirm you want to share ${numShareableDocuments} of ${totalFolderSize} documents`,
+			pageComponents: [],
+			submitButtonText: 'Share documents',
+			submitButtonProperties: {
+				wrapperHtml: {
+					opening: `<form method="POST" action="${request.originalUrl}">`,
+					closing: '</form>'
+				},
+				text: 'Share documents',
+				type: 'submit'
+			}
+		};
+
+		pageContent.pageComponents?.push({
+			type: 'html',
+			parameters: {
+				html: '<p class="govuk-body">You can only share documents that are set to redacted or redaction not needed.</p>'
+			}
+		});
+
+		if (notifyPreview) {
+			pageContent.pageComponents?.push(
+				{
+					type: 'details',
+					parameters: {
+						summaryText: 'Preview email to appellant',
+						html: notifyPreview.renderedHtml
+					}
+				},
+				{
+					type: 'details',
+					parameters: {
+						summaryText: 'Preview email to LPA',
+						html: notifyPreview.renderedHtml
+					}
+				}
+			);
+		}
+		return pageContent;
+	}
+}
+
+/**
  * @param {DocumentInfo} document
  * @param {DocumentVersionInfo|undefined} documentVersion
  * @returns {HtmlProperty & ClassesProperty}
