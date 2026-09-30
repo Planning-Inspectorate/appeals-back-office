@@ -1,4 +1,4 @@
-import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
+import { APPEAL_DOCUMENT_TYPE, REDACTION_STATUS } from '@planning-inspectorate/data-model';
 
 /**
  * @param {string} folderPath
@@ -37,3 +37,16 @@ export function getUrlSuffix({ costsDocumentType, latestVersionDocumentType }) {
 		return '/invite-main-party-comments';
 	return '/invite-responses';
 }
+
+/**
+ * @param {any} document * @returns {boolean}
+ * */
+const isShareableDocument = (document) =>
+	document.latestDocumentVersion?.redactionStatus?.toLowerCase() !== REDACTION_STATUS.UNREDACTED &&
+	document.latestDocumentVersion?.published === false;
+
+/** *
+ * @param {{ documents: any[] }} folder
+ * @returns {any[]}
+ * */
+export const getShareableDocuments = (folder) => folder.documents.filter(isShareableDocument);

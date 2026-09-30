@@ -1078,6 +1078,43 @@ describe('supporting documents', () => {
 				);
 			});
 
+			it(`should render the share all button if any document has not been shared`, async () => {
+				const response = await request.get(
+					`${baseUrl}/1/supporting-documents/manage-documents/${supportingDocsFolderId}`
+				);
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Share all documents</a>');
+			});
+
+			it(`should not render the share all button if all documents have already been shared`, async () => {
+				const publishedFolder = {
+					...supportingDocumentsFolderInfo,
+					documents: supportingDocumentsFolderInfo.documents.map((document) => ({
+						...document,
+						latestDocumentVersion: {
+							...document.latestDocumentVersion,
+							published: true
+						}
+					}))
+				};
+				nock.cleanAll();
+				installMockApi();
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses)
+					.persist();
+				nock('http://test/')
+					.get(getFolderApiUrl(supportingDocsFolderId))
+					.reply(200, publishedFolder);
+
+				const response = await request.get(
+					`${baseUrl}/1/supporting-documents/manage-documents/${supportingDocsFolderId}`
+				);
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).not.toContain('Share all documents</a>');
+			});
 			it(`Should render 'Manage and share' CTA and NO tag if document is NOT shared`, async () => {
 				nock('http://test/').get('/appeals/1/exists').reply(200, appealData);
 
@@ -1708,6 +1745,94 @@ describe('supporting documents', () => {
 				expect(unprettifiedElement.innerHTML).toContain('Confirm and share document</button>');
 			});
 
+			describe('GET /supporting-documents/manage-documents/:folderId/share-all', () => {
+				it(`should render a 404 error page if the folderId is not valid`, async () => {
+					const response = await request.get(
+						`${baseUrl}/1/supporting-documents/manage-documents/99/share-all`
+					);
+					const element = parseHtml(response.text, { skipPrettyPrint: true });
+
+					expect(element.innerHTML).toContain('Page not found');
+				});
+
+				it(`should render the share all documents page if the folderId is valid`, async () => {
+					const folder = {
+						...supportingDocumentsFolderInfo,
+						totalFolderSize: supportingDocumentsFolderInfo.documents.length
+					};
+
+					nock.cleanAll();
+					installMockApi();
+					nock('http://test/')
+						.get('/appeals/document-redaction-statuses')
+						.reply(200, documentRedactionStatuses)
+						.persist();
+					nock('http://test/').get(getFolderApiUrl(supportingDocsFolderId)).reply(200, folder);
+
+					const response = await request.get(
+						`${baseUrl}/1/supporting-documents/manage-documents/${supportingDocsFolderId}/share-all`
+					);
+
+					expect(response.status).toBe(200);
+					expect(response.text).toContain(
+						`href="${baseUrl}/1/supporting-documents/manage-documents/${supportingDocsFolderId}"`
+					);
+				});
+			});
+
+			describe('POST /supporting-documents/manage-documents/:folderId/share-all', () => {
+				const shareableFolder = {
+					...supportingDocumentsFolderInfo,
+					documents: supportingDocumentsFolderInfo.documents.map((document) => ({
+						...document,
+						latestDocumentVersion: {
+							...document.latestDocumentVersion,
+							published: false
+						}
+					}))
+				};
+
+				beforeEach(() => {
+					nock.cleanAll();
+					installMockApi();
+					nock('http://test/').get(getFolderApiUrl(1)).reply(200, shareableFolder).persist();
+				});
+
+				it(`should mark each shareable document as shared and redirect to the appeal details page`, async () => {
+					const patchMock = nock('http://test/')
+						.patch(
+							/\/appeals\/1\/documents\/[^/?]+$/,
+							(body) =>
+								body.document.isShared === true &&
+								body.sharingDocumentType === 'supporting-document'
+						)
+						.times(shareableFolder.documents.length)
+						.reply(200, {});
+
+					const response = await request.post(
+						`${baseUrl}/1/supporting-documents/manage-documents/${supportingDocsFolderId}/share-all`
+					);
+
+					expect(response.statusCode).toBe(302);
+					expect(response.text).toBe(`Found. Redirecting to ${baseUrl}/1`);
+					expect(patchMock.isDone()).toBe(true);
+				});
+
+				it(`should still redirect if updating a document fails`, async () => {
+					const patchMock = nock('http://test/')
+						.patch(/\/appeals\/1\/documents\/[^/?]+$/)
+						.times(shareableFolder.documents.length)
+						.reply(500, {});
+
+					const response = await request.post(
+						`${baseUrl}/1/supporting-documents/manage-documents/${supportingDocsFolderId}/share-all`
+					);
+
+					expect(response.statusCode).toBe(302);
+					expect(response.text).toBe(`Found. Redirecting to ${baseUrl}/1`);
+					expect(patchMock.isDone()).toBe(true);
+				});
+			});
 			it(`should route the backlink properly depending on the document type`, async () => {
 				const response = await request.get(
 					`${baseUrl}/1/supporting-documents/manage-documents/${supportingDocsFolderId}/1/check-your-answers`
