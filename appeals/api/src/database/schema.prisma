@@ -851,7 +851,6 @@ model Document {
   versions              DocumentVersion[]      @relation("versionHistory")
   versionAudit          DocumentVersionAudit[] @relation("audit")
 
-  @@unique([name, folderId])
   @@unique([guid, latestVersionId])
   @@index([caseId, folderId])
   @@index([folderId])

@@ -68,6 +68,9 @@ jest.unstable_mockModule('#lib/active-directory-token.js', () => ({
 	default: jest.fn()
 }));
 
+const { createContentDisposition, createSafeDownloadFilename, createUniqueArchiveFilename } =
+	await import('../file-downloader.component.js');
+
 describe('getBulkDocumentDownload', () => {
 	let mockApiClient, mockSession, mockAppeal, mockResponse;
 	beforeEach(async () => {
@@ -195,6 +198,61 @@ describe('getBulkDocumentDownload', () => {
 		expect(mockArchive.finalize).toHaveBeenCalled();
 		expect(mockResponse.status).toHaveBeenCalledWith(200);
 		expect(mockResponse.send).not.toHaveBeenCalled();
+	});
+
+	it('uses friendly unique names for duplicate files in the same folder', async () => {
+		const docService = await import('#appeals/appeal-documents/appeal.documents.service.js');
+		docService.getAllCaseFolders.mockResolvedValue([
+			{
+				path: 'folder',
+				documents: [
+					{
+						latestDocumentVersion: {
+							blobStorageContainer: 'c',
+							blobStoragePath: 'first',
+							documentURI: 'uri',
+							originalFileName: 'Report.pdf'
+						},
+						name: 'Report.pdf',
+						guid: 'first',
+						id: 'first'
+					},
+					{
+						latestDocumentVersion: {
+							blobStorageContainer: 'c',
+							blobStoragePath: 'second',
+							documentURI: 'uri',
+							originalFileName: 'report.pdf'
+						},
+						name: 'report.pdf',
+						guid: 'second',
+						id: 'second'
+					}
+				]
+			}
+		]);
+		mockBlobInstance.getBlobProperties.mockResolvedValue({});
+		mockBlobInstance.downloadStream.mockResolvedValue({ readableStreamBody: {} });
+
+		const { getBulkDocumentDownload } = await import('../file-downloader.component.js');
+		await getBulkDocumentDownload(
+			{
+				apiClient: mockApiClient,
+				params: { caseId: '1' },
+				session: mockSession,
+				currentAppeal: mockAppeal
+			},
+			mockResponse
+		);
+
+		expect(mockArchive.append).toHaveBeenNthCalledWith(1, expect.any(Object), {
+			name: 'Folder/Report.pdf',
+			store: true
+		});
+		expect(mockArchive.append).toHaveBeenNthCalledWith(2, expect.any(Object), {
+			name: 'Folder/report (2).pdf',
+			store: true
+		});
 	});
 
 	it('skips a failed blob download and still finalizes the zip', async () => {
@@ -364,5 +422,134 @@ describe('getBulkDocumentDownload', () => {
 		expect(bulkFileInfo.find((f) => f.fullName.includes('Comment 350'))?.fullName).toBe(
 			'Representations/Interested party comments/Accepted/Comment 350/doc-350.pdf'
 		);
+	});
+});
+
+describe('single document downloads', () => {
+	let mockResponse;
+
+	beforeEach(() => {
+		mockResponse = {
+			setHeader: jest.fn(),
+			status: jest.fn().mockReturnThis()
+		};
+		mockBlobInstance.getBlobProperties.mockReset();
+		mockBlobInstance.downloadStream.mockReset();
+	});
+
+	test('uses a safe storage key and friendly name for uncommitted files', async () => {
+		const documentGuid = 'a30ec1dc-3b7b-4d2c-8553-bb8d052593f5';
+		mockBlobInstance.getBlobProperties.mockResolvedValue({});
+		mockBlobInstance.downloadStream.mockResolvedValue({ readableStreamBody: { pipe: jest.fn() } });
+
+		const { getUncommittedDocumentDownload } = await import('../file-downloader.component.js');
+		await getUncommittedDocumentDownload(
+			{
+				params: {
+					caseReference: '123',
+					guid: documentGuid,
+					filename: 'Friendly report.pdf',
+					version: undefined
+				},
+				session: {}
+			},
+			mockResponse
+		);
+
+		expect(mockBlobInstance.getBlobProperties).toHaveBeenCalledWith(
+			undefined,
+			`appeal/123/${documentGuid}/v1/${documentGuid}.pdf`
+		);
+		expect(mockResponse.setHeader).toHaveBeenCalledWith(
+			'content-disposition',
+			'attachment; filename="Friendly report.pdf"; filename*=UTF-8\'\'Friendly%20report.pdf'
+		);
+	});
+
+	test('handles malformed unicode in a download name', async () => {
+		const documentGuid = 'a30ec1dc-3b7b-4d2c-8553-bb8d052593f5';
+		const docService = await import('#appeals/appeal-documents/appeal.documents.service.js');
+		docService.getFileInfo.mockResolvedValue({
+			latestDocumentVersion: {
+				blobStorageContainer: 'files',
+				blobStoragePath: 'appeal/123/v1/document.pdf',
+				virusCheckStatus: 'scanned',
+				originalFileName: '\ud800.pdf'
+			}
+		});
+		mockBlobInstance.getBlobProperties.mockResolvedValue({});
+		mockBlobInstance.downloadStream.mockResolvedValue({ readableStreamBody: { pipe: jest.fn() } });
+
+		const { getDocumentDownload } = await import('../file-downloader.component.js');
+		await expect(
+			getDocumentDownload(
+				{ apiClient: {}, params: { caseId: '1', guid: documentGuid }, session: {} },
+				mockResponse
+			)
+		).resolves.toBe(mockResponse);
+	});
+});
+
+describe('filename helpers', () => {
+	const documentGuid = 'a30ec1dc-3b7b-4d2c-8553-bb8d052593f5';
+
+	test.each([
+		['report.pdf', 'report.pdf'],
+		['C:\\temp\\report.pdf', 'C__temp_report.pdf'],
+		['/tmp/report.pdf', '_tmp_report.pdf'],
+		['report<final>:?.pdf', 'report_final___.pdf'],
+		[' report.pdf ', 'report.pdf'],
+		['report.pdf. ', 'report.pdf'],
+		['CON.txt', `${documentGuid}.txt`],
+		['..', documentGuid],
+		[' . .', documentGuid],
+		['. . ', documentGuid],
+		['', documentGuid],
+		['unsafe-name.pdf', 'unsafe-name.pdf']
+	])('sanitizes %s as %s', (filename, expectedFilename) => {
+		expect(createSafeDownloadFilename(documentGuid, filename)).toBe(expectedFilename);
+	});
+
+	test.each([
+		['report.pdf', 'attachment; filename="report.pdf"; filename*=UTF-8\'\'report.pdf'],
+		[
+			'report#final!.pdf',
+			'attachment; filename="report_final_.pdf"; filename*=UTF-8\'\'report%23final!.pdf'
+		],
+		['résumé.pdf', 'attachment; filename="r_sum_.pdf"; filename*=UTF-8\'\'r%C3%A9sum%C3%A9.pdf'],
+		[
+			'report\ud800.pdf',
+			'attachment; filename="report_.pdf"; filename*=UTF-8\'\'report%EF%BF%BD.pdf'
+		]
+	])('creates safe content disposition for %s', (filename, expectedHeader) => {
+		expect(createContentDisposition(documentGuid, filename)).toBe(expectedHeader);
+	});
+
+	test.each([
+		['Report.pdf', 'Report.pdf', []],
+		['report.pdf', 'report (2).pdf', ['report.pdf']],
+		['report (2).pdf', 'report (2) (2).pdf', ['report.pdf', 'report (2).pdf']],
+		['REPORT.PDF', 'REPORT (2).PDF', ['report.pdf']]
+	])('creates unique archive filename %s as %s', (filename, expectedFilename, existingNames) => {
+		const usedNames = new Set(existingNames);
+
+		expect(createUniqueArchiveFilename('Folder', filename, usedNames)).toBe(
+			`Folder/${expectedFilename}`
+		);
+	});
+
+	test('tracks archive names case-insensitively within a folder', () => {
+		const usedNames = new Set();
+
+		expect(createUniqueArchiveFilename('Folder', 'Report.pdf', usedNames)).toBe(
+			'Folder/Report.pdf'
+		);
+		expect(createUniqueArchiveFilename('Folder', 'report.pdf', usedNames)).toBe(
+			'Folder/report (2).pdf'
+		);
+	});
+
+	test('does not include the folder in the returned name for root files', () => {
+		expect(createUniqueArchiveFilename('', 'report.pdf', new Set())).toBe('report.pdf');
 	});
 });

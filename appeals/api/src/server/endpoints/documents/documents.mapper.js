@@ -1,5 +1,5 @@
+import { createDocumentStorageFilename } from '#utils/document-storage-filename.js';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
-import { randomUUID } from 'node:crypto';
 import { formatFolder } from './documents.formatter.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Folder} Folder */
@@ -9,26 +9,30 @@ import { formatFolder } from './documents.formatter.js';
 
 /**
  * @param {number} caseId
+ * @param {string} caseReference
  * @param {string} blobStorageHost,
  * @param {string} blobStorageContainer,
  * @param {MappedDocument[]} documents
+ * @param {number} [version]
  * @returns
  */
 export const mapDocumentsForDatabase = (
 	caseId,
+	caseReference,
 	blobStorageHost,
 	blobStorageContainer,
-	documents
+	documents,
+	version = 1
 ) => {
 	return documents?.map((document) => {
 		const storageHost = mapHost(blobStorageHost || '');
+		const fileName = createDocumentStorageFilename(document.GUID, document.documentName);
+		const blobStoragePath = mapBlobPath(document.GUID, caseReference, fileName, version);
 
 		return {
 			GUID: document.GUID,
-			name:
-				document.stage === 'representation'
-					? `${randomUUID()}_${document.documentName}`
-					: document.documentName,
+			name: document.documentName,
+			fileName,
 			caseId,
 			folderId: document.folderId,
 			mime: document.mimeType,
@@ -37,8 +41,8 @@ export const mapDocumentsForDatabase = (
 			stage: document.stage,
 			blobStorageHost: storageHost,
 			blobStorageContainer,
-			blobStoragePath: document.blobStoragePath,
-			documentURI: `${storageHost}/${blobStorageContainer}/${document.blobStoragePath}`,
+			blobStoragePath,
+			documentURI: `${storageHost}/${blobStorageContainer}/${blobStoragePath}`,
 			redactionStatusId: document.redactionStatusId,
 			dateReceived: new Date(document.receivedDate),
 			virusCheckStatus: document.virusCheckStatus
@@ -94,7 +98,7 @@ export const mapDocumentsForAuditTrail = (documents) =>
 			return null;
 		}
 
-		const fileName = document.fileName || document.documentGuid;
+		const fileName = document.originalFilename || document.documentGuid;
 		return {
 			documentName: fileName,
 			documentType: document.documentType,

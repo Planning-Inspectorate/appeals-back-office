@@ -213,7 +213,7 @@ describe('appeal linked appeals routes', () => {
 						'appeal-document-to-move',
 						[
 							{
-								importedURI: `https://127.0.0.1:10000/document-service-uploads/appeal/1345264/mock-uuid/v1/mydoc-4567654.pdf`,
+								importedURI: `https://127.0.0.1:10000/document-service-uploads/appeal/1345264/mock-uuid/v1/mock-uuid.pdf`,
 								originalURI: `https://127.0.0.1:10000/document-service-uploads/appeal/6000001/27d0fda4-8a9a-4f5a-a158-68eaea676158/v1/mydoc.pdf`
 							}
 						],
@@ -226,7 +226,7 @@ describe('appeal linked appeals routes', () => {
 								caseId: 1,
 								folderId: 23,
 								guid: 'mock-uuid',
-								name: 'mydoc-4567654.pdf'
+								name: 'mydoc.pdf'
 							}
 						]
 					});
@@ -235,18 +235,18 @@ describe('appeal linked appeals routes', () => {
 						data: [
 							{
 								blobStorageContainer: 'document-service-uploads',
-								blobStoragePath: 'appeal/1345264/mock-uuid/v1/mydoc-4567654.pdf',
+								blobStoragePath: 'appeal/1345264/mock-uuid/v1/mock-uuid.pdf',
 								dateReceived: expect.any(Date),
 								documentGuid: 'mock-uuid',
 								documentType: 'appellantCostApplication',
 								documentURI:
-									'https://127.0.0.1:10000/document-service-uploads/appeal/1345264/mock-uuid/v1/mydoc-4567654.pdf',
+									'https://127.0.0.1:10000/document-service-uploads/appeal/1345264/mock-uuid/v1/mock-uuid.pdf',
 								draft: false,
-								fileName: 'mydoc-4567654.pdf',
+								fileName: 'mock-uuid.pdf',
 								isLateEntry: false,
 								lastModified: expect.any(Date),
 								mime: 'application/pdf',
-								originalFilename: 'mydoc-4567654.pdf',
+								originalFilename: 'mydoc.pdf',
 								published: false,
 								redactionStatusId: 1,
 								size: 14699,
