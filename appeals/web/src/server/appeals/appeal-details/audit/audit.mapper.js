@@ -206,6 +206,28 @@ export const tryMapDocument = (appealId, log, docInfo, lpaqId) => {
 			const url = `/appeals-service/appeal-details/${appealId}/${internalDocsPath}/manage-documents/${folderId}/${documentGuid}`;
 			return log.replace(name, `<a class="govuk-link" href="${url}">${name}</a>`);
 		}
+		case 'hearing': {
+			const url = `/appeals-service/appeal-details/${appealId}/hearing-documents/manage-documents/${folderId}/${documentGuid}`;
+			return log.replace(name, `<a class="govuk-link" href="${url}">${name}</a>`);
+		}
+		case 'inquiry': {
+			let url = '';
+			switch (documentType) {
+				case APPEAL_DOCUMENT_TYPE.INQUIRY_CORE: {
+					url = `/appeals-service/appeal-details/${appealId}/inquiry/documents/manage-documents/${folderId}/${documentGuid}`;
+					break;
+				}
+				case APPEAL_DOCUMENT_TYPE.INQUIRY_POST_EVENT: {
+					url = `/appeals-service/appeal-details/${appealId}/inquiry-event-documents/manage-documents/${folderId}/${documentGuid}`;
+					break;
+				}
+			}
+			return log.replace(name, `<a class="govuk-link" href="${url}">${name}</a>`);
+		}
+		case 'general': {
+			const url = `/appeals-service/appeal-details/${appealId}/supporting-documents/manage-documents/${folderId}/${documentGuid}`;
+			return log.replace(name, `<a class="govuk-link" href="${url}">${name}</a>`);
+		}
 		case 'representation': {
 			const repType = docInfo?.representationType;
 			if (!repType) break;
