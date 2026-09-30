@@ -1,3 +1,4 @@
+import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
 import { applyEditsForAppeal, getSessionValuesForAppeal } from '#lib/edit-utilities.js';
 import logger from '#lib/logger.js';
 import { PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common.js';
@@ -38,11 +39,19 @@ const populateDefaultTimetableDatesForPart1Transition = async (sessionValues, cu
 	) {
 		return;
 	}
+	const eventDate = dayMonthYearHourMinuteToISOString({
+		day: sessionValues['event-date-day'],
+		month: sessionValues['event-date-month'],
+		year: sessionValues['event-date-year'],
+		hour: sessionValues['event-time-hour'],
+		minute: sessionValues['event-time-minute']
+	});
 
 	const calculatedTimetable = await calculateTimetable(
 		appealTypeToAppealCaseTypeMapper(currentAppeal.appealType) || currentAppeal.appealType,
 		new Date(currentAppeal.startedAt),
-		sessionValues.appealProcedure
+		sessionValues.appealProcedure,
+		sessionValues.appealProcedure === PROCEDURE_TYPE_NAME.INQUIRY.toLowerCase() ? eventDate : null
 	);
 
 	if (calculatedTimetable) {
