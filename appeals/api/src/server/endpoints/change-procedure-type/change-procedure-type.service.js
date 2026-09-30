@@ -403,6 +403,7 @@ export const buildChangeProcedureTypeMessage = (
  * @param {string | undefined} caseManagementConferenceDueDate
  * @param {import('#endpoints/appeals.js').SingleAddressResponse | undefined} address
  * @param {string | undefined} eventDate
+ * @param {string} [azureAdUserId]
  * @returns {Promise<void>}
  */
 export const sendChangeProcedureTypeNotifications = async (
@@ -414,7 +415,8 @@ export const sendChangeProcedureTypeNotifications = async (
 	proofOfEvidenceAndWitnessesDueDate,
 	caseManagementConferenceDueDate,
 	address,
-	eventDate
+	eventDate,
+	azureAdUserId = ''
 ) => {
 	const lpaStatement = await databaseConnector.representation.findFirst({
 		where: { appealId: appeal.id, representationType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT }
@@ -473,7 +475,14 @@ export const sendChangeProcedureTypeNotifications = async (
 		hearing_time: dateISOStringToDisplayTime12hr(eventDate ?? ''),
 		...(enforcementReference && { enforcement_reference: enforcementReference })
 	};
-	await sendNotifications(notifyClient, templateName, appeal, lpaStatement, personalisation);
+	await sendNotifications(
+		notifyClient,
+		templateName,
+		appeal,
+		lpaStatement,
+		personalisation,
+		azureAdUserId
+	);
 };
 
 /**
@@ -482,6 +491,7 @@ export const sendChangeProcedureTypeNotifications = async (
  * @param {Appeal} appeal
  * @param {Object | null} lpaStatement
  * @param {Record<string, string>} [personalisation]
+ * @param {string} [azureAdUserId]
  * @returns {Promise<void>}
  */
 const sendNotifications = async (
@@ -489,7 +499,8 @@ const sendNotifications = async (
 	templateName,
 	appeal,
 	lpaStatement,
-	personalisation = {}
+	personalisation = {},
+	azureAdUserId
 ) => {
 	const appellantEmail = appeal.agent?.email ?? appeal.appellant?.email;
 	const lpaEmail = appeal.lpa?.email;
@@ -507,6 +518,7 @@ const sendNotifications = async (
 
 		const enforcementReference = await getEnforcementReference(appeal);
 		await notifySend({
+			azureAdUserId,
 			notifyClient,
 			templateName,
 			personalisation: {
