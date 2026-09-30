@@ -211,6 +211,8 @@ const createHearing = async (
 			);
 		}
 
+		// await broadcasters.broadcastEvent(hearing.id, EVENT_TYPE.HEARING, EventType.Create);
+
 		// only send a notify for the single/lead appeal
 		await sendHearingDetailsNotifications(
 			notifyClient,
