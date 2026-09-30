@@ -1,6 +1,6 @@
 import { createNewDocumentVersion } from '#app/components/file-uploader.component.js';
 import { mapUncommittedDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
-import { getFileInfo } from '#appeals/appeal-documents/appeal.documents.service.js';
+import { getFileVersionsInfo } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
@@ -13,6 +13,8 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import config from '@pins/appeals.web/environment/config.js';
 import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
+import { getMaxDocumentVersion } from '@pins/appeals/utils/document-version.js';
+import { escape } from 'lodash-es';
 import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
 import { correctionNoticePage } from './update-decision-letter.mapper.js';
 import { updateCaseDecisionOutcomeDate } from './update-decision-letter.service.js';
@@ -68,7 +70,7 @@ export const renderUpdateDocumentCheckDetails = async (request, response) => {
 	const baseUrl = request.baseUrl;
 	const file = inspectorDecision?.files?.[0];
 
-	const fileInfo = await getFileInfo(request.apiClient, decision.documentId);
+	const fileInfo = await getFileVersionsInfo(request.apiClient, decision.documentId);
 
 	if (!fileInfo) {
 		return response.status(404).render('app/404');
@@ -78,8 +80,8 @@ export const renderUpdateDocumentCheckDetails = async (request, response) => {
 		return response.status(500).render('app/500.njk');
 	}
 
-	const documentVersion = fileInfo.latestDocumentVersion.version + 1;
-	const documentName = fileInfo.name;
+	const documentVersion =
+		getMaxDocumentVersion(fileInfo.latestDocumentVersion.version, fileInfo.allVersions) + 1;
 	const { email: assignedTeamEmail } = await getTeamFromAppealId(request.apiClient, appealId);
 	const personalisation = {
 		appeal_reference_number: appealReference,
@@ -125,9 +127,9 @@ export const renderUpdateDocumentCheckDetails = async (request, response) => {
 					html: `<a href="${mapUncommittedDocumentDownloadUrl(
 						appealReference,
 						file.GUID,
-						documentName,
+						file.name,
 						documentVersion
-					)}" class="govuk-link">${documentName}</a>`,
+					)}" class="govuk-link">${escape(file.name)}</a>`,
 					actions: {
 						Change: {
 							href: `${addBackLinkQueryToUrl(request, `${baseUrl}/upload-decision-letter`)}`,

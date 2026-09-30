@@ -6,7 +6,7 @@ import nock from 'nock';
 import supertest from 'supertest';
 import {
 	appealDataIssuedDecision,
-	documentFileInfo,
+	documentFileVersionsInfo,
 	documentRedactionStatuses,
 	fileUploadInfo,
 	fileUploadInfo2,
@@ -207,7 +207,9 @@ describe('update-decision-letter', () => {
 				.get('/appeals/1?include=all')
 				.reply(200, issueDecisionAppealData)
 				.persist();
-			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
+			nock('http://test/')
+				.get('/appeals/documents/1/versions')
+				.reply(200, documentFileVersionsInfo);
 			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 			nock('http://test/')
 				.post(`/appeals/notify-preview/correction-notice-decision-lpa.content.md`)
@@ -227,10 +229,11 @@ describe('update-decision-letter', () => {
 				.reply(200, documentRedactionStatuses)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b')
+				.get('/appeals/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
 				.reply(200, {
 					id: 'e1e90a49-fab3-44b8-a21a-bb73af089f6b',
 					name: 'test-document2.pdf',
+					allVersions: [{ version: 3 }],
 					latestDocumentVersion: {
 						documentId: '3861dfbd-4886-4c43-9e23-18c8134f9ba1',
 						version: 3,
@@ -281,6 +284,31 @@ describe('update-decision-letter', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Update decision letter');
 		});
 
+		it('escapes uploaded filenames on the check details page', async () => {
+			const filename = 'decision<img src=x>.pdf';
+			const uploadedFiles = JSON.parse(fileUploadInfo2);
+			uploadedFiles[0].name = filename;
+			await request
+				.post(`${baseUrl}/1/update-decision-letter/upload-decision-letter`)
+				.send({ 'upload-info': JSON.stringify(uploadedFiles) })
+				.expect(302);
+
+			nock('http://test/')
+				.get('/appeals/1/case-team-email')
+				.reply(200, {
+					id: 1,
+					email: 'caseofficers@planninginspectorate.gov.uk',
+					name: 'standard email'
+				})
+				.persist();
+			const response = await request.get(`${baseUrl}/1/update-decision-letter/check-details`);
+			const element = parseHtml(response.text, { skipPrettyPrint: true });
+			const fileLink = element.querySelector('a[href*="download-uncommitted"]');
+
+			expect(fileLink.textContent).toBe(filename);
+			expect(fileLink.querySelector('img')).toBeNull();
+		});
+
 		it('should use the new file upload date in the notifies', async () => {
 			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
 			expect(correctionNoticeResponse.statusCode).toBe(302);
@@ -291,10 +319,11 @@ describe('update-decision-letter', () => {
 				.reply(200, issueDecisionAppealData)
 				.persist();
 			nock('http://test/')
-				.get('/appeals/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b')
+				.get('/appeals/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
 				.reply(200, {
 					id: 'e1e90a49-fab3-44b8-a21a-bb73af089f6b',
 					name: 'test-document2.pdf',
+					allVersions: [{ version: 3 }],
 					latestDocumentVersion: {
 						documentId: '3861dfbd-4886-4c43-9e23-18c8134f9ba1',
 						version: 3,

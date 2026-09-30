@@ -11,7 +11,8 @@ import {
 	manageDocumentPage,
 	manageFolderPage,
 	mapDocumentDownloadUrl,
-	mapRedactionStatusKeyToName
+	mapRedactionStatusKeyToName,
+	mapUncommittedDocumentDownloadUrl
 } from '../appeal-documents.mapper.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
@@ -702,6 +703,21 @@ describe('mapDocumentDownloadUrl', () => {
 	it('should return the correct URL when documentVersion is provided', () => {
 		const result = mapDocumentDownloadUrl(1, '2', 'document.pdf', 3);
 		expect(result).toBe('/documents/1/download/2/3/document.pdf');
+	});
+
+	describe('mapUncommittedDocumentDownloadUrl', () => {
+		it('encodes filenames as URL path segments', () => {
+			const result = mapUncommittedDocumentDownloadUrl(
+				'APP/1',
+				'document-id',
+				'revision#2?.pdf',
+				3
+			);
+
+			expect(result).toBe(
+				'/documents/APP/1/download-uncommitted/document-id/revision%232%3F.pdf/3'
+			);
+		});
 	});
 
 	it('should return the correct URL when documentVersion is not provided', () => {

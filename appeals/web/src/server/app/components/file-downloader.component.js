@@ -10,6 +10,8 @@ import logger from '#lib/logger.js';
 import { BlobServiceClient } from '@azure/storage-blob';
 import config from '@pins/appeals.web/environment/config.js';
 import { REP_ATTACHMENT_DOCTYPE } from '@pins/appeals/constants/documents.js';
+import { mapBlobPath } from '@pins/appeals/utils/document-blob-path.js';
+import { createDocumentStorageFilename } from '@pins/appeals/utils/document-storage-filename.js';
 import { camelCaseToWords, toSentenceCase } from '@pins/appeals/utils/string-case.js';
 import { BlobStorageClient } from '@pins/blob-storage-client';
 import {
@@ -25,6 +27,108 @@ import path from 'node:path';
 /** @typedef {import('express').Response} Response */
 
 const validScanResult = APPEAL_VIRUS_CHECK_STATUS.SCANNED;
+
+/**
+ * strip trailing dots and spaces from a string
+ * @param {string} value
+ * @returns {string}
+ */
+function trimTrailingDotsAndSpaces(value) {
+	while (value.endsWith('.') || value.endsWith(' ')) {
+		value = value.slice(0, -1);
+	}
+	return value;
+}
+
+/**
+ * @param {string} documentGuid
+ * @param {string} filename
+ * @returns {string}
+ */
+export const createSafeDownloadFilename = (documentGuid, filename) => {
+	// Replace characters Windows does not allow in filenames.
+	let safeFilename = filename.replace(/[<>:"|?*/\\]/g, '_');
+	// Replace control characters with underscores
+	// eslint-disable-next-line no-control-regex
+	safeFilename = safeFilename.replace(/[\u0000-\u001f\u007f]/g, '_');
+	safeFilename = trimTrailingDotsAndSpaces(safeFilename).trim();
+
+	if (
+		// empty
+		!safeFilename ||
+		// just a dot
+		safeFilename === '.' ||
+		// path traversal attempts
+		safeFilename === '..' ||
+		// reserved filenames
+		/^(con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\..*)?$/i.test(safeFilename)
+	) {
+		return createGuidFilename(documentGuid, safeFilename);
+	}
+
+	return safeFilename;
+};
+
+/**
+ * @param {string} documentGuid
+ * @param {string} filename
+ * @returns {string}
+ */
+export const createContentDisposition = (documentGuid, filename) => {
+	const downloadFilename = createSafeDownloadFilename(documentGuid, filename);
+	// utf-16 surrogate pairs fix
+	const wellFormedFilename = downloadFilename.toWellFormed?.() ?? downloadFilename;
+	// ascii-safe filename
+	const UNSAFE_ASCII_FILENAME_CHARACTERS = /[^A-Za-z0-9 ._()-]/g;
+	const asciiFilename =
+		wellFormedFilename.replace(UNSAFE_ASCII_FILENAME_CHARACTERS, '_') || documentGuid;
+
+	return `attachment; filename="${asciiFilename}"; filename*=UTF-8''${encodeURIComponent(wellFormedFilename)}`;
+};
+
+/**
+ * @param {string} documentGuid
+ * @param {string} filename
+ * @returns {string}
+ */
+export const createGuidFilename = (documentGuid, filename) => {
+	return createDocumentStorageFilename(documentGuid, filename);
+};
+
+/**
+ * @param {string} directory
+ * @param {string} filename
+ * @param {Set<string>} usedNames
+ * @param {string} [fallbackName]
+ * @returns {string}
+ */
+export const createUniqueArchiveFilename = (directory, filename, usedNames, fallbackName) => {
+	const maxFilenameBytes = 255;
+	const extension = path.extname(filename);
+	const basename = path.basename(filename, extension);
+	const fallbackBasename = fallbackName || crypto.randomUUID();
+	let candidate = filename;
+	let suffix = 1;
+
+	/** @param {string} name */
+	const tooLong = (name) => Buffer.byteLength(name, 'utf8') > maxFilenameBytes;
+
+	while (usedNames.has(candidate.toLowerCase()) || tooLong(candidate)) {
+		// if not unique, append a suffix
+		candidate = `${basename} (${suffix++})${extension}`;
+		// if the candidate is then too long, replace it with the fallback name
+		if (tooLong(candidate)) {
+			candidate = `${fallbackBasename}${extension}`;
+		}
+		// if the candidate is still not unique, generate a random UUID-based filename
+		if (usedNames.has(candidate.toLowerCase())) {
+			candidate = `${crypto.randomUUID()}${extension}`;
+		}
+	}
+
+	usedNames.add(candidate.toLowerCase());
+	return directory ? `${directory}/${candidate}` : candidate;
+};
 
 // file types already compressed so no benefit in running through zip compression
 const storeTypes = new Set([
@@ -96,7 +200,7 @@ export const getDocumentDownload = async ({ apiClient, params, session }, respon
 
 	const blobStorageClient = await createBlobStorageClient(session);
 	const documentKey = blobStoragePath.startsWith('/') ? blobStoragePath.slice(1) : blobStoragePath;
-	const extractedFilename = `${documentKey}`.split(/\/+/).pop();
+	const downloadFilename = createSafeDownloadFilename(fileGuid, fileInfo.name || documentKey);
 
 	const blobProperties = await blobStorageClient.getBlobProperties(
 		blobStorageContainer,
@@ -109,7 +213,7 @@ export const getDocumentDownload = async ({ apiClient, params, session }, respon
 	if (requestedFilename && blobProperties?.contentType) {
 		response.setHeader('content-type', blobProperties.contentType);
 	} else {
-		response.setHeader('content-disposition', `attachment; filename=${extractedFilename}`);
+		response.setHeader('content-disposition', createContentDisposition(fileGuid, downloadFilename));
 	}
 
 	const blobStream = await blobStorageClient.downloadStream(blobStorageContainer, documentKey);
@@ -135,13 +239,14 @@ export const getUncommittedDocumentDownload = async (
 	response
 ) => {
 	const blobStorageClient = await createBlobStorageClient(session);
-	const documentKey = `appeal/${caseReference}/${guid}/v${version || 1}/${requestedFilename}`;
-	const extractedFilename = `${documentKey}`.split(/\/+/).pop();
-
+	const downloadFilename = createSafeDownloadFilename(guid, requestedFilename);
+	const storageFilename = createGuidFilename(guid, requestedFilename);
+	const documentKey = mapBlobPath(guid, caseReference, storageFilename, Number(version || 1));
 	const blobProperties = await blobStorageClient.getBlobProperties(
 		config.blobStorageDefaultContainer,
 		documentKey
 	);
+
 	if (!blobProperties) {
 		return response.status(404);
 	}
@@ -149,7 +254,7 @@ export const getUncommittedDocumentDownload = async (
 	if (blobProperties?.contentType) {
 		response.setHeader('content-type', blobProperties.contentType);
 	} else {
-		response.setHeader('content-disposition', `attachment; filename=${extractedFilename}`);
+		response.setHeader('content-disposition', createContentDisposition(guid, downloadFilename));
 	}
 
 	const blobStream = await blobStorageClient.downloadStream(
@@ -202,7 +307,7 @@ export const getDocumentDownloadByVersion = async ({ apiClient, params, session 
 
 	const blobStorageClient = await createBlobStorageClient(session);
 	const documentKey = blobStoragePath.startsWith('/') ? blobStoragePath.slice(1) : blobStoragePath;
-	const extractedFilename = `${documentKey}`.split(/\/+/).pop();
+	const downloadFilename = createSafeDownloadFilename(fileGuid, filesInfo.name || documentKey);
 
 	const blobProperties = await blobStorageClient.getBlobProperties(
 		blobStorageContainer,
@@ -215,7 +320,7 @@ export const getDocumentDownloadByVersion = async ({ apiClient, params, session 
 	if (requestedFilename && blobProperties?.contentType) {
 		response.setHeader('content-type', blobProperties.contentType);
 	} else {
-		response.setHeader('content-disposition', `attachment; filename=${extractedFilename}`);
+		response.setHeader('content-disposition', createContentDisposition(fileGuid, downloadFilename));
 	}
 
 	const blobStream = await blobStorageClient.downloadStream(blobStorageContainer, documentKey);
@@ -291,10 +396,11 @@ const createBlobDownloadStream = async (
 /**
  * @param {import('archiver').Archiver} archive
  * @param {import('@pins/blob-storage-client').BlobStorageClient} blobStorageClient
- * @param {Array<{blobStorageContainer: string, blobStoragePath: string, fullName: string}>} bulkFileInfo
+ * @param {Array<{blobStorageContainer: string, blobStoragePath: string, fullName: string, guid: string}>} bulkFileInfo
  * @param {string[]} missingFiles
  */
 const addBlobsToArchive = async (archive, blobStorageClient, bulkFileInfo, missingFiles) => {
+	const usedNamesByDirectory = new Map();
 	// download and append one blob at a time; idle blob streams are disconnected by Azure
 	for (const fileInfo of bulkFileInfo) {
 		const blobStream = await createBlobDownloadStream(
@@ -326,10 +432,20 @@ const addBlobsToArchive = async (archive, blobStorageClient, bulkFileInfo, missi
 			archive.once('entry', onArchiveEntry);
 			archive.once('error', onArchiveError);
 
+			// ensure filenames are unique within their directory
+			const directory = path.dirname(fileInfo.fullName);
+			const usedNames = usedNamesByDirectory.get(directory) || new Set();
+			const archiveName = createUniqueArchiveFilename(
+				directory === '.' ? '' : directory,
+				path.basename(fileInfo.fullName),
+				usedNames,
+				fileInfo.guid
+			);
+			usedNamesByDirectory.set(directory, usedNames);
 			// avoid compression on given file types as they get no benefit from compression
-			const ext = path.extname(fileInfo.fullName).slice(1).toLowerCase();
+			const ext = path.extname(archiveName).slice(1).toLowerCase();
 			const store = storeTypes.has(ext);
-			archive.append(blobStream, { name: fileInfo.fullName, store });
+			archive.append(blobStream, { name: archiveName, store });
 		});
 	}
 };
@@ -522,7 +638,8 @@ export const getRepresentationAttachmentFullNames = async (apiClient, caseId) =>
 				attachment?.documentVersion?.fileName ||
 				attachment?.documentVersion?.originalFilename;
 			if (guid && name) {
-				fullAttachmentNames[guid] = `Representations/${representationType}/${name}`;
+				fullAttachmentNames[guid] =
+					`Representations/${representationType}/${createSafeDownloadFilename(guid, name)}`;
 			}
 		});
 	});
@@ -584,9 +701,10 @@ export const getBulkFileInfo = async (apiClient, caseId, representationType) => 
 			.map((document) => {
 				const { blobStorageContainer, blobStoragePath, documentURI } =
 					document.latestDocumentVersion;
+				const documentGuid = document.id || document.guid;
+				const downloadFilename = createSafeDownloadFilename(documentGuid, document.name);
 
-				const representationAttachmentFullName =
-					representationAttachmentFullNames[document.id || document.guid];
+				const representationAttachmentFullName = representationAttachmentFullNames[documentGuid];
 
 				// If this is in Representation Attachments folder, only include if it's mapped
 				if (folderPath === 'Representation/Representation Attachments') {
@@ -598,11 +716,17 @@ export const getBulkFileInfo = async (apiClient, caseId, representationType) => 
 						) {
 							return null;
 						}
+						const representationFolderPath = path.dirname(representationAttachmentFullName);
+						const representationFilename = createSafeDownloadFilename(
+							documentGuid,
+							path.basename(representationAttachmentFullName)
+						);
 						return {
-							fullName: representationAttachmentFullName,
+							fullName: `${representationFolderPath}/${representationFilename}`,
 							blobStorageContainer,
 							blobStoragePath,
-							documentURI
+							documentURI,
+							guid: documentGuid
 						};
 					} else {
 						// Skip unmapped representation attachments
@@ -611,10 +735,11 @@ export const getBulkFileInfo = async (apiClient, caseId, representationType) => 
 				} else {
 					// For other folders, include all documents
 					return {
-						fullName: representationAttachmentFullName || `${folderPath}/${document.name}`,
+						fullName: representationAttachmentFullName ?? `${folderPath}/${downloadFilename}`,
 						blobStorageContainer,
 						blobStoragePath,
-						documentURI
+						documentURI,
+						guid: documentGuid
 					};
 				}
 			})

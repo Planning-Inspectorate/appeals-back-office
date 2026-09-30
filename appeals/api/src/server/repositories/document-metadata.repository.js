@@ -1,6 +1,7 @@
 import { databaseConnector } from '#utils/database-connector.js';
 import { findPreviousVersion } from '#utils/find-previous-version.js';
 import logger from '#utils/logger.js';
+import { getMaxDocumentVersion } from '@pins/appeals/utils/document-version.js';
 import { EventType } from '@pins/event-client';
 import { APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
 import { randomUUID } from 'node:crypto';
@@ -53,7 +54,7 @@ export const addDocument = async (metadata, context) => {
 
 		metadata.documentGuid = guid;
 		metadata.version = 1;
-		metadata.fileName = name || metadata.originalFilename;
+		metadata.fileName = metadata.fileName || name || metadata.originalFilename;
 		if (!metadata.virusCheckStatus) {
 			const scanStatus = await tx.documentVersionAvScan.findUnique({
 				where: {
@@ -227,11 +228,11 @@ export const addDocumentVersion = async (params) => {
 
 		const { name, versions } = document;
 
-		const newVersionId = versions ? versions.length + 1 : 1;
+		const newVersionId = getMaxDocumentVersion(0, versions) + 1;
 
 		metadata.documentGuid = documentGuid;
 		metadata.version = newVersionId;
-		metadata.fileName = name;
+		metadata.fileName = metadata.fileName || name;
 
 		const scanStatus = await tx.documentVersionAvScan.findUnique({
 			where: {
