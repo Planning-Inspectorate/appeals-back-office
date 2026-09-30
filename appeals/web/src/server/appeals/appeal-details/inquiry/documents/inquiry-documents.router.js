@@ -28,6 +28,17 @@ router
 router.route('/manage-documents/:folderId').get(asyncHandler(controller.getManageFolder));
 
 router
+	.route('/manage-documents/:folderId/share-all')
+	.get(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.getShareAllDocuments)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.postShareAllDocuments)
+	);
+
+router
 	.route('/manage-documents/:folderId/:documentId')
 	.get(asyncHandler(controller.getManageDocument));
 
@@ -93,10 +104,7 @@ router
 	);
 
 router
-	.route([
-		'/change-document-details/:folderId/:documentId',
-		'/change-document-details/:folderId/:documentId'
-	])
+	.route('/change-document-details/:folderId/:documentId')
 	.get(
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getChangeInquiryDocumentVersionDetails)

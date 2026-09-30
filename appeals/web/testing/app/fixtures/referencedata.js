@@ -3514,7 +3514,8 @@ export const supportingDocumentsFolderInfo = {
 				size: 129363,
 				mime: 'application/pdf',
 				virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
-				isLateEntry: false
+				isLateEntry: false,
+				published: false
 			}
 		},
 		{
@@ -3527,7 +3528,8 @@ export const supportingDocumentsFolderInfo = {
 				size: 11815175,
 				mime: 'video/mp4',
 				virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
-				isLateEntry: false
+				isLateEntry: false,
+				published: false
 			}
 		}
 	],
@@ -3548,7 +3550,8 @@ export const inquiryDocumentsFolderInfo = {
 				size: 129363,
 				mime: 'application/pdf',
 				virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
-				isLateEntry: false
+				isLateEntry: false,
+				published: false
 			}
 		},
 		{
@@ -3561,7 +3564,8 @@ export const inquiryDocumentsFolderInfo = {
 				size: 11815175,
 				mime: 'video/mp4',
 				virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
-				isLateEntry: false
+				isLateEntry: false,
+				published: false
 			}
 		}
 	],
@@ -3582,7 +3586,8 @@ export const inquiryEventDocumentsFolderInfo = {
 				size: 129363,
 				mime: 'application/pdf',
 				virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
-				isLateEntry: false
+				isLateEntry: false,
+				published: false
 			}
 		},
 		{
@@ -3595,7 +3600,8 @@ export const inquiryEventDocumentsFolderInfo = {
 				size: 11815175,
 				mime: 'video/mp4',
 				virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
-				isLateEntry: false
+				isLateEntry: false,
+				published: false
 			}
 		}
 	],
@@ -3616,7 +3622,8 @@ export const hearingDocumentsFolderInfo = {
 				size: 129363,
 				mime: 'application/pdf',
 				virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
-				isLateEntry: false
+				isLateEntry: false,
+				published: false
 			}
 		},
 		{
@@ -3629,7 +3636,8 @@ export const hearingDocumentsFolderInfo = {
 				size: 11815175,
 				mime: 'video/mp4',
 				virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
-				isLateEntry: false
+				isLateEntry: false,
+				published: false
 			}
 		}
 	],

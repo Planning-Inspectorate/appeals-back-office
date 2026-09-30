@@ -26,7 +26,8 @@ import {
 	manageDocumentPage,
 	manageFolderPage,
 	mapDocumentDetailsFormDataToAPIRequest,
-	mapDocumentFileNameFormDataToAPIRequest
+	mapDocumentFileNameFormDataToAPIRequest,
+	shareAllDocumentsPage
 } from './appeal-documents.mapper.js';
 import {
 	deleteDocument,
@@ -420,6 +421,44 @@ export const renderManageDocument = async ({
 		pageContent: mappedPageContent,
 		errors
 	});
+};
+
+/**
+ * @param {Object} params
+ * @param {import('@pins/express/types/express.js').Request} params.request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
+ * @param {number} params.numShareableDocuments
+ * @param {number} params.totalFolderSize
+ * @param {string} params.backLinkUrl
+ */
+export const renderShareAllDocuments = async ({
+	request,
+	response,
+	numShareableDocuments,
+	totalFolderSize,
+	backLinkUrl
+}) => {
+	const { errors } = request;
+
+	const mappedPageContent = await shareAllDocumentsPage({
+		request,
+		numShareableDocuments,
+		totalFolderSize,
+		backLinkUrl,
+		notifyPreview: undefined
+	});
+
+	if (numShareableDocuments < 1) {
+		return response.status(200).render('patterns/display-page.pattern.njk', {
+			pageContent: mappedPageContent,
+			errors
+		});
+	} else {
+		return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
+			pageContent: mappedPageContent,
+			errors
+		});
+	}
 };
 
 /**
