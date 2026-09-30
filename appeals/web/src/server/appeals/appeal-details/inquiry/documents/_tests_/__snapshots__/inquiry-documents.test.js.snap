@@ -118,6 +118,56 @@ exports[`inquiry documents GET /inquiry/documents/manage-documents/:folderId sho
 </main>"
 `;
 
+exports[`inquiry documents GET /inquiry/documents/manage-documents/:folderId should render the share all button if there are unpublished docs to be shared 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
+            <h1 class="govuk-heading-l">Inquiry documents</h1>
+        </div>
+    </div>
+    <div class="govuk-button-group"><a href="/appeals-service/appeal-details/1/inquiry/documents/upload-documents/1"
+        role="button" draggable="false" class="govuk-button govuk-button--secondary"
+        data-module="govuk-button"> Add documents</a><a href="/appeals-service/appeal-details/1/inquiry/documents/manage-documents/1/share-all"
+        role="button" draggable="false" class="govuk-button govuk-button--secondary"
+        data-module="govuk-button"> Share all documents</a>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <table class="govuk-table" id="documents-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">Name</th>
+                        <th scope="col" class="govuk-table__header">Date received</th>
+                        <th scope="col" class="govuk-table__header">Redaction status</th>
+                        <th scope="col" class="govuk-table__header">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/documents/1/download/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/test-pdf-documentFolderInfo.pdf"
+                            target="_blank">test-pdf-documentFolderInfo.pdf</a> (129 KB)</td>
+                        <td class="govuk-table__cell">1 February 2023</td>
+                        <td class="govuk-table__cell">No redaction required</td>
+                        <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/inquiry/documents/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
+                            class="govuk-link">Manage and share <span class="govuk-visually-hidden">test-pdf-documentFolderInfo.pdf</span></a>
+                        </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/documents/1/download/47d8f073-c837-4f07-9161-c1a5626eba56/sample-20s-documentFolderInfo.mp4"
+                            target="_blank">sample-20s-documentFolderInfo.mp4</a> (11.8 MB)</td>
+                        <td                         class="govuk-table__cell">2 March 2024</td>
+                            <td class="govuk-table__cell">No redaction required</td>
+                            <td class="govuk-table__cell"><a href="/appeals-service/appeal-details/1/inquiry/documents/manage-documents/1/47d8f073-c837-4f07-9161-c1a5626eba56"
+                                class="govuk-link">Manage and share <span class="govuk-visually-hidden">sample-20s-documentFolderInfo.mp4</span></a>
+                            </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`inquiry documents GET /inquiry/documents/manage-documents/:folderId/:documentId should render a 404 error page if the documentId is not valid 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
@@ -248,6 +298,29 @@ exports[`inquiry documents GET /inquiry/documents/manage-documents/:folderId/:do
         </div>
         </details>
     </div>
+    </div>
+</main>"
+`;
+
+exports[`inquiry documents GET /inquiry/documents/manage-documents/:folderId/share-all should render the share all documents page if the folderId is valid 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Confirm you want to share 2 of undefined documents</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">You can only share documents that are set to redacted or redaction not
+                needed.</p>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Share documents</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </main>"
 `;
