@@ -388,7 +388,7 @@ exports[`environmental-assessment POST /environmental-assessment/upload-document
             <h2 class="govuk-heading-m govuk-!-margin-top-5 govuk-!-margin-bottom-4">Uploaded file</h2>
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> File</dt>
-                    <dd class="govuk-summary-list__value"><a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/ph0-documentFileInfo.jpeg/2"
+                    <dd class="govuk-summary-list__value"><a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt/2"
                         target="_blank">test-document.txt</a>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/environmental-assessment/upload-documents/2864/15d19184-155b-4b6c-bba6-2bd2a61ca9a3">Change<span class="govuk-visually-hidden"> file test-document.txt</span></a>

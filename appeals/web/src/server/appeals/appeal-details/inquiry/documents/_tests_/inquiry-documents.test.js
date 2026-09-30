@@ -453,7 +453,7 @@ describe('inquiry documents', () => {
 			expect(addDetailsResponse.statusCode).toBe(200);
 
 			const response = await request.get(
-				`${baseUrl}/1/inquiry/documents/check-your-answers/${inquiryDocsFolderId}/1`
+				`${baseUrl}/1/inquiry/documents/check-your-answers/${inquiryDocsFolderId}`
 			);
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });

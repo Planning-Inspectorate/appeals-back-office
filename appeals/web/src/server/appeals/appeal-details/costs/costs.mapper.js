@@ -11,7 +11,6 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
  * @param {import('@pins/appeals.api').Schema.DocumentRedactionStatus[]} redactionStatuses
  * @param {string} [documentId]
  * @param {number} [documentVersion]
- * @param {string} [documentFileName]
  * @returns {PageContent}
  */
 export function decisionCheckAndConfirmPage(
@@ -20,8 +19,7 @@ export function decisionCheckAndConfirmPage(
 	uncommittedFiles,
 	redactionStatuses,
 	documentId,
-	documentVersion,
-	documentFileName
+	documentVersion
 ) {
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 	const addDocumentDetailsPageUrl = `/appeals-service/appeal-details/${appealDetails.appealId}/costs/decision/add-document-details/${decisionDocumentFolder.folderId}`;
@@ -38,8 +36,7 @@ export function decisionCheckAndConfirmPage(
 		titleTextOverride: `Check your answers - ${shortAppealReference}`,
 		summaryListNameLabelOverride: documentId ? 'Updated costs decision' : 'Costs decision',
 		summaryListDateLabelOverride: 'Decision date',
-		documentVersion,
-		documentFileName
+		documentVersion
 	});
 
 	pageContent.pageComponents?.push(

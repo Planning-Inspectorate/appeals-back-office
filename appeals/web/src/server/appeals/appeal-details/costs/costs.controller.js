@@ -561,7 +561,6 @@ export const renderDecisionCheckAndConfirm = async (request, response) => {
 	}
 
 	let documentVersion;
-	let documentFileName;
 
 	if (documentId) {
 		const fileInfo = await getFileInfo(request.apiClient, documentId);
@@ -570,14 +569,13 @@ export const renderDecisionCheckAndConfirm = async (request, response) => {
 			return response.status(404).render('app/404');
 		}
 
-		const { latestDocumentVersion, name } = fileInfo;
+		const { latestDocumentVersion } = fileInfo;
 
-		if (!latestDocumentVersion || !name) {
+		if (!latestDocumentVersion) {
 			return response.status(500).render('app/500.njk');
 		}
 
 		documentVersion = latestDocumentVersion.version + 1;
-		documentFileName = name;
 	}
 
 	const mappedPageContent = decisionCheckAndConfirmPage(
@@ -586,8 +584,7 @@ export const renderDecisionCheckAndConfirm = async (request, response) => {
 		session.fileUploadInfo.files,
 		redactionStatuses,
 		documentId,
-		documentVersion,
-		documentFileName
+		documentVersion
 	);
 
 	return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {

@@ -623,7 +623,6 @@ export const renderUploadDocumentsCheckAndConfirm = async ({
 	}
 
 	let documentVersion;
-	let documentFileName;
 
 	if (documentId) {
 		const fileInfo = await getFileInfo(request.apiClient, documentId);
@@ -637,7 +636,6 @@ export const renderUploadDocumentsCheckAndConfirm = async ({
 		}
 
 		documentVersion = fileInfo.latestDocumentVersion.version + 1;
-		documentFileName = fileInfo.name;
 	}
 
 	const mappedPageContent = addDocumentsCheckAndConfirmPage({
@@ -649,7 +647,6 @@ export const renderUploadDocumentsCheckAndConfirm = async ({
 		uncommittedFiles: request.session.fileUploadInfo.files,
 		redactionStatuses,
 		documentVersion,
-		documentFileName,
 		...(summaryListNameLabelOverride && {
 			summaryListNameLabelOverride
 		}),
