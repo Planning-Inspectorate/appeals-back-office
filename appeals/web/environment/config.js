@@ -192,7 +192,8 @@ export function loadConfig() {
 			featureFlagSharingInquiryDocuments:
 				environment.FEATURE_FLAG_SHARING_INQUIRY_DOCUMENTS === 'true',
 			featureFlagSharingSupportingDocuments:
-				environment.FEATURE_FLAG_SHARING_SUPPORTING_DOCUMENTS === 'true'
+				environment.FEATURE_FLAG_SHARING_SUPPORTING_DOCUMENTS === 'true',
+			featureFlagGenericCase: environment.FEATURE_FLAG_GENERIC_CASE === 'true'
 		},
 		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
 		pdfServiceHost: PDF_SERVICE_HOST
