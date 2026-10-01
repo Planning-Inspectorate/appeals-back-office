@@ -252,6 +252,7 @@ variable "sb_topic_names" {
       appeal_has            = string
       appeal_s78            = string
       document              = string
+      case_file_package     = string
       document_to_move      = string
       event                 = string
       listed_building       = string
