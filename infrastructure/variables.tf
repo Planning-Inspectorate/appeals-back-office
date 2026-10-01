@@ -57,6 +57,7 @@ variable "apps_config" {
     })
 
     featureFlags = object({
+      featureFlagBackgroundCaseDownload           = bool
       featureFlagLinkedAppeals                    = bool
       featureFlagLinkedAppealsUnlink              = bool
       featureFlagSimplifyTeamAssignment           = bool
