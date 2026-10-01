@@ -280,25 +280,28 @@ const updateHearing = async (
 };
 
 /**
- * @param {CancelHearing} deleteHearingData
+ * @param {number[]} appealIdsToUpdate
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {Appeal} appeal
  * @param {string} azureAdUserId
  */
-const deleteHearing = async (deleteHearingData, notifyClient, appeal, azureAdUserId) => {
+const deleteHearing = async (appealIdsToUpdate, notifyClient, appeal, azureAdUserId) => {
 	try {
-		const { hearingId } = deleteHearingData;
+		const existingHearings = await hearingRepository.getHearingByAppealId(appealIdsToUpdate);
 
-		const existingHearing = await hearingRepository.getHearingById(hearingId);
+		await hearingRepository.deleteMultiHearingsByAppealId(appealIdsToUpdate);
 
-		await hearingRepository.deleteHearingById(hearingId);
-
-		await broadcasters.broadcastEvent(
-			hearingId,
-			EVENT_TYPE.HEARING,
-			EventType.Delete,
-			existingHearing
+		await Promise.allSettled(
+			existingHearings.map((existingHearing) =>
+				broadcasters.broadcastEvent(
+					existingHearing.id,
+					EVENT_TYPE.HEARING,
+					EventType.Delete,
+					existingHearing
+				)
+			)
 		);
+
 		await sendHearingNotifications(notifyClient, 'hearing-cancelled', appeal, azureAdUserId);
 	} catch (error) {
 		logger.error(error, 'Failed to delete hearing');

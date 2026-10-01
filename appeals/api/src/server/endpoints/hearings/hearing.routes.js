@@ -140,7 +140,8 @@ router.delete(
 		'appellant',
 		'agent',
 		'lpa',
-		'address'
+		'address',
+		'childAppeals'
 	]),
 	checkHearingExists,
 	deleteHearingDateValidator,
