@@ -85,7 +85,6 @@ module "app_api" {
     FEATURE_FLAG_RULE_6_COSTS                        = var.apps_config.featureFlags.featureFlagRule6Costs
     FEATURE_FLAG_RULE_6_STATEMENT                    = var.apps_config.featureFlags.featureFlagRule6Statement
     FEATURE_FLAG_EXPEDITED_APPEALS                   = var.apps_config.featureFlags.featureFlagExpeditedAppeals
-    FEATURE_FLAG_LDC                                 = var.apps_config.featureFlags.featureFlagLDC
     FEATURE_FLAG_APPELLANT_STATEMENT                 = var.apps_config.featureFlags.featureFlagAppellantStatement
     FEATURE_FLAG_ENFORCEMENT_HEARING_LINKED          = var.apps_config.featureFlags.featureFlagEnforcementHearingLinked
     FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED          = var.apps_config.featureFlags.featureFlagEnforcementInquiryLinked

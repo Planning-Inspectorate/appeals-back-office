@@ -109,7 +109,6 @@ module "app_web" {
     FEATURE_FLAG_APPELLANT_STATEMENT                 = var.apps_config.featureFlags.featureFlagAppellantStatement
     FEATURE_FLAG_RULE_6_STATEMENT                    = var.apps_config.featureFlags.featureFlagRule6Statement
     FEATURE_FLAG_RULE_6_COSTS                        = var.apps_config.featureFlags.featureFlagRule6Costs
-    FEATURE_FLAG_LDC                                 = var.apps_config.featureFlags.featureFlagLDC
     FEATURE_FLAG_S20_INQUIRY                         = var.apps_config.featureFlags.featureFlagS20Inquiry
     FEATURE_FLAG_ENFORCEMENT_NOTICE_HEARING          = var.apps_config.featureFlags.featureFlagEnforcementNoticeHearing
     FEATURE_FLAG_ENFORCEMENT_NOTICE_INQUIRY          = var.apps_config.featureFlags.featureFlagEnforcementNoticeInquiry

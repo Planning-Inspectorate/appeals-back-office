@@ -65,7 +65,6 @@ apps_config = {
     featureFlagExpeditedAppeals                 = true
     featureFlagAppellantStatement               = true
     featureFlagRule6Statement                   = true
-    featureFlagLDC                              = true
     featureFlagRule6Costs                       = true
     featureFlagS20Inquiry                       = true
     featureFlagEnforcementNoticeHearing         = true
