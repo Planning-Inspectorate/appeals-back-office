@@ -94,6 +94,7 @@ variable "apps_config" {
       featureFlagSharingInquiryEventDocuments     = bool
       featureFlagSharingInquiryDocuments          = bool
       featureFlagSharingSupportingDocuments       = bool
+      featureFlagShareMultipleDocs                = bool
       featureFlagGenericCase                      = bool
     })
 
