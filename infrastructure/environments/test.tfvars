@@ -84,6 +84,7 @@ apps_config = {
     featureFlagSharingInquiryEventDocuments     = false
     featureFlagSharingInquiryDocuments          = false
     featureFlagSharingSupportingDocuments       = false
+    featureFlagGenericCase                      = false
   }
 
   use_system_test_bc_for_change_lpa = true
