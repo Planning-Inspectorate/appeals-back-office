@@ -8,6 +8,7 @@ export const producers = {
 	boEventData: config.serviceBusOptions.topicAppealEvent,
 	boEventEstimate: config.serviceBusOptions.topicAppealEventEstimate,
 	boBlobMove: config.serviceBusOptions.topicDocumentMove,
+	boCaseFilePackage: config.serviceBusOptions.topicCaseFilePackage,
 	boRepresentation: config.serviceBusOptions.topicAppealRepresentation
 };
 

@@ -38,6 +38,7 @@ const { value, error } = schema.validate({
 		topicAppealEventEstimate:
 			environment.SB_TOPIC_NAME_APPEAL_EVENT_ESTIMATE || 'appeal-event-estimate',
 		topicDocumentMove: environment.SB_TOPIC_NAME_DOCUMENT_MOVE || 'appeal-document-to-move',
+		topicCaseFilePackage: environment.SB_TOPIC_NAME_CASE_FILE_PACKAGE || 'appeal-case-file-package',
 		topicAppealRepresentation:
 			environment.SB_TOPIC_NAME_APPEAL_REPRESENTATION || 'appeal-representation'
 	},

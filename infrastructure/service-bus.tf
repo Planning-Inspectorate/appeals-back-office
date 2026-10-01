@@ -129,6 +129,12 @@ resource "azurerm_servicebus_topic" "appeal_event_estimate" {
 
 ## Back office internal topics
 
+resource "azurerm_servicebus_topic" "case_file_package" {
+  name                = var.sb_topic_names.events.case_file_package
+  namespace_id        = local.service_bus.id
+  default_message_ttl = var.sb_ttl.default
+}
+
 resource "azurerm_servicebus_topic" "appeal_document_to_move" {
   name                = var.sb_topic_names.events.document_to_move
   namespace_id        = local.service_bus.id

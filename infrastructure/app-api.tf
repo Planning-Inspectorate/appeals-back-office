@@ -108,6 +108,7 @@ module "app_api" {
     SB_TOPIC_NAME_APPEAL_EVENT          = var.sb_topic_names.events.event
     SB_TOPIC_NAME_APPEAL_EVENT_ESTIMATE = var.sb_topic_names.events.appeal_event_estimate
     SB_TOPIC_NAME_DOCUMENT_MOVE         = var.sb_topic_names.events.document_to_move
+    SB_TOPIC_NAME_CASE_FILE_PACKAGE     = var.sb_topic_names.events.case_file_package
     SB_TOPIC_NAME_APPEAL_REPRESENTATION = var.sb_topic_names.events.appeal_representation
 
   }
