@@ -13,6 +13,7 @@ import {
 	renderDocumentUpload,
 	renderManageDocument,
 	renderManageFolder,
+	renderShareAllDocuments,
 	renderUploadDocumentsCheckAndConfirm
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import {
@@ -27,7 +28,7 @@ import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-fo
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { FRONT_OFFICE_DASHBOARD_PATH_STUBS } from '@pins/appeals/constants/common.js';
 import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
-import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
+import { APPEAL_DOCUMENT_TYPE, REDACTION_STATUS } from '@planning-inspectorate/data-model';
 import { addWeeks, format } from 'date-fns';
 import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
 import {
@@ -297,6 +298,32 @@ export const getManageFolder = async (request, response) => {
 	});
 };
 
+/**
+  @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getShareAllDocuments = async (request, response) => {
+	const { currentAppeal, currentFolder } = request;
+
+	const numShareableDocuments = currentFolder.documents.filter(
+		//@ts-ignore
+		(document) =>
+			document.latestDocumentVersion.redactionStatus.toLowerCase() !== REDACTION_STATUS.UNREDACTED
+	).length;
+
+	if (!currentAppeal || !currentFolder) {
+		return response.status(404).render('app/404.njk');
+	}
+
+	await renderShareAllDocuments({
+		request,
+		response,
+		numShareableDocuments,
+		totalFolderSize: currentFolder.totalFolderSize, // possibly total is minus the ones already shared?
+		backLinkUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/supporting-documents/manage-documents/${currentFolder.folderId}`
+	});
+};
+
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getManageDocument = async (request, response) => {
 	const { currentAppeal, currentFolder } = request;
@@ -507,6 +534,47 @@ export const postShareDocumentCheckAndConfirm = async (request, response) => {
 		bannerDefinitionKey: 'documentAdded',
 		appealId: appealId,
 		text: 'Document shared'
+	});
+
+	return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postShareAllDocuments = async (request, response) => {
+	const { appealId } = request.params;
+	const { currentFolder } = request;
+
+	const shareableDocuments = currentFolder.documents.filter(
+		//@ts-ignore
+		(document) =>
+			document.latestDocumentVersion.redactionStatus.toLowerCase() !== REDACTION_STATUS.UNREDACTED
+	);
+
+	for (const document of shareableDocuments) {
+		try {
+			// sends 2x notifies per document
+			await updateDocument(request.apiClient, appealId, {
+				document: { id: document.id, isShared: true },
+				sharingDocumentType: 'supporting-document'
+			});
+		} catch (error) {
+			logger.error(
+				error,
+				error instanceof Error
+					? error.message
+					: `Something went wrong when marking document ${document.id} as shared`
+			);
+		}
+	}
+
+	addNotificationBannerToSession({
+		session: request.session,
+		bannerDefinitionKey: 'documentAdded',
+		appealId: appealId,
+		text: 'Documents shared'
 	});
 
 	return response.redirect(`/appeals-service/appeal-details/${appealId}`);
