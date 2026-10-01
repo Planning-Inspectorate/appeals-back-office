@@ -3071,10 +3071,12 @@ describe('/appeals/:id/reps', () => {
 						has_lpa_statement: true,
 						has_ip_comments: true,
 						has_appellant_statement: false,
+						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA,
+						recipient_role: 'lpa',
 						team_email_address: expect.any(String)
 					},
 					recipientEmail: mockEnforcementListedAppeal.lpa.email,
-					templateName: 'publish-statements-written-reps-lpa'
+					templateName: 'publish-statements-enforcement-written-reps'
 				});
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
@@ -3085,10 +3087,12 @@ describe('/appeals/:id/reps', () => {
 						has_lpa_statement: true,
 						has_ip_comments: true,
 						has_appellant_statement: false,
+						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
+						recipient_role: 'appellant',
 						team_email_address: expect.any(String)
 					},
 					recipientEmail: 'test6@example.com',
-					templateName: 'publish-statements-written-reps-appellant'
+					templateName: 'publish-statements-enforcement-written-reps'
 				});
 			});
 
