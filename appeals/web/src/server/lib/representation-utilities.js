@@ -1,9 +1,7 @@
-import { isFeatureActive } from '#common/feature-flags.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
-	APPEAL_REPRESENTATION_TYPES_PATHS,
-	FEATURE_FLAG_NAMES
+	APPEAL_REPRESENTATION_TYPES_PATHS
 } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { isStatePassed } from './appeal-status.js';
@@ -71,16 +69,12 @@ export function mapRepresentationDocumentSummaryActionLink(
 	}
 
 	if (documentationStatus !== 'received') {
-		return isFeatureActive(FEATURE_FLAG_NAMES.MANUALLY_ADD_REPS) &&
-			representationDueDate != undefined &&
+		return representationDueDate != undefined &&
 			dateIsInThePastIsoString(representationDueDate) &&
 			isInCorrectCaseStatusOrLater(request.currentAppeal, representationType)
 			? addLink
 			: '';
-	} else if (
-		representationStatus === APPEAL_REPRESENTATION_STATUS.INVALID &&
-		isFeatureActive(FEATURE_FLAG_NAMES.MANUALLY_ADD_REPS)
-	) {
+	} else if (representationStatus === APPEAL_REPRESENTATION_STATUS.INVALID) {
 		return `${addLink} | ${reviewViewLink}`;
 	}
 

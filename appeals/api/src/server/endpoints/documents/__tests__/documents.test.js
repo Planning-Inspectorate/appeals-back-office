@@ -254,11 +254,52 @@ describe('/appeals/:appealId/documents/:documentId', () => {
 				type: 'costs-withdrawal',
 				expectedTemplate: 'shared-cost-application-withdrawal',
 				inviteResponses: false
+			},
+			{
+				type: 'supporting-document',
+				expectedTemplate: 'document-received',
+				inviteResponses: true
+			},
+			{
+				type: 'supporting-document',
+				expectedTemplate: 'document-received',
+				inviteResponses: false
+			},
+			{
+				type: 'hearing-document',
+				expectedTemplate: 'document-received',
+				inviteResponses: true
+			},
+			{
+				type: 'hearing-document',
+				expectedTemplate: 'document-received',
+				inviteResponses: false
+			},
+			{
+				type: 'inquiry-document',
+				expectedTemplate: 'document-received',
+				inviteResponses: true
+			},
+			{
+				type: 'inquiry-document',
+				expectedTemplate: 'document-received',
+				inviteResponses: false
+			},
+			{
+				type: 'inquiry-event-document',
+				expectedTemplate: 'document-received',
+				inviteResponses: true
+			},
+			{
+				type: 'inquiry-event-document',
+				expectedTemplate: 'document-received',
+				inviteResponses: false
 			}
 		];
 
 		sharingDocumentTypes.forEach(({ type, expectedTemplate, inviteResponses }) => {
 			test(`sharing a document sends notify for: ${type}`, async () => {
+				jest.clearAllMocks();
 				databaseConnector.document.findUnique.mockResolvedValue({
 					...documentCreated,
 					latestDocumentVersion: {
@@ -273,16 +314,81 @@ describe('/appeals/:appealId/documents/:documentId', () => {
 					.send({
 						document: { id: documentCreated.guid, isShared: true },
 						sharingDocumentType: type,
-						inviteResponses: inviteResponses ? true : undefined
+						inviteResponses: inviteResponses ? true : undefined,
+						costsCategory: 'lpa'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(notifySend).toHaveBeenCalledTimes(2);
-				expect(notifySend).toHaveBeenCalledWith(
+
+				// Appellant receives inviteResponses when costsCategory is 'lpa'
+				expect(notifySend).toHaveBeenNthCalledWith(
+					1,
 					expect.objectContaining({
 						templateName: expectedTemplate,
 						personalisation: expect.objectContaining({
-							responses_invited: inviteResponses
+							responses_invited: inviteResponses,
+							dashboard_link: 'appeals'
+						})
+					})
+				);
+
+				// LPA receives NO inviteResponses when costsCategory is 'lpa' (not 'appellant')
+				expect(notifySend).toHaveBeenNthCalledWith(
+					2,
+					expect.objectContaining({
+						templateName: expectedTemplate,
+						personalisation: expect.objectContaining({
+							responses_invited: false,
+							dashboard_link: 'manage-appeals'
+						})
+					})
+				);
+			});
+
+			test(`sharing a document sends notify for: ${type} with appellant costsCategory`, async () => {
+				jest.clearAllMocks();
+				databaseConnector.document.findUnique.mockResolvedValue({
+					...documentCreated,
+					latestDocumentVersion: {
+						...documentCreated.latestDocumentVersion,
+						published: false,
+						redactionStatusId: 1
+					}
+				});
+
+				await request
+					.patch(`/appeals/${householdAppeal.id}/documents/${documentCreated.guid}`)
+					.send({
+						document: { id: documentCreated.guid, isShared: true },
+						sharingDocumentType: type,
+						inviteResponses: inviteResponses ? true : undefined,
+						costsCategory: 'appellant'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				// Appellant receives NO inviteResponses when costsCategory is 'appellant' (not 'lpa')
+				expect(mockNotifySend).toHaveBeenNthCalledWith(
+					1,
+					expect.objectContaining({
+						templateName: expectedTemplate,
+						personalisation: expect.objectContaining({
+							responses_invited: false,
+							dashboard_link: 'appeals'
+						})
+					})
+				);
+
+				// LPA receives inviteResponses when costsCategory is 'appellant'
+				expect(notifySend).toHaveBeenNthCalledWith(
+					2,
+					expect.objectContaining({
+						templateName: expectedTemplate,
+						personalisation: expect.objectContaining({
+							responses_invited: inviteResponses,
+							dashboard_link: 'manage-appeals'
 						})
 					})
 				);

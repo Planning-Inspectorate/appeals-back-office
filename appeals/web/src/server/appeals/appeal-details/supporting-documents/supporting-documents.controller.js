@@ -20,13 +20,18 @@ import {
 	getFileVersionsInfo,
 	updateDocument
 } from '#appeals/appeal-documents/appeal.documents.service.js';
+import { appealSiteToAddressString } from '#lib/address-formatter.js';
+import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import logger from '#lib/logger.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { FRONT_OFFICE_DASHBOARD_PATH_STUBS } from '@pins/appeals/constants/common.js';
 import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
+import { addWeeks, format } from 'date-fns';
+import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
 import {
-	inviteResponsesPage,
+	inviteMainPartyCommentsPage,
 	shareDocumentCheckAndConfirmPage
 } from './supporting-documents.mapper.js';
 
@@ -385,46 +390,44 @@ export const postChangeDocumentVersionDetails = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const getInviteResponses = async (request, response) => {
+export const getInviteMainPartyComments = async (request, response) => {
 	const { appealId, folderId, documentId } = request.params;
 	const backLinkUrl = `/appeals-service/appeal-details/${appealId}/supporting-documents/manage-documents/${folderId}/${documentId}`;
 
 	if (request.session.appealId && request.session.appealId !== appealId) {
 		delete request.session.appealId;
-		delete request.session.inviteResponses;
+		delete request.session.inviteMainPartyComments;
 	}
 
-	const inviteResponses =
-		appealId === request.session.appealId ? request.session.inviteResponses : undefined;
-	const pageContent = inviteResponsesPage(backLinkUrl, inviteResponses);
+	const inviteMainPartyComments =
+		appealId === request.session.appealId ? request.session.inviteMainPartyComments : undefined;
+	const pageContent = inviteMainPartyCommentsPage(backLinkUrl, inviteMainPartyComments);
 
 	return response.render('patterns/change-page.pattern.njk', {
 		pageContent,
 		errors: request.errors
 	});
 };
-
 /**
  *
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const postInviteResponses = async (request, response) => {
+export const postInviteMainPartyComments = async (request, response) => {
 	const { errors, body } = request;
 	const { appealId, folderId, documentId } = request.params;
 
 	if (errors) {
-		return getInviteResponses(request, response);
+		return getInviteMainPartyComments(request, response);
 	}
 
-	request.session.inviteResponses = body['invite-responses'];
+	request.session.inviteMainPartyComments = body['invite-main-party-comments'];
 	request.session.appealId = appealId;
 
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/supporting-documents/manage-documents/${folderId}/${documentId}/check-your-answers`
 	);
 };
-
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
@@ -432,37 +435,37 @@ export const postInviteResponses = async (request, response) => {
 export const getShareDocumentCheckAndConfirm = async (request, response) => {
 	const { appealId, folderId, documentId } = request.params;
 	const session = request.session;
-	// const { currentAppeal } = request;
+	const { currentAppeal } = request;
 	const documentInfo = await getFileVersionsInfo(request.apiClient, documentId);
 	if (!documentInfo || !documentInfo.latestDocumentVersion) {
 		return response.status(404).render('app/404.njk');
 	}
 
-	const backLinkUrl = `/appeals-service/appeal-details/${appealId}/supporting-documents/manage-documents/${folderId}/${documentId}/invite-responses`;
+	const backLinkUrl = `/appeals-service/appeal-details/${appealId}/supporting-documents/manage-documents/${folderId}/${documentId}/invite-main-party-comments`;
 
-	// const { email } = await getTeamFromAppealId(request.apiClient, appealId);
-	// const address = appealSiteToAddressString(currentAppeal?.appealSite);
-	// const deadline = format(addWeeks(new Date(), 1), 'd MMMM yyyy');
-	// let notifyTemplateName = '';
+	const { email } = await getTeamFromAppealId(request.apiClient, appealId);
+	const address = appealSiteToAddressString(currentAppeal?.appealSite);
+	const deadline = format(addWeeks(new Date(), 1), 'd MMMM yyyy');
+	const notifyTemplateName = 'document-received.content.md';
 
-	// const inviteResponses = session?.inviteResponses?.toLowerCase() === 'yes';
+	const inviteResponses = session?.inviteMainPartyComments?.toLowerCase() === 'yes';
 
-	// const notifyPreview = await generateNotifyPreview(request.apiClient, notifyTemplateName, {
-	// 	appeal_reference_number: currentAppeal?.appealReference,
-	// 	site_address: address || '',
-	// 	lpa_reference: currentAppeal?.planningApplicationReference || '',
-	// 	enforcement_reference: currentAppeal.enforcementNotice?.appellantCase?.reference || '',
-	// 	contact_email: email || '',
-	// 	deadline: deadline,
-	// 	responses_invited: inviteResponses,
-	// 	dashboard_link: 'appeals'
-	// });
+	const notifyPreview = await generateNotifyPreview(request.apiClient, notifyTemplateName, {
+		appeal_reference_number: currentAppeal?.appealReference,
+		site_address: address || '',
+		contact_email: email || '',
+		deadline: deadline,
+		responses_invited: inviteResponses,
+		dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
+		document_name: documentInfo.name || '',
+		document_type: 'supporting-documents'
+	});
 
 	const pageContent = shareDocumentCheckAndConfirmPage(
 		backLinkUrl,
 		documentInfo.latestDocumentVersion,
-		null,
-		session.inviteResponses
+		notifyPreview,
+		session.inviteMainPartyComments
 	);
 
 	return response.render('patterns/change-page.pattern.njk', {
@@ -478,13 +481,12 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
 export const postShareDocumentCheckAndConfirm = async (request, response) => {
 	const { appealId, documentId } = request.params;
 	try {
-		/** @type {import('#appeals/appeal-documents/appeal.documents.service.js').DocumentDetailAPIPatchRequest} */
 		const apiRequest = {
 			document: {
 				id: documentId,
 				isShared: true
 			},
-			inviteResponses: request.session?.inviteResponses === 'yes',
+			inviteResponses: request.session?.inviteMainPartyComments === 'yes',
 			sharingDocumentType: `supporting-document`
 		};
 
@@ -498,7 +500,7 @@ export const postShareDocumentCheckAndConfirm = async (request, response) => {
 		);
 	}
 
-	delete request.session.inviteResponses;
+	delete request.session.inviteMainPartyComments;
 
 	addNotificationBannerToSession({
 		session: request.session,

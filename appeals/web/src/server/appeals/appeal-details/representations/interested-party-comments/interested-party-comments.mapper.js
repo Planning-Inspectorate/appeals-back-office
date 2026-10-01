@@ -1,8 +1,7 @@
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
-import { isFeatureActive } from '#common/feature-flags.js';
 import { addressToString } from '#lib/address-formatter.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate, dateISOStringToDisplayTime24hr } from '#lib/dates.js';
 import {
 	addressInputs,
 	mapNotificationBannersFromSession,
@@ -13,7 +12,6 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { highlightRedactedSections } from '#lib/redaction-string-formatter.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /**
@@ -162,65 +160,101 @@ export function sharedIpCommentsPage(
 		// @ts-ignore
 	].includes(appealDetails.appealStatus);
 
-	/** @type {PageComponent} */
-	const table = {
-		type: 'table',
-		parameters: {
-			head: [
-				{
-					text: 'Address',
-					classes: 'govuk-!-width-one-quarter'
-				},
-				{
-					text: 'Comment',
-					classes: 'govuk-!-width-one-half'
-				},
-				{
-					text: 'Supporting documents',
-					classes: 'govuk-!-width-one-quarter'
-				}
-			],
-			rows: comments.map((comment) => [
-				{
-					html: addressToString(comment.represented.address) || 'No address'
-				},
-				{
-					html: '',
-					pageComponents: [
-						{
-							type: 'show-more',
-							parameters: {
-								html: comment.redactedRepresentation
-									? highlightRedactedSections(
-											comment.redactedRepresentation,
-											comment.originalRepresentation
-										)
-									: comment.originalRepresentation || 'No comment',
-								labelText: 'Read more'
-							}
+	const commentsComponents = comments.flatMap((comment, index) => {
+		/** @type {PageComponent} */
+		const ipSummaryList = {
+			type: 'summary-list',
+			parameters: {
+				classes: 'govuk-summary-list--no-border',
+				rows: [
+					{
+						key: { text: 'Interested party' },
+						value: { text: comment.represented?.name || comment.author || '' }
+					},
+					{
+						key: { text: 'Date received' },
+						value: {
+							text: comment.created
+								? `${dateISOStringToDisplayDate(comment.created)}, ${dateISOStringToDisplayTime24hr(
+										comment.created
+									)}`
+								: ''
 						}
+					},
+					{
+						key: { text: 'Email' },
+						value: { text: comment.represented?.email || 'No email' }
+					},
+					{
+						key: { text: 'Address' },
+						value: { text: addressToString(comment.represented?.address) || 'No address' }
+					},
+					{
+						key: { text: 'Comment' },
+						value: {
+							html: '',
+							pageComponents: [
+								{
+									type: 'show-more',
+									parameters: {
+										html: comment.redactedRepresentation
+											? highlightRedactedSections(
+													comment.redactedRepresentation,
+													comment.originalRepresentation
+												)
+											: comment.originalRepresentation || 'No comment',
+										labelText: 'Read more'
+									}
+								}
+							]
+						}
+					},
+					{
+						key: { text: 'Supporting documents' },
+						value: {
+							html: buildHtmlList({
+								items: comment.attachments?.length
+									? comment.attachments.map(
+											(a) =>
+												`<a class="govuk-link" href="${mapDocumentDownloadUrl(
+													a.documentVersion.document.caseId,
+													a.documentVersion.document.guid,
+													a.documentVersion.document.name
+												)}" target="_blank">${a.documentVersion.document.name}</a>`
+										)
+									: ['No documents'],
+								isOrderedList: true,
+								isNumberedList: (comment.attachments?.length ?? 0) > 1,
+								listClasses: 'govuk-list govuk-!-margin-top-0'
+							})
+						}
+					}
+				]
+			}
+		};
+
+		/** @type {PageComponent} */
+		const siteVisitTag = {
+			type: 'tag',
+			parameters: {
+				text: 'Site visit requested',
+				classes: 'govuk-tag--blue'
+			}
+		};
+
+		return [
+			simpleHtmlComponent('h3', {}, `Interested party ${index + 1}`),
+			...(comment.siteVisitRequested ? [siteVisitTag] : []),
+			ipSummaryList,
+			...(index < comments.length - 1
+				? [
+						simpleHtmlComponent('hr', {
+							class: 'govuk-section-break govuk-section-break--l govuk-section-break--visible'
+						})
 					]
-				},
-				{
-					html: buildHtmlList({
-						items: comment.attachments?.length
-							? comment.attachments.map(
-									(a) =>
-										`<a class="govuk-link" href="${mapDocumentDownloadUrl(
-											a.documentVersion.document.caseId,
-											a.documentVersion.document.guid,
-											a.documentVersion.document.name
-										)}" target="_blank">${a.documentVersion.document.name}</a>`
-								)
-							: ['No documents'],
-						isOrderedList: true,
-						isNumberedList: comment.attachments.length > 1,
-						listClasses: 'govuk-list govuk-!-margin-top-0'
-					})
-				}
-			])
-		}
-	};
+				: [])
+		];
+	});
 
 	const pageComponents = [
 		wrapComponents(
@@ -240,7 +274,7 @@ export function sharedIpCommentsPage(
 			}
 		),
 		...notificationBanners,
-		...(isFeatureActive(FEATURE_FLAG_NAMES.MANUALLY_ADD_REPS) && !disableAddIPComment
+		...(!disableAddIPComment
 			? [
 					wrapComponents(
 						[
@@ -261,7 +295,7 @@ export function sharedIpCommentsPage(
 				]
 			: []),
 		simpleHtmlComponent('h2', {}, 'Shared IP comments'),
-		table
+		...commentsComponents
 	];
 
 	preRenderPageComponents(pageComponents);

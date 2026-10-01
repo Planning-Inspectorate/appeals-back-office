@@ -6,8 +6,8 @@ export interface AssignUserCheckAndConfirmPageContent {
 		reference: string;
 		shortReference: string | null | undefined;
 	};
-	user: Object | undefined;
-	existingUser: Object | null | undefined;
+	user: object | undefined;
+	existingUser: object | null | undefined;
 	isInspector: boolean;
 	isUnassign: boolean;
 	errors: ValidationErrors | undefined;

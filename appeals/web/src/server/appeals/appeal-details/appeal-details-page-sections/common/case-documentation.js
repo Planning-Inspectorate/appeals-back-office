@@ -1,6 +1,6 @@
 import { APPEAL_CASE_PRE_STATEMENTS_STATUS } from '#appeals/appeal.constants.js';
 import { isFeatureActive } from '#common/feature-flags.js';
-import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import { isChildAppeal, isEnforcementChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { isDefined } from '#lib/ts-utilities.js';
 import { FEATURE_FLAG_NAMES, PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common.js';
 
@@ -13,10 +13,12 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 	const caseStarted = appealDetails.startedAt;
 	const inquiryEventSetUp = appealDetails.inquiry;
 	const isInquiryProcedureType = appealDetails.procedureType === PROCEDURE_TYPE_NAME.INQUIRY;
+	const isHearingProcedureType = appealDetails.procedureType === PROCEDURE_TYPE_NAME.HEARING;
 	const isExpeditedAppealType = appealDetails.procedureType === PROCEDURE_TYPE_NAME.WRITTEN_PART_1;
 	const statementsCompleted = !APPEAL_CASE_PRE_STATEMENTS_STATUS.includes(
 		appealDetails?.appealStatus
 	);
+	const isEnforcementChild = isEnforcementChildAppeal(appealDetails);
 
 	return {
 		type: 'table',
@@ -30,8 +32,13 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 			rows: [
 				mappedData.appeal.appellantCase.display.tableItem,
 				caseStarted ? mappedData.appeal.lpaQuestionnaire.display.tableItem : undefined,
-				...(isFeatureActive(FEATURE_FLAG_NAMES.SHARING_SUPPORTING_DOCUMENTS)
+				...(isFeatureActive(FEATURE_FLAG_NAMES.SHARING_SUPPORTING_DOCUMENTS) && !isEnforcementChild
 					? [mappedData.appeal.supportingDocuments.display.tableItem]
+					: []),
+				...(isFeatureActive(FEATURE_FLAG_NAMES.SHARING_HEARING_DOCUMENTS) &&
+				isHearingProcedureType &&
+				!isEnforcementChild
+					? [mappedData.appeal.hearingDocuments.display.tableItem]
 					: []),
 				...(isFeatureActive(FEATURE_FLAG_NAMES.FEATURE_FLAG_SHARING_INQUIRY_DOCUMENTS) &&
 				caseStarted &&

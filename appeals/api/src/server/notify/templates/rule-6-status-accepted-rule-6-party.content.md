@@ -2,7 +2,7 @@
 
 # What happens next
 
-You can go to https://appeal-a-planning-decision.service.gov.uk/ to:
+You can [go to our service]({{front_office_url}}/{{fo_dashboard_stub}}/{{appeal_reference_number}}) to:
 
 * view the appeal
 * submit a statement of case by {{statements_due_date}}

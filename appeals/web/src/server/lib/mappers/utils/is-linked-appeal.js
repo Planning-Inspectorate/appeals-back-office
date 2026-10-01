@@ -10,7 +10,6 @@ export const isLinkedAppealsActive = (appeal = null) => {
 	const { appealType, type = appealType } = appeal || {};
 	const isLinkedAppealsFeatureActive = config.featureFlags.featureFlagLinkedAppeals;
 	const isEnforcementLinkedFeatureActive =
-		config.featureFlags.featureFlagEnforcementNotice &&
 		config.featureFlags.featureFlagEnforcementLinked &&
 		(!appeal || type === APPEAL_TYPE.ENFORCEMENT_NOTICE);
 
@@ -24,6 +23,18 @@ export const isLinkedAppealsActive = (appeal = null) => {
  */
 export function isChildAppeal(appeal) {
 	return appeal.isChildAppeal && isLinkedAppealsActive(appeal);
+}
+
+/**
+ *
+ * @param {*} appeal
+ * @returns {boolean}
+ */
+export function isEnforcementChildAppeal(appeal) {
+	const { appealType, type = appealType } = appeal || {};
+	return (
+		appeal.isChildAppeal && isLinkedAppealsActive(appeal) && type === APPEAL_TYPE.ENFORCEMENT_NOTICE
+	);
 }
 
 /**

@@ -17,7 +17,7 @@ export const validateAffectedListedBuilding = createValidator(
 				if (!result) {
 					throw new Error('Listed building entry number is not valid');
 				}
-			} catch (error) {
+			} catch {
 				throw new Error('Listed building entry number is not valid');
 			}
 		})

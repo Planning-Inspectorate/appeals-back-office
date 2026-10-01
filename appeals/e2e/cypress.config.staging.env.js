@@ -12,6 +12,8 @@ const e2eOverride = {
 };
 
 module.exports = defineConfig({
+	reporter: baseConfig.reporter,
+	reporterOptions: baseConfig.reporterOptions,
 	e2e: {
 		...baseConfig.e2e,
 		...e2eOverride

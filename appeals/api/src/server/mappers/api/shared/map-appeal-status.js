@@ -12,7 +12,7 @@ export const mapAppealStatus = (data) => {
 	const { appeal } = data;
 
 	if (!appeal.appealStatus || !appeal.appealStatus.length) {
-		return '';
+		return currentStatus(appeal);
 	}
 
 	if (appeal.appealStatus.length > 1) {

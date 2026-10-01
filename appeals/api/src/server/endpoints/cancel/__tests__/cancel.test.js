@@ -17,6 +17,8 @@ describe('cancel routes', () => {
 				name: 'Invalid'
 			}
 		]);
+		// Mock $executeRawUnsafe for updating PersonalList
+		databaseConnector.$executeRawUnsafe = jest.fn().mockResolvedValue();
 	});
 
 	afterEach(() => {
@@ -75,7 +77,11 @@ describe('cancel routes', () => {
 					templateName: 'appeal-cancelled-enforcement-notice-withdrawn'
 				})
 			);
-			expect(databaseConnector.personalList.upsert).toHaveBeenCalled();
+			// Assert $executeRawUnsafe was called to update personalList
+			expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledTimes(1);
+			expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledWith(
+				expect.stringContaining('EXEC dbo.spSetPersonalList')
+			);
 			expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(enforcementNoticeAppeal.id);
 		});
 		test('cancels the appeal and returns the appeal when dryRun is not set and there are child appeals', async () => {
@@ -121,7 +127,11 @@ describe('cancel routes', () => {
 					templateName: 'appeal-cancelled-enforcement-notice-withdrawn'
 				})
 			);
-			expect(databaseConnector.personalList.upsert).toHaveBeenCalled();
+			// Assert $executeRawUnsafe was called to update personalList
+			expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledTimes(1);
+			expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledWith(
+				expect.stringContaining('EXEC dbo.spSetPersonalList')
+			);
 			expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(enforcementNoticeAppeal.id);
 			expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(100);
 		});

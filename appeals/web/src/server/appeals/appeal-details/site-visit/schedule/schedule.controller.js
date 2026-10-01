@@ -226,7 +226,10 @@ export const postSiteVisitCheckDetails = async (request, response) => {
 					appealDetails,
 					mappedUpdateOrCreateSiteVisitParameters
 				);
-
+				const isCompletingSiteVisitSetup = siteVisitService.checkCompletingSiteVisitSetup(
+					appealDetails.siteVisit,
+					mappedUpdateOrCreateSiteVisitParameters
+				);
 				await siteVisitService.updateSiteVisit(
 					request.apiClient,
 					mappedUpdateOrCreateSiteVisitParameters.appealIdNumber,
@@ -237,7 +240,8 @@ export const postSiteVisitCheckDetails = async (request, response) => {
 					mappedUpdateOrCreateSiteVisitParameters.visitEndTime,
 					mappedUpdateOrCreateSiteVisitParameters.previousVisitType,
 					mappedUpdateOrCreateSiteVisitParameters.inspectorName,
-					successBannerAndChangeType.changeType
+					successBannerAndChangeType.changeType,
+					isCompletingSiteVisitSetup
 				);
 
 				addNotificationBannerToSession({

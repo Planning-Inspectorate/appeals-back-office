@@ -9,7 +9,6 @@ import { seedTeams } from './seed-teams.js';
 import { teamsToCreate } from './teams/training.js';
 
 /** @typedef {import('#utils/db-client/models.ts').TeamCreateInput} Team */
-/** @typedef {Record<string, number|null>} lpaTeamAssignments */
 /**
  * Seed the training database with the required static data
  *

@@ -34,7 +34,9 @@ export const validateAddOtherAppealsReference = createValidator(
 				return Promise.resolve();
 			} catch (error) {
 				logger.error(error);
-				throw new Error('error when attempting to validate linkable appeal reference');
+				throw new Error('error when attempting to validate linkable appeal reference', {
+					cause: error
+				});
 			}
 		})
 		.withMessage('Enter a real appeal reference number')

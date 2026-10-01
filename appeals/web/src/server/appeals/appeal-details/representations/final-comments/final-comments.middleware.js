@@ -36,7 +36,7 @@ export const withSingularRepresentation = async (req, res, next) => {
 			req.session.createNewRepresentation = true;
 		}
 		req.currentRepresentation = representation;
-	} catch (/** @type {any} */ error) {
+	} catch {
 		return res.status(500).render('app/500.njk');
 	}
 

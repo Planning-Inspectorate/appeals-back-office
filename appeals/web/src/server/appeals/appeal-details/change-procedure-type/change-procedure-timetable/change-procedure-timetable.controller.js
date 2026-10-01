@@ -1,5 +1,8 @@
 import { applyEditsForAppeal, getSessionValuesForAppeal } from '#lib/edit-utilities.js';
 import logger from '#lib/logger.js';
+import { PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common.js';
+import { appealTypeToAppealCaseTypeMapper } from '@pins/appeals/utils/appeal-type-case.mapper.js';
+import { calculateTimetable } from '@pins/appeals/utils/business-days.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { getBackLinkUrl } from '../change-procedure-type.controller.js';
 import { mapChangeTimetablePage } from './change-procedure-timetable.mapper.js';
@@ -10,7 +13,50 @@ import { mapChangeTimetablePage } from './change-procedure-timetable.mapper.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getChangeAppealTimetable = async (request, response) => {
-	renderChangeAppealTimetable(request, response);
+	await renderChangeAppealTimetable(request, response);
+};
+
+/**
+ * This function populates default timetable dates for appeals that are transitioning from procedure type 'Part 1'.
+ * @param {ChangeProcedureTypeSession} sessionValues
+ * @param {import('../../appeal-details.types.js').WebAppeal} currentAppeal
+ */
+const populateDefaultTimetableDatesForPart1Transition = async (sessionValues, currentAppeal) => {
+	const isTransitionFromPart1 =
+		sessionValues.existingAppealProcedure?.toLowerCase() ===
+		PROCEDURE_TYPE_NAME.WRITTEN_PART_1.toLowerCase();
+
+	if (!isTransitionFromPart1) {
+		return;
+	}
+
+	if (
+		!currentAppeal.startedAt ||
+		(sessionValues.appealTimetable?.lpaStatementDueDate &&
+			sessionValues.appealTimetable?.ipCommentsDueDate &&
+			sessionValues.appealTimetable?.finalCommentsDueDate)
+	) {
+		return;
+	}
+
+	const calculatedTimetable = await calculateTimetable(
+		appealTypeToAppealCaseTypeMapper(currentAppeal.appealType) || currentAppeal.appealType,
+		new Date(currentAppeal.startedAt),
+		sessionValues.appealProcedure
+	);
+
+	if (calculatedTimetable) {
+		sessionValues.appealTimetable = sessionValues.appealTimetable || {};
+		sessionValues.appealTimetable.lpaStatementDueDate =
+			sessionValues.appealTimetable.lpaStatementDueDate ??
+			calculatedTimetable.lpaStatementDueDate?.toISOString();
+		sessionValues.appealTimetable.ipCommentsDueDate =
+			sessionValues.appealTimetable.ipCommentsDueDate ??
+			calculatedTimetable.ipCommentsDueDate?.toISOString();
+		sessionValues.appealTimetable.finalCommentsDueDate =
+			sessionValues.appealTimetable.finalCommentsDueDate ??
+			calculatedTimetable.finalCommentsDueDate?.toISOString();
+	}
 };
 
 /**
@@ -29,6 +75,9 @@ const renderChangeAppealTimetable = async (request, response) => {
 	const sessionValues = /** @type {ChangeProcedureTypeSession} */ (
 		/** @type {unknown} */ (getSessionValuesForAppeal(request, 'changeProcedureType', appealId))
 	);
+
+	await populateDefaultTimetableDatesForPart1Transition(sessionValues, currentAppeal);
+
 	const newProcedureType = sessionValues.appealProcedure;
 	const backUrl = getBackLinkUrl(
 		request,

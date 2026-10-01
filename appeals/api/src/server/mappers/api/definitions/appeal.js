@@ -182,6 +182,13 @@ const appeal = {
 				...Folder.properties
 			},
 			nullable: true
+		},
+		hearingDocuments: {
+			type: 'object',
+			properties: {
+				...Folder.properties
+			},
+			nullable: true
 		}
 	}
 };

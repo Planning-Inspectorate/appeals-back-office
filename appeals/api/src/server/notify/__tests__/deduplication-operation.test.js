@@ -32,12 +32,12 @@ describe('Deduplication Operation Proof', () => {
 		};
 		try {
 			await notifySend(data);
-		} catch (e) {
+		} catch {
 			/* ignore render error */
 		}
 		try {
 			await notifySend(data);
-		} catch (e) {
+		} catch {
 			/* ignore render error */
 		}
 
@@ -56,7 +56,7 @@ describe('Deduplication Operation Proof', () => {
 
 		try {
 			await notifySend(data);
-		} catch (e) {
+		} catch {
 			/* ignore */
 		}
 
@@ -64,7 +64,7 @@ describe('Deduplication Operation Proof', () => {
 
 		try {
 			await notifySend(data);
-		} catch (e) {
+		} catch {
 			/* ignore */
 		}
 
@@ -82,12 +82,12 @@ describe('Deduplication Operation Proof', () => {
 
 		try {
 			await notifySend({ ...baseData, recipientEmail: 'user-a@example.com' });
-		} catch (e) {
+		} catch {
 			/* ignore */
 		}
 		try {
 			await notifySend({ ...baseData, recipientEmail: 'user-b@example.com' });
-		} catch (e) {
+		} catch {
 			/* ignore */
 		}
 
@@ -105,12 +105,12 @@ describe('Deduplication Operation Proof', () => {
 
 		try {
 			await notifySend({ ...baseData, templateName: 'template-receipt' });
-		} catch (e) {
+		} catch {
 			/* ignore */
 		}
 		try {
 			await notifySend({ ...baseData, templateName: 'template-decision' });
-		} catch (e) {
+		} catch {
 			/* ignore */
 		}
 

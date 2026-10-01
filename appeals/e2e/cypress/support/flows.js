@@ -121,36 +121,3 @@ export const FLOWS = Object.freeze({
 		STATUSES.COMPLETE
 	]
 });
-
-//For Autocomplete
-/**
- * @typedef {(
- *  'ASSIGN_CASE_OFFICER' |
- *  'VALIDATION' |
- *  'READY_TO_START' |
- *  'LPA_QUESTIONNAIRE' |
- *  'STATEMENTS' |
- *  'FINAL_COMMENTS' |
- *  'EVIDENCE' |
- *  'EVENT_READY_TO_SETUP' |
- *  'AWAITING_EVENT' |
- *  'ISSUE_DECISION' |
- *  'COMPLETE'
- * )} Status
- *
- * @typedef {(
- *  'HAS' |
- *  'S78' |
- *  'S20' |
- *  'EN' |
- *  'CAS_PLANNING' |
- *  'CAS_ADVERT' |
- *  'ADVERT'
- * )} AppealType
- *
- * @typedef {(
- *  'WRITTEN' |
- *  'HEARING' |
- *  'INQUIRY'
- * )} ProcedureType
- */

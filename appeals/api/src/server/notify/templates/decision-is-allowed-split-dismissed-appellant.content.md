@@ -14,7 +14,7 @@ We have made a decision on the following appeals:
 We have made a decision on your appeal.
 {%- endif %}
 
-[Sign in to our service]({{front_office_url}}/appeals/{{appeal_reference_number}}) to view the decision letter dated {{decision_date}}.
+[Sign in to our service]({{front_office_url}}/{{fo_dashboard_stub}}/{{appeal_reference_number}}) to view the decision letter dated {{decision_date}}.
 
 We have also informed the local planning authority of the decision.
 

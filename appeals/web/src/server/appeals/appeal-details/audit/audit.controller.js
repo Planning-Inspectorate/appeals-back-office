@@ -1,13 +1,17 @@
 import nunjucksEnvironments from '#app/config/nunjucks.js';
 import { getAppealCaseNotes } from '#appeals/appeal-details/case-notes/case-notes.service.js';
-import config from '#environment/config.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate, dateISOStringToDisplayTime12hr } from '#lib/dates.js';
 import { appealProcedureNameToLabelText } from '#lib/procedure-type-display-name-formatter.js';
 import { APPEAL_TYPE, PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common.js';
+import { AUDIT_TRAIL_REP_COMMENT_STATUS_INVALID } from '@pins/appeals/constants/support.js';
 import { utcToZonedTime } from 'date-fns-tz';
 import * as interestedPartyCommentsService from '../representations/interested-party-comments/interested-party-comments.service.js';
-import { mapMessageContent, tryMapUsers } from './audit.mapper.js';
+import {
+	mapMessageContent,
+	renderRejectedIpCommentComponent,
+	tryMapUsers
+} from './audit.mapper.js';
 import { getAppealAudit, getAppealAuditNotifications } from './audit.service.js';
 /**
  * @typedef {import('@pins/appeals.api/src/server/openapi-types.js').AuditNotifications} AuditNotifications
@@ -35,16 +39,29 @@ export const renderAudit = async (request, response) => {
 	const auditInfoRequest = getAppealAudit(request.apiClient, appealId);
 	const auditNotifications = getAppealAuditNotifications(request.apiClient, appealId);
 	const caseNotesRequest = getAppealCaseNotes(request.apiClient, appealId);
+	const invalidIpCommentsRequest = interestedPartyCommentsService.getInterestedPartyComments(
+		request.apiClient,
+		appeal.appealId,
+		'invalid'
+	);
 
-	const [auditInfo, caseNotes, notifications] = await Promise.all([
+	const [auditInfo, caseNotes, notifications, invalidIpComments] = await Promise.all([
 		auditInfoRequest,
 		caseNotesRequest,
-		auditNotifications
+		auditNotifications,
+		invalidIpCommentsRequest
 	]);
 
 	if (!auditInfo && !caseNotes) {
 		return response.status(404).render('app/404.njk');
 	}
+
+	const usedInvalidRepIds = new Set();
+	const invalidItems = invalidIpComments?.items || [];
+
+	const REJECTED_COMMENT_AUDIT_STRINGS = Array.from(
+		new Set([AUDIT_TRAIL_REP_COMMENT_STATUS_INVALID, 'Interested party comment rejected'])
+	);
 
 	const auditTrails = await Promise.all(
 		auditInfo.map(async (audit) => {
@@ -57,7 +74,24 @@ export const renderAudit = async (request, response) => {
 			);
 			let detailsHtml = details || '';
 
-			if (
+			const matchedPrefix = REJECTED_COMMENT_AUDIT_STRINGS.find((str) =>
+				audit.details.startsWith(str)
+			);
+			if (matchedPrefix) {
+				const idMatch = audit.details.match(/:\s*(\d+)/);
+				const repId = idMatch ? parseInt(idMatch[1], 10) : null;
+				const rejectedComment = invalidItems.find((comment) =>
+					repId ? comment.id === repId : !usedInvalidRepIds.has(comment.id)
+				);
+
+				if (rejectedComment) {
+					usedInvalidRepIds.add(rejectedComment.id);
+					detailsHtml = await renderRejectedIpCommentComponent(
+						rejectedComment,
+						nunjucksEnvironments
+					);
+				}
+			} else if (
 				appeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
 				detailsHtml.startsWith('Appeal reviewed as valid on')
 			) {
@@ -126,57 +160,47 @@ export const renderAudit = async (request, response) => {
 		})
 	);
 
+	const ipComments = await interestedPartyCommentsService.getInterestedPartyComments(
+		request.apiClient,
+		appeal.appealId,
+		'all',
+		1,
+		9999
+	);
 	/** @type {NotificationArrayItem[]} */
-	let notificationsArray = [];
-	if (config.featureFlags.featureFlagNotifyCaseHistory) {
-		const ipComments = await interestedPartyCommentsService.getInterestedPartyComments(
-			request.apiClient,
-			appeal.appealId,
-			'all',
-			1,
-			9999
-		);
-		notificationsArray = await Promise.all(
-			/** @type {AuditNotifications} */ (notifications).map(async (notification) => {
-				const createdAt = utcToZonedTime(notification.dateCreated, 'Europe/London');
-				const opening = `${notification.subject} sent to ${mapEmailToRecipientType(
-					notification.recipient,
-					appeal,
-					await tryMapUsers(appeal.caseOfficer || '', request.session, request.apiClient),
-					await tryMapUsers(appeal.inspector || '', request.session, request.apiClient),
-					ipComments
-				)}`;
-				const finalHtml = await nunjucksEnvironments.render(
-					'appeals/components/page-component.njk',
-					{
-						component: {
-							type: 'details',
-							wrapperHtml: {
-								opening,
-								closing: '</div></div>'
-							},
-							parameters: {
-								summaryText: 'View email',
-								html: notification.renderedSubject + notification.renderedContent
-							}
-						}
+	const notificationsArray = await Promise.all(
+		/** @type {AuditNotifications} */ (notifications).map(async (notification) => {
+			const createdAt = utcToZonedTime(notification.dateCreated, 'Europe/London');
+			const opening = `${notification.subject} sent to ${mapEmailToRecipientType(
+				notification.recipient,
+				appeal,
+				await tryMapUsers(appeal.caseOfficer || '', request.session, request.apiClient),
+				await tryMapUsers(appeal.inspector || '', request.session, request.apiClient),
+				ipComments
+			)}`;
+			const finalHtml = await nunjucksEnvironments.render('appeals/components/page-component.njk', {
+				component: {
+					type: 'details',
+					wrapperHtml: {
+						opening,
+						closing: '</div></div>'
+					},
+					parameters: {
+						summaryText: 'View email',
+						html: notification.renderedSubject + notification.renderedContent
 					}
-				);
-				const user = await tryMapUsers(
-					notification.sender || '',
-					request.session,
-					request.apiClient
-				);
-				return {
-					dateTime: createdAt.getTime(),
-					date: dateISOStringToDisplayDate(notification.dateCreated),
-					time: dateISOStringToDisplayTime12hr(notification.dateCreated),
-					details: finalHtml,
-					user
-				};
-			})
-		);
-	}
+				}
+			});
+			const user = await tryMapUsers(notification.sender || '', request.session, request.apiClient);
+			return {
+				dateTime: createdAt.getTime(),
+				date: dateISOStringToDisplayDate(notification.dateCreated),
+				time: dateISOStringToDisplayTime12hr(notification.dateCreated),
+				details: finalHtml,
+				user
+			};
+		})
+	);
 	const sortedCaseNotesAndAuditEntries = [
 		...auditTrails,
 		...caseNotesArray,

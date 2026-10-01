@@ -138,6 +138,10 @@ resource "azurerm_key_vault_secret" "sql_function_connection_string" {
     azurerm_private_dns_zone_virtual_network_link.keyvault
   ]
 
+  lifecycle {
+    ignore_changes = [expiration_date]
+  }
+
   tags = local.tags
 }
 

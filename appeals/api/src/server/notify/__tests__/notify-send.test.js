@@ -53,50 +53,42 @@ describe('notify-send', () => {
 		await expect(
 			async () => await notifySend({ ...notifySendData, templateName: 'corrupt-template' })
 		).rejects.toThrow(
-			new Error(
-				stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
-					`'expected variable end' at line #1 and column #32 in template: corrupt-template.content.md`
-				])
-			)
+			stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
+				`'expected variable end' at line #1 and column #32 in template: corrupt-template.content.md`
+			])
 		);
 	});
 
 	test('should throw the failed to populate error when no parameters passed in', async () => {
 		await expect(async () => await notifySend({ doNotMockNotifySend: true })).rejects.toThrow(
-			new Error(
-				stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
-					'a missing template name'
-				])
-			)
+			stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
+				'a missing template name'
+			])
 		);
 	});
 
 	test('should throw if the template is missing', async () => {
 		notifySendData.templateName = 'missing';
 		await expect(async () => await notifySend(notifySendData)).rejects.toThrow(
-			new Error(
-				stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
-					'template not found: missing.content.md'
-				])
-			)
+			stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
+				'template not found: missing.content.md'
+			])
 		);
 	});
 
 	test('should throw the failed to populate error when the template expects missing personalisation parameters', async () => {
 		delete notifySendData.personalisation.first_name;
 		await expect(async () => await notifySend(notifySendData)).rejects.toThrow(
-			new Error(
-				stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
-					'missing parameter at line #1 and column #13 in template: test-template.content.md'
-				])
-			)
+			stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
+				'missing parameter at line #1 and column #13 in template: test-template.content.md'
+			])
 		);
 	});
 
 	test('should throw the failed to send error when notifyClient.sendmail fails', async () => {
 		notifySendData.notifyClient.sendEmail = jest.fn().mockRejectedValue(new Error('test error'));
 		await expect(async () => await notifySend(notifySendData)).rejects.toThrow(
-			new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL)
+			ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL
 		);
 	});
 

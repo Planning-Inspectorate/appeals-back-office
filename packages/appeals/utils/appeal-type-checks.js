@@ -96,7 +96,8 @@ export const isS78ExpeditedAppealType = (
 		typeOfPlanningApplication === APPEAL_TYPE_OF_PLANNING_APPLICATION.RESERVED_MATTERS ||
 		typeOfPlanningApplication === APPEAL_TYPE_OF_PLANNING_APPLICATION.PRIOR_APPROVAL ||
 		typeOfPlanningApplication ===
-			APPEAL_TYPE_OF_PLANNING_APPLICATION.REMOVAL_OR_VARIATION_OF_CONDITIONS;
+			APPEAL_TYPE_OF_PLANNING_APPLICATION.REMOVAL_OR_VARIATION_OF_CONDITIONS ||
+		typeOfPlanningApplication === APPEAL_TYPE_OF_PLANNING_APPLICATION.PERMISSION_IN_PRINCIPLE;
 
 	return isEligibleDecision && isEligiblePlanningApplication;
 };
@@ -155,3 +156,11 @@ export const isLdcCaseType = (caseType) => caseType === APPEAL_CASE_TYPE.X;
  */
 export const isLdcOrEnforcementAppealType = (appealType) =>
 	isLdcOrEnforcementCaseType(appealTypeToAppealCaseTypeMapper(appealType));
+
+/**
+ *
+ * @param {string | null | undefined } appealType
+ * @returns {boolean}
+ */
+export const isNetResidencesAppealType = (appealType) =>
+	appealType === APPEAL_TYPE.S78 || appealType === APPEAL_TYPE.PLANNED_LISTED_BUILDING;

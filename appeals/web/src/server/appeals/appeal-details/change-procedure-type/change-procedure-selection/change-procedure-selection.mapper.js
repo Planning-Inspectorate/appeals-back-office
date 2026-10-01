@@ -11,7 +11,7 @@ import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /**
  * @param {string} appealReference
- * @param {string} appealType
+ * @param {string|import('../../appeal-details.types.js').WebAppeal} appealOrAppealType
  * @param {string} backLinkUrl
  * @param {string} appealProcedure
  * @param {string|undefined} errorMessage
@@ -19,12 +19,12 @@ import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
  */
 export const selectProcedurePage = (
 	appealReference,
-	appealType,
+	appealOrAppealType,
 	backLinkUrl,
 	appealProcedure,
 	errorMessage = undefined
 ) => {
-	const availableProcedureTypes = getAvailableProcedureTypesForAppealType(appealType);
+	const availableProcedureTypes = getAvailableProcedureTypesForAppealType(appealOrAppealType);
 	const sortedAvailableProcedureTypes = [
 		APPEAL_CASE_PROCEDURE.WRITTEN,
 		APPEAL_CASE_PROCEDURE.HEARING,

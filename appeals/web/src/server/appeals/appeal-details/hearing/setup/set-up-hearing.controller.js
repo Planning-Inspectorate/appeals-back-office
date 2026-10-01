@@ -668,15 +668,18 @@ export const postChangeHearingCheckDetails = async (request, response) => {
 	} else if (!isEqual(submittedAddress, hearing?.address)) {
 		address = submittedAddress;
 	}
+	const estimateDays = sessionData.hearingEstimationYesNo
+		? sessionData.hearingEstimationYesNo === 'yes'
+			? sessionData.hearingEstimationDays
+			: 0
+		: hearing?.estimatedDays;
 
 	const inspectorName = await getInspectorFormattedEmailName(inspector, request);
 
 	try {
 		await updateHearing(request, request.currentAppeal.hearing.hearingId, {
 			hearingStartTime: hearingStartTimeForUpdate(sessionData, hearing.hearingStartTime),
-			...(sessionData.hearingEstimationYesNo === 'yes' && {
-				estimatedDays: sessionData.hearingEstimationDays
-			}),
+			estimatedDays: estimateDays,
 			address,
 			inspectorName
 		});

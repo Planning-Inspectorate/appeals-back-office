@@ -26,7 +26,8 @@ import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.reposito
 import { getPageCount } from '#utils/database-pagination.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { updatePersonalList } from '#utils/update-personal-list.js';
+import { setPersonalList } from '#utils/update-personal-list.js';
+import { FRONT_OFFICE_DASHBOARD_PATH_STUBS } from '@pins/appeals/constants/common.js';
 import { EventType } from '@pins/event-client';
 import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { addWeeks, format } from 'date-fns';
@@ -140,7 +141,7 @@ export const addDocuments = async (req, res) => {
 			);
 		}
 
-		await updatePersonalList(appeal.id);
+		await setPersonalList({ appealId: appeal.id });
 
 		const auditTrails = await Promise.all(
 			documentInfo.documents.filter(Boolean).map(async (document) => {
@@ -395,7 +396,7 @@ export const updateDocuments = async (req, res) => {
  */
 export const updateDocument = async (req, res) => {
 	const { body, appeal, params } = req;
-	const { document, inviteResponses, sharingDocumentType } = body;
+	const { document, inviteResponses, sharingDocumentType, costsCategory = null } = body;
 	const { documentId } = params;
 	try {
 		const latestDocument = await documentRepository.getDocumentById(documentId);
@@ -436,6 +437,12 @@ export const updateDocument = async (req, res) => {
 					case 'costs-withdrawal':
 						notifyTemplateName = 'shared-cost-application-withdrawal';
 						break;
+					case 'supporting-document':
+					case 'hearing-document':
+					case 'inquiry-document':
+					case 'inquiry-event-document':
+						notifyTemplateName = 'document-received';
+						break;
 				}
 
 				if (notifyTemplateName) {
@@ -443,7 +450,10 @@ export const updateDocument = async (req, res) => {
 						req.notifyClient,
 						appeal,
 						notifyTemplateName,
-						inviteResponses
+						inviteResponses,
+						costsCategory,
+						latestDocument?.name,
+						sharingDocumentType
 					);
 				}
 			}
@@ -471,12 +481,18 @@ export const updateDocument = async (req, res) => {
  * @param {import('@pins/appeals.api').Schema.Appeal} appeal
  * @param {string} notifyTemplateName
  * @param {boolean} inviteResponses
+ * @param {string} costsCategory
+ * @param {string} documentName
+ * @param {string} sharingDocumentType
  */
 const sendShareDocumentEmails = async (
 	notifyClient,
 	appeal,
 	notifyTemplateName,
-	inviteResponses
+	inviteResponses,
+	costsCategory,
+	documentName,
+	sharingDocumentType
 ) => {
 	const teamEmail = await getTeamEmailFromAppealId(appeal.id);
 	const deadline = format(addWeeks(new Date(), 1), 'd MMMM yyyy');
@@ -491,27 +507,39 @@ const sendShareDocumentEmails = async (
 		enforcement_reference: appeal?.appellantCase?.enforcementReference || '',
 		contact_email: teamEmail || '',
 		deadline: deadline,
-		responses_invited: !!inviteResponses
+		responses_invited: !!inviteResponses,
+		document_name: documentName || '',
+		document_type: sharingDocumentType || ''
 	};
 
 	const appellantEmail = appeal.agent?.email ?? appeal.appellant?.email;
 	const lpaEmail = appeal.lpa?.email;
 
 	if (appellantEmail) {
+		const inviteComments = inviteResponses && costsCategory === 'lpa';
 		await notifySend({
 			templateName: notifyTemplateName,
 			notifyClient: notifyClient,
 			recipientEmail: appellantEmail,
-			personalisation: { dashboard_link: 'appeals', ...personalisation }
+			personalisation: {
+				dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
+				...personalisation,
+				responses_invited: !!inviteComments
+			}
 		});
 	}
 
 	if (lpaEmail) {
+		const inviteComments = inviteResponses && costsCategory === 'appellant';
 		await notifySend({
 			templateName: notifyTemplateName,
 			notifyClient: notifyClient,
 			recipientEmail: lpaEmail,
-			personalisation: { dashboard_link: 'manage-appeals', ...personalisation }
+			personalisation: {
+				dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA,
+				...personalisation,
+				responses_invited: !!inviteComments
+			}
 		});
 	}
 };

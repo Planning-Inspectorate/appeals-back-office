@@ -90,7 +90,7 @@ export function dateISOStringToDisplayTime24hr(dateISOString) {
 
 	try {
 		displayTimeString = formatInTimeZone(dateISOString, DEFAULT_TIMEZONE, 'H:mm');
-	} catch (e) {
+	} catch {
 		displayTimeString = '';
 	}
 
@@ -110,7 +110,7 @@ export function dateISOStringToDisplayTime12hr(dateISOString) {
 
 	try {
 		displayTimeString = formatInTimeZone(dateISOString, DEFAULT_TIMEZONE, `h:mmaaa`);
-	} catch (e) {
+	} catch {
 		displayTimeString = '';
 	}
 
@@ -149,7 +149,7 @@ export function dateISOStringToDisplayDate(dateISOString, fallback = '') {
 		displayDateString = formatInTimeZone(dateISOString, DEFAULT_TIMEZONE, 'd MMMM yyyy', {
 			locale: enGB
 		});
-	} catch (e) {
+	} catch {
 		displayDateString = '';
 	}
 
@@ -173,7 +173,7 @@ export function dateISOStringToDayMonthYearHourMinute(dateISOString) {
 		year = parseInt(formatInTimeZone(dateISOString, DEFAULT_TIMEZONE, 'yyyy'), 10);
 		hour = parseInt(formatInTimeZone(dateISOString, DEFAULT_TIMEZONE, 'HH'), 10);
 		minute = parseInt(formatInTimeZone(dateISOString, DEFAULT_TIMEZONE, 'mm'), 10);
-	} catch (e) {
+	} catch {
 		day = undefined;
 		month = undefined;
 		year = undefined;
@@ -233,7 +233,7 @@ export const dayMonthYearHourMinuteToISOString = (dayMonthYearHourMinute) => {
 
 	try {
 		dateISOString = zonedTimeToUtc(`${dateStr} ${timeStr}`, DEFAULT_TIMEZONE).toISOString();
-	} catch (e) {
+	} catch {
 		dateISOString = '';
 	}
 

@@ -5,6 +5,7 @@ import { notifySend } from '#notify/notify-send.js';
 import hearingRepository from '#repositories/hearing.repository.js';
 import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import logger from '#utils/logger.js';
+import { toTime } from '#utils/to-time.js';
 import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
 import {
 	ERROR_FAILED_TO_SAVE_DATA,
@@ -42,6 +43,33 @@ const checkHearingExists = async (req, res, next) => {
 	}
 
 	next();
+};
+
+/**
+ * @param {Hearing | null | undefined} existingHearing
+ * @param {UpdateHearing} updatedHearing
+ * @returns {{isDateChanged: boolean, isEndTimeChanged: boolean, isEstimatedDaysChanged: boolean, isOnlyAddressUpdated: boolean}}
+ */
+const checkUpdatedHearingValues = (existingHearing, updatedHearing) => {
+	const existingEstimatedDays = existingHearing?.estimatedDays?.d?.[0];
+	const isDateChanged =
+		toTime(existingHearing?.hearingStartTime) !== toTime(updatedHearing.hearingStartTime);
+	const isEndTimeChanged =
+		toTime(existingHearing?.hearingEndTime) !== toTime(updatedHearing.hearingEndTime);
+	const isEstimatedDaysChanged =
+		(existingEstimatedDays ?? null) !== (updatedHearing.estimatedDays ?? null);
+	const isOnlyAddressUpdated =
+		updatedHearing.address !== undefined &&
+		existingHearing?.address !== updatedHearing.address &&
+		!isDateChanged &&
+		!isEndTimeChanged &&
+		!isEstimatedDaysChanged;
+	return {
+		isDateChanged,
+		isEndTimeChanged,
+		isEstimatedDaysChanged,
+		isOnlyAddressUpdated
+	};
 };
 
 /**
@@ -187,7 +215,7 @@ const createHearing = async (
 		);
 	} catch (error) {
 		logger.error(error, 'Failed to create hearing');
-		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+		throw new Error(ERROR_FAILED_TO_SAVE_DATA, { cause: error });
 	}
 };
 
@@ -247,7 +275,7 @@ const updateHearing = async (
 		return result;
 	} catch (error) {
 		logger.error(error, 'Failed to update hearing');
-		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+		throw new Error(ERROR_FAILED_TO_SAVE_DATA, { cause: error });
 	}
 };
 
@@ -274,8 +302,14 @@ const deleteHearing = async (deleteHearingData, notifyClient, appeal, azureAdUse
 		await sendHearingNotifications(notifyClient, 'hearing-cancelled', appeal, azureAdUserId);
 	} catch (error) {
 		logger.error(error, 'Failed to delete hearing');
-		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+		throw new Error(ERROR_FAILED_TO_SAVE_DATA, { cause: error });
 	}
 };
 
-export { checkHearingExists, createHearing, deleteHearing, updateHearing };
+export {
+	checkHearingExists,
+	checkUpdatedHearingValues,
+	createHearing,
+	deleteHearing,
+	updateHearing
+};

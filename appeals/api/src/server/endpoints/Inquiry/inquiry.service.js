@@ -339,7 +339,7 @@ const createInquiry = async (
 		await broadcasters.broadcastEvent(result.inquiry.id, EVENT_TYPE.INQUIRY, EventType.Create);
 	} catch (error) {
 		logger.error(error, 'Failed to create inquiry');
-		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+		throw new Error(ERROR_FAILED_TO_SAVE_DATA, { cause: error });
 	}
 };
 
@@ -400,7 +400,7 @@ const updateInquiry = async (
 		}
 	} catch (error) {
 		logger.error(error, 'Failed to update inquiry');
-		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+		throw new Error(ERROR_FAILED_TO_SAVE_DATA, { cause: error });
 	}
 };
 
@@ -428,7 +428,7 @@ const deleteInquiry = async (deleteInquiryData, notifyClient, appeal) => {
 		});
 	} catch (error) {
 		logger.error(error, 'Failed to delete inquiry');
-		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+		throw new Error(ERROR_FAILED_TO_SAVE_DATA, { cause: error });
 	}
 };
 

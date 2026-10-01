@@ -67,7 +67,7 @@ const displayProcedureChangeLink = (appealDetails) => {
 		appealDetails.documentationSummary?.lpaStatement ?? {};
 	const { representationStatus: ipCommentsrepresentationStatus } =
 		appealDetails.documentationSummary?.ipComments ?? {};
-	const availableProcedureTypes = getAvailableProcedureTypesForAppealType(appealDetails.appealType);
+	const availableProcedureTypes = getAvailableProcedureTypesForAppealType(appealDetails);
 	const hasAlternativeProcedureType = availableProcedureTypes.some(
 		(procedureType) => procedureType !== appealDetails.procedureType?.toLowerCase()
 	);

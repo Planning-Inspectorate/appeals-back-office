@@ -1,4 +1,5 @@
 import { renderTemplate } from '#notify/notify-send.js';
+import { FRONT_OFFICE_DASHBOARD_PATH_STUBS } from '@pins/appeals/constants/common.js';
 
 describe('publish-statements-enforcement-hearing.content.md - LPA notify', () => {
 	const templateName = 'publish-statements-enforcement-hearing.content.md';
@@ -9,7 +10,8 @@ describe('publish-statements-enforcement-hearing.content.md - LPA notify', () =>
 		enforcement_reference: 'ENF/2025/0001',
 		lpa_reference: 'LPA/2025/0002',
 		team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-		front_office_url: '/mock-front-office-url/appeals/ENF12345',
+		front_office_url: 'https://example.com',
+		fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA,
 		has_appellant_statement: true,
 		has_lpa_statement: true,
 		has_ip_comments: true,
@@ -81,7 +83,7 @@ describe('publish-statements-enforcement-hearing.content.md - LPA notify', () =>
 				'- local planning authority’s statement',
 				'- comments from interested parties',
 				'',
-				'You can [view this information in the appeals service](/mock-front-office-url/appeals/ENF12345).',
+				'You can [view this information in the appeals service](https://example.com/manage-appeals/ENF12345).',
 				...appealHearingAndNextStepsLines
 			].join('\n')
 		},
@@ -95,7 +97,7 @@ describe('publish-statements-enforcement-hearing.content.md - LPA notify', () =>
 				'- appellant’s statement',
 				'- local planning authority’s statement',
 				'',
-				'You can [view this information in the appeals service](/mock-front-office-url/appeals/ENF12345).',
+				'You can [view this information in the appeals service](https://example.com/manage-appeals/ENF12345).',
 				'We did not receive comments from interested parties.',
 				...appealHearingAndNextStepsLines
 			].join('\n')
@@ -110,7 +112,7 @@ describe('publish-statements-enforcement-hearing.content.md - LPA notify', () =>
 				'- appellant’s statement',
 				'- comments from interested parties',
 				'',
-				'You can [view this information in the appeals service](/mock-front-office-url/appeals/ENF12345).',
+				'You can [view this information in the appeals service](https://example.com/manage-appeals/ENF12345).',
 				'We did not receive a statement from the local planning authority.',
 				...appealHearingAndNextStepsLines
 			].join('\n')
@@ -125,7 +127,7 @@ describe('publish-statements-enforcement-hearing.content.md - LPA notify', () =>
 				'- local planning authority’s statement',
 				'- comments from interested parties',
 				'',
-				'You can [view this information in the appeals service](/mock-front-office-url/appeals/ENF12345).',
+				'You can [view this information in the appeals service](https://example.com/manage-appeals/ENF12345).',
 				'We did not receive a statement from the appellant.',
 				...appealHearingAndNextStepsLines
 			].join('\n')
@@ -139,7 +141,7 @@ describe('publish-statements-enforcement-hearing.content.md - LPA notify', () =>
 				'# Documents received',
 				'- appellant’s statement',
 				'',
-				'You can [view this information in the appeals service](/mock-front-office-url/appeals/ENF12345).',
+				'You can [view this information in the appeals service](https://example.com/manage-appeals/ENF12345).',
 				'We did not receive a statement from the local planning authority.',
 				'We did not receive comments from interested parties.',
 				...appealHearingAndNextStepsLines
@@ -154,7 +156,7 @@ describe('publish-statements-enforcement-hearing.content.md - LPA notify', () =>
 				'# Documents received',
 				'- local planning authority’s statement',
 				'',
-				'You can [view this information in the appeals service](/mock-front-office-url/appeals/ENF12345).',
+				'You can [view this information in the appeals service](https://example.com/manage-appeals/ENF12345).',
 				'We did not receive a statement from the appellant.',
 				'We did not receive comments from interested parties.',
 				...appealHearingLines,
@@ -171,7 +173,7 @@ describe('publish-statements-enforcement-hearing.content.md - LPA notify', () =>
 				'# Documents received',
 				'- comments from interested parties',
 				'',
-				'You can [view this information in the appeals service](/mock-front-office-url/appeals/ENF12345).',
+				'You can [view this information in the appeals service](https://example.com/manage-appeals/ENF12345).',
 				'We did not receive a statement from the local planning authority.',
 				'We did not receive a statement from the appellant.',
 				...appealHearingAndNextStepsLines
@@ -234,5 +236,27 @@ describe('publish-statements-enforcement-hearing.content.md - LPA notify', () =>
 			'We will let you know if the local planning authority submits any final comments.'
 		);
 		expect(content).not.toContain('You need to submit any final comments by 20 March 2025.');
+	});
+
+	test('should render appellant FO dashboard link when appellant fo_dashboard_stub is provided', () => {
+		const content = renderContent({
+			fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
+			recipient_role: 'appellant'
+		});
+
+		expect(content).toContain(
+			'You can [view this information in the appeals service](https://example.com/appeals/ENF12345).'
+		);
+	});
+
+	test('should render LPA FO dashboard link when LPA fo_dashboard_stub is provided', () => {
+		const content = renderContent({
+			fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA,
+			recipient_role: 'lpa'
+		});
+
+		expect(content).toContain(
+			'You can [view this information in the appeals service](https://example.com/manage-appeals/ENF12345).'
+		);
 	});
 });

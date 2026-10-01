@@ -187,6 +187,7 @@ export interface DocumentRedactionStatus extends schema.DocumentRedactionStatus 
 
 export interface AuditTrailDoc {
 	document: Document | null;
+	representation?: { id: number; representationType: string | null } | null;
 }
 
 export interface AuditTrail extends schema.AuditTrail {

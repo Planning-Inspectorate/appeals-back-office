@@ -3,7 +3,7 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import appealRepository from '#repositories/appeal.repository.js';
 import { isParentAppeal } from '#utils/is-linked-appeal.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { updatePersonalList } from '#utils/update-personal-list.js';
+import { setPersonalList } from '#utils/update-personal-list.js';
 import {
 	AUDIT_TRAIL_APPEAL_LINK_ADDED,
 	CASE_RELATIONSHIP_LINKED
@@ -60,9 +60,9 @@ export const linkAppeals = async (azureAdUserId, parentAppeal, childAppeal) => {
 	await appealRepository.linkAppeal(relationship);
 
 	await Promise.all([
-		await updatePersonalList(relationship.parentId),
+		await setPersonalList({ appealId: relationship.parentId }),
 
-		await updatePersonalList(relationship.childId),
+		await setPersonalList({ appealId: relationship.childId }),
 
 		createAuditTrail({
 			appealId: relationship.parentId,
@@ -85,7 +85,7 @@ export const linkAppeals = async (azureAdUserId, parentAppeal, childAppeal) => {
 /**
  *
  * @param {Partial<Appeal> | undefined} appeal
- * @returns {Promise<{ reference: string | undefined, grounds: string[] }[]>}
+ * @returns {Promise<{ reference: string | undefined, id: number, grounds: string[] }[]>}
  */
 export const getChildEnforcementsWithGrounds = async (appeal) => {
 	let childEnforcementWithGrounds = [];
@@ -97,6 +97,7 @@ export const getChildEnforcementsWithGrounds = async (appeal) => {
 				]);
 				childEnforcementWithGrounds.push({
 					reference: childAppeal.reference,
+					id: Number(childAppeal.id),
 					grounds:
 						childWithInfo?.appealGrounds?.map((ground) => ground.ground?.groundRef || '').sort() ||
 						[]

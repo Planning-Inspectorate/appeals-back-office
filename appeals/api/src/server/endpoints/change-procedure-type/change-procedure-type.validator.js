@@ -29,8 +29,8 @@ export const postChangeProcedureTypeValidator = composeMiddleware(
 	body('existingAppealProcedure')
 		.notEmpty()
 		.withMessage('existingAppealProcedure is required')
-		.isIn(['hearing', 'inquiry', 'written'])
-		.withMessage('existingAppealProcedure must be one of hearing, inquiry, or written'),
+		.isIn(['hearing', 'inquiry', 'written', 'part 1'])
+		.withMessage('existingAppealProcedure must be one of hearing, inquiry, written, or part 1'),
 
 	body('eventDate')
 		.if((_, { req }) => req.body.appealProcedure === 'inquiry')
@@ -52,8 +52,36 @@ export const postChangeProcedureTypeValidator = composeMiddleware(
 		.withMessage('estimationDays must be a positive integer'),
 
 	validateDateParameter({ parameterName: 'lpaQuestionnaireDueDate', isRequired: true }),
-	validateDateParameter({ parameterName: 'lpaStatementDueDate', isRequired: true }),
-	validateDateParameter({ parameterName: 'ipCommentsDueDate', isRequired: true }),
+
+	body('lpaStatementDueDate')
+		.if(
+			(_, { req }) =>
+				['written', 'inquiry', 'hearing'].includes(req.body.existingAppealProcedure) ||
+				(req.body.existingAppealProcedure !== 'part 1' &&
+					req.body.statementOfCommonGroundDueDate !== '')
+		)
+		.custom(({ req }) => {
+			return validateDateParameter({ parameterName: 'lpaStatementDueDate', isRequired: true })(
+				req,
+				{},
+				() => {}
+			);
+		}),
+
+	body('ipCommentsDueDate')
+		.if(
+			(_, { req }) =>
+				['written', 'inquiry', 'hearing'].includes(req.body.existingAppealProcedure) ||
+				(req.body.existingAppealProcedure !== 'part 1' &&
+					req.body.statementOfCommonGroundDueDate !== '')
+		)
+		.custom(({ req }) => {
+			return validateDateParameter({ parameterName: 'ipCommentsDueDate', isRequired: true })(
+				req,
+				{},
+				() => {}
+			);
+		}),
 
 	body('planningObligationDueDate')
 		.optional({ checkFalsy: true })
@@ -61,19 +89,43 @@ export const postChangeProcedureTypeValidator = composeMiddleware(
 		.withMessage('planningObligationDueDate must be a valid date'),
 
 	body('finalCommentsDueDate')
-		.if((_, { req }) => req.body.appealProcedure === 'written')
+		.if(
+			(_, { req }) =>
+				req.body.appealProcedure === 'written' &&
+				(['written', 'inquiry', 'hearing'].includes(req.body.existingAppealProcedure) ||
+					(req.body.existingAppealProcedure !== 'part 1' &&
+						req.body.statementOfCommonGroundDueDate !== ''))
+		)
 		.isISO8601()
 		.withMessage('finalCommentsDueDate must be a valid date'),
 	body('statementOfCommonGroundDueDate')
-		.if((_, { req }) => ['inquiry', 'hearing'].includes(req.body.appealProcedure))
+		.if(
+			(_, { req }) =>
+				['inquiry', 'hearing'].includes(req.body.appealProcedure) &&
+				(['written', 'inquiry', 'hearing'].includes(req.body.existingAppealProcedure) ||
+					(req.body.existingAppealProcedure !== 'part 1' &&
+						req.body.statementOfCommonGroundDueDate !== ''))
+		)
 		.isISO8601()
 		.withMessage('statementOfCommonGroundDueDate must be a valid date'),
 	body('proofOfEvidenceAndWitnessesDueDate')
-		.if((_, { req }) => req.body.appealProcedure === 'inquiry')
+		.if(
+			(_, { req }) =>
+				['inquiry'].includes(req.body.appealProcedure) &&
+				(['written', 'inquiry', 'hearing'].includes(req.body.existingAppealProcedure) ||
+					(req.body.existingAppealProcedure !== 'part 1' &&
+						req.body.proofOfEvidenceAndWitnessesDueDate !== ''))
+		)
 		.isISO8601()
 		.withMessage('proofOfEvidenceAndWitnessesDueDate must be a valid date'),
 	body('caseManagementConferenceDueDate')
-		.if((_, { req }) => req.body.appealProcedure === 'inquiry')
+		.if(
+			(_, { req }) =>
+				['inquiry'].includes(req.body.appealProcedure) &&
+				(['written', 'inquiry', 'hearing'].includes(req.body.existingAppealProcedure) ||
+					(req.body.existingAppealProcedure !== 'part 1' &&
+						req.body.caseManagementConferenceDueDate !== ''))
+		)
 		.isISO8601()
 		.withMessage('caseManagementConferenceDueDate must be a valid date'),
 	body('address')

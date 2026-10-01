@@ -52,18 +52,14 @@ export function loadConfig() {
 		AZURE_BLOB_USE_EMULATOR,
 		BETA_FEEDBACK_URL,
 		CACHE_CONTROL_MAX_AGE,
-		FEATURE_FLAG_S78_WRITTEN,
-		FEATURE_FLAG_S78_INQUIRY,
 		FEATURE_FLAG_LINKED_APPEALS,
 		FEATURE_FLAG_LINKED_APPEALS_UNLINK,
-		FEATURE_FLAG_NOTIFY_CASE_HISTORY,
 		FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT,
 		FEATURE_FLAG_PDF_DOWNLOAD,
-		FEATURE_FLAG_NET_RESIDENCE_S20,
 		FEATURE_FLAG_HEARING_POST_MVP,
 		FEATURE_FLAG_EXPEDITED_APPEALS,
 		FEATURE_FLAG_EXPEDITED_APPEALS_LPAQ,
-		FEATURE_FLAG_MANUALLY_ADD_REP,
+		FEATURE_FLAG_EXPEDITED_APPEALS_CHANGE_PROCEDURE,
 		GOOGLE_ANALYTICS_ID,
 		MICROSOFT_CLARITY_ID,
 		HORIZON_APPEAL_BASE_URL,
@@ -82,9 +78,6 @@ export function loadConfig() {
 		RETRY_STATUS_CODES,
 		USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
 		FEATURE_FLAG_CHANGE_PROCEDURE_TYPE,
-		FEATURE_FLAG_CANCEL_SITE_VISIT,
-		FEATURE_FLAG_SEARCH_CASE_OFFICER,
-		FEATURE_FLAG_ENFORCEMENT_NOTICE,
 		FEATURE_FLAG_ENFORCEMENT_LINKED,
 		FEATURE_FLAG_ENFORCEMENT_CANCEL,
 		FEATURE_FLAG_INVALID_DECISION_LETTER,
@@ -161,19 +154,12 @@ export function loadConfig() {
 		// flag name convention: featureFlag[ jira number ][feature short description]
 		// set Feature Flag default val here [default: false] - will be overwritted by values coming from the .env file
 		featureFlags: {
-			featureFlagS78Written: FEATURE_FLAG_S78_WRITTEN === 'true',
-			featureFlagS78Inquiry: FEATURE_FLAG_S78_INQUIRY === 'true',
 			featureFlagLinkedAppeals: FEATURE_FLAG_LINKED_APPEALS === 'true',
 			featureFlagLinkedAppealsUnlink: FEATURE_FLAG_LINKED_APPEALS_UNLINK === 'true',
-			featureFlagNotifyCaseHistory: FEATURE_FLAG_NOTIFY_CASE_HISTORY === 'true',
 			featureFlagSimplifyTeamAssignment: FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT === 'true',
 			featureFlagPdfDownload: FEATURE_FLAG_PDF_DOWNLOAD === 'true',
-			featureFlagNetResidenceS20: FEATURE_FLAG_NET_RESIDENCE_S20 === 'true',
 			featureFlagChangeProcedureType: FEATURE_FLAG_CHANGE_PROCEDURE_TYPE === 'true',
 			featureFlagHearingPostMvp: FEATURE_FLAG_HEARING_POST_MVP === 'true',
-			featureFlagCancelSiteVisit: FEATURE_FLAG_CANCEL_SITE_VISIT === 'true',
-			featureFlagSearchCaseOfficer: FEATURE_FLAG_SEARCH_CASE_OFFICER === 'true',
-			featureFlagEnforcementNotice: FEATURE_FLAG_ENFORCEMENT_NOTICE === 'true',
 			featureFlagEnforcementLinked: FEATURE_FLAG_ENFORCEMENT_LINKED === 'true',
 			featureFlagEnforcementCancel: FEATURE_FLAG_ENFORCEMENT_CANCEL === 'true',
 			featureFlagInvalidDecisionLetter: FEATURE_FLAG_INVALID_DECISION_LETTER === 'true',
@@ -181,7 +167,8 @@ export function loadConfig() {
 			featureFlagRule6PoE: FEATURE_FLAG_RULE_6_POE === 'true',
 			featureFlagExpeditedAppeals: FEATURE_FLAG_EXPEDITED_APPEALS === 'true',
 			featureFlagExpeditedAppealsLpaq: FEATURE_FLAG_EXPEDITED_APPEALS_LPAQ === 'true',
-			featureFlagManuallyAddReps: FEATURE_FLAG_MANUALLY_ADD_REP === 'true',
+			featureFlagExpeditedAppealsChangeProcedure:
+				FEATURE_FLAG_EXPEDITED_APPEALS_CHANGE_PROCEDURE === 'true',
 			featureFlagAppellantStatement: FEATURE_FLAG_APPELLANT_STATEMENT === 'true',
 			featureFlagRule6Statement: FEATURE_FLAG_RULE_6_STATEMENT === 'true',
 			featureFlagRule6Costs: FEATURE_FLAG_RULE_6_COSTS === 'true',
@@ -205,7 +192,8 @@ export function loadConfig() {
 			featureFlagSharingInquiryDocuments:
 				environment.FEATURE_FLAG_SHARING_INQUIRY_DOCUMENTS === 'true',
 			featureFlagSharingSupportingDocuments:
-				environment.FEATURE_FLAG_SHARING_SUPPORTING_DOCUMENTS === 'true'
+				environment.FEATURE_FLAG_SHARING_SUPPORTING_DOCUMENTS === 'true',
+			featureFlagGenericCase: environment.FEATURE_FLAG_GENERIC_CASE === 'true'
 		},
 		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
 		pdfServiceHost: PDF_SERVICE_HOST

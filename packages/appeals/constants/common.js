@@ -8,15 +8,10 @@ export const EVENT_TYPE = Object.freeze({
 });
 
 export const FEATURE_FLAG_NAMES = Object.freeze({
-	SECTION_78: 'featureFlagS78Written',
-	SECTION_78_INQUIRY: 'featureFlagS78Inquiry',
-	NET_RESIDENCE_S20: 'featureFlagNetResidenceS20',
 	LINKED_APPEALS: 'featureFlagLinkedAppeals',
 	LINKED_APPEALS_UNLINK: 'featureFlagLinkedAppealsUnlink',
 	CHANGE_PROCEDURE_TYPE: 'featureFlagChangeProcedureType',
 	HEARING_POST_MVP: 'featureFlagHearingPostMvp',
-	SEARCH_CASE_OFFICER: 'featureFlagSearchCaseOfficer',
-	ENFORCEMENT_NOTICE: 'featureFlagEnforcementNotice',
 	ENFORCEMENT_LINKED: 'featureFlagEnforcementLinked',
 	ENFORCEMENT_CANCEL: 'featureFlagEnforcementCancel',
 	INVALID_DECISION_LETTER: 'featureFlagInvalidDecisionLetter',
@@ -24,7 +19,7 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	RULE_6_PARTIES_POE: 'featureFlagRule6PoE',
 	EXPEDITED_APPEALS: 'featureFlagExpeditedAppeals',
 	EXPEDITED_APPEALS_LPAQ: 'featureFlagExpeditedAppealsLpaq',
-	MANUALLY_ADD_REPS: 'featureFlagManuallyAddReps',
+	EXPEDITED_APPEALS_CHANGE_PROCEDURE: 'featureFlagExpeditedAppealsChangeProcedure',
 	APPELLANT_STATEMENT: 'featureFlagAppellantStatement',
 	RULE_6_STATEMENT: 'featureFlagRule6Statement',
 	S20_INQUIRY: 'featureFlagS20Inquiry',
@@ -41,7 +36,9 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	ENFORCEMENT_CHANGE_PROCEDURE: 'featureFlagEnforcementChangeProcedure',
 	SHARING_SUPPORTING_DOCUMENTS: 'featureFlagSharingSupportingDocuments',
 	FEATURE_FLAG_SHARING_INQUIRY_DOCUMENTS: 'featureFlagSharingInquiryDocuments',
-	SHARING_INQUIRY_EVENT_DOCUMENTS: 'featureFlagSharingInquiryEventDocuments'
+	SHARING_INQUIRY_EVENT_DOCUMENTS: 'featureFlagSharingInquiryEventDocuments',
+	SHARING_HEARING_DOCUMENTS: 'featureFlagSharingHearingDocuments',
+	GENERIC_CASE: 'featureFlagGenericCase'
 });
 
 export const APPEAL_TYPE = Object.freeze({

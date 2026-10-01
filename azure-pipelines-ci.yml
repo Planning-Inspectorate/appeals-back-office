@@ -132,6 +132,14 @@ extends:
                 TURBO_TEAM: $(TURBO_TEAM)
                 TURBO_API: $(TURBO_API)
                 TURBO_TOKEN: $(TURBO_TOKEN)
+          - template: ../steps/node_script.yml
+            parameters:
+              nodeVersion: 22
+              script: npm run test:stored-procedures --workspace=@pins/appeals.api
+              environmentVariables:
+                TURBO_TEAM: $(TURBO_TEAM)
+                TURBO_API: $(TURBO_API)
+                TURBO_TOKEN: $(TURBO_TOKEN)
 
       - name: Run Other Tests
         variables:

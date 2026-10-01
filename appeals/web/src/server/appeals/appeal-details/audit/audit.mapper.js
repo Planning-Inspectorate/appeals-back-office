@@ -1,6 +1,9 @@
+import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import usersService from '#appeals/appeal-users/users-service.js';
+import { addressToString } from '#lib/address-formatter.js';
 import { mapStatusText } from '#lib/appeal-status.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import {
 	AUDIT_TRAIL_APPELLANT_IMPORT_MSG,
 	AUDIT_TRAIL_IP_UUID,
@@ -18,7 +21,7 @@ import {
 } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('#app/auth/auth-session.service').SessionWithAuth} SessionWithAuth */
-/** @typedef {{ documentGuid: string, name: string, stage: string, folderId: number, documentType: string }} DocInfo */
+/** @typedef {{ documentGuid: string, name: string, stage: string, folderId: number, documentType: string, representationId?: number, representationType?: string, }} DocInfo */
 
 /**
  * @param {import('../appeal-details.types.js').WebAppeal} appeal
@@ -179,7 +182,7 @@ export const tryMapDocument = (appealId, log, docInfo, lpaqId) => {
 			return log.replace(name, `<a class="govuk-link" href="${url}">${name}</a>`);
 		}
 		case APPEAL_CASE_STAGE.INTERNAL: {
-			const internalTypes = ['appellant', 'cross-team', 'inspector'];
+			const internalTypes = ['appellant', 'cross-team', 'inspector', 'main-party'];
 			let internalDocsPath = '';
 			switch (documentType) {
 				case APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_CORRESPONDENCE: {
@@ -194,14 +197,60 @@ export const tryMapDocument = (appealId, log, docInfo, lpaqId) => {
 					internalDocsPath = `internal-correspondence/${internalTypes[2]}`;
 					break;
 				}
+				case APPEAL_DOCUMENT_TYPE.MAIN_PARTY_CORRESPONDENCE: {
+					internalDocsPath = `internal-correspondence/${internalTypes[3]}`;
+					break;
+				}
 			}
 
 			const url = `/appeals-service/appeal-details/${appealId}/${internalDocsPath}/manage-documents/${folderId}/${documentGuid}`;
 			return log.replace(name, `<a class="govuk-link" href="${url}">${name}</a>`);
 		}
+		case 'hearing': {
+			const url = `/appeals-service/appeal-details/${appealId}/hearing-documents/manage-documents/${folderId}/${documentGuid}`;
+			return log.replace(name, `<a class="govuk-link" href="${url}">${name}</a>`);
+		}
+		case 'inquiry': {
+			let url = '';
+			switch (documentType) {
+				case APPEAL_DOCUMENT_TYPE.INQUIRY_CORE: {
+					url = `/appeals-service/appeal-details/${appealId}/inquiry/documents/manage-documents/${folderId}/${documentGuid}`;
+					break;
+				}
+				case APPEAL_DOCUMENT_TYPE.INQUIRY_POST_EVENT: {
+					url = `/appeals-service/appeal-details/${appealId}/inquiry-event-documents/manage-documents/${folderId}/${documentGuid}`;
+					break;
+				}
+			}
+			return log.replace(name, `<a class="govuk-link" href="${url}">${name}</a>`);
+		}
+		case 'general': {
+			const url = `/appeals-service/appeal-details/${appealId}/supporting-documents/manage-documents/${folderId}/${documentGuid}`;
+			return log.replace(name, `<a class="govuk-link" href="${url}">${name}</a>`);
+		}
 		case 'representation': {
-			const repAuditDisplayName = name.replace(/[a-f\d-]{36}_/, '');
-			return log.replace(name, `<a class="govuk-link" href="#">${repAuditDisplayName}</a>`);
+			const repType = docInfo?.representationType;
+			if (!repType) break;
+
+			const source = repType.includes('final_comment')
+				? ['appellant', 'lpa'].find((s) => repType.includes(s))
+				: undefined;
+			const isIpComment = !source && repType.includes('comment');
+			const base = isIpComment
+				? 'interested-party-comments'
+				: repType.replace(source ? `${source}_` : '', '').replace(/_/g, '-');
+
+			const representationPath = isIpComment
+				? `${base}/${docInfo?.representationId}`
+				: source
+					? `${base}s/${source}`
+					: base;
+
+			const url = `/appeals-service/appeal-details/${appealId}/${representationPath}/manage-documents/${folderId}`;
+			return log.replace(
+				name,
+				`<a class="govuk-link" href="${url}">${name.replace(/[a-f\d-]{36}_/, '')}</a>`
+			);
 		}
 		case APPEAL_CASE_STAGE.CANCELLATION: {
 			const url = `/documents/${appealId}/download/${documentGuid}/${name}`;
@@ -300,3 +349,114 @@ const tryMapDocumentRedactionStatus = (log) =>
 		.replace(APPEAL_REDACTED_STATUS.REDACTED, 'redacted')
 		.replace(APPEAL_REDACTED_STATUS.NOT_REDACTED, 'unredacted')
 		.replace(APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED, 'no redaction required');
+
+/**
+ * @param {any} comment
+ * @returns {string}
+ */
+export const generateRejectionReasonsHtmlList = (comment) => {
+	if (!comment?.rejectionReasons?.length) {
+		return '';
+	}
+	const listItemsString = comment.rejectionReasons
+		.reduce(
+			(
+				/** @type {string[]} */ listItems,
+				/** @type {{ name: string, text: string[] }} */ { name, text }
+			) =>
+				text?.length
+					? [...listItems, ...text.map((item) => `${name}: ${item}`)]
+					: [...listItems, name],
+			[]
+		)
+		.map((/** @type {string} */ item) => `<li>${item}</li>`)
+		.join('');
+	return `<ul class="govuk-list govuk-list--bullet">${listItemsString}</ul>`;
+};
+
+/**
+ * @param {any} comment
+ * @returns {any}
+ */
+export const formatRejectedIpCommentDetails = (comment) => {
+	const attachmentsList = comment.attachments?.length
+		? buildHtmlList({
+				items: comment.attachments.map(
+					(/** @type {any} */ a) =>
+						`<a class="govuk-link" href="${mapDocumentDownloadUrl(
+							a.documentVersion?.document?.caseId,
+							a.documentVersion?.document?.guid,
+							a.documentVersion?.document?.name
+						)}" target="_blank">${a.documentVersion?.document?.name}</a>`
+				),
+				isOrderedList: true,
+				isNumberedList: comment.attachments.length > 1,
+				listClasses: 'govuk-list govuk-!-margin-top-0'
+			})
+		: null;
+
+	const { address, name, email } = comment.represented || {};
+
+	const rows = [
+		{
+			key: { text: 'Interested party' },
+			value: { text: name || comment.author || 'No name' }
+		},
+		{
+			key: { text: 'Email' },
+			value: { text: email || 'No email' }
+		},
+		{
+			key: { text: 'Address' },
+			value: { text: addressToString(address) || 'No address' }
+		},
+		{
+			key: { text: 'Site visit requested' },
+			value: { text: comment.siteVisitRequested ? 'Yes' : 'No' }
+		},
+		{
+			key: { text: 'Comment' },
+			value: {
+				text: comment.originalRepresentation || comment.redactedRepresentation || 'No comment'
+			}
+		},
+		{
+			key: { text: 'Supporting documents' },
+			value: attachmentsList ? { html: attachmentsList } : { text: 'No documents' }
+		},
+		{
+			key: { text: 'Why was the comment rejected?' },
+			value: { html: generateRejectionReasonsHtmlList(comment) }
+		}
+	];
+
+	return {
+		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
+		parameters: { rows }
+	};
+};
+
+/**
+ * @param {any} comment
+ * @param {any} nunjucks
+ * @returns {Promise<string>}
+ */
+export const renderRejectedIpCommentComponent = async (comment, nunjucks) => {
+	const summaryListComponent = formatRejectedIpCommentDetails(comment);
+	const detailsComponentHtml = await nunjucks.render('appeals/components/page-component.njk', {
+		component: {
+			type: 'details',
+			parameters: {
+				summaryText: 'View rejected comment',
+				html: await nunjucks.render('appeals/components/page-component.njk', {
+					component: summaryListComponent
+				})
+			}
+		}
+	});
+	return `<span>Interested party comment rejected</span>${detailsComponentHtml}`;
+};

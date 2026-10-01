@@ -1,5 +1,4 @@
 import featureFlags from '#common/feature-flags.js';
-import { isNetResidencesAppealType } from '#common/net-residences-appeal-types.js';
 import config from '#environment/config.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
@@ -17,7 +16,10 @@ import {
 	SITE_VISIT_TYPE_ACCOMPANIED,
 	VALIDATION_OUTCOME_INCOMPLETE
 } from '@pins/appeals/constants/support.js';
-import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import {
+	isAnyEnforcementAppealType,
+	isNetResidencesAppealType
+} from '@pins/appeals/utils/appeal-type-checks.js';
 import isAppellantStatementAppealType from '@pins/appeals/utils/is-appellant-statement-appeal-type.js';
 import { normaliseProcedureType } from '@pins/appeals/utils/procedure-type.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';

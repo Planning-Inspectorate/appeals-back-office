@@ -24,6 +24,18 @@ export class OverviewSectionPage extends CaseDetailsPage {
 		netGainResidential: () => cy.get(this.overviewSectionSelectors.netGainResidential)
 	};
 
+	verifyCaseOverviewValue(field, expectedValue) {
+		// verify value of specified overview field
+		const overviewFieldSelector = this.overviewSectionElements[field]();
+		if (!overviewFieldSelector) {
+			throw new Error(`No element selector found for field: ${field}`);
+		}
+
+		overviewFieldSelector.invoke('prop', 'innerText').then((text) => {
+			expect(text).to.equal(expectedValue);
+		});
+	}
+
 	verifyCaseOverviewDetails = (expectedValues, checkNetResidence = true) => {
 		// verify overview fields
 		this.overviewSectionElements

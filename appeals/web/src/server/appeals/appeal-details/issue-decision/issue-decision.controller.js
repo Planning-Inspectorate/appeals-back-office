@@ -720,7 +720,7 @@ export const postCheckDecision = async (request, response) => {
 		if (decisionsToPost.length) {
 			try {
 				await postInspectorDecision(apiClient, appealId, decisionsToPost);
-			} catch (error) {
+			} catch {
 				const docToRemove = flattenedUploadedDocuments.map(
 					async (doc) => await deleteDocument(apiClient, doc?.GUID, doc.versionId)
 				);

@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { permissionNames } from '#environment/permissions.js';
 import { mapSupportingDocuments } from '#lib/mappers/data/appeal/submappers/supporting-documents.mapper.js';
 
 describe('supporting-documents.mapper', () => {
@@ -11,6 +12,11 @@ describe('supporting-documents.mapper', () => {
 				supportingDocuments: {
 					folderId: 10,
 					documents: []
+				}
+			},
+			session: {
+				permissions: {
+					[permissionNames.updateCase]: true
 				}
 			}
 		};
@@ -69,5 +75,33 @@ describe('supporting-documents.mapper', () => {
 		const mappedData = mapSupportingDocuments(data);
 
 		expect(mappedData.display.tableItem[1].text).toEqual('2 documents');
+	});
+
+	it('should not show the Add action when the user does not have permission to update the case', () => {
+		data.session.permissions[permissionNames.updateCase] = false;
+		data.appealDetails.supportingDocuments.documentCount = 0;
+
+		const mappedData = mapSupportingDocuments(data);
+
+		expect(mappedData.display.tableItem[3].html).not.toContain(
+			'/test/supporting-documents/manage-documents/10'
+		);
+		expect(mappedData.display.tableItem[3].html).not.toContain(
+			'/test/supporting-documents/upload-documents/10'
+		);
+	});
+
+	it('should show the manage action when the user does not have permission to update the case but there are documents', () => {
+		data.session.permissions[permissionNames.updateCase] = false;
+		data.appealDetails.supportingDocuments.documentCount = 1;
+
+		const mappedData = mapSupportingDocuments(data);
+
+		expect(mappedData.display.tableItem[3].html).toContain(
+			'/test/supporting-documents/manage-documents/10'
+		);
+		expect(mappedData.display.tableItem[3].html).not.toContain(
+			'/test/supporting-documents/upload-documents/10'
+		);
 	});
 });

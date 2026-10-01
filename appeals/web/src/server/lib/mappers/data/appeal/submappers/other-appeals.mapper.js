@@ -5,7 +5,7 @@ export const mapOtherAppeals = ({ appealDetails, currentRoute, userHasUpdateCase
 	const otherAppealsItems = [];
 
 	if (userHasUpdateCasePermission) {
-		if (appealDetails.otherAppeals.length) {
+		if (appealDetails.otherAppeals?.length) {
 			otherAppealsItems.push({
 				text: 'Manage',
 				href: `${currentRoute}/other-appeals/manage`,

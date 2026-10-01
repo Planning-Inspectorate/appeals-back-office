@@ -38,8 +38,12 @@ export const mapSiteVisitEntity = (siteVisit, updateType) => {
 					: 'offered',
 		isUrgent: false,
 		eventPublished: true,
-		eventStartDateTime: (siteVisit.visitStartTime ?? siteVisit.visitDate)?.toISOString() ?? null,
-		eventEndDateTime: siteVisit.visitEndTime?.toISOString() || null,
+		eventStartDateTime:
+			updateType === EventType.Delete
+				? null
+				: ((siteVisit.visitStartTime ?? siteVisit.visitDate)?.toISOString() ?? null),
+		eventEndDateTime:
+			updateType === EventType.Delete ? null : siteVisit.visitEndTime?.toISOString() || null,
 		notificationOfSiteVisit: null,
 		...mapEventAddress(siteVisit.appeal.address)
 	};

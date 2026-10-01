@@ -130,10 +130,12 @@ const getRepresentations = async (appealIds, options, pageNumber, pageSize) => {
 				representationType: true,
 				status: true,
 				dateCreated: true,
+				dateLastUpdated: true,
 				originalRepresentation: true,
 				source: true,
 				redactedRepresentation: true,
-				isRedacted: true
+				isRedacted: true,
+				siteVisitRequested: true
 			},
 			orderBy: { dateCreated: 'desc' },
 			...(pageNumber && pageSize ? { skip: pageNumber * pageSize } : {}),
@@ -460,6 +462,31 @@ const getInterestedPartyEmails = async (appealIds) => {
 		.filter((email) => email !== undefined && email !== null);
 };
 
+/** * @param {string} documentGuid * @param {number} version * @returns {Promise<{ id: number, representationType: string | null } | null>} */
+const getRepresentationForDocument = async (documentGuid, version) => {
+	if (!documentGuid || !version) return null;
+
+	const attachment = await databaseConnector.representationAttachment.findUnique({
+		where: {
+			documentGuid_version: { documentGuid, version }
+		},
+		select: {
+			representationId: true
+		}
+	});
+	if (!attachment?.representationId) return null;
+
+	const representation = await databaseConnector.representation.findUnique({
+		where: { id: attachment.representationId },
+		select: {
+			representationType: true
+		}
+	});
+	if (!representation) return null;
+
+	return attachment ? { id: attachment.representationId, ...representation } : null;
+};
+
 export default {
 	checkRepresentationExistsById,
 	getById,
@@ -473,5 +500,6 @@ export default {
 	createRepresentations,
 	addAttachments,
 	moveRepresentationAttachmentDocuments,
-	updateRejectionReasons
+	updateRejectionReasons,
+	getRepresentationForDocument
 };

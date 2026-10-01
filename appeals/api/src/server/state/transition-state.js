@@ -7,12 +7,13 @@ import { currentStatus as getCurrentStatus } from '#utils/current-status.js';
 import { isChildAppeal } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { updatePersonalList } from '#utils/update-personal-list.js';
+import { setPersonalList } from '#utils/update-personal-list.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
 import {
+	ACTION_CHANGE_PROCEDURE_TYPE,
 	AUDIT_TRAIL_PROGRESSED_TO_STATUS,
 	AUDIT_TRIAL_AUTOMATIC_EVENT_UUID,
 	CASE_RELATIONSHIP_LINKED,
@@ -40,9 +41,12 @@ import createStateMachine from './create-state-machine.js';
  * @param {number} appealId
  * @param {string} azureAdUserId
  * @param {string} trigger
+ * @param {object} [options]
+ * @param {string} [options.targetProcedureType]
+ * @param {string} [options.previousProcedureType]
  * @returns {Promise<boolean>} true if the state was transitioned
  */
-const transitionState = async (appealId, azureAdUserId, trigger) => {
+const transitionState = async (appealId, azureAdUserId, trigger, options = {}) => {
 	const appeal = await appealRepository.getAppealById(appealId, true, [
 		'appealStatus',
 		'appealType',
@@ -84,7 +88,9 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 		procedureKey,
 		currentState,
 		eventElapsed,
-		isLdcOrDiscontinuanceOrEnforcement
+		isLdcOrDiscontinuanceOrEnforcement,
+		options.targetProcedureType,
+		options.previousProcedureType
 	);
 	const stateMachineService = interpret(stateMachine);
 
@@ -101,12 +107,21 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 	if (newState === currentState) {
 		stateMachineService.stop();
 		if (!isChildAppeal(appeal)) {
-			await updatePersonalList(appealId);
+			await setPersonalList({ appealId });
 		}
 		return false;
 	}
 
-	if (isStatePassed(appeal, newState)) {
+	if (trigger === ACTION_CHANGE_PROCEDURE_TYPE) {
+		switch (newState) {
+			case APPEAL_CASE_STATUS.STATEMENTS:
+				await appealStatusRepository.rollBackAppealStatusTo(
+					appealId,
+					newState,
+					APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
+				);
+		}
+	} else if (isStatePassed(appeal, newState)) {
 		await appealStatusRepository.rollBackAppealStatusTo(appealId, newState);
 	} else {
 		await appealStatusRepository.updateAppealStatusByAppealId(appealId, newState);
@@ -167,7 +182,7 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 	}
 
 	if (!isChildAppeal(appeal)) {
-		await updatePersonalList(appealId);
+		await setPersonalList({ appealId });
 	}
 
 	stateMachineService.stop();

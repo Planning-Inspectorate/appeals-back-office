@@ -1,4 +1,3 @@
-import config from '#config/config.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
@@ -619,12 +618,7 @@ const sendPublishedStatementNotifiesForHearing = async (
 	const hasAppellantStatement = representations.some(
 		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT
 	);
-	const hasStatementsOrComments = hasAppellantStatement || hasLpaStatement || hasIpComments;
 	const isEnforcementOrLdc = isLdcOrEnforcementCaseType(appeal.appealType?.key);
-
-	const includeFrontOfficeUrl = isEnforcementOrLdc && !hasStatementsOrComments;
-	const lpaPath = `${config.frontOffice.url}/${FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA}/${appeal.reference}`;
-	const appellantPath = `${config.frontOffice.url}/${FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT}/${appeal.reference}`;
 
 	const hearingDate = appeal.hearing?.hearingStartTime
 		? dateISOStringToDisplayDate(appeal.hearing.hearingStartTime)
@@ -646,8 +640,8 @@ const sendPublishedStatementNotifiesForHearing = async (
 		false
 	);
 
-	let lpaTemplate = '';
-	let appellantTemplate = '';
+	let lpaTemplate;
+	let appellantTemplate;
 	let additionalEmailValues = {};
 
 	if (isEnforcementOrLdc) {
@@ -672,13 +666,13 @@ const sendPublishedStatementNotifiesForHearing = async (
 		{
 			email: appeal.lpa?.email,
 			template: lpaTemplate,
-			url: lpaPath,
+			dashboardStub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA,
 			recipientRole: 'lpa'
 		},
 		{
 			email: appeal.agent?.email || appeal.appellant?.email,
 			template: appellantTemplate,
-			url: appellantPath,
+			dashboardStub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
 			recipientRole: 'appellant'
 		}
 	];
@@ -703,9 +697,7 @@ const sendPublishedStatementNotifiesForHearing = async (
 				site_address: siteAddress,
 				...(enforcementReference && { enforcement_reference: enforcementReference }),
 				lpa_reference: lpaReference || '',
-				...(includeFrontOfficeUrl && {
-					front_office_url: isEnforcementOrLdc ? contact.url : config.frontOffice.url
-				}),
+				...(isEnforcementOrLdc && { fo_dashboard_stub: contact.dashboardStub }),
 				hearing_date: hearingDate,
 				team_email_address,
 				recipient_role: contact.recipientRole,
@@ -742,17 +734,27 @@ const sendPublishedStatementNotifiesForWrittenReps = async (
 		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
 	);
 
-	let lpaTemplate = 'publish-statements-written-reps-lpa';
-	let appellantTemplate = 'publish-statements-written-reps-appellant';
+	const isEnforcementOrLdc = isLdcOrEnforcementCaseType(appeal.appealType?.key);
+
+	let lpaTemplate = isEnforcementOrLdc
+		? 'publish-statements-enforcement-written-reps'
+		: 'publish-statements-written-reps-lpa';
+	let appellantTemplate = isEnforcementOrLdc
+		? 'publish-statements-enforcement-written-reps'
+		: 'publish-statements-written-reps-appellant';
 
 	const contacts = [
 		{
 			email: appeal.lpa?.email,
-			template: lpaTemplate
+			template: lpaTemplate,
+			dashboardStub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA,
+			recipientRole: 'lpa'
 		},
 		{
 			email: appeal.agent?.email || appeal.appellant?.email,
-			template: appellantTemplate
+			template: appellantTemplate,
+			dashboardStub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
+			recipientRole: 'appellant'
 		}
 	];
 
@@ -778,8 +780,12 @@ const sendPublishedStatementNotifiesForWrittenReps = async (
 				site_address: siteAddress,
 				...(enforcementReference && { enforcement_reference: enforcementReference }),
 				lpa_reference: lpaReference || '',
+				...(isEnforcementOrLdc && { fo_dashboard_stub: contact.dashboardStub }),
 				final_comments_due_date: finalCommentsDueDate,
-				team_email_address
+				team_email_address,
+				...(isEnforcementOrLdc && {
+					recipient_role: contact.recipientRole
+				})
 			}
 		});
 	});
@@ -822,6 +828,10 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient, 
 			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
 		);
 
+		const isEnforcementOrLdcHearing =
+			isLdcOrEnforcementCaseType(appeal.appealType?.key) &&
+			appeal.procedureType?.name === PROCEDURE_TYPE_NAME.HEARING;
+
 		if (hasLpaFinalComment) {
 			await notifyAppellantAboutLpaFinalComments(
 				appeal,
@@ -830,7 +840,15 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient, 
 				inspectorName
 			);
 		} else {
-			await notifyNoFinalComments(appeal, notifyClient, azureAdUserId, 'local planning authority');
+			if (!isEnforcementOrLdcHearing) {
+				await notifyNoFinalComments(
+					appeal,
+					notifyClient,
+					azureAdUserId,
+					'local planning authority',
+					inspectorName
+				);
+			}
 		}
 
 		if (hasAppellantFinalComment) {
@@ -841,7 +859,27 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient, 
 				inspectorName
 			);
 		} else {
-			await notifyNoFinalComments(appeal, notifyClient, azureAdUserId, 'appellant');
+			if (!isEnforcementOrLdcHearing) {
+				await notifyNoFinalComments(
+					appeal,
+					notifyClient,
+					azureAdUserId,
+					'appellant',
+					inspectorName
+				);
+			}
+		}
+
+		// for enforcement and ldc hearings, the none received is sent if neither party submits FCs
+		if (isEnforcementOrLdcHearing && !hasLpaFinalComment && !hasAppellantFinalComment) {
+			await notifyNoFinalComments(
+				appeal,
+				notifyClient,
+				azureAdUserId,
+				'local planning authority',
+				inspectorName
+			);
+			await notifyNoFinalComments(appeal, notifyClient, azureAdUserId, 'appellant', inspectorName);
 		}
 	} catch (error) {
 		logger.error(error);
@@ -1051,7 +1089,8 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
  * @property {string | null} [hearingDate]
  * @property {string | null} [hearingTime]
  * @property {string | null} [hearingAddress]
- * @property {string | null } [hearingExpectedDays]
+ * @property {string | null} [hearingExpectedDays]
+ * @property {string | null} [inspectorName]
  */
 
 /**
@@ -1073,6 +1112,7 @@ async function notifyPublished({
 	hearingTime = null,
 	hearingExpectedDays = null,
 	hearingAddress = null,
+	inspectorName = null,
 	isHearingProcedure = false,
 	isInquiryProcedure = false,
 	statementUrl = '',
@@ -1112,7 +1152,8 @@ async function notifyPublished({
 				hearing_date: hearingDate,
 				hearing_time: hearingTime,
 				hearing_expected_days: hearingExpectedDays,
-				hearing_address: hearingAddress
+				hearing_address: hearingAddress,
+				inspector_name: inspectorName
 			}),
 			is_hearing_procedure: isHearingProcedure,
 			is_inquiry_procedure: isInquiryProcedure,
@@ -1341,8 +1382,15 @@ async function notifyAppellantAboutLpaFinalComments(
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
  * @param {'appellant' | 'local planning authority'} userTypeNoCommentSubmitted
+ * @param {string | null} [inspectorName]
  */
-function notifyNoFinalComments(appeal, notifyClient, azureAdUserId, userTypeNoCommentSubmitted) {
+async function notifyNoFinalComments(
+	appeal,
+	notifyClient,
+	azureAdUserId,
+	userTypeNoCommentSubmitted,
+	inspectorName = null
+) {
 	const recipientEmail =
 		userTypeNoCommentSubmitted === 'appellant'
 			? appeal.lpa?.email
@@ -1354,16 +1402,17 @@ function notifyNoFinalComments(appeal, notifyClient, azureAdUserId, userTypeNoCo
 		);
 	}
 
-	const isEnforcementOrLdc = isLdcOrEnforcementCaseType(appeal.appealType?.key);
-	const templateName =
-		isEnforcementOrLdc && appeal.procedureType?.name === PROCEDURE_TYPE_NAME.HEARING
-			? 'final-comments-none-enforcement-hearing'
-			: 'final-comments-none';
+	const isEnforcementOrLdcHearing =
+		isLdcOrEnforcementCaseType(appeal.appealType?.key) &&
+		appeal.procedureType?.name === PROCEDURE_TYPE_NAME.HEARING;
+
+	const templateName = isEnforcementOrLdcHearing
+		? 'final-comments-none-enforcement-hearing'
+		: 'final-comments-none';
 
 	const hearingDate = appeal.hearing?.hearingStartTime
 		? dateISOStringToDisplayDate(appeal.hearing.hearingStartTime)
 		: null;
-
 	const hearingTime = appeal.hearing?.hearingStartTime
 		? formatTime12h(
 				typeof appeal.hearing.hearingStartTime === 'string'
@@ -1376,17 +1425,18 @@ function notifyNoFinalComments(appeal, notifyClient, azureAdUserId, userTypeNoCo
 		? formatAddressSingleLine(appeal.hearing.address)
 		: '';
 
-	return notifyPublished({
+	return await notifyPublished({
 		appeal,
-		hearingDate,
-		hearingTime,
-		hearingExpectedDays,
-		hearingAddress,
 		notifyClient,
 		templateName,
 		recipientEmail,
 		azureAdUserId,
-		userTypeNoCommentSubmitted
+		userTypeNoCommentSubmitted,
+		hearingDate,
+		hearingTime,
+		hearingExpectedDays,
+		hearingAddress,
+		inspectorName
 	});
 }
 

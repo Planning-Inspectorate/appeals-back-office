@@ -8,20 +8,28 @@ export const PLANNING_APPLICATION_TYPES = {
 	FULL: 'full-appeal',
 	OUTLINE: 'outline-planning',
 	RESERVED_MATTERS: 'reserved-matters',
-	PRIOR_APPROVAL: 'prior-approval'
+	PRIOR_APPROVAL: 'prior-approval',
+	PERMISSION_IN_PRINCIPLE: 'permission-in-principle',
+	REMOVAL_OR_VARIATION_OF_CONDITIONS: 'removal-or-variation-of-conditions',
+	MINOR_COMMERCIAL: 'minor-commercial-development',
+	ADVERTISEMENT: 'advertisement'
 };
 
 export const APPEAL_PAYLOAD_TYPES = {
 	FULL_APPEAL_SUBMISSION: 'S78FullAppealSubmission',
 	OUTLINE_PLANNING_APPEAL_SUBMISSION: 'S78OutlinePlanningAppealSubmission',
 	RESERVED_MATTERS_APPEAL_SUBMISSION: 'S78ReservedMattersAppealSubmission',
-	PRIOR_APPROVAL_APPEAL_SUBMISSION: 'S78PriorApprovalAppealSubmission'
+	PRIOR_APPROVAL_APPEAL_SUBMISSION: 'S78PriorApprovalAppealSubmission',
+	PERMISSION_IN_PRINCIPLE_APPEAL_SUBMISSION: 'S78PermissionInPrincipleAppealSubmission',
+	REMOVAL_OR_VARIATION_OF_CONDITIONS_APPEAL_SUBMISSION:
+		'S78RemovalOrVariationOfConditionsAppealSubmission'
 };
 
 export const CTA_TEXT = {
 	documents: {
 		viewEdit: 'View and edit',
-		manageShare: 'Manage and share'
+		manageShare: 'Manage and share',
+		addComment: 'Add comment'
 	},
 	caseProgression: {
 		progressToProofOfEvidence: 'Progress to proof of evidence and witnesses'
@@ -31,11 +39,23 @@ export const CTA_TEXT = {
 	}
 };
 
+export const HEADINGS = {
+	cya: {
+		ipComment: 'Check details and add interested party comment'
+	}
+};
+
 export const PROCEDURE_TYPES = {
 	hearing: 'Hearing',
 	inquiry: 'Inquiry',
 	written: 'Written representations',
 	writtenPart2: 'Written representations (Part 2)'
+};
+
+export const REDACTION_STATUSES = {
+	redacted: 'redacted',
+	noRedactionRequired: 'noRedactionRequired',
+	unredacted: 'unredacted'
 };
 
 export const BANNER_TYPES = {
@@ -71,7 +91,7 @@ export const DEFAULT_OVERVIEW_DETAILS = {
 	applicationReference: '123',
 	allocationLevel: 'No allocation level for this appeal',
 	linkedAppeals: 'No linked appeals',
-	relatedAppeals: 'No', //'1000000' is a bug with displaying related appeals in case overview, see https://pins-ds.atlassian.net/browse/A2-8942
+	relatedAppeals: '1000000',
 	netGainResidential: 'Not provided'
 };
 

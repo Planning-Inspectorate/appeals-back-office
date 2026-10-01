@@ -12,10 +12,12 @@ import {
 } from '#tests/appeals/mocks.js';
 import { documentCreated, documentVersionCreated, savedFolder } from '#tests/documents/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
-import { getFeedbackLinkFromAppealTypeKey } from '#utils/feedback-form-link.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { jest } from '@jest/globals';
-import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
+import {
+	FEEDBACK_FORM_LINKS,
+	FRONT_OFFICE_DASHBOARD_PATH_STUBS
+} from '@pins/appeals/constants/common.js';
 import {
 	AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
 	AUDIT_TRAIL_CORRECTION_NOTICE_ADDED,
@@ -415,7 +417,8 @@ describe('decision routes', () => {
 					notifyClient: expect.any(Object),
 					personalisation: {
 						...personalisation,
-						feedback_link: expectedFeedbackLink
+						feedback_link: expectedFeedbackLink,
+						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT
 					},
 					templateName: invalidReason
 						? 'decision-is-invalid-appellant'
@@ -431,7 +434,8 @@ describe('decision routes', () => {
 						feedback_link:
 							appealType === 'enforcementNoticeAppeal' || appealType === 'appealEnforcementListed'
 								? FEEDBACK_FORM_LINKS.ENFORCEMENT_NOTICE
-								: FEEDBACK_FORM_LINKS.LPA
+								: FEEDBACK_FORM_LINKS.LPA,
+						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA
 					},
 					templateName: invalidReason
 						? 'decision-is-invalid-lpa'
@@ -771,7 +775,9 @@ describe('decision routes', () => {
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					decision_date: formatDate(utcDate, false),
 					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`,
-					feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key)
+					feedback_link:
+						'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQzg1SlNPQjA3V0FDNUFJTldHMlEzMDdMRS4u',
+					fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT
 				},
 				templateName: 'decision-is-allowed-split-dismissed-appellant',
 				recipientEmail: appeal.agent.email
@@ -788,7 +794,8 @@ describe('decision routes', () => {
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					decision_date: formatDate(utcDate, false),
 					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`,
-					feedback_link: FEEDBACK_FORM_LINKS.LPA
+					feedback_link: FEEDBACK_FORM_LINKS.LPA,
+					fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA
 				},
 				templateName: 'decision-is-allowed-split-dismissed-lpa',
 				recipientEmail: appeal.lpa.email
@@ -902,7 +909,8 @@ describe('decision routes', () => {
 				notifyClient: expect.any(Object),
 				personalisation: {
 					...personalisation,
-					feedback_link: FEEDBACK_FORM_LINKS.S78
+					feedback_link: FEEDBACK_FORM_LINKS.S78,
+					fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT
 				},
 				templateName: 'decision-is-allowed-split-dismissed-appellant',
 				recipientEmail: appeal.agent.email
@@ -913,7 +921,8 @@ describe('decision routes', () => {
 				notifyClient: expect.any(Object),
 				personalisation: {
 					...personalisation,
-					feedback_link: FEEDBACK_FORM_LINKS.LPA
+					feedback_link: FEEDBACK_FORM_LINKS.LPA,
+					fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA
 				},
 				templateName: 'decision-is-allowed-split-dismissed-lpa',
 				recipientEmail: appeal.lpa.email
@@ -924,7 +933,8 @@ describe('decision routes', () => {
 				notifyClient: expect.any(Object),
 				personalisation: {
 					...personalisation,
-					feedback_link: FEEDBACK_FORM_LINKS.S78
+					feedback_link: FEEDBACK_FORM_LINKS.S78,
+					fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.RULE_6_PARTY
 				},
 				templateName: 'decision-is-allowed-split-dismissed-appellant',
 				recipientEmail: 'rule6@example.com'

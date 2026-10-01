@@ -8,7 +8,7 @@ import {
 	dateISOStringToDisplayTime24hr,
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
-import { folderIsAdditionalDocuments } from '#lib/documents.js';
+import { folderIsAdditionalDocuments, getUrlSuffix } from '#lib/documents.js';
 import {
 	createNotificationBanner,
 	documentDateInput,
@@ -23,7 +23,8 @@ import { APPEAL_TYPE, DOCUMENTS_PAGE_SIZE } from '@pins/appeals/constants/common
 import {
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_REDACTED_STATUS,
-	APPEAL_VIRUS_CHECK_STATUS
+	APPEAL_VIRUS_CHECK_STATUS,
+	REDACTION_STATUS
 } from '@planning-inspectorate/data-model';
 import { capitalize } from 'lodash-es';
 
@@ -797,7 +798,7 @@ export function mapFolderDocumentInformationHtmlProperty(
 	const isShared = document?.latestDocumentVersion?.published;
 	const sharedTagHtml =
 		canShare && isShared
-			? `<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong>`
+			? `<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1" aria-label="Shared document">Shared</strong>`
 			: '';
 
 	if (document?.id) {
@@ -1025,7 +1026,7 @@ export function manageFolderPage({
 			...errorSummaryPageComponents,
 			...(hasMultipleButtons ? [buttonWrapperOpen] : []),
 			...(editable ? [buttonComponent] : []),
-			...(shareAllLinkUrl ? [shareAllButtonComponent] : []),
+			...(editable && shareAllLinkUrl ? [shareAllButtonComponent] : []),
 			...(hasMultipleButtons ? [buttonWrapperClose] : []),
 			{
 				type: 'table',
@@ -1184,7 +1185,7 @@ function mapDocumentNameHtmlProperty(document, documentVersion, canShare = false
 	const isShared = documentVersion.published;
 	const sharedTagHtml =
 		canShare && isShared
-			? `<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong>`
+			? `<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1" aria-label="Shared document">Shared</strong>`
 			: '';
 
 	if (virusCheckStatus.checked && virusCheckStatus.safe) {
@@ -1298,7 +1299,7 @@ export async function manageDocumentPage({
 		`${baseUrl}change-document-name`
 	);
 
-	const headingText = canShare ? 'Document details' : document?.name || '';
+	const headingText = document?.name || 'Document details';
 
 	const session = request.session;
 	const latestVersion = getDocumentLatestVersion(document);
@@ -1343,14 +1344,56 @@ export async function manageDocumentPage({
 	}
 
 	const isShared = latestVersion?.published;
+	const isUnredacted =
+		REDACTION_STATUS.UNREDACTED === latestVersion?.redactionStatus.toLowerCase() ||
+		latestVersion?.redactionStatus === null;
 
 	if (canShare && !isShared) {
 		const { costsDocumentType } = request.params;
-		const shareUrl =
-			costsDocumentType === 'withdrawal'
-				? request.originalUrl + '/check-your-answers'
-				: request.originalUrl + '/invite-responses';
+		const { documentType: latestVersionDocumentType } = latestVersion ?? {};
 
+		const shareUrl =
+			request.originalUrl + getUrlSuffix({ costsDocumentType, latestVersionDocumentType });
+
+		/** @type {PageComponent} */
+		const shareDocumentButton = {
+			type: 'button',
+			parameters: {
+				text: 'Share document',
+				href: shareUrl,
+				classes: 'govuk-button--secondary'
+			}
+		};
+
+		/** @type {PageComponent} */
+		const redactDocumentButton = {
+			type: 'button',
+			parameters: {
+				text: 'Redact document',
+				href: changeDetailsUrl,
+				classes: 'govuk-button--secondary'
+			}
+		};
+
+		pageComponents.push(
+			{
+				type: 'html',
+				parameters: { html: '<h2 class="govuk-heading-m">Current version</h2>' }
+			},
+			isUnredacted
+				? {
+						type: 'html',
+						parameters: {
+							html: '<p class="govuk-body">This document is unredacted and cannot be shared.</p>'
+						}
+					}
+				: {
+						type: 'html',
+						parameters: { html: '<p class="govuk-body">This document is not shared.</p>' }
+					},
+			isUnredacted ? redactDocumentButton : shareDocumentButton
+		);
+	} else if (canShare && isShared) {
 		pageComponents.push(
 			{
 				type: 'html',
@@ -1358,14 +1401,8 @@ export async function manageDocumentPage({
 			},
 			{
 				type: 'html',
-				parameters: { html: '<p class="govuk-body">This document is not shared</p>' }
-			},
-			{
-				type: 'button',
 				parameters: {
-					text: 'Share document',
-					href: shareUrl,
-					classes: 'govuk-!-margin-bottom-7'
+					html: '<strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-4" aria-label="Shared document">Shared</strong>'
 				}
 			}
 		);
@@ -1400,7 +1437,7 @@ export async function manageDocumentPage({
 				{
 					key: { text: 'Version' },
 					value: {
-						html: `${versionId} ${canShare && isShared ? '<br><strong class="govuk-tag govuk-tag--blue govuk-!-margin-top-1">Shared</strong>' : ''}`
+						html: `${versionId}`
 					}
 				}
 			]
@@ -1496,7 +1533,7 @@ export async function manageDocumentPage({
 			parameters: {
 				id: 'upload-updated-document',
 				href: uploadNewVersionUrl,
-				classes: 'govuk-!-margin-right-2',
+				classes: `govuk-!-margin-right-2${canShare ? ' govuk-button--secondary' : ''}`,
 				html: `Upload a new version<span class="govuk-visually-hidden"> of ${document.name}</span>`
 			}
 		};

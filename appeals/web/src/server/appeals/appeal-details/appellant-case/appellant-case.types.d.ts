@@ -32,12 +32,12 @@ export interface AppellantCaseSessionValidationOutcome {
 	appealId: string;
 	validationOutcome: AppellantCaseValidationOutcome;
 	reasons?: string | string[];
-	reasonsText?: Object<string, string[]>;
-	incompleteReasons?: Object<string, string[]>;
+	reasonsText?: Record<string, string[]>;
+	incompleteReasons?: Record<string, string[]>;
 	// enforcement fields
 	enforcementNoticeInvalid?: string;
 	missingDocuments?: string | string[];
-	missingDocumentsText?: Object<string, string[]>;
+	missingDocumentsText?: Record<string, string[]>;
 	enforcementGroundsMismatchText?: Array<{ id: number; text: string[]; name: string }>;
 	updatedDueDate?: DueDate;
 	feeReceiptDueDate?: DueDate;

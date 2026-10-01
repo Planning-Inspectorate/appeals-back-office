@@ -12,7 +12,7 @@ export function isInternalUrl(url, request) {
 		const internalUrlRegex = new RegExp(`^/[^/]|^//${baseHost}/|^${baseProtocol}://${baseHost}/`);
 
 		return internalUrlRegex.test(url);
-	} catch (error) {
+	} catch {
 		return false;
 	}
 }

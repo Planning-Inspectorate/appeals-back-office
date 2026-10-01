@@ -13,6 +13,7 @@ export const VALIDATION_OUTCOME_INCOMPLETE = 'Incomplete';
 export const VALIDATION_OUTCOME_INVALID = 'Invalid';
 export const VALIDATION_OUTCOME_VALID = 'Valid';
 export const VALIDATION_OUTCOME_CANCEL = 'Cancel';
+export const ACTION_CHANGE_PROCEDURE_TYPE = 'CHANGE_PROCEDURE_TYPE';
 
 export const CHANGE_APPEAL_TYPE_INVALID_REASON = 'Wrong appeal type';
 export const INVALID_APPEAL_OTHER_REASON = 'Other reason';
@@ -75,6 +76,7 @@ export const AUDIT_TRAIL_RULE_6_PARTY_PROOFS_EVIDENCE_UPDATED =
 
 //Interested party comment rep logs
 export const AUDIT_TRAIL_REP_COMMENT_STATUS_VALID = 'Interested party comment accepted';
+// Note: If changing this constant, add the previous value to REJECTED_COMMENT_AUDIT_STRINGS in audit.controller.js to preserve historical audit trail matching.
 export const AUDIT_TRAIL_REP_COMMENT_STATUS_INVALID = 'Interested party comment rejected';
 export const AUDIT_TRAIL_REP_COMMENT_STATUS_REDACTED_AND_ACCEPTED =
 	'Interested party comment redacted and accepted';
@@ -526,6 +528,24 @@ const s78ExpeditedTimetable = {
 };
 const advertTimetable = {
 	lpaQuestionnaireDueDate: {
+		daysFromStartDate: 5
+	},
+	ipCommentsDueDate: {
+		daysFromStartDate: 25
+	},
+	lpaStatementDueDate: {
+		daysFromStartDate: 25
+	},
+	finalCommentsDueDate: {
+		daysFromStartDate: 35
+	},
+	s106ObligationDueDate: {
+		daysFromStartDate: 30
+	}
+};
+
+const enforcementNoticeTimetable = {
+	lpaQuestionnaireDueDate: {
 		daysFromStartDate: 10
 	},
 	ipCommentsDueDate: {
@@ -537,14 +557,10 @@ const advertTimetable = {
 	finalCommentsDueDate: {
 		daysFromStartDate: 45
 	},
-	s106ObligationDueDate: {
-		daysFromStartDate: 30
-	}
-};
-
-const enforcementNoticeTimetable = {
-	...advertTimetable,
 	planningObligationDueDate: {
+		daysFromStartDate: 30
+	},
+	s106ObligationDueDate: {
 		daysFromStartDate: 30
 	}
 };

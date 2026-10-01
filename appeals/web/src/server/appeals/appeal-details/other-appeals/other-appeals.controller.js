@@ -347,7 +347,7 @@ export const postRemoveOtherAppeals = async (request, response) => {
 				return response.redirect(origin);
 			}
 		}
-	} catch (error) {
+	} catch {
 		return response.status(500).render('app/500.njk');
 	}
 };

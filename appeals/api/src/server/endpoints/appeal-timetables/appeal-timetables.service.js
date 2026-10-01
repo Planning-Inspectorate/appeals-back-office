@@ -9,12 +9,12 @@ import appealTimetableRepository from '#repositories/appeal-timetable.repository
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
 import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
-import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
+import { isEnforcementChildAppeal, isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import { getChildEnforcementsWithGrounds } from '#utils/link-appeals.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { trimAppealType } from '#utils/string-utils.js';
-import { updatePersonalList } from '#utils/update-personal-list.js';
+import { setPersonalList } from '#utils/update-personal-list.js';
 import {
 	PROCEDURE_TYPE_ID_MAP,
 	PROCEDURE_TYPE_KEY,
@@ -401,13 +401,15 @@ const generateStartCaseNotifyPreviews = async (
  * @param {number} params.appealId
  * @param {string | undefined} params.azureAdUserId
  * @param {string | undefined} params.procedureType
+ * @param {boolean} params.isEnforcementChild
  * @param {string} [params.hearingStartTime]
  */
 const createStartCaseAuditTrails = async ({
 	appealId,
 	azureAdUserId,
 	procedureType,
-	hearingStartTime
+	hearingStartTime,
+	isEnforcementChild
 }) => {
 	await createAuditTrail({
 		appealId,
@@ -423,14 +425,16 @@ const createStartCaseAuditTrails = async ({
 		])
 	});
 
-	if (hearingStartTime) {
-		await createAuditTrail({
-			appealId,
-			azureAdUserId,
-			details: stringTokenReplacement(AUDIT_TRAIL_HEARING_SET_UP, [
-				dateISOStringToDisplayDate(hearingStartTime)
-			])
-		});
+	if (!isEnforcementChild) {
+		if (hearingStartTime) {
+			await createAuditTrail({
+				appealId,
+				azureAdUserId,
+				details: stringTokenReplacement(AUDIT_TRAIL_HEARING_SET_UP, [
+					dateISOStringToDisplayDate(hearingStartTime)
+				])
+			});
+		}
 	}
 };
 
@@ -469,6 +473,7 @@ const startCase = async (
 					(parentAppeal) => parentAppeal.type === CASE_RELATIONSHIP_LINKED
 				).length
 			);
+		const isEnforcementChild = isEnforcementChildAppeal(appeal, isChildAppeal);
 
 		const startedAt = await recalculateDateIfNotBusinessDay(startDate);
 		const isS78Expedited = isS78ExpeditedAppealType(
@@ -516,7 +521,8 @@ const startCase = async (
 			appealId: appeal.id,
 			azureAdUserId,
 			procedureType: effectiveProcedureType,
-			hearingStartTime
+			hearingStartTime,
+			isEnforcementChild
 		});
 
 		if (!isChildAppeal) {
@@ -655,7 +661,7 @@ const updateAppealTimetable = async (
 	);
 
 	if (result) {
-		await updatePersonalList(appeal.id);
+		await setPersonalList({ appealId: appeal.id });
 
 		if (!isChildAppeal) {
 			let details = 'Timetable updated:';
@@ -923,6 +929,7 @@ const getTimetableUpdatedTemplateName = (appealTypeKey, procedureType) => {
 export {
 	calculateAppealTimetable,
 	checkAppealTimetableExists,
+	createStartCaseAuditTrails,
 	getStartCaseNotifyParams,
 	getStartCaseNotifyPreviews,
 	startCase,

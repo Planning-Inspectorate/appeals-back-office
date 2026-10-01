@@ -57,7 +57,8 @@ export const getCheckAndConfirm = async (request, response) => {
 	const timeTableTypes = getTimetableTypes(
 		currentAppeal.appealType,
 		appellantCase.planningObligation?.hasObligation,
-		newProcedureType
+		newProcedureType,
+		sessionValues?.existingAppealProcedure
 	);
 
 	/** @type {{ [key: string]: {value?: string, actions?: { [text: string]: { href: string, visuallyHiddenText: string, attributes?: { 'data-cy': string } } }} }} */

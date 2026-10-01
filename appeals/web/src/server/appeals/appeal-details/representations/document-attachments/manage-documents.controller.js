@@ -233,7 +233,7 @@ export const getAddDocumentVersionDetails = async (request, response) => {
 			backLinkUrl: `${baseUrl}/add-documents/${folderId}/${documentId}`,
 			documentId
 		});
-	} catch (error) {
+	} catch {
 		return response.status(500).render('app/500.njk');
 	}
 };

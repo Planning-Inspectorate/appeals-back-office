@@ -11,7 +11,7 @@ export const mapRelatedAppeals = ({
 	const actionItems = [];
 
 	if (!appellantCaseData.isEnforcementChild) {
-		if (appealDetails.otherAppeals.length) {
+		if (appealDetails.otherAppeals?.length) {
 			actionItems.push(
 				displayComponentGivenPermission(userHasUpdateCase, {
 					text: 'Change',

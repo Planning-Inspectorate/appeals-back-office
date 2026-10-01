@@ -132,7 +132,6 @@ export function selectProcedurePage(
 			: []),
 		{
 			case: APPEAL_CASE_PROCEDURE.WRITTEN,
-			featureFlag: FEATURE_FLAG_NAMES.SECTION_78,
 			appeals: getEnabledAppealTypes()
 		},
 		{

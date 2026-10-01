@@ -14,6 +14,7 @@ import {
 } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { jest } from '@jest/globals';
+import { FRONT_OFFICE_DASHBOARD_PATH_STUBS } from '@pins/appeals/constants/common.js';
 import {
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED,
@@ -2738,10 +2739,12 @@ describe('/appeals/:id/reps', () => {
 						has_ip_comments: true,
 						has_lpa_statement: true,
 						has_appellant_statement: false,
+						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA,
+						recipient_role: 'lpa',
 						team_email_address: expect.any(String)
 					},
 					recipientEmail: mockLdcAppeal.lpa.email,
-					templateName: 'publish-statements-written-reps-lpa'
+					templateName: 'publish-statements-enforcement-written-reps'
 				});
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
@@ -2752,10 +2755,12 @@ describe('/appeals/:id/reps', () => {
 						has_ip_comments: true,
 						has_lpa_statement: true,
 						has_appellant_statement: false,
+						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
+						recipient_role: 'appellant',
 						team_email_address: expect.any(String)
 					},
 					recipientEmail: mockLdcAppeal.agent.email,
-					templateName: 'publish-statements-written-reps-appellant'
+					templateName: 'publish-statements-enforcement-written-reps'
 				});
 			});
 
@@ -2970,10 +2975,12 @@ describe('/appeals/:id/reps', () => {
 						has_lpa_statement: true,
 						has_ip_comments: true,
 						has_appellant_statement: false,
+						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA,
+						recipient_role: 'lpa',
 						team_email_address: expect.any(String)
 					},
 					recipientEmail: mockEnforcementNoticeAppeal.lpa.email,
-					templateName: 'publish-statements-written-reps-lpa'
+					templateName: 'publish-statements-enforcement-written-reps'
 				});
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
@@ -2984,10 +2991,12 @@ describe('/appeals/:id/reps', () => {
 						has_lpa_statement: true,
 						has_ip_comments: true,
 						has_appellant_statement: false,
+						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
+						recipient_role: 'appellant',
 						team_email_address: expect.any(String)
 					},
 					recipientEmail: 'test@136s7.com',
-					templateName: 'publish-statements-written-reps-appellant'
+					templateName: 'publish-statements-enforcement-written-reps'
 				});
 			});
 
@@ -3062,10 +3071,12 @@ describe('/appeals/:id/reps', () => {
 						has_lpa_statement: true,
 						has_ip_comments: true,
 						has_appellant_statement: false,
+						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA,
+						recipient_role: 'lpa',
 						team_email_address: expect.any(String)
 					},
 					recipientEmail: mockEnforcementListedAppeal.lpa.email,
-					templateName: 'publish-statements-written-reps-lpa'
+					templateName: 'publish-statements-enforcement-written-reps'
 				});
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
@@ -3076,10 +3087,12 @@ describe('/appeals/:id/reps', () => {
 						has_lpa_statement: true,
 						has_ip_comments: true,
 						has_appellant_statement: false,
+						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
+						recipient_role: 'appellant',
 						team_email_address: expect.any(String)
 					},
 					recipientEmail: 'test6@example.com',
-					templateName: 'publish-statements-written-reps-appellant'
+					templateName: 'publish-statements-enforcement-written-reps'
 				});
 			});
 
@@ -3168,6 +3181,7 @@ describe('/appeals/:id/reps', () => {
 					notifyClient: expect.anything(),
 					personalisation: {
 						...expectedEmailPayload,
+						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA,
 						recipient_role: 'lpa'
 					},
 					recipientEmail: mockEnforcementNoticeAppeal.lpa.email,
@@ -3179,6 +3193,7 @@ describe('/appeals/:id/reps', () => {
 					notifyClient: expect.anything(),
 					personalisation: {
 						...expectedEmailPayload,
+						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
 						recipient_role: 'appellant'
 					},
 					recipientEmail: 'test@136s7.com',
@@ -4954,7 +4969,7 @@ describe('/appeals/:id/reps', () => {
 				});
 			});
 
-			test('selects final-comments-none-enforcement-hearing template when progressing from final comments with no comments submitted', async () => {
+			test('selects final-comments-none-enforcement-hearing template when progressing from final comments with no comments submitted from either party', async () => {
 				const expectedSiteAddress = [
 					'addressLine1',
 					'addressLine2',
@@ -4983,6 +4998,7 @@ describe('/appeals/:id/reps', () => {
 					hearing_time: '12:00am',
 					hearing_expected_days: '',
 					hearing_address: '123 Main St, Apt 1, AA1 1AA',
+					inspector_name: null,
 					final_comments_deadline: '',
 					has_ip_comments: false,
 					has_statement: false,
@@ -5073,7 +5089,189 @@ describe('/appeals/:id/reps', () => {
 				});
 			});
 
-			test('sends notify emails to LPA and appellant when only LPA final comments are received', async () => {
+			// for non enfElbLdc hearings a no-fc received from appellant notify would be sent, for enfElbLdc this is only sent if neither party submits
+			test('does not send no-FC received notify emails to LPA or appellant when LPA FCs are received but no appellant FCs submitted (enfElbLDC hearing)', async () => {
+				const { hearing: expectedHearing } = mockEnforcementNoticeAppeal;
+
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => mockEnforcementListedAppeal.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedHearingAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => expectedHearing.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedEmailPayload = {
+					lpa_reference: mockEnforcementListedAppeal.applicationReference,
+					enforcement_reference: 'Reference',
+					appeal_reference_number: mockEnforcementListedAppeal.reference,
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					site_address: expectedSiteAddress,
+					hearing_address: expectedHearingAddress,
+					hearing_date: '31 March 2022',
+					hearing_expected_days: expectedHearing.estimatedDays,
+					hearing_time: '2:00am',
+					inspector_name: undefined
+				};
+
+				mockEnforcementListedAppeal.currentStatus = 'final_comments';
+				mockEnforcementListedAppeal.appealStatus = [{ status: 'final_comments', valid: true }];
+
+				mockEnforcementListedAppeal.procedureType = {
+					id: 1,
+					key: 'hearing',
+					name: 'Hearing'
+				};
+
+				mockEnforcementListedAppeal.hearing = expectedHearing;
+
+				mockEnforcementListedAppeal.appealTimetable = {
+					...mockEnforcementListedAppeal.appealTimetable,
+					finalCommentsDueDate: new Date('2023-01-01T00:00:00.000Z')
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(mockEnforcementListedAppeal);
+				databaseConnector.appealStatus.create.mockResolvedValue({});
+				databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+				databaseConnector.representation.findMany.mockResolvedValue([
+					{ representationType: 'lpa_final_comment' }
+				]);
+				databaseConnector.representation.updateMany.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+				]);
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+				const response = await request
+					.post('/appeals/1/reps/publish')
+					.query({ type: 'final_comments' })
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						fo_dashboard_stub: 'appeals',
+						submitting_party: 'local planning authority'
+					},
+					recipientEmail: mockEnforcementListedAppeal.agent.email,
+					templateName: 'final-comments-received-enforcement-hearing'
+				});
+			});
+
+			// for non enfElbLdc hearings a no-fc received from LPA notify would be sent, for enfElbLdc this is only sent if neither party submits
+			test('does not send no-FC received notify emails to LPA or appellant when appellant FCs are received but no LPA FCs submitted (enfElbLDC hearing)', async () => {
+				const { hearing: expectedHearing } = mockEnforcementNoticeAppeal;
+
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => mockEnforcementListedAppeal.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedHearingAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => expectedHearing.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedEmailPayload = {
+					lpa_reference: mockEnforcementListedAppeal.applicationReference,
+					enforcement_reference: 'Reference',
+					appeal_reference_number: mockEnforcementListedAppeal.reference,
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					site_address: expectedSiteAddress,
+					hearing_address: expectedHearingAddress,
+					hearing_date: '31 March 2022',
+					hearing_expected_days: expectedHearing.estimatedDays,
+					hearing_time: '2:00am',
+					inspector_name: undefined
+				};
+
+				mockEnforcementListedAppeal.currentStatus = 'final_comments';
+				mockEnforcementListedAppeal.appealStatus = [{ status: 'final_comments', valid: true }];
+
+				mockEnforcementListedAppeal.procedureType = {
+					id: 1,
+					key: 'hearing',
+					name: 'Hearing'
+				};
+
+				mockEnforcementListedAppeal.hearing = expectedHearing;
+
+				mockEnforcementListedAppeal.appealTimetable = {
+					...mockEnforcementListedAppeal.appealTimetable,
+					finalCommentsDueDate: new Date('2023-01-01T00:00:00.000Z')
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(mockEnforcementListedAppeal);
+				databaseConnector.appealStatus.create.mockResolvedValue({});
+				databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+				databaseConnector.representation.findMany.mockResolvedValue([
+					{ representationType: 'appellant_final_comment' }
+				]);
+				databaseConnector.representation.updateMany.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+				]);
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+				const response = await request
+					.post('/appeals/1/reps/publish')
+					.query({ type: 'final_comments' })
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						fo_dashboard_stub: 'manage-appeals',
+						submitting_party: 'appellant'
+					},
+					recipientEmail: mockEnforcementListedAppeal.lpa.email,
+					templateName: 'final-comments-received-enforcement-hearing'
+				});
+			});
+
+			test('sends notify emails to LPA and appellant when only LPA final comments are received (if not enfElbLDC hearing)', async () => {
 				const expectedSiteAddress = [
 					'addressLine1',
 					'addressLine2',
@@ -5149,7 +5347,7 @@ describe('/appeals/:id/reps', () => {
 				});
 			});
 
-			test('sends notify emails to LPA and appellant when only appellant final comments are received', async () => {
+			test('sends notify emails to LPA and appellant when only appellant final comments are received (if not enfElbLDC hearing)', async () => {
 				const expectedSiteAddress = [
 					'addressLine1',
 					'addressLine2',

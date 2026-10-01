@@ -72,6 +72,7 @@ export async function recordMissedSiteVisit(apiClient, appealId, siteVisitId, wh
  * @param {string} [previousVisitType]
  * @param {string} [inspectorName]
  * @param {string} [siteVisitChangeType]
+ * @param {boolean}isCompletingSiteVisitSetup
  */
 export async function updateSiteVisit(
 	apiClient,
@@ -83,7 +84,8 @@ export async function updateSiteVisit(
 	visitEndTime,
 	previousVisitType,
 	inspectorName,
-	siteVisitChangeType
+	siteVisitChangeType,
+	isCompletingSiteVisitSetup = false
 ) {
 	const ids = assertValidNumericIds({ appealId, siteVisitId });
 	return apiClient
@@ -95,7 +97,8 @@ export async function updateSiteVisit(
 				visitEndTime,
 				...(previousVisitType && { previousVisitType }),
 				inspectorName,
-				siteVisitChangeType
+				siteVisitChangeType,
+				isCompletingSiteVisitSetup
 			}
 		})
 		.json();
@@ -121,3 +124,28 @@ export async function cancelSiteVisit(apiClient, appealId, siteVisitId) {
 	const ids = assertValidNumericIds({ appealId, siteVisitId });
 	return apiClient.delete(`appeals/${ids.appealId}/site-visits/${ids.siteVisitId}`).json();
 }
+
+/**
+ *
+ * @param {{visitDate:string,visitStartTime:string}} originalSiteVisit
+ * @param {UpdateOrCreateSiteVisitParameters}updatedSiteVisit
+ *  @returns {boolean}
+ */
+export const checkCompletingSiteVisitSetup = (originalSiteVisit, updatedSiteVisit) => {
+	const hadNoDateTime = !originalSiteVisit?.visitDate && !originalSiteVisit.visitStartTime;
+	const updatedSiteVisitType = updatedSiteVisit.apiVisitType?.toLowerCase();
+	switch (updatedSiteVisitType) {
+		case 'access required':
+		case 'accompanied':
+			return (
+				hadNoDateTime &&
+				Boolean(updatedSiteVisit.visitDate) &&
+				Boolean(updatedSiteVisit.visitStartTime)
+			);
+
+		case 'unaccompanied':
+			return hadNoDateTime && Boolean(updatedSiteVisit.visitDate);
+		default:
+			return false;
+	}
+};

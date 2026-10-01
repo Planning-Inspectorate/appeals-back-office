@@ -50,10 +50,6 @@ const { value, error } = schema.validate({
 	},
 	cwd: url.fileURLToPath(new URL('..', import.meta.url)),
 	featureFlags: {
-		featureFlagS78Written:
-			environment.FEATURE_FLAG_S78_WRITTEN && environment.FEATURE_FLAG_S78_WRITTEN === 'true',
-		featureFlagS78Inquiry:
-			environment.FEATURE_FLAG_S78_INQUIRY && environment.FEATURE_FLAG_S78_INQUIRY === 'true',
 		featureFlagS20Inquiry:
 			environment.FEATURE_FLAG_S20_INQUIRY && environment.FEATURE_FLAG_S20_INQUIRY === 'true',
 		featureFlagLinkedAppeals:
@@ -61,18 +57,9 @@ const { value, error } = schema.validate({
 		featureFlagLinkedAppealsUnlink:
 			environment.FEATURE_FLAG_LINKED_APPEALS_UNLINK &&
 			environment.FEATURE_FLAG_LINKED_APPEALS_UNLINK === 'true',
-		featureFlagNetResidenceS20:
-			environment.FEATURE_FLAG_NET_RESIDENCE_S20 &&
-			environment.FEATURE_FLAG_NET_RESIDENCE_S20 === 'true',
 		featureFlagHearingPostMvp:
 			environment.FEATURE_FLAG_HEARING_POST_MVP &&
 			environment.FEATURE_FLAG_HEARING_POST_MVP === 'true',
-		featureFlagSearchCaseOfficer:
-			environment.FEATURE_FLAG_SEARCH_CASE_OFFICER &&
-			environment.FEATURE_FLAG_SEARCH_CASE_OFFICER === 'true',
-		featureFlagEnforcementNotice:
-			environment.FEATURE_FLAG_ENFORCEMENT_NOTICE &&
-			environment.FEATURE_FLAG_ENFORCEMENT_NOTICE === 'true',
 		featureFlagEnforcementLinked:
 			environment.FEATURE_FLAG_ENFORCEMENT_LINKED &&
 			environment.FEATURE_FLAG_ENFORCEMENT_LINKED === 'true',
@@ -92,6 +79,9 @@ const { value, error } = schema.validate({
 		featureFlagExpeditedAppealsLpaq:
 			environment.FEATURE_FLAG_EXPEDITED_APPEALS_LPAQ &&
 			environment.FEATURE_FLAG_EXPEDITED_APPEALS_LPAQ === 'true',
+		featureFlagExpeditedAppealsChangeProcedure:
+			environment.FEATURE_FLAG_EXPEDITED_APPEALS_CHANGE_PROCEDURE &&
+			environment.FEATURE_FLAG_EXPEDITED_APPEALS_CHANGE_PROCEDURE === 'true',
 		featureFlagRule6Costs:
 			environment.FEATURE_FLAG_RULE_6_COSTS && environment.FEATURE_FLAG_RULE_6_COSTS === 'true',
 		featureFlagAppellantStatement:
@@ -120,7 +110,9 @@ const { value, error } = schema.validate({
 			environment.FEATURE_FLAG_SHARING_INQUIRY_DOCUMENTS === 'true',
 		featureFlagSharingSupportingDocuments:
 			environment.FEATURE_FLAG_SHARING_SUPPORTING_DOCUMENTS &&
-			environment.FEATURE_FLAG_SHARING_SUPPORTING_DOCUMENTS === 'true'
+			environment.FEATURE_FLAG_SHARING_SUPPORTING_DOCUMENTS === 'true',
+		featureFlagGenericCase:
+			environment.FEATURE_FLAG_GENERIC_CASE && environment.FEATURE_FLAG_GENERIC_CASE === 'true'
 	},
 	serviceBusEnabled: environment.SERVICE_BUS_ENABLED && environment.SERVICE_BUS_ENABLED === 'true',
 	enableTestEndpoints:

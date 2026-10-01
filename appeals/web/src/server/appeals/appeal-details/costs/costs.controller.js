@@ -28,6 +28,7 @@ import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import logger from '#lib/logger.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { FRONT_OFFICE_DASHBOARD_PATH_STUBS } from '@pins/appeals/constants/common.js';
 import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { addWeeks, format } from 'date-fns';
 import { capitalize, upperCase } from 'lodash-es';
@@ -50,7 +51,7 @@ export const getDocumentUpload = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	let uploadPageHeadingText = '';
+	let uploadPageHeadingText;
 	let documentTitle = undefined;
 	switch (costsCategory) {
 		case 'lpa':
@@ -721,7 +722,9 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
 			break;
 	}
 
+	const senderIsLpa = costsCategory === 'lpa';
 	const inviteResponses = session?.inviteResponses?.toLowerCase() === 'yes';
+	const inviteCommentsForPreview = inviteResponses && senderIsLpa;
 
 	const notifyPreview = await generateNotifyPreview(request.apiClient, notifyTemplateName, {
 		appeal_reference_number: currentAppeal?.appealReference,
@@ -730,8 +733,8 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
 		enforcement_reference: currentAppeal.enforcementNotice?.appellantCase?.reference || '',
 		contact_email: email || '',
 		deadline: deadline,
-		responses_invited: inviteResponses,
-		dashboard_link: 'appeals'
+		responses_invited: !!inviteCommentsForPreview,
+		dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT
 	});
 
 	const pageContent = shareDocumentCheckAndConfirmPage(
@@ -752,7 +755,7 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postShareDocumentCheckAndConfirm = async (request, response) => {
-	const { appealId, documentId, costsDocumentType } = request.params;
+	const { appealId, documentId, costsDocumentType, costsCategory } = request.params;
 	try {
 		/** @type {import('#appeals/appeal-documents/appeal.documents.service.js').DocumentDetailAPIPatchRequest} */
 		const apiRequest = {
@@ -761,6 +764,7 @@ export const postShareDocumentCheckAndConfirm = async (request, response) => {
 				isShared: true
 			},
 			inviteResponses: request.session?.inviteResponses === 'yes',
+			costsCategory: costsCategory,
 			sharingDocumentType: `costs-${costsDocumentType}`
 		};
 

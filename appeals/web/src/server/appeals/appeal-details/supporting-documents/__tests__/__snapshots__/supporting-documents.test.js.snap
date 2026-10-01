@@ -223,12 +223,12 @@ exports[`supporting documents supporting documents GET /supporting-documents/man
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
-            <h1 class="govuk-heading-l">Document details</h1>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
-    <p class="govuk-body">This document is not shared</p><a href="/appeals-service/appeal-details/1/supporting-documents/manage-documents/1/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-!-margin-bottom-7"
+    <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/supporting-documents/manage-documents/1/1/invite-responses"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -261,7 +261,7 @@ exports[`supporting documents supporting documents GET /supporting-documents/man
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/supporting-documents/upload-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
-            role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
+            role="button" draggable="false" class="govuk-button govuk-!-margin-right-2 govuk-button--secondary"
             data-module="govuk-button" id="upload-updated-document"> Upload a new version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span></a>
             <a             href="/appeals-service/appeal-details/1/supporting-documents/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
             role="button" draggable="false" class="govuk-button govuk-button--secondary"
@@ -330,12 +330,12 @@ exports[`supporting documents supporting documents GET /supporting-documents/man
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
-            <h1 class="govuk-heading-l">Document details</h1>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
-    <p class="govuk-body">This document is not shared</p><a href="/appeals-service/appeal-details/1/supporting-documents/manage-documents/1/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-!-margin-bottom-7"
+    <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/supporting-documents/manage-documents/1/1/invite-responses"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -413,12 +413,12 @@ exports[`supporting documents supporting documents GET /supporting-documents/man
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
-            <h1 class="govuk-heading-l">Document details</h1>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
-    <p class="govuk-body">This document is not shared</p><a href="/appeals-service/appeal-details/1/supporting-documents/manage-documents/1/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-!-margin-bottom-7"
+    <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/supporting-documents/manage-documents/1/1/invite-responses"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -450,7 +450,7 @@ exports[`supporting documents supporting documents GET /supporting-documents/man
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><a href="/appeals-service/appeal-details/1/supporting-documents/upload-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
-            role="button" draggable="false" class="govuk-button govuk-!-margin-right-2"
+            role="button" draggable="false" class="govuk-button govuk-!-margin-right-2 govuk-button--secondary"
             data-module="govuk-button" id="upload-updated-document"> Upload a new version<span class="govuk-visually-hidden"> of test-pdf-documentFileVersionsInfo.pdf</span></a>
             <a             href="/appeals-service/appeal-details/1/supporting-documents/manage-documents/1/15d19184-155b-4b6c-bba6-2bd2a61ca9a3/1/delete"
             role="button" draggable="false" class="govuk-button govuk-button--secondary"
@@ -518,12 +518,12 @@ exports[`supporting documents supporting documents GET /supporting-documents/man
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
-            <h1 class="govuk-heading-l">Document details</h1>
+            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
         </div>
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
-    <p class="govuk-body">This document is not shared</p><a href="/appeals-service/appeal-details/1/supporting-documents/manage-documents/1/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-!-margin-bottom-7"
+    <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/supporting-documents/manage-documents/1/1/invite-responses"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">

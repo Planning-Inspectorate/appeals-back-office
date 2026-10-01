@@ -147,6 +147,7 @@ describe('appeal rule 6 parties routes', () => {
 						site_address: expect.stringContaining('Maidstone'),
 						statements_due_date: '1 May 2025',
 						proofs_due_date: '1 June 2025',
+						fo_dashboard_stub: 'rule-6',
 						team_email_address: 'team@email.com'
 					}
 				});

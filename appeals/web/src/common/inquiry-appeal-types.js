@@ -11,10 +11,7 @@ export const getEnabledInquiryAppealTypes = (linked = false) => {
 	let enabledInquiryAppealTypes = [];
 	let enabledLinkedInquiryAppealTypes = [];
 
-	if (
-		isAppealTypeEnabled(APPEAL_TYPE.S78) &&
-		isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78_INQUIRY)
-	) {
+	if (isAppealTypeEnabled(APPEAL_TYPE.S78)) {
 		enabledInquiryAppealTypes.push(APPEAL_TYPE.S78);
 	}
 

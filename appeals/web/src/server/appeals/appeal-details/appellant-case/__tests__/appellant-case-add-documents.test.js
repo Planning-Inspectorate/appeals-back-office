@@ -633,6 +633,14 @@ describe('appellant-case documents', () => {
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated)
 				.persist();
+			nock('http://test/')
+				.get('/appeals/1/appellant-case')
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					appealType: appealData.appealType,
+					documentationSummary: appealData.documentationSummary
+				})
+				.persist();
 		});
 		afterEach(() => {
 			nock.cleanAll();
@@ -791,6 +799,14 @@ describe('appellant-case documents', () => {
 				.get('/appeals/1/appellant-cases/0')
 				.reply(200, appellantCaseDataNotValidated);
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
+			nock('http://test/')
+				.get('/appeals/1/appellant-case')
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					appealType: appealData.appealType,
+					documentationSummary: appealData.documentationSummary
+				})
+				.persist();
 		});
 		afterEach(() => {
 			nock.cleanAll();

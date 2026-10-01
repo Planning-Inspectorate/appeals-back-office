@@ -1,22 +1,22 @@
 /**
  * @param {string} backLinkUrl
- * @param {string} [selectedInviteResponses]
+ * @param {string} [inviteMainPartyComments]
  * @returns {PageContent}
  */
-export function inviteResponsesPage(backLinkUrl, selectedInviteResponses) {
+export function inviteMainPartyCommentsPage(backLinkUrl, inviteMainPartyComments) {
 	/** @type {PageContent} */
 	return {
-		title: 'Do you want to invite responses?',
+		title: 'Do you want to invite comments from main parties on this document?',
 		backLinkText: 'Back',
 		backLinkUrl: backLinkUrl,
-		heading: 'Do you want to invite responses?',
+		heading: 'Do you want to invite comments from main parties on this document?',
 		pageComponents: [
 			{
 				type: 'radios',
 				parameters: {
-					name: 'invite-responses',
-					idPrefix: 'invite-responses',
-					value: selectedInviteResponses || null,
+					name: 'invite-main-party-comments',
+					idPrefix: 'invite-main-party-comments',
+					value: inviteMainPartyComments || null,
 					items: [
 						{ text: 'Yes', value: 'yes' },
 						{ text: 'No', value: 'no' }
@@ -24,9 +24,9 @@ export function inviteResponsesPage(backLinkUrl, selectedInviteResponses) {
 				}
 			}
 		],
-		submitButtonText: 'Confirm and share document',
+		submitButtonText: 'Continue',
 		submitButtonProperties: {
-			text: 'Confirm and share document',
+			text: 'Continue',
 			type: 'submit'
 		}
 	};
@@ -87,14 +87,22 @@ export function shareDocumentCheckAndConfirmPage(
 	}
 
 	if (notifyPreview) {
-		pageContent.pageComponents?.push({
-			type: 'details',
-			parameters: {
-				summaryText: 'Preview email to LPA and appellant',
-				html: notifyPreview.renderedHtml
+		pageContent.pageComponents?.push(
+			{
+				type: 'details',
+				parameters: {
+					summaryText: 'Preview email to appellant',
+					html: notifyPreview.renderedHtml
+				}
+			},
+			{
+				type: 'details',
+				parameters: {
+					summaryText: 'Preview email to LPA',
+					html: notifyPreview.renderedHtml
+				}
 			}
-		});
+		);
 	}
-
 	return pageContent;
 }

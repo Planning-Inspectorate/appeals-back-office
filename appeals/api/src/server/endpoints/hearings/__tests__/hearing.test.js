@@ -499,6 +499,57 @@ describe('hearing routes', () => {
 				expect(response.status).toEqual(201);
 			});
 
+			test('only creates the address added audit trail when the address is the only value updated', async () => {
+				const existingHearing = {
+					...hearing,
+					hearingStartTime: new Date('2999-01-01T12:00:00.000Z'),
+					hearingEndTime: new Date('2999-01-01T13:00:00.000Z'),
+					addressId: null,
+					address: null
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...fullPlanningAppeal,
+					hearing: existingHearing
+				});
+				databaseConnector.hearing.findUnique.mockResolvedValue({ ...existingHearing });
+				databaseConnector.hearing.update.mockResolvedValue({
+					...existingHearing,
+					address: hearing.address
+				});
+
+				const response = await request
+					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
+					.send({
+						hearingStartTime: '2999-01-01T12:00:00.000Z',
+						hearingEndTime: '2999-01-01T13:00:00.000Z',
+						address: hearingAddress
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+
+				// The address added audit trail is the only one that should be created
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: fullPlanningAppeal.id,
+						details: 'The hearing address has been added',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+				// The hearing date audit trail should not be created
+				expect(databaseConnector.auditTrail.create).not.toHaveBeenCalledWith({
+					data: {
+						appealId: fullPlanningAppeal.id,
+						details: expect.stringContaining('Hearing date updated'),
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+			});
+
 			test('returns an error if appealId is not provided', async () => {
 				const { hearing } = fullPlanningAppeal;
 

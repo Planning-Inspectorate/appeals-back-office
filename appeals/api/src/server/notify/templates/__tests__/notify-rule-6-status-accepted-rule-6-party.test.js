@@ -1,5 +1,6 @@
 import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
+import { FRONT_OFFICE_DASHBOARD_PATH_STUBS } from '@pins/appeals/constants/common.js';
 
 describe('rule-6-status-accepted-rule-6-party.md', () => {
 	test('should call notify sendEmail with the correct data', async () => {
@@ -16,6 +17,8 @@ describe('rule-6-status-accepted-rule-6-party.md', () => {
 				lpa_reference: '12345XYZ',
 				statements_due_date: '10 March 2025',
 				proofs_due_date: '20 March 2025',
+				fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.RULE_6_PARTY,
+				front_office_url: 'https://appeals-service-test.planninginspectorate.gov.uk',
 				team_email_address: 'team@example.com'
 			}
 		};
@@ -29,7 +32,7 @@ describe('rule-6-status-accepted-rule-6-party.md', () => {
 			'',
 			'# What happens next',
 			'',
-			'You can go to https://appeal-a-planning-decision.service.gov.uk/ to:',
+			'You can [go to our service](https://appeals-service-test.planninginspectorate.gov.uk/rule-6/ABC45678) to:',
 			'',
 			'* view the appeal',
 			'* submit a statement of case by 10 March 2025',

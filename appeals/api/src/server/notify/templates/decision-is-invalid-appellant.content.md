@@ -13,7 +13,7 @@ Your appeal is now closed.
 {% if has_costs_decision %}
 # Costs decision
 
-[Sign in to our service]({{front_office_url}}/appeals/{{appeal_reference_number}}) to view the costs decision.
+[Sign in to our service]({{front_office_url}}/{{fo_dashboard_stub}}/{{appeal_reference_number}}) to view the costs decision.
 {% endif %}
 # Feedback
 

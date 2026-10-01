@@ -54,7 +54,7 @@ describe('final-comments-received-enforcement-hearing.md', () => {
 				'We will contact you if we make any changes to the hearing.',
 				'',
 				'',
-				'The Planning Inspectorate',
+				'Planning Inspectorate',
 				'caseofficers@planninginspectorate.gov.uk'
 			].join('\n');
 
@@ -111,7 +111,7 @@ describe('final-comments-received-enforcement-hearing.md', () => {
 				'We will contact you by email when we set up the hearing.',
 				'',
 				'',
-				'The Planning Inspectorate',
+				'Planning Inspectorate',
 				'caseofficers@planninginspectorate.gov.uk'
 			].join('\n');
 

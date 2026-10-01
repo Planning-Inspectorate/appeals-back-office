@@ -515,6 +515,14 @@ export const appealDataFullPlanning = {
 	...appealData,
 	appealType: 'Planning appeal'
 };
+export const appealDataFullPlanningExpedited = {
+	...appealData,
+	appealType: 'Planning appeal',
+	isExpedited: true,
+	createdAt: '2026-05-21T10:27:06.626Z',
+	startedAt: '2026-05-23T10:27:06.626Z',
+	validAt: '2026-05-23T10:27:06.626Z'
+};
 
 export const appealDataListedBuilding = {
 	...appealData,
@@ -3593,6 +3601,40 @@ export const inquiryEventDocumentsFolderInfo = {
 	],
 	folderId: 1,
 	path: `inquiry/${APPEAL_DOCUMENT_TYPE.INQUIRY_POST_EVENT}`
+};
+
+export const hearingDocumentsFolderInfo = {
+	caseId: 1,
+	documents: [
+		{
+			id: '15d19184-155b-4b6c-bba6-2bd2a61ca9a3',
+			name: 'test-pdf-documentFolderInfo.pdf',
+			latestDocumentVersion: {
+				draft: false,
+				dateReceived: '2023-02-01T01:00:00.000Z',
+				redactionStatus: 'No redaction required',
+				size: 129363,
+				mime: 'application/pdf',
+				virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
+				isLateEntry: false
+			}
+		},
+		{
+			id: '47d8f073-c837-4f07-9161-c1a5626eba56',
+			name: 'sample-20s-documentFolderInfo.mp4',
+			latestDocumentVersion: {
+				draft: false,
+				dateReceived: '2024-03-02T01:00:00.000Z',
+				redactionStatus: 'No redaction required',
+				size: 11815175,
+				mime: 'video/mp4',
+				virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
+				isLateEntry: false
+			}
+		}
+	],
+	folderId: 1,
+	path: `hearing/${APPEAL_DOCUMENT_TYPE.HEARING_PROCESS}`
 };
 
 export const costsFolderInfoAppellantApplication = {

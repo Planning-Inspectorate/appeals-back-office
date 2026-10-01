@@ -130,6 +130,8 @@ const householdAppealDto = {
 	enforcementNotice: { appellantCase: {}, appealOutcome: {} },
 	appealRule6Parties: {},
 	appellantCase: {
+		applicationDate: '2024-10-16T14:08:50.409Z',
+		applicationDecision: 'refused',
 		numberOfResidencesNetChange: null,
 		screeningOpinionIndicatesEiaRequired: null,
 		applicationMadeUnderActSection: null,
@@ -138,7 +140,8 @@ const householdAppealDto = {
 			hasObligation: true,
 			status: 'not_started'
 		},
-		enforcementNotice: null
+		enforcementNotice: null,
+		typeOfPlanningApplication: null
 	},
 	resubmitTypeId: null,
 	resubmitType: null,
@@ -299,6 +302,8 @@ const s78AppealDto = {
 	validAt: fullPlanningAppeal.caseValidDate?.toISOString(),
 	enforcementNotice: { appellantCase: {}, appealOutcome: {} },
 	appellantCase: {
+		applicationDate: '2024-10-16T14:08:50.409Z',
+		applicationDecision: 'refused',
 		numberOfResidencesNetChange: null,
 		screeningOpinionIndicatesEiaRequired: null,
 		applicationMadeUnderActSection: null,
@@ -310,7 +315,8 @@ const s78AppealDto = {
 						status: fullPlanningAppeal.appellantCase.statusPlanningObligation
 					}
 				: null,
-		enforcementNotice: null
+		enforcementNotice: null,
+		typeOfPlanningApplication: null
 	},
 	resubmitTypeId: null,
 	resubmitType: null,

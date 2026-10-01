@@ -3,9 +3,10 @@ import { appealDetailService } from '#endpoints/appeal-details/appeal-details.se
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { contextEnum } from '#mappers/context-enum.js';
+import { getAppealByContext } from '#repositories/appeal.repository.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { updatePersonalList } from '#utils/update-personal-list.js';
+import { setPersonalList } from '#utils/update-personal-list.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import {
@@ -30,7 +31,15 @@ import {
  * @returns {Promise<Response>}
  */
 const getAppellantCaseById = async (req, res) => {
-	const { appeal } = req;
+	const appeal = await getAppealByContext(Number(req.params.appealId), contextEnum.appellantCase);
+
+	if (!appeal) {
+		return res.status(404).send({ errors: { appealId: ERROR_NOT_FOUND } });
+	}
+	if (!appeal.appellantCase) {
+		return res.status(404).send({ errors: { appellantCaseId: ERROR_NOT_FOUND } });
+	}
+
 	const dto = await appealDetailService.loadAndFormatAppeal({
 		appeal,
 		context: contextEnum.appellantCase
@@ -206,7 +215,7 @@ const updateAppellantCaseById = async (req, res) => {
 					appeal
 				);
 
-		await updatePersonalList(appeal.id);
+		await setPersonalList({ appealId: appeal.id });
 
 		const auditTrailDetail = renderAuditTrailDetail(body);
 

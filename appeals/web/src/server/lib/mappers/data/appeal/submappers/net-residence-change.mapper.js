@@ -1,8 +1,8 @@
-import { isNetResidencesAppealType } from '#common/net-residences-appeal-types.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { isNetResidencesAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @type {import('../mapper.js').SubMapper} */

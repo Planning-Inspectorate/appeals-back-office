@@ -14,7 +14,7 @@ import {
 	SITE_VISIT_TYPE_ACCOMPANIED,
 	SITE_VISIT_TYPE_UNACCOMPANIED
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { request } from '../../../app-test.js';
 
 import {
@@ -30,7 +30,10 @@ import {
 	listedBuildingAppeal as listedBuildingAppealData
 } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
-import { dateISOStringToDisplayDate, formatTime } from '@pins/appeals/utils/date-formatter.js';
+import formatDate, {
+	dateISOStringToDisplayDate,
+	formatTime
+} from '@pins/appeals/utils/date-formatter.js';
 
 import {
 	addStatusesToLinkedAppeals,
@@ -992,7 +995,316 @@ describe('PATCH /:appealId/site-visits/:siteVisitId', () => {
 				siteVisitChangeType: 'visit-type'
 			});
 		});
+
+		test('updates an Unaccompanied site visit that had visitType added already', async () => {
+			const appealSiteVisitSetup = {
+				...appeal,
+				siteVisit: {
+					id: 1,
+					appealId: 1,
+					visitDate: '',
+					visitEndTime: '',
+					visitStartTime: '',
+					siteVisitType: {
+						id: 1,
+						name: SITE_VISIT_TYPE_UNACCOMPANIED,
+						key: 'site_visit_unaccompanied'
+					}
+				}
+			};
+
+			const { siteVisit } = JSON.parse(JSON.stringify(appeal));
+			siteVisit.siteVisitType.name = SITE_VISIT_TYPE_UNACCOMPANIED;
+
+			const idsOfLinkedGroup = getIdsOfLinkedGroup(appealSiteVisitSetup);
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockImplementation(
+				mockAppealFindUnique(appealSiteVisitSetup)
+			);
+			// @ts-ignore
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
+			// @ts-ignore
+			databaseConnector.user.upsert.mockResolvedValue({
+				id: 1,
+				azureAdUserId
+			});
+
+			const response = await request
+				.patch(`/appeals/${appeal.id}/site-visits/${siteVisit.id}`)
+				.send({
+					visitDate: siteVisit.visitDate,
+					visitType: siteVisit.siteVisitType.name,
+					siteVisitChangeType: 'date-time',
+					isCompletingSiteVisitSetup: true
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.siteVisit.updateMany).toHaveBeenCalledWith({
+				where: { appealId: { in: idsOfLinkedGroup } },
+				data: {
+					visitDate: new Date(siteVisit.visitDate),
+					siteVisitTypeId: siteVisit.siteVisitType.id,
+					visitEndTime: null,
+					visitStartTime: null
+				}
+			});
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+				data: {
+					appealId: appealSiteVisitSetup.id,
+					details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
+					loggedAt: expect.any(Date),
+					userId: appealSiteVisitSetup.caseOfficer.id
+				}
+			});
+			expect(response.body).toEqual({
+				visitDate: siteVisit.visitDate,
+				visitType: siteVisit.siteVisitType.name,
+				siteVisitChangeType: 'date-time'
+			});
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(1);
+			const mockNotifyExpected = {
+				azureAdUserId,
+				templateName: 'site-visit-schedule-unaccompanied-appellant',
+				notifyClient: expect.anything(),
+				recipientEmail: expect.anything(),
+				personalisation:
+					appeal.appealType.key === APPEAL_CASE_TYPE.F
+						? {
+								appeal_reference_number: appeal.reference,
+								lpa_reference: appeal.applicationReference,
+								site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+								enforcement_reference: appeal.appellantCase.enforcementReference,
+								team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+								visit_date: formatDate(new Date(siteVisit.visitDate), false),
+								start_time: '',
+								inspector_name: ''
+							}
+						: {
+								appeal_reference_number: appeal.reference,
+								lpa_reference: appeal.applicationReference,
+								site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+								team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+								visit_date: formatDate(new Date(siteVisit.visitDate), false),
+								start_time: '',
+								inspector_name: ''
+							}
+			};
+
+			expect(mockNotifySend).toHaveBeenCalledWith(mockNotifyExpected);
+			expect(response.status).toEqual(200);
+		});
+
+		test('updates an Accompanied site visit that had visitType added already', async () => {
+			const appealSiteVisitSetup = {
+				...appeal,
+				siteVisit: {
+					id: 1,
+					appealId: 1,
+					visitDate: '',
+					visitEndTime: '',
+					visitStartTime: '',
+					siteVisitType: {
+						id: 1,
+						name: SITE_VISIT_TYPE_ACCOMPANIED,
+						key: 'site_visit_accompanied'
+					}
+				}
+			};
+
+			const { siteVisit } = JSON.parse(JSON.stringify(appeal));
+			siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCOMPANIED;
+
+			const idsOfLinkedGroup = getIdsOfLinkedGroup(appealSiteVisitSetup);
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockImplementation(
+				mockAppealFindUnique(appealSiteVisitSetup)
+			);
+			// @ts-ignore
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
+			// @ts-ignore
+			databaseConnector.user.upsert.mockResolvedValue({
+				id: 1,
+				azureAdUserId
+			});
+
+			const response = await request
+				.patch(`/appeals/${appeal.id}/site-visits/${siteVisit.id}`)
+				.send({
+					visitDate: siteVisit.visitDate,
+					visitType: siteVisit.siteVisitType.name,
+					visitStartTime: siteVisit.visitStartTime,
+					siteVisitChangeType: 'date-time',
+					isCompletingSiteVisitSetup: true
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.siteVisit.updateMany).toHaveBeenCalledWith({
+				where: { appealId: { in: idsOfLinkedGroup } },
+				data: {
+					visitDate: new Date(siteVisit.visitDate),
+					siteVisitTypeId: siteVisit.siteVisitType.id,
+					visitEndTime: null,
+					visitStartTime: new Date(siteVisit.visitStartTime)
+				}
+			});
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+				data: {
+					appealId: appealSiteVisitSetup.id,
+					details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
+					loggedAt: expect.any(Date),
+					userId: appealSiteVisitSetup.caseOfficer.id
+				}
+			});
+			expect(response.body).toEqual({
+				visitDate: siteVisit.visitDate,
+				visitType: siteVisit.siteVisitType.name,
+				visitStartTime: siteVisit.visitStartTime,
+				siteVisitChangeType: 'date-time'
+			});
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
+			const mockNotifyExpected = {
+				azureAdUserId,
+				templateName: 'site-visit-schedule-accompanied-appellant',
+				notifyClient: expect.anything(),
+				recipientEmail: expect.anything(),
+				personalisation:
+					appeal.appealType.key === APPEAL_CASE_TYPE.F
+						? {
+								appeal_reference_number: appeal.reference,
+								lpa_reference: appeal.applicationReference,
+								site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+								enforcement_reference: appeal.appellantCase.enforcementReference,
+								team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+								visit_date: formatDate(new Date(siteVisit.visitDate), false),
+								start_time: formatTime(new Date(siteVisit.visitStartTime)),
+								end_time: '',
+								inspector_name: ''
+							}
+						: {
+								appeal_reference_number: appeal.reference,
+								lpa_reference: appeal.applicationReference,
+								site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+								team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+								visit_date: formatDate(new Date(siteVisit.visitDate), false),
+								start_time: formatTime(new Date(siteVisit.visitStartTime)),
+								end_time: '',
+								inspector_name: ''
+							}
+			};
+
+			expect(mockNotifySend).toHaveBeenCalledWith(mockNotifyExpected);
+			expect(response.status).toEqual(200);
+		});
+
+		test('updates an Access Required site visit that had visitType added already', async () => {
+			const appealSiteVisitSetup = {
+				...appeal,
+				siteVisit: {
+					id: 1,
+					appealId: 1,
+					visitDate: '',
+					visitEndTime: '',
+					visitStartTime: '',
+					siteVisitType: {
+						id: 1,
+						name: SITE_VISIT_TYPE_ACCESS_REQUIRED,
+						key: 'site_visit_access_required'
+					}
+				}
+			};
+
+			const { siteVisit } = JSON.parse(JSON.stringify(appeal));
+			siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCESS_REQUIRED;
+
+			const idsOfLinkedGroup = getIdsOfLinkedGroup(appealSiteVisitSetup);
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockImplementation(
+				mockAppealFindUnique(appealSiteVisitSetup)
+			);
+			// @ts-ignore
+			databaseConnector.siteVisitType.findMany.mockResolvedValue([siteVisit.siteVisitType]);
+			// @ts-ignore
+			databaseConnector.user.upsert.mockResolvedValue({
+				id: 1,
+				azureAdUserId
+			});
+
+			const response = await request
+				.patch(`/appeals/${appeal.id}/site-visits/${siteVisit.id}`)
+				.send({
+					visitDate: siteVisit.visitDate,
+					visitType: siteVisit.siteVisitType.name,
+					visitStartTime: siteVisit.visitStartTime,
+					siteVisitChangeType: 'date-time',
+					isCompletingSiteVisitSetup: true
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.siteVisit.updateMany).toHaveBeenCalledWith({
+				where: { appealId: { in: idsOfLinkedGroup } },
+				data: {
+					visitDate: new Date(siteVisit.visitDate),
+					siteVisitTypeId: siteVisit.siteVisitType.id,
+					visitEndTime: null,
+					visitStartTime: new Date(siteVisit.visitStartTime)
+				}
+			});
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+				data: {
+					appealId: appealSiteVisitSetup.id,
+					details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
+					loggedAt: expect.any(Date),
+					userId: appealSiteVisitSetup.caseOfficer.id
+				}
+			});
+			expect(response.body).toEqual({
+				visitDate: siteVisit.visitDate,
+				visitType: siteVisit.siteVisitType.name,
+				visitStartTime: siteVisit.visitStartTime,
+				siteVisitChangeType: 'date-time'
+			});
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(1);
+			const mockNotifyExpected = {
+				azureAdUserId,
+				templateName: 'site-visit-schedule-access-required-appellant',
+				notifyClient: expect.anything(),
+				recipientEmail: expect.anything(),
+				personalisation:
+					appeal.appealType.key === APPEAL_CASE_TYPE.F
+						? {
+								appeal_reference_number: appeal.reference,
+								lpa_reference: appeal.applicationReference,
+								site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+								enforcement_reference: appeal.appellantCase.enforcementReference,
+								team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+								visit_date: formatDate(new Date(siteVisit.visitDate), false),
+								start_time: formatTime(new Date(siteVisit.visitStartTime)),
+								end_time: '',
+								inspector_name: ''
+							}
+						: {
+								appeal_reference_number: appeal.reference,
+								lpa_reference: appeal.applicationReference,
+								site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+								team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+								visit_date: formatDate(new Date(siteVisit.visitDate), false),
+								start_time: formatTime(new Date(siteVisit.visitStartTime)),
+								end_time: '',
+								inspector_name: ''
+							}
+			};
+
+			expect(mockNotifySend).toHaveBeenCalledWith(mockNotifyExpected);
+			expect(response.status).toEqual(200);
+		});
 	});
+
 	describe.each([
 		['single appeal', getHouseholdAppeal],
 		['linked appeals- enforcement multiple appellants', getEnforcementLeadAppeal]

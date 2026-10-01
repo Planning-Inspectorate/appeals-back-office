@@ -155,6 +155,49 @@ describe('personal-list', () => {
 			);
 		});
 
+		it('should render the first page of the personal list with applied filter when filter is applied from the second page', async () => {
+			nock('http://test/')
+				.get(
+					'/appeals/personal-list?pageNumber=2&pageSize=30&caseOfficerId=abac693e-4332-4a02-bb21-af05b9fee854&status=awaiting_event'
+				)
+				.reply(200, assignedAppealsPage2);
+
+			const secondPageResponse = await request.get(
+				`${baseUrl}${'?pageNumber=2&pageSize=30&caseOfficerId=abac693e-4332-4a02-bb21-af05b9fee854&appealStatusFilter=awaiting_event'}`
+			);
+			const secondPageHtml = parseHtml(secondPageResponse.text, {
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(secondPageHtml).not.toContain('name="pageNumber"');
+			expect(secondPageHtml).not.toContain('name="pageSize"');
+			expect(secondPageHtml).toContain(
+				'<input type="hidden" name="caseOfficerId" value="abac693e-4332-4a02-bb21-af05b9fee854">'
+			);
+			expect(secondPageHtml).toContain('aria-label="Page 2" aria-current="page"> 2</a>');
+
+			nock('http://test/')
+				.get('/appeals/personal-list')
+				.query({
+					pageNumber: 1,
+					pageSize: 30,
+					caseOfficerId: 'abac693e-4332-4a02-bb21-af05b9fee854',
+					status: 'lpa_questionnaire'
+				})
+				.reply(200, assignedAppealsPage1);
+
+			const filteredResponse = await request.get(
+				`${baseUrl}${'?caseOfficerId=abac693e-4332-4a02-bb21-af05b9fee854&appealStatusFilter=lpa_questionnaire'}`
+			);
+			const filteredHtml = parseHtml(filteredResponse.text, { skipPrettyPrint: true }).innerHTML;
+
+			expect(filteredHtml).toContain('Appeals assigned to McTest, George</h1>');
+			expect(filteredHtml).toContain('<option value="lpa_questionnaire" selected');
+			expect(filteredHtml).toContain('aria-label="Page 1" aria-current="page"> 1</a>');
+			expect(filteredHtml).toContain('aria-label="Page 2"> 2</a>');
+			expect(filteredHtml).toContain('caseOfficerId=abac693e-4332-4a02-bb21-af05b9fee854');
+		});
+
 		it('should render the header with navigation containing links to the personal list (with active modifier class), national list, and sign out route', async () => {
 			nock('http://test/')
 				.get('/appeals/personal-list?pageNumber=1&pageSize=30')

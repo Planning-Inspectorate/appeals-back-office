@@ -1018,11 +1018,15 @@ describe('change hearing', () => {
 			county: 'Tuscany',
 			postCode: 'T12 3YZ'
 		};
+		const hearingEstimationDaysValues = {
+			hearingEstimationDays: 1,
+			hearingEstimationYesNo: 'yes'
+		};
 
 		beforeEach(() => {
 			nock('http://test/')
+				.persist()
 				.get(`/appeals/${appealId}?include=all`)
-				.times(4)
 				.reply(200, { ...appealWithHearing, appealId });
 		});
 
@@ -1031,21 +1035,33 @@ describe('change hearing', () => {
 				.patch(`/appeals/${appealId}/hearing/${appealWithHearing.hearing.hearingId}`, {
 					hearingStartTime: '3025-02-01T12:00:00.000Z',
 					address: { ...omit(addressValues, 'postCode'), postcode: addressValues.postCode },
-					inspectorName: null
+					inspectorName: null,
+					estimatedDays: '1'
 				})
 				.reply(200, { hearingId: 1 });
 
 			// set session data with post requests to previous pages
-			await request.post(`${baseUrl}/${appealId}/hearing/change/date`).send(dateValues);
-			await request
+			const firstResponse = await request
+				.post(`${baseUrl}/${appealId}/hearing/change/date`)
+				.send(dateValues);
+			expect(firstResponse.status).toBe(302);
+
+			const secondResponse = await request
+				.post(`${baseUrl}/${appealId}/hearing/change/estimation`)
+				.send(hearingEstimationDaysValues);
+			expect(secondResponse.status).toBe(302);
+
+			const thirdResponse = await request
 				.post(`${baseUrl}/${appealId}/hearing/change/address`)
 				.send({ addressKnown: 'yes' });
-			await request
+			expect(thirdResponse.status).toBe(302);
+
+			const fourthResponse = await request
 				.post(`${baseUrl}/${appealId}/hearing/change/address-details`)
 				.send(addressValues);
+			expect(fourthResponse.status).toBe(302);
 
 			const response = await request.post(`${baseUrl}/${appealId}/hearing/change/check-details`);
-
 			expect(response.status).toBe(302);
 			expect(response.headers.location).toBe(`${baseUrl}/${appealId}`);
 		});
@@ -1055,12 +1071,18 @@ describe('change hearing', () => {
 				.patch(`/appeals/${appealId}/hearing/${appealWithHearing.hearing.hearingId}`, {
 					hearingStartTime: '3025-02-01T12:00:00.000Z',
 					address: null,
-					inspectorName: null
+					inspectorName: null,
+					estimatedDays: '1'
 				})
 				.reply(200, { hearingId: 1 });
 
 			// set session data with post requests to previous pages
 			await request.post(`${baseUrl}/${appealId}/hearing/change/date`).send(dateValues);
+
+			await request
+				.post(`${baseUrl}/${appealId}/hearing/change/estimation`)
+				.send(hearingEstimationDaysValues);
+
 			await request
 				.post(`${baseUrl}/${appealId}/hearing/change/address`)
 				.send({ addressKnown: 'no' });
@@ -1081,6 +1103,34 @@ describe('change hearing', () => {
 
 			// set session data with post requests to previous pages
 			await request.post(`${baseUrl}/${appealId}/hearing/change/date`).send(dateValues);
+			await request
+				.post(`${baseUrl}/${appealId}/hearing/change/address`)
+				.send({ addressKnown: 'yes' });
+			await request.post(`${baseUrl}/${appealId}/hearing/change/address-details`).send({
+				...appealWithHearing.hearing.address,
+				postCode: appealWithHearing.hearing.address.postcode
+			});
+
+			const response = await request.post(`${baseUrl}/${appealId}/hearing/change/check-details`);
+
+			expect(response.status).toBe(302);
+			expect(response.headers.location).toBe(`${baseUrl}/${appealId}`);
+		});
+		it('should redirect to appeal details page after submission with unchanged address and no to knowing estimated days', async () => {
+			nock('http://test/')
+				.patch(`/appeals/${appealId}/hearing/${appealWithHearing.hearing.hearingId}`, {
+					hearingStartTime: '3025-02-01T12:00:00.000Z', // address not sent if unchanged
+					inspectorName: null,
+					estimatedDays: 0
+				})
+				.reply(200, { hearingId: 1 });
+
+			// set session data with post requests to previous pages
+			await request.post(`${baseUrl}/${appealId}/hearing/change/date`).send(dateValues);
+			const secondResponse = await request
+				.post(`${baseUrl}/${appealId}/hearing/change/estimation`)
+				.send({ hearingEstimationYesNo: 'no' });
+			expect(secondResponse.status).toBe(302);
 			await request
 				.post(`${baseUrl}/${appealId}/hearing/change/address`)
 				.send({ addressKnown: 'yes' });

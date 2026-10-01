@@ -1,7 +1,7 @@
 import { appealData } from '#testing/appeals/appeals.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -151,6 +151,52 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 			);
 
 			expect(unprettifiedHtml).toContain('Update appeal procedure</button>');
+		});
+
+		it('should render the written check details page without LPA questionnaire row when transitioning from Part 1', async () => {
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					procedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
+					appealStatus: 'lpa_questionnaire',
+					appealType: 'Planning appeal',
+					documentationSummary: {
+						lpaQuestionnaire: {
+							status: 'not received'
+						}
+					}
+				})
+				.persist();
+
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, { planningObligation: { hasObligation: false } })
+				.persist();
+
+			const session = supertest.agent(app);
+
+			await session
+				.post(
+					'/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type'
+				)
+				.send({ appealProcedure: 'written' });
+
+			const response = await session.get(
+				`/appeals-service/appeal-details/1/change-appeal-procedure-type/written/check-and-confirm`
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+			expect(unprettifiedHtml).toContain('Check details and update appeal procedure</h1>');
+			expect(unprettifiedHtml).toContain('Appeal procedure</dt>');
+			expect(unprettifiedHtml).toContain('Written representations</dd>');
+			expect(unprettifiedHtml).not.toContain('LPA questionnaire due');
+			expect(unprettifiedHtml).toContain('Statements due</dt>');
+			expect(unprettifiedHtml).toContain('Interested party comments due</dt>');
+			expect(unprettifiedHtml).toContain('Final comments due</dt>');
 		});
 	});
 
@@ -728,6 +774,58 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 				planningObligationDueDate: '2023-10-16T22:59:00.000Z',
 				proofOfEvidenceAndWitnessesDueDate: '',
 				caseManagementConferenceDueDate: ''
+			});
+		});
+	});
+
+	describe('POST /change-appeal-procedure-type/written/check-and-confirm', () => {
+		it('should submit change procedure request with existingAppealProcedure as part 1 and appealProcedure as written', async () => {
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.times(5)
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					procedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
+					appealStatus: 'lpa_questionnaire',
+					appealType: 'Planning appeal',
+					documentationSummary: {
+						lpaQuestionnaire: {
+							status: 'not received'
+						}
+					}
+				});
+
+			const session = supertest.agent(app);
+
+			await session
+				.post(
+					'/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type'
+				)
+				.send({ appealProcedure: 'written' });
+
+			let capturedRequestBody;
+			const changeProcedureTypeRequest = nock('http://test/')
+				.post('/appeals/1/procedure-type-change-request', (body) => {
+					capturedRequestBody = body;
+					return true;
+				})
+				.reply(200);
+
+			const response = await session
+				.post(
+					'/appeals-service/appeal-details/1/change-appeal-procedure-type/written/check-and-confirm'
+				)
+				.send();
+
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toContain('/appeals-service/appeal-details/1');
+			expect(changeProcedureTypeRequest.isDone()).toBe(true);
+			expect(capturedRequestBody).toMatchObject({
+				existingAppealProcedure: 'part 1',
+				appealProcedure: 'written',
+				ipCommentsDueDate: '2023-10-13T22:59:00.000Z',
+				lpaStatementDueDate: '2023-10-14T22:59:00.000Z',
+				finalCommentsDueDate: '2023-10-12T22:59:00.000Z'
 			});
 		});
 	});

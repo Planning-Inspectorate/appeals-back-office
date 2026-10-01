@@ -100,9 +100,6 @@ function createDataMap(mappingRequest) {
 			return mergeMaps(caseData, advert);
 		}
 		case APPEAL_CASE_TYPE.C: {
-			if (!isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE)) {
-				return caseData;
-			}
 			const enforcement = createMap(apiMappers.apiEnforcementMappers, mappingRequest);
 			return mergeMaps(caseData, enforcement);
 		}
@@ -164,9 +161,6 @@ function createIntegrationMap(mappingRequest) {
 			return mergeMaps(caseData, advert);
 		}
 		case APPEAL_CASE_TYPE.C: {
-			if (!isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_NOTICE)) {
-				return caseData;
-			}
 			const enforcement = createMap(
 				integrationMappers.integrationEnforcementMappers,
 				mappingRequest
@@ -242,11 +236,14 @@ function createDataLayout(caseMap, mappingRequest) {
 	switch (context) {
 		case contextEnum.appellantCase:
 			return {
+				...appealSummary,
+				...team,
+				...appealDetails,
 				appellantCaseId: appeal.appellantCase?.id,
+				...appellantCase,
+				...appealRelationships,
 				...otherAppellants,
 				...appealGrounds,
-				...appealSummary,
-				...appellantCase,
 				transferStatus: appealTransferStatus,
 				...createFoldersLayout(folders, contextEnum.appellantCase)
 			};
@@ -281,6 +278,9 @@ function createDataLayout(caseMap, mappingRequest) {
 					applicationMadeUnderActSection:
 						appeal.appellantCase?.applicationMadeUnderActSection ?? null,
 					isEnforcementChild: appellantCase?.isEnforcementChild ?? false,
+					applicationDate: appeal.appellantCase?.applicationDate?.toISOString() ?? null,
+					applicationDecision: appeal.appellantCase?.applicationDecision ?? null,
+					typeOfPlanningApplication: appeal.appellantCase?.typeOfPlanningApplication ?? null,
 					planningObligation:
 						appeal.appellantCase?.planningObligation !== undefined
 							? {
@@ -352,9 +352,15 @@ function createFoldersLayout(folders, context) {
 			const appellantCaseFolders = folders.filter((f) =>
 				f.path.startsWith(APPEAL_CASE_STAGE.APPELLANT_CASE)
 			);
-
 			return {
-				documents: processFolders(appellantCaseFolders)
+				documents: processFolders(appellantCaseFolders),
+				costs: {
+					appellantApplicationFolder: folders.find(
+						(f) =>
+							f.path ===
+							`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION}`
+					)
+				}
 			};
 		}
 		case contextEnum.lpaQuestionnaire: {
@@ -402,6 +408,9 @@ function createFoldersLayout(folders, context) {
 				),
 				inquiryEventDocuments: folders.find(
 					(f) => f.path === `inquiry/${APPEAL_DOCUMENT_TYPE.INQUIRY_POST_EVENT}`
+				),
+				hearingDocuments: folders.find(
+					(f) => f.path === `hearing/${APPEAL_DOCUMENT_TYPE.HEARING_PROCESS}`
 				),
 				costs: {
 					appellantApplicationFolder: folders.find(

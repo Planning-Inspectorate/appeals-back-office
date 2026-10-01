@@ -114,8 +114,8 @@ export const getCheckDetails = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	let appellantPreview = '';
-	let lpaPreview = '';
+	let appellantPreview;
+	let lpaPreview;
 	try {
 		const notifyPreviews = await cancelAppealEnforcementNoticeWithdrawn(
 			request.apiClient,

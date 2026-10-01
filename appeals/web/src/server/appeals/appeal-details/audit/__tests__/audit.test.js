@@ -96,7 +96,7 @@ describe('audit', () => {
 		});
 	});
 
-	describe('tryMapDocument', () => {
+	describe('tryMapDocument - interested parties', () => {
 		const redactionStatusKeys = Object.keys(statusFormatMap);
 		const randomKey = redactionStatusKeys[Math.floor(Math.random() * redactionStatusKeys.length)];
 		const randomRedactStatus = statusFormatMap[randomKey].toLowerCase();
@@ -106,15 +106,21 @@ describe('audit', () => {
 			documentGuid: 'efac1b7f-71c6-4780-bf22-edd0b0531914',
 			stage: 'representation',
 			folderId: 61306,
-			documentType: 'representationAttachments'
+			documentType: 'representationAttachments',
+			representationId: 257,
+			representationType: 'comment'
 		};
 
-		it('should return audit trail entry with doc GUID removed from a supporting doc display name', async () => {
-			const result = await tryMapDocument(1, auditTrailEntryText, docInfo, null);
-			expect(result).toEqual(
-				`Document <a class="govuk-link" href="#">docstuff.docx</a> uploaded (version 1, ${randomRedactStatus})`
-			);
-		});
+		it(
+			'should return audit trail entry with doc GUID removed from a supporting doc display' +
+				' name',
+			async () => {
+				const result = await tryMapDocument(1, auditTrailEntryText, docInfo, null);
+				expect(result).toEqual(
+					`Document <a class="govuk-link" href="/appeals-service/appeal-details/1/interested-party-comments/257/manage-documents/61306">docstuff.docx</a> uploaded (version 1, ${randomRedactStatus})`
+				);
+			}
+		);
 
 		it('should include the redaction status in the audit log display text for a supporting document', async () => {
 			const result = await tryMapDocument(1, auditTrailEntryText, docInfo, null);
@@ -134,6 +140,76 @@ describe('audit', () => {
 			const result = await tryMapDocument(1, auditTrailEntryText, docInfo, null);
 			expect(result).toEqual(
 				`Document <a class="govuk-link" href="/documents/1/download/${docInfo.documentGuid}/${docInfo.name}">${docInfo.name}</a> uploaded (version 1, ${randomRedactStatus})`
+			);
+		});
+	});
+
+	describe('tryMapDocument - hearing, inquiry, inquiry event and supporting docs', () => {
+		const redactionStatusKeys = Object.keys(statusFormatMap);
+		const randomKey = redactionStatusKeys[Math.floor(Math.random() * redactionStatusKeys.length)];
+		const randomRedactStatus = statusFormatMap[randomKey].toLowerCase();
+
+		it('should return audit trail entry with link for hearing documents', async () => {
+			const auditTrailEntryText = `Document hearing-brief.pdf uploaded (version 1, ${randomRedactStatus})`;
+			const docInfo = {
+				name: 'hearing-brief.pdf',
+				documentGuid: 'efac1b7f-71c6-4780-bf22-edd0b0531914',
+				stage: 'hearing',
+				folderId: 12345,
+				documentType: APPEAL_DOCUMENT_TYPE.HEARING_PROCESS
+			};
+
+			const result = await tryMapDocument(1, auditTrailEntryText, docInfo, null);
+			expect(result).toEqual(
+				`Document <a class="govuk-link" href="/appeals-service/appeal-details/1/hearing-documents/manage-documents/12345/efac1b7f-71c6-4780-bf22-edd0b0531914">hearing-brief.pdf</a> uploaded (version 1, ${randomRedactStatus})`
+			);
+		});
+
+		it('should return audit trail entry with link for inquiry core documents', async () => {
+			const auditTrailEntryText = `Document inquiry-proof.docx uploaded (version 1, ${randomRedactStatus})`;
+			const docInfo = {
+				name: 'inquiry-proof.docx',
+				documentGuid: 'a1b2c3d4-e5f6-4780-bf22-edd0b0531914',
+				stage: 'inquiry',
+				folderId: 54321,
+				documentType: APPEAL_DOCUMENT_TYPE.INQUIRY_CORE
+			};
+
+			const result = await tryMapDocument(1, auditTrailEntryText, docInfo, null);
+			expect(result).toEqual(
+				`Document <a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/documents/manage-documents/54321/a1b2c3d4-e5f6-4780-bf22-edd0b0531914">inquiry-proof.docx</a> uploaded (version 1, ${randomRedactStatus})`
+			);
+		});
+
+		it('should return audit trail entry with link for inquiry post-event documents', async () => {
+			const auditTrailEntryText = `Document post-event-doc.pdf uploaded (version 1, ${randomRedactStatus})`;
+			const docInfo = {
+				name: 'post-event-doc.pdf',
+				documentGuid: 'b2c3d4e5-f6a7-4780-bf22-edd0b0531914',
+				stage: 'inquiry',
+				folderId: 99999,
+				documentType: APPEAL_DOCUMENT_TYPE.INQUIRY_POST_EVENT
+			};
+
+			const result = await tryMapDocument(1, auditTrailEntryText, docInfo, null);
+			expect(result).toEqual(
+				`Document <a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry-event-documents/manage-documents/99999/b2c3d4e5-f6a7-4780-bf22-edd0b0531914">post-event-doc.pdf</a> uploaded (version 1, ${randomRedactStatus})`
+			);
+		});
+
+		it('should return audit trail entry with link for supporting documents', async () => {
+			const auditTrailEntryText = `Document supporting-evidence.pdf uploaded (version 1, ${randomRedactStatus})`;
+			const docInfo = {
+				name: 'supporting-evidence.pdf',
+				documentGuid: 'c3d4e5f6-a7b8-4780-bf22-edd0b0531914',
+				stage: 'general',
+				folderId: 88888,
+				documentType: 'supportingDocuments'
+			};
+
+			const result = await tryMapDocument(1, auditTrailEntryText, docInfo, null);
+			expect(result).toEqual(
+				`Document <a class="govuk-link" href="/appeals-service/appeal-details/1/supporting-documents/manage-documents/88888/c3d4e5f6-a7b8-4780-bf22-edd0b0531914">supporting-evidence.pdf</a> uploaded (version 1, ${randomRedactStatus})`
 			);
 		});
 	});
@@ -182,6 +258,10 @@ describe('audit', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}/audit-notifications`)
 				.reply(200, caseNotificationAuditLog);
+			nock('http://test/')
+				.get(`/appeals/${appealId}/reps?type=comment&pageNumber=1&pageSize=30&status=invalid`)
+				.times(7)
+				.reply(200, { items: [] });
 			nock('http://test/')
 				.get(`/appeals/${appealId}/reps?type=comment&pageNumber=1&pageSize=9999`)
 				.times(7)
@@ -249,6 +329,79 @@ describe('audit', () => {
 			);
 			expect(unprettifiedHtml).toContain(
 				'<td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--green">Issue decision</strong></td>'
+			);
+		});
+
+		it('should render rejected IP comment with expandable details when status is invalid', async () => {
+			const appealId = 1;
+			const rejectedAuditLog = [
+				{
+					azureAdUserId: activeDirectoryUsersData[0].id,
+					details: 'Interested party comment rejected: 101',
+					loggedDate: '2026-06-15T09:21:00.000Z'
+				}
+			];
+			const rejectedCommentItem = {
+				id: 101,
+				status: 'invalid',
+				representationType: 'comment',
+				originalRepresentation: 'This is a rejected comment text',
+				siteVisitRequested: true,
+				represented: {
+					name: 'Sarah Philips',
+					email: 'sarah@example.com',
+					address: {
+						addressLine1: '1 High Street',
+						town: 'London',
+						postCode: 'SW1A 1AA'
+					}
+				},
+				rejectionReasons: [
+					{
+						name: 'Not relevant to the appeal',
+						text: []
+					},
+					{
+						name: 'Illegible or incomplete documentation',
+						text: ['Document is blurry']
+					}
+				],
+				attachments: [
+					{
+						documentVersion: {
+							document: {
+								caseId: 1,
+								guid: 'doc-guid-1',
+								name: 'plan.pdf'
+							}
+						}
+					}
+				]
+			};
+
+			nock('http://test/').get(`/appeals/${appealId}/audit-trails`).reply(200, rejectedAuditLog);
+			nock('http://test/').get(`/appeals/${appealId}/audit-notifications`).reply(200, []);
+			nock('http://test/')
+				.get(`/appeals/${appealId}/reps?type=comment&pageNumber=1&pageSize=30&status=invalid`)
+				.reply(200, { items: [rejectedCommentItem] });
+			nock('http://test/')
+				.get(`/appeals/${appealId}/reps?type=comment&pageNumber=1&pageSize=9999`)
+				.reply(200, { items: [] });
+
+			const response = await request.get(`${baseUrl}/${appealId}/audit`);
+			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+			expect(unprettifiedHtml).toContain('Interested party comment rejected');
+			expect(unprettifiedHtml).toContain('View rejected comment');
+			expect(unprettifiedHtml).toContain('Sarah Philips');
+			expect(unprettifiedHtml).toContain('sarah@example.com');
+			expect(unprettifiedHtml).toContain('1 High Street, London, SW1A 1AA');
+			expect(unprettifiedHtml).toContain('Yes');
+			expect(unprettifiedHtml).toContain('This is a rejected comment text');
+			expect(unprettifiedHtml).toContain('plan.pdf');
+			expect(unprettifiedHtml).toContain('Not relevant to the appeal');
+			expect(unprettifiedHtml).toContain(
+				'Illegible or incomplete documentation: Document is blurry'
 			);
 		});
 	});
