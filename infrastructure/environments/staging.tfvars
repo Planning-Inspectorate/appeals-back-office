@@ -84,6 +84,7 @@ apps_config = {
     featureFlagSharingInquiryEventDocuments     = true
     featureFlagSharingInquiryDocuments          = true
     featureFlagSharingSupportingDocuments       = true
+    featureFlagShareMultipleDocs                = true
     featureFlagGenericCase                      = true
   }
 
