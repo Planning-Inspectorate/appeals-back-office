@@ -52,6 +52,7 @@ apps_config = {
     featureFlagLinkedAppealsUnlink              = true
     featureFlagSimplifyTeamAssignment           = true
     featureFlagPdfDownload                      = true
+    featureFlagBackgroundCaseDownload           = true
     featureFlagCancelCase                       = true
     featureFlagChangeProcedureType              = true
     featureFlagHearingPostMvp                   = true
