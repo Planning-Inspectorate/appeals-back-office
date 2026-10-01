@@ -674,10 +674,6 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
           "text": "17 January 2026",
         },
         {
-          "key": "Are you claiming costs as part of your appeal?",
-          "text": "Not answered",
-        },
-        {
           "key": "What is the application reference number?",
           "text": "65950/APP/3/3690",
         },
@@ -797,15 +793,6 @@ exports[`mapAppellantCaseData appellantCase should map appellant case data for a
         {
           "html": "No documents",
           "key": "Other new supporting documents",
-        },
-      ],
-    },
-    {
-      "heading": "Additional documents",
-      "items": [
-        {
-          "html": "No documents",
-          "key": "",
         },
       ],
     },

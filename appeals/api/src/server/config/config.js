@@ -110,7 +110,9 @@ const { value, error } = schema.validate({
 			environment.FEATURE_FLAG_SHARING_INQUIRY_DOCUMENTS === 'true',
 		featureFlagSharingSupportingDocuments:
 			environment.FEATURE_FLAG_SHARING_SUPPORTING_DOCUMENTS &&
-			environment.FEATURE_FLAG_SHARING_SUPPORTING_DOCUMENTS === 'true'
+			environment.FEATURE_FLAG_SHARING_SUPPORTING_DOCUMENTS === 'true',
+		featureFlagGenericCase:
+			environment.FEATURE_FLAG_GENERIC_CASE && environment.FEATURE_FLAG_GENERIC_CASE === 'true'
 	},
 	serviceBusEnabled: environment.SERVICE_BUS_ENABLED && environment.SERVICE_BUS_ENABLED === 'true',
 	enableTestEndpoints:

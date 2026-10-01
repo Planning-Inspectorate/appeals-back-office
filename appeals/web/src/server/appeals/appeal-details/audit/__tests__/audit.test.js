@@ -96,7 +96,7 @@ describe('audit', () => {
 		});
 	});
 
-	describe('tryMapDocument', () => {
+	describe('tryMapDocument - interested parties', () => {
 		const redactionStatusKeys = Object.keys(statusFormatMap);
 		const randomKey = redactionStatusKeys[Math.floor(Math.random() * redactionStatusKeys.length)];
 		const randomRedactStatus = statusFormatMap[randomKey].toLowerCase();
@@ -140,6 +140,76 @@ describe('audit', () => {
 			const result = await tryMapDocument(1, auditTrailEntryText, docInfo, null);
 			expect(result).toEqual(
 				`Document <a class="govuk-link" href="/documents/1/download/${docInfo.documentGuid}/${docInfo.name}">${docInfo.name}</a> uploaded (version 1, ${randomRedactStatus})`
+			);
+		});
+	});
+
+	describe('tryMapDocument - hearing, inquiry, inquiry event and supporting docs', () => {
+		const redactionStatusKeys = Object.keys(statusFormatMap);
+		const randomKey = redactionStatusKeys[Math.floor(Math.random() * redactionStatusKeys.length)];
+		const randomRedactStatus = statusFormatMap[randomKey].toLowerCase();
+
+		it('should return audit trail entry with link for hearing documents', async () => {
+			const auditTrailEntryText = `Document hearing-brief.pdf uploaded (version 1, ${randomRedactStatus})`;
+			const docInfo = {
+				name: 'hearing-brief.pdf',
+				documentGuid: 'efac1b7f-71c6-4780-bf22-edd0b0531914',
+				stage: 'hearing',
+				folderId: 12345,
+				documentType: APPEAL_DOCUMENT_TYPE.HEARING_PROCESS
+			};
+
+			const result = await tryMapDocument(1, auditTrailEntryText, docInfo, null);
+			expect(result).toEqual(
+				`Document <a class="govuk-link" href="/appeals-service/appeal-details/1/hearing-documents/manage-documents/12345/efac1b7f-71c6-4780-bf22-edd0b0531914">hearing-brief.pdf</a> uploaded (version 1, ${randomRedactStatus})`
+			);
+		});
+
+		it('should return audit trail entry with link for inquiry core documents', async () => {
+			const auditTrailEntryText = `Document inquiry-proof.docx uploaded (version 1, ${randomRedactStatus})`;
+			const docInfo = {
+				name: 'inquiry-proof.docx',
+				documentGuid: 'a1b2c3d4-e5f6-4780-bf22-edd0b0531914',
+				stage: 'inquiry',
+				folderId: 54321,
+				documentType: APPEAL_DOCUMENT_TYPE.INQUIRY_CORE
+			};
+
+			const result = await tryMapDocument(1, auditTrailEntryText, docInfo, null);
+			expect(result).toEqual(
+				`Document <a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/documents/manage-documents/54321/a1b2c3d4-e5f6-4780-bf22-edd0b0531914">inquiry-proof.docx</a> uploaded (version 1, ${randomRedactStatus})`
+			);
+		});
+
+		it('should return audit trail entry with link for inquiry post-event documents', async () => {
+			const auditTrailEntryText = `Document post-event-doc.pdf uploaded (version 1, ${randomRedactStatus})`;
+			const docInfo = {
+				name: 'post-event-doc.pdf',
+				documentGuid: 'b2c3d4e5-f6a7-4780-bf22-edd0b0531914',
+				stage: 'inquiry',
+				folderId: 99999,
+				documentType: APPEAL_DOCUMENT_TYPE.INQUIRY_POST_EVENT
+			};
+
+			const result = await tryMapDocument(1, auditTrailEntryText, docInfo, null);
+			expect(result).toEqual(
+				`Document <a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry-event-documents/manage-documents/99999/b2c3d4e5-f6a7-4780-bf22-edd0b0531914">post-event-doc.pdf</a> uploaded (version 1, ${randomRedactStatus})`
+			);
+		});
+
+		it('should return audit trail entry with link for supporting documents', async () => {
+			const auditTrailEntryText = `Document supporting-evidence.pdf uploaded (version 1, ${randomRedactStatus})`;
+			const docInfo = {
+				name: 'supporting-evidence.pdf',
+				documentGuid: 'c3d4e5f6-a7b8-4780-bf22-edd0b0531914',
+				stage: 'general',
+				folderId: 88888,
+				documentType: 'supportingDocuments'
+			};
+
+			const result = await tryMapDocument(1, auditTrailEntryText, docInfo, null);
+			expect(result).toEqual(
+				`Document <a class="govuk-link" href="/appeals-service/appeal-details/1/supporting-documents/manage-documents/88888/c3d4e5f6-a7b8-4780-bf22-edd0b0531914">supporting-evidence.pdf</a> uploaded (version 1, ${randomRedactStatus})`
 			);
 		});
 	});
