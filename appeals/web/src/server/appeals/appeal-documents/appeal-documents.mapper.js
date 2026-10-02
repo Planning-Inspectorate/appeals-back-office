@@ -1,5 +1,6 @@
 import usersService from '#appeals/appeal-users/users-service.js';
 import { gigabyte, kilobyte, megabyte } from '#appeals/appeal.constants.js';
+import { isFeatureActive } from '#common/feature-flags.js';
 import { permissionNames } from '#environment/permissions.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import {
@@ -22,7 +23,11 @@ import {
 	redactionStatusIdToName
 } from '#lib/redaction-statuses.js';
 import config from '@pins/appeals.web/environment/config.js';
-import { APPEAL_TYPE, DOCUMENTS_PAGE_SIZE } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_TYPE,
+	DOCUMENTS_PAGE_SIZE,
+	FEATURE_FLAG_NAMES
+} from '@pins/appeals/constants/common.js';
 import {
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_REDACTED_STATUS,
@@ -1029,7 +1034,9 @@ export function manageFolderPage({
 			...errorSummaryPageComponents,
 			...(hasMultipleButtons ? [buttonWrapperOpen] : []),
 			...(editable ? [buttonComponent] : []),
-			...(editable && shareAllLinkUrl ? [shareAllButtonComponent] : []),
+			...(isFeatureActive(FEATURE_FLAG_NAMES.SHARE_MULTIPLE_DOCS) && editable && shareAllLinkUrl
+				? [shareAllButtonComponent]
+				: []),
 			...(hasMultipleButtons ? [buttonWrapperClose] : []),
 			{
 				type: 'table',
