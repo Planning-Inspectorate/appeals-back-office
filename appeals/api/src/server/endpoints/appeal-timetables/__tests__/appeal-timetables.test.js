@@ -321,7 +321,7 @@ describe('appeal timetables routes', () => {
 					enforcementNoticeHearingAppealWithTimetable,
 					enforcementNoticeAppealRequestBody,
 					enforcementNoticeAppealResponseBody,
-					'appeal-timetable-updated-enforcement-hearing'
+					'appeal-timetable-updated-enforcement'
 				]
 			])(
 				'updates a enforcement %s appeal timetable and sends notify',
