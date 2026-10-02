@@ -9,8 +9,6 @@ import { mapQuestionnaireIn } from './questionnaire.mapper.js';
 import { mapRepresentationIn } from './representation.mapper.js';
 import { hasContactAddressData, mapServiceUserIn } from './service-user.mapper.js';
 
-import { renameDuplicateDocuments } from '#endpoints/integrations/integrations.utils.js';
-
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.ServiceUser} ServiceUser */
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
@@ -96,7 +94,7 @@ const mapAppealSubmission = (data) => {
 		appealInput.address = { create: address };
 	}
 
-	const documentsInput = (renameDuplicateDocuments(documents) || []).map((document) =>
+	const documentsInput = (documents || []).map((document) =>
 		mapDocumentIn(document, APPEAL_CASE_STAGE.APPELLANT_CASE)
 	);
 
@@ -136,7 +134,7 @@ const mapQuestionnaireSubmission = (data, appeal, designatedSites) => {
 		}
 	};
 
-	const documentsInput = (renameDuplicateDocuments(documents) || []).map((document) =>
+	const documentsInput = (documents || []).map((document) =>
 		mapDocumentIn(document, APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE)
 	);
 

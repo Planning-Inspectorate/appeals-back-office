@@ -105,12 +105,14 @@ export const documentVersionUpdated = {
 export const documentVersionCreated = {
 	documentGuid: guid,
 	fileName,
+	originalFilename: originalFileName,
 	version
 };
 
 export const documentVersionRetrieved = {
 	documentGuid: guid,
 	fileName,
+	originalFilename: originalFileName,
 	version,
 	parentDocument: documentUpdated
 };

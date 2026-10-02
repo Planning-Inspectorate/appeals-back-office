@@ -290,7 +290,7 @@ const setDocumentVersions = async (tx, appealId, caseReference, documents) => {
 		for (const batch of documentBatches) {
 			const documentData = batch.map((document) => {
 				// @ts-ignore
-				const { documentGuid, documentType, stage, fileName } = document;
+				const { documentGuid, documentType, stage, fileName, originalFilename } = document;
 
 				const folderId = getFolderIdFromDocumentType(
 					caseFolders,
@@ -303,7 +303,7 @@ const setDocumentVersions = async (tx, appealId, caseReference, documents) => {
 				return {
 					caseId: appealId,
 					folderId,
-					name: fileName,
+					name: originalFilename || fileName,
 					guid: documentGuid
 				};
 			});
