@@ -1,5 +1,5 @@
 
-{% macro globalHeader(domainType, domainName, containerClasses, pageIsPersonalList, pageIsNationalList) %}
+{% macro globalHeader(domainType, domainName, containerClasses, pageIsPersonalList, pageIsNationalList, pageIsCreateCase) %}
 	<header class="govuk-header govuk-!-margin-bottom-0" id="pins-applications-header" role="banner" data-module="govuk-header">
 		<div class="{{containerClasses}}">
 			<div class="pins-row">
@@ -12,7 +12,7 @@
 				<div class="pins-column--central">
 					<h1 class="pins-header-domainname govuk-body-l govuk-!-font-weight-bold govuk-!-margin-bottom-0">
 						{{ domainName }}
-					</h1> 
+					</h1>
 					<nav class="govuk-header__navigation pins-header-navigation" aria-label="Menu">
 						<ul class="govuk-header__navigation-list">
 							<li class="govuk-header__navigation-item{{ ' govuk-header__navigation-item--active' if pageIsPersonalList else '' }}">
@@ -21,6 +21,11 @@
 							<li class="govuk-header__navigation-item{{ ' govuk-header__navigation-item--active' if pageIsNationalList else '' }}">
 								<a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
 							</li>
+							{% if featureFlagGenericCase %}
+							<li class="govuk-header__navigation-item{{ ' govuk-header__navigation-item--active' if pageIsCreateCase else '' }}">
+								<a class="govuk-header__link" href="/appeals-service/create-a-case">Create a case</a>
+							</li>
+							{% endif %}
 							<li class="govuk-header__navigation-item">
 								<a class="govuk-header__link" href="/auth/signout">Sign out</a>
 							</li>
