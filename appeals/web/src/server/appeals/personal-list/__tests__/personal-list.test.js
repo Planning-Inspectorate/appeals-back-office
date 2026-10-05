@@ -217,6 +217,9 @@ describe('personal-list', () => {
 				'<li class="govuk-header__navigation-item govuk-header__navigation-item--active"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>'
 			);
 			expect(headerNavigationHtml).toContain('href="/appeals-service/all-cases">All cases</a>');
+			expect(headerNavigationHtml).toContain(
+				'href="/appeals-service/create-a-case">Create a case</a>'
+			);
 			expect(headerNavigationHtml).toContain('href="/auth/signout">Sign out</a>');
 		});
 

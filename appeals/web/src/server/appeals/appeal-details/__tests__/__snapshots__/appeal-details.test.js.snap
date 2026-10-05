@@ -8832,6 +8832,8 @@ role="banner" data-module="govuk-header">
                         </li>
                         <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
                         </li>
+                        <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/create-a-case">Create a case</a>
+                        </li>
                         <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
                         </li>
                     </ul>
@@ -9231,6 +9233,8 @@ exports[`appeal-details should not render a back button 1`] = `
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                             </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/create-a-case">Create a case</a>
                             </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
                             </li>
