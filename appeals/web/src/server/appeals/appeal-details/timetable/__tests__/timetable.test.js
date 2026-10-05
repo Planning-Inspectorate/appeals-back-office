@@ -421,6 +421,57 @@ describe('Timetable', () => {
 				expect(element.innerHTML).not.toContain('name="statement-of-common-ground-due-date-day"');
 			});
 		});
+
+		describe.each([APPEAL_TYPE.ENFORCEMENT_NOTICE, APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING])(
+			'Enforcement and ELB written with planning obligation',
+			(appealType) => {
+				it(`should map planningObligationDueDate for ${appealType} type written appeal with a planning obligation`, async () => {
+					const appealData = {
+						...baseAppealData,
+						appealStatus: 'lpa_questionnaire',
+						appealTimetable: {
+							appealTimetableId: 1
+						},
+						appealType: appealType,
+						procedureType: 'Written'
+					};
+
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
+					nock('http://test/')
+						.get('/appeals/1/appellant-cases/0')
+						.reply(200, { planningObligation: { hasObligation: true } });
+
+					const response = await request.get(`${baseUrl}/edit`);
+					const element = parseHtml(response.text);
+
+					expect(element.innerHTML).toContain('name="planning-obligation-due-date-day"');
+					expect(element.innerHTML).toContain('name="planning-obligation-due-date-month"');
+					expect(element.innerHTML).toContain('name="planning-obligation-due-date-year"');
+				});
+
+				it(`should not map planningObligationDueDate for ${appealType} type written appeal without a planning obligation`, async () => {
+					const appealData = {
+						...baseAppealData,
+						appealStatus: 'lpa_questionnaire',
+						appealTimetable: {
+							appealTimetableId: 1
+						},
+						appealType: appealType,
+						procedureType: 'Written'
+					};
+
+					nock('http://test/').get('/appeals/1?include=all').reply(200, appealData);
+					nock('http://test/')
+						.get('/appeals/1/appellant-cases/0')
+						.reply(200, { planningObligation: { hasObligation: false } });
+
+					const response = await request.get(`${baseUrl}/edit`);
+					const element = parseHtml(response.text);
+
+					expect(element.innerHTML).not.toContain('name="planning-obligation-due-date-day"');
+				});
+			}
+		);
 	});
 
 	describe('POST /edit', () => {
