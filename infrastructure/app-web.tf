@@ -109,7 +109,6 @@ module "app_web" {
     FEATURE_FLAG_APPELLANT_STATEMENT                 = var.apps_config.featureFlags.featureFlagAppellantStatement
     FEATURE_FLAG_RULE_6_STATEMENT                    = var.apps_config.featureFlags.featureFlagRule6Statement
     FEATURE_FLAG_RULE_6_COSTS                        = var.apps_config.featureFlags.featureFlagRule6Costs
-    FEATURE_FLAG_LDC                                 = var.apps_config.featureFlags.featureFlagLDC
     FEATURE_FLAG_S20_INQUIRY                         = var.apps_config.featureFlags.featureFlagS20Inquiry
     FEATURE_FLAG_ENFORCEMENT_NOTICE_HEARING          = var.apps_config.featureFlags.featureFlagEnforcementNoticeHearing
     FEATURE_FLAG_ENFORCEMENT_NOTICE_INQUIRY          = var.apps_config.featureFlags.featureFlagEnforcementNoticeInquiry
@@ -128,6 +127,7 @@ module "app_web" {
     FEATURE_FLAG_SHARING_INQUIRY_EVENT_DOCUMENTS     = var.apps_config.featureFlags.featureFlagSharingInquiryEventDocuments
     FEATURE_FLAG_SHARING_INQUIRY_DOCUMENTS           = var.apps_config.featureFlags.featureFlagSharingInquiryDocuments
     FEATURE_FLAG_SHARING_SUPPORTING_DOCUMENTS        = var.apps_config.featureFlags.featureFlagSharingSupportingDocuments
+    FEATURE_FLAG_SHARE_MULTIPLE_DOCS                 = var.apps_config.featureFlags.featureFlagShareMultipleDocs
     FEATURE_FLAG_GENERIC_CASE                        = var.apps_config.featureFlags.featureFlagGenericCase
 
     #change LPA
