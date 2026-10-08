@@ -4,8 +4,9 @@ import {
 } from '#endpoints/addresses/addresses.formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import hearingRepository from '#repositories/hearing.repository.js';
-import transitionState from '#state/transition-state.js';
+import transitionState, { transitionLinkedChildAppealsState } from '#state/transition-state.js';
 import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
+import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
@@ -14,6 +15,7 @@ import {
 	AUDIT_TRAIL_HEARING_CANCELLED,
 	AUDIT_TRAIL_HEARING_DATE_UPDATED,
 	AUDIT_TRAIL_HEARING_SET_UP,
+	CASE_RELATIONSHIP_LINKED,
 	ERROR_FAILED_TO_SAVE_DATA,
 	VALIDATION_OUTCOME_CANCEL,
 	VALIDATION_OUTCOME_COMPLETE,
@@ -57,9 +59,20 @@ export const postHearing = async (req, res) => {
 		appeal
 	} = req;
 
+	const childAppeals = appeal.childAppeals;
 	const appealId = Number(params.appealId);
 	const azureAdUserId = String(req.get('azureAdUserId'));
 	try {
+		let appealIdsToUpdate = [appeal.id];
+		if (isLinkedAppealsActive(appeal)) {
+			// we also want to create hearings associated with the child appeals
+			childAppeals?.forEach((childAppeal) => {
+				if (childAppeal.type === CASE_RELATIONSHIP_LINKED && childAppeal.childId !== null) {
+					appealIdsToUpdate.push(childAppeal.childId);
+				}
+			});
+		}
+
 		await createHearing(
 			{
 				appealId,
@@ -80,10 +93,14 @@ export const postHearing = async (req, res) => {
 			appeal,
 			req.body.inspectorName,
 			req.notifyClient,
-			azureAdUserId
+			azureAdUserId,
+			appealIdsToUpdate
 		);
 
 		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT) && address) {
+			if (isLinkedAppealsActive(appeal)) {
+				await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+			}
 			await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 		}
 
