@@ -175,6 +175,7 @@ const sendHearingNotifications = async (
  * @param {string} inspectorName
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
+ * @param {number[]} appealIdsToUpdate
  * @returns {Promise<void>}
  */
 const createHearing = async (
@@ -182,27 +183,40 @@ const createHearing = async (
 	appeal,
 	inspectorName,
 	notifyClient,
-	azureAdUserId
+	azureAdUserId,
+	appealIdsToUpdate
 ) => {
 	try {
-		const appealId = createHearingData.appealId;
 		const hearingStartTime = createHearingData.hearingStartTime;
 		const hearingEndTime = createHearingData.hearingEndTime;
 		const estimatedDays = createHearingData.estimatedDays;
 		const address = createHearingData.address;
 
-		const hearing = await hearingRepository.createHearingById({
-			appealId,
-			hearingStartTime,
-			hearingEndTime,
-			estimatedDays,
-			address
-		});
+		// Batch create hearings for all appeals in the linked group
+		// Cannot use a createMany as prisma doesn't support nesting additional relations (here the address)
+		// in a createMany call, so we have to create each hearing individually
+		const hearings = await Promise.all(
+			appealIdsToUpdate.map((appealId) =>
+				hearingRepository.createHearingById({
+					appealId,
+					hearingStartTime,
+					hearingEndTime,
+					estimatedDays,
+					address
+				})
+			)
+		);
 
 		if (address) {
-			await broadcasters.broadcastEvent(hearing.id, EVENT_TYPE.HEARING, EventType.Create);
+			// Batch broadcast hearing events for all appeals in the linked group
+			await Promise.all(
+				hearings.map((hearing) =>
+					broadcasters.broadcastEvent(hearing.id, EVENT_TYPE.HEARING, EventType.Create)
+				)
+			);
 		}
 
+		// only send a notify for the single/lead appeal
 		await sendHearingDetailsNotifications(
 			notifyClient,
 			'hearing-set-up',
