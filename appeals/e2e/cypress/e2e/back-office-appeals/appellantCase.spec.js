@@ -777,7 +777,7 @@ describe('Managing Appellant Case Details', () => {
 	});
 
 	const navigateToReferenceUpdate = (caseObj) => {
-		caseDetailsPage.navigateToAppealsService();
+		caseDetailsPage.navigateToAppealsList();
 		listCasesPage.clickAppealByRef(caseObj);
 		caseDetailsPage.clickReviewAppellantCase();
 		caseDetailsPage.clickChangeApplicationReferenceLink();
