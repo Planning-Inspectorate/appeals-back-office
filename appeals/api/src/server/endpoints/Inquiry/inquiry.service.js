@@ -383,9 +383,9 @@ const updateInquiry = async (
 		};
 
 		const result = await inquiryRepository.updateInquiryById(inquiryId, updateData);
+		await broadcasters.broadcastEvent(updateData.inquiryId, EVENT_TYPE.INQUIRY, EventType.Update);
 
 		if (result.address || existingAddressId) {
-			await broadcasters.broadcastEvent(updateData.inquiryId, EVENT_TYPE.INQUIRY, EventType.Update);
 			await sendInquiryDetailsNotifications(
 				notifyClient,
 				'inquiry-updated',
