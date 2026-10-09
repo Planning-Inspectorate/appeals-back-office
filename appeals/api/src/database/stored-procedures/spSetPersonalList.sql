@@ -308,8 +308,9 @@ BEGIN
 	UPDATE  #personal
 	SET     dueDate = CASE	WHEN appealTypeId = @APPEAL_TYPE_ENFORCEMENT AND groundAFeeReceiptDueDate IS NOT NULL AND caseExtensionDate IS NOT NULL THEN
 								  CASE WHEN groundAFeeReceiptDueDate < caseExtensionDate THEN groundAFeeReceiptDueDate ELSE caseExtensionDate END
-							  WHEN caseExtensionDate IS NULL THEN caseCreatedDate
-							  ELSE caseExtensionDate
+							WHEN appealTypeId = @APPEAL_TYPE_ENFORCEMENT AND groundAFeeReceiptDueDate IS NOT NULL THEN groundAFeeReceiptDueDate
+							WHEN caseExtensionDate IS NOT NULL THEN caseExtensionDate
+							ELSE caseCreatedDate
 					END
 	WHERE   status = @STATUS_VALIDATION;
 
