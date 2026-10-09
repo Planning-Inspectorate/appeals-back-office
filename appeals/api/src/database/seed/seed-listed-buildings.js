@@ -5,10 +5,10 @@ import { Readable } from 'node:stream';
 
 // json streaming
 import { chain } from 'stream-chain';
-import Parser from 'stream-json';
-import Ignore from 'stream-json/filters/Ignore.js';
-import Pick from 'stream-json/filters/Pick.js';
-import StreamArray from 'stream-json/streamers/StreamArray.js';
+import { parser } from 'stream-json';
+import { ignore } from 'stream-json/filters/ignore.js';
+import { pick } from 'stream-json/filters/pick.js';
+import { streamArray } from 'stream-json/streamers/stream-array.js';
 
 const LOCAL_LISTED_BUILDINGS = [
 	{ reference: '1021469', name: 'FIVE LORDS FARMHOUSE', grade: 'II' },
@@ -65,13 +65,13 @@ export const importListedBuildingsDataset = async (databaseConnector, url, force
 const importListedBuildings = async (fileStream, databaseConnector) => {
 	const pipeline = chain([
 		fileStream,
-		Parser(),
-		new Pick({ filter: 'entities' }),
-		new Ignore({
+		parser(),
+		pick({ filter: 'entities' }),
+		ignore({
 			filter:
 				/dataset|geometry|entry-date|end-date|entity|organisation-entity|point|prefix|typology|documentation-url|start-date/i
 		}),
-		new StreamArray()
+		streamArray()
 	]);
 
 	const batchSize = 50;
