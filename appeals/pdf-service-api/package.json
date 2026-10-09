@@ -20,21 +20,21 @@
 	"dependencies": {
 		"@pins/appeals": "^0.0.0",
 		"@pins/platform": "^0.0.0",
-		"applicationinsights": "*",
-		"body-parser": "^1.20.6",
-		"cors": "*",
-		"date-fns": "^2.30.0",
-		"date-fns-tz": "^2.0.0",
-		"dotenv": "16.0.3",
+		"applicationinsights": "^3.16.0",
+		"body-parser": "^2.3.0",
+		"cors": "^2.8.6",
+		"date-fns": "^4.4.0",
+		"date-fns-tz": "^3.2.0",
+		"dotenv": "18.0.5",
 		"express": "*",
-		"govuk-frontend": "^5.4.0",
+		"govuk-frontend": "^6.5.1",
 		"multer": "^2.4.0",
 		"nunjucks": "^3.2.4",
-		"pino": "*",
-		"puppeteer-core": "*"
+		"pino": "^10.3.1",
+		"puppeteer-core": "^25.12.0"
 	},
 	"devDependencies": {
-		"@types/express": "^5.0.5",
+		"@types/express": "^5.0.6",
 		"jest": "*",
 		"jest-junit": "*",
 		"nodemon": "*"
