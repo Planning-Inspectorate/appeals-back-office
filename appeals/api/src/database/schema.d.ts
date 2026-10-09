@@ -64,7 +64,7 @@ export interface Specialism extends schema.Specialism {}
 export interface ProcedureType extends schema.ProcedureType {}
 export interface LPA extends schema.LPA {}
 export interface ServiceUser extends schema.ServiceUser {
-	address?: Address;
+	address?: Address | null;
 }
 export interface User extends schema.User {}
 export interface PADSUser extends schema.PADSUser {}
@@ -193,6 +193,7 @@ export interface AuditTrailDoc {
 export interface AuditTrail extends schema.AuditTrail {
 	user?: User | null;
 	doc?: AuditTrailDoc | null;
+	representation?: Representation | null;
 }
 
 export interface Representation extends schema.Representation {
@@ -206,19 +207,19 @@ export interface Representation extends schema.Representation {
 }
 
 export interface RepresentationAttachment extends schema.RepresentationAttachment {
-	documentVersion: DocumentVersion;
-	representation: Representation;
+	documentVersion?: DocumentVersion | null;
+	representation?: Representation | null;
 }
 
 export interface RepresentationRejectionReason extends schema.RepresentationRejectionReason {
-	representationRejectionReasonsSelected: RepresentationRejectionReasonsSelected[];
+	representationRejectionReasonsSelected?: RepresentationRejectionReasonsSelected[] | null;
 }
 
 export interface RepresentationRejectionReasonsSelected
 	extends schema.RepresentationRejectionReasonsSelected {
-	representationRejectionReason: RepresentationRejectionReason;
-	representation: Representation;
-	representationRejectionReasonText: RepresentationRejectionReasonText[];
+	representationRejectionReason?: RepresentationRejectionReason | null;
+	representation?: Representation | null;
+	representationRejectionReasonText?: RepresentationRejectionReasonText[] | null;
 }
 
 export interface RepresentationRejectionReasonText
