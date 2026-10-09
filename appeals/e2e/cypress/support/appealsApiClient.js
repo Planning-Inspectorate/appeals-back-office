@@ -75,7 +75,7 @@ export const appealsApiClient = {
 				})
 			});
 
-			assertResponseStatus(response, 'submitting case', url);
+			await assertResponseStatus(response, 'submitting case', url);
 
 			const responseBody = await response.json();
 
@@ -107,7 +107,7 @@ export const appealsApiClient = {
 				body: JSON.stringify(requestBody)
 			});
 
-			assertResponseStatus(response, 'submitting LPAQ', url);
+			await assertResponseStatus(response, 'submitting LPAQ', url);
 
 			const responseBody = await response.json();
 
@@ -135,7 +135,7 @@ export const appealsApiClient = {
 				body: JSON.stringify(requestBody)
 			});
 
-			assertResponseStatus(response, 'submitting appellant statement', url);
+			await assertResponseStatus(response, 'submitting appellant statement', url);
 
 			const responseBody = await response.json();
 			expect(responseBody).to.be.an('object');
@@ -162,7 +162,7 @@ export const appealsApiClient = {
 				}
 			});
 
-			assertResponseStatus(response, 'reviewing appellant statement', url);
+			await assertResponseStatus(response, 'reviewing appellant statement', url);
 
 			const responseBody = await response.json();
 			expect(responseBody).to.be.an('object');
@@ -185,7 +185,7 @@ export const appealsApiClient = {
 				}
 			});
 
-			assertResponseStatus(response, 'reviewing rule6Party statement', url);
+			await assertResponseStatus(response, 'reviewing rule6Party statement', url);
 
 			const responseBody = await response.json();
 			expect(responseBody).to.be.an('object');
@@ -211,7 +211,7 @@ export const appealsApiClient = {
 				})
 			});
 
-			assertResponseStatus(response, 'reviewing rule6 proof of evidence', url);
+			await assertResponseStatus(response, 'reviewing rule6 proof of evidence', url);
 
 			const responseBody = await response.json();
 			expect(responseBody).to.be.an('object');
@@ -234,7 +234,7 @@ export const appealsApiClient = {
 				}
 			});
 
-			assertResponseStatus(response, 'reviewing LPA proof of evidence', url);
+			await assertResponseStatus(response, 'reviewing LPA proof of evidence', url);
 
 			const responseBody = await response.json();
 			expect(responseBody).to.be.an('object');
@@ -257,7 +257,7 @@ export const appealsApiClient = {
 				}
 			});
 
-			assertResponseStatus(response, 'reviewing appellant proof of evidence', url);
+			await assertResponseStatus(response, 'reviewing appellant proof of evidence', url);
 
 			const responseBody = await response.json();
 			expect(responseBody).to.be.an('object');
@@ -289,7 +289,7 @@ export const appealsApiClient = {
 				body: JSON.stringify(submission)
 			});
 
-			assertResponseStatus(response, 'adding representation', url);
+			await assertResponseStatus(response, 'adding representation', url);
 
 			const responseBody = await response.json();
 
@@ -312,7 +312,7 @@ export const appealsApiClient = {
 				}
 			});
 
-			assertResponseStatus(response, 'simulating site visit elapsed', url);
+			await assertResponseStatus(response, 'simulating site visit elapsed', url);
 
 			const responseBody = await response.json();
 			expect(responseBody).to.be.true;
@@ -335,7 +335,7 @@ export const appealsApiClient = {
 				}
 			});
 
-			assertResponseStatus(response, 'simulating hearing elapsed', url);
+			await assertResponseStatus(response, 'simulating hearing elapsed', url);
 
 			const responseBody = await response.json();
 			expect(responseBody).to.be.true;
@@ -357,7 +357,7 @@ export const appealsApiClient = {
 				}
 			});
 
-			assertResponseStatus(response, 'simulating proof of evidence elapsed', url);
+			await assertResponseStatus(response, 'simulating proof of evidence elapsed', url);
 
 			const responseBody = await response.json();
 			expect(responseBody).to.be.true;
@@ -380,7 +380,7 @@ export const appealsApiClient = {
 				}
 			});
 
-			assertResponseStatus(response, 'simulating inquiry elapsed', url);
+			await assertResponseStatus(response, 'simulating inquiry elapsed', url);
 
 			const responseBody = await response.json();
 			expect(responseBody).to.be.true;
@@ -403,7 +403,7 @@ export const appealsApiClient = {
 				}
 			});
 
-			assertResponseStatus(response, 'simulating statements elapsed', url);
+			await assertResponseStatus(response, 'simulating statements elapsed', url);
 
 			const responseBody = await response.json();
 
@@ -426,7 +426,7 @@ export const appealsApiClient = {
 				}
 			});
 
-			assertResponseStatus(response, 'simulating final comments elapsed', url);
+			await assertResponseStatus(response, 'simulating final comments elapsed', url);
 
 			const responseBody = await response.json();
 			expect(responseBody).to.be.true;
@@ -448,7 +448,7 @@ export const appealsApiClient = {
 				}
 			});
 
-			assertResponseStatus(response, 'simulating document scan complete', url);
+			await assertResponseStatus(response, 'simulating document scan complete', url);
 
 			return true;
 		} catch (error) {
@@ -467,7 +467,7 @@ export const appealsApiClient = {
 				}
 			});
 
-			assertResponseStatus(response, 'loading case details', url);
+			await assertResponseStatus(response, 'loading case details', url);
 
 			const responseBody = await response.json();
 
@@ -492,7 +492,7 @@ export const appealsApiClient = {
 				}
 			});
 
-			assertResponseStatus(response, 'loading appellant case details', url);
+			await assertResponseStatus(response, 'loading appellant case details', url);
 
 			const responseBody = await response.json();
 
@@ -522,7 +522,7 @@ export const appealsApiClient = {
 					numDays: days
 				})
 			});
-			assertResponseStatus(response, 'getting business date', url);
+			await assertResponseStatus(response, 'getting business date', url);
 
 			const responseBody = await response.json();
 
@@ -546,7 +546,7 @@ export const appealsApiClient = {
 					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 				}
 			});
-			assertResponseStatus(response, 'getting specialisms', url);
+			await assertResponseStatus(response, 'getting specialisms', url);
 
 			const responseBody = await response.json();
 
@@ -578,7 +578,7 @@ export const appealsApiClient = {
 				})
 			});
 
-			assertResponseStatus(response, 'updating allocation', url);
+			await assertResponseStatus(response, 'updating allocation', url);
 
 			const responseBody = await response.json();
 
@@ -615,7 +615,7 @@ export const appealsApiClient = {
 				body: JSON.stringify(hearingRequest)
 			});
 
-			assertResponseStatus(response, 'adding hearing', url);
+			await assertResponseStatus(response, 'adding hearing', url);
 
 			const responseBody = await response.json();
 			expect(responseBody).to.be.an('object');
@@ -644,7 +644,7 @@ export const appealsApiClient = {
 				}
 			});
 
-			assertResponseStatus(response, 'deleting hearing', url);
+			await assertResponseStatus(response, 'deleting hearing', url);
 
 			const responseBody = await response.json();
 
@@ -673,7 +673,7 @@ export const appealsApiClient = {
 				}
 			});
 
-			assertResponseStatus(response, 'getting notify emails', url);
+			await assertResponseStatus(response, 'getting notify emails', url);
 
 			const responsejson = await response.json();
 
@@ -702,7 +702,7 @@ export const appealsApiClient = {
 				},
 				body: JSON.stringify(requestBody)
 			});
-			assertResponseStatus(response, 'updating appeal cases', url);
+			await assertResponseStatus(response, 'updating appeal cases', url);
 
 			return await response.json();
 		} catch (error) {
@@ -724,7 +724,7 @@ export const appealsApiClient = {
 				},
 				body: JSON.stringify(requestBody)
 			});
-			assertResponseStatus(response, 'updating timetable', url);
+			await assertResponseStatus(response, 'updating timetable', url);
 
 			return await response.json();
 		} catch (error) {
@@ -767,7 +767,7 @@ export const appealsApiClient = {
 				body: JSON.stringify(requestBodyWithOverrides)
 			});
 
-			assertResponseStatus(response, 'adding inquiry', url);
+			await assertResponseStatus(response, 'adding inquiry', url);
 
 			return await response.json();
 		} catch (error) {
@@ -787,7 +787,7 @@ export const appealsApiClient = {
 				}
 			});
 
-			assertResponseStatus(response, 'reviewing LPA statement', url);
+			await assertResponseStatus(response, 'reviewing LPA statement', url);
 
 			const responseBody = await response.json();
 
@@ -811,7 +811,7 @@ export const appealsApiClient = {
 				}
 			});
 
-			assertResponseStatus(response, 'reviewing IP comments', url);
+			await assertResponseStatus(response, 'reviewing IP comments', url);
 
 			const responseBody = await response.json();
 
@@ -834,7 +834,7 @@ export const appealsApiClient = {
 				}
 			});
 
-			assertResponseStatus(response, 'sharing comments and statements', url);
+			await assertResponseStatus(response, 'sharing comments and statements', url);
 		} catch (error) {
 			cy.writeLog(`Error sharing comments and statements for appeal ${reference}: ${error}`);
 			return false;
@@ -851,7 +851,7 @@ export const appealsApiClient = {
 					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 				}
 			});
-			assertResponseStatus(response, 'reviewing appellant final comments', url);
+			await assertResponseStatus(response, 'reviewing appellant final comments', url);
 		} catch (error) {
 			cy.writeLog(`Error reviewing appellant final comments for appeal ${reference}: ${error}`);
 			return false;
@@ -868,7 +868,7 @@ export const appealsApiClient = {
 					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 				}
 			});
-			assertResponseStatus(response, 'reviewing LPA final comments', url);
+			await assertResponseStatus(response, 'reviewing LPA final comments', url);
 		} catch (error) {
 			cy.writeLog(`Error reviewing LPA final comments for appeal ${reference}: ${error}`);
 			return false;
@@ -885,7 +885,7 @@ export const appealsApiClient = {
 					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 				}
 			});
-			assertResponseStatus(response, 'setting up site visit', url);
+			await assertResponseStatus(response, 'setting up site visit', url);
 
 			const responseBody = await response.json();
 
@@ -912,7 +912,7 @@ export const appealsApiClient = {
 					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 				}
 			});
-			assertResponseStatus(response, 'issuing decision', url);
+			await assertResponseStatus(response, 'issuing decision', url);
 		} catch (error) {
 			cy.writeLog(`Error issuing decision for appeal ${reference}: ${error}`);
 			return false;
@@ -929,7 +929,7 @@ export const appealsApiClient = {
 					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 				}
 			});
-			assertResponseStatus(response, 'setting up hearing', url);
+			await assertResponseStatus(response, 'setting up hearing', url);
 
 			const responseBody = await response.json();
 
@@ -958,7 +958,7 @@ export const appealsApiClient = {
 				body: JSON.stringify(requestBody)
 			});
 
-			assertResponseStatus(response, 'adding estimate', url);
+			await assertResponseStatus(response, 'adding estimate', url);
 
 			const responseBody = await response.json();
 
@@ -982,7 +982,7 @@ export const appealsApiClient = {
 					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 				}
 			});
-			assertResponseStatus(response, 'deleting estimate', url);
+			await assertResponseStatus(response, 'deleting estimate', url);
 			return await response.json();
 		} catch (error) {
 			cy.writeLog(
@@ -1009,7 +1009,7 @@ export const appealsApiClient = {
 				})
 			});
 
-			assertResponseStatus(response, 'assigning case officer', url);
+			await assertResponseStatus(response, 'assigning case officer', url);
 
 			const responseBody = await response.json();
 
@@ -1035,7 +1035,7 @@ export const appealsApiClient = {
 					appealIds
 				})
 			});
-			assertResponseStatus(response, 'deleting appeals', url);
+			await assertResponseStatus(response, 'deleting appeals', url);
 		} catch (error) {
 			cy.writeLog(`Error deleting appeals with IDs ${appealIds.toString()}: ${error}`);
 			return false;
@@ -1052,7 +1052,7 @@ export const appealsApiClient = {
 					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 				}
 			});
-			assertResponseStatus(response, 'starting appeal', url);
+			await assertResponseStatus(response, 'starting appeal', url);
 		} catch (error) {
 			cy.writeLog(`Error starting appeal ${appealReference}: ${error}`);
 			return false;
@@ -1073,7 +1073,7 @@ export const appealsApiClient = {
 					isCurrentAppealParent: true
 				})
 			});
-			assertResponseStatus(response, 'linking appeals', url);
+			await assertResponseStatus(response, 'linking appeals', url);
 		} catch (error) {
 			cy.writeLog(`Error linking appeals ${leadAppeaId} and ${childAppealId}: ${error}`);
 			return false;
@@ -1090,7 +1090,7 @@ export const appealsApiClient = {
 					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 				}
 			});
-			assertResponseStatus(response, 'reviewing LPAQ', url);
+			await assertResponseStatus(response, 'reviewing LPAQ', url);
 
 			const body = await response.json();
 			expect(body.validationOutcome.name).eq('Complete');
@@ -1119,7 +1119,7 @@ export const appealsApiClient = {
 				},
 				body: JSON.stringify(requestBody)
 			});
-			assertResponseStatus(response, 'adding rule 6 party', url);
+			await assertResponseStatus(response, 'adding rule 6 party', url);
 
 			const responseBody = await response.json();
 			expect(responseBody.serviceUser).to.deep.equal(requestBody.serviceUser);
