@@ -4,6 +4,7 @@ import { Router as createRouter } from 'express';
 import nationalListRouter from '../appeals/national-list/national-list.router.js';
 import personalListRouter from '../appeals/personal-list/personal-list.router.js';
 import appealDetailsRouter from './appeal-details/appeal-details.router.js';
+import createCaseRouter from './create-case/create-case.router.js';
 import errorRouter from './error/error.router.js';
 
 const router = createRouter();
@@ -13,6 +14,8 @@ router.use('/all-cases', assertUserHasPermission(permissionNames.viewCaseList), 
 router.use('/personal-list', personalListRouter);
 
 router.use('/appeal-details', appealDetailsRouter);
+
+router.use('/create-a-case', createCaseRouter);
 
 router.use('/error', errorRouter);
 
