@@ -47,21 +47,39 @@ export const selectTimetableValidators = (req, timetableTypes, session) => {
 		].some((value) => value?.trim());
 		const sessionDate = buildSessionDate(req, idText);
 		const originalDatePart = (originalTimetable[timetableType] || '').slice(0, 10);
-		if ((!originalDatePart && hasDateInput) || sessionDate !== originalDatePart) {
-			//only validate due dates that have changed
-			const validatorConfig = validatorsMap[timetableType];
-			const idToCompare = 'idToCompare' in validatorConfig ? validatorConfig.idToCompare : '';
-			const labelToCompare =
-				'labelToCompare' in validatorConfig ? validatorConfig.labelToCompare : '';
-			validatorsList.push(
-				...createTimetableValidators(
-					validatorConfig.id,
-					validatorConfig.label,
-					idToCompare,
-					labelToCompare
-				)
-			);
+		const isChangeOfProcedure = session?.appealProcedure !== session?.existingAppealProcedure;
+		if (isChangeOfProcedure) {
+			if (!originalDatePart || sessionDate !== originalDatePart) {
+				const validatorConfig = validatorsMap[timetableType];
+				const idToCompare = 'idToCompare' in validatorConfig ? validatorConfig.idToCompare : '';
+				const labelToCompare =
+					'labelToCompare' in validatorConfig ? validatorConfig.labelToCompare : '';
+				validatorsList.push(
+					...createTimetableValidators(
+						validatorConfig.id,
+						validatorConfig.label,
+						idToCompare,
+						labelToCompare
+					)
+				);
+			}
+		} else {
+			if ((!originalDatePart && hasDateInput) || sessionDate !== originalDatePart) {
+				const validatorConfig = validatorsMap[timetableType];
+				const idToCompare = 'idToCompare' in validatorConfig ? validatorConfig.idToCompare : '';
+				const labelToCompare =
+					'labelToCompare' in validatorConfig ? validatorConfig.labelToCompare : '';
+				validatorsList.push(
+					...createTimetableValidators(
+						validatorConfig.id,
+						validatorConfig.label,
+						idToCompare,
+						labelToCompare
+					)
+				);
+			}
 		}
+
 		session.appealTimetable[timetableType] = sessionDate;
 	});
 	validatorsList.push(...getAllDateErrorExtractors());
