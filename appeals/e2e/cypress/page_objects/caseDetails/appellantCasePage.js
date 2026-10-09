@@ -55,6 +55,10 @@ export class AppellantCasePage extends Page {
 		this.elements.changeRelatedAppeal().click();
 	}
 
+	selectChangeLink(selector) {
+		cy.getByData(selector).click();
+	}
+
 	/*********************************************************
 	 ******************** Assertions **************************
 	 *********************************************************/
@@ -88,7 +92,12 @@ export class AppellantCasePage extends Page {
 		cy.get('.govuk-summary-list__key')
 			.contains(labelText)
 			.siblings('.govuk-summary-list__value')
-			.should('contain', expectedValue);
+			.invoke('text')
+			.then((text) => {
+				cy.writeLog(`Asserting field value for label "${labelText}" is "${expectedValue}"`);
+				expect(text.trim()).to.contain(expectedValue);
+			});
+		//.should('contain', expectedValue);
 	}
 
 	assertFieldNotPresent(labelText) {

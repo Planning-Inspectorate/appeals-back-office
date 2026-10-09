@@ -266,6 +266,7 @@ const appealsApiRequests = {
 			caseType: 'D',
 			applicationDate: '2026-04-01T00:00:00.000Z',
 			applicationDecision: 'refused',
+			typeOfPlanningApplication: PLANNING_APPLICATION_TYPES.HOUSEHOLDER_PLANNING,
 			reasonForAppealAppellant: 'My reason for Householder appeal',
 			significantChangesAffectingApplicationAppellant: [
 				{ value: 'adopted-a-new-local-plan', comment: 'Local plan changes' },
@@ -612,7 +613,7 @@ const appealsApiRequests = {
 					factsForGround: 'I like Christmas'
 				}
 			],
-				namedIndividuals: [
+			namedIndividuals: [
 			{
 				firstName: 'Jack',
 				lastName: 'Jackerson',
