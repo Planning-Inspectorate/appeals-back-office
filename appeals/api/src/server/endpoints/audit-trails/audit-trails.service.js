@@ -11,7 +11,7 @@ export const auditRequestCache = new Set();
  * @param {CreateAuditTrail} param0
  * @returns {Promise<AuditTrail | undefined>}
  */
-const createAuditTrail = async ({ appealId, azureAdUserId, details }) => {
+const createAuditTrail = async ({ appealId, azureAdUserId, details, representationId }) => {
 	try {
 		if (azureAdUserId && details) {
 			const fingerprint = `${appealId}-${details}`;
@@ -43,7 +43,8 @@ const createAuditTrail = async ({ appealId, azureAdUserId, details }) => {
 					appealId,
 					details,
 					loggedAt: new Date(),
-					userId
+					userId,
+					representationId
 				});
 			}
 		}
