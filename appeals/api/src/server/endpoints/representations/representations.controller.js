@@ -214,7 +214,8 @@ export async function updateRepresentation(request, response) {
 		await createAuditTrail({
 			appealId: parseInt(appealId),
 			azureAdUserId: String(request.get('azureAdUserId')),
-			details
+			details,
+			representationId: updatedRep.id
 		});
 	}
 
@@ -285,7 +286,8 @@ export const createRepresentation = () => async (req, res) => {
 			await createAuditTrail({
 				appealId: parseInt(appealId),
 				azureAdUserId,
-				details: stringTokenReplacement(trail, [partyName])
+				details: stringTokenReplacement(trail, [partyName]),
+				representationId: Number(rep.id)
 			});
 		}
 	}
@@ -304,7 +306,8 @@ export const createRepresentation = () => async (req, res) => {
 		await createAuditTrail({
 			appealId: parseInt(appealId),
 			azureAdUserId,
-			details: CONSTANTS.AUDIT_TRAIL_REP_APPELLANT_STATEMENT_ADDED
+			details: CONSTANTS.AUDIT_TRAIL_REP_APPELLANT_STATEMENT_ADDED,
+			representationId: Number(rep.id)
 		});
 	}
 
@@ -396,7 +399,8 @@ export const updateRepresentationAttachments = async (req, res) => {
 				details: stringTokenReplacement(
 					CONSTANTS.AUDIT_TRAIL_RULE_6_PARTY_PROOFS_EVIDENCE_UPDATED,
 					[partyName]
-				)
+				),
+				representationId: updatedRepresentation.id
 			});
 		}
 	}
