@@ -940,14 +940,16 @@ model DocumentRedactionStatus {
 /// AuditTrail model
 /// Stores an activity log against each appeal.
 model AuditTrail {
-  id       Int                   @id @default(autoincrement())
-  appealId Int
-  userId   Int
-  loggedAt DateTime
-  details  String                @db.NVarChar(Max)
-  appeal   Appeal                @relation(fields: [appealId], references: [id])
-  user     User                  @relation(fields: [userId], references: [id])
-  doc      DocumentVersionAudit? @relation("auditTrails")
+  id               Int                   @id @default(autoincrement())
+  appealId         Int
+  userId           Int
+  loggedAt         DateTime
+  details          String                @db.NVarChar(Max)
+  representationId Int?
+  appeal           Appeal                @relation(fields: [appealId], references: [id])
+  user             User                  @relation(fields: [userId], references: [id])
+  representation   Representation?       @relation("representationAuditTrails", fields: [representationId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  doc              DocumentVersionAudit? @relation("auditTrails")
 
   @@index([appealId])
 }
@@ -977,6 +979,7 @@ model Representation {
   siteVisitRequested                     Boolean                                  @default(false)
   source                                 String                                   @default("citizen")
   representationRejectionReasonsSelected RepresentationRejectionReasonsSelected[]
+  auditTrails                            AuditTrail[]                             @relation("representationAuditTrails")
 
   @@index([appealId])
   @@index([appealId, representationType, dateCreated(sort: Asc)])

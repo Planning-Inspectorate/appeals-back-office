@@ -289,7 +289,8 @@ export const createRepresentation = async (
 		details: stringTokenReplacement(auditTrailType, [
 			getRepresentationLabel(input.representationType),
 			formattedAppealStatus
-		])
+		]),
+		representationId: representation.id
 	});
 
 	return representation;

@@ -259,10 +259,6 @@ describe('audit', () => {
 				.get(`/appeals/${appealId}/audit-notifications`)
 				.reply(200, caseNotificationAuditLog);
 			nock('http://test/')
-				.get(`/appeals/${appealId}/reps?type=comment&pageNumber=1&pageSize=30&status=invalid`)
-				.times(7)
-				.reply(200, { items: [] });
-			nock('http://test/')
 				.get(`/appeals/${appealId}/reps?type=comment&pageNumber=1&pageSize=9999`)
 				.times(7)
 				.reply(200, { items: [{ represented: { email: 'test1@email.com' } }] });
@@ -332,15 +328,8 @@ describe('audit', () => {
 			);
 		});
 
-		it('should render rejected IP comment with expandable details when status is invalid', async () => {
+		it('should render rejected IP comment with expandable details when audit log has representation linked', async () => {
 			const appealId = 1;
-			const rejectedAuditLog = [
-				{
-					azureAdUserId: activeDirectoryUsersData[0].id,
-					details: 'Interested party comment rejected: 101',
-					loggedDate: '2026-06-15T09:21:00.000Z'
-				}
-			];
 			const rejectedCommentItem = {
 				id: 101,
 				status: 'invalid',
@@ -378,12 +367,18 @@ describe('audit', () => {
 					}
 				]
 			};
+			const rejectedAuditLog = [
+				{
+					azureAdUserId: activeDirectoryUsersData[0].id,
+					details: 'Interested party comment rejected: 101',
+					loggedDate: '2026-06-15T09:21:00.000Z',
+					representationId: 101,
+					representation: rejectedCommentItem
+				}
+			];
 
 			nock('http://test/').get(`/appeals/${appealId}/audit-trails`).reply(200, rejectedAuditLog);
 			nock('http://test/').get(`/appeals/${appealId}/audit-notifications`).reply(200, []);
-			nock('http://test/')
-				.get(`/appeals/${appealId}/reps?type=comment&pageNumber=1&pageSize=30&status=invalid`)
-				.reply(200, { items: [rejectedCommentItem] });
 			nock('http://test/')
 				.get(`/appeals/${appealId}/reps?type=comment&pageNumber=1&pageSize=9999`)
 				.reply(200, { items: [] });
@@ -403,6 +398,29 @@ describe('audit', () => {
 			expect(unprettifiedHtml).toContain(
 				'Illegible or incomplete documentation: Document is blurry'
 			);
+		});
+
+		it('should render unlinked rejected IP comment audit entry without expandable component', async () => {
+			const appealId = 1;
+			const rejectedAuditLog = [
+				{
+					azureAdUserId: activeDirectoryUsersData[0].id,
+					details: 'Interested party comment rejected: 101',
+					loggedDate: '2026-06-15T09:21:00.000Z'
+				}
+			];
+
+			nock('http://test/').get(`/appeals/${appealId}/audit-trails`).reply(200, rejectedAuditLog);
+			nock('http://test/').get(`/appeals/${appealId}/audit-notifications`).reply(200, []);
+			nock('http://test/')
+				.get(`/appeals/${appealId}/reps?type=comment&pageNumber=1&pageSize=9999`)
+				.reply(200, { items: [] });
+
+			const response = await request.get(`${baseUrl}/${appealId}/audit`);
+			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+			expect(unprettifiedHtml).toContain('Interested party comment rejected: 101');
+			expect(unprettifiedHtml).not.toContain('View rejected comment');
 		});
 	});
 });

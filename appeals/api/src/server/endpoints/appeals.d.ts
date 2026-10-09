@@ -1032,6 +1032,7 @@ interface CreateAuditTrail {
 	appealId: number;
 	azureAdUserId?: string;
 	details: string;
+	representationId?: number;
 }
 
 interface CreateAuditTrailRequest {
@@ -1039,6 +1040,7 @@ interface CreateAuditTrailRequest {
 	details: string;
 	loggedAt: Date;
 	userId: number;
+	representationId?: number;
 }
 
 interface EnforcementNoticeAppellantCase {
@@ -1129,6 +1131,8 @@ type GetAuditTrailsResponse = {
 	azureAdUserId: string;
 	details: string;
 	loggedDate: string;
+	representationId?: number | null;
+	representation?: SingleRepresentationResponse | undefined;
 	doc?:
 		| {
 				documentGuid: string;
