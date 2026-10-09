@@ -2279,7 +2279,7 @@ describe('inquiry routes', () => {
 
 				expect(response.status).toEqual(201);
 
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalled();
 			});
 
 			test('updates a single inquiry with no address', async () => {
@@ -2314,7 +2314,7 @@ describe('inquiry routes', () => {
 				expect(response.status).toEqual(201);
 				expect(mockNotifySend).not.toHaveBeenCalled();
 
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalled();
 			});
 
 			test('removes the address if address is null', async () => {
@@ -2358,7 +2358,7 @@ describe('inquiry routes', () => {
 
 				expect(mockNotifySend).not.toHaveBeenCalled();
 
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalled();
 			});
 
 			test('updates a single inquiry with no estimation day', async () => {
