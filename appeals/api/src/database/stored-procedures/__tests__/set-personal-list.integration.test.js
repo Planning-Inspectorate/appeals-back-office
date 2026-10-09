@@ -374,7 +374,7 @@ describe('spSetPersonalList stored procedure', () => {
 		const enfAppealExtensionDate = new Date('2026-05-14T09:00:00.000Z');
 		const enfAppealGroundFeeDate = new Date('2026-05-01T09:00:00.000Z');
 
-		test('enforcement appeal with a ground a fee receipt due date earlier', async () => {
+		test('enforcement appeal with a ground a fee receipt due date earlier than extension date', async () => {
 			const appealData = {
 				...enforcementAppealData,
 				appeal: {
@@ -408,7 +408,7 @@ describe('spSetPersonalList stored procedure', () => {
 			expect(dueDate).toBe(enfAppealGroundFeeDate.toISOString());
 		});
 
-		test('enforcement appeal with a ground a fee receipt due date later', async () => {
+		test('enforcement appeal with a ground a fee receipt due date later than extension date', async () => {
 			const appealData = {
 				...enforcementAppealData,
 				appeal: {
@@ -437,12 +437,104 @@ describe('spSetPersonalList stored procedure', () => {
 			expect(dueDate).toBe(enfAppealExtensionDate.toISOString());
 		});
 
+		test('enforcement appeal with a ground a fee receipt due date but no extension date', async () => {
+			const appealData = {
+				...enforcementAppealData,
+				appeal: {
+					...enforcementAppealData.appeal,
+					reference: 1100003,
+					caseExtensionDate: null,
+					caseCreatedDate: appealDataDates.createdDate
+				},
+				enforcementNoticeAppealOutcome: {
+					...enforcementAppealData.enforcementNoticeAppealOutcome,
+					groundAFeeReceiptDueDate: appealDataDates.enforcementGroundFeeDate
+				}
+			};
+
+			const appeal = await createTestAppealAndRelatedData(prisma, appealData);
+			createdAppealIds.push(appeal.id);
+
+			await executeSpSetPersonalList(prisma, { appealId: appeal.id });
+
+			const personalListEntry = await prisma.personalList.findUnique({
+				where: { appealId: appeal.id }
+			});
+
+			const dueDate = personalListEntry?.dueDate?.toISOString();
+
+			expect(personalListEntry).not.toBeNull();
+			expect(dueDate).toBe(
+				appealData.enforcementNoticeAppealOutcome.groundAFeeReceiptDueDate.toISOString()
+			);
+		});
+
+		test('enforcement appeal with an extension date but no ground a fee receipt due date', async () => {
+			const appealData = {
+				...enforcementAppealData,
+				appeal: {
+					...enforcementAppealData.appeal,
+					reference: 1100004,
+					caseExtensionDate: appealDataDates.extensionDate,
+					caseCreatedDate: appealDataDates.createdDate
+				},
+				enforcementNoticeAppealOutcome: {
+					...enforcementAppealData.enforcementNoticeAppealOutcome,
+					groundAFeeReceiptDueDate: null
+				}
+			};
+
+			const appeal = await createTestAppealAndRelatedData(prisma, appealData);
+			createdAppealIds.push(appeal.id);
+
+			await executeSpSetPersonalList(prisma, { appealId: appeal.id });
+
+			const personalListEntry = await prisma.personalList.findUnique({
+				where: { appealId: appeal.id }
+			});
+
+			const dueDate = personalListEntry?.dueDate?.toISOString();
+
+			expect(personalListEntry).not.toBeNull();
+			expect(dueDate).toBe(appealData.appeal.caseExtensionDate.toISOString());
+		});
+
+		test('enforcement appeal with no extension date and no ground a fee receipt due date', async () => {
+			const appealData = {
+				...enforcementAppealData,
+				appeal: {
+					...enforcementAppealData.appeal,
+					reference: 1100005,
+					caseExtensionDate: null,
+					caseCreatedDate: appealDataDates.createdDate
+				},
+				enforcementNoticeAppealOutcome: {
+					...enforcementAppealData.enforcementNoticeAppealOutcome,
+					groundAFeeReceiptDueDate: null
+				}
+			};
+
+			const appeal = await createTestAppealAndRelatedData(prisma, appealData);
+			createdAppealIds.push(appeal.id);
+
+			await executeSpSetPersonalList(prisma, { appealId: appeal.id });
+
+			const personalListEntry = await prisma.personalList.findUnique({
+				where: { appealId: appeal.id }
+			});
+
+			const dueDate = personalListEntry?.dueDate?.toISOString();
+
+			expect(personalListEntry).not.toBeNull();
+			expect(dueDate).toBe(appealData.appeal.caseCreatedDate.toISOString());
+		});
+
 		test('non-enforcement appeal with extension date sets that', async () => {
 			let appealData = {
 				...planningAppealData,
 				appeal: {
 					...planningAppealData.appeal,
-					reference: 1100003,
+					reference: 1100006,
 					caseExtensionDate: appealDataDates.extensionDate
 				},
 				enforcementNoticeAppealOutcome: null
@@ -467,7 +559,7 @@ describe('spSetPersonalList stored procedure', () => {
 				...planningAppealData,
 				appeal: {
 					...planningAppealData.appeal,
-					reference: 1100004,
+					reference: 1100007,
 					caseExtensionDate: null
 				}
 			};
