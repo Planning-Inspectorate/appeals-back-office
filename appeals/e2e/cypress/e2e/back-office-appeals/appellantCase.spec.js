@@ -1003,6 +1003,54 @@ describe('Managing Appellant Case Details', () => {
 		});
 	});
 
+	it.only('Enforcement linked appeal - can update grounds of appeal', () => {
+		cy.createCase({ ...enforcementLinkedData }).then((caseObj) => {
+			appeal = caseObj;
+			appellantCasePage.navigateToAppellantCase(caseObj);
+
+			// select the change link for grounds of appeal
+			appellantCasePage.selectChangeLink('grounds-for-appeal');
+
+			// check the previously selected grounds of appeal are displayed
+			groundsOfAppealPage.checkSelectedGroundsOfAppeal(enforcementLinkedData.appealGrounds);
+
+			// select some different grounds of appeal
+			groundsOfAppealPage.selectGroundsOfAppeal(['a', 'c', 'd']);
+
+			const updatedFormattedGrounds = {
+				descriptionOfBreach: enforcementLinkedData.descriptionOfAllegedBreach,
+				groundsList: ['c', 'd'],
+				groundFacts: [
+					{
+						label: 'Facts for ground (c)',
+						value: 'Not answered'
+					},
+					{
+						label: 'Facts for ground (d)',
+						value: 'Not answered'
+					}
+				]
+			};
+
+			// check for success banner message
+			appellantCasePage.validateBannerMessage(BANNER_TYPES.success, SUCCESS_MESSAGES.appealUpdated);
+
+			// check the updated grounds of appeal are displayed on the appellant case page
+			assertGroundsOfAppeal(updatedFormattedGrounds);
+
+			// check case history for the updated grounds of appeal
+			appellantCasePage.clickBackLink();
+			caseDetailsPage.clickViewCaseHistory();
+			cy.get('h1').should('contain.text', 'Case history');
+
+			caseHistoryPage.verifyCaseHistoryValues([
+				'Ground (a) removed',
+				'Ground (c) added',
+				'Ground (d) added'
+			]);
+		});
+	});
+
 	const navigateToReferenceUpdate = (caseObj) => {
 		caseDetailsPage.navigateToAppealsService();
 		listCasesPage.clickAppealByRef(caseObj);
@@ -1046,19 +1094,6 @@ describe('Managing Appellant Case Details', () => {
 
 		return appellants.join('');
 	};
-
-	/*function formatDate(dateStr) {
-		const d = new Date(dateStr);
-		return d.toLocaleDateString('en-GB', {
-			day: 'numeric',
-			month: 'long',
-			year: 'numeric'
-		});
-	}
-
-	function capitalize(str) {
-		return str.charAt(0).toUpperCase() + str.slice(1);
-	}*/
 
 	const assertGroundsOfAppeal = (formattedGrounds) => {
 		// description of the alleged breach and grounds of appeal
