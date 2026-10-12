@@ -199,9 +199,7 @@ const createHearing = async (
 			address
 		});
 
-		if (address) {
-			await broadcasters.broadcastEvent(hearing.id, EVENT_TYPE.HEARING, EventType.Create);
-		}
+		await broadcasters.broadcastEvent(hearing.id, EVENT_TYPE.HEARING, EventType.Create);
 
 		await sendHearingDetailsNotifications(
 			notifyClient,
