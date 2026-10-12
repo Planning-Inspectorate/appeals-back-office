@@ -2313,8 +2313,11 @@ describe('inquiry routes', () => {
 
 				expect(response.status).toEqual(201);
 				expect(mockNotifySend).not.toHaveBeenCalled();
-
-				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalled();
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+					inquiry.id,
+					'inquiry',
+					'Update'
+				);
 			});
 
 			test('removes the address if address is null', async () => {
