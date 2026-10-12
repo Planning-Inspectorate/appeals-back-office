@@ -314,4 +314,210 @@ describe('create a case', () => {
 			}
 		});
 	});
+
+	describe('GET /check-details', () => {
+		beforeEach(async () => {
+			await request.post(`${baseUrl}/select-case-type`).send({
+				caseType: 'Tree preservation order'
+			});
+			await request.post(`${baseUrl}/submission-date`).send({
+				'submission-date-day': '19',
+				'submission-date-month': '9',
+				'submission-date-year': '2026'
+			});
+		});
+
+		it('should redirect to /select-case-type if session data is missing', async () => {
+			await request.get(baseUrl);
+
+			const response = await request.get(`${baseUrl}/check-details`);
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toBe(`${baseUrl}/select-case-type`);
+		});
+
+		it('should render the correct heading, caption, and title', async () => {
+			const response = await request.get(`${baseUrl}/check-details`);
+			expect(response.statusCode).toBe(200);
+
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+			expect(pageHtml.querySelector('main h1')?.innerHTML.trim()).toBe(
+				'Check details and create a new case'
+			);
+			expect(pageHtml.querySelector('main .govuk-caption-l')?.innerHTML.trim()).toBe(
+				'Create a case'
+			);
+		});
+
+		it('should render the summary list with selected case type and formatted date submitted', async () => {
+			const response = await request.get(`${baseUrl}/check-details`);
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			const summaryRows = pageHtml.querySelectorAll('.govuk-summary-list__row');
+			expect(summaryRows.length).toBe(2);
+
+			const caseTypeKey = summaryRows[0]
+				.querySelector('.govuk-summary-list__key')
+				?.innerHTML.trim();
+			const caseTypeValue = summaryRows[0]
+				.querySelector('.govuk-summary-list__value')
+				?.innerHTML.trim();
+			expect(caseTypeKey).toBe('Case type');
+			expect(caseTypeValue).toBe('Tree preservation order');
+
+			const dateKey = summaryRows[1].querySelector('.govuk-summary-list__key')?.innerHTML.trim();
+			const dateValue = summaryRows[1]
+				.querySelector('.govuk-summary-list__value')
+				?.innerHTML.trim();
+			expect(dateKey).toBe('Date submitted');
+			expect(dateValue).toBe('19 September 2026');
+		});
+
+		it('should render change links pointing to the edit pages with editEntrypoint query', async () => {
+			const response = await request.get(`${baseUrl}/check-details`);
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			const summaryRows = pageHtml.querySelectorAll('.govuk-summary-list__row');
+			const caseTypeAction = summaryRows[0].querySelector('.govuk-summary-list__actions a');
+			const dateAction = summaryRows[1].querySelector('.govuk-summary-list__actions a');
+
+			expect(caseTypeAction?.getAttribute('href')).toBe(
+				`${baseUrl}/select-case-type?editEntrypoint=${encodeURIComponent(
+					`${baseUrl}/select-case-type`
+				)}`
+			);
+			expect(caseTypeAction?.textContent?.replace(/\s+/g, ' ').trim()).toBe('Change case type');
+
+			expect(dateAction?.getAttribute('href')).toBe(
+				`${baseUrl}/submission-date?editEntrypoint=${encodeURIComponent(
+					`${baseUrl}/submission-date`
+				)}`
+			);
+			expect(dateAction?.textContent?.replace(/\s+/g, ' ').trim()).toBe('Change date submitted');
+		});
+
+		it('should render a Back link navigating to the submission date page', async () => {
+			const response = await request.get(`${baseUrl}/check-details`);
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/submission-date`
+			);
+		});
+
+		it('should render the Create case submit button', async () => {
+			const response = await request.get(`${baseUrl}/check-details`);
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			const submitButton = pageHtml.querySelector('button[type="submit"]');
+			expect(submitButton?.innerHTML.trim()).toBe('Create case');
+		});
+
+		it('should highlight Create a case navigation tab in header', async () => {
+			const response = await request.get(`${baseUrl}/check-details`);
+			const html = parseHtml(response.text, { rootElement: 'header' });
+
+			const activeNavLink = html.querySelector(
+				'.govuk-header__navigation-item--active a.govuk-header__link'
+			);
+			expect(activeNavLink?.getAttribute('href')).toBe('/appeals-service/create-a-case');
+			expect(activeNavLink?.innerHTML.trim()).toBe('Create a case');
+		});
+	});
+
+	describe('editing answers via change links', () => {
+		beforeEach(async () => {
+			await request.post(`${baseUrl}/select-case-type`).send({
+				caseType: 'Tree preservation order'
+			});
+			await request.post(`${baseUrl}/submission-date`).send({
+				'submission-date-day': '19',
+				'submission-date-month': '9',
+				'submission-date-year': '2026'
+			});
+		});
+
+		it('should allow changing the case type and return back to /check-details', async () => {
+			const editUrl = `${baseUrl}/select-case-type?editEntrypoint=${encodeURIComponent(
+				`${baseUrl}/select-case-type`
+			)}`;
+
+			const editPageRes = await request.get(editUrl);
+			const editPageHtml = parseHtml(editPageRes.text, { rootElement: 'body' });
+
+			expect(editPageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/check-details`
+			);
+			const tpoRadio = editPageHtml.querySelector('input[value="Tree preservation order"]');
+			expect(tpoRadio.hasAttribute('checked')).toBe(true);
+
+			const postEditRes = await request.post(editUrl).send({
+				caseType: 'High hedges appeal'
+			});
+			expect(postEditRes.statusCode).toBe(302);
+			expect(postEditRes.headers.location).toBe(`${baseUrl}/check-details`);
+
+			const checkDetailsRes = await request.get(`${baseUrl}/check-details`);
+			const checkDetailsHtml = parseHtml(checkDetailsRes.text, { rootElement: 'body' });
+			const rows = checkDetailsHtml.querySelectorAll('.govuk-summary-list__row');
+			expect(rows[0].querySelector('.govuk-summary-list__value')?.innerHTML.trim()).toBe(
+				'High hedges appeal'
+			);
+		});
+
+		it('should allow changing the submission date and return back to /check-details', async () => {
+			const editUrl = `${baseUrl}/submission-date?editEntrypoint=${encodeURIComponent(
+				`${baseUrl}/submission-date`
+			)}`;
+
+			const editPageRes = await request.get(editUrl);
+			const editPageHtml = parseHtml(editPageRes.text, { rootElement: 'body' });
+
+			expect(editPageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/check-details`
+			);
+			expect(
+				editPageHtml.querySelector('input[name="submission-date-day"]').getAttribute('value')
+			).toBe('19');
+
+			const postEditRes = await request.post(editUrl).send({
+				'submission-date-day': '20',
+				'submission-date-month': '9',
+				'submission-date-year': '2026'
+			});
+			expect(postEditRes.statusCode).toBe(302);
+			expect(postEditRes.headers.location).toBe(`${baseUrl}/check-details`);
+
+			const checkDetailsRes = await request.get(`${baseUrl}/check-details`);
+			const checkDetailsHtml = parseHtml(checkDetailsRes.text, { rootElement: 'body' });
+			const rows = checkDetailsHtml.querySelectorAll('.govuk-summary-list__row');
+			expect(rows[1].querySelector('.govuk-summary-list__value')?.innerHTML.trim()).toBe(
+				'20 September 2026'
+			);
+		});
+	});
+
+	describe('POST /check-details', () => {
+		beforeEach(async () => {
+			await request.post(`${baseUrl}/select-case-type`).send({
+				caseType: 'Tree preservation order'
+			});
+			await request.post(`${baseUrl}/submission-date`).send({
+				'submission-date-day': '19',
+				'submission-date-month': '9',
+				'submission-date-year': '2026'
+			});
+		});
+
+		it('should clear the session and redirect to the case details page placeholder', async () => {
+			const response = await request.post(`${baseUrl}/check-details`);
+
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toBe('/appeals-service/appeal-details/1');
+
+			// Check session was cleared
+			const checkDetailsResponse = await request.get(`${baseUrl}/check-details`);
+			expect(checkDetailsResponse.statusCode).toBe(302);
+			expect(checkDetailsResponse.headers.location).toBe(`${baseUrl}/select-case-type`);
+		});
+	});
 });
