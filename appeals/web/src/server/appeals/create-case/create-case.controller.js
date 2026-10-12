@@ -1,7 +1,11 @@
 import { getSessionValues } from '#lib/edit-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
-import { fieldNameCaseType, sessionKeyCreateCase } from './create-case.constants.js';
-import { selectCaseTypePage } from './create-case.mapper.js';
+import {
+	fieldNameCaseType,
+	fieldNameSubmissionDate,
+	sessionKeyCreateCase
+} from './create-case.constants.js';
+import { selectCaseTypePage, submissionDatePage } from './create-case.mapper.js';
 
 /**
  * @param {string} path
@@ -66,4 +70,61 @@ export const postSelectCaseType = async (request, response) => {
 	}
 
 	return response.redirect('/appeals-service/create-a-case/submission-date');
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getSubmissionDate = async (request, response) => {
+	const sessionValues = getSessionValues(request, sessionKeyCreateCase);
+	const submissionDate = {
+		day: sessionValues?.[`${fieldNameSubmissionDate}-day`],
+		month: sessionValues?.[`${fieldNameSubmissionDate}-month`],
+		year: sessionValues?.[`${fieldNameSubmissionDate}-year`]
+	};
+	return renderSubmissionDate(request, response, submissionDate);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {{ day?: string, month?: string, year?: string } | undefined} submissionDate
+ */
+export const renderSubmissionDate = (request, response, submissionDate) => {
+	const { errors } = request;
+
+	const backLinkUrl = `${request.baseUrl}/select-case-type`;
+
+	const pageContent = submissionDatePage(backLinkUrl, submissionDate, errors);
+
+	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
+		pageContent,
+		errors,
+		pageIsCreateCase: true
+	});
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postSubmissionDate = async (request, response) => {
+	if (request.errors) {
+		const sessionValues = getSessionValues(request, sessionKeyCreateCase);
+		const submissionDate = {
+			day:
+				request.body?.[`${fieldNameSubmissionDate}-day`] ||
+				sessionValues?.[`${fieldNameSubmissionDate}-day`],
+			month:
+				request.body?.[`${fieldNameSubmissionDate}-month`] ||
+				sessionValues?.[`${fieldNameSubmissionDate}-month`],
+			year:
+				request.body?.[`${fieldNameSubmissionDate}-year`] ||
+				sessionValues?.[`${fieldNameSubmissionDate}-year`]
+		};
+		return renderSubmissionDate(request, response, submissionDate);
+	}
+
+	return response.redirect('/appeals-service/create-a-case/check-details');
 };

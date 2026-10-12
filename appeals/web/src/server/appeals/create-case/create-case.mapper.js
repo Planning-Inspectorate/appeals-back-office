@@ -1,6 +1,8 @@
+import { getExampleDateHint } from '#lib/dates.js';
+import { dateInput } from '#lib/mappers/components/page-components/date.js';
 import { radiosInput } from '#lib/mappers/components/page-components/radio.js';
 import { GENERIC_APPEAL_TYPES } from '@pins/appeals/constants/common.js';
-import { fieldNameCaseType } from './create-case.constants.js';
+import { fieldNameCaseType, fieldNameSubmissionDate } from './create-case.constants.js';
 
 /**
  * @param {string} backLinkUrl
@@ -28,6 +30,38 @@ export function selectCaseTypePage(backLinkUrl, selectedCaseType, errors) {
 				items,
 				value: selectedCaseType,
 				errorMessage: errors?.[fieldNameCaseType]?.msg
+			})
+		]
+	};
+
+	return pageContent;
+}
+
+/**
+ * @param {string} backLinkUrl
+ * @param {{ day?: string, month?: string, year?: string } | undefined} submissionDate
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
+ * @returns {PageContent}
+ */
+export function submissionDatePage(backLinkUrl, submissionDate, errors) {
+	/** @type {PageContent} */
+	const pageContent = {
+		title: 'What date was the appeal submitted?',
+		backLinkUrl,
+		preHeading: 'Create a case',
+		heading: 'What date was the appeal submitted?',
+		pageComponents: [
+			dateInput({
+				name: fieldNameSubmissionDate,
+				id: fieldNameSubmissionDate,
+				namePrefix: fieldNameSubmissionDate,
+				value: {
+					day: submissionDate?.day,
+					month: submissionDate?.month,
+					year: submissionDate?.year
+				},
+				hint: `For example, ${getExampleDateHint(3, false)}`,
+				errors
 			})
 		]
 	};
