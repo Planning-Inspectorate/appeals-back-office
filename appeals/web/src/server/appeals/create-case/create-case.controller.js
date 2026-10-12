@@ -1,11 +1,17 @@
-import { getSessionValues } from '#lib/edit-utilities.js';
+import {
+	applyEdits,
+	clearEdits,
+	getSessionValues,
+	isAtEditEntrypoint
+} from '#lib/edit-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
 import {
 	fieldNameCaseType,
 	fieldNameSubmissionDate,
+	placeholderAppealId,
 	sessionKeyCreateCase
 } from './create-case.constants.js';
-import { selectCaseTypePage, submissionDatePage } from './create-case.mapper.js';
+import { checkDetailsPage, selectCaseTypePage, submissionDatePage } from './create-case.mapper.js';
 
 /**
  * @param {string} path
@@ -35,15 +41,20 @@ export const getSelectCaseType = async (request, response) => {
 export const renderSelectCaseType = (request, response, selectedCaseType) => {
 	const { errors } = request;
 
-	let backLinkUrl =
-		request.query.returnUrl || request.get('Referrer') || '/appeals-service/all-cases';
+	let backLinkUrl;
+	if (isAtEditEntrypoint(request)) {
+		backLinkUrl = `${request.baseUrl}/check-details`;
+	} else {
+		backLinkUrl =
+			request.query.returnUrl || request.get('Referrer') || '/appeals-service/all-cases';
 
-	if (
-		typeof backLinkUrl !== 'string' ||
-		!backLinkUrl.startsWith('/') ||
-		backLinkUrl.startsWith('//')
-	) {
-		backLinkUrl = '/appeals-service/all-cases';
+		if (
+			typeof backLinkUrl !== 'string' ||
+			!backLinkUrl.startsWith('/') ||
+			backLinkUrl.startsWith('//')
+		) {
+			backLinkUrl = '/appeals-service/all-cases';
+		}
 	}
 
 	const pageContent = selectCaseTypePage(backLinkUrl, selectedCaseType, errors);
@@ -69,7 +80,13 @@ export const postSelectCaseType = async (request, response) => {
 		);
 	}
 
-	return response.redirect('/appeals-service/create-a-case/submission-date');
+	applyEdits(request, sessionKeyCreateCase);
+
+	if (isAtEditEntrypoint(request)) {
+		return response.redirect(`${request.baseUrl}/check-details`);
+	}
+
+	return response.redirect(`${request.baseUrl}/submission-date`);
 };
 
 /**
@@ -94,7 +111,9 @@ export const getSubmissionDate = async (request, response) => {
 export const renderSubmissionDate = (request, response, submissionDate) => {
 	const { errors } = request;
 
-	const backLinkUrl = `${request.baseUrl}/select-case-type`;
+	const backLinkUrl = isAtEditEntrypoint(request)
+		? `${request.baseUrl}/check-details`
+		: `${request.baseUrl}/select-case-type`;
 
 	const pageContent = submissionDatePage(backLinkUrl, submissionDate, errors);
 
@@ -126,5 +145,37 @@ export const postSubmissionDate = async (request, response) => {
 		return renderSubmissionDate(request, response, submissionDate);
 	}
 
-	return response.redirect('/appeals-service/create-a-case/check-details');
+	applyEdits(request, sessionKeyCreateCase);
+
+	return response.redirect(`${request.baseUrl}/check-details`);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getCheckDetails = async (request, response) => {
+	clearEdits(request, sessionKeyCreateCase);
+
+	const sessionValues = getSessionValues(request, sessionKeyCreateCase);
+	if (!sessionValues?.[fieldNameCaseType]) {
+		return response.redirect(`${request.baseUrl}/select-case-type`);
+	}
+
+	const pageContent = checkDetailsPage(request.baseUrl, sessionValues);
+
+	return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
+		pageContent,
+		pageIsCreateCase: true
+	});
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postCheckDetails = async (request, response) => {
+	delete request.session[sessionKeyCreateCase];
+
+	return response.redirect(`/appeals-service/appeal-details/${placeholderAppealId}`);
 };
