@@ -27,11 +27,16 @@ describe('neighbouring-site-access', () => {
 				it(`should render a row for "Will the inspector need to enter a neighbour’s land or property?" with a value of "${testCase.expectedContent.join(
 					', '
 				)}" if reasonForNeighbourVisits is "${testCase.value}"`, async () => {
-					nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataFullPlanning);
+					nock('http://test/').get('/appeals/1/exists').reply(200, {
+						id: appealDataFullPlanning.appealId,
+						appealId: appealDataFullPlanning.appealId,
+						appealReference: appealDataFullPlanning.appealReference
+					});
 					nock('http://test/')
-						.get('/appeals/1/lpa-questionnaires/2')
+						.get('/appeals/1/lpa-questionnaire')
 						.reply(200, {
 							...lpaQuestionnaireDataNotValidated,
+							...appealDataFullPlanning,
 							reasonForNeighbourVisits: testCase.value
 						});
 
@@ -57,11 +62,16 @@ describe('neighbouring-site-access', () => {
 			}
 
 			it('should render a row for "Will the inspector need to enter a neighbour’s land or property?" with the value wrapped in a "show more" component, if reasonForNeighbourVisits is more than 300 characters in length', async () => {
-				nock('http://test/').get('/appeals/1?include=all').reply(200, appealDataFullPlanning);
+				nock('http://test/').get('/appeals/1/exists').reply(200, {
+					id: appealDataFullPlanning.appealId,
+					appealId: appealDataFullPlanning.appealId,
+					appealReference: appealDataFullPlanning.appealReference
+				});
 				nock('http://test/')
-					.get('/appeals/1/lpa-questionnaires/2')
+					.get('/appeals/1/lpa-questionnaire')
 					.reply(200, {
 						...lpaQuestionnaireDataNotValidated,
+						...appealDataFullPlanning,
 						reasonForNeighbourVisits: 'a'.repeat(301)
 					});
 

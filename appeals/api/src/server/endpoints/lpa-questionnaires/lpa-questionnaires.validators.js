@@ -22,7 +22,6 @@ import { body } from 'express-validator';
 
 const getLPAQuestionnaireValidator = composeMiddleware(
 	validateIdParameter('appealId'),
-	validateIdParameter('lpaQuestionnaireId'),
 	validationErrorHandler
 );
 
