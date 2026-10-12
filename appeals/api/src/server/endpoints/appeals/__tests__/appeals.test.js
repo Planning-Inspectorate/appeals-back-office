@@ -100,53 +100,6 @@ describe('appeals list routes', () => {
 							appealType: householdAppeal.appealType.type,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							documentationSummary: {
-								appellantCase: {
-									receivedAt: '2024-03-25T23:59:59.999Z',
-									status: 'received'
-								},
-								ipComments: {
-									status: 'not_received',
-									counts: {},
-									isRedacted: false
-								},
-								lpaQuestionnaire: {
-									receivedAt: '2024-06-24T00:00:00.000Z',
-									status: 'received'
-								},
-								lpaStatement: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								rule6PartyProofs: {},
-								rule6PartyStatements: {},
-								lpaFinalComments: {
-									representationStatus: null,
-									status: 'not_received',
-									isRedacted: false
-								},
-								appellantFinalComments: {
-									representationStatus: null,
-									status: 'not_received',
-									isRedacted: false
-								},
-								lpaProofOfEvidence: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								appellantProofOfEvidence: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								appellantStatement: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								}
-							},
 							isS78Expedited: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
@@ -170,69 +123,6 @@ describe('appeals list routes', () => {
 							appealType: fullPlanningAppeal.appealType.type,
 							createdAt: fullPlanningAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: fullPlanningAppeal.lpa.name,
-							documentationSummary: {
-								appellantCase: {
-									receivedAt: '2024-03-25T23:59:59.999Z',
-									status: 'received'
-								},
-								ipComments: {
-									status: 'not_received',
-									counts: {},
-									isRedacted: false
-								},
-								lpaQuestionnaire: {
-									receivedAt: '2024-06-24T00:00:00.000Z',
-									status: 'received'
-								},
-								lpaStatement: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								lpaFinalComments: {
-									representationStatus: null,
-									status: 'not_received',
-									isRedacted: false
-								},
-								appellantFinalComments: {
-									representationStatus: null,
-									status: 'not_received',
-									isRedacted: false
-								},
-								lpaProofOfEvidence: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								appellantProofOfEvidence: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								appellantStatement: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								rule6PartyProofs: {
-									1: {
-										status: 'received',
-										representationStatus: 'valid',
-										receivedAt: '2024-03-25T23:59:59.999Z',
-										isRedacted: false,
-										rule6PartyId: 1
-									}
-								},
-								rule6PartyStatements: {
-									1: {
-										status: 'not_received',
-										representationStatus: null,
-										receivedAt: null,
-										isRedacted: false,
-										rule6PartyId: 1
-									}
-								}
-							},
 							isS78Expedited: false,
 							planningApplicationReference: fullPlanningAppeal.applicationReference,
 							procedureType: 'Written',
@@ -316,69 +206,6 @@ describe('appeals list routes', () => {
 							appealType: fullPlanningAppeal.appealType.type,
 							createdAt: fullPlanningAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: fullPlanningAppeal.lpa.name,
-							documentationSummary: {
-								appellantCase: {
-									receivedAt: '2024-03-25T23:59:59.999Z',
-									status: 'received'
-								},
-								ipComments: {
-									status: 'not_received',
-									counts: {},
-									isRedacted: false
-								},
-								lpaQuestionnaire: {
-									receivedAt: '2024-06-24T00:00:00.000Z',
-									status: 'received'
-								},
-								lpaStatement: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								lpaFinalComments: {
-									representationStatus: null,
-									status: 'not_received',
-									isRedacted: false
-								},
-								appellantFinalComments: {
-									representationStatus: null,
-									status: 'not_received',
-									isRedacted: false
-								},
-								lpaProofOfEvidence: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								appellantProofOfEvidence: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								appellantStatement: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								rule6PartyProofs: {
-									1: {
-										status: 'received',
-										representationStatus: 'valid',
-										receivedAt: '2024-03-25T23:59:59.999Z',
-										isRedacted: false,
-										rule6PartyId: 1
-									}
-								},
-								rule6PartyStatements: {
-									1: {
-										status: 'not_received',
-										representationStatus: null,
-										receivedAt: null,
-										isRedacted: false,
-										rule6PartyId: 1
-									}
-								}
-							},
 							isS78Expedited: false,
 							planningApplicationReference: fullPlanningAppeal.applicationReference,
 							procedureType: 'Written',
@@ -461,53 +288,6 @@ describe('appeals list routes', () => {
 							appealType: householdAppeal.appealType.type,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							documentationSummary: {
-								appellantCase: {
-									receivedAt: '2024-03-25T23:59:59.999Z',
-									status: 'received'
-								},
-								ipComments: {
-									status: 'not_received',
-									counts: {},
-									isRedacted: false
-								},
-								lpaQuestionnaire: {
-									receivedAt: '2024-06-24T00:00:00.000Z',
-									status: 'received'
-								},
-								lpaStatement: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								lpaFinalComments: {
-									representationStatus: null,
-									status: 'not_received',
-									isRedacted: false
-								},
-								appellantFinalComments: {
-									representationStatus: null,
-									status: 'not_received',
-									isRedacted: false
-								},
-								lpaProofOfEvidence: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								appellantProofOfEvidence: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								appellantStatement: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								rule6PartyProofs: {},
-								rule6PartyStatements: {}
-							},
 							isS78Expedited: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
@@ -590,53 +370,6 @@ describe('appeals list routes', () => {
 							appealType: householdAppeal.appealType.type,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							documentationSummary: {
-								appellantCase: {
-									receivedAt: '2024-03-25T23:59:59.999Z',
-									status: 'received'
-								},
-								ipComments: {
-									status: 'not_received',
-									counts: {},
-									isRedacted: false
-								},
-								lpaQuestionnaire: {
-									receivedAt: '2024-06-24T00:00:00.000Z',
-									status: 'received'
-								},
-								lpaStatement: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								lpaFinalComments: {
-									representationStatus: null,
-									status: 'not_received',
-									isRedacted: false
-								},
-								appellantFinalComments: {
-									representationStatus: null,
-									status: 'not_received',
-									isRedacted: false
-								},
-								lpaProofOfEvidence: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								appellantProofOfEvidence: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								appellantStatement: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								rule6PartyProofs: {},
-								rule6PartyStatements: {}
-							},
 							isS78Expedited: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
@@ -719,53 +452,6 @@ describe('appeals list routes', () => {
 							appealType: householdAppeal.appealType.type,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							documentationSummary: {
-								appellantCase: {
-									receivedAt: '2024-03-25T23:59:59.999Z',
-									status: 'received'
-								},
-								ipComments: {
-									status: 'not_received',
-									counts: {},
-									isRedacted: false
-								},
-								lpaQuestionnaire: {
-									receivedAt: '2024-06-24T00:00:00.000Z',
-									status: 'received'
-								},
-								lpaStatement: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								lpaFinalComments: {
-									representationStatus: null,
-									status: 'not_received',
-									isRedacted: false
-								},
-								appellantFinalComments: {
-									representationStatus: null,
-									status: 'not_received',
-									isRedacted: false
-								},
-								lpaProofOfEvidence: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								appellantProofOfEvidence: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								appellantStatement: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								rule6PartyProofs: {},
-								rule6PartyStatements: {}
-							},
 							isS78Expedited: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
@@ -823,53 +509,6 @@ describe('appeals list routes', () => {
 							appealType: householdAppeal.appealType.type,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							documentationSummary: {
-								appellantCase: {
-									receivedAt: '2024-03-25T23:59:59.999Z',
-									status: 'received'
-								},
-								ipComments: {
-									status: 'not_received',
-									counts: {},
-									isRedacted: false
-								},
-								lpaQuestionnaire: {
-									receivedAt: '2024-06-24T00:00:00.000Z',
-									status: 'received'
-								},
-								lpaStatement: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								lpaFinalComments: {
-									representationStatus: null,
-									status: 'not_received',
-									isRedacted: false
-								},
-								appellantFinalComments: {
-									representationStatus: null,
-									status: 'not_received',
-									isRedacted: false
-								},
-								lpaProofOfEvidence: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								appellantProofOfEvidence: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								appellantStatement: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								rule6PartyProofs: {},
-								rule6PartyStatements: {}
-							},
 							isS78Expedited: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
@@ -938,53 +577,6 @@ describe('appeals list routes', () => {
 							appealType: householdAppeal.appealType.type,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							documentationSummary: {
-								appellantCase: {
-									receivedAt: '2024-03-25T23:59:59.999Z',
-									status: 'received'
-								},
-								ipComments: {
-									status: 'not_received',
-									counts: {},
-									isRedacted: false
-								},
-								lpaQuestionnaire: {
-									receivedAt: '2024-06-24T00:00:00.000Z',
-									status: 'received'
-								},
-								lpaStatement: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								lpaFinalComments: {
-									representationStatus: null,
-									status: 'not_received',
-									isRedacted: false
-								},
-								appellantFinalComments: {
-									representationStatus: null,
-									status: 'not_received',
-									isRedacted: false
-								},
-								lpaProofOfEvidence: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								appellantProofOfEvidence: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								appellantStatement: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								rule6PartyProofs: {},
-								rule6PartyStatements: {}
-							},
 							isS78Expedited: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
@@ -1049,53 +641,6 @@ describe('appeals list routes', () => {
 							appealType: householdAppeal.appealType.type,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							documentationSummary: {
-								appellantCase: {
-									receivedAt: '2024-03-25T23:59:59.999Z',
-									status: 'received'
-								},
-								ipComments: {
-									status: 'not_received',
-									counts: {},
-									isRedacted: false
-								},
-								lpaQuestionnaire: {
-									receivedAt: '2024-06-24T00:00:00.000Z',
-									status: 'received'
-								},
-								lpaStatement: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								lpaFinalComments: {
-									representationStatus: null,
-									status: 'not_received',
-									isRedacted: false
-								},
-								appellantFinalComments: {
-									representationStatus: null,
-									status: 'not_received',
-									isRedacted: false
-								},
-								lpaProofOfEvidence: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								appellantProofOfEvidence: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								appellantStatement: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								rule6PartyProofs: {},
-								rule6PartyStatements: {}
-							},
 							isS78Expedited: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
@@ -1159,53 +704,6 @@ describe('appeals list routes', () => {
 							appealType: householdAppeal.appealType.type,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							documentationSummary: {
-								appellantCase: {
-									receivedAt: '2024-03-25T23:59:59.999Z',
-									status: 'received'
-								},
-								ipComments: {
-									status: 'not_received',
-									counts: {},
-									isRedacted: false
-								},
-								lpaQuestionnaire: {
-									receivedAt: '2024-06-24T00:00:00.000Z',
-									status: 'received'
-								},
-								lpaStatement: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								lpaFinalComments: {
-									representationStatus: null,
-									status: 'not_received',
-									isRedacted: false
-								},
-								appellantFinalComments: {
-									representationStatus: null,
-									status: 'not_received',
-									isRedacted: false
-								},
-								lpaProofOfEvidence: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								appellantProofOfEvidence: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								appellantStatement: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								rule6PartyProofs: {},
-								rule6PartyStatements: {}
-							},
 							isS78Expedited: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
@@ -1270,53 +768,6 @@ describe('appeals list routes', () => {
 							appealType: householdAppeal.appealType.type,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							documentationSummary: {
-								appellantCase: {
-									receivedAt: '2024-03-25T23:59:59.999Z',
-									status: 'received'
-								},
-								ipComments: {
-									status: 'not_received',
-									counts: {},
-									isRedacted: false
-								},
-								lpaQuestionnaire: {
-									receivedAt: '2024-06-24T00:00:00.000Z',
-									status: 'received'
-								},
-								lpaStatement: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								lpaFinalComments: {
-									representationStatus: null,
-									status: 'not_received',
-									isRedacted: false
-								},
-								appellantFinalComments: {
-									representationStatus: null,
-									status: 'not_received',
-									isRedacted: false
-								},
-								lpaProofOfEvidence: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								appellantProofOfEvidence: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								appellantStatement: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								rule6PartyProofs: {},
-								rule6PartyStatements: {}
-							},
 							isS78Expedited: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
@@ -1373,53 +824,6 @@ describe('appeals list routes', () => {
 							appealType: householdAppeal.appealType.type,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
 							localPlanningDepartment: householdAppeal.lpa.name,
-							documentationSummary: {
-								appellantCase: {
-									receivedAt: '2024-03-25T23:59:59.999Z',
-									status: 'received'
-								},
-								ipComments: {
-									status: 'not_received',
-									counts: {},
-									isRedacted: false
-								},
-								lpaQuestionnaire: {
-									receivedAt: '2024-06-24T00:00:00.000Z',
-									status: 'received'
-								},
-								lpaStatement: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								lpaFinalComments: {
-									representationStatus: null,
-									status: 'not_received',
-									isRedacted: false
-								},
-								appellantFinalComments: {
-									representationStatus: null,
-									status: 'not_received',
-									isRedacted: false
-								},
-								lpaProofOfEvidence: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								appellantProofOfEvidence: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								appellantStatement: {
-									status: 'not_received',
-									representationStatus: null,
-									isRedacted: false
-								},
-								rule6PartyProofs: {},
-								rule6PartyStatements: {}
-							},
 							isS78Expedited: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',

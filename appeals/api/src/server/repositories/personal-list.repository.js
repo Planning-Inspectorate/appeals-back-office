@@ -208,6 +208,7 @@ const getPersonalList = async (userId, pageNumber, pageSize, status, leadAppealI
 
 		const itemCount = await tx.personalList.count({ where: where({ status }) });
 
+		// todo: use queryRaw for distinct as per national list, cost will grow over time
 		const appealStatuses = await tx.personalList.findMany({
 			where: where({}),
 			select: {
