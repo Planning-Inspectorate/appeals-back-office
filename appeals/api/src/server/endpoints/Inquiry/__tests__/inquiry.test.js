@@ -2279,7 +2279,11 @@ describe('inquiry routes', () => {
 
 				expect(response.status).toEqual(201);
 
-				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalled();
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+					inquiry.id,
+					'inquiry',
+					'Update'
+				);
 			});
 
 			test('updates a single inquiry with no address', async () => {
