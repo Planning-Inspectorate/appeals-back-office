@@ -21,19 +21,17 @@ describe('final-comments-done-appellant.md', () => {
 		const expectedContent = [
 			"We have received the local planning authority's final comments.",
 			'',
+			'You can [view this information in the appeals service](/mock-front-office-url/appeals/ABC45678).',
+			'',
 			'# Appeal details',
 			'',
 			'^Appeal reference number: ABC45678',
 			'Address: 10, Test Street',
 			'Planning application reference: 12345XYZ',
 			'',
-			'# What happens next',
+			'Find out about the [average handling times for appeals](https://www.gov.uk/guidance/appeals-how-long-they-take).',
 			'',
-			"You can [view the local planning authority's final comments](/mock-front-office-url/appeals/ABC45678).",
-			'',
-			'The inspector will visit the site and we will contact you when we have made the decision.',
-			'',
-			'The Planning Inspectorate',
+			'Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
 		].join('\n');
 
