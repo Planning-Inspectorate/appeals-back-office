@@ -2,9 +2,7 @@ The {{user_type}} did not submit any final comments.
 
 {% include 'parts/appeal-details.md' %}
 
-# What happens next
+Find out about the [average handling times for appeals](https://www.gov.uk/guidance/appeals-how-long-they-take).
 
-The inspector will visit the site and we will contact you when we have made the decision.
-
-The Planning Inspectorate
+Planning Inspectorate
 {{team_email_address}}
