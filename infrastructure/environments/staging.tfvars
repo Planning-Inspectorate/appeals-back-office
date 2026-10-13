@@ -196,7 +196,7 @@ sql_config = {
     login_username = "pins-odt-sql-staging-appeals-bo"
     object_id      = "7c2f34b4-4f84-48dc-8b04-93881773bbf1"
   }
-  sku_name    = "S0"
+  sku_name    = "S1"
   max_size_gb = 250
   retention = {
     audit_days               = 30
