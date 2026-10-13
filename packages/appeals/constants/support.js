@@ -565,6 +565,24 @@ const enforcementNoticeTimetable = {
 	}
 };
 
+const LDCTimetable = {
+	lpaQuestionnaireDueDate: {
+		daysFromStartDate: 10
+	},
+	ipCommentsDueDate: {
+		daysFromStartDate: 30
+	},
+	lpaStatementDueDate: {
+		daysFromStartDate: 30
+	},
+	finalCommentsDueDate: {
+		daysFromStartDate: 45
+	},
+	s106ObligationDueDate: {
+		daysFromStartDate: 30
+	}
+};
+
 const s78InquiryTimetable = {
 	lpaQuestionnaireDueDate: {
 		daysFromStartDate: 5
@@ -626,6 +644,16 @@ export const CONFIG_APPEAL_TIMETABLE = {
 		[APPEAL_CASE_PROCEDURE.WRITTEN]: { ...advertTimetable },
 		[APPEAL_CASE_PROCEDURE.HEARING]: {
 			...advertTimetable,
+			statementOfCommonGroundDueDate: {
+				daysFromStartDate: 25
+			}
+		},
+		[APPEAL_CASE_PROCEDURE.INQUIRY]: { ...enforcementInquiryTimetable }
+	},
+	[APPEAL_CASE_TYPE.X]: {
+		[APPEAL_CASE_PROCEDURE.WRITTEN]: { ...LDCTimetable },
+		[APPEAL_CASE_PROCEDURE.HEARING]: {
+			...LDCTimetable,
 			statementOfCommonGroundDueDate: {
 				daysFromStartDate: 25
 			}
