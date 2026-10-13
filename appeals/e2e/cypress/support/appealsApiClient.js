@@ -9,16 +9,26 @@ import { apiPaths } from './apiPaths.js';
 
 const baseUrl = Cypress.config('apiBaseUrl');
 
-export const createApiSubmission = (submission, type) => {
+export const createApiSubmission = (submission, type, additionalDocuments = []) => {
 	const env = baseUrl.indexOf('test') > -1 ? 'test' : 'dev';
 
-	// generate unqique document from base object
-	const baseDocument = documentsApiRequest[env][type];
-	const updatedDocument = generateUniqueDocument(baseDocument);
+	// some requests (e.g. case submission) require that a mandatory documents field is included in the payload
+	// as such we check to see if there is a default document for the request type, and merge with any additional documents passed in
+	const baseDocument = documentsApiRequest[env][type].documents[0];
+	const allDocuments = [baseDocument ? baseDocument : null, ...additionalDocuments];
+
+	cy.writeLog(`** all documents: ${JSON.stringify(allDocuments)}`);
+
+	let updatedDocuments;
+
+	// if are any documents to include generate unqique versions
+	if (allDocuments.length > 0) {
+		updatedDocuments = allDocuments.map((doc) => generateUniqueDocument(doc));
+	}
 
 	return {
 		...submission,
-		...updatedDocument
+		...(updatedDocuments && { documents: updatedDocuments })
 	};
 };
 
@@ -49,15 +59,25 @@ const assertResponseStatus = async (response, requestDescription, requestUrl) =>
 };
 
 export const appealsApiClient = {
-	async caseSubmission(requestBody) {
+	async caseSubmission(requestBody, additionalDocuments = []) {
 		try {
-			const submission = createApiSubmission(appealsApiRequests.caseSubmission, 'appellant');
+			const submission = createApiSubmission(
+				appealsApiRequests.caseSubmission,
+				'appellant',
+				additionalDocuments
+			);
 			const { casedata, users, documents } = submission;
 
-			console.log({
-				...casedata,
-				...requestBody
-			});
+			cy.writeLog(
+				JSON.stringify({
+					casedata: {
+						...casedata,
+						...requestBody
+					},
+					users,
+					documents
+				})
+			);
 
 			const url = baseUrl + apiPaths.caseSubmission;
 			const response = await fetch(url, {

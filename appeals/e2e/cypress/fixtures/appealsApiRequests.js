@@ -7,25 +7,19 @@ import { PLANNING_APPLICATION_TYPES } from '../support/consts.js';
  * @param {Object} baseDocument base document to be overridden
  * @returns new version of document with unique values for id and filenames
  */
-export const generateUniqueDocument = (baseDocument) => {
-	if (!baseDocument) return {}; // some requests do not need a document, e.g. setup inquiry and hearing
+export const generateUniqueDocument = (document) => {
+	if (!document) return {}; // some requests do not need a document, e.g. setup inquiry and hearing
 
 	// generate random id
 	const id = crypto.randomUUID();
 
-	const document = baseDocument.documents[0];
-
 	// return new document with unique properties
 	return {
-		documents: [
-			{
-				...document,
-				documentId: `doc-${id}`,
-				filename: `img-${id}.jpg`,
-				originalFilename: `oimg-${id}.jpg`,
-			}
-		]
-	};
+		...document,
+		documentId: `doc-${id}`,
+		filename: `${document.filename}-${id}.doc`,
+		//originalFilename: `${document.filename}-${id}.doc`,
+	}
 }
 
 const validLpaQuestionnaireCommon = {
@@ -544,8 +538,21 @@ const appealsApiRequests = {
 					groundRef: 'a',
 					factsForGround: 'I like Christmas'
 				}
-			]
+			],
 		},
+		documents: [
+			{
+				dateCreated: '2024-03-01T13:48:35.847Z',
+				documentId: '001',
+				documentType: 'groundASupporting',
+				documentURI:
+					'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+				filename: 'groundASupporting',
+				mime: 'image/jpeg',
+				originalFilename: 'groundASupporting.doc',
+				size: 10293
+			}
+		],
 	},
 	enforcementLinkedSubmission: {
 		casedata: {

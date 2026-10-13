@@ -81,7 +81,7 @@ export class AppellantCasePage extends Page {
 			.and('contain', phone);
 	}
 
-	assertFieldLabelAndValue(labelText, expectedValue) {
+	assertFieldLabelAndValue(labelText, expectedValue, isLink = false) {
 		cy.get('.govuk-summary-list__key')
 			.contains(labelText)
 			.invoke('text')
@@ -89,15 +89,40 @@ export class AppellantCasePage extends Page {
 				expect(text.trim()).to.eq(labelText);
 			});
 
-		cy.get('.govuk-summary-list__key')
+		/*cy.get('.govuk-summary-list__key')
 			.contains(labelText)
 			.siblings('.govuk-summary-list__value')
 			.invoke('text')
 			.then((text) => {
 				cy.writeLog(`Asserting field value for label "${labelText}" is "${expectedValue}"`);
 				expect(text.trim()).to.contain(expectedValue);
+			});*/
+
+		cy.get('.govuk-summary-list__key')
+			.contains(labelText)
+			.siblings('.govuk-summary-list__value')
+			.then(($value) => {
+				cy.writeLog(
+					`Asserting field value for label "${labelText}" is "${expectedValue}", expecting link: ${isLink}`
+				);
+
+				// If the value is a link, we need to check the text of the link instead of the value itself
+				if (isLink) {
+					cy.wrap($value)
+						.find('a')
+						.should('be.visible')
+						.invoke('text')
+						.then((text) => {
+							expect(text.trim()).to.contain(expectedValue);
+						});
+				} else {
+					cy.wrap($value)
+						.invoke('text')
+						.then((text) => {
+							expect(text.trim()).to.contain(expectedValue);
+						});
+				}
 			});
-		//.should('contain', expectedValue);
 	}
 
 	assertFieldNotPresent(labelText) {

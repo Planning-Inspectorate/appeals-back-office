@@ -28,7 +28,8 @@ const casPlanningExpeditedData = appealsApiRequests.casPlanningExpeditedSubmissi
 const casAdvertExpeditedData = appealsApiRequests.casAdvertsExpeditedSubmission.casedata;
 const casAdvertData = appealsApiRequests.casAdvertsSubmission.casedata;
 const fullAdvertData = appealsApiRequests.advertsSubmission.casedata;
-const enforcementData = appealsApiRequests.enforcementSubmission.casedata;
+const { casedata: enforcementData, documents: enforcementDocuments } =
+	appealsApiRequests.enforcementSubmission;
 const enforcementLinkedData = appealsApiRequests.enforcementLinkedSubmission.casedata;
 
 describe('Managing Appellant Case Details', () => {
@@ -805,8 +806,8 @@ describe('Managing Appellant Case Details', () => {
 		});
 	});
 
-	it('Enforcement appeal - appellant form', () => {
-		cy.createCase({ ...enforcementData }).then((caseObj) => {
+	it.only('Enforcement appeal - appellant form', () => {
+		cy.createCase({ ...enforcementData }, enforcementDocuments).then((caseObj) => {
 			appeal = caseObj;
 			appellantCasePage.navigateToAppellantCase(caseObj);
 
@@ -818,7 +819,7 @@ describe('Managing Appellant Case Details', () => {
 			};
 
 			// Base questions for enforcement appeals
-			assertBaseQuestions(baseData);
+			assertBaseQuestions(baseData, false);
 
 			// Not present
 			appellantCasePage.assertFieldNotPresent('What is the area of the appeal site?');
@@ -881,7 +882,7 @@ describe('Managing Appellant Case Details', () => {
 		});
 	});
 
-	it.only('Enforcement linked appeal - appellant form', () => {
+	it('Enforcement linked appeal - appellant form', () => {
 		cy.createCase({ ...enforcementLinkedData }).then((caseObj) => {
 			appeal = caseObj;
 			appellantCasePage.navigateToAppellantCase(caseObj);
@@ -1003,7 +1004,7 @@ describe('Managing Appellant Case Details', () => {
 		});
 	});
 
-	it.only('Enforcement linked appeal - can update grounds of appeal', () => {
+	it('Enforcement linked appeal - can update grounds of appeal', () => {
 		cy.createCase({ ...enforcementLinkedData }).then((caseObj) => {
 			appeal = caseObj;
 			appellantCasePage.navigateToAppellantCase(caseObj);
@@ -1066,6 +1067,7 @@ describe('Managing Appellant Case Details', () => {
 
 	/**
 	 * Takes a set of enforecment data and creates an object with information about the appeal grounds
+	 * that can be used to assert the appellant case page displays the correct information for each ground of appeal
 	 * @param {*} enforcementData case data for an enforcement appeal
 	 * @returns object with a list of references and facts for each appeal ground
 	 */
@@ -1076,7 +1078,9 @@ describe('Managing Appellant Case Details', () => {
 			groundsList.push(ground.groundRef);
 			return {
 				label: `Facts for ground (${ground.groundRef})`,
-				value: ground.factsForGround
+				value: ground.factsForGround,
+				documentLabel: `Ground (${ground.groundRef}) supporting documents`,
+				documentTypeKey: `ground${ground.groundRef.toUpperCase()}Supporting`
 			};
 		});
 
@@ -1108,9 +1112,29 @@ describe('Managing Appellant Case Details', () => {
 			formattedGrounds.groundsList.join('')
 		);
 
-		// facts for each ground of appeal
+		// facts and supporting documents for each ground of appeal
 		formattedGrounds.groundFacts.forEach((groundFact) => {
 			appellantCasePage.assertFieldLabelAndValue(groundFact.label, groundFact.value);
+
+			// check that if there is a supporting document for the ground of appeal it is displayed correctly,
+			// otherwise check that the default for no documents is displayed
+			const enforcementDocument = enforcementDocuments.find(
+				(doc) => doc.documentType === groundFact.documentTypeKey
+			);
+
+			if (enforcementDocument) {
+				cy.writeLog(
+					`Supporting document for ground (${groundFact.groundRef}) is ${JSON.stringify(enforcementDocument)}`
+				);
+
+				appellantCasePage.assertFieldLabelAndValue(
+					groundFact.documentLabel,
+					enforcementDocument.filename,
+					true
+				);
+			} else {
+				appellantCasePage.assertFieldLabelAndValue(groundFact.documentLabel, 'No documents');
+			}
 		});
 
 		// check that are not displaying rows for any other grounds of appeal
