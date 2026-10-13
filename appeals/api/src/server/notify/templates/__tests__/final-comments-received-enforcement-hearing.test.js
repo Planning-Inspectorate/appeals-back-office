@@ -35,7 +35,7 @@ describe('final-comments-received-enforcement-hearing.md', () => {
 			const expectedContent = [
 				`We have received the ${submittingParty}'s final comments.`,
 				'',
-				`You can [view this information in the appeal service](/mock-front-office-url/${dashboardStub}/ABC45678).`,
+				`You can [view this information in the appeals service](/mock-front-office-url/${dashboardStub}/ABC45678).`,
 				'',
 				'# Appeal details',
 				'',
@@ -100,7 +100,7 @@ describe('final-comments-received-enforcement-hearing.md', () => {
 			const expectedContent = [
 				`We have received the ${submittingParty}'s final comments.`,
 				'',
-				`You can [view this information in the appeal service](/mock-front-office-url/${dashboardStub}/ABC45678).`,
+				`You can [view this information in the appeals service](/mock-front-office-url/${dashboardStub}/ABC45678).`,
 				'',
 				'# Appeal details',
 				'',
