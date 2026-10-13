@@ -972,33 +972,12 @@ these [Notify Templates](../appeals/api/src/server/notify/templates):
 - **Notify Content Template:** [decision-is-invalid-interested-party](../appeals/api/src/server/notify/templates/decision-is-invalid-interested-party.content.md)
 - **Trigger:** Issue decision and select invalid and continue
 
-### Appellant costs decision - appellant
+### Costs decision - all parties
 
-- **Appeal type:**
-- **Notify Subject Template:** [appellant-costs-decision-appellant](../appeals/api/src/server/notify/templates/appellant-costs-decision-appellant.subject.md)
-- **Notify Content Template:** [appellant-costs-decision-appellant](../appeals/api/src/server/notify/templates/appellant-costs-decision-appellant.content.md)
-- **Trigger:**
-
-### Appellant costs decision - lpa
-
-- **Appeal type:**
-- **Notify Subject Template:** [appellant-costs-decision-lpa](../appeals/api/src/server/notify/templates/appellant-costs-decision-lpa.subject.md)
-- **Notify Content Template:** [appellant-costs-decision-lpa](../appeals/api/src/server/notify/templates/appellant-costs-decision-lpa.content.md)
-- **Trigger:**
-
-### LPA costs decision - appellant
-
-- **Appeal type:**
-- **Notify Subject Template:** [lpa-costs-decision-appellant](../appeals/api/src/server/notify/templates/lpa-costs-decision-appellant.subject.md)
-- **Notify Content Template:** [lpa-costs-decision-appellant](../appeals/api/src/server/notify/templates/lpa-costs-decision-appellant.content.md)
-- **Trigger:**
-
-### LPA costs decision - lpa
-
-- **Appeal type:**
-- **Notify Subject Template:** [lpa-costs-decision-lpa](../appeals/api/src/server/notify/templates/lpa-costs-decision-lpa.subject.md)
-- **Notify Content Template:** [lpa-costs-decision-lpa](../appeals/api/src/server/notify/templates/lpa-costs-decision-lpa.content.md)
-- **Trigger:**
+- **Appeal type:** all
+- **Notify Subject Template:** [costs-decision-all-parties](../appeals/api/src/server/notify/templates/costs-decision-all-parties.subject.md)
+- **Notify Content Template:** [costs-decision-all-parties](../appeals/api/src/server/notify/templates/costs-decision-all-parties.content.md)
+- **Trigger:** Issue costs decision and continue
 
 ### Correction notice decision - appellant
 
