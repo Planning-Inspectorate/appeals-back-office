@@ -722,25 +722,42 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
 			break;
 	}
 
-	const senderIsLpa = costsCategory === 'lpa';
 	const inviteResponses = session?.inviteResponses?.toLowerCase() === 'yes';
-	const inviteCommentsForPreview = inviteResponses && senderIsLpa;
-
-	const notifyPreview = await generateNotifyPreview(request.apiClient, notifyTemplateName, {
+	const commonPersonalisation = {
 		appeal_reference_number: currentAppeal?.appealReference,
 		site_address: address || '',
 		lpa_reference: currentAppeal?.planningApplicationReference || '',
 		enforcement_reference: currentAppeal.enforcementNotice?.appellantCase?.reference || '',
 		contact_email: email || '',
-		deadline: deadline,
-		responses_invited: !!inviteCommentsForPreview,
-		dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT
-	});
+		deadline: deadline
+	};
+	const inviteCommentsApellant = inviteResponses && costsCategory === 'lpa';
+	const inviteCommentsLpa = inviteResponses && costsCategory === 'appellant';
 
-	const pageContent = shareDocumentCheckAndConfirmPage(
+	const appellantNotifyPreview = await generateNotifyPreview(
+		request.apiClient,
+		notifyTemplateName,
+		{
+			...commonPersonalisation,
+			responses_invited: !!inviteCommentsApellant,
+			dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT
+		}
+	);
+
+	const lpaNotifyPreview = await generateNotifyPreview(request.apiClient, notifyTemplateName, {
+		...commonPersonalisation,
+		responses_invited: !!inviteCommentsLpa,
+		dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA
+	});
+	const emailPreviews = {
+		appellant: appellantNotifyPreview.renderedHtml,
+		lpa: lpaNotifyPreview.renderedHtml
+	};
+
+	const pageContent = await shareDocumentCheckAndConfirmPage(
 		backLinkUrl,
 		documentInfo.latestDocumentVersion,
-		notifyPreview,
+		emailPreviews,
 		session.inviteResponses
 	);
 
@@ -779,7 +796,7 @@ export const postShareDocumentCheckAndConfirm = async (request, response) => {
 	}
 
 	delete request.session.inviteResponses;
-	delete request.session.costsDocumentTypes;
+	delete request.session.costsDocumentType;
 
 	addNotificationBannerToSession({
 		session: request.session,
