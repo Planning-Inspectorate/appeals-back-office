@@ -1,4 +1,5 @@
 import config from '#config/config.js';
+import { createDocumentStorageFilename } from '#utils/document-storage-filename.js';
 import { REP_ATTACHMENT_DOCTYPE } from '@pins/appeals/constants/documents.js';
 import { APPEAL_CASE_STAGE } from '@planning-inspectorate/data-model';
 import { randomUUID } from 'node:crypto';
@@ -19,9 +20,9 @@ import { randomUUID } from 'node:crypto';
  */
 export const mapDocumentIn = (doc, stage = null) => {
 	const { filename, documentId, ...metadata } = doc;
-	metadata.fileName = metadata.originalFilename;
+	const documentGuid = randomUUID();
+
 	if (stage === 'representation') {
-		metadata.fileName = `${randomUUID()}_${metadata.originalFilename}`;
 		// @ts-ignore
 		metadata.documentType = REP_ATTACHMENT_DOCTYPE;
 	}
@@ -29,10 +30,11 @@ export const mapDocumentIn = (doc, stage = null) => {
 	metadata.blobStorageContainer = config.BO_BLOB_CONTAINER;
 	metadata.stage = metadata.stage ?? stage ?? APPEAL_CASE_STAGE.INTERNAL;
 	metadata.description = metadata.description || `Document ${filename} (${documentId}) imported`;
+	metadata.fileName = createDocumentStorageFilename(documentGuid, metadata.originalFilename);
 
 	const documentVersionInput = {
 		...metadata,
-		documentGuid: randomUUID(),
+		documentGuid,
 		dateCreated: (doc.dateCreated ? new Date(doc.dateCreated) : new Date()).toISOString(),
 		lastModified: new Date().toISOString(),
 		version: 1

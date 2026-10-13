@@ -335,9 +335,7 @@ const clientActions = (container) => {
 					blobStorageUrl: createBlobStorageUrl(
 						container.dataset?.caseReference,
 						addedFile.guid,
-						newVersionOfExistingFile
-							? container.dataset?.documentOriginalFileName || ''
-							: addedFile.file.name,
+						createDocumentStorageFilename(addedFile.guid, addedFile.file.name),
 						newVersionOfExistingFile ? container.dataset?.documentVersion : undefined
 					)
 				};
@@ -608,6 +606,16 @@ const clientActions = (container) => {
 		const version = latestVersionNumber ? latestVersionNumber + 1 : 1;
 
 		return `appeal/${caseReference}/${fileGUID}/v${version}/${fileName}`;
+	}
+
+	/**
+	 * @param {string} fileGUID
+	 * @param {string} originalFilename
+	 * @returns {string}
+	 */
+	function createDocumentStorageFilename(fileGUID, originalFilename) {
+		const extension = originalFilename?.split('.').pop()?.toLowerCase() || '';
+		return `${fileGUID}.${extension}`;
 	}
 
 	return { bindEvents };
