@@ -1,11 +1,11 @@
 import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
 
-describe('final-comments-done-lpa.md', () => {
+describe('final-comments-none.md', () => {
 	test('should call notify sendEmail with the correct data', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'final-comments-done-lpa',
+			templateName: 'final-comments-none',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
@@ -14,12 +14,13 @@ describe('final-comments-done-lpa.md', () => {
 				appeal_reference_number: 'ABC45678',
 				site_address: '10, Test Street',
 				lpa_reference: '12345XYZ',
-				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+				user_type: 'appellant'
 			}
 		};
 
 		const expectedContent = [
-			"We have received the appellant's final comments.",
+			'The appellant did not submit any final comments.',
 			'',
 			'# Appeal details',
 			'',
@@ -27,13 +28,9 @@ describe('final-comments-done-lpa.md', () => {
 			'Address: 10, Test Street',
 			'Planning application reference: 12345XYZ',
 			'',
-			'# What happens next',
+			'Find out about the [average handling times for appeals](https://www.gov.uk/guidance/appeals-how-long-they-take).',
 			'',
-			"You can [view the appellant's final comments](/mock-front-office-url/manage-appeals/ABC45678).",
-			'',
-			'The inspector will visit the site and we will contact you when we have made the decision.',
-			'',
-			'The Planning Inspectorate',
+			'Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
 		].join('\n');
 
@@ -46,7 +43,7 @@ describe('final-comments-done-lpa.md', () => {
 			'test@136s7.com',
 			{
 				content: expectedContent,
-				subject: "We have received the appellant's final comments: ABC45678"
+				subject: 'No final comments: ABC45678'
 			}
 		);
 	});
