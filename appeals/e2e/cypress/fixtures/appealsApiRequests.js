@@ -537,6 +537,10 @@ const appealsApiRequests = {
 				{
 					groundRef: 'a',
 					factsForGround: 'I like Christmas'
+				},
+				{
+					groundRef: 'b',
+					factsForGround: 'I like Easter'
 				}
 			],
 		},
@@ -680,27 +684,20 @@ const appealsApiRequests = {
 			enforcementReference: '12345',
 			enforcementIssueDate: '1890-12-28T22:49:47.0Z',
 			enforcementEffectiveDate: '1890-12-28T22:49:47.0Z',
+			descriptionOfAllegedBreach: 'Christmas tree stolen',
 			contactPlanningInspectorateDate: null,
 			interestInLand: 'owner',
 			caseSubmissionDueDate: null,
-			siteAddressLine1: 'occaecat aliquip non pariatur consequat',
-			siteAddressLine2: null,
-			siteAddressTown: 'et',
-			siteAddressCounty: 'velit',
-			siteAddressPostcode: 'nisi minim laboris sed',
 			contactAddressLine1: null,
 			contactAddressLine2: null,
 			contactAddressTown: null,
 			contactAddressCounty: null,
 			contactAddressPostcode: null,
-			siteAccessDetails: ['laborum', 'aute velit quis', 'dolor'],
-			siteSafetyDetails: ['velit aliqua', 'qui', 'tempor Duis ut dolore', 'anim Ut in ea', 'eiusmod laborum'],
 			appellantCostsAppliedFor: false,
-			appellantProcedurePreference: null,
+			appellantProcedurePreference: 'written',
 			appellantProcedurePreferenceDetails: 'eiusmod ex exercitation',
-			appellantProcedurePreferenceDuration: 10816414.941069126,
-			appellantProcedurePreferenceWitnessCount: -91300569.36444478,
-			nearbyCaseReferences: ['incididunt'],
+			appellantProcedurePreferenceDuration: 3,
+			appellantProcedurePreferenceWitnessCount: 2,
 			appealGrounds: [
 				{
 					groundRef: 'a',
@@ -903,7 +900,7 @@ const documentsApiRequest = {
 						'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
 					filename: '{placeholder}', // will be replaced by generated id
 					mime: 'image/jpeg',
-					originalFilename: '{placeholder}', // will be replaced by generated id
+					originalFilename: 'appellantCostsApplication.doc', // will be replaced by generated id
 					size: 10293
 				}
 			]

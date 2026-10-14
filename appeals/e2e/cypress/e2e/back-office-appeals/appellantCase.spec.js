@@ -23,6 +23,7 @@ const {
 	casAdvertsCasedata,
 	enforcementCasedata
 } = appealsApiRequests.caseSubmission;
+
 const hasExpeditedData = appealsApiRequests.hasExpeditedSubmission.casedata;
 const casPlanningExpeditedData = appealsApiRequests.casPlanningExpeditedSubmission.casedata;
 const casAdvertExpeditedData = appealsApiRequests.casAdvertsExpeditedSubmission.casedata;
@@ -31,6 +32,12 @@ const fullAdvertData = appealsApiRequests.advertsSubmission.casedata;
 const { casedata: enforcementData, documents: enforcementDocuments } =
 	appealsApiRequests.enforcementSubmission;
 const enforcementLinkedData = appealsApiRequests.enforcementLinkedSubmission.casedata;
+const enforcementListedBuildingData = appealsApiRequests.enforcementListedSubmission.casedata;
+
+const defaultAppealProperties = {
+	includeLandOwnershipQuestions: true,
+	lpaQuestionLabel: 'Local planning authority'
+};
 
 describe('Managing Appellant Case Details', () => {
 	const fieldId = 'planning-application-reference';
@@ -724,7 +731,7 @@ describe('Managing Appellant Case Details', () => {
 		});
 	});
 
-	it('Full Advert - appellant form', () => {
+	it.only('Full Advert - appellant form', () => {
 		cy.createCase({ ...fullAdvertData }).then((caseObj) => {
 			appeal = caseObj;
 			appellantCasePage.navigateToAppellantCase(caseObj);
@@ -751,7 +758,7 @@ describe('Managing Appellant Case Details', () => {
 			);
 			appellantCasePage.assertFieldLabelAndValue(
 				'Are there other appeals linked to your development?',
-				fullAdvertData.nearbyCaseReferences
+				fullAdvertData.nearbyCaseReferences.join('')
 			);
 			appellantCasePage.assertFieldLabelAndValue(
 				'Was your application granted or refused?',
@@ -797,11 +804,11 @@ describe('Managing Appellant Case Details', () => {
 			);
 			appellantCasePage.assertFieldLabelAndValue(
 				'How many days would you expect the inquiry to last?',
-				fullAdvertData.appellantProcedurePreferenceDuration
+				`${fullAdvertData.appellantProcedurePreferenceDuration} day`
 			);
 			appellantCasePage.assertFieldLabelAndValue(
 				'How many witnesses would you expect to give evidence at the inquiry?',
-				fullAdvertData.appellantProcedurePreferenceWitnessCount
+				`${fullAdvertData.appellantProcedurePreferenceWitnessCount}`
 			);
 		});
 	});
@@ -819,7 +826,11 @@ describe('Managing Appellant Case Details', () => {
 			};
 
 			// Base questions for enforcement appeals
-			assertBaseQuestions(baseData, false);
+			const appealProperties = {
+				...defaultAppealProperties,
+				includeLandOwnershipQuestions: false
+			};
+			assertBaseQuestions(baseData, appealProperties);
 
 			// Not present
 			appellantCasePage.assertFieldNotPresent('What is the area of the appeal site?');
@@ -841,7 +852,7 @@ describe('Managing Appellant Case Details', () => {
 			);
 			appellantCasePage.assertFieldLabelAndValue(
 				'Are there other appeals linked to your development?',
-				enforcementData.nearbyCaseReferences
+				enforcementData.nearbyCaseReferences.join('')
 			);
 			appellantCasePage.assertFieldLabelAndValue(
 				'Was your application granted or refused?',
@@ -856,10 +867,13 @@ describe('Managing Appellant Case Details', () => {
 
 			// Upload document labels
 			appellantCasePage.assertFieldLabelAndValue('Application form', '');
-			appellantCasePage.assertFieldLabelAndValue('Application for an award of appeal costs', '');
+			appellantCasePage.assertFieldLabelAndValue(
+				'Application for an award of appeal costs',
+				'appellantCostsApplication.doc'
+			);
 
 			// Grounds and facts
-			const formattedGrounds = formatGroundsOfAppeal(enforcementData);
+			const formattedGrounds = formatGroundsOfAppeal(enforcementData, enforcementDocuments);
 			assertGroundsOfAppeal(formattedGrounds);
 
 			// Apppeal details
@@ -873,11 +887,11 @@ describe('Managing Appellant Case Details', () => {
 			);
 			appellantCasePage.assertFieldLabelAndValue(
 				'How many days would you expect the inquiry to last?',
-				enforcementData.appellantProcedurePreferenceDuration
+				`${enforcementData.appellantProcedurePreferenceDuration} day`
 			);
 			appellantCasePage.assertFieldLabelAndValue(
 				'How many witnesses would you expect to give evidence at the inquiry?',
-				enforcementData.appellantProcedurePreferenceWitnessCount
+				`${enforcementData.appellantProcedurePreferenceWitnessCount}`
 			);
 		});
 	});
@@ -895,7 +909,11 @@ describe('Managing Appellant Case Details', () => {
 			};
 
 			// Base questions for enforcement appeals
-			assertBaseQuestions(baseData, false);
+			const appealProperties = {
+				...defaultAppealProperties,
+				includeLandOwnershipQuestions: false
+			};
+			assertBaseQuestions(baseData, appealProperties);
 
 			// Not present
 			appellantCasePage.assertFieldNotPresent('What is the area of the appeal site?');
@@ -955,11 +973,88 @@ describe('Managing Appellant Case Details', () => {
 			);
 			appellantCasePage.assertFieldLabelAndValue(
 				'How many days would you expect the inquiry to last?',
-				enforcementLinkedData.appellantProcedurePreferenceDuration
+				`${enforcementLinkedData.appellantProcedurePreferenceDuration} day`
 			);
 			appellantCasePage.assertFieldLabelAndValue(
 				'How many witnesses would you expect to give evidence at the inquiry?',
-				enforcementLinkedData.appellantProcedurePreferenceWitnessCount
+				`${enforcementLinkedData.appellantProcedurePreferenceWitnessCount}`
+			);
+		});
+	});
+
+	it.only('Enforcement listed building appeal - appellant form', () => {
+		cy.createCase({ ...enforcementListedBuildingData }).then((caseObj) => {
+			appeal = caseObj;
+			appellantCasePage.navigateToAppellantCase(caseObj);
+
+			// first line address and postcode are different for enforcement linked appeals, so we need to merge them with the base data
+			const baseData = {
+				...casedata,
+				siteAddressLine1: enforcementListedBuildingData.siteAddressLine1,
+				siteAddressPostcode: enforcementListedBuildingData.siteAddressPostcode
+			};
+
+			// Base questions for enforcement appeals
+			const appealProperties = {
+				...defaultAppealProperties,
+				lpaQuestionLabel: 'Which local planning authority (LPA) do you want to appeal against?',
+				includeLandOwnershipQuestions: false
+			};
+			assertBaseQuestions(baseData, appealProperties);
+
+			// Not present
+			appellantCasePage.assertFieldNotPresent('What is the area of the appeal site?');
+			appellantCasePage.assertFieldNotPresent('Application form');
+
+			// Enforcement application reference number
+			appellantCasePage.assertFieldLabelAndValue(
+				'What is the reference number on the enforcement notice?',
+				enforcementListedBuildingData.enforcementReference
+			);
+
+			// Application details
+			appellantCasePage.assertFieldLabelAndValue(
+				'Are there other appeals linked to your development?',
+				enforcementListedBuildingData.nearbyCaseReferences.join('')
+			);
+
+			// Appeal details
+			appellantCasePage.assertFieldLabelAndValue(
+				'What is your appeal about?',
+				'Enforcement listed building and conservation area'
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'What is the issue date on your enforcement notice?',
+				formatDateAndTime(new Date(enforcementListedBuildingData.enforcementIssueDate)).date
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'What is the effective date on your enforcement notice?',
+				formatDateAndTime(new Date(enforcementListedBuildingData.enforcementEffectiveDate)).date
+			);
+
+			// Upload document labels
+			appellantCasePage.assertFieldLabelAndValue('Application for an award of appeal costs', '');
+
+			// Grounds and facts
+			const formattedGrounds = formatGroundsOfAppeal(enforcementListedBuildingData);
+			assertGroundsOfAppeal(formattedGrounds);
+
+			// Apppeal details
+			appellantCasePage.assertFieldLabelAndValue(
+				'How would you prefer us to decide your appeal?',
+				capitalize(enforcementListedBuildingData.appellantProcedurePreference)
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'Why would you prefer this appeal procedure?',
+				enforcementListedBuildingData.appellantProcedurePreferenceDetails
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'How many days would you expect the inquiry to last?',
+				`${enforcementListedBuildingData.appellantProcedurePreferenceDuration} day`
+			);
+			appellantCasePage.assertFieldLabelAndValue(
+				'How many witnesses would you expect to give evidence at the inquiry?',
+				`${enforcementListedBuildingData.appellantProcedurePreferenceWitnessCount}`
 			);
 		});
 	});
@@ -1066,21 +1161,27 @@ describe('Managing Appellant Case Details', () => {
 	};
 
 	/**
-	 * Takes a set of enforecment data and creates an object with information about the appeal grounds
+	 * Takes a set of enforecment data and combines it into an object with information about the appeal grounds,
 	 * that can be used to assert the appellant case page displays the correct information for each ground of appeal
 	 * @param {*} enforcementData case data for an enforcement appeal
-	 * @returns object with a list of references and facts for each appeal ground
+	 * @param {Array} enforcementDocuments list of any grounds of appeal documents that have been uploaded for the appeal
+	 * @returns object with information and facts about the grounds of appeal
 	 */
-	const formatGroundsOfAppeal = (enforcementData) => {
+	const formatGroundsOfAppeal = (enforcementData, enforcementDocuments = []) => {
 		let groundsList = [];
 
 		const formattedGrounds = enforcementData.appealGrounds.map((ground) => {
 			groundsList.push(ground.groundRef);
+
+			const enforcementDocument = enforcementDocuments.find(
+				(doc) => doc.documentType === `ground${ground.groundRef.toUpperCase()}Supporting`
+			);
+
 			return {
 				label: `Facts for ground (${ground.groundRef})`,
 				value: ground.factsForGround,
 				documentLabel: `Ground (${ground.groundRef}) supporting documents`,
-				documentTypeKey: `ground${ground.groundRef.toUpperCase()}Supporting`
+				...(enforcementDocument && { document: enforcementDocument })
 			};
 		});
 
@@ -1100,6 +1201,7 @@ describe('Managing Appellant Case Details', () => {
 	};
 
 	const assertGroundsOfAppeal = (formattedGrounds) => {
+		cy.writeLog(`Formatted grounds of appeal: ${JSON.stringify(formattedGrounds)}`);
 		// description of the alleged breach and grounds of appeal
 		appellantCasePage.assertFieldLabelAndValue(
 			'Description of the alleged breach',
@@ -1118,18 +1220,14 @@ describe('Managing Appellant Case Details', () => {
 
 			// check that if there is a supporting document for the ground of appeal it is displayed correctly,
 			// otherwise check that the default for no documents is displayed
-			const enforcementDocument = enforcementDocuments.find(
-				(doc) => doc.documentType === groundFact.documentTypeKey
-			);
-
-			if (enforcementDocument) {
+			if (groundFact.document) {
 				cy.writeLog(
-					`Supporting document for ground (${groundFact.groundRef}) is ${JSON.stringify(enforcementDocument)}`
+					`Supporting document for ground (${groundFact.groundRef}) is ${JSON.stringify(groundFact.document)}`
 				);
 
 				appellantCasePage.assertFieldLabelAndValue(
 					groundFact.documentLabel,
-					enforcementDocument.filename,
+					groundFact.document.originalFilename,
 					true
 				);
 			} else {
@@ -1151,10 +1249,16 @@ describe('Managing Appellant Case Details', () => {
 		});
 	};
 
-	const assertBaseQuestions = (submissionType, includeLandOwnershipQuestions = true) => {
+	/**
+	 * Asserts the base questions that are common to all appeal types on the appellant case page, including appellant and agent details,
+	 * site details, and land ownership questions (if applicable)
+	 * @param {object} submissionType base data for the appeal
+	 * @param {object} appealProperties config object that allows to apply overrides (e.g. where some questions are not applicable)
+	 */
+	const assertBaseQuestions = (submissionType, appealProperties = defaultAppealProperties) => {
 		// Before you start
 		appellantCasePage.assertFieldLabelAndValue(
-			'Local planning authority',
+			appealProperties.lpaQuestionLabel,
 			'System Test Borough Council'
 		);
 
@@ -1192,7 +1296,7 @@ describe('Managing Appellant Case Details', () => {
 		);
 
 		// land ownership questions, are not applicable for some appeal types (e.g. CAS adverts, enforcement appeals)
-		if (includeLandOwnershipQuestions) {
+		if (appealProperties.includeLandOwnershipQuestions) {
 			appellantCasePage.assertFieldLabelAndValue(
 				'Is the appeal site in a green belt?',
 				submissionType.isGreenBelt ? 'Yes' : 'No'

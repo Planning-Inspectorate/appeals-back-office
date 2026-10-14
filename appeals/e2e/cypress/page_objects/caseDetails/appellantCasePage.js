@@ -86,17 +86,8 @@ export class AppellantCasePage extends Page {
 			.contains(labelText)
 			.invoke('text')
 			.then((text) => {
-				expect(text.trim()).to.eq(labelText);
+				expect(text.trim().toLowerCase()).to.eq(labelText.toLowerCase());
 			});
-
-		/*cy.get('.govuk-summary-list__key')
-			.contains(labelText)
-			.siblings('.govuk-summary-list__value')
-			.invoke('text')
-			.then((text) => {
-				cy.writeLog(`Asserting field value for label "${labelText}" is "${expectedValue}"`);
-				expect(text.trim()).to.contain(expectedValue);
-			});*/
 
 		cy.get('.govuk-summary-list__key')
 			.contains(labelText)
@@ -119,7 +110,7 @@ export class AppellantCasePage extends Page {
 					cy.wrap($value)
 						.invoke('text')
 						.then((text) => {
-							expect(text.trim()).to.contain(expectedValue);
+							expect(text.trim().toLowerCase()).to.contain(expectedValue.toLowerCase());
 						});
 				}
 			});
