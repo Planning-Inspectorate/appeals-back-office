@@ -19,6 +19,7 @@ import {
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_REDACTED_STATUS
 } from '@planning-inspectorate/data-model';
+import { showMoreComment } from '../representations/common/components/show-more-comment.js';
 
 /** @typedef {import('#app/auth/auth-session.service').SessionWithAuth} SessionWithAuth */
 /** @typedef {{ documentGuid: string, name: string, stage: string, folderId: number, documentType: string, representationId?: number, representationType?: string, }} DocInfo */
@@ -416,9 +417,9 @@ export const formatRejectedIpCommentDetails = (comment) => {
 		},
 		{
 			key: { text: 'Comment' },
-			value: {
+			value: showMoreComment({
 				text: comment.originalRepresentation || comment.redactedRepresentation || 'No comment'
-			}
+			})
 		},
 		{
 			key: { text: 'Supporting documents' },
@@ -447,6 +448,7 @@ export const formatRejectedIpCommentDetails = (comment) => {
  */
 export const renderRejectedIpCommentComponent = async (comment, nunjucks) => {
 	const summaryListComponent = formatRejectedIpCommentDetails(comment);
+	preRenderPageComponents([summaryListComponent]);
 	const detailsComponentHtml = await nunjucks.render('appeals/components/page-component.njk', {
 		component: {
 			type: 'details',
