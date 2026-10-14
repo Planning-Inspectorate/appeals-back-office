@@ -79,7 +79,8 @@ export async function postShareRepresentations(request, response) {
 		(rep) =>
 			rep?.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT ||
 			rep?.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT ||
-			rep?.representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT
+			rep?.representationType === APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT ||
+			rep?.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT
 	);
 	const hearingIsSetUp = Boolean(
 		currentAppeal.hearing?.hearingStartTime && currentAppeal.hearing?.address
@@ -120,7 +121,7 @@ export async function postShareRepresentations(request, response) {
 							);
 					}
 				} else if (hasComments && hasStatements) {
-					return 'commentsAndLpaStatementShared';
+					return 'commentsAndStatementsShared';
 				} else if (hasStatements) {
 					return 'statementsShared';
 				} else if (hasComments) {

@@ -194,7 +194,7 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 					`/appeals-service/appeal-details/${appealDetails.appealId}/share`
 				)}" class="govuk-heading-s govuk-notification-banner__link">Share final comments</a>`
 			});
-		case 'shareCommentsAndLpaStatement':
+		case 'shareCommentsAndStatement':
 			return createNotificationBanner({
 				bannerDefinitionKey,
 				html: `<a href="${addBackLinkQueryToUrl(
