@@ -16,6 +16,7 @@ export const dateKnownPage = (appealDetails, backLinkUrl, values) => {
 		id: 'date-known',
 		legendText: 'Do you know the date and time of the hearing?',
 		legendIsPageHeading: true,
+		legendTextSize: 'l',
 		value: values?.dateKnown
 	});
 
