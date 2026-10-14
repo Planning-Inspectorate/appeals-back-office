@@ -818,7 +818,7 @@ describe('Managing Appellant Case Details', () => {
 			appeal = caseObj;
 			appellantCasePage.navigateToAppellantCase(caseObj);
 
-			// first line address and postcode are different for enforcement linked appeals, so we need to merge them with the base data blue bean
+			// first line address and postcode are different for enforcement linked appeals, so we need to merge them with the base data
 			const baseData = {
 				...casedata,
 				siteAddressLine1: enforcementData.siteAddressLine1,
@@ -1071,15 +1071,21 @@ describe('Managing Appellant Case Details', () => {
 			groundsOfAppealPage.checkSelectedGroundsOfAppeal(enforcementData.appealGrounds);
 
 			// select a different ground of appeal
-			groundsOfAppealPage.selectGroundsOfAppeal(['a', 'b']);
+			groundsOfAppealPage.selectGroundsOfAppeal(['a', 'c']);
 
 			const updatedFormattedGrounds = {
 				descriptionOfBreach: enforcementData.descriptionOfAllegedBreach,
-				groundsList: ['b'],
+				groundsList: ['b', 'c'],
 				groundFacts: [
 					{
 						label: 'Facts for ground (b)',
-						value: 'Not answered'
+						value: 'I like easter',
+						documentLabel: `Ground (b) supporting documents`
+					},
+					{
+						label: 'Facts for ground (c)',
+						value: 'Not answered',
+						documentLabel: `Ground (c) supporting documents`
 					}
 				]
 			};
@@ -1095,7 +1101,7 @@ describe('Managing Appellant Case Details', () => {
 			caseDetailsPage.clickViewCaseHistory();
 			cy.get('h1').should('contain.text', 'Case history');
 
-			caseHistoryPage.verifyCaseHistoryValues(['Ground (a) removed', 'Ground (b) added']);
+			caseHistoryPage.verifyCaseHistoryValues(['Ground (a) removed', 'Ground (c) added']);
 		});
 	});
 
@@ -1119,11 +1125,13 @@ describe('Managing Appellant Case Details', () => {
 				groundFacts: [
 					{
 						label: 'Facts for ground (c)',
-						value: 'Not answered'
+						value: 'Not answered',
+						documentLabel: `Ground (c) supporting documents`
 					},
 					{
 						label: 'Facts for ground (d)',
-						value: 'Not answered'
+						value: 'Not answered',
+						documentLabel: `Ground (d) supporting documents`
 					}
 				]
 			};
