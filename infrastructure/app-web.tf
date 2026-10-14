@@ -91,6 +91,7 @@ module "app_web" {
     RETRY_STATUS_CODES = "408,413,429,500,502,503,504,521,522,524"
 
     #feature flags
+    FEATURE_FLAG_BACKGROUND_CASE_DOWNLOAD            = var.apps_config.featureFlags.featureFlagBackgroundCaseDownload
     FEATURE_FLAG_LINKED_APPEALS                      = var.apps_config.featureFlags.featureFlagLinkedAppeals
     FEATURE_FLAG_LINKED_APPEALS_UNLINK               = var.apps_config.featureFlags.featureFlagLinkedAppealsUnlink
     FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT            = var.apps_config.featureFlags.featureFlagSimplifyTeamAssignment

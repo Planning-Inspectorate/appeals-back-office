@@ -1,3 +1,4 @@
+import { formatRepresentation } from '#endpoints/representations/representations.formatter.js';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.AuditTrail} AuditTrail */
@@ -10,10 +11,16 @@ import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
  */
 const formatAuditTrail = (auditTrail, appealTypeKey) =>
 	auditTrail
-		? auditTrail.map(({ details, loggedAt, user, doc }) => ({
+		? auditTrail.map(({ details, loggedAt, user, doc, representation, representationId }) => ({
 				azureAdUserId: user?.azureAdUserId || '',
 				details: formatAuditDetails(details, appealTypeKey) || '',
 				loggedDate: typeof loggedAt === 'string' ? loggedAt : loggedAt?.toISOString() || '',
+				...(representationId || representation?.id
+					? { representationId: representationId || representation?.id }
+					: {}),
+				representation: representation
+					? formatRepresentation(/** @type {any} */ (representation))
+					: undefined,
 				doc: doc
 					? {
 							name: doc.document?.name || '',

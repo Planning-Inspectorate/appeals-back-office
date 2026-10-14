@@ -51,6 +51,7 @@ apps_config = {
     featureFlagLinkedAppealsUnlink              = true
     featureFlagSimplifyTeamAssignment           = true
     featureFlagPdfDownload                      = true
+    featureFlagBackgroundCaseDownload           = false
     featureFlagCancelCase                       = true
     featureFlagChangeProcedureType              = true
     featureFlagHearingPostMvp                   = true
@@ -168,7 +169,7 @@ sql_config = {
     login_username = "pins-odt-sql-test-appeals-bo"
     object_id      = "1819fc4a-bd5e-4e01-a727-16d865fb3f82"
   }
-  sku_name    = "S0"
+  sku_name    = "S1"
   max_size_gb = 250
   retention = {
     audit_days               = 30

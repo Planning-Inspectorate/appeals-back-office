@@ -872,5 +872,184 @@ describe('Change procedure timetable', () => {
 				});
 			});
 		});
+
+		describe('S78 Expedited', () => {
+			const appealData = {
+				...baseAppealData,
+				appealType: APPEAL_TYPE.S78,
+				procedureType: PROCEDURE_TYPE_NAME.WRITTEN_PART_1,
+				appealStatus: 'lpa_questionnaire',
+				appealTimetable: {
+					appealTimetableId: 1,
+					lpaStatementDueDate: '2025-07-25T22:59:00.000Z',
+					ipCommentsDueDate: '2025-08-26T22:59:00.000Z',
+					finalCommentsDueDate: '2025-09-10T22:59:00.000Z'
+				}
+			};
+
+			beforeEach(() => {
+				nock.cleanAll();
+				nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+				nock('http://test/').get('/appeals/1/appellant-cases/0').reply(200).persist();
+				nock('http://test/')
+					.post(`/appeals/validate-business-date`)
+					.reply(200, { result: true })
+					.persist();
+			});
+			afterEach(() => {
+				nock.cleanAll();
+			});
+			const baseValidHearingPayloadParts = {
+				'lpa-statement-due-date': { day: '02', month: '10', year: '2050' },
+				'ip-comments-due-date': { day: '03', month: '10', year: '2050' },
+				'statement-of-common-ground-due-date': { day: '04', month: '10', year: '2050' }
+			};
+
+			/**
+			 * @returns {{
+			 * 'lpa-statement-due-date-day': string,
+			 * 'lpa-statement-due-date-month': string,
+			 * 'lpa-statement-due-date-year': string,
+			 * 'ip-comments-due-date-day': string,
+			 * 'ip-comments-due-date-month': string,
+			 * 'ip-comments-due-date-year': string,
+			 * 'statement-of-common-ground-due-date-day': string,
+			 * 'statement-of-common-ground-due-date-month': string,
+			 * 'statement-of-common-ground-due-date-year': string,
+			 * }}
+			 */
+			const getBaseValidHearingPayload = () => ({
+				'lpa-statement-due-date-day': baseValidHearingPayloadParts['lpa-statement-due-date'].day,
+				'lpa-statement-due-date-month':
+					baseValidHearingPayloadParts['lpa-statement-due-date'].month,
+				'lpa-statement-due-date-year': baseValidHearingPayloadParts['lpa-statement-due-date'].year,
+				'ip-comments-due-date-day': baseValidHearingPayloadParts['ip-comments-due-date'].day,
+				'ip-comments-due-date-month': baseValidHearingPayloadParts['ip-comments-due-date'].month,
+				'ip-comments-due-date-year': baseValidHearingPayloadParts['ip-comments-due-date'].year,
+				'statement-of-common-ground-due-date-day':
+					baseValidHearingPayloadParts['statement-of-common-ground-due-date'].day,
+				'statement-of-common-ground-due-date-month':
+					baseValidHearingPayloadParts['statement-of-common-ground-due-date'].month,
+				'statement-of-common-ground-due-date-year':
+					baseValidHearingPayloadParts['statement-of-common-ground-due-date'].year
+			});
+
+			const timetableTypes = [
+				{
+					id: 'lpa-statement',
+					label: 'Statements'
+				},
+				{
+					id: 'ip-comments',
+					label: 'Interested party comments'
+				},
+				{
+					id: 'statement-of-common-ground',
+					label: 'Statement of common ground'
+				}
+			];
+
+			const testCases = [
+				{
+					name: 'missing day',
+					payload: (/** @type {string} */ id) => ({
+						[`${id}-due-date-month`]: '10',
+						[`${id}-due-date-year`]: '2050'
+					}),
+					expectedError: (/** @type {string} */ label) => `${label} due date must include a day</a>`
+				},
+				{
+					name: 'missing month',
+					payload: (/** @type {string} */ id) => ({
+						[`${id}-due-date-day`]: '10',
+						[`${id}-due-date-year`]: '2050'
+					}),
+					expectedError: (/** @type {string} */ label) =>
+						`${label} due date must include a month</a>`
+				},
+				{
+					name: 'missing year',
+					payload: (/** @type {string} */ id) => ({
+						[`${id}-due-date-day`]: '10',
+						[`${id}-due-date-month`]: '12'
+					}),
+					expectedError: (/** @type {string} */ label) =>
+						`${label} due date must include a year</a>`
+				},
+				{
+					name: 'not a real date',
+					payload: (/** @type {string} */ id) => ({
+						[`${id}-due-date-day`]: '29',
+						[`${id}-due-date-month`]: '2',
+						[`${id}-due-date-year`]: '3000'
+					}),
+					expectedError: (/** @type {string} */ label) =>
+						`${label} due date must be a real date</a>`
+				},
+				{
+					name: 'must be in the future',
+					payload: (/** @type {string} */ id) => ({
+						[`${id}-due-date-day`]: '25',
+						[`${id}-due-date-month`]: '2',
+						[`${id}-due-date-year`]: '1950'
+					}),
+					expectedError: (/** @type {string} */ label) =>
+						`The ${label.toLowerCase()} due date must be in the future</a>`
+				}
+			];
+
+			timetableTypes.forEach(({ id: currentFieldId, label }) => {
+				describe(`${label}`, () => {
+					it.each(testCases)(
+						'should re-render change timetable page with $name error for ' + label,
+						async (testCase) => {
+							const payloadForTest = getBaseValidHearingPayload();
+							const session = supertest.agent(app);
+
+							await session
+								.post(`${baseUrl}/change-selected-procedure-type`)
+								.send({ appealProcedure: APPEAL_CASE_PROCEDURE.HEARING });
+							// Define the keys for the field under test
+							const dayKey = /** @type {keyof typeof payloadForTest} */ (
+								`${currentFieldId}-due-date-day`
+							);
+							const monthKey = /** @type {keyof typeof payloadForTest} */ (
+								`${currentFieldId}-due-date-month`
+							);
+							const yearKey = /** @type {keyof typeof payloadForTest} */ (
+								`${currentFieldId}-due-date-year`
+							);
+
+							// Remove the valid parts for the field under test, so it can be replaced by the error-inducing parts
+							// Check if keys exist before deleting (though they should, given the structure)
+							if (dayKey in payloadForTest) delete payloadForTest[dayKey];
+							if (monthKey in payloadForTest) delete payloadForTest[monthKey];
+							if (yearKey in payloadForTest) delete payloadForTest[yearKey];
+
+							// Apply the specific error-inducing payload for the current field
+							const errorInducingParts = testCase.payload(currentFieldId);
+							for (const key in errorInducingParts) {
+								if (Object.prototype.hasOwnProperty.call(errorInducingParts, key)) {
+									// Cast 'key' to tell TypeScript it's a valid key for payloadForTest
+									payloadForTest[/** @type {keyof typeof payloadForTest} */ (key)] =
+										errorInducingParts[key];
+								}
+							}
+
+							const response = await request
+								.post(`${baseUrl}/hearing/change-timetable`)
+								.send(payloadForTest);
+							const element = parseHtml(response.text);
+
+							expect(element.innerHTML).toMatchSnapshot();
+							expect(element.innerHTML).toContain(
+								'<h2 class="govuk-error-summary__title"> There is a problem</h2>'
+							);
+							expect(element.innerHTML).toContain(testCase.expectedError(label));
+						}
+					);
+				});
+			});
+		});
 	});
 });
