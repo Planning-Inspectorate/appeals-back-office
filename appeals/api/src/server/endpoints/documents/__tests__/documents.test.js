@@ -326,6 +326,7 @@ describe('/appeals/:appealId/documents/:documentId', () => {
 					1,
 					expect.objectContaining({
 						templateName: expectedTemplate,
+						azureAdUserId,
 						personalisation: expect.objectContaining({
 							responses_invited: inviteResponses,
 							dashboard_link: 'appeals'
@@ -338,6 +339,7 @@ describe('/appeals/:appealId/documents/:documentId', () => {
 					2,
 					expect.objectContaining({
 						templateName: expectedTemplate,
+						azureAdUserId,
 						personalisation: expect.objectContaining({
 							responses_invited: false,
 							dashboard_link: 'manage-appeals'

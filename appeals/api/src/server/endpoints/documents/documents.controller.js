@@ -453,7 +453,8 @@ export const updateDocument = async (req, res) => {
 						inviteResponses,
 						costsCategory,
 						latestDocument?.name,
-						sharingDocumentType
+						sharingDocumentType,
+						req.get('azureAdUserId')
 					);
 				}
 			}
@@ -484,6 +485,7 @@ export const updateDocument = async (req, res) => {
  * @param {string} costsCategory
  * @param {string} documentName
  * @param {string} sharingDocumentType
+ * @param {string | undefined} azureAdUserId
  */
 const sendShareDocumentEmails = async (
 	notifyClient,
@@ -492,7 +494,8 @@ const sendShareDocumentEmails = async (
 	inviteResponses,
 	costsCategory,
 	documentName,
-	sharingDocumentType
+	sharingDocumentType,
+	azureAdUserId
 ) => {
 	const teamEmail = await getTeamEmailFromAppealId(appeal.id);
 	const deadline = format(addWeeks(new Date(), 1), 'd MMMM yyyy');
@@ -521,6 +524,7 @@ const sendShareDocumentEmails = async (
 			templateName: notifyTemplateName,
 			notifyClient: notifyClient,
 			recipientEmail: appellantEmail,
+			azureAdUserId,
 			personalisation: {
 				dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
 				...personalisation,
@@ -535,6 +539,7 @@ const sendShareDocumentEmails = async (
 			templateName: notifyTemplateName,
 			notifyClient: notifyClient,
 			recipientEmail: lpaEmail,
+			azureAdUserId,
 			personalisation: {
 				dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA,
 				...personalisation,
