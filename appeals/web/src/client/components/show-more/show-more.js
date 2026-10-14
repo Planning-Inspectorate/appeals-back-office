@@ -232,7 +232,7 @@ const shouldInitialiseComponentInstance = (
 			return false;
 		}
 	} else if (
-		componentInstance.elements.root.innerText.length <=
+		componentInstance.elements.root.textContent.length <=
 		componentInstance.options.maximumCharactersBeforeHiding
 	) {
 		return false;

@@ -1,4 +1,5 @@
 import { rejectionReasonHtml } from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
+import { showMoreComment } from '#appeals/appeal-details/representations/common/components/show-more-comment.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { editLink } from '#lib/edit-utilities.js';
 import {
@@ -95,16 +96,16 @@ export function rejectCheckYourAnswersPage(
 	const shortReference = appealShortReference(appealDetails.appealReference);
 	const userProvidedEmail = Boolean(comment.represented.email);
 
-	const commentHtml = (() => {
+	const commentValue = (() => {
 		if (comment.originalRepresentation) {
-			return `<div class="pins-show-more">${comment.originalRepresentation}</div>`;
+			return showMoreComment({ text: comment.originalRepresentation });
 		}
 
 		if (comment.attachments.length > 0) {
-			return REPRESENTATION_ADDED_AS_DOCUMENT;
+			return { html: REPRESENTATION_ADDED_AS_DOCUMENT };
 		}
 
-		return '';
+		return { html: '' };
 	})();
 
 	const attachmentsList = getAttachmentList(comment);
@@ -126,9 +127,7 @@ export function rejectCheckYourAnswersPage(
 					key: {
 						text: 'Comment'
 					},
-					value: {
-						html: commentHtml
-					}
+					value: commentValue
 				},
 				{
 					key: {

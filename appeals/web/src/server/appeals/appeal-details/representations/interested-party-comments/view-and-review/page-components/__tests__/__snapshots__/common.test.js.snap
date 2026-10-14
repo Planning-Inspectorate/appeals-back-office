@@ -75,7 +75,15 @@ exports[`generateCommentSummaryList should return the comment summary list inclu
           "text": "Comment",
         },
         "value": {
-          "text": "Test comment",
+          "html": "",
+          "pageComponents": [
+            {
+              "parameters": {
+                "html": "Test comment",
+              },
+              "type": "show-more",
+            },
+          ],
         },
       },
       {
@@ -174,7 +182,15 @@ exports[`generateCommentSummaryList should return the default comment summary li
           "text": "Comment",
         },
         "value": {
-          "text": undefined,
+          "html": "",
+          "pageComponents": [
+            {
+              "parameters": {
+                "html": "",
+              },
+              "type": "show-more",
+            },
+          ],
         },
       },
       {
