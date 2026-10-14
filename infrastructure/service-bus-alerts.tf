@@ -37,7 +37,8 @@ locals {
     # Appeals back office events - internal to back office
     "Internal" = {
       topics = [
-        var.sb_topic_names.events.document_to_move
+        var.sb_topic_names.events.document_to_move,
+        azurerm_servicebus_topic.case_file_package.name
       ],
       action_groups = [
         "bo_tech",
