@@ -27,7 +27,6 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"nodemon": "3.0.3"
 	},
 	"devDependencies": {
 		"@badeball/cypress-cucumber-preprocessor": "^23.2.0",
