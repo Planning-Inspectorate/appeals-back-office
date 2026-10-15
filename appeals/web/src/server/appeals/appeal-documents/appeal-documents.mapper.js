@@ -1113,7 +1113,7 @@ export function manageFolderPage({
  * @param {number} params.numShareableDocuments
  * @param {number} params.totalFolderSize
  * @param {string} params.backLinkUrl
- * @param {{renderedHtml: string} | undefined} params.notifyPreview
+ * @param {{ renderedHtml: string }[]} [params.notifyPreviews]
  * @returns {PageContent}
  */
 export function shareAllDocumentsPage({
@@ -1121,7 +1121,7 @@ export function shareAllDocumentsPage({
 	numShareableDocuments,
 	totalFolderSize,
 	backLinkUrl,
-	notifyPreview
+	notifyPreviews = []
 }) {
 	if (numShareableDocuments < 1) {
 		/** @type {PageContent} */
@@ -1173,20 +1173,20 @@ export function shareAllDocumentsPage({
 			}
 		});
 
-		if (notifyPreview) {
+		if (notifyPreviews?.length > 1) {
 			pageContent.pageComponents?.push(
 				{
 					type: 'details',
 					parameters: {
 						summaryText: 'Preview email to appellant',
-						html: notifyPreview.renderedHtml
+						html: notifyPreviews[0]?.renderedHtml
 					}
 				},
 				{
 					type: 'details',
 					parameters: {
 						summaryText: 'Preview email to LPA',
-						html: notifyPreview.renderedHtml
+						html: notifyPreviews[1]?.renderedHtml
 					}
 				}
 			);

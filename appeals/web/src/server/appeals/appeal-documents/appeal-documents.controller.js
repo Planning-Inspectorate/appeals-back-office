@@ -2,7 +2,10 @@ import {
 	createNewDocument,
 	createNewDocumentVersion
 } from '#app/components/file-uploader.component.js';
+import { getTeamFromAppealId } from '#appeals/appeal-details/update-case-team/update-case-team.service.js';
 import { permissionNames } from '#environment/permissions.js';
+import { appealSiteToAddressString } from '#lib/address-formatter.js';
+import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import { getTodaysISOString } from '#lib/dates.js';
 import { folderIsAdditionalDocuments } from '#lib/documents.js';
 import logger from '#lib/logger.js';
@@ -13,8 +16,12 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { isFileUploadInfoItemArray } from '#lib/ts-utilities.js';
 import { isInternalUrl, safeRedirect, stripQueryString } from '#lib/url-utilities.js';
 import config from '@pins/appeals.web/environment/config.js';
-import { DOCUMENTS_PAGE_SIZE } from '@pins/appeals/constants/common.js';
+import {
+	DOCUMENTS_PAGE_SIZE,
+	FRONT_OFFICE_DASHBOARD_PATH_STUBS
+} from '@pins/appeals/constants/common.js';
 import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
+import { addWeeks, format } from 'date-fns';
 import {
 	addDocumentDetailsFormDataToFileUploadInfo,
 	addDocumentDetailsPage,
@@ -429,6 +436,7 @@ export const renderManageDocument = async ({
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
  * @param {number} params.numShareableDocuments
  * @param {number} params.totalFolderSize
+ * @param {boolean} params.showNotifyPreviews
  * @param {string} params.backLinkUrl
  */
 export const renderShareAllDocuments = async ({
@@ -436,16 +444,56 @@ export const renderShareAllDocuments = async ({
 	response,
 	numShareableDocuments,
 	totalFolderSize,
+	showNotifyPreviews,
 	backLinkUrl
 }) => {
-	const { errors } = request;
+	const { currentAppeal, errors, currentFolder } = request;
 
+	const { email } = await getTeamFromAppealId(request.apiClient, currentAppeal.appealId);
+	const address = appealSiteToAddressString(currentAppeal?.appealSite);
+	const deadline = format(addWeeks(new Date(), 1), 'd MMMM yyyy');
+	const notifyTemplateName = 'document-received.content.md';
+	const sharingMultipleDocuments = numShareableDocuments > 1;
+	const firstDocumentName = currentFolder.documents.filter(
+		(/** @type {DocumentInfo} */ doc) => !doc.latestDocumentVersion.published
+	)[0].name;
+	let notifyPreviews = [];
+	if (showNotifyPreviews) {
+		const appellantNotifyPreview = await generateNotifyPreview(
+			request.apiClient,
+			notifyTemplateName,
+			{
+				appeal_reference_number: currentAppeal?.appealReference,
+				site_address: address || '',
+				contact_email: email || '',
+				deadline: deadline,
+				dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
+				document_type: 'hearing-documents',
+				sharing_multiple_documents: !!sharingMultipleDocuments,
+				document_name: sharingMultipleDocuments ? '' : firstDocumentName,
+				responses_invited: false
+			}
+		);
+		const lpaNotifyPreview = await generateNotifyPreview(request.apiClient, notifyTemplateName, {
+			appeal_reference_number: currentAppeal?.appealReference,
+			site_address: address || '',
+			contact_email: email || '',
+			deadline: deadline,
+			dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA,
+			document_type: 'hearing-documents',
+			sharing_multiple_documents: !!sharingMultipleDocuments,
+			document_name: sharingMultipleDocuments ? '' : firstDocumentName,
+			responses_invited: false
+		});
+
+		notifyPreviews.push(appellantNotifyPreview, lpaNotifyPreview);
+	}
 	const mappedPageContent = await shareAllDocumentsPage({
 		request,
 		numShareableDocuments,
 		totalFolderSize,
 		backLinkUrl,
-		notifyPreview: undefined
+		notifyPreviews
 	});
 
 	if (numShareableDocuments < 1) {
@@ -804,6 +852,7 @@ export const postUploadDocumentVersionCheckAndConfirm = async ({
  */
 
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
+/** @typedef {import('@pins/appeals.api').Appeals.DocumentInfo} DocumentInfo */
 /**
  * @param {Object} params
  * @param {import('@pins/express/types/express.js').Request} params.request
