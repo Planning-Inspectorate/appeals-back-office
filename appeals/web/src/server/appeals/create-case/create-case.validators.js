@@ -38,6 +38,11 @@ export const validateSubmissionDateInPastOrToday = createDateInputDateInPastOrTo
 	'appeal submitted date'
 );
 
+/**
+ * @param {import('@pins/express/types/express.js').Request} req
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} res
+ * @param {import('express').NextFunction} next
+ */
 export const overrideDateErrorMessage = (req, res, next) => {
 	if (req.errors) {
 		const dayKey = `${fieldNameSubmissionDate}-day`;

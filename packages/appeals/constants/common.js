@@ -219,5 +219,6 @@ export const DOCUMENTS_PAGE_SIZE = 100;
 export const FRONT_OFFICE_DASHBOARD_PATH_STUBS = Object.freeze({
 	APPELLANT: 'appeals',
 	LPA: 'manage-appeals',
-	RULE_6_PARTY: 'rule-6'
+	RULE_6_PARTY: 'rule-6',
+	INTERESTED_PARTY: 'comment-planning-appeal/appeals'
 });
