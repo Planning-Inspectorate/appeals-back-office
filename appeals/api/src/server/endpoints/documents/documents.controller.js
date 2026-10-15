@@ -320,17 +320,41 @@ export const deleteDocumentVersion = async (req, res) => {
 	return res.send(documentInfo);
 };
 
+/** @param {string} sharingDocumentType */
+const getNotifyTemplateName = (sharingDocumentType) => {
+	let notifyTemplateName;
+	switch (sharingDocumentType) {
+		case 'costs-application':
+			notifyTemplateName = 'shared-cost-application';
+			break;
+		case 'costs-correspondence':
+			notifyTemplateName = 'shared-cost-application-comment';
+			break;
+		case 'costs-withdrawal':
+			notifyTemplateName = 'shared-cost-application-withdrawal';
+			break;
+		case 'supporting-document':
+		case 'hearing-document':
+		case 'inquiry-document':
+		case 'inquiry-event-document':
+			notifyTemplateName = 'document-received';
+			break;
+	}
+	return notifyTemplateName;
+};
+
 /**
  * @param {Request} req
  * @param {Response} res
  */
 export const updateDocuments = async (req, res) => {
 	const { body, appeal } = req;
+	const { inviteResponses, sharingDocumentType, costsCategory, shareMultipleDocuments } = body;
 	const responseDocuments = [];
 
 	try {
 		const documents = body.documents;
-		for (const document of documents) {
+		for (const [index, document] of documents.entries()) {
 			const latestDocument = await documentRepository.getDocumentById(document.id);
 			document.latestVersion = latestDocument?.latestDocumentVersion?.version;
 
@@ -366,15 +390,38 @@ export const updateDocuments = async (req, res) => {
 						latestDocument.guid
 					);
 				}
+				document.isShared =
+					document.isShared && latestDocument && !latestDocument.latestDocumentVersion?.published;
+				document.currentRedactionStatusId =
+					latestDocument?.latestDocumentVersion?.redactionStatusId ?? null;
 			}
 
 			responseDocuments.push({
 				id: document.id,
-				latestVersion: document.latestVersion,
+				latestVersion: document?.latestVersion ?? latestDocument?.latestDocumentVersion,
 				redactionStatus: document.redactionStatus,
 				receivedDate: document.receivedDate,
-				fileName: document.fileName
+				fileName: document?.fileName ?? latestDocument?.name
 			});
+		}
+
+		const notifyTemplateName = getNotifyTemplateName(body.sharingDocumentType);
+		if (
+			documents[0].isShared &&
+			sharingDocumentType &&
+			shareMultipleDocuments &&
+			notifyTemplateName
+		) {
+			await sendShareDocumentEmails(
+				req.notifyClient,
+				appeal,
+				notifyTemplateName,
+				inviteResponses,
+				costsCategory,
+				shareMultipleDocuments,
+				documents[0].name,
+				sharingDocumentType
+			);
 		}
 		await documentRepository.updateDocuments(documents);
 		for (const document of documents) {
@@ -396,7 +443,13 @@ export const updateDocuments = async (req, res) => {
  */
 export const updateDocument = async (req, res) => {
 	const { body, appeal, params } = req;
-	const { document, inviteResponses, sharingDocumentType, costsCategory = null } = body;
+	const {
+		document,
+		inviteResponses,
+		sharingDocumentType,
+		costsCategory = null,
+		shareMultipleDocuments
+	} = body;
 	const { documentId } = params;
 	try {
 		const latestDocument = await documentRepository.getDocumentById(documentId);
@@ -425,25 +478,7 @@ export const updateDocument = async (req, res) => {
 			}
 
 			if (isSharingDocument && sharingDocumentType) {
-				let notifyTemplateName = '';
-
-				switch (sharingDocumentType) {
-					case 'costs-application':
-						notifyTemplateName = 'shared-cost-application';
-						break;
-					case 'costs-correspondence':
-						notifyTemplateName = 'shared-cost-application-comment';
-						break;
-					case 'costs-withdrawal':
-						notifyTemplateName = 'shared-cost-application-withdrawal';
-						break;
-					case 'supporting-document':
-					case 'hearing-document':
-					case 'inquiry-document':
-					case 'inquiry-event-document':
-						notifyTemplateName = 'document-received';
-						break;
-				}
+				const notifyTemplateName = getNotifyTemplateName(sharingDocumentType);
 
 				if (notifyTemplateName) {
 					await sendShareDocumentEmails(
@@ -452,6 +487,7 @@ export const updateDocument = async (req, res) => {
 						notifyTemplateName,
 						inviteResponses,
 						costsCategory,
+						shareMultipleDocuments,
 						latestDocument?.name,
 						sharingDocumentType
 					);
@@ -482,6 +518,7 @@ export const updateDocument = async (req, res) => {
  * @param {string} notifyTemplateName
  * @param {boolean} inviteResponses
  * @param {string} costsCategory
+ * @param {boolean} shareMultipleDocuments
  * @param {string} documentName
  * @param {string} sharingDocumentType
  */
@@ -491,6 +528,7 @@ const sendShareDocumentEmails = async (
 	notifyTemplateName,
 	inviteResponses,
 	costsCategory,
+	shareMultipleDocuments,
 	documentName,
 	sharingDocumentType
 ) => {
@@ -508,6 +546,7 @@ const sendShareDocumentEmails = async (
 		contact_email: teamEmail || '',
 		deadline: deadline,
 		responses_invited: !!inviteResponses,
+		sharing_multiple_documents: !!shareMultipleDocuments,
 		document_name: documentName || '',
 		document_type: sharingDocumentType || ''
 	};

@@ -18,18 +18,21 @@ import {
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import {
 	getDocumentFileType,
+	getDocumentRedactionStatuses,
 	getFileVersionsInfo,
-	updateDocument
+	updateDocument,
+	updateDocuments
 } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import { getShareableDocuments } from '#lib/documents.js';
 import logger from '#lib/logger.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
+import { redactionStatusNameToId } from '#lib/redaction-statuses.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { FRONT_OFFICE_DASHBOARD_PATH_STUBS } from '@pins/appeals/constants/common.js';
 import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
-import { APPEAL_DOCUMENT_TYPE, REDACTION_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { addWeeks, format } from 'date-fns';
 import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
 import {
@@ -528,21 +531,24 @@ export const postShareDocumentCheckAndConfirm = async (request, response) => {
 export const getShareAllDocuments = async (request, response) => {
 	const { currentAppeal, currentFolder } = request;
 
-	const numShareableDocuments = getShareableDocuments(currentFolder).length;
-
 	if (!currentAppeal || !currentFolder) {
 		return response.status(404).render('app/404.njk');
 	}
+	const numShareableDocuments = getShareableDocuments(currentFolder).length;
 
 	await renderShareAllDocuments({
 		request,
 		response,
 		numShareableDocuments,
+		showNotifyPreviews: true,
 		totalFolderSize: currentFolder.totalFolderSize,
+		documentType: 'hearing-documents',
 		backLinkUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/hearing-documents/manage-documents/${currentFolder.folderId}`
 	});
 };
 
+/** @typedef {import('@pins/appeals.api').Appeals.DocumentInfo} DocumentInfo */
+/** @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} DocumentRedactionStatus */
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
@@ -551,27 +557,33 @@ export const postShareAllDocuments = async (request, response) => {
 	const { appealId } = request.params;
 	const { currentFolder } = request;
 
-	const shareableDocuments = currentFolder.documents.filter(
-		//@ts-ignore
-		(document) =>
-			document.latestDocumentVersion.redactionStatus.toLowerCase() !==
-				REDACTION_STATUS.UNREDACTED && document.latestDocumentVersion.published === false
-	);
+	const shareableDocuments = getShareableDocuments(currentFolder);
 
-	for (const document of shareableDocuments) {
-		try {
-			await updateDocument(request.apiClient, appealId, {
-				document: { id: document.id, isShared: true },
-				sharingDocumentType: 'hearing-document'
-			});
-		} catch (error) {
-			logger.error(
-				error,
-				error instanceof Error
-					? error.message
-					: `Something went wrong when marking document ${document.id} as shared`
-			);
-		}
+	try {
+		const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
+
+		const formattedDocuments = shareableDocuments.map((/** @type {DocumentInfo} */ document) => ({
+			id: document.id,
+			latestDocumentVersionId: document.latestDocumentVersion.version,
+			isShared: true,
+			receivedDate: document.latestDocumentVersion.dateReceived,
+			redactionStatus: redactionStatusNameToId(
+				// @ts-ignore
+				redactionStatuses,
+				document.latestDocumentVersion.redactionStatus
+			)
+		}));
+		await updateDocuments(request.apiClient, appealId, {
+			documents: formattedDocuments,
+			sharingDocumentType: 'hearing-document',
+			shareMultipleDocuments: shareableDocuments.length > 1
+		});
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error ? error.message : 'Something went wrong when sharing hearing documents'
+		);
+		return response.status(500).render('app/500.njk');
 	}
 
 	addNotificationBannerToSession({
