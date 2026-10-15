@@ -681,6 +681,8 @@ exports[`inquiry event documents inquiry event documents GET /inquiry-event-docu
 </main>"
 `;
 
+exports[`inquiry event documents inquiry event documents GET /inquiry-event-documents/manage-documents/:folderId/share-all should render the share all documents page if the folderId is valid 1`] = `undefined`;
+
 exports[`inquiry event documents inquiry event documents GET /inquiry-event-documents/upload-documents/:folderId should render the upload documents page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
