@@ -372,11 +372,57 @@ export const publishChildDecision = async (childAppeal, outcome, documentDate, a
 
 /**
  * @param {Appeal} appeal
+ * @param {string} decisionType
+ * @param {string} siteAddress
+ * @returns {Promise<{previews: {appellant: string, lpa: string, interestedParty: string}}>}
+ */
+export const getCostsDecisionPreview = async (appeal, decisionType, siteAddress) => {
+	const costDecisionDetails = getCostDecisionDetails(decisionType);
+	if (!costDecisionDetails) {
+		throw new Error('Unable to parse decision type for cost decision details.');
+	}
+	const { emailTemplate } = costDecisionDetails;
+
+	const enforcementReference = await getEnforcementReference(appeal);
+	const caseTeamEmail = await getTeamEmailFromAppealId(appeal.id);
+	const personalisation = {
+		appeal_reference_number: appeal.reference,
+		site_address: siteAddress,
+		lpa_reference: appeal.applicationReference || '',
+		front_office_url: environment.FRONT_OFFICE_URL || '',
+		case_team_email_address: caseTeamEmail,
+		...(enforcementReference && { enforcement_reference: enforcementReference })
+	};
+
+	const appellantTemplate = renderTemplate(`${emailTemplate}.content.md`, {
+		...personalisation,
+		fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT
+	});
+	const lpaTemplate = renderTemplate(`${emailTemplate}.content.md`, {
+		...personalisation,
+		fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA
+	});
+	const interestedPartyTemplate = renderTemplate(`${emailTemplate}.content.md`, {
+		...personalisation,
+		fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.INTERESTED_PARTY
+	});
+
+	return {
+		previews: {
+			appellant: generateNotifyPreview(appellantTemplate),
+			lpa: generateNotifyPreview(lpaTemplate),
+			interestedParty: generateNotifyPreview(interestedPartyTemplate)
+		}
+	};
+};
+
+/**
+ * @param {Appeal} appeal
  * @param {import('#endpoints/appeals.js').NotifyClient } notifyClient
  * @param {string} siteAddress
  * @param {string} azureAdUserId
  * @param {string} decisionType
- * @param {boolean}skipNotifies
+ * @param {boolean} [skipNotifies=false]
  * @returns
  */
 export const publishCostsDecision = async (
@@ -385,66 +431,80 @@ export const publishCostsDecision = async (
 	siteAddress,
 	azureAdUserId,
 	decisionType,
-	skipNotifies
+	skipNotifies = false
 ) => {
 	const costDecisionDetails = getCostDecisionDetails(decisionType);
 	if (!costDecisionDetails) {
 		throw new Error('Unable to parse decision type for cost decision details.');
 	}
-	const { recipientEmailTemplate, lpaEmailTemplate, auditTrailDetails } = costDecisionDetails;
+	const { emailTemplate, auditTrailDetails } = costDecisionDetails;
 
 	await setPersonalList({ appealId: appeal.id });
 
 	if (!skipNotifies) {
 		const enforcementReference = await getEnforcementReference(appeal);
+		const caseTeamEmail = await getTeamEmailFromAppealId(appeal.id);
 		const personalisation = {
 			appeal_reference_number: appeal.reference,
 			site_address: siteAddress,
 			lpa_reference: appeal.applicationReference || '',
 			front_office_url: environment.FRONT_OFFICE_URL || '',
-			feedback_link: getFeedbackLinkFromAppealTypeKey(appeal?.appealType?.key || ''),
+			case_team_email_address: caseTeamEmail,
 			...(enforcementReference && { enforcement_reference: enforcementReference })
 		};
-		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
-		const lpaEmail = appeal.lpa?.email || '';
+		const recipients = [
+			{
+				email: appeal.agent?.email || appeal.appellant?.email,
+				stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT
+			},
+			{
+				email: appeal.lpa?.email,
+				stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA
+			},
+			...(appeal.appealRule6Parties || []).map((party) => ({
+				email: party.serviceUser?.email,
+				stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.RULE_6_PARTY
+			}))
+		].filter((recipient) => Boolean(recipient.email));
 
-		if (recipientEmail) {
+		for (const { email, stub } of recipients) {
 			await notifySend({
 				azureAdUserId,
-				templateName: recipientEmailTemplate,
+				templateName: emailTemplate,
 				notifyClient,
-				recipientEmail,
-				personalisation
-			});
-		}
-
-		if (lpaEmail) {
-			await notifySend({
-				azureAdUserId,
-				templateName: lpaEmailTemplate,
-				notifyClient,
-				recipientEmail: lpaEmail,
+				recipientEmail: email,
 				personalisation: {
 					...personalisation,
-					feedback_link: FEEDBACK_FORM_LINKS.LPA
+					fo_dashboard_stub: stub
 				}
 			});
 		}
 
-		if (appeal.appealRule6Parties && appeal.appealRule6Parties.length > 0) {
-			for (const party of appeal.appealRule6Parties) {
-				if (party.serviceUser?.email) {
-					await notifySend({
-						azureAdUserId,
-						templateName: recipientEmailTemplate,
-						notifyClient,
-						recipientEmail: party.serviceUser.email,
-						personalisation: {
-							...personalisation,
-							feedback_link: getFeedbackLinkFromAppealTypeKey(appeal?.appealType?.key || '')
-						}
-					});
-				}
+		const interestedPartyEmails = await getInterestedPartyEmails([appeal.id]);
+		if (interestedPartyEmails.length > 0) {
+			try {
+				await batchSendNotifyToInterestedParties(
+					interestedPartyEmails,
+					(email) =>
+						notifySend({
+							azureAdUserId,
+							templateName: emailTemplate,
+							notifyClient,
+							recipientEmail: email,
+							personalisation: {
+								...personalisation,
+								fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.INTERESTED_PARTY
+							}
+						}),
+					appeal.id,
+					azureAdUserId,
+					'costs decision'
+				);
+			} catch (err) {
+				logger.error(
+					err,
+					`Error sending costs decision email to interested parties on appeal: ${appeal.id}`
+				);
 			}
 		}
 	}
@@ -465,15 +525,13 @@ const getCostDecisionDetails = (decisionType) => {
 	switch (decisionType) {
 		case DECISION_TYPE_APPELLANT_COSTS: {
 			return {
-				recipientEmailTemplate: 'appellant-costs-decision-appellant',
-				lpaEmailTemplate: 'appellant-costs-decision-lpa',
+				emailTemplate: 'costs-decision-all-parties',
 				auditTrailDetails: AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED
 			};
 		}
 		case DECISION_TYPE_LPA_COSTS: {
 			return {
-				recipientEmailTemplate: 'lpa-costs-decision-appellant',
-				lpaEmailTemplate: 'lpa-costs-decision-lpa',
+				emailTemplate: 'costs-decision-all-parties',
 				auditTrailDetails: AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED
 			};
 		}

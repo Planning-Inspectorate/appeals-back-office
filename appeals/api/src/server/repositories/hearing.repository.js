@@ -34,12 +34,11 @@ const getHearingById = async (id) => {
  *  estimatedDays?: string | number | null;
  *  address?: Omit<Address, 'id'>
  * }} data
- * @returns
  */
-const createHearingById = (data) => {
+const buildCreateHearingData = (data) => {
 	const { appealId, hearingStartTime, hearingEndTime, estimatedDays, address } = data;
 
-	const hearingData = {
+	return {
 		appeal: {
 			connect: { id: appealId }
 		},
@@ -61,9 +60,47 @@ const createHearingById = (data) => {
 			}
 		})
 	};
+};
 
+/**
+ * @param {{
+ *  appealId: number;
+ * 	hearingStartTime: Date | string | null;
+ * 	hearingEndTime?: Date | string | null;
+ *  estimatedDays?: string | number | null;
+ *  address?: Omit<Address, 'id'>
+ * }} data
+ * @returns
+ */
+const createHearingById = (data) => {
 	return databaseConnector.hearing.create({
-		data: hearingData
+		data: buildCreateHearingData(data)
+	});
+};
+
+/**
+ * @param {number[]} appealIds
+ * @param {{
+ * 	hearingStartTime: Date | string | null;
+ * 	hearingEndTime?: Date | string | null;
+ *  estimatedDays?: string | number | null;
+ *  address?: Omit<Address, 'id'>
+ * }} data
+ * @returns {Promise<Hearing[]>}
+ */
+const createHearingsByAppealIds = async (appealIds, data) => {
+	// use a transaction so that if one fails they all fail, and we don't end up with partial data
+	return databaseConnector.$transaction(async (tx) => {
+		return Promise.all(
+			appealIds.map((appealId) =>
+				tx.hearing.create({
+					data: buildCreateHearingData({
+						...data,
+						appealId
+					})
+				})
+			)
+		);
 	});
 };
 
@@ -132,4 +169,10 @@ const deleteHearingById = (id) => {
 	return databaseConnector.hearing.delete({ where: { id } });
 };
 
-export default { getHearingById, createHearingById, updateHearingById, deleteHearingById };
+export default {
+	getHearingById,
+	createHearingById,
+	createHearingsByAppealIds,
+	updateHearingById,
+	deleteHearingById
+};

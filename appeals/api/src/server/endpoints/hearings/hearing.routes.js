@@ -70,10 +70,12 @@ router.post(
 	checkAppealExistsByIdAndAddPartialToRequest([
 		'hearing',
 		'appealStatus',
+		'appealType', // required for isLinkedAppealsActive call
 		'appellant',
 		'agent',
 		'lpa',
-		'address'
+		'address',
+		'childAppeals'
 	]),
 	asyncHandler(postHearing)
 );

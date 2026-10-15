@@ -39,8 +39,8 @@ export const validateSubmissionDateInPastOrToday = createDateInputDateInPastOrTo
 );
 
 /**
- * @param {import('express').Request} req
- * @param {import('express').Response} res
+ * @param {import('@pins/express/types/express.js').Request} req
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} res
  * @param {import('express').NextFunction} next
  */
 export const overrideDateErrorMessage = (req, res, next) => {
