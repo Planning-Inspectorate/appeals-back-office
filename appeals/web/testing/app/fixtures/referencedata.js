@@ -4838,7 +4838,7 @@ export const appealDataToGetRequiredActions = {
 			}
 		}
 	},
-	shareIpCommentsAndLpaStatement: {
+	shareCommentsAndStatements: {
 		...baseAppealDataToGetRequiredActions,
 		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
 		appealTimetable: {
