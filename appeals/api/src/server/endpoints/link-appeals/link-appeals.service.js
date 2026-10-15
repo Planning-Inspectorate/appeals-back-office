@@ -139,7 +139,6 @@ export const replaceLeadAppeal = async (currentLead, appealToReplaceLead) => {
 
 		// The current lead is now the child of the new lead. If it has no agent, it needs to be the agent of the new lead.
 		if (!currentLead.agentId) {
-			// eslint-disable-next-line no-unused-vars
 			const data = omit(appealToReplaceLead.agent, 'id', 'addressId', 'address');
 			const { id: agentId } = await tx.serviceUser.create({ data });
 
@@ -163,11 +162,14 @@ export const replaceLeadAppeal = async (currentLead, appealToReplaceLead) => {
 
 /**
  * Unlinks the child appeal.
- * @param {Appeal} appeal
+ * @param {number | undefined} childAppealId
  * @returns {Promise<*>}
  */
-export const unlinkChildAppeal = async (appeal) => {
-	await databaseConnector.appealRelationship.deleteMany({ where: { childId: appeal.id } });
+export const unlinkChildAppeal = async (childAppealId) => {
+	if (!childAppealId) {
+		throw new Error('Child appeal ID is required to unlink the appeal');
+	}
+	await databaseConnector.appealRelationship.deleteMany({ where: { childId: childAppealId } });
 };
 
 /**

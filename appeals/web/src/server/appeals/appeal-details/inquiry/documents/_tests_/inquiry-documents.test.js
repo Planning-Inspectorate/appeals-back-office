@@ -893,4 +893,121 @@ describe('inquiry documents', () => {
 			});
 		});
 	});
+
+	describe('GET and POST /inquiry/documents/manage-documents/:folderId/:documentId/:versionId/delete', () => {
+		beforeEach(() => {
+			installMockApi();
+			nock('http://test/')
+				.get(getFolderApiUrl(inquiryDocsFolderId))
+				.reply(200, inquiryDocumentsFolderInfo)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/documents/1/versions')
+				.reply(200, documentFileVersionsInfo)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses') // ← ADD THIS
+				.reply(200, documentRedactionStatuses)
+				.persist();
+		});
+		it(`should render the delete document confirmation page on GET when there is a single document version`, async () => {
+			nock('http://test/')
+				.get(getFolderApiUrl(inquiryDocsFolderId))
+				.reply(200, inquiryDocumentsFolderInfo)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/documents/1/versions')
+				.reply(200, documentFileVersionsInfo)
+				.persist();
+
+			const response = await request.get(
+				`${baseUrl}/1/inquiry/documents/manage-documents/${inquiryDocsFolderId}/1/1/delete`
+			);
+			expect(response.statusCode).toBe(200);
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			const radiosElement = parseHtml(response.text, {
+				rootElement: '.govuk-radios',
+				skipPrettyPrint: true
+			});
+
+			expect(radiosElement.innerHTML).toContain(
+				'name="delete-file-answer" type="radio" value="yes"'
+			);
+			expect(radiosElement.innerHTML).toContain(
+				'name="delete-file-answer" type="radio" value="no"'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('version');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Removing the only version of a document will delete the document from the case'
+			);
+		});
+
+		it(`should render the delete document page with the expected content when there are multiple document versions`, async () => {
+			const multipleVersionsDocument = structuredClone(documentFileVersionsInfoChecked);
+			multipleVersionsDocument.allVersions.push(multipleVersionsDocument.allVersions[0]);
+
+			nock('http://test/')
+				.get('/appeals/documents/1/versions')
+				.reply(200, multipleVersionsDocument);
+
+			const response = await request.get(
+				`${baseUrl}/1/inquiry/documents/manage-documents/${inquiryDocsFolderId}/1/1/delete`
+			);
+
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Are you sure you want to remove this version?</h1>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('class="govuk-warning-text"');
+
+			const radiosElement = parseHtml(response.text, {
+				rootElement: '.govuk-radios',
+				skipPrettyPrint: true
+			});
+
+			expect(radiosElement.innerHTML).toContain(
+				'name="delete-file-answer" type="radio" value="yes"'
+			);
+			expect(radiosElement.innerHTML).toContain(
+				'name="delete-file-answer" type="radio" value="no"'
+			);
+		});
+
+		it(`should render a 404 error page if the folderId is invalid on GET`, async () => {
+			const response = await request.get(
+				`${baseUrl}/1/inquiry/documents/manage-documents/99/1/1/delete`
+			);
+
+			expect(response.statusCode).toBe(404);
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain('Page not found');
+		});
+
+		it(`should delete the document version and redirect to manage document page on POST`, async () => {
+			nock('http://test/').delete('/documents/1/1').reply(200, documentFileVersionsInfo);
+
+			const response = await request
+				.post(`${baseUrl}/1/inquiry/documents/manage-documents/${inquiryDocsFolderId}/1/1/delete`)
+				.send({
+					'delete-file-answer': 'yes'
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toContain(`Found. Redirecting to /appeals-service/appeal-details/1`);
+		});
+
+		it(`should render a 404 error page if currentFolder is missing`, async () => {
+			const response = await request.get(
+				`${baseUrl}/1/inquiry/documents/manage-documents/invalid/1/1/delete`
+			);
+
+			expect(response.statusCode).toBe(404);
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain('Page not found');
+		});
+	});
 });

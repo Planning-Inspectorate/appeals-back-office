@@ -1,3 +1,20 @@
+import { APPEAL_CASE_STAGE } from '@planning-inspectorate/data-model';
+
+/**
+ * @param {any} document
+ * @param {string|undefined} [folderPath]
+ * @returns {string}
+ */
+export function getDocumentDisplayRedactionStatus(document, folderPath) {
+	if (document?.latestDocumentVersion?.redactionStatus) {
+		return document.latestDocumentVersion.redactionStatus;
+	}
+
+	return folderPath?.startsWith(`${APPEAL_CASE_STAGE.APPELLANT_CASE}/`)
+		? 'Redaction review required'
+		: '';
+}
+
 /**
  * @param {import("#appeals/appeal-documents/appeal-documents.mapper.js").RedactionStatus[]} redactionStatuses
  * @param {string} name

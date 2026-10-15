@@ -8832,6 +8832,8 @@ role="banner" data-module="govuk-header">
                         </li>
                         <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
                         </li>
+                        <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/create-a-case">Create a case</a>
+                        </li>
                         <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
                         </li>
                     </ul>
@@ -9004,12 +9006,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                 <td class="govuk-table__cell">Awaiting start date</td>
                 <td class="govuk-table__cell">Not applicable</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"></td>
-            </tr>
-            <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">Supporting documents</th>
-                <td class="govuk-table__cell">No documents</td>
-                <td class="govuk-table__cell">Not applicable</td>
-                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
             </tr>
         </tbody>
     </table>
@@ -9237,6 +9233,8 @@ exports[`appeal-details should not render a back button 1`] = `
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                             </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/create-a-case">Create a case</a>
                             </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
                             </li>

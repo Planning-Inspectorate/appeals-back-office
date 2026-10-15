@@ -3,6 +3,7 @@ import { dateISOStringToDayMonthYearHourMinute, getExampleDateHint } from '#lib/
 import { dateInput } from '#lib/mappers/index.js';
 import { appealTypeToAppealCaseTypeMapper } from '@pins/appeals/utils/appeal-type-case.mapper.js';
 import {
+	isEnforcementCaseType,
 	isExpeditedAppealType,
 	isLdcOrDiscontinuanceOrEnforcementCaseType
 } from '@pins/appeals/utils/appeal-type-checks.js';
@@ -169,6 +170,13 @@ export const getAppealTimetableTypes = (appeal, appellantCase) => {
 					appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY))
 		) {
 			validAppealTimetableType.push('finalCommentsDueDate');
+		}
+		if (
+			appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN &&
+			isEnforcementCaseType(caseType) &&
+			appellantCase.planningObligation?.hasObligation
+		) {
+			validAppealTimetableType.push('planningObligationDueDate');
 		}
 		if (appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING) {
 			if (!isLdcOrDiscontinuanceOrEnforcementCaseType(caseType)) {

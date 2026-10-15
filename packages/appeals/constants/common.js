@@ -8,6 +8,7 @@ export const EVENT_TYPE = Object.freeze({
 });
 
 export const FEATURE_FLAG_NAMES = Object.freeze({
+	BACKGROUND_CASE_DOWNLOAD: 'featureFlagBackgroundCaseDownload',
 	LINKED_APPEALS: 'featureFlagLinkedAppeals',
 	LINKED_APPEALS_UNLINK: 'featureFlagLinkedAppealsUnlink',
 	CHANGE_PROCEDURE_TYPE: 'featureFlagChangeProcedureType',
@@ -38,6 +39,7 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	FEATURE_FLAG_SHARING_INQUIRY_DOCUMENTS: 'featureFlagSharingInquiryDocuments',
 	SHARING_INQUIRY_EVENT_DOCUMENTS: 'featureFlagSharingInquiryEventDocuments',
 	SHARING_HEARING_DOCUMENTS: 'featureFlagSharingHearingDocuments',
+	SHARE_MULTIPLE_DOCS: 'featureFlagShareMultipleDocs',
 	GENERIC_CASE: 'featureFlagGenericCase'
 });
 
@@ -74,6 +76,17 @@ export const APPEAL_TYPE_CHANGE_APPEALS = Object.freeze({
 	PLANNED_LISTED_BUILDING: 'Planning listed building and conservation area',
 	CAS_PLANNING: 'Commercial planning (CAS)',
 	CAS_ADVERTISEMENT: 'Commercial advertisement (CAS)'
+});
+
+export const GENERIC_APPEAL_TYPES = Object.freeze({
+	TREE_PRESERVATION_ORDER: 'Tree preservation order',
+	TREE_REPLACEMENT_NOTICE: 'Tree replacement notice',
+	HIGH_HEDGES: 'High hedges appeal',
+	HEDGEROWS: 'Hedgerows appeal',
+	DISCONTINUANCE_NOTICE: 'Discontinuance notice',
+	COMMUNITY_INFRASTRUCTURE_LEVY: 'Community infrastructure levy',
+	SECTION_106_AGREEMENT: 'Section 106 agreement',
+	ENVIRONMENTAL: 'Environmental appeal'
 });
 
 /** @type {Object<string, string>} */
@@ -206,5 +219,6 @@ export const DOCUMENTS_PAGE_SIZE = 100;
 export const FRONT_OFFICE_DASHBOARD_PATH_STUBS = Object.freeze({
 	APPELLANT: 'appeals',
 	LPA: 'manage-appeals',
-	RULE_6_PARTY: 'rule-6'
+	RULE_6_PARTY: 'rule-6',
+	INTERESTED_PARTY: 'comment-planning-appeal/appeals'
 });

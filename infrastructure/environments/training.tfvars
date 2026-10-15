@@ -51,6 +51,7 @@ apps_config = {
     featureFlagLinkedAppealsUnlink              = true
     featureFlagSimplifyTeamAssignment           = true
     featureFlagPdfDownload                      = true
+    featureFlagBackgroundCaseDownload           = false
     featureFlagCancelCase                       = true
     featureFlagChangeProcedureType              = true
     featureFlagHearingPostMvp                   = true
@@ -64,7 +65,6 @@ apps_config = {
     featureFlagExpeditedAppeals                 = true
     featureFlagAppellantStatement               = true
     featureFlagRule6Statement                   = true
-    featureFlagLDC                              = true
     featureFlagRule6Costs                       = false
     featureFlagS20Inquiry                       = false
     featureFlagEnforcementNoticeHearing         = true
@@ -84,6 +84,7 @@ apps_config = {
     featureFlagSharingInquiryEventDocuments     = false
     featureFlagSharingInquiryDocuments          = false
     featureFlagSharingSupportingDocuments       = false
+    featureFlagShareMultipleDocs                = false
     featureFlagGenericCase                      = false
   }
 

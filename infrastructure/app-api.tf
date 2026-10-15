@@ -74,6 +74,7 @@ module "app_api" {
     GOV_NOTIFY_APPEAL_GENERIC_ID = var.apps_config.integrations.notify_template_ids.appeal_generic_id
 
     #feature flags
+    FEATURE_FLAG_BACKGROUND_CASE_DOWNLOAD            = var.apps_config.featureFlags.featureFlagBackgroundCaseDownload
     FEATURE_FLAG_S20_INQUIRY                         = var.apps_config.featureFlags.featureFlagS20Inquiry
     FEATURE_FLAG_LINKED_APPEALS                      = var.apps_config.featureFlags.featureFlagLinkedAppeals
     FEATURE_FLAG_LINKED_APPEALS_UNLINK               = var.apps_config.featureFlags.featureFlagLinkedAppealsUnlink
@@ -85,7 +86,6 @@ module "app_api" {
     FEATURE_FLAG_RULE_6_COSTS                        = var.apps_config.featureFlags.featureFlagRule6Costs
     FEATURE_FLAG_RULE_6_STATEMENT                    = var.apps_config.featureFlags.featureFlagRule6Statement
     FEATURE_FLAG_EXPEDITED_APPEALS                   = var.apps_config.featureFlags.featureFlagExpeditedAppeals
-    FEATURE_FLAG_LDC                                 = var.apps_config.featureFlags.featureFlagLDC
     FEATURE_FLAG_APPELLANT_STATEMENT                 = var.apps_config.featureFlags.featureFlagAppellantStatement
     FEATURE_FLAG_ENFORCEMENT_HEARING_LINKED          = var.apps_config.featureFlags.featureFlagEnforcementHearingLinked
     FEATURE_FLAG_ENFORCEMENT_INQUIRY_LINKED          = var.apps_config.featureFlags.featureFlagEnforcementInquiryLinked

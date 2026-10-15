@@ -51,6 +51,7 @@ apps_config = {
     featureFlagLinkedAppealsUnlink              = true
     featureFlagSimplifyTeamAssignment           = true
     featureFlagPdfDownload                      = true
+    featureFlagBackgroundCaseDownload           = false
     featureFlagCancelCase                       = true
     featureFlagChangeProcedureType              = true
     featureFlagHearingPostMvp                   = true
@@ -64,7 +65,6 @@ apps_config = {
     featureFlagExpeditedAppeals                 = true
     featureFlagAppellantStatement               = true
     featureFlagRule6Statement                   = true
-    featureFlagLDC                              = true
     featureFlagRule6Costs                       = true
     featureFlagS20Inquiry                       = true
     featureFlagEnforcementNoticeHearing         = true
@@ -84,6 +84,7 @@ apps_config = {
     featureFlagSharingInquiryEventDocuments     = true
     featureFlagSharingInquiryDocuments          = true
     featureFlagSharingSupportingDocuments       = true
+    featureFlagShareMultipleDocs                = true
     featureFlagGenericCase                      = true
   }
 
@@ -196,7 +197,7 @@ sql_config = {
     login_username = "pins-odt-sql-staging-appeals-bo"
     object_id      = "7c2f34b4-4f84-48dc-8b04-93881773bbf1"
   }
-  sku_name    = "S0"
+  sku_name    = "S1"
   max_size_gb = 250
   retention = {
     audit_days               = 30

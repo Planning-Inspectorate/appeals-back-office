@@ -89,7 +89,7 @@ describe('update-bank-holidays', () => {
 		assert.strictEqual(mockTable.rows.add.mock.calls[0].arguments[1], 'Bank Holiday 3');
 		assert.deepStrictEqual(mockTable.rows.add.mock.calls[1].arguments[0], new Date('2024-10-04'));
 		assert.strictEqual(mockTable.rows.add.mock.calls[1].arguments[1], 'Bank Holiday 4');
-		assert.strictEqual(mockRequest.query.mock.callCount(), 6);
+		assert.strictEqual(mockRequest.query.mock.callCount(), 10);
 		assert.strictEqual(
 			mockRequest.query.mock.calls[0].arguments[0],
 			`
@@ -121,11 +121,27 @@ describe('update-bank-holidays', () => {
 		);
 		assert.strictEqual(
 			mockRequest.query.mock.calls[4].arguments[0],
-			`EXEC dbo.spPopulateNextBusinessDates @BusinessDays = 30;`
+			`EXEC dbo.spPopulateNextBusinessDates @BusinessDays = 10;`
 		);
 		assert.strictEqual(
 			mockRequest.query.mock.calls[5].arguments[0],
+			`EXEC dbo.spPopulateNextBusinessDates @BusinessDays = 25;`
+		);
+		assert.strictEqual(
+			mockRequest.query.mock.calls[6].arguments[0],
+			`EXEC dbo.spPopulateNextBusinessDates @BusinessDays = 30;`
+		);
+		assert.strictEqual(
+			mockRequest.query.mock.calls[7].arguments[0],
+			`EXEC dbo.spPopulateNextBusinessDates @BusinessDays = 35;`
+		);
+		assert.strictEqual(
+			mockRequest.query.mock.calls[8].arguments[0],
 			`EXEC dbo.spPopulateNextBusinessDates @BusinessDays = 40;`
+		);
+		assert.strictEqual(
+			mockRequest.query.mock.calls[9].arguments[0],
+			`EXEC dbo.spPopulateNextBusinessDates @BusinessDays = 45;`
 		);
 	});
 

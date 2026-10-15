@@ -560,12 +560,6 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
                 </td>
             </tr>
             <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">Supporting documents</th>
-                <td class="govuk-table__cell">No documents</td>
-                <td class="govuk-table__cell">Not applicable</td>
-                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
-            </tr>
-            <tr class="govuk-table__row">
                 <th scope="row" class="govuk-table__header">Hearing documents</th>
                 <td class="govuk-table__cell">No documents</td>
                 <td class="govuk-table__cell">Not applicable</td>

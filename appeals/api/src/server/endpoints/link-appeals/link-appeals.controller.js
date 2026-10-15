@@ -513,12 +513,13 @@ export const updateLinkedAppeals = async (req, res) => {
 					// @ts-ignore
 					representationsToBroadcast = results[0].value;
 				}
-				await Promise.allSettled([
-					// @ts-ignore
-					unlinkChildAppeal(appealToUnlink),
-					// @ts-ignore
-					setPersonalList({ appealId: appealToUnlink.id })
-				]);
+
+				// unlinkChildAppeal needs to happen before setPersonalList
+				// so the appeal relationship is removed before the personal list is updated
+				// the personal list logic checks for linked appeals and has different logic for them
+				// (including controlling the tags)
+				await unlinkChildAppeal(appealToUnlink.id);
+				await setPersonalList({ appealId: appealToUnlink.id });
 
 				if (currentLead?.id && appealToUnlink?.reference) {
 					const unlinkDetails = stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UNLINKED, [

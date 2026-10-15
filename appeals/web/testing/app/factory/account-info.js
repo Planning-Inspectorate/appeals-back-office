@@ -9,12 +9,12 @@ import { snakeCase } from 'lodash-es';
  * @returns {AccountInfo}
  */
 export function createAccountInfo({
-	homeAccountId = faker.datatype.uuid(),
-	name = `${faker.name.firstName()} ${faker.name.lastName()}`,
+	homeAccountId = faker.string.uuid(),
+	name = `${faker.person.firstName()} ${faker.person.lastName()}`,
 	environment = 'login.planninginspectorate.gov.uk',
 	tenantId = 'PlanningInspectorate',
 	username = snakeCase(name),
-	localAccountId = faker.datatype.uuid(),
+	localAccountId = faker.string.uuid(),
 	groups = ['appeals_case_officer', 'appeals_inspector']
 } = {}) {
 	return {

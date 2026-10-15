@@ -1647,12 +1647,7 @@ const appellantCaseSelect = {
 		select: {
 			factsForGround: true,
 			isDeleted: true,
-			ground: {
-				select: {
-					groundRef: true,
-					groundDescription: true
-				}
-			}
+			ground: true
 		}
 	}
 };

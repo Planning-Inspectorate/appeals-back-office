@@ -158,6 +158,8 @@ export function loadConfig() {
 			featureFlagLinkedAppealsUnlink: FEATURE_FLAG_LINKED_APPEALS_UNLINK === 'true',
 			featureFlagSimplifyTeamAssignment: FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT === 'true',
 			featureFlagPdfDownload: FEATURE_FLAG_PDF_DOWNLOAD === 'true',
+			featureFlagBackgroundCaseDownload:
+				environment.FEATURE_FLAG_BACKGROUND_CASE_DOWNLOAD === 'true',
 			featureFlagChangeProcedureType: FEATURE_FLAG_CHANGE_PROCEDURE_TYPE === 'true',
 			featureFlagHearingPostMvp: FEATURE_FLAG_HEARING_POST_MVP === 'true',
 			featureFlagEnforcementLinked: FEATURE_FLAG_ENFORCEMENT_LINKED === 'true',
@@ -193,6 +195,7 @@ export function loadConfig() {
 				environment.FEATURE_FLAG_SHARING_INQUIRY_DOCUMENTS === 'true',
 			featureFlagSharingSupportingDocuments:
 				environment.FEATURE_FLAG_SHARING_SUPPORTING_DOCUMENTS === 'true',
+			featureFlagShareMultipleDocs: environment.FEATURE_FLAG_SHARE_MULTIPLE_DOCS === 'true',
 			featureFlagGenericCase: environment.FEATURE_FLAG_GENERIC_CASE === 'true'
 		},
 		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,

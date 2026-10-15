@@ -24,12 +24,12 @@ Due by {{final_comments_due_date}}.
 
 {% endif -%}
 
-{% if statement_of_common_ground_due_date -%}
+{% if appeal_procedure != 'written' and statement_of_common_ground_due_date -%}
 ## Statement of common ground
 Send to {{team_email_address}} by {{statement_of_common_ground_due_date}}.
 
 {% endif -%}
-{% if proof_of_evidence_and_witnesses_due_date -%}
+{% if appeal_procedure != 'written' and proof_of_evidence_and_witnesses_due_date -%}
 ## Proof of evidence and witnesses
 Due by {{proof_of_evidence_and_witnesses_due_date}}.
 

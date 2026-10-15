@@ -58,7 +58,8 @@ export const requestChangeOfProcedureType = async (req, res) => {
 				data.caseManagementConferenceDueDate,
 				// @ts-ignore
 				data.address,
-				data.eventDate
+				data.eventDate,
+				azureAdUserId
 			);
 
 			await createAuditTrail({

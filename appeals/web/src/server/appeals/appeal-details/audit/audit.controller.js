@@ -39,25 +39,16 @@ export const renderAudit = async (request, response) => {
 	const auditInfoRequest = getAppealAudit(request.apiClient, appealId);
 	const auditNotifications = getAppealAuditNotifications(request.apiClient, appealId);
 	const caseNotesRequest = getAppealCaseNotes(request.apiClient, appealId);
-	const invalidIpCommentsRequest = interestedPartyCommentsService.getInterestedPartyComments(
-		request.apiClient,
-		appeal.appealId,
-		'invalid'
-	);
 
-	const [auditInfo, caseNotes, notifications, invalidIpComments] = await Promise.all([
+	const [auditInfo, caseNotes, notifications] = await Promise.all([
 		auditInfoRequest,
 		caseNotesRequest,
-		auditNotifications,
-		invalidIpCommentsRequest
+		auditNotifications
 	]);
 
 	if (!auditInfo && !caseNotes) {
 		return response.status(404).render('app/404.njk');
 	}
-
-	const usedInvalidRepIds = new Set();
-	const invalidItems = invalidIpComments?.items || [];
 
 	const REJECTED_COMMENT_AUDIT_STRINGS = Array.from(
 		new Set([AUDIT_TRAIL_REP_COMMENT_STATUS_INVALID, 'Interested party comment rejected'])
@@ -77,20 +68,11 @@ export const renderAudit = async (request, response) => {
 			const matchedPrefix = REJECTED_COMMENT_AUDIT_STRINGS.find((str) =>
 				audit.details.startsWith(str)
 			);
-			if (matchedPrefix) {
-				const idMatch = audit.details.match(/:\s*(\d+)/);
-				const repId = idMatch ? parseInt(idMatch[1], 10) : null;
-				const rejectedComment = invalidItems.find((comment) =>
-					repId ? comment.id === repId : !usedInvalidRepIds.has(comment.id)
+			if (matchedPrefix && audit.representation) {
+				detailsHtml = await renderRejectedIpCommentComponent(
+					audit.representation,
+					nunjucksEnvironments
 				);
-
-				if (rejectedComment) {
-					usedInvalidRepIds.add(rejectedComment.id);
-					detailsHtml = await renderRejectedIpCommentComponent(
-						rejectedComment,
-						nunjucksEnvironments
-					);
-				}
 			} else if (
 				appeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
 				detailsHtml.startsWith('Appeal reviewed as valid on')

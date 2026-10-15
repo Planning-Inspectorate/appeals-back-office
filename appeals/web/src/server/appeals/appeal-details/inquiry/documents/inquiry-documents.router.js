@@ -134,4 +134,15 @@ router
 		asyncHandler(controller.postShareDocumentCheckAndConfirm)
 	);
 
+router
+	.route('/manage-documents/:folderId/:documentId/:versionId/delete')
+	.get(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.getDeleteInquiryDocument)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.postDeleteInquiryDocument)
+	);
+
 export default router;

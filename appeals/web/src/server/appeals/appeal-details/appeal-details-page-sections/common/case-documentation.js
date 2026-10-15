@@ -32,7 +32,9 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 			rows: [
 				mappedData.appeal.appellantCase.display.tableItem,
 				caseStarted ? mappedData.appeal.lpaQuestionnaire.display.tableItem : undefined,
-				...(isFeatureActive(FEATURE_FLAG_NAMES.SHARING_SUPPORTING_DOCUMENTS) && !isEnforcementChild
+				...(isFeatureActive(FEATURE_FLAG_NAMES.SHARING_SUPPORTING_DOCUMENTS) &&
+				!isEnforcementChild &&
+				caseStarted
 					? [mappedData.appeal.supportingDocuments.display.tableItem]
 					: []),
 				...(isFeatureActive(FEATURE_FLAG_NAMES.SHARING_HEARING_DOCUMENTS) &&

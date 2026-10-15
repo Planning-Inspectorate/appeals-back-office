@@ -21,6 +21,8 @@ exports[`set up hearing GET /hearing/setup/address should match the snapshot 1`]
                             </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
                             </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/create-a-case">Create a case</a>
+                            </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
                             </li>
                         </ul>
@@ -113,6 +115,8 @@ exports[`set up hearing GET /hearing/setup/address-details should match the snap
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                             </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/create-a-case">Create a case</a>
                             </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
                             </li>
@@ -217,6 +221,8 @@ exports[`set up hearing GET /hearing/setup/check-details should match the snapsh
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                             </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/create-a-case">Create a case</a>
                             </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
                             </li>
@@ -323,6 +329,8 @@ exports[`set up hearing GET /hearing/setup/date should match the snapshot 1`] = 
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                             </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/create-a-case">Create a case</a>
                             </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
                             </li>

@@ -1,7 +1,7 @@
 import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
 
-describe('appeal-timetable-updated-enforcement-hearing.content.md', () => {
+describe('appeal-timetable-updated-enforcement.content.md', () => {
 	const basePersonalisation = {
 		appeal_reference_number: '134526',
 		lpa_reference: '48269/APP/2021/1482',
@@ -15,7 +15,7 @@ describe('appeal-timetable-updated-enforcement-hearing.content.md', () => {
 	test('should render all conditional sections when all optional values are present', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'appeal-timetable-updated-enforcement-hearing',
+			templateName: 'appeal-timetable-updated-enforcement',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
@@ -81,7 +81,7 @@ describe('appeal-timetable-updated-enforcement-hearing.content.md', () => {
 	test('should not render planning obligation when appellant is not set', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'appeal-timetable-updated-enforcement-hearing',
+			templateName: 'appeal-timetable-updated-enforcement',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
@@ -110,7 +110,7 @@ describe('appeal-timetable-updated-enforcement-hearing.content.md', () => {
 	test('should render only required sections when optional values are empty', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'appeal-timetable-updated-enforcement-hearing',
+			templateName: 'appeal-timetable-updated-enforcement',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
@@ -164,7 +164,7 @@ describe('appeal-timetable-updated-enforcement-hearing.content.md', () => {
 	test('should render enforcement notice reference text and only required sections when optional values are empty and we have enforcement ref', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'appeal-timetable-updated-enforcement-hearing',
+			templateName: 'appeal-timetable-updated-enforcement',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
@@ -215,4 +215,67 @@ describe('appeal-timetable-updated-enforcement-hearing.content.md', () => {
 			}
 		);
 	});
+
+	test.each([['enforcement notice appeal'], ['enforcement listed building']])(
+		'should render planning obligation but not statement of common ground or proof of evidence for a %s case with a written procedure',
+		async (caseType) => {
+			const notifySendData = {
+				doNotMockNotifySend: true,
+				templateName: 'appeal-timetable-updated-enforcement',
+				notifyClient: {
+					sendEmail: jest.fn()
+				},
+				recipientEmail: 'test@136s7.com',
+				personalisation: {
+					...basePersonalisation,
+					case_type: caseType,
+					appellant: true,
+					enforcement_reference: 'ENF123456',
+					appeal_procedure: 'written',
+					planning_obligation_due_date: '23 January 2025',
+					final_comments_due_date: '',
+					statement_of_common_ground_due_date: '25 January 2025',
+					proof_of_evidence_and_witnesses_due_date: '26 January 2025'
+				}
+			};
+
+			const expectedContent = [
+				'We have updated your timetable.',
+				'',
+				'# Appeal details',
+				'',
+				'^Appeal reference number: 134526',
+				'Address: 96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+				'Enforcement notice reference: ENF123456',
+				'',
+				'# Timetable',
+				'',
+				'## Local planning authority questionnaire',
+				'Due by 01 January 2025.',
+				'',
+				'## Statements',
+				'Due by 10 January 2025.',
+				'',
+				'## Interested party comments',
+				'Due by 20 January 2025.',
+				'',
+				'## Planning obligation',
+				'Send to caseofficers@planninginspectorate.gov.uk by 23 January 2025.',
+				'',
+				'Planning Inspectorate',
+				'caseofficers@planninginspectorate.gov.uk'
+			].join('\n');
+
+			await notifySend(notifySendData);
+
+			expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalledWith(
+				{ id: 'mock-appeal-generic-id' },
+				'test@136s7.com',
+				{
+					content: expectedContent,
+					subject: 'We have updated your timetable: 134526'
+				}
+			);
+		}
+	);
 });

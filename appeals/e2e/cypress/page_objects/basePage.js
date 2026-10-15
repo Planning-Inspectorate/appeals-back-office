@@ -106,6 +106,10 @@ export class Page {
 			cy.get(
 				`:nth-child(2) > .govuk-\\!\\-text-align-right > [data-cy="unlink-appeal-${caseObj}"]`
 			),
+		unlinkFirstChildAppeal: (caseObj) =>
+			cy.get(
+				`:nth-child(3) > .govuk-\\!\\-text-align-right > [data-cy="unlink-appeal-${caseObj}"]`
+			),
 		loggedInUser: () => cy.get(`${this.selectors.rightCol} > span`),
 		getPageCaption: () => cy.get('.govuk-caption-l'),
 		panelBody: () => cy.get(`${this.selectors.panelBody}`),
@@ -223,6 +227,10 @@ export class Page {
 
 	clickUnlinkLeadAppeal(caseObj) {
 		this.basePageElements.unlinkLeadAppeal(caseObj).click();
+	}
+
+	clickUnlinkFirstChildAppeal(caseObj) {
+		this.basePageElements.unlinkFirstChildAppeal(caseObj).click();
 	}
 
 	chooseRadioBtnByIndex(indexNumber) {

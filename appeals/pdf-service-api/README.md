@@ -1,39 +1,71 @@
 # Building, running and operations
 
-## Building the docker image
-From the root folder, execute:
+## Environment & Configuration
+
+Ensure `.env` exists in `appeals/pdf-service-api` (copied from `.env.example`):
 
 ```shell
-docker build . -f appeals/pdf-service-api/Dockerfile -t pins/pdf-service-api:local
+cp appeals/pdf-service-api/.env.example appeals/pdf-service-api/.env
 ```
 
+Key environment variables and defaults:
 
-## Running a container with the built image
-From a new terminal (to view logs), execute:
+| Variable | Default | Description |
+| --- | --- | --- |
+| `SERVER_PORT` | `3010` | Port the API runs on (mapped to `3010` in `docker-compose.dev.yaml`). |
+| `LOGGER_LEVEL` | `info` | Pino log verbosity level (`info`, `debug`, `error`). |
+| `CREATE_HTML_FILE` | `false` | When `true`, dumps generated HTML to a temporary folder for debugging. |
+
+## Running for Local Development (Recommended)
+
+From the root of the repository, run:
 
 ```shell
-docker run -p 3001:3000 pins/pdf-service-api:local
+npm run pdf-service:dev
 ```
 
-Or to install in detached mode
+This runs `docker compose -f appeals/pdf-service-api/docker-compose.dev.yaml up --build`. It starts the PDF service on port `3010` with live reloading (`node --watch`) enabled via volume mounts (`./appeals/pdf-service-api/src` and `./packages`). Code changes take effect automatically without needing manual rebuilds.
+
+### Running natively (without Docker)
+
+If you prefer running the Node process directly on your host machine:
 
 ```shell
-docker run -p 3001:3000 --name pins_pdfgen -d pins/pdf-service-api:local
+npm run pdf-service
 ```
-### when changing anything to do with pdf-service-api: please do the following in root directory of back office
-docker build --no-cache -f appeals/pdf-service-api/Dockerfile -t pins/pdf-service-api:local .
-docker stop pins_pdfgen && docker rm pins_pdfgen
-docker run -p 3001:3000 --name pins_pdfgen -d pins/pdf-service-api:local
+
+*(Note: Requires dependencies like Chromium/Puppeteer set up locally on your machine).*
+
+## Docker Compose manual commands
+
+From the root directory:
+
+```shell
+# Start container
+docker compose -f appeals/pdf-service-api/docker-compose.dev.yaml up -d
+
+# Rebuild container image
+docker compose -f appeals/pdf-service-api/docker-compose.dev.yaml up --build -d
+
+# View logs
+docker compose -f appeals/pdf-service-api/docker-compose.dev.yaml logs -f
+```
 
 ## Operations
-### Check health
-Open in a browser [the health check](http://localhost:3001/health)
 
-### Generate a PDF
-From `appeals/pdf-service-api`, run
+### Check health
+Open in a browser [http://localhost:3010/health](http://localhost:3010/health) or run:
 
 ```shell
-curl -X POST -d '{"html" : "<html><title>My page</title><body>This is the content of my page</body></html>"}' -H "Content-type: application/json" http://localhost:3001/api/v1/generate --output appeals/pdf-service-api/generated/generated.pdf
+curl http://localhost:3010/health
+```
+
+### Generate a PDF
+
+From `appeals/pdf-service-api`:
+
+```shell
+curl -X POST -d '{"html" : "<html><title>My page</title><body>This is the content of my page</body></html>"}' -H "Content-type: application/json" http://localhost:3010/api/v1/generate --output generated/generated.pdf
 ```
 
 The command will generate `appeals/pdf-service-api/generated/generated.pdf`.

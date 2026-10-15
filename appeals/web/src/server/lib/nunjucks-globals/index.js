@@ -3,4 +3,5 @@ import config from '#environment/config.js';
 export const betaFeedbackUrl = config.betaFeedbackUrl;
 export const googleAnalyticsId = config.googleAnalyticsId;
 export const microsoftClarityId = config.microsoftClarityId;
+export const featureFlagGenericCase = config.featureFlags.featureFlagGenericCase;
 export { isArray, isUndefined } from 'lodash-es';

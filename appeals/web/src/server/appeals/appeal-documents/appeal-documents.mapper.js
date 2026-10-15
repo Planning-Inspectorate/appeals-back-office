@@ -1,5 +1,6 @@
 import usersService from '#appeals/appeal-users/users-service.js';
 import { gigabyte, kilobyte, megabyte } from '#appeals/appeal.constants.js';
+import { isFeatureActive } from '#common/feature-flags.js';
 import { permissionNames } from '#environment/permissions.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import {
@@ -17,9 +18,16 @@ import {
 } from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
-import { redactionStatusIdToName } from '#lib/redaction-statuses.js';
+import {
+	getDocumentDisplayRedactionStatus,
+	redactionStatusIdToName
+} from '#lib/redaction-statuses.js';
 import config from '@pins/appeals.web/environment/config.js';
-import { APPEAL_TYPE, DOCUMENTS_PAGE_SIZE } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_TYPE,
+	DOCUMENTS_PAGE_SIZE,
+	FEATURE_FLAG_NAMES
+} from '@pins/appeals/constants/common.js';
 import {
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_REDACTED_STATUS,
@@ -1026,7 +1034,9 @@ export function manageFolderPage({
 			...errorSummaryPageComponents,
 			...(hasMultipleButtons ? [buttonWrapperOpen] : []),
 			...(editable ? [buttonComponent] : []),
-			...(editable && shareAllLinkUrl ? [shareAllButtonComponent] : []),
+			...(isFeatureActive(FEATURE_FLAG_NAMES.SHARE_MULTIPLE_DOCS) && editable && shareAllLinkUrl
+				? [shareAllButtonComponent]
+				: []),
 			...(hasMultipleButtons ? [buttonWrapperClose] : []),
 			{
 				type: 'table',
@@ -1079,7 +1089,7 @@ export function manageFolderPage({
 									text: dateISOStringToDisplayDate(document?.latestDocumentVersion?.dateReceived)
 								},
 						...(canViewRedactionColumn
-							? [{ text: document?.latestDocumentVersion?.redactionStatus }]
+							? [{ text: getDocumentDisplayRedactionStatus(document, folder?.path) }]
 							: []),
 						...(editable
 							? [mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEditUrl, canShare)]
@@ -1502,7 +1512,7 @@ export async function manageDocumentPage({
 		documentSummary.parameters.rows.push({
 			key: { text: 'Redaction status' },
 			value: {
-				text: getDocumentLatestVersion(document)?.redactionStatus
+				text: getDocumentDisplayRedactionStatus(document, folder?.path)
 			},
 			actions: {
 				items: [

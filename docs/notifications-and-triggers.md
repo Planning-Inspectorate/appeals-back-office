@@ -392,12 +392,12 @@ these [Notify Templates](../appeals/api/src/server/notify/templates):
 - **Notify Content Template:** [advertisement-appeal-timetable-updated](../appeals/api/src/server/notify/templates/advertisement-appeal-timetable-updated.content.md)
 - **Trigger:** Update timetable dates from the timetable section of the appeal. Sent to appellant/agent and LPA.
 
-### Timetable updated - enforcement hearing
+### Timetable updated - enforcement/ELB - hearing/written
 
 - **Appeal type:** enforcement
 - **Procedure:** Hearing
-- **Notify Subject Template:** [appeal-timetable-updated-enforcement-hearing](../appeals/api/src/server/notify/templates/appeal-timetable-updated-enforcement-hearing.subject.md)
-- **Notify Content Template:** [appeal-timetable-updated-enforcement-hearing](../appeals/api/src/server/notify/templates/appeal-timetable-updated-enforcement-hearing.content.md)
+- **Notify Subject Template:** [appeal-timetable-updated-enforcement](../appeals/api/src/server/notify/templates/appeal-timetable-updated-enforcement.subject.md)
+- **Notify Content Template:** [appeal-timetable-updated-enforcement](../appeals/api/src/server/notify/templates/appeal-timetable-updated-enforcement.content.md)
 - **GOV notify template:** [Timetable updated - GOV.UK notify](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/53cb5239-a431-4db9-b88e-9d93686cce4c)
 - **Trigger:** Update timetable dates from the timetable section of the appeal. Sent to appellant/agent and LPA.
 
@@ -972,33 +972,12 @@ these [Notify Templates](../appeals/api/src/server/notify/templates):
 - **Notify Content Template:** [decision-is-invalid-interested-party](../appeals/api/src/server/notify/templates/decision-is-invalid-interested-party.content.md)
 - **Trigger:** Issue decision and select invalid and continue
 
-### Appellant costs decision - appellant
+### Costs decision - all parties
 
-- **Appeal type:**
-- **Notify Subject Template:** [appellant-costs-decision-appellant](../appeals/api/src/server/notify/templates/appellant-costs-decision-appellant.subject.md)
-- **Notify Content Template:** [appellant-costs-decision-appellant](../appeals/api/src/server/notify/templates/appellant-costs-decision-appellant.content.md)
-- **Trigger:**
-
-### Appellant costs decision - lpa
-
-- **Appeal type:**
-- **Notify Subject Template:** [appellant-costs-decision-lpa](../appeals/api/src/server/notify/templates/appellant-costs-decision-lpa.subject.md)
-- **Notify Content Template:** [appellant-costs-decision-lpa](../appeals/api/src/server/notify/templates/appellant-costs-decision-lpa.content.md)
-- **Trigger:**
-
-### LPA costs decision - appellant
-
-- **Appeal type:**
-- **Notify Subject Template:** [lpa-costs-decision-appellant](../appeals/api/src/server/notify/templates/lpa-costs-decision-appellant.subject.md)
-- **Notify Content Template:** [lpa-costs-decision-appellant](../appeals/api/src/server/notify/templates/lpa-costs-decision-appellant.content.md)
-- **Trigger:**
-
-### LPA costs decision - lpa
-
-- **Appeal type:**
-- **Notify Subject Template:** [lpa-costs-decision-lpa](../appeals/api/src/server/notify/templates/lpa-costs-decision-lpa.subject.md)
-- **Notify Content Template:** [lpa-costs-decision-lpa](../appeals/api/src/server/notify/templates/lpa-costs-decision-lpa.content.md)
-- **Trigger:**
+- **Appeal type:** all
+- **Notify Subject Template:** [costs-decision-all-parties](../appeals/api/src/server/notify/templates/costs-decision-all-parties.subject.md)
+- **Notify Content Template:** [costs-decision-all-parties](../appeals/api/src/server/notify/templates/costs-decision-all-parties.content.md)
+- **Trigger:** Issue costs decision and continue
 
 ### Correction notice decision - appellant
 

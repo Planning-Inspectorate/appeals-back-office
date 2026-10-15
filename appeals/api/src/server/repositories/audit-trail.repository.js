@@ -9,17 +9,18 @@ import { DATABASE_ORDER_BY_DESC } from '@pins/appeals/constants/support.js';
  */
 
 /**
- * @param {CreateAuditTrailRequest} param0
+ * @param {CreateAuditTrailRequest & { representationId?: number }} param0
  * @returns {PrismaPromise<AuditTrail>}
  */
-const createAuditTrail = ({ appealId, details, loggedAt, userId }) =>
+const createAuditTrail = ({ appealId, details, loggedAt, userId, representationId }) =>
 	// @ts-ignore
 	databaseConnector.auditTrail.create({
 		data: {
 			appealId,
 			details,
 			loggedAt,
-			userId
+			userId,
+			...(representationId ? { representationId } : {})
 		}
 	});
 
@@ -32,6 +33,30 @@ const getAuditTrail = (appealId) =>
 		where: { appealId },
 		include: {
 			user: true,
+			representation: {
+				include: {
+					represented: {
+						include: { address: true }
+					},
+					representative: {
+						include: { address: true }
+					},
+					lpa: true,
+					attachments: {
+						include: {
+							documentVersion: {
+								include: { document: true }
+							}
+						}
+					},
+					representationRejectionReasonsSelected: {
+						include: {
+							representationRejectionReason: true,
+							representationRejectionReasonText: true
+						}
+					}
+				}
+			},
 			doc: {
 				select: {
 					document: {

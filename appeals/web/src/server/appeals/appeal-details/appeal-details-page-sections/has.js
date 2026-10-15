@@ -78,7 +78,9 @@ export function generateAppealDetailsPageComponents(appealDetails, mappedData, s
 			rows: [
 				mappedData.appeal.appellantCase.display.tableItem,
 				mappedData.appeal.lpaQuestionnaire.display.tableItem,
-				mappedData.appeal.supportingDocuments.display.tableItem
+				...(appealDetails.startedAt
+					? [mappedData.appeal.supportingDocuments.display.tableItem]
+					: [])
 			].filter(isDefined),
 			firstCellIsHeader: true
 		},

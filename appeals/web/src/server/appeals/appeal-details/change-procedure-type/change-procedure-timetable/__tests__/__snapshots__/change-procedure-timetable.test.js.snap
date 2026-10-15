@@ -3450,6 +3450,2093 @@ exports[`Change procedure timetable GET /change-timetable S78, S20 and EN - Plan
 </main>"
 `;
 
+exports[`Change procedure timetable POST /change-timetable S78 Expedited Interested party comments should re-render change timetable page with missing day error for Interested party comments 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#ip-comments-due-date-day">Interested party comments due date must include a day</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>
+            <h1             class="govuk-heading-l">Timetable due dates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"></div>
+    </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="lpa-statement-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
+                            value="02" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-month" name="lpa-statement-due-date-month" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-year" name="lpa-statement-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group govuk-form-group--error">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
+                <div id="ip-comments-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
+                    due date must include a day</p>
+                <div class="govuk-date-input" id="ip-comments-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-month" name="ip-comments-due-date-month" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-year" name="ip-comments-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
+                <div id="statement-of-common-ground-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="statement-of-common-ground-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-day" name="statement-of-common-ground-due-date-day"
+                            type="text" value="04" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-month" name="statement-of-common-ground-due-date-month"
+                            type="text" value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-year" name="statement-of-common-ground-due-date-year"
+                            type="text" value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+        </div>
+    </form>
+</main>"
+`;
+
+exports[`Change procedure timetable POST /change-timetable S78 Expedited Interested party comments should re-render change timetable page with missing month error for Interested party comments 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#ip-comments-due-date-month">Interested party comments due date must include a month</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>
+            <h1             class="govuk-heading-l">Timetable due dates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"></div>
+    </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="lpa-statement-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
+                            value="02" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-month" name="lpa-statement-due-date-month" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-year" name="lpa-statement-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group govuk-form-group--error">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
+                <div id="ip-comments-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
+                    due date must include a month</p>
+                <div class="govuk-date-input" id="ip-comments-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            id="ip-comments-due-date-month" name="ip-comments-due-date-month" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-year" name="ip-comments-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
+                <div id="statement-of-common-ground-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="statement-of-common-ground-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-day" name="statement-of-common-ground-due-date-day"
+                            type="text" value="04" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-month" name="statement-of-common-ground-due-date-month"
+                            type="text" value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-year" name="statement-of-common-ground-due-date-year"
+                            type="text" value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+        </div>
+    </form>
+</main>"
+`;
+
+exports[`Change procedure timetable POST /change-timetable S78 Expedited Interested party comments should re-render change timetable page with missing year error for Interested party comments 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#ip-comments-due-date-year">Interested party comments due date must include a year</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>
+            <h1             class="govuk-heading-l">Timetable due dates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"></div>
+    </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="lpa-statement-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
+                            value="02" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-month" name="lpa-statement-due-date-month" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-year" name="lpa-statement-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group govuk-form-group--error">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
+                <div id="ip-comments-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
+                    due date must include a year</p>
+                <div class="govuk-date-input" id="ip-comments-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-month" name="ip-comments-due-date-month" type="text"
+                            value="12" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                            id="ip-comments-due-date-year" name="ip-comments-due-date-year" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
+                <div id="statement-of-common-ground-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="statement-of-common-ground-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-day" name="statement-of-common-ground-due-date-day"
+                            type="text" value="04" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-month" name="statement-of-common-ground-due-date-month"
+                            type="text" value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-year" name="statement-of-common-ground-due-date-year"
+                            type="text" value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+        </div>
+    </form>
+</main>"
+`;
+
+exports[`Change procedure timetable POST /change-timetable S78 Expedited Interested party comments should re-render change timetable page with must be in the future error for Interested party comments 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#ip-comments-due-date-day">The interested party comments due date must be in the future</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>
+            <h1             class="govuk-heading-l">Timetable due dates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"></div>
+    </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="lpa-statement-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
+                            value="02" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-month" name="lpa-statement-due-date-month" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-year" name="lpa-statement-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group govuk-form-group--error">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
+                <div id="ip-comments-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The interested party
+                    comments due date must be in the future</p>
+                <div class="govuk-date-input"
+                id="ip-comments-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
+                            value="25" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            id="ip-comments-due-date-month" name="ip-comments-due-date-month" type="text"
+                            value="2" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                            id="ip-comments-due-date-year" name="ip-comments-due-date-year" type="text"
+                            value="1950" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
+                <div id="statement-of-common-ground-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="statement-of-common-ground-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-day" name="statement-of-common-ground-due-date-day"
+                            type="text" value="04" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-month" name="statement-of-common-ground-due-date-month"
+                            type="text" value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-year" name="statement-of-common-ground-due-date-year"
+                            type="text" value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+        </div>
+    </form>
+</main>"
+`;
+
+exports[`Change procedure timetable POST /change-timetable S78 Expedited Interested party comments should re-render change timetable page with not a real date error for Interested party comments 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#ip-comments-due-date-day">Interested party comments due date must be a real date</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>
+            <h1             class="govuk-heading-l">Timetable due dates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"></div>
+    </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="lpa-statement-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
+                            value="02" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-month" name="lpa-statement-due-date-month" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-year" name="lpa-statement-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group govuk-form-group--error">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
+                <div id="ip-comments-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
+                    due date must be a real date</p>
+                <div class="govuk-date-input" id="ip-comments-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
+                            value="29" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            id="ip-comments-due-date-month" name="ip-comments-due-date-month" type="text"
+                            value="2" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                            id="ip-comments-due-date-year" name="ip-comments-due-date-year" type="text"
+                            value="3000" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
+                <div id="statement-of-common-ground-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="statement-of-common-ground-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-day" name="statement-of-common-ground-due-date-day"
+                            type="text" value="04" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-month" name="statement-of-common-ground-due-date-month"
+                            type="text" value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-year" name="statement-of-common-ground-due-date-year"
+                            type="text" value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+        </div>
+    </form>
+</main>"
+`;
+
+exports[`Change procedure timetable POST /change-timetable S78 Expedited Statement of common ground should re-render change timetable page with missing day error for Statement of common ground 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#statement-of-common-ground-due-date-day">Statement of common ground due date must include a day</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>
+            <h1             class="govuk-heading-l">Timetable due dates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"></div>
+    </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="lpa-statement-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
+                            value="02" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-month" name="lpa-statement-due-date-month" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-year" name="lpa-statement-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
+                <div id="ip-comments-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="ip-comments-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
+                            value="03" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-month" name="ip-comments-due-date-month" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-year" name="ip-comments-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group govuk-form-group--error">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint statement-of-common-ground-due-date-error">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
+                <div id="statement-of-common-ground-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <p id="statement-of-common-ground-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statement of common ground
+                    due date must include a day</p>
+                <div class="govuk-date-input" id="statement-of-common-ground-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            id="statement-of-common-ground-due-date-day" name="statement-of-common-ground-due-date-day"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-month" name="statement-of-common-ground-due-date-month"
+                            type="text" value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-year" name="statement-of-common-ground-due-date-year"
+                            type="text" value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+        </div>
+    </form>
+</main>"
+`;
+
+exports[`Change procedure timetable POST /change-timetable S78 Expedited Statement of common ground should re-render change timetable page with missing month error for Statement of common ground 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#statement-of-common-ground-due-date-month">Statement of common ground due date must include a month</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>
+            <h1             class="govuk-heading-l">Timetable due dates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"></div>
+    </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="lpa-statement-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
+                            value="02" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-month" name="lpa-statement-due-date-month" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-year" name="lpa-statement-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
+                <div id="ip-comments-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="ip-comments-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
+                            value="03" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-month" name="ip-comments-due-date-month" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-year" name="ip-comments-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group govuk-form-group--error">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint statement-of-common-ground-due-date-error">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
+                <div id="statement-of-common-ground-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <p id="statement-of-common-ground-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statement of common ground
+                    due date must include a month</p>
+                <div class="govuk-date-input" id="statement-of-common-ground-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-day" name="statement-of-common-ground-due-date-day"
+                            type="text" value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            id="statement-of-common-ground-due-date-month" name="statement-of-common-ground-due-date-month"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-year" name="statement-of-common-ground-due-date-year"
+                            type="text" value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+        </div>
+    </form>
+</main>"
+`;
+
+exports[`Change procedure timetable POST /change-timetable S78 Expedited Statement of common ground should re-render change timetable page with missing year error for Statement of common ground 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#statement-of-common-ground-due-date-year">Statement of common ground due date must include a year</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>
+            <h1             class="govuk-heading-l">Timetable due dates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"></div>
+    </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="lpa-statement-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
+                            value="02" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-month" name="lpa-statement-due-date-month" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-year" name="lpa-statement-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
+                <div id="ip-comments-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="ip-comments-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
+                            value="03" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-month" name="ip-comments-due-date-month" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-year" name="ip-comments-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group govuk-form-group--error">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint statement-of-common-ground-due-date-error">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
+                <div id="statement-of-common-ground-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <p id="statement-of-common-ground-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statement of common ground
+                    due date must include a year</p>
+                <div class="govuk-date-input" id="statement-of-common-ground-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-day" name="statement-of-common-ground-due-date-day"
+                            type="text" value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-month" name="statement-of-common-ground-due-date-month"
+                            type="text" value="12" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                            id="statement-of-common-ground-due-date-year" name="statement-of-common-ground-due-date-year"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+        </div>
+    </form>
+</main>"
+`;
+
+exports[`Change procedure timetable POST /change-timetable S78 Expedited Statement of common ground should re-render change timetable page with must be in the future error for Statement of common ground 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#statement-of-common-ground-due-date-day">The statement of common ground due date must be in the future</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>
+            <h1             class="govuk-heading-l">Timetable due dates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"></div>
+    </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="lpa-statement-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
+                            value="02" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-month" name="lpa-statement-due-date-month" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-year" name="lpa-statement-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
+                <div id="ip-comments-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="ip-comments-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
+                            value="03" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-month" name="ip-comments-due-date-month" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-year" name="ip-comments-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group govuk-form-group--error">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint statement-of-common-ground-due-date-error">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
+                <div id="statement-of-common-ground-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <p id="statement-of-common-ground-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The statement of common
+                    ground due date must be in the future</p>
+                <div class="govuk-date-input"
+                id="statement-of-common-ground-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            id="statement-of-common-ground-due-date-day" name="statement-of-common-ground-due-date-day"
+                            type="text" value="25" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            id="statement-of-common-ground-due-date-month" name="statement-of-common-ground-due-date-month"
+                            type="text" value="2" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                            id="statement-of-common-ground-due-date-year" name="statement-of-common-ground-due-date-year"
+                            type="text" value="1950" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+        </div>
+    </form>
+</main>"
+`;
+
+exports[`Change procedure timetable POST /change-timetable S78 Expedited Statement of common ground should re-render change timetable page with not a real date error for Statement of common ground 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#statement-of-common-ground-due-date-day">Statement of common ground due date must be a real date</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>
+            <h1             class="govuk-heading-l">Timetable due dates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"></div>
+    </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="lpa-statement-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
+                            value="02" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-month" name="lpa-statement-due-date-month" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-year" name="lpa-statement-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
+                <div id="ip-comments-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="ip-comments-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
+                            value="03" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-month" name="ip-comments-due-date-month" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-year" name="ip-comments-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group govuk-form-group--error">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint statement-of-common-ground-due-date-error">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
+                <div id="statement-of-common-ground-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <p id="statement-of-common-ground-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statement of common ground
+                    due date must be a real date</p>
+                <div class="govuk-date-input" id="statement-of-common-ground-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            id="statement-of-common-ground-due-date-day" name="statement-of-common-ground-due-date-day"
+                            type="text" value="29" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            id="statement-of-common-ground-due-date-month" name="statement-of-common-ground-due-date-month"
+                            type="text" value="2" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                            id="statement-of-common-ground-due-date-year" name="statement-of-common-ground-due-date-year"
+                            type="text" value="3000" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+        </div>
+    </form>
+</main>"
+`;
+
+exports[`Change procedure timetable POST /change-timetable S78 Expedited Statements should re-render change timetable page with missing day error for Statements 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#lpa-statement-due-date-day">Statements due date must include a day</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>
+            <h1             class="govuk-heading-l">Timetable due dates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"></div>
+    </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group govuk-form-group--error">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
+                    include a day</p>
+                <div class="govuk-date-input" id="lpa-statement-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-month" name="lpa-statement-due-date-month" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-year" name="lpa-statement-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
+                <div id="ip-comments-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="ip-comments-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
+                            value="03" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-month" name="ip-comments-due-date-month" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-year" name="ip-comments-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
+                <div id="statement-of-common-ground-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="statement-of-common-ground-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-day" name="statement-of-common-ground-due-date-day"
+                            type="text" value="04" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-month" name="statement-of-common-ground-due-date-month"
+                            type="text" value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-year" name="statement-of-common-ground-due-date-year"
+                            type="text" value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+        </div>
+    </form>
+</main>"
+`;
+
+exports[`Change procedure timetable POST /change-timetable S78 Expedited Statements should re-render change timetable page with missing month error for Statements 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#lpa-statement-due-date-month">Statements due date must include a month</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>
+            <h1             class="govuk-heading-l">Timetable due dates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"></div>
+    </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group govuk-form-group--error">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
+                    include a month</p>
+                <div class="govuk-date-input" id="lpa-statement-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            id="lpa-statement-due-date-month" name="lpa-statement-due-date-month" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-year" name="lpa-statement-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
+                <div id="ip-comments-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="ip-comments-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
+                            value="03" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-month" name="ip-comments-due-date-month" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-year" name="ip-comments-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
+                <div id="statement-of-common-ground-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="statement-of-common-ground-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-day" name="statement-of-common-ground-due-date-day"
+                            type="text" value="04" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-month" name="statement-of-common-ground-due-date-month"
+                            type="text" value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-year" name="statement-of-common-ground-due-date-year"
+                            type="text" value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+        </div>
+    </form>
+</main>"
+`;
+
+exports[`Change procedure timetable POST /change-timetable S78 Expedited Statements should re-render change timetable page with missing year error for Statements 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#lpa-statement-due-date-year">Statements due date must include a year</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>
+            <h1             class="govuk-heading-l">Timetable due dates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"></div>
+    </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group govuk-form-group--error">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
+                    include a year</p>
+                <div class="govuk-date-input" id="lpa-statement-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-statement-due-date-month" name="lpa-statement-due-date-month" type="text"
+                            value="12" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                            id="lpa-statement-due-date-year" name="lpa-statement-due-date-year" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
+                <div id="ip-comments-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="ip-comments-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
+                            value="03" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-month" name="ip-comments-due-date-month" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-year" name="ip-comments-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
+                <div id="statement-of-common-ground-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="statement-of-common-ground-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-day" name="statement-of-common-ground-due-date-day"
+                            type="text" value="04" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-month" name="statement-of-common-ground-due-date-month"
+                            type="text" value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-year" name="statement-of-common-ground-due-date-year"
+                            type="text" value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+        </div>
+    </form>
+</main>"
+`;
+
+exports[`Change procedure timetable POST /change-timetable S78 Expedited Statements should re-render change timetable page with must be in the future error for Statements 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#lpa-statement-due-date-day">The statements due date must be in the future</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>
+            <h1             class="govuk-heading-l">Timetable due dates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"></div>
+    </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group govuk-form-group--error">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The statements due date
+                    must be in the future</p>
+                <div class="govuk-date-input" id="lpa-statement-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
+                            value="25" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            id="lpa-statement-due-date-month" name="lpa-statement-due-date-month" type="text"
+                            value="2" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                            id="lpa-statement-due-date-year" name="lpa-statement-due-date-year" type="text"
+                            value="1950" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
+                <div id="ip-comments-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="ip-comments-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
+                            value="03" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-month" name="ip-comments-due-date-month" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-year" name="ip-comments-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
+                <div id="statement-of-common-ground-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="statement-of-common-ground-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-day" name="statement-of-common-ground-due-date-day"
+                            type="text" value="04" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-month" name="statement-of-common-ground-due-date-month"
+                            type="text" value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-year" name="statement-of-common-ground-due-date-year"
+                            type="text" value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+        </div>
+    </form>
+</main>"
+`;
+
+exports[`Change procedure timetable POST /change-timetable S78 Expedited Statements should re-render change timetable page with not a real date error for Statements 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#lpa-statement-due-date-day">Statements due date must be a real date</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>
+            <h1             class="govuk-heading-l">Timetable due dates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"></div>
+    </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group govuk-form-group--error">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
+                    be a real date</p>
+                <div class="govuk-date-input" id="lpa-statement-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
+                            value="29" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            id="lpa-statement-due-date-month" name="lpa-statement-due-date-month" type="text"
+                            value="2" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                            id="lpa-statement-due-date-year" name="lpa-statement-due-date-year" type="text"
+                            value="3000" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
+                <div id="ip-comments-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="ip-comments-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
+                            value="03" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-month" name="ip-comments-due-date-month" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="ip-comments-due-date-year" name="ip-comments-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
+                <div id="statement-of-common-ground-due-date-hint"
+                class="govuk-hint">
+                    <div class="govuk-hint">For example, 29 10 2024</div>
+                </div>
+                <div class="govuk-date-input" id="statement-of-common-ground-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-day" name="statement-of-common-ground-due-date-day"
+                            type="text" value="04" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-month" name="statement-of-common-ground-due-date-month"
+                            type="text" value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="statement-of-common-ground-due-date-year" name="statement-of-common-ground-due-date-year"
+                            type="text" value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+        </div>
+    </form>
+</main>"
+`;
+
 exports[`Change procedure timetable POST /change-timetable S78 hearing Interested party comments should re-render change timetable page with missing day error for Interested party comments 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">

@@ -6,7 +6,12 @@ import {
 	listedBuildingAppeal as listedBuildingAppealData
 } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { jest } from '@jest/globals';
+import {
+	AUDIT_TRAIL_CHANGE_PROCEDURE_TYPE,
+	AUDIT_TRAIL_SYSTEM_UUID
+} from '@pins/appeals/constants/support.js';
 import { buildChangeProcedureTypeMessage } from '../change-procedure-type.service.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
@@ -205,6 +210,7 @@ describe('Change appeal procedure type route', () => {
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					notifyClient: expect.anything(),
+					azureAdUserId,
 					personalisation: {
 						...personalisation,
 						is_lpa: false,
@@ -219,6 +225,7 @@ describe('Change appeal procedure type route', () => {
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					notifyClient: expect.anything(),
+					azureAdUserId,
 					personalisation: {
 						...personalisation,
 						is_lpa: true,
@@ -298,6 +305,7 @@ describe('Change appeal procedure type route', () => {
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					notifyClient: expect.anything(),
+					azureAdUserId,
 					personalisation: {
 						...personalisation,
 						is_lpa: false,
@@ -310,6 +318,7 @@ describe('Change appeal procedure type route', () => {
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					notifyClient: expect.anything(),
+					azureAdUserId,
 					personalisation: {
 						...personalisation,
 						is_lpa: true,
@@ -439,6 +448,48 @@ describe('Change appeal procedure type route', () => {
 					expect(databaseConnector.$transaction).toHaveBeenCalled();
 				}
 			);
+
+			test('records the audit trail against the requesting user (not "System") when changing from writtenPart1 to written', async () => {
+				fullPlanningAppeal.currentStatus = 'lpa_questionnaire';
+				fullPlanningAppeal.appealStatus = [{ status: 'lpa_questionnaire', valid: true }];
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 100,
+					azureAdUserId
+				});
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/procedure-type-change-request`)
+					.send({
+						existingAppealProcedure: 'part 1',
+						appealProcedure: 'written',
+						lpaQuestionnaireDueDate: '2026-11-03T00:00:00.000Z',
+						ipCommentsDueDate: '2026-12-01T00:00:00.000Z',
+						lpaStatementDueDate: '2026-12-01T00:00:00.000Z',
+						finalCommentsDueDate: '2026-12-15T00:00:00.000Z'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+				expect(databaseConnector.user.upsert).toHaveBeenCalledWith({
+					where: { azureAdUserId },
+					update: {},
+					create: { azureAdUserId }
+				});
+				expect(databaseConnector.user.upsert).not.toHaveBeenCalledWith(
+					expect.objectContaining({ where: { azureAdUserId: AUDIT_TRAIL_SYSTEM_UUID } })
+				);
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: expect.objectContaining({
+						appealId: fullPlanningAppeal.id,
+						details: stringTokenReplacement(AUDIT_TRAIL_CHANGE_PROCEDURE_TYPE, [
+							'written representations'
+						]),
+						userId: 100
+					})
+				});
+			});
 		});
 
 		describe('Change to Hearing', () => {
@@ -573,6 +624,7 @@ describe('Change appeal procedure type route', () => {
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					notifyClient: expect.anything(),
+					azureAdUserId,
 					personalisation: {
 						...personalisation,
 						is_lpa: false,
@@ -587,6 +639,7 @@ describe('Change appeal procedure type route', () => {
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					notifyClient: expect.anything(),
+					azureAdUserId,
 					personalisation: {
 						...personalisation,
 						is_lpa: true,
@@ -667,6 +720,7 @@ describe('Change appeal procedure type route', () => {
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					notifyClient: expect.anything(),
+					azureAdUserId,
 					personalisation: {
 						...personalisation,
 						is_lpa: false,
@@ -681,6 +735,7 @@ describe('Change appeal procedure type route', () => {
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					notifyClient: expect.anything(),
+					azureAdUserId,
 					personalisation: {
 						...personalisation,
 						is_lpa: true,
@@ -943,6 +998,7 @@ describe('Change appeal procedure type route', () => {
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					notifyClient: expect.anything(),
+					azureAdUserId,
 					personalisation: {
 						...personalisation,
 						is_lpa: false,
@@ -957,6 +1013,7 @@ describe('Change appeal procedure type route', () => {
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					notifyClient: expect.anything(),
+					azureAdUserId,
 					personalisation: {
 						...personalisation,
 						is_lpa: true,
@@ -1096,6 +1153,7 @@ describe('Change appeal procedure type route', () => {
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					notifyClient: expect.anything(),
+					azureAdUserId,
 					personalisation: {
 						...personalisation,
 						is_lpa: false,
@@ -1111,6 +1169,7 @@ describe('Change appeal procedure type route', () => {
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					notifyClient: expect.anything(),
+					azureAdUserId,
 					personalisation: {
 						...personalisation,
 						is_lpa: true,

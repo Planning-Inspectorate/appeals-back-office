@@ -1,8 +1,7 @@
 {
-	"npmClient": "npm",
 	"globalEnv": ["NODE_ENV"],
 	"globalPassThroughEnv": ["TURBO_*"],
-	"pipeline": {
+	"tasks": {
 		"build": {
 			"outputs": ["src/server/static/scripts/**", "src/server/static/styles/**"],
 			"dependsOn": ["^build"],
@@ -58,7 +57,8 @@
 			"env": ["DATABASE_URL"]
 		},
 		"dev": {
-			"cache": false
+			"cache": false,
+			"persistent": true
 		},
 		"clean": {
 			"cache": false
