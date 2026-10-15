@@ -53,6 +53,7 @@ describe('costs', () => {
 
 	beforeEach(() => {
 		installMockApi();
+		costsFolderInfoApellantApplicationResponse = costsFolderInfoAppellantApplication;
 		nock('http://test/').get('/appeals/1?include=appellantCase').reply(200, appealData);
 		nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse).persist();
 
@@ -62,7 +63,7 @@ describe('costs', () => {
 			.persist();
 		nock('http://test/')
 			.get(getFolderApiUrl(1))
-			.reply(200, costsFolderInfoAppellantApplication)
+			.reply(200, () => costsFolderInfoApellantApplicationResponse)
 			.persist();
 		nock('http://test/')
 			.get(getFolderApiUrl(2))
@@ -1485,18 +1486,14 @@ describe('costs', () => {
 			}
 
 			it(`Should render 'Manage and share' CTA and NO tag if document is NOT shared`, async () => {
-				nock.cleanAll();
-				nock('http://test/')
-					.get('/appeals/1?include=appellantCase')
-					.reply(200, appealData)
-					.persist();
+				nock('http://test/').get('/appeals/1?include=appellantCase').reply(200, appealData);
 
 				const unsharedDocumentFolder = structuredClone(costsFolderInfoAppellantApplication);
 				unsharedDocumentFolder.documents.forEach((doc) => {
 					doc.latestDocumentVersion.published = false;
 				});
 
-				nock('http://test/').get(getFolderApiUrl(1)).reply(200, unsharedDocumentFolder);
+				costsFolderInfoApellantApplicationResponse = unsharedDocumentFolder;
 
 				const response = await request.get(
 					`${baseUrl}/1/costs/appellant/application/manage-documents/1`
@@ -1510,18 +1507,13 @@ describe('costs', () => {
 			});
 
 			it(`Should render 'Manage' CTA and 'Shared' tag if document IS shared`, async () => {
-				nock.cleanAll();
-				nock('http://test/')
-					.get('/appeals/1?include=appellantCase')
-					.reply(200, appealData)
-					.persist();
+				nock('http://test/').get('/appeals/1?include=appellantCase').reply(200, appealData);
 
 				const sharedDocumentFolder = structuredClone(costsFolderInfoAppellantApplication);
 				sharedDocumentFolder.documents.forEach((doc) => {
 					doc.latestDocumentVersion.published = true;
 				});
-
-				nock('http://test/').get(getFolderApiUrl(1)).reply(200, sharedDocumentFolder);
+				costsFolderInfoApellantApplicationResponse = sharedDocumentFolder;
 
 				const response = await request.get(
 					`${baseUrl}/1/costs/appellant/application/manage-documents/1`
@@ -1704,7 +1696,6 @@ describe('costs', () => {
 					});
 
 					it(`should render 'Shared' tags under the Version Summary and in Version History if document IS shared`, async () => {
-						nock.cleanAll();
 						nock('http://test/')
 							.get('/appeals/1?include=appellantCase')
 							.reply(200, appealData)
@@ -1744,7 +1735,6 @@ describe('costs', () => {
 					});
 
 					it(`should render 'Document details' and 'Share document' button with correct link if document is NOT shared`, async () => {
-						nock.cleanAll();
 						nock('http://test/')
 							.get('/appeals/1?include=appellantCase')
 							.reply(200, appealData)
@@ -2029,7 +2019,6 @@ describe('costs', () => {
 
 				describe(`Testing ${costsCategory} ${costsDocumentType}`, () => {
 					beforeEach(() => {
-						nock.cleanAll();
 						nock('http://test/')
 							.get('/appeals/1?include=appellantCase')
 							.reply(200, appealData)
@@ -2124,7 +2113,6 @@ describe('costs', () => {
 									? 'shared-cost-application.content.md'
 									: 'shared-cost-application-comment.content.md';
 
-						nock.cleanAll();
 						nock('http://test/')
 							.get('/appeals/1?include=appellantCase')
 							.reply(200, appealData)
