@@ -1,6 +1,6 @@
 We have received the {{submitting_party}}'s final comments.
 
-You can [view this information in the appeal service]({{front_office_url}}/{{fo_dashboard_stub}}/{{appeal_reference_number}}).
+You can [view this information in the appeals service]({{front_office_url}}/{{fo_dashboard_stub}}/{{appeal_reference_number}}).
 
 {% include 'parts/appeal-details.md' %}
 
