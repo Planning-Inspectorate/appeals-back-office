@@ -7,7 +7,10 @@ import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
 	DOCUMENT_STATUS_RECEIVED
 } from '@pins/appeals/constants/support.js';
-import { isExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import {
+	isExpeditedAppealType,
+	isGenericAppealType
+} from '@pins/appeals/utils/appeal-type-checks.js';
 import { getSingularRepresentation } from '@pins/appeals/utils/representations.js';
 import { countBy, maxBy, reduce } from 'lodash-es';
 
@@ -73,7 +76,11 @@ export const mapDocumentationSummary = (data) => {
 		appellantCase: {
 			status: formatAppellantCaseDocumentationStatus(appeal),
 			dueDate: appeal.caseExtensionDate && appeal.caseExtensionDate?.toISOString(),
-			receivedAt: appeal.caseCreatedDate.toISOString()
+			receivedAt: (
+				(isGenericAppealType(appeal.appealType?.type)
+					? appeal.appellantCase?.caseSubmittedDate
+					: appeal.caseCreatedDate) || appeal.caseCreatedDate
+			)?.toISOString()
 		},
 		lpaQuestionnaire: {
 			status: formatLpaQuestionnaireDocumentationStatus(appeal),

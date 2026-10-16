@@ -1,12 +1,15 @@
 import { validationErrorHandler } from '#middleware/error-handler.js';
+import { GENERIC_APPEAL_TYPES } from '@pins/appeals/constants/common.js';
 import {
 	ERROR_LENGTH_BETWEEN_MIN_AND_MAX_CHARACTERS,
+	ERROR_MUST_BE_CORRECT_DATE_FORMAT,
 	ERROR_MUST_BE_GREATER_THAN_ZERO,
 	ERROR_MUST_BE_NUMBER,
+	ERROR_MUST_BE_STRING,
 	ERROR_PAGENUMBER_AND_PAGESIZE_ARE_REQUIRED
 } from '@pins/appeals/constants/support.js';
 import { composeMiddleware } from '@pins/express';
-import { query } from 'express-validator';
+import { body, query } from 'express-validator';
 
 /** @typedef {import('express-validator').ValidationChain} ValidationChain */
 /** @typedef {import('express').Request} Request */
@@ -57,4 +60,14 @@ const getAppealsValidator = composeMiddleware(
 	validationErrorHandler
 );
 
-export { getAppealsValidator };
+const createAppealValidator = composeMiddleware(
+	body('caseType')
+		.isString()
+		.withMessage(ERROR_MUST_BE_STRING)
+		.isIn(Object.values(GENERIC_APPEAL_TYPES))
+		.withMessage('Must be a valid generic appeal type'),
+	body('submissionDate').isISO8601().withMessage(ERROR_MUST_BE_CORRECT_DATE_FORMAT),
+	validationErrorHandler
+);
+
+export { createAppealValidator, getAppealsValidator };

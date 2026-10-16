@@ -508,7 +508,7 @@ describe('create a case', () => {
 			});
 		});
 
-		it('should clear the session and redirect to the case details page placeholder', async () => {
+		it('should create the case via API, clear the session, set the success notification banner, and redirect to the case details page', async () => {
 			const response = await request.post(`${baseUrl}/check-details`);
 
 			expect(response.statusCode).toBe(302);

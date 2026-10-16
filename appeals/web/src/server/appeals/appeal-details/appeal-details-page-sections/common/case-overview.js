@@ -3,6 +3,7 @@ import featureFlags from '#common/feature-flags.js';
 import { removeSummaryListActions } from '#lib/mappers/index.js';
 import { isDefined } from '#lib/ts-utilities.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import {
 	APPEAL_CASE_STATUS,
 	APPEAL_REPRESENTATION_STATUS
@@ -32,7 +33,10 @@ export const getCaseOverview = (mappedData, appealDetails) => ({
 				? mappedData.appeal?.caseProcedure?.display.summaryListItem
 				: removeSummaryListActions(mappedData.appeal?.caseProcedure?.display.summaryListItem),
 			mappedData.appeal?.allocationDetails?.display.summaryListItem,
-			mappedData.appeal?.linkedAppeals?.display.summaryListItem,
+			// TODO: update once case type letters and schema are provided by ODW
+			!isGenericAppealType(appealDetails.appealType)
+				? mappedData.appeal?.linkedAppeals?.display.summaryListItem
+				: undefined,
 			mappedData.appeal?.otherAppeals?.display.summaryListItem,
 			mappedData.appeal?.netResidenceChange?.display.summaryListItem,
 			mappedData.appeal?.netResidenceGainOrLoss?.display.summaryListItem,
