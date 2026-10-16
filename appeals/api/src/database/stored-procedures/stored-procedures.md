@@ -4,6 +4,8 @@ This is the folder where we will keep our version-controlled stored procedure SQ
 
 To change these scripts, amend them here and then create a new manual prisma migration file in a prisma migration folder, and copy that script into it.
 
+To run the tests, use `npm run test:stored-procedures`. This uses the migrations to test the stored procedures so your changes will need to be in a migration file.
+
 For more details, see the main documentation on [stored procedures](/docs/database.md).
 
 # Current Stored Procedures
