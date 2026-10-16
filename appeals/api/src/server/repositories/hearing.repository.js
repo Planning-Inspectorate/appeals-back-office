@@ -169,10 +169,33 @@ const deleteHearingById = (id) => {
 	return databaseConnector.hearing.delete({ where: { id } });
 };
 
+/**
+ * @param {number[]} appealIds
+ * */
+const deleteMultiHearingsByAppealId = (appealIds) =>
+	databaseConnector.hearing.deleteMany({
+		where: {
+			appealId: { in: appealIds }
+		}
+	});
+
+/**
+ * @param {number[]} appealIds
+ * @returns
+ */
+const getHearingByAppealId = (appealIds) =>
+	databaseConnector.hearing.findMany({
+		where: {
+			appealId: { in: appealIds }
+		}
+	});
+
 export default {
 	getHearingById,
 	createHearingById,
 	createHearingsByAppealIds,
 	updateHearingById,
-	deleteHearingById
+	deleteHearingById,
+	deleteMultiHearingsByAppealId,
+	getHearingByAppealId
 };

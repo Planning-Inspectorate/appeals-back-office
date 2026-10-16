@@ -2016,105 +2016,136 @@ describe('hearing routes', () => {
 		});
 
 		describe('DELETE', () => {
-			test('deletes a single hearing', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue({ ...fullPlanningAppeal, hearing });
+			const getFullAppeal = () => JSON.parse(JSON.stringify(fullPlanningAppealData));
 
-				const response = await request
-					.delete(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.set('azureAdUserId', azureAdUserId);
+			const getEnforcementLeadAppeal = () =>
+				JSON.parse(
+					JSON.stringify({ ...enforcementNoticeAppeal, childAppeals: childAppealsEnforcementBase })
+				);
 
-				expect(databaseConnector.hearing.delete).toHaveBeenCalledWith({
-					where: {
-						id: hearing.id
-					}
+			describe.each([
+				['single appeal', getFullAppeal],
+				['linked appeals - enforcement multiple appellants', getEnforcementLeadAppeal]
+			])('%s', (_, getAppeal) => {
+				let appeal = getAppeal();
+				let idsOfLinkedGroup;
+				let sizeOfLinkedGroup;
+
+				beforeEach(() => {
+					appeal = getAppeal();
+					idsOfLinkedGroup = getIdsOfLinkedGroup(appeal);
+					sizeOfLinkedGroup = idsOfLinkedGroup.length;
+
+					// // @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue({ ...appeal, hearing });
+					databaseConnector.hearing.findMany.mockResolvedValue([hearing]);
 				});
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: {
-						appealId: fullPlanningAppeal.id,
-						details: 'Hearing cancelled',
-						loggedAt: expect.any(Date),
-						userId: 1
-					}
-				});
-				const personalisation = {
-					appeal_reference_number: '1345264',
-					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-					lpa_reference: '48269/APP/2021/1482',
-					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
-				};
-
-				expect(mockNotifySend).toHaveBeenCalledTimes(2);
-
-				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
-					notifyClient: expect.anything(),
-					personalisation,
-					recipientEmail: fullPlanningAppeal.agent.email,
-					templateName: 'hearing-cancelled'
+				afterEach(() => {
+					databaseConnector.appeal.findUnique.mockClear();
 				});
 
-				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
-					notifyClient: expect.anything(),
-					personalisation,
-					recipientEmail: fullPlanningAppeal.lpa.email,
-					templateName: 'hearing-cancelled'
+				test('deletes a single hearing', async () => {
+					const response = await request
+						.delete(`/appeals/${appeal.id}/hearing/${hearing.id}`)
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(databaseConnector.hearing.deleteMany).toHaveBeenCalledWith({
+						where: {
+							appealId: { in: idsOfLinkedGroup }
+						}
+					});
+
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+						data: {
+							appealId: appeal.id,
+							details: 'Hearing cancelled',
+							loggedAt: expect.any(Date),
+							userId: 1
+						}
+					});
+
+					const personalisation = {
+						appeal_reference_number: '1345264',
+						...(appeal.appellantCase.enforcementReference && {
+							enforcement_reference: appeal.appellantCase.enforcementReference
+						}),
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						lpa_reference: '48269/APP/2021/1482',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+					};
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation,
+						recipientEmail: appeal.agent.email,
+						templateName: 'hearing-cancelled'
+					});
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation,
+						recipientEmail: appeal.lpa.email,
+						templateName: 'hearing-cancelled'
+					});
+
+					expect(response.status).toEqual(200);
 				});
 
-				expect(response.status).toEqual(200);
-			});
+				test('returns an error if appealId is not a number', async () => {
+					const { hearing } = fullPlanningAppeal;
 
-			test('returns an error if appealId is not a number', async () => {
-				const { hearing } = fullPlanningAppeal;
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+					const response = await request
+						.delete(`/appeals/BUSSIN/hearing/${hearing.id}`)
+						.set('azureAdUserId', azureAdUserId);
 
-				const response = await request
-					.delete(`/appeals/BUSSIN/hearing/${hearing.id}`)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: { appealId: 'must be a number' }
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: { appealId: 'must be a number' }
+					});
 				});
-			});
 
-			test('returns an error if hearingId is not a number', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				test('returns an error if hearingId is not a number', async () => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 
-				const response = await request
-					.delete(`/appeals/${fullPlanningAppeal.id}/hearing/BUSSIN`)
-					.set('azureAdUserId', azureAdUserId);
+					const response = await request
+						.delete(`/appeals/${fullPlanningAppeal.id}/hearing/BUSSIN`)
+						.set('azureAdUserId', azureAdUserId);
 
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: { hearingId: 'must be a number' }
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: { hearingId: 'must be a number' }
+					});
 				});
-			});
 
-			test('returns an error if the hearing has already occurred', async () => {
-				const appeal = {
-					...fullPlanningAppeal,
-					hearing: {
-						...fullPlanningAppeal.hearing,
-						hearingStartTime: new Date('2020-01-01')
-					}
-				};
-				const { hearing } = appeal;
+				test('returns an error if the hearing has already occurred', async () => {
+					const appeal = {
+						...fullPlanningAppeal,
+						hearing: {
+							...fullPlanningAppeal.hearing,
+							hearingStartTime: new Date('2020-01-01')
+						}
+					};
+					const { hearing } = appeal;
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
 
-				const response = await request
-					.delete(`/appeals/${appeal.id}/hearing/${hearing.id}`)
-					.set('azureAdUserId', azureAdUserId);
+					const response = await request
+						.delete(`/appeals/${appeal.id}/hearing/${hearing.id}`)
+						.set('azureAdUserId', azureAdUserId);
 
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: { hearingStartTime: 'must be in the future' }
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: { hearingStartTime: 'must be in the future' }
+					});
 				});
 			});
 		});

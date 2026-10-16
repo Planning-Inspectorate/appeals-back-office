@@ -139,10 +139,12 @@ router.delete(
 	checkAppealExistsByIdAndAddPartialToRequest([
 		'hearing',
 		'appealStatus',
+		'appealType', // required for isLinkedAppealsActive call
 		'appellant',
 		'agent',
 		'lpa',
-		'address'
+		'address',
+		'childAppeals'
 	]),
 	checkHearingExists,
 	deleteHearingDateValidator,
