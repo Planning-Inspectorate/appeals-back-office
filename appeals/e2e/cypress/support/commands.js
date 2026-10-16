@@ -149,9 +149,9 @@ Cypress.Commands.add('writeLog', (message, logToConsole = true, logToBrowser = t
 	}
 });
 
-Cypress.Commands.add('createCase', (customValues) => {
+Cypress.Commands.add('createCase', (customValues, additionalDocuments = []) => {
 	return cy.wrap(null).then(() => {
-		return appealsApiClient.caseSubmission(customValues).then((data) => {
+		return appealsApiClient.caseSubmission(customValues, additionalDocuments).then((data) => {
 			const appealRef = data.reference;
 			const appealId = data.id;
 			cy.log(`Generated case with ref ${appealRef} and id ${appealId}`);

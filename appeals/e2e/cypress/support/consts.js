@@ -12,7 +12,8 @@ export const PLANNING_APPLICATION_TYPES = {
 	PERMISSION_IN_PRINCIPLE: 'permission-in-principle',
 	REMOVAL_OR_VARIATION_OF_CONDITIONS: 'removal-or-variation-of-conditions',
 	MINOR_COMMERCIAL: 'minor-commercial-development',
-	ADVERTISEMENT: 'advertisement'
+	ADVERTISEMENT: 'advertisement',
+	HOUSEHOLDER_PLANNING: 'householder-planning'
 };
 
 export const APPEAL_PAYLOAD_TYPES = {
@@ -24,6 +25,17 @@ export const APPEAL_PAYLOAD_TYPES = {
 	REMOVAL_OR_VARIATION_OF_CONDITIONS_APPEAL_SUBMISSION:
 		'S78RemovalOrVariationOfConditionsAppealSubmission'
 };
+
+export const DOCUMENT_TYPES = {
+	costsApplication: 'appellantCostsApplication',
+	groundASupporting: 'groundASupporting',
+	groundBSupporting: 'groundBSupporting',
+	groundCSupporting: 'groundCSupporting',
+	groundDSupporting: 'groundDSupporting',
+	groundESupporting: 'groundESupporting',
+	groundFSupporting: 'groundFSupporting',
+	groundGSupporting: 'groundGSupporting'
+}
 
 export const CTA_TEXT = {
 	documents: {
@@ -67,7 +79,8 @@ export const SUCCESS_MESSAGES = {
 	filenameUpdated: 'Document filename updated',
 	appealStarted: 'Appeal started',
 	appealValidated: 'Appeal validated',
-	appealValid: 'Appeal valid'
+	appealValid: 'Appeal valid',
+	appealUpdated: 'Appeal updated'
 };
 
 export const ERROR_MESSAGES = {
