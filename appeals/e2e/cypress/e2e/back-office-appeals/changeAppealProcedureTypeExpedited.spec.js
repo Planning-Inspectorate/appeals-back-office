@@ -558,6 +558,14 @@ describe('Change appeal procedure type - Expedited', () => {
 							'ipCommentsDueDate',
 							getDateAndTimeValues(ipCommentsDueDate)
 						);
+						dateTimeSection.enterTimeTableDueDate(
+							'statement-of-common-ground-due-date',
+							statementsAndIpDate
+						);
+						dateTimeSection.enterTimeTableDueDate(
+							'planning-obligation-due-date',
+							statementsAndIpDate
+						);
 
 						dateTimeSection.clickButtonByText('Continue');
 
@@ -651,6 +659,14 @@ describe('Change appeal procedure type - Expedited', () => {
 							dateTimeSection.verifyPrepopulatedTimeTableDueDates(
 								'ipCommentsDueDate',
 								getDateAndTimeValues(ipCommentsDueDate)
+							);
+							dateTimeSection.enterTimeTableDueDate(
+								'statement-of-common-ground-due-date',
+								statementsAndIpDate
+							);
+							dateTimeSection.enterTimeTableDueDate(
+								'planning-obligation-due-date',
+								statementsAndIpDate
 							);
 
 							dateTimeSection.clickButtonByText('Continue');
@@ -748,6 +764,14 @@ describe('Change appeal procedure type - Expedited', () => {
 							dateTimeSection.verifyPrepopulatedTimeTableDueDates(
 								'ipCommentsDueDate',
 								getDateAndTimeValues(ipCommentsDueDate)
+							);
+							dateTimeSection.enterTimeTableDueDate(
+								'statement-of-common-ground-due-date',
+								statementsAndIpDate
+							);
+							dateTimeSection.enterTimeTableDueDate(
+								'planning-obligation-due-date',
+								statementsAndIpDate
 							);
 
 							dateTimeSection.clickButtonByText('Continue');
@@ -850,6 +874,14 @@ describe('Change appeal procedure type - Expedited', () => {
 								'ipCommentsDueDate',
 								getDateAndTimeValues(ipCommentsDueDate)
 							);
+							dateTimeSection.enterTimeTableDueDate(
+								'statement-of-common-ground-due-date',
+								statementsAndIpDate
+							);
+								dateTimeSection.enterTimeTableDueDate(
+								'planning-obligation-due-date',
+							statementsAndIpDate
+							);
 
 							dateTimeSection.clickButtonByText('Continue');
 
@@ -935,17 +967,35 @@ describe('Change appeal procedure type - Expedited', () => {
 					const startDate = new Date(appealDetails.startedAt);
 
 					cy.getBusinessActualDate(startDate, 25).then((statementsAndIpDate) => {
-						const lpaStatementDueDate = statementsAndIpDate;
-						const ipCommentsDueDate = statementsAndIpDate;
+						cy.getBusinessActualDate(startDate, 35).then((finalCommentsDate) => {
+							const lpaStatementDueDate = statementsAndIpDate;
+							const ipCommentsDueDate = statementsAndIpDate;
+							const finalCommentsDueDate = finalCommentsDate;
 
-						dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-							'lpaStatementDueDate',
-							getDateAndTimeValues(lpaStatementDueDate)
-						);
-						dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-							'ipCommentsDueDate',
-							getDateAndTimeValues(ipCommentsDueDate)
-						);
+							dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+								'lpaStatementDueDate',
+								getDateAndTimeValues(lpaStatementDueDate)
+							);
+							dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+								'ipCommentsDueDate',
+								getDateAndTimeValues(ipCommentsDueDate)
+							);
+							dateTimeSection.enterTimeTableDueDate(
+								'statement-of-common-ground-due-date',
+								statementsAndIpDate
+							);
+							dateTimeSection.enterTimeTableDueDate(
+								'planning-obligation-due-date',
+								statementsAndIpDate
+							);
+							dateTimeSection.enterTimeTableDueDate(
+								'proof-of-evidence-and-witnesses-due-date',
+								finalCommentsDate
+							);
+							dateTimeSection.enterTimeTableDueDate(
+								'case-management-conference-due-date',
+								finalCommentsDate
+							);
 
 						dateTimeSection.clickButtonByText('Continue');
 
@@ -1044,6 +1094,22 @@ describe('Change appeal procedure type - Expedited', () => {
 							dateTimeSection.verifyPrepopulatedTimeTableDueDates(
 								'ipCommentsDueDate',
 								getDateAndTimeValues(ipCommentsDueDate)
+							);
+							dateTimeSection.enterTimeTableDueDate(
+								'statement-of-common-ground-due-date',
+								statementsAndIpDate
+							);
+							dateTimeSection.enterTimeTableDueDate(
+								'planning-obligation-due-date',
+								statementsAndIpDate
+							);
+							dateTimeSection.enterTimeTableDueDate(
+								'proof-of-evidence-and-witnesses-due-date',
+								finalCommentsDate
+							);
+							dateTimeSection.enterTimeTableDueDate(
+								'case-management-conference-due-date',
+								finalCommentsDate
 							);
 
 							dateTimeSection.clickButtonByText('Continue');
@@ -1145,6 +1211,22 @@ describe('Change appeal procedure type - Expedited', () => {
 							dateTimeSection.verifyPrepopulatedTimeTableDueDates(
 								'ipCommentsDueDate',
 								getDateAndTimeValues(ipCommentsDueDate)
+							);
+							dateTimeSection.enterTimeTableDueDate(
+								'statement-of-common-ground-due-date',
+								statementsAndIpDate
+							);
+							dateTimeSection.enterTimeTableDueDate(
+								'planning-obligation-due-date',
+								statementsAndIpDate
+							);
+							dateTimeSection.enterTimeTableDueDate(
+								'proof-of-evidence-and-witnesses-due-date',
+								finalCommentsDate
+							);
+							dateTimeSection.enterTimeTableDueDate(
+								'case-management-conference-due-date',
+								finalCommentsDate
 							);
 
 							dateTimeSection.clickButtonByText('Continue');
@@ -1251,6 +1333,22 @@ describe('Change appeal procedure type - Expedited', () => {
 								'ipCommentsDueDate',
 								getDateAndTimeValues(ipCommentsDueDate)
 							);
+							dateTimeSection.enterTimeTableDueDate(
+								'statement-of-common-ground-due-date',
+								statementsAndIpDate
+							);
+							dateTimeSection.enterTimeTableDueDate(
+								'planning-obligation-due-date',
+								statementsAndIpDate
+							);
+							dateTimeSection.enterTimeTableDueDate(
+								'proof-of-evidence-and-witnesses-due-date',
+								finalCommentsDate
+							);
+							dateTimeSection.enterTimeTableDueDate(
+								'case-management-conference-due-date',
+								finalCommentsDate
+							);
 
 							dateTimeSection.clickButtonByText('Continue');
 
@@ -1292,4 +1390,5 @@ describe('Change appeal procedure type - Expedited', () => {
 			});
 		});
 	});
+})
 });

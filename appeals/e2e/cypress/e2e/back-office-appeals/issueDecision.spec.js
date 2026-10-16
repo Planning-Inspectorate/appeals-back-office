@@ -217,11 +217,11 @@ describe('Issue individual costs decision', () => {
 
 			const notifies = [
 				{
-					template: 'appellant-costs-decision-appellant',
+					template: 'costs-decision-all-parties',
 					recipient: 'agent@test.com'
 				},
 				{
-					template: 'appellant-costs-decision-lpa',
+					template: 'costs-decision-all-parties',
 					recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
 				}
 			];
@@ -248,11 +248,11 @@ describe('Issue individual costs decision', () => {
 
 			const notifies = [
 				{
-					template: 'lpa-costs-decision-appellant',
+					template: 'costs-decision-all-parties',
 					recipient: 'agent@test.com'
 				},
 				{
-					template: 'lpa-costs-decision-lpa',
+					template: 'costs-decision-all-parties',
 					recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
 				}
 			];
