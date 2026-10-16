@@ -45,7 +45,7 @@ describe('spSetPersonalList stored procedure', () => {
 
 		// Set up the appeal types for the example appeal data, reading appeal type id from DB
 		testDBCaseTypes = await appealTypes(prisma);
-		enforcementAppealData.appeal.appealTypeId = testDBCaseTypes.S78_ENFORCEMENT_NOTICE;
+		enforcementAppealData.appeal.appealTypeId = testDBCaseTypes.ENFORCEMENT_NOTICE;
 		planningAppealData.appeal.appealTypeId = testDBCaseTypes.S78_APPEAL;
 
 		// and set the procedure types
@@ -193,7 +193,7 @@ describe('spSetPersonalList stored procedure', () => {
 			expect(personalListEntry2).toBeNull();
 		});
 
-		test('creates entries for the supplied linked appeal set and not for unlinked or unrelated appeals', async () => {
+		test('creates entries for the supplied linked appeal set and not for unlinked or unrelated appeals, even if the linked appeal is also related', async () => {
 			const parentCreatedDate = new Date('2026-06-01T00:00:00.000Z');
 			const childCreatedDate = new Date('2026-06-03T00:00:00.000Z');
 			const parentAppeal = await createTestAppeal(prisma, {
@@ -228,6 +228,17 @@ describe('spSetPersonalList stored procedure', () => {
 			await prisma.appealRelationship.create({
 				data: {
 					type: 'linked',
+					parentRef: parentAppeal.reference,
+					childRef: childAppeal.reference,
+					parentId: parentAppeal.id,
+					childId: childAppeal.id
+				}
+			});
+
+			// make a "related" (not linked) relationship for the linked appeal
+			await prisma.appealRelationship.create({
+				data: {
+					type: 'related',
 					parentRef: parentAppeal.reference,
 					childRef: childAppeal.reference,
 					parentId: parentAppeal.id,

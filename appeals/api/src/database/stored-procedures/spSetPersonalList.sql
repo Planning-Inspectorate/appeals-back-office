@@ -173,7 +173,7 @@ BEGIN
 					SELECT  ap.id, ap.caseCreatedDate, ap.caseExtensionDate, ap.caseValidDate, ap.caseStartedDate, pt.[key], ap.appealTypeId
 					FROM    Appeal ap
 							LEFT OUTER JOIN ProcedureType pt ON ap.procedureTypeId = pt.id
-						    INNER JOIN AppealRelationship ar ON ap.id = ar.childId AND parentId = @parentId;
+						    INNER JOIN AppealRelationship ar ON ap.id = ar.childId AND ar.parentId = @parentId AND ar.type = @LINKED_STATUS;
 				END
 		END;
 
