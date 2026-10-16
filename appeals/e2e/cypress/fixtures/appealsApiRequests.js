@@ -2,6 +2,9 @@
 
 import { PLANNING_APPLICATION_TYPES } from '../support/consts.js';
 
+const documentURI = 'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg';
+	
+
 /**
  * Takes a base document object and returns new version with unique values for id and filenames
  * @param {Object} baseDocument base document to be overridden
@@ -19,6 +22,26 @@ export const generateUniqueDocument = (document) => {
 		documentId: `doc-${id}`,
 		filename: `${document.filename}-${id}.doc`,
 		//originalFilename: `${document.filename}-${id}.doc`,
+	}
+}
+
+/**
+ * Generates a base document for including in an api request 
+ * @param {string} type the type of document, e.g. rule 6, environment statement or costs application 
+ * @param {*} fileName the file name 
+ * @param {*} extension extension to apply to file 
+ * @returns base document object with specified properties applied 
+ */
+export const createBaseDocument = (type, fileName, extension) => {
+	return {
+		dateCreated: '2024-03-01T13:48:35.847Z',
+		documentId: `{placeholder}`,
+		documentType: type,
+		documentURI: documentURI,
+		filename: fileName,
+		mime: 'image/jpeg',
+		originalFilename: `${fileName}.${extension}`,
+		size: 10293
 	}
 }
 

@@ -9,26 +9,17 @@ import { apiPaths } from './apiPaths.js';
 
 const baseUrl = Cypress.config('apiBaseUrl');
 
-export const createApiSubmission = (submission, type, additionalDocuments = []) => {
+export const createApiSubmission = (submission, type) => {
 	const env = baseUrl.indexOf('test') > -1 ? 'test' : 'dev';
 
 	// some requests (e.g. case submission) require that a mandatory documents field is included in the payload
-	// as such we check to see if there is a default document for the request type, and merge with any additional documents passed in
-	const baseDocument = documentsApiRequest[env][type].documents[0];
-	const allDocuments = [baseDocument ? baseDocument : null, ...additionalDocuments];
-
-	cy.writeLog(`** all documents: ${JSON.stringify(allDocuments)}`);
-
-	let updatedDocuments;
-
-	// if are any documents to include generate unqique versions
-	if (allDocuments.length > 0) {
-		updatedDocuments = allDocuments.map((doc) => generateUniqueDocument(doc));
-	}
+	// as such we check to see if there is a default document for the request type, and update it with unique values 
+	const baseDocument = documentsApiRequest[env][type]?.documents[0] ?? null;
+	const updatedDocument = generateUniqueDocument(baseDocument);
 
 	return {
 		...submission,
-		...(updatedDocuments && { documents: updatedDocuments })
+		documents: [updatedDocument]
 	};
 };
 
@@ -64,9 +55,12 @@ export const appealsApiClient = {
 			const submission = createApiSubmission(
 				appealsApiRequests.caseSubmission,
 				'appellant',
-				additionalDocuments
 			);
 			const { casedata, users, documents } = submission;
+
+			// if are any additional documents, generate unique versions and merge with default document 
+			const updatedAdditionalDocuments = additionalDocuments.length > 0 ? additionalDocuments.map((doc) => generateUniqueDocument(doc)) : []
+			const allDocuments = [...documents, ...updatedAdditionalDocuments]
 
 			cy.writeLog(
 				JSON.stringify({
@@ -75,7 +69,7 @@ export const appealsApiClient = {
 						...requestBody
 					},
 					users,
-					documents
+					documents: allDocuments
 				})
 			);
 
@@ -91,7 +85,7 @@ export const appealsApiClient = {
 						...requestBody
 					},
 					users,
-					documents
+					documents: allDocuments
 				})
 			});
 

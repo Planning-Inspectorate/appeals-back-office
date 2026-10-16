@@ -26,6 +26,17 @@ export const APPEAL_PAYLOAD_TYPES = {
 		'S78RemovalOrVariationOfConditionsAppealSubmission'
 };
 
+export const DOCUMENT_TYPES = {
+	costsApplication: 'appellantCostsApplication',
+	groundASupporting: 'groundASupporting',
+	groundBSupporting: 'groundBSupporting',
+	groundCSupporting: 'groundCSupporting',
+	groundDSupporting: 'groundDSupporting',
+	groundESupporting: 'groundESupporting',
+	groundFSupporting: 'groundFSupporting',
+	groundGSupporting: 'groundGSupporting'
+}
+
 export const CTA_TEXT = {
 	documents: {
 		viewEdit: 'View and edit',

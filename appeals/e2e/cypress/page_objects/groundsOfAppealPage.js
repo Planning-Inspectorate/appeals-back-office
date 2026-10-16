@@ -2,7 +2,7 @@
 import { CaseDetailsPage } from './caseDetailsPage.js';
 
 /**
- * This page object represents the grounds of appeal section of the appellant case page
+ * This page object represents the update grounds of appeal section of the appellant case page 
  */
 
 export class GroundsOfAppealPage extends CaseDetailsPage {
