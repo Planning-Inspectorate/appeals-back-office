@@ -67,7 +67,7 @@
  * @typedef {Object} appealTypeIds
  * @property {Number} S78_APPEAL
  * @property {Number} PLANNING_LISTED_BUILDING
- * @property {Number} S78_ENFORCEMENT_NOTICE
+ * @property {Number} ENFORCEMENT_NOTICE
  * @property {Number} ENFORCEMENT_LISTED_BUILDING
  * @property {Number} LAWFUL_DEVELOPMENT_CERTIFICATE
  * @property {Number} ADVERTISEMENT
@@ -128,7 +128,7 @@ export const appealTypes = async (prisma) => {
 	return {
 		S78_APPEAL: planningAppealType.id,
 		PLANNING_LISTED_BUILDING: planningLBType.id,
-		S78_ENFORCEMENT_NOTICE: enforcementNoticeAppealType.id,
+		ENFORCEMENT_NOTICE: enforcementNoticeAppealType.id,
 		ENFORCEMENT_LISTED_BUILDING: enforcementLBType.id,
 		LAWFUL_DEVELOPMENT_CERTIFICATE: ldcType.id,
 		ADVERTISEMENT: advertType.id
