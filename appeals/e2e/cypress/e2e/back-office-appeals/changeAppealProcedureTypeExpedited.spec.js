@@ -878,9 +878,9 @@ describe('Change appeal procedure type - Expedited', () => {
 								'statement-of-common-ground-due-date',
 								statementsAndIpDate
 							);
-								dateTimeSection.enterTimeTableDueDate(
+							dateTimeSection.enterTimeTableDueDate(
 								'planning-obligation-due-date',
-							statementsAndIpDate
+								statementsAndIpDate
 							);
 
 							dateTimeSection.clickButtonByText('Continue');
@@ -997,398 +997,403 @@ describe('Change appeal procedure type - Expedited', () => {
 								finalCommentsDate
 							);
 
+							dateTimeSection.clickButtonByText('Continue');
+
+							cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Inquiry');
+							cy.contains('dt.govuk-summary-list__key', 'LPA questionnaire due').should(
+								'not.exist'
+							);
+							cyaSection.verifyCheckYourAnswers(
+								'Statements due',
+								formatDateAndTime(lpaStatementDueDate).date
+							);
+							cyaSection.verifyCheckYourAnswers(
+								'Interested party comments due',
+								formatDateAndTime(ipCommentsDueDate).date
+							);
+
+							cy.contains(
+								'p',
+								"We’ll send an email to the appellant and LPA to tell them that we've changed the procedure."
+							).should('be.visible');
+
+							caseDetailsPage.clickButtonByText('Update appeal procedure');
+
+							caseDetailsPage.validateBannerMessage(
+								BANNER_TYPES.success,
+								'Appeal procedure updated'
+							);
+
+							overviewSectionPage.verifyCaseOverviewDetails(
+								{
+									...DEFAULT_OVERVIEW_DETAILS,
+									relatedAppeals: 'No',
+									appealProcedure: 'Inquiry'
+								},
+								false
+							);
+
+							caseDetailsPage.clickViewCaseHistory();
+							cy.location('pathname').should('include', '/audit');
+							caseHistoryPage.verifyCaseHistoryValue('Appeal procedure updated to inquiry');
+						});
+					});
+				});
+			});
+
+			it('should change appeal procedure type from Part 1 to Inquiry representations in Event stage', () => {
+				const procedureTypeCaption = (ref) => `Appeal ${ref} - update appeal procedure`;
+
+				setupTestCase({ additionalDocs: [appealsApiRequests.environmentalAssessment] }).then(() => {
+					happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
+
+					caseDetailsPage.clickReadyToStartCase();
+					procedureTypePage.selectProcedureType('Written representations (Part 1)');
+					procedureTypePage.clickButtonByText('Start case');
+
+					caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+					cy.addLpaqSubmissionToCase(caseObj);
+					happyPathHelper.reviewS78Lpaq(caseObj);
+
+					caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
+					overviewSectionPage.verifyCaseOverviewDetails(
+						{
+							...DEFAULT_OVERVIEW_DETAILS,
+
+							appealProcedure: 'Written representations (Part 1)'
+						},
+						false
+					);
+
+					overviewSectionPage.clickRowChangeLink('case-procedure');
+					procedureTypePage.verifyHeader(procedureTypeCaption(caseObj.reference));
+					procedureTypePage.verifyProcedureTypeOptionVisible('inquiry');
+					procedureTypePage.selectProcedureType('Inquiry');
+
+					cy.getBusinessActualDate(currentDate, 1).then((date) => {
+						dateTimeSection.enterEventDate(date);
 						dateTimeSection.clickButtonByText('Continue');
+						estimatedDaysSection.selectEstimatedDaysOption('No');
+						estimatedDaysSection.clickButtonByText('Continue');
+						cy.wait(1000);
 
-						cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Inquiry');
-						cy.contains('dt.govuk-summary-list__key', 'LPA questionnaire due').should('not.exist');
-						cyaSection.verifyCheckYourAnswers(
-							'Statements due',
-							formatDateAndTime(lpaStatementDueDate).date
-						);
-						cyaSection.verifyCheckYourAnswers(
-							'Interested party comments due',
-							formatDateAndTime(ipCommentsDueDate).date
-						);
+						addressSection.selectAddressOption('No'); // or 'No'
 
-						cy.contains(
-							'p',
-							"We’ll send an email to the appellant and LPA to tell them that we've changed the procedure."
-						).should('be.visible');
-
-						caseDetailsPage.clickButtonByText('Update appeal procedure');
-
-						caseDetailsPage.validateBannerMessage(BANNER_TYPES.success, 'Appeal procedure updated');
-
-						overviewSectionPage.verifyCaseOverviewDetails(
-							{
-								...DEFAULT_OVERVIEW_DETAILS,
-								relatedAppeals: 'No',
-								appealProcedure: 'Inquiry'
-							},
-							false
-						);
-
-						caseDetailsPage.clickViewCaseHistory();
-						cy.location('pathname').should('include', '/audit');
-						caseHistoryPage.verifyCaseHistoryValue('Appeal procedure updated to inquiry');
+						addressSection.clickButtonByText('Continue');
 					});
-				});
-			});
-		});
+					cy.get('#lpa-questionnaire-due-date-day').should('not.exist');
 
-		it('should change appeal procedure type from Part 1 to Inquiry representations in Event stage', () => {
-			const procedureTypeCaption = (ref) => `Appeal ${ref} - update appeal procedure`;
+					cy.loadAppealDetails(caseObj).then((appealDetails) => {
+						const startDate = new Date(appealDetails.startedAt);
 
-			setupTestCase({ additionalDocs: [appealsApiRequests.environmentalAssessment] }).then(() => {
-				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
+						cy.getBusinessActualDate(startDate, 25).then((statementsAndIpDate) => {
+							cy.getBusinessActualDate(startDate, 35).then((finalCommentsDate) => {
+								const lpaStatementDueDate = statementsAndIpDate;
+								const ipCommentsDueDate = statementsAndIpDate;
+								const finalCommentsDueDate = finalCommentsDate;
 
-				caseDetailsPage.clickReadyToStartCase();
-				procedureTypePage.selectProcedureType('Written representations (Part 1)');
-				procedureTypePage.clickButtonByText('Start case');
+								dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+									'lpaStatementDueDate',
+									getDateAndTimeValues(lpaStatementDueDate)
+								);
+								dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+									'ipCommentsDueDate',
+									getDateAndTimeValues(ipCommentsDueDate)
+								);
+								dateTimeSection.enterTimeTableDueDate(
+									'statement-of-common-ground-due-date',
+									statementsAndIpDate
+								);
+								dateTimeSection.enterTimeTableDueDate(
+									'planning-obligation-due-date',
+									statementsAndIpDate
+								);
+								dateTimeSection.enterTimeTableDueDate(
+									'proof-of-evidence-and-witnesses-due-date',
+									finalCommentsDate
+								);
+								dateTimeSection.enterTimeTableDueDate(
+									'case-management-conference-due-date',
+									finalCommentsDate
+								);
 
-				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
-				cy.addLpaqSubmissionToCase(caseObj);
-				happyPathHelper.reviewS78Lpaq(caseObj);
+								dateTimeSection.clickButtonByText('Continue');
 
-				caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
-				overviewSectionPage.verifyCaseOverviewDetails(
-					{
-						...DEFAULT_OVERVIEW_DETAILS,
+								cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Inquiry');
+								cy.contains('dt.govuk-summary-list__key', 'LPA questionnaire due').should(
+									'not.exist'
+								);
+								cyaSection.verifyCheckYourAnswers(
+									'Statements due',
+									formatDateAndTime(lpaStatementDueDate).date
+								);
+								cyaSection.verifyCheckYourAnswers(
+									'Interested party comments due',
+									formatDateAndTime(ipCommentsDueDate).date
+								);
 
-						appealProcedure: 'Written representations (Part 1)'
-					},
-					false
-				);
+								caseDetailsPage.clickButtonByText('Update appeal procedure');
+								caseDetailsPage.validateBannerMessage(
+									BANNER_TYPES.success,
+									'Appeal procedure updated'
+								);
 
-				overviewSectionPage.clickRowChangeLink('case-procedure');
-				procedureTypePage.verifyHeader(procedureTypeCaption(caseObj.reference));
-				procedureTypePage.verifyProcedureTypeOptionVisible('inquiry');
-				procedureTypePage.selectProcedureType('Inquiry');
+								caseDetailsPage.checkStatusOfCase('Statements', 0);
+								overviewSectionPage.verifyCaseOverviewDetails(
+									{
+										...DEFAULT_OVERVIEW_DETAILS,
+										appealProcedure: 'Inquiry'
+									},
+									false
+								);
 
-				cy.getBusinessActualDate(currentDate, 1).then((date) => {
-					dateTimeSection.enterEventDate(date);
-					dateTimeSection.clickButtonByText('Continue');
-					estimatedDaysSection.selectEstimatedDaysOption('No');
-					estimatedDaysSection.clickButtonByText('Continue');
-					cy.wait(1000);
-
-					addressSection.selectAddressOption('No'); // or 'No'
-
-					addressSection.clickButtonByText('Continue');
-				});
-				cy.get('#lpa-questionnaire-due-date-day').should('not.exist');
-
-				cy.loadAppealDetails(caseObj).then((appealDetails) => {
-					const startDate = new Date(appealDetails.startedAt);
-
-					cy.getBusinessActualDate(startDate, 25).then((statementsAndIpDate) => {
-						cy.getBusinessActualDate(startDate, 35).then((finalCommentsDate) => {
-							const lpaStatementDueDate = statementsAndIpDate;
-							const ipCommentsDueDate = statementsAndIpDate;
-							const finalCommentsDueDate = finalCommentsDate;
-
-							dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-								'lpaStatementDueDate',
-								getDateAndTimeValues(lpaStatementDueDate)
-							);
-							dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-								'ipCommentsDueDate',
-								getDateAndTimeValues(ipCommentsDueDate)
-							);
-							dateTimeSection.enterTimeTableDueDate(
-								'statement-of-common-ground-due-date',
-								statementsAndIpDate
-							);
-							dateTimeSection.enterTimeTableDueDate(
-								'planning-obligation-due-date',
-								statementsAndIpDate
-							);
-							dateTimeSection.enterTimeTableDueDate(
-								'proof-of-evidence-and-witnesses-due-date',
-								finalCommentsDate
-							);
-							dateTimeSection.enterTimeTableDueDate(
-								'case-management-conference-due-date',
-								finalCommentsDate
-							);
-
-							dateTimeSection.clickButtonByText('Continue');
-
-							cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Inquiry');
-							cy.contains('dt.govuk-summary-list__key', 'LPA questionnaire due').should(
-								'not.exist'
-							);
-							cyaSection.verifyCheckYourAnswers(
-								'Statements due',
-								formatDateAndTime(lpaStatementDueDate).date
-							);
-							cyaSection.verifyCheckYourAnswers(
-								'Interested party comments due',
-								formatDateAndTime(ipCommentsDueDate).date
-							);
-
-							caseDetailsPage.clickButtonByText('Update appeal procedure');
-							caseDetailsPage.validateBannerMessage(
-								BANNER_TYPES.success,
-								'Appeal procedure updated'
-							);
-
-							caseDetailsPage.checkStatusOfCase('Statements', 0);
-							overviewSectionPage.verifyCaseOverviewDetails(
-								{
-									...DEFAULT_OVERVIEW_DETAILS,
-									appealProcedure: 'Inquiry'
-								},
-								false
-							);
-
-							caseDetailsPage.clickViewCaseHistory();
-							cy.location('pathname').should('include', '/audit');
-							caseHistoryPage.verifyCaseHistoryValue('Appeal procedure updated to inquiry');
+								caseDetailsPage.clickViewCaseHistory();
+								cy.location('pathname').should('include', '/audit');
+								caseHistoryPage.verifyCaseHistoryValue('Appeal procedure updated to inquiry');
+							});
 						});
 					});
 				});
 			});
-		});
 
-		it('should change appeal procedure type from Part 1 to Inquiry representations in Awaiting Event stage (deleting site visit)', () => {
-			const procedureTypeCaption = (ref) => `Appeal ${ref} - update appeal procedure`;
+			it('should change appeal procedure type from Part 1 to Inquiry representations in Awaiting Event stage (deleting site visit)', () => {
+				const procedureTypeCaption = (ref) => `Appeal ${ref} - update appeal procedure`;
 
-			setupTestCase({ additionalDocs: [appealsApiRequests.environmentalAssessment] }).then(() => {
-				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
+				setupTestCase({ additionalDocs: [appealsApiRequests.environmentalAssessment] }).then(() => {
+					happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
 
-				caseDetailsPage.clickReadyToStartCase();
-				procedureTypePage.selectProcedureType('Written representations (Part 1)');
-				procedureTypePage.clickButtonByText('Start case');
+					caseDetailsPage.clickReadyToStartCase();
+					procedureTypePage.selectProcedureType('Written representations (Part 1)');
+					procedureTypePage.clickButtonByText('Start case');
 
-				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
-				cy.addLpaqSubmissionToCase(caseObj);
-				happyPathHelper.reviewS78Lpaq(caseObj);
+					caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+					cy.addLpaqSubmissionToCase(caseObj);
+					happyPathHelper.reviewS78Lpaq(caseObj);
 
-				caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
-				happyPathHelper.setupSiteVisitFromBanner(caseObj);
+					caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
+					happyPathHelper.setupSiteVisitFromBanner(caseObj);
 
-				caseDetailsPage.checkStatusOfCase('Awaiting site visit', 0);
-				overviewSectionPage.verifyCaseOverviewDetails(
-					{
-						...DEFAULT_OVERVIEW_DETAILS,
-						appealProcedure: 'Written representations (Part 1)'
-					},
-					false
-				);
+					caseDetailsPage.checkStatusOfCase('Awaiting site visit', 0);
+					overviewSectionPage.verifyCaseOverviewDetails(
+						{
+							...DEFAULT_OVERVIEW_DETAILS,
+							appealProcedure: 'Written representations (Part 1)'
+						},
+						false
+					);
 
-				overviewSectionPage.clickRowChangeLink('case-procedure');
-				procedureTypePage.verifyHeader(procedureTypeCaption(caseObj.reference));
-				procedureTypePage.verifyProcedureTypeOptionVisible('inquiry');
-				procedureTypePage.selectProcedureType('Inquiry');
+					overviewSectionPage.clickRowChangeLink('case-procedure');
+					procedureTypePage.verifyHeader(procedureTypeCaption(caseObj.reference));
+					procedureTypePage.verifyProcedureTypeOptionVisible('inquiry');
+					procedureTypePage.selectProcedureType('Inquiry');
 
-				cy.getBusinessActualDate(currentDate, 1).then((date) => {
-					dateTimeSection.enterEventDate(date);
-					dateTimeSection.clickButtonByText('Continue');
-					estimatedDaysSection.selectEstimatedDaysOption('No');
-					estimatedDaysSection.clickButtonByText('Continue');
-					cy.wait(1000);
+					cy.getBusinessActualDate(currentDate, 1).then((date) => {
+						dateTimeSection.enterEventDate(date);
+						dateTimeSection.clickButtonByText('Continue');
+						estimatedDaysSection.selectEstimatedDaysOption('No');
+						estimatedDaysSection.clickButtonByText('Continue');
+						cy.wait(1000);
 
-					addressSection.selectAddressOption('No');
+						addressSection.selectAddressOption('No');
 
-					addressSection.clickButtonByText('Continue');
-				});
-				cy.get('#lpa-questionnaire-due-date-day').should('not.exist');
+						addressSection.clickButtonByText('Continue');
+					});
+					cy.get('#lpa-questionnaire-due-date-day').should('not.exist');
 
-				cy.loadAppealDetails(caseObj).then((appealDetails) => {
-					const startDate = new Date(appealDetails.startedAt);
+					cy.loadAppealDetails(caseObj).then((appealDetails) => {
+						const startDate = new Date(appealDetails.startedAt);
 
-					cy.getBusinessActualDate(startDate, 25).then((statementsAndIpDate) => {
-						cy.getBusinessActualDate(startDate, 35).then((finalCommentsDate) => {
-							const lpaStatementDueDate = statementsAndIpDate;
-							const ipCommentsDueDate = statementsAndIpDate;
-							const finalCommentsDueDate = finalCommentsDate;
+						cy.getBusinessActualDate(startDate, 25).then((statementsAndIpDate) => {
+							cy.getBusinessActualDate(startDate, 35).then((finalCommentsDate) => {
+								const lpaStatementDueDate = statementsAndIpDate;
+								const ipCommentsDueDate = statementsAndIpDate;
+								const finalCommentsDueDate = finalCommentsDate;
 
-							dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-								'lpaStatementDueDate',
-								getDateAndTimeValues(lpaStatementDueDate)
-							);
-							dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-								'ipCommentsDueDate',
-								getDateAndTimeValues(ipCommentsDueDate)
-							);
-							dateTimeSection.enterTimeTableDueDate(
-								'statement-of-common-ground-due-date',
-								statementsAndIpDate
-							);
-							dateTimeSection.enterTimeTableDueDate(
-								'planning-obligation-due-date',
-								statementsAndIpDate
-							);
-							dateTimeSection.enterTimeTableDueDate(
-								'proof-of-evidence-and-witnesses-due-date',
-								finalCommentsDate
-							);
-							dateTimeSection.enterTimeTableDueDate(
-								'case-management-conference-due-date',
-								finalCommentsDate
-							);
+								dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+									'lpaStatementDueDate',
+									getDateAndTimeValues(lpaStatementDueDate)
+								);
+								dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+									'ipCommentsDueDate',
+									getDateAndTimeValues(ipCommentsDueDate)
+								);
+								dateTimeSection.enterTimeTableDueDate(
+									'statement-of-common-ground-due-date',
+									statementsAndIpDate
+								);
+								dateTimeSection.enterTimeTableDueDate(
+									'planning-obligation-due-date',
+									statementsAndIpDate
+								);
+								dateTimeSection.enterTimeTableDueDate(
+									'proof-of-evidence-and-witnesses-due-date',
+									finalCommentsDate
+								);
+								dateTimeSection.enterTimeTableDueDate(
+									'case-management-conference-due-date',
+									finalCommentsDate
+								);
 
-							dateTimeSection.clickButtonByText('Continue');
+								dateTimeSection.clickButtonByText('Continue');
 
-							cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Inquiry');
-							cy.contains('dt.govuk-summary-list__key', 'LPA questionnaire due').should(
-								'not.exist'
-							);
-							cyaSection.verifyCheckYourAnswers(
-								'Statements due',
-								formatDateAndTime(lpaStatementDueDate).date
-							);
-							cyaSection.verifyCheckYourAnswers(
-								'Interested party comments due',
-								formatDateAndTime(ipCommentsDueDate).date
-							);
+								cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Inquiry');
+								cy.contains('dt.govuk-summary-list__key', 'LPA questionnaire due').should(
+									'not.exist'
+								);
+								cyaSection.verifyCheckYourAnswers(
+									'Statements due',
+									formatDateAndTime(lpaStatementDueDate).date
+								);
+								cyaSection.verifyCheckYourAnswers(
+									'Interested party comments due',
+									formatDateAndTime(ipCommentsDueDate).date
+								);
 
-							caseDetailsPage.clickButtonByText('Update appeal procedure');
-							caseDetailsPage.validateBannerMessage(
-								BANNER_TYPES.success,
-								'Appeal procedure updated'
-							);
+								caseDetailsPage.clickButtonByText('Update appeal procedure');
+								caseDetailsPage.validateBannerMessage(
+									BANNER_TYPES.success,
+									'Appeal procedure updated'
+								);
 
-							caseDetailsPage.checkStatusOfCase('Statements', 0);
-							caseDetailsPage.elements.siteVisitBanner().should('not.exist');
-							overviewSectionPage.verifyCaseOverviewDetails(
-								{
-									...DEFAULT_OVERVIEW_DETAILS,
-									appealProcedure: 'Inquiry'
-								},
-								false
-							);
+								caseDetailsPage.checkStatusOfCase('Statements', 0);
+								caseDetailsPage.elements.siteVisitBanner().should('not.exist');
+								overviewSectionPage.verifyCaseOverviewDetails(
+									{
+										...DEFAULT_OVERVIEW_DETAILS,
+										appealProcedure: 'Inquiry'
+									},
+									false
+								);
 
-							caseDetailsPage.clickViewCaseHistory();
-							cy.location('pathname').should('include', '/audit');
-							caseHistoryPage.verifyCaseHistoryValue('Appeal procedure updated to inquiry');
+								caseDetailsPage.clickViewCaseHistory();
+								cy.location('pathname').should('include', '/audit');
+								caseHistoryPage.verifyCaseHistoryValue('Appeal procedure updated to inquiry');
+							});
 						});
 					});
 				});
 			});
-		});
 
-		it('should change appeal procedure type from Part 1 to Inquiry representations in Issue Determination stage', () => {
-			const procedureTypeCaption = (ref) => `Appeal ${ref} - update appeal procedure`;
+			it('should change appeal procedure type from Part 1 to Inquiry representations in Issue Determination stage', () => {
+				const procedureTypeCaption = (ref) => `Appeal ${ref} - update appeal procedure`;
 
-			setupTestCase({ additionalDocs: [appealsApiRequests.environmentalAssessment] }).then(() => {
-				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
+				setupTestCase({ additionalDocs: [appealsApiRequests.environmentalAssessment] }).then(() => {
+					happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
 
-				caseDetailsPage.clickReadyToStartCase();
-				procedureTypePage.selectProcedureType('Written representations (Part 1)');
-				procedureTypePage.clickButtonByText('Start case');
+					caseDetailsPage.clickReadyToStartCase();
+					procedureTypePage.selectProcedureType('Written representations (Part 1)');
+					procedureTypePage.clickButtonByText('Start case');
 
-				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
-				cy.addLpaqSubmissionToCase(caseObj);
-				happyPathHelper.reviewS78Lpaq(caseObj);
+					caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+					cy.addLpaqSubmissionToCase(caseObj);
+					happyPathHelper.reviewS78Lpaq(caseObj);
 
-				caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
-				happyPathHelper.setupSiteVisitFromBanner(caseObj);
+					caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
+					happyPathHelper.setupSiteVisitFromBanner(caseObj);
 
-				caseDetailsPage.checkStatusOfCase('Awaiting site visit', 0);
-				cy.simulateSiteVisit(caseObj);
+					caseDetailsPage.checkStatusOfCase('Awaiting site visit', 0);
+					cy.simulateSiteVisit(caseObj);
 
-				caseDetailsPage.checkStatusOfCase('Issue decision', 0);
-				overviewSectionPage.verifyCaseOverviewDetails(
-					{
-						...DEFAULT_OVERVIEW_DETAILS,
-						appealProcedure: 'Written representations (Part 1)'
-					},
-					false
-				);
+					caseDetailsPage.checkStatusOfCase('Issue decision', 0);
+					overviewSectionPage.verifyCaseOverviewDetails(
+						{
+							...DEFAULT_OVERVIEW_DETAILS,
+							appealProcedure: 'Written representations (Part 1)'
+						},
+						false
+					);
 
-				overviewSectionPage.clickRowChangeLink('case-procedure');
-				procedureTypePage.verifyHeader(procedureTypeCaption(caseObj.reference));
-				procedureTypePage.verifyProcedureTypeOptionVisible('inquiry');
-				procedureTypePage.selectProcedureType('Inquiry');
+					overviewSectionPage.clickRowChangeLink('case-procedure');
+					procedureTypePage.verifyHeader(procedureTypeCaption(caseObj.reference));
+					procedureTypePage.verifyProcedureTypeOptionVisible('inquiry');
+					procedureTypePage.selectProcedureType('Inquiry');
 
-				cy.getBusinessActualDate(currentDate, 1).then((date) => {
-					dateTimeSection.enterEventDate(date);
-					dateTimeSection.clickButtonByText('Continue');
-					estimatedDaysSection.selectEstimatedDaysOption('No');
-					estimatedDaysSection.clickButtonByText('Continue');
-					cy.wait(1000);
+					cy.getBusinessActualDate(currentDate, 1).then((date) => {
+						dateTimeSection.enterEventDate(date);
+						dateTimeSection.clickButtonByText('Continue');
+						estimatedDaysSection.selectEstimatedDaysOption('No');
+						estimatedDaysSection.clickButtonByText('Continue');
+						cy.wait(1000);
 
-					addressSection.selectAddressOption('No');
+						addressSection.selectAddressOption('No');
 
-					addressSection.clickButtonByText('Continue');
-				});
-				cy.get('#lpa-questionnaire-due-date-day').should('not.exist');
+						addressSection.clickButtonByText('Continue');
+					});
+					cy.get('#lpa-questionnaire-due-date-day').should('not.exist');
 
-				cy.loadAppealDetails(caseObj).then((appealDetails) => {
-					const startDate = new Date(appealDetails.startedAt);
+					cy.loadAppealDetails(caseObj).then((appealDetails) => {
+						const startDate = new Date(appealDetails.startedAt);
 
-					cy.getBusinessActualDate(startDate, 25).then((statementsAndIpDate) => {
-						cy.getBusinessActualDate(startDate, 35).then((finalCommentsDate) => {
-							const lpaStatementDueDate = statementsAndIpDate;
-							const ipCommentsDueDate = statementsAndIpDate;
-							const finalCommentsDueDate = finalCommentsDate;
+						cy.getBusinessActualDate(startDate, 25).then((statementsAndIpDate) => {
+							cy.getBusinessActualDate(startDate, 35).then((finalCommentsDate) => {
+								const lpaStatementDueDate = statementsAndIpDate;
+								const ipCommentsDueDate = statementsAndIpDate;
+								const finalCommentsDueDate = finalCommentsDate;
 
-							dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-								'lpaStatementDueDate',
-								getDateAndTimeValues(lpaStatementDueDate)
-							);
-							dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-								'ipCommentsDueDate',
-								getDateAndTimeValues(ipCommentsDueDate)
-							);
-							dateTimeSection.enterTimeTableDueDate(
-								'statement-of-common-ground-due-date',
-								statementsAndIpDate
-							);
-							dateTimeSection.enterTimeTableDueDate(
-								'planning-obligation-due-date',
-								statementsAndIpDate
-							);
-							dateTimeSection.enterTimeTableDueDate(
-								'proof-of-evidence-and-witnesses-due-date',
-								finalCommentsDate
-							);
-							dateTimeSection.enterTimeTableDueDate(
-								'case-management-conference-due-date',
-								finalCommentsDate
-							);
+								dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+									'lpaStatementDueDate',
+									getDateAndTimeValues(lpaStatementDueDate)
+								);
+								dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+									'ipCommentsDueDate',
+									getDateAndTimeValues(ipCommentsDueDate)
+								);
+								dateTimeSection.enterTimeTableDueDate(
+									'statement-of-common-ground-due-date',
+									statementsAndIpDate
+								);
+								dateTimeSection.enterTimeTableDueDate(
+									'planning-obligation-due-date',
+									statementsAndIpDate
+								);
+								dateTimeSection.enterTimeTableDueDate(
+									'proof-of-evidence-and-witnesses-due-date',
+									finalCommentsDate
+								);
+								dateTimeSection.enterTimeTableDueDate(
+									'case-management-conference-due-date',
+									finalCommentsDate
+								);
 
-							dateTimeSection.clickButtonByText('Continue');
+								dateTimeSection.clickButtonByText('Continue');
 
-							cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Inquiry');
-							cy.contains('dt.govuk-summary-list__key', 'LPA questionnaire due').should(
-								'not.exist'
-							);
-							cyaSection.verifyCheckYourAnswers(
-								'Statements due',
-								formatDateAndTime(lpaStatementDueDate).date
-							);
-							cyaSection.verifyCheckYourAnswers(
-								'Interested party comments due',
-								formatDateAndTime(ipCommentsDueDate).date
-							);
+								cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Inquiry');
+								cy.contains('dt.govuk-summary-list__key', 'LPA questionnaire due').should(
+									'not.exist'
+								);
+								cyaSection.verifyCheckYourAnswers(
+									'Statements due',
+									formatDateAndTime(lpaStatementDueDate).date
+								);
+								cyaSection.verifyCheckYourAnswers(
+									'Interested party comments due',
+									formatDateAndTime(ipCommentsDueDate).date
+								);
 
-							caseDetailsPage.clickButtonByText('Update appeal procedure');
-							caseDetailsPage.validateBannerMessage(
-								BANNER_TYPES.success,
-								'Appeal procedure updated'
-							);
+								caseDetailsPage.clickButtonByText('Update appeal procedure');
+								caseDetailsPage.validateBannerMessage(
+									BANNER_TYPES.success,
+									'Appeal procedure updated'
+								);
 
-							caseDetailsPage.checkStatusOfCase('Statements', 0);
-							caseDetailsPage.elements.siteVisitBanner().should('not.exist');
-							overviewSectionPage.verifyCaseOverviewDetails(
-								{
-									...DEFAULT_OVERVIEW_DETAILS,
-									appealProcedure: 'Inquiry'
-								},
-								false
-							);
+								caseDetailsPage.checkStatusOfCase('Statements', 0);
+								caseDetailsPage.elements.siteVisitBanner().should('not.exist');
+								overviewSectionPage.verifyCaseOverviewDetails(
+									{
+										...DEFAULT_OVERVIEW_DETAILS,
+										appealProcedure: 'Inquiry'
+									},
+									false
+								);
 
-							caseDetailsPage.clickViewCaseHistory();
-							cy.location('pathname').should('include', '/audit');
-							caseHistoryPage.verifyCaseHistoryValue('Appeal procedure updated to inquiry');
+								caseDetailsPage.clickViewCaseHistory();
+								cy.location('pathname').should('include', '/audit');
+								caseHistoryPage.verifyCaseHistoryValue('Appeal procedure updated to inquiry');
+							});
 						});
 					});
 				});
 			});
 		});
 	});
-})
 });
