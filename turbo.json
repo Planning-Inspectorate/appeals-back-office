@@ -40,15 +40,12 @@
 			"env": ["NODE_ENV", "DATABASE_URL"]
 		},
 		"lint:js": {
-			"inputs": ["*.ts", "*.js", ".eslintrc*", "package.json"],
 			"outputs": []
 		},
 		"lint:js:fix": {
-			"inputs": ["*.ts", "*.js", ".eslintrc*", "package.json"],
 			"outputs": []
 		},
 		"tscheck": {
-			"inputs": ["*.ts", "*.js", "jsconfig.json", "package.json"],
 			"outputs": []
 		},
 		"prisma-generate": {

@@ -48,7 +48,7 @@ export interface AppealRelationship extends schema.AppealRelationship {
 }
 
 export interface Hearing extends schema.Hearing {
-	address: Address;
+	address?: Address | null;
 }
 export interface Inquiry extends schema.Inquiry {
 	address: Address;
