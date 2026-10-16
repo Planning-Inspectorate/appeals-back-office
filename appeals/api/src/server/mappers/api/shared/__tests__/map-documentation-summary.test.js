@@ -9,7 +9,8 @@ await jest.unstable_mockModule('#utils/format-documentation-status.js', () => ({
 }));
 
 await jest.unstable_mockModule('@pins/appeals/utils/appeal-type-checks.js', () => ({
-	isExpeditedAppealType: jest.fn(() => false)
+	isExpeditedAppealType: jest.fn(() => false),
+	isGenericAppealType: jest.fn(() => false)
 }));
 
 const { mapDocumentationSummary } = await import('../map-documentation-summary.js');

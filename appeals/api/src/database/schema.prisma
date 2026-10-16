@@ -26,8 +26,8 @@ model Appeal {
   address                        Address?                        @relation(fields: [addressId], references: [id])
   addressId                      Int?
   neighbouringSites              NeighbouringSite[]
-  lpa                            LPA                             @relation(fields: [lpaId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  lpaId                          Int
+  lpa                            LPA?                            @relation(fields: [lpaId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  lpaId                          Int?
   applicationReference           String?
   caseCreatedDate                DateTime                        @default(now())
   caseUpdatedDate                DateTime                        @default(now())

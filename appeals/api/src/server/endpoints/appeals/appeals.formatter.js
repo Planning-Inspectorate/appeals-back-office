@@ -14,6 +14,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import {
 	isExpeditedAppealType,
+	isGenericAppealType,
 	isS78ExpeditedAppealType
 } from '@pins/appeals/utils/appeal-type-checks.js';
 import { getSingularRepresentation } from '@pins/appeals/utils/representations.js';
@@ -162,7 +163,11 @@ const formatDocumentationSummary = (appeal) => {
 		appellantCase: {
 			status: formatAppellantCaseDocumentationStatus(appeal),
 			dueDate: appeal.caseExtensionDate && appeal.caseExtensionDate?.toISOString(),
-			receivedAt: appeal.caseCreatedDate?.toISOString()
+			receivedAt: (
+				(isGenericAppealType(appeal.appealType?.type)
+					? /** @type {any} */ (appeal.appellantCase)?.caseSubmittedDate
+					: appeal.caseCreatedDate) || appeal.caseCreatedDate
+			)?.toISOString()
 		},
 		lpaQuestionnaire: {
 			status: formatLpaQuestionnaireDocumentationStatus(appeal),

@@ -1968,3 +1968,73 @@ describe('updateCompletedEvents', () => {
 		expect(response.status).toEqual(204);
 	});
 });
+
+describe('POST /appeals', () => {
+	test('successfully creates a generic appeal with status 201', async () => {
+		const mockCreatedAppeal = {
+			id: 123,
+			reference: 'uuid-ref'
+		};
+		const mockUpdatedAppeal = {
+			id: 123,
+			reference: '6000123'
+		};
+
+		const mockAppealCreate = jest.fn().mockResolvedValue(mockCreatedAppeal);
+
+		databaseConnector.$transaction = jest.fn().mockImplementation(async (callback) => {
+			const tx = {
+				appealType: {
+					findFirst: jest.fn().mockResolvedValue({
+						id: 1,
+						type: 'Tree preservation order',
+						key: 'TREE_PRESERVATION_ORDER'
+					})
+				},
+				appeal: {
+					create: mockAppealCreate,
+					update: jest.fn().mockResolvedValue(mockUpdatedAppeal)
+				}
+			};
+			return callback(tx);
+		});
+
+		const response = await request.post('/appeals').set('azureAdUserId', azureAdUserId).send({
+			caseType: 'Tree preservation order',
+			submissionDate: '2026-10-14T00:00:00.000Z'
+		});
+
+		expect(response.status).toEqual(201);
+		expect(response.body).toEqual({
+			appealId: 123,
+			reference: '6000123'
+		});
+		expect(mockAppealCreate).toHaveBeenCalledWith(
+			expect.objectContaining({
+				data: expect.not.objectContaining({
+					caseValidDate: expect.anything()
+				})
+			})
+		);
+	});
+
+	test('returns 400 when caseType is missing or invalid', async () => {
+		const response = await request.post('/appeals').set('azureAdUserId', azureAdUserId).send({
+			caseType: 'InvalidCaseType',
+			submissionDate: '2026-10-14T00:00:00.000Z'
+		});
+
+		expect(response.status).toEqual(400);
+		expect(response.body.errors.caseType).toBeDefined();
+	});
+
+	test('returns 400 when submissionDate is missing or invalid', async () => {
+		const response = await request.post('/appeals').set('azureAdUserId', azureAdUserId).send({
+			caseType: 'Tree preservation order',
+			submissionDate: 'invalid-date'
+		});
+
+		expect(response.status).toEqual(400);
+		expect(response.body.errors.submissionDate).toBeDefined();
+	});
+});

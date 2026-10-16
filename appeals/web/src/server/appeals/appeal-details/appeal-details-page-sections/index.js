@@ -1,4 +1,6 @@
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import { generateAppealDetailsPageComponents as generateGenericAppealDetailsPageComponents } from './generic.js';
 import { generateAppealDetailsPageComponents as generateHasAppealDetailsPageComponents } from './has.js';
 import { generateAppealDetailsPageComponents as generateS78AppealDetailsPageComponents } from './s78.js';
 
@@ -10,6 +12,11 @@ import { generateAppealDetailsPageComponents as generateS78AppealDetailsPageComp
  * @returns {PageComponent[]}
  */
 export function generateAppealDetailsSections(appealDetails, mappedData, session) {
+	// TODO: update once case type letters and schema are provided by ODW
+	if (isGenericAppealType(appealDetails.appealType)) {
+		return generateGenericAppealDetailsPageComponents(appealDetails, mappedData, session);
+	}
+
 	switch (appealDetails.appealType) {
 		case APPEAL_TYPE.HOUSEHOLDER:
 		case APPEAL_TYPE.CAS_PLANNING:

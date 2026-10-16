@@ -2,10 +2,9 @@ import { textSummaryListItem } from '#lib/mappers/index.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapCaseTeam = ({ appealDetails, currentRoute, userHasUpdateCasePermission }) => {
-	const teamAssigned =
-		appealDetails.assignedTeam?.name === null && appealDetails.assignedTeam?.email === null
-			? false
-			: true;
+	const teamAssigned = Boolean(
+		appealDetails.assignedTeam?.name || appealDetails.assignedTeam?.email
+	);
 	const teamRowValue = `
         <ul class="govuk-list">
             ${appealDetails.assignedTeam?.name ? `<li>${appealDetails.assignedTeam.name}</li>` : ``}
