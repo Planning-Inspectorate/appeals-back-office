@@ -237,7 +237,6 @@ const createGenericAppeal = async ({ caseType, submissionDate }) => {
 					connect: { id: appealType.id }
 				},
 				caseCreatedDate: parsedSubmissionDate,
-				caseValidDate: parsedSubmissionDate,
 				currentStatus: APPEAL_CASE_STATUS.READY_TO_START,
 				appealStatus: {
 					create: {

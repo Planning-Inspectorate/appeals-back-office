@@ -1980,6 +1980,8 @@ describe('POST /appeals', () => {
 			reference: '6000123'
 		};
 
+		const mockAppealCreate = jest.fn().mockResolvedValue(mockCreatedAppeal);
+
 		databaseConnector.$transaction = jest.fn().mockImplementation(async (callback) => {
 			const tx = {
 				appealType: {
@@ -1990,7 +1992,7 @@ describe('POST /appeals', () => {
 					})
 				},
 				appeal: {
-					create: jest.fn().mockResolvedValue(mockCreatedAppeal),
+					create: mockAppealCreate,
 					update: jest.fn().mockResolvedValue(mockUpdatedAppeal)
 				}
 			};
@@ -2007,6 +2009,13 @@ describe('POST /appeals', () => {
 			appealId: 123,
 			reference: '6000123'
 		});
+		expect(mockAppealCreate).toHaveBeenCalledWith(
+			expect.objectContaining({
+				data: expect.not.objectContaining({
+					caseValidDate: expect.anything()
+				})
+			})
+		);
 	});
 
 	test('returns 400 when caseType is missing or invalid', async () => {
