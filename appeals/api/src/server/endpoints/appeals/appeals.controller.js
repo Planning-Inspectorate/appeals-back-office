@@ -7,7 +7,11 @@ import {
 	ERROR_CANNOT_BE_EMPTY_STRING
 } from '@pins/appeals/constants/support.js';
 import { formatPersonalListItem } from './appeals.formatter.js';
-import { retrieveAppealListData, updateCompletedEvents } from './appeals.service.js';
+import {
+	createGenericAppeal,
+	retrieveAppealListData,
+	updateCompletedEvents
+} from './appeals.service.js';
 
 /**
  * @type {import('express').RequestHandler}
@@ -119,4 +123,15 @@ async function updateCompletedEventsController(req, res) {
 	return res.status(204).end();
 }
 
-export { getAppeals, getPersonalList, updateCompletedEventsController };
+/**
+ * @type {import('express').RequestHandler}
+ */
+const createAppeal = async (req, res) => {
+	const { caseType, submissionDate } = req.body;
+
+	const result = await createGenericAppeal({ caseType, submissionDate });
+
+	return res.status(201).send(result);
+};
+
+export { createAppeal, getAppeals, getPersonalList, updateCompletedEventsController };

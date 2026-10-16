@@ -1,7 +1,9 @@
+import config from '@pins/appeals.web/environment/config.js';
 import {
 	appealCaseTypeToAppealTypeMapper,
 	appealTypeToAppealCaseTypeMapper
 } from '@pins/appeals/utils/appeal-type-case.mapper.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 /**
@@ -48,7 +50,11 @@ export const isAppealCaseTypeEnabled = (appealCaseType) => {
  * @param {string|undefined} appealType
  * @returns boolean
  */
+// TODO: update once case type letters and schema are provided by ODW
 export const isAppealTypeEnabled = (appealType) => {
+	if (isGenericAppealType(appealType)) {
+		return Boolean(config.featureFlags.featureFlagGenericCase);
+	}
 	return isAppealCaseTypeEnabled(appealTypeToAppealCaseTypeMapper(appealType));
 };
 
