@@ -7,6 +7,14 @@ import { formatCaseOfficerDetailsForCaseSummary } from './format-case-officer-de
  * @returns {PageComponent}
  */
 export function generateCaseSummary(mappedAppealDetails) {
+	const siteAddressItem = mappedAppealDetails.appeal?.siteAddress?.display?.summaryListItem;
+	const siteAddressValue = siteAddressItem?.value?.text || siteAddressItem?.value?.html;
+	const hasSiteAddress = Boolean(siteAddressValue && siteAddressValue.trim());
+
+	const lpaItem = mappedAppealDetails.appeal?.localPlanningAuthority?.display?.summaryListItem;
+	const lpaValue = lpaItem?.value?.text || lpaItem?.value?.html;
+	const hasLpa = Boolean(lpaValue && lpaValue.trim());
+
 	return {
 		type: 'summary-list',
 		wrapperHtml: {
@@ -23,16 +31,22 @@ export function generateCaseSummary(mappedAppealDetails) {
 							)
 						]
 					: []),
-				...(mappedAppealDetails.appeal?.siteAddress?.display?.summaryListItem
-					? [mappedAppealDetails.appeal.siteAddress.display.summaryListItem]
-					: []),
-				...(mappedAppealDetails.appeal?.localPlanningAuthority?.display?.summaryListItem
+				...(siteAddressItem
 					? [
 							{
-								...mappedAppealDetails.appeal.localPlanningAuthority.display.summaryListItem,
+								...siteAddressItem,
+								value: hasSiteAddress ? siteAddressItem.value : { text: 'No site address' }
+							}
+						]
+					: []),
+				...(lpaItem
+					? [
+							{
+								...lpaItem,
 								key: {
 									text: 'LPA'
-								}
+								},
+								value: hasLpa ? lpaItem.value : { text: 'No Local planning authority' }
 							}
 						]
 					: [])

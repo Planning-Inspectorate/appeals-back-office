@@ -1,11 +1,21 @@
+import config from '#config/config.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
+// TODO: update once case type letters and schema are provided by ODW
 /**
- *
- * @param {string} type
- * @returns
+ * @param {string} [type]
+ * @returns {boolean}
  */
 export const isAppealTypeEnabled = (type) => {
+	if (!type) {
+		return false;
+	}
+
+	if (isGenericAppealType(type)) {
+		return Boolean(config.featureFlags.featureFlagGenericCase);
+	}
+
 	switch (type) {
 		case APPEAL_CASE_TYPE.D: {
 			return true;
@@ -88,4 +98,21 @@ export const filterEnabledAppealTypes = (appealTypes) => {
 		//@ts-ignore
 		return enabledAppealTypes.includes(appealType.key);
 	}, []);
+};
+
+// TODO: update once case type letters and schema are provided by ODW
+/**
+ * @param {any} appeal
+ * @returns {boolean}
+ */
+export const isAppealEnabled = (appeal) => {
+	const isGeneric = Boolean(
+		appeal?.appealType?.type && isGenericAppealType(appeal.appealType.type)
+	);
+
+	if (isGeneric) {
+		return Boolean(config.featureFlags.featureFlagGenericCase);
+	}
+
+	return isAppealTypeEnabled(appeal?.appealType?.key || '');
 };

@@ -2936,6 +2936,41 @@
 						"description": "Bad Request"
 					}
 				}
+			},
+			"post": {
+				"tags": ["Appeals"],
+				"description": "Creates a generic appeal",
+				"parameters": [
+					{
+						"name": "body",
+						"in": "body",
+						"description": "Appeal case type and submission date",
+						"schema": {
+							"$ref": "#/components/schemas/CreateAppealRequest"
+						},
+						"required": true
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Created appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreateAppealResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/CreateAppealResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
 			}
 		},
 		"/appeals/personal-list": {

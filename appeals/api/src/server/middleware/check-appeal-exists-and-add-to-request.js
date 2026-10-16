@@ -1,5 +1,5 @@
 import appealRepository from '#repositories/appeal.repository.js';
-import { isAppealTypeEnabled } from '#utils/feature-flags-appeal-types.js';
+import { isAppealEnabled } from '#utils/feature-flags-appeal-types.js';
 import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('express').Request} Request */
@@ -21,7 +21,7 @@ export const checkAppealExistsByCaseReferenceAndAddToRequest = async (req, res, 
 	// is returning all data, return only needed data
 	const appeal = await appealRepository.deprecatedGetAppealByAppealReference(caseReference);
 
-	if (!appeal || !isAppealTypeEnabled(appeal.appealType?.key || '')) {
+	if (!appeal || !isAppealEnabled(appeal)) {
 		return res.status(404).send({ errors: { caseReference: ERROR_NOT_FOUND } });
 	}
 
@@ -76,7 +76,7 @@ export const checkAppealExistsByIdAndAddPartialToRequest =
 			);
 		}
 
-		if (!appeal || !isAppealTypeEnabled(appeal.appealType?.key || '')) {
+		if (!appeal || !isAppealEnabled(appeal)) {
 			return res.status(404).send({ errors: { appealId: ERROR_NOT_FOUND } });
 		}
 
@@ -94,7 +94,7 @@ export const checkAppealExistsByIdForPageDisplayAndAddToRequest = async (req, re
 
 	const appeal = await appealRepository.getAppealByIdForPageDisplay(Number(appealId));
 
-	if (!appeal || !isAppealTypeEnabled(appeal.appealType?.key || '')) {
+	if (!appeal || !isAppealEnabled(appeal)) {
 		return res.status(404).send({ errors: { appealId: ERROR_NOT_FOUND } });
 	}
 

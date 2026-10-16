@@ -4,14 +4,15 @@ import {
 	getSessionValues,
 	isAtEditEntrypoint
 } from '#lib/edit-utilities.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
 import {
 	fieldNameCaseType,
 	fieldNameSubmissionDate,
-	placeholderAppealId,
 	sessionKeyCreateCase
 } from './create-case.constants.js';
 import { checkDetailsPage, selectCaseTypePage, submissionDatePage } from './create-case.mapper.js';
+import { createCase } from './create-case.service.js';
 
 /**
  * @param {string} path
@@ -175,7 +176,33 @@ export const getCheckDetails = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postCheckDetails = async (request, response) => {
+	const sessionValues = getSessionValues(request, sessionKeyCreateCase);
+	if (!sessionValues?.[fieldNameCaseType]) {
+		return response.redirect(`${request.baseUrl}/select-case-type`);
+	}
+
+	const caseType = sessionValues[fieldNameCaseType];
+	const day = sessionValues[`${fieldNameSubmissionDate}-day`];
+	const month = sessionValues[`${fieldNameSubmissionDate}-month`];
+	const year = sessionValues[`${fieldNameSubmissionDate}-year`];
+
+	const submissionDate = new Date(
+		Date.UTC(Number(year), Number(month) - 1, Number(day))
+	).toISOString();
+
+	// TODO: update once case type letters and schema are provided by ODW
+	const result = await createCase(request.apiClient, {
+		caseType,
+		submissionDate
+	});
+
+	addNotificationBannerToSession({
+		session: request.session,
+		bannerDefinitionKey: 'caseCreated',
+		appealId: result.appealId
+	});
+
 	delete request.session[sessionKeyCreateCase];
 
-	return response.redirect(`/appeals-service/appeal-details/${placeholderAppealId}`);
+	return response.redirect(`/appeals-service/appeal-details/${result.appealId}`);
 };

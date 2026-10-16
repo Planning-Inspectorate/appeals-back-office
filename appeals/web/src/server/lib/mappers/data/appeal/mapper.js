@@ -4,6 +4,7 @@ import { permissionNames } from '#environment/permissions.js';
 import { userHasPermission } from '#lib/mappers/index.js';
 import { stripQueryString } from '#lib/url-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { submaps as hasSubmaps } from './has.js';
 import { submaps as s78Submaps } from './s78.js';
 
@@ -107,7 +108,9 @@ export async function initialiseAndMapAppealData(
 	const userHasUpdateCasePermission = userHasPermission(permissionNames.updateCase, session);
 
 	/** @type {Record<string, SubMapper>} */
-	const submappers = submaps[appealDetails.appealType];
+	const submappers = isGenericAppealType(appealDetails.appealType)
+		? s78Submaps
+		: submaps[appealDetails.appealType];
 
 	/** @type {{appeal: MappedInstructions}} */
 	const mappedData = {
