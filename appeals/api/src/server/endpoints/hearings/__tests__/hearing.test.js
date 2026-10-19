@@ -260,6 +260,12 @@ describe('hearing routes', () => {
 					templateName: 'hearing-updated'
 				});
 
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+					hearing.id,
+					'hearing',
+					'Update'
+				);
+
 				expect(response.status).toEqual(201);
 			});
 
@@ -316,6 +322,11 @@ describe('hearing routes', () => {
 
 				expect(response.status).toEqual(201);
 				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+					hearing.id,
+					'hearing',
+					'Update'
+				);
 			});
 
 			test('updates a single hearing with no address or hearingEndTime', async () => {
@@ -383,6 +394,12 @@ describe('hearing routes', () => {
 					templateName: 'hearing-updated'
 				});
 
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+					hearing.id,
+					'hearing',
+					'Update'
+				);
+
 				expect(response.status).toEqual(201);
 			});
 
@@ -432,6 +449,12 @@ describe('hearing routes', () => {
 					recipientEmail: fullPlanningAppeal.lpa.email,
 					templateName: 'hearing-updated'
 				});
+
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+					hearing.id,
+					'hearing',
+					'Update'
+				);
 
 				expect(response.status).toEqual(201);
 			});
@@ -504,6 +527,12 @@ describe('hearing routes', () => {
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+					hearing.id,
+					'hearing',
+					'Update'
+				);
+
 				expect(response.status).toEqual(201);
 			});
 
@@ -534,6 +563,12 @@ describe('hearing routes', () => {
 						address: hearingAddress
 					})
 					.set('azureAdUserId', azureAdUserId);
+
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+					hearing.id,
+					'hearing',
+					'Update'
+				);
 
 				expect(response.status).toEqual(201);
 
@@ -573,6 +608,8 @@ describe('hearing routes', () => {
 					})
 					.set('azureAdUserId', azureAdUserId);
 
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
 				expect(response.status).toEqual(405);
 				expect(response.body).toEqual({
 					errors: 'Method is not allowed'
@@ -593,6 +630,8 @@ describe('hearing routes', () => {
 						address
 					})
 					.set('azureAdUserId', azureAdUserId);
+
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
@@ -615,6 +654,8 @@ describe('hearing routes', () => {
 					})
 					.set('azureAdUserId', azureAdUserId);
 
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
 				expect(response.status).toEqual(405);
 				expect(response.body).toEqual({
 					errors: 'Method is not allowed'
@@ -635,6 +676,8 @@ describe('hearing routes', () => {
 					})
 					.set('azureAdUserId', azureAdUserId);
 
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: { hearingId: 'must be a number' }
@@ -654,6 +697,8 @@ describe('hearing routes', () => {
 						address
 					})
 					.set('azureAdUserId', azureAdUserId);
+
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
@@ -677,6 +722,8 @@ describe('hearing routes', () => {
 					})
 					.set('azureAdUserId', azureAdUserId);
 
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
@@ -696,6 +743,12 @@ describe('hearing routes', () => {
 					.send({ hearingStartTime: hearing.hearingStartTime, address })
 					.set('azureAdUserId', azureAdUserId);
 
+				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+					hearing.id,
+					'hearing',
+					'Update'
+				);
+
 				expect(response.status).toEqual(201);
 			});
 
@@ -713,6 +766,8 @@ describe('hearing routes', () => {
 						address
 					})
 					.set('azureAdUserId', azureAdUserId);
+
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
@@ -743,6 +798,8 @@ describe('hearing routes', () => {
 					})
 					.set('azureAdUserId', azureAdUserId);
 
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
@@ -772,6 +829,8 @@ describe('hearing routes', () => {
 					})
 					.set('azureAdUserId', azureAdUserId);
 
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
@@ -800,6 +859,8 @@ describe('hearing routes', () => {
 						}
 					})
 					.set('azureAdUserId', azureAdUserId);
+
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
@@ -831,6 +892,8 @@ describe('hearing routes', () => {
 					})
 					.set('azureAdUserId', azureAdUserId);
 
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
@@ -859,6 +922,8 @@ describe('hearing routes', () => {
 						}
 					})
 					.set('azureAdUserId', azureAdUserId);
+
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
@@ -889,6 +954,8 @@ describe('hearing routes', () => {
 					})
 					.set('azureAdUserId', azureAdUserId);
 
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
@@ -918,6 +985,8 @@ describe('hearing routes', () => {
 					})
 					.set('azureAdUserId', azureAdUserId);
 
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
@@ -946,6 +1015,8 @@ describe('hearing routes', () => {
 						}
 					})
 					.set('azureAdUserId', azureAdUserId);
+
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
@@ -977,6 +1048,8 @@ describe('hearing routes', () => {
 					})
 					.set('azureAdUserId', azureAdUserId);
 
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
@@ -1005,6 +1078,8 @@ describe('hearing routes', () => {
 						}
 					})
 					.set('azureAdUserId', azureAdUserId);
+
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
@@ -1036,6 +1111,8 @@ describe('hearing routes', () => {
 					})
 					.set('azureAdUserId', azureAdUserId);
 
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
@@ -1064,6 +1141,8 @@ describe('hearing routes', () => {
 						}
 					})
 					.set('azureAdUserId', azureAdUserId);
+
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
@@ -1094,6 +1173,8 @@ describe('hearing routes', () => {
 					})
 					.set('azureAdUserId', azureAdUserId);
 
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
@@ -1122,6 +1203,8 @@ describe('hearing routes', () => {
 						}
 					})
 					.set('azureAdUserId', azureAdUserId);
+
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
@@ -1152,6 +1235,8 @@ describe('hearing routes', () => {
 					})
 					.set('azureAdUserId', azureAdUserId);
 
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
@@ -1180,6 +1265,8 @@ describe('hearing routes', () => {
 						}
 					})
 					.set('azureAdUserId', azureAdUserId);
+
+				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
@@ -1214,6 +1301,12 @@ describe('hearing routes', () => {
 				let appeal = getAppeal();
 				let idsOfLinkedGroup;
 				let sizeOfLinkedGroup;
+				const mockHearing = {
+					id: 1,
+					appealId: appeal.id,
+					hearingStartTime: '2999-01-01T13:00:00.000Z',
+					hearingEndTime: undefined
+				};
 
 				beforeEach(() => {
 					appeal = getAppeal();
@@ -1222,6 +1315,7 @@ describe('hearing routes', () => {
 
 					// // @ts-ignore
 					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+					databaseConnector.hearing.create.mockResolvedValue(mockHearing);
 				});
 				afterEach(() => {
 					databaseConnector.appeal.findUnique.mockClear();
@@ -1307,6 +1401,13 @@ describe('hearing routes', () => {
 						templateName: 'hearing-set-up'
 					});
 
+					expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledTimes(sizeOfLinkedGroup);
+					expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+						mockHearing.id,
+						'hearing',
+						'Create'
+					);
+
 					expect(response.status).toEqual(201);
 				});
 
@@ -1369,6 +1470,13 @@ describe('hearing routes', () => {
 						templateName: 'hearing-set-up'
 					});
 
+					expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledTimes(sizeOfLinkedGroup);
+					expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+						mockHearing.id,
+						'hearing',
+						'Create'
+					);
+
 					expect(response.status).toEqual(201);
 				});
 
@@ -1421,6 +1529,13 @@ describe('hearing routes', () => {
 					);
 					expect(databaseConnector.appealStatus.create).toHaveBeenCalledTimes(sizeOfLinkedGroup);
 
+					expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledTimes(sizeOfLinkedGroup);
+					expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+						mockHearing.id,
+						'hearing',
+						'Create'
+					);
+
 					expect(response.status).toEqual(201);
 				});
 			});
@@ -1440,6 +1555,8 @@ describe('hearing routes', () => {
 							address
 						})
 						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
 					expect(response.status).toEqual(405);
 					expect(response.body).toEqual({
@@ -1461,6 +1578,8 @@ describe('hearing routes', () => {
 						})
 						.set('azureAdUserId', azureAdUserId);
 
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
 					expect(response.status).toEqual(400);
 					expect(response.body).toEqual({
 						errors: { appealId: 'must be a number' }
@@ -1477,6 +1596,8 @@ describe('hearing routes', () => {
 						.post(`/appeals/${fullPlanningAppeal.id}/hearing`)
 						.send({ hearingEndTime: hearing.hearingEndTime, address })
 						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
 					expect(response.status).toEqual(400);
 					expect(response.body).toEqual({
@@ -1501,6 +1622,8 @@ describe('hearing routes', () => {
 						})
 						.set('azureAdUserId', azureAdUserId);
 
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
 					expect(response.status).toEqual(400);
 					expect(response.body).toEqual({
 						errors: {
@@ -1514,11 +1637,18 @@ describe('hearing routes', () => {
 
 					// @ts-ignore
 					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+					databaseConnector.hearing.create.mockResolvedValue(hearing);
 
 					const response = await request
 						.post(`/appeals/${fullPlanningAppeal.id}/hearing`)
 						.send({ hearingStartTime: hearing.hearingStartTime, address })
 						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+						hearing.id,
+						'hearing',
+						'Create'
+					);
 
 					expect(response.status).toEqual(201);
 				});
@@ -1537,6 +1667,8 @@ describe('hearing routes', () => {
 							hearingEndTime: 'hearingEndTime'
 						})
 						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
 					expect(response.status).toEqual(400);
 					expect(response.body).toEqual({
@@ -1567,6 +1699,8 @@ describe('hearing routes', () => {
 						})
 						.set('azureAdUserId', azureAdUserId);
 
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
 					expect(response.status).toEqual(400);
 					expect(response.body).toEqual({
 						errors: {
@@ -1596,6 +1730,8 @@ describe('hearing routes', () => {
 						})
 						.set('azureAdUserId', azureAdUserId);
 
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
 					expect(response.status).toEqual(400);
 					expect(response.body).toEqual({
 						errors: {
@@ -1624,6 +1760,8 @@ describe('hearing routes', () => {
 							}
 						})
 						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
 					expect(response.status).toEqual(400);
 					expect(response.body).toEqual({
@@ -1655,6 +1793,8 @@ describe('hearing routes', () => {
 						})
 						.set('azureAdUserId', azureAdUserId);
 
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
 					expect(response.status).toEqual(400);
 					expect(response.body).toEqual({
 						errors: {
@@ -1683,6 +1823,8 @@ describe('hearing routes', () => {
 							}
 						})
 						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
 					expect(response.status).toEqual(400);
 					expect(response.body).toEqual({
@@ -1713,6 +1855,8 @@ describe('hearing routes', () => {
 						})
 						.set('azureAdUserId', azureAdUserId);
 
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
 					expect(response.status).toEqual(400);
 					expect(response.body).toEqual({
 						errors: {
@@ -1742,6 +1886,8 @@ describe('hearing routes', () => {
 						})
 						.set('azureAdUserId', azureAdUserId);
 
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
 					expect(response.status).toEqual(400);
 					expect(response.body).toEqual({
 						errors: {
@@ -1770,6 +1916,8 @@ describe('hearing routes', () => {
 							}
 						})
 						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
 					expect(response.status).toEqual(400);
 					expect(response.body).toEqual({
@@ -1801,6 +1949,8 @@ describe('hearing routes', () => {
 						})
 						.set('azureAdUserId', azureAdUserId);
 
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
 					expect(response.status).toEqual(400);
 					expect(response.body).toEqual({
 						errors: {
@@ -1829,6 +1979,8 @@ describe('hearing routes', () => {
 							}
 						})
 						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
 					expect(response.status).toEqual(400);
 					expect(response.body).toEqual({
@@ -1860,6 +2012,8 @@ describe('hearing routes', () => {
 						})
 						.set('azureAdUserId', azureAdUserId);
 
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
 					expect(response.status).toEqual(400);
 					expect(response.body).toEqual({
 						errors: {
@@ -1888,6 +2042,8 @@ describe('hearing routes', () => {
 							}
 						})
 						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
 					expect(response.status).toEqual(400);
 					expect(response.body).toEqual({
@@ -1918,6 +2074,8 @@ describe('hearing routes', () => {
 						})
 						.set('azureAdUserId', azureAdUserId);
 
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
 					expect(response.status).toEqual(400);
 					expect(response.body).toEqual({
 						errors: {
@@ -1946,6 +2104,8 @@ describe('hearing routes', () => {
 							}
 						})
 						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
 					expect(response.status).toEqual(400);
 					expect(response.body).toEqual({
@@ -1976,6 +2136,8 @@ describe('hearing routes', () => {
 						})
 						.set('azureAdUserId', azureAdUserId);
 
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
 					expect(response.status).toEqual(400);
 					expect(response.body).toEqual({
 						errors: {
@@ -2004,6 +2166,8 @@ describe('hearing routes', () => {
 							}
 						})
 						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
 					expect(response.status).toEqual(400);
 					expect(response.body).toEqual({

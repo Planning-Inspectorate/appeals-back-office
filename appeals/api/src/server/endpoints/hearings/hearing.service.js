@@ -202,14 +202,12 @@ const createHearing = async (
 			address
 		});
 
-		if (address) {
-			// Batch broadcast hearing events for all appeals in the linked group
-			await Promise.all(
-				hearings.map((hearing) =>
-					broadcasters.broadcastEvent(hearing.id, EVENT_TYPE.HEARING, EventType.Create)
-				)
-			);
-		}
+		// Batch broadcast hearing events for all appeals in the linked group
+		await Promise.all(
+			hearings.map((hearing) =>
+				broadcasters.broadcastEvent(hearing.id, EVENT_TYPE.HEARING, EventType.Create)
+			)
+		);
 
 		// only send a notify for the single/lead appeal
 		await sendHearingDetailsNotifications(
@@ -234,15 +232,13 @@ const createHearing = async (
  * @param {string} inspectorName
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
- * @param {number | null | undefined} existingAddressId
  */
 const updateHearing = async (
 	updateHearingData,
 	appeal,
 	inspectorName,
 	notifyClient,
-	azureAdUserId,
-	existingAddressId
+	azureAdUserId
 ) => {
 	try {
 		const appealId = updateHearingData.appealId;
@@ -265,10 +261,7 @@ const updateHearing = async (
 
 		const result = await hearingRepository.updateHearingById(hearingId, updateData);
 
-		// @ts-ignore
-		if (result.address || existingAddressId) {
-			await broadcasters.broadcastEvent(updateData.hearingId, EVENT_TYPE.HEARING, EventType.Update);
-		}
+		await broadcasters.broadcastEvent(updateData.hearingId, EVENT_TYPE.HEARING, EventType.Update);
 
 		await sendHearingDetailsNotifications(
 			notifyClient,

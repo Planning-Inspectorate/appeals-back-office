@@ -1558,7 +1558,7 @@ describe('appeal timetables routes', () => {
 							expectedAppellantHearingTemplateName,
 							expectedLpaHearingTemplateName
 						) => {
-							test(`start an appeal timetable with a hearing procedure type`, async () => {
+							test(`start an appeal timetable with a hearing procedure type - no hearing dates and no hearing set up`, async () => {
 								databaseConnector.appeal.findUnique.mockResolvedValue({
 									...appeal
 								});
@@ -1567,6 +1567,9 @@ describe('appeal timetables routes', () => {
 									id: 1,
 									azureAdUserId
 								});
+								const updatedAppeal = structuredClone(appeal);
+								updatedAppeal.hearing = null;
+								databaseConnector.appeal.update.mockResolvedValue(updatedAppeal);
 								const timetable = mapValues(expectedTimetableDto, (date) => new Date(date));
 
 								const { id } = appeal;
@@ -1683,17 +1686,22 @@ describe('appeal timetables routes', () => {
 									recipientEmail: appeal.lpa.email,
 									templateName: expectedLpaTemplateName
 								});
+
+								expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 							});
 
 							test(`start an appeal timetable with a hearing procedure type and a hearing start time`, async () => {
 								databaseConnector.appeal.findUnique.mockResolvedValue({
-									...appeal
+									...appeal,
+									hearing: null
 								});
 								// @ts-ignore
 								databaseConnector.user.upsert.mockResolvedValue({
 									id: 1,
 									azureAdUserId
 								});
+								const updatedAppeal = structuredClone(appeal);
+								databaseConnector.appeal.update.mockResolvedValue(updatedAppeal);
 
 								const timetable = mapValues(expectedTimetableDto, (date) => new Date(date));
 
@@ -1740,7 +1748,12 @@ describe('appeal timetables routes', () => {
 									},
 									include: {
 										appealStatus: true,
-										appealType: true
+										appealType: true,
+										hearing: {
+											select: {
+												id: true
+											}
+										}
 									}
 								});
 
@@ -1848,16 +1861,25 @@ describe('appeal timetables routes', () => {
 									recipientEmail: appeal.lpa.email,
 									templateName: expectedLpaHearingTemplateName
 								});
+
+								expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+									appeal.hearing.id,
+									'hearing',
+									'Create'
+								);
 							});
 
 							test(`start an appeal timetable with a hearing procedure type, a decimal duration and no hearing start time`, async () => {
 								databaseConnector.appeal.findUnique.mockResolvedValue({
-									...appeal
+									...appeal,
+									hearing: null
 								});
 								databaseConnector.user.upsert.mockResolvedValue({
 									id: 1,
 									azureAdUserId
 								});
+								const updatedAppeal = structuredClone(appeal);
+								databaseConnector.appeal.update.mockResolvedValue(updatedAppeal);
 
 								const timetable = mapValues(expectedTimetableDto, (date) => new Date(date));
 
@@ -1898,14 +1920,26 @@ describe('appeal timetables routes', () => {
 									},
 									include: {
 										appealStatus: true,
-										appealType: true
+										appealType: true,
+										hearing: {
+											select: {
+												id: true
+											}
+										}
 									}
 								});
+
+								expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+									appeal.hearing.id,
+									'hearing',
+									'Create'
+								);
 							});
 
-							test(`restart an appeal timetable with a hearing procedure type`, async () => {
+							test(`restart an appeal timetable with a hearing procedure type - no hearing details, no hearing event created`, async () => {
 								databaseConnector.appeal.findUnique.mockResolvedValue({
 									...appeal,
+									hearing: null,
 									caseStartedDate: '2024-06-05T22:59:00.000Z'
 								});
 								// @ts-ignore
@@ -1913,6 +1947,9 @@ describe('appeal timetables routes', () => {
 									id: 1,
 									azureAdUserId
 								});
+								const updatedAppeal = structuredClone(appeal);
+								updatedAppeal.hearing = null;
+								databaseConnector.appeal.update.mockResolvedValue(updatedAppeal);
 
 								const timetable = mapValues(expectedTimetableDto, (date) => new Date(date));
 
@@ -2030,9 +2067,158 @@ describe('appeal timetables routes', () => {
 									recipientEmail: appeal.lpa.email,
 									templateName: 'appeal-start-date-change-lpa'
 								});
+
+								expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 							});
 
-							test(`start an appeal timetable for a lead appeal`, async () => {
+							test(`restart an appeal timetable with a hearing procedure type - existing hearing, new hearing details`, async () => {
+								databaseConnector.appeal.findUnique.mockResolvedValue({
+									...appeal,
+									caseStartedDate: '2024-06-05T22:59:00.000Z'
+								});
+								// @ts-ignore
+								databaseConnector.user.upsert.mockResolvedValue({
+									id: 1,
+									azureAdUserId
+								});
+								const updatedAppeal = structuredClone(appeal);
+								databaseConnector.appeal.update.mockResolvedValue(updatedAppeal);
+
+								const timetable = mapValues(expectedTimetableDto, (date) => new Date(date));
+
+								const { id } = appeal;
+								const response = await request
+									.post(`/appeals/${id}/appeal-timetables/`)
+									.send({
+										startDate: '2024-06-05T22:59:00.000Z',
+										hearingStartTime: '2024-08-10T13:45:00.000Z',
+										hearingEstimatedDays: 9
+									})
+									.set('azureAdUserId', azureAdUserId);
+
+								expect(response.status).toEqual(201);
+								expect(response.body).toEqual(expectedTimetableDto);
+
+								expect(databaseConnector.appealTimetable.upsert).toHaveBeenCalledWith({
+									create: { ...timetable, appealId: id },
+									update: { ...timetable },
+									where: { appealId: id },
+									include: { appeal: true }
+								});
+
+								const auditDetails =
+									appealType === 'fullPlanning'
+										? ['The case timeline was created', 'Appeal started\nAppeal procedure: hearing']
+										: ['The case timeline was created'];
+
+								auditDetails.forEach((details) => {
+									expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+										data: {
+											appealId: id,
+											details,
+											loggedAt: expect.any(Date),
+											userId: 1
+										}
+									});
+								});
+
+								expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+								expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+									azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+									notifyClient: expect.anything(),
+									personalisation: {
+										appeal_reference_number: appeal.reference,
+										inspector_name: null,
+										appeal_type: trimAppealType(appeal.appealType.type),
+										appellant_email_address: appeal.agent.email,
+										child_appeals: [],
+										comment_deadline: '',
+										due_date: dateISOStringToDisplayDate(
+											expectedTimetableDto.lpaQuestionnaireDueDate
+										),
+										final_comments_deadline: dateISOStringToDisplayDate(
+											expectedTimetableDto.finalCommentsDueDate
+										),
+										ip_comments_deadline: dateISOStringToDisplayDate(
+											expectedTimetableDto.ipCommentsDueDate
+										),
+										local_planning_authority: appeal.lpa.name,
+										lpa_reference: appeal.applicationReference,
+										lpa_statement_deadline: dateISOStringToDisplayDate(
+											expectedTimetableDto.lpaStatementDueDate
+										),
+										procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
+										questionnaire_due_date: dateISOStringToDisplayDate(
+											expectedTimetableDto.lpaQuestionnaireDueDate
+										),
+										site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+										start_date: '5 June 2024',
+										site_visit: false,
+										costs_info: false,
+										statement_of_common_ground_deadline: dateISOStringToDisplayDate(
+											expectedTimetableDto.statementOfCommonGroundDueDate
+										),
+										hearing_date: '10 August 2024',
+										hearing_time: '2:45pm',
+										hearing_expected_days: 9,
+										team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+									},
+									recipientEmail: appeal.agent.email,
+									templateName: 'appeal-start-date-change-appellant'
+								});
+
+								expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+									azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+									notifyClient: expect.anything(),
+									personalisation: {
+										appeal_reference_number: appeal.reference,
+										inspector_name: null,
+										appeal_type: trimAppealType(appeal.appealType.type),
+										appellant_email_address: appeal.agent.email,
+										child_appeals: [],
+										comment_deadline: '',
+										due_date: dateISOStringToDisplayDate(
+											expectedTimetableDto.lpaQuestionnaireDueDate
+										),
+										final_comments_deadline: dateISOStringToDisplayDate(
+											expectedTimetableDto.finalCommentsDueDate
+										),
+										ip_comments_deadline: dateISOStringToDisplayDate(
+											expectedTimetableDto.ipCommentsDueDate
+										),
+										local_planning_authority: appeal.lpa.name,
+										lpa_reference: appeal.applicationReference,
+										lpa_statement_deadline: dateISOStringToDisplayDate(
+											expectedTimetableDto.lpaStatementDueDate
+										),
+										procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
+										questionnaire_due_date: dateISOStringToDisplayDate(
+											expectedTimetableDto.lpaQuestionnaireDueDate
+										),
+										site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+										start_date: '5 June 2024',
+										statement_of_common_ground_deadline: dateISOStringToDisplayDate(
+											expectedTimetableDto.statementOfCommonGroundDueDate
+										),
+										...personalisation,
+										hearing_date: '10 August 2024',
+										hearing_time: '2:45pm',
+										hearing_expected_days: 9,
+										team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+									},
+									recipientEmail: appeal.lpa.email,
+									templateName: 'appeal-start-date-change-lpa'
+								});
+
+								expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+									appeal.hearing.id,
+									'hearing',
+									'Update'
+								);
+							});
+
+							test(`start an appeal timetable for a lead appeal - no hearing details, no hearing event created`, async () => {
 								databaseConnector.appeal.findUnique.mockResolvedValue({
 									...appeal,
 									childAppeals: [
@@ -2046,6 +2232,8 @@ describe('appeal timetables routes', () => {
 									id: 1,
 									azureAdUserId
 								});
+								const updatedAppeal = structuredClone(appeal);
+								databaseConnector.appeal.update.mockResolvedValue(updatedAppeal);
 
 								const timetable = mapValues(expectedTimetableDto, (date) => new Date(date));
 
@@ -2163,6 +2351,8 @@ describe('appeal timetables routes', () => {
 									recipientEmail: appeal.lpa.email,
 									templateName: expectedLpaTemplateName
 								});
+
+								expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 							});
 						}
 					);

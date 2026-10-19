@@ -49,7 +49,8 @@ router.post(
 		'agent',
 		'lpa',
 		'appealGrounds',
-		'appellantCase'
+		'appellantCase',
+		'hearing'
 	]),
 	createAppealTimetableValidator,
 	asyncHandler(startAppeal)
