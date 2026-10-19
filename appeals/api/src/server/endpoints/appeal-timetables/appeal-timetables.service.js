@@ -16,6 +16,7 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { trimAppealType } from '#utils/string-utils.js';
 import { setPersonalList } from '#utils/update-personal-list.js';
 import {
+	EVENT_TYPE,
 	PROCEDURE_TYPE_ID_MAP,
 	PROCEDURE_TYPE_KEY,
 	PROCEDURE_TYPE_MAP
@@ -44,8 +45,8 @@ import formatDate, {
 	dateISOStringToDisplayDate,
 	formatTime12h
 } from '@pins/appeals/utils/date-formatter.js';
-
 import { getEffectiveProcedureType } from '@pins/appeals/utils/procedure-type.js';
+import { EventType } from '@pins/event-client';
 import { loadEnvironment } from '@pins/platform';
 import {
 	APPEAL_CASE_PROCEDURE,
@@ -500,7 +501,8 @@ const startCase = async (
 		const startDateWithTimeCorrection = setTimeInTimeZone(startedAt, 0, 0);
 		const procedureTypeId = effectiveProcedureType && PROCEDURE_TYPE_ID_MAP[effectiveProcedureType];
 
-		await Promise.all([
+		// eslint-disable-next-line no-unused-vars
+		const [_, updatedAppeal] = await Promise.all([
 			// @ts-ignore
 			appealTimetableRepository.upsertAppealTimetableById(appeal.id, timetable),
 			appealRepository.updateAppealById(appeal.id, {
@@ -545,6 +547,16 @@ const startCase = async (
 		}
 
 		await broadcasters.broadcastAppeal(appeal.id);
+
+		//broadcast hearing event if hearing created on start case or amended on restart
+		if ((hearingStartTime || hearingEstimatedDays) && updatedAppeal.hearing?.id) {
+			await broadcasters.broadcastEvent(
+				updatedAppeal.hearing.id,
+				EVENT_TYPE.HEARING,
+				appeal.hearing?.id ? EventType.Update : EventType.Create
+			);
+		}
+
 		return { success: true, timetable };
 	} catch (error) {
 		logger.error(`Error starting case for appeal ID ${appeal.id}: ${error}`);

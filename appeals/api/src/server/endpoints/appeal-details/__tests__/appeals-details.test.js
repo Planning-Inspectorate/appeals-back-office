@@ -556,7 +556,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					},
 					where: {
 						id: householdAppeal.id
@@ -587,7 +592,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					},
 					where: {
 						id: householdAppeal.id
@@ -659,7 +669,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					},
 					where: {
 						id: householdAppeal.id
@@ -707,7 +722,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					},
 					where: {
 						id: householdAppeal.id
@@ -759,7 +779,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					}
 				});
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
@@ -814,7 +839,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					}
 				});
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
@@ -864,7 +894,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					}
 				});
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
@@ -918,7 +953,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					}
 				});
 
@@ -962,7 +1002,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					},
 					where: {
 						id: leadAppeal.id
@@ -975,7 +1020,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					},
 					where: {
 						id: leadAppeal.childAppeals[0].childId
@@ -988,7 +1038,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					},
 					where: {
 						id: leadAppeal.childAppeals[2].childId
@@ -1066,7 +1121,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					}
 				});
 				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(2, {
@@ -1079,7 +1139,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					}
 				});
 				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(3, {
@@ -1092,7 +1157,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					}
 				});
 
@@ -1168,7 +1238,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					}
 				});
 				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(2, {
@@ -1182,7 +1257,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					}
 				});
 				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(3, {
@@ -1196,7 +1276,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					}
 				});
 

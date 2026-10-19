@@ -421,7 +421,12 @@ describe('appellant cases routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					}
 				});
 				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
@@ -2009,7 +2014,12 @@ describe('appellant cases routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					}
 				});
 				expect(databaseConnector.enforcementNoticeAppealOutcome.upsert).toHaveBeenCalledWith({

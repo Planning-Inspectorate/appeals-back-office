@@ -39,7 +39,8 @@ const linkedAppealsInclude = isLinkedAppealsActive()
 			inspectorDecision: true,
 			address: true,
 			appellant: { include: { address: true } },
-			agent: { include: { address: true } }
+			agent: { include: { address: true } },
+			hearing: { select: { id: true } }
 		}
 	: {
 			appealType: true
@@ -568,7 +569,12 @@ const updateAppealById = (
 		},
 		include: {
 			appealType: true,
-			appealStatus: true
+			appealStatus: true,
+			hearing: {
+				select: {
+					id: true
+				}
+			}
 		}
 	});
 

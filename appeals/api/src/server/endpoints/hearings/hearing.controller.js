@@ -145,7 +145,6 @@ export const rearrangeHearing = async (req, res) => {
 	try {
 		/** @type {Hearing | undefined} */
 		const currentHearing = await hearingRepository.getHearingById(hearingId);
-		const existingAddressId = currentHearing?.addressId;
 		const existingHearing = req.appeal.hearing;
 		const updatedHearingValues = checkUpdatedHearingValues(existingHearing, req.body);
 
@@ -164,8 +163,7 @@ export const rearrangeHearing = async (req, res) => {
 			appeal,
 			req.body.inspectorName,
 			req.notifyClient,
-			azureAdUserId,
-			existingAddressId
+			azureAdUserId
 		);
 
 		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT)) {
