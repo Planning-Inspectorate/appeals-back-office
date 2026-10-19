@@ -7,6 +7,9 @@ describe('costs-decision-all-parties.md', () => {
 	const caseTeamEmail = 'enquiries@planninginspectorate.gov.uk';
 	const frontOfficeUrl = '/mock-front-office-url';
 
+	/**
+	 * @param {Record<string, any>} [personalisation]
+	 */
 	const createNotifyData = (personalisation) => ({
 		doNotMockNotifySend: true,
 		templateName: 'costs-decision-all-parties',
@@ -22,6 +25,9 @@ describe('costs-decision-all-parties.md', () => {
 		}
 	});
 
+	/**
+	 * @param {string} expectedLink
+	 */
 	const buildExpectedContent = (expectedLink) =>
 		[
 			`We have made a decision on the application for an award of appeal costs on appeal ${appealReference}.`,
