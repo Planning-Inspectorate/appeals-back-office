@@ -4,7 +4,7 @@ dotenv.config();
 import { Readable } from 'node:stream';
 
 // json streaming
-import { chain } from 'stream-chain';
+import chain from 'stream-chain';
 import { parser } from 'stream-json';
 import { ignore } from 'stream-json/filters/ignore.js';
 import { pick } from 'stream-json/filters/pick.js';
