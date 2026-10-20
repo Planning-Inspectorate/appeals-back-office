@@ -2,30 +2,45 @@
 
 import { PLANNING_APPLICATION_TYPES } from '../support/consts.js';
 
+const documentURI = 'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg';
+	
+
 /**
  * Takes a base document object and returns new version with unique values for id and filenames
- * @param {Object} baseDocument base document to be overridden
+ * @param {Object} baseDocument base document to be updated 
  * @returns new version of document with unique values for id and filenames
  */
-export const generateUniqueDocument = (baseDocument) => {
-	if (!baseDocument) return {}; // some requests do not need a document, e.g. setup inquiry and hearing
+export const generateUniqueDocument = (document) => {
+	if (!document) return {}; // some requests do not need a document, e.g. setup inquiry and hearing
 
 	// generate random id
 	const id = crypto.randomUUID();
 
-	const document = baseDocument.documents[0];
-
 	// return new document with unique properties
 	return {
-		documents: [
-			{
-				...document,
-				documentId: `doc-${id}`,
-				filename: `img-${id}.jpg`,
-				originalFilename: `oimg-${id}.jpg`,
-			}
-		]
-	};
+		...document,
+		documentId: `doc-${id}`,
+		filename: `file-${id}.doc`,
+		originalFilename: `${document.documentType}-${id}.doc`
+	}
+}
+
+/**
+ * Generates a base document for including in an api request 
+ * @param {string} type the type of document, e.g. rule 6, environment statement or costs application 
+ * @returns base document object with basic properties applied 
+ */
+export const generateBaseDocument = (type) => {
+	return {
+		dateCreated: new Date(Date.now()).toISOString(),
+		documentId: `{placeholder}`, // is replaced by unique id 
+		documentType: type,
+		documentURI: documentURI,
+		filename: `{placeholder}`, // is replaced by unique id 
+		mime: 'image/jpeg',
+		originalFilename: `${type}`, // is updated with unique id 
+		size: 10293
+	}
 }
 
 const validLpaQuestionnaireCommon = {
@@ -266,6 +281,7 @@ const appealsApiRequests = {
 			caseType: 'D',
 			applicationDate: '2026-04-01T00:00:00.000Z',
 			applicationDecision: 'refused',
+			typeOfPlanningApplication: PLANNING_APPLICATION_TYPES.HOUSEHOLDER_PLANNING,
 			reasonForAppealAppellant: 'My reason for Householder appeal',
 			significantChangesAffectingApplicationAppellant: [
 				{ value: 'adopted-a-new-local-plan', comment: 'Local plan changes' },
@@ -542,8 +558,12 @@ const appealsApiRequests = {
 				{
 					groundRef: 'a',
 					factsForGround: 'I like Christmas'
+				},
+				{
+					groundRef: 'b',
+					factsForGround: 'I like Easter'
 				}
-			]
+			],
 		},
 	},
 	enforcementLinkedSubmission: {
@@ -612,7 +632,7 @@ const appealsApiRequests = {
 					factsForGround: 'I like Christmas'
 				}
 			],
-				namedIndividuals: [
+			namedIndividuals: [
 			{
 				firstName: 'Jack',
 				lastName: 'Jackerson',
@@ -672,27 +692,20 @@ const appealsApiRequests = {
 			enforcementReference: '12345',
 			enforcementIssueDate: '1890-12-28T22:49:47.0Z',
 			enforcementEffectiveDate: '1890-12-28T22:49:47.0Z',
+			descriptionOfAllegedBreach: 'Christmas tree stolen',
 			contactPlanningInspectorateDate: null,
 			interestInLand: 'owner',
 			caseSubmissionDueDate: null,
-			siteAddressLine1: 'occaecat aliquip non pariatur consequat',
-			siteAddressLine2: null,
-			siteAddressTown: 'et',
-			siteAddressCounty: 'velit',
-			siteAddressPostcode: 'nisi minim laboris sed',
 			contactAddressLine1: null,
 			contactAddressLine2: null,
 			contactAddressTown: null,
 			contactAddressCounty: null,
 			contactAddressPostcode: null,
-			siteAccessDetails: ['laborum', 'aute velit quis', 'dolor'],
-			siteSafetyDetails: ['velit aliqua', 'qui', 'tempor Duis ut dolore', 'anim Ut in ea', 'eiusmod laborum'],
 			appellantCostsAppliedFor: false,
-			appellantProcedurePreference: null,
+			appellantProcedurePreference: 'written',
 			appellantProcedurePreferenceDetails: 'eiusmod ex exercitation',
-			appellantProcedurePreferenceDuration: 10816414.941069126,
-			appellantProcedurePreferenceWitnessCount: -91300569.36444478,
-			nearbyCaseReferences: ['incididunt'],
+			appellantProcedurePreferenceDuration: 3,
+			appellantProcedurePreferenceWitnessCount: 2,
 			appealGrounds: [
 				{
 					groundRef: 'a',
