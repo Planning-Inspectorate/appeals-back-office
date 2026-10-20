@@ -92,7 +92,7 @@ export const getDeleteInquiryDocument = async (request, response) => {
 	await renderDeleteDocument({
 		request,
 		response,
-		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/inquiry-documents/manage-documents/${currentFolder.folderId}/{{documentId}}`
+		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/inquiry/documents/manage-documents/${currentFolder.folderId}/{{documentId}}`
 	});
 };
 
@@ -108,8 +108,8 @@ export const postDeleteInquiryDocument = async (request, response) => {
 		request,
 		response,
 		returnUrl: `/appeals-service/appeal-details/${request.params.appealId}`,
-		cancelUrl: `/appeals-service/appeal-details/${request.params.appealId}/inquiry-documents/manage-documents/{{folderId}}/{{documentId}}`,
-		uploadNewDocumentUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/inquiry-documents/upload-documents/{{folderId}}`
+		cancelUrl: `/appeals-service/appeal-details/${request.params.appealId}/inquiry/documents/manage-documents/{{folderId}}/{{documentId}}`,
+		uploadNewDocumentUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/inquiry/documents/upload-documents/{{folderId}}`
 	});
 };
 
