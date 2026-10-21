@@ -167,7 +167,7 @@ const importNamedIndividuals = async ({ parentAppeal, casedata, documents, users
 	for (const individual of namedIndividuals) {
 		const childAppeal = await importIndividualAppeal(individual);
 		if (isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_LINKED)) {
-			await linkAppeals(AUDIT_TRAIL_LPA_UUID, parentAppeal, childAppeal);
+			await linkAppeals(AUDIT_TRAIL_SYSTEM_UUID, parentAppeal, childAppeal);
 			childAppeals.push(childAppeal);
 		} else {
 			await markAwaitingTransfer(
