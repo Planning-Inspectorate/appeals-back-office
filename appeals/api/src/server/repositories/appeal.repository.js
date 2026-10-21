@@ -532,6 +532,7 @@ const updateAppealById = (
 		inspector,
 		padsInspector,
 		agent,
+		appellant,
 		applicationReference,
 		procedureTypeId,
 		hearingStartTime,
@@ -549,6 +550,7 @@ const updateAppealById = (
 			...(hasValueOrIsNull(inspector) && { inspectorUserId: inspector }),
 			...(hasValueOrIsNull(padsInspector) && { padsInspectorUserId: padsInspector }),
 			...(hasValueOrIsNull(agent) && { agentId: agent }),
+			...(hasValueOrIsNull(appellant) && { appellantId: appellant }),
 			...(hasValueOrIsNull(procedureTypeId) && { procedureTypeId }),
 			caseUpdatedDate: new Date(),
 			...((hearingStartTime || hearingEstimatedDays) && {

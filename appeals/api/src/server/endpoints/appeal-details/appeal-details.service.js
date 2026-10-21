@@ -247,10 +247,11 @@ const assignUserForLinkedAppeals = async (
  * @param {string | null} params.validAt
  * @param {string} params.planningApplicationReference
  * @param {AppealDto['agent']} params.agent
+ * @param {AppealDto['appellant']} params.appellant
  * @param {string | undefined} azureAdUserId
  */
 const updateAppealDetails = async (
-	{ appealId, reference, startedAt, validAt, planningApplicationReference, agent },
+	{ appealId, reference, startedAt, validAt, planningApplicationReference, agent, appellant },
 	azureAdUserId
 ) => {
 	let agentId = null;
@@ -264,11 +265,17 @@ const updateAppealDetails = async (
 			reference ?? ''
 		);
 	}
+	let appellantId = null;
+	if (appellant) {
+		const { id } = await serviceUserRepository.createServiceUser(appellant);
+		appellantId = id;
+	}
 	const body = {
 		...(startedAt && { caseStartedDate: startedAt }),
 		...(validAt && { caseValidDate: validAt }),
 		...(planningApplicationReference && { applicationReference: planningApplicationReference }),
-		...(agent && { agent: agentId })
+		...(agent && { agent: agentId }),
+		...(appellant && { appellant: appellantId })
 	};
 	await appealRepository.updateAppealById(appealId, body);
 

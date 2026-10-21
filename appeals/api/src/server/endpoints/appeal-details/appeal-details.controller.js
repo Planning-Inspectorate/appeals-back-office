@@ -49,6 +49,7 @@ const updateAppealById = async (req, res) => {
 			validAt,
 			planningApplicationReference,
 			agent,
+			appellant,
 			padsInspectorId
 		},
 		params
@@ -93,7 +94,8 @@ const updateAppealById = async (req, res) => {
 					startedAt,
 					validAt,
 					planningApplicationReference,
-					agent
+					agent,
+					appellant
 				},
 				azureAdUserId
 			);
@@ -140,7 +142,8 @@ const updateAppealById = async (req, res) => {
 									startedAt,
 									validAt,
 									planningApplicationReference,
-									agent
+									agent,
+									appellant
 								},
 								azureAdUserId
 							);

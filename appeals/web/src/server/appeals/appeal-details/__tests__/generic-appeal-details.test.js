@@ -259,4 +259,53 @@ describe('generic appeal details', () => {
 		const caseTeamAction = html.querySelector('.appeal-case-team .govuk-summary-list__actions a');
 		expect(caseTeamAction?.innerHTML.trim()).toContain('Change');
 	});
+
+	it('should allow adding an appellant to a generic appeal where no appellant exists', async () => {
+		const getResponse = await request.get(
+			'/appeals-service/appeal-details/999/service-user/add/appellant'
+		);
+		expect(getResponse.statusCode).toBe(200);
+
+		const html = parseHtml(getResponse.text);
+		expect(html.innerHTML).toContain('Appellant details</h1>');
+		expect(html.querySelector('input[name="firstName"]')).not.toBeNull();
+		expect(html.querySelector('input[name="lastName"]')).not.toBeNull();
+		expect(html.querySelector('input[name="organisationName"]')).not.toBeNull();
+		expect(html.querySelector('input[name="emailAddress"]')).not.toBeNull();
+		expect(html.querySelector('input[name="phoneNumber"]')).not.toBeNull();
+
+		const validAppellantData = {
+			firstName: 'Jane',
+			lastName: 'Smith',
+			organisationName: 'Woodland Trust',
+			emailAddress: 'jane.smith@example.com',
+			phoneNumber: '07123456789'
+		};
+
+		let patchPayload;
+		nock('http://test/')
+			.patch('/appeals/999?include=childAppeals', (body) => {
+				patchPayload = body;
+				return true;
+			})
+			.reply(200, {
+				appellant: validAppellantData
+			});
+
+		const postResponse = await request
+			.post('/appeals-service/appeal-details/999/service-user/add/appellant')
+			.send(validAppellantData);
+
+		expect(postResponse.statusCode).toBe(302);
+		expect(postResponse.headers.location).toBe('/appeals-service/appeal-details/999');
+		expect(patchPayload).toEqual({
+			appellant: {
+				firstName: 'Jane',
+				lastName: 'Smith',
+				organisationName: 'Woodland Trust',
+				email: 'jane.smith@example.com',
+				phoneNumber: '07123456789'
+			}
+		});
+	});
 });
