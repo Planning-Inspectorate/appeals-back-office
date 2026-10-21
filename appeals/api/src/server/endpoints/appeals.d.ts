@@ -170,6 +170,7 @@ interface UpdateAppealRequest {
 	inspector?: number | null;
 	padsInspector?: string | null;
 	agent?: number | null;
+	appellant?: number | null;
 	procedureTypeId?: number | null;
 	hearingStartTime?: string;
 	hearingEstimatedDays?: number;
@@ -976,6 +977,8 @@ interface UpdateAppealRequest {
 	planningApplicationReference?: string;
 	caseOfficer?: number | null;
 	inspector?: number | null;
+	agent?: any;
+	appellant?: any;
 }
 interface UpdateAsssignedTeamRequest {
 	teamId: string;

@@ -64,9 +64,7 @@ export const createEmailInputConditionallyMandatoryValidator = (
 			.if((value) => typeof value !== 'undefined')
 			.trim()
 			.custom((value, { req }) => {
-				const isMandatory =
-					(req.currentAppeal && typeof req.currentAppeal.agent === 'undefined') ||
-					req.params?.userType === 'agent';
+				const isMandatory = !req.currentAppeal?.agent || req.params?.userType === 'agent';
 
 				if (isMandatory && !value) {
 					if (req.params && req.params.userType) {

@@ -643,6 +643,51 @@ describe('Appeal detail routes', () => {
 				);
 			});
 
+			test('updates the appellant', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				// @ts-ignore
+				databaseConnector.serviceUser.create.mockResolvedValue({ id: 101 });
+
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						appellant: {
+							firstName: 'John',
+							lastName: 'Doe',
+							email: 'john.doe@example.com'
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.serviceUser.create).toHaveBeenCalledWith({
+					data: {
+						firstName: 'John',
+						lastName: 'Doe',
+						email: 'john.doe@example.com'
+					}
+				});
+				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+					data: {
+						appellantId: 101,
+						caseUpdatedDate: expect.any(Date)
+					},
+					include: {
+						appealStatus: true,
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
+					},
+					where: {
+						id: householdAppeal.id
+					}
+				});
+				expect(response.status).toEqual(200);
+			});
+
 			test('assigns a case officer to an appeal', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue({
