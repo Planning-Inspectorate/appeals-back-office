@@ -228,6 +228,7 @@ describe('appeal hearing estimates routes', () => {
 	describe('valid requests', () => {
 		test('returns 201 when creating a hearing estimate with valid values', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
 			databaseConnector.hearingEstimate.create.mockResolvedValue({ id: 1 });
 
 			const response = await request
@@ -249,6 +250,7 @@ describe('appeal hearing estimates routes', () => {
 
 		test('returns 200 when updating a hearing estimate with valid values', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(appealWithHearingEstimate);
+			databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
 			databaseConnector.hearingEstimate.findUnique.mockResolvedValue(
 				appealWithHearingEstimate.hearingEstimate
 			);
@@ -273,6 +275,7 @@ describe('appeal hearing estimates routes', () => {
 
 		test('returns 200 when deleting a hearing estimate', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(appealWithHearingEstimate);
+			databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
 			databaseConnector.hearingEstimate.findUnique.mockResolvedValue(
 				appealWithHearingEstimate.hearingEstimate
 			);
@@ -284,6 +287,87 @@ describe('appeal hearing estimates routes', () => {
 
 			expect(response.status).toEqual(200);
 			expect(databaseConnector.hearingEstimate.delete).toHaveBeenCalledTimes(1);
+			expect(databaseConnector.hearingEstimate.delete).toHaveBeenCalledWith({
+				where: { appealId: householdAppeal.id }
+			});
+		});
+
+		test('returns 201 when creating a hearing estimate with valid values and with linked child appeals', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			databaseConnector.appealRelationship.findMany.mockResolvedValue([
+				{
+					id: 2,
+					childId: 3
+				}
+			]);
+			databaseConnector.hearingEstimate.create.mockResolvedValue({ id: 1 });
+
+			const response = await request
+				.post(`/appeals/${householdAppeal.id}/hearing-estimates`)
+				.send(validHearingEstimate)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(201);
+			expect(databaseConnector.hearingEstimate.create).toHaveBeenCalledTimes(2);
+			expect(databaseConnector.hearingEstimate.create).toHaveBeenCalledWith({
+				data: {
+					appealId: householdAppeal.id,
+					preparationTime: validHearingEstimate.preparationTime,
+					sittingTime: validHearingEstimate.sittingTime,
+					reportingTime: validHearingEstimate.reportingTime
+				}
+			});
+		});
+
+		test('returns 200 when updating a hearing estimate with valid values and with linked child appeals', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(appealWithHearingEstimate);
+			databaseConnector.appealRelationship.findMany.mockResolvedValue([
+				{
+					id: 2,
+					childId: 3
+				}
+			]);
+			databaseConnector.hearingEstimate.findUnique.mockResolvedValue(
+				appealWithHearingEstimate.hearingEstimate
+			);
+			databaseConnector.hearingEstimate.update.mockResolvedValue({ id: 1 });
+
+			const response = await request
+				.patch(`/appeals/${householdAppeal.id}/hearing-estimates`)
+				.send(validHearingEstimate)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+			expect(databaseConnector.hearingEstimate.update).toHaveBeenCalledTimes(2);
+			expect(databaseConnector.hearingEstimate.update).toHaveBeenCalledWith({
+				where: { appealId: householdAppeal.id },
+				data: {
+					preparationTime: validHearingEstimate.preparationTime,
+					sittingTime: validHearingEstimate.sittingTime,
+					reportingTime: validHearingEstimate.reportingTime
+				}
+			});
+		});
+
+		test('returns 200 when deleting a hearing estimate and with linked child appeals', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(appealWithHearingEstimate);
+			databaseConnector.appealRelationship.findMany.mockResolvedValue([
+				{
+					id: 2,
+					childId: 3
+				}
+			]);
+			databaseConnector.hearingEstimate.findUnique.mockResolvedValue(
+				appealWithHearingEstimate.hearingEstimate
+			);
+			databaseConnector.hearingEstimate.delete.mockResolvedValue({ id: 1 });
+
+			const response = await request
+				.delete(`/appeals/${householdAppeal.id}/hearing-estimates`)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+			expect(databaseConnector.hearingEstimate.delete).toHaveBeenCalledTimes(2);
 			expect(databaseConnector.hearingEstimate.delete).toHaveBeenCalledWith({
 				where: { appealId: householdAppeal.id }
 			});
