@@ -141,8 +141,11 @@ const mockHearingFindUnique = jest.fn().mockResolvedValue({});
 const mockHearingDelete = jest.fn().mockResolvedValue({});
 const mockHearingDeleteMany = jest.fn().mockResolvedValue({});
 const mockHearingEstimateCreate = jest.fn().mockResolvedValue({});
+const mockHearingEstimateCreateMany = jest.fn().mockResolvedValue({});
+const mockHearingEstimateUpdateMany = jest.fn().mockResolvedValue({});
 const mockHearingEstimateUpdate = jest.fn().mockResolvedValue({});
 const mockHearingEstimateFindUnique = jest.fn().mockResolvedValue({});
+const mockHearingEstimateFindMany = jest.fn().mockResolvedValue({});
 const mockHearingEstimateDelete = jest.fn().mockResolvedValue({});
 const mockHearingEstimateDeleteMany = jest.fn().mockResolvedValue({});
 const mockInquiryCreate = jest.fn().mockResolvedValue({});
@@ -570,8 +573,11 @@ class MockPrismaClient {
 	get hearingEstimate() {
 		return {
 			create: mockHearingEstimateCreate,
+			createMany: mockHearingEstimateCreateMany,
 			update: mockHearingEstimateUpdate,
+			updateMany: mockHearingEstimateUpdateMany,
 			findUnique: mockHearingEstimateFindUnique,
+			findMany: mockHearingEstimateFindMany,
 			delete: mockHearingEstimateDelete,
 			deleteMany: mockHearingEstimateDeleteMany
 		};

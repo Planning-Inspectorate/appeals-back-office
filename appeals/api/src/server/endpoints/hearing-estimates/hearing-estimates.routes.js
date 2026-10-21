@@ -37,7 +37,7 @@ router.post(
 		#swagger.responses[400] = {}
 		#swagger.responses[500] = {}
 	 */
-	checkAppealExistsByIdAndAddPartialToRequest([]),
+	checkAppealExistsByIdAndAddPartialToRequest(['childAppeals', 'appealType']),
 	createHearingEstimateValidator,
 	asyncHandler(addHearingEstimate)
 );
@@ -67,7 +67,7 @@ router.patch(
 		#swagger.responses[404] = {}
 		#swagger.responses[500] = {}
 	 */
-	checkAppealExistsByIdAndAddPartialToRequest([]),
+	checkAppealExistsByIdAndAddPartialToRequest(['childAppeals', 'appealType']),
 	updateHearingEstimateValidator,
 	asyncHandler(updateHearingEstimate)
 );
@@ -90,7 +90,7 @@ router.delete(
 		#swagger.responses[404] = {}
 		#swagger.responses[500] = {}
 	 */
-	checkAppealExistsByIdAndAddPartialToRequest([]),
+	checkAppealExistsByIdAndAddPartialToRequest(['childAppeals', 'appealType']),
 	asyncHandler(removeHearingEstimate)
 );
 
