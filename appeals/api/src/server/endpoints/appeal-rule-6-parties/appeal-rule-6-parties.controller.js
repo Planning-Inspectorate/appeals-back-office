@@ -85,7 +85,7 @@ export const deleteRule6Party = async (req, res) => {
 	const azureAdUserId = String(req.get('azureAdUserId'));
 	try {
 		const result = await appealRule6PartiesService.deleteRule6Party(
-			appeal.reference,
+			appeal,
 			Number(rule6PartyId),
 			azureAdUserId
 		);

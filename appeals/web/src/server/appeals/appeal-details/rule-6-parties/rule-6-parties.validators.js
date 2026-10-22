@@ -1,10 +1,14 @@
-import { createEmailInputValidator } from '#lib/validators/email-input.validator.js';
+import {
+	createEmailInputOptionalValidator,
+	createEmailInputValidator
+} from '#lib/validators/email-input.validator.js';
 import { areIdParamsValid } from '#lib/validators/id-param.validator.js';
 import {
 	createTextInputValidatorMinMax,
 	TEXT_INPUT_MAX_CHARACTERS,
 	TEXT_INPUT_MIN_CHARACTERS
 } from '#lib/validators/text-input-validator.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 
 /**
  * @type {import("express").RequestHandler}
@@ -29,7 +33,13 @@ export const validateName = createTextInputValidatorMinMax(
 	`The name must not include numbers`
 );
 
-export const validateEmail = createEmailInputValidator(
-	'email',
-	'Enter a Rule 6 party email address'
-);
+/**
+ * @type {import("express").RequestHandler}
+ */
+export const validateEmail = (req, res, next) => {
+	const isGeneric = isGenericAppealType(req.currentAppeal?.appealType);
+	if (isGeneric) {
+		return createEmailInputOptionalValidator('email')(req, res, next);
+	}
+	return createEmailInputValidator('email', 'Enter a Rule 6 party email address')(req, res, next);
+};

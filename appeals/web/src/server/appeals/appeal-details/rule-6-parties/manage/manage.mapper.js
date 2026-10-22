@@ -30,7 +30,7 @@ export function manageRule6PartiesPage(appealData, request) {
 					text: rule6Party.serviceUser.organisationName
 				},
 				value: {
-					text: rule6Party.serviceUser.email
+					text: rule6Party.serviceUser.email || ''
 				},
 				actions: {
 					id: `rule-6-party-${rule6Party.id}-actions`,
