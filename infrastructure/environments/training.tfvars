@@ -80,10 +80,10 @@ apps_config = {
     featureFlagExpeditedAppealsLpaq             = true
     featureFlagExpeditedAppealsChangeProcedure  = true
     featureFlagEnforcementChangeProcedure       = false
-    featureFlagSharingHearingDocuments          = false
-    featureFlagSharingInquiryEventDocuments     = false
-    featureFlagSharingInquiryDocuments          = false
-    featureFlagSharingSupportingDocuments       = false
+    featureFlagSharingHearingDocuments          = true
+    featureFlagSharingInquiryEventDocuments     = true
+    featureFlagSharingInquiryDocuments          = true
+    featureFlagSharingSupportingDocuments       = true
     featureFlagShareMultipleDocs                = false
     featureFlagGenericCase                      = false
   }
