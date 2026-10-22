@@ -33,6 +33,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import {
 	isEnforcementCaseType,
+	isGenericAppealType,
 	isS78ExpeditedAppealType
 } from '@pins/appeals/utils/appeal-type-checks.js';
 import {
@@ -527,7 +528,10 @@ const startCase = async (
 			isEnforcementChild
 		});
 
-		if (!isChildAppeal) {
+		const isGeneric =
+			isGenericAppealType(appeal.appealType?.type) || isGenericAppealType(appeal.appealType?.key);
+
+		if (!isChildAppeal && !isGeneric) {
 			const siteAddress = appeal.address
 				? formatAddressSingleLine(appeal.address)
 				: 'Address not available';
@@ -875,6 +879,9 @@ const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient, az
  * @returns {boolean}
  */
 const shouldSendNotify = (appealTypeShorthand, procedureType) => {
+	if (isGenericAppealType(appealTypeShorthand)) {
+		return false;
+	}
 	return (
 		appealTypeShorthand === APPEAL_CASE_TYPE.D ||
 		appealTypeShorthand === APPEAL_CASE_TYPE.ZP ||

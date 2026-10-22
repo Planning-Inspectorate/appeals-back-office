@@ -3,6 +3,7 @@ import { mapAllocationDetails } from './submappers/allocation-details.mapper.js'
 import { mapAppealDecision } from './submappers/appeal-decision.mapper.js';
 import { mapAppealReference } from './submappers/appeal-reference.mapper.js';
 import { mapAppealStatus } from './submappers/appeal-status.mapper.js';
+import { mapAppealSubmittedDate } from './submappers/appeal-submitted-date.mapper.js';
 import { mapAppealType } from './submappers/appeal-type.mapper.js';
 import { mapAppellantCase } from './submappers/appellant-case.mapper.js';
 import { mapAppellantHealthAndSafety } from './submappers/appellant-health-and-safety.mapper.js';
@@ -72,6 +73,7 @@ export const submaps = {
 	visitType: mapVisitType,
 	validAt: mapValidAt,
 	startedAt: mapStartedAt,
+	appealSubmittedDate: mapAppealSubmittedDate,
 	lpaQuestionnaireDueDate: mapLpaQuestionnaireDueDate,
 	siteVisitTimetable: mapSiteVisitTimetable,
 	siteVisit: mapSiteVisit,
