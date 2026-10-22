@@ -148,4 +148,59 @@ describe('valid-at.mapper', () => {
 			expect(mappedData).toEqual(expectedMappedData);
 		});
 	});
+
+	it('should return "Not validated" and "Add" action link for generic appeal types without validAt', () => {
+		data.appealDetails.appealType = 'Tree preservation order';
+		const mappedData = mapValidAt(data);
+		expect(mappedData).toEqual({
+			id: 'valid-date',
+			display: {
+				summaryListItem: {
+					actions: {
+						items: [
+							{
+								attributes: {
+									'data-cy': 'add-valid-date'
+								},
+								href: '/test/appellant-case/valid/date',
+								text: 'Add',
+								visuallyHiddenText: 'Valid date'
+							}
+						]
+					},
+					classes: 'appeal-valid-date',
+					key: { text: 'Valid date' },
+					value: { text: 'Not validated' }
+				}
+			}
+		});
+	});
+
+	it('should return formatted date and "Change" action link for generic appeal types with validAt', () => {
+		data.appealDetails.appealType = 'Tree preservation order';
+		data.appealDetails.validAt = '2026-10-01T00:00:00.000Z';
+		const mappedData = mapValidAt(data);
+		expect(mappedData).toEqual({
+			id: 'valid-date',
+			display: {
+				summaryListItem: {
+					actions: {
+						items: [
+							{
+								attributes: {
+									'data-cy': 'change-valid-date'
+								},
+								href: '/test/appellant-case/valid/date',
+								text: 'Change',
+								visuallyHiddenText: 'Valid date'
+							}
+						]
+					},
+					classes: 'appeal-valid-date',
+					key: { text: 'Valid date' },
+					value: { text: '1 October 2026' }
+				}
+			}
+		});
+	});
 });
