@@ -813,6 +813,10 @@ describe('lpa questionnaires routes', () => {
 						userId: householdAppeal.caseOfficer.id
 					}
 				});
+				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledWith(
+					expect.stringContaining('EXEC dbo.spSetPersonalList')
+				);
 				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
 				expect(response.status).toEqual(200);
 			});
@@ -867,6 +871,10 @@ describe('lpa questionnaires routes', () => {
 						userId: householdAppeal.caseOfficer.id
 					}
 				});
+				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledWith(
+					expect.stringContaining('EXEC dbo.spSetPersonalList')
+				);
 				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
 				expect(response.status).toEqual(200);
 			});
@@ -921,6 +929,10 @@ describe('lpa questionnaires routes', () => {
 						userId: householdAppeal.caseOfficer.id
 					}
 				});
+				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledWith(
+					expect.stringContaining('EXEC dbo.spSetPersonalList')
+				);
 				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
 				expect(response.status).toEqual(200);
 			});
@@ -975,6 +987,10 @@ describe('lpa questionnaires routes', () => {
 						userId: householdAppeal.caseOfficer.id
 					}
 				});
+				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledWith(
+					expect.stringContaining('EXEC dbo.spSetPersonalList')
+				);
 				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
 				expect(response.status).toEqual(200);
 			});
@@ -1029,6 +1045,10 @@ describe('lpa questionnaires routes', () => {
 						userId: householdAppeal.caseOfficer.id
 					}
 				});
+				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledWith(
+					expect.stringContaining('EXEC dbo.spSetPersonalList')
+				);
 				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
 				expect(response.status).toEqual(200);
 			});
@@ -1122,6 +1142,11 @@ describe('lpa questionnaires routes', () => {
 						}
 					]
 				});
+
+				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledWith(
+					expect.stringContaining('EXEC dbo.spSetPersonalList')
+				);
 				expect(response.status).toEqual(200);
 			});
 
@@ -1214,6 +1239,10 @@ describe('lpa questionnaires routes', () => {
 						}
 					]
 				});
+				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledWith(
+					expect.stringContaining('EXEC dbo.spSetPersonalList')
+				);
 				expect(response.status).toEqual(200);
 			});
 
@@ -1286,6 +1315,10 @@ describe('lpa questionnaires routes', () => {
 						text: 'A'
 					})
 				});
+				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.$executeRawUnsafe).toHaveBeenCalledWith(
+					expect.stringContaining('EXEC dbo.spSetPersonalList')
+				);
 				expect(response.status).toEqual(200);
 			});
 
