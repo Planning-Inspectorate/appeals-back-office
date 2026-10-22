@@ -14,10 +14,14 @@ exports[`redact renders the confirm redaction page 1`] = `
                     <dd class="govuk-summary-list__value">Lee Thornton</dd>
                 </div>
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Original comment</dt>
-                    <dd class="govuk-summary-list__value">Awaiting review comment 47</dd>
+                    <dd class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="" data-mode="html">Awaiting review comment 47</div>
+                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redacted comment</dt>
-                    <dd class="govuk-summary-list__value"></dd>
+                    <dd class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="" data-mode="text"></div>
+                    </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/redact?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finterested-party-comments%2F3670%2Fredact">Change<span class="govuk-visually-hidden"> redacted comment</span></a>
                     </dd>
                 </div>
@@ -49,7 +53,9 @@ exports[`redact renders the redact page 1`] = `
     <div class="govuk-grid-row">
         <form method="POST" class="govuk-grid-column-two-thirds">
             <p class="govuk-body govuk-!-margin-bottom-0">Original comment:</p>
-            <div id="original-comment" class="govuk-inset-text govuk-!-margin-top-2">Awaiting review comment 47</div>
+            <div id="original-comment" class="govuk-inset-text govuk-!-margin-top-2">
+                <div class="pins-show-more" data-label="" data-mode="html">Awaiting review comment 47</div>
+            </div>
             <div class="govuk-button-group">
                 <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button"
                 id="revert-button">Revert to original comment</button>
