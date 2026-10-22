@@ -80,6 +80,17 @@ router
 	);
 
 router
+	.route(['/manage-documents/:folderId/share-all', '/manage-documents/:folderId/share-all'])
+	.get(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.getShareAllDocuments)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.postShareAllDocuments)
+	);
+
+router
 	.route(['/manage-documents/:folderId', '/manage-documents/:folderId'])
 	.get(asyncHandler(controller.getManageFolder));
 

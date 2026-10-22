@@ -13,21 +13,26 @@ import {
 	renderDocumentUpload,
 	renderManageDocument,
 	renderManageFolder,
+	renderShareAllDocuments,
 	renderUploadDocumentsCheckAndConfirm
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import {
 	getDocumentFileType,
+	getDocumentRedactionStatuses,
 	getFileVersionsInfo,
-	updateDocument
+	updateDocument,
+	updateDocuments
 } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
+import { getShareableDocuments } from '#lib/documents.js';
 import logger from '#lib/logger.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
+import { redactionStatusNameToId } from '#lib/redaction-statuses.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { FRONT_OFFICE_DASHBOARD_PATH_STUBS } from '@pins/appeals/constants/common.js';
 import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
-import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
+import { APPEAL_DOCUMENT_TYPE, REDACTION_STATUS } from '@planning-inspectorate/data-model';
 import { addWeeks, format } from 'date-fns';
 import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
 import {
@@ -285,15 +290,47 @@ export const getManageFolder = async (request, response) => {
 
 	const categoryLabel = `Supporting documents`;
 
+	const baseUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/supporting-documents`;
+
+	const numShareableDocuments = getShareableDocuments(currentFolder).length;
+
+	const shareAllLink =
+		numShareableDocuments > 0
+			? `${baseUrl}/manage-documents/${currentFolder.folderId}/share-all`
+			: undefined;
+
 	await renderManageFolder({
 		request,
 		response,
 		backLinkUrl: `/appeals-service/appeal-details/${request.params.appealId}`,
-		viewAndEditUrl: `/appeals-service/appeal-details/${request.params.appealId}/supporting-documents/manage-documents/${currentFolder.folderId}/{{documentId}}`,
-		addButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/supporting-documents/upload-documents/${currentFolder.folderId}`,
+		viewAndEditUrl: `${baseUrl}/manage-documents/${currentFolder.folderId}/{{documentId}}`,
+		addButtonUrl: `${baseUrl}/upload-documents/${currentFolder.folderId}`,
 		pageHeadingTextOverride: categoryLabel,
 		canShare: true,
-		shareAllLinkUrl: `/appeals-service/appeal-details/${request.params.appealId}/supporting-documents/manage-documents/${currentFolder.folderId}/share-all`
+		shareAllLinkUrl: shareAllLink
+	});
+};
+
+/**
+  @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getShareAllDocuments = async (request, response) => {
+	const { currentAppeal, currentFolder } = request;
+
+	const numShareableDocuments = getShareableDocuments(currentFolder).length;
+
+	if (!currentAppeal || !currentFolder) {
+		return response.status(404).render('app/404.njk');
+	}
+
+	await renderShareAllDocuments({
+		request,
+		response,
+		numShareableDocuments,
+		showNotifyPreviews: true,
+		totalFolderSize: currentFolder.totalFolderSize,
+		backLinkUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/supporting-documents/manage-documents/${currentFolder.folderId}`
 	});
 };
 
@@ -507,6 +544,59 @@ export const postShareDocumentCheckAndConfirm = async (request, response) => {
 		bannerDefinitionKey: 'documentAdded',
 		appealId: appealId,
 		text: 'Document shared'
+	});
+
+	return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+};
+/** @typedef {import('@pins/appeals.api').Appeals.DocumentInfo} DocumentInfo */
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postShareAllDocuments = async (request, response) => {
+	const { appealId } = request.params;
+	const { currentFolder } = request;
+
+	const shareableDocuments = currentFolder.documents.filter(
+		(/** @type {DocumentInfo} */ document) =>
+			document.latestDocumentVersion.redactionStatus.toLowerCase() !== REDACTION_STATUS.UNREDACTED
+	);
+
+	try {
+		const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
+
+		const formattedDocuments = shareableDocuments.map((/** @type DocumentInfo */ document) => ({
+			id: document.id,
+			latestDocumentVersionId: document.latestDocumentVersion.version,
+			isShared: true,
+			receivedDate: document.latestDocumentVersion.dateReceived,
+			redactionStatus: redactionStatusNameToId(
+				// @ts-ignore
+				redactionStatuses,
+				document.latestDocumentVersion.redactionStatus
+			)
+		}));
+
+		await updateDocuments(request.apiClient, appealId, {
+			documents: formattedDocuments,
+			sharingDocumentType: 'supporting-document',
+			shareMultipleDocuments: shareableDocuments.length > 1
+		});
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when sharing supporting' + ' documents'
+		);
+		return response.status(500).render('app/500.njk');
+	}
+
+	addNotificationBannerToSession({
+		session: request.session,
+		bannerDefinitionKey: 'documentAdded',
+		appealId: appealId,
+		text: 'Documents shared'
 	});
 
 	return response.redirect(`/appeals-service/appeal-details/${appealId}`);

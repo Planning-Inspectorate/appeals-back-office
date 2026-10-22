@@ -579,8 +579,129 @@ describe('inquiry documents', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Inquiry documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFolderInfo.pdf');
 		});
+		it(`should render the share all button if there are unpublished docs to be shared`, async () => {
+			const response = await request.get(
+				`${baseUrl}/1/inquiry/documents/manage-documents/${inquiryDocsFolderId}`
+			);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Share all documents</a>');
+		});
+		it(`should render the share all button if there are unpublished docs to be shared`, async () => {
+			const publishedFolder = {
+				...inquiryDocumentsFolderInfo,
+				documents: inquiryDocumentsFolderInfo.documents.map((document) => ({
+					...document,
+					latestDocumentVersion: {
+						...document.latestDocumentVersion,
+						published: true
+					}
+				}))
+			};
+			nock.cleanAll();
+			installMockApi();
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses)
+				.persist();
+			nock('http://test/').get(getFolderApiUrl(inquiryDocsFolderId)).reply(200, publishedFolder);
+
+			const response = await request.get(
+				`${baseUrl}/1/inquiry/documents/manage-documents/${inquiryDocsFolderId}`
+			);
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).not.toContain('Share all documents</a>');
+		});
 	});
 
+	describe('GET /inquiry/documents/manage-documents/:folderId/share-all', () => {
+		it(`should render a 404 error page if the folderId is not valid`, async () => {
+			const response = await request.get(
+				`${baseUrl}/1/inquiry-event-documents/manage-documents/99/share-all`
+			);
+			const element = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(element.innerHTML).toContain('Page not found');
+		});
+
+		it(`should render the share all documents page if the folderId is valid`, async () => {
+			const folder = {
+				...inquiryDocumentsFolderInfo,
+				totalFolderSize: inquiryDocumentsFolderInfo.documents.length
+			};
+			nock('http://test/').get(getFolderApiUrl(inquiryDocsFolderId)).reply(200, folder);
+			nock('http://test/')
+				.get('/appeals/1/case-team-email')
+				.reply(200, { email: 'test@example.com' });
+			nock('http://test/')
+				.post('/appeals/notify-preview/document-received.content.md')
+				.reply(200, { renderedHtml: '<p>Test notification</p>' });
+
+			const response = await request.get(
+				`${baseUrl}/1/inquiry/documents/manage-documents/${inquiryDocsFolderId}/share-all`
+			);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			expect(response.status).toBe(200);
+			expect(response.text).toContain(
+				`href="/appeals-service/appeal-details/1/inquiry/documents/manage-documents/${inquiryDocsFolderId}"`
+			);
+		});
+	});
+
+	describe('POST /inquiry/documents/manage-documents/:folderId/share-all', () => {
+		const shareableFolder = {
+			...inquiryDocumentsFolderInfo,
+			documents: inquiryDocumentsFolderInfo.documents.map((document) => ({
+				...document,
+				latestDocumentVersion: {
+					...document.latestDocumentVersion,
+					published: false
+				}
+			}))
+		};
+
+		beforeEach(() => {
+			nock.cleanAll();
+			installMockApi();
+			nock('http://test/').get(getFolderApiUrl(1)).reply(200, shareableFolder).persist();
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses)
+				.persist();
+		});
+
+		it(`should mark each shareable document as shared and redirect to the appeal details page`, async () => {
+			const patchMock = nock('http://test/').patch('/appeals/1/documents').reply(200, {});
+
+			const response = await request.post(
+				`${baseUrl}/1/inquiry/documents/manage-documents/${inquiryDocsFolderId}/share-all`
+			);
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(`Found. Redirecting to ${baseUrl}/1`);
+			expect(patchMock.isDone()).toBe(true);
+		});
+
+		it(`should render a 500 error page if updating the documents fails`, async () => {
+			const patchMock = nock('http://test/').patch('/appeals/1/documents').reply(500, {});
+
+			const response = await request.post(
+				`${baseUrl}/1/inquiry/documents/manage-documents/${inquiryDocsFolderId}/share-all`
+			);
+
+			expect(response.statusCode).toBe(500);
+			expect(response.text).toContain('Sorry, there is a problem with the service');
+			expect(patchMock.isDone()).toBe(true);
+		});
+	});
 	describe('GET /inquiry/documents/manage-documents/:folderId/:documentId', () => {
 		beforeEach(() => {
 			nock('http://test/')

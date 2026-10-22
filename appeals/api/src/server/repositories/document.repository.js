@@ -149,24 +149,42 @@ export const getDocumentsInFolder = ({ folderId }) => {
  * @param {UpdateDocumentsRequest} data
  * @returns
  */
-export const updateDocuments = (data) => {
-	const queries = data.map((document) =>
-		databaseConnector.documentVersion.update({
+export const updateDocuments = async (data) => {
+	const redactionStatuses =
+		await documentRedactionStatusRepository.getAllDocumentRedactionStatuses();
+	const noRedactionRequiredStatus = redactionStatuses.find(
+		(redaction) => redaction.key === APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED
+	);
+
+	const queries = data.map((document) => {
+		const { latestDocumentVersion } = document;
+		const shouldPublish = !!(
+			document.isShared &&
+			latestDocumentVersion &&
+			!latestDocumentVersion.published
+		);
+
+		const redactionStatusId =
+			document.redactionStatus ??
+			// @ts-ignore
+			(shouldPublish && latestDocumentVersion.redactionStatusId === null
+				? noRedactionRequiredStatus?.id
+				: undefined);
+
+		return databaseConnector.documentVersion.update({
 			data: {
-				dateReceived: document.receivedDate,
-				redactionStatus: {
-					connect: {
-						id: document.redactionStatus
-					}
-				},
-				published: document.published,
+				...(document.receivedDate !== undefined && { dateReceived: document.receivedDate }),
+				...(redactionStatusId && { redactionStatus: { connect: { id: redactionStatusId } } }),
+				...(shouldPublish
+					? { published: true, datePublished: new Date() }
+					: { published: document.published }),
 				draft: false
 			},
 			where: {
-				documentGuid_version: { documentGuid: document.id, version: document.latestVersion }
+				documentGuid_version: { documentGuid: document.id, version: latestDocumentVersion.version }
 			}
-		})
-	);
+		});
+	});
 
 	return Promise.all(queries);
 };
@@ -259,9 +277,9 @@ export const setRedactionStatusOnValidation = async (
 	/** @type {UpdateRedactionStatusResult[]} */
 	const result = await databaseConnector.$queryRaw`UPDATE dv
 		SET redactionStatusId = ${redactionStatusId}
-		OUTPUT 
+		OUTPUT
 			 d.guid ,d.name
-			,inserted.version ,inserted.documentURI ,inserted.originalFilename 
+			,inserted.version ,inserted.documentURI ,inserted.originalFilename
 			,inserted.size ,inserted.mime ,inserted.fileMD5 ,inserted.virusCheckStatus
 			,inserted.stage	,inserted.documentType ,inserted.published
 			,inserted.datePublished	,inserted.dateCreated ,inserted.dateReceived ,inserted.lastModified
