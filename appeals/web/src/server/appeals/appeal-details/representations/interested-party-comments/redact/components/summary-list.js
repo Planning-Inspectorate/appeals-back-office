@@ -1,6 +1,7 @@
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
 
+import { showMoreComment } from '#appeals/appeal-details/representations/common/components/show-more-comment.js';
 import { getAttachmentList } from '#appeals/appeal-details/representations/common/document-attachment-list.js';
 import { editLink } from '#lib/edit-utilities.js';
 
@@ -32,11 +33,11 @@ export const summaryList = (appealDetails, comment, session, redactMatching) => 
 					? [
 							{
 								key: { text: 'Original comment' },
-								value: { text: comment.originalRepresentation }
+								value: showMoreComment({ text: comment.originalRepresentation })
 							},
 							{
 								key: { text: 'Redacted comment' },
-								value: { text: session?.redactedRepresentation },
+								value: showMoreComment({ text: session?.redactedRepresentation }),
 								actions: {
 									items: [
 										{
@@ -53,7 +54,7 @@ export const summaryList = (appealDetails, comment, session, redactMatching) => 
 					: [
 							{
 								key: { text: 'Comment' },
-								value: { text: comment.originalRepresentation },
+								value: showMoreComment({ text: comment.originalRepresentation }),
 								actions: {
 									items: [
 										{

@@ -3,6 +3,7 @@ import { buttonComponent, simpleHtmlComponent, wrapComponents } from '#lib/mappe
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { REVERT_BUTTON_TEXT } from '@pins/appeals/constants/common.js';
 import { redactInput } from '../../common/components/redact-input.js';
+import { showMoreComment } from '../../common/components/show-more-comment.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
@@ -31,9 +32,9 @@ export const redactInterestedPartyCommentPage = (appealDetails, comment, backLin
 				{
 					type: 'inset-text',
 					parameters: {
-						text: comment.originalRepresentation,
 						id: 'original-comment',
-						classes: 'govuk-!-margin-top-2'
+						classes: 'govuk-!-margin-top-2',
+						...showMoreComment({ text: comment.originalRepresentation })
 					}
 				},
 				...redactInput({
