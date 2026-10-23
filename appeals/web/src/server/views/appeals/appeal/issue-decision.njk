@@ -34,7 +34,9 @@
 			{%- endif -%}
 		{%- endfor -%}
 		{%- if not viewOnly -%}
+		{%- if not hideNotificationCopy -%}
 		<p class="govuk-body">We'll send an email to the appellant, LPA and any interested parties to tell them about the decision.</p>
+		{%- endif -%}
 		{{ govukButton({
 			text: pageContent.submitButtonText if pageContent.submitButtonText else "Continue",
 			type: "submit"

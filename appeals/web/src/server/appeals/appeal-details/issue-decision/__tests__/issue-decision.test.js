@@ -188,6 +188,49 @@ describe('issue-decision', () => {
 			});
 		});
 
+		describe('Generic appeals', () => {
+			beforeEach(() => {
+				nock('http://test/')
+					.get('/appeals/1234?include=all')
+					.reply(200, {
+						...appealData,
+						appealId: 1234,
+						appealType: 'Tree preservation order'
+					})
+					.persist();
+			});
+
+			it(`should render the generic appeal 'decision' page with all 8 outcomes`, async () => {
+				const response = await request.get(`${baseUrl}/1234${issueDecisionPath}${decisionPath}`);
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision" name="decision" type="radio" value="allowed">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-2" name="decision" type="radio" value="dismissed">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="split_decision">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-4" name="decision" type="radio" value="planning_permission_granted">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-5" name="decision" type="radio" value="notice_upheld">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-6" name="decision" type="radio" value="notice_varied_and_upheld">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-7" name="decision" type="radio" value="quashed_on_legal_grounds">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-8" name="decision" type="radio" value="invalid">'
+				);
+			});
+		});
+
 		describe('Linked appeals', () => {
 			let linkedAppealData;
 
@@ -1093,6 +1136,50 @@ describe('issue-decision', () => {
 				expect(unprettifiedElement.innerHTML).toContain('test-document-lpa.pdf</a>');
 
 				expect(unprettifiedElement.innerHTML).toContain('Issue decision</button>');
+			});
+		});
+
+		describe('Single appeal - Generic appeal', () => {
+			beforeEach(async () => {
+				nock('http://test/')
+					.get('/appeals/1?include=all')
+					.reply(200, {
+						...issueDecisionAppealData,
+						appealType: 'Tree preservation order'
+					})
+					.persist();
+				nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
+				nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses)
+					.persist();
+
+				issueDecisionResponse = await request
+					.post(`${baseUrl}/1/issue-decision/decision`)
+					.send({ decision: APPEAL_CASE_DECISION_OUTCOME.ALLOWED });
+
+				uploadDecisionLetterResponse = await request
+					.post(`${baseUrl}/1${issueDecisionPath}${decisionLetterUploadPath}`)
+					.send({
+						'upload-info':
+							'[{"name": "test-document.pdf", "GUID": "1", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "caseDecisionLetter", "size": 1, "stage": "appellant-case"}]'
+					});
+			});
+
+			it('should render the check your decision page without email previews or notification copy', async () => {
+				const response = await request.get(
+					`${baseUrl}/1${issueDecisionPath}${checkYourDecisionPath}`
+				);
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Check details and issue decision</h1>');
+				expect(unprettifiedElement.innerHTML).toContain('Allowed</dd>');
+				expect(unprettifiedElement.innerHTML).not.toContain('Preview email to appellant');
+				expect(unprettifiedElement.innerHTML).not.toContain(
+					"We'll send an email to the appellant, LPA and any interested parties to tell them about the decision."
+				);
 			});
 		});
 

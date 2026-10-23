@@ -12,6 +12,7 @@ import {
 	ERROR_NO_RECIPIENT_EMAIL,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { dateISOStringToDisplayDate, formatTime12h } from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
 
@@ -142,6 +143,12 @@ const sendHearingNotifications = async (
 	personalisation = {},
 	includeRecipientRole = false
 ) => {
+	const isGeneric =
+		isGenericAppealType(appeal.appealType?.type) || isGenericAppealType(appeal.appealType?.key);
+	if (isGeneric) {
+		return;
+	}
+
 	const appellantEmail = appeal.agent?.email ?? appeal.appellant?.email;
 	const lpaEmail = appeal.lpa?.email;
 	if (!appellantEmail || !lpaEmail) {

@@ -9,7 +9,10 @@ import { radiosInput } from '#lib/mappers/components/page-components/radio.js';
 import { simpleHtmlComponent, textSummaryListItem } from '#lib/mappers/index.js';
 import { appealProcedureKeyToLabelText } from '#lib/procedure-type-display-name-formatter.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
-import { isS78ExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import {
+	isGenericAppealType,
+	isS78ExpeditedAppealType
+} from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /**
@@ -120,6 +123,7 @@ export function selectProcedurePage(
 			appellantCase.applicationDecision,
 			appellantCase.typeOfPlanningApplication
 		);
+	const isGeneric = isGenericAppealType(appealType);
 	const dataMappers = [
 		...(showPart1
 			? [
@@ -150,7 +154,7 @@ export function selectProcedurePage(
 	dataMappers.map((item) => {
 		if (
 			(!item.featureFlag || featureFlags.isFeatureActive(item.featureFlag)) &&
-			item.appeals.includes(appealType)
+			(item.appeals.includes(appealType) || isGeneric)
 		) {
 			radioItems.push({
 				value: item.case,
@@ -196,18 +200,20 @@ export function confirmProcedurePage(
 	appealType,
 	emailPreviews
 ) {
-	const emailPreviewComponents = emailPreviews
-		? [
-				detailsComponent({
-					summaryText: `Preview email to appellant`,
-					html: emailPreviews.appellant
-				}),
-				detailsComponent({
-					summaryText: `Preview email to LPA`,
-					html: emailPreviews.lpa
-				})
-			]
-		: [];
+	const isGeneric = isGenericAppealType(appealType);
+	const emailPreviewComponents =
+		!isGeneric && emailPreviews
+			? [
+					detailsComponent({
+						summaryText: `Preview email to appellant`,
+						html: emailPreviews.appellant
+					}),
+					detailsComponent({
+						summaryText: `Preview email to LPA`,
+						html: emailPreviews.lpa
+					})
+				]
+			: [];
 
 	const isEditable = ![
 		APPEAL_TYPE.ENFORCEMENT_NOTICE,
@@ -219,7 +225,9 @@ export function confirmProcedurePage(
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Check details and start case',
-		backLinkUrl: `/appeals-service/appeal-details/${appealId}/${isEditable ? `start-case/select-procedure` : ''}`,
+		backLinkUrl: isGeneric
+			? `/appeals-service/appeal-details/${appealId}/start-case/timetable`
+			: `/appeals-service/appeal-details/${appealId}/${isEditable ? `start-case/select-procedure` : ''}`,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
 		heading: 'Check details and start case',
 		pageComponents: [
@@ -245,7 +253,9 @@ export function confirmProcedurePage(
 				{
 					class: 'govuk-body'
 				},
-				`We’ll start the timetable now and send emails to the relevant parties.`
+				isGeneric
+					? 'We’ll start the timetable now'
+					: 'We’ll start the timetable now and send emails to the relevant parties.'
 			),
 			...emailPreviewComponents
 		],
