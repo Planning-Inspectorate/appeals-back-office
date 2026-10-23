@@ -1209,12 +1209,9 @@ type UpdateInquiry = {
 };
 
 type UpdateHearing = {
-	appealId: number;
-	hearingId: number;
 	hearingStartTime: Date | string | null;
 	hearingEndTime: Date | string | undefined | null;
 	estimatedDays: number | undefined;
-	addressId?: number;
 	address?: Omit<Schema.Address, 'id'> | null;
 };
 
