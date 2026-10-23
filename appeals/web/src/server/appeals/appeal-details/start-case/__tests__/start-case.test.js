@@ -1386,5 +1386,72 @@ describe('start-case', () => {
 				);
 			});
 		});
+
+		describe('Check details and start case for generic appeals (Scenario 1 & 2)', () => {
+			it('should render check details page with "We’ll start the timetable now" copy and no email previews (Scenario 1)', async () => {
+				nock('http://test/').get('/appeals/1?include=all').reply(200, genericAppeal);
+
+				await request
+					.post('/appeals-service/appeal-details/1/start-case/select-procedure')
+					.send({ appealProcedure: 'written' });
+
+				nock('http://test/').get('/appeals/1?include=all').reply(200, genericAppeal);
+
+				const response = await request.get(
+					'/appeals-service/appeal-details/1/start-case/select-procedure/check-and-confirm'
+				);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHtml).toContain('We’ll start the timetable now</p>');
+				expect(unprettifiedHtml).not.toContain('and send emails to the relevant parties');
+				expect(unprettifiedHtml).not.toContain('Preview email to appellant');
+				expect(unprettifiedHtml).not.toContain('Preview email to LPA');
+				expect(response.text).toContain(
+					'href="/appeals-service/appeal-details/1/start-case/timetable"'
+				);
+			});
+
+			it('should start case with custom timetable and display caseStarted banner (Scenario 2)', async () => {
+				nock('http://test/').get('/appeals/1?include=all').reply(200, genericAppeal);
+
+				await request
+					.post('/appeals-service/appeal-details/1/start-case/select-procedure')
+					.send({ appealProcedure: 'written' });
+
+				nock('http://test/').get('/appeals/1?include=all').reply(200, genericAppeal);
+				nock('http://test/').post('/appeals/validate-business-date').reply(200, { result: true });
+
+				await request.post('/appeals-service/appeal-details/1/start-case/timetable').send({
+					'lpa-questionnaire-due-date-day': '27',
+					'lpa-questionnaire-due-date-month': '03',
+					'lpa-questionnaire-due-date-year': '2026'
+				});
+
+				nock('http://test/').get('/appeals/1?include=all').reply(200, genericAppeal);
+
+				/** @type {any} */
+				let requestBody;
+				const mockApi = nock('http://test/')
+					.post('/appeals/1/appeal-timetables', (body) => {
+						requestBody = body;
+						return true;
+					})
+					.reply(200, {});
+
+				const response = await request.post(
+					'/appeals-service/appeal-details/1/start-case/select-procedure/check-and-confirm'
+				);
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
+				expect(mockApi.isDone()).toBe(true);
+				expect(requestBody.timetable).toEqual({
+					lpaQuestionnaireDueDate: '2026-03-27T00:00:00.000Z'
+				});
+			});
+		});
 	});
 });

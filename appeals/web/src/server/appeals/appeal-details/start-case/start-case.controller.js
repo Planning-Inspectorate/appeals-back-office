@@ -1,7 +1,11 @@
 import featureFlags from '#common/feature-flags.js';
 import { getEnabledHearingAppealTypes } from '#common/hearing-appeal-types.js';
 import { getEnabledInquiryAppealTypes } from '#common/inquiry-appeal-types.js';
-import { dateISOStringToDisplayDate, getTodaysISOString } from '#lib/dates.js';
+import {
+	dateISOStringToDisplayDate,
+	dayMonthYearHourMinuteToISOString,
+	getTodaysISOString
+} from '#lib/dates.js';
 import {
 	applyEditsForAppeal,
 	clearEditsForAppeal,
@@ -405,16 +409,37 @@ export const postConfirmProcedure = async (request, response) => {
 			return response.status(500).render('app/500.njk');
 		}
 
+		const isGeneric = isGenericAppealType(request.currentAppeal.appealType);
+
+		const hearingEstimatedDays =
+			sessionValues?.hearingEstimationYesNo === 'yes' ? sessionValues?.hearingEstimationDays : null;
+
+		const hearingStartTime =
+			sessionValues?.dateKnown === 'yes' &&
+			sessionValues['hearing-date-day'] &&
+			sessionValues['hearing-date-month'] &&
+			sessionValues['hearing-date-year']
+				? dayMonthYearHourMinuteToISOString({
+						day: sessionValues['hearing-date-day'],
+						month: sessionValues['hearing-date-month'],
+						year: sessionValues['hearing-date-year'],
+						hour: sessionValues['hearing-time-hour'],
+						minute: sessionValues['hearing-time-minute']
+					})
+				: null;
+
 		const inspectorName = await getInspectorFormattedEmailName(inspector, request);
+		const timetable = /** @type {any} */ (sessionValues)?.timetable;
 
 		await startCaseService.setStartDate(
 			request.apiClient,
 			appealId,
 			getTodaysISOString(),
 			sessionValues?.appealProcedure,
-			null,
-			null,
-			inspectorName
+			hearingStartTime,
+			hearingEstimatedDays,
+			inspectorName,
+			timetable
 		);
 
 		addNotificationBannerToSession({
@@ -423,7 +448,7 @@ export const postConfirmProcedure = async (request, response) => {
 			appealId
 		});
 
-		if (sessionValues?.appealProcedure === APPEAL_CASE_PROCEDURE.HEARING) {
+		if (!isGeneric && sessionValues?.appealProcedure === APPEAL_CASE_PROCEDURE.HEARING) {
 			addNotificationBannerToSession({
 				session: request.session,
 				bannerDefinitionKey: 'timetableStarted',

@@ -450,6 +450,7 @@ const createStartCaseAuditTrails = async ({
  * @param {string} [hearingStartTime]
  * @param {string} [hearingEstimatedDays]
  * @param {string | null | undefined} inspectorName
+ * @param {Record<string, string> | null} [customTimetable]
  * @returns {Promise<{ success: boolean, timetable?: any }>}
  */
 const startCase = async (
@@ -460,13 +461,17 @@ const startCase = async (
 	procedureType,
 	hearingStartTime,
 	hearingEstimatedDays,
-	inspectorName = null
+	inspectorName = null,
+	customTimetable = null
 ) => {
 	try {
 		const appealType = appeal.appealType || null;
 		if (!appealType) {
 			throw new Error('Appeal type is required to start a case.');
 		}
+
+		const isGeneric =
+			isGenericAppealType(appeal.appealType?.type) || isGenericAppealType(appeal.appealType?.key);
 
 		const isChildAppeal =
 			isLinkedAppealsActive(appeal) &&
@@ -487,13 +492,15 @@ const startCase = async (
 
 		const effectiveProcedureType = getEffectiveProcedureType(appeal, procedureType);
 
-		const timetable = await calculateTimetable(
-			appealType.key,
-			startedAt,
-			effectiveProcedureType,
-			null,
-			isS78Expedited
-		);
+		const timetable = isGeneric
+			? customTimetable || {}
+			: await calculateTimetable(
+					appealType.key,
+					startedAt,
+					effectiveProcedureType,
+					null,
+					isS78Expedited
+				);
 
 		if (!timetable) {
 			return { success: false };
@@ -527,9 +534,6 @@ const startCase = async (
 			hearingStartTime,
 			isEnforcementChild
 		});
-
-		const isGeneric =
-			isGenericAppealType(appeal.appealType?.type) || isGenericAppealType(appeal.appealType?.key);
 
 		if (!isChildAppeal && !isGeneric) {
 			const siteAddress = appeal.address

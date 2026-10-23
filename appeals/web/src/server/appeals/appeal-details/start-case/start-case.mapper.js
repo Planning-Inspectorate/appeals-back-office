@@ -200,18 +200,20 @@ export function confirmProcedurePage(
 	appealType,
 	emailPreviews
 ) {
-	const emailPreviewComponents = emailPreviews
-		? [
-				detailsComponent({
-					summaryText: `Preview email to appellant`,
-					html: emailPreviews.appellant
-				}),
-				detailsComponent({
-					summaryText: `Preview email to LPA`,
-					html: emailPreviews.lpa
-				})
-			]
-		: [];
+	const isGeneric = isGenericAppealType(appealType);
+	const emailPreviewComponents =
+		!isGeneric && emailPreviews
+			? [
+					detailsComponent({
+						summaryText: `Preview email to appellant`,
+						html: emailPreviews.appellant
+					}),
+					detailsComponent({
+						summaryText: `Preview email to LPA`,
+						html: emailPreviews.lpa
+					})
+				]
+			: [];
 
 	const isEditable = ![
 		APPEAL_TYPE.ENFORCEMENT_NOTICE,
@@ -223,7 +225,7 @@ export function confirmProcedurePage(
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Check details and start case',
-		backLinkUrl: isGenericAppealType(appealType)
+		backLinkUrl: isGeneric
 			? `/appeals-service/appeal-details/${appealId}/start-case/timetable`
 			: `/appeals-service/appeal-details/${appealId}/${isEditable ? `start-case/select-procedure` : ''}`,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
@@ -251,7 +253,9 @@ export function confirmProcedurePage(
 				{
 					class: 'govuk-body'
 				},
-				`We’ll start the timetable now and send emails to the relevant parties.`
+				isGeneric
+					? 'We’ll start the timetable now'
+					: 'We’ll start the timetable now and send emails to the relevant parties.'
 			),
 			...emailPreviewComponents
 		],
