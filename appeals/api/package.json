@@ -40,6 +40,7 @@
 	"dependencies": {
 		"@azure/identity": "4.13.1",
 		"@azure/service-bus": "^7.9.5",
+		"@azure/storage-blob": "^12.34.0",
 		"@pins/event-client": "^0.0.0",
 		"@pins/express": "^0.0.0",
 		"@pins/platform": "^0.0.0",
@@ -96,9 +97,9 @@
 		"stream-chain": "^4.2.5",
 		"stream-json": "^3.6.0",
 		"supertest": "7.0.0",
-		"testcontainers": "^11.7.3",
 		"swagger-autogen": "^2.21.4",
-		"swagger-typescript-api": "^13.12.2"
+		"swagger-typescript-api": "^13.12.2",
+		"testcontainers": "^11.7.3"
 	},
 	"imports": {
 		"#db-client/*": "./src/server/utils/db-client/*",
