@@ -1,7 +1,6 @@
-import { dateISOStringToDisplayDate } from '#lib/dates.js';
-import { textSummaryListItem } from '#lib/mappers/index.js';
-import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { displayPlanningObligation } from '@pins/appeals/utils/business-rules.js';
+import { mapDueDateSummaryListItem } from './utils/due-date-mapper-helper.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapPlanningObligationDueDate = ({
@@ -12,30 +11,27 @@ export const mapPlanningObligationDueDate = ({
 }) => {
 	const id = 'planning-obligation-due-date';
 
+	const isGeneric = isGenericAppealType(appealDetails.appealType);
+
 	if (
 		!appealDetails.startedAt ||
-		!displayPlanningObligation(
-			appealDetails.appealType ?? undefined,
-			appealDetails.procedureType ?? undefined,
-			appellantCase?.planningObligation?.hasObligation ?? undefined
-		)
+		(!isGeneric &&
+			!displayPlanningObligation(
+				appealDetails.appealType ?? undefined,
+				appealDetails.procedureType ?? undefined,
+				appellantCase?.planningObligation?.hasObligation ?? undefined
+			))
 	) {
 		return { id, display: {} };
 	}
 
-	const planningObligationDueDate = appealDetails.appealTimetable?.planningObligationDueDate;
-
-	return textSummaryListItem({
+	return mapDueDateSummaryListItem({
 		id,
 		text: 'Planning obligation due',
-		value: planningObligationDueDate
-			? dateISOStringToDisplayDate(planningObligationDueDate)
-			: 'Not provided',
-		link: `${currentRoute}/timetable/edit`,
-		editable:
-			!isChildAppeal(appealDetails) &&
-			userHasUpdateCasePermission &&
-			Boolean(appealDetails.startedAt),
+		dueDate: appealDetails.appealTimetable?.planningObligationDueDate,
+		appealDetails,
+		currentRoute,
+		userHasUpdateCasePermission,
 		classes: 'appeal-planning-obligation-due-date'
 	});
 };

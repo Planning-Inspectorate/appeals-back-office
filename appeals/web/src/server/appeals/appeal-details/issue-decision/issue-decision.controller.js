@@ -44,6 +44,7 @@ import {
 	DECISION_TYPE_APPELLANT_COSTS,
 	DECISION_TYPE_INSPECTOR
 } from '@pins/appeals/constants/support.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import {
 	APPEAL_CASE_DECISION_OUTCOME,
 	APPEAL_CASE_STAGE,
@@ -755,35 +756,43 @@ export const renderCheckDecision = async (request, response) => {
 		return response.status(500).render('app/500.njk');
 	}
 
-	const { previews } = await request.apiClient
-		.post(`appeals/${currentAppeal.appealId}/decision/preview`, {
-			json: {
-				outcome: session.inspectorDecision.outcome,
-				invalidDecisionReason: session.inspectorDecision.invalidReason
-			}
-		})
-		.json();
+	const isGeneric = isGenericAppealType(currentAppeal.appealType);
 
-	const emailPreviewComponents = [
-		detailsComponent({
-			summaryText: 'Preview email to appellant',
-			html: previews.appellant
-		}),
-		detailsComponent({
-			summaryText: 'Preview email to LPA',
-			html: previews.lpa
-		}),
-		detailsComponent({
-			summaryText: 'Preview email to interested parties',
-			html: previews.interestedParty
-		})
-	];
+	/** @type {any[]} */
+	let emailPreviewComponents = [];
+
+	if (!isGeneric) {
+		const { previews } = await request.apiClient
+			.post(`appeals/${currentAppeal.appealId}/decision/preview`, {
+				json: {
+					outcome: session.inspectorDecision.outcome,
+					invalidDecisionReason: session.inspectorDecision.invalidReason
+				}
+			})
+			.json();
+
+		emailPreviewComponents = [
+			detailsComponent({
+				summaryText: 'Preview email to appellant',
+				html: previews.appellant
+			}),
+			detailsComponent({
+				summaryText: 'Preview email to LPA',
+				html: previews.lpa
+			}),
+			detailsComponent({
+				summaryText: 'Preview email to interested parties',
+				html: previews.interestedParty
+			})
+		];
+	}
 
 	const mappedPageContent = checkAndConfirmPage(currentAppeal, request, emailPreviewComponents);
 
 	return response.status(200).render('appeals/appeal/issue-decision.njk', {
 		pageContent: mappedPageContent,
-		errors
+		errors,
+		hideNotificationCopy: isGeneric
 	});
 };
 
@@ -847,36 +856,44 @@ export const renderCostsCheckDecision = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	const { previews } = await request.apiClient
-		.post(`appeals/${currentAppeal.appealId}/decision/preview`, {
-			json: {
-				decisionType: specificDecisionType,
-				outcome: session.inspectorDecision?.outcome,
-				invalidDecisionReason: session.inspectorDecision?.invalidReason
-			}
-		})
-		.json();
+	const isGeneric = isGenericAppealType(currentAppeal.appealType);
 
-	const emailPreviewComponents = [
-		detailsComponent({
-			summaryText: 'Preview email to appellant',
-			html: previews.appellant
-		}),
-		detailsComponent({
-			summaryText: 'Preview email to LPA',
-			html: previews.lpa
-		}),
-		detailsComponent({
-			summaryText: 'Preview email to interested parties',
-			html: previews.interestedParty
-		})
-	];
+	/** @type {any[]} */
+	let emailPreviewComponents = [];
+
+	if (!isGeneric) {
+		const { previews } = await request.apiClient
+			.post(`appeals/${currentAppeal.appealId}/decision/preview`, {
+				json: {
+					decisionType: specificDecisionType,
+					outcome: session.inspectorDecision?.outcome,
+					invalidDecisionReason: session.inspectorDecision?.invalidReason
+				}
+			})
+			.json();
+
+		emailPreviewComponents = [
+			detailsComponent({
+				summaryText: 'Preview email to appellant',
+				html: previews.appellant
+			}),
+			detailsComponent({
+				summaryText: 'Preview email to LPA',
+				html: previews.lpa
+			}),
+			detailsComponent({
+				summaryText: 'Preview email to interested parties',
+				html: previews.interestedParty
+			})
+		];
+	}
 
 	const mappedPageContent = checkAndConfirmPage(currentAppeal, request, emailPreviewComponents);
 
 	return response.status(200).render('appeals/appeal/issue-decision.njk', {
 		pageContent: mappedPageContent,
-		errors
+		errors,
+		hideNotificationCopy: isGeneric
 	});
 };
 

@@ -208,4 +208,27 @@ describe('decision-mapper', () => {
 			expect(mapDecision(params)).toEqual(expectedListedBuildingConsentGrantedRow(params));
 		});
 	});
+
+	describe('for generic appeal', () => {
+		beforeEach(() => {
+			params.appealDetails.appealType = 'Tree preservation order';
+			params.appealDetails.completedStateList = [];
+		});
+
+		it('Should display decision row with issue decision link in ready_to_start', () => {
+			params.appealDetails.appealStatus = 'ready_to_start';
+			expect(mapDecision(params)).toEqual(expectedIssueDecisionRow(params));
+		});
+
+		it('Should display decision row with issue decision link in lpa_questionnaire', () => {
+			params.appealDetails.appealStatus = 'lpa_questionnaire';
+			expect(mapDecision(params)).toEqual(expectedIssueDecisionRow(params));
+		});
+
+		it('Should display decision row with view decision link when outcome exists', () => {
+			params.appealDetails.appealStatus = 'complete';
+			setCaseOutcome(params);
+			expect(mapDecision(params)).toEqual(expectedViewDecisionRow(params));
+		});
+	});
 });
