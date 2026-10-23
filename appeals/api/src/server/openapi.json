@@ -8953,6 +8953,499 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/case-file-package": {
+			"get": {
+				"tags": ["Case File Packages"],
+				"description": "Gets latest package status.",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string",
+									"example": "integer"
+								},
+								"minimum": {
+									"type": "number",
+									"example": 1
+								}
+							}
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CaseFilePackageStatus"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/CaseFilePackageStatus"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Invalid appeal ID"
+					},
+					"404": {
+						"description": "Appeal not found or feature disabled"
+					}
+				}
+			},
+			"post": {
+				"tags": ["Case File Packages"],
+				"description": "Queues a case file package, or returns existing active package.",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string",
+									"example": "integer"
+								},
+								"minimum": {
+									"type": "number",
+									"example": 1
+								}
+							}
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Existing active package",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CaseFilePackage"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/CaseFilePackage"
+								}
+							}
+						}
+					},
+					"202": {
+						"description": "Package queued",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CaseFilePackage"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/CaseFilePackage"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Invalid appeal ID"
+					},
+					"404": {
+						"description": "Appeal not found or feature disabled"
+					},
+					"500": {
+						"description": "Could not queue package"
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/case-file-package/download-url": {
+			"get": {
+				"tags": ["Case File Packages"],
+				"description": "Gets a read-only download URL valid for 15 minutes for latest ready package. Response uses Cache-Control: no-store.",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string",
+									"example": "integer"
+								},
+								"minimum": {
+									"type": "number",
+									"example": 1
+								}
+							}
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CaseFilePackageDownloadUrl"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/CaseFilePackageDownloadUrl"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Invalid appeal ID"
+					},
+					"404": {
+						"description": "Ready package not found or feature disabled"
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/case-file-package/{packageId}/claim": {
+			"post": {
+				"tags": ["Case File Packages"],
+				"description": "Claims an active queued package for processing.",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string",
+									"example": "integer"
+								},
+								"minimum": {
+									"type": "number",
+									"example": 1
+								}
+							}
+						}
+					},
+					{
+						"name": "packageId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"schema": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string",
+									"example": "string"
+								},
+								"enum": {
+									"type": "array",
+									"example": ["00000000-0000-0000-0000-000000000000"],
+									"items": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"204": {
+						"description": "Package claimed"
+					},
+					"400": {
+						"description": "Invalid appeal ID"
+					},
+					"409": {
+						"description": "No matching active queued package"
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/case-file-package/{packageId}": {
+			"get": {
+				"tags": ["Case File Packages"],
+				"description": "Gets a specific package.",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string",
+									"example": "integer"
+								},
+								"minimum": {
+									"type": "number",
+									"example": 1
+								}
+							}
+						}
+					},
+					{
+						"name": "packageId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"schema": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string",
+									"example": "string"
+								},
+								"enum": {
+									"type": "array",
+									"example": ["00000000-0000-0000-0000-000000000000"],
+									"items": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CaseFilePackage"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/CaseFilePackage"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Invalid appeal ID"
+					},
+					"404": {
+						"description": "Package not found"
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/case-file-package/{packageId}/complete": {
+			"post": {
+				"tags": ["Case File Packages"],
+				"description": "Marks an active processing package ready.",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string",
+									"example": "integer"
+								},
+								"minimum": {
+									"type": "number",
+									"example": 1
+								}
+							}
+						}
+					},
+					{
+						"name": "packageId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"schema": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string",
+									"example": "string"
+								},
+								"enum": {
+									"type": "array",
+									"example": ["00000000-0000-0000-0000-000000000000"],
+									"items": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"204": {
+						"description": "Package completed"
+					},
+					"400": {
+						"description": "Invalid appeal ID, blob path or size"
+					},
+					"409": {
+						"description": "No matching active processing package"
+					}
+				},
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CompleteCaseFilePackageRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/CompleteCaseFilePackageRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/case-file-package/{packageId}/fail": {
+			"post": {
+				"tags": ["Case File Packages"],
+				"description": "Marks a processing package failed.",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string",
+									"example": "integer"
+								},
+								"minimum": {
+									"type": "number",
+									"example": 1
+								}
+							}
+						}
+					},
+					{
+						"name": "packageId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"schema": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string",
+									"example": "string"
+								},
+								"enum": {
+									"type": "array",
+									"example": ["00000000-0000-0000-0000-000000000000"],
+									"items": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"204": {
+						"description": "Package marked failed"
+					},
+					"400": {
+						"description": "Invalid appeal ID"
+					},
+					"409": {
+						"description": "No matching active processing package"
+					}
+				},
+				"requestBody": {
+					"required": false,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/FailCaseFilePackageRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/FailCaseFilePackageRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/appellant-case-enforcement-invalid-reasons": {
 			"get": {
 				"tags": ["Appellant Case Enforcement Invalid Reasons"],
@@ -15527,6 +16020,83 @@
 				},
 				"xml": {
 					"name": "TeamEmailResponse"
+				}
+			},
+			"CaseFilePackage": {
+				"type": "object",
+				"required": ["id", "status", "requestedAt", "completedAt", "sizeBytes"],
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"status": {
+						"type": "string",
+						"enum": ["queued", "processing", "ready", "failed"]
+					},
+					"requestedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"completedAt": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					},
+					"sizeBytes": {
+						"type": "integer",
+						"nullable": true
+					}
+				}
+			},
+			"CaseFilePackageStatus": {
+				"oneOf": [
+					{
+						"$ref": "#/components/schemas/CaseFilePackage"
+					},
+					{
+						"type": "object",
+						"required": ["status"],
+						"properties": {
+							"status": {
+								"type": "string",
+								"enum": ["not_requested"]
+							}
+						}
+					}
+				]
+			},
+			"CaseFilePackageDownloadUrl": {
+				"type": "object",
+				"required": ["url"],
+				"properties": {
+					"url": {
+						"type": "string",
+						"format": "uri"
+					}
+				}
+			},
+			"CompleteCaseFilePackageRequest": {
+				"type": "object",
+				"required": ["blobPath", "sizeBytes"],
+				"properties": {
+					"blobPath": {
+						"type": "string",
+						"description": "Must equal case-file-packages/{packageId}.zip"
+					},
+					"sizeBytes": {
+						"type": "integer",
+						"minimum": 1,
+						"maximum": 9007199254740991
+					}
+				}
+			},
+			"FailCaseFilePackageRequest": {
+				"type": "object",
+				"properties": {
+					"error": {
+						"type": "string",
+						"description": "Stored error is truncated to 500 characters"
+					}
 				}
 			},
 			"SingleLinkableAppealSummaryResponse": {
