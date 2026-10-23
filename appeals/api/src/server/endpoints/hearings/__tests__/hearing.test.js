@@ -593,6 +593,86 @@ describe('hearing routes', () => {
 				});
 			});
 
+			describe('when the hearing is still being set up and only estimatedDays changes', () => {
+				const hearingStartTime = '2999-01-01T12:00:00.000Z';
+				const hearingEndTime = '2999-01-01T13:00:00.000Z';
+
+				/**
+				 * @param {{ d: number[] } | null} existingEstimatedDays
+				 */
+				const setupOnlyEstimatedDaysUpdate = (existingEstimatedDays) => {
+					const existingHearing = {
+						id: hearing.id,
+						hearingStartTime: new Date(hearingStartTime),
+						hearingEndTime: new Date(hearingEndTime),
+						estimatedDays: existingEstimatedDays,
+						addressId: null,
+						address: null
+					};
+
+					databaseConnector.appeal.findUnique.mockResolvedValue({
+						...fullPlanningAppeal,
+						hearing: existingHearing
+					});
+					databaseConnector.hearing.findUnique.mockResolvedValue({ ...existingHearing });
+					databaseConnector.hearing.update.mockResolvedValue({ ...existingHearing });
+				};
+
+				test('logs the estimates added audit trail when there were no existing estimated days', async () => {
+					setupOnlyEstimatedDaysUpdate(null);
+
+					const response = await request
+						.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
+						.send({ hearingStartTime, hearingEndTime, estimatedDays: 3 })
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(response.status).toEqual(201);
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+						data: {
+							appealId: fullPlanningAppeal.id,
+							details: 'We have added the number of days we expect the hearing to take',
+							loggedAt: expect.any(Date),
+							userId: 1
+						}
+					});
+					expect(databaseConnector.auditTrail.create).not.toHaveBeenCalledWith({
+						data: {
+							appealId: fullPlanningAppeal.id,
+							details: expect.stringContaining('Hearing date updated'),
+							loggedAt: expect.any(Date),
+							userId: 1
+						}
+					});
+				});
+
+				test('logs the estimates updated audit trail when existing estimated days are changed', async () => {
+					setupOnlyEstimatedDaysUpdate({ d: [6] });
+
+					const response = await request
+						.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
+						.send({ hearingStartTime, hearingEndTime, estimatedDays: 3 })
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(response.status).toEqual(201);
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+						data: {
+							appealId: fullPlanningAppeal.id,
+							details: 'We have updated the number of days we expect the hearing to take',
+							loggedAt: expect.any(Date),
+							userId: 1
+						}
+					});
+					expect(databaseConnector.auditTrail.create).not.toHaveBeenCalledWith({
+						data: {
+							appealId: fullPlanningAppeal.id,
+							details: expect.stringContaining('Hearing date updated'),
+							loggedAt: expect.any(Date),
+							userId: 1
+						}
+					});
+				});
+			});
+
 			test('returns an error if appealId is not provided', async () => {
 				const { hearing } = fullPlanningAppeal;
 

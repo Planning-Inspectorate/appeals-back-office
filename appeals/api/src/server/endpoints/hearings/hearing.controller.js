@@ -14,6 +14,8 @@ import {
 	AUDIT_TRAIL_HEARING_ADDRESS_UPDATED,
 	AUDIT_TRAIL_HEARING_CANCELLED,
 	AUDIT_TRAIL_HEARING_DATE_UPDATED,
+	AUDIT_TRAIL_HEARING_ESTIMATES_ADDED,
+	AUDIT_TRAIL_HEARING_ESTIMATES_UPDATED,
 	AUDIT_TRAIL_HEARING_SET_UP,
 	CASE_RELATIONSHIP_LINKED,
 	ERROR_FAILED_TO_SAVE_DATA,
@@ -179,6 +181,18 @@ export const rearrangeHearing = async (req, res) => {
 				appealId: appeal.id,
 				azureAdUserId,
 				details: stringTokenReplacement(AUDIT_TRAIL_HEARING_DATE_UPDATED, [
+					dateISOStringToDisplayDate(hearingStartTime)
+				])
+			});
+		}
+		if (updatedHearingValues.isOnlyEstimatedDaysUpdated) {
+			const auditLogMessage = updatedHearingValues.existingEstimatedDays
+				? AUDIT_TRAIL_HEARING_ESTIMATES_UPDATED
+				: AUDIT_TRAIL_HEARING_ESTIMATES_ADDED;
+			await createAuditTrail({
+				appealId: appeal.id,
+				azureAdUserId,
+				details: stringTokenReplacement(auditLogMessage, [
 					dateISOStringToDisplayDate(hearingStartTime)
 				])
 			});

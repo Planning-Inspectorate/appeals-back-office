@@ -266,8 +266,10 @@ export const AUDIT_TRAIL_HEARING_DATE_UPDATED = 'Hearing date updated to {replac
 export const AUDIT_TRAIL_HEARING_ADDRESS_ADDED = 'The hearing address has been added';
 export const AUDIT_TRAIL_HEARING_ADDRESS_UPDATED = 'Hearing address updated to {replacement0}';
 export const AUDIT_TRAIL_HEARING_CANCELLED = 'Hearing cancelled';
-export const AUDIT_TRAIL_HEARING_ESTIMATES_ADDED = 'Hearing estimates added';
-export const AUDIT_TRAIL_HEARING_ESTIMATES_UPDATED = 'Hearing estimates updated';
+export const AUDIT_TRAIL_HEARING_ESTIMATES_ADDED =
+	'We have added the number of days we expect the hearing to take';
+export const AUDIT_TRAIL_HEARING_ESTIMATES_UPDATED =
+	'We have updated the number of days we expect the hearing to take';
 export const AUDIT_TRAIL_HEARING_ESTIMATES_REMOVED = 'Hearing estimates removed';
 
 export const AUDIT_TRAIL_INQUIRY_SET_UP = 'Inquiry set up on {replacement0}';
