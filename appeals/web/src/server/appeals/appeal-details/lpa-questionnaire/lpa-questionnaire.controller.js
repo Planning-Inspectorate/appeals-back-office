@@ -31,7 +31,6 @@ import {
 	renderManageFolder,
 	renderUploadDocumentsCheckAndConfirm
 } from '../../appeal-documents/appeal-documents.controller.js';
-import * as appellantCaseService from '../appellant-case/appellant-case.service.js';
 import {
 	checkAndConfirmPage,
 	environmentServiceTeamReviewCasePage,
@@ -47,44 +46,32 @@ import * as lpaQuestionnaireService from './lpa-questionnaire.service.js';
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderLpaQuestionnaire = async (request, response, errors = null) => {
-	const {
-		currentAppeal,
-		params: { lpaQuestionnaireId },
-		session
-	} = request;
+	const { currentAppeal, session } = request;
 
-	const { isChildAppeal, appealType } = currentAppeal;
+	const lpaQuestionnaire = await lpaQuestionnaireService.getLpaQuestionnaireFromId(
+		request.apiClient,
+		currentAppeal.appealId
+	);
+
+	if (!lpaQuestionnaire) {
+		return response.status(404).render('app/404.njk');
+	}
+
+	const { isChildAppeal, appealType, applicationDate } = lpaQuestionnaire;
+
 	if (appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE && isChildAppeal) {
 		// Should not be able to access LPA questionnaire for child enforcement notice appeals
 		return response.status(404).render('app/404.njk');
 	}
 
-	const lpaQuestionnaire = await lpaQuestionnaireService.getLpaQuestionnaireFromId(
-		request.apiClient,
-		currentAppeal.appealId,
-		lpaQuestionnaireId
-	);
-	const appellantCaseResponse = await appellantCaseService
-		.getAppellantCaseFromAppealId(
-			request.apiClient,
-			currentAppeal.appealId,
-			currentAppeal.appellantCaseId
-		)
-		.catch((error) => {
-			return logger.error(error);
-		});
-
-	if (!lpaQuestionnaire) {
-		return response.status(404).render('app/404.njk');
-	}
 	const mappedPageContent = await lpaQuestionnairePage(
 		lpaQuestionnaire,
-		currentAppeal,
+		lpaQuestionnaire,
 		stripQueryString(request.originalUrl),
 		session,
 		request,
 		getBackLinkUrlFromQuery(request),
-		appellantCaseResponse?.applicationDate
+		applicationDate
 	);
 
 	return response.status(200).render('patterns/display-page.pattern.njk', {
