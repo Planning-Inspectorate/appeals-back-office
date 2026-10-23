@@ -178,7 +178,9 @@ const sendHearingNotifications = async (
  * @param {number[]} appealIdsToUpdate
  * @returns {Promise<void>}
  */
-const createHearing = async (
+
+// creates associated hearings for all appeals in appealIdsToUpdate, which could be a single appeal or a linked group of appeals
+const createHearings = async (
 	createHearingData,
 	appeal,
 	inspectorName,
@@ -193,8 +195,6 @@ const createHearing = async (
 		const address = createHearingData.address;
 
 		// Batch create hearings for all appeals in the linked group
-		// Cannot use a createMany as prisma doesn't support nesting additional relations (here the address)
-		// in a createMany call, so we have to create each hearing individually
 		const hearings = await hearingRepository.createHearingsByAppealIds(appealIdsToUpdate, {
 			hearingStartTime,
 			hearingEndTime,
@@ -232,36 +232,44 @@ const createHearing = async (
  * @param {string} inspectorName
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
+ * @param {number[]} appealIdsToUpdate
  */
-const updateHearing = async (
+// updates the associated hearing for all appeals in appealIdsToUpdate, which could be a single appeal or a linked group of appeals
+const updateHearings = async (
 	updateHearingData,
 	appeal,
 	inspectorName,
 	notifyClient,
-	azureAdUserId
+	azureAdUserId,
+	appealIdsToUpdate
 ) => {
 	try {
-		const appealId = updateHearingData.appealId;
-		const hearingId = Number(updateHearingData.hearingId);
 		const hearingStartTime = updateHearingData.hearingStartTime;
 		const hearingEndTime = updateHearingData.hearingEndTime;
 		const estimatedDays = updateHearingData.estimatedDays;
 		const address = updateHearingData.address;
-		const addressId = updateHearingData.addressId;
 
 		const updateData = {
-			appealId,
-			hearingId,
 			hearingStartTime: hearingStartTime,
 			hearingEndTime: hearingEndTime || undefined,
 			estimatedDays,
-			addressId: addressId,
 			address: address
 		};
 
-		const result = await hearingRepository.updateHearingById(hearingId, updateData);
+		// Batch update hearings for all appeals in the linked group
+		const hearings = await hearingRepository.updateHearingsByAppealIds(
+			appealIdsToUpdate,
+			updateData
+		);
 
-		await broadcasters.broadcastEvent(updateData.hearingId, EVENT_TYPE.HEARING, EventType.Update);
+		const primaryHearing = hearings.find((hearing) => hearing.appealId === appeal.id);
+
+		// Batch broadcast hearing events for all appeals in the linked group
+		await Promise.all(
+			hearings.map((hearing) =>
+				broadcasters.broadcastEvent(hearing.id, EVENT_TYPE.HEARING, EventType.Update)
+			)
+		);
 
 		await sendHearingDetailsNotifications(
 			notifyClient,
@@ -270,11 +278,11 @@ const updateHearing = async (
 			inspectorName,
 			hearingStartTime,
 			estimatedDays ? String(estimatedDays) : '',
-			result.address,
+			primaryHearing?.address ?? null,
 			azureAdUserId
 		);
 
-		return result;
+		return hearings;
 	} catch (error) {
 		logger.error(error, 'Failed to update hearing');
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA, { cause: error });
@@ -287,7 +295,8 @@ const updateHearing = async (
  * @param {Appeal} appeal
  * @param {string} azureAdUserId
  */
-const deleteHearing = async (appealIdsToUpdate, notifyClient, appeal, azureAdUserId) => {
+// deletes the associated hearing for all appeals in appealIdsToUpdate, which could be a single appeal or a linked group of appeals
+const deleteHearings = async (appealIdsToUpdate, notifyClient, appeal, azureAdUserId) => {
 	try {
 		const existingHearings = await hearingRepository.getHearingByAppealId(appealIdsToUpdate);
 
@@ -314,7 +323,7 @@ const deleteHearing = async (appealIdsToUpdate, notifyClient, appeal, azureAdUse
 export {
 	checkHearingExists,
 	checkUpdatedHearingValues,
-	createHearing,
-	deleteHearing,
-	updateHearing
+	createHearings,
+	deleteHearings,
+	updateHearings
 };
