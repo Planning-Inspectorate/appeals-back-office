@@ -32,7 +32,7 @@ const getHearingById = async (id) => {
  * 	hearingStartTime: Date | string | null;
  * 	hearingEndTime?: Date | string | null;
  *  estimatedDays?: string | number | null;
- *  address?: Omit<Address, 'id'>
+ *  address?: Omit<Address, 'id'> | null;
  * }} data
  */
 const buildCreateHearingData = (data) => {
@@ -68,6 +68,59 @@ const buildCreateHearingData = (data) => {
  * 	hearingStartTime: Date | string | null;
  * 	hearingEndTime?: Date | string | null;
  *  estimatedDays?: string | number | null;
+ *  address?: Omit<Address, 'id'> | null;
+ * }} data
+ */
+const buildUpdateHearingData = (data) => {
+	const { hearingStartTime, hearingEndTime, estimatedDays, address } = data;
+
+	let addressStatement = {};
+
+	if (address) {
+		addressStatement = {
+			address: {
+				upsert: {
+					create: {
+						addressLine1: address.addressLine1 ?? null,
+						addressLine2: address.addressLine2 ?? null,
+						addressTown: address.addressTown ?? null,
+						addressCounty: address.addressCounty ?? null,
+						postcode: address.postcode ?? null,
+						addressCountry: address.addressCountry ?? null
+					},
+					update: {
+						addressLine1: address.addressLine1 ?? null,
+						addressLine2: address.addressLine2 ?? null,
+						addressTown: address.addressTown ?? null,
+						addressCounty: address.addressCounty ?? null,
+						postcode: address.postcode ?? null,
+						addressCountry: address.addressCountry ?? null
+					}
+				}
+			}
+		};
+	} else if (address === null) {
+		// we cannot delete the address as it could be used for other hearings based on the database schema
+		// even if this is not how we use it in practice
+		addressStatement = { address: { disconnect: true } };
+	}
+
+	return {
+		hearingStartTime,
+		hearingEndTime,
+		...(estimatedDays !== undefined && {
+			estimatedDays: Number(estimatedDays)
+		}),
+		...addressStatement
+	};
+};
+
+/**
+ * @param {{
+ *  appealId: number;
+ * 	hearingStartTime: Date | string | null;
+ * 	hearingEndTime?: Date | string | null;
+ *  estimatedDays?: string | number | null;
  *  address?: Omit<Address, 'id'>
  * }} data
  * @returns
@@ -84,12 +137,14 @@ const createHearingById = (data) => {
  * 	hearingStartTime: Date | string | null;
  * 	hearingEndTime?: Date | string | null;
  *  estimatedDays?: string | number | null;
- *  address?: Omit<Address, 'id'>
+ *  address?: Omit<Address, 'id'> | null;
  * }} data
  * @returns {Promise<Hearing[]>}
  */
 const createHearingsByAppealIds = async (appealIds, data) => {
 	// use a transaction so that if one fails they all fail, and we don't end up with partial data
+	// Cannot use a createMany as prisma doesn't support nesting additional relations (here the address)
+	// in a createMany call, so we have to create each hearing individually
 	return databaseConnector.$transaction(async (tx) => {
 		return Promise.all(
 			appealIds.map((appealId) =>
@@ -116,49 +171,44 @@ const createHearingsByAppealIds = async (appealIds, data) => {
  * }} data
  */
 const updateHearingById = (id, data) => {
-	const { appealId, hearingStartTime, hearingEndTime, estimatedDays, address, addressId } = data;
-
-	let addressStatement = {};
-
-	if (addressId) {
-		addressStatement = { address: { connect: { id: addressId } } };
-	} else if (address) {
-		addressStatement = {
-			address: {
-				create: {
-					addressLine1: address.addressLine1 ?? null,
-					addressLine2: address.addressLine2 ?? null,
-					addressTown: address.addressTown ?? null,
-					addressCounty: address.addressCounty ?? null,
-					postcode: address.postcode ?? null,
-					addressCountry: address.addressCountry ?? null
-				}
-			}
-		};
-	} else if (address === null) {
-		addressStatement = { address: { disconnect: true } };
-	}
-
-	const hearingData = {
-		...(appealId && {
-			appeal: {
-				connect: { id: appealId }
-			}
-		}),
-		hearingStartTime,
-		hearingEndTime,
-		...(estimatedDays !== undefined && {
-			estimatedDays: Number(estimatedDays)
-		}),
-		...addressStatement
-	};
-
 	return databaseConnector.hearing.update({
 		where: { id },
-		data: hearingData,
+		data: buildUpdateHearingData(data),
 		include: {
 			address: true
 		}
+	});
+};
+
+/**
+ * @param {number[]} appealIds
+ * @param {{
+ * 	hearingStartTime: Date | string | null;
+ * 	hearingEndTime?: Date | string | null;
+ *  estimatedDays?: string | number | null;
+ *  address?: Omit<Address, 'id'> | null | undefined;
+ * }} data
+ * @returns {Promise<Hearing[]>}
+ */
+const updateHearingsByAppealIds = async (appealIds, data) => {
+	// use a transaction so that if one fails they all fail, and we don't end up with partial data
+	// Cannot use a updateMany as prisma doesn't support nesting additional relations (here the address)
+	// in a updateMany call, so we have to update each hearing individually
+	return databaseConnector.$transaction(async (tx) => {
+		return Promise.all(
+			appealIds.map((appealId) =>
+				tx.hearing.update({
+					where: { appealId },
+					data: buildUpdateHearingData({
+						...data,
+						appealId
+					}),
+					include: {
+						address: true
+					}
+				})
+			)
+		);
 	});
 };
 
@@ -195,6 +245,7 @@ export default {
 	createHearingById,
 	createHearingsByAppealIds,
 	updateHearingById,
+	updateHearingsByAppealIds,
 	deleteHearingById,
 	deleteMultiHearingsByAppealId,
 	getHearingByAppealId

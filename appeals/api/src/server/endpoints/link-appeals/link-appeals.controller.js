@@ -112,6 +112,7 @@ export const linkAppeal = async (req, res) => {
 	const result = await appealRepository.linkAppeal(relationship);
 
 	if (result) {
+		// TODO: consider duplicating events which have been set up as current logic for events copies updates onto child appeals
 		await duplicateFiles(childAppeal, parentAppeal, APPEAL_CASE_STAGE.COSTS);
 		const azureAdUserId = req.get('azureAdUserId') || '';
 		await setAssignedTeamId(childAppeal.id, parentAppeal.assignedTeamId || null, azureAdUserId);

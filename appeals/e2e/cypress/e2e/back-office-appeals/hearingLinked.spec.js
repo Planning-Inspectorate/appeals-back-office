@@ -203,6 +203,69 @@ describe('Setup hearing and add hearing estimates', () => {
 		hearingSectionPage.verifyHearingValues('address', 'Yes', true, Object.values(originalAddress));
 	});
 
+	it('should update hearing details on unlinked appeal when hearing details are updated on the lead, then unlinked after', () => {
+		// child info for the one we will unlink
+		const childAppeal = {
+			reference: String(Number(appeal.reference) + 1),
+			id: String(Number(appeal.id) + 1)
+		};
+
+		// start the case with a hearing date and estimated days
+		cy.getBusinessActualDate(new Date(), 2).then((date) => {
+			const estimatedDays = 6;
+			const formattedDate = formatDateAndTime(date);
+			happyPathHelper.startS78HearingCase(caseObj, 'hearing', {
+				date,
+				setEstimatedDays: true,
+				estimatedDays,
+				startCase: true
+			});
+
+			// verify hearing date and estimated days is added on the case details page
+			hearingSectionPage.verifyHearingValues(
+				'estimated-days',
+				String(Number(estimatedDays)) + ' Days'
+			);
+			hearingSectionPage.verifyHearingValues('date', formattedDate.date);
+			hearingSectionPage.verifyHearingValues('time', formattedDate.time);
+
+			// add the hearing address on the lead appeal
+			hearingSectionPage.changeHearingAddress({ address: originalAddress });
+			hearingSectionPage.clickButtonByText('Update hearing');
+			caseDetailsPage.validateBannerMessage('Success', 'Hearing updated');
+
+			// verify hearing address is updated on the case details page
+			hearingSectionPage.verifyHearingValues(
+				'address',
+				'Yes',
+				true,
+				Object.values(originalAddress)
+			);
+
+			// unlink the appeal
+			happyPathHelper.unlinkFirstChildEnforcementAppeal(appeal.reference);
+
+			// go to the unlinked appeal
+			happyPathHelper.viewCaseDetails(childAppeal);
+			caseDetailsPage.verifyAppealRefOnCaseDetails(`Appeal ${childAppeal.reference}`);
+
+			// verify hearing date and estimated days is still present
+			hearingSectionPage.verifyHearingValues(
+				'estimated-days',
+				String(Number(estimatedDays)) + ' Days'
+			);
+			hearingSectionPage.verifyHearingValues('date', formattedDate.date);
+			hearingSectionPage.verifyHearingValues('time', formattedDate.time);
+			// verify hearing address is present on the unlinked appeal
+			hearingSectionPage.verifyHearingValues(
+				'address',
+				'Yes',
+				true,
+				Object.values(originalAddress)
+			);
+		});
+	});
+
 	it('should cancel hearing on child appeals - should not show hearing details on unlinked child appeal if hearing cancelled', () => {
 		const childAppeal = {
 			reference: String(Number(appeal.reference) + 1),
