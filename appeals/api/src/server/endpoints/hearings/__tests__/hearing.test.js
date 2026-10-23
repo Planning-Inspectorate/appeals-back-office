@@ -158,315 +158,314 @@ describe('hearing routes', () => {
 				}
 			};
 
-			test('updates a single hearing with address', async () => {
-				databaseConnector.appeal.findUnique.mockResolvedValue({
-					...fullPlanningAppeal,
-					currentStatus: APPEAL_CASE_STATUS.EVENT,
-					appealStatus: [
+			const getFullPlanningAppeal = () => JSON.parse(JSON.stringify(fullPlanningAppealData));
+			const getEnforcementLeadAppeal = () =>
+				JSON.parse(
+					JSON.stringify({ ...enforcementNoticeAppeal, childAppeals: childAppealsEnforcementBase })
+				);
+
+			describe.each([
+				['single hearing', getFullPlanningAppeal],
+				['linked appeals- enforcement multiple appellants', getEnforcementLeadAppeal]
+			])('%s', (_, getAppeal) => {
+				let appeal;
+				let idsOfLinkedGroup;
+				let sizeOfLinkedGroup;
+
+				beforeEach(() => {
+					appeal = getAppeal();
+					idsOfLinkedGroup = getIdsOfLinkedGroup(appeal);
+					sizeOfLinkedGroup = idsOfLinkedGroup.length;
+				});
+				afterEach(() => {
+					jest.clearAllMocks();
+				});
+
+				test('updates a hearing with address', async () => {
+					appeal.currentStatus = APPEAL_CASE_STATUS.EVENT;
+					appeal.appealStatus = [
 						{
 							status: APPEAL_CASE_STATUS.EVENT,
 							valid: true
 						}
-					]
-				});
-				databaseConnector.hearing.findUnique.mockResolvedValue({
-					...hearing,
-					addressId: null,
-					address: null
-				});
-				databaseConnector.hearing.update.mockResolvedValue(hearing);
+					];
+					addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
 
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({
-						hearingStartTime: '2999-01-01T12:00:00.000Z',
-						hearingEndTime: '2999-01-01T13:00:00.000Z',
-						address: hearingAddress
-					})
-					.set('azureAdUserId', azureAdUserId);
+					databaseConnector.appeal.findUnique.mockResolvedValue({
+						...appeal,
+						hearing: { ...hearing, addressId: null, address: null }
+					});
+					databaseConnector.hearing.update.mockResolvedValue({ ...hearing, appealId: appeal.id });
+					databaseConnector.appealStatus.findFirst.mockImplementation(() => {
+						return {
+							id: 1,
+							status: APPEAL_CASE_STATUS.EVENT,
+							createdAt: '2025-09-18T10:07:15.406Z',
+							valid: true,
+							subStateMachineName: null,
+							compoundStateName: null
+						};
+					});
 
-				expect(databaseConnector.hearing.update).toHaveBeenCalledWith({
-					data: {
-						appeal: {
-							connect: {
-								id: fullPlanningAppeal.id
+					const response = await request
+						.patch(`/appeals/${appeal.id}/hearing/${hearing.id}`)
+						.send({
+							hearingStartTime: '2999-01-01T12:00:00.000Z',
+							hearingEndTime: '2999-01-01T13:00:00.000Z',
+							address: hearingAddress
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					for (const appealId of idsOfLinkedGroup) {
+						expect(databaseConnector.hearing.update).toHaveBeenCalledWith({
+							where: {
+								appealId: appealId
+							},
+							data: {
+								hearingStartTime: '2999-01-01T12:00:00.000Z',
+								hearingEndTime: '2999-01-01T13:00:00.000Z',
+								address: {
+									upsert: {
+										create: {
+											addressLine1: hearingAddress.addressLine1,
+											addressLine2: hearingAddress.addressLine2,
+											addressTown: hearingAddress.town,
+											addressCounty: hearingAddress.county,
+											postcode: hearingAddress.postcode,
+											addressCountry: hearingAddress.country
+										},
+										update: {
+											addressLine1: hearingAddress.addressLine1,
+											addressLine2: hearingAddress.addressLine2,
+											addressTown: hearingAddress.town,
+											addressCounty: hearingAddress.county,
+											postcode: hearingAddress.postcode,
+											addressCountry: hearingAddress.country
+										}
+									}
+								}
+							},
+							include: {
+								address: true
 							}
-						},
-						hearingStartTime: '2999-01-01T12:00:00.000Z',
-						hearingEndTime: '2999-01-01T13:00:00.000Z',
-						address: {
-							create: {
-								addressLine1: hearingAddress.addressLine1,
-								addressLine2: hearingAddress.addressLine2,
-								addressTown: hearingAddress.town,
-								addressCounty: hearingAddress.county,
-								postcode: hearingAddress.postcode,
-								addressCountry: hearingAddress.country
+						});
+						expect(databaseConnector.appealStatus.create).toHaveBeenCalledWith({
+							data: {
+								appealId: appealId,
+								createdAt: expect.any(Date),
+								status: APPEAL_CASE_STATUS.AWAITING_EVENT,
+								valid: true
 							}
+						});
+					}
+
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+						data: {
+							appealId: appeal.id,
+							details: 'The hearing address has been added',
+							loggedAt: expect.any(Date),
+							userId: 1
 						}
-					},
-					where: {
-						id: hearing.id
-					},
-					include: {
-						address: true
+					});
+
+					const personalisation = {
+						appeal_reference_number: '1345264',
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						lpa_reference: '48269/APP/2021/1482',
+						hearing_date: '1 January 2999',
+						hearing_time: '12:00pm',
+						inspector_name: null,
+						hearing_expected_days: '',
+						hearing_address:
+							'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						...(appeal.appellantCase.enforcementReference && {
+							enforcement_reference: appeal.appellantCase.enforcementReference
+						})
+					};
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation: { ...personalisation, is_lpa: false },
+						recipientEmail: appeal.agent.email,
+						templateName: 'hearing-updated'
+					});
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation: { ...personalisation, is_lpa: true },
+						recipientEmail: appeal.lpa.email,
+						templateName: 'hearing-updated'
+					});
+
+					expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+						hearing.id,
+						'hearing',
+						'Update'
+					);
+
+					expect(response.status).toEqual(201);
+				});
+
+				test('updates a hearing with no address or hearingEndTime', async () => {
+					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+					databaseConnector.hearing.update.mockResolvedValue({ ...hearing, appealId: appeal.id });
+
+					const response = await request
+						.patch(`/appeals/${appeal.id}/hearing/${hearing.id}`)
+						.send({ hearingStartTime: '2999-01-02T12:00:00.000Z' })
+						.set('azureAdUserId', azureAdUserId);
+
+					for (const appealId of idsOfLinkedGroup) {
+						expect(databaseConnector.hearing.update).toHaveBeenCalledWith({
+							where: {
+								appealId
+							},
+							data: {
+								hearingStartTime: '2999-01-02T12:00:00.000Z',
+								hearingEndTime: undefined
+							},
+							include: {
+								address: true
+							}
+						});
 					}
-				});
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: {
-						appealId: fullPlanningAppeal.id,
-						details:
-							'Hearing address updated to Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
-						loggedAt: expect.any(Date),
-						userId: 1
-					}
-				});
-				expect(databaseConnector.appealStatus.create).toHaveBeenCalledWith({
-					data: {
-						appealId: fullPlanningAppeal.id,
-						createdAt: expect.any(Date),
-						status: 'awaiting_event',
-						valid: true
-					}
-				});
-				const personalisation = {
-					appeal_reference_number: '1345264',
-					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-					lpa_reference: '48269/APP/2021/1482',
-					hearing_date: '1 January 2999',
-					hearing_time: '12:00pm',
-					inspector_name: null,
-					hearing_expected_days: '',
-					hearing_address:
-						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
-					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
-				};
-
-				expect(mockNotifySend).toHaveBeenCalledTimes(2);
-
-				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
-					notifyClient: expect.anything(),
-					personalisation: { ...personalisation, is_lpa: false },
-					recipientEmail: fullPlanningAppeal.agent.email,
-					templateName: 'hearing-updated'
-				});
-
-				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
-					notifyClient: expect.anything(),
-					personalisation: { ...personalisation, is_lpa: true },
-					recipientEmail: fullPlanningAppeal.lpa.email,
-					templateName: 'hearing-updated'
-				});
-
-				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
-					hearing.id,
-					'hearing',
-					'Update'
-				);
-
-				expect(response.status).toEqual(201);
-			});
-
-			test('updates a single hearing with addressId', async () => {
-				databaseConnector.hearing.update.mockResolvedValue(hearing);
-				databaseConnector.appeal.findUnique.mockResolvedValue({
-					...fullPlanningAppeal,
-					currentStatus: APPEAL_CASE_STATUS.EVENT,
-					appealStatus: [
-						{
-							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
-							valid: true
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+						data: {
+							appealId: appeal.id,
+							details: 'Hearing date updated to 2 January 2999',
+							loggedAt: expect.any(Date),
+							userId: 1
 						}
-					]
-				});
-				databaseConnector.hearing.findUnique.mockResolvedValue({
-					...hearing,
-					address: undefined,
-					addressId: 99
+					});
+					const personalisation = {
+						appeal_reference_number: '1345264',
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						lpa_reference: '48269/APP/2021/1482',
+						hearing_date: '2 January 2999',
+						hearing_time: '12:00pm',
+						inspector_name: null,
+						hearing_expected_days: '',
+						hearing_address:
+							'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						...(appeal.appellantCase.enforcementReference && {
+							enforcement_reference: appeal.appellantCase.enforcementReference
+						})
+					};
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation: { ...personalisation, is_lpa: false },
+						recipientEmail: appeal.agent.email,
+						templateName: 'hearing-updated'
+					});
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation: { ...personalisation, is_lpa: true },
+						recipientEmail: appeal.lpa.email,
+						templateName: 'hearing-updated'
+					});
+
+					expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+						hearing.id,
+						'hearing',
+						'Update'
+					);
+
+					expect(response.status).toEqual(201);
 				});
 
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({
-						hearingStartTime: '2999-01-01T12:00:00.000Z',
-						hearingEndTime: '2999-01-01T13:00:00.000Z',
-						addressId: 42,
-						address: hearingAddress
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(databaseConnector.hearing.update).toHaveBeenCalledWith({
-					data: {
-						appeal: {
-							connect: {
-								id: fullPlanningAppeal.id
-							}
-						},
-						hearingStartTime: '2999-01-01T12:00:00.000Z',
-						hearingEndTime: '2999-01-01T13:00:00.000Z',
-						address: {
-							connect: {
-								id: 42
-							}
+				test('updates a hearing and sends notifications when no venue address is set', async () => {
+					databaseConnector.appeal.findUnique.mockResolvedValue({
+						...appeal,
+						hearing: {
+							...hearing,
+							addressId: null,
+							address: null
 						}
-					},
-					where: {
-						id: hearing.id
-					},
-					include: {
-						address: true
-					}
-				});
+					});
+					databaseConnector.hearing.update.mockResolvedValue({
+						...hearing,
+						appealId: appeal.id,
+						hearingStartTime: new Date('2999-01-03T12:00:00.000Z'),
+						addressId: null,
+						address: null
+					});
 
-				expect(response.status).toEqual(201);
-				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
-				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
-					hearing.id,
-					'hearing',
-					'Update'
-				);
-			});
+					const response = await request
+						.patch(`/appeals/${appeal.id}/hearing/${hearing.id}`)
+						.send({ hearingStartTime: '2999-01-03T12:00:00.000Z' })
+						.set('azureAdUserId', azureAdUserId);
 
-			test('updates a single hearing with no address or hearingEndTime', async () => {
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
-				databaseConnector.hearing.update.mockResolvedValue(hearing);
-
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({ hearingStartTime: '2999-01-02T12:00:00.000Z' })
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(databaseConnector.hearing.update).toHaveBeenCalledWith({
-					data: {
-						appeal: {
-							connect: {
-								id: fullPlanningAppeal.id
+					for (const appealId of idsOfLinkedGroup) {
+						expect(databaseConnector.hearing.update).toHaveBeenCalledWith({
+							where: {
+								appealId: appealId
+							},
+							data: {
+								hearingStartTime: '2999-01-03T12:00:00.000Z',
+								hearingEndTime: undefined
+							},
+							include: {
+								address: true
 							}
-						},
-						hearingStartTime: '2999-01-02T12:00:00.000Z',
-						hearingEndTime: undefined
-					},
-					where: {
-						id: hearing.id
-					},
-					include: {
-						address: true
+						});
 					}
-				});
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: {
-						appealId: fullPlanningAppeal.id,
-						details: 'Hearing date updated to 2 January 2999',
-						loggedAt: expect.any(Date),
-						userId: 1
-					}
-				});
-				const personalisation = {
-					appeal_reference_number: '1345264',
-					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-					lpa_reference: '48269/APP/2021/1482',
-					hearing_date: '2 January 2999',
-					hearing_time: '12:00pm',
-					inspector_name: null,
-					hearing_expected_days: '',
-					hearing_address:
-						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
-					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
-				};
 
-				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+					const personalisation = {
+						appeal_reference_number: '1345264',
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						lpa_reference: '48269/APP/2021/1482',
+						hearing_date: '3 January 2999',
+						hearing_time: '12:00pm',
+						inspector_name: null,
+						hearing_expected_days: '',
+						hearing_address: '',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						...(appeal.appellantCase.enforcementReference && {
+							enforcement_reference: appeal.appellantCase.enforcementReference
+						})
+					};
 
-				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
-					notifyClient: expect.anything(),
-					personalisation: { ...personalisation, is_lpa: false },
-					recipientEmail: fullPlanningAppeal.agent.email,
-					templateName: 'hearing-updated'
-				});
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation: { ...personalisation, is_lpa: false },
+						recipientEmail: appeal.agent.email,
+						templateName: 'hearing-updated'
+					});
+					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation: { ...personalisation, is_lpa: true },
+						recipientEmail: appeal.lpa.email,
+						templateName: 'hearing-updated'
+					});
 
-				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
-					notifyClient: expect.anything(),
-					personalisation: { ...personalisation, is_lpa: true },
-					recipientEmail: fullPlanningAppeal.lpa.email,
-					templateName: 'hearing-updated'
-				});
+					expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+						hearing.id,
+						'hearing',
+						'Update'
+					);
 
-				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
-					hearing.id,
-					'hearing',
-					'Update'
-				);
-
-				expect(response.status).toEqual(201);
-			});
-
-			test('updates a single hearing and sends notifications when no venue address is set', async () => {
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
-				databaseConnector.hearing.findUnique.mockResolvedValue({
-					...hearing,
-					addressId: null,
-					address: null
-				});
-				databaseConnector.hearing.update.mockResolvedValue({
-					...hearing,
-					hearingStartTime: new Date('2999-01-03T12:00:00.000Z'),
-					addressId: null,
-					address: null
+					expect(response.status).toEqual(201);
 				});
 
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({ hearingStartTime: '2999-01-03T12:00:00.000Z' })
-					.set('azureAdUserId', azureAdUserId);
-
-				const personalisation = {
-					appeal_reference_number: '1345264',
-					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-					lpa_reference: '48269/APP/2021/1482',
-					hearing_date: '3 January 2999',
-					hearing_time: '12:00pm',
-					inspector_name: null,
-					hearing_expected_days: '',
-					hearing_address: '',
-					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
-				};
-
-				expect(mockNotifySend).toHaveBeenCalledTimes(2);
-				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
-					notifyClient: expect.anything(),
-					personalisation: { ...personalisation, is_lpa: false },
-					recipientEmail: fullPlanningAppeal.agent.email,
-					templateName: 'hearing-updated'
-				});
-				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
-					notifyClient: expect.anything(),
-					personalisation: { ...personalisation, is_lpa: true },
-					recipientEmail: fullPlanningAppeal.lpa.email,
-					templateName: 'hearing-updated'
-				});
-
-				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
-					hearing.id,
-					'hearing',
-					'Update'
-				);
-
-				expect(response.status).toEqual(201);
-			});
-
-			test('removes the address if address is null', async () => {
-				const { hearing } = fullPlanningAppeal;
-
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue({
-					...fullPlanningAppeal,
-					currentStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
-					appealStatus: [
+				test('removes the address if address is null', async () => {
+					const { hearing } = appeal;
+					appeal.currentStatus = APPEAL_CASE_STATUS.AWAITING_EVENT;
+					appeal.appealStatus = [
 						{
 							status: APPEAL_CASE_STATUS.EVENT,
 							valid: false
@@ -475,804 +474,825 @@ describe('hearing routes', () => {
 							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
 							valid: true
 						}
-					]
-				});
-				databaseConnector.hearing.update.mockResolvedValue({ ...hearing, address: null });
-				databaseConnector.appealStatus.findFirst.mockResolvedValue({
-					id: 592,
-					appealId: fullPlanningAppeal.id,
-					status: APPEAL_CASE_STATUS.EVENT,
-					valid: false,
-					createdAt: new Date('2999-01-01T12:00:00.000Z')
-				});
+					];
+					addStatusesToLinkedAppeals(appeal, appeal.appealStatus);
 
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({ hearingStartTime: hearing.hearingStartTime, address: null })
-					.set('azureAdUserId', azureAdUserId);
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue({
+						...appeal,
+						hearing: { ...hearing, addressId: 1, address: hearingAddress }
+					});
+					databaseConnector.hearing.update.mockResolvedValue({
+						...hearing,
+						appealId: appeal.id,
+						address: null
+					});
+					databaseConnector.appealStatus.findFirst.mockResolvedValue({
+						id: 592,
+						appealId: appeal.id,
+						status: APPEAL_CASE_STATUS.EVENT,
+						valid: false,
+						createdAt: new Date('2999-01-01T12:00:00.000Z')
+					});
 
-				expect(databaseConnector.hearing.update).toHaveBeenCalledWith({
-					data: {
-						appeal: {
-							connect: {
-								id: fullPlanningAppeal.id
+					const response = await request
+						.patch(`/appeals/${appeal.id}/hearing/${hearing.id}`)
+						.send({ hearingStartTime: hearing.hearingStartTime, address: null })
+						.set('azureAdUserId', azureAdUserId);
+
+					for (const appealId of idsOfLinkedGroup) {
+						expect(databaseConnector.hearing.update).toHaveBeenCalledWith({
+							where: {
+								appealId: appealId
+							},
+							data: {
+								hearingStartTime: hearing.hearingStartTime,
+								hearingEndTime: undefined,
+								address: {
+									disconnect: true
+								}
+							},
+							include: {
+								address: true
 							}
-						},
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: undefined,
-						address: {
-							disconnect: true
+						});
+
+						expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledWith({
+							where: {
+								appealId: appeal.id,
+								createdAt: {
+									gt: new Date('2999-01-01T12:00:00.000Z')
+								}
+							}
+						});
+					}
+
+					expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledTimes(
+						sizeOfLinkedGroup
+					);
+
+					expect(databaseConnector.appealStatus.update).toHaveBeenCalledTimes(sizeOfLinkedGroup);
+
+					expect(databaseConnector.appealStatus.update).toHaveBeenCalledWith({
+						where: { id: 592 },
+						data: { valid: true }
+					});
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+					expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+						hearing.id,
+						'hearing',
+						'Update'
+					);
+
+					expect(response.status).toEqual(201);
+				});
+
+				test('only creates the address added audit trail when the address is the only value updated', async () => {
+					const existingHearing = {
+						...hearing,
+						hearingStartTime: new Date('2999-01-01T12:00:00.000Z'),
+						hearingEndTime: new Date('2999-01-01T13:00:00.000Z'),
+						addressId: null,
+						address: null
+					};
+
+					databaseConnector.appeal.findUnique.mockResolvedValue({
+						...appeal,
+						hearing: existingHearing
+					});
+					databaseConnector.hearing.update.mockResolvedValue({
+						...existingHearing,
+						appealId: appeal.id,
+						address: hearing.address
+					});
+
+					const response = await request
+						.patch(`/appeals/${appeal.id}/hearing/${hearing.id}`)
+						.send({
+							hearingStartTime: '2999-01-01T12:00:00.000Z',
+							hearingEndTime: '2999-01-01T13:00:00.000Z',
+							address: hearingAddress
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+						hearing.id,
+						'hearing',
+						'Update'
+					);
+
+					expect(response.status).toEqual(201);
+
+					// The address added audit trail is the only one that should be created
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+						data: {
+							appealId: appeal.id,
+							details: 'The hearing address has been added',
+							loggedAt: expect.any(Date),
+							userId: 1
 						}
-					},
-					where: {
-						id: hearing.id
-					},
-					include: {
-						address: true
-					}
-				});
-
-				expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledWith({
-					where: {
-						appealId: fullPlanningAppeal.id,
-						createdAt: {
-							gt: new Date('2999-01-01T12:00:00.000Z')
+					});
+					// The hearing date audit trail should not be created
+					expect(databaseConnector.auditTrail.create).not.toHaveBeenCalledWith({
+						data: {
+							appealId: appeal.id,
+							details: expect.stringContaining('Hearing date updated'),
+							loggedAt: expect.any(Date),
+							userId: 1
 						}
-					}
-				});
-				expect(databaseConnector.appealStatus.update).toHaveBeenCalledWith({
-					where: { id: 592 },
-					data: { valid: true }
-				});
-
-				expect(mockNotifySend).toHaveBeenCalledTimes(2);
-
-				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
-					hearing.id,
-					'hearing',
-					'Update'
-				);
-
-				expect(response.status).toEqual(201);
-			});
-
-			test('only creates the address added audit trail when the address is the only value updated', async () => {
-				const existingHearing = {
-					...hearing,
-					hearingStartTime: new Date('2999-01-01T12:00:00.000Z'),
-					hearingEndTime: new Date('2999-01-01T13:00:00.000Z'),
-					addressId: null,
-					address: null
-				};
-
-				databaseConnector.appeal.findUnique.mockResolvedValue({
-					...fullPlanningAppeal,
-					hearing: existingHearing
-				});
-				databaseConnector.hearing.findUnique.mockResolvedValue({ ...existingHearing });
-				databaseConnector.hearing.update.mockResolvedValue({
-					...existingHearing,
-					address: hearing.address
-				});
-
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({
-						hearingStartTime: '2999-01-01T12:00:00.000Z',
-						hearingEndTime: '2999-01-01T13:00:00.000Z',
-						address: hearingAddress
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
-					hearing.id,
-					'hearing',
-					'Update'
-				);
-
-				expect(response.status).toEqual(201);
-
-				// The address added audit trail is the only one that should be created
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: {
-						appealId: fullPlanningAppeal.id,
-						details: 'The hearing address has been added',
-						loggedAt: expect.any(Date),
-						userId: 1
-					}
-				});
-				// The hearing date audit trail should not be created
-				expect(databaseConnector.auditTrail.create).not.toHaveBeenCalledWith({
-					data: {
-						appealId: fullPlanningAppeal.id,
-						details: expect.stringContaining('Hearing date updated'),
-						loggedAt: expect.any(Date),
-						userId: 1
-					}
+					});
 				});
 			});
 
-			test('returns an error if appealId is not provided', async () => {
-				const { hearing } = fullPlanningAppeal;
+			describe('validation', () => {
+				test('returns an error if appealId is not provided', async () => {
+					const { hearing } = fullPlanningAppeal;
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 
-				const response = await request
-					.patch(`/appeals//hearing/${hearing.id}`)
-					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						address
-					})
-					.set('azureAdUserId', azureAdUserId);
+					const response = await request
+						.patch(`/appeals//hearing/${hearing.id}`)
+						.send({
+							hearingStartTime: hearing.hearingStartTime,
+							hearingEndTime: hearing.hearingEndTime,
+							address
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
-				expect(response.status).toEqual(405);
-				expect(response.body).toEqual({
-					errors: 'Method is not allowed'
+					expect(response.status).toEqual(405);
+					expect(response.body).toEqual({
+						errors: 'Method is not allowed'
+					});
 				});
-			});
 
-			test('returns an error if appealId is not a number', async () => {
-				const { hearing } = fullPlanningAppeal;
+				test('returns an error if appealId is not a number', async () => {
+					const { hearing } = fullPlanningAppeal;
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 
-				const response = await request
-					.patch(`/appeals/appealId/hearing/${hearing.id}`)
-					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						address
-					})
-					.set('azureAdUserId', azureAdUserId);
+					const response = await request
+						.patch(`/appeals/appealId/hearing/${hearing.id}`)
+						.send({
+							hearingStartTime: hearing.hearingStartTime,
+							hearingEndTime: hearing.hearingEndTime,
+							address
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: { appealId: 'must be a number' }
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: { appealId: 'must be a number' }
+					});
 				});
-			});
 
-			test('returns an error if hearingId is not provided', async () => {
-				const { hearing } = fullPlanningAppeal;
+				test('returns an error if hearingId is not provided', async () => {
+					const { hearing } = fullPlanningAppeal;
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/`)
-					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						address
-					})
-					.set('azureAdUserId', azureAdUserId);
+					const response = await request
+						.patch(`/appeals/${fullPlanningAppeal.id}/hearing/`)
+						.send({
+							hearingStartTime: hearing.hearingStartTime,
+							hearingEndTime: hearing.hearingEndTime,
+							address
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
-				expect(response.status).toEqual(405);
-				expect(response.body).toEqual({
-					errors: 'Method is not allowed'
+					expect(response.status).toEqual(405);
+					expect(response.body).toEqual({
+						errors: 'Method is not allowed'
+					});
 				});
-			});
-			test('returns an error if hearingId is not a number', async () => {
-				const { hearing } = fullPlanningAppeal;
+				test('returns an error if hearingId is not a number', async () => {
+					const { hearing } = fullPlanningAppeal;
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/hearingId`)
-					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						address
-					})
-					.set('azureAdUserId', azureAdUserId);
+					const response = await request
+						.patch(`/appeals/${fullPlanningAppeal.id}/hearing/hearingId`)
+						.send({
+							hearingStartTime: hearing.hearingStartTime,
+							hearingEndTime: hearing.hearingEndTime,
+							address
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: { hearingId: 'must be a number' }
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: { hearingId: 'must be a number' }
+					});
 				});
-			});
 
-			test('returns an error if hearingStartTime is not provided', async () => {
-				const { hearing } = fullPlanningAppeal;
+				test('returns an error if hearingStartTime is not provided', async () => {
+					const { hearing } = fullPlanningAppeal;
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({
-						hearingEndTime: hearing.hearingEndTime,
-						address
-					})
-					.set('azureAdUserId', azureAdUserId);
+					const response = await request
+						.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
+						.send({
+							hearingEndTime: hearing.hearingEndTime,
+							address
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
 
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						hearingStartTime: 'must be a valid utc date time format'
-					}
-				});
-			});
-			test('returns an error if hearingStartTime is not a valid date', async () => {
-				const { hearing } = fullPlanningAppeal;
-
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
-
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({
-						hearingStartTime: 'hearingStartTime',
-						hearingEndTime: hearing.hearingEndTime,
-						address
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						hearingStartTime: 'must be a valid utc date time format'
-					}
-				});
-			});
-
-			test('does not return an error if hearingEndTime is not provided', async () => {
-				const { hearing } = fullPlanningAppeal;
-
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
-
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({ hearingStartTime: hearing.hearingStartTime, address })
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
-					hearing.id,
-					'hearing',
-					'Update'
-				);
-
-				expect(response.status).toEqual(201);
-			});
-
-			test('returns an error if hearingEndTime is not a valid date', async () => {
-				const { hearing } = fullPlanningAppeal;
-
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
-
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: 'hearingEndTime',
-						address
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						hearingEndTime: 'must be a valid utc date time format'
-					}
-				});
-			});
-
-			test('returns an error if addressLine1 is not provided', async () => {
-				const { hearing } = fullPlanningAppeal;
-
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
-
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						address: {
-							addressLine2: hearing.address.addressLine2,
-							country: hearing.address.addressCountry,
-							county: hearing.address.addressCounty,
-							postcode: hearing.address.postcode,
-							town: hearing.address.addressTown
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							hearingStartTime: 'must be a valid utc date time format'
 						}
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						'address.addressLine1': 'must be a string'
-					}
+					});
 				});
-			});
-			test('returns an error if addressLine1 is not a string', async () => {
-				const { hearing } = fullPlanningAppeal;
+				test('returns an error if hearingStartTime is not a valid date', async () => {
+					const { hearing } = fullPlanningAppeal;
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						address: {
-							addressLine1: 123,
-							addressLine2: hearing.address.addressLine2,
-							country: hearing.address.addressCountry,
-							county: hearing.address.addressCounty,
-							postcode: hearing.address.postcode,
-							town: hearing.address.addressTown
+					const response = await request
+						.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
+						.send({
+							hearingStartTime: 'hearingStartTime',
+							hearingEndTime: hearing.hearingEndTime,
+							address
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							hearingStartTime: 'must be a valid utc date time format'
 						}
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						'address.addressLine1': 'must be a string'
-					}
+					});
 				});
-			});
-			test('returns an error if addressLine1 is greater than 250 characters', async () => {
-				const { hearing } = fullPlanningAppeal;
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				test('does not return an error if hearingEndTime is not provided', async () => {
+					const { hearing } = fullPlanningAppeal;
 
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						address: {
-							addressLine1: 'a'.repeat(251),
-							addressLine2: hearing.address.addressLine2,
-							country: hearing.address.addressCountry,
-							county: hearing.address.addressCounty,
-							postcode: hearing.address.postcode,
-							town: hearing.address.addressTown
-						}
-					})
-					.set('azureAdUserId', azureAdUserId);
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+					databaseConnector.hearing.update.mockResolvedValue({
+						...hearing,
+						appealId: fullPlanningAppeal.id
+					});
 
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+					const response = await request
+						.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
+						.send({ hearingStartTime: hearing.hearingStartTime, address })
+						.set('azureAdUserId', azureAdUserId);
 
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						'address.addressLine1': 'must be 250 characters or less'
-					}
+					expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(
+						hearing.id,
+						'hearing',
+						'Update'
+					);
+
+					expect(response.status).toEqual(201);
 				});
-			});
 
-			test('returns an error if addressLine2 is not a string', async () => {
-				const { hearing } = fullPlanningAppeal;
+				test('returns an error if hearingEndTime is not a valid date', async () => {
+					const { hearing } = fullPlanningAppeal;
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						address: {
-							addressLine1: hearing.address.addressLine1,
-							addressLine2: 123,
-							country: hearing.address.addressCountry,
-							county: hearing.address.addressCounty,
-							postcode: hearing.address.postcode,
-							town: hearing.address.addressTown
+					const response = await request
+						.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
+						.send({
+							hearingStartTime: hearing.hearingStartTime,
+							hearingEndTime: 'hearingEndTime',
+							address
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							hearingEndTime: 'must be a valid utc date time format'
 						}
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						'address.addressLine2': 'must be a string'
-					}
+					});
 				});
-			});
-			test('returns an error if addressLine2 is greater than 250 characters', async () => {
-				const { hearing } = fullPlanningAppeal;
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				test('returns an error if addressLine1 is not provided', async () => {
+					const { hearing } = fullPlanningAppeal;
 
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						address: {
-							addressLine1: hearing.address.addressLine1,
-							addressLine2: 'a'.repeat(251),
-							country: hearing.address.addressCountry,
-							county: hearing.address.addressCounty,
-							postcode: hearing.address.postcode,
-							town: hearing.address.addressTown
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+					const response = await request
+						.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
+						.send({
+							hearingStartTime: hearing.hearingStartTime,
+							hearingEndTime: hearing.hearingEndTime,
+							address: {
+								addressLine2: hearing.address.addressLine2,
+								country: hearing.address.addressCountry,
+								county: hearing.address.addressCounty,
+								postcode: hearing.address.postcode,
+								town: hearing.address.addressTown
+							}
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							'address.addressLine1': 'must be a string'
 						}
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						'address.addressLine2': 'must be 250 characters or less'
-					}
+					});
 				});
-			});
+				test('returns an error if addressLine1 is not a string', async () => {
+					const { hearing } = fullPlanningAppeal;
 
-			test('returns an error if town is not provided', async () => {
-				const { hearing } = fullPlanningAppeal;
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+					const response = await request
+						.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
+						.send({
+							hearingStartTime: hearing.hearingStartTime,
+							hearingEndTime: hearing.hearingEndTime,
+							address: {
+								addressLine1: 123,
+								addressLine2: hearing.address.addressLine2,
+								country: hearing.address.addressCountry,
+								county: hearing.address.addressCounty,
+								postcode: hearing.address.postcode,
+								town: hearing.address.addressTown
+							}
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						address: {
-							addressLine1: hearing.address.addressLine1,
-							addressLine2: hearing.address.addressLine2,
-							country: hearing.address.addressCountry,
-							county: hearing.address.addressCounty,
-							postcode: hearing.address.postcode
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							'address.addressLine1': 'must be a string'
 						}
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						'address.town': 'must be a string'
-					}
+					});
 				});
-			});
-			test('returns an error if town is not a string', async () => {
-				const { hearing } = fullPlanningAppeal;
+				test('returns an error if addressLine1 is greater than 250 characters', async () => {
+					const { hearing } = fullPlanningAppeal;
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						address: {
-							addressLine1: hearing.address.addressLine1,
-							addressLine2: hearing.address.addressLine2,
-							country: hearing.address.addressCountry,
-							county: hearing.address.addressCounty,
-							postcode: hearing.address.postcode,
-							town: 123
+					const response = await request
+						.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
+						.send({
+							hearingStartTime: hearing.hearingStartTime,
+							hearingEndTime: hearing.hearingEndTime,
+							address: {
+								addressLine1: 'a'.repeat(251),
+								addressLine2: hearing.address.addressLine2,
+								country: hearing.address.addressCountry,
+								county: hearing.address.addressCounty,
+								postcode: hearing.address.postcode,
+								town: hearing.address.addressTown
+							}
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							'address.addressLine1': 'must be 250 characters or less'
 						}
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						'address.town': 'must be a string'
-					}
+					});
 				});
-			});
-			test('returns an error if town is greater than 250 characters', async () => {
-				const { hearing } = fullPlanningAppeal;
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				test('returns an error if addressLine2 is not a string', async () => {
+					const { hearing } = fullPlanningAppeal;
 
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						address: {
-							addressLine1: hearing.address.addressLine1,
-							addressLine2: hearing.address.addressLine2,
-							country: hearing.address.addressCountry,
-							county: hearing.address.addressCounty,
-							postcode: hearing.address.postcode,
-							town: 'a'.repeat(251)
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+					const response = await request
+						.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
+						.send({
+							hearingStartTime: hearing.hearingStartTime,
+							hearingEndTime: hearing.hearingEndTime,
+							address: {
+								addressLine1: hearing.address.addressLine1,
+								addressLine2: 123,
+								country: hearing.address.addressCountry,
+								county: hearing.address.addressCounty,
+								postcode: hearing.address.postcode,
+								town: hearing.address.addressTown
+							}
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							'address.addressLine2': 'must be a string'
 						}
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						'address.town': 'must be 250 characters or less'
-					}
+					});
 				});
-			});
+				test('returns an error if addressLine2 is greater than 250 characters', async () => {
+					const { hearing } = fullPlanningAppeal;
 
-			test('returns an error if country is not a string', async () => {
-				const { hearing } = fullPlanningAppeal;
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+					const response = await request
+						.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
+						.send({
+							hearingStartTime: hearing.hearingStartTime,
+							hearingEndTime: hearing.hearingEndTime,
+							address: {
+								addressLine1: hearing.address.addressLine1,
+								addressLine2: 'a'.repeat(251),
+								country: hearing.address.addressCountry,
+								county: hearing.address.addressCounty,
+								postcode: hearing.address.postcode,
+								town: hearing.address.addressTown
+							}
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						address: {
-							addressLine1: hearing.address.addressLine1,
-							addressLine2: hearing.address.addressLine2,
-							country: 123,
-							county: hearing.address.addressCounty,
-							postcode: hearing.address.postcode,
-							town: hearing.address.addressTown
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							'address.addressLine2': 'must be 250 characters or less'
 						}
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						'address.country': 'must be a string'
-					}
+					});
 				});
-			});
-			test('returns an error if country is greater than 250 characters', async () => {
-				const { hearing } = fullPlanningAppeal;
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				test('returns an error if town is not provided', async () => {
+					const { hearing } = fullPlanningAppeal;
 
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						address: {
-							addressLine1: hearing.address.addressLine1,
-							addressLine2: hearing.address.addressLine2,
-							country: 'a'.repeat(251),
-							county: hearing.address.addressCounty,
-							postcode: hearing.address.postcode,
-							town: hearing.address.addressTown
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+					const response = await request
+						.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
+						.send({
+							hearingStartTime: hearing.hearingStartTime,
+							hearingEndTime: hearing.hearingEndTime,
+							address: {
+								addressLine1: hearing.address.addressLine1,
+								addressLine2: hearing.address.addressLine2,
+								country: hearing.address.addressCountry,
+								county: hearing.address.addressCounty,
+								postcode: hearing.address.postcode
+							}
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							'address.town': 'must be a string'
 						}
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						'address.country': 'must be 250 characters or less'
-					}
+					});
 				});
-			});
+				test('returns an error if town is not a string', async () => {
+					const { hearing } = fullPlanningAppeal;
 
-			test('returns an error if county is not a string', async () => {
-				const { hearing } = fullPlanningAppeal;
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+					const response = await request
+						.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
+						.send({
+							hearingStartTime: hearing.hearingStartTime,
+							hearingEndTime: hearing.hearingEndTime,
+							address: {
+								addressLine1: hearing.address.addressLine1,
+								addressLine2: hearing.address.addressLine2,
+								country: hearing.address.addressCountry,
+								county: hearing.address.addressCounty,
+								postcode: hearing.address.postcode,
+								town: 123
+							}
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						address: {
-							addressLine1: hearing.address.addressLine1,
-							addressLine2: hearing.address.addressLine2,
-							country: hearing.address.addressCountry,
-							county: 123,
-							postcode: hearing.address.postcode,
-							town: hearing.address.addressTown
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							'address.town': 'must be a string'
 						}
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						'address.county': 'must be a string'
-					}
+					});
 				});
-			});
-			test('returns an error if county is greater than 250 characters', async () => {
-				const { hearing } = fullPlanningAppeal;
+				test('returns an error if town is greater than 250 characters', async () => {
+					const { hearing } = fullPlanningAppeal;
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						address: {
-							addressLine1: hearing.address.addressLine1,
-							addressLine2: hearing.address.addressLine2,
-							country: hearing.address.addressCountry,
-							county: 'a'.repeat(251),
-							postcode: hearing.address.postcode,
-							town: hearing.address.addressTown
+					const response = await request
+						.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
+						.send({
+							hearingStartTime: hearing.hearingStartTime,
+							hearingEndTime: hearing.hearingEndTime,
+							address: {
+								addressLine1: hearing.address.addressLine1,
+								addressLine2: hearing.address.addressLine2,
+								country: hearing.address.addressCountry,
+								county: hearing.address.addressCounty,
+								postcode: hearing.address.postcode,
+								town: 'a'.repeat(251)
+							}
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							'address.town': 'must be 250 characters or less'
 						}
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						'address.county': 'must be 250 characters or less'
-					}
+					});
 				});
-			});
 
-			test('returns an error if postcode is not provided', async () => {
-				const { hearing } = fullPlanningAppeal;
+				test('returns an error if country is not a string', async () => {
+					const { hearing } = fullPlanningAppeal;
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						address: {
-							addressLine1: hearing.address.addressLine1,
-							addressLine2: hearing.address.addressLine2,
-							country: hearing.address.addressCountry,
-							county: hearing.address.addressCounty,
-							town: hearing.address.addressTown
+					const response = await request
+						.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
+						.send({
+							hearingStartTime: hearing.hearingStartTime,
+							hearingEndTime: hearing.hearingEndTime,
+							address: {
+								addressLine1: hearing.address.addressLine1,
+								addressLine2: hearing.address.addressLine2,
+								country: 123,
+								county: hearing.address.addressCounty,
+								postcode: hearing.address.postcode,
+								town: hearing.address.addressTown
+							}
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							'address.country': 'must be a string'
 						}
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						'address.postcode': 'must be a string'
-					}
+					});
 				});
-			});
-			test('returns an error if postcode is not a string', async () => {
-				const { hearing } = fullPlanningAppeal;
+				test('returns an error if country is greater than 250 characters', async () => {
+					const { hearing } = fullPlanningAppeal;
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						address: {
-							addressLine1: hearing.address.addressLine1,
-							addressLine2: hearing.address.addressLine2,
-							country: hearing.address.addressCountry,
-							county: hearing.address.addressCounty,
-							postcode: 123,
-							town: hearing.address.addressTown
+					const response = await request
+						.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
+						.send({
+							hearingStartTime: hearing.hearingStartTime,
+							hearingEndTime: hearing.hearingEndTime,
+							address: {
+								addressLine1: hearing.address.addressLine1,
+								addressLine2: hearing.address.addressLine2,
+								country: 'a'.repeat(251),
+								county: hearing.address.addressCounty,
+								postcode: hearing.address.postcode,
+								town: hearing.address.addressTown
+							}
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							'address.country': 'must be 250 characters or less'
 						}
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						'address.postcode': 'must be a string'
-					}
+					});
 				});
-			});
-			test('returns an error if postcode is greater than 8 characters', async () => {
-				const { hearing } = fullPlanningAppeal;
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				test('returns an error if county is not a string', async () => {
+					const { hearing } = fullPlanningAppeal;
 
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						address: {
-							addressLine1: hearing.address.addressLine1,
-							addressLine2: hearing.address.addressLine2,
-							country: hearing.address.addressCountry,
-							county: hearing.address.addressCounty,
-							postcode: 'a'.repeat(9),
-							town: hearing.address.addressTown
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+					const response = await request
+						.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
+						.send({
+							hearingStartTime: hearing.hearingStartTime,
+							hearingEndTime: hearing.hearingEndTime,
+							address: {
+								addressLine1: hearing.address.addressLine1,
+								addressLine2: hearing.address.addressLine2,
+								country: hearing.address.addressCountry,
+								county: 123,
+								postcode: hearing.address.postcode,
+								town: hearing.address.addressTown
+							}
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							'address.county': 'must be a string'
 						}
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						'address.postcode': 'must be 8 characters or less'
-					}
+					});
 				});
-			});
-			test('returns an error if postcode is not a valid UK postcode', async () => {
-				const { hearing } = fullPlanningAppeal;
+				test('returns an error if county is greater than 250 characters', async () => {
+					const { hearing } = fullPlanningAppeal;
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 
-				const response = await request
-					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
-					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						address: {
-							addressLine1: hearing.address.addressLine1,
-							addressLine2: hearing.address.addressLine2,
-							country: hearing.address.addressCountry,
-							county: hearing.address.addressCounty,
-							postcode: 'ZZ999XZZ',
-							town: hearing.address.addressTown
+					const response = await request
+						.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
+						.send({
+							hearingStartTime: hearing.hearingStartTime,
+							hearingEndTime: hearing.hearingEndTime,
+							address: {
+								addressLine1: hearing.address.addressLine1,
+								addressLine2: hearing.address.addressLine2,
+								country: hearing.address.addressCountry,
+								county: 'a'.repeat(251),
+								postcode: hearing.address.postcode,
+								town: hearing.address.addressTown
+							}
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							'address.county': 'must be 250 characters or less'
 						}
-					})
-					.set('azureAdUserId', azureAdUserId);
+					});
+				});
 
-				expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+				test('returns an error if postcode is not provided', async () => {
+					const { hearing } = fullPlanningAppeal;
 
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						'address.postcode': 'needs to be a valid and include spaces'
-					}
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+					const response = await request
+						.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
+						.send({
+							hearingStartTime: hearing.hearingStartTime,
+							hearingEndTime: hearing.hearingEndTime,
+							address: {
+								addressLine1: hearing.address.addressLine1,
+								addressLine2: hearing.address.addressLine2,
+								country: hearing.address.addressCountry,
+								county: hearing.address.addressCounty,
+								town: hearing.address.addressTown
+							}
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							'address.postcode': 'must be a string'
+						}
+					});
+				});
+				test('returns an error if postcode is not a string', async () => {
+					const { hearing } = fullPlanningAppeal;
+
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+					const response = await request
+						.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
+						.send({
+							hearingStartTime: hearing.hearingStartTime,
+							hearingEndTime: hearing.hearingEndTime,
+							address: {
+								addressLine1: hearing.address.addressLine1,
+								addressLine2: hearing.address.addressLine2,
+								country: hearing.address.addressCountry,
+								county: hearing.address.addressCounty,
+								postcode: 123,
+								town: hearing.address.addressTown
+							}
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							'address.postcode': 'must be a string'
+						}
+					});
+				});
+				test('returns an error if postcode is greater than 8 characters', async () => {
+					const { hearing } = fullPlanningAppeal;
+
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+					const response = await request
+						.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
+						.send({
+							hearingStartTime: hearing.hearingStartTime,
+							hearingEndTime: hearing.hearingEndTime,
+							address: {
+								addressLine1: hearing.address.addressLine1,
+								addressLine2: hearing.address.addressLine2,
+								country: hearing.address.addressCountry,
+								county: hearing.address.addressCounty,
+								postcode: 'a'.repeat(9),
+								town: hearing.address.addressTown
+							}
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							'address.postcode': 'must be 8 characters or less'
+						}
+					});
+				});
+				test('returns an error if postcode is not a valid UK postcode', async () => {
+					const { hearing } = fullPlanningAppeal;
+
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+
+					const response = await request
+						.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
+						.send({
+							hearingStartTime: hearing.hearingStartTime,
+							hearingEndTime: hearing.hearingEndTime,
+							address: {
+								addressLine1: hearing.address.addressLine1,
+								addressLine2: hearing.address.addressLine2,
+								country: hearing.address.addressCountry,
+								county: hearing.address.addressCounty,
+								postcode: 'ZZ999XZZ',
+								town: hearing.address.addressTown
+							}
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(mockBroadcasters.broadcastEvent).not.toHaveBeenCalled();
+
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							'address.postcode': 'needs to be a valid and include spaces'
+						}
+					});
 				});
 			});
 		});
@@ -1298,7 +1318,7 @@ describe('hearing routes', () => {
 				['single appeal', getFullPlanningAppeal],
 				['linked appeals- enforcement multiple appellants', getEnforcementLeadAppeal]
 			])('%s', (_, getAppeal) => {
-				let appeal = getAppeal();
+				let appeal;
 				let idsOfLinkedGroup;
 				let sizeOfLinkedGroup;
 				const mockHearing = {
@@ -1481,11 +1501,11 @@ describe('hearing routes', () => {
 				});
 
 				test('creates a hearing when in hearing ready to set up and transitions to awaiting hearing', async () => {
-					appeal.currentStatus = 'event';
+					appeal.currentStatus = APPEAL_CASE_STATUS.EVENT;
 					appeal.appealStatus = [
 						{
 							id: 1,
-							status: 'event',
+							status: APPEAL_CASE_STATUS.EVENT,
 							createdAt: '2025-09-18T10:07:15.406Z',
 							valid: true,
 							appealId: appeal.id,
@@ -1498,7 +1518,7 @@ describe('hearing routes', () => {
 					databaseConnector.appealStatus.findFirst.mockImplementation(() => {
 						return {
 							id: 1,
-							status: 'event',
+							status: APPEAL_CASE_STATUS.EVENT,
 							createdAt: '2025-09-18T10:07:15.406Z',
 							valid: true,
 							subStateMachineName: null,
@@ -1509,13 +1529,13 @@ describe('hearing routes', () => {
 					// mock appealStatus.update and appealStatus.create to return the new status
 					databaseConnector.appealStatus.updateMany.mockResolvedValue({
 						id: 1,
-						status: 'event',
+						status: APPEAL_CASE_STATUS.EVENT,
 						valid: false
 					});
 
 					databaseConnector.appealStatus.create.mockResolvedValue({
 						id: 2,
-						status: 'awaiting_event',
+						status: APPEAL_CASE_STATUS.AWAITING_EVENT,
 						valid: true
 					});
 
