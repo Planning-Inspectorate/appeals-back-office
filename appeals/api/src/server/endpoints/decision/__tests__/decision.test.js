@@ -16,7 +16,8 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { jest } from '@jest/globals';
 import {
 	FEEDBACK_FORM_LINKS,
-	FRONT_OFFICE_DASHBOARD_PATH_STUBS
+	FRONT_OFFICE_DASHBOARD_PATH_STUBS,
+	GENERIC_APPEAL_TYPES
 } from '@pins/appeals/constants/common.js';
 import {
 	AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
@@ -1394,6 +1395,69 @@ describe('decision routes', () => {
 				})
 			);
 		});
+
+		test('allows issuing decision on generic appeal from any state with no notifies and no recipient emails', async () => {
+			const genericAppeal = {
+				...householdAppeal,
+				id: 999,
+				currentStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+						valid: true
+					}
+				],
+				appealType: {
+					key: 'TPO',
+					type: GENERIC_APPEAL_TYPES.TREE_PRESERVATION_ORDER
+				},
+				agent: null,
+				appellant: null,
+				lpa: null
+			};
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(genericAppeal);
+			// @ts-ignore
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			// @ts-ignore
+			databaseConnector.inspectorDecision.create.mockResolvedValue({});
+
+			const tenDaysAgo = sub(new Date(), { days: 10 });
+			const withoutWeekends = await recalculateDateIfNotBusinessDay(tenDaysAgo.toISOString());
+			const utcDate = setTimeInTimeZone(withoutWeekends, 0, 0);
+
+			const response = await request
+				.post(`/appeals/${genericAppeal.id}/decision`)
+				.send({
+					decisions: [
+						{
+							decisionType: DECISION_TYPE_INSPECTOR,
+							outcome: 'allowed',
+							documentDate: utcDate.toISOString(),
+							documentGuid: documentCreated.guid
+						}
+					]
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(201);
+			expect(mockNotifySend).not.toHaveBeenCalled();
+			expect(databaseConnector.appealStatus.create).toHaveBeenCalledWith({
+				data: expect.objectContaining({
+					appealId: genericAppeal.id,
+					status: APPEAL_CASE_STATUS.COMPLETE,
+					valid: true
+				})
+			});
+			expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+				where: { id: genericAppeal.id },
+				data: {
+					currentStatus: APPEAL_CASE_STATUS.COMPLETE
+				}
+			});
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
+		});
 	});
 
 	describe('PATCH /appeals/:appealId/decision/caseDecisionOutcomeDate', () => {
@@ -1462,6 +1526,27 @@ describe('decision routes', () => {
 			expect(response.body.previews).toHaveProperty('appellant');
 			expect(response.body.previews).toHaveProperty('lpa');
 			expect(response.body.previews).toHaveProperty('interestedParty');
+		});
+
+		test('returns empty previews for generic appeal determination', async () => {
+			const genericAppeal = {
+				...householdAppeal,
+				id: 999,
+				appealType: {
+					key: 'TPO',
+					type: GENERIC_APPEAL_TYPES.TREE_PRESERVATION_ORDER
+				}
+			};
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(genericAppeal);
+
+			const response = await request
+				.post(`/appeals/${genericAppeal.id}/decision/preview`)
+				.send({ outcome: 'allowed' })
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toBe(200);
+			expect(response.body).toEqual({ previews: {} });
 		});
 
 		test('returns rendered previews for costs decision', async () => {

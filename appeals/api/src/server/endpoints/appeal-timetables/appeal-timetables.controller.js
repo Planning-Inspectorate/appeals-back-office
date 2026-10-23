@@ -54,7 +54,8 @@ const startAppeal = async (req, res) => {
 							body.procedureType || appeal.procedureType?.key,
 							body.hearingStartTime,
 							body.hearingEstimatedDays,
-							body.inspectorName
+							body.inspectorName,
+							body.timetable
 						)
 					)
 				);
@@ -83,7 +84,8 @@ const startAppeal = async (req, res) => {
 				body.procedureType || appeal.procedureType?.key,
 				body.hearingStartTime,
 				body.hearingEstimatedDays,
-				body.inspectorName
+				body.inspectorName,
+				body.timetable
 			);
 
 			if (result.success) {

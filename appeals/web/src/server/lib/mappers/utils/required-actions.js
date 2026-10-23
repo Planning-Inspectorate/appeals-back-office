@@ -18,6 +18,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import {
 	isAnyEnforcementAppealType,
+	isGenericAppealType,
 	isNetResidencesAppealType
 } from '@pins/appeals/utils/appeal-type-checks.js';
 import isAppellantStatementAppealType from '@pins/appeals/utils/is-appellant-statement-appeal-type.js';
@@ -61,6 +62,25 @@ export function canDisplayAction(appeal) {
 export function getRequiredActionsForAppeal(appealDetails, view) {
 	/** @type {AppealRequiredAction[]} */
 	const actions = [];
+
+	if (isGenericAppealType(appealDetails.appealType)) {
+		const hasDecision = 'decision' in appealDetails && Boolean(appealDetails.decision?.outcome);
+		const isTerminalStatus = /** @type {string[]} */ ([
+			APPEAL_CASE_STATUS.COMPLETE,
+			APPEAL_CASE_STATUS.INVALID,
+			APPEAL_CASE_STATUS.WITHDRAWN,
+			APPEAL_CASE_STATUS.CLOSED,
+			APPEAL_CASE_STATUS.TRANSFERRED
+		]).includes(appealDetails.appealStatus);
+
+		if (!isTerminalStatus && !hasDecision) {
+			if (appealDetails.appealStatus === APPEAL_CASE_STATUS.READY_TO_START) {
+				actions.push('startAppeal');
+			}
+			actions.push('issueDecision');
+		}
+		return actions;
+	}
 
 	const procedureType = normaliseProcedureType(appealDetails.procedureType);
 

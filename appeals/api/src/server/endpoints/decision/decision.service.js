@@ -30,6 +30,7 @@ import {
 	DECISION_TYPE_LPA_COSTS,
 	ERROR_NO_RECIPIENT_EMAIL
 } from '@pins/appeals/constants/support.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { decisionOutcomeToDisplayText } from '@pins/appeals/utils/decision-outcome-display-text.js';
 import { loadEnvironment } from '@pins/platform';
@@ -110,6 +111,7 @@ export const publishDecision = async (
 	dryRun = false
 ) => {
 	const { type = '', key: appealTypeKey = APPEAL_CASE_TYPE.D } = appeal.appealType || {};
+	const isGeneric = isGenericAppealType(appealTypeKey) || isGenericAppealType(type);
 	const appealType = trimAppealType(type);
 	const caseTeamEmail = await getTeamEmailFromAppealId(appeal.id);
 
@@ -143,6 +145,12 @@ export const publishDecision = async (
 	}
 
 	if (dryRun) {
+		if (isGeneric) {
+			return {
+				previews: {}
+			};
+		}
+
 		const appellantTemplate = renderTemplate(
 			invalidDecisionReason
 				? 'decision-is-invalid-appellant.content.md'
@@ -197,7 +205,7 @@ export const publishDecision = async (
 
 	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 
-	if (!recipientEmail || !appeal.lpa?.email) {
+	if (!isGeneric && (!recipientEmail || !appeal.lpa?.email)) {
 		throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 	}
 
@@ -220,75 +228,77 @@ export const publishDecision = async (
 			? APPEAL_CASE_STATUS.INVALID
 			: APPEAL_CASE_STATUS.COMPLETE;
 
-	if (recipientEmail) {
-		await notifySend({
-			azureAdUserId,
-			templateName: invalidDecisionReason
-				? 'decision-is-invalid-appellant'
-				: 'decision-is-allowed-split-dismissed-appellant',
-			notifyClient,
-			recipientEmail,
-			personalisation: invalidDecisionReason
-				? {
-						...personalisation,
-						has_costs_decision: hasAppellantCostsDecision,
-						feedback_link: feedbackLinkForAppellant,
-						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT
-					}
-				: {
-						...personalisation,
-						feedback_link: feedbackLinkForAppellant,
-						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT
-					}
-		});
-	}
+	if (!isGeneric) {
+		if (recipientEmail) {
+			await notifySend({
+				azureAdUserId,
+				templateName: invalidDecisionReason
+					? 'decision-is-invalid-appellant'
+					: 'decision-is-allowed-split-dismissed-appellant',
+				notifyClient,
+				recipientEmail,
+				personalisation: invalidDecisionReason
+					? {
+							...personalisation,
+							has_costs_decision: hasAppellantCostsDecision,
+							feedback_link: feedbackLinkForAppellant,
+							fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT
+						}
+					: {
+							...personalisation,
+							feedback_link: feedbackLinkForAppellant,
+							fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT
+						}
+			});
+		}
 
-	if (lpaEmail) {
-		await notifySend({
-			azureAdUserId,
-			templateName: invalidDecisionReason
-				? 'decision-is-invalid-lpa'
-				: 'decision-is-allowed-split-dismissed-lpa',
-			notifyClient,
-			recipientEmail: lpaEmail,
-			personalisation: invalidDecisionReason
-				? {
-						...personalisation,
-						has_costs_decision: hasLpaCostsDecision,
-						feedback_link: feedbackLinkForLPA,
-						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA
-					}
-				: {
-						...personalisation,
-						feedback_link: feedbackLinkForLPA,
-						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA
-					}
-		});
-	}
+		if (lpaEmail) {
+			await notifySend({
+				azureAdUserId,
+				templateName: invalidDecisionReason
+					? 'decision-is-invalid-lpa'
+					: 'decision-is-allowed-split-dismissed-lpa',
+				notifyClient,
+				recipientEmail: lpaEmail,
+				personalisation: invalidDecisionReason
+					? {
+							...personalisation,
+							has_costs_decision: hasLpaCostsDecision,
+							feedback_link: feedbackLinkForLPA,
+							fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA
+						}
+					: {
+							...personalisation,
+							feedback_link: feedbackLinkForLPA,
+							fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA
+						}
+			});
+		}
 
-	if (appeal.appealRule6Parties && appeal.appealRule6Parties.length > 0) {
-		for (const party of appeal.appealRule6Parties) {
-			if (party.serviceUser?.email) {
-				await notifySend({
-					azureAdUserId,
-					templateName: invalidDecisionReason
-						? 'decision-is-invalid-appellant'
-						: 'decision-is-allowed-split-dismissed-appellant',
-					notifyClient,
-					recipientEmail: party.serviceUser.email,
-					personalisation: invalidDecisionReason
-						? {
-								...personalisation,
-								has_costs_decision: hasAppellantCostsDecision,
-								feedback_link: feedbackLinkForAppellant,
-								fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.RULE_6_PARTY
-							}
-						: {
-								...personalisation,
-								feedback_link: feedbackLinkForAppellant,
-								fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.RULE_6_PARTY
-							}
-				});
+		if (appeal.appealRule6Parties && appeal.appealRule6Parties.length > 0) {
+			for (const party of appeal.appealRule6Parties) {
+				if (party.serviceUser?.email) {
+					await notifySend({
+						azureAdUserId,
+						templateName: invalidDecisionReason
+							? 'decision-is-invalid-appellant'
+							: 'decision-is-allowed-split-dismissed-appellant',
+						notifyClient,
+						recipientEmail: party.serviceUser.email,
+						personalisation: invalidDecisionReason
+							? {
+									...personalisation,
+									has_costs_decision: hasAppellantCostsDecision,
+									feedback_link: feedbackLinkForAppellant,
+									fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.RULE_6_PARTY
+								}
+							: {
+									...personalisation,
+									feedback_link: feedbackLinkForAppellant,
+									fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.RULE_6_PARTY
+								}
+					});
+				}
 			}
 		}
 	}
@@ -303,7 +313,7 @@ export const publishDecision = async (
 	await broadcasters.broadcastAppeal(appeal.id);
 
 	/** @type {string[]} */
-	if (interestedPartyEmails.length > 0) {
+	if (!isGeneric && interestedPartyEmails.length > 0) {
 		try {
 			await batchSendNotifyToInterestedParties(
 				interestedPartyEmails,
@@ -377,6 +387,18 @@ export const publishChildDecision = async (childAppeal, outcome, documentDate, a
  * @returns {Promise<{previews: {appellant: string, lpa: string, interestedParty: string}}>}
  */
 export const getCostsDecisionPreview = async (appeal, decisionType, siteAddress) => {
+	const isGeneric = isGenericAppealType(appeal.appealType?.type || appeal.appealType?.key);
+
+	if (isGeneric) {
+		return {
+			previews: {
+				appellant: '',
+				lpa: '',
+				interestedParty: ''
+			}
+		};
+	}
+
 	const costDecisionDetails = getCostDecisionDetails(decisionType);
 	if (!costDecisionDetails) {
 		throw new Error('Unable to parse decision type for cost decision details.');
@@ -441,7 +463,9 @@ export const publishCostsDecision = async (
 
 	await setPersonalList({ appealId: appeal.id });
 
-	if (!skipNotifies) {
+	const isGeneric = isGenericAppealType(appeal.appealType?.type || appeal.appealType?.key);
+
+	if (!skipNotifies && !isGeneric) {
 		const enforcementReference = await getEnforcementReference(appeal);
 		const caseTeamEmail = await getTeamEmailFromAppealId(appeal.id);
 		const personalisation = {

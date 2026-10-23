@@ -23,6 +23,7 @@
  * @param {string | null} [hearingStartTime]
  * @param {string | null} [hearingEstimatedDays]
  * @param {string | null | undefined} inspectorName
+ * @param {Record<string, string> | null} [timetable]
  * @returns {Promise<Appeal>}
  */
 export async function setStartDate(
@@ -32,7 +33,8 @@ export async function setStartDate(
 	procedureType,
 	hearingStartTime,
 	hearingEstimatedDays,
-	inspectorName = null
+	inspectorName = null,
+	timetable = null
 ) {
 	return await apiClient
 		.post(`appeals/${appealId}/appeal-timetables`, {
@@ -41,7 +43,8 @@ export async function setStartDate(
 				...(procedureType && { procedureType }),
 				...(hearingStartTime && { hearingStartTime }),
 				...(hearingEstimatedDays && { hearingEstimatedDays }),
-				...(inspectorName && { inspectorName })
+				...(inspectorName && { inspectorName }),
+				...(timetable && { timetable })
 			}
 		})
 		.json();
