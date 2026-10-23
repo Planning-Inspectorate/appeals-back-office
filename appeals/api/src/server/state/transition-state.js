@@ -21,6 +21,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import {
 	isExpeditedAppealType,
+	isGenericAppealType,
 	isLdcOrDiscontinuanceOrEnforcementCaseType
 } from '@pins/appeals/utils/appeal-type-checks.js';
 import { nextUKDay } from '@pins/appeals/utils/date-utils.js';
@@ -68,15 +69,45 @@ const transitionState = async (appealId, azureAdUserId, trigger, options = {}) =
 
 	const currentState = getCurrentStatus(appeal);
 
+	const isGeneric = isGenericAppealType(appealType?.type || appealType?.key);
+
+	if (isGeneric) {
+		if (
+			[
+				APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+				APPEAL_CASE_STATUS.COMPLETE,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
+			].includes(/** @type {any} */ (trigger))
+		) {
+			const newState = trigger;
+			if (newState !== currentState) {
+				await appealStatusRepository.updateAppealStatusByAppealId(appealId, newState);
+				if (newState === APPEAL_CASE_STATUS.ISSUE_DETERMINATION) {
+					azureAdUserId = AUDIT_TRIAL_AUTOMATIC_EVENT_UUID;
+				}
+				createAuditTrail({
+					appealId,
+					azureAdUserId,
+					details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, [newState])
+				});
+				if (!isChildAppeal(appeal)) {
+					await setPersonalList({ appealId });
+				}
+				return true;
+			}
+			return false;
+		}
+	}
+
 	if (!procedureType) {
 		logger.info(`Procedure type not set for appeal ${appealId}, defaulting to written`);
 	}
 
 	const procedureKey = procedureType?.key ?? APPEAL_CASE_PROCEDURE.WRITTEN;
 	const normalisedProcedureKey = /** @type {string} */ (normaliseProcedureType(procedureKey));
-	const normalizedAppealTypeKey = !isExpeditedAppealType(appealType.key)
-		? APPEAL_CASE_TYPE.W
-		: APPEAL_CASE_TYPE.D;
+	const normalizedAppealTypeKey =
+		isGeneric || !isExpeditedAppealType(appealType.key) ? APPEAL_CASE_TYPE.W : APPEAL_CASE_TYPE.D;
 	const isLdcOrDiscontinuanceOrEnforcement = isLdcOrDiscontinuanceOrEnforcementCaseType(
 		appealType.key
 	);

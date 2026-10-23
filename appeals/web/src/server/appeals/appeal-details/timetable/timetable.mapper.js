@@ -5,6 +5,7 @@ import { appealTypeToAppealCaseTypeMapper } from '@pins/appeals/utils/appeal-typ
 import {
 	isEnforcementCaseType,
 	isExpeditedAppealType,
+	isGenericAppealType,
 	isLdcOrDiscontinuanceOrEnforcementCaseType
 } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
@@ -26,6 +27,7 @@ import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorat
  * @param {AppellantCase} appellantCase
  * @param {Record<string, any>} body
  * @param {import("@pins/express").ValidationErrors | undefined} errors
+ * @param {string} [backLinkUrl]
  * @returns {PageContent}
  */
 export const mapEditTimetablePage = (
@@ -33,14 +35,15 @@ export const mapEditTimetablePage = (
 	appealDetails,
 	appellantCase,
 	body,
-	errors = undefined
+	errors = undefined,
+	backLinkUrl = undefined
 ) => {
 	const timeTableTypes = getAppealTimetableTypes(appealDetails, appellantCase);
 
 	/** @type {PageContent} */
 	let pageContent = {
 		title: `Timetable due dates`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		backLinkUrl: backLinkUrl ?? `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 		heading: timeTableTypes.length > 1 ? `Timetable due dates` : ``,
 		submitButtonProperties: {
@@ -145,6 +148,19 @@ export const getIdText = (timetableType) => {
 export const getAppealTimetableTypes = (appeal, appellantCase) => {
 	/** @type {AppealTimetableType[]} */
 	let validAppealTimetableType;
+
+	if (isGenericAppealType(appeal.appealType)) {
+		return [
+			'lpaQuestionnaireDueDate',
+			'lpaStatementDueDate',
+			'ipCommentsDueDate',
+			'finalCommentsDueDate',
+			'statementOfCommonGroundDueDate',
+			'planningObligationDueDate',
+			'proofOfEvidenceAndWitnessesDueDate',
+			'caseManagementConferenceDueDate'
+		];
+	}
 
 	const caseType = appealTypeToAppealCaseTypeMapper(appeal.appealType);
 	if (isExpeditedAppealType(caseType)) {
