@@ -19,7 +19,7 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 		appealDetails?.appealStatus
 	);
 	const isEnforcementChild = isEnforcementChildAppeal(appealDetails);
-
+	const isChild = isChildAppeal(appealDetails);
 	return {
 		type: 'table',
 		parameters: {
@@ -51,7 +51,7 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 				isFeatureActive(FEATURE_FLAG_NAMES.SHARING_INQUIRY_EVENT_DOCUMENTS)
 					? [mappedData.appeal.inquiryEventDocuments.display.tableItem]
 					: []),
-				...(!isChildAppeal(appealDetails) && !isExpeditedAppealType
+				...(!isChild && !isExpeditedAppealType
 					? [
 							caseStarted ? mappedData.appeal.appellantStatement.display.tableItem : undefined,
 							caseStarted ? mappedData.appeal.lpaStatement.display.tableItem : undefined,
@@ -72,7 +72,7 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 								: [])
 						]
 					: []),
-				mappedData.appeal.environmentalAssessment.display.tableItem
+				...(!isChild ? [mappedData.appeal.environmentalAssessment.display.tableItem] : [])
 			].filter(isDefined),
 			firstCellIsHeader: true,
 			attributes: {

@@ -2701,6 +2701,26 @@ describe('appeal-details', () => {
 				expect(element.innerHTML).toMatchSnapshot();
 				expect(element.innerHTML).not.toContain('govuk-notification-banner');
 			});
+			it('should not render Environmental services team review when the appeal is a linked child appeal', async () => {
+				const appealId = 2;
+				nock('http://test/')
+					.get(`/appeals/${appealId}/page-details`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealStatus: 'ready_to_start',
+						isChildAppeal: true,
+						eiaScreeningRequired: true
+					});
+				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+				const element = parseHtml(response.text, { rootElement: '.govuk-main-wrapper' });
+
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).not.toContain('Environmental services team review</h2>');
+			});
 		});
 
 		it('should redirect to 500 page if it fails to post', async () => {
