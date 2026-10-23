@@ -1,4 +1,5 @@
 import config from '@pins/appeals.web/environment/config.js';
+import { GENERIC_APPEAL_TYPES } from '@pins/appeals/constants/common.js';
 import {
 	appealCaseTypeToAppealTypeMapper,
 	appealTypeToAppealCaseTypeMapper
@@ -84,6 +85,31 @@ export const getEnabledAppealCaseTypes = () => {
 	if (isAppealCaseTypeEnabled(APPEAL_CASE_TYPE.X)) {
 		// @ts-ignore
 		enabledAppeals.push(APPEAL_CASE_TYPE.X);
+	}
+	if (isAppealTypeEnabled(GENERIC_APPEAL_TYPES.TREE_PRESERVATION_ORDER)) {
+		enabledAppeals.push(GENERIC_APPEAL_TYPES.TREE_PRESERVATION_ORDER);
+	}
+	if (isAppealTypeEnabled(GENERIC_APPEAL_TYPES.TREE_REPLACEMENT_NOTICE)) {
+		enabledAppeals.push(GENERIC_APPEAL_TYPES.TREE_REPLACEMENT_NOTICE);
+	}
+	if (isAppealTypeEnabled(GENERIC_APPEAL_TYPES.HIGH_HEDGES)) {
+		enabledAppeals.push(GENERIC_APPEAL_TYPES.HIGH_HEDGES);
+	}
+	if (isAppealTypeEnabled(GENERIC_APPEAL_TYPES.HEDGEROWS)) {
+		enabledAppeals.push(GENERIC_APPEAL_TYPES.HEDGEROWS);
+	}
+	if (isAppealTypeEnabled(GENERIC_APPEAL_TYPES.DISCONTINUANCE_NOTICE)) {
+		enabledAppeals.push(GENERIC_APPEAL_TYPES.DISCONTINUANCE_NOTICE);
+	}
+	if (isAppealTypeEnabled(GENERIC_APPEAL_TYPES.COMMUNITY_INFRASTRUCTURE_LEVY)) {
+		// @ts-ignore
+		enabledAppeals.push(APPEAL_CASE_TYPE.L);
+	}
+	if (isAppealTypeEnabled(GENERIC_APPEAL_TYPES.SECTION_106_AGREEMENT)) {
+		enabledAppeals.push(GENERIC_APPEAL_TYPES.SECTION_106_AGREEMENT);
+	}
+	if (isAppealTypeEnabled(GENERIC_APPEAL_TYPES.ENVIRONMENTAL)) {
+		enabledAppeals.push(GENERIC_APPEAL_TYPES.ENVIRONMENTAL);
 	}
 
 	return enabledAppeals;

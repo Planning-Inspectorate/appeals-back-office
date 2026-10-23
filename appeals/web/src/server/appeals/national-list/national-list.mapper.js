@@ -141,15 +141,19 @@ export function nationalListPage(
 			selected: appealTypeFilter === 'all'
 		},
 		...enabledAppealTypes
-			.filter((appealType) => appealTypes.some((item) => item.key === appealType))
+			.filter((appealType) =>
+				appealTypes.some((item) => item.key === appealType || item.type === appealType)
+			)
 			.map((appealType) => {
-				const { type, id } = appealTypes.find((item) => item.key === appealType) || {};
+				const { type, id } =
+					appealTypes.find((item) => item.key === appealType || item.type === appealType) || {};
 				return {
 					text: type,
 					value: `${id}`,
 					selected: appealTypeFilter === `${id}`
 				};
 			})
+			.sort((a, b) => String(a.text).localeCompare(String(b.text), 'en', { sensitivity: 'base' }))
 	];
 
 	const caseTeamFilterItemsArray = [
