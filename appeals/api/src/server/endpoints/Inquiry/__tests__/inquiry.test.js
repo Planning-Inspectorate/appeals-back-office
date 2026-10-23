@@ -938,6 +938,26 @@ describe('inquiry routes', () => {
 				expect(response.status).toEqual(201);
 			});
 
+			test('does not send notification when appeal type is generic', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...fullPlanningAppeal,
+					appealType: {
+						id: 99,
+						shorthand: 'GEN',
+						type: 'Tree preservation order',
+						key: 'TREE_PRESERVATION_ORDER'
+					}
+				});
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send(requestData)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+				expect(mockNotifySend).not.toHaveBeenCalled();
+			});
+
 			test('creates a single inquiry with no address or inquiryEndTime', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 

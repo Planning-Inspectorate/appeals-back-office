@@ -18,10 +18,15 @@ import {
 	preserveQueryString
 } from '#lib/url-utilities.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
-import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import {
+	isAnyEnforcementAppealType,
+	isGenericAppealType
+} from '@pins/appeals/utils/appeal-type-checks.js';
 import { recalculateDateIfNotBusinessDay } from '@pins/appeals/utils/business-days.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { getAppellantCaseFromAppealId } from '../appellant-case/appellant-case.service.js';
+import { getIdText, mapEditTimetablePage } from '../timetable/timetable.mapper.js';
+import { buildSessionDate } from '../timetable/timetable.validators.js';
 import {
 	changeDatePage,
 	confirmProcedurePage,
@@ -49,13 +54,14 @@ export const getStartDate = async (request, response) => {
 		getEnabledInquiryAppealTypes().includes(appealType);
 
 	if (
-		// S78 and enforcement and ELB should always go to select procedure, other appeal types should only go to select procedure if hearing or inquiry is enabled for that appeal type
+		// S78 and enforcement, ELB and generic apppeals should always go to select procedure, other appeal types should only go to select procedure if hearing or inquiry is enabled for that appeal type
 		[
 			APPEAL_TYPE.S78,
 			APPEAL_TYPE.ENFORCEMENT_NOTICE,
 			APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
 		].includes(appealType) ||
-		hearingOrInquiryEnabled
+		hearingOrInquiryEnabled ||
+		isGenericAppealType(appealType)
 	) {
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/start-case/select-procedure${
@@ -291,7 +297,7 @@ const useNewHearingRoute = (request) => {
  */
 const redirectionTarget = (request) => {
 	const {
-		currentAppeal: { appealId }
+		currentAppeal: { appealId, appealType }
 	} = request;
 
 	const sessionValues = getSessionValuesForAppeal(request, 'startCaseAppealProcedure', appealId);
@@ -311,6 +317,10 @@ const redirectionTarget = (request) => {
 	}
 
 	applyEditsForAppeal(request, 'startCaseAppealProcedure', appealId);
+
+	if (isGenericAppealType(appealType)) {
+		return `/appeals-service/appeal-details/${appealId}/start-case/timetable`;
+	}
 
 	return `/appeals-service/appeal-details/${appealId}/start-case/select-procedure/check-and-confirm`;
 };
@@ -432,4 +442,98 @@ export const postConfirmProcedure = async (request, response) => {
 
 		return response.status(500).render('app/500.njk');
 	}
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const getStartCaseTimetable = async (request, response) => {
+	return renderStartCaseTimetable(request, response);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+const renderStartCaseTimetable = async (request, response) => {
+	const { currentAppeal, errors } = request;
+	const { appealId } = currentAppeal;
+	const sessionValues = getSessionValuesForAppeal(request, 'startCaseAppealProcedure', appealId);
+	const procedureType = sessionValues?.appealProcedure;
+
+	let defaultBackLink = `/appeals-service/appeal-details/${appealId}/start-case/select-procedure`;
+	if (procedureType === APPEAL_CASE_PROCEDURE.HEARING) {
+		defaultBackLink = `/appeals-service/appeal-details/${appealId}/start-case/hearing/estimation`;
+	} else if (procedureType === APPEAL_CASE_PROCEDURE.INQUIRY) {
+		const inquiryValues = getSessionValuesForAppeal(request, 'setUpInquiry', appealId);
+		defaultBackLink =
+			inquiryValues?.addressKnown === 'yes'
+				? `/appeals-service/appeal-details/${appealId}/inquiry/setup/address-details`
+				: `/appeals-service/appeal-details/${appealId}/inquiry/setup/address`;
+	}
+
+	const backLinkUrl = getBackLinkUrl(
+		request,
+		defaultBackLink,
+		`/appeals-service/appeal-details/${appealId}/start-case/select-procedure/check-and-confirm`
+	);
+
+	const appealTimetable = sessionValues?.timetable || request.session.appealTimetable || {};
+
+	const mappedPageContent = mapEditTimetablePage(
+		appealTimetable,
+		currentAppeal,
+		request.locals?.appellantCase,
+		request.body,
+		errors,
+		backLinkUrl
+	);
+
+	return response.render('appeals/appeal/update-date.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postStartCaseTimetable = async (request, response) => {
+	if (request.errors) {
+		return renderStartCaseTimetable(request, response);
+	}
+
+	const { appealId } = request.currentAppeal;
+
+	request.session.startCaseAppealProcedure = request.session.startCaseAppealProcedure || {};
+	request.session.startCaseAppealProcedure[appealId] =
+		request.session.startCaseAppealProcedure[appealId] || {};
+
+	/** @type {Record<string, string>} */
+	const timetable = {};
+	/** @type {import('../timetable/timetable.mapper.js').AppealTimetableType[]} */
+	const timetableTypes = [
+		'lpaQuestionnaireDueDate',
+		'lpaStatementDueDate',
+		'ipCommentsDueDate',
+		'finalCommentsDueDate',
+		'statementOfCommonGroundDueDate',
+		'planningObligationDueDate',
+		'proofOfEvidenceAndWitnessesDueDate',
+		'caseManagementConferenceDueDate'
+	];
+
+	timetableTypes.forEach((timetableType) => {
+		const idText = getIdText(timetableType);
+		const dateStr = buildSessionDate(request, idText);
+		if (dateStr) {
+			timetable[timetableType] = `${dateStr}T00:00:00.000Z`;
+		}
+	});
+
+	request.session.startCaseAppealProcedure[appealId].timetable = timetable;
+	request.session.appealTimetable = timetable;
+
+	return response.redirect(
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${appealId}/start-case/select-procedure/check-and-confirm`
+		)
+	);
 };

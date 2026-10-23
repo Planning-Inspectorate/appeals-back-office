@@ -32,6 +32,11 @@ router
 	.get(asyncHandler(controller.getConfirmProcedure))
 	.post(asyncHandler(controller.postConfirmProcedure));
 
+router
+	.route('/timetable')
+	.get(asyncHandler(controller.getStartCaseTimetable))
+	.post(validators.validateStartCaseTimetable, asyncHandler(controller.postStartCaseTimetable));
+
 router.use('/hearing', hearingRouter);
 
 export default router;

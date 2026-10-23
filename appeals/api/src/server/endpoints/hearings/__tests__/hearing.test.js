@@ -1480,6 +1480,26 @@ describe('hearing routes', () => {
 					expect(response.status).toEqual(201);
 				});
 
+				test('does not send notifications when appeal type is generic', async () => {
+					databaseConnector.appeal.findUnique.mockResolvedValue({
+						...appeal,
+						appealType: {
+							id: 99,
+							shorthand: 'GEN',
+							type: 'Tree preservation order',
+							key: 'TREE_PRESERVATION_ORDER'
+						}
+					});
+
+					const response = await request
+						.post(`/appeals/${appeal.id}/hearing`)
+						.send({ hearingStartTime: hearing.hearingStartTime })
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(response.status).toEqual(201);
+					expect(mockNotifySend).not.toHaveBeenCalled();
+				});
+
 				test('creates a hearing when in hearing ready to set up and transitions to awaiting hearing', async () => {
 					appeal.currentStatus = 'event';
 					appeal.appealStatus = [

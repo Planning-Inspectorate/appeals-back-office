@@ -5,7 +5,7 @@ import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { appealData } from '#testing/appeals/appeals.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, GENERIC_APPEAL_TYPES } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
 import { APPEAL_TYPE_OF_PLANNING_APPLICATION } from '@planning-inspectorate/data-model';
 import nock from 'nock';
@@ -179,6 +179,12 @@ describe('start-case', () => {
 				[
 					'for enforcement listed building appeals regardless of enabled types (empty arrays)',
 					APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+					[],
+					[]
+				],
+				[
+					'for generic appeals regardless of enabled types (empty arrays)',
+					GENERIC_APPEAL_TYPES.TREE_PRESERVATION_ORDER,
 					[],
 					[]
 				]
@@ -857,6 +863,34 @@ describe('start-case', () => {
 				);
 			});
 
+			it('should show written, hearing and inquiry radio buttons for generic appeals regardless of enabled types', async () => {
+				// @ts-ignore
+				getEnabledHearingAppealTypes.mockReturnValue([]);
+				// @ts-ignore
+				getEnabledInquiryAppealTypes.mockReturnValue([]);
+
+				nock('http://test/')
+					.get('/appeals/1?include=all')
+					.reply(200, {
+						...appealDataWithoutStartDate,
+						appealType: GENERIC_APPEAL_TYPES.TREE_PRESERVATION_ORDER
+					});
+
+				const response = await request.get(
+					'/appeals-service/appeal-details/1/start-case/select-procedure'
+				);
+
+				expect(response.statusCode).toBe(200);
+				const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="written"');
+				expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="hearing"');
+				expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="inquiry"');
+				expect(unprettifiedHtml).not.toContain(
+					'name="appealProcedure" type="radio" value="writtenPart1"'
+				);
+			});
+
 			it.each([
 				['enforcement', APPEAL_TYPE.ENFORCEMENT_NOTICE],
 				['enforcement listed building', APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING]
@@ -1188,6 +1222,169 @@ describe('start-case', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(mockAppealTimetablesEndpoint.isDone()).toBe(true);
+		});
+	});
+
+	describe('Timetable for generic appeals', () => {
+		const genericAppeal = {
+			...appealDataWithoutStartDate,
+			appealType: 'Tree preservation order'
+		};
+
+		describe('GET /start-case/timetable', () => {
+			it('should render timetable due dates page with blank date fields for all 8 rows (Scenario 4)', async () => {
+				nock('http://test/').get('/appeals/1?include=all').reply(200, genericAppeal);
+
+				const response = await request.get(
+					'/appeals-service/appeal-details/1/start-case/timetable'
+				);
+
+				expect(response.statusCode).toBe(200);
+
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toContain('Timetable due dates</h1>');
+				expect(element.innerHTML).toContain('LPA questionnaire due');
+				expect(element.innerHTML).toContain('Statements due');
+				expect(element.innerHTML).toContain('Interested party comments due');
+				expect(element.innerHTML).toContain('Final comments due');
+				expect(element.innerHTML).toContain('Statement of common ground due');
+				expect(element.innerHTML).toContain('Planning obligation due');
+				expect(element.innerHTML).toContain('Proof of evidence and witnesses due');
+				expect(element.innerHTML).toContain('Case management conference due');
+
+				expect(
+					element
+						.querySelector('input[name="lpa-questionnaire-due-date-day"]')
+						?.getAttribute('value')
+				).toBeFalsy();
+				expect(
+					element.querySelector('input[name="lpa-statement-due-date-day"]')?.getAttribute('value')
+				).toBeFalsy();
+				expect(
+					element.querySelector('input[name="ip-comments-due-date-day"]')?.getAttribute('value')
+				).toBeFalsy();
+				expect(
+					element.querySelector('input[name="final-comments-due-date-day"]')?.getAttribute('value')
+				).toBeFalsy();
+				expect(
+					element
+						.querySelector('input[name="statement-of-common-ground-due-date-day"]')
+						?.getAttribute('value')
+				).toBeFalsy();
+				expect(
+					element
+						.querySelector('input[name="planning-obligation-due-date-day"]')
+						?.getAttribute('value')
+				).toBeFalsy();
+				expect(
+					element
+						.querySelector('input[name="proof-of-evidence-and-witnesses-due-date-day"]')
+						?.getAttribute('value')
+				).toBeFalsy();
+				expect(
+					element
+						.querySelector('input[name="case-management-conference-due-date-day"]')
+						?.getAttribute('value')
+				).toBeFalsy();
+			});
+		});
+
+		describe('POST /start-case/timetable', () => {
+			it('should allow continuing when no dates are entered without any errors (Scenario 6)', async () => {
+				nock('http://test/').get('/appeals/1?include=all').reply(200, genericAppeal);
+
+				const response = await request
+					.post('/appeals-service/appeal-details/1/start-case/timetable')
+					.send({});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1/start-case/select-procedure/check-and-confirm'
+				);
+			});
+
+			it('should return error message when an entered date is not a business day (Scenario 5)', async () => {
+				nock('http://test/').get('/appeals/1?include=all').reply(200, genericAppeal);
+
+				nock('http://test/')
+					.post('/appeals/validate-business-date')
+					.reply(400, { errors: { inputDate: 'Must be a business day' } });
+
+				const response = await request
+					.post('/appeals-service/appeal-details/1/start-case/timetable')
+					.send({
+						'lpa-questionnaire-due-date-day': '28',
+						'lpa-questionnaire-due-date-month': '02',
+						'lpa-questionnaire-due-date-year': '2026'
+					});
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+				expect(unprettifiedHtml).toContain('The lpa questionnaire due date must be a business day');
+			});
+
+			it('should successfully save dates when entered dates are business days', async () => {
+				nock('http://test/').get('/appeals/1?include=all').reply(200, genericAppeal);
+
+				nock('http://test/').post('/appeals/validate-business-date').reply(200, { result: true });
+
+				const response = await request
+					.post('/appeals-service/appeal-details/1/start-case/timetable')
+					.send({
+						'lpa-questionnaire-due-date-day': '27',
+						'lpa-questionnaire-due-date-month': '02',
+						'lpa-questionnaire-due-date-year': '2026'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1/start-case/select-procedure/check-and-confirm'
+				);
+			});
+
+			it('should allow earlier due date before questionnaire due date without validation error between due dates (Scenario 8)', async () => {
+				nock('http://test/').get('/appeals/1?include=all').reply(200, genericAppeal);
+
+				nock('http://test/')
+					.post('/appeals/validate-business-date')
+					.times(2)
+					.reply(200, { result: true });
+
+				const response = await request
+					.post('/appeals-service/appeal-details/1/start-case/timetable')
+					.send({
+						'lpa-questionnaire-due-date-day': '27',
+						'lpa-questionnaire-due-date-month': '03',
+						'lpa-questionnaire-due-date-year': '2026',
+						'lpa-statement-due-date-day': '27',
+						'lpa-statement-due-date-month': '02',
+						'lpa-statement-due-date-year': '2026'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1/start-case/select-procedure/check-and-confirm'
+				);
+			});
+		});
+
+		describe('Navigation to timetable for generic appeals', () => {
+			it('should redirect to /start-case/timetable when selecting procedure written', async () => {
+				nock('http://test/').get('/appeals/1?include=all').reply(200, genericAppeal);
+
+				const response = await request
+					.post('/appeals-service/appeal-details/1/start-case/select-procedure')
+					.send({
+						appealProcedure: 'written'
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1/start-case/timetable'
+				);
+			});
 		});
 	});
 });
