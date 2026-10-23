@@ -48,7 +48,7 @@ const checkHearingExists = async (req, res, next) => {
 /**
  * @param {Hearing | null | undefined} existingHearing
  * @param {UpdateHearing} updatedHearing
- * @returns {{isDateChanged: boolean, isEndTimeChanged: boolean, isEstimatedDaysChanged: boolean, isOnlyAddressUpdated: boolean}}
+ * @returns {{isDateChanged: boolean, isEndTimeChanged: boolean, isEstimatedDaysChanged: boolean, isOnlyAddressUpdated: boolean, isOnlyEstimatedDaysUpdated: boolean, existingEstimatedDays: number | undefined}}
  */
 const checkUpdatedHearingValues = (existingHearing, updatedHearing) => {
 	const existingEstimatedDays = existingHearing?.estimatedDays?.d?.[0];
@@ -64,11 +64,18 @@ const checkUpdatedHearingValues = (existingHearing, updatedHearing) => {
 		!isDateChanged &&
 		!isEndTimeChanged &&
 		!isEstimatedDaysChanged;
+	const isOnlyEstimatedDaysUpdated =
+		isEstimatedDaysChanged &&
+		!isDateChanged &&
+		!isEndTimeChanged &&
+		(updatedHearing.address === undefined || existingHearing?.address === updatedHearing.address);
 	return {
 		isDateChanged,
 		isEndTimeChanged,
 		isEstimatedDaysChanged,
-		isOnlyAddressUpdated
+		isOnlyAddressUpdated,
+		isOnlyEstimatedDaysUpdated,
+		existingEstimatedDays
 	};
 };
 
