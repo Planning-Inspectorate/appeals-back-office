@@ -597,6 +597,7 @@ describe('appeals documents', () => {
 
 			const mappedReq = mappers.mapDocumentsForDatabase(
 				householdAppeal.id,
+				householdAppeal.reference,
 				addDocumentsRequestWithGuid.blobStorageHost,
 				addDocumentsRequestWithGuid.blobStorageContainer,
 				addDocumentsRequestWithGuid.documents
@@ -604,6 +605,11 @@ describe('appeals documents', () => {
 			mappedReq.forEach((m) => {
 				expect(m.blobStorageHost).toEqual(addDocumentsRequestWithGuid.blobStorageHost);
 				expect(m.blobStorageContainer).toEqual(addDocumentsRequestWithGuid.blobStorageContainer);
+				expect(m.name).toEqual('mydoc.pdf');
+				expect(m.fileName).toEqual(`${blobInfo.GUID}.pdf`);
+				expect(m.blobStoragePath).toEqual(
+					`appeal/${householdAppeal.reference}/${blobInfo.GUID}/v1/${blobInfo.GUID}.pdf`
+				);
 			});
 
 			const prismaMock = {
@@ -705,13 +711,19 @@ describe('appeals documents', () => {
 		test('post new document version', async () => {
 			const mappedReq = mappers.mapDocumentsForDatabase(
 				householdAppeal.id,
+				householdAppeal.reference,
 				addDocumentVersionRequest.blobStorageHost,
 				addDocumentVersionRequest.blobStorageContainer,
-				[addDocumentVersionRequest.document]
+				[{ ...addDocumentVersionRequest.document, GUID: documentCreated.guid }],
+				2
 			);
 			mappedReq.forEach((m) => {
 				expect(m.blobStorageHost).toEqual(addDocumentVersionRequest.blobStorageHost);
 				expect(m.blobStorageContainer).toEqual(addDocumentVersionRequest.blobStorageContainer);
+				expect(m.fileName).toEqual(`${documentCreated.guid}.pdf`);
+				expect(m.blobStoragePath).toEqual(
+					`appeal/${householdAppeal.reference}/${documentCreated.guid}/v2/${documentCreated.guid}.pdf`
+				);
 			});
 
 			const prismaMock = {
