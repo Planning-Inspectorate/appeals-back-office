@@ -59,6 +59,7 @@ model Appeal {
   inspectorDecision              InspectorDecision?
   folders                        Folder[]
   documents                      Document[]
+  caseFilePackages               CaseFilePackage[]
   auditTrail                     AuditTrail[]
   parentAppeals                  AppealRelationship[]            @relation("childAppeal")
   childAppeals                   AppealRelationship[]            @relation("parentAppeal")
@@ -88,6 +89,23 @@ model Appeal {
   @@index([currentStatus])
   @@index([currentStatus, caseOfficerUserId])
   @@index([currentStatus, inspectorUserId])
+}
+
+model CaseFilePackage {
+  id                  String    @id @default(uuid())
+  appealId            Int
+  appeal              Appeal    @relation(fields: [appealId], references: [id])
+  requestedBy         String
+  status              String    @default("queued") // queued, processing, ready, failed
+  active              Boolean   @default(true) // true means no new package can be queued as one is queued or processing already
+  requestedAt         DateTime  @default(now())
+  processingStartedAt DateTime?
+  completedAt         DateTime?
+  blobPath            String?
+  sizeBytes           BigInt?
+  error               String?   @db.NVarChar(Max)
+
+  @@index([appealId, requestedAt])
 }
 
 /// AppealRelationship model
