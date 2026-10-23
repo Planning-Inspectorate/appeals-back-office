@@ -16,7 +16,7 @@ describe('add rule 6 party', () => {
 	describe('GET /rule-6-parties/add', () => {
 		it('should redirect to /rule-6-parties/add/name', async () => {
 			nock('http://test/')
-				.get(`/appeals/2?include=appealRule6Parties`)
+				.get(`/appeals/2?include=appealRule6Parties,appealType`)
 				.reply(200, { ...appealData, appealId: 2 });
 
 			const response = await request.get(
@@ -36,7 +36,7 @@ describe('add rule 6 party', () => {
 
 		beforeAll(async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=appealRule6Parties`)
+				.get(`/appeals/${appealId}?include=appealRule6Parties,appealType`)
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(`${baseUrl}/${appealId}/rule-6-parties/add/name`);
@@ -63,7 +63,7 @@ describe('add rule 6 party', () => {
 
 		it('should have a back link to the original page if specified', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=appealRule6Parties`)
+				.get(`/appeals/${appealId}?include=appealRule6Parties,appealType`)
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(
@@ -76,7 +76,7 @@ describe('add rule 6 party', () => {
 
 		it('should have a back link to the CYA page if editing', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=appealRule6Parties`)
+				.get(`/appeals/${appealId}?include=appealRule6Parties,appealType`)
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(
@@ -91,7 +91,7 @@ describe('add rule 6 party', () => {
 
 		it('should render any saved response', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=appealRule6Parties`)
+				.get(`/appeals/${appealId}?include=appealRule6Parties,appealType`)
 				.twice()
 				.reply(200, { ...appealData, appealId });
 
@@ -111,7 +111,7 @@ describe('add rule 6 party', () => {
 
 		it('should render an edited response', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=appealRule6Parties`)
+				.get(`/appeals/${appealId}?include=appealRule6Parties,appealType`)
 				.twice()
 				.reply(200, { ...appealData, appealId });
 
@@ -137,7 +137,7 @@ describe('add rule 6 party', () => {
 
 		beforeEach(() => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=appealRule6Parties`)
+				.get(`/appeals/${appealId}?include=appealRule6Parties,appealType`)
 				.reply(200, { ...appealData, appealId });
 		});
 
@@ -222,7 +222,7 @@ describe('add rule 6 party', () => {
 
 		beforeAll(async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=appealRule6Parties`)
+				.get(`/appeals/${appealId}?include=appealRule6Parties,appealType`)
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(`${baseUrl}/${appealId}/rule-6-parties/add/email`);
@@ -239,6 +239,19 @@ describe('add rule 6 party', () => {
 			);
 		});
 
+		it('should render (optional) heading for generic appeal', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=appealRule6Parties,appealType`)
+				.reply(200, { ...appealData, appealId, appealType: 'Tree preservation order' });
+
+			const response = await request.get(`${baseUrl}/${appealId}/rule-6-parties/add/email`);
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(html.querySelector('h1 label')?.innerHTML.trim()).toBe(
+				'Rule 6 party email address (optional)'
+			);
+		});
+
 		it('should render an email address field', () => {
 			expect(pageHtml.querySelector('input#email')).not.toBeNull();
 		});
@@ -251,7 +264,7 @@ describe('add rule 6 party', () => {
 
 		it('should have a back link to the CYA page if editing', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=appealRule6Parties`)
+				.get(`/appeals/${appealId}?include=appealRule6Parties,appealType`)
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(
@@ -266,7 +279,7 @@ describe('add rule 6 party', () => {
 
 		it('should render any saved response', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=appealRule6Parties`)
+				.get(`/appeals/${appealId}?include=appealRule6Parties,appealType`)
 				.twice()
 				.reply(200, { ...appealData, appealId });
 
@@ -286,7 +299,7 @@ describe('add rule 6 party', () => {
 
 		it('should render an edited response', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=appealRule6Parties`)
+				.get(`/appeals/${appealId}?include=appealRule6Parties,appealType`)
 				.twice()
 				.reply(200, { ...appealData, appealId });
 
@@ -312,7 +325,7 @@ describe('add rule 6 party', () => {
 
 		beforeEach(() => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=appealRule6Parties`)
+				.get(`/appeals/${appealId}?include=appealRule6Parties,appealType`)
 				.reply(200, { ...appealData, appealId });
 		});
 
@@ -341,6 +354,44 @@ describe('add rule 6 party', () => {
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
 			expect(errorSummaryHtml).toContain('Enter a Rule 6 party email address');
+		});
+
+		it('should redirect to CYA page with empty email on generic appeal', async () => {
+			nock.cleanAll();
+			installMockApi();
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=appealRule6Parties,appealType`)
+				.reply(200, { ...appealData, appealId, appealType: 'Tree preservation order' });
+
+			const response = await request.post(`${baseUrl}/${appealId}/rule-6-parties/add/email`).send({
+				email: ''
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toBe(
+				`${baseUrl}/${appealId}/rule-6-parties/add/check-details`
+			);
+		});
+
+		it('should return 400 on invalid email on generic appeal', async () => {
+			nock.cleanAll();
+			installMockApi();
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=appealRule6Parties,appealType`)
+				.reply(200, { ...appealData, appealId, appealType: 'Tree preservation order' });
+
+			const response = await request.post(`${baseUrl}/${appealId}/rule-6-parties/add/email`).send({
+				email: 'not-valid'
+			});
+
+			expect(response.statusCode).toBe(400);
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+			expect(errorSummaryHtml).toContain(
+				'Enter an email address in the correct format, like name@example.com'
+			);
 		});
 
 		it('should return 400 on email greater than 264 characters', async () => {
@@ -384,7 +435,7 @@ describe('add rule 6 party', () => {
 
 		beforeEach(async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=appealRule6Parties`)
+				.get(`/appeals/${appealId}?include=appealRule6Parties,appealType`)
 				.times(3)
 				.reply(200, { ...appealData, appealId });
 
@@ -422,6 +473,28 @@ describe('add rule 6 party', () => {
 			);
 		});
 
+		it('should render "No email" when email address is not provided', async () => {
+			nock.cleanAll();
+			installMockApi();
+			nock('http://test/')
+				.get(`/appeals/${appealId}?include=appealRule6Parties,appealType`)
+				.times(3)
+				.reply(200, { ...appealData, appealId, appealType: 'Tree preservation order' });
+
+			await request.post(`${baseUrl}/${appealId}/rule-6-parties/add/name`).send({
+				organisationName: 'Test Organisation'
+			});
+			await request.post(`${baseUrl}/${appealId}/rule-6-parties/add/email`).send({
+				email: ''
+			});
+
+			const response = await request.get(`${baseUrl}/${appealId}/rule-6-parties/add/check-details`);
+			const html = parseHtml(response.text, { rootElement: 'body' });
+			expect(html.querySelectorAll('dd.govuk-summary-list__value')?.[1]?.innerHTML.trim()).toBe(
+				'No email'
+			);
+		});
+
 		it('should render the correct button text', () => {
 			expect(pageHtml.querySelector('button')?.innerHTML.trim()).toBe('Add rule 6 party');
 		});
@@ -438,13 +511,13 @@ describe('add rule 6 party', () => {
 
 		beforeEach(() => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=appealRule6Parties`)
+				.get(`/appeals/${appealId}?include=appealRule6Parties,appealType`)
 				.reply(200, { ...appealData, appealId });
 		});
 
 		it('should redirect to the appeal details page with valid inputs', async () => {
 			nock('http://test/')
-				.get(`/appeals/${appealId}?include=appealRule6Parties`)
+				.get(`/appeals/${appealId}?include=appealRule6Parties,appealType`)
 				.times(3)
 				.reply(200, { ...appealData, appealId });
 			const addRule6PartyMock = nock('http://test/')

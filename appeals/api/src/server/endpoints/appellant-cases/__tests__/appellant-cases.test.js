@@ -771,6 +771,45 @@ describe('appellant cases routes', () => {
 				}
 			);
 
+			test('updates appellant case without sending notify emails or requiring recipient email when validation outcome is Incomplete for generic appeal', async () => {
+				const genericAppeal = {
+					...householdAppealAppellantCaseIncomplete,
+					id: 160,
+					reference: '6000123',
+					appealType: {
+						key: 'TREE_PRESERVATION_ORDER',
+						type: 'Tree preservation order'
+					},
+					appellant: null,
+					agent: null,
+					currentStatus: APPEAL_CASE_STATUS.VALIDATION,
+					appealStatus: [{ status: APPEAL_CASE_STATUS.VALIDATION, valid: true }]
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(genericAppeal);
+				databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
+				);
+				databaseConnector.appellantCaseIncompleteReason.findMany.mockResolvedValue(
+					appellantCaseIncompleteReasons
+				);
+
+				const body = {
+					appealDueDate: '2099-07-14T00:00:00.000Z',
+					incompleteReasons: [{ id: 1 }, { id: 2 }],
+					validationOutcome: 'Incomplete'
+				};
+				const { appellantCase, id } = genericAppeal;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				expect(mockNotifySend).not.toHaveBeenCalled();
+			});
+
 			test('updates appellant case when the validation outcome is Invalid with reason text', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppealAppellantCaseInvalid);
@@ -1074,6 +1113,44 @@ describe('appellant cases routes', () => {
 				}
 			);
 
+			test('updates appellant case without sending notify emails or requiring recipient email when validation outcome is Invalid for generic appeal', async () => {
+				const genericAppeal = {
+					...householdAppealAppellantCaseInvalid,
+					id: 160,
+					reference: '6000123',
+					appealType: {
+						key: 'TREE_PRESERVATION_ORDER',
+						type: 'Tree preservation order'
+					},
+					appellant: null,
+					agent: null,
+					currentStatus: APPEAL_CASE_STATUS.VALIDATION,
+					appealStatus: [{ status: APPEAL_CASE_STATUS.VALIDATION, valid: true }]
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(genericAppeal);
+				databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
+				);
+				databaseConnector.appellantCaseInvalidReason.findMany.mockResolvedValue(
+					appellantCaseInvalidReasons
+				);
+
+				const body = {
+					invalidReasons: [{ id: 1 }, { id: 2 }],
+					validationOutcome: 'Invalid'
+				};
+				const { appellantCase, id } = genericAppeal;
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				expect(mockNotifySend).not.toHaveBeenCalled();
+			});
+
 			test.each([
 				['householdAppeal', householdAppeal, FEEDBACK_FORM_LINKS.HAS],
 				['advertisementAppeal', advertisementAppeal, FEEDBACK_FORM_LINKS.FULL_ADVERTS],
@@ -1219,6 +1296,63 @@ describe('appellant cases routes', () => {
 					);
 				}
 			);
+
+			test('updates appellant case without sending notify emails or requiring recipient email when validation outcome is Valid for generic appeal', async () => {
+				const genericAppeal = {
+					...householdAppeal,
+					id: 160,
+					reference: '6000123',
+					appealType: {
+						key: 'TREE_PRESERVATION_ORDER',
+						type: 'Tree preservation order'
+					},
+					appellant: null,
+					agent: null,
+					currentStatus: APPEAL_CASE_STATUS.VALIDATION,
+					appealStatus: [{ status: APPEAL_CASE_STATUS.VALIDATION, valid: true }]
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(genericAppeal);
+				databaseConnector.appellantCaseValidationOutcome.findMany.mockResolvedValue(
+					appellantCaseValidationOutcomes
+				);
+				databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+				databaseConnector.documentVersion.update.mockResolvedValue([]);
+				const redactionStatusId = 123;
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ id: redactionStatusId, key: 'no_redaction_required' }
+				]);
+				databaseConnector.documentRedactionStatus.findUnique.mockResolvedValue({
+					id: redactionStatusId,
+					key: 'no_redaction_required'
+				});
+				databaseConnector.$queryRaw.mockResolvedValue([]);
+				databaseConnector.document.findUnique.mockResolvedValue(null);
+
+				const body = { validationOutcome: 'valid' };
+				const { appellantCase, id } = genericAppeal;
+
+				const response = await request
+					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+					.send(body)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+					where: { id: appellantCase.id },
+					data: { appellantCaseValidationOutcomeId: 3 }
+				});
+				expect(databaseConnector.appealStatus.create).toHaveBeenCalledWith({
+					data: {
+						appealId: genericAppeal.id,
+						createdAt: expect.any(Date),
+						status: APPEAL_CASE_STATUS.READY_TO_START,
+						valid: true
+					}
+				});
+				expect(mockNotifySend).not.toHaveBeenCalled();
+			});
 
 			test('updates appellant case and sends notify emails for valid enforcement notice appeal', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue({

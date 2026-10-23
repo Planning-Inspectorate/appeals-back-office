@@ -29,7 +29,7 @@ describe('remove rule 6 party', () => {
 	describe('GET /rule-6-parties/remove/:rule6PartyId', () => {
 		beforeEach(() => {
 			nock('http://test/')
-				.get(`/appeals/2?include=appealRule6Parties`)
+				.get(`/appeals/2?include=appealRule6Parties,appealType`)
 				.reply(200, { ...appealData, appealId: 2 });
 		});
 
@@ -75,7 +75,7 @@ describe('remove rule 6 party', () => {
 	describe('POST /rule-6-parties/remove/:rule6PartyId', () => {
 		beforeEach(() => {
 			nock('http://test/')
-				.get(`/appeals/2?include=appealRule6Parties`)
+				.get(`/appeals/2?include=appealRule6Parties,appealType`)
 				.reply(200, { ...appealData, appealId: 2 });
 		});
 

@@ -188,6 +188,12 @@ describe('generic appeal details', () => {
 		);
 		expect(rule6Action?.innerHTML.trim()).toContain('Add');
 
+		const validDateAction = html.querySelector(
+			'.appeal-valid-date .govuk-summary-list__actions a[data-cy="add-valid-date"]'
+		);
+		expect(validDateAction?.innerHTML.trim()).toContain('Add');
+		expect(validDateAction?.getAttribute('href')).toContain('/appellant-case/valid/date');
+
 		const caseTeamAction = html.querySelector('.appeal-case-team .govuk-summary-list__actions a');
 		expect(caseTeamAction?.innerHTML.trim()).toContain('Assign');
 
@@ -256,6 +262,11 @@ describe('generic appeal details', () => {
 		const appellantAction = html.querySelector('.appeal-appellant .govuk-summary-list__actions a');
 		expect(appellantAction?.innerHTML.trim()).toContain('Change');
 
+		const validDateAction = html.querySelector(
+			'.appeal-valid-date .govuk-summary-list__actions a[data-cy="add-valid-date"]'
+		);
+		expect(validDateAction?.innerHTML.trim()).toContain('Add');
+
 		const caseTeamAction = html.querySelector('.appeal-case-team .govuk-summary-list__actions a');
 		expect(caseTeamAction?.innerHTML.trim()).toContain('Change');
 	});
@@ -307,5 +318,125 @@ describe('generic appeal details', () => {
 				phoneNumber: '07123456789'
 			}
 		});
+	});
+	it('should display the Timetable section with Appeal submitted date, Valid date with Add link, and Start date', async () => {
+		const response = await request.get('/appeals-service/appeal-details/999');
+		expect(response.statusCode).toBe(200);
+
+		const html = parseHtml(response.text);
+		const timetable = html.querySelector('.appeal-case-timetable');
+		expect(timetable).not.toBeNull();
+
+		const submittedRow = timetable?.querySelector('.appeal-submitted-date');
+		expect(submittedRow?.querySelector('.govuk-summary-list__key')?.innerHTML.trim()).toBe(
+			'Appeal submitted date'
+		);
+		expect(submittedRow?.querySelector('.govuk-summary-list__value')?.innerHTML.trim()).toBe(
+			'19 September 2026'
+		);
+		expect(submittedRow?.querySelector('.govuk-summary-list__actions a')).toBeNull();
+
+		const validRow = timetable?.querySelector('.appeal-valid-date');
+		expect(validRow?.querySelector('.govuk-summary-list__key')?.innerHTML.trim()).toBe(
+			'Valid date'
+		);
+		expect(validRow?.querySelector('.govuk-summary-list__value')?.innerHTML.trim()).toBe(
+			'Not validated'
+		);
+		const validAction = validRow?.querySelector('.govuk-summary-list__actions a');
+		expect(validAction?.innerHTML.trim()).toContain('Add');
+		expect(validAction?.getAttribute('href')).toContain('/appellant-case/valid/date');
+
+		const startRow = timetable?.querySelector('.appeal-start-date');
+		expect(startRow?.querySelector('.govuk-summary-list__key')?.innerHTML.trim()).toBe(
+			'Start date'
+		);
+		expect(startRow?.querySelector('.govuk-summary-list__value')?.innerHTML.trim()).toBe(
+			'Not started'
+		);
+		const startAction = startRow?.querySelector('.govuk-summary-list__actions a');
+		expect(startAction?.innerHTML.trim()).toContain('Start');
+		expect(startAction?.getAttribute('href')).toContain('/start-case/add?backUrl=');
+	});
+
+	it('should display formatted dates and Change link for valid date in the Timetable section when populated', async () => {
+		const populatedData = {
+			...genericAppealData,
+			validAt: '2026-10-01T00:00:00.000Z',
+			startedAt: '2026-10-05T00:00:00.000Z'
+		};
+
+		nock.cleanAll();
+		installMockApi();
+
+		nock('http://test/').get('/appeals/999/page-details').reply(200, populatedData).persist();
+		nock('http://test/').get('/appeals/999').query(true).reply(200, populatedData).persist();
+		nock('http://test/')
+			.get('/appeals/999/exists')
+			.reply(200, { id: 999, appealId: 999, appealReference: populatedData.appealReference })
+			.persist();
+		nock('http://test/').get('/appeals/999/case-notes').reply(200, []).persist();
+
+		const response = await request.get('/appeals-service/appeal-details/999');
+		expect(response.statusCode).toBe(200);
+
+		const html = parseHtml(response.text);
+		const timetable = html.querySelector('.appeal-case-timetable');
+
+		const validRow = timetable?.querySelector('.appeal-valid-date');
+		expect(validRow?.querySelector('.govuk-summary-list__value')?.innerHTML.trim()).toBe(
+			'1 October 2026'
+		);
+		const validAction = validRow?.querySelector('.govuk-summary-list__actions a');
+		expect(validAction?.innerHTML.trim()).toContain('Change');
+		expect(validAction?.getAttribute('href')).toContain('/appellant-case/valid/date');
+
+		const startRow = timetable?.querySelector('.appeal-start-date');
+		expect(startRow?.querySelector('.govuk-summary-list__value')?.innerHTML.trim()).toBe(
+			'5 October 2026'
+		);
+		const populatedStartAction = startRow?.querySelector('.govuk-summary-list__actions a');
+		expect(populatedStartAction?.innerHTML.trim()).toContain('Change');
+		expect(populatedStartAction?.getAttribute('href')).toContain('/start-case/change');
+	});
+
+	it('should display Rule 6 parties without email address cleanly in contacts section', async () => {
+		const rule6Data = {
+			...genericAppealData,
+			appealRule6Parties: [
+				{
+					id: 1,
+					serviceUserId: 10,
+					serviceUser: {
+						id: 10,
+						organisationName: 'Woodland Trust Friends',
+						email: null
+					}
+				}
+			]
+		};
+
+		nock.cleanAll();
+		installMockApi();
+
+		nock('http://test/').get('/appeals/999/page-details').reply(200, rule6Data).persist();
+		nock('http://test/').get('/appeals/999').query(true).reply(200, rule6Data).persist();
+		nock('http://test/')
+			.get('/appeals/999/exists')
+			.reply(200, { id: 999, appealId: 999, appealReference: rule6Data.appealReference })
+			.persist();
+		nock('http://test/').get('/appeals/999/case-notes').reply(200, []).persist();
+
+		const response = await request.get('/appeals-service/appeal-details/999');
+		expect(response.statusCode).toBe(200);
+
+		const html = parseHtml(response.text);
+
+		const rule6Row = html.querySelector('.appeal-rule-6-party-contact-details');
+		expect(rule6Row).not.toBeNull();
+		const rule6Value = rule6Row.querySelector('.govuk-summary-list__value')?.innerHTML;
+		expect(rule6Value).toContain('Woodland Trust Friends');
+		expect(rule6Value).not.toContain('null');
+		expect(rule6Value).not.toContain('undefined');
 	});
 });

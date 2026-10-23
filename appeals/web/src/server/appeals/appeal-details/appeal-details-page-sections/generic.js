@@ -34,8 +34,9 @@ export function generateAppealDetailsPageComponents(appealDetails, mappedData, s
 			parameters: {
 				classes: 'appeal-case-timetable',
 				rows: [
-					mappedData.appeal.validAt.display.summaryListItem,
-					mappedData.appeal.startedAt.display.summaryListItem
+					mappedData.appeal.appealSubmittedDate?.display?.summaryListItem,
+					mappedData.appeal.validAt?.display?.summaryListItem,
+					mappedData.appeal.startedAt?.display?.summaryListItem
 				].filter(isDefined)
 			},
 			wrapperHtml: {

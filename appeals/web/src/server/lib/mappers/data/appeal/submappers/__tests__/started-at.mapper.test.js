@@ -128,4 +128,60 @@ describe('started-at.mapper', () => {
 			id: 'start-case-date'
 		});
 	});
+
+	it('should return "Not started" and Start action link for generic appeal types even if validAt is not present', () => {
+		delete data.appealDetails.validAt;
+		data.appealDetails.appealType = 'Tree preservation order';
+		const mappedData = mapStartedAt(data);
+		expect(mappedData).toEqual({
+			id: 'start-case-date',
+			display: {
+				summaryListItem: {
+					actions: {
+						items: [
+							{
+								attributes: {
+									'data-cy': 'start-start-case-date'
+								},
+								href: '/test/start-case/add?backUrl=/test',
+								text: 'Start',
+								visuallyHiddenText: 'Start date'
+							}
+						]
+					},
+					classes: 'appeal-start-date',
+					key: { text: 'Start date' },
+					value: { text: 'Not started' }
+				}
+			}
+		});
+	});
+
+	it('should return formatted date and Change action link for generic appeal types when startedAt is present', () => {
+		data.appealDetails.appealType = 'Tree preservation order';
+		data.appealDetails.startedAt = '2026-10-05T00:00:00.000Z';
+		const mappedData = mapStartedAt(data);
+		expect(mappedData).toEqual({
+			id: 'start-case-date',
+			display: {
+				summaryListItem: {
+					actions: {
+						items: [
+							{
+								attributes: {
+									'data-cy': 'change-start-case-date'
+								},
+								href: '/test/start-case/change',
+								text: 'Change',
+								visuallyHiddenText: 'Start date'
+							}
+						]
+					},
+					classes: 'appeal-start-date',
+					key: { text: 'Start date' },
+					value: { text: '5 October 2026' }
+				}
+			}
+		});
+	});
 });

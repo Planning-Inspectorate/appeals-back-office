@@ -49,6 +49,7 @@ import {
 import {
 	isAnyEnforcementAppealType,
 	isEnforcementCaseType,
+	isGenericAppealType,
 	isLdcCaseType
 } from '@pins/appeals/utils/appeal-type-checks.js';
 import { formatAppealUnderActSection } from '@pins/appeals/utils/appellant-case-mappers.js';
@@ -260,6 +261,9 @@ export const updateAppellantCaseValidationOutcome = async (
 		omitRepresentations: true
 	});
 
+	const isGeneric =
+		isGenericAppealType(appeal.appealType?.type) || isGenericAppealType(appeal.appealType?.key);
+
 	if (isOutcomeValid(validationOutcome.name)) {
 		const noRedactionRequiredStatus = await commonRepository.getLookupListValueByKey(
 			'documentRedactionStatus',
@@ -273,78 +277,80 @@ export const updateAppellantCaseValidationOutcome = async (
 		);
 		await broadcasters.broadcastDocuments(updatedDocuments, EventType.Update);
 
-		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
-		if (!recipientEmail) {
-			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
-		}
-		const isEnforcement = isEnforcementCaseType(appeal.appealType.key);
-		const isLdc = isLdcCaseType(appeal.appealType.key);
-		const childEnforcementWithGrounds = await getChildEnforcementsWithGrounds(appeal);
-
-		// If validating and there are child enforcement appeals, will be necessary to sweep up
-		// redaction status on child appeal documents too
-		if (childEnforcementWithGrounds.length > 0) {
-			childEnforcementWithGrounds.forEach(async (childAppeal) => {
-				if (childAppeal.reference) {
-					const updatedDocuments = await documentRepository.setRedactionStatusOnValidation(
-						childAppeal.id,
-						childAppeal.reference,
-						appeal.appealType.key,
-						noRedactionRequiredStatus
-					);
-
-					await broadcasters.broadcastDocuments(updatedDocuments, EventType.Update);
-				}
-			});
-		}
-
-		const personalisation = {
-			appeal_reference_number: appeal.reference,
-			lpa_reference: appeal.applicationReference || '',
-			site_address: siteAddress,
-			team_email_address: teamEmail,
-			appeal_type: trimAppealType(appeal.appealType.type),
-			...(isEnforcement && {
-				local_planning_authority: updatedAppeal?.lpa?.name || '',
-				enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
-				appeal_grounds:
-					updatedAppeal?.appealGrounds?.map((ground) => ground.ground?.groundRef || '').sort() ||
-					[],
-				...(childEnforcementWithGrounds && {
-					other_appeals_grounds_group: childEnforcementWithGrounds
-				}),
-				ground_a_barred: groundABarred || false,
-				other_info: otherInformation || ''
-			}),
-			...(isLdc && {
-				ldc_type: formatAppealUnderActSection(
-					updatedAppeal?.appellantCase?.applicationMadeUnderActSection
-				)
-			})
-		};
-		await notifySend({
-			azureAdUserId,
-			templateName: isEnforcement ? 'appeal-confirmed-enforcement-appellant' : 'appeal-confirmed',
-			notifyClient,
-			recipientEmail,
-			personalisation: {
-				...personalisation,
-				feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key)
+		if (!isGeneric) {
+			const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+			if (!recipientEmail) {
+				throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 			}
-		});
-		if (isEnforcement || isLdc) {
-			const { agent, appellant } = updatedAppeal || {};
+			const isEnforcement = isEnforcementCaseType(appeal.appealType.key);
+			const isLdc = isLdcCaseType(appeal.appealType.key);
+			const childEnforcementWithGrounds = await getChildEnforcementsWithGrounds(appeal);
+
+			// If validating and there are child enforcement appeals, will be necessary to sweep up
+			// redaction status on child appeal documents too
+			if (childEnforcementWithGrounds.length > 0) {
+				childEnforcementWithGrounds.forEach(async (childAppeal) => {
+					if (childAppeal.reference) {
+						const updatedDocuments = await documentRepository.setRedactionStatusOnValidation(
+							childAppeal.id,
+							childAppeal.reference,
+							appeal.appealType.key,
+							noRedactionRequiredStatus
+						);
+
+						await broadcasters.broadcastDocuments(updatedDocuments, EventType.Update);
+					}
+				});
+			}
+
+			const personalisation = {
+				appeal_reference_number: appeal.reference,
+				lpa_reference: appeal.applicationReference || '',
+				site_address: siteAddress,
+				team_email_address: teamEmail,
+				appeal_type: trimAppealType(appeal.appealType.type),
+				...(isEnforcement && {
+					local_planning_authority: updatedAppeal?.lpa?.name || '',
+					enforcement_reference: updatedAppeal?.appellantCase?.enforcementReference || '',
+					appeal_grounds:
+						updatedAppeal?.appealGrounds?.map((ground) => ground.ground?.groundRef || '').sort() ||
+						[],
+					...(childEnforcementWithGrounds && {
+						other_appeals_grounds_group: childEnforcementWithGrounds
+					}),
+					ground_a_barred: groundABarred || false,
+					other_info: otherInformation || ''
+				}),
+				...(isLdc && {
+					ldc_type: formatAppealUnderActSection(
+						updatedAppeal?.appellantCase?.applicationMadeUnderActSection
+					)
+				})
+			};
 			await notifySend({
 				azureAdUserId,
-				templateName: isEnforcement ? 'appeal-confirmed-enforcement-lpa' : 'appeal-confirmed-lpa',
+				templateName: isEnforcement ? 'appeal-confirmed-enforcement-appellant' : 'appeal-confirmed',
 				notifyClient,
-				recipientEmail: updatedAppeal?.lpa?.email,
+				recipientEmail,
 				personalisation: {
 					...personalisation,
-					agent_contact_details: agent ? formatContactDetails(agent) : '',
-					appellant_contact_details: appellant ? formatContactDetails(appellant) : ''
+					feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType.key)
 				}
 			});
+			if (isEnforcement || isLdc) {
+				const { agent, appellant } = updatedAppeal || {};
+				await notifySend({
+					azureAdUserId,
+					templateName: isEnforcement ? 'appeal-confirmed-enforcement-lpa' : 'appeal-confirmed-lpa',
+					notifyClient,
+					recipientEmail: updatedAppeal?.lpa?.email,
+					personalisation: {
+						...personalisation,
+						agent_contact_details: agent ? formatContactDetails(agent) : '',
+						appellant_contact_details: appellant ? formatContactDetails(appellant) : ''
+					}
+				});
+			}
 		}
 	}
 
@@ -353,9 +359,12 @@ export const updateAppellantCaseValidationOutcome = async (
 			updatedAppeal;
 
 		if (isOutcomeIncomplete(validationOutcome.name)) {
-			const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
-			if (!recipientEmail) {
-				throw new Error(ERROR_NO_RECIPIENT_EMAIL);
+			let recipientEmail;
+			if (!isGeneric) {
+				recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+				if (!recipientEmail) {
+					throw new Error(ERROR_NO_RECIPIENT_EMAIL);
+				}
 			}
 
 			if (
@@ -390,7 +399,10 @@ export const updateAppellantCaseValidationOutcome = async (
 					details
 				});
 
-				if (incompleteAppealDueDate || enforcementNoticeAppealOutcome?.groundAFeeReceiptDueDate) {
+				if (
+					!isGeneric &&
+					(incompleteAppealDueDate || enforcementNoticeAppealOutcome?.groundAFeeReceiptDueDate)
+				) {
 					const missingDocumentOptions = await commonRepository.getLookupList(
 						'appellantCaseEnforcementMissingDocument'
 					);
@@ -467,6 +479,7 @@ export const updateAppellantCaseValidationOutcome = async (
 					details
 				});
 				if (
+					!isGeneric &&
 					updatedDueDate &&
 					updatedAppeal.appealType?.type !== APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
 				) {
@@ -534,7 +547,7 @@ export const updateAppellantCaseValidationOutcome = async (
 			const isAnyEnfType = isAnyEnforcementAppealType(appeal.appealType?.type);
 			const isChildAnyEnfType = isAnyEnfType && isChildAppeal(appeal);
 
-			if (!isChildAnyEnfType) {
+			if (!isChildAnyEnfType && !isGeneric) {
 				const applicantEmail = appeal.agent?.email || appeal.appellant?.email;
 				if (!applicantEmail) {
 					throw new Error(ERROR_NO_RECIPIENT_EMAIL);

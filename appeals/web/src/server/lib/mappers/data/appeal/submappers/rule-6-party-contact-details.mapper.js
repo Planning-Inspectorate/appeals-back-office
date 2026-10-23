@@ -52,9 +52,10 @@ export const mapRule6PartyContactDetails = ({
 		classes: 'appeal-rule-6-party-contact-details'
 	};
 
-	const rule6PartyItems = rule6Parties.map(
-		(/** @type {Record<string, any>} */ rule6Party) =>
-			`${rule6Party.serviceUser.organisationName}<br>${rule6Party.serviceUser.email}`
+	const rule6PartyItems = rule6Parties.map((/** @type {Record<string, any>} */ rule6Party) =>
+		[rule6Party.serviceUser.organisationName, rule6Party.serviceUser.email]
+			.filter(Boolean)
+			.join('<br>')
 	);
 
 	return {
