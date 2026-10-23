@@ -1185,6 +1185,29 @@ export const childAppealsEnforcementBase = [
 	}
 ];
 
+export const childAppealsHousehold = [
+	{
+		id: 0,
+		childId: 101,
+		parentId: enforcementNoticeAppeal.id,
+		type: CASE_RELATIONSHIP_LINKED,
+		child: {
+			id: 101,
+			appealType: householdAppeal.appealType
+		}
+	},
+	{
+		id: 2,
+		childId: 103,
+		parentId: enforcementNoticeAppeal.id,
+		type: CASE_RELATIONSHIP_LINKED,
+		child: {
+			id: 103,
+			appealType: householdAppeal.appealType
+		}
+	}
+];
+
 export const serviceUser = {
 	id: 1,
 	organisationName: 'Fury LTD',

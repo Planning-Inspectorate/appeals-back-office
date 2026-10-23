@@ -659,6 +659,24 @@ const setAppealEiaScreeningRequired = (id, eiaScreeningRequired) => {
 };
 
 /**
+ * @param {number[]} ids
+ * @param {Boolean} eiaScreeningRequired
+ * @returns {PrismaPromise<import('#db-client/internal/prismaNamespace.js').BatchPayload>}
+ */
+const setMultiAppealEiaScreeningRequired = (ids, eiaScreeningRequired) => {
+	return databaseConnector.appeal.updateMany({
+		data: {
+			eiaScreeningRequired
+		},
+		where: {
+			id: {
+				in: ids
+			}
+		}
+	});
+};
+
+/**
  * @param {number} id
  * @param {SetInvalidAppealDecisionRequest} data
  * @returns {PrismaPromise<[InspectorDecision, DocumentVersion]>}
@@ -1722,5 +1740,6 @@ export default {
 	deleteAppealsByIds,
 	checkIfAppealHasAgent,
 	getAppealReference,
-	getFoldersWithDocumentsAndVersions
+	getFoldersWithDocumentsAndVersions,
+	setMultiAppealEiaScreeningRequired
 };
