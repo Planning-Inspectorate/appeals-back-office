@@ -528,8 +528,7 @@ const startCase = async (
 			isEnforcementChild
 		});
 
-		const isGeneric =
-			isGenericAppealType(appeal.appealType?.type) || isGenericAppealType(appeal.appealType?.key);
+		const isGeneric = isGenericAppealType(appeal.appealType?.type);
 
 		if (!isChildAppeal && !isGeneric) {
 			const siteAddress = appeal.address
