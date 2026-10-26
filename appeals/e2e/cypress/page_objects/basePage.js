@@ -389,7 +389,7 @@ export class Page {
 		this.basePageElements.panelBody().contains(successMessage);
 	}
 
-	navigateToAppealsService() {
+	navigateToAppealsList() {
 		cy.visit(urlPaths.appealsList);
 	}
 
