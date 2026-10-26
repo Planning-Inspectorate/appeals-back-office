@@ -1,8 +1,10 @@
 // @ts-nocheck
 import usersService from '#appeals/appeal-users/users-service.js';
 import { mapActionLinksForAppeal } from '#appeals/personal-list/personal-list.mapper.js';
+import { getRequiredActionsForAppeal } from '#lib/mappers/utils/required-actions.js';
 import {
 	activeDirectoryUsersData,
+	appealData,
 	appealDataToGetRequiredActions,
 	assignedAppealsPage1,
 	assignedAppealsPage2,
@@ -858,6 +860,32 @@ describe('personal-list', () => {
 					expect(result).toContain(expectedHtml.caseOfficer);
 				}
 			);
+		});
+	});
+
+	describe('getRequiredActionsForAppeal', () => {
+		it('should return the "addHearingAddress" ("Add hearing address") action for both the "detail" and "summary" views when hearing data is present but no hearing address has been added', () => {
+			const appealWithHearingButNoAddress = {
+				...appealData,
+				appealStatus: APPEAL_CASE_STATUS.EVENT,
+				procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+				// used by the "detail" view
+				hearing: {
+					...appealData.hearing,
+					addressId: null,
+					address: null
+				},
+				// used by the "summary" view
+				isHearingSetup: true,
+				hasHearingAddress: false
+			};
+
+			const detailActions = getRequiredActionsForAppeal(appealWithHearingButNoAddress, 'detail');
+			const summaryActions = getRequiredActionsForAppeal(appealWithHearingButNoAddress, 'summary');
+
+			expect(detailActions).toEqual(['addHearingAddress']);
+			expect(summaryActions).toEqual(['addHearingAddress']);
+			expect(detailActions).toEqual(summaryActions);
 		});
 	});
 });
