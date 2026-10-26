@@ -181,7 +181,7 @@ export const getCheckDetails = async (request, response) => {
 			}
 		},
 		'Rule 6 party email address': {
-			value: sessionValues.email,
+			value: sessionValues.email || 'No email',
 			actions: {
 				Change: {
 					href: editLink(baseUrl, 'email'),

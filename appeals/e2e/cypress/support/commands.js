@@ -682,7 +682,7 @@ Cypress.Commands.add('addRule6Party', (caseObj, requestBodyOverride = null) => {
 	});
 });
 
-Cypress.Commands.add('getRule6ServiceUserId', (caseObj, rule6Email) => {
+Cypress.Commands.add('getRule6ServiceUserId', (caseObj, rule6Identifier) => {
 	return cy.wrap(null).then(async () => {
 		const responseData = await appealsApiClient.loadCaseDetails(caseObj.reference);
 
@@ -691,18 +691,20 @@ Cypress.Commands.add('getRule6ServiceUserId', (caseObj, rule6Email) => {
 			throw new Error('No appealRule6Parties found in response');
 		}
 
-		// Find the Rule 6 party with the matching email
+		// Find the Rule 6 party with the matching email or organisation name
 		const rule6Party = responseData.appealRule6Parties.find(
 			(party) =>
-				party.serviceUser &&
-				party.serviceUser.email &&
-				party.serviceUser.email.toLowerCase() === rule6Email.toString().toLowerCase()
+				(party.serviceUser?.email &&
+					party.serviceUser.email.toLowerCase() === rule6Identifier.toString().toLowerCase()) ||
+				(party.serviceUser?.organisationName &&
+					party.serviceUser.organisationName.toLowerCase() ===
+						rule6Identifier.toString().toLowerCase())
 		);
 
 		if (!rule6Party) {
 			throw new Error(
-				`No Rule 6 party found with email: ${rule6Email}. Available emails: ${responseData.appealRule6Parties
-					.map((p) => p.serviceUser?.email)
+				`No Rule 6 party found with identifier: ${rule6Identifier}. Available parties: ${responseData.appealRule6Parties
+					.map((p) => p.serviceUser?.email || p.serviceUser?.organisationName)
 					.filter(Boolean)
 					.join(', ')}`
 			);

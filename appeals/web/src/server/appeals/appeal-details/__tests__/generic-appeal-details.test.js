@@ -399,4 +399,44 @@ describe('generic appeal details', () => {
 		expect(populatedStartAction?.innerHTML.trim()).toContain('Change');
 		expect(populatedStartAction?.getAttribute('href')).toContain('/start-case/change');
 	});
+
+	it('should display Rule 6 parties without email address cleanly in contacts section', async () => {
+		const rule6Data = {
+			...genericAppealData,
+			appealRule6Parties: [
+				{
+					id: 1,
+					serviceUserId: 10,
+					serviceUser: {
+						id: 10,
+						organisationName: 'Woodland Trust Friends',
+						email: null
+					}
+				}
+			]
+		};
+
+		nock.cleanAll();
+		installMockApi();
+
+		nock('http://test/').get('/appeals/999/page-details').reply(200, rule6Data).persist();
+		nock('http://test/').get('/appeals/999').query(true).reply(200, rule6Data).persist();
+		nock('http://test/')
+			.get('/appeals/999/exists')
+			.reply(200, { id: 999, appealId: 999, appealReference: rule6Data.appealReference })
+			.persist();
+		nock('http://test/').get('/appeals/999/case-notes').reply(200, []).persist();
+
+		const response = await request.get('/appeals-service/appeal-details/999');
+		expect(response.statusCode).toBe(200);
+
+		const html = parseHtml(response.text);
+
+		const rule6Row = html.querySelector('.appeal-rule-6-party-contact-details');
+		expect(rule6Row).not.toBeNull();
+		const rule6Value = rule6Row.querySelector('.govuk-summary-list__value')?.innerHTML;
+		expect(rule6Value).toContain('Woodland Trust Friends');
+		expect(rule6Value).not.toContain('null');
+		expect(rule6Value).not.toContain('undefined');
+	});
 });
