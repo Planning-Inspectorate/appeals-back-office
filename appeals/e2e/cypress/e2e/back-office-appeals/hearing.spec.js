@@ -283,8 +283,8 @@ describe('Setup hearing and add hearing estimates', () => {
 		// check the case history to ensure updates are logged correctly
 		caseDetailsPage.clickViewCaseHistory();
 		caseHistoryPage.verifyCaseHistoryValues([
-			'Hearing estimates added',
-			'Hearing estimates updated'
+			'We have updated the number of days we expect the hearing to take',
+			'We have added the number of days we expect the hearing to take'
 		]);
 	});
 
