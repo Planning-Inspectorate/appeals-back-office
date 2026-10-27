@@ -820,6 +820,53 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/appeal-status/redetermination-roll-back": {
+			"post": {
+				"tags": ["Appeal Status"],
+				"description": "Roll back appeal status to be redetermined",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"400": {
+						"description": "Bad Request"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Appeal status",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/AppealStatusRollBackRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/AppealStatusRollBackRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/appeal-status/{status}/created-date": {
 			"get": {
 				"tags": ["Appeal Status"],

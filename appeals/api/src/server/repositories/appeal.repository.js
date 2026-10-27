@@ -644,6 +644,21 @@ const setAppealWithdrawal = (id, withdrawalRequestDate) => {
 
 /**
  * @param {number} id
+ * @returns {PrismaPromise<import('#db-client/client.ts').Appeal>}
+ */
+const incrementAppealVersion = (id) => {
+	return databaseConnector.appeal.update({
+		data: {
+			currentAppealVersion: { increment: 1 }
+		},
+		where: {
+			id
+		}
+	});
+};
+
+/**
+ * @param {number} id
  * @param {Boolean} eiaScreeningRequired
  * @returns {PrismaPromise<import('#db-client/client.ts').Appeal>}
  */
@@ -1741,5 +1756,6 @@ export default {
 	checkIfAppealHasAgent,
 	getAppealReference,
 	getFoldersWithDocumentsAndVersions,
-	setMultiAppealEiaScreeningRequired
+	setMultiAppealEiaScreeningRequired,
+	incrementAppealVersion
 };

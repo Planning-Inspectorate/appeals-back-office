@@ -38,7 +38,7 @@ export const mapSiteVisit = (data) => {
 			visitEndTime: appeal.siteVisit.visitEndTime
 				? appeal.siteVisit.visitEndTime.toISOString()
 				: '',
-			visitType: isValidSiteVisitType(appeal.siteVisit.siteVisitType.name)
+			visitType: isValidSiteVisitType(appeal.siteVisit.siteVisitType?.name)
 				? appeal.siteVisit.siteVisitType.name
 				: SITE_VISIT_TYPE_UNACCOMPANIED
 		};

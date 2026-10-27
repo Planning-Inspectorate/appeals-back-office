@@ -88,6 +88,56 @@ const rollBackAppealStatusTo = (appealId, targetStatus, fromStatus = targetStatu
 		});
 	});
 
+/*
+* @param {number} appealId
+* @param {string} targetStatus
+* @param {string} [fromStatus] Status anchor after which subsequent records are purged (defaults to targetStatus)
+* @returns {Promise<object>}
+*/
+const rollForwardAppealStatusTo = (appealId, targetStatus, fromStatus = targetStatus) =>
+	databaseConnector.$transaction(async (tx) => {
+		const baseStatus = await tx.appealStatus.findFirst({
+			where: { appealId, status: fromStatus, isDeleted: false }
+		});
+
+		if (!baseStatus) {
+			throw new Error(`Appeal status ${fromStatus} not found for appeal ${appealId}`);
+		}
+
+		// soft delete all statuses after the base status to maintain history
+		await tx.appealStatus.updateMany({
+			where: {
+				appealId: baseStatus.appealId,
+				createdAt: {
+					gt: baseStatus.createdAt
+				}
+			},
+			data: { valid: false, isDeleted: true }
+		});
+
+		// update status on appeal
+		await tx.appeal.update({
+			where: { id: baseStatus.appealId },
+			data: { currentStatus: targetStatus }
+		});
+
+
+		await tx.appealStatus.updateMany({
+			where: { appealId, valid: true },
+			data: { valid: false }
+		});
+
+		// create new status record for the target status
+		return await tx.appealStatus.create({
+			data: {
+				appealId,
+				createdAt: new Date(),
+				status: targetStatus,
+				valid: true
+			}
+		});
+	});
+
 /**
  * @param {number} appealId
  * @param {string} status
@@ -109,5 +159,6 @@ const getAppealStatusCreatedDate = async (appealId, status) => {
 export default {
 	updateAppealStatusByAppealId,
 	rollBackAppealStatusTo,
+	rollForwardAppealStatusTo,
 	getAppealStatusCreatedDate
 };

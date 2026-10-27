@@ -36,6 +36,30 @@ router.post(
 	asyncHandler(controller.rollBackAppealStatus)
 );
 
+router.post(
+	'/:appealId/appeal-status/redetermination-roll-back',
+	/*
+        #swagger.tags = ['Appeal Status']
+        #swagger.path = '/appeals/{appealId}/appeal-status/redetermination-roll-back'
+        #swagger.description = 'Roll back appeal status to be redetermined'
+        #swagger.parameters['azureAdUserId'] = {
+            in: 'header',
+            required: true,
+            example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+        }
+        #swagger.requestBody = {
+            in: 'body',
+            description: 'Appeal status',
+            schema: { $ref: '#/components/schemas/AppealStatusRollBackRequest' },
+            required: true
+        }
+        #swagger.responses[400] = {}
+	*/
+	checkAppealExistsById,
+	validateAppealStatusRollBackRequest,
+	asyncHandler(controller.redeterminationRollBackAppealStatus)
+)
+
 router.get(
 	'/:appealId/appeal-status/:status/created-date',
 	/*

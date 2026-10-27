@@ -16,7 +16,7 @@ model Appeal {
   id                             Int                             @id @default(autoincrement())
   reference                      String                          @unique
   submissionId                   String?
-  appealTimetable                AppealTimetable?
+  appealTimetable                AppealTimetable[]
   appealStatus                   AppealStatus[]
   currentStatus                  String                          @default("assign_case_officer")
   appealType                     AppealType?                     @relation(fields: [appealTypeId], references: [id])
@@ -55,8 +55,8 @@ model Appeal {
   padsInspectorUserId            String?
   appellantCase                  AppellantCase?
   lpaQuestionnaire               LPAQuestionnaire?
-  siteVisit                      SiteVisit?
-  inspectorDecision              InspectorDecision?
+  siteVisit                      SiteVisit[]
+  inspectorDecision              InspectorDecision[]
   folders                        Folder[]
   documents                      Document[]
   auditTrail                     AuditTrail[]
@@ -64,17 +64,18 @@ model Appeal {
   childAppeals                   AppealRelationship[]            @relation("parentAppeal")
   representations                Representation[]
   caseNotes                      CaseNote[]
-  hearing                        Hearing?
+  hearing                        Hearing[]
   appealNotifications            AppealNotification[]
-  hearingEstimate                HearingEstimate?
-  inquiry                        Inquiry?
-  inquiryEstimate                InquiryEstimate?
+  hearingEstimate                HearingEstimate[]
+  inquiry                        Inquiry[]
+  inquiryEstimate                InquiryEstimate[]
   assignedTeam                   Team?                           @relation(fields: [assignedTeamId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   assignedTeamId                 Int?
   PersonalList                   PersonalList?                   @relation("appeal")
   appealRule6Parties             AppealRule6Party[]              @relation("appealRule6Parties")
   appealGrounds                  AppealGround[]                  @relation("appealGrounds")
   enforcementNoticeAppealOutcome EnforcementNoticeAppealOutcome?
+  currentAppealVersion           Int                             @default(1)
 
   @@index([addressId])
   @@index([appealTypeId])
@@ -130,7 +131,7 @@ model AppealType {
 model AppealTimetable {
   id                                 Int       @id @default(autoincrement())
   appeal                             Appeal    @relation(fields: [appealId], references: [id])
-  appealId                           Int       @unique
+  appealId                           Int
   caseResubmissionDueDate            DateTime?
   lpaQuestionnaireDueDate            DateTime?
   ipCommentsDueDate                  DateTime?
@@ -143,6 +144,9 @@ model AppealTimetable {
   planningObligationDueDate          DateTime?
   proofOfEvidenceAndWitnessesDueDate DateTime?
   caseManagementConferenceDueDate    DateTime?
+  associatedAppealVersion            Int       @default(1)
+
+  @@unique([appealId, associatedAppealVersion])
 }
 
 /// AppealStatus model
@@ -160,6 +164,7 @@ model AppealStatus {
   appealId            Int
   subStateMachineName String?
   compoundStateName   String?
+  isDeleted           Boolean  @default(false)
 
   @@index([appealId])
   @@index([valid, appealId])
@@ -785,15 +790,18 @@ model DesignatedSiteSelected {
 /// SiteVisit model
 /// Contains information on the scheduled site visit for an appeal.
 model SiteVisit {
-  id                 Int            @id @default(autoincrement())
-  appealId           Int            @unique
-  siteVisitTypeId    Int?
-  visitDate          DateTime?
-  visitStartTime     DateTime?
-  visitEndTime       DateTime?
-  appeal             Appeal         @relation(fields: [appealId], references: [id])
-  siteVisitType      SiteVisitType? @relation(fields: [siteVisitTypeId], references: [id])
-  whoMissedSiteVisit String?
+  id                      Int            @id @default(autoincrement())
+  appealId                Int
+  siteVisitTypeId         Int?
+  visitDate               DateTime?
+  visitStartTime          DateTime?
+  visitEndTime            DateTime?
+  appeal                  Appeal         @relation(fields: [appealId], references: [id])
+  siteVisitType           SiteVisitType? @relation(fields: [siteVisitTypeId], references: [id])
+  whoMissedSiteVisit      String?
+  associatedAppealVersion Int            @default(1)
+
+  @@unique([appealId, associatedAppealVersion])
 }
 
 /// SiteVisitType model
@@ -810,11 +818,14 @@ model SiteVisitType {
 model InspectorDecision {
   id                      Int       @id @default(autoincrement())
   appeal                  Appeal    @relation(fields: [appealId], references: [id])
-  appealId                Int       @unique
+  appealId                Int
   outcome                 String
   decisionLetterGuid      String?
   invalidDecisionReason   String?
   caseDecisionOutcomeDate DateTime?
+  associatedAppealVersion Int       @default(1)
+
+  @@unique([appealId, associatedAppealVersion])
 }
 
 /// Folder model
@@ -1050,27 +1061,33 @@ model CaseNote {
 // Hearing model
 // Store hearing related information
 model Hearing {
-  id               Int       @id @default(autoincrement())
-  appealId         Int       @unique
-  hearingStartTime DateTime?
-  hearingEndTime   DateTime?
-  estimatedDays    Decimal?
-  addressId        Int?
-  address          Address?  @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  appeal           Appeal    @relation(fields: [appealId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id                      Int       @id @default(autoincrement())
+  appealId                Int
+  hearingStartTime        DateTime?
+  hearingEndTime          DateTime?
+  estimatedDays           Decimal?
+  addressId               Int?
+  address                 Address?  @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  appeal                  Appeal    @relation(fields: [appealId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  associatedAppealVersion Int       @default(1)
+
+  @@unique([appealId, associatedAppealVersion])
 }
 
 // Inquiry model
 // Store Inquiry related information
 model Inquiry {
-  id               Int       @id @default(autoincrement())
-  appealId         Int       @unique
-  inquiryStartTime DateTime
-  inquiryEndTime   DateTime?
-  addressId        Int?
-  address          Address?  @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  appeal           Appeal    @relation(fields: [appealId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  estimatedDays    Int?
+  id                      Int       @id @default(autoincrement())
+  appealId                Int
+  inquiryStartTime        DateTime
+  inquiryEndTime          DateTime?
+  addressId               Int?
+  address                 Address?  @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  appeal                  Appeal    @relation(fields: [appealId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  estimatedDays           Int?
+  associatedAppealVersion Int       @default(1)
+
+  @@unique([appealId, associatedAppealVersion])
 }
 
 /// ListedBuilding model
@@ -1106,23 +1123,29 @@ model AppealNotification {
 /// HearingEstimate model
 /// Contains information on the hearing estimates for an appeal
 model HearingEstimate {
-  id              Int      @id @default(autoincrement())
-  appealId        Int      @unique
-  preparationTime Decimal?
-  sittingTime     Decimal?
-  reportingTime   Decimal?
-  appeal          Appeal   @relation(fields: [appealId], references: [id])
+  id                      Int      @id @default(autoincrement())
+  appealId                Int
+  preparationTime         Decimal?
+  sittingTime             Decimal?
+  reportingTime           Decimal?
+  appeal                  Appeal   @relation(fields: [appealId], references: [id])
+  associatedAppealVersion Int      @default(1)
+
+  @@unique([appealId, associatedAppealVersion])
 }
 
 /// InquiryEstimate model
 /// Contains information on the inquiry estimates for an appeal
 model InquiryEstimate {
-  id              Int      @id @default(autoincrement())
-  appealId        Int      @unique
-  preparationTime Decimal?
-  sittingTime     Decimal?
-  reportingTime   Decimal?
-  appeal          Appeal   @relation(fields: [appealId], references: [id])
+  id                      Int      @id @default(autoincrement())
+  appealId                Int
+  preparationTime         Decimal?
+  sittingTime             Decimal?
+  reportingTime           Decimal?
+  appeal                  Appeal   @relation(fields: [appealId], references: [id])
+  associatedAppealVersion Int      @default(1)
+
+  @@unique([appealId, associatedAppealVersion])
 }
 
 /// Team model
