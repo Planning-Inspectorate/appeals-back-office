@@ -169,12 +169,12 @@ describe('create a case', () => {
 			expect(match).not.toBeNull();
 
 			const [_, day, month, year] = match;
-			const exampleDate = new Date(Number(year), Number(month) - 1, Number(day));
+			// Compare calendar dates in UTC to avoid DST-boundary off-by-one errors
+			const exampleDateUtc = Date.UTC(Number(year), Number(month) - 1, Number(day));
 			const now = new Date();
-			now.setHours(23, 59, 59, 999);
+			const nowDateUtc = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
 
-			const diffTime = now.getTime() - exampleDate.getTime();
-			const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+			const diffDays = Math.round((nowDateUtc - exampleDateUtc) / (1000 * 60 * 60 * 24));
 
 			expect(diffDays).toBeLessThanOrEqual(3);
 			expect(diffDays).toBeGreaterThanOrEqual(0);
