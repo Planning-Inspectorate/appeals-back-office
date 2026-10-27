@@ -534,6 +534,89 @@ describe('/appeals/:appealId/documents', () => {
 			expect(response.status).toEqual(200);
 		});
 	});
+
+	describe('PATCH sharing multiple documents', () => {
+		beforeEach(() => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
+			databaseConnector.document.findUnique.mockResolvedValue({
+				...documentCreated,
+				latestDocumentVersion: {
+					...documentCreated.latestDocumentVersion,
+					published: false,
+					redactionStatusId: 1
+				}
+			});
+			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue(
+				documentRedactionStatuses
+			);
+		});
+
+		afterEach(() => {
+			jest.clearAllMocks();
+		});
+
+		const multipleDocumentSharingTypes = [
+			'supporting-document',
+			'hearing-document',
+			'inquiry-document',
+			'inquiry-event-document'
+		];
+
+		multipleDocumentSharingTypes.forEach((type) => {
+			test(`shares multiple documents and sends a single notify pair for: ${type}`, async () => {
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}/documents`)
+					.send({
+						documents: [
+							{
+								id: '987e66e0-1db4-404b-8213-8082919159e9',
+								isShared: true,
+								receivedDate: new Date().toISOString(),
+								redactionStatus: 1
+							},
+							{
+								id: '8b107895-b8c9-467f-aad0-c09daafeaaad',
+								isShared: true,
+								receivedDate: new Date().toISOString(),
+								redactionStatus: 1
+							}
+						],
+						sharingDocumentType: type,
+						shareMultipleDocuments: true,
+						costsCategory: 'lpa'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				// Only the first document triggers notify, once per recipient
+				expect(notifySend).toHaveBeenCalledTimes(2);
+				expect(notifySend).toHaveBeenNthCalledWith(
+					1,
+					expect.objectContaining({
+						templateName: 'document-received',
+						personalisation: expect.objectContaining({
+							sharing_multiple_documents: true,
+							document_type: type,
+							dashboard_link: 'appeals'
+						})
+					})
+				);
+				expect(notifySend).toHaveBeenNthCalledWith(
+					2,
+					expect.objectContaining({
+						templateName: 'document-received',
+						personalisation: expect.objectContaining({
+							sharing_multiple_documents: true,
+							document_type: type,
+							dashboard_link: 'manage-appeals'
+						})
+					})
+				);
+				expect(mockBroadcasters.broadcastDocument).toHaveBeenCalledTimes(2);
+			});
+		});
+	});
 });
 
 describe('appeals documents', () => {

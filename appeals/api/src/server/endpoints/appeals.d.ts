@@ -786,7 +786,7 @@ interface FolderInfo {
 	documents: DocumentInfo[];
 }
 
-interface DocumentInfo {
+export interface DocumentInfo {
 	id: string;
 	caseId: number;
 	folderId: number;
@@ -1165,6 +1165,8 @@ type UpdateDocumentsRequest = {
 	published: boolean;
 	draft: boolean;
 	fileName: string | null;
+	isShared?: boolean;
+	latestDocumentVersion: DocumentVersionInfo;
 }[];
 
 type UpdateDocumentAvCheckRequest = {

@@ -313,6 +313,20 @@ exports[`inquiry documents GET /inquiry/documents/manage-documents/:folderId/sha
         <div class="govuk-grid-column-two-thirds">
             <p class="govuk-body">You can only share documents that are set to redacted or redaction not
                 needed.</p>
+            <details class="govuk-details">
+                <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
+                </summary>
+                <div class="govuk-details__text">
+                    <p>Test notification</p>
+                </div>
+            </details>
+            <details class="govuk-details">
+                <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to LPA</span>
+                </summary>
+                <div class="govuk-details__text">
+                    <p>Test notification</p>
+                </div>
+            </details>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="post" novalidate="novalidate">

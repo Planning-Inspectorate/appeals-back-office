@@ -18,7 +18,7 @@ export function getDocumentDisplayRedactionStatus(document, folderPath) {
 /**
  * @param {import("#appeals/appeal-documents/appeal-documents.mapper.js").RedactionStatus[]} redactionStatuses
  * @param {string} name
- * @returns {number|undefined}
+ * @returns {number}
  */
 export function redactionStatusNameToId(redactionStatuses, name) {
 	return Number(
