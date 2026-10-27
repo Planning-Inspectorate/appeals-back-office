@@ -1756,6 +1756,33 @@ describe('supporting documents', () => {
 				});
 
 				it(`should render the document redaction warning page if no redacted documents present`, async () => {
+					const folder = {
+						...supportingDocumentsFolderInfo,
+						documents: supportingDocumentsFolderInfo.documents.map((document) => ({
+							...document,
+							latestDocumentVersion: {
+								...document.latestDocumentVersion,
+								redactionStatus: REDACTION_STATUS.UNREDACTED
+							}
+						})),
+						totalFolderSize: supportingDocumentsFolderInfo.documents.length
+					};
+
+					nock.cleanAll();
+					installMockApi();
+					nock('http://test/')
+						.get('/appeals/document-redaction-statuses')
+						.reply(200, documentRedactionStatuses)
+						.persist();
+					nock('http://test/').get(getFolderApiUrl(supportingDocsFolderId)).reply(200, folder);
+					nock('http://test/')
+						.get('/appeals/1/case-team-email')
+						.reply(200, { email: 'test@example.com' });
+					nock('http://test/')
+						.post('/appeals/notify-preview/document-received.content.md')
+						.times(2)
+						.reply(200, { renderedHtml: '<p>Test notification</p>' });
+
 					const response = await request.get(
 						`${baseUrl}/1/supporting-documents/manage-documents/${supportingDocsFolderId}/share-all`
 					);
@@ -1779,6 +1806,12 @@ describe('supporting documents', () => {
 						.reply(200, documentRedactionStatuses)
 						.persist();
 					nock('http://test/').get(getFolderApiUrl(supportingDocsFolderId)).reply(200, folder);
+					nock('http://test/')
+						.get('/appeals/1/case-team-email')
+						.reply(200, { email: 'test@example.com' });
+					nock('http://test/')
+						.post('/appeals/notify-preview/document-received.content.md')
+						.reply(200, { renderedHtml: '<p>Test notification</p>' });
 
 					const response = await request.get(
 						`${baseUrl}/1/supporting-documents/manage-documents/${supportingDocsFolderId}/share-all`
@@ -1807,17 +1840,18 @@ describe('supporting documents', () => {
 					nock.cleanAll();
 					installMockApi();
 					nock('http://test/').get(getFolderApiUrl(1)).reply(200, shareableFolder).persist();
+					nock('http://test/')
+						.get('/appeals/document-redaction-statuses')
+						.reply(200, documentRedactionStatuses)
+						.persist();
 				});
 
 				it(`should mark each shareable document as shared and redirect to the appeal details page`, async () => {
 					const patchMock = nock('http://test/')
 						.patch(
-							/\/appeals\/1\/documents\/[^/?]+$/,
-							(body) =>
-								body.document.isShared === true &&
-								body.sharingDocumentType === 'supporting-document'
+							'/appeals/1/documents',
+							(body) => body.sharingDocumentType === 'supporting-document'
 						)
-						.times(shareableFolder.documents.length)
 						.reply(200, {});
 
 					const response = await request.post(
@@ -1829,18 +1863,15 @@ describe('supporting documents', () => {
 					expect(patchMock.isDone()).toBe(true);
 				});
 
-				it(`should still redirect if updating a document fails`, async () => {
-					const patchMock = nock('http://test/')
-						.patch(/\/appeals\/1\/documents\/[^/?]+$/)
-						.times(shareableFolder.documents.length)
-						.reply(500, {});
+				it(`should render a 500 error page if updating the documents fails`, async () => {
+					const patchMock = nock('http://test/').patch('/appeals/1/documents').reply(500, {});
 
 					const response = await request.post(
 						`${baseUrl}/1/supporting-documents/manage-documents/${supportingDocsFolderId}/share-all`
 					);
 
-					expect(response.statusCode).toBe(302);
-					expect(response.text).toBe(`Found. Redirecting to ${baseUrl}/1`);
+					expect(response.statusCode).toBe(500);
+					expect(response.text).toContain('Sorry, there is a problem with the service');
 					expect(patchMock.isDone()).toBe(true);
 				});
 			});
