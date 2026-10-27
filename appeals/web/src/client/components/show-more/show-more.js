@@ -302,7 +302,7 @@ const createEllipsisSpan = () => {
 	const ellipsisSpan = document.createElement('span');
 	ellipsisSpan.className = CLASSES.ellipsis;
 	ellipsisSpan.setAttribute('aria-hidden', 'true');
-	ellipsisSpan.textContent = '…';
+	ellipsisSpan.textContent = '… ';
 
 	return ellipsisSpan;
 };
