@@ -24,6 +24,7 @@ export const mapAppealSummary = (data) => {
 	return {
 		appealId: appeal.id,
 		appealReference: appeal.reference,
+		appealVersion: appeal.currentAppealVersion,
 		planningApplicationReference: mapApplicationReference(data),
 		localPlanningDepartment: mapLpa(data),
 		procedureType: mapProcedureType(data),

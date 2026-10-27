@@ -23,10 +23,12 @@ import { mapNeighbouringSites } from './map-neighbouring-sites.js';
 import { mapSiteVisit } from './map-site-visit.js';
 import { mapStateList } from './map-state-list.js';
 import { mapTransferStatus } from './map-transfer-status.js';
+import { mapAppealVersion } from '#mappers/api/shared/map-appeal-version.js';
 
 export const apiSharedMappers = {
 	appealSummary: mapAppealSummary,
 	appealStatus: mapAppealStatus,
+	appealVersion: mapAppealVersion,
 	assignedTeam: mapAssignedTeam,
 	team: mapAppealTeam,
 	siteVisit: mapSiteVisit,

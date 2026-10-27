@@ -111,6 +111,7 @@ export const publishDecision = async (
 ) => {
 	const { type = '', key: appealTypeKey = APPEAL_CASE_TYPE.D } = appeal.appealType || {};
 	const appealType = trimAppealType(type);
+	const currentAppealVersion = appeal.currentAppealVersion;
 	const caseTeamEmail = await getTeamEmailFromAppealId(appeal.id);
 
 	const feedbackLinkForAppellant = getFeedbackLinkFromAppealTypeKey(appealTypeKey || '');

@@ -1152,6 +1152,7 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 	id: true,
 	reference: true,
 	currentStatus: true,
+	currentAppealVersion: true,
 	applicationReference: true,
 	caseCreatedDate: true,
 	caseValidDate: true,
@@ -1544,6 +1545,7 @@ const appellantCaseSelect = {
 	reference: true,
 	applicationReference: true,
 	currentStatus: true,
+	currentAppealVersion: true,
 	caseCreatedDate: true,
 	appellantCase: {
 		include: {

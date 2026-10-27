@@ -49,6 +49,7 @@ interface SingleAppealDetailsResponse {
 	appealReference: string;
 	appealSite: AppealSite;
 	appealStatus: string;
+	appealVersion: number;
 	stateList: StateStub[];
 	completedStateList: string[];
 	transferStatus?: {

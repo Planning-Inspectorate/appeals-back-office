@@ -38,6 +38,16 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 		}
 	}
 
+	if (mappedData.appeal.appealVersion.display?.statusTag) {
+		statusTags.push({
+			type: 'status-tag',
+			parameters: {
+				...mappedData.appeal.appealVersion.display.statusTag,
+				classes: 'pins-status-tag--full-width govuk-!-margin-bottom-6'
+			}
+		});
+	}
+
 	const statusTagsComponentGroup = [];
 
 	if (statusTags.length) {
