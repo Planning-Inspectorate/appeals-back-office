@@ -7,6 +7,7 @@ import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { happyPathHelper } from '../../support/happyPathHelper';
+import { tag } from '../../support/tag';
 
 let appeal;
 
@@ -106,7 +107,7 @@ const appealTypesWithNotifyForAccompaniedAndAccessRequiredVisitTypes = [
 
 appealTypesWithSiteVisitInCaseTimetableAndNotifyForAllVisitTypes.forEach(
 	([appealType, setupTestCase], index) => {
-		describe(`Schedule site visit - ${appealType}`, () => {
+		describe(`Schedule site visit - ${appealType}`, { tags: [tag.siteVisit] }, () => {
 			beforeEach(() => {
 				setupTestCase();
 			});
@@ -254,7 +255,7 @@ appealTypesWithSiteVisitInCaseTimetableAndNotifyForAllVisitTypes.forEach(
 
 appealTypesWithoutSiteVisitInCaseTimetableAndNotifyForAllVisitTypes.forEach(
 	([appealType, setupTestCase], index) => {
-		describe(`Schedule site visit - ${appealType}`, () => {
+		describe(`Schedule site visit - ${appealType}`, { tags: [tag.siteVisit] }, () => {
 			beforeEach(() => {
 				setupTestCase();
 			});
@@ -382,7 +383,7 @@ appealTypesWithoutSiteVisitInCaseTimetableAndNotifyForAllVisitTypes.forEach(
 
 appealTypesWithNotifyForAccompaniedAndAccessRequiredVisitTypes.forEach(
 	([appealType, setupTestCase], index) => {
-		describe(`Schedule site visit - ${appealType}`, () => {
+		describe(`Schedule site visit - ${appealType}`, { tags: [tag.siteVisit] }, () => {
 			beforeEach(() => {
 				setupTestCase();
 			});

@@ -6,12 +6,13 @@ import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection.js';
 import { ListCasesPage } from '../../page_objects/listCasesPage.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
+import { tag } from '../../support/tag';
 
 const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
 
-describe('Add correspondence', () => {
+describe('Add correspondence', { tags: [tag.has, tag.correspondence, tag.newRegs] }, () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});

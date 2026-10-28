@@ -12,7 +12,7 @@ const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
 
-describe('Review appellant case', () => {
+describe('Review appellant case', { tags: [tag.has, tag.validation, tag.newRegs] }, () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});

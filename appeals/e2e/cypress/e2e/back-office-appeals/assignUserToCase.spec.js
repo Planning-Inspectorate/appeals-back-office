@@ -11,7 +11,7 @@ import { urlPaths } from '../../support/urlPaths';
 const listCasesPage = new ListCasesPage();
 const caseDetailsPage = new CaseDetailsPage();
 
-describe('Assign user to case', () => {
+describe('Assign user to case', { tags: [tag.has, tag.caseDetails, tag.newRegs] }, () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});

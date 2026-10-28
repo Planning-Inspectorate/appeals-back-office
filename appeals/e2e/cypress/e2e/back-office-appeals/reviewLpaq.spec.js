@@ -18,7 +18,7 @@ const lpaqPage = new LpaqPage();
 const { casedata } = appealsApiRequests.lpaqSubmission;
 const [address] = appealsApiRequests.lpaqSubmission.casedata.neighbouringSiteAddresses;
 
-describe('Review LPAQ', () => {
+describe('Review LPAQ', { tags: [tag.lpaq] }, () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
@@ -29,7 +29,7 @@ describe('Review LPAQ', () => {
 		cy.deleteAppeals(appeal);
 	});
 
-	it('Complete LPAQ', { tags: tag.smoke }, () => {
+	it('Complete LPAQ', { tags: [tag.smoke, tag.has, tag.newRegs] }, () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
@@ -43,7 +43,7 @@ describe('Review LPAQ', () => {
 		});
 	});
 
-	it('incomplete LPAQ', { tags: tag.smoke }, () => {
+	it('incomplete LPAQ', { tags: [tag.smoke, tag.has, tag.newRegs] }, () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
@@ -65,7 +65,7 @@ describe('Review LPAQ', () => {
 		});
 	});
 
-	it('incomplete LPAQ add another reason', () => {
+	it('incomplete LPAQ add another reason', { tags: [tag.has, tag.newRegs] }, () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
@@ -88,7 +88,7 @@ describe('Review LPAQ', () => {
 			listCasesPage.verifyTableCellText(testData);
 		});
 	});
-	it('Review LPAQ - HAS', () => {
+	it('Review LPAQ - HAS', { tags: [tag.has, tag.newRegs] }, () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
@@ -168,7 +168,7 @@ describe('Review LPAQ', () => {
 		});
 	});
 
-	it('Review LPAQ - S78 Full Planning', { tags: tag.smoke }, () => {
+	it('Review LPAQ - S78 Full Planning', { tags: [tag.smoke, tag.s78, tag.newRegs] }, () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
@@ -277,7 +277,7 @@ describe('Review LPAQ', () => {
 		});
 	});
 
-	it('Review LPAQ - S20 Listed Building', () => {
+	it('Review LPAQ - S20 Listed Building', { tags: [tag.s20, tag.newRegs] }, () => {
 		cy.createCase({ caseType: 'Y' }).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
@@ -390,7 +390,7 @@ describe('Review LPAQ', () => {
 		});
 	});
 
-	it('Review LPAQ - CAS Adverts', () => {
+	it('Review LPAQ - CAS Adverts', { tags: [tag.casAdverts, tag.newRegs] }, () => {
 		cy.createCase({ ...appealsApiRequests.casAdvertsSubmission.casedata }).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
@@ -506,7 +506,7 @@ describe('Review LPAQ', () => {
 		});
 	});
 
-	it('Review LPAQ - CAS Planning', () => {
+	it('Review LPAQ - CAS Planning', { tags: [tag.casPlanning, tag.newRegs] }, () => {
 		cy.createCase({ caseType: 'ZP' }).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
@@ -586,7 +586,7 @@ describe('Review LPAQ', () => {
 		});
 	});
 
-	it('Review LPAQ - Full Adverts', () => {
+	it('Review LPAQ - Full Adverts', { tags: [tag.advert, tag.oldRegs] }, () => {
 		cy.createCase({ ...appealsApiRequests.advertsSubmission.casedata }).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);

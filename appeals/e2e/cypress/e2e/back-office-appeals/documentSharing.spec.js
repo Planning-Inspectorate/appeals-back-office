@@ -8,6 +8,7 @@ import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.
 import { FileUploader } from '../../page_objects/shared.js';
 import { CTA_TEXT } from '../../support/consts.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
+import { tag } from '../../support/tag';
 
 const caseDetailsPage = new CaseDetailsPage();
 const documentationSectionPage = new DocumentationSectionPage();
@@ -15,7 +16,7 @@ const fileUploader = new FileUploader();
 const pdf = [fileUploader.sampleFiles.pdf];
 const caseHistoryPage = new CaseHistoryPage();
 
-describe('Create Test Data', () => {
+describe('Create Test Data', { tags: [tag.s78, tag.documents, tag.newRegs] }, () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
@@ -26,7 +27,7 @@ describe('Create Test Data', () => {
 		cy.deleteAppeals(appeal);
 	});
 
-	it('Hearing Document Upload', () => {
+	it('Hearing Document Upload', { tags: [tag.hearing] }, () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;
 			happyPathHelper.advanceTo(
@@ -56,7 +57,7 @@ describe('Create Test Data', () => {
 		});
 	});
 
-	it('Inquiry Document Upload', () => {
+	it('Inquiry Document Upload', { tags: [tag.inquiry] }, () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;
 			happyPathHelper.advanceTo(
@@ -86,7 +87,7 @@ describe('Create Test Data', () => {
 		});
 	});
 
-	it('Inquiry event Document Upload', () => {
+	it('Inquiry event Document Upload', { tags: [tag.inquiry] }, () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;
 			happyPathHelper.advanceTo(

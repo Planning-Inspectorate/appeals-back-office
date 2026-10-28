@@ -10,6 +10,7 @@ import { FileDateAndRedactionStatusComponent } from '../../page_objects/fileDate
 import { FileUploader } from '../../page_objects/shared.js';
 import { CTA_TEXT, HEADINGS } from '../../support/consts.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
+import { tag } from '../../support/tag';
 
 const caseDetailsPage = new CaseDetailsPage();
 const caseHistoryPage = new CaseHistoryPage();
@@ -20,7 +21,7 @@ const cyaSection = new CYASection();
 
 let sampleFiles = fileUploader.sampleFiles;
 
-describe('Manually Add a rep', () => {
+describe('Manually Add a rep', { tags: [tag.s78, tag.representations, tag.newRegs] }, () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});

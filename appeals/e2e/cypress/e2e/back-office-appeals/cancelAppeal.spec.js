@@ -7,6 +7,7 @@ import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { FileUploader } from '../../page_objects/shared.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
+import { tag } from '../../support/tag';
 
 const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();
@@ -25,7 +26,7 @@ const setupTestCase = () => {
 	});
 };
 
-describe('Cancel an appeal', () => {
+describe('Cancel an appeal', { tags: [tag.has, tag.caseDetails, tag.newRegs] }, () => {
 	beforeEach(() => {
 		setupTestCase();
 	});

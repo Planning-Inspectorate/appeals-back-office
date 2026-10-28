@@ -10,6 +10,7 @@ import { FileUploaderSection } from '../../page_objects/fileUploadSection.js';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { ReviewEvidenceSection } from '../../page_objects/reviewEvidenceSection.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
+import { tag } from '../../support/tag';
 import { urlPaths } from '../../support/urlPaths.js';
 
 const cyaSection = new CYASection();
@@ -22,7 +23,7 @@ const documentationSectionPage = new DocumentationSectionPage();
 const BULK_UPLOAD_COUNT = 800;
 const REPRESENTATIONS_ROW_ID = 'representations-from-other-parties';
 
-describe('Manage docs on lpa case', () => {
+describe('Manage docs on lpa case', { tags: [tag.documents] }, () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
@@ -89,7 +90,7 @@ describe('Manage docs on lpa case', () => {
 	};
 
 	let sampleFiles = caseDetailsPage.sampleFiles;
-	it('add a doc and then remove on file upload page', () => {
+	it('add a doc and then remove on file upload page', { tags: [tag.has, tag.newRegs] }, () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
@@ -105,29 +106,37 @@ describe('Manage docs on lpa case', () => {
 		});
 	});
 
-	it('allows uploading 800 representations for HAS and continue without service error', () => {
-		cy.createCase().then((caseObj) => {
-			appeal = caseObj;
-			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
-			caseDetailsPage.clickReviewLpaq();
+	it(
+		'allows uploading 800 representations for HAS and continue without service error',
+		{ tags: [tag.has, tag.representations, tag.newRegs] },
+		() => {
+			cy.createCase().then((caseObj) => {
+				appeal = caseObj;
+				cy.addLpaqSubmissionToCase(caseObj);
+				happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
+				caseDetailsPage.clickReviewLpaq();
 
-			verifyBulkUploadCanContinue('bulk-has-representations');
-		});
-	});
+				verifyBulkUploadCanContinue('bulk-has-representations');
+			});
+		}
+	);
 
-	it('allows uploading 800 representations for S78 and continue without service error', () => {
-		cy.createCase({ caseType: 'W' }).then((caseObj) => {
-			appeal = caseObj;
-			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'S78');
-			caseDetailsPage.clickReviewLpaq();
+	it(
+		'allows uploading 800 representations for S78 and continue without service error',
+		{ tags: [tag.s78, tag.representations, tag.newRegs] },
+		() => {
+			cy.createCase({ caseType: 'W' }).then((caseObj) => {
+				appeal = caseObj;
+				cy.addLpaqSubmissionToCase(caseObj);
+				happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'S78');
+				caseDetailsPage.clickReviewLpaq();
 
-			verifyBulkUploadCanContinue('bulk-s78-representations');
-		});
-	});
+				verifyBulkUploadCanContinue('bulk-s78-representations');
+			});
+		}
+	);
 
-	it('remove a doc when not the last version', () => {
+	it('remove a doc when not the last version', { tags: [tag.has, tag.newRegs] }, () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
@@ -153,7 +162,7 @@ describe('Manage docs on lpa case', () => {
 		});
 	});
 
-	it('remove the last version of the document', () => {
+	it('remove the last version of the document', { tags: [tag.has, tag.newRegs] }, () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
@@ -167,179 +176,199 @@ describe('Manage docs on lpa case', () => {
 		});
 	});
 
-	it('can upload lpa proof of evidence and witness to inquiry case', () => {
-		cy.createCase({ caseType: 'W' }).then((caseObj) => {
-			cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-				appeal = caseObj;
-				// require case to be started as inquiry to access appellant POE evidence
-				setupInquiry(caseObj, inquiryDate);
+	it(
+		'can upload lpa proof of evidence and witness to inquiry case',
+		{ tags: [tag.s78, tag.inquiry, tag.newRegs] },
+		() => {
+			cy.createCase({ caseType: 'W' }).then((caseObj) => {
+				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+					appeal = caseObj;
+					// require case to be started as inquiry to access appellant POE evidence
+					setupInquiry(caseObj, inquiryDate);
 
-				// find case and open inqiiry section
-				cy.visit(urlPaths.appealsList);
-				listCasesPage.clickAppealByRef(caseObj);
+					// find case and open inqiiry section
+					cy.visit(urlPaths.appealsList);
+					listCasesPage.clickAppealByRef(caseObj);
 
-				// navigate to file upload view, upload file and verify uploaded
-				documentationSectionPage.selectAddDocument('lpa-proofs-evidence');
-				fileUploaderSection.uploadFile(sampleFiles.document);
-				fileUploaderSection.verifyFilesUploaded([sampleFiles.document]);
+					// navigate to file upload view, upload file and verify uploaded
+					documentationSectionPage.selectAddDocument('lpa-proofs-evidence');
+					fileUploaderSection.uploadFile(sampleFiles.document);
+					fileUploaderSection.verifyFilesUploaded([sampleFiles.document]);
 
-				// naviagte to review/confirm page
-				caseDetailsPage.clickButtonByText('Continue');
-				// check for lpa heading
-				caseDetailsPage.validateSectionHeader(
-					'Check details and add LPA proof of evidence and witnesses'
-				);
-				caseDetailsPage.clickButtonByText('Add lpa proof of evidence and witness');
+					// naviagte to review/confirm page
+					caseDetailsPage.clickButtonByText('Continue');
+					// check for lpa heading
+					caseDetailsPage.validateSectionHeader(
+						'Check details and add LPA proof of evidence and witnesses'
+					);
+					caseDetailsPage.clickButtonByText('Add lpa proof of evidence and witness');
 
-				// check page header and success banner
-				caseDetailsPage.validateSectionHeader('Review LPA proof of evidence and witnesses');
-				caseDetailsPage.validateBannerMessage(
-					'Success',
-					'LPA proof of evidence and witnesses added'
-				);
-			});
-		});
-	});
-
-	it('upload lpa proof of evidence and witness - proceed without uploading file', () => {
-		cy.createCase({ caseType: 'W' }).then((caseObj) => {
-			cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-				appeal = caseObj;
-				// require case to be started as inquiry to access appellant POE evidence
-				setupInquiry(caseObj, inquiryDate);
-
-				// find case and open inqiiry section
-				cy.visit(urlPaths.appealsList);
-				listCasesPage.clickAppealByRef(caseObj);
-
-				// navigate to file upload view, proceed without uploading file
-				documentationSectionPage.selectAddDocument('lpa-proofs-evidence');
-				caseDetailsPage.clickButtonByText('Continue');
-
-				// verify error message
-				fileUploaderSection.verifyErrorMessages({
-					messages: ['Select the Proof of evidence and witness'],
-					fields: ['upload-file-button-1']
+					// check page header and success banner
+					caseDetailsPage.validateSectionHeader('Review LPA proof of evidence and witnesses');
+					caseDetailsPage.validateBannerMessage(
+						'Success',
+						'LPA proof of evidence and witnesses added'
+					);
 				});
 			});
-		});
-	});
+		}
+	);
 
-	it('can mark lpa proof of evidence as incomplete and select reason', () => {
-		cy.createCase({ caseType: 'W' }).then((caseObj) => {
-			cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-				appeal = caseObj;
-				// require case to be started as inquiry to access appellant POE evidence
-				setupInquiry(caseObj, inquiryDate);
+	it(
+		'upload lpa proof of evidence and witness - proceed without uploading file',
+		{ tags: [tag.s78, tag.inquiry, tag.newRegs] },
+		() => {
+			cy.createCase({ caseType: 'W' }).then((caseObj) => {
+				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+					appeal = caseObj;
+					// require case to be started as inquiry to access appellant POE evidence
+					setupInquiry(caseObj, inquiryDate);
 
-				// find case and open inquiry section
-				cy.visit(urlPaths.appealsList);
-				listCasesPage.clickAppealByRef(caseObj);
+					// find case and open inqiiry section
+					cy.visit(urlPaths.appealsList);
+					listCasesPage.clickAppealByRef(caseObj);
 
-				// navigate to file upload view, upload file and verify uploaded
-				documentationSectionPage.selectAddDocument('lpa-proofs-evidence');
-				fileUploaderSection.uploadFile(sampleFiles.document);
-				fileUploaderSection.verifyFilesUploaded([sampleFiles.document]);
+					// navigate to file upload view, proceed without uploading file
+					documentationSectionPage.selectAddDocument('lpa-proofs-evidence');
+					caseDetailsPage.clickButtonByText('Continue');
 
-				//naviagte to review/confirm page
-				fileUploaderSection.clickButtonByText('Continue');
-				caseDetailsPage.clickButtonByText('Add lpa proof of evidence and witness');
+					// verify error message
+					fileUploaderSection.verifyErrorMessages({
+						messages: ['Select the Proof of evidence and witness'],
+						fields: ['upload-file-button-1']
+					});
+				});
+			});
+		}
+	);
 
-				// set review as incomplete and select reason
-				reviewEvidenceSection.selectEvidenceReviewOption('Mark as incomplete');
-				reviewEvidenceSection.clickButtonByText('Continue');
+	it(
+		'can mark lpa proof of evidence as incomplete and select reason',
+		{ tags: [tag.s78, tag.inquiry, tag.newRegs] },
+		() => {
+			cy.createCase({ caseType: 'W' }).then((caseObj) => {
+				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+					appeal = caseObj;
+					// require case to be started as inquiry to access appellant POE evidence
+					setupInquiry(caseObj, inquiryDate);
 
-				// check that should not be any preselected options
-				evidenceReasonsSection.verifyNumberOfSelectedReasons(0);
+					// find case and open inquiry section
+					cy.visit(urlPaths.appealsList);
+					listCasesPage.clickAppealByRef(caseObj);
 
-				// select reason and proceed to check answers page
-				evidenceReasonsSection.selectAndReturnEvidenceReasonOption().then((selectedOption) => {
+					// navigate to file upload view, upload file and verify uploaded
+					documentationSectionPage.selectAddDocument('lpa-proofs-evidence');
+					fileUploaderSection.uploadFile(sampleFiles.document);
+					fileUploaderSection.verifyFilesUploaded([sampleFiles.document]);
+
+					//naviagte to review/confirm page
+					fileUploaderSection.clickButtonByText('Continue');
+					caseDetailsPage.clickButtonByText('Add lpa proof of evidence and witness');
+
+					// set review as incomplete and select reason
+					reviewEvidenceSection.selectEvidenceReviewOption('Mark as incomplete');
+					reviewEvidenceSection.clickButtonByText('Continue');
+
+					// check that should not be any preselected options
+					evidenceReasonsSection.verifyNumberOfSelectedReasons(0);
+
+					// select reason and proceed to check answers page
+					evidenceReasonsSection.selectAndReturnEvidenceReasonOption().then((selectedOption) => {
+						evidenceReasonsSection.clickButtonByText('Continue');
+
+						// check address is correct
+						cyaSection.verifyAnswerUpdated({
+							field: cyaSection.cyaSectionFields.reasonForRejectLPAPOE,
+							value: selectedOption
+						});
+					});
+				});
+			});
+		}
+	);
+
+	it(
+		'can mark lpa proof of evidence as incomplete and select other reason',
+		{ tags: [tag.s78, tag.inquiry, tag.newRegs] },
+		() => {
+			cy.createCase({ caseType: 'W' }).then((caseObj) => {
+				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+					appeal = caseObj;
+					// require case to be started as inquiry to access appellant POE evidence
+					setupInquiry(caseObj, inquiryDate);
+
+					// find case and open inquiry section
+					cy.visit(urlPaths.appealsList);
+					listCasesPage.clickAppealByRef(caseObj);
+
+					// navigate to file upload view, upload file and verify uploaded
+					documentationSectionPage.selectAddDocument('lpa-proofs-evidence');
+					fileUploaderSection.uploadFile(sampleFiles.document);
+					fileUploaderSection.verifyFilesUploaded([sampleFiles.document]);
+
+					//naviagte to review/confirm page
+					fileUploaderSection.clickButtonByText('Continue');
+					caseDetailsPage.clickButtonByText('Add lpa proof of evidence and witness');
+
+					// set review as incomplete and select reason
+					reviewEvidenceSection.selectEvidenceReviewOption('Mark as incomplete');
+					reviewEvidenceSection.clickButtonByText('Continue');
+
+					// check that should not be any preselected options
+					evidenceReasonsSection.verifyNumberOfSelectedReasons(0);
+
+					// select other reason and proceed to check answers page
+					const otherReason = 'This is another reason';
+					evidenceReasonsSection.selectOtherReason(otherReason);
 					evidenceReasonsSection.clickButtonByText('Continue');
 
 					// check address is correct
 					cyaSection.verifyAnswerUpdated({
 						field: cyaSection.cyaSectionFields.reasonForRejectLPAPOE,
-						value: selectedOption
+						value: otherReason
 					});
 				});
 			});
-		});
-	});
+		}
+	);
 
-	it('can mark lpa proof of evidence as incomplete and select other reason', () => {
-		cy.createCase({ caseType: 'W' }).then((caseObj) => {
-			cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-				appeal = caseObj;
-				// require case to be started as inquiry to access appellant POE evidence
-				setupInquiry(caseObj, inquiryDate);
+	it(
+		'can mark appellant proof of evidence as incomplete - proceed without select reason',
+		{ tags: [tag.s78, tag.inquiry, tag.newRegs] },
+		() => {
+			cy.createCase({ caseType: 'W' }).then((caseObj) => {
+				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+					appeal = caseObj;
+					// require case to be started as inquiry to access appellant POE evidence
+					setupInquiry(caseObj, inquiryDate);
 
-				// find case and open inquiry section
-				cy.visit(urlPaths.appealsList);
-				listCasesPage.clickAppealByRef(caseObj);
+					// find case and open inquiry section
+					cy.visit(urlPaths.appealsList);
+					listCasesPage.clickAppealByRef(caseObj);
 
-				// navigate to file upload view, upload file and verify uploaded
-				documentationSectionPage.selectAddDocument('lpa-proofs-evidence');
-				fileUploaderSection.uploadFile(sampleFiles.document);
-				fileUploaderSection.verifyFilesUploaded([sampleFiles.document]);
+					// navigate to file upload view, upload file and verify uploaded
+					documentationSectionPage.selectAddDocument('lpa-proofs-evidence');
+					fileUploaderSection.uploadFile(sampleFiles.document);
+					fileUploaderSection.verifyFilesUploaded([sampleFiles.document]);
 
-				//naviagte to review/confirm page
-				fileUploaderSection.clickButtonByText('Continue');
-				caseDetailsPage.clickButtonByText('Add lpa proof of evidence and witness');
+					//naviagte to review/confirm page
+					fileUploaderSection.clickButtonByText('Continue');
+					caseDetailsPage.clickButtonByText('Add lpa proof of evidence and witness');
 
-				// set review as incomplete and select reason
-				reviewEvidenceSection.selectEvidenceReviewOption('Mark as incomplete');
-				reviewEvidenceSection.clickButtonByText('Continue');
+					// set review as incomplete and select reason
+					reviewEvidenceSection.selectEvidenceReviewOption('Mark as incomplete');
+					reviewEvidenceSection.clickButtonByText('Continue');
 
-				// check that should not be any preselected options
-				evidenceReasonsSection.verifyNumberOfSelectedReasons(0);
+					// proceed without selecting a reason
+					evidenceReasonsSection.clickButtonByText('Continue');
 
-				// select other reason and proceed to check answers page
-				const otherReason = 'This is another reason';
-				evidenceReasonsSection.selectOtherReason(otherReason);
-				evidenceReasonsSection.clickButtonByText('Continue');
-
-				// check address is correct
-				cyaSection.verifyAnswerUpdated({
-					field: cyaSection.cyaSectionFields.reasonForRejectLPAPOE,
-					value: otherReason
+					// verify error message
+					evidenceReasonsSection.verifyErrorMessages({
+						messages: ['Select why the proof of evidence and witnesses are incomplete'],
+						fields: ['rejection-reason']
+					});
 				});
 			});
-		});
-	});
-
-	it('can mark appellant proof of evidence as incomplete - proceed without select reason', () => {
-		cy.createCase({ caseType: 'W' }).then((caseObj) => {
-			cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-				appeal = caseObj;
-				// require case to be started as inquiry to access appellant POE evidence
-				setupInquiry(caseObj, inquiryDate);
-
-				// find case and open inquiry section
-				cy.visit(urlPaths.appealsList);
-				listCasesPage.clickAppealByRef(caseObj);
-
-				// navigate to file upload view, upload file and verify uploaded
-				documentationSectionPage.selectAddDocument('lpa-proofs-evidence');
-				fileUploaderSection.uploadFile(sampleFiles.document);
-				fileUploaderSection.verifyFilesUploaded([sampleFiles.document]);
-
-				//naviagte to review/confirm page
-				fileUploaderSection.clickButtonByText('Continue');
-				caseDetailsPage.clickButtonByText('Add lpa proof of evidence and witness');
-
-				// set review as incomplete and select reason
-				reviewEvidenceSection.selectEvidenceReviewOption('Mark as incomplete');
-				reviewEvidenceSection.clickButtonByText('Continue');
-
-				// proceed without selecting a reason
-				evidenceReasonsSection.clickButtonByText('Continue');
-
-				// verify error message
-				evidenceReasonsSection.verifyErrorMessages({
-					messages: ['Select why the proof of evidence and witnesses are incomplete'],
-					fields: ['rejection-reason']
-				});
-			});
-		});
-	});
+		}
+	);
 });

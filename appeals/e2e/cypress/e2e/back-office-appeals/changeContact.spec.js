@@ -6,12 +6,13 @@ import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { ContactDetailsPage } from '../../page_objects/contactDetailsPage.js';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
+import { tag } from '../../support/tag';
 
 const caseDetailsPage = new CaseDetailsPage();
 const listCasesPage = new ListCasesPage();
 const contactDetailsPage = new ContactDetailsPage();
 
-describe('change contacts', () => {
+describe('change contacts', { tags: [tag.has, tag.caseDetails, tag.newRegs] }, () => {
 	let caseObj;
 
 	before(() => {

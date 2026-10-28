@@ -22,7 +22,7 @@ const estimatedDaysSection = new EstimatedDaysSection();
 const addressSection = new AddressSection();
 const hearingSectionPage = new HearingSectionPage();
 
-describe('Start case', () => {
+describe('Start case', { tags: [tag.startCase] }, () => {
 	const expectedNotifies = {
 		Household: [
 			{
@@ -76,7 +76,7 @@ describe('Start case', () => {
 		cy.deleteAppeals(appeal);
 	});
 
-	it('Start case', () => {
+	it('Start case', { tags: [tag.has, tag.written, tag.newRegs] }, () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 
@@ -96,7 +96,7 @@ describe('Start case', () => {
 		});
 	});
 
-	it('Start S78 case', { tags: tag.smoke }, () => {
+	it('Start S78 case', { tags: [tag.smoke, tag.s78, tag.written, tag.newRegs] }, () => {
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {
@@ -119,7 +119,7 @@ describe('Start case', () => {
 		});
 	});
 
-	it('Start S20 Listed Building case', () => {
+	it('Start S20 Listed Building case', { tags: [tag.s20, tag.written, tag.newRegs] }, () => {
 		cy.createCase({
 			caseType: 'Y'
 		}).then((caseObj) => {
@@ -145,7 +145,7 @@ describe('Start case', () => {
 
 	it(
 		'S78 hearing case - start appeal with scheduled hearing and estimated days',
-		{ tags: tag.smoke },
+		{ tags: [tag.smoke, tag.s78, tag.hearing, tag.newRegs] },
 		() => {
 			cy.login(users.appeals.caseAdmin);
 			cy.createCase({ caseType: 'W' }).then((caseObj) => {
@@ -208,7 +208,7 @@ describe('Start case', () => {
 
 	it(
 		'S78 hearing case - start appeal with scheduled hearing and without estimated days',
-		{ tags: tag.smoke },
+		{ tags: [tag.smoke, tag.s78, tag.hearing, tag.newRegs] },
 		() => {
 			cy.login(users.appeals.caseAdmin);
 			cy.createCase({ caseType: 'W' }).then((caseObj) => {
@@ -260,118 +260,126 @@ describe('Start case', () => {
 		}
 	);
 
-	it('S78 can start case as inquiry with address', () => {
-		cy.createCase({ caseType: 'W' }).then((caseObj) => {
-			appeal = caseObj;
-			happyPathHelper.viewCaseDetails(caseObj);
+	it(
+		'S78 can start case as inquiry with address',
+		{ tags: [tag.s78, tag.inquiry, tag.newRegs] },
+		() => {
+			cy.createCase({ caseType: 'W' }).then((caseObj) => {
+				appeal = caseObj;
+				happyPathHelper.viewCaseDetails(caseObj);
 
-			// Assign Case Officer Via API
-			cy.assignCaseOfficerViaApi(caseObj);
+				// Assign Case Officer Via API
+				cy.assignCaseOfficerViaApi(caseObj);
 
-			// Validate Appeal Via API
-			cy.validateAppeal(caseObj);
+				// Validate Appeal Via API
+				cy.validateAppeal(caseObj);
 
-			happyPathHelper.startS78InquiryCase(caseObj, 'inquiry');
+				happyPathHelper.startS78InquiryCase(caseObj, 'inquiry');
 
-			// enter inquiry date and time
-			cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-				//set to midday
-				inquiryDate.setHours(12);
+				// enter inquiry date and time
+				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+					//set to midday
+					inquiryDate.setHours(12);
 
-				// Set exact time and date format for assertions
-				const expectedDateTime = formatDateAndTime(inquiryDate);
-				cy.log('expectedDateTime', inquiryDate.toLocaleString());
+					// Set exact time and date format for assertions
+					const expectedDateTime = formatDateAndTime(inquiryDate);
+					cy.log('expectedDateTime', inquiryDate.toLocaleString());
 
-				dateTimeSection.enterInquiryDate(inquiryDate);
-				dateTimeSection.enterInquiryTime(inquiryDate.getHours(), inquiryDate.getMinutes());
+					dateTimeSection.enterInquiryDate(inquiryDate);
+					dateTimeSection.enterInquiryTime(inquiryDate.getHours(), inquiryDate.getMinutes());
 
-				dateTimeSection.clickButtonByText('Continue');
+					dateTimeSection.clickButtonByText('Continue');
 
-				// enter estimated days
-				estimatedDaysSection.selectEstimatedDaysOption('Yes');
-				estimatedDaysSection.enterEstimatedInquiryDays(6);
-				estimatedDaysSection.clickButtonByText('Continue');
+					// enter estimated days
+					estimatedDaysSection.selectEstimatedDaysOption('Yes');
+					estimatedDaysSection.enterEstimatedInquiryDays(6);
+					estimatedDaysSection.clickButtonByText('Continue');
 
-				// enter an address
-				addressSection.selectAddressOption('Yes');
-				addressSection.clickButtonByText('Continue');
-				addressSection.enterAddress(inquiryAddress);
-				addressSection.clickButtonByText('Continue');
+					// enter an address
+					addressSection.selectAddressOption('Yes');
+					addressSection.clickButtonByText('Continue');
+					addressSection.enterAddress(inquiryAddress);
+					addressSection.clickButtonByText('Continue');
 
-				// enter timetable dates
-				cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
-					dateTimeSection.enterInquiryDueDates(startCaseTimetableItems, startDate, 7);
+					// enter timetable dates
+					cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
+						dateTimeSection.enterInquiryDueDates(startCaseTimetableItems, startDate, 7);
+					});
+
+					dateTimeSection.clickButtonByText('Continue');
+
+					const appealDetails = {
+						date: expectedDateTime.date,
+						time: expectedDateTime.time,
+						expectedDays: 6,
+						venueAddress: formatObjectAsString(inquiryAddress, ', ')
+					};
+
+					// check email previews
+					cyaSection.verifyPreviewEmail('appellant', true, appealDetails);
+					cyaSection.verifyPreviewEmail('lpa', true, appealDetails);
 				});
-
-				dateTimeSection.clickButtonByText('Continue');
-
-				const appealDetails = {
-					date: expectedDateTime.date,
-					time: expectedDateTime.time,
-					expectedDays: 6,
-					venueAddress: formatObjectAsString(inquiryAddress, ', ')
-				};
-
-				// check email previews
-				cyaSection.verifyPreviewEmail('appellant', true, appealDetails);
-				cyaSection.verifyPreviewEmail('lpa', true, appealDetails);
 			});
-		});
-	});
+		}
+	);
 
-	it('S78 can start case as inquiry without address', { tags: tag.smoke }, () => {
-		cy.createCase({ caseType: 'W' }).then((caseObj) => {
-			appeal = caseObj;
-			happyPathHelper.viewCaseDetails(caseObj);
+	it(
+		'S78 can start case as inquiry without address',
+		{ tags: [tag.smoke, tag.s78, tag.inquiry, tag.newRegs] },
+		() => {
+			cy.createCase({ caseType: 'W' }).then((caseObj) => {
+				appeal = caseObj;
+				happyPathHelper.viewCaseDetails(caseObj);
 
-			// Assign Case Officer Via API
-			cy.assignCaseOfficerViaApi(caseObj);
+				// Assign Case Officer Via API
+				cy.assignCaseOfficerViaApi(caseObj);
 
-			// Validate Appeal Via API
-			cy.validateAppeal(caseObj);
+				// Validate Appeal Via API
+				cy.validateAppeal(caseObj);
 
-			happyPathHelper.startS78InquiryCase(caseObj, 'inquiry');
+				happyPathHelper.startS78InquiryCase(caseObj, 'inquiry');
 
-			// enter inquiry date and time
-			cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-				//set to midday
-				inquiryDate.setHours(12);
+				// enter inquiry date and time
+				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+					//set to midday
+					inquiryDate.setHours(12);
 
-				// Set exact time and date format for assertions
-				const expectedDateTime = formatDateAndTime(inquiryDate);
-				cy.log('expectedDateTime', inquiryDate.toLocaleString());
+					// Set exact time and date format for assertions
+					const expectedDateTime = formatDateAndTime(inquiryDate);
+					cy.log('expectedDateTime', inquiryDate.toLocaleString());
 
-				dateTimeSection.enterInquiryDate(inquiryDate);
-				dateTimeSection.enterInquiryTime(inquiryDate.getHours(), inquiryDate.getMinutes());
+					dateTimeSection.enterInquiryDate(inquiryDate);
+					dateTimeSection.enterInquiryTime(inquiryDate.getHours(), inquiryDate.getMinutes());
 
-				dateTimeSection.clickButtonByText('Continue');
+					dateTimeSection.clickButtonByText('Continue');
 
-				// enter estimated days
-				estimatedDaysSection.selectEstimatedDaysOption('Yes');
-				estimatedDaysSection.enterEstimatedInquiryDays(6);
-				estimatedDaysSection.clickButtonByText('Continue');
+					// enter estimated days
+					estimatedDaysSection.selectEstimatedDaysOption('Yes');
+					estimatedDaysSection.enterEstimatedInquiryDays(6);
+					estimatedDaysSection.clickButtonByText('Continue');
 
-				// do not enter an address
-				addressSection.selectAddressOption('No');
-				addressSection.clickButtonByText('Continue');
+					// do not enter an address
+					addressSection.selectAddressOption('No');
+					addressSection.clickButtonByText('Continue');
 
-				// enter timetable dates
-				cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
-					dateTimeSection.enterInquiryDueDates(startCaseTimetableItems, startDate, 7);
+					// enter timetable dates
+					cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
+						dateTimeSection.enterInquiryDueDates(startCaseTimetableItems, startDate, 7);
+					});
+
+					dateTimeSection.clickButtonByText('Continue');
+
+					const appealDetails = {
+						date: expectedDateTime.date,
+						time: expectedDateTime.time,
+						expectedDays: 6
+					};
+
+					// check email previews
+					cyaSection.verifyPreviewEmail('appellant', true, appealDetails);
+					cyaSection.verifyPreviewEmail('lpa', true, appealDetails);
 				});
-
-				dateTimeSection.clickButtonByText('Continue');
-
-				const appealDetails = {
-					date: expectedDateTime.date,
-					time: expectedDateTime.time,
-					expectedDays: 6
-				};
-
-				// check email previews
-				cyaSection.verifyPreviewEmail('appellant', true, appealDetails);
-				cyaSection.verifyPreviewEmail('lpa', true, appealDetails);
 			});
-		});
-	});
+		}
+	);
 });

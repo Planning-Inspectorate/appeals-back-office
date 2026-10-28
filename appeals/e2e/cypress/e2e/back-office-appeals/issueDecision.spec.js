@@ -31,7 +31,7 @@ afterEach(() => {
 	cy.deleteAppeals(appeal);
 });
 
-describe('Issue decision', () => {
+describe('Issue decision', { tags: [tag.has, tag.written, tag.decision, tag.newRegs] }, () => {
 	const issueDecisionCompleteStatus = ['Allowed', 'Dismissed', 'Split Decision'];
 
 	issueDecisionCompleteStatus.forEach((issueDecision) => {
@@ -102,60 +102,64 @@ describe('Issue decision', () => {
 	});
 });
 
-describe('Withdrawn costs', () => {
-	it('Issue decision with withdrawn appellant costs', () => {
-		cy.get('@caseObjAlias').then((caseObj) => {
-			//add withdrawal document
-			happyPathHelper.viewCaseDetails(caseObj);
-			happyPathHelper.addAppellantCostWithdrawal();
+describe(
+	'Withdrawn costs',
+	{ tags: [tag.has, tag.written, tag.decision, tag.costs, tag.newRegs] },
+	() => {
+		it('Issue decision with withdrawn appellant costs', () => {
+			cy.get('@caseObjAlias').then((caseObj) => {
+				//add withdrawal document
+				happyPathHelper.viewCaseDetails(caseObj);
+				happyPathHelper.addAppellantCostWithdrawal();
 
-			//Issue decision without costs
-			happyPathHelper.issueDecision('Allowed', 'lpa only');
+				//Issue decision without costs
+				happyPathHelper.issueDecision('Allowed', 'lpa only');
 
-			//Case details
-			caseDetailsPage.checkDecisionOutcome('Decision: Allowed');
-			caseDetailsPage.checkDecisionOutcome(`Decision issued on ${formattedDate.date}`);
-			caseDetailsPage.checkDecisionOutcome('LPA costs decision: Issued');
-			caseDetailsPage.viewDecisionLetter('View decision');
+				//Case details
+				caseDetailsPage.checkDecisionOutcome('Decision: Allowed');
+				caseDetailsPage.checkDecisionOutcome(`Decision issued on ${formattedDate.date}`);
+				caseDetailsPage.checkDecisionOutcome('LPA costs decision: Issued');
+				caseDetailsPage.viewDecisionLetter('View decision');
+			});
 		});
-	});
 
-	it('Issue decision with withdrawn LPA costs', () => {
-		cy.get('@caseObjAlias').then((caseObj) => {
-			//add withdrawal document
-			happyPathHelper.viewCaseDetails(caseObj);
-			happyPathHelper.addLpaCostWithdrawal();
+		it('Issue decision with withdrawn LPA costs', () => {
+			cy.get('@caseObjAlias').then((caseObj) => {
+				//add withdrawal document
+				happyPathHelper.viewCaseDetails(caseObj);
+				happyPathHelper.addLpaCostWithdrawal();
 
-			//Issue decision without costs
-			happyPathHelper.issueDecision('Allowed', 'appellant only');
+				//Issue decision without costs
+				happyPathHelper.issueDecision('Allowed', 'appellant only');
 
-			//Case details
-			caseDetailsPage.checkDecisionOutcome('Decision: Allowed');
-			caseDetailsPage.checkDecisionOutcome(`Decision issued on ${formattedDate.date}`);
-			caseDetailsPage.checkDecisionOutcome('Appellant costs decision: Issued');
-			caseDetailsPage.viewDecisionLetter('View decision');
+				//Case details
+				caseDetailsPage.checkDecisionOutcome('Decision: Allowed');
+				caseDetailsPage.checkDecisionOutcome(`Decision issued on ${formattedDate.date}`);
+				caseDetailsPage.checkDecisionOutcome('Appellant costs decision: Issued');
+				caseDetailsPage.viewDecisionLetter('View decision');
+			});
 		});
-	});
 
-	it('Issue decision with both appellant and LPA costs withdrawn', () => {
-		cy.get('@caseObjAlias').then((caseObj) => {
-			//add withdrawal document
-			happyPathHelper.viewCaseDetails(caseObj);
-			happyPathHelper.addAppellantCostWithdrawal();
-			happyPathHelper.addLpaCostWithdrawal();
+		it('Issue decision with both appellant and LPA costs withdrawn', () => {
+			cy.get('@caseObjAlias').then((caseObj) => {
+				//add withdrawal document
+				happyPathHelper.viewCaseDetails(caseObj);
+				happyPathHelper.addAppellantCostWithdrawal();
+				happyPathHelper.addLpaCostWithdrawal();
 
-			//Issue decision without costs
-			happyPathHelper.issueDecision('Allowed', 'no costs');
+				//Issue decision without costs
+				happyPathHelper.issueDecision('Allowed', 'no costs');
 
-			//Case details
-			caseDetailsPage.checkDecisionOutcome('Decision: Allowed');
-			caseDetailsPage.checkDecisionOutcome(`Decision issued on ${formattedDate.date}`);
-			caseDetailsPage.viewDecisionLetter('View decision');
+				//Case details
+				caseDetailsPage.checkDecisionOutcome('Decision: Allowed');
+				caseDetailsPage.checkDecisionOutcome(`Decision issued on ${formattedDate.date}`);
+				caseDetailsPage.viewDecisionLetter('View decision');
+			});
 		});
-	});
-});
+	}
+);
 
-describe('Invalid decision', () => {
+describe('Invalid decision', { tags: [tag.has, tag.written, tag.decision, tag.newRegs] }, () => {
 	const hasDecisionLetter = [true, false];
 
 	hasDecisionLetter.forEach((hasLetter) => {
@@ -197,66 +201,70 @@ describe('Invalid decision', () => {
 	});
 });
 
-describe('Issue individual costs decision', () => {
-	it('Issue appellant costs separately', () => {
-		cy.get('@caseObjAlias').then((caseObj) => {
-			//Issue decision without costs
-			happyPathHelper.viewCaseDetails(caseObj);
-			happyPathHelper.issueDecision('Allowed', 'both costs', false, false);
+describe(
+	'Issue individual costs decision',
+	{ tags: [tag.has, tag.written, tag.decision, tag.costs, tag.newRegs] },
+	() => {
+		it('Issue appellant costs separately', () => {
+			cy.get('@caseObjAlias').then((caseObj) => {
+				//Issue decision without costs
+				happyPathHelper.viewCaseDetails(caseObj);
+				happyPathHelper.issueDecision('Allowed', 'both costs', false, false);
 
-			//Upload decision letter
-			caseDetailsPage.clickIssueAppellantCostsDecision();
-			fileUploader.uploadFiles(pdf);
-			fileUploader.clickButtonByText('Continue');
-			caseDetailsPage.clickButtonByText('Issue appellant costs decision');
+				//Upload decision letter
+				caseDetailsPage.clickIssueAppellantCostsDecision();
+				fileUploader.uploadFiles(pdf);
+				fileUploader.clickButtonByText('Continue');
+				caseDetailsPage.clickButtonByText('Issue appellant costs decision');
 
-			//Verify case details updates
-			caseDetailsPage.validateBannerMessage('Success', 'Appellant costs decision issued');
-			caseDetailsPage.checkDecisionOutcome('Appellant costs decision: Issued');
-			caseDetailsPage.checkCorrectAnswerDisplays('Appellant costs decision', 'Issued');
+				//Verify case details updates
+				caseDetailsPage.validateBannerMessage('Success', 'Appellant costs decision issued');
+				caseDetailsPage.checkDecisionOutcome('Appellant costs decision: Issued');
+				caseDetailsPage.checkCorrectAnswerDisplays('Appellant costs decision', 'Issued');
 
-			const notifies = [
-				{
-					template: 'costs-decision-all-parties',
-					recipient: 'agent@test.com'
-				},
-				{
-					template: 'costs-decision-all-parties',
-					recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
-				}
-			];
-			cy.checkNotifySent(caseObj, notifies);
+				const notifies = [
+					{
+						template: 'costs-decision-all-parties',
+						recipient: 'agent@test.com'
+					},
+					{
+						template: 'costs-decision-all-parties',
+						recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+					}
+				];
+				cy.checkNotifySent(caseObj, notifies);
+			});
 		});
-	});
 
-	it('Issue LPA costs separately', () => {
-		cy.get('@caseObjAlias').then((caseObj) => {
-			//Issue decision without costs
-			happyPathHelper.viewCaseDetails(caseObj);
-			happyPathHelper.issueDecision('Allowed', 'both costs', false, false);
+		it('Issue LPA costs separately', () => {
+			cy.get('@caseObjAlias').then((caseObj) => {
+				//Issue decision without costs
+				happyPathHelper.viewCaseDetails(caseObj);
+				happyPathHelper.issueDecision('Allowed', 'both costs', false, false);
 
-			//Upload decision letter
-			caseDetailsPage.clickIssueLpaCostsDecision();
-			fileUploader.uploadFiles(pdf);
-			fileUploader.clickButtonByText('Continue');
-			caseDetailsPage.clickButtonByText('Issue LPA costs decision');
+				//Upload decision letter
+				caseDetailsPage.clickIssueLpaCostsDecision();
+				fileUploader.uploadFiles(pdf);
+				fileUploader.clickButtonByText('Continue');
+				caseDetailsPage.clickButtonByText('Issue LPA costs decision');
 
-			//Verify case details updates
-			caseDetailsPage.validateBannerMessage('Success', 'LPA costs decision issued');
-			caseDetailsPage.checkDecisionOutcome('LPA costs decision: Issued');
-			caseDetailsPage.checkCorrectAnswerDisplays('LPA costs decision', 'Issued');
+				//Verify case details updates
+				caseDetailsPage.validateBannerMessage('Success', 'LPA costs decision issued');
+				caseDetailsPage.checkDecisionOutcome('LPA costs decision: Issued');
+				caseDetailsPage.checkCorrectAnswerDisplays('LPA costs decision', 'Issued');
 
-			const notifies = [
-				{
-					template: 'costs-decision-all-parties',
-					recipient: 'agent@test.com'
-				},
-				{
-					template: 'costs-decision-all-parties',
-					recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
-				}
-			];
-			cy.checkNotifySent(caseObj, notifies);
+				const notifies = [
+					{
+						template: 'costs-decision-all-parties',
+						recipient: 'agent@test.com'
+					},
+					{
+						template: 'costs-decision-all-parties',
+						recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+					}
+				];
+				cy.checkNotifySent(caseObj, notifies);
+			});
 		});
-	});
-});
+	}
+);

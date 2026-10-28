@@ -5,10 +5,11 @@ import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
 import { horizonTestAppeals } from '../../support/horizonTestAppeals.js';
+import { tag } from '../../support/tag';
 
 const caseDetailsPage = new CaseDetailsPage();
 
-describe('unrelate appeals', () => {
+describe('unrelate appeals', { tags: [tag.has, tag.linkedAppeals, tag.newRegs] }, () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});

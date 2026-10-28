@@ -7,13 +7,14 @@ import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
+import { tag } from '../../support/tag';
 
 const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
 const caseHistoryPage = new CaseHistoryPage();
 
-describe('Progress S78 to decision', () => {
+describe('Progress S78 to decision', { tags: [tag.written, tag.e2e, tag.decision] }, () => {
 	const expectedSections = [
 		'Overview',
 		'Site',
@@ -35,7 +36,7 @@ describe('Progress S78 to decision', () => {
 		cy.deleteAppeals(appeal);
 	});
 
-	it(`Completes a S78 appeal to decision`, () => {
+	it(`Completes a S78 appeal to decision`, { tags: [tag.s78, tag.newRegs] }, () => {
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {
@@ -102,47 +103,51 @@ describe('Progress S78 to decision', () => {
 		});
 	});
 
-	it(`Completes a CAS Planning Appeal to decision`, () => {
-		cy.createCase({ caseType: 'ZP' }).then((caseObj) => {
-			appeal = caseObj;
-			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.assignCaseOfficer(caseObj);
-			caseDetailsPage.checkStatusOfCase('Validation', 0);
+	it(
+		`Completes a CAS Planning Appeal to decision`,
+		{ tags: [tag.casPlanning, tag.newRegs] },
+		() => {
+			cy.createCase({ caseType: 'ZP' }).then((caseObj) => {
+				appeal = caseObj;
+				cy.addLpaqSubmissionToCase(caseObj);
+				happyPathHelper.assignCaseOfficer(caseObj);
+				caseDetailsPage.checkStatusOfCase('Validation', 0);
 
-			caseDetailsPage.verifyAppealType('CAS planning');
+				caseDetailsPage.verifyAppealType('CAS planning');
 
-			happyPathHelper.reviewAppellantCase(caseObj);
-			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
+				happyPathHelper.reviewAppellantCase(caseObj);
+				caseDetailsPage.checkStatusOfCase('Ready to start', 0);
 
-			happyPathHelper.startCase(caseObj);
-			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+				happyPathHelper.startCase(caseObj);
+				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
-			// Display all expected case detail sections for written cases
-			caseDetailsPage.verifyCaseDetailsSection(expectedSections);
+				// Display all expected case detail sections for written cases
+				caseDetailsPage.verifyCaseDetailsSection(expectedSections);
 
-			happyPathHelper.reviewLpaq(caseObj);
+				happyPathHelper.reviewLpaq(caseObj);
 
-			caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
+				caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
 
-			happyPathHelper.setupSiteVisitFromBanner(caseObj);
-			cy.simulateSiteVisit(caseObj).then((caseObj) => {
-				cy.reload();
+				happyPathHelper.setupSiteVisitFromBanner(caseObj);
+				cy.simulateSiteVisit(caseObj).then((caseObj) => {
+					cy.reload();
+				});
+				caseDetailsPage.clickIssueDecision(caseObj);
+				caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Allowed'));
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.uploadSampleFile(caseDetailsPage.sampleFiles.pdf);
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.selectRadioButtonByValue('No');
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.selectRadioButtonByValue('No');
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.clickButtonByText('Issue Decision');
+				caseDetailsPage.validateBannerMessage('Success', 'Decision issued');
+				caseDetailsPage.checkStatusOfCase('Complete', 0);
+				caseHistoryPage.verifyCaseHistory('completedState', caseObj.reference);
+				caseDetailsPage.checkDecisionOutcome('Allowed');
+				caseDetailsPage.viewDecisionLetter('View decision');
 			});
-			caseDetailsPage.clickIssueDecision(caseObj);
-			caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Allowed'));
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.uploadSampleFile(caseDetailsPage.sampleFiles.pdf);
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.selectRadioButtonByValue('No');
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.selectRadioButtonByValue('No');
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.clickButtonByText('Issue Decision');
-			caseDetailsPage.validateBannerMessage('Success', 'Decision issued');
-			caseDetailsPage.checkStatusOfCase('Complete', 0);
-			caseHistoryPage.verifyCaseHistory('completedState', caseObj.reference);
-			caseDetailsPage.checkDecisionOutcome('Allowed');
-			caseDetailsPage.viewDecisionLetter('View decision');
-		});
-	});
+		}
+	);
 });

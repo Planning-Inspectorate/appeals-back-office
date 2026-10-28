@@ -13,6 +13,7 @@ import { EstimatedDaysSection } from '../../page_objects/estimatedDaysSection.js
 import { ProcedureTypePage } from '../../page_objects/procedureTypePage';
 import { CTA_TEXT, DEFAULT_OVERVIEW_DETAILS, PROCEDURE_TYPES } from '../../support/consts.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
+import { tag } from '../../support/tag';
 import { changeAppealProcedureTypeTimetableItems } from '../../support/timetables.js';
 import { formatDateAndTime, getDateAndTimeValues } from '../../support/utils/format';
 
@@ -48,91 +49,253 @@ const appealTypeVariants = [
 ];
 
 appealTypeVariants.forEach((appealVariant) => {
-	describe(`change appeal procedure types - ${appealVariant.name}`, () => {
-		let caseObj;
+	describe(
+		`change appeal procedure types - ${appealVariant.name}`,
+		{
+			tags: [tag.s78, tag.s20, tag.written, tag.hearing, tag.inquiry, tag.changeAppeal, tag.newRegs]
+		},
+		() => {
+			let caseObj;
 
-		const overviewDetails = {
-			...DEFAULT_OVERVIEW_DETAILS,
-			appealType: appealVariant.overviewAppealType
-		};
+			const overviewDetails = {
+				...DEFAULT_OVERVIEW_DETAILS,
+				appealType: appealVariant.overviewAppealType
+			};
 
-		const inquiryAddress = {
-			line1: 'e2e Inquiry Test Address',
-			line2: 'Inquiry Street',
-			town: 'Inquiry Town',
-			county: 'Somewhere',
-			postcode: 'BS20 1BS'
-		};
+			const inquiryAddress = {
+				line1: 'e2e Inquiry Test Address',
+				line2: 'Inquiry Street',
+				town: 'Inquiry Town',
+				county: 'Somewhere',
+				postcode: 'BS20 1BS'
+			};
 
-		const emptyAddress = {
-			line1: '',
-			line2: '',
-			town: '',
-			county: '',
-			postcode: ''
-		};
+			const emptyAddress = {
+				line1: '',
+				line2: '',
+				town: '',
+				county: '',
+				postcode: ''
+			};
 
-		const defaultEventDateTime = {
-			day: '',
-			month: '',
-			year: '',
-			hours: '10',
-			minutes: '0'
-		};
+			const defaultEventDateTime = {
+				day: '',
+				month: '',
+				year: '',
+				hours: '10',
+				minutes: '0'
+			};
 
-		beforeEach(() => {
-			setupTestCase();
-		});
+			beforeEach(() => {
+				setupTestCase();
+			});
 
-		let appeal;
+			let appeal;
 
-		afterEach(() => {
-			cy.deleteAppeals(appeal);
-		});
+			afterEach(() => {
+				cy.deleteAppeals(appeal);
+			});
 
-		it('should change appeal procedure type - hearing to inquiry', () => {
-			// caption that should be shown when changing appeal procedure type
-			const procedureTypeCaption = `Appeal ${caseObj.reference} - update appeal procedure`;
+			it('should change appeal procedure type - hearing to inquiry', () => {
+				// caption that should be shown when changing appeal procedure type
+				const procedureTypeCaption = `Appeal ${caseObj.reference} - update appeal procedure`;
 
-			happyPathHelper.startCaseWithProcedureType(caseObj, 'hearing');
-			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+				happyPathHelper.startCaseWithProcedureType(caseObj, 'hearing');
+				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
-			const writtenDetails = { ...overviewDetails, appealProcedure: 'Hearing' };
-			overviewSectionPage.verifyCaseOverviewDetails(writtenDetails, false);
+				const writtenDetails = { ...overviewDetails, appealProcedure: 'Hearing' };
+				overviewSectionPage.verifyCaseOverviewDetails(writtenDetails, false);
 
-			overviewSectionPage.clickRowChangeLink('case-procedure');
+				overviewSectionPage.clickRowChangeLink('case-procedure');
 
-			// verify procedure page header and preselected value
-			procedureTypePage.verifyHeader(procedureTypeCaption);
-			procedureTypePage.verifySelectedRadioButtonValue('Hearing');
-			procedureTypePage.selectProcedureType('inquiry');
+				// verify procedure page header and preselected value
+				procedureTypePage.verifyHeader(procedureTypeCaption);
+				procedureTypePage.verifySelectedRadioButtonValue('Hearing');
+				procedureTypePage.selectProcedureType('inquiry');
 
-			// enter inquiry date
-			cy.getBusinessActualDate(currentDate, 1).then((date) => {
-				// verify prepopulated values
-				dateTimeSection.verifyPrepopulatedEventValues(defaultEventDateTime);
-				dateTimeSection.enterEventDate(date);
-				dateTimeSection.clickButtonByText('Continue');
+				// enter inquiry date
+				cy.getBusinessActualDate(currentDate, 1).then((date) => {
+					// verify prepopulated values
+					dateTimeSection.verifyPrepopulatedEventValues(defaultEventDateTime);
+					dateTimeSection.enterEventDate(date);
+					dateTimeSection.clickButtonByText('Continue');
 
-				// verify estimated days is not prepopulated and enter estimated days
-				estimatedDaysSection.selectEstimatedDaysOption('Yes');
-				estimatedDaysSection.verifyPrepopulatedValue('', true);
-				estimatedDaysSection.enterEstimatedDays(6);
-				estimatedDaysSection.clickButtonByText('Continue');
+					// verify estimated days is not prepopulated and enter estimated days
+					estimatedDaysSection.selectEstimatedDaysOption('Yes');
+					estimatedDaysSection.verifyPrepopulatedValue('', true);
+					estimatedDaysSection.enterEstimatedDays(6);
+					estimatedDaysSection.clickButtonByText('Continue');
 
-				// verify address is not prepopulated and enter address
-				addressSection.selectAddressOption('Yes');
-				addressSection.clickButtonByText('Continue');
+					// verify address is not prepopulated and enter address
+					addressSection.selectAddressOption('Yes');
+					addressSection.clickButtonByText('Continue');
 
-				addressSection.verifyPrepopulatedValues(emptyAddress);
-				addressSection.enterAddress(inquiryAddress);
-				addressSection.clickButtonByText('Continue');
+					addressSection.verifyPrepopulatedValues(emptyAddress);
+					addressSection.enterAddress(inquiryAddress);
+					addressSection.clickButtonByText('Continue');
 
-				// verify previous date values are prepopulated for timetable
+					// verify previous date values are prepopulated for timetable
+					cy.loadAppealDetails(caseObj).then((appealDetails) => {
+						procedureTypePage.verifyHeader(procedureTypeCaption);
+						const appealTimetable = appealDetails?.appealTimetable;
+						cy.log('** appealTimetable - ', JSON.stringify(appealTimetable));
+						const lpaQuestionnaireDueDate = new Date(appealTimetable.lpaQuestionnaireDueDate);
+						const lpaStatementDueDate = new Date(appealTimetable.lpaStatementDueDate);
+						const ipCommentsDueDate = new Date(appealTimetable.ipCommentsDueDate);
+
+						dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+							'lpaQuestionnaireDueDate',
+							getDateAndTimeValues(lpaQuestionnaireDueDate)
+						);
+						dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+							'lpaStatementDueDate',
+							getDateAndTimeValues(lpaStatementDueDate)
+						);
+						dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+							'ipCommentsDueDate',
+							getDateAndTimeValues(ipCommentsDueDate)
+						);
+
+						// enter POE date, ensure is business day
+						cy.getBusinessActualDate(ipCommentsDueDate, 10).then((date) => {
+							const proofOfEvidenceDate = date;
+							dateTimeSection.enterDueDates(
+								changeAppealProcedureTypeTimetableItems.slice(2),
+								proofOfEvidenceDate,
+								0
+							);
+
+							// proceed to cya page and check answers
+							dateTimeSection.clickButtonByText('Continue');
+
+							cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Inquiry');
+							cyaSection.verifyCheckYourAnswers(
+								'LPA questionnaire due',
+								formatDateAndTime(lpaQuestionnaireDueDate).date
+							);
+							cyaSection.verifyCheckYourAnswers(
+								'Statements due',
+								formatDateAndTime(lpaStatementDueDate).date
+							);
+							cyaSection.verifyCheckYourAnswers(
+								'Statement of common ground due',
+								formatDateAndTime(ipCommentsDueDate).date
+							);
+							cyaSection.verifyCheckYourAnswers(
+								'Proof of evidence and witnesses due',
+								formatDateAndTime(proofOfEvidenceDate).date
+							);
+
+							caseDetailsPage.clickButtonByText('Update appeal procedure');
+							const inquiryDetails = { ...overviewDetails, appealProcedure: 'Inquiry' };
+							overviewSectionPage.verifyCaseOverviewDetails(inquiryDetails, false);
+							caseDetailsPage.clickViewCaseHistory();
+							caseHistoryPage.verifyCaseHistoryValue('Appeal procedure updated to inquiry');
+						});
+					});
+				});
+			});
+
+			it('should change appeal procedure type - inquiry to hearing', () => {
+				const procedureTypeCaption = `Appeal ${caseObj.reference} - update appeal procedure`;
+
+				happyPathHelper.startCaseWithProcedureType(caseObj, 'hearing');
+				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+
+				overviewSectionPage.clickRowChangeLink('case-procedure');
+				procedureTypePage.verifyHeader(procedureTypeCaption);
+				procedureTypePage.verifySelectedRadioButtonValue('Hearing');
+				procedureTypePage.selectProcedureType('inquiry');
+
+				cy.getBusinessActualDate(currentDate, 1).then((date) => {
+					dateTimeSection.verifyPrepopulatedEventValues(defaultEventDateTime);
+					dateTimeSection.enterEventDate(date);
+					dateTimeSection.clickButtonByText('Continue');
+
+					estimatedDaysSection.selectEstimatedDaysOption('Yes');
+					estimatedDaysSection.enterEstimatedDays(6);
+					estimatedDaysSection.clickButtonByText('Continue');
+
+					addressSection.selectAddressOption('No');
+					addressSection.clickButtonByText('Continue');
+				});
+
 				cy.loadAppealDetails(caseObj).then((appealDetails) => {
-					procedureTypePage.verifyHeader(procedureTypeCaption);
 					const appealTimetable = appealDetails?.appealTimetable;
-					cy.log('** appealTimetable - ', JSON.stringify(appealTimetable));
+					const ipCommentsDueDate = new Date(appealTimetable.ipCommentsDueDate);
+
+					cy.getBusinessActualDate(ipCommentsDueDate, 10).then((date) => {
+						dateTimeSection.enterDueDates(
+							changeAppealProcedureTypeTimetableItems.slice(2),
+							date,
+							0
+						);
+						dateTimeSection.clickButtonByText('Continue');
+						caseDetailsPage.clickButtonByText('Update appeal procedure');
+
+						const inquiryDetails = { ...overviewDetails, appealProcedure: 'Inquiry' };
+						overviewSectionPage.verifyCaseOverviewDetails(inquiryDetails, false);
+
+						overviewSectionPage.clickRowChangeLink('case-procedure');
+						procedureTypePage.verifyHeader(procedureTypeCaption);
+						procedureTypePage.verifySelectedRadioButtonValue('Inquiry');
+						procedureTypePage.selectProcedureType('hearing');
+						dateTimeQuestionPage.selectDateTimeOption('No');
+						dateTimeQuestionPage.clickButtonByText('Continue');
+
+						dateTimeSection.enterDueDates(
+							changeAppealProcedureTypeTimetableItems.slice(1, 2),
+							date,
+							0
+						);
+						dateTimeSection.clickButtonByText('Continue');
+
+						cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Hearing');
+						caseDetailsPage.clickButtonByText('Update appeal procedure');
+
+						const hearingDetails = { ...overviewDetails, appealProcedure: 'Hearing' };
+						overviewSectionPage.verifyCaseOverviewDetails(hearingDetails, false);
+						caseDetailsPage.clickViewCaseHistory();
+						caseHistoryPage.verifyCaseHistoryValue('Appeal procedure updated to hearing');
+					});
+				});
+			});
+
+			it('change appeal procedure type - should not allow change procedure after statements have been shared', () => {
+				happyPathHelper.startCaseWithProcedureType(caseObj, 'hearing');
+
+				// progress to statements shared status
+				happyPathHelper.reviewLPaStatement(caseObj, {
+					progressText: CTA_TEXT.share.shareCommentsAndStatements
+				});
+
+				// should not be able to see change procedure link
+				overviewSectionPage.verifyChangeLinkVisibility(
+					overviewSectionPage.overviewSectionSelectors.changeProcedureType,
+					false
+				);
+			});
+
+			it('should change appeal procedure type - written (in LPAQ state) to hearing', () => {
+				const procedureTypeCaption = `Appeal ${caseObj.reference} - update appeal procedure`;
+
+				happyPathHelper.startCaseWithProcedureType(caseObj, 'written');
+				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+
+				const writtenDetails = { ...overviewDetails, appealProcedure: PROCEDURE_TYPES.written };
+				overviewSectionPage.verifyCaseOverviewDetails(writtenDetails, false);
+
+				overviewSectionPage.clickRowChangeLink('case-procedure');
+
+				procedureTypePage.verifyHeader(procedureTypeCaption);
+				procedureTypePage.verifySelectedRadioButtonValue('Written');
+				procedureTypePage.selectProcedureType('hearing');
+
+				dateTimeQuestionPage.selectDateTimeOption('No');
+				dateTimeQuestionPage.clickButtonByText('Continue');
+
+				cy.loadAppealDetails(caseObj).then((appealDetails) => {
+					const appealTimetable = appealDetails?.appealTimetable;
 					const lpaQuestionnaireDueDate = new Date(appealTimetable.lpaQuestionnaireDueDate);
 					const lpaStatementDueDate = new Date(appealTimetable.lpaStatementDueDate);
 					const ipCommentsDueDate = new Date(appealTimetable.ipCommentsDueDate);
@@ -150,19 +313,137 @@ appealTypeVariants.forEach((appealVariant) => {
 						getDateAndTimeValues(ipCommentsDueDate)
 					);
 
-					// enter POE date, ensure is business day
-					cy.getBusinessActualDate(ipCommentsDueDate, 10).then((date) => {
-						const proofOfEvidenceDate = date;
+					cy.getBusinessActualDate(ipCommentsDueDate, 5).then((date) => {
 						dateTimeSection.enterDueDates(
-							changeAppealProcedureTypeTimetableItems.slice(2),
-							proofOfEvidenceDate,
+							changeAppealProcedureTypeTimetableItems.slice(1, 2),
+							date,
 							0
 						);
 
-						// proceed to cya page and check answers
+						dateTimeSection.clickButtonByText('Continue');
+						cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Hearing');
+						caseDetailsPage.clickButtonByText('Update appeal procedure');
+
+						const hearingDetails = { ...overviewDetails, appealProcedure: 'Hearing' };
+						overviewSectionPage.verifyCaseOverviewDetails(hearingDetails, false);
+						caseDetailsPage.clickViewCaseHistory();
+						caseHistoryPage.verifyCaseHistoryValue('Appeal procedure updated to hearing');
+					});
+				});
+			});
+
+			it('should change appeal procedure type - written (in LPAQ state) to inquiry', () => {
+				const procedureTypeCaption = `Appeal ${caseObj.reference} - update appeal procedure`;
+
+				happyPathHelper.startCaseWithProcedureType(caseObj, 'written');
+				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+
+				const writtenDetails = { ...overviewDetails, appealProcedure: PROCEDURE_TYPES.written };
+				overviewSectionPage.verifyCaseOverviewDetails(writtenDetails, false);
+
+				overviewSectionPage.clickRowChangeLink('case-procedure');
+				procedureTypePage.verifyHeader(procedureTypeCaption);
+				procedureTypePage.verifySelectedRadioButtonValue('Written');
+				procedureTypePage.selectProcedureType('inquiry');
+
+				cy.getBusinessActualDate(currentDate, 1).then((date) => {
+					dateTimeSection.verifyPrepopulatedEventValues(defaultEventDateTime);
+					dateTimeSection.enterEventDate(date);
+					dateTimeSection.clickButtonByText('Continue');
+
+					estimatedDaysSection.selectEstimatedDaysOption('Yes');
+					estimatedDaysSection.enterEstimatedDays(6);
+					estimatedDaysSection.clickButtonByText('Continue');
+
+					addressSection.selectAddressOption('No');
+					addressSection.clickButtonByText('Continue');
+				});
+
+				cy.loadAppealDetails(caseObj).then((appealDetails) => {
+					const appealTimetable = appealDetails?.appealTimetable;
+					const lpaQuestionnaireDueDate = new Date(appealTimetable.lpaQuestionnaireDueDate);
+					const lpaStatementDueDate = new Date(appealTimetable.lpaStatementDueDate);
+					const ipCommentsDueDate = new Date(appealTimetable.ipCommentsDueDate);
+
+					dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+						'lpaQuestionnaireDueDate',
+						getDateAndTimeValues(lpaQuestionnaireDueDate)
+					);
+					dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+						'lpaStatementDueDate',
+						getDateAndTimeValues(lpaStatementDueDate)
+					);
+					dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+						'ipCommentsDueDate',
+						getDateAndTimeValues(ipCommentsDueDate)
+					);
+
+					cy.getBusinessActualDate(ipCommentsDueDate, 10).then((date) => {
+						dateTimeSection.enterDueDates(
+							changeAppealProcedureTypeTimetableItems.slice(1),
+							date,
+							0
+						);
 						dateTimeSection.clickButtonByText('Continue');
 
 						cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Inquiry');
+						caseDetailsPage.clickButtonByText('Update appeal procedure');
+
+						const inquiryDetails = { ...overviewDetails, appealProcedure: 'Inquiry' };
+						overviewSectionPage.verifyCaseOverviewDetails(inquiryDetails, false);
+						caseDetailsPage.clickViewCaseHistory();
+						caseHistoryPage.verifyCaseHistoryValue('Appeal procedure updated to inquiry');
+					});
+				});
+			});
+
+			it('should change appeal procedure type - written (in LPAQ state) to written', () => {
+				// caption that should be shown when changing appeal procedure type
+				const procedureTypeCaption = `Appeal ${caseObj.reference} - update appeal procedure`;
+
+				happyPathHelper.startCaseWithProcedureType(caseObj, 'written');
+				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+
+				const writtenDetails = { ...overviewDetails, appealProcedure: PROCEDURE_TYPES.written };
+				overviewSectionPage.verifyCaseOverviewDetails(writtenDetails, false);
+
+				overviewSectionPage.clickRowChangeLink('case-procedure');
+
+				procedureTypePage.verifyHeader(procedureTypeCaption);
+				procedureTypePage.selectProcedureType('Written representations');
+
+				// verify previous values are prepopulated
+				cy.loadAppealDetails(caseObj).then((appealDetails) => {
+					procedureTypePage.verifyHeader(procedureTypeCaption);
+					const appealTimetable = appealDetails?.appealTimetable;
+					const lpaQuestionnaireDueDate = new Date(appealTimetable.lpaQuestionnaireDueDate);
+					const lpaStatementDueDate = new Date(appealTimetable.lpaStatementDueDate);
+					const ipCommentsDueDate = new Date(appealTimetable.ipCommentsDueDate);
+
+					dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+						'lpaQuestionnaireDueDate',
+						getDateAndTimeValues(lpaQuestionnaireDueDate)
+					);
+					dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+						'lpaStatementDueDate',
+						getDateAndTimeValues(lpaStatementDueDate)
+					);
+					dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+						'ipCommentsDueDate',
+						getDateAndTimeValues(ipCommentsDueDate)
+					);
+
+					// update final comments due date and check CYA page
+					cy.getBusinessActualDate(new Date(), 60).then((dueDate) => {
+						caseDetailsPage.changeTimetableDates(
+							changeAppealProcedureTypeTimetableItems.slice(0, 1),
+							dueDate,
+							0
+						); //update and continue
+						const updateFinalCommentsDueDate = new Date(dueDate);
+
+						cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Written representations');
+
 						cyaSection.verifyCheckYourAnswers(
 							'LPA questionnaire due',
 							formatDateAndTime(lpaQuestionnaireDueDate).date
@@ -172,388 +453,122 @@ appealTypeVariants.forEach((appealVariant) => {
 							formatDateAndTime(lpaStatementDueDate).date
 						);
 						cyaSection.verifyCheckYourAnswers(
-							'Statement of common ground due',
+							'Interested party comments due',
 							formatDateAndTime(ipCommentsDueDate).date
 						);
 						cyaSection.verifyCheckYourAnswers(
-							'Proof of evidence and witnesses due',
-							formatDateAndTime(proofOfEvidenceDate).date
+							'Final comments due',
+							formatDateAndTime(updateFinalCommentsDueDate).date
 						);
-
-						caseDetailsPage.clickButtonByText('Update appeal procedure');
-						const inquiryDetails = { ...overviewDetails, appealProcedure: 'Inquiry' };
-						overviewSectionPage.verifyCaseOverviewDetails(inquiryDetails, false);
-						caseDetailsPage.clickViewCaseHistory();
-						caseHistoryPage.verifyCaseHistoryValue('Appeal procedure updated to inquiry');
 					});
 				});
 			});
-		});
 
-		it('should change appeal procedure type - inquiry to hearing', () => {
-			const procedureTypeCaption = `Appeal ${caseObj.reference} - update appeal procedure`;
+			it('should change appeal procedure type - hearing (in LPAQ state) to hearing', () => {
+				// caption that should be shown when changing appeal procedure type
+				const procedureTypeCaption = `Appeal ${caseObj.reference} - update appeal procedure`;
 
-			happyPathHelper.startCaseWithProcedureType(caseObj, 'hearing');
-			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+				happyPathHelper.startCaseWithProcedureType(caseObj, 'hearing');
+				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
-			overviewSectionPage.clickRowChangeLink('case-procedure');
-			procedureTypePage.verifyHeader(procedureTypeCaption);
-			procedureTypePage.verifySelectedRadioButtonValue('Hearing');
-			procedureTypePage.selectProcedureType('inquiry');
+				// Add planning obligation
+				cy.updateAppealDetailsViaApi(caseObj, { planningObligation: true });
+				cy.getBusinessActualDate(currentDate, 1).then((date) => {
+					cy.updateTimeTableDetails(caseObj, { planningObligationDueDate: date });
+				});
 
-			cy.getBusinessActualDate(currentDate, 1).then((date) => {
-				dateTimeSection.verifyPrepopulatedEventValues(defaultEventDateTime);
-				dateTimeSection.enterEventDate(date);
-				dateTimeSection.clickButtonByText('Continue');
+				const hearingDetails = { ...overviewDetails, appealProcedure: 'Hearing' };
+				overviewSectionPage.verifyCaseOverviewDetails(hearingDetails, false);
 
-				estimatedDaysSection.selectEstimatedDaysOption('Yes');
-				estimatedDaysSection.enterEstimatedDays(6);
-				estimatedDaysSection.clickButtonByText('Continue');
+				overviewSectionPage.clickRowChangeLink('case-procedure');
 
-				addressSection.selectAddressOption('No');
-				addressSection.clickButtonByText('Continue');
-			});
+				procedureTypePage.verifyHeader(procedureTypeCaption);
+				procedureTypePage.selectProcedureType('hearing');
 
-			cy.loadAppealDetails(caseObj).then((appealDetails) => {
-				const appealTimetable = appealDetails?.appealTimetable;
-				const ipCommentsDueDate = new Date(appealTimetable.ipCommentsDueDate);
+				dateTimeQuestionPage.selectDateTimeOption('No');
+				dateTimeQuestionPage.clickButtonByText('Continue');
 
-				cy.getBusinessActualDate(ipCommentsDueDate, 10).then((date) => {
-					dateTimeSection.enterDueDates(changeAppealProcedureTypeTimetableItems.slice(2), date, 0);
-					dateTimeSection.clickButtonByText('Continue');
-					caseDetailsPage.clickButtonByText('Update appeal procedure');
-
-					const inquiryDetails = { ...overviewDetails, appealProcedure: 'Inquiry' };
-					overviewSectionPage.verifyCaseOverviewDetails(inquiryDetails, false);
-
-					overviewSectionPage.clickRowChangeLink('case-procedure');
+				// verify previous values are prepopulated
+				cy.loadAppealDetails(caseObj).then((appealDetails) => {
 					procedureTypePage.verifyHeader(procedureTypeCaption);
-					procedureTypePage.verifySelectedRadioButtonValue('Inquiry');
-					procedureTypePage.selectProcedureType('hearing');
-					dateTimeQuestionPage.selectDateTimeOption('No');
-					dateTimeQuestionPage.clickButtonByText('Continue');
-
-					dateTimeSection.enterDueDates(
-						changeAppealProcedureTypeTimetableItems.slice(1, 2),
-						date,
-						0
+					const appealTimetable = appealDetails?.appealTimetable;
+					const lpaQuestionnaireDueDate = new Date(appealTimetable.lpaQuestionnaireDueDate);
+					const lpaStatementDueDate = new Date(appealTimetable.lpaStatementDueDate);
+					const ipCommentsDueDate = new Date(appealTimetable.ipCommentsDueDate);
+					const statementOfCommonGroundDueDate = new Date(
+						appealTimetable.statementOfCommonGroundDueDate
 					);
-					dateTimeSection.clickButtonByText('Continue');
+					const planningObligationDueDate = new Date(appealTimetable.planningObligationDueDate);
 
-					cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Hearing');
-					caseDetailsPage.clickButtonByText('Update appeal procedure');
+					dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+						'lpaQuestionnaireDueDate',
+						getDateAndTimeValues(lpaQuestionnaireDueDate)
+					);
+					dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+						'lpaStatementDueDate',
+						getDateAndTimeValues(lpaStatementDueDate)
+					);
+					dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+						'ipCommentsDueDate',
+						getDateAndTimeValues(ipCommentsDueDate)
+					);
+					dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+						'planningObligationDueDate',
+						getDateAndTimeValues(planningObligationDueDate)
+					);
 
-					const hearingDetails = { ...overviewDetails, appealProcedure: 'Hearing' };
-					overviewSectionPage.verifyCaseOverviewDetails(hearingDetails, false);
-					caseDetailsPage.clickViewCaseHistory();
-					caseHistoryPage.verifyCaseHistoryValue('Appeal procedure updated to hearing');
+					// update statement of common ground due date and check CYA page
+					cy.getBusinessActualDate(new Date(), 10).then((dueDate) => {
+						dateTimeSection.enterDueDates(
+							changeAppealProcedureTypeTimetableItems.slice(1, 2),
+							dueDate,
+							0
+						);
+						dateTimeSection.clickButtonByText('Continue');
+						const updateStatementOfCommonGroundDueDate = new Date(dueDate);
+
+						cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Hearing');
+
+						cyaSection.verifyCheckYourAnswers(
+							'LPA questionnaire due',
+							formatDateAndTime(lpaQuestionnaireDueDate).date
+						);
+						cyaSection.verifyCheckYourAnswers(
+							'Statements due',
+							formatDateAndTime(lpaStatementDueDate).date
+						);
+						cyaSection.verifyCheckYourAnswers(
+							'Interested party comments due',
+							formatDateAndTime(ipCommentsDueDate).date
+						);
+						cyaSection.verifyCheckYourAnswers(
+							'Statement of common ground due',
+							formatDateAndTime(updateStatementOfCommonGroundDueDate).date
+						);
+						cyaSection.verifyCheckYourAnswers(
+							'Planning obligation due',
+							formatDateAndTime(planningObligationDueDate).date
+						);
+					});
 				});
 			});
-		});
 
-		it('change appeal procedure type - should not allow change procedure after statements have been shared', () => {
-			happyPathHelper.startCaseWithProcedureType(caseObj, 'hearing');
-
-			// progress to statements shared status
-			happyPathHelper.reviewLPaStatement(caseObj, {
-				progressText: CTA_TEXT.share.shareCommentsAndStatements
-			});
-
-			// should not be able to see change procedure link
-			overviewSectionPage.verifyChangeLinkVisibility(
-				overviewSectionPage.overviewSectionSelectors.changeProcedureType,
-				false
-			);
-		});
-
-		it('should change appeal procedure type - written (in LPAQ state) to hearing', () => {
-			const procedureTypeCaption = `Appeal ${caseObj.reference} - update appeal procedure`;
-
-			happyPathHelper.startCaseWithProcedureType(caseObj, 'written');
-			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
-
-			const writtenDetails = { ...overviewDetails, appealProcedure: PROCEDURE_TYPES.written };
-			overviewSectionPage.verifyCaseOverviewDetails(writtenDetails, false);
-
-			overviewSectionPage.clickRowChangeLink('case-procedure');
-
-			procedureTypePage.verifyHeader(procedureTypeCaption);
-			procedureTypePage.verifySelectedRadioButtonValue('Written');
-			procedureTypePage.selectProcedureType('hearing');
-
-			dateTimeQuestionPage.selectDateTimeOption('No');
-			dateTimeQuestionPage.clickButtonByText('Continue');
-
-			cy.loadAppealDetails(caseObj).then((appealDetails) => {
-				const appealTimetable = appealDetails?.appealTimetable;
-				const lpaQuestionnaireDueDate = new Date(appealTimetable.lpaQuestionnaireDueDate);
-				const lpaStatementDueDate = new Date(appealTimetable.lpaStatementDueDate);
-				const ipCommentsDueDate = new Date(appealTimetable.ipCommentsDueDate);
-
-				dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-					'lpaQuestionnaireDueDate',
-					getDateAndTimeValues(lpaQuestionnaireDueDate)
-				);
-				dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-					'lpaStatementDueDate',
-					getDateAndTimeValues(lpaStatementDueDate)
-				);
-				dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-					'ipCommentsDueDate',
-					getDateAndTimeValues(ipCommentsDueDate)
-				);
-
-				cy.getBusinessActualDate(ipCommentsDueDate, 5).then((date) => {
-					dateTimeSection.enterDueDates(
-						changeAppealProcedureTypeTimetableItems.slice(1, 2),
-						date,
-						0
+			const setupTestCase = () => {
+				cy.login(users.appeals.caseAdmin);
+				cy.createCase({ caseType: appealVariant.caseType }).then((ref) => {
+					caseObj = ref;
+					appeal = caseObj;
+					happyPathHelper.advanceTo(
+						caseObj,
+						'ASSIGN_CASE_OFFICER',
+						'READY_TO_START',
+						appealVariant.appealFlowType,
+						'WRITTEN'
 					);
-
-					dateTimeSection.clickButtonByText('Continue');
-					cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Hearing');
-					caseDetailsPage.clickButtonByText('Update appeal procedure');
-
-					const hearingDetails = { ...overviewDetails, appealProcedure: 'Hearing' };
-					overviewSectionPage.verifyCaseOverviewDetails(hearingDetails, false);
-					caseDetailsPage.clickViewCaseHistory();
-					caseHistoryPage.verifyCaseHistoryValue('Appeal procedure updated to hearing');
+					caseDetailsPage.checkStatusOfCase('Ready to start', 0);
+					cy.addLpaqSubmissionToCase(caseObj);
 				});
-			});
-		});
-
-		it('should change appeal procedure type - written (in LPAQ state) to inquiry', () => {
-			const procedureTypeCaption = `Appeal ${caseObj.reference} - update appeal procedure`;
-
-			happyPathHelper.startCaseWithProcedureType(caseObj, 'written');
-			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
-
-			const writtenDetails = { ...overviewDetails, appealProcedure: PROCEDURE_TYPES.written };
-			overviewSectionPage.verifyCaseOverviewDetails(writtenDetails, false);
-
-			overviewSectionPage.clickRowChangeLink('case-procedure');
-			procedureTypePage.verifyHeader(procedureTypeCaption);
-			procedureTypePage.verifySelectedRadioButtonValue('Written');
-			procedureTypePage.selectProcedureType('inquiry');
-
-			cy.getBusinessActualDate(currentDate, 1).then((date) => {
-				dateTimeSection.verifyPrepopulatedEventValues(defaultEventDateTime);
-				dateTimeSection.enterEventDate(date);
-				dateTimeSection.clickButtonByText('Continue');
-
-				estimatedDaysSection.selectEstimatedDaysOption('Yes');
-				estimatedDaysSection.enterEstimatedDays(6);
-				estimatedDaysSection.clickButtonByText('Continue');
-
-				addressSection.selectAddressOption('No');
-				addressSection.clickButtonByText('Continue');
-			});
-
-			cy.loadAppealDetails(caseObj).then((appealDetails) => {
-				const appealTimetable = appealDetails?.appealTimetable;
-				const lpaQuestionnaireDueDate = new Date(appealTimetable.lpaQuestionnaireDueDate);
-				const lpaStatementDueDate = new Date(appealTimetable.lpaStatementDueDate);
-				const ipCommentsDueDate = new Date(appealTimetable.ipCommentsDueDate);
-
-				dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-					'lpaQuestionnaireDueDate',
-					getDateAndTimeValues(lpaQuestionnaireDueDate)
-				);
-				dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-					'lpaStatementDueDate',
-					getDateAndTimeValues(lpaStatementDueDate)
-				);
-				dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-					'ipCommentsDueDate',
-					getDateAndTimeValues(ipCommentsDueDate)
-				);
-
-				cy.getBusinessActualDate(ipCommentsDueDate, 10).then((date) => {
-					dateTimeSection.enterDueDates(changeAppealProcedureTypeTimetableItems.slice(1), date, 0);
-					dateTimeSection.clickButtonByText('Continue');
-
-					cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Inquiry');
-					caseDetailsPage.clickButtonByText('Update appeal procedure');
-
-					const inquiryDetails = { ...overviewDetails, appealProcedure: 'Inquiry' };
-					overviewSectionPage.verifyCaseOverviewDetails(inquiryDetails, false);
-					caseDetailsPage.clickViewCaseHistory();
-					caseHistoryPage.verifyCaseHistoryValue('Appeal procedure updated to inquiry');
-				});
-			});
-		});
-
-		it('should change appeal procedure type - written (in LPAQ state) to written', () => {
-			// caption that should be shown when changing appeal procedure type
-			const procedureTypeCaption = `Appeal ${caseObj.reference} - update appeal procedure`;
-
-			happyPathHelper.startCaseWithProcedureType(caseObj, 'written');
-			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
-
-			const writtenDetails = { ...overviewDetails, appealProcedure: PROCEDURE_TYPES.written };
-			overviewSectionPage.verifyCaseOverviewDetails(writtenDetails, false);
-
-			overviewSectionPage.clickRowChangeLink('case-procedure');
-
-			procedureTypePage.verifyHeader(procedureTypeCaption);
-			procedureTypePage.selectProcedureType('Written representations');
-
-			// verify previous values are prepopulated
-			cy.loadAppealDetails(caseObj).then((appealDetails) => {
-				procedureTypePage.verifyHeader(procedureTypeCaption);
-				const appealTimetable = appealDetails?.appealTimetable;
-				const lpaQuestionnaireDueDate = new Date(appealTimetable.lpaQuestionnaireDueDate);
-				const lpaStatementDueDate = new Date(appealTimetable.lpaStatementDueDate);
-				const ipCommentsDueDate = new Date(appealTimetable.ipCommentsDueDate);
-
-				dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-					'lpaQuestionnaireDueDate',
-					getDateAndTimeValues(lpaQuestionnaireDueDate)
-				);
-				dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-					'lpaStatementDueDate',
-					getDateAndTimeValues(lpaStatementDueDate)
-				);
-				dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-					'ipCommentsDueDate',
-					getDateAndTimeValues(ipCommentsDueDate)
-				);
-
-				// update final comments due date and check CYA page
-				cy.getBusinessActualDate(new Date(), 60).then((dueDate) => {
-					caseDetailsPage.changeTimetableDates(
-						changeAppealProcedureTypeTimetableItems.slice(0, 1),
-						dueDate,
-						0
-					); //update and continue
-					const updateFinalCommentsDueDate = new Date(dueDate);
-
-					cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Written representations');
-
-					cyaSection.verifyCheckYourAnswers(
-						'LPA questionnaire due',
-						formatDateAndTime(lpaQuestionnaireDueDate).date
-					);
-					cyaSection.verifyCheckYourAnswers(
-						'Statements due',
-						formatDateAndTime(lpaStatementDueDate).date
-					);
-					cyaSection.verifyCheckYourAnswers(
-						'Interested party comments due',
-						formatDateAndTime(ipCommentsDueDate).date
-					);
-					cyaSection.verifyCheckYourAnswers(
-						'Final comments due',
-						formatDateAndTime(updateFinalCommentsDueDate).date
-					);
-				});
-			});
-		});
-
-		it('should change appeal procedure type - hearing (in LPAQ state) to hearing', () => {
-			// caption that should be shown when changing appeal procedure type
-			const procedureTypeCaption = `Appeal ${caseObj.reference} - update appeal procedure`;
-
-			happyPathHelper.startCaseWithProcedureType(caseObj, 'hearing');
-			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
-
-			// Add planning obligation
-			cy.updateAppealDetailsViaApi(caseObj, { planningObligation: true });
-			cy.getBusinessActualDate(currentDate, 1).then((date) => {
-				cy.updateTimeTableDetails(caseObj, { planningObligationDueDate: date });
-			});
-
-			const hearingDetails = { ...overviewDetails, appealProcedure: 'Hearing' };
-			overviewSectionPage.verifyCaseOverviewDetails(hearingDetails, false);
-
-			overviewSectionPage.clickRowChangeLink('case-procedure');
-
-			procedureTypePage.verifyHeader(procedureTypeCaption);
-			procedureTypePage.selectProcedureType('hearing');
-
-			dateTimeQuestionPage.selectDateTimeOption('No');
-			dateTimeQuestionPage.clickButtonByText('Continue');
-
-			// verify previous values are prepopulated
-			cy.loadAppealDetails(caseObj).then((appealDetails) => {
-				procedureTypePage.verifyHeader(procedureTypeCaption);
-				const appealTimetable = appealDetails?.appealTimetable;
-				const lpaQuestionnaireDueDate = new Date(appealTimetable.lpaQuestionnaireDueDate);
-				const lpaStatementDueDate = new Date(appealTimetable.lpaStatementDueDate);
-				const ipCommentsDueDate = new Date(appealTimetable.ipCommentsDueDate);
-				const statementOfCommonGroundDueDate = new Date(
-					appealTimetable.statementOfCommonGroundDueDate
-				);
-				const planningObligationDueDate = new Date(appealTimetable.planningObligationDueDate);
-
-				dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-					'lpaQuestionnaireDueDate',
-					getDateAndTimeValues(lpaQuestionnaireDueDate)
-				);
-				dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-					'lpaStatementDueDate',
-					getDateAndTimeValues(lpaStatementDueDate)
-				);
-				dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-					'ipCommentsDueDate',
-					getDateAndTimeValues(ipCommentsDueDate)
-				);
-				dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-					'planningObligationDueDate',
-					getDateAndTimeValues(planningObligationDueDate)
-				);
-
-				// update statement of common ground due date and check CYA page
-				cy.getBusinessActualDate(new Date(), 10).then((dueDate) => {
-					dateTimeSection.enterDueDates(
-						changeAppealProcedureTypeTimetableItems.slice(1, 2),
-						dueDate,
-						0
-					);
-					dateTimeSection.clickButtonByText('Continue');
-					const updateStatementOfCommonGroundDueDate = new Date(dueDate);
-
-					cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Hearing');
-
-					cyaSection.verifyCheckYourAnswers(
-						'LPA questionnaire due',
-						formatDateAndTime(lpaQuestionnaireDueDate).date
-					);
-					cyaSection.verifyCheckYourAnswers(
-						'Statements due',
-						formatDateAndTime(lpaStatementDueDate).date
-					);
-					cyaSection.verifyCheckYourAnswers(
-						'Interested party comments due',
-						formatDateAndTime(ipCommentsDueDate).date
-					);
-					cyaSection.verifyCheckYourAnswers(
-						'Statement of common ground due',
-						formatDateAndTime(updateStatementOfCommonGroundDueDate).date
-					);
-					cyaSection.verifyCheckYourAnswers(
-						'Planning obligation due',
-						formatDateAndTime(planningObligationDueDate).date
-					);
-				});
-			});
-		});
-
-		const setupTestCase = () => {
-			cy.login(users.appeals.caseAdmin);
-			cy.createCase({ caseType: appealVariant.caseType }).then((ref) => {
-				caseObj = ref;
-				appeal = caseObj;
-				happyPathHelper.advanceTo(
-					caseObj,
-					'ASSIGN_CASE_OFFICER',
-					'READY_TO_START',
-					appealVariant.appealFlowType,
-					'WRITTEN'
-				);
-				caseDetailsPage.checkStatusOfCase('Ready to start', 0);
-				cy.addLpaqSubmissionToCase(caseObj);
-			});
-		};
-	});
+			};
+		}
+	);
 });

@@ -5,11 +5,12 @@ import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { happyPathHelper } from '../../support/happyPathHelper';
+import { tag } from '../../support/tag';
 
 const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
 
-describe('Change site visit', () => {
+describe('Change site visit', { tags: [tag.has, tag.written, tag.siteVisit, tag.newRegs] }, () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});

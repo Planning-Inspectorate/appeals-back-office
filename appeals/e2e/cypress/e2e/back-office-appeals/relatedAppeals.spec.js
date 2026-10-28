@@ -10,6 +10,7 @@ import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
 import { horizonTestAppeals } from '../../support/horizonTestAppeals.js';
+import { tag } from '../../support/tag';
 
 const { casedata } = appealsApiRequests.lpaqSubmission;
 
@@ -19,7 +20,7 @@ const appellantCasePage = new AppellantCasePage();
 const overviewSectionPage = new OverviewSectionPage();
 const lpaqPage = new LpaqPage();
 
-describe('related appeals', () => {
+describe('related appeals', { tags: [tag.has, tag.linkedAppeals, tag.newRegs] }, () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
