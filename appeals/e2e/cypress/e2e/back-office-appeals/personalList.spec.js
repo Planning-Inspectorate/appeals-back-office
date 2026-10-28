@@ -4,6 +4,7 @@
 import { users } from '../../fixtures/users';
 import { PersonalListPage } from '../../page_objects/caseDetails/personalListPage';
 import { happyPathHelper } from '../../support/happyPathHelper';
+import { tag } from '../../support/tag';
 import { urlPaths } from '../../support/urlPaths';
 
 let caseObj;
@@ -41,11 +42,15 @@ afterEach(() => {
 	cy.deleteAppeals(appeal);
 });
 
-it.skip('Display Review CTA for appellant statement on personal list page', () => {
-	cy.addLpaqSubmissionToCase(caseObj);
-	cy.reviewLpaqSubmission(caseObj);
-	cy.addAppellantStatementToCase(caseObj);
+it.skip(
+	'Display Review CTA for appellant statement on personal list page',
+	{ tags: [tag.personalList, tag.s78, tag.representations, tag.newRegs] },
+	() => {
+		cy.addLpaqSubmissionToCase(caseObj);
+		cy.reviewLpaqSubmission(caseObj);
+		cy.addAppellantStatementToCase(caseObj);
 
-	cy.visit(urlPaths.personalListFilteredStatement);
-	personalListPage.verifyActionRequiredLink(caseObj.reference, 'Review appellant statement');
-});
+		cy.visit(urlPaths.personalListFilteredStatement);
+		personalListPage.verifyActionRequiredLink(caseObj.reference, 'Review appellant statement');
+	}
+);

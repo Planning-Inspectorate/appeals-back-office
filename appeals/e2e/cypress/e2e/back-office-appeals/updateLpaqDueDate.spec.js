@@ -7,12 +7,13 @@ import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { happyPathHelper } from '../../support/happyPathHelper';
+import { tag } from '../../support/tag';
 
 const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
 
-describe('Update LPAQ Due date', () => {
+describe('Update LPAQ Due date', { tags: [tag.lpaq, tag.timetable] }, () => {
 	const lpaQuestionnaire = 'lpa-questionnaire-due-date';
 
 	beforeEach(() => {
@@ -25,7 +26,7 @@ describe('Update LPAQ Due date', () => {
 		cy.deleteAppeals(appeal);
 	});
 
-	it('change lpaq due date from timetable', () => {
+	it('change lpaq due date from timetable', { tags: [tag.has, tag.newRegs] }, () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			updateLpaqDueDate(caseObj);
@@ -34,26 +35,34 @@ describe('Update LPAQ Due date', () => {
 		});
 	});
 
-	it('change S78 lpaq due date from timetable', () => {
+	it('change S78 lpaq due date from timetable', { tags: [tag.s78, tag.newRegs] }, () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;
 			updateLpaqDueDate(caseObj);
 		});
 	});
 
-	it('change cas adverts lpaq due date from timetable', () => {
-		cy.createCase({ ...appealsApiRequests.casAdvertsSubmission.casedata }).then((caseObj) => {
-			appeal = caseObj;
-			updateLpaqDueDate(caseObj);
-		});
-	});
+	it(
+		'change cas adverts lpaq due date from timetable',
+		{ tags: [tag.casAdverts, tag.newRegs] },
+		() => {
+			cy.createCase({ ...appealsApiRequests.casAdvertsSubmission.casedata }).then((caseObj) => {
+				appeal = caseObj;
+				updateLpaqDueDate(caseObj);
+			});
+		}
+	);
 
-	it('change cas planning lpaq due date from timetable', () => {
-		cy.createCase({ caseType: 'ZP' }).then((caseObj) => {
-			appeal = caseObj;
-			updateLpaqDueDate(caseObj);
-		});
-	});
+	it(
+		'change cas planning lpaq due date from timetable',
+		{ tags: [tag.casPlanning, tag.newRegs] },
+		() => {
+			cy.createCase({ caseType: 'ZP' }).then((caseObj) => {
+				appeal = caseObj;
+				updateLpaqDueDate(caseObj);
+			});
+		}
+	);
 
 	const updateLpaqDueDate = (caseObj) => {
 		happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'S78');

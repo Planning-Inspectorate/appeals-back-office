@@ -9,7 +9,7 @@ import { urlPaths } from '../../support/urlPaths';
 
 const listCasesPage = new ListCasesPage();
 
-describe('All cases search', () => {
+describe('All cases search', { tags: [tag.search] }, () => {
 	let caseObj;
 	const fieldId = 'searchTerm';
 	const postcode = 'XX12 3XX';
@@ -61,7 +61,7 @@ describe('All cases search', () => {
 		verify(errorMessage);
 	});
 
-	it.skip('check Part 1 filter visible', () => {
+	it.skip('check Part 1 filter visible', { tags: [tag.s78, tag.expedited, tag.newRegs] }, () => {
 		cy.createCase({ caseType: 'W', applicationDate: '2026-04-01T00:00:00.000Z' }).then(
 			(caseObj) => {
 				appeal = caseObj;
@@ -82,16 +82,20 @@ describe('All cases search', () => {
 		);
 	});
 
-	it.skip('should not show case under Part 1 filter if case type is Y', () => {
-		cy.createCase({ caseType: 'Y', applicationDate: '2026-04-01T00:00:00.000Z' }).then(
-			(caseObj) => {
-				appeal = caseObj;
-				cy.visit(urlPaths.appealsList);
-				listCasesPage.filterByAppealProcedure('Part 1');
-				cy.contains(caseObj.reference).should('not.exist');
-			}
-		);
-	});
+	it.skip(
+		'should not show case under Part 1 filter if case type is Y',
+		{ tags: [tag.s20, tag.expedited, tag.newRegs] },
+		() => {
+			cy.createCase({ caseType: 'Y', applicationDate: '2026-04-01T00:00:00.000Z' }).then(
+				(caseObj) => {
+					appeal = caseObj;
+					cy.visit(urlPaths.appealsList);
+					listCasesPage.filterByAppealProcedure('Part 1');
+					cy.contains(caseObj.reference).should('not.exist');
+				}
+			);
+		}
+	);
 
 	const setupTestCase = () => {
 		cy.createCase({ siteAddressPostcode: postcode }).then((ref) => {

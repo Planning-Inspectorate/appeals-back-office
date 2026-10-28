@@ -6,6 +6,7 @@ import { OverviewSectionPage } from '../../page_objects/caseDetails/overviewSect
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { DEFAULT_OVERVIEW_DETAILS, PROCEDURE_TYPES } from '../../support/consts.js';
 import { happyPathHelper } from '../../support/happyPathHelper';
+import { tag } from '../../support/tag';
 
 const caseDetailsPage = new CaseDetailsPage();
 const netResidencePage = new NetResidencePage();
@@ -13,7 +14,7 @@ const overviewSectionPage = new OverviewSectionPage();
 
 let caseObj;
 
-describe('Capture Net Residences', () => {
+describe('Capture Net Residences', { tags: [tag.s78, tag.caseDetails, tag.newRegs] }, () => {
 	beforeEach(() => {
 		setupTestCase();
 	});

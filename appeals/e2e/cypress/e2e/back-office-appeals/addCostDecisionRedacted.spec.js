@@ -7,6 +7,7 @@ import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { CTA_TEXT } from '../../support/consts.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
+import { tag } from '../../support/tag';
 
 const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();
@@ -22,78 +23,82 @@ afterEach(() => {
 	cy.deleteAppeals(appeal);
 });
 
-describe('add cost decision and redact', () => {
-	let sampleFiles = caseDetailsPage.sampleFiles;
+describe(
+	'add cost decision and redact',
+	{ tags: [tag.has, tag.costs, tag.decision, tag.newRegs] },
+	() => {
+		let sampleFiles = caseDetailsPage.sampleFiles;
 
-	it('add costs decsion and redact', () => {
-		cy.createCase().then((caseObj) => {
-			appeal = caseObj;
-			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'HAS');
-			caseDetailsPage.clickIssueAppellantCostsDecision();
-			caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.clickButtonByText('Issue appellant costs decision');
-			caseDetailsPage.validateSuccessPanelBody('Appellant costs decision issued');
+		it('add costs decsion and redact', () => {
+			cy.createCase().then((caseObj) => {
+				appeal = caseObj;
+				happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'HAS');
+				caseDetailsPage.clickIssueAppellantCostsDecision();
+				caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.clickButtonByText('Issue appellant costs decision');
+				caseDetailsPage.validateSuccessPanelBody('Appellant costs decision issued');
+			});
 		});
-	});
 
-	it('change the redaction status of a cost decsion', () => {
-		cy.createCase().then((caseObj) => {
-			appeal = caseObj;
-			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
-			caseDetailsPage.clickAddAppellantApplication();
-			caseDetailsPage.uploadSampleFile(sampleFiles.document);
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.selectRadioButtonByValue('Redacted');
-			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.clickManageAppellantCostApplication();
+		it('change the redaction status of a cost decsion', () => {
+			cy.createCase().then((caseObj) => {
+				appeal = caseObj;
+				happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
+				caseDetailsPage.clickAddAppellantApplication();
+				caseDetailsPage.uploadSampleFile(sampleFiles.document);
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.selectRadioButtonByValue('Redacted');
+				caseDetailsPage.clickButtonByText('Confirm');
+				caseDetailsPage.clickButtonByText('Confirm');
+				caseDetailsPage.clickManageAppellantCostApplication();
 
-			// Simulate the completion of the documents scan
-			cy.simulateDocumentsScanComplete(caseObj);
+				// Simulate the completion of the documents scan
+				cy.simulateDocumentsScanComplete(caseObj);
 
-			caseDetailsPage.clickLinkByText(CTA_TEXT.documents.manageShare);
-			caseDetailsPage.clickChangeRedactionStatus();
-			caseDetailsPage.selectRadioButtonByValue('Unredacted');
-			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateBannerMessage('Success', 'Document details updated');
-			caseDetailsPage.checkRedactionStatus('Unredacted');
+				caseDetailsPage.clickLinkByText(CTA_TEXT.documents.manageShare);
+				caseDetailsPage.clickChangeRedactionStatus();
+				caseDetailsPage.selectRadioButtonByValue('Unredacted');
+				caseDetailsPage.clickButtonByText('Confirm');
+				caseDetailsPage.validateBannerMessage('Success', 'Document details updated');
+				caseDetailsPage.checkRedactionStatus('Unredacted');
+			});
 		});
-	});
 
-	it('Upload new version and change filename', () => {
-		cy.createCase().then((caseObj) => {
-			appeal = caseObj;
-			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
-			caseDetailsPage.clickAddAppellantApplication();
-			caseDetailsPage.uploadSampleFile(sampleFiles.document);
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.selectRadioButtonByValue('Redacted');
-			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.clickManageAppellantCostApplication();
+		it('Upload new version and change filename', () => {
+			cy.createCase().then((caseObj) => {
+				appeal = caseObj;
+				happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
+				caseDetailsPage.clickAddAppellantApplication();
+				caseDetailsPage.uploadSampleFile(sampleFiles.document);
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.selectRadioButtonByValue('Redacted');
+				caseDetailsPage.clickButtonByText('Confirm');
+				caseDetailsPage.clickButtonByText('Confirm');
+				caseDetailsPage.clickManageAppellantCostApplication();
 
-			// Simulate the completion of the documents scan
-			cy.simulateDocumentsScanComplete(caseObj);
+				// Simulate the completion of the documents scan
+				cy.simulateDocumentsScanComplete(caseObj);
 
-			caseDetailsPage.clickLinkByText(CTA_TEXT.documents.manageShare);
-			caseDetailsPage.clickButtonByText('Upload a new version');
-			caseDetailsPage.uploadSampleFile(sampleFiles.document2);
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.selectRadioButtonByValue('Unredacted');
-			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.clickManageAppellantCostApplication();
+				caseDetailsPage.clickLinkByText(CTA_TEXT.documents.manageShare);
+				caseDetailsPage.clickButtonByText('Upload a new version');
+				caseDetailsPage.uploadSampleFile(sampleFiles.document2);
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.selectRadioButtonByValue('Unredacted');
+				caseDetailsPage.clickButtonByText('Confirm');
+				caseDetailsPage.clickButtonByText('Confirm');
+				caseDetailsPage.clickManageAppellantCostApplication();
 
-			// Simulate the completion of the documents scan
-			cy.simulateDocumentsScanComplete(caseObj);
+				// Simulate the completion of the documents scan
+				cy.simulateDocumentsScanComplete(caseObj);
 
-			caseDetailsPage.clickLinkByText(CTA_TEXT.documents.manageShare);
-			caseDetailsPage.checkDocVersionNumber('2');
-			caseDetailsPage.clickChangeFileName();
-			caseDetailsPage.updateFileName('sample-file');
-			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.checkFileName('sample-file.doc');
+				caseDetailsPage.clickLinkByText(CTA_TEXT.documents.manageShare);
+				caseDetailsPage.checkDocVersionNumber('2');
+				caseDetailsPage.clickChangeFileName();
+				caseDetailsPage.updateFileName('sample-file');
+				caseDetailsPage.clickButtonByText('Confirm');
+				caseDetailsPage.checkFileName('sample-file.doc');
+			});
 		});
-	});
-});
+	}
+);

@@ -40,7 +40,7 @@ afterEach(() => {
 	cy.deleteAppeals(cases);
 });
 
-describe('Link appeals', () => {
+describe('Link appeals', { tags: [tag.s78, tag.written, tag.linkedAppeals, tag.newRegs] }, () => {
 	it('Link an unlinked appeal to an unlinked appeal (from lead)', { tags: tag.smoke }, () => {
 		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
 			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
@@ -137,70 +137,111 @@ describe('Link appeals', () => {
 	});
 });
 
-describe('Hidden elements', () => {
-	it('Start CTA on child appeals are hidden when at "Ready to start" stage', () => {
-		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
-			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
-				cases = [leadCaseObj, childCaseObj];
-
-				cy.assignCaseOfficerViaApi(leadCaseObj);
-				happyPathHelper.viewCaseDetails(leadCaseObj);
-
-				//link appeal
-				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
-				happyPathHelper.reviewAppellantCase(leadCaseObj);
-				caseDetailsPage.verifyActionExists('Start date', false);
-
-				//child appeal
-				happyPathHelper.reviewAppellantCase(childCaseObj);
-				caseDetailsPage.checkStatusOfCase('Ready to start', 0);
-				caseDetailsPage.checkStatusOfCase('Child', 1);
-				caseDetailsPage.verifyActionExists('Start date', false);
-
-				//check lead appeal
-				caseDetailsPage.clickLinkedAppeal(leadCaseObj);
-				caseDetailsPage.verifyActionExists('Start date', true);
-			});
-		});
-	});
-
-	it.skip('Change CTA on child appeals are hidden on timetable section', () => {});
-
-	it('Cancel CTA is hidden on linked appeals', { retries: { runMode: 2, openMode: 0 } }, () => {
-		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
-			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
-				cases = [leadCaseObj, childCaseObj];
-
-				//child appeal
-				cy.assignCaseOfficerViaApi(childCaseObj);
-				happyPathHelper.viewCaseDetails(childCaseObj);
-				happyPathHelper.reviewAppellantCase(childCaseObj);
-				caseDetailsPage.verifyLinkExists('Cancel appeal', true);
-
-				//lead appeal
-				cy.assignCaseOfficerViaApi(leadCaseObj);
-				happyPathHelper.viewCaseDetails(leadCaseObj);
-				caseDetailsPage.verifyLinkExists('Cancel appeal', true);
-				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
-				happyPathHelper.reviewAppellantCase(leadCaseObj);
-				happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written', true);
-				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
-				caseDetailsPage.verifyLinkExists('Cancel appeal', false);
-
-				//child appeal
-				happyPathHelper.viewCaseDetails(childCaseObj);
-				caseDetailsPage.verifyLinkExists('Cancel appeal', false);
-			});
-		});
-	});
-
-	it(
-		'Change CTA is hidden on appeal procedure row on linked appeals',
-		{ retries: { runMode: 2, openMode: 0 } },
-		() => {
+describe(
+	'Hidden elements',
+	{ tags: [tag.s78, tag.written, tag.linkedAppeals, tag.newRegs] },
+	() => {
+		it('Start CTA on child appeals are hidden when at "Ready to start" stage', () => {
 			cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
 				cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
 					cases = [leadCaseObj, childCaseObj];
+
+					cy.assignCaseOfficerViaApi(leadCaseObj);
+					happyPathHelper.viewCaseDetails(leadCaseObj);
+
+					//link appeal
+					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
+					happyPathHelper.reviewAppellantCase(leadCaseObj);
+					caseDetailsPage.verifyActionExists('Start date', false);
+
+					//child appeal
+					happyPathHelper.reviewAppellantCase(childCaseObj);
+					caseDetailsPage.checkStatusOfCase('Ready to start', 0);
+					caseDetailsPage.checkStatusOfCase('Child', 1);
+					caseDetailsPage.verifyActionExists('Start date', false);
+
+					//check lead appeal
+					caseDetailsPage.clickLinkedAppeal(leadCaseObj);
+					caseDetailsPage.verifyActionExists('Start date', true);
+				});
+			});
+		});
+
+		it.skip('Change CTA on child appeals are hidden on timetable section', () => {});
+
+		it('Cancel CTA is hidden on linked appeals', { retries: { runMode: 2, openMode: 0 } }, () => {
+			cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
+				cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
+					cases = [leadCaseObj, childCaseObj];
+
+					//child appeal
+					cy.assignCaseOfficerViaApi(childCaseObj);
+					happyPathHelper.viewCaseDetails(childCaseObj);
+					happyPathHelper.reviewAppellantCase(childCaseObj);
+					caseDetailsPage.verifyLinkExists('Cancel appeal', true);
+
+					//lead appeal
+					cy.assignCaseOfficerViaApi(leadCaseObj);
+					happyPathHelper.viewCaseDetails(leadCaseObj);
+					caseDetailsPage.verifyLinkExists('Cancel appeal', true);
+					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
+					happyPathHelper.reviewAppellantCase(leadCaseObj);
+					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written', true);
+					caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+					caseDetailsPage.verifyLinkExists('Cancel appeal', false);
+
+					//child appeal
+					happyPathHelper.viewCaseDetails(childCaseObj);
+					caseDetailsPage.verifyLinkExists('Cancel appeal', false);
+				});
+			});
+		});
+
+		it(
+			'Change CTA is hidden on appeal procedure row on linked appeals',
+			{ retries: { runMode: 2, openMode: 0 } },
+			() => {
+				cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
+					cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
+						cases = [leadCaseObj, childCaseObj];
+
+						//child appeal
+						cy.assignCaseOfficerViaApi(childCaseObj);
+						happyPathHelper.viewCaseDetails(childCaseObj);
+						happyPathHelper.reviewAppellantCase(childCaseObj);
+
+						//lead appeal
+						cy.assignCaseOfficerViaApi(leadCaseObj);
+						happyPathHelper.viewCaseDetails(leadCaseObj);
+						happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
+						happyPathHelper.reviewAppellantCase(leadCaseObj);
+						happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written', true);
+						caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+						caseDetailsPage.verifyActionExists('Appeal procedure', false);
+
+						//child appeal
+						happyPathHelper.viewCaseDetails(childCaseObj);
+						caseDetailsPage.verifyActionExists('Appeal procedure', false);
+					});
+				});
+			}
+		);
+	}
+);
+
+// Skip Net residencies for now
+describe.skip(
+	'Net residences',
+	{ tags: [tag.s78, tag.written, tag.linkedAppeals, tag.caseDetails, tag.newRegs] },
+	() => {
+		it('Net residence banner is only displayed on the lead appeal', () => {
+			cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
+				cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
+					cases = [leadCaseObj, childCaseObj];
+
+					cases.forEach((appeal) => {
+						cy.addLpaqSubmissionToCase(appeal);
+					});
 
 					//child appeal
 					cy.assignCaseOfficerViaApi(childCaseObj);
@@ -210,148 +251,158 @@ describe('Hidden elements', () => {
 					//lead appeal
 					cy.assignCaseOfficerViaApi(leadCaseObj);
 					happyPathHelper.viewCaseDetails(leadCaseObj);
-					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
 					happyPathHelper.reviewAppellantCase(leadCaseObj);
-					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written', true);
-					caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
-					caseDetailsPage.verifyActionExists('Appeal procedure', false);
+					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
+					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
 
 					//child appeal
 					happyPathHelper.viewCaseDetails(childCaseObj);
-					caseDetailsPage.verifyActionExists('Appeal procedure', false);
+					caseDetailsPage.validateBannerMessage(
+						'Important',
+						'Add number of residential units',
+						false
+					);
+
+					//lead appeal
+					happyPathHelper.viewCaseDetails(leadCaseObj);
+					caseDetailsPage.validateBannerMessage('Important', 'Add number of residential units');
 				});
-			});
-		}
-	);
-});
-
-// Skip Net residencies for now
-describe.skip('Net residences', () => {
-	it('Net residence banner is only displayed on the lead appeal', () => {
-		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
-			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
-				cases = [leadCaseObj, childCaseObj];
-
-				cases.forEach((appeal) => {
-					cy.addLpaqSubmissionToCase(appeal);
-				});
-
-				//child appeal
-				cy.assignCaseOfficerViaApi(childCaseObj);
-				happyPathHelper.viewCaseDetails(childCaseObj);
-				happyPathHelper.reviewAppellantCase(childCaseObj);
-
-				//lead appeal
-				cy.assignCaseOfficerViaApi(leadCaseObj);
-				happyPathHelper.viewCaseDetails(leadCaseObj);
-				happyPathHelper.reviewAppellantCase(leadCaseObj);
-				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
-				happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
-
-				//child appeal
-				happyPathHelper.viewCaseDetails(childCaseObj);
-				caseDetailsPage.validateBannerMessage(
-					'Important',
-					'Add number of residential units',
-					false
-				);
-
-				//lead appeal
-				happyPathHelper.viewCaseDetails(leadCaseObj);
-				caseDetailsPage.validateBannerMessage('Important', 'Add number of residential units');
 			});
 		});
-	});
 
-	it('Net residence rows are not visible on the child appeal', () => {
-		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
-			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
-				cases = [leadCaseObj, childCaseObj];
+		it('Net residence rows are not visible on the child appeal', () => {
+			cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
+				cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
+					cases = [leadCaseObj, childCaseObj];
 
-				cases.forEach((appeal) => {
-					cy.addLpaqSubmissionToCase(appeal);
+					cases.forEach((appeal) => {
+						cy.addLpaqSubmissionToCase(appeal);
+					});
+
+					//child appeal
+					cy.assignCaseOfficerViaApi(childCaseObj);
+					happyPathHelper.viewCaseDetails(childCaseObj);
+					happyPathHelper.reviewAppellantCase(childCaseObj);
+
+					//lead appeal
+					cy.assignCaseOfficerViaApi(leadCaseObj);
+					happyPathHelper.viewCaseDetails(leadCaseObj);
+					happyPathHelper.reviewAppellantCase(leadCaseObj);
+					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
+					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
+					happyPathHelper.reviewS78Lpaq(leadCaseObj);
+
+					//child appeal
+					happyPathHelper.viewCaseDetails(childCaseObj);
+					happyPathHelper.reviewS78Lpaq(childCaseObj);
+
+					//lead appeal
+					happyPathHelper.viewCaseDetails(leadCaseObj);
+					happyPathHelper.addNetResidences('Net gain', '4');
+					(caseDetailsPage.validateBannerMessage('Success', 'Number of residential units added'),
+						caseDetailsPage.verifyRowValue('Net gain', '4'));
+
+					//child appeal
+					happyPathHelper.viewCaseDetails(childCaseObj);
+					caseDetailsPage.validateBannerExists(false);
+					caseDetailsPage.verifyRowExists('Net gain', false);
 				});
-
-				//child appeal
-				cy.assignCaseOfficerViaApi(childCaseObj);
-				happyPathHelper.viewCaseDetails(childCaseObj);
-				happyPathHelper.reviewAppellantCase(childCaseObj);
-
-				//lead appeal
-				cy.assignCaseOfficerViaApi(leadCaseObj);
-				happyPathHelper.viewCaseDetails(leadCaseObj);
-				happyPathHelper.reviewAppellantCase(leadCaseObj);
-				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
-				happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
-				happyPathHelper.reviewS78Lpaq(leadCaseObj);
-
-				//child appeal
-				happyPathHelper.viewCaseDetails(childCaseObj);
-				happyPathHelper.reviewS78Lpaq(childCaseObj);
-
-				//lead appeal
-				happyPathHelper.viewCaseDetails(leadCaseObj);
-				happyPathHelper.addNetResidences('Net gain', '4');
-				(caseDetailsPage.validateBannerMessage('Success', 'Number of residential units added'),
-					caseDetailsPage.verifyRowValue('Net gain', '4'));
-
-				//child appeal
-				happyPathHelper.viewCaseDetails(childCaseObj);
-				caseDetailsPage.validateBannerExists(false);
-				caseDetailsPage.verifyRowExists('Net gain', false);
 			});
 		});
-	});
 
-	//A2-4950
-	//more detailed updates required
-	it('Net residence case history entries only appear on the lead appeal', () => {
-		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
-			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
-				cases = [leadCaseObj, childCaseObj];
+		//A2-4950
+		//more detailed updates required
+		it('Net residence case history entries only appear on the lead appeal', () => {
+			cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
+				cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
+					cases = [leadCaseObj, childCaseObj];
 
-				cases.forEach((appeal) => {
-					cy.addLpaqSubmissionToCase(appeal);
+					cases.forEach((appeal) => {
+						cy.addLpaqSubmissionToCase(appeal);
+					});
+
+					//child appeal
+					cy.assignCaseOfficerViaApi(childCaseObj);
+					happyPathHelper.viewCaseDetails(childCaseObj);
+					happyPathHelper.reviewAppellantCase(childCaseObj);
+
+					//lead appeal
+					cy.assignCaseOfficerViaApi(leadCaseObj);
+					happyPathHelper.viewCaseDetails(leadCaseObj);
+					happyPathHelper.reviewAppellantCase(leadCaseObj);
+					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
+					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
+					happyPathHelper.reviewS78Lpaq(leadCaseObj);
+
+					//child appeal
+					happyPathHelper.viewCaseDetails(childCaseObj);
+					happyPathHelper.reviewS78Lpaq(childCaseObj);
+
+					//lead appeal
+					happyPathHelper.viewCaseDetails(leadCaseObj);
+					happyPathHelper.addNetResidences('Net gain', '4');
+					(caseDetailsPage.validateBannerMessage('Success', 'Number of residential units added'),
+						caseDetailsPage.clickViewCaseHistory());
+					caseHistoryPage.verifyCaseHistoryValue('Appellant case updated');
+
+					//child appeal
+					happyPathHelper.viewCaseDetails(childCaseObj);
+					caseDetailsPage.clickViewCaseHistory();
+					caseHistoryPage.verifyCaseHistoryValue('Appellant case updated', false);
 				});
-
-				//child appeal
-				cy.assignCaseOfficerViaApi(childCaseObj);
-				happyPathHelper.viewCaseDetails(childCaseObj);
-				happyPathHelper.reviewAppellantCase(childCaseObj);
-
-				//lead appeal
-				cy.assignCaseOfficerViaApi(leadCaseObj);
-				happyPathHelper.viewCaseDetails(leadCaseObj);
-				happyPathHelper.reviewAppellantCase(leadCaseObj);
-				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
-				happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
-				happyPathHelper.reviewS78Lpaq(leadCaseObj);
-
-				//child appeal
-				happyPathHelper.viewCaseDetails(childCaseObj);
-				happyPathHelper.reviewS78Lpaq(childCaseObj);
-
-				//lead appeal
-				happyPathHelper.viewCaseDetails(leadCaseObj);
-				happyPathHelper.addNetResidences('Net gain', '4');
-				(caseDetailsPage.validateBannerMessage('Success', 'Number of residential units added'),
-					caseDetailsPage.clickViewCaseHistory());
-				caseHistoryPage.verifyCaseHistoryValue('Appellant case updated');
-
-				//child appeal
-				happyPathHelper.viewCaseDetails(childCaseObj);
-				caseDetailsPage.clickViewCaseHistory();
-				caseHistoryPage.verifyCaseHistoryValue('Appellant case updated', false);
 			});
 		});
-	});
-});
+	}
+);
 
-describe('Timetable', () => {
-	it(
-		'Timetable changes are reflected on child appeals',
-		{ retries: { runMode: 2, openMode: 0 } },
-		() => {
+describe(
+	'Timetable',
+	{ tags: [tag.s78, tag.written, tag.linkedAppeals, tag.timetable, tag.newRegs] },
+	() => {
+		it(
+			'Timetable changes are reflected on child appeals',
+			{ retries: { runMode: 2, openMode: 0 } },
+			() => {
+				cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
+					cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
+						cases = [leadCaseObj, childCaseObj];
+
+						cases.forEach((appeal) => {
+							cy.addLpaqSubmissionToCase(appeal);
+						});
+
+						//child appeal
+						cy.assignCaseOfficerViaApi(childCaseObj);
+						happyPathHelper.viewCaseDetails(childCaseObj);
+						happyPathHelper.reviewAppellantCase(childCaseObj);
+
+						//lead appeal
+						cy.assignCaseOfficerViaApi(leadCaseObj);
+						happyPathHelper.viewCaseDetails(leadCaseObj);
+						happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
+						happyPathHelper.reviewAppellantCase(leadCaseObj);
+						happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written', true);
+
+						//update statements due date
+						caseDetailsPage.appeal;
+						caseDetailsPage.verifyActionExists('LPA statement due', true);
+						caseDetailsPage.clickRowChangeLink('lpa-statement-due-date');
+						cy.getBusinessActualDate(new Date(), 14).then((dueDate) => {
+							const formattedDate = formatDateAndTime(dueDate);
+							caseDetailsPage.changeTimetableDates(linkAppealsTimetableItems, dueDate, 0);
+							basePage.clickButtonByText('Update timetable due dates');
+							caseDetailsPage.verifyRowValue('LPA statement due', formattedDate.date);
+
+							//child apppeal
+							happyPathHelper.viewCaseDetails(childCaseObj);
+							caseDetailsPage.verifyRowValue('LPA statement due', formattedDate.date);
+						});
+					});
+				});
+			}
+		);
+		//skipping whilst https://pins-ds.atlassian.net/browse/A2-9063 is being fixed
+		it.skip('Timetable changes are reflected in case history', () => {
 			cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
 				cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
 					cases = [leadCaseObj, childCaseObj];
@@ -370,7 +421,7 @@ describe('Timetable', () => {
 					happyPathHelper.viewCaseDetails(leadCaseObj);
 					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
 					happyPathHelper.reviewAppellantCase(leadCaseObj);
-					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written', true);
+					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
 
 					//update statements due date
 					caseDetailsPage.appeal;
@@ -382,217 +433,48 @@ describe('Timetable', () => {
 						basePage.clickButtonByText('Update timetable due dates');
 						caseDetailsPage.verifyRowValue('LPA statement due', formattedDate.date);
 
+						//case history
+						caseDetailsPage.clickViewCaseHistory();
+						caseHistoryPage.verifyCaseHistoryValue(
+							`Statements due date changed to ${formattedDate.date}`
+						);
+
 						//child apppeal
 						happyPathHelper.viewCaseDetails(childCaseObj);
-						caseDetailsPage.verifyRowValue('LPA statement due', formattedDate.date);
+						caseDetailsPage.clickViewCaseHistory();
+						caseHistoryPage.verifyCaseHistoryValue(
+							`Statements due date changed to ${formattedDate.date}`,
+							false
+						);
 					});
 				});
 			});
-		}
-	);
-	//skipping whilst https://pins-ds.atlassian.net/browse/A2-9063 is being fixed
-	it.skip('Timetable changes are reflected in case history', () => {
-		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
-			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
-				cases = [leadCaseObj, childCaseObj];
+		});
+	}
+);
 
-				cases.forEach((appeal) => {
-					cy.addLpaqSubmissionToCase(appeal);
-				});
+describe(
+	'Site visit',
+	{ tags: [tag.s78, tag.written, tag.linkedAppeals, tag.siteVisit, tag.newRegs] },
+	() => {
+		it('Arrange a site visit - S78', () => {
+			cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
+				cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
+					cases = [leadCaseObj, childCaseObj];
 
-				//child appeal
-				cy.assignCaseOfficerViaApi(childCaseObj);
-				happyPathHelper.viewCaseDetails(childCaseObj);
-				happyPathHelper.reviewAppellantCase(childCaseObj);
+					cases.forEach((caseObj) => {
+						cy.addLpaqSubmissionToCase(caseObj);
+					});
 
-				//lead appeal
-				cy.assignCaseOfficerViaApi(leadCaseObj);
-				happyPathHelper.viewCaseDetails(leadCaseObj);
-				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
-				happyPathHelper.reviewAppellantCase(leadCaseObj);
-				happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
-
-				//update statements due date
-				caseDetailsPage.appeal;
-				caseDetailsPage.verifyActionExists('LPA statement due', true);
-				caseDetailsPage.clickRowChangeLink('lpa-statement-due-date');
-				cy.getBusinessActualDate(new Date(), 14).then((dueDate) => {
-					const formattedDate = formatDateAndTime(dueDate);
-					caseDetailsPage.changeTimetableDates(linkAppealsTimetableItems, dueDate, 0);
-					basePage.clickButtonByText('Update timetable due dates');
-					caseDetailsPage.verifyRowValue('LPA statement due', formattedDate.date);
-
-					//case history
-					caseDetailsPage.clickViewCaseHistory();
-					caseHistoryPage.verifyCaseHistoryValue(
-						`Statements due date changed to ${formattedDate.date}`
-					);
-
-					//child apppeal
+					cy.assignCaseOfficerViaApi(childCaseObj);
 					happyPathHelper.viewCaseDetails(childCaseObj);
-					caseDetailsPage.clickViewCaseHistory();
-					caseHistoryPage.verifyCaseHistoryValue(
-						`Statements due date changed to ${formattedDate.date}`,
-						false
-					);
-				});
-			});
-		});
-	});
-});
-
-describe('Site visit', () => {
-	it('Arrange a site visit - S78', () => {
-		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
-			cy.createCase({ caseType: 'W' }).then((childCaseObj) => {
-				cases = [leadCaseObj, childCaseObj];
-
-				cases.forEach((caseObj) => {
-					cy.addLpaqSubmissionToCase(caseObj);
-				});
-
-				cy.assignCaseOfficerViaApi(childCaseObj);
-				happyPathHelper.viewCaseDetails(childCaseObj);
-				happyPathHelper.reviewAppellantCase(childCaseObj);
-
-				cy.assignCaseOfficerViaApi(leadCaseObj);
-				happyPathHelper.viewCaseDetails(leadCaseObj);
-
-				//link appeals
-				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
-				caseDetailsPage.checkStatusOfCase('Lead', 1);
-
-				happyPathHelper.reviewAppellantCase(leadCaseObj);
-				happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written', true);
-				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
-
-				//review child LPAQs
-				happyPathHelper.viewCaseDetails(childCaseObj);
-				happyPathHelper.reviewS78Lpaq(childCaseObj);
-
-				//review lead LPAQ
-				happyPathHelper.viewCaseDetails(leadCaseObj);
-				happyPathHelper.reviewS78Lpaq(leadCaseObj);
-				caseDetailsPage.checkStatusOfCase('Statements', 0);
-
-				//add IP comments
-				happyPathHelper.addThirdPartyComment(leadCaseObj, true);
-				caseDetailsPage.clickBackLink();
-
-				//add LPA statement
-				happyPathHelper.addLpaStatement(leadCaseObj);
-				cy.simulateStatementsDeadlineElapsed(leadCaseObj);
-				cy.reload();
-
-				caseDetailsPage.shareCommentsAndStatements();
-				caseDetailsPage.checkStatusOfCase('Final comments', 0);
-
-				//add final comments
-				happyPathHelper.addLpaFinalComment(leadCaseObj);
-				cy.loadAppealDetails(leadCaseObj).then((appealData) => {
-					const serviceUserId = (
-						(appealData?.appellant?.serviceUserId ?? 0) + 200000000
-					).toString();
-					happyPathHelper.addAppellantFinalComment(leadCaseObj, serviceUserId);
-				});
-				cy.simulateFinalCommentsDeadlineElapsed(leadCaseObj).then(() => {
-					cy.reload();
-				});
-
-				//share final comments
-				happyPathHelper.shareFinalComments(leadCaseObj);
-
-				//SITE VISIT
-				const readyTagText = 'Site visit ready to set up';
-				const awaitingTagText = 'Awaiting site visit';
-
-				//lead case details
-				happyPathHelper.viewCaseDetails(leadCaseObj);
-				caseDetailsPage.checkStatusOfCase(readyTagText, 0);
-
-				//child case details
-				happyPathHelper.viewCaseDetails(childCaseObj);
-				caseDetailsPage.checkStatusOfCase(readyTagText, 0);
-				basePage.verifySectionHeaderExists('Site', false);
-
-				//A2-7617 - uncomment once it passes
-				//personal list
-				// cy.visit(urlPaths.personalListFilteredEventReadyToSetup);
-				// cases.forEach((caseObj) => {
-				// 	basePage.verifyTagOnPersonalListPage(caseObj.reference, readyTagText);
-				// });
-
-				//all cases
-				cy.visit(urlPaths.appealsList);
-				cases.forEach((caseObj) => {
-					basePage.verifyTagOnAllCasesPage(caseObj.reference, readyTagText);
-				});
-
-				//arrange site visit
-				happyPathHelper.viewCaseDetails(leadCaseObj);
-				happyPathHelper.setupSiteVisitFromBanner(leadCaseObj);
-
-				cases.forEach((caseObj) => {
-					happyPathHelper.viewCaseDetails(caseObj);
-					caseDetailsPage.checkStatusOfCase(awaitingTagText, 0);
-				});
-
-				//A2-7617 - uncomment once it passes
-				//personal list
-				// cy.visit(urlPaths.personalListFilteredAwaitingEvent);
-				// cases.forEach((caseObj) => {
-				// 	basePage.verifyTagOnPersonalListPage(caseObj.reference, awaitingTagText);
-				// 	cy.log(leadCaseObj.reference);
-				// });
-
-				//all cases
-				cy.visit(urlPaths.appealsList);
-				cases.forEach((caseObj) => {
-					basePage.verifyTagOnAllCasesPage(caseObj.reference, awaitingTagText);
-				});
-
-				//notify
-				const expectedNotifies = [
-					{
-						template: 'site-visit-schedule-accompanied-lpa',
-						recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
-					},
-					{
-						template: 'site-visit-schedule-accompanied-appellant',
-						recipient: 'agent@test.com'
-					}
-				];
-				cy.checkNotifySent(leadCaseObj, expectedNotifies);
-			});
-		});
-	});
-});
-//skipped for now as linked appeals does not apply to s78
-describe('Issue Decision', () => {
-	it.skip('Issue a decision with costs for linked appeals - S78', () => {
-		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
-			cy.createCase({ caseType: 'W' }).then((childCaseObj1) => {
-				cy.createCase({ caseType: 'W' }).then((childCaseObj2) => {
-					cases = [leadCaseObj, childCaseObj1, childCaseObj2];
-					const children = cases.slice(1);
-
-					cases.forEach((caseRef) => {
-						cy.addLpaqSubmissionToCase(caseRef);
-					});
-
-					children.forEach((childCaseObj) => {
-						cy.assignCaseOfficerViaApi(childCaseObj);
-						happyPathHelper.viewCaseDetails(childCaseObj);
-						happyPathHelper.reviewAppellantCase(childCaseObj);
-					});
+					happyPathHelper.reviewAppellantCase(childCaseObj);
 
 					cy.assignCaseOfficerViaApi(leadCaseObj);
 					happyPathHelper.viewCaseDetails(leadCaseObj);
 
 					//link appeals
-					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj1);
-					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj2, false);
-
+					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
 					caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 					happyPathHelper.reviewAppellantCase(leadCaseObj);
@@ -600,10 +482,8 @@ describe('Issue Decision', () => {
 					caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
 					//review child LPAQs
-					children.forEach((child) => {
-						happyPathHelper.viewCaseDetails(child);
-						happyPathHelper.reviewS78Lpaq(child);
-					});
+					happyPathHelper.viewCaseDetails(childCaseObj);
+					happyPathHelper.reviewS78Lpaq(childCaseObj);
 
 					//review lead LPAQ
 					happyPathHelper.viewCaseDetails(leadCaseObj);
@@ -612,8 +492,6 @@ describe('Issue Decision', () => {
 
 					//add IP comments
 					happyPathHelper.addThirdPartyComment(leadCaseObj, true);
-					caseDetailsPage.clickBackLink();
-					happyPathHelper.addThirdPartyComment(leadCaseObj, false);
 					caseDetailsPage.clickBackLink();
 
 					//add LPA statement
@@ -639,274 +517,416 @@ describe('Issue Decision', () => {
 					//share final comments
 					happyPathHelper.shareFinalComments(leadCaseObj);
 
-					//site visit
-					happyPathHelper.setupSiteVisitFromBanner(leadCaseObj);
-					cy.simulateSiteVisit(leadCaseObj).then(() => {
-						cy.reload();
+					//SITE VISIT
+					const readyTagText = 'Site visit ready to set up';
+					const awaitingTagText = 'Awaiting site visit';
+
+					//lead case details
+					happyPathHelper.viewCaseDetails(leadCaseObj);
+					caseDetailsPage.checkStatusOfCase(readyTagText, 0);
+
+					//child case details
+					happyPathHelper.viewCaseDetails(childCaseObj);
+					caseDetailsPage.checkStatusOfCase(readyTagText, 0);
+					basePage.verifySectionHeaderExists('Site', false);
+
+					//A2-7617 - uncomment once it passes
+					//personal list
+					// cy.visit(urlPaths.personalListFilteredEventReadyToSetup);
+					// cases.forEach((caseObj) => {
+					// 	basePage.verifyTagOnPersonalListPage(caseObj.reference, readyTagText);
+					// });
+
+					//all cases
+					cy.visit(urlPaths.appealsList);
+					cases.forEach((caseObj) => {
+						basePage.verifyTagOnAllCasesPage(caseObj.reference, readyTagText);
 					});
 
-					//decision, number of children, costs present
-					happyPathHelper.issueLinkedAppealDecisions('Allowed', children.length, 'both costs');
+					//arrange site visit
+					happyPathHelper.viewCaseDetails(leadCaseObj);
+					happyPathHelper.setupSiteVisitFromBanner(leadCaseObj);
 
-					//case details
-					caseDetailsPage.checkDecisionOutcome('Appellant costs decision: Issued');
-					caseDetailsPage.checkDecisionOutcome('LPA costs decision: Issued');
+					cases.forEach((caseObj) => {
+						happyPathHelper.viewCaseDetails(caseObj);
+						caseDetailsPage.checkStatusOfCase(awaitingTagText, 0);
+					});
 
-					cases.forEach((caseRef) => {
-						happyPathHelper.viewCaseDetails(caseRef);
-						caseDetailsPage.checkStatusOfCase('Complete', 0);
-						caseDetailsPage.checkDecisionOutcome(`Decision: Allowed`);
-						caseDetailsPage.checkDecisionOutcome(`Decision issued on ${formattedDate.date}`);
+					//A2-7617 - uncomment once it passes
+					//personal list
+					// cy.visit(urlPaths.personalListFilteredAwaitingEvent);
+					// cases.forEach((caseObj) => {
+					// 	basePage.verifyTagOnPersonalListPage(caseObj.reference, awaitingTagText);
+					// 	cy.log(leadCaseObj.reference);
+					// });
+
+					//all cases
+					cy.visit(urlPaths.appealsList);
+					cases.forEach((caseObj) => {
+						basePage.verifyTagOnAllCasesPage(caseObj.reference, awaitingTagText);
 					});
 
 					//notify
 					const expectedNotifies = [
 						{
-							template: 'decision-is-allowed-split-dismissed-lpa',
+							template: 'site-visit-schedule-accompanied-lpa',
 							recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
 						},
 						{
-							template: 'decision-is-allowed-split-dismissed-appellant',
+							template: 'site-visit-schedule-accompanied-appellant',
 							recipient: 'agent@test.com'
 						}
 					];
-
 					cy.checkNotifySent(leadCaseObj, expectedNotifies);
 				});
 			});
 		});
-	});
+	}
+);
+//skipped for now as linked appeals does not apply to s78
+describe(
+	'Issue Decision',
+	{ tags: [tag.s78, tag.written, tag.linkedAppeals, tag.decision, tag.costs, tag.newRegs] },
+	() => {
+		it.skip('Issue a decision with costs for linked appeals - S78', () => {
+			cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
+				cy.createCase({ caseType: 'W' }).then((childCaseObj1) => {
+					cy.createCase({ caseType: 'W' }).then((childCaseObj2) => {
+						cases = [leadCaseObj, childCaseObj1, childCaseObj2];
+						const children = cases.slice(1);
 
-	it.skip('Cost decisions - appellant withdrawn', () => {
-		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
-			cy.createCase({ caseType: 'W' }).then((childCaseObj1) => {
-				cy.createCase({ caseType: 'W' }).then((childCaseObj2) => {
-					const cases = [leadCaseObj, childCaseObj1, childCaseObj2];
-					const children = cases.slice(1);
+						cases.forEach((caseRef) => {
+							cy.addLpaqSubmissionToCase(caseRef);
+						});
 
-					cases.forEach((caseObj) => {
-						cy.addLpaqSubmissionToCase(caseObj);
-					});
+						children.forEach((childCaseObj) => {
+							cy.assignCaseOfficerViaApi(childCaseObj);
+							happyPathHelper.viewCaseDetails(childCaseObj);
+							happyPathHelper.reviewAppellantCase(childCaseObj);
+						});
 
-					children.forEach((childCaseObj) => {
-						cy.assignCaseOfficerViaApi(childCaseObj);
-						happyPathHelper.viewCaseDetails(childCaseObj);
-						happyPathHelper.reviewAppellantCase(childCaseObj);
-					});
+						cy.assignCaseOfficerViaApi(leadCaseObj);
+						happyPathHelper.viewCaseDetails(leadCaseObj);
 
-					cy.assignCaseOfficerViaApi(leadCaseObj);
-					happyPathHelper.viewCaseDetails(leadCaseObj);
+						//link appeals
+						happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj1);
+						happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj2, false);
 
-					//link appeals
-					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj1);
-					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj2, false);
+						caseDetailsPage.checkStatusOfCase('Lead', 1);
 
-					caseDetailsPage.checkStatusOfCase('Lead', 1);
+						happyPathHelper.reviewAppellantCase(leadCaseObj);
+						happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written', true);
+						caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
-					happyPathHelper.reviewAppellantCase(leadCaseObj);
-					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
-					caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+						//review child LPAQs
+						children.forEach((child) => {
+							happyPathHelper.viewCaseDetails(child);
+							happyPathHelper.reviewS78Lpaq(child);
+						});
 
-					//review child LPAQs
-					children.forEach((child) => {
-						happyPathHelper.viewCaseDetails(child);
-						happyPathHelper.reviewS78Lpaq(child);
-					});
+						//review lead LPAQ
+						happyPathHelper.viewCaseDetails(leadCaseObj);
+						happyPathHelper.reviewS78Lpaq(leadCaseObj);
+						caseDetailsPage.checkStatusOfCase('Statements', 0);
 
-					//review lead LPAQ
-					happyPathHelper.viewCaseDetails(leadCaseObj);
-					happyPathHelper.reviewS78Lpaq(leadCaseObj);
-					caseDetailsPage.checkStatusOfCase('Statements', 0);
+						//add IP comments
+						happyPathHelper.addThirdPartyComment(leadCaseObj, true);
+						caseDetailsPage.clickBackLink();
+						happyPathHelper.addThirdPartyComment(leadCaseObj, false);
+						caseDetailsPage.clickBackLink();
 
-					//add IP comments
-					happyPathHelper.addThirdPartyComment(leadCaseObj, true);
-					caseDetailsPage.clickBackLink();
-					happyPathHelper.addThirdPartyComment(leadCaseObj, false);
-					caseDetailsPage.clickBackLink();
-
-					//add LPA statement
-					happyPathHelper.addLpaStatement(leadCaseObj);
-					cy.simulateStatementsDeadlineElapsed(leadCaseObj);
-					cy.reload();
-
-					caseDetailsPage.shareCommentsAndStatements();
-					caseDetailsPage.checkStatusOfCase('Final comments', 0);
-
-					//add final comments
-					happyPathHelper.addLpaFinalComment(leadCaseObj);
-					cy.loadAppealDetails(leadCaseObj).then((appealData) => {
-						const serviceUserId = (
-							(appealData?.appellant?.serviceUserId ?? 0) + 200000000
-						).toString();
-						happyPathHelper.addAppellantFinalComment(leadCaseObj, serviceUserId);
-					});
-					cy.simulateFinalCommentsDeadlineElapsed(leadCaseObj).then(() => {
+						//add LPA statement
+						happyPathHelper.addLpaStatement(leadCaseObj);
+						cy.simulateStatementsDeadlineElapsed(leadCaseObj);
 						cy.reload();
-					});
 
-					//share final comments
-					happyPathHelper.shareFinalComments(leadCaseObj);
+						caseDetailsPage.shareCommentsAndStatements();
+						caseDetailsPage.checkStatusOfCase('Final comments', 0);
 
-					//site visit
-					happyPathHelper.setupSiteVisitFromBanner(leadCaseObj);
-					cy.simulateSiteVisit(leadCaseObj).then(() => {
-						cy.reload();
-					});
+						//add final comments
+						happyPathHelper.addLpaFinalComment(leadCaseObj);
+						cy.loadAppealDetails(leadCaseObj).then((appealData) => {
+							const serviceUserId = (
+								(appealData?.appellant?.serviceUserId ?? 0) + 200000000
+							).toString();
+							happyPathHelper.addAppellantFinalComment(leadCaseObj, serviceUserId);
+						});
+						cy.simulateFinalCommentsDeadlineElapsed(leadCaseObj).then(() => {
+							cy.reload();
+						});
 
-					caseDetailsPage.clickManageAppellantCostApplication();
-					manageDocument.verifyNumberOfDocuments(3);
-					manageDocument.clickBackLink();
+						//share final comments
+						happyPathHelper.shareFinalComments(leadCaseObj);
 
-					caseDetailsPage.clickAddAppellantWithdrawal();
-					fileUploader.uploadFiles([pdf, doc, img]);
-					fileUploader.clickButtonByText('Continue');
-					fileUploader.clickButtonByText('Confirm');
-					fileUploader.clickButtonByText('Confirm');
+						//site visit
+						happyPathHelper.setupSiteVisitFromBanner(leadCaseObj);
+						cy.simulateSiteVisit(leadCaseObj).then(() => {
+							cy.reload();
+						});
 
-					caseDetailsPage.clickManageAppellanCostWithdrawal();
-					manageDocument.verifyNumberOfDocuments(3);
-					manageDocument.clickBackLink();
+						//decision, number of children, costs present
+						happyPathHelper.issueLinkedAppealDecisions('Allowed', children.length, 'both costs');
 
-					//issue decision
-					//leadcase, decision, number of children, costs present, issueCosts
-					happyPathHelper.issueLinkedAppealDecisions(
-						'Allowed',
-						children.length,
-						'lpa only',
-						true,
-						true
-					);
+						//case details
+						caseDetailsPage.checkDecisionOutcome('Appellant costs decision: Issued');
+						caseDetailsPage.checkDecisionOutcome('LPA costs decision: Issued');
 
-					//case details
-					caseDetailsPage.checkDecisionOutcome('LPA costs decision: Issued');
+						cases.forEach((caseRef) => {
+							happyPathHelper.viewCaseDetails(caseRef);
+							caseDetailsPage.checkStatusOfCase('Complete', 0);
+							caseDetailsPage.checkDecisionOutcome(`Decision: Allowed`);
+							caseDetailsPage.checkDecisionOutcome(`Decision issued on ${formattedDate.date}`);
+						});
 
-					cases.forEach((caseObj) => {
-						happyPathHelper.viewCaseDetails(caseObj);
-						caseDetailsPage.checkStatusOfCase('Complete', 0);
-						caseDetailsPage.checkDecisionOutcome(`Decision: Allowed`);
-						caseDetailsPage.checkDecisionOutcome(`Decision issued on ${formattedDate.date}`);
+						//notify
+						const expectedNotifies = [
+							{
+								template: 'decision-is-allowed-split-dismissed-lpa',
+								recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+							},
+							{
+								template: 'decision-is-allowed-split-dismissed-appellant',
+								recipient: 'agent@test.com'
+							}
+						];
+
+						cy.checkNotifySent(leadCaseObj, expectedNotifies);
 					});
 				});
 			});
 		});
-	});
 
-	it.skip('Cost decisions - lpa withdrawn', () => {
-		cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
-			cy.createCase({ caseType: 'W' }).then((childCaseObj1) => {
-				cy.createCase({ caseType: 'W' }).then((childCaseObj2) => {
-					const cases = [leadCaseObj, childCaseObj1, childCaseObj2];
-					const children = cases.slice(1);
+		it.skip('Cost decisions - appellant withdrawn', () => {
+			cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
+				cy.createCase({ caseType: 'W' }).then((childCaseObj1) => {
+					cy.createCase({ caseType: 'W' }).then((childCaseObj2) => {
+						const cases = [leadCaseObj, childCaseObj1, childCaseObj2];
+						const children = cases.slice(1);
 
-					cases.forEach((caseObj) => {
-						cy.addLpaqSubmissionToCase(caseObj);
-					});
+						cases.forEach((caseObj) => {
+							cy.addLpaqSubmissionToCase(caseObj);
+						});
 
-					children.forEach((childCaseObj) => {
-						cy.assignCaseOfficerViaApi(childCaseObj);
-						happyPathHelper.viewCaseDetails(childCaseObj);
-						happyPathHelper.reviewAppellantCase(childCaseObj);
-					});
+						children.forEach((childCaseObj) => {
+							cy.assignCaseOfficerViaApi(childCaseObj);
+							happyPathHelper.viewCaseDetails(childCaseObj);
+							happyPathHelper.reviewAppellantCase(childCaseObj);
+						});
 
-					cy.assignCaseOfficerViaApi(leadCaseObj);
-					happyPathHelper.viewCaseDetails(leadCaseObj);
+						cy.assignCaseOfficerViaApi(leadCaseObj);
+						happyPathHelper.viewCaseDetails(leadCaseObj);
 
-					//link appeals
-					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj1);
-					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj2, false);
+						//link appeals
+						happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj1);
+						happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj2, false);
 
-					caseDetailsPage.checkStatusOfCase('Lead', 1);
+						caseDetailsPage.checkStatusOfCase('Lead', 1);
 
-					happyPathHelper.reviewAppellantCase(leadCaseObj);
-					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
-					caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+						happyPathHelper.reviewAppellantCase(leadCaseObj);
+						happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
+						caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
-					//review child LPAQs
-					children.forEach((child) => {
-						happyPathHelper.viewCaseDetails(child);
-						happyPathHelper.reviewS78Lpaq(child);
-					});
+						//review child LPAQs
+						children.forEach((child) => {
+							happyPathHelper.viewCaseDetails(child);
+							happyPathHelper.reviewS78Lpaq(child);
+						});
 
-					//review lead LPAQ
-					happyPathHelper.viewCaseDetails(leadCaseObj);
-					happyPathHelper.reviewS78Lpaq(leadCaseObj);
-					caseDetailsPage.checkStatusOfCase('Statements', 0);
+						//review lead LPAQ
+						happyPathHelper.viewCaseDetails(leadCaseObj);
+						happyPathHelper.reviewS78Lpaq(leadCaseObj);
+						caseDetailsPage.checkStatusOfCase('Statements', 0);
 
-					//add IP comments
-					happyPathHelper.addThirdPartyComment(leadCaseObj, true);
-					caseDetailsPage.clickBackLink();
-					happyPathHelper.addThirdPartyComment(leadCaseObj, false);
-					caseDetailsPage.clickBackLink();
+						//add IP comments
+						happyPathHelper.addThirdPartyComment(leadCaseObj, true);
+						caseDetailsPage.clickBackLink();
+						happyPathHelper.addThirdPartyComment(leadCaseObj, false);
+						caseDetailsPage.clickBackLink();
 
-					//add LPA statement
-					happyPathHelper.addLpaStatement(leadCaseObj);
-					cy.simulateStatementsDeadlineElapsed(leadCaseObj);
-					cy.reload();
-
-					caseDetailsPage.shareCommentsAndStatements();
-					caseDetailsPage.checkStatusOfCase('Final comments', 0);
-
-					//add final comments
-					happyPathHelper.addLpaFinalComment(leadCaseObj);
-					cy.loadAppealDetails(leadCaseObj).then((appealData) => {
-						const serviceUserId = (
-							(appealData?.appellant?.serviceUserId ?? 0) + 200000000
-						).toString();
-						happyPathHelper.addAppellantFinalComment(leadCaseObj, serviceUserId);
-					});
-					cy.simulateFinalCommentsDeadlineElapsed(leadCaseObj).then(() => {
+						//add LPA statement
+						happyPathHelper.addLpaStatement(leadCaseObj);
+						cy.simulateStatementsDeadlineElapsed(leadCaseObj);
 						cy.reload();
-					});
 
-					//share final comments
-					happyPathHelper.shareFinalComments(leadCaseObj);
+						caseDetailsPage.shareCommentsAndStatements();
+						caseDetailsPage.checkStatusOfCase('Final comments', 0);
 
-					//site visit
-					happyPathHelper.setupSiteVisitFromBanner(leadCaseObj);
-					cy.simulateSiteVisit(leadCaseObj).then(() => {
-						cy.reload();
-					});
+						//add final comments
+						happyPathHelper.addLpaFinalComment(leadCaseObj);
+						cy.loadAppealDetails(leadCaseObj).then((appealData) => {
+							const serviceUserId = (
+								(appealData?.appellant?.serviceUserId ?? 0) + 200000000
+							).toString();
+							happyPathHelper.addAppellantFinalComment(leadCaseObj, serviceUserId);
+						});
+						cy.simulateFinalCommentsDeadlineElapsed(leadCaseObj).then(() => {
+							cy.reload();
+						});
 
-					caseDetailsPage.clickManageLpaCostApplication();
-					manageDocument.verifyNumberOfDocuments(3);
-					manageDocument.clickBackLink();
+						//share final comments
+						happyPathHelper.shareFinalComments(leadCaseObj);
 
-					caseDetailsPage.clickAddLpaWithdrawal();
-					fileUploader.uploadFiles([pdf, doc, img]);
-					fileUploader.clickButtonByText('Continue');
-					fileUploader.clickButtonByText('Confirm');
-					fileUploader.clickButtonByText('Confirm');
+						//site visit
+						happyPathHelper.setupSiteVisitFromBanner(leadCaseObj);
+						cy.simulateSiteVisit(leadCaseObj).then(() => {
+							cy.reload();
+						});
 
-					caseDetailsPage.clickManageLpaCostWithdrawal();
-					manageDocument.verifyNumberOfDocuments(3);
-					manageDocument.clickBackLink();
+						caseDetailsPage.clickManageAppellantCostApplication();
+						manageDocument.verifyNumberOfDocuments(3);
+						manageDocument.clickBackLink();
 
-					//issue decision
-					//leadcase, decision, number of children, costs present, issueCosts
-					happyPathHelper.issueLinkedAppealDecisions(
-						'Allowed',
-						children.length,
-						'appellant only',
-						true,
-						true
-					);
+						caseDetailsPage.clickAddAppellantWithdrawal();
+						fileUploader.uploadFiles([pdf, doc, img]);
+						fileUploader.clickButtonByText('Continue');
+						fileUploader.clickButtonByText('Confirm');
+						fileUploader.clickButtonByText('Confirm');
 
-					//case details
-					caseDetailsPage.checkDecisionOutcome('Appellant costs decision: Issued');
+						caseDetailsPage.clickManageAppellanCostWithdrawal();
+						manageDocument.verifyNumberOfDocuments(3);
+						manageDocument.clickBackLink();
 
-					cases.forEach((caseObj) => {
-						happyPathHelper.viewCaseDetails(caseObj);
-						caseDetailsPage.checkStatusOfCase('Complete', 0);
-						caseDetailsPage.checkDecisionOutcome(`Decision: Allowed`);
-						caseDetailsPage.checkDecisionOutcome(`Decision issued on ${formattedDate.date}`);
+						//issue decision
+						//leadcase, decision, number of children, costs present, issueCosts
+						happyPathHelper.issueLinkedAppealDecisions(
+							'Allowed',
+							children.length,
+							'lpa only',
+							true,
+							true
+						);
+
+						//case details
+						caseDetailsPage.checkDecisionOutcome('LPA costs decision: Issued');
+
+						cases.forEach((caseObj) => {
+							happyPathHelper.viewCaseDetails(caseObj);
+							caseDetailsPage.checkStatusOfCase('Complete', 0);
+							caseDetailsPage.checkDecisionOutcome(`Decision: Allowed`);
+							caseDetailsPage.checkDecisionOutcome(`Decision issued on ${formattedDate.date}`);
+						});
 					});
 				});
 			});
 		});
-	});
-});
 
-describe('Unhappy path', () => {
+		it.skip('Cost decisions - lpa withdrawn', () => {
+			cy.createCase({ caseType: 'W' }).then((leadCaseObj) => {
+				cy.createCase({ caseType: 'W' }).then((childCaseObj1) => {
+					cy.createCase({ caseType: 'W' }).then((childCaseObj2) => {
+						const cases = [leadCaseObj, childCaseObj1, childCaseObj2];
+						const children = cases.slice(1);
+
+						cases.forEach((caseObj) => {
+							cy.addLpaqSubmissionToCase(caseObj);
+						});
+
+						children.forEach((childCaseObj) => {
+							cy.assignCaseOfficerViaApi(childCaseObj);
+							happyPathHelper.viewCaseDetails(childCaseObj);
+							happyPathHelper.reviewAppellantCase(childCaseObj);
+						});
+
+						cy.assignCaseOfficerViaApi(leadCaseObj);
+						happyPathHelper.viewCaseDetails(leadCaseObj);
+
+						//link appeals
+						happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj1);
+						happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj2, false);
+
+						caseDetailsPage.checkStatusOfCase('Lead', 1);
+
+						happyPathHelper.reviewAppellantCase(leadCaseObj);
+						happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
+						caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+
+						//review child LPAQs
+						children.forEach((child) => {
+							happyPathHelper.viewCaseDetails(child);
+							happyPathHelper.reviewS78Lpaq(child);
+						});
+
+						//review lead LPAQ
+						happyPathHelper.viewCaseDetails(leadCaseObj);
+						happyPathHelper.reviewS78Lpaq(leadCaseObj);
+						caseDetailsPage.checkStatusOfCase('Statements', 0);
+
+						//add IP comments
+						happyPathHelper.addThirdPartyComment(leadCaseObj, true);
+						caseDetailsPage.clickBackLink();
+						happyPathHelper.addThirdPartyComment(leadCaseObj, false);
+						caseDetailsPage.clickBackLink();
+
+						//add LPA statement
+						happyPathHelper.addLpaStatement(leadCaseObj);
+						cy.simulateStatementsDeadlineElapsed(leadCaseObj);
+						cy.reload();
+
+						caseDetailsPage.shareCommentsAndStatements();
+						caseDetailsPage.checkStatusOfCase('Final comments', 0);
+
+						//add final comments
+						happyPathHelper.addLpaFinalComment(leadCaseObj);
+						cy.loadAppealDetails(leadCaseObj).then((appealData) => {
+							const serviceUserId = (
+								(appealData?.appellant?.serviceUserId ?? 0) + 200000000
+							).toString();
+							happyPathHelper.addAppellantFinalComment(leadCaseObj, serviceUserId);
+						});
+						cy.simulateFinalCommentsDeadlineElapsed(leadCaseObj).then(() => {
+							cy.reload();
+						});
+
+						//share final comments
+						happyPathHelper.shareFinalComments(leadCaseObj);
+
+						//site visit
+						happyPathHelper.setupSiteVisitFromBanner(leadCaseObj);
+						cy.simulateSiteVisit(leadCaseObj).then(() => {
+							cy.reload();
+						});
+
+						caseDetailsPage.clickManageLpaCostApplication();
+						manageDocument.verifyNumberOfDocuments(3);
+						manageDocument.clickBackLink();
+
+						caseDetailsPage.clickAddLpaWithdrawal();
+						fileUploader.uploadFiles([pdf, doc, img]);
+						fileUploader.clickButtonByText('Continue');
+						fileUploader.clickButtonByText('Confirm');
+						fileUploader.clickButtonByText('Confirm');
+
+						caseDetailsPage.clickManageLpaCostWithdrawal();
+						manageDocument.verifyNumberOfDocuments(3);
+						manageDocument.clickBackLink();
+
+						//issue decision
+						//leadcase, decision, number of children, costs present, issueCosts
+						happyPathHelper.issueLinkedAppealDecisions(
+							'Allowed',
+							children.length,
+							'appellant only',
+							true,
+							true
+						);
+
+						//case details
+						caseDetailsPage.checkDecisionOutcome('Appellant costs decision: Issued');
+
+						cases.forEach((caseObj) => {
+							happyPathHelper.viewCaseDetails(caseObj);
+							caseDetailsPage.checkStatusOfCase('Complete', 0);
+							caseDetailsPage.checkDecisionOutcome(`Decision: Allowed`);
+							caseDetailsPage.checkDecisionOutcome(`Decision issued on ${formattedDate.date}`);
+						});
+					});
+				});
+			});
+		});
+	}
+);
+
+describe('Unhappy path', { tags: [tag.s78, tag.written, tag.linkedAppeals, tag.newRegs] }, () => {
 	it('As a lead appeal, I am unable to link an already linked child case', () => {
 		cy.createCase({ caseType: 'W' }).then((leadCaseObj1) => {
 			cy.createCase({ caseType: 'W' }).then((leadCaseObj2) => {

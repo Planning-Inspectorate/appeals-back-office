@@ -9,6 +9,7 @@ import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
+import { tag } from '../../support/tag';
 
 const dateTimeSection = new DateTimeSection();
 const basePage = new Page();
@@ -49,7 +50,7 @@ afterEach(() => {
 	cy.deleteAppeals(appeal);
 });
 
-describe('From S78', () => {
+describe('From S78', { tags: [tag.s78, tag.changeAppeal, tag.newRegs] }, () => {
 	it('to HAS', () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;
@@ -102,7 +103,7 @@ describe('From S78', () => {
 	});
 });
 
-describe('From HAS', () => {
+describe('From HAS', { tags: [tag.has, tag.changeAppeal, tag.newRegs] }, () => {
 	it('to S78', () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
@@ -152,40 +153,44 @@ describe('From HAS', () => {
 	});
 });
 
-describe('Case history', () => {
-	it('Case history entry added', () => {
-		cy.createCase({ caseType: 'W' }).then((caseObj) => {
-			appeal = caseObj;
-			cy.assignCaseOfficerViaApi(caseObj);
-			happyPathHelper.viewCaseDetails(caseObj);
-			//change appeal type
-			happyPathHelper.changeAppealType(1);
-			caseDetailsPage.checkStatusOfCase('Validation', 0);
-			caseDetailsPage.verifyAppealType('Householder');
+describe(
+	'Case history',
+	{ tags: [tag.s78, tag.changeAppeal, tag.caseDetails, tag.newRegs] },
+	() => {
+		it('Case history entry added', () => {
+			cy.createCase({ caseType: 'W' }).then((caseObj) => {
+				appeal = caseObj;
+				cy.assignCaseOfficerViaApi(caseObj);
+				happyPathHelper.viewCaseDetails(caseObj);
+				//change appeal type
+				happyPathHelper.changeAppealType(1);
+				caseDetailsPage.checkStatusOfCase('Validation', 0);
+				caseDetailsPage.verifyAppealType('Householder');
 
-			//case history
-			caseDetailsPage.clickViewCaseHistory();
-			caseHistoryPage.verifyCaseHistoryValue('Appeal type updated to Householder');
+				//case history
+				caseDetailsPage.clickViewCaseHistory();
+				caseHistoryPage.verifyCaseHistoryValue('Appeal type updated to Householder');
+			});
 		});
-	});
 
-	it('Case history entry added - resubmit', () => {
-		cy.createCase({ caseType: 'W' }).then((caseObj) => {
-			appeal = caseObj;
-			cy.assignCaseOfficerViaApi(caseObj);
-			happyPathHelper.viewCaseDetails(caseObj);
-			//change appeal type
-			happyPathHelper.changeAppealTypeResubmit(1);
-			caseDetailsPage.verifyAppealType('Planning appeal');
+		it('Case history entry added - resubmit', () => {
+			cy.createCase({ caseType: 'W' }).then((caseObj) => {
+				appeal = caseObj;
+				cy.assignCaseOfficerViaApi(caseObj);
+				happyPathHelper.viewCaseDetails(caseObj);
+				//change appeal type
+				happyPathHelper.changeAppealTypeResubmit(1);
+				caseDetailsPage.verifyAppealType('Planning appeal');
 
-			//case history
-			caseDetailsPage.clickViewCaseHistory();
-			caseHistoryPage.verifyCaseHistoryValue('Appeal reviewed as invalid: wrong appeal type');
+				//case history
+				caseDetailsPage.clickViewCaseHistory();
+				caseHistoryPage.verifyCaseHistoryValue('Appeal reviewed as invalid: wrong appeal type');
+			});
 		});
-	});
-});
+	}
+);
 
-describe('Notify', () => {
+describe('Notify', { tags: [tag.s78, tag.changeAppeal, tag.newRegs] }, () => {
 	it('Notify sent', () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;
@@ -230,7 +235,7 @@ describe('Notify', () => {
 	});
 });
 
-describe('Other', () => {
+describe('Other', { tags: [tag.s78, tag.changeAppeal, tag.newRegs] }, () => {
 	it('All cases reflects new appeal type', () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;

@@ -5,11 +5,12 @@ import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
+import { tag } from '../../support/tag';
 
 const caseDetailsPage = new CaseDetailsPage();
 const listCasesPage = new ListCasesPage();
 
-describe('add case notes', () => {
+describe('add case notes', { tags: [tag.has, tag.caseDetails, tag.newRegs] }, () => {
 	let caseObj;
 	const maxCharacters = 500;
 	const caseNoteText = 'Here is a case note that is more than 500 characters.';

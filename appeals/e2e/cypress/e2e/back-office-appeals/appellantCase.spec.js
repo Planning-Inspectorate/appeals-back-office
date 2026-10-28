@@ -9,6 +9,7 @@ import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage'
 import { GroundsOfAppealSelectionPage } from '../../page_objects/groundsOfAppealSelectionPage';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { BANNER_TYPES, DOCUMENT_TYPES, SUCCESS_MESSAGES } from '../../support/consts.js';
+import { tag } from '../../support/tag';
 import { capitalize, formatDateAndTime } from '../../support/utils/format.js';
 
 const listCasesPage = new ListCasesPage();
@@ -38,7 +39,7 @@ const defaultAppealProperties = {
 	lpaQuestionLabel: 'Local planning authority'
 };
 
-describe('Managing Appellant Case Details', () => {
+describe('Managing Appellant Case Details', { tags: [tag.validation] }, () => {
 	const fieldId = 'planning-application-reference';
 	const testReference = 'TEST-REF-123!.#@,/|:;?()_';
 	const maxLengthReference = testReference.repeat(10).substring(0, 100);
@@ -60,40 +61,52 @@ describe('Managing Appellant Case Details', () => {
 		cy.deleteAppeals(appeal);
 	});
 
-	it('should reject empty value for the LPA application number', () => {
-		cy.createCase({ caseType: 'D' }).then((caseObj) => {
-			appeal = caseObj;
-			navigateToReferenceUpdate(caseObj);
-			caseDetailsPage.updatePlanningApplicationReference(' ');
-			verifyError('Enter the application reference number');
-		});
-	});
-
-	it('should reject reference exceeding 100 characters for the LPA application number', () => {
-		cy.createCase({ caseType: 'W' }).then((caseObj) => {
-			appeal = caseObj;
-			navigateToReferenceUpdate(caseObj);
-			caseDetailsPage.updatePlanningApplicationReference(exceededLengthReference);
-			verifyError('Application reference number must be 100 characters or less');
-		});
-	});
-
-	Object.entries(appealTypes).forEach(([caseType, description]) => {
-		it(`should update ${description} LPA application reference`, () => {
-			cy.createCase({ caseType }).then((caseObj) => {
+	it(
+		'should reject empty value for the LPA application number',
+		{ tags: [tag.has, tag.newRegs] },
+		() => {
+			cy.createCase({ caseType: 'D' }).then((caseObj) => {
 				appeal = caseObj;
 				navigateToReferenceUpdate(caseObj);
-				caseDetailsPage.updatePlanningApplicationReference(maxLengthReference);
-
-				caseDetailsPage.validateConfirmationPanelMessage('Success', 'Appeal updated');
-				cy.loadAppealDetails(caseObj)
-					.its('planningApplicationReference')
-					.should('eq', maxLengthReference);
+				caseDetailsPage.updatePlanningApplicationReference(' ');
+				verifyError('Enter the application reference number');
 			});
-		});
+		}
+	);
+
+	it(
+		'should reject reference exceeding 100 characters for the LPA application number',
+		{ tags: [tag.s78, tag.newRegs] },
+		() => {
+			cy.createCase({ caseType: 'W' }).then((caseObj) => {
+				appeal = caseObj;
+				navigateToReferenceUpdate(caseObj);
+				caseDetailsPage.updatePlanningApplicationReference(exceededLengthReference);
+				verifyError('Application reference number must be 100 characters or less');
+			});
+		}
+	);
+
+	Object.entries(appealTypes).forEach(([caseType, description]) => {
+		it(
+			`should update ${description} LPA application reference`,
+			{ tags: [tag.has, tag.s78, tag.s20, tag.newRegs] },
+			() => {
+				cy.createCase({ caseType }).then((caseObj) => {
+					appeal = caseObj;
+					navigateToReferenceUpdate(caseObj);
+					caseDetailsPage.updatePlanningApplicationReference(maxLengthReference);
+
+					caseDetailsPage.validateConfirmationPanelMessage('Success', 'Appeal updated');
+					cy.loadAppealDetails(caseObj)
+						.its('planningApplicationReference')
+						.should('eq', maxLengthReference);
+				});
+			}
+		);
 	});
 
-	it('HAS - appellant form', () => {
+	it('HAS - appellant form', { tags: [tag.has, tag.newRegs] }, () => {
 		cy.createCase({ applicationDecision: 'not_received' }).then((caseObj) => {
 			appeal = caseObj;
 			appellantCasePage.navigateToAppellantCase(caseObj);
@@ -148,7 +161,7 @@ describe('Managing Appellant Case Details', () => {
 		});
 	});
 
-	it('HAS - expedited appellant form', () => {
+	it('HAS - expedited appellant form', { tags: [tag.has, tag.expedited, tag.newRegs] }, () => {
 		cy.createCase({ ...hasExpeditedData }).then((caseObj) => {
 			appeal = caseObj;
 			appellantCasePage.navigateToAppellantCase(caseObj);
@@ -237,7 +250,7 @@ describe('Managing Appellant Case Details', () => {
 		});
 	});
 
-	it('S78 Full Planning - appellant form', () => {
+	it('S78 Full Planning - appellant form', { tags: [tag.s78, tag.newRegs] }, () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;
 			appellantCasePage.navigateToAppellantCase(caseObj);
@@ -331,7 +344,7 @@ describe('Managing Appellant Case Details', () => {
 		});
 	});
 
-	it('S20 Listed Building - appellant form', () => {
+	it('S20 Listed Building - appellant form', { tags: [tag.s20, tag.newRegs] }, () => {
 		cy.createCase({ caseType: 'Y' }).then((caseObj) => {
 			appeal = caseObj;
 			appellantCasePage.navigateToAppellantCase(caseObj);
@@ -418,7 +431,7 @@ describe('Managing Appellant Case Details', () => {
 		});
 	});
 
-	it('CAS Advert - appellant form', () => {
+	it('CAS Advert - appellant form', { tags: [tag.casAdverts, tag.newRegs] }, () => {
 		cy.createCase({ ...casAdvertData }).then((caseObj) => {
 			appeal = caseObj;
 			appellantCasePage.navigateToAppellantCase(caseObj);
@@ -485,107 +498,111 @@ describe('Managing Appellant Case Details', () => {
 		});
 	});
 
-	it('CAS Advert - expedited appellant form', () => {
-		cy.createCase({ ...casAdvertExpeditedData }).then((caseObj) => {
-			appeal = caseObj;
-			appellantCasePage.navigateToAppellantCase(caseObj);
+	it(
+		'CAS Advert - expedited appellant form',
+		{ tags: [tag.casAdverts, tag.expedited, tag.newRegs] },
+		() => {
+			cy.createCase({ ...casAdvertExpeditedData }).then((caseObj) => {
+				appeal = caseObj;
+				appellantCasePage.navigateToAppellantCase(caseObj);
 
-			// Base questions for CAS adverts
-			assertBaseQuestions(casAdvertExpeditedData);
+				// Base questions for CAS adverts
+				assertBaseQuestions(casAdvertExpeditedData);
 
-			// Not present
-			appellantCasePage.assertFieldNotPresent('What is the area of the appeal site?');
-			appellantCasePage.assertFieldNotPresent('Additional documents');
+				// Not present
+				appellantCasePage.assertFieldNotPresent('What is the area of the appeal site?');
+				appellantCasePage.assertFieldNotPresent('Additional documents');
 
-			// Advert specific site details + significant changes
-			appellantCasePage.assertFieldLabelAndValue(
-				'Is the appeal site on highway land?',
-				casAdvertExpeditedData.advertDetails[0].isSiteOnHighwayLand ? 'Yes' : 'No'
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Is the advertisement in position?',
-				casAdvertExpeditedData.advertDetails[0].isAdvertInPosition ? 'Yes' : 'No'
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				"Do you have the landowner's permission?",
-				casAdvertExpeditedData.hasLandownersPermission ? 'Yes' : 'No'
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Have there been any significant changes that would affect the application?',
-				'Yes'
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Have there been any significant changes that would affect the application?',
-				'Local plan: Local plan changes'
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Have there been any significant changes that would affect the application?',
-				'National policy: National policy changes'
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Have there been any significant changes that would affect the application?',
-				'Court judgment: Court judgment changes'
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Have there been any significant changes that would affect the application?',
-				'Other: Other changes'
-			);
+				// Advert specific site details + significant changes
+				appellantCasePage.assertFieldLabelAndValue(
+					'Is the appeal site on highway land?',
+					casAdvertExpeditedData.advertDetails[0].isSiteOnHighwayLand ? 'Yes' : 'No'
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Is the advertisement in position?',
+					casAdvertExpeditedData.advertDetails[0].isAdvertInPosition ? 'Yes' : 'No'
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					"Do you have the landowner's permission?",
+					casAdvertExpeditedData.hasLandownersPermission ? 'Yes' : 'No'
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Have there been any significant changes that would affect the application?',
+					'Yes'
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Have there been any significant changes that would affect the application?',
+					'Local plan: Local plan changes'
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Have there been any significant changes that would affect the application?',
+					'National policy: National policy changes'
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Have there been any significant changes that would affect the application?',
+					'Court judgment: Court judgment changes'
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Have there been any significant changes that would affect the application?',
+					'Other: Other changes'
+				);
 
-			// Application details
-			appellantCasePage.assertFieldLabelAndValue(
-				'What is the application reference number?',
-				casAdvertExpeditedData.applicationReference
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'What date did you submit your application?',
-				formatDateAndTime(new Date(casAdvertExpeditedData.applicationDate)).date
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Enter the description of the advertisement',
-				casAdvertExpeditedData.originalDevelopmentDescription
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Are there other appeals linked to your development?',
-				casAdvertExpeditedData.nearbyCaseReferences.length
-					? casAdvertExpeditedData.nearbyCaseReferences.join('')
-					: 'No'
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Was your application granted or refused?',
-				capitalize(casAdvertExpeditedData.applicationDecision)
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'What’s the date on the decision letter from the local planning authority?​',
-				formatDateAndTime(new Date(casAdvertExpeditedData.applicationDecisionDate)).date
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Decision letter from the local planning authority',
-				'No documents'
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Agreement to change the description of the advertisement',
-				'No documents'
-			);
+				// Application details
+				appellantCasePage.assertFieldLabelAndValue(
+					'What is the application reference number?',
+					casAdvertExpeditedData.applicationReference
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'What date did you submit your application?',
+					formatDateAndTime(new Date(casAdvertExpeditedData.applicationDate)).date
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Enter the description of the advertisement',
+					casAdvertExpeditedData.originalDevelopmentDescription
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Are there other appeals linked to your development?',
+					casAdvertExpeditedData.nearbyCaseReferences.length
+						? casAdvertExpeditedData.nearbyCaseReferences.join('')
+						: 'No'
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Was your application granted or refused?',
+					capitalize(casAdvertExpeditedData.applicationDecision)
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'What’s the date on the decision letter from the local planning authority?​',
+					formatDateAndTime(new Date(casAdvertExpeditedData.applicationDecisionDate)).date
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Decision letter from the local planning authority',
+					'No documents'
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Agreement to change the description of the advertisement',
+					'No documents'
+				);
 
-			// Appeal details
-			appellantCasePage.assertFieldLabelAndValue(
-				'What is your appeal about?',
-				'Displaying an advertisement'
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Why are you appealing?',
-				casAdvertExpeditedData.reasonForAppealAppellant
-			);
+				// Appeal details
+				appellantCasePage.assertFieldLabelAndValue(
+					'What is your appeal about?',
+					'Displaying an advertisement'
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Why are you appealing?',
+					casAdvertExpeditedData.reasonForAppealAppellant
+				);
 
-			// Upload document labels (No appeal statement, no supporting docs)
-			appellantCasePage.assertFieldLabelAndValue('Application form', '');
-			appellantCasePage.assertFieldNotPresent('Appeal statement');
-			appellantCasePage.assertFieldLabelAndValue('Application for an award of appeal costs', '');
-			appellantCasePage.assertFieldNotPresent('Other new supporting documents');
-		});
-	});
+				// Upload document labels (No appeal statement, no supporting docs)
+				appellantCasePage.assertFieldLabelAndValue('Application form', '');
+				appellantCasePage.assertFieldNotPresent('Appeal statement');
+				appellantCasePage.assertFieldLabelAndValue('Application for an award of appeal costs', '');
+				appellantCasePage.assertFieldNotPresent('Other new supporting documents');
+			});
+		}
+	);
 
-	it('CAS Planning - appellant form', () => {
+	it('CAS Planning - appellant form', { tags: [tag.casPlanning, tag.newRegs] }, () => {
 		cy.createCase({ caseType: 'ZP' }).then((caseObj) => {
 			appeal = caseObj;
 			appellantCasePage.navigateToAppellantCase(caseObj);
@@ -646,99 +663,103 @@ describe('Managing Appellant Case Details', () => {
 		});
 	});
 
-	it('CAS Planning - expedited appellant form', () => {
-		cy.createCase({ ...casPlanningExpeditedData }).then((caseObj) => {
-			appeal = caseObj;
-			appellantCasePage.navigateToAppellantCase(caseObj);
+	it(
+		'CAS Planning - expedited appellant form',
+		{ tags: [tag.casPlanning, tag.expedited, tag.newRegs] },
+		() => {
+			cy.createCase({ ...casPlanningExpeditedData }).then((caseObj) => {
+				appeal = caseObj;
+				appellantCasePage.navigateToAppellantCase(caseObj);
 
-			// Base questions
-			assertBaseQuestions(casPlanningExpeditedData);
+				// Base questions
+				assertBaseQuestions(casPlanningExpeditedData);
 
-			// 1 Site details
-			appellantCasePage.assertFieldLabelAndValue(
-				'What is the area of the appeal site?',
-				`${casPlanningExpeditedData.siteAreaSquareMetres} m²`
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Have there been any significant changes that would affect the application?',
-				'Yes'
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Have there been any significant changes that would affect the application?',
-				'Local plan: Local plan changes'
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Have there been any significant changes that would affect the application?',
-				'National policy: National policy changes'
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Have there been any significant changes that would affect the application?',
-				'Court judgment: Court judgment changes'
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Have there been any significant changes that would affect the application?',
-				'Other: Other changes'
-			);
+				// 1 Site details
+				appellantCasePage.assertFieldLabelAndValue(
+					'What is the area of the appeal site?',
+					`${casPlanningExpeditedData.siteAreaSquareMetres} m²`
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Have there been any significant changes that would affect the application?',
+					'Yes'
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Have there been any significant changes that would affect the application?',
+					'Local plan: Local plan changes'
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Have there been any significant changes that would affect the application?',
+					'National policy: National policy changes'
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Have there been any significant changes that would affect the application?',
+					'Court judgment: Court judgment changes'
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Have there been any significant changes that would affect the application?',
+					'Other: Other changes'
+				);
 
-			// 2 Application details
-			appellantCasePage.assertFieldLabelAndValue(
-				'What is the application reference number?',
-				casPlanningExpeditedData.applicationReference
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'What date did you submit your application?',
-				formatDateAndTime(new Date(casPlanningExpeditedData.applicationDate)).date
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Enter the description of development that you submitted in your application',
-				casPlanningExpeditedData.originalDevelopmentDescription
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Are there other appeals linked to your development?',
-				casPlanningExpeditedData.nearbyCaseReferences.length
-					? casPlanningExpeditedData.nearbyCaseReferences.join('')
-					: 'No'
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Was your application granted or refused?',
-				capitalize(casPlanningExpeditedData.applicationDecision)
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'What’s the date on the decision letter from the local planning authority?​',
-				formatDateAndTime(new Date(casPlanningExpeditedData.applicationDecisionDate)).date
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Decision letter from the local planning authority',
-				'No documents'
-			);
+				// 2 Application details
+				appellantCasePage.assertFieldLabelAndValue(
+					'What is the application reference number?',
+					casPlanningExpeditedData.applicationReference
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'What date did you submit your application?',
+					formatDateAndTime(new Date(casPlanningExpeditedData.applicationDate)).date
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Enter the description of development that you submitted in your application',
+					casPlanningExpeditedData.originalDevelopmentDescription
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Are there other appeals linked to your development?',
+					casPlanningExpeditedData.nearbyCaseReferences.length
+						? casPlanningExpeditedData.nearbyCaseReferences.join('')
+						: 'No'
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Was your application granted or refused?',
+					capitalize(casPlanningExpeditedData.applicationDecision)
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'What’s the date on the decision letter from the local planning authority?​',
+					formatDateAndTime(new Date(casPlanningExpeditedData.applicationDecisionDate)).date
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Decision letter from the local planning authority',
+					'No documents'
+				);
 
-			// 3 Appeal details
-			appellantCasePage.assertFieldLabelAndValue(
-				'What is your appeal about?',
-				'Minor commercial development'
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Why are you appealing?',
-				casPlanningExpeditedData.reasonForAppealAppellant
-			);
+				// 3 Appeal details
+				appellantCasePage.assertFieldLabelAndValue(
+					'What is your appeal about?',
+					'Minor commercial development'
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Why are you appealing?',
+					casPlanningExpeditedData.reasonForAppealAppellant
+				);
 
-			// 4 Upload docs (No appeal statement, no design & access, no supporting docs)
-			appellantCasePage.assertFieldLabelAndValue('Application form', '');
-			appellantCasePage.assertFieldLabelAndValue(
-				'Agreement to change the description of development',
-				''
-			);
-			appellantCasePage.assertFieldNotPresent('Appeal statement');
-			appellantCasePage.assertFieldLabelAndValue('Application for an award of appeal costs', '');
-			appellantCasePage.assertFieldNotPresent('Design and access statement');
-			appellantCasePage.assertFieldNotPresent('Plans, drawings and list of plans');
-			appellantCasePage.assertFieldNotPresent('Other new supporting documents');
+				// 4 Upload docs (No appeal statement, no design & access, no supporting docs)
+				appellantCasePage.assertFieldLabelAndValue('Application form', '');
+				appellantCasePage.assertFieldLabelAndValue(
+					'Agreement to change the description of development',
+					''
+				);
+				appellantCasePage.assertFieldNotPresent('Appeal statement');
+				appellantCasePage.assertFieldLabelAndValue('Application for an award of appeal costs', '');
+				appellantCasePage.assertFieldNotPresent('Design and access statement');
+				appellantCasePage.assertFieldNotPresent('Plans, drawings and list of plans');
+				appellantCasePage.assertFieldNotPresent('Other new supporting documents');
 
-			appellantCasePage.assertFieldNotPresent('Additional documents');
-		});
-	});
+				appellantCasePage.assertFieldNotPresent('Additional documents');
+			});
+		}
+	);
 
-	it('Full Advert - appellant form', () => {
+	it('Full Advert - appellant form', { tags: [tag.advert, tag.oldRegs] }, () => {
 		cy.createCase({ ...fullAdvertData }).then((caseObj) => {
 			appeal = caseObj;
 			appellantCasePage.navigateToAppellantCase(caseObj);
@@ -822,7 +843,7 @@ describe('Managing Appellant Case Details', () => {
 		});
 	});
 
-	it('Enforcement appeal - appellant form', () => {
+	it('Enforcement appeal - appellant form', { tags: [tag.enforcement, tag.oldRegs] }, () => {
 		// enforcement appeal with supporting document for ground A
 		const enforcementDocuments = [generateBaseDocument(DOCUMENT_TYPES.groundASupporting)];
 
@@ -910,313 +931,342 @@ describe('Managing Appellant Case Details', () => {
 		});
 	});
 
-	it('Enforcement linked appeal - appellant form', () => {
-		cy.createCase({ ...enforcementLinkedData }).then((caseObj) => {
-			appeal = caseObj;
-			appellantCasePage.navigateToAppellantCase(caseObj);
+	it(
+		'Enforcement linked appeal - appellant form',
+		{ tags: [tag.enforcement, tag.linkedAppeals, tag.oldRegs] },
+		() => {
+			cy.createCase({ ...enforcementLinkedData }).then((caseObj) => {
+				appeal = caseObj;
+				appellantCasePage.navigateToAppellantCase(caseObj);
 
-			// first line address and postcode are different for enforcement linked appeals, so we need to merge them with the base data
-			const baseData = {
-				...casedata,
-				siteAddressLine1: enforcementLinkedData.siteAddressLine1,
-				siteAddressPostcode: enforcementLinkedData.siteAddressPostcode
-			};
+				// first line address and postcode are different for enforcement linked appeals, so we need to merge them with the base data
+				const baseData = {
+					...casedata,
+					siteAddressLine1: enforcementLinkedData.siteAddressLine1,
+					siteAddressPostcode: enforcementLinkedData.siteAddressPostcode
+				};
 
-			// Base questions for enforcement appeals
-			const appealProperties = {
-				...defaultAppealProperties,
-				includeLandOwnershipQuestions: false
-			};
-			assertBaseQuestions(baseData, appealProperties);
+				// Base questions for enforcement appeals
+				const appealProperties = {
+					...defaultAppealProperties,
+					includeLandOwnershipQuestions: false
+				};
+				assertBaseQuestions(baseData, appealProperties);
 
-			// Not present
-			appellantCasePage.assertFieldNotPresent('What is the area of the appeal site?');
+				// Not present
+				appellantCasePage.assertFieldNotPresent('What is the area of the appeal site?');
 
-			// Enforcement application reference number
-			appellantCasePage.assertFieldLabelAndValue(
-				'What is the reference number on the enforcement notice?',
-				enforcementLinkedData.enforcementReference
-			);
+				// Enforcement application reference number
+				appellantCasePage.assertFieldLabelAndValue(
+					'What is the reference number on the enforcement notice?',
+					enforcementLinkedData.enforcementReference
+				);
 
-			// Other appellants (i.e. child appeal contacts)
-			appellantCasePage.assertFieldLabelAndValue(
-				'Other appellants',
-				formatAdditionalAppellants(enforcementLinkedData.namedIndividuals)
-			);
+				// Other appellants (i.e. child appeal contacts)
+				appellantCasePage.assertFieldLabelAndValue(
+					'Other appellants',
+					formatAdditionalAppellants(enforcementLinkedData.namedIndividuals)
+				);
 
-			// Application details
-			appellantCasePage.assertFieldLabelAndValue(
-				'What is the application reference number?',
-				enforcementLinkedData.applicationReference
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'What date did you submit your application?',
-				formatDateAndTime(new Date(enforcementLinkedData.applicationDate)).date
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Are there other appeals linked to your development?',
-				enforcementLinkedData.nearbyCaseReferences.length
-					? enforcementLinkedData.nearbyCaseReferences.join('')
-					: 'No'
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Was your application granted or refused?',
-				'Refused'
-			);
+				// Application details
+				appellantCasePage.assertFieldLabelAndValue(
+					'What is the application reference number?',
+					enforcementLinkedData.applicationReference
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'What date did you submit your application?',
+					formatDateAndTime(new Date(enforcementLinkedData.applicationDate)).date
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Are there other appeals linked to your development?',
+					enforcementLinkedData.nearbyCaseReferences.length
+						? enforcementLinkedData.nearbyCaseReferences.join('')
+						: 'No'
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Was your application granted or refused?',
+					'Refused'
+				);
 
-			// Appeal details
-			appellantCasePage.assertFieldLabelAndValue(
-				'What is your appeal about?',
-				'Enforcement notice'
-			);
+				// Appeal details
+				appellantCasePage.assertFieldLabelAndValue(
+					'What is your appeal about?',
+					'Enforcement notice'
+				);
 
-			// Upload document labels
-			appellantCasePage.assertFieldLabelAndValue('Application form', '');
-			appellantCasePage.assertFieldLabelAndValue('Application for an award of appeal costs', '');
+				// Upload document labels
+				appellantCasePage.assertFieldLabelAndValue('Application form', '');
+				appellantCasePage.assertFieldLabelAndValue('Application for an award of appeal costs', '');
 
-			// Grounds and facts
-			const formattedGrounds = formatGroundsOfAppeal(enforcementLinkedData);
-			assertGroundsOfAppeal(formattedGrounds);
+				// Grounds and facts
+				const formattedGrounds = formatGroundsOfAppeal(enforcementLinkedData);
+				assertGroundsOfAppeal(formattedGrounds);
 
-			// Apppeal details
-			appellantCasePage.assertFieldLabelAndValue(
-				'How would you prefer us to decide your appeal?',
-				capitalize(enforcementLinkedData.appellantProcedurePreference)
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Why would you prefer this appeal procedure?',
-				enforcementLinkedData.appellantProcedurePreferenceDetails
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'How many days would you expect the inquiry to last?',
-				`${enforcementLinkedData.appellantProcedurePreferenceDuration} day`
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'How many witnesses would you expect to give evidence at the inquiry?',
-				`${enforcementLinkedData.appellantProcedurePreferenceWitnessCount}`
-			);
-		});
-	});
+				// Apppeal details
+				appellantCasePage.assertFieldLabelAndValue(
+					'How would you prefer us to decide your appeal?',
+					capitalize(enforcementLinkedData.appellantProcedurePreference)
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Why would you prefer this appeal procedure?',
+					enforcementLinkedData.appellantProcedurePreferenceDetails
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'How many days would you expect the inquiry to last?',
+					`${enforcementLinkedData.appellantProcedurePreferenceDuration} day`
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'How many witnesses would you expect to give evidence at the inquiry?',
+					`${enforcementLinkedData.appellantProcedurePreferenceWitnessCount}`
+				);
+			});
+		}
+	);
 
-	it('Enforcement listed building appeal - appellant form', () => {
-		cy.createCase({ ...enforcementListedBuildingData }).then((caseObj) => {
-			appeal = caseObj;
-			appellantCasePage.navigateToAppellantCase(caseObj);
+	it(
+		'Enforcement listed building appeal - appellant form',
+		{ tags: [tag.enforcementListed, tag.oldRegs] },
+		() => {
+			cy.createCase({ ...enforcementListedBuildingData }).then((caseObj) => {
+				appeal = caseObj;
+				appellantCasePage.navigateToAppellantCase(caseObj);
 
-			// first line address and postcode are different for enforcement linked appeals, so we need to merge them with the base data
-			const baseData = {
-				...casedata,
-				siteAddressLine1: enforcementListedBuildingData.siteAddressLine1,
-				siteAddressPostcode: enforcementListedBuildingData.siteAddressPostcode
-			};
+				// first line address and postcode are different for enforcement linked appeals, so we need to merge them with the base data
+				const baseData = {
+					...casedata,
+					siteAddressLine1: enforcementListedBuildingData.siteAddressLine1,
+					siteAddressPostcode: enforcementListedBuildingData.siteAddressPostcode
+				};
 
-			// Base questions for enforcement appeals
-			const appealProperties = {
-				...defaultAppealProperties,
-				lpaQuestionLabel: 'Which local planning authority (LPA) do you want to appeal against?',
-				includeLandOwnershipQuestions: false
-			};
-			assertBaseQuestions(baseData, appealProperties);
+				// Base questions for enforcement appeals
+				const appealProperties = {
+					...defaultAppealProperties,
+					lpaQuestionLabel: 'Which local planning authority (LPA) do you want to appeal against?',
+					includeLandOwnershipQuestions: false
+				};
+				assertBaseQuestions(baseData, appealProperties);
 
-			// Not present
-			appellantCasePage.assertFieldNotPresent('What is the area of the appeal site?');
-			appellantCasePage.assertFieldNotPresent('Application form');
+				// Not present
+				appellantCasePage.assertFieldNotPresent('What is the area of the appeal site?');
+				appellantCasePage.assertFieldNotPresent('Application form');
 
-			// Enforcement application reference number
-			appellantCasePage.assertFieldLabelAndValue(
-				'What is the reference number on the enforcement notice?',
-				enforcementListedBuildingData.enforcementReference
-			);
+				// Enforcement application reference number
+				appellantCasePage.assertFieldLabelAndValue(
+					'What is the reference number on the enforcement notice?',
+					enforcementListedBuildingData.enforcementReference
+				);
 
-			// Application details
-			appellantCasePage.assertFieldLabelAndValue(
-				'Are there other appeals linked to your development?',
-				enforcementListedBuildingData.nearbyCaseReferences.length
-					? enforcementListedBuildingData.nearbyCaseReferences.join('')
-					: 'No'
-			);
+				// Application details
+				appellantCasePage.assertFieldLabelAndValue(
+					'Are there other appeals linked to your development?',
+					enforcementListedBuildingData.nearbyCaseReferences.length
+						? enforcementListedBuildingData.nearbyCaseReferences.join('')
+						: 'No'
+				);
 
-			// Appeal details
-			appellantCasePage.assertFieldLabelAndValue(
-				'What is your appeal about?',
-				'Enforcement listed building and conservation area'
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'What is the issue date on your enforcement notice?',
-				formatDateAndTime(new Date(enforcementListedBuildingData.enforcementIssueDate)).date
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'What is the effective date on your enforcement notice?',
-				formatDateAndTime(new Date(enforcementListedBuildingData.enforcementEffectiveDate)).date
-			);
+				// Appeal details
+				appellantCasePage.assertFieldLabelAndValue(
+					'What is your appeal about?',
+					'Enforcement listed building and conservation area'
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'What is the issue date on your enforcement notice?',
+					formatDateAndTime(new Date(enforcementListedBuildingData.enforcementIssueDate)).date
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'What is the effective date on your enforcement notice?',
+					formatDateAndTime(new Date(enforcementListedBuildingData.enforcementEffectiveDate)).date
+				);
 
-			// Upload document labels
-			appellantCasePage.assertFieldLabelAndValue('Application for an award of appeal costs', '');
+				// Upload document labels
+				appellantCasePage.assertFieldLabelAndValue('Application for an award of appeal costs', '');
 
-			// Grounds and facts
-			const formattedGrounds = formatGroundsOfAppeal(enforcementListedBuildingData);
-			assertGroundsOfAppeal(formattedGrounds);
+				// Grounds and facts
+				const formattedGrounds = formatGroundsOfAppeal(enforcementListedBuildingData);
+				assertGroundsOfAppeal(formattedGrounds);
 
-			// Apppeal details
-			appellantCasePage.assertFieldLabelAndValue(
-				'How would you prefer us to decide your appeal?',
-				capitalize(enforcementListedBuildingData.appellantProcedurePreference)
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'Why would you prefer this appeal procedure?',
-				enforcementListedBuildingData.appellantProcedurePreferenceDetails
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'How many days would you expect the inquiry to last?',
-				`${enforcementListedBuildingData.appellantProcedurePreferenceDuration} day`
-			);
-			appellantCasePage.assertFieldLabelAndValue(
-				'How many witnesses would you expect to give evidence at the inquiry?',
-				`${enforcementListedBuildingData.appellantProcedurePreferenceWitnessCount}`
-			);
-		});
-	});
+				// Apppeal details
+				appellantCasePage.assertFieldLabelAndValue(
+					'How would you prefer us to decide your appeal?',
+					capitalize(enforcementListedBuildingData.appellantProcedurePreference)
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'Why would you prefer this appeal procedure?',
+					enforcementListedBuildingData.appellantProcedurePreferenceDetails
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'How many days would you expect the inquiry to last?',
+					`${enforcementListedBuildingData.appellantProcedurePreferenceDuration} day`
+				);
+				appellantCasePage.assertFieldLabelAndValue(
+					'How many witnesses would you expect to give evidence at the inquiry?',
+					`${enforcementListedBuildingData.appellantProcedurePreferenceWitnessCount}`
+				);
+			});
+		}
+	);
 
-	it('Enforcement appeal - can update grounds of appeal', () => {
-		cy.createCase({ ...enforcementData }).then((caseObj) => {
-			appeal = caseObj;
-			appellantCasePage.navigateToAppellantCase(caseObj);
+	it(
+		'Enforcement appeal - can update grounds of appeal',
+		{ tags: [tag.enforcement, tag.oldRegs] },
+		() => {
+			cy.createCase({ ...enforcementData }).then((caseObj) => {
+				appeal = caseObj;
+				appellantCasePage.navigateToAppellantCase(caseObj);
 
-			// select the change link for grounds of appeal
-			appellantCasePage.selectChangeLink('grounds-for-appeal');
+				// select the change link for grounds of appeal
+				appellantCasePage.selectChangeLink('grounds-for-appeal');
 
-			// check the previously selected grounds of appeal are displayed
-			groundsOfAppealSelectionPage.checkSelectedGroundsOfAppeal(enforcementData.appealGrounds);
+				// check the previously selected grounds of appeal are displayed
+				groundsOfAppealSelectionPage.checkSelectedGroundsOfAppeal(enforcementData.appealGrounds);
 
-			// select a different ground of appeal
-			groundsOfAppealSelectionPage.selectGroundsOfAppeal(['a', 'c']);
+				// select a different ground of appeal
+				groundsOfAppealSelectionPage.selectGroundsOfAppeal(['a', 'c']);
 
-			// configure what grounds of appeal should be after updating
-			const updatedFormattedGrounds = {
-				descriptionOfBreach: enforcementData.descriptionOfAllegedBreach,
-				groundsList: ['b', 'c'],
-				groundFacts: [
-					{
-						label: 'Facts for ground (b)',
-						value: 'I like easter',
-						documentLabel: `Ground (b) supporting documents`
-					},
-					{
-						label: 'Facts for ground (c)',
-						value: 'Not answered',
-						documentLabel: `Ground (c) supporting documents`
-					}
-				]
-			};
+				// configure what grounds of appeal should be after updating
+				const updatedFormattedGrounds = {
+					descriptionOfBreach: enforcementData.descriptionOfAllegedBreach,
+					groundsList: ['b', 'c'],
+					groundFacts: [
+						{
+							label: 'Facts for ground (b)',
+							value: 'I like easter',
+							documentLabel: `Ground (b) supporting documents`
+						},
+						{
+							label: 'Facts for ground (c)',
+							value: 'Not answered',
+							documentLabel: `Ground (c) supporting documents`
+						}
+					]
+				};
 
-			// check for success banner message
-			appellantCasePage.validateBannerMessage(BANNER_TYPES.success, SUCCESS_MESSAGES.appealUpdated);
+				// check for success banner message
+				appellantCasePage.validateBannerMessage(
+					BANNER_TYPES.success,
+					SUCCESS_MESSAGES.appealUpdated
+				);
 
-			// check the updated grounds of appeal are displayed on the appellant case page
-			assertGroundsOfAppeal(updatedFormattedGrounds);
+				// check the updated grounds of appeal are displayed on the appellant case page
+				assertGroundsOfAppeal(updatedFormattedGrounds);
 
-			// check case history for the updated grounds of appeal
-			appellantCasePage.clickBackLink();
-			caseDetailsPage.clickViewCaseHistory();
+				// check case history for the updated grounds of appeal
+				appellantCasePage.clickBackLink();
+				caseDetailsPage.clickViewCaseHistory();
 
-			caseHistoryPage.verifyCaseHistoryValues(['Ground (a) removed', 'Ground (c) added']);
-		});
-	});
+				caseHistoryPage.verifyCaseHistoryValues(['Ground (a) removed', 'Ground (c) added']);
+			});
+		}
+	);
 
-	it('Enforcement linked appeal - can update grounds of appeal', () => {
-		cy.createCase({ ...enforcementLinkedData }).then((caseObj) => {
-			appeal = caseObj;
-			appellantCasePage.navigateToAppellantCase(caseObj);
+	it(
+		'Enforcement linked appeal - can update grounds of appeal',
+		{ tags: [tag.enforcement, tag.linkedAppeals, tag.oldRegs] },
+		() => {
+			cy.createCase({ ...enforcementLinkedData }).then((caseObj) => {
+				appeal = caseObj;
+				appellantCasePage.navigateToAppellantCase(caseObj);
 
-			// select the change link for grounds of appeal
-			appellantCasePage.selectChangeLink('grounds-for-appeal');
+				// select the change link for grounds of appeal
+				appellantCasePage.selectChangeLink('grounds-for-appeal');
 
-			// check the previously selected grounds of appeal are displayed
-			groundsOfAppealSelectionPage.checkSelectedGroundsOfAppeal(
-				enforcementLinkedData.appealGrounds
-			);
+				// check the previously selected grounds of appeal are displayed
+				groundsOfAppealSelectionPage.checkSelectedGroundsOfAppeal(
+					enforcementLinkedData.appealGrounds
+				);
 
-			// select some different grounds of appeal
-			groundsOfAppealSelectionPage.selectGroundsOfAppeal(['a', 'c', 'd']);
+				// select some different grounds of appeal
+				groundsOfAppealSelectionPage.selectGroundsOfAppeal(['a', 'c', 'd']);
 
-			// configure what grounds of appeal should be after updating
-			const updatedFormattedGrounds = {
-				descriptionOfBreach: enforcementLinkedData.descriptionOfAllegedBreach,
-				groundsList: ['c', 'd'],
-				groundFacts: [
-					{
-						label: 'Facts for ground (c)',
-						value: 'Not answered',
-						documentLabel: `Ground (c) supporting documents`
-					},
-					{
-						label: 'Facts for ground (d)',
-						value: 'Not answered',
-						documentLabel: `Ground (d) supporting documents`
-					}
-				]
-			};
+				// configure what grounds of appeal should be after updating
+				const updatedFormattedGrounds = {
+					descriptionOfBreach: enforcementLinkedData.descriptionOfAllegedBreach,
+					groundsList: ['c', 'd'],
+					groundFacts: [
+						{
+							label: 'Facts for ground (c)',
+							value: 'Not answered',
+							documentLabel: `Ground (c) supporting documents`
+						},
+						{
+							label: 'Facts for ground (d)',
+							value: 'Not answered',
+							documentLabel: `Ground (d) supporting documents`
+						}
+					]
+				};
 
-			// check for success banner message
-			appellantCasePage.validateBannerMessage(BANNER_TYPES.success, SUCCESS_MESSAGES.appealUpdated);
+				// check for success banner message
+				appellantCasePage.validateBannerMessage(
+					BANNER_TYPES.success,
+					SUCCESS_MESSAGES.appealUpdated
+				);
 
-			// check the updated grounds of appeal are displayed on the appellant case page
-			assertGroundsOfAppeal(updatedFormattedGrounds);
+				// check the updated grounds of appeal are displayed on the appellant case page
+				assertGroundsOfAppeal(updatedFormattedGrounds);
 
-			// check case history for the updated grounds of appeal
-			appellantCasePage.clickBackLink();
-			caseDetailsPage.clickViewCaseHistory();
+				// check case history for the updated grounds of appeal
+				appellantCasePage.clickBackLink();
+				caseDetailsPage.clickViewCaseHistory();
 
-			caseHistoryPage.verifyCaseHistoryValues([
-				'Ground (a) removed',
-				'Ground (c) added',
-				'Ground (d) added'
-			]);
-		});
-	});
+				caseHistoryPage.verifyCaseHistoryValues([
+					'Ground (a) removed',
+					'Ground (c) added',
+					'Ground (d) added'
+				]);
+			});
+		}
+	);
 
-	it('Enforcement listed building appeal - can update grounds of appeal', () => {
-		cy.createCase({ ...enforcementListedBuildingData }).then((caseObj) => {
-			appeal = caseObj;
-			appellantCasePage.navigateToAppellantCase(caseObj);
+	it(
+		'Enforcement listed building appeal - can update grounds of appeal',
+		{ tags: [tag.enforcementListed, tag.oldRegs] },
+		() => {
+			cy.createCase({ ...enforcementListedBuildingData }).then((caseObj) => {
+				appeal = caseObj;
+				appellantCasePage.navigateToAppellantCase(caseObj);
 
-			// select the change link for grounds of appeal
-			appellantCasePage.selectChangeLink('grounds-for-appeal');
+				// select the change link for grounds of appeal
+				appellantCasePage.selectChangeLink('grounds-for-appeal');
 
-			// check the previously selected grounds of appeal are displayed
-			groundsOfAppealSelectionPage.checkSelectedGroundsOfAppeal(
-				enforcementListedBuildingData.appealGrounds
-			);
+				// check the previously selected grounds of appeal are displayed
+				groundsOfAppealSelectionPage.checkSelectedGroundsOfAppeal(
+					enforcementListedBuildingData.appealGrounds
+				);
 
-			// select a different ground of appeal
-			groundsOfAppealSelectionPage.selectGroundsOfAppeal(['a', 'c']);
+				// select a different ground of appeal
+				groundsOfAppealSelectionPage.selectGroundsOfAppeal(['a', 'c']);
 
-			// configure what grounds of appeal should be after updating
-			const updatedFormattedGrounds = {
-				descriptionOfBreach: enforcementData.descriptionOfAllegedBreach,
-				groundsList: ['c'],
-				groundFacts: [
-					{
-						label: 'Facts for ground (c)',
-						value: 'Not answered',
-						documentLabel: `Ground (c) supporting documents`
-					}
-				]
-			};
+				// configure what grounds of appeal should be after updating
+				const updatedFormattedGrounds = {
+					descriptionOfBreach: enforcementData.descriptionOfAllegedBreach,
+					groundsList: ['c'],
+					groundFacts: [
+						{
+							label: 'Facts for ground (c)',
+							value: 'Not answered',
+							documentLabel: `Ground (c) supporting documents`
+						}
+					]
+				};
 
-			// check for success banner message
-			appellantCasePage.validateBannerMessage(BANNER_TYPES.success, SUCCESS_MESSAGES.appealUpdated);
+				// check for success banner message
+				appellantCasePage.validateBannerMessage(
+					BANNER_TYPES.success,
+					SUCCESS_MESSAGES.appealUpdated
+				);
 
-			// check the updated grounds of appeal are displayed on the appellant case page
-			assertGroundsOfAppeal(updatedFormattedGrounds);
+				// check the updated grounds of appeal are displayed on the appellant case page
+				assertGroundsOfAppeal(updatedFormattedGrounds);
 
-			// check case history for the updated grounds of appeal
-			appellantCasePage.clickBackLink();
-			caseDetailsPage.clickViewCaseHistory();
+				// check case history for the updated grounds of appeal
+				appellantCasePage.clickBackLink();
+				caseDetailsPage.clickViewCaseHistory();
 
-			caseHistoryPage.verifyCaseHistoryValues(['Ground (a) removed', 'Ground (c) added']);
-		});
-	});
+				caseHistoryPage.verifyCaseHistoryValues(['Ground (a) removed', 'Ground (c) added']);
+			});
+		}
+	);
 
 	const navigateToReferenceUpdate = (caseObj) => {
 		caseDetailsPage.navigateToAppealsService();

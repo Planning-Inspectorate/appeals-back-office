@@ -14,57 +14,61 @@ const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
 const caseHistoryPage = new CaseHistoryPage();
 
-describe('Case History - Assign, validate, amend docs, update appellant case', () => {
-	beforeEach(() => {
-		cy.login(users.appeals.caseAdmin);
-	});
+describe(
+	'Case History - Assign, validate, amend docs, update appellant case',
+	{ tags: [tag.has, tag.caseDetails, tag.newRegs] },
+	() => {
+		beforeEach(() => {
+			cy.login(users.appeals.caseAdmin);
+		});
 
-	let appeal;
+		let appeal;
 
-	afterEach(() => {
-		cy.deleteAppeals(appeal);
-	});
+		afterEach(() => {
+			cy.deleteAppeals(appeal);
+		});
 
-	it(
-		'view case history after assigning a case officer and validating a case',
-		{ tags: tag.smoke },
-		() => {
-			let dueDate = new Date();
-			let officer;
+		it(
+			'view case history after assigning a case officer and validating a case',
+			{ tags: tag.smoke },
+			() => {
+				let dueDate = new Date();
+				let officer;
 
-			cy.createCase().then((caseObj) => {
-				appeal = caseObj;
-				happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'READY_TO_START', 'HAS');
-				caseDetailsPage.getCaseOfficer().then((name) => {
-					officer = name;
-					caseDetailsPage.clickViewCaseHistory();
-					caseHistoryPage.verifyCaseHistoryValue(officer + ' was added to the team');
+				cy.createCase().then((caseObj) => {
+					appeal = caseObj;
+					happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'READY_TO_START', 'HAS');
+					caseDetailsPage.getCaseOfficer().then((name) => {
+						officer = name;
+						caseDetailsPage.clickViewCaseHistory();
+						caseHistoryPage.verifyCaseHistoryValue(officer + ' was added to the team');
+					});
+					caseHistoryPage.verifyCaseHistoryValue('Case progressed to validation');
 				});
-				caseHistoryPage.verifyCaseHistoryValue('Case progressed to validation');
-			});
-		}
-	);
+			}
+		);
 
-	it(
-		'view case history after amending a document and updating the appellant case',
-		{ tags: tag.smoke },
-		() => {
-			let dueDate = new Date();
+		it(
+			'view case history after amending a document and updating the appellant case',
+			{ tags: tag.smoke },
+			() => {
+				let dueDate = new Date();
 
-			cy.createCase().then((caseObj) => {
-				appeal = caseObj;
-				happyPathHelper.manageDocsAppellantCase(caseObj);
-				caseDetailsPage.clickChangeSiteOwnership();
-				caseDetailsPage.selectRadioButtonByValue('Owns some of the land');
-				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.validateBannerMessage('Success', 'Site ownership updated');
-				caseDetailsPage.clickBackLink();
-				caseDetailsPage.clickViewCaseHistory();
-				caseHistoryPage.verifyCaseHistoryValue(
-					`Document sample-file.doc uploaded (version 1, no redaction required)`
-				);
-				caseHistoryPage.verifyCaseHistoryValue('updated to Partially owned');
-			});
-		}
-	);
-});
+				cy.createCase().then((caseObj) => {
+					appeal = caseObj;
+					happyPathHelper.manageDocsAppellantCase(caseObj);
+					caseDetailsPage.clickChangeSiteOwnership();
+					caseDetailsPage.selectRadioButtonByValue('Owns some of the land');
+					caseDetailsPage.clickButtonByText('Continue');
+					caseDetailsPage.validateBannerMessage('Success', 'Site ownership updated');
+					caseDetailsPage.clickBackLink();
+					caseDetailsPage.clickViewCaseHistory();
+					caseHistoryPage.verifyCaseHistoryValue(
+						`Document sample-file.doc uploaded (version 1, no redaction required)`
+					);
+					caseHistoryPage.verifyCaseHistoryValue('updated to Partially owned');
+				});
+			}
+		);
+	}
+);

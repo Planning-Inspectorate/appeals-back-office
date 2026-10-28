@@ -12,6 +12,7 @@ import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { ReviewEvidenceSection } from '../../page_objects/reviewEvidenceSection.js';
 import { SAMPLE_FILES } from '../../support/consts.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
+import { tag } from '../../support/tag';
 import { urlPaths } from '../../support/urlPaths.js';
 import { getFileProperties } from '../../support/utils/format.js';
 
@@ -24,7 +25,7 @@ const evidenceReasonsSection = new EvidenceReasonsSection();
 const documentationSectionPage = new DocumentationSectionPage();
 const fileDetailsPage = new FileDetailsPage();
 
-describe('manage docs on appellant case', () => {
+describe('manage docs on appellant case', { tags: [tag.documents] }, () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
@@ -48,7 +49,7 @@ describe('manage docs on appellant case', () => {
 
 	let sampleFiles = caseDetailsPage.sampleFiles;
 
-	it('upload new version of document on appellant case', () => {
+	it('upload new version of document on appellant case', { tags: [tag.has, tag.newRegs] }, () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			happyPathHelper.uploadDocAppellantCase(caseObj);
@@ -72,7 +73,7 @@ describe('manage docs on appellant case', () => {
 		});
 	});
 
-	it('check correct error response for file upload', () => {
+	it('check correct error response for file upload', { tags: [tag.has, tag.newRegs] }, () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			happyPathHelper.uploadDocAppellantCase(caseObj);
@@ -86,7 +87,7 @@ describe('manage docs on appellant case', () => {
 		});
 	});
 
-	it('upload doc and remove when final version', () => {
+	it('upload doc and remove when final version', { tags: [tag.has, tag.newRegs] }, () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			happyPathHelper.uploadDocAppellantCase(caseObj);
@@ -113,7 +114,7 @@ describe('manage docs on appellant case', () => {
 		});
 	});
 
-	it('remove doc when not final version', () => {
+	it('remove doc when not final version', { tags: [tag.has, tag.newRegs] }, () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			happyPathHelper.uploadDocAppellantCase(caseObj);
@@ -160,227 +161,255 @@ describe('manage docs on appellant case', () => {
 		});
 	});
 
-	it('can upload a file with spaces in name and rename it', () => {
-		cy.createCase().then((caseObj) => {
-			appeal = caseObj;
-
-			const fileToUpload = SAMPLE_FILES.documentWithSpaces;
-
-			happyPathHelper.uploadDocAppellantCase(caseObj, fileToUpload);
-			caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
-
-			// Simulate the completion of the documents scan
-			cy.simulateDocumentsScanComplete(caseObj);
-
-			// get the file name from the uploaded file and create a new name for it
-			const { fileName } = getFileProperties(fileToUpload);
-			const newFileName = `${fileName}-new`;
-
-			fileDetailsPage.clickLinkByText('View and edit');
-			fileDetailsPage.changeFileName();
-			fileDetailsPage.enterFileName(newFileName);
-			fileDetailsPage.clickButtonByText('Confirm');
-			fileDetailsPage.confirmFileRenamed(newFileName);
-		});
-	});
-
-	it('can upload a file with brackets in name and rename it', () => {
-		cy.createCase().then((caseObj) => {
-			appeal = caseObj;
-
-			const fileToUpload = SAMPLE_FILES.documentWithBrackets;
-
-			happyPathHelper.uploadDocAppellantCase(caseObj, fileToUpload);
-			caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
-
-			// Simulate the completion of the documents scan
-			cy.simulateDocumentsScanComplete(caseObj);
-
-			// get the file name from the uploaded file and create a new name for it
-			const { fileName } = getFileProperties(fileToUpload);
-			const newFileName = `${fileName}-new`;
-
-			fileDetailsPage.clickLinkByText('View and edit');
-			fileDetailsPage.changeFileName();
-			fileDetailsPage.enterFileName(newFileName);
-			fileDetailsPage.clickButtonByText('Confirm');
-			fileDetailsPage.confirmFileRenamed(newFileName);
-		});
-	});
-
-	it('can upload appellant proof of evidence and witness to inquiry case', () => {
-		cy.createCase({ caseType: 'W' }).then((caseObj) => {
-			cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+	it(
+		'can upload a file with spaces in name and rename it',
+		{ tags: [tag.has, tag.newRegs] },
+		() => {
+			cy.createCase().then((caseObj) => {
 				appeal = caseObj;
-				// require case to be started as inquiry to access appellant POE evidence
-				setupInquiry(caseObj, inquiryDate);
 
-				// find case and open inqiiry section
-				cy.visit(urlPaths.appealsList);
-				listCasesPage.clickAppealByRef(caseObj);
+				const fileToUpload = SAMPLE_FILES.documentWithSpaces;
 
-				// navigate to file upload view, upload file and verify uploaded
-				documentationSectionPage.selectAddDocument('appellant-proofs-evidence');
-				fileUploaderSection.uploadFile(sampleFiles.document);
-				fileUploaderSection.verifyFilesUploaded([sampleFiles.document]);
+				happyPathHelper.uploadDocAppellantCase(caseObj, fileToUpload);
+				caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
 
-				//naviagte to review/confirm page
-				caseDetailsPage.clickButtonByText('Continue');
-				// check for lpa heading
-				caseDetailsPage.validateSectionHeader(
-					'Check details and add appellant proof of evidence and witnesses'
-				);
-				caseDetailsPage.clickButtonByText('Add appellant proof of evidence and witness');
+				// Simulate the completion of the documents scan
+				cy.simulateDocumentsScanComplete(caseObj);
 
-				// check page header and success banner
-				caseDetailsPage.validateSectionHeader('Review appellant proof of evidence and witnesses');
-				caseDetailsPage.validateBannerMessage(
-					'Success',
-					'Appellant proof of evidence and witnesses added'
-				);
+				// get the file name from the uploaded file and create a new name for it
+				const { fileName } = getFileProperties(fileToUpload);
+				const newFileName = `${fileName}-new`;
+
+				fileDetailsPage.clickLinkByText('View and edit');
+				fileDetailsPage.changeFileName();
+				fileDetailsPage.enterFileName(newFileName);
+				fileDetailsPage.clickButtonByText('Confirm');
+				fileDetailsPage.confirmFileRenamed(newFileName);
 			});
-		});
-	});
+		}
+	);
 
-	it('upload appellant proof of evidence and witness - proceed without uploading file', () => {
-		cy.createCase({ caseType: 'W' }).then((caseObj) => {
-			cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+	it(
+		'can upload a file with brackets in name and rename it',
+		{ tags: [tag.has, tag.newRegs] },
+		() => {
+			cy.createCase().then((caseObj) => {
 				appeal = caseObj;
-				// require case to be started as inquiry to access appellant POE evidence
-				setupInquiry(caseObj, inquiryDate);
 
-				// find case and open inqiiry section
-				cy.visit(urlPaths.appealsList);
-				listCasesPage.clickAppealByRef(caseObj);
+				const fileToUpload = SAMPLE_FILES.documentWithBrackets;
 
-				// navigate to file upload view, proceed without uploading file
-				documentationSectionPage.selectAddDocument('appellant-proofs-evidence');
-				caseDetailsPage.clickButtonByText('Continue');
+				happyPathHelper.uploadDocAppellantCase(caseObj, fileToUpload);
+				caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
 
-				// verify error message
-				fileUploaderSection.verifyErrorMessages({
-					messages: ['Select the Proof of evidence and witness'],
-					fields: ['upload-file-button-1']
+				// Simulate the completion of the documents scan
+				cy.simulateDocumentsScanComplete(caseObj);
+
+				// get the file name from the uploaded file and create a new name for it
+				const { fileName } = getFileProperties(fileToUpload);
+				const newFileName = `${fileName}-new`;
+
+				fileDetailsPage.clickLinkByText('View and edit');
+				fileDetailsPage.changeFileName();
+				fileDetailsPage.enterFileName(newFileName);
+				fileDetailsPage.clickButtonByText('Confirm');
+				fileDetailsPage.confirmFileRenamed(newFileName);
+			});
+		}
+	);
+
+	it(
+		'can upload appellant proof of evidence and witness to inquiry case',
+		{ tags: [tag.s78, tag.inquiry, tag.newRegs] },
+		() => {
+			cy.createCase({ caseType: 'W' }).then((caseObj) => {
+				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+					appeal = caseObj;
+					// require case to be started as inquiry to access appellant POE evidence
+					setupInquiry(caseObj, inquiryDate);
+
+					// find case and open inqiiry section
+					cy.visit(urlPaths.appealsList);
+					listCasesPage.clickAppealByRef(caseObj);
+
+					// navigate to file upload view, upload file and verify uploaded
+					documentationSectionPage.selectAddDocument('appellant-proofs-evidence');
+					fileUploaderSection.uploadFile(sampleFiles.document);
+					fileUploaderSection.verifyFilesUploaded([sampleFiles.document]);
+
+					//naviagte to review/confirm page
+					caseDetailsPage.clickButtonByText('Continue');
+					// check for lpa heading
+					caseDetailsPage.validateSectionHeader(
+						'Check details and add appellant proof of evidence and witnesses'
+					);
+					caseDetailsPage.clickButtonByText('Add appellant proof of evidence and witness');
+
+					// check page header and success banner
+					caseDetailsPage.validateSectionHeader('Review appellant proof of evidence and witnesses');
+					caseDetailsPage.validateBannerMessage(
+						'Success',
+						'Appellant proof of evidence and witnesses added'
+					);
 				});
 			});
-		});
-	});
+		}
+	);
 
-	it('can mark appellant proof of evidence as incomplete and select reason', () => {
-		cy.createCase({ caseType: 'W' }).then((caseObj) => {
-			cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-				appeal = caseObj;
-				// require case to be started as inquiry to access appellant POE evidence
-				setupInquiry(caseObj, inquiryDate);
+	it(
+		'upload appellant proof of evidence and witness - proceed without uploading file',
+		{ tags: [tag.s78, tag.inquiry, tag.newRegs] },
+		() => {
+			cy.createCase({ caseType: 'W' }).then((caseObj) => {
+				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+					appeal = caseObj;
+					// require case to be started as inquiry to access appellant POE evidence
+					setupInquiry(caseObj, inquiryDate);
 
-				// find case and open inquiry section
-				cy.visit(urlPaths.appealsList);
-				listCasesPage.clickAppealByRef(caseObj);
+					// find case and open inqiiry section
+					cy.visit(urlPaths.appealsList);
+					listCasesPage.clickAppealByRef(caseObj);
 
-				// navigate to file upload view, upload file and verify uploaded
-				documentationSectionPage.selectAddDocument('appellant-proofs-evidence');
-				fileUploaderSection.uploadFile(sampleFiles.document);
-				fileUploaderSection.verifyFilesUploaded([sampleFiles.document]);
+					// navigate to file upload view, proceed without uploading file
+					documentationSectionPage.selectAddDocument('appellant-proofs-evidence');
+					caseDetailsPage.clickButtonByText('Continue');
 
-				//naviagte to review/confirm page
-				fileUploaderSection.clickButtonByText('Continue');
-				caseDetailsPage.clickButtonByText('Add appellant proof of evidence and witness');
+					// verify error message
+					fileUploaderSection.verifyErrorMessages({
+						messages: ['Select the Proof of evidence and witness'],
+						fields: ['upload-file-button-1']
+					});
+				});
+			});
+		}
+	);
 
-				// set review as incomplete and select reason
-				reviewEvidenceSection.selectEvidenceReviewOption('Mark as incomplete');
-				reviewEvidenceSection.clickButtonByText('Continue');
+	it(
+		'can mark appellant proof of evidence as incomplete and select reason',
+		{ tags: [tag.s78, tag.inquiry, tag.newRegs] },
+		() => {
+			cy.createCase({ caseType: 'W' }).then((caseObj) => {
+				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+					appeal = caseObj;
+					// require case to be started as inquiry to access appellant POE evidence
+					setupInquiry(caseObj, inquiryDate);
 
-				// check that should not be any preselected options
-				evidenceReasonsSection.verifyNumberOfSelectedReasons(0);
+					// find case and open inquiry section
+					cy.visit(urlPaths.appealsList);
+					listCasesPage.clickAppealByRef(caseObj);
 
-				// select reason and proceed to check answers page
-				evidenceReasonsSection.selectAndReturnEvidenceReasonOption().then((selectedOption) => {
+					// navigate to file upload view, upload file and verify uploaded
+					documentationSectionPage.selectAddDocument('appellant-proofs-evidence');
+					fileUploaderSection.uploadFile(sampleFiles.document);
+					fileUploaderSection.verifyFilesUploaded([sampleFiles.document]);
+
+					//naviagte to review/confirm page
+					fileUploaderSection.clickButtonByText('Continue');
+					caseDetailsPage.clickButtonByText('Add appellant proof of evidence and witness');
+
+					// set review as incomplete and select reason
+					reviewEvidenceSection.selectEvidenceReviewOption('Mark as incomplete');
+					reviewEvidenceSection.clickButtonByText('Continue');
+
+					// check that should not be any preselected options
+					evidenceReasonsSection.verifyNumberOfSelectedReasons(0);
+
+					// select reason and proceed to check answers page
+					evidenceReasonsSection.selectAndReturnEvidenceReasonOption().then((selectedOption) => {
+						evidenceReasonsSection.clickButtonByText('Continue');
+
+						// check address is correct
+						cyaSection.verifyAnswerUpdated({
+							field: cyaSection.cyaSectionFields.reasonForRejectAppellantPOE,
+							value: selectedOption
+						});
+					});
+				});
+			});
+		}
+	);
+
+	it(
+		'can mark appellant proof of evidence as incomplete and select other reason',
+		{ tags: [tag.s78, tag.inquiry, tag.newRegs] },
+		() => {
+			cy.createCase({ caseType: 'W' }).then((caseObj) => {
+				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+					appeal = caseObj;
+					// require case to be started as inquiry to access appellant POE evidence
+					setupInquiry(caseObj, inquiryDate);
+
+					// find case and open inquiry section
+					cy.visit(urlPaths.appealsList);
+					listCasesPage.clickAppealByRef(caseObj);
+
+					// navigate to file upload view, upload file and verify uploaded
+					documentationSectionPage.selectAddDocument('appellant-proofs-evidence');
+					fileUploaderSection.uploadFile(sampleFiles.document);
+					fileUploaderSection.verifyFilesUploaded([sampleFiles.document]);
+
+					//naviagte to review/confirm page
+					fileUploaderSection.clickButtonByText('Continue');
+					caseDetailsPage.clickButtonByText('Add appellant proof of evidence and witness');
+
+					// set review as incomplete and select reason
+					reviewEvidenceSection.selectEvidenceReviewOption('Mark as incomplete');
+					reviewEvidenceSection.clickButtonByText('Continue');
+
+					// check that should not be any preselected options
+					evidenceReasonsSection.verifyNumberOfSelectedReasons(0);
+
+					// select other reason and proceed to check answers page
+					const otherReason = 'This is another reason';
+					evidenceReasonsSection.selectOtherReason(otherReason);
 					evidenceReasonsSection.clickButtonByText('Continue');
 
 					// check address is correct
 					cyaSection.verifyAnswerUpdated({
 						field: cyaSection.cyaSectionFields.reasonForRejectAppellantPOE,
-						value: selectedOption
+						value: otherReason
 					});
 				});
 			});
-		});
-	});
+		}
+	);
 
-	it('can mark appellant proof of evidence as incomplete and select other reason', () => {
-		cy.createCase({ caseType: 'W' }).then((caseObj) => {
-			cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-				appeal = caseObj;
-				// require case to be started as inquiry to access appellant POE evidence
-				setupInquiry(caseObj, inquiryDate);
+	it(
+		'can mark appellant proof of evidence as incomplete - proceed without select reason',
+		{ tags: [tag.s78, tag.inquiry, tag.newRegs] },
+		() => {
+			cy.createCase({ caseType: 'W' }).then((caseObj) => {
+				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+					appeal = caseObj;
+					// require case to be started as inquiry to access appellant POE evidence
+					setupInquiry(caseObj, inquiryDate);
 
-				// find case and open inquiry section
-				cy.visit(urlPaths.appealsList);
-				listCasesPage.clickAppealByRef(caseObj);
+					// find case and open inquiry section
+					cy.visit(urlPaths.appealsList);
+					listCasesPage.clickAppealByRef(caseObj);
 
-				// navigate to file upload view, upload file and verify uploaded
-				documentationSectionPage.selectAddDocument('appellant-proofs-evidence');
-				fileUploaderSection.uploadFile(sampleFiles.document);
-				fileUploaderSection.verifyFilesUploaded([sampleFiles.document]);
+					// navigate to file upload view, upload file and verify uploaded
+					documentationSectionPage.selectAddDocument('appellant-proofs-evidence');
+					fileUploaderSection.uploadFile(sampleFiles.document);
+					fileUploaderSection.verifyFilesUploaded([sampleFiles.document]);
 
-				//naviagte to review/confirm page
-				fileUploaderSection.clickButtonByText('Continue');
-				caseDetailsPage.clickButtonByText('Add appellant proof of evidence and witness');
+					//naviagte to review/confirm page
+					fileUploaderSection.clickButtonByText('Continue');
+					caseDetailsPage.clickButtonByText('Add appellant proof of evidence and witness');
 
-				// set review as incomplete and select reason
-				reviewEvidenceSection.selectEvidenceReviewOption('Mark as incomplete');
-				reviewEvidenceSection.clickButtonByText('Continue');
+					// set review as incomplete and select reason
+					reviewEvidenceSection.selectEvidenceReviewOption('Mark as incomplete');
+					reviewEvidenceSection.clickButtonByText('Continue');
 
-				// check that should not be any preselected options
-				evidenceReasonsSection.verifyNumberOfSelectedReasons(0);
+					// proceed without selecting a reason
+					evidenceReasonsSection.clickButtonByText('Continue');
 
-				// select other reason and proceed to check answers page
-				const otherReason = 'This is another reason';
-				evidenceReasonsSection.selectOtherReason(otherReason);
-				evidenceReasonsSection.clickButtonByText('Continue');
-
-				// check address is correct
-				cyaSection.verifyAnswerUpdated({
-					field: cyaSection.cyaSectionFields.reasonForRejectAppellantPOE,
-					value: otherReason
+					// verify error message
+					evidenceReasonsSection.verifyErrorMessages({
+						messages: ['Select why the proof of evidence and witnesses are incomplete'],
+						fields: ['rejection-reason']
+					});
 				});
 			});
-		});
-	});
-
-	it('can mark appellant proof of evidence as incomplete - proceed without select reason', () => {
-		cy.createCase({ caseType: 'W' }).then((caseObj) => {
-			cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-				appeal = caseObj;
-				// require case to be started as inquiry to access appellant POE evidence
-				setupInquiry(caseObj, inquiryDate);
-
-				// find case and open inquiry section
-				cy.visit(urlPaths.appealsList);
-				listCasesPage.clickAppealByRef(caseObj);
-
-				// navigate to file upload view, upload file and verify uploaded
-				documentationSectionPage.selectAddDocument('appellant-proofs-evidence');
-				fileUploaderSection.uploadFile(sampleFiles.document);
-				fileUploaderSection.verifyFilesUploaded([sampleFiles.document]);
-
-				//naviagte to review/confirm page
-				fileUploaderSection.clickButtonByText('Continue');
-				caseDetailsPage.clickButtonByText('Add appellant proof of evidence and witness');
-
-				// set review as incomplete and select reason
-				reviewEvidenceSection.selectEvidenceReviewOption('Mark as incomplete');
-				reviewEvidenceSection.clickButtonByText('Continue');
-
-				// proceed without selecting a reason
-				evidenceReasonsSection.clickButtonByText('Continue');
-
-				// verify error message
-				evidenceReasonsSection.verifyErrorMessages({
-					messages: ['Select why the proof of evidence and witnesses are incomplete'],
-					fields: ['rejection-reason']
-				});
-			});
-		});
-	});
+		}
+	);
 });

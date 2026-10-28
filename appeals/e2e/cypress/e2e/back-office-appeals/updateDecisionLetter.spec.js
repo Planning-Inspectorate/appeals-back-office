@@ -6,6 +6,7 @@ import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { CaseHistoryPage } from '../../page_objects/caseHistory/caseHistoryPage.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
+import { tag } from '../../support/tag';
 import { formatDateAndTime } from '../../support/utils/format';
 
 const caseDetailsPage = new CaseDetailsPage();
@@ -16,7 +17,7 @@ const formattedDate = formatDateAndTime(now);
 
 const { users: apiUsers, casedata } = appealsApiRequests.caseSubmission;
 
-describe('Update Decision Letter', () => {
+describe('Update Decision Letter', { tags: [tag.s78, tag.decision, tag.newRegs] }, () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
