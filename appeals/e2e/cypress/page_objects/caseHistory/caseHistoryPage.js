@@ -21,6 +21,8 @@ export class CaseHistoryPage extends Page {
 
 	verifyCaseHistory(groupArray, caseRef) {
 		caseDetailsPage.clickViewCaseHistory();
+		cy.url().should('include', '/audit');
+		cy.contains('h1', 'Case history').should('be.visible');
 		const state = this.states[groupArray];
 
 		state.forEach((status, index) => {
