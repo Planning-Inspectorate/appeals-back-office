@@ -119,7 +119,7 @@ it(`New Reg Appeal Personal list all stages`, () => {
 	});
 });
 
-it.only(`Old Reg Appeal Personal list all stages`, () => {
+it(`Old Reg Appeal Personal list all stages`, () => {
 	cy.createCase({ ...appealsApiRequests.enforcementSubmission.casedata }).then((caseObj) => {
 		appeal = caseObj;
 		cy.addLpaqSubmissionToCase(caseObj);
