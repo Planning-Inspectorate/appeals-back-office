@@ -98,7 +98,7 @@ describe('Change appeal procedure type - Expedited', () => {
 		it('should change appeal procedure type from Part 1 to Written representations in LPAQ stage', () => {
 			const procedureTypeCaption = (ref) => `Appeal ${ref} - update appeal procedure`;
 
-			setupTestCase({ additionalDocs: [appealsApiRequests.environmentalAssessment] }).then(() => {
+			setupTestCase().then(() => {
 				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
 
 				caseDetailsPage.clickReadyToStartCase();
@@ -204,7 +204,7 @@ describe('Change appeal procedure type - Expedited', () => {
 		it('should change appeal procedure type from Part 1 to Written representations in Event stage', () => {
 			const procedureTypeCaption = (ref) => `Appeal ${ref} - update appeal procedure`;
 
-			setupTestCase({ additionalDocs: [appealsApiRequests.environmentalAssessment] }).then(() => {
+			setupTestCase().then(() => {
 				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
 
 				caseDetailsPage.clickReadyToStartCase();
@@ -302,7 +302,7 @@ describe('Change appeal procedure type - Expedited', () => {
 		it('should change appeal procedure type from Part 1 to Written representations in Awaiting Event stage (deleting site visit)', () => {
 			const procedureTypeCaption = (ref) => `Appeal ${ref} - update appeal procedure`;
 
-			setupTestCase({ additionalDocs: [appealsApiRequests.environmentalAssessment] }).then(() => {
+			setupTestCase().then(() => {
 				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
 
 				caseDetailsPage.clickReadyToStartCase();
@@ -404,7 +404,7 @@ describe('Change appeal procedure type - Expedited', () => {
 		it('should change appeal procedure type from Part 1 to Written representations in Issue Determination stage', () => {
 			const procedureTypeCaption = (ref) => `Appeal ${ref} - update appeal procedure`;
 
-			setupTestCase({ additionalDocs: [appealsApiRequests.environmentalAssessment] }).then(() => {
+			setupTestCase().then(() => {
 				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
 
 				caseDetailsPage.clickReadyToStartCase();
@@ -511,7 +511,7 @@ describe('Change appeal procedure type - Expedited', () => {
 		it('should change appeal procedure type from Part 1 to Hearing representations in LPAQ stage', () => {
 			const procedureTypeCaption = (ref) => `Appeal ${ref} - update appeal procedure`;
 
-			setupTestCase({ additionalDocs: [appealsApiRequests.environmentalAssessment] }).then(() => {
+			setupTestCase().then(() => {
 				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
 
 				caseDetailsPage.clickReadyToStartCase();
@@ -609,7 +609,7 @@ describe('Change appeal procedure type - Expedited', () => {
 		it('should change appeal procedure type from Part 1 to Hearing representations in Event stage', () => {
 			const procedureTypeCaption = (ref) => `Appeal ${ref} - update appeal procedure`;
 
-			setupTestCase({ additionalDocs: [appealsApiRequests.environmentalAssessment] }).then(() => {
+			setupTestCase().then(() => {
 				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
 
 				caseDetailsPage.clickReadyToStartCase();
@@ -711,7 +711,7 @@ describe('Change appeal procedure type - Expedited', () => {
 		it('should change appeal procedure type from Part 1 to Hearing representations in Awaiting Event stage (deleting site visit)', () => {
 			const procedureTypeCaption = (ref) => `Appeal ${ref} - update appeal procedure`;
 
-			setupTestCase({ additionalDocs: [appealsApiRequests.environmentalAssessment] }).then(() => {
+			setupTestCase().then(() => {
 				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
 
 				caseDetailsPage.clickReadyToStartCase();
@@ -817,7 +817,7 @@ describe('Change appeal procedure type - Expedited', () => {
 		it('should change appeal procedure type from Part 1 to Hearing representations in Issue Determination stage', () => {
 			const procedureTypeCaption = (ref) => `Appeal ${ref} - update appeal procedure`;
 
-			setupTestCase({ additionalDocs: [appealsApiRequests.environmentalAssessment] }).then(() => {
+			setupTestCase().then(() => {
 				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
 
 				caseDetailsPage.clickReadyToStartCase();
@@ -928,7 +928,7 @@ describe('Change appeal procedure type - Expedited', () => {
 		it('should change appeal procedure type from Part 1 to Inquiry representations in LPAQ stage', () => {
 			const procedureTypeCaption = (ref) => `Appeal ${ref} - update appeal procedure`;
 
-			setupTestCase({ additionalDocs: [appealsApiRequests.environmentalAssessment] }).then(() => {
+			setupTestCase().then(() => {
 				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
 
 				caseDetailsPage.clickReadyToStartCase();
@@ -1044,7 +1044,7 @@ describe('Change appeal procedure type - Expedited', () => {
 			it('should change appeal procedure type from Part 1 to Inquiry representations in Event stage', () => {
 				const procedureTypeCaption = (ref) => `Appeal ${ref} - update appeal procedure`;
 
-				setupTestCase({ additionalDocs: [appealsApiRequests.environmentalAssessment] }).then(() => {
+				setupTestCase().then(() => {
 					happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
 
 					caseDetailsPage.clickReadyToStartCase();
@@ -1159,7 +1159,7 @@ describe('Change appeal procedure type - Expedited', () => {
 			it('should change appeal procedure type from Part 1 to Inquiry representations in Awaiting Event stage (deleting site visit)', () => {
 				const procedureTypeCaption = (ref) => `Appeal ${ref} - update appeal procedure`;
 
-				setupTestCase({ additionalDocs: [appealsApiRequests.environmentalAssessment] }).then(() => {
+				setupTestCase().then(() => {
 					happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
 
 					caseDetailsPage.clickReadyToStartCase();
@@ -1277,7 +1277,7 @@ describe('Change appeal procedure type - Expedited', () => {
 			it('should change appeal procedure type from Part 1 to Inquiry representations in Issue Determination stage', () => {
 				const procedureTypeCaption = (ref) => `Appeal ${ref} - update appeal procedure`;
 
-				setupTestCase({ additionalDocs: [appealsApiRequests.environmentalAssessment] }).then(() => {
+				setupTestCase().then(() => {
 					happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
 
 					caseDetailsPage.clickReadyToStartCase();

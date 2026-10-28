@@ -106,9 +106,7 @@ describe('Expedited (part1)) appeals', () => {
 
 	describe('Appeals valid for expedited process - appeals submitted on 01-04-2026', () => {
 		it('S78 full planning appeal submitted on 01-04-2026 should be set as expedited', () => {
-			setupTestCase({
-				additionalDocs: [appealsApiRequests.environmentalAssessment]
-			}).then(() => {
+			setupTestCase().then(() => {
 				// approve appellant case as valid and set a due date for the questionnaire response
 				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
 
@@ -274,7 +272,6 @@ describe('Expedited (part1)) appeals', () => {
 	describe('Appeals valid for expedited process - appeals submitted after 01-04-2026', () => {
 		it('S78 full planning appeal submitted after 01-04-2026 should be set as expedited', () => {
 			setupTestCase({
-				additionalDocs: [appealsApiRequests.environmentalAssessment],
 				applicationDate: '2026-06-02T00:00:00.000Z'
 			}).then(() => {
 				// approve appellant case as valid and set a due date for the questionnaire response
@@ -447,7 +444,6 @@ describe('Expedited (part1)) appeals', () => {
 	describe('Appeals valid for expedited process - appeals submitted with decision refused', () => {
 		it('S78 full planning appeal submitted on 01-04-2026 with decision refused should be set as expedited', () => {
 			setupTestCase({
-				additionalDocs: [appealsApiRequests.environmentalAssessment],
 				applicationDecision: APPLICATION_DECISIONS.REFUSED
 			}).then(() => {
 				// approve appellant case as valid and set a due date for the questionnaire response
