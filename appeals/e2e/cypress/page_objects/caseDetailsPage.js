@@ -865,6 +865,7 @@ export class CaseDetailsPage extends Page {
 		this.selectRadioButtonByValue('Accept statement');
 		this.clickButtonByText('Continue');
 		if (isAllocationPageExist) {
+			cy.url().should('include', '/allocation-level');
 			this.selectRadioButtonByValue('A');
 			this.clickButtonByText('Continue');
 			this.selectCheckbox();
@@ -872,7 +873,9 @@ export class CaseDetailsPage extends Page {
 			this.selectRadioButtonByValue('No');
 		}
 		this.clickButtonByText('Continue');
-		this.clickButtonByText('Confirm');
+		cy.url().should('include', '/lpa-statement/valid/confirm');
+		cy.contains('button', 'Confirm').should('be.visible').click();
+		cy.url().should('not.include', '/confirm');
 	}
 
 	reviewFinalComment(type) {
@@ -880,7 +883,11 @@ export class CaseDetailsPage extends Page {
 		this.basePageElements.bannerLink().click();
 		this.selectRadioButtonByValue('Accept final comment');
 		this.clickButtonByText('Continue');
-		this.clickButtonByText(`Accept ${type} final comments`);
+
+		const confirmUrl = `/final-comments/${type.toLowerCase()}/accept`;
+		cy.url().should('include', confirmUrl);
+		cy.contains('button', `Accept ${type} final comments`).should('be.visible').click();
+		cy.url().should('not.include', confirmUrl);
 	}
 
 	checkTimetableDueDatesAndChangeLinks(timetableItems) {

@@ -70,8 +70,11 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.selectRadioButtonByValue('Yes');
 		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.selectRadioButtonByValue('No');
-		caseDetailsPage.clickButtonByText('Continue');
+
+		cy.contains('h1', 'Do you want to add any other information?').should('be.visible');
+		cy.contains('label', 'No').click();
+		cy.contains('button', 'Continue').click();
+
 		dateTimeSection.enterValidDate(dueDate);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Mark appeal as valid');

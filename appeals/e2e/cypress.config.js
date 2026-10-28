@@ -74,7 +74,7 @@ module.exports = defineConfig({
 		experimentalRunAllSpecs: true,
 		chromeWebSecurity: false,
 		video: false,
-		retries: 1,
+		// retries: 1,
 		redirectionLimit: 50
 	}
 });
