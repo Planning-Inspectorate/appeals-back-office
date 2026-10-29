@@ -233,6 +233,19 @@ describe('appeal timetables routes', () => {
 					fullPlanningAppealRequestBody,
 					fullPlanningAppealResponseBody,
 					'appeal-timetable-updated-hearing'
+				],
+				[
+					'full planning written part 1',
+					{
+						...fullPlanningAppealWithTimetable,
+						procedureType: {
+							...fullPlanningAppealWithTimetable.procedureType,
+							key: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1
+						}
+					},
+					fullPlanningAppealRequestBody,
+					fullPlanningAppealResponseBody,
+					'has-appeal-timetable-updated'
 				]
 			])(
 				'updates a %s appeal timetable and sends notify',
