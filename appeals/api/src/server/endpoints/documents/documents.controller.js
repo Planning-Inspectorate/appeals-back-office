@@ -519,7 +519,9 @@ const sendShareDocumentEmails = async (
 	const lpaEmail = appeal.lpa?.email;
 
 	if (appellantEmail) {
-		const inviteComments = inviteResponses && costsCategory === 'lpa';
+		const inviteComments = costsCategory
+			? inviteResponses && costsCategory === 'lpa'
+			: inviteResponses;
 		await notifySend({
 			templateName: notifyTemplateName,
 			notifyClient: notifyClient,
@@ -534,7 +536,9 @@ const sendShareDocumentEmails = async (
 	}
 
 	if (lpaEmail) {
-		const inviteComments = inviteResponses && costsCategory === 'appellant';
+		const inviteComments = costsCategory
+			? inviteResponses && costsCategory === 'appellant'
+			: inviteResponses;
 		await notifySend({
 			templateName: notifyTemplateName,
 			notifyClient: notifyClient,
