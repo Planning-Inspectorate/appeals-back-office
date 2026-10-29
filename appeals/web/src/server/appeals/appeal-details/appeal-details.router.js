@@ -40,6 +40,7 @@ import lpaReferenceRouter from './lpa-reference/lpa-reference.router.js';
 import neighbouringSitesRouter from './neighbouring-sites/neighbouring-sites.router.js';
 import netResidenceRouter from './net-residence/net-residence.router.js';
 import otherAppealsRouter from './other-appeals/other-appeals.router.js';
+import redetermineAppealRouter from './redetermine/redetermine.router.js';
 import finalCommentsRouter from './representations/final-comments/final-comments.router.js';
 import interestedPartyCommentsRouter from './representations/interested-party-comments/interested-party-comments.router.js';
 import proofOfEvidenceRouter from './representations/proof-of-evidence/proof-of-evidence.router.js';
@@ -265,6 +266,12 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	cancelAppealRouter
+);
+router.use(
+	'/:appealId/redetermine',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	redetermineAppealRouter
 );
 router.use(
 	'/:appealId/invalid',

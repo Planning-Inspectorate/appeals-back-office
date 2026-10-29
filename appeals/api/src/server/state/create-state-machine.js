@@ -1,5 +1,6 @@
 import {
 	ACTION_CHANGE_PROCEDURE_TYPE,
+	ACTION_REDETERMINATION,
 	STATE_TYPE_FINAL,
 	VALIDATION_OUTCOME_CANCEL,
 	VALIDATION_OUTCOME_COMPLETE,
@@ -407,7 +408,9 @@ const createStateMachine = (
 				}
 			},
 			[APPEAL_CASE_STATUS.COMPLETE]: {
-				type: STATE_TYPE_FINAL,
+				on: {
+					[ACTION_REDETERMINATION]: { target: APPEAL_CASE_STATUS.EVENT }
+				},
 				meta: {
 					validAppealTypes: [APPEAL_CASE_TYPE.D, APPEAL_CASE_TYPE.W],
 					validProcedureTypes: [

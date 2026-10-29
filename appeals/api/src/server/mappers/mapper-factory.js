@@ -412,6 +412,7 @@ function createFoldersLayout(folders, context) {
 				hearingDocuments: folders.find(
 					(f) => f.path === `hearing/${APPEAL_DOCUMENT_TYPE.HEARING_PROCESS}`
 				),
+				redeterminationEvidence: folders.find((f) => f.path === 'redetermination/evidence'),
 				costs: {
 					appellantApplicationFolder: folders.find(
 						(f) =>

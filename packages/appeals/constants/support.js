@@ -14,6 +14,7 @@ export const VALIDATION_OUTCOME_INVALID = 'Invalid';
 export const VALIDATION_OUTCOME_VALID = 'Valid';
 export const VALIDATION_OUTCOME_CANCEL = 'Cancel';
 export const ACTION_CHANGE_PROCEDURE_TYPE = 'CHANGE_PROCEDURE_TYPE';
+export const ACTION_REDETERMINATION = 'ACTION_REDETERMINATION';
 
 export const CHANGE_APPEAL_TYPE_INVALID_REASON = 'Wrong appeal type';
 export const INVALID_APPEAL_OTHER_REASON = 'Other reason';
@@ -287,6 +288,7 @@ export const AUDIT_TRAIL_CHANGE_PROCEDURE_TYPE = 'Appeal procedure updated to {r
 export const AUDIT_TRAIL_DECISION_ISSUED = 'Decision issued: {replacement0}';
 export const AUDIT_TRAIL_DECISION_LETTER_UPLOADED = 'Decision letter {replacement0} uploaded';
 export const AUDIT_TRAIL_DECISION_LETTER_UPDATED = 'Decision letter {replacement0} updated';
+export const AUDIT_TRAIL_REDETERMINATION_STARTED = 'Appeal reopened for redetermination';
 export const AUDIT_TRAIL_CORRECTION_NOTICE_ADDED = 'Correction notice added: {replacement0} ';
 export const AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED = 'Appellant costs decision issued';
 export const AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED = 'LPA costs decision issued';

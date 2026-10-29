@@ -7,6 +7,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { generateAppealDetailsSections } from './appeal-details-page-sections/index.js';
 import { getCancelAppealSection } from './cancel/cancel-appeal-section.js';
 import { generateCaseNotes } from './case-notes/case-notes.mapper.js';
+import { getRedetermineAppealSection } from './redetermine/redetermine-appeal-section.js';
 import { generateStatusTags } from './status-tags/status-tags.mapper.js';
 
 export const pageHeading = 'Case details';
@@ -70,6 +71,7 @@ export async function appealDetailsPage(
 	]);
 
 	const caseCancel = getCancelAppealSection(appealDetails, currentRoute);
+	const caseRedetermine = getRedetermineAppealSection(appealDetails, currentRoute);
 
 	const pageComponents = [
 		...notificationBanners,
@@ -78,7 +80,8 @@ export async function appealDetailsPage(
 		...caseDownload,
 		caseNotes,
 		...appealDetailsSections,
-		...(caseCancel ?? [])
+		...(caseCancel ?? []),
+		...(caseRedetermine ?? [])
 	];
 
 	preRenderPageComponents(pageComponents);

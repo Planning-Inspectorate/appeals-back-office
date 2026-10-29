@@ -72,7 +72,8 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 								: [])
 						]
 					: []),
-				...(!isChild ? [mappedData.appeal.environmentalAssessment.display.tableItem] : [])
+				...(!isChild ? [mappedData.appeal.environmentalAssessment.display.tableItem] : []),
+				mappedData.appeal.redeterminationEvidence?.display?.tableItem
 			].filter(isDefined),
 			firstCellIsHeader: true,
 			attributes: {

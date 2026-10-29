@@ -433,6 +433,7 @@ export interface WebAppeal extends SingleAppealDetailsResponse {
 	isS78Expedited?: boolean;
 	inquiryDocuments?: FolderInfo | null;
 	hearingDocuments?: FolderIfo | null;
+	redeterminationEvidence?: FolderInfo | null;
 }
 
 export interface WebServiceUser {

@@ -38,6 +38,7 @@ import { mapLpaQuestionnaire } from './submappers/lpa-questionnaire.mapper.js';
 import { mapLpaReference } from './submappers/lpa-reference.mapper.js';
 import { mapMainPartyCorrespondence } from './submappers/main-party-correspondence.mapper.js';
 import { mapOtherAppeals } from './submappers/other-appeals.mapper.js';
+import { mapRedeterminationEvidence } from './submappers/redetermination-evidence.mapper.js';
 import { mapSiteAddress } from './submappers/site-address.mapper.js';
 import {
 	mapSiteVisitDate,
@@ -91,6 +92,7 @@ export const submaps = {
 	appellantCase: mapAppellantCase,
 	lpaQuestionnaire: mapLpaQuestionnaire,
 	supportingDocuments: mapSupportingDocuments,
+	redeterminationEvidence: mapRedeterminationEvidence,
 	appealDecision: mapAppealDecision,
 	costsAppellantApplication: mapCostsAppellantApplication,
 	costsAppellantWithdrawal: mapCostsAppellantWithdrawal,

@@ -80,6 +80,7 @@ interface SingleAppealDetailsResponse {
 	};
 	supportingDocuments?: FolderInfo | null;
 	inquiryEventDocuments?: FolderInfo | null;
+	redeterminationEvidence?: FolderInfo | null;
 	costsDecision?: CostsDecision;
 	decision: {
 		folderId: number;

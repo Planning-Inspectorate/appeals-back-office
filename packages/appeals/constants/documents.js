@@ -90,7 +90,8 @@ export const FOLDERS = [
 	`general/${APPEAL_DOCUMENT_TYPE.GENERAL_SUPPORTING}`,
 	`inquiry/${APPEAL_DOCUMENT_TYPE.INQUIRY_CORE}`,
 	`inquiry/${APPEAL_DOCUMENT_TYPE.INQUIRY_POST_EVENT}`,
-	`hearing/${APPEAL_DOCUMENT_TYPE.HEARING_PROCESS}`
+	`hearing/${APPEAL_DOCUMENT_TYPE.HEARING_PROCESS}`,
+	'redetermination/evidence'
 ];
 
 export const VALID_MIME_TYPES = Object.freeze({

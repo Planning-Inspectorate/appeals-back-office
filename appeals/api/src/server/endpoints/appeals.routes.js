@@ -52,6 +52,7 @@ import { appealNotificationRouter } from './notifications/notifications.routes.j
 import { notifyPreviewRouter } from './notify-preview/notify-preview.routes.js';
 import { planningAppealDecisionSuppliersRoutes } from './planning-appeal-decision-suppliers/planning-appeal-decision-suppliers.routes.js';
 import { procedureTypesRoutes } from './procedure-types/procedure-types.routes.js';
+import { redeterminationRoutes } from './redetermination/redetermination.routes.js';
 import { representationRejectionReasonsRoutes } from './representation-rejection-reasons/representation-rejection-reasons.routes.js';
 import { representationRoutes } from './representations/representations.routes.js';
 import { serviceUserRoutes } from './service-user/service-user.routes.js';
@@ -138,5 +139,6 @@ router.use(changeProcedureTypeRoutes);
 router.use(appealRule6PartiesRoutes);
 
 router.use(cancelRoutes);
+router.use(redeterminationRoutes);
 
 export { router as appealsRoutes };
