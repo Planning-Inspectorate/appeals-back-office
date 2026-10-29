@@ -939,6 +939,17 @@ const getTimetableUpdatedTemplateName = (appealTypeKey, procedureType) => {
 				return 'appeal-timetable-updated-enforcement';
 			}
 			return 'appeal-timetable-updated';
+		case APPEAL_CASE_TYPE.W:
+			if (procedureType === APPEAL_CASE_PROCEDURE.INQUIRY) {
+				return 'appeal-timetable-updated-inquiry';
+			}
+			if (procedureType === APPEAL_CASE_PROCEDURE.HEARING) {
+				return 'appeal-timetable-updated-hearing';
+			}
+			if (procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1) {
+				return 'has-appeal-timetable-updated';
+			}
+			return 'appeal-timetable-updated';
 		default:
 			if (procedureType === APPEAL_CASE_PROCEDURE.INQUIRY) {
 				return 'appeal-timetable-updated-inquiry';
