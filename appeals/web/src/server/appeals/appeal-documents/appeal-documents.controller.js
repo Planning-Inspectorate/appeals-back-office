@@ -14,6 +14,7 @@ import { isFileUploadInfoItemArray } from '#lib/ts-utilities.js';
 import { isInternalUrl, safeRedirect, stripQueryString } from '#lib/url-utilities.js';
 import config from '@pins/appeals.web/environment/config.js';
 import { DOCUMENTS_PAGE_SIZE } from '@pins/appeals/constants/common.js';
+import { getMaxDocumentVersion } from '@pins/appeals/utils/document-version.js';
 import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
 import {
 	addDocumentDetailsFormDataToFileUploadInfo,
@@ -570,10 +571,9 @@ export const renderUploadDocumentsCheckAndConfirm = async ({
 	}
 
 	let documentVersion;
-	let documentFileName;
 
 	if (documentId) {
-		const fileInfo = await getFileInfo(request.apiClient, documentId);
+		const fileInfo = await getFileVersionsInfo(request.apiClient, documentId);
 
 		if (!fileInfo) {
 			return response.status(404).render('app/404');
@@ -583,8 +583,8 @@ export const renderUploadDocumentsCheckAndConfirm = async ({
 			return response.status(500).render('app/500.njk');
 		}
 
-		documentVersion = fileInfo.latestDocumentVersion.version + 1;
-		documentFileName = fileInfo.name;
+		documentVersion =
+			getMaxDocumentVersion(fileInfo.latestDocumentVersion.version, fileInfo.allVersions) + 1;
 	}
 
 	const mappedPageContent = addDocumentsCheckAndConfirmPage({
@@ -596,7 +596,6 @@ export const renderUploadDocumentsCheckAndConfirm = async ({
 		uncommittedFiles: request.session.fileUploadInfo.files,
 		redactionStatuses,
 		documentVersion,
-		documentFileName,
 		...(summaryListNameLabelOverride && {
 			summaryListNameLabelOverride
 		}),

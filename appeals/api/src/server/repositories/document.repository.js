@@ -38,6 +38,24 @@ export const getDocumentById = (guid) => {
 };
 
 /**
+ * @param {string} guid
+ * @returns {PrismaPromise<Document|null>}
+ */
+export const getDocumentWithVersionsById = (guid) => {
+	return databaseConnector.document.findUnique({
+		where: { guid },
+		include: {
+			latestDocumentVersion: {
+				include: {
+					redactionStatus: true
+				}
+			},
+			versions: true
+		}
+	});
+};
+
+/**
  * @param {string[]} guids
  * @returns {Promise<Document[]>}
  * */

@@ -19,7 +19,6 @@ import {
 import {
 	getDocumentFileType,
 	getDocumentRedactionStatuses,
-	getFileInfo,
 	getFileVersionsInfo,
 	updateDocument
 } from '#appeals/appeal-documents/appeal.documents.service.js';
@@ -29,6 +28,7 @@ import logger from '#lib/logger.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { FRONT_OFFICE_DASHBOARD_PATH_STUBS } from '@pins/appeals/constants/common.js';
+import { getMaxDocumentVersion } from '@pins/appeals/utils/document-version.js';
 import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { addWeeks, format } from 'date-fns';
 import { capitalize, upperCase } from 'lodash-es';
@@ -561,23 +561,22 @@ export const renderDecisionCheckAndConfirm = async (request, response) => {
 	}
 
 	let documentVersion;
-	let documentFileName;
 
 	if (documentId) {
-		const fileInfo = await getFileInfo(request.apiClient, documentId);
+		const fileInfo = await getFileVersionsInfo(request.apiClient, documentId);
 
 		if (!fileInfo) {
 			return response.status(404).render('app/404');
 		}
 
-		const { latestDocumentVersion, name } = fileInfo;
+		const { latestDocumentVersion } = fileInfo;
 
-		if (!latestDocumentVersion || !name) {
+		if (!latestDocumentVersion) {
 			return response.status(500).render('app/500.njk');
 		}
 
-		documentVersion = latestDocumentVersion.version + 1;
-		documentFileName = name;
+		documentVersion =
+			getMaxDocumentVersion(latestDocumentVersion.version, fileInfo.allVersions) + 1;
 	}
 
 	const mappedPageContent = decisionCheckAndConfirmPage(
@@ -586,8 +585,7 @@ export const renderDecisionCheckAndConfirm = async (request, response) => {
 		session.fileUploadInfo.files,
 		redactionStatuses,
 		documentId,
-		documentVersion,
-		documentFileName
+		documentVersion
 	);
 
 	return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {

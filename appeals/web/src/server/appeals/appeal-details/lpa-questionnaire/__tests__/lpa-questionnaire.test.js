@@ -4517,6 +4517,9 @@ describe('LPA Questionnaire review', () => {
 				.persist();
 			nock('http://test/').get(getFolderApiUrl(1, 1)).reply(200, documentFolderInfo).persist();
 			nock('http://test/').get('/appeals/documents/1').reply(200, documentFileInfo);
+			nock('http://test/')
+				.get('/appeals/documents/1/versions')
+				.reply(200, documentFileVersionsInfo);
 		});
 		afterEach(() => {
 			nock.cleanAll();
@@ -4552,7 +4555,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('File</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/ph0-documentFileInfo.jpeg/2" target="_blank">test-document.txt</a></dd>'
+				'<a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt/2" target="_blank">test-document.txt</a></dd>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				`<a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/${documentFolderInfo.folderId}/1">Change<span class="govuk-visually-hidden"> file test-document.txt</span></a></dd>`

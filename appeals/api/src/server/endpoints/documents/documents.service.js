@@ -23,6 +23,7 @@ import {
 	VALIDATION_OUTCOME_INVALID,
 	VALIDATION_OUTCOME_VALID
 } from '@pins/appeals/constants/support.js';
+import { getMaxDocumentVersion } from '@pins/appeals/utils/document-version.js';
 import { EventType } from '@pins/event-client';
 import {
 	APPEAL_CASE_STAGE,
@@ -290,6 +291,7 @@ export const addDocumentsToAppeal = async (upload, appeal, skipBlobValidation = 
 	const { blobStorageHost, blobStorageContainer, documents } = upload;
 	const documentsToSendToDatabase = mapDocumentsForDatabase(
 		appeal.id,
+		appeal.reference,
 		blobStorageHost ?? config.BO_BLOB_STORAGE_ACCOUNT,
 		blobStorageContainer ?? config.BO_BLOB_CONTAINER,
 		documents
@@ -335,7 +337,7 @@ const addDocumentAndVersion = async (appeal, documents, allowErrors = false) => 
 	const bulkDocuments = documents.map((document) => ({
 		guid: document.GUID,
 		originalFilename: document.name,
-		fileName: document.name,
+		fileName: document.fileName,
 		caseId: appeal.id,
 		folderId: Number(document.folderId),
 		mime: document.mime,
@@ -390,11 +392,15 @@ export const addVersionToDocument = async (upload, appeal, document) => {
 	}
 
 	const { blobStorageHost, blobStorageContainer, document: uploadedDocument } = upload;
+	const nextVersion =
+		getMaxDocumentVersion(document.latestDocumentVersion?.version, document.versions) + 1;
 	const documentToSendToDatabase = mapDocumentsForDatabase(
 		appeal.id,
+		appeal.reference,
 		blobStorageHost,
 		blobStorageContainer,
-		[uploadedDocument]
+		[uploadedDocument],
+		nextVersion
 	)[0];
 
 	const blobValidation = await validateBlobContents(appeal.reference, [
@@ -407,7 +413,7 @@ export const addVersionToDocument = async (upload, appeal, document) => {
 
 	const documentVersionCreated = await addDocumentVersion({
 		documentGuid: document.guid,
-		fileName: document.name,
+		fileName: documentToSendToDatabase.fileName,
 		originalFilename: documentToSendToDatabase.name,
 		mime: documentToSendToDatabase.mime,
 		size: documentToSendToDatabase.documentSize,

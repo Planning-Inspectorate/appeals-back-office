@@ -1,4 +1,4 @@
-import { getDocumentById } from '#repositories/document.repository.js';
+import { getDocumentWithVersionsById } from '#repositories/document.repository.js';
 import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 
 /**
@@ -7,7 +7,7 @@ import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
  */
 export const validateDocumentAndAddToRequest = async (req, res, next) => {
 	const { documentId } = req.params;
-	const document = await getDocumentById(documentId);
+	const document = await getDocumentWithVersionsById(documentId);
 
 	if (!document || document.isDeleted) {
 		return res.status(404).send({ errors: { documentId: ERROR_NOT_FOUND } });

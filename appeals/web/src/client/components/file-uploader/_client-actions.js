@@ -3,6 +3,8 @@ import {
 	MAX_FILE_SIZE,
 	TOTAL_MAX_FILE_SIZE
 } from '@pins/appeals/constants/distance.js';
+import { mapBlobPath } from '@pins/appeals/utils/document-blob-path.js';
+import { createDocumentStorageFilename } from '@pins/appeals/utils/document-storage-filename.js';
 import { hideErrors, showErrors } from './_errors.js';
 import {
 	buildErrorListItem,
@@ -335,9 +337,7 @@ const clientActions = (container) => {
 					blobStorageUrl: createBlobStorageUrl(
 						container.dataset?.caseReference,
 						addedFile.guid,
-						newVersionOfExistingFile
-							? container.dataset?.documentOriginalFileName || ''
-							: addedFile.file.name,
+						createDocumentStorageFilename(addedFile.guid, addedFile.file.name),
 						newVersionOfExistingFile ? container.dataset?.documentVersion : undefined
 					)
 				};
@@ -607,7 +607,7 @@ const clientActions = (container) => {
 		const latestVersionNumber = latestVersion && parseInt(latestVersion, 10);
 		const version = latestVersionNumber ? latestVersionNumber + 1 : 1;
 
-		return `appeal/${caseReference}/${fileGUID}/v${version}/${fileName}`;
+		return mapBlobPath(fileGUID, caseReference, fileName, version);
 	}
 
 	return { bindEvents };
