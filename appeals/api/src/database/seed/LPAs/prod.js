@@ -2330,5 +2330,12 @@ export const localPlanningDepartmentList = [
 		name: 'Devon County Council',
 		email: 'planning@devon.gov.uk',
 		teamId: 9 // West3
+	},
+	{
+		lpaCode: 'L1111',
+		name: 'Oxford Street Development Corporation',
+		email: 'Planning.Enquiries@oxfordstreet.org.uk',
+		teamId: 15, // North1
+		enforcementTeamId: 6 // Enforcement Appeals Team - Team 4
 	}
 ];
