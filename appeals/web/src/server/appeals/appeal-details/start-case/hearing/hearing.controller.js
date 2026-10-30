@@ -21,6 +21,7 @@ import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { getInspectorFormattedEmailName } from '#lib/service-user-formatter.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { capitalize } from 'lodash-es';
 import * as startCaseService from '../start-case.service.js';
 import { getStartCaseNotifyPreviews } from '../start-case.service.js';
@@ -190,9 +191,18 @@ export const postHearingEstimation = async (request, response) => {
 		return renderHearingEstimation(request, response);
 	}
 
-	const { appealId } = request.currentAppeal;
+	const { appealId, appealType } = request.currentAppeal;
 
 	applyEdits(request, 'startCaseAppealProcedure');
+
+	if (isGenericAppealType(appealType)) {
+		return response.redirect(
+			preserveQueryString(
+				request,
+				`/appeals-service/appeal-details/${appealId}/start-case/timetable`
+			)
+		);
+	}
 
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/start-case/hearing/confirm`
