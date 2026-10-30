@@ -1,7 +1,6 @@
-import { dateISOStringToDisplayDate } from '#lib/dates.js';
-import { textSummaryListItem } from '#lib/mappers/index.js';
-import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
+import { mapDueDateSummaryListItem } from './utils/due-date-mapper-helper.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapProofOfEvidenceAndWitnessesDueDate = ({
@@ -11,27 +10,22 @@ export const mapProofOfEvidenceAndWitnessesDueDate = ({
 }) => {
 	const id = 'proof-of-evidence-and-witnesses-due-date';
 
+	const isGeneric = isGenericAppealType(appealDetails.appealType);
+
 	if (
 		!appealDetails.startedAt ||
-		appealDetails.procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.INQUIRY
+		(!isGeneric && appealDetails.procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.INQUIRY)
 	) {
 		return { id, display: {} };
 	}
 
-	const proofOfEvidenceAndWitnessesDueDate =
-		appealDetails.appealTimetable?.proofOfEvidenceAndWitnessesDueDate;
-
-	return textSummaryListItem({
+	return mapDueDateSummaryListItem({
 		id,
 		text: 'Proof of evidence and witness due',
-		value: proofOfEvidenceAndWitnessesDueDate
-			? dateISOStringToDisplayDate(proofOfEvidenceAndWitnessesDueDate)
-			: 'Not provided',
-		link: `${currentRoute}/timetable/edit`,
-		editable:
-			!isChildAppeal(appealDetails) &&
-			userHasUpdateCasePermission &&
-			Boolean(appealDetails.startedAt),
+		dueDate: appealDetails.appealTimetable?.proofOfEvidenceAndWitnessesDueDate,
+		appealDetails,
+		currentRoute,
+		userHasUpdateCasePermission,
 		classes: 'appeal-proof-of-evidence-and-witnesses-due-date'
 	});
 };

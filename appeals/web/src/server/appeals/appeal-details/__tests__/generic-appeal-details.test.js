@@ -30,6 +30,10 @@ const genericAppealData = {
 			status: 'received',
 			receivedAt: '2026-09-19T00:00:00.000Z'
 		}
+	},
+	decision: {
+		folderId: 1,
+		path: 'appeal-decision/case-decision-letter'
 	}
 };
 
@@ -106,12 +110,15 @@ describe('generic appeal details', () => {
 
 		const firstHtml = parseHtml(firstResponse.text);
 		const banners = firstHtml.querySelectorAll('.govuk-notification-banner');
-		expect(banners.length).toBe(2);
+		expect(banners.length).toBe(3);
 
 		expect(banners[0].classList.contains('govuk-notification-banner--success')).toBe(true);
 		expect(banners[0].innerHTML).toContain('Case created');
 		expect(banners[1].querySelector('a[data-cy="ready-to-start"]')?.innerHTML.trim()).toBe(
 			'Start case'
+		);
+		expect(banners[2].querySelector('a[data-cy="issue-determination"]')?.innerHTML.trim()).toBe(
+			'Issue decision'
 		);
 
 		const secondResponse = await request.get('/appeals-service/appeal-details/999');
@@ -119,14 +126,17 @@ describe('generic appeal details', () => {
 
 		const secondHtml = parseHtml(secondResponse.text);
 		const remainingBanners = secondHtml.querySelectorAll('.govuk-notification-banner');
-		expect(remainingBanners.length).toBe(1);
+		expect(remainingBanners.length).toBe(2);
 		expect(secondResponse.text).not.toContain('Case created');
 		expect(remainingBanners[0].querySelector('a[data-cy="ready-to-start"]')?.innerHTML.trim()).toBe(
 			'Start case'
 		);
+		expect(
+			remainingBanners[1].querySelector('a[data-cy="issue-determination"]')?.innerHTML.trim()
+		).toBe('Issue decision');
 	});
 
-	it('should display the Start case banner when appeal is ready_to_start (Scenario 9)', async () => {
+	it('should display the Start case and Issue decision banners when appeal is ready_to_start (Scenario 9)', async () => {
 		const response = await request.get('/appeals-service/appeal-details/999');
 		expect(response.statusCode).toBe(200);
 
@@ -134,6 +144,10 @@ describe('generic appeal details', () => {
 		const startCaseLink = html.querySelector('a[data-cy="ready-to-start"]');
 		expect(startCaseLink).not.toBeNull();
 		expect(startCaseLink?.innerHTML.trim()).toBe('Start case');
+
+		const issueDecisionLink = html.querySelector('a[data-cy="issue-determination"]');
+		expect(issueDecisionLink).not.toBeNull();
+		expect(issueDecisionLink?.innerHTML.trim()).toBe('Issue decision');
 	});
 
 	it('should display only the Appeal row in the Documentation table with CaseSubmittedDate (Scenario 6)', async () => {
@@ -438,5 +452,155 @@ describe('generic appeal details', () => {
 		expect(rule6Value).toContain('Woodland Trust Friends');
 		expect(rule6Value).not.toContain('null');
 		expect(rule6Value).not.toContain('undefined');
+	});
+
+	it('should display all 8 timetable rows with Not provided dates and Add links when case is started without dates (Scenario 7)', async () => {
+		const startedBlankData = {
+			...genericAppealData,
+			appealStatus: 'lpa_questionnaire',
+			startedAt: '2026-10-05T00:00:00.000Z',
+			procedureType: 'written',
+			appealTimetable: {}
+		};
+
+		nock.cleanAll();
+		installMockApi();
+
+		nock('http://test/').get('/appeals/999/page-details').reply(200, startedBlankData).persist();
+		nock('http://test/').get('/appeals/999').query(true).reply(200, startedBlankData).persist();
+		nock('http://test/')
+			.get('/appeals/999/exists')
+			.reply(200, { id: 999, appealId: 999, appealReference: startedBlankData.appealReference })
+			.persist();
+		nock('http://test/').get('/appeals/999/case-notes').reply(200, []).persist();
+
+		const response = await request.get('/appeals-service/appeal-details/999');
+		expect(response.statusCode).toBe(200);
+
+		const html = parseHtml(response.text);
+
+		// Issue decision banner displayed
+		const issueDecisionBanner = html.querySelector('a[data-cy="issue-determination"]');
+		expect(issueDecisionBanner).not.toBeNull();
+		expect(issueDecisionBanner?.innerHTML.trim()).toBe('Issue decision');
+
+		// Timetable rows
+		const timetableClasses = [
+			'appeal-lpa-questionnaire-due-date',
+			'appeal-lpa-statement-due-date',
+			'appeal-ip-comments-due-date',
+			'appeal-final-comments-due-date',
+			'appeal-statement-of-common-ground-due-date',
+			'appeal-planning-obligation-due-date',
+			'appeal-proof-of-evidence-and-witnesses-due-date',
+			'appeal-case-management-conference-due-date'
+		];
+
+		timetableClasses.forEach((cls) => {
+			const row = html.querySelector(`.${cls}`);
+			expect(row).not.toBeNull();
+			expect(row?.querySelector('.govuk-summary-list__value')?.innerHTML.trim()).toBe(
+				'Not provided'
+			);
+			const action = row?.querySelector('.govuk-summary-list__actions a');
+			expect(action).not.toBeNull();
+			expect(action?.innerHTML.trim()).toContain('Add');
+			expect(action?.getAttribute('href')).toContain('/timetable/edit');
+		});
+	});
+
+	it('should display all 8 timetable rows with formatted dates and Change links when dates are populated (Scenario 7)', async () => {
+		const startedPopulatedData = {
+			...genericAppealData,
+			appealStatus: 'lpa_questionnaire',
+			startedAt: '2026-10-05T00:00:00.000Z',
+			procedureType: 'inquiry',
+			appealTimetable: {
+				lpaQuestionnaireDueDate: '2026-10-12T23:00:00.000Z',
+				lpaStatementDueDate: '2026-10-19T23:00:00.000Z',
+				ipCommentsDueDate: '2026-10-26T23:00:00.000Z',
+				finalCommentsDueDate: '2026-11-02T23:00:00.000Z',
+				statementOfCommonGroundDueDate: '2026-11-09T23:00:00.000Z',
+				planningObligationDueDate: '2026-11-16T23:00:00.000Z',
+				proofOfEvidenceAndWitnessesDueDate: '2026-11-23T23:00:00.000Z',
+				caseManagementConferenceDueDate: '2026-11-30T23:00:00.000Z'
+			}
+		};
+
+		nock.cleanAll();
+		installMockApi();
+
+		nock('http://test/')
+			.get('/appeals/999/page-details')
+			.reply(200, startedPopulatedData)
+			.persist();
+		nock('http://test/').get('/appeals/999').query(true).reply(200, startedPopulatedData).persist();
+		nock('http://test/')
+			.get('/appeals/999/exists')
+			.reply(200, {
+				id: 999,
+				appealId: 999,
+				appealReference: startedPopulatedData.appealReference
+			})
+			.persist();
+		nock('http://test/').get('/appeals/999/case-notes').reply(200, []).persist();
+
+		const response = await request.get('/appeals-service/appeal-details/999');
+		expect(response.statusCode).toBe(200);
+
+		const html = parseHtml(response.text);
+
+		const timetableClasses = [
+			'appeal-lpa-questionnaire-due-date',
+			'appeal-lpa-statement-due-date',
+			'appeal-ip-comments-due-date',
+			'appeal-final-comments-due-date',
+			'appeal-statement-of-common-ground-due-date',
+			'appeal-planning-obligation-due-date',
+			'appeal-proof-of-evidence-and-witnesses-due-date',
+			'appeal-case-management-conference-due-date'
+		];
+
+		timetableClasses.forEach((cls) => {
+			const row = html.querySelector(`.${cls}`);
+			expect(row).not.toBeNull();
+			expect(row?.querySelector('.govuk-summary-list__value')?.innerHTML.trim()).not.toBe('');
+			const action = row?.querySelector('.govuk-summary-list__actions a');
+			expect(action).not.toBeNull();
+			expect(action?.innerHTML.trim()).toContain('Change');
+			expect(action?.getAttribute('href')).toContain('/timetable/edit');
+		});
+	});
+
+	it('should display event setup component when procedure is hearing or inquiry', async () => {
+		const hearingData = {
+			...genericAppealData,
+			appealStatus: 'lpa_questionnaire',
+			startedAt: '2026-10-05T00:00:00.000Z',
+			procedureType: 'hearing',
+			hearing: null,
+			hearingEstimate: null,
+			appealTimetable: {}
+		};
+
+		nock.cleanAll();
+		installMockApi();
+
+		nock('http://test/').get('/appeals/999/page-details').reply(200, hearingData).persist();
+		nock('http://test/').get('/appeals/999').query(true).reply(200, hearingData).persist();
+		nock('http://test/')
+			.get('/appeals/999/exists')
+			.reply(200, { id: 999, appealId: 999, appealReference: hearingData.appealReference })
+			.persist();
+		nock('http://test/').get('/appeals/999/case-notes').reply(200, []).persist();
+
+		const response = await request.get('/appeals-service/appeal-details/999');
+		expect(response.statusCode).toBe(200);
+
+		const html = parseHtml(response.text);
+		expect(response.text).toContain('Hearing');
+		const setUpEventButton = html.querySelector('a.govuk-button[href*="/hearing/setup"]');
+		expect(setUpEventButton).not.toBeNull();
+		expect(setUpEventButton?.innerHTML.trim()).toBe('Set up hearing');
 	});
 });

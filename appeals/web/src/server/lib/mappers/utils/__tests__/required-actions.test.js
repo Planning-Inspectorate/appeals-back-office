@@ -2147,4 +2147,72 @@ describe('required actions', () => {
 			});
 		});
 	});
+
+	describe('for generic appeals', () => {
+		const genericAppeal = {
+			...appealData,
+			appealType: 'Tree preservation order',
+			appealStatus: APPEAL_CASE_STATUS.READY_TO_START,
+			decision: {
+				folderId: 1,
+				path: 'appeal-decision/case-decision-letter'
+			}
+		};
+
+		it('should return ["startAppeal", "issueDecision"] when status is READY_TO_START and decision has no outcome', () => {
+			expect(getRequiredActionsForAppeal(genericAppeal, 'detail')).toEqual([
+				'startAppeal',
+				'issueDecision'
+			]);
+		});
+
+		it('should return ["issueDecision"] when status is LPA_QUESTIONNAIRE and decision has no outcome', () => {
+			expect(
+				getRequiredActionsForAppeal(
+					{ ...genericAppeal, appealStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE },
+					'detail'
+				)
+			).toEqual(['issueDecision']);
+		});
+
+		it('should return ["issueDecision"] when status is ISSUE_DETERMINATION and decision has no outcome', () => {
+			expect(
+				getRequiredActionsForAppeal(
+					{ ...genericAppeal, appealStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION },
+					'detail'
+				)
+			).toEqual(['issueDecision']);
+		});
+
+		it('should return [] when decision has an outcome', () => {
+			expect(
+				getRequiredActionsForAppeal(
+					{
+						...genericAppeal,
+						appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+						decision: { ...genericAppeal.decision, outcome: 'allowed' }
+					},
+					'detail'
+				)
+			).toEqual([]);
+		});
+
+		it.each([
+			APPEAL_CASE_STATUS.COMPLETE,
+			APPEAL_CASE_STATUS.INVALID,
+			APPEAL_CASE_STATUS.WITHDRAWN,
+			APPEAL_CASE_STATUS.CLOSED,
+			APPEAL_CASE_STATUS.TRANSFERRED
+		])('should return [] when status is terminal (%s) even with no decision outcome', (status) => {
+			expect(
+				getRequiredActionsForAppeal(
+					{
+						...genericAppeal,
+						appealStatus: status
+					},
+					'detail'
+				)
+			).toEqual([]);
+		});
+	});
 });

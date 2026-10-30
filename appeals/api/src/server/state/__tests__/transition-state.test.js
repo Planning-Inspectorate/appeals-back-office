@@ -541,6 +541,47 @@ describe('transitionState', () => {
 		});
 	});
 
+	describe('Generic appeal transitions', () => {
+		test('transitions generic appeal directly to lpa questionnaire, issue determination, complete or invalid', async () => {
+			const genericAppeal = {
+				id: 88,
+				currentStatus: APPEAL_CASE_STATUS.READY_TO_START,
+				appealStatus: [{ status: APPEAL_CASE_STATUS.READY_TO_START, valid: true }],
+				appealType: { key: 'TREE_PRESERVATION_ORDER', type: 'Tree preservation order' },
+				procedureType: { key: APPEAL_CASE_PROCEDURE.WRITTEN }
+			};
+
+			jest.spyOn(appealRepository, 'getAppealById').mockResolvedValue(genericAppeal);
+			const updateStatusSpy = jest
+				.spyOn(appealStatusRepository, 'updateAppealStatusByAppealId')
+				.mockResolvedValue({});
+
+			const resultLpaQuestionnaire = await transitionState(
+				88,
+				'user-123',
+				APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
+			);
+			expect(resultLpaQuestionnaire).toBe(true);
+			expect(updateStatusSpy).toHaveBeenCalledWith(88, APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE);
+
+			const resultIssueDetermination = await transitionState(
+				88,
+				'user-123',
+				APPEAL_CASE_STATUS.ISSUE_DETERMINATION
+			);
+			expect(resultIssueDetermination).toBe(true);
+			expect(updateStatusSpy).toHaveBeenCalledWith(88, APPEAL_CASE_STATUS.ISSUE_DETERMINATION);
+
+			const resultComplete = await transitionState(88, 'user-123', APPEAL_CASE_STATUS.COMPLETE);
+			expect(resultComplete).toBe(true);
+			expect(updateStatusSpy).toHaveBeenCalledWith(88, APPEAL_CASE_STATUS.COMPLETE);
+
+			const resultInvalid = await transitionState(88, 'user-123', APPEAL_CASE_STATUS.INVALID);
+			expect(resultInvalid).toBe(true);
+			expect(updateStatusSpy).toHaveBeenCalledWith(88, APPEAL_CASE_STATUS.INVALID);
+		});
+	});
+
 	describe('Transition to EVENT / AWAITING_EVENT / ISSUE_DETERMINATION from preceding states', () => {
 		const runTransitionTest = async (mockAppeal, mockRepresentations) => {
 			const currentAppeal = { ...mockAppeal };
