@@ -28,7 +28,7 @@
 		"dotenv": "16.0.3",
 		"express": "*",
 		"govuk-frontend": "^5.4.0",
-		"multer": "^2.4.0",
+		"multer": "^2.5.0",
 		"nunjucks": "^3.2.4",
 		"pino": "*",
 		"puppeteer-core": "*"
