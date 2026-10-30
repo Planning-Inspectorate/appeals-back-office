@@ -1396,6 +1396,49 @@ export const spec = {
 		}
 	},
 	'@definitions': {
+		CaseFilePackage: {
+			type: 'object',
+			required: ['id', 'status', 'requestedAt', 'completedAt', 'sizeBytes'],
+			properties: {
+				id: { type: 'string' },
+				status: { type: 'string', enum: ['queued', 'processing', 'ready', 'failed'] },
+				requestedAt: { type: 'string', format: 'date-time' },
+				completedAt: { type: 'string', format: 'date-time', nullable: true },
+				sizeBytes: { type: 'integer', nullable: true }
+			}
+		},
+		CaseFilePackageStatus: {
+			oneOf: [
+				{ $ref: '#/components/schemas/CaseFilePackage' },
+				{
+					type: 'object',
+					required: ['status'],
+					properties: { status: { type: 'string', enum: ['not_requested'] } }
+				}
+			]
+		},
+		CaseFilePackageDownloadUrl: {
+			type: 'object',
+			required: ['url'],
+			properties: { url: { type: 'string', format: 'uri' } }
+		},
+		CompleteCaseFilePackageRequest: {
+			type: 'object',
+			required: ['blobPath', 'sizeBytes'],
+			properties: {
+				blobPath: {
+					type: 'string',
+					description: 'Must equal case-file-packages/{packageId}.zip'
+				},
+				sizeBytes: { type: 'integer', minimum: 1, maximum: Number.MAX_SAFE_INTEGER }
+			}
+		},
+		FailCaseFilePackageRequest: {
+			type: 'object',
+			properties: {
+				error: { type: 'string', description: 'Stored error is truncated to 500 characters' }
+			}
+		},
 		SingleLinkableAppealSummaryResponse: {
 			type: 'object',
 			properties: {

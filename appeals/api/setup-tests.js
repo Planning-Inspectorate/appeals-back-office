@@ -21,6 +21,10 @@ const mockAppealDecision = jest.fn().mockResolvedValue({});
 const mockAppealDecisionUpdate = jest.fn().mockResolvedValue({});
 const mockAppealDecisionDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppealFindUnique = jest.fn().mockResolvedValue({});
+const mockCaseFilePackageCreate = jest.fn();
+const mockCaseFilePackageFindFirst = jest.fn();
+const mockCaseFilePackageUpdate = jest.fn();
+const mockCaseFilePackageUpdateMany = jest.fn();
 const mockAppealCreate = jest.fn().mockResolvedValue({});
 const mockAppealDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppealNotificationDeleteMany = jest.fn().mockResolvedValue({});
@@ -253,6 +257,14 @@ const mockNotifySend = jest.fn().mockImplementation(async (params) => {
 });
 
 class MockPrismaClient {
+	get caseFilePackage() {
+		return {
+			create: mockCaseFilePackageCreate,
+			findFirst: mockCaseFilePackageFindFirst,
+			update: mockCaseFilePackageUpdate,
+			updateMany: mockCaseFilePackageUpdateMany
+		};
+	}
 	get representation() {
 		return {
 			update: mockRepUpdateById,
@@ -888,7 +900,12 @@ jest.unstable_mockModule('@pins/blob-storage-client', () => ({
 	BlobStorageClient: { fromUrl: jest.fn().mockReturnValue({ copyFile: mockBlobStorageCopyFile }) }
 }));
 
-jest.unstable_mockModule('@azure/storage-blob', () => ({ BlobServiceClient: jest.fn() }));
+jest.unstable_mockModule('@azure/storage-blob', () => ({
+	BlobServiceClient: jest.fn(),
+	BlobSASPermissions: { parse: jest.fn().mockReturnValue('r') },
+	SASProtocol: { Https: 'https' },
+	generateBlobSASQueryParameters: jest.fn().mockReturnValue({ toString: () => 'signed-token' })
+}));
 
 jest.unstable_mockModule('rhea', () => ({
 	default: { generate_uuid: jest.fn().mockReturnValue('mock-uuid') }

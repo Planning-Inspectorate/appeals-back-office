@@ -3182,6 +3182,42 @@ export interface TeamEmailResponse {
 	teamEmail?: string;
 }
 
+export interface CaseFilePackage {
+	id: string;
+	status: 'queued' | 'processing' | 'ready' | 'failed';
+	/** @format date-time */
+	requestedAt: string;
+	/** @format date-time */
+	completedAt: string | null;
+	sizeBytes: number | null;
+}
+
+export type CaseFilePackageStatus =
+	| CaseFilePackage
+	| {
+			status: 'not_requested';
+	  };
+
+export interface CaseFilePackageDownloadUrl {
+	/** @format uri */
+	url: string;
+}
+
+export interface CompleteCaseFilePackageRequest {
+	/** Must equal case-file-packages/{packageId}.zip */
+	blobPath: string;
+	/**
+	 * @min 1
+	 * @max 9007199254740991
+	 */
+	sizeBytes: number;
+}
+
+export interface FailCaseFilePackageRequest {
+	/** Stored error is truncated to 500 characters */
+	error?: string;
+}
+
 export interface SingleLinkableAppealSummaryResponse {
 	/**
 	 * ID in back-office or horizon
