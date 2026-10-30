@@ -14,7 +14,7 @@ import commonRepository from './common.repository.js';
  * @returns {Promise<object>}
  */
 const updateLPAQuestionnaireById = (id, data) => {
-	const { appealId, incompleteReasons, timetable } = data;
+	const { appealId, appealVersion, incompleteReasons, timetable } = data;
 
 	/** @type {any[]} */
 	const transaction = [];
@@ -105,9 +105,9 @@ const updateLPAQuestionnaireById = (id, data) => {
 		);
 	}
 
-	if (appealId && timetable) {
+	if (appealId && appealVersion && timetable) {
 		// @ts-ignore
-		transaction.push(appealTimetablesRepository.upsertAppealTimetableById(appealId, timetable));
+		transaction.push(appealTimetablesRepository.upsertAppealTimetableById(appealId, appealVersion, timetable));
 	}
 
 	return databaseConnector.$transaction(transaction);

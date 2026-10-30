@@ -92,8 +92,9 @@ export const checkAppealExistsByIdForPageDisplayAndAddToRequest = async (req, re
 		params: { appealId }
 	} = req;
 
-	const appeal = await appealRepository.getAppealByIdForPageDisplay(Number(appealId));
+	const appealVersion = await appealRepository.getAppealVersionById(Number(appealId));
 
+	const appeal = await appealRepository.getAppealByIdForPageDisplay(Number(appealId), Number(appealVersion));
 	if (!appeal || !isAppealEnabled(appeal)) {
 		return res.status(404).send({ errors: { appealId: ERROR_NOT_FOUND } });
 	}

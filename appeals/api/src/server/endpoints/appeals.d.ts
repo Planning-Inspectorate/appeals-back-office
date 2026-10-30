@@ -994,6 +994,7 @@ interface SetAppealDecisionRequest {
 	version: number;
 	outcome: string;
 	invalidDecisionReason?: string | null;
+	associatedAppealVersion: number;
 }
 
 interface SetInvalidAppealDecisionRequest {
@@ -1090,6 +1091,7 @@ type GetCaseNoteResponse = {
 
 export interface CreateSiteVisitData {
 	appealId: number;
+	appealVersion: number;
 	appealTypeKey: string;
 	visitDate?: Date;
 	visitEndTime?: Date;

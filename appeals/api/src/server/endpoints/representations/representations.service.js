@@ -437,6 +437,9 @@ export async function updateRepresentation(repId, payload, existingRep) {
  * @type {PublishFunction}
  * */
 export async function publishStatements(appeal, azureAdUserId, notifyClient, inspectorName) {
+
+	console.log('###### IN HERE publishStatements!!!');
+
 	if (!isCurrentStatus(appeal, APPEAL_CASE_STATUS.STATEMENTS)) {
 		throw new BackOfficeAppError('appeal in incorrect state to publish statements', 409);
 	}

@@ -68,7 +68,7 @@ const changeAppealType = async (
 				caseUpdatedDate: new Date()
 			}
 		}),
-		await timetableRepository.upsertAppealTimetableById(appeal.id, {
+		await timetableRepository.upsertAppealTimetableById(appeal.id, appeal.currentAppealVersion, {
 			caseResubmissionDueDate: setTimeInTimeZone(dueDate, DEADLINE_HOUR, DEADLINE_MINUTE)
 		}),
 		await transitionState(appeal.id, azureAdUserId, APPEAL_CASE_STATUS.CLOSED),
@@ -140,7 +140,7 @@ const resubmitAndMarkInvalid = async (
 				caseUpdatedDate: new Date()
 			}
 		}),
-		await timetableRepository.upsertAppealTimetableById(appealId, {
+		await timetableRepository.upsertAppealTimetableById(appealId, appeal.currentAppealVersion, {
 			caseResubmissionDueDate: setTimeInTimeZone(dueDate, DEADLINE_HOUR, DEADLINE_MINUTE)
 		}),
 		await appellantCaseRepository.updateAppellantCaseValidationOutcome({

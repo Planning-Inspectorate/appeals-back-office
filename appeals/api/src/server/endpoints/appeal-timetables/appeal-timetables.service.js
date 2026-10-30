@@ -504,7 +504,7 @@ const startCase = async (
 		// eslint-disable-next-line no-unused-vars
 		const [_, updatedAppeal] = await Promise.all([
 			// @ts-ignore
-			appealTimetableRepository.upsertAppealTimetableById(appeal.id, timetable),
+			appealTimetableRepository.upsertAppealTimetableById(appeal.id, appeal.currentAppealVersion, timetable),
 			appealRepository.updateAppealById(appeal.id, {
 				caseStartedDate: startDateWithTimeCorrection.toISOString(),
 				...(procedureTypeId && { procedureTypeId }),
@@ -668,6 +668,8 @@ const updateAppealTimetable = async (
 	const result = await appealTimetableRepository.updateAppealTimetableByAppealId(
 		// @ts-ignore
 		appeal.id,
+		// @ts-ignore
+		appeal.currentAppealVersion,
 		// @ts-ignore
 		processedBody
 	);

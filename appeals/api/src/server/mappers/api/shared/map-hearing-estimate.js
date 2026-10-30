@@ -10,11 +10,15 @@
 export const mapHearingEstimate = (data) => {
 	const { appeal } = data;
 
-	if (appeal.hearingEstimate) {
+	const hearingEstimate = Array.isArray(appeal.hearingEstimate)
+		? appeal.hearingEstimate[0]
+		: appeal.hearingEstimate;
+
+	if (hearingEstimate) {
 		return {
-			preparationTime: Number(appeal.hearingEstimate.preparationTime),
-			sittingTime: Number(appeal.hearingEstimate.sittingTime),
-			reportingTime: Number(appeal.hearingEstimate.reportingTime)
+			preparationTime: Number(hearingEstimate.preparationTime),
+			sittingTime: Number(hearingEstimate.sittingTime),
+			reportingTime: Number(hearingEstimate.reportingTime)
 		};
 	}
 };

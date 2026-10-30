@@ -7,5 +7,5 @@
  * @returns {string[]}
  */
 export function mapCompletedStateList(data) {
-	return data.appeal.appealStatus?.filter(({ valid }) => !valid).map(({ status }) => status) || [];
+	return data.appeal.appealStatus?.filter(({ valid, isDeleted }) => !valid && !isDeleted).map(({ status }) => status) || [];
 }

@@ -154,6 +154,7 @@ export const postInspectorDecision = async (req, res) => {
  * @returns {Promise<Response>}
  */
 export const patchCaseDecisionOutcomeDate = async (req, res) => {
+	// we will need to get appeal version in here
 	const {
 		params: { appealId },
 		body: { caseDecisionOutcomeDate }

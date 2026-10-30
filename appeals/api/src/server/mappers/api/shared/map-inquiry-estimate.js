@@ -10,11 +10,15 @@
 export const mapInquiryEstimate = (data) => {
 	const { appeal } = data;
 
-	if (appeal.inquiryEstimate) {
+	const inquiryEstimate = Array.isArray(appeal.inquiryEstimate)
+		? appeal.inquiryEstimate[0]
+		: appeal.inquiryEstimate;
+
+	if (inquiryEstimate) {
 		return {
-			preparationTime: Number(appeal.inquiryEstimate.preparationTime),
-			sittingTime: Number(appeal.inquiryEstimate.sittingTime),
-			reportingTime: Number(appeal.inquiryEstimate.reportingTime)
+			preparationTime: Number(inquiryEstimate.preparationTime),
+			sittingTime: Number(inquiryEstimate.sittingTime),
+			reportingTime: Number(inquiryEstimate.reportingTime)
 		};
 	}
 };

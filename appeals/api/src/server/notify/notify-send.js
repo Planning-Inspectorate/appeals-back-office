@@ -116,6 +116,7 @@ export const notifySend = async (options) => {
 		'\r\n',
 		'\n'
 	);
+
 	const subject = renderTemplate(`${templateName}.subject.md`, personalisation);
 	const renderedMessage = generateNotifyPreview(content);
 	const renderedSubject = generateNotifyPreview(`Subject: ${subject}`, true);

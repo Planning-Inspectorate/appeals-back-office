@@ -35,8 +35,10 @@ export const simulateSiteVisitElapsed = async (req, res) => {
 	const reference = Number(appealReference);
 	const appealId = reference - APPEAL_START_RANGE;
 
+	const appealVersion = await appealRepository.getAppealVersionById(appealId);
+
 	const event = await databaseConnector.siteVisit.findFirst({
-		where: { appealId }
+		where: { appealId, associatedAppealVersion: appealVersion }
 	});
 
 	if (event !== null) {

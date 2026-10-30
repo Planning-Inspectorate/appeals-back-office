@@ -95,6 +95,7 @@ const formatIssueDecisionAuditTrail = (outcome, appealType, invalidDecisionReaso
  * @param {import('#endpoints/appeals.js').NotifyClient } notifyClient
  * @param {string} siteAddress
  * @param {string} azureAdUserId
+ * @param {number} appealVersion
  * @param {string|null} [invalidDecisionReason]
  * @param {boolean} [dryRun=false]
  */
@@ -189,7 +190,8 @@ export const publishDecision = async (
 		documentGuid,
 		version: 1,
 		outcome: outcome?.replaceAll(' ', '_'),
-		invalidDecisionReason
+		invalidDecisionReason,
+		associatedAppealVersion: currentAppealVersion
 	});
 
 	if (!result) {

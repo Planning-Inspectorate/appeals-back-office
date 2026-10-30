@@ -10,20 +10,24 @@
 export const mapInquiry = (data) => {
 	const { appeal } = data;
 
-	if (appeal.inquiry) {
+	const inquiry = Array.isArray(appeal.inquiry)
+		? appeal.inquiry[0]
+		: appeal.inquiry;
+
+	if (inquiry) {
 		return {
-			inquiryId: appeal.inquiry?.id,
-			inquiryStartTime: appeal.inquiry.inquiryStartTime?.toISOString() || '',
-			inquiryEndTime: appeal.inquiry.inquiryEndTime?.toISOString() || '',
-			addressId: appeal.inquiry.addressId || undefined,
-			estimatedDays: appeal.inquiry.estimatedDays || undefined,
-			...(appeal.inquiry.address && {
+			inquiryId: inquiry?.id,
+			inquiryStartTime: inquiry.inquiryStartTime?.toISOString() || '',
+			inquiryEndTime: inquiry.inquiryEndTime?.toISOString() || '',
+			addressId: inquiry.addressId || undefined,
+			estimatedDays: inquiry.estimatedDays || undefined,
+			...(inquiry.address && {
 				address: {
-					addressLine1: appeal.inquiry.address.addressLine1 || undefined,
-					addressLine2: appeal.inquiry.address.addressLine2 || undefined,
-					town: appeal.inquiry.address.addressTown || undefined,
-					county: appeal.inquiry.address.addressCounty || undefined,
-					postcode: appeal.inquiry.address.postcode || undefined
+					addressLine1: inquiry.address.addressLine1 || undefined,
+					addressLine2: inquiry.address.addressLine2 || undefined,
+					town: inquiry.address.addressTown || undefined,
+					county: inquiry.address.addressCounty || undefined,
+					postcode: inquiry.address.postcode || undefined
 				}
 			})
 		};

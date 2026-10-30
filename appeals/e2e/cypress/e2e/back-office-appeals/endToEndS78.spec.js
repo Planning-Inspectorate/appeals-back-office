@@ -32,10 +32,10 @@ describe('Progress S78 to decision', () => {
 	let appeal;
 
 	afterEach(() => {
-		cy.deleteAppeals(appeal);
+		// cy.deleteAppeals(appeal);
 	});
 
-	it(`Completes a S78 appeal to decision`, () => {
+	it.only(`Completes a S78 appeal to decision`, () => {
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {

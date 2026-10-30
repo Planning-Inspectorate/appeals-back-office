@@ -28,18 +28,22 @@ const isValidSiteVisitType = (outcome) =>
 export const mapSiteVisit = (data) => {
 	const { appeal } = data;
 
-	if (appeal.siteVisit) {
+	const siteVisit = Array.isArray(appeal.siteVisit)
+		? appeal.siteVisit[0]
+		: appeal.siteVisit;
+
+	if (siteVisit) {
 		return {
-			siteVisitId: appeal.siteVisit.id,
-			visitDate: appeal.siteVisit.visitDate?.toISOString() || '',
-			visitStartTime: appeal.siteVisit.visitStartTime
-				? appeal.siteVisit.visitStartTime.toISOString()
+			siteVisitId: siteVisit.id,
+			visitDate: siteVisit.visitDate?.toISOString() || '',
+			visitStartTime: siteVisit.visitStartTime
+				? siteVisit.visitStartTime.toISOString()
 				: '',
-			visitEndTime: appeal.siteVisit.visitEndTime
-				? appeal.siteVisit.visitEndTime.toISOString()
+			visitEndTime: siteVisit.visitEndTime
+				? siteVisit.visitEndTime.toISOString()
 				: '',
-			visitType: isValidSiteVisitType(appeal.siteVisit.siteVisitType?.name)
-				? appeal.siteVisit.siteVisitType.name
+			visitType: isValidSiteVisitType(siteVisit.siteVisitType?.name)
+				? siteVisit.siteVisitType.name
 				: SITE_VISIT_TYPE_UNACCOMPANIED
 		};
 	}

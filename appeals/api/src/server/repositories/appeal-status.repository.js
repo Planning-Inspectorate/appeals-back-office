@@ -104,12 +104,12 @@ const rollForwardAppealStatusTo = (appealId, targetStatus, fromStatus = targetSt
 			throw new Error(`Appeal status ${fromStatus} not found for appeal ${appealId}`);
 		}
 
-		// soft delete all statuses after the base status to maintain history
+		// soft delete all statuses after and including the base status to maintain history
 		await tx.appealStatus.updateMany({
 			where: {
 				appealId: baseStatus.appealId,
 				createdAt: {
-					gt: baseStatus.createdAt
+					gte: baseStatus.createdAt
 				}
 			},
 			data: { valid: false, isDeleted: true }

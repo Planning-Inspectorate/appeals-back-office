@@ -18,11 +18,15 @@ export const mapAppealDecision = (data) => {
 			f.path === `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
 	);
 
+	const inspectorDecision = Array.isArray(appeal.inspectorDecision)
+		? appeal.inspectorDecision[0]
+		: appeal.inspectorDecision;
+
 	if (decisionFolder) {
-		if (appeal.inspectorDecision && isValidOutcome(appeal.inspectorDecision.outcome)) {
-			const outcome = appeal.inspectorDecision.outcome;
+		if (inspectorDecision && isValidOutcome(inspectorDecision.outcome)) {
+			const outcome = inspectorDecision.outcome;
 			const decisionLetter = decisionFolder?.documents?.find(
-				(d) => d.guid === appeal.inspectorDecision?.decisionLetterGuid
+				(d) => d.guid === inspectorDecision?.decisionLetterGuid
 			);
 			if (outcome) {
 				if (decisionLetter?.latestDocumentVersion) {
@@ -35,7 +39,7 @@ export const mapAppealDecision = (data) => {
 							documentName: decisionLetter.name,
 							letterDate:
 								decisionLetter.latestDocumentVersion?.dateReceived?.toISOString() ??
-								appeal.inspectorDecision.caseDecisionOutcomeDate?.toISOString(),
+								inspectorDecision.caseDecisionOutcomeDate?.toISOString(),
 							virusCheckStatus: avCheckStatus,
 							outcome
 						};
@@ -44,8 +48,8 @@ export const mapAppealDecision = (data) => {
 					return {
 						folderId: decisionFolder.id,
 						path: decisionFolder.path,
-						letterDate: appeal.inspectorDecision.caseDecisionOutcomeDate?.toISOString(),
-						invalidReason: appeal.inspectorDecision.invalidDecisionReason,
+						letterDate: inspectorDecision.caseDecisionOutcomeDate?.toISOString(),
+						invalidReason: inspectorDecision.invalidDecisionReason,
 						outcome
 					};
 				}

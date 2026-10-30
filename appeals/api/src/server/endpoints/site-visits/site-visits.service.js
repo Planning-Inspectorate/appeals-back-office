@@ -57,6 +57,7 @@ export const createSiteVisit = async (
 ) => {
 	try {
 		const appealId = siteVisitData.appealId;
+		const associatedAppealVersion = siteVisitData.appealVersion;
 		const appealType = appealCaseTypeToAppealTypeMapper(siteVisitData.appealTypeKey);
 		const visitDate = siteVisitData.visitDate;
 		const visitEndTime = siteVisitData.visitEndTime;
@@ -65,6 +66,7 @@ export const createSiteVisit = async (
 
 		const siteVisit = await siteVisitRepository.createSiteVisitById({
 			appealId,
+			associatedAppealVersion,
 			visitDate,
 			visitEndTime,
 			visitStartTime,

@@ -10,16 +10,21 @@ import { databaseConnector } from '#utils/database-connector.js';
 
 /**
  * @param {number} id
+ * @param {number} appealVersion
  * @param {Partial<AppealTimetable>} data
  * @returns {PrismaPromise<AppealTimetable>}
  */
-const upsertAppealTimetableById = (id, data) =>
+const upsertAppealTimetableById = (id, appealVersion , data) =>
 	databaseConnector.appealTimetable.upsert({
-		where: { appealId: id },
+		where: { appealId_associatedAppealVersion: {
+				appealId: id,
+				associatedAppealVersion: appealVersion
+			} },
 		update: data,
 		create: {
 			...data,
-			appealId: id
+			appealId: id,
+			associatedAppealVersion: appealVersion
 		},
 		include: {
 			appeal: true
@@ -39,12 +44,16 @@ const updateAppealTimetableById = (id, data) =>
 
 /**
  * @param {number} appealId
+ * @param {number} appealVersion
  * @param {Timetable} data
  * @returns {PrismaPromise<AppealTimetable>}
  */
-const updateAppealTimetableByAppealId = (appealId, data) =>
+const updateAppealTimetableByAppealId = (appealId, appealVersion, data) =>
 	databaseConnector.appealTimetable.update({
-		where: { appealId },
+		where: { appealId_associatedAppealVersion: {
+				appealId: id,
+				associatedAppealVersion: appealVersion
+			}},
 		data
 	});
 

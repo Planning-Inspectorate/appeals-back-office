@@ -22263,6 +22263,7 @@ export interface AppellantCaseUpdateRequest {
 
 export interface LpaQuestionnaireUpdateRequest {
 	appealId?: number;
+	appealVersion?: number;
 	isCorrectAppealType?: boolean | null;
 	isGreenBelt?: boolean | null;
 	isConservationArea?: boolean | null;

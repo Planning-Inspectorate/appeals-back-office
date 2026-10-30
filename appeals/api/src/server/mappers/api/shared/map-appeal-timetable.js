@@ -12,48 +12,54 @@ import { isExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js
 export const mapAppealTimetable = (data) => {
 	const { appeal } = data;
 
-	if (appeal.appealTimetable)
+	const timetable = Array.isArray(appeal.appealTimetable)
+		? appeal.appealTimetable[0]
+		: appeal.appealTimetable;
+
+	if (!timetable) return undefined;
+
+	if (timetable)
 		return {
-			appealTimetableId: appeal.appealTimetable.id,
+			appealTimetableId: timetable.id,
 			lpaQuestionnaireDueDate:
-				(appeal.appealTimetable.lpaQuestionnaireDueDate &&
-					appeal.appealTimetable.lpaQuestionnaireDueDate.toISOString()) ||
+				(timetable.lpaQuestionnaireDueDate &&
+					timetable.lpaQuestionnaireDueDate.toISOString()) ||
 				null,
-			caseResubmissionDueDate: appeal.appealTimetable.caseResubmissionDueDate
-				? appeal.appealTimetable.caseResubmissionDueDate.toISOString()
+			caseResubmissionDueDate: timetable.caseResubmissionDueDate
+				? timetable.caseResubmissionDueDate.toISOString()
 				: null,
 			...(!isExpeditedAppealType(appeal.appealType?.key || '') && {
 				ipCommentsDueDate:
-					(appeal.appealTimetable.ipCommentsDueDate &&
-						appeal.appealTimetable.ipCommentsDueDate.toISOString()) ||
+					(timetable.ipCommentsDueDate &&
+						timetable.ipCommentsDueDate.toISOString()) ||
 					null,
 				lpaStatementDueDate:
-					(appeal.appealTimetable.lpaStatementDueDate &&
-						appeal.appealTimetable.lpaStatementDueDate.toISOString()) ||
+					(timetable.lpaStatementDueDate &&
+						timetable.lpaStatementDueDate.toISOString()) ||
 					null,
 				finalCommentsDueDate:
-					(appeal.appealTimetable.finalCommentsDueDate &&
-						appeal.appealTimetable.finalCommentsDueDate.toISOString()) ||
+					(timetable.finalCommentsDueDate &&
+						timetable.finalCommentsDueDate.toISOString()) ||
 					null,
 				s106ObligationDueDate:
-					(appeal.appealTimetable.s106ObligationDueDate &&
-						appeal.appealTimetable.s106ObligationDueDate.toISOString()) ||
+					(timetable.s106ObligationDueDate &&
+						timetable.s106ObligationDueDate.toISOString()) ||
 					null,
 				statementOfCommonGroundDueDate:
-					(appeal.appealTimetable.statementOfCommonGroundDueDate &&
-						appeal.appealTimetable.statementOfCommonGroundDueDate.toISOString()) ||
+					(timetable.statementOfCommonGroundDueDate &&
+						timetable.statementOfCommonGroundDueDate.toISOString()) ||
 					null,
 				planningObligationDueDate:
-					(appeal.appealTimetable.planningObligationDueDate &&
-						appeal.appealTimetable.planningObligationDueDate.toISOString()) ||
+					(timetable.planningObligationDueDate &&
+						timetable.planningObligationDueDate.toISOString()) ||
 					null,
 				proofOfEvidenceAndWitnessesDueDate:
-					(appeal.appealTimetable.proofOfEvidenceAndWitnessesDueDate &&
-						appeal.appealTimetable.proofOfEvidenceAndWitnessesDueDate.toISOString()) ||
+					(timetable.proofOfEvidenceAndWitnessesDueDate &&
+						timetable.proofOfEvidenceAndWitnessesDueDate.toISOString()) ||
 					null,
 				caseManagementConferenceDueDate:
-					(appeal.appealTimetable.caseManagementConferenceDueDate &&
-						appeal.appealTimetable.caseManagementConferenceDueDate.toISOString()) ||
+					(timetable.caseManagementConferenceDueDate &&
+						timetable.caseManagementConferenceDueDate.toISOString()) ||
 					null
 			})
 		};

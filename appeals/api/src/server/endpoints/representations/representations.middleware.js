@@ -18,10 +18,15 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
  * @returns {boolean}
  */
 const canPublishIpCommentsAndStatements = (currentAppeal) => {
+	console.log('########### canPublishIpCommentsAndStatements');
 	const { representations = [], appealTimetable } = currentAppeal || {};
 	const { AWAITING_REVIEW } = APPEAL_REPRESENTATION_STATUS;
 	const { COMMENT, LPA_STATEMENT, RULE_6_PARTY_STATEMENT, APPELLANT_STATEMENT } =
 		APPEAL_REPRESENTATION_TYPE;
+
+	const timetable = Array.isArray(appealTimetable)
+		? appealTimetable[0]
+		: appealTimetable;
 
 	const representationCheckList = [COMMENT, LPA_STATEMENT];
 	if (isFeatureActive(FEATURE_FLAG_NAMES.APPELLANT_STATEMENT)) {
@@ -39,10 +44,10 @@ const canPublishIpCommentsAndStatements = (currentAppeal) => {
 	const today = new Date();
 
 	const ipCommentsDueDatePassed =
-		appealTimetable?.ipCommentsDueDate && dateIsPast(appealTimetable.ipCommentsDueDate, today);
+		timetable?.ipCommentsDueDate && dateIsPast(timetable.ipCommentsDueDate, today);
 
 	const lpaStatementDueDatePassed =
-		appealTimetable?.lpaStatementDueDate && dateIsPast(appealTimetable.lpaStatementDueDate, today);
+		timetable?.lpaStatementDueDate && dateIsPast(timetable.lpaStatementDueDate, today);
 
 	return Boolean(
 		ipCommentsDueDatePassed && lpaStatementDueDatePassed && !hasRepresentationsAwaitingReview
@@ -60,6 +65,10 @@ const canPublishFinalComments = (currentAppeal) => {
 	const { AWAITING_REVIEW } = APPEAL_REPRESENTATION_STATUS;
 	const { LPA_FINAL_COMMENT, APPELLANT_FINAL_COMMENT } = APPEAL_REPRESENTATION_TYPE;
 
+	const timetable = Array.isArray(appealTimetable)
+		? appealTimetable[0]
+		: appealTimetable;
+
 	const hasFinalCommentsAwaitingReview = representations?.some(
 		({ status, representationType }) =>
 			[LPA_FINAL_COMMENT, APPELLANT_FINAL_COMMENT].includes(representationType) &&
@@ -69,8 +78,8 @@ const canPublishFinalComments = (currentAppeal) => {
 	const today = new Date();
 
 	const finalCommentsDueDatePassed =
-		appealTimetable?.finalCommentsDueDate &&
-		dateIsPast(appealTimetable.finalCommentsDueDate, today);
+		timetable?.finalCommentsDueDate &&
+		dateIsPast(timetable.finalCommentsDueDate, today);
 
 	return Boolean(!hasFinalCommentsAwaitingReview && finalCommentsDueDatePassed);
 };
@@ -87,6 +96,10 @@ const canPublishProofOfEvidence = (currentAppeal) => {
 	const { LPA_PROOFS_EVIDENCE, APPELLANT_PROOFS_EVIDENCE, RULE_6_PARTY_PROOFS_EVIDENCE } =
 		APPEAL_REPRESENTATION_TYPE;
 
+	const timetable = Array.isArray(appealTimetable)
+		? appealTimetable[0]
+		: appealTimetable;
+
 	const hasProofOfEvidenceAwaitingReview = representations?.some(
 		({ status, representationType }) =>
 			[LPA_PROOFS_EVIDENCE, APPELLANT_PROOFS_EVIDENCE, RULE_6_PARTY_PROOFS_EVIDENCE].includes(
@@ -97,8 +110,8 @@ const canPublishProofOfEvidence = (currentAppeal) => {
 	const today = new Date();
 
 	const proofOfEvidenceDueDatePassed =
-		appealTimetable?.proofOfEvidenceAndWitnessesDueDate &&
-		dateIsPast(appealTimetable.proofOfEvidenceAndWitnessesDueDate, today);
+		timetable?.proofOfEvidenceAndWitnessesDueDate &&
+		dateIsPast(timetable.proofOfEvidenceAndWitnessesDueDate, today);
 
 	return Boolean(!hasProofOfEvidenceAwaitingReview || proofOfEvidenceDueDatePassed);
 };

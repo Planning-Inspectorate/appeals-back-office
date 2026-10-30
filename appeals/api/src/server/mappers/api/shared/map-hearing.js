@@ -10,22 +10,26 @@
 export const mapHearing = (data) => {
 	const { appeal } = data;
 
-	if (appeal.hearing) {
+	const hearing = Array.isArray(appeal.hearing)
+		? appeal.hearing[0]
+		: appeal.hearing;
+
+	if (hearing) {
 		return {
-			hearingId: appeal.hearing.id,
-			hearingStartTime: appeal.hearing.hearingStartTime?.toISOString() || '',
-			hearingEndTime: appeal.hearing.hearingEndTime?.toISOString() || '',
-			estimatedDays: appeal.hearing.estimatedDays
-				? Number(appeal.hearing.estimatedDays)
+			hearingId: hearing.id,
+			hearingStartTime: hearing.hearingStartTime?.toISOString() || '',
+			hearingEndTime: hearing.hearingEndTime?.toISOString() || '',
+			estimatedDays: hearing.estimatedDays
+				? Number(hearing.estimatedDays)
 				: undefined,
-			addressId: appeal.hearing.addressId || undefined,
-			...(appeal.hearing.address && {
+			addressId: hearing.addressId || undefined,
+			...(hearing.address && {
 				address: {
-					addressLine1: appeal.hearing.address.addressLine1 || undefined,
-					addressLine2: appeal.hearing.address.addressLine2 || undefined,
-					town: appeal.hearing.address.addressTown || undefined,
-					county: appeal.hearing.address.addressCounty || undefined,
-					postcode: appeal.hearing.address.postcode || undefined
+					addressLine1: hearing.address.addressLine1 || undefined,
+					addressLine2: hearing.address.addressLine2 || undefined,
+					town: hearing.address.addressTown || undefined,
+					county: hearing.address.addressCounty || undefined,
+					postcode: hearing.address.postcode || undefined
 				}
 			})
 		};

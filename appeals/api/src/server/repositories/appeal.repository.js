@@ -338,13 +338,23 @@ export const appealDetailsIncludeMap = /** @type {Object} */ {
  * @param {K[]} selectedKeys
  * @param {boolean} includeDetails
  * @param {boolean} selectAppealTypeKey
+ * @param {number} appealId
+ * @param {number} appealVersion
  * @returns {Partial<import('#db-client/models.ts').AppealInclude> | null}
  */
 export const buildAppealInclude = (
 	selectedKeys = [],
 	includeDetails = true,
-	selectAppealTypeKey = false
+	selectAppealTypeKey = false,
+	appealId,
+	appealVersion
 ) => {
+
+	const context = {
+				appealId: appealId,
+				currentAppealVersion: appealVersion
+			}
+
 	if (!includeDetails) {
 		if (selectAppealTypeKey) {
 			return {
@@ -362,7 +372,10 @@ export const buildAppealInclude = (
 	/** @type {Partial<import('#db-client/models.ts').AppealInclude>} */
 	let include = {};
 	for (const key of selectedKeys) {
-		include[key] = appealDetailsIncludeMap[key];
+		const config = appealDetailsIncludeMap[key];
+		include[key] = typeof config === 'function'
+			? config(context)
+			: applyVersionedFilters(config, context);
 	}
 
 	if (selectAppealTypeKey && !selectedKeys.some((key) => key === 'appealType')) {
@@ -388,7 +401,22 @@ export const buildAppealInclude = (
  * @returns {Promise<Appeal|undefined>}
  */
 const getAppealById = async (id, includeDetails = true, selectedKeys = [], selectAppealTypeKey) => {
-	const include = buildAppealInclude(selectedKeys, includeDetails, selectAppealTypeKey);
+	const appealVersion = await databaseConnector.appeal.findUnique({
+		where: {
+			id
+		},
+		select: {
+			currentAppealVersion: true
+		}
+	});
+
+	const include = buildAppealInclude(
+		selectedKeys,
+		includeDetails,
+		selectAppealTypeKey,
+		id,
+		appealVersion?.currentAppealVersion ?? 1
+	);
 
 	const includeFolders = include && include.folders;
 	if (include && 'folders' in include) {
@@ -587,7 +615,7 @@ const updateAppealById = (
  */
 const setAppealDecision = (
 	id,
-	{ documentDate, documentGuid, version = 1, outcome, invalidDecisionReason = null }
+	{ documentDate, documentGuid, version = 1, outcome, invalidDecisionReason = null, associatedAppealVersion = 1 }
 ) => {
 	const decisionDate = new Date(documentDate).toISOString();
 	// @ts-ignore
@@ -602,7 +630,8 @@ const setAppealDecision = (
 				outcome,
 				decisionLetterGuid: documentGuid,
 				caseDecisionOutcomeDate: new Date(documentDate),
-				invalidDecisionReason: invalidDecisionReason ? invalidDecisionReason : null
+				invalidDecisionReason: invalidDecisionReason ? invalidDecisionReason : null,
+				associatedAppealVersion
 			}
 		});
 
@@ -864,6 +893,7 @@ const getAppealsWithCompletedEvents = () =>
 			OR: [
 				{
 					siteVisit: {
+						associatedAppealVersion: databaseConnector.appeal.currentAppealVersion,
 						OR: [
 							{
 								visitEndTime: {
@@ -881,6 +911,7 @@ const getAppealsWithCompletedEvents = () =>
 				},
 				{
 					hearing: {
+						associatedAppealVersion: databaseConnector.appeal.currentAppealVersion,
 						OR: [
 							{
 								hearingStartTime: {
@@ -898,6 +929,7 @@ const getAppealsWithCompletedEvents = () =>
 				},
 				{
 					inquiry: {
+						associatedAppealVersion: databaseConnector.appeal.currentAppealVersion,
 						OR: [
 							{
 								inquiryStartTime: {
@@ -1146,9 +1178,11 @@ const getAppealReference = async (appealId) => {
 };
 
 /**
- * @type {import('#db-client/models.ts').AppealSelect}
+ * @param {number} appealId
+ * @param {number} appealVersion
+ * @returns {import('#db-client/models.ts').AppealSelect}
  **/
-export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
+export const appealDetailsPageDisplaySelect = (appealId, appealVersion) => { return {
 	id: true,
 	reference: true,
 	currentStatus: true,
@@ -1293,6 +1327,10 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 		}
 	},
 	appealTimetable: {
+		where: {
+			appealId: appealId,
+			associatedAppealVersion: appealVersion
+		},
 		select: {
 			id: true,
 			lpaQuestionnaireDueDate: true,
@@ -1333,6 +1371,10 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 		}
 	},
 	inspectorDecision: {
+		where: {
+			appealId: appealId,
+			associatedAppealVersion: appealVersion
+		},
 		select: {
 			outcome: true,
 			decisionLetterGuid: true,
@@ -1354,6 +1396,8 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 	},
 	siteVisit: {
 		where: {
+			appealId: appealId,
+			associatedAppealVersion: appealVersion,
 			whoMissedSiteVisit: null
 		},
 		select: {
@@ -1369,6 +1413,10 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 		}
 	},
 	hearing: {
+		where: {
+			appealId: appealId,
+			associatedAppealVersion: appealVersion
+		},
 		select: {
 			id: true,
 			hearingStartTime: true,
@@ -1387,6 +1435,10 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 		}
 	},
 	inquiry: {
+		where: {
+			appealId: appealId,
+			associatedAppealVersion: appealVersion
+		},
 		select: {
 			id: true,
 			inquiryStartTime: true,
@@ -1415,6 +1467,10 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 		}
 	},
 	hearingEstimate: {
+		where: {
+			appealId: appealId,
+			associatedAppealVersion: appealVersion
+		},
 		select: {
 			id: true,
 			preparationTime: true,
@@ -1423,6 +1479,10 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 		}
 	},
 	inquiryEstimate: {
+		where: {
+			appealId: appealId,
+			associatedAppealVersion: appealVersion
+		},
 		select: {
 			id: true,
 			preparationTime: true,
@@ -1517,18 +1577,39 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 			createdAt: 'desc'
 		}
 	}
-};
+}};
+
 
 /**
  * @param {number} id
  * @returns {Promise<Appeal|undefined>}
  */
-const getAppealByIdForPageDisplay = async (id) => {
+const getAppealVersionById = async (id) => {
+	const appealVersion = await databaseConnector.appeal.findUnique({
+		where: {
+			id
+		},
+		select: { currentAppealVersion: true }
+	});
+
+	if (appealVersion) {
+		// @ts-ignore
+		return appealVersion.currentAppealVersion;
+	}
+};
+
+/**
+ * @param {number} id
+ * @param {number} appealVersion
+ * @returns {Promise<Appeal|undefined>}
+ */
+const getAppealByIdForPageDisplay = async (id, appealVersion) => {
+
 	const appeal = await databaseConnector.appeal.findUnique({
 		where: {
 			id
 		},
-		select: appealDetailsPageDisplaySelect
+		select: appealDetailsPageDisplaySelect(id, appealVersion)
 	});
 
 	if (appeal) {
@@ -1759,5 +1840,43 @@ export default {
 	getAppealReference,
 	getFoldersWithDocumentsAndVersions,
 	setMultiAppealEiaScreeningRequired,
-	incrementAppealVersion
+	incrementAppealVersion,
+	getAppealVersionById
+};
+
+/**
+ * Apply versioned filters to an include config
+ *
+ * @param {Object} includeConfig
+ * @param {Object} context
+ * @returns {Object}
+ */
+const applyVersionedFilters = (includeConfig, context = {}) => {
+	if (!includeConfig || typeof includeConfig !== 'object' || context.appealId == null || context.currentAppealVersion == null) {
+		return includeConfig;
+	}
+
+	if (Array.isArray(includeConfig)) {
+		return includeConfig.map((item) => applyVersionedFilters(item, context));
+	}
+
+	const config = { ...includeConfig };
+	for (const [key, value] of Object.entries(includeConfig)) {
+		if (value && typeof value === 'object') {
+			if (['siteVisit', 'inspectorDecision', 'appealTimetable'].includes(key)) {
+				config[key] = {
+					...value,
+					where: {
+						...(value.where ?? {}),
+						appealId: context.appealId,
+						associatedAppealVersion: context.currentAppealVersion
+					}
+				};
+			} else {
+				config[key] = applyVersionedFilters(value, context);
+			}
+		}
+	}
+
+	return config;
 };

@@ -22,12 +22,13 @@ export const updateAppealDecisionLetter = (appealId, documentGuid) => {
 
 /**
  * @param {number} appealId
+ * @param {number} appealVersion
  * @param {Date} caseDecisionOutcomeDate
  * @returns {PrismaPromise<InspectorDecision>}
  */
-export const updateAppealCaseDecisionOutcomeDate = (appealId, caseDecisionOutcomeDate) => {
+export const updateAppealCaseDecisionOutcomeDate = (appealId, appealVersion, caseDecisionOutcomeDate) => {
 	return databaseConnector.inspectorDecision.update({
-		where: { appealId },
+		where: { appealId, associatedAppealVersion: appealVersion },
 		data: {
 			caseDecisionOutcomeDate
 		}

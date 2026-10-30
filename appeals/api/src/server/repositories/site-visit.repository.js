@@ -9,6 +9,7 @@ import { databaseConnector } from '#utils/database-connector.js';
 /**
  * @param {{
  *  appealId: number;
+ *  associatedAppealVersion: number;
  * 	visitDate?: Date;
  * 	visitEndTime?: Date;
  * 	visitStartTime?: Date;
