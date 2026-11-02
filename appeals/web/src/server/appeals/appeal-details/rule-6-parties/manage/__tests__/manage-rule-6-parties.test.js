@@ -16,7 +16,7 @@ describe('manage rule 6 parties', () => {
 	describe('GET /rule-6-parties/manage', () => {
 		it('should render the manage rule 6 parties page with the expected content', async () => {
 			nock('http://test/')
-				.get(`/appeals/2?include=appealRule6Parties`)
+				.get(`/appeals/2?include=appealRule6Parties,appealType`)
 				.reply(200, {
 					...appealData,
 					appealId: 2,
@@ -107,7 +107,7 @@ describe('manage rule 6 parties', () => {
 
 		it('should have a back link to the appeal details page', async () => {
 			nock('http://test/')
-				.get(`/appeals/2?include=appealRule6Parties`)
+				.get(`/appeals/2?include=appealRule6Parties,appealType`)
 				.reply(200, { ...appealData, appealId: 2 });
 
 			const response = await request.get(`${baseUrl}/2/rule-6-parties/manage`);
@@ -121,7 +121,7 @@ describe('manage rule 6 parties', () => {
 
 		it('should have a back link to the original page if specified', async () => {
 			nock('http://test/')
-				.get(`/appeals/2?include=appealRule6Parties`)
+				.get(`/appeals/2?include=appealRule6Parties,appealType`)
 				.reply(200, { ...appealData, appealId: 2 });
 
 			const response = await request.get(`${baseUrl}/2/rule-6-parties/manage?backUrl=/my-cases`);
@@ -129,6 +129,37 @@ describe('manage rule 6 parties', () => {
 
 			const html = parseHtml(response.text, { rootElement: 'body' });
 			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe('/my-cases');
+		});
+
+		it('should render empty string when email is not provided', async () => {
+			nock('http://test/')
+				.get(`/appeals/2?include=appealRule6Parties,appealType`)
+				.reply(200, {
+					...appealData,
+					appealId: 2,
+					appealType: 'Tree preservation order',
+					appealRule6Parties: [
+						{
+							id: 1,
+							serviceUser: {
+								organisationName: 'Test Organisation Without Email',
+								email: null
+							}
+						}
+					]
+				});
+
+			const response = await request.get(`${baseUrl}/2/rule-6-parties/manage`);
+			expect(response.statusCode).toBe(200);
+
+			const html = parseHtml(response.text);
+			const summaryList = html.querySelector('#rule-6-parties-summary-list');
+			const rows = summaryList.querySelectorAll('.govuk-summary-list__row');
+			expect(rows.length).toBe(1);
+			expect(rows[0].querySelector('.govuk-summary-list__key').textContent.trim()).toBe(
+				'Test Organisation Without Email'
+			);
+			expect(rows[0].querySelector('.govuk-summary-list__value').textContent.trim()).toBe('');
 		});
 	});
 });

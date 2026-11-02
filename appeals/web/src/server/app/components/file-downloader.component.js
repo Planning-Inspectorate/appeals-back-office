@@ -12,7 +12,11 @@ import config from '@pins/appeals.web/environment/config.js';
 import { REP_ATTACHMENT_DOCTYPE } from '@pins/appeals/constants/documents.js';
 import { camelCaseToWords, toSentenceCase } from '@pins/appeals/utils/string-case.js';
 import { BlobStorageClient } from '@pins/blob-storage-client';
-import { APPEAL_CASE_STAGE, APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_CASE_STAGE,
+	APPEAL_DOCUMENT_TYPE,
+	APPEAL_VIRUS_CHECK_STATUS
+} from '@planning-inspectorate/data-model';
 import archiver from 'archiver';
 import path from 'node:path';
 
@@ -38,6 +42,14 @@ const storeTypes = new Set([
 	'mp4',
 	'mov'
 ]);
+
+/** @type {Record<string, string>} */
+const hearingSupInqFolderNamesMap = {
+	[APPEAL_DOCUMENT_TYPE.HEARING_PROCESS]: 'Hearing documents',
+	[APPEAL_DOCUMENT_TYPE.GENERAL_SUPPORTING]: 'Supporting documents',
+	[APPEAL_DOCUMENT_TYPE.INQUIRY_CORE]: 'Inquiry documents',
+	[APPEAL_DOCUMENT_TYPE.INQUIRY_POST_EVENT]: 'Inquiry event documents'
+};
 
 /**
  * Create a new blob storage client
@@ -556,7 +568,11 @@ export const getBulkFileInfo = async (apiClient, caseId, representationType) => 
 	const bulkFileInfo = folders.flatMap((folder) => {
 		let folderPath = folder.path
 			.split('/')
-			.map((folderName) => camelCaseToWords(folderName.trim()).replace('Lpa', 'LPA'))
+			.map(
+				(folderName) =>
+					hearingSupInqFolderNamesMap[folderName.trim()] ||
+					camelCaseToWords(folderName.trim()).replace('Lpa', 'LPA')
+			)
 			.map((folderName) =>
 				folderName.toLowerCase() === APPEAL_CASE_STAGE.INTERNAL
 					? 'Case Management (Internal)'

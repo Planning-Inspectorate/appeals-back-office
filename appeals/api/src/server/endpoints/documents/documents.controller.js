@@ -26,7 +26,8 @@ import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.reposito
 import { getPageCount } from '#utils/database-pagination.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { updatePersonalList } from '#utils/update-personal-list.js';
+import { setPersonalList } from '#utils/update-personal-list.js';
+import { FRONT_OFFICE_DASHBOARD_PATH_STUBS } from '@pins/appeals/constants/common.js';
 import { EventType } from '@pins/event-client';
 import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { addWeeks, format } from 'date-fns';
@@ -140,7 +141,7 @@ export const addDocuments = async (req, res) => {
 			);
 		}
 
-		await updatePersonalList(appeal.id);
+		await setPersonalList({ appealId: appeal.id });
 
 		const auditTrails = await Promise.all(
 			documentInfo.documents.filter(Boolean).map(async (document) => {
@@ -319,12 +320,43 @@ export const deleteDocumentVersion = async (req, res) => {
 	return res.send(documentInfo);
 };
 
+/** @param {string} sharingDocumentType */
+const getNotifyTemplateName = (sharingDocumentType) => {
+	let notifyTemplateName;
+	switch (sharingDocumentType) {
+		case 'costs-application':
+			notifyTemplateName = 'shared-cost-application';
+			break;
+		case 'costs-correspondence':
+			notifyTemplateName = 'shared-cost-application-comment';
+			break;
+		case 'costs-withdrawal':
+			notifyTemplateName = 'shared-cost-application-withdrawal';
+			break;
+		case 'supporting-document':
+		case 'hearing-document':
+		case 'inquiry-document':
+		case 'inquiry-event-document':
+			notifyTemplateName = 'document-received';
+			break;
+	}
+	return notifyTemplateName;
+};
+
+/**
+ * @param {string | undefined} sharingDocumentType
+ * @returns {string}
+ */
+const getDocumentFolderName = (sharingDocumentType) =>
+	(sharingDocumentType || '').replace(/-/g, ' ');
+
 /**
  * @param {Request} req
  * @param {Response} res
  */
 export const updateDocuments = async (req, res) => {
 	const { body, appeal } = req;
+	const { inviteResponses, sharingDocumentType, costsCategory, shareMultipleDocuments } = body;
 	const responseDocuments = [];
 
 	try {
@@ -332,6 +364,7 @@ export const updateDocuments = async (req, res) => {
 		for (const document of documents) {
 			const latestDocument = await documentRepository.getDocumentById(document.id);
 			document.latestVersion = latestDocument?.latestDocumentVersion?.version;
+			document.latestDocumentVersion = latestDocument?.latestDocumentVersion;
 
 			if (latestDocument && latestDocument.name) {
 				if (document.redactionStatus !== latestDocument?.latestDocumentVersion?.redactionStatusId) {
@@ -365,15 +398,39 @@ export const updateDocuments = async (req, res) => {
 						latestDocument.guid
 					);
 				}
+				document.isShared =
+					document.isShared && latestDocument && !latestDocument.latestDocumentVersion?.published;
+				document.currentRedactionStatusId =
+					latestDocument?.latestDocumentVersion?.redactionStatusId ?? null;
 			}
 
 			responseDocuments.push({
 				id: document.id,
-				latestVersion: document.latestVersion,
+				latestVersion: document?.latestVersion ?? latestDocument?.latestDocumentVersion,
 				redactionStatus: document.redactionStatus,
 				receivedDate: document.receivedDate,
-				fileName: document.fileName
+				fileName: document?.fileName ?? latestDocument?.name
 			});
+		}
+
+		const notifyTemplateName = getNotifyTemplateName(body.sharingDocumentType);
+		if (
+			documents[0].isShared &&
+			sharingDocumentType &&
+			shareMultipleDocuments &&
+			notifyTemplateName
+		) {
+			await sendShareDocumentEmails(
+				req.notifyClient,
+				appeal,
+				notifyTemplateName,
+				inviteResponses,
+				costsCategory,
+				shareMultipleDocuments,
+				documents[0].name,
+				sharingDocumentType,
+				req.get('azureAdUserId')
+			);
 		}
 		await documentRepository.updateDocuments(documents);
 		for (const document of documents) {
@@ -395,7 +452,13 @@ export const updateDocuments = async (req, res) => {
  */
 export const updateDocument = async (req, res) => {
 	const { body, appeal, params } = req;
-	const { document, inviteResponses, sharingDocumentType } = body;
+	const {
+		document,
+		inviteResponses,
+		sharingDocumentType,
+		costsCategory = null,
+		shareMultipleDocuments
+	} = body;
 	const { documentId } = params;
 	try {
 		const latestDocument = await documentRepository.getDocumentById(documentId);
@@ -424,26 +487,19 @@ export const updateDocument = async (req, res) => {
 			}
 
 			if (isSharingDocument && sharingDocumentType) {
-				let notifyTemplateName = '';
-
-				switch (sharingDocumentType) {
-					case 'costs-application':
-						notifyTemplateName = 'shared-cost-application';
-						break;
-					case 'costs-correspondence':
-						notifyTemplateName = 'shared-cost-application-comment';
-						break;
-					case 'costs-withdrawal':
-						notifyTemplateName = 'shared-cost-application-withdrawal';
-						break;
-				}
+				const notifyTemplateName = getNotifyTemplateName(sharingDocumentType);
 
 				if (notifyTemplateName) {
 					await sendShareDocumentEmails(
 						req.notifyClient,
 						appeal,
 						notifyTemplateName,
-						inviteResponses
+						inviteResponses,
+						costsCategory,
+						shareMultipleDocuments,
+						latestDocument?.name,
+						sharingDocumentType,
+						req.get('azureAdUserId')
 					);
 				}
 			}
@@ -471,19 +527,29 @@ export const updateDocument = async (req, res) => {
  * @param {import('@pins/appeals.api').Schema.Appeal} appeal
  * @param {string} notifyTemplateName
  * @param {boolean} inviteResponses
+ * @param {string} costsCategory
+ * @param {boolean} shareMultipleDocuments
+ * @param {string} documentName
+ * @param {string} sharingDocumentType
+ * @param {string | undefined} azureAdUserId
  */
 const sendShareDocumentEmails = async (
 	notifyClient,
 	appeal,
 	notifyTemplateName,
-	inviteResponses
+	inviteResponses,
+	costsCategory,
+	shareMultipleDocuments,
+	documentName,
+	sharingDocumentType,
+	azureAdUserId
 ) => {
 	const teamEmail = await getTeamEmailFromAppealId(appeal.id);
 	const deadline = format(addWeeks(new Date(), 1), 'd MMMM yyyy');
 	const siteAddress = appeal.address
 		? formatAddressSingleLine(appeal.address)
 		: 'Address not available';
-
+	const folderName = getDocumentFolderName(sharingDocumentType);
 	const personalisation = {
 		appeal_reference_number: appeal?.reference || '',
 		site_address: siteAddress,
@@ -491,27 +557,47 @@ const sendShareDocumentEmails = async (
 		enforcement_reference: appeal?.appellantCase?.enforcementReference || '',
 		contact_email: teamEmail || '',
 		deadline: deadline,
-		responses_invited: !!inviteResponses
+		responses_invited: !!inviteResponses,
+		sharing_multiple_documents: !!shareMultipleDocuments,
+		document_name: documentName || '',
+		document_type: sharingDocumentType || '',
+		document_folder_name: folderName
 	};
 
 	const appellantEmail = appeal.agent?.email ?? appeal.appellant?.email;
 	const lpaEmail = appeal.lpa?.email;
 
 	if (appellantEmail) {
+		const inviteComments = costsCategory
+			? inviteResponses && costsCategory === 'lpa'
+			: inviteResponses;
 		await notifySend({
 			templateName: notifyTemplateName,
 			notifyClient: notifyClient,
 			recipientEmail: appellantEmail,
-			personalisation: { dashboard_link: 'appeals', ...personalisation }
+			azureAdUserId,
+			personalisation: {
+				dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
+				...personalisation,
+				responses_invited: !!inviteComments
+			}
 		});
 	}
 
 	if (lpaEmail) {
+		const inviteComments = costsCategory
+			? inviteResponses && costsCategory === 'appellant'
+			: inviteResponses;
 		await notifySend({
 			templateName: notifyTemplateName,
 			notifyClient: notifyClient,
 			recipientEmail: lpaEmail,
-			personalisation: { dashboard_link: 'manage-appeals', ...personalisation }
+			azureAdUserId,
+			personalisation: {
+				dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA,
+				...personalisation,
+				responses_invited: !!inviteComments
+			}
 		});
 	}
 };

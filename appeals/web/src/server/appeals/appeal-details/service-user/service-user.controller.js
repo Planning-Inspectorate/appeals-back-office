@@ -38,7 +38,7 @@ const renderChangeServiceUser = async (request, response) => {
 	if (
 		appealDetails &&
 		((action === 'change' && userType in appealDetails) ||
-			(action === 'add' && userType === 'agent'))
+			(action === 'add' && (userType === 'agent' || userType === 'appellant')))
 	) {
 		const mappedPageContents = changeServiceUserPage(
 			appealDetails,

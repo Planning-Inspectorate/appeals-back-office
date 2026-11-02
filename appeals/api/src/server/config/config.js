@@ -38,6 +38,7 @@ const { value, error } = schema.validate({
 		topicAppealEventEstimate:
 			environment.SB_TOPIC_NAME_APPEAL_EVENT_ESTIMATE || 'appeal-event-estimate',
 		topicDocumentMove: environment.SB_TOPIC_NAME_DOCUMENT_MOVE || 'appeal-document-to-move',
+		topicCaseFilePackage: environment.SB_TOPIC_NAME_CASE_FILE_PACKAGE || 'appeal-case-file-package',
 		topicAppealRepresentation:
 			environment.SB_TOPIC_NAME_APPEAL_REPRESENTATION || 'appeal-representation'
 	},
@@ -50,6 +51,7 @@ const { value, error } = schema.validate({
 	},
 	cwd: url.fileURLToPath(new URL('..', import.meta.url)),
 	featureFlags: {
+		featureFlagBackgroundCaseDownload: environment.FEATURE_FLAG_BACKGROUND_CASE_DOWNLOAD === 'true',
 		featureFlagS20Inquiry:
 			environment.FEATURE_FLAG_S20_INQUIRY && environment.FEATURE_FLAG_S20_INQUIRY === 'true',
 		featureFlagLinkedAppeals:
@@ -110,7 +112,9 @@ const { value, error } = schema.validate({
 			environment.FEATURE_FLAG_SHARING_INQUIRY_DOCUMENTS === 'true',
 		featureFlagSharingSupportingDocuments:
 			environment.FEATURE_FLAG_SHARING_SUPPORTING_DOCUMENTS &&
-			environment.FEATURE_FLAG_SHARING_SUPPORTING_DOCUMENTS === 'true'
+			environment.FEATURE_FLAG_SHARING_SUPPORTING_DOCUMENTS === 'true',
+		featureFlagGenericCase:
+			environment.FEATURE_FLAG_GENERIC_CASE && environment.FEATURE_FLAG_GENERIC_CASE === 'true'
 	},
 	serviceBusEnabled: environment.SERVICE_BUS_ENABLED && environment.SERVICE_BUS_ENABLED === 'true',
 	enableTestEndpoints:

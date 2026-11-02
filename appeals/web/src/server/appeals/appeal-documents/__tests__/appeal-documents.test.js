@@ -8,6 +8,7 @@ import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
 import nock from 'nock';
 import supertest from 'supertest';
 import {
+	manageDocumentPage,
 	manageFolderPage,
 	mapDocumentDownloadUrl,
 	mapRedactionStatusKeyToName
@@ -441,6 +442,244 @@ describe('appeal-documents', () => {
 
 			expect(hasShareAllNoLink).toBe(false);
 			expect(hasShareAllNotEditable).toBe(false);
+		});
+
+		it('renders "Redaction review required" for appellant case folder documents before validation if redactionStatus is empty', () => {
+			const folder = {
+				folderId: validFolderId,
+				path: 'appellant-case/appellantStatement',
+				caseId: validAppealId,
+				documents: [
+					{
+						id: 'doc-1',
+						name: 'doc-1.pdf',
+						latestDocumentVersion: {
+							dateReceived: '2024-01-01T00:00:00.000Z',
+							redactionStatus: ''
+						}
+					}
+				],
+				totalFolderSize: 1
+			};
+			const fakeRequest = {
+				currentAppeal: {
+					appealType: 'Householder',
+					appealStatus: 'validation'
+				},
+				session: {
+					permissions: {
+						viewRedactionStatusColumn: true
+					}
+				}
+			};
+
+			const page = manageFolderPage({
+				backLinkUrl: '/',
+				viewAndEditUrl: '/view/{{folderId}}/{{documentId}}',
+				addButtonUrl: '/add/{{folderId}}',
+				// @ts-ignore
+				folder,
+				// @ts-ignore
+				request: fakeRequest,
+				currentPageNumber: 1
+			});
+
+			// @ts-ignore
+			const table = page.pageComponents.find((c) => c.type === 'table');
+			// @ts-ignore
+			const redactionStatusCell = table?.parameters?.rows?.[0]?.[2];
+			expect(redactionStatusCell?.text).toBe('Redaction review required');
+		});
+
+		it('renders explicit redaction status when set before validation', () => {
+			const folder = {
+				folderId: validFolderId,
+				path: 'appellant-case/appellantStatement',
+				caseId: validAppealId,
+				documents: [
+					{
+						id: 'doc-1',
+						name: 'doc-1.pdf',
+						latestDocumentVersion: {
+							dateReceived: '2024-01-01T00:00:00.000Z',
+							redactionStatus: 'Redacted'
+						}
+					}
+				],
+				totalFolderSize: 1
+			};
+			const fakeRequest = {
+				currentAppeal: {
+					appealType: 'Householder',
+					appealStatus: 'validation'
+				},
+				session: {
+					permissions: {
+						viewRedactionStatusColumn: true
+					}
+				}
+			};
+
+			const page = manageFolderPage({
+				backLinkUrl: '/',
+				viewAndEditUrl: '/view/{{folderId}}/{{documentId}}',
+				addButtonUrl: '/add/{{folderId}}',
+				// @ts-ignore
+				folder,
+				// @ts-ignore
+				request: fakeRequest,
+				currentPageNumber: 1
+			});
+
+			// @ts-ignore
+			const table = page.pageComponents.find((c) => c.type === 'table');
+			// @ts-ignore
+			const redactionStatusCell = table?.parameters?.rows?.[0]?.[2];
+			expect(redactionStatusCell?.text).toBe('Redacted');
+		});
+
+		it('renders "No redaction required" when post-validation documents have status populated by API', () => {
+			const folder = {
+				folderId: validFolderId,
+				path: 'appellant-case/appellantStatement',
+				caseId: validAppealId,
+				documents: [
+					{
+						id: 'doc-1',
+						name: 'doc-1.pdf',
+						latestDocumentVersion: {
+							dateReceived: '2024-01-01T00:00:00.000Z',
+							redactionStatus: 'No redaction required'
+						}
+					}
+				],
+				totalFolderSize: 1
+			};
+			const fakeRequest = {
+				currentAppeal: {
+					appealType: 'Householder',
+					appealStatus: 'statements'
+				},
+				session: {
+					permissions: {
+						viewRedactionStatusColumn: true
+					}
+				}
+			};
+
+			const page = manageFolderPage({
+				backLinkUrl: '/',
+				viewAndEditUrl: '/view/{{folderId}}/{{documentId}}',
+				addButtonUrl: '/add/{{folderId}}',
+				// @ts-ignore
+				folder,
+				// @ts-ignore
+				request: fakeRequest,
+				currentPageNumber: 1
+			});
+
+			// @ts-ignore
+			const table = page.pageComponents.find((c) => c.type === 'table');
+			// @ts-ignore
+			const redactionStatusCell = table?.parameters?.rows?.[0]?.[2];
+			expect(redactionStatusCell?.text).toBe('No redaction required');
+		});
+
+		it('does not render "Redaction review required" for non-appellant-case folders when redactionStatus is empty', () => {
+			const folder = {
+				folderId: validFolderId,
+				path: 'lpa-questionnaire/other',
+				caseId: validAppealId,
+				documents: [
+					{
+						id: 'doc-1',
+						name: 'doc-1.pdf',
+						latestDocumentVersion: {
+							dateReceived: '2024-01-01T00:00:00.000Z',
+							redactionStatus: ''
+						}
+					}
+				],
+				totalFolderSize: 1
+			};
+			const fakeRequest = {
+				currentAppeal: {
+					appealType: 'Householder',
+					appealStatus: 'validation'
+				},
+				session: {
+					permissions: {
+						viewRedactionStatusColumn: true
+					}
+				}
+			};
+
+			const page = manageFolderPage({
+				backLinkUrl: '/',
+				viewAndEditUrl: '/view/{{folderId}}/{{documentId}}',
+				addButtonUrl: '/add/{{folderId}}',
+				// @ts-ignore
+				folder,
+				// @ts-ignore
+				request: fakeRequest,
+				currentPageNumber: 1
+			});
+
+			// @ts-ignore
+			const table = page.pageComponents.find((c) => c.type === 'table');
+			// @ts-ignore
+			const redactionStatusCell = table?.parameters?.rows?.[0]?.[2];
+			expect(redactionStatusCell?.text).toBe('');
+		});
+	});
+
+	describe('manageDocumentPage', () => {
+		it('renders "Redaction review required" in Redaction status summary row pre-validation when redactionStatus is empty', async () => {
+			const folder = {
+				folderId: validFolderId,
+				path: 'appellant-case/appellantStatement',
+				caseId: validAppealId
+			};
+			const document = {
+				id: 'doc-1',
+				name: 'doc-1.pdf',
+				latestDocumentVersion: {
+					version: 1,
+					dateReceived: '2024-01-01T00:00:00.000Z',
+					redactionStatus: '',
+					published: false
+				}
+			};
+			const fakeRequest = {
+				originalUrl: '/appeals-service/appeal-details/1/appellant-case/manage-documents/1/doc-1',
+				currentAppeal: {
+					appealType: 'Householder',
+					appealStatus: 'validation'
+				},
+				session: {}
+			};
+
+			const page = await manageDocumentPage({
+				appealId: validAppealId.toString(),
+				// @ts-ignore
+				document,
+				// @ts-ignore
+				folder,
+				// @ts-ignore
+				request: fakeRequest,
+				uploadUpdatedDocumentUrl: '/upload/{{folderId}}/{{documentId}}',
+				removeDocumentUrl: '/remove/{{folderId}}/{{documentId}}',
+				editable: true
+			});
+
+			// @ts-ignore
+			const summaryList = page.pageComponents.find((c) => c.type === 'summary-list');
+			// @ts-ignore
+			const redactionRow = summaryList?.parameters?.rows?.find(
+				// @ts-ignore
+				(r) => r.key?.text === 'Redaction status'
+			);
+			expect(redactionRow?.value?.text).toBe('Redaction review required');
 		});
 	});
 });

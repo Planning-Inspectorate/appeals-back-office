@@ -104,6 +104,9 @@ const patchDocumentsValidator = composeMiddleware(
 	validateIdParameter('appealId'),
 	validateUuidParameter({ parameterName: 'documents.*.id', parameterType: body }),
 	validateDateParameter({ parameterName: 'documents.*.receivedDate', isRequired: true }),
+	validateBooleanParameter('documents.*.isShared'),
+	validateStringParameter('sharingDocumentType'),
+	validateBooleanParameter('inviteResponses'),
 	body('documents').custom(validateDocumentRedactionStatusIds),
 	validationErrorHandler
 );

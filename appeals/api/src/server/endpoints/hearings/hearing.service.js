@@ -5,6 +5,7 @@ import { notifySend } from '#notify/notify-send.js';
 import hearingRepository from '#repositories/hearing.repository.js';
 import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import logger from '#utils/logger.js';
+import { toTime } from '#utils/to-time.js';
 import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
 import {
 	ERROR_FAILED_TO_SAVE_DATA,
@@ -42,6 +43,40 @@ const checkHearingExists = async (req, res, next) => {
 	}
 
 	next();
+};
+
+/**
+ * @param {Hearing | null | undefined} existingHearing
+ * @param {UpdateHearing} updatedHearing
+ * @returns {{isDateChanged: boolean, isEndTimeChanged: boolean, isEstimatedDaysChanged: boolean, isOnlyAddressUpdated: boolean, isOnlyEstimatedDaysUpdated: boolean, existingEstimatedDays: number | undefined}}
+ */
+const checkUpdatedHearingValues = (existingHearing, updatedHearing) => {
+	const existingEstimatedDays = existingHearing?.estimatedDays?.d?.[0];
+	const isDateChanged =
+		toTime(existingHearing?.hearingStartTime) !== toTime(updatedHearing.hearingStartTime);
+	const isEndTimeChanged =
+		toTime(existingHearing?.hearingEndTime) !== toTime(updatedHearing.hearingEndTime);
+	const isEstimatedDaysChanged =
+		(existingEstimatedDays ?? null) !== (updatedHearing.estimatedDays ?? null);
+	const isOnlyAddressUpdated =
+		updatedHearing.address !== undefined &&
+		existingHearing?.address !== updatedHearing.address &&
+		!isDateChanged &&
+		!isEndTimeChanged &&
+		!isEstimatedDaysChanged;
+	const isOnlyEstimatedDaysUpdated =
+		isEstimatedDaysChanged &&
+		!isDateChanged &&
+		!isEndTimeChanged &&
+		(updatedHearing.address === undefined || existingHearing?.address === updatedHearing.address);
+	return {
+		isDateChanged,
+		isEndTimeChanged,
+		isEstimatedDaysChanged,
+		isOnlyAddressUpdated,
+		isOnlyEstimatedDaysUpdated,
+		existingEstimatedDays
+	};
 };
 
 /**
@@ -147,34 +182,41 @@ const sendHearingNotifications = async (
  * @param {string} inspectorName
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
+ * @param {number[]} appealIdsToUpdate
  * @returns {Promise<void>}
  */
-const createHearing = async (
+
+// creates associated hearings for all appeals in appealIdsToUpdate, which could be a single appeal or a linked group of appeals
+const createHearings = async (
 	createHearingData,
 	appeal,
 	inspectorName,
 	notifyClient,
-	azureAdUserId
+	azureAdUserId,
+	appealIdsToUpdate
 ) => {
 	try {
-		const appealId = createHearingData.appealId;
 		const hearingStartTime = createHearingData.hearingStartTime;
 		const hearingEndTime = createHearingData.hearingEndTime;
 		const estimatedDays = createHearingData.estimatedDays;
 		const address = createHearingData.address;
 
-		const hearing = await hearingRepository.createHearingById({
-			appealId,
+		// Batch create hearings for all appeals in the linked group
+		const hearings = await hearingRepository.createHearingsByAppealIds(appealIdsToUpdate, {
 			hearingStartTime,
 			hearingEndTime,
 			estimatedDays,
 			address
 		});
 
-		if (address) {
-			await broadcasters.broadcastEvent(hearing.id, EVENT_TYPE.HEARING, EventType.Create);
-		}
+		// Batch broadcast hearing events for all appeals in the linked group
+		await Promise.all(
+			hearings.map((hearing) =>
+				broadcasters.broadcastEvent(hearing.id, EVENT_TYPE.HEARING, EventType.Create)
+			)
+		);
 
+		// only send a notify for the single/lead appeal
 		await sendHearingDetailsNotifications(
 			notifyClient,
 			'hearing-set-up',
@@ -197,41 +239,44 @@ const createHearing = async (
  * @param {string} inspectorName
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
- * @param {number | null | undefined} existingAddressId
+ * @param {number[]} appealIdsToUpdate
  */
-const updateHearing = async (
+// updates the associated hearing for all appeals in appealIdsToUpdate, which could be a single appeal or a linked group of appeals
+const updateHearings = async (
 	updateHearingData,
 	appeal,
 	inspectorName,
 	notifyClient,
 	azureAdUserId,
-	existingAddressId
+	appealIdsToUpdate
 ) => {
 	try {
-		const appealId = updateHearingData.appealId;
-		const hearingId = Number(updateHearingData.hearingId);
 		const hearingStartTime = updateHearingData.hearingStartTime;
 		const hearingEndTime = updateHearingData.hearingEndTime;
 		const estimatedDays = updateHearingData.estimatedDays;
 		const address = updateHearingData.address;
-		const addressId = updateHearingData.addressId;
 
 		const updateData = {
-			appealId,
-			hearingId,
 			hearingStartTime: hearingStartTime,
 			hearingEndTime: hearingEndTime || undefined,
 			estimatedDays,
-			addressId: addressId,
 			address: address
 		};
 
-		const result = await hearingRepository.updateHearingById(hearingId, updateData);
+		// Batch update hearings for all appeals in the linked group
+		const hearings = await hearingRepository.updateHearingsByAppealIds(
+			appealIdsToUpdate,
+			updateData
+		);
 
-		// @ts-ignore
-		if (result.address || existingAddressId) {
-			await broadcasters.broadcastEvent(updateData.hearingId, EVENT_TYPE.HEARING, EventType.Update);
-		}
+		const primaryHearing = hearings.find((hearing) => hearing.appealId === appeal.id);
+
+		// Batch broadcast hearing events for all appeals in the linked group
+		await Promise.all(
+			hearings.map((hearing) =>
+				broadcasters.broadcastEvent(hearing.id, EVENT_TYPE.HEARING, EventType.Update)
+			)
+		);
 
 		await sendHearingDetailsNotifications(
 			notifyClient,
@@ -240,11 +285,11 @@ const updateHearing = async (
 			inspectorName,
 			hearingStartTime,
 			estimatedDays ? String(estimatedDays) : '',
-			result.address,
+			primaryHearing?.address ?? null,
 			azureAdUserId
 		);
 
-		return result;
+		return hearings;
 	} catch (error) {
 		logger.error(error, 'Failed to update hearing');
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA, { cause: error });
@@ -252,25 +297,29 @@ const updateHearing = async (
 };
 
 /**
- * @param {CancelHearing} deleteHearingData
+ * @param {number[]} appealIdsToUpdate
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {Appeal} appeal
  * @param {string} azureAdUserId
  */
-const deleteHearing = async (deleteHearingData, notifyClient, appeal, azureAdUserId) => {
+// deletes the associated hearing for all appeals in appealIdsToUpdate, which could be a single appeal or a linked group of appeals
+const deleteHearings = async (appealIdsToUpdate, notifyClient, appeal, azureAdUserId) => {
 	try {
-		const { hearingId } = deleteHearingData;
+		const existingHearings = await hearingRepository.getHearingByAppealId(appealIdsToUpdate);
 
-		const existingHearing = await hearingRepository.getHearingById(hearingId);
+		await hearingRepository.deleteMultiHearingsByAppealId(appealIdsToUpdate);
 
-		await hearingRepository.deleteHearingById(hearingId);
-
-		await broadcasters.broadcastEvent(
-			hearingId,
-			EVENT_TYPE.HEARING,
-			EventType.Delete,
-			existingHearing
+		await Promise.allSettled(
+			existingHearings.map((existingHearing) =>
+				broadcasters.broadcastEvent(
+					existingHearing.id,
+					EVENT_TYPE.HEARING,
+					EventType.Delete,
+					existingHearing
+				)
+			)
 		);
+
 		await sendHearingNotifications(notifyClient, 'hearing-cancelled', appeal, azureAdUserId);
 	} catch (error) {
 		logger.error(error, 'Failed to delete hearing');
@@ -278,4 +327,10 @@ const deleteHearing = async (deleteHearingData, notifyClient, appeal, azureAdUse
 	}
 };
 
-export { checkHearingExists, createHearing, deleteHearing, updateHearing };
+export {
+	checkHearingExists,
+	checkUpdatedHearingValues,
+	createHearings,
+	deleteHearings,
+	updateHearings
+};

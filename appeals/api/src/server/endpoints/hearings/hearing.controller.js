@@ -3,9 +3,9 @@ import {
 	formatAddressSingleLine
 } from '#endpoints/addresses/addresses.formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import hearingRepository from '#repositories/hearing.repository.js';
-import transitionState from '#state/transition-state.js';
+import transitionState, { transitionLinkedChildAppealsState } from '#state/transition-state.js';
 import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
+import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
@@ -13,7 +13,10 @@ import {
 	AUDIT_TRAIL_HEARING_ADDRESS_UPDATED,
 	AUDIT_TRAIL_HEARING_CANCELLED,
 	AUDIT_TRAIL_HEARING_DATE_UPDATED,
+	AUDIT_TRAIL_HEARING_ESTIMATES_ADDED,
+	AUDIT_TRAIL_HEARING_ESTIMATES_UPDATED,
 	AUDIT_TRAIL_HEARING_SET_UP,
+	CASE_RELATIONSHIP_LINKED,
 	ERROR_FAILED_TO_SAVE_DATA,
 	VALIDATION_OUTCOME_CANCEL,
 	VALIDATION_OUTCOME_COMPLETE,
@@ -22,7 +25,12 @@ import {
 import { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { formatHearing } from './hearing.formatter.js';
-import { createHearing, deleteHearing, updateHearing } from './hearing.service.js';
+import {
+	checkUpdatedHearingValues,
+	createHearings,
+	deleteHearings,
+	updateHearings
+} from './hearing.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -52,10 +60,21 @@ export const postHearing = async (req, res) => {
 		appeal
 	} = req;
 
+	const childAppeals = appeal.childAppeals;
 	const appealId = Number(params.appealId);
 	const azureAdUserId = String(req.get('azureAdUserId'));
 	try {
-		await createHearing(
+		let appealIdsToUpdate = [appeal.id];
+		if (isLinkedAppealsActive(appeal)) {
+			// we also want to create hearings associated with the child appeals
+			childAppeals?.forEach((childAppeal) => {
+				if (childAppeal.type === CASE_RELATIONSHIP_LINKED && childAppeal.childId !== null) {
+					appealIdsToUpdate.push(childAppeal.childId);
+				}
+			});
+		}
+
+		await createHearings(
 			{
 				appealId,
 				hearingStartTime,
@@ -75,10 +94,14 @@ export const postHearing = async (req, res) => {
 			appeal,
 			req.body.inspectorName,
 			req.notifyClient,
-			azureAdUserId
+			azureAdUserId,
+			appealIdsToUpdate
 		);
 
 		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT) && address) {
+			if (isLinkedAppealsActive(appeal)) {
+				await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+			}
 			await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 		}
 
@@ -111,28 +134,34 @@ export const postHearing = async (req, res) => {
  */
 export const rearrangeHearing = async (req, res) => {
 	const {
-		body: { hearingStartTime, hearingEndTime, estimatedDays, address, addressId },
+		body: { hearingStartTime, hearingEndTime, estimatedDays, address },
 		params,
 		appeal
 	} = req;
 
+	const childAppeals = appeal.childAppeals;
 	const azureAdUserId = String(req.get('azureAdUserId'));
 	const appealId = Number(params.appealId);
-	const hearingId = Number(params.hearingId);
 
 	try {
-		/** @type {Hearing | undefined} */
-		const currentHearing = await hearingRepository.getHearingById(hearingId);
-		const existingAddressId = currentHearing?.addressId;
+		const existingHearing = req.appeal.hearing;
+		const updatedHearingValues = checkUpdatedHearingValues(existingHearing, req.body);
 
-		await updateHearing(
+		let appealIdsToUpdate = [appeal.id];
+		if (isLinkedAppealsActive(appeal)) {
+			// we also want to update hearings associated with the child appeals
+			childAppeals?.forEach((childAppeal) => {
+				if (childAppeal.type === CASE_RELATIONSHIP_LINKED && childAppeal.childId !== null) {
+					appealIdsToUpdate.push(childAppeal.childId);
+				}
+			});
+		}
+
+		await updateHearings(
 			{
-				appealId,
-				hearingId,
 				hearingStartTime,
 				hearingEndTime,
 				estimatedDays,
-				addressId,
 				...(address !== undefined && {
 					address: address === null ? null : formatAddressForDb(address)
 				})
@@ -141,23 +170,48 @@ export const rearrangeHearing = async (req, res) => {
 			req.body.inspectorName,
 			req.notifyClient,
 			azureAdUserId,
-			existingAddressId
+			appealIdsToUpdate
 		);
 
 		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT)) {
-			if (address && !currentHearing?.addressId) {
+			if (address && !existingHearing?.addressId) {
+				if (isLinkedAppealsActive(appeal)) {
+					await transitionLinkedChildAppealsState(
+						appeal,
+						azureAdUserId,
+						VALIDATION_OUTCOME_COMPLETE
+					);
+				}
 				await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
-			} else if (!address && currentHearing?.addressId) {
+			} else if (address === null && existingHearing?.addressId) {
+				if (isLinkedAppealsActive(appeal)) {
+					await transitionLinkedChildAppealsState(
+						appeal,
+						azureAdUserId,
+						VALIDATION_OUTCOME_INCOMPLETE
+					);
+				}
 				await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_INCOMPLETE);
 			}
 		}
 
-		const existingHearing = req.appeal.hearing;
-		if (existingHearing?.hearingStartTime !== hearingStartTime) {
+		if (!updatedHearingValues.isOnlyAddressUpdated && updatedHearingValues.isDateChanged) {
 			await createAuditTrail({
 				appealId: appeal.id,
 				azureAdUserId,
 				details: stringTokenReplacement(AUDIT_TRAIL_HEARING_DATE_UPDATED, [
+					dateISOStringToDisplayDate(hearingStartTime)
+				])
+			});
+		}
+		if (updatedHearingValues.isOnlyEstimatedDaysUpdated) {
+			const auditLogMessage = updatedHearingValues.existingEstimatedDays
+				? AUDIT_TRAIL_HEARING_ESTIMATES_UPDATED
+				: AUDIT_TRAIL_HEARING_ESTIMATES_ADDED;
+			await createAuditTrail({
+				appealId: appeal.id,
+				azureAdUserId,
+				details: stringTokenReplacement(auditLogMessage, [
 					dateISOStringToDisplayDate(hearingStartTime)
 				])
 			});
@@ -189,19 +243,33 @@ export const rearrangeHearing = async (req, res) => {
  */
 export const cancelHearing = async (req, res) => {
 	const {
-		params: { appealId, hearingId }
+		params: { appealId, hearingId },
+		appeal,
+		notifyClient
 	} = req;
-	const azureAdUserId = String(req.get('azureAdUserId'));
+	const azureAdUserId = String(req.get('azureAdUserId')) || '';
+	const childAppeals = appeal.childAppeals;
+
 	try {
-		await deleteHearing(
-			{ hearingId: Number(hearingId) },
-			req.notifyClient,
-			req.appeal,
-			azureAdUserId
-		);
-		await transitionState(Number(appealId), azureAdUserId, VALIDATION_OUTCOME_CANCEL);
+		let appealsToUpdate = [appeal.id];
+
+		if (isLinkedAppealsActive(appeal)) {
+			childAppeals?.forEach((childAppeal) => {
+				if (childAppeal.type === CASE_RELATIONSHIP_LINKED && childAppeal.childId !== null) {
+					appealsToUpdate.push(childAppeal.childId);
+				}
+			});
+		}
+
+		await deleteHearings(appealsToUpdate, notifyClient, appeal, azureAdUserId);
+
+		if (isLinkedAppealsActive(appeal)) {
+			await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_INCOMPLETE);
+		}
+		await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_CANCEL);
+
 		await createAuditTrail({
-			appealId: Number(appealId),
+			appealId: appeal.id,
 			azureAdUserId,
 			details: AUDIT_TRAIL_HEARING_CANCELLED
 		});

@@ -6,18 +6,24 @@ export const mapLpaContactDetails = ({
 	appealDetails,
 	currentRoute,
 	userHasUpdateCasePermission
-}) =>
-	textSummaryListItem({
+}) => {
+	const hasLpa = Boolean(appealDetails.localPlanningDepartment);
+
+	return textSummaryListItem({
 		id: 'lpa-contact-details',
 		text: 'Local planning authority (LPA)',
 		value: {
 			html:
 				appealDetails.localPlanningDepartment && appealDetails.lpaEmailAddress
 					? `<ul class="govuk-list"><li>${appealDetails.localPlanningDepartment}</li><li>${appealDetails.lpaEmailAddress}</li></ul>`
-					: 'Awaiting questionnaire'
+					: appealDetails.localPlanningDepartment
+						? `<ul class="govuk-list"><li>${appealDetails.localPlanningDepartment}</li></ul>`
+						: 'No Local planning authority'
 		},
 		link: `${currentRoute}/change-appeal-details/local-planning-authority`,
 		editable:
 			userHasUpdateCasePermission && !appealDetails.isChildAppeal && !isLpaqReceived(appealDetails),
+		actionText: hasLpa ? 'Change' : 'Add',
 		classes: 'appeal-lpa-contact-details'
 	});
+};

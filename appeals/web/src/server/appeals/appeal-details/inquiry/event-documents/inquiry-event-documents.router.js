@@ -1,14 +1,15 @@
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
+import {
+	validateCaseDocumentId,
+	validateCaseFolderId
+} from '#appeals/appeal-documents/appeal-documents.middleware.js';
+import * as documentsValidators from '#appeals/appeal-documents/appeal-documents.validators.js';
 import { permissionNames } from '#environment/permissions.js';
 import { extractAndProcessDocumentDateErrors } from '#lib/validators/date-input.validator.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
-import {
-	validateCaseDocumentId,
-	validateCaseFolderId
-} from '../../../appeal-documents/appeal-documents.middleware.js';
-import * as documentsValidators from '../../../appeal-documents/appeal-documents.validators.js';
 import * as controller from './inquiry-event-documents.controller.js';
+import { validateInviteMainPartyComments } from './inquiry-event-documents.validators.js';
 
 const router = createRouter({ mergeParams: true });
 router.param('folderId', (req, res, next) => {
@@ -16,7 +17,7 @@ router.param('folderId', (req, res, next) => {
 });
 
 router
-	.route(['/upload-documents/:folderId', '/upload-documents/:folderId'])
+	.route('/upload-documents/:folderId')
 	.get(
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getDocumentUpload)
@@ -27,7 +28,7 @@ router
 	);
 
 router
-	.route(['/upload-documents/:folderId/:documentId', '/upload-documents/:folderId/:documentId'])
+	.route('/upload-documents/:folderId/:documentId')
 	.get(asyncHandler(controller.getDocumentVersionUpload))
 	.post(
 		assertUserHasPermission(permissionNames.updateCase),
@@ -35,12 +36,7 @@ router
 	);
 
 router
-	.route([
-		'/add-document-details/:folderId',
-		'/add-document-details/:folderId/:documentId',
-		'/add-document-details/:folderId',
-		'/add-document-details/:folderId/:documentId'
-	])
+	.route(['/add-document-details/:folderId', '/add-document-details/:folderId/:documentId'])
 	.get(
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getAddDocumentDetails)
@@ -78,19 +74,25 @@ router
 		asyncHandler(controller.postAddDocumentVersionCheckAndConfirm)
 	);
 
-router
-	.route(['/manage-documents/:folderId', '/manage-documents/:folderId'])
-	.get(asyncHandler(controller.getManageFolder));
+router.route('/manage-documents/:folderId').get(asyncHandler(controller.getManageFolder));
 
 router
-	.route(['/manage-documents/:folderId/:documentId', '/manage-documents/:folderId/:documentId'])
+	.route('/manage-documents/:folderId/share-all')
+	.get(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.getShareAllDocuments)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.postShareAllDocuments)
+	);
+
+router
+	.route('/manage-documents/:folderId/:documentId')
 	.get(asyncHandler(controller.getManageDocument));
 
 router
-	.route([
-		'/manage-documents/:folderId/:documentId/:versionId/delete',
-		'/manage-documents/:folderId/:documentId/:versionId/delete'
-	])
+	.route('/manage-documents/:folderId/:documentId/:versionId/delete')
 	.get(
 		validateCaseDocumentId,
 		assertUserHasPermission(permissionNames.updateCase),
@@ -104,12 +106,8 @@ router
 	);
 
 router
-	.route([
-		'/change-document-name/:folderId/:documentId',
-		'/change-document-name/:folderId/:documentId'
-	])
+	.route('/change-document-name/:folderId/:documentId')
 	.get(
-		assertUserHasPermission(permissionNames.updateCase),
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getChangeDocumentFileNameDetails)
 	)
@@ -121,10 +119,7 @@ router
 	);
 
 router
-	.route([
-		'/change-document-details/:folderId/:documentId',
-		'/change-document-details/:folderId/:documentId'
-	])
+	.route('/change-document-details/:folderId/:documentId')
 	.get(
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getChangeDocumentVersionDetails)
@@ -149,6 +144,29 @@ router
 	.post(
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.postAddDocumentVersionCheckAndConfirm)
+	);
+
+router
+	.route(['/manage-documents/:folderId/:documentId/invite-main-party-comments'])
+	.get(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.getInviteMainPartyComments)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.updateCase),
+		validateInviteMainPartyComments,
+		asyncHandler(controller.postInviteMainPartyComments)
+	);
+
+router
+	.route(['/manage-documents/:folderId/:documentId/check-your-answers'])
+	.get(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.getShareDocumentCheckAndConfirm)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.postShareDocumentCheckAndConfirm)
 	);
 
 export default router;

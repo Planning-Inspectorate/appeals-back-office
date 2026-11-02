@@ -1,6 +1,7 @@
 import config from '#environment/config.js';
 import { listOrOnlyItem } from '#lib/mappers/components/page-components/list-or-only-item.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
@@ -13,9 +14,11 @@ export const mapRule6PartyContactDetails = ({
 	const id = 'rule-6-party-contact-details';
 	const { appealId } = appealDetails;
 
+	// TODO: update once case type letters and schema are provided by ODW
 	if (
 		!config.featureFlags.featureFlagRule6Mvp ||
-		appealDetails.procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.INQUIRY.toLowerCase()
+		(!isGenericAppealType(appealDetails.appealType) &&
+			appealDetails.procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.INQUIRY.toLowerCase())
 	) {
 		return { id, display: {} };
 	}
@@ -49,9 +52,10 @@ export const mapRule6PartyContactDetails = ({
 		classes: 'appeal-rule-6-party-contact-details'
 	};
 
-	const rule6PartyItems = rule6Parties.map(
-		(/** @type {Record<string, any>} */ rule6Party) =>
-			`${rule6Party.serviceUser.organisationName}<br>${rule6Party.serviceUser.email}`
+	const rule6PartyItems = rule6Parties.map((/** @type {Record<string, any>} */ rule6Party) =>
+		[rule6Party.serviceUser.organisationName, rule6Party.serviceUser.email]
+			.filter(Boolean)
+			.join('<br>')
 	);
 
 	return {

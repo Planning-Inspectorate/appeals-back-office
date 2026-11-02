@@ -1,4 +1,8 @@
-import { APPEAL_TYPE, APPEAL_TYPE_CHANGE_APPEALS } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_TYPE,
+	APPEAL_TYPE_CHANGE_APPEALS,
+	GENERIC_APPEAL_TYPES
+} from '@pins/appeals/constants/common.js';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import {
 	APPEAL_CASE_PROCEDURE,
@@ -120,6 +124,42 @@ export const appealTypes = [
 		type: APPEAL_TYPE.CAS_PLANNING,
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.CAS_PLANNING,
 		enabled: false
+	},
+	// TODO: update once case type letters and schema are provided by ODW
+	{
+		key: 'TREE_PRESERVATION_ORDER',
+		type: GENERIC_APPEAL_TYPES.TREE_PRESERVATION_ORDER,
+		enabled: true
+	},
+	{
+		key: 'TREE_REPLACEMENT_NOTICE',
+		type: GENERIC_APPEAL_TYPES.TREE_REPLACEMENT_NOTICE,
+		enabled: true
+	},
+	{
+		key: 'HIGH_HEDGES',
+		type: GENERIC_APPEAL_TYPES.HIGH_HEDGES,
+		enabled: true
+	},
+	{
+		key: 'HEDGEROWS',
+		type: GENERIC_APPEAL_TYPES.HEDGEROWS,
+		enabled: true
+	},
+	{
+		key: 'DISCONTINUANCE_NOTICE',
+		type: GENERIC_APPEAL_TYPES.DISCONTINUANCE_NOTICE,
+		enabled: true
+	},
+	{
+		key: 'SECTION_106_AGREEMENT',
+		type: GENERIC_APPEAL_TYPES.SECTION_106_AGREEMENT,
+		enabled: true
+	},
+	{
+		key: 'ENVIRONMENTAL',
+		type: GENERIC_APPEAL_TYPES.ENVIRONMENTAL,
+		enabled: true
 	}
 ];
 
@@ -952,10 +992,13 @@ export const representationRejectionReasons = [
  * Seed static data into the database. Does not disconnect from the database or handle errors.
  *
  * @param {import('../../server/utils/db-client/client.ts').PrismaClient} databaseConnector
+ * @param {boolean} [forceLocalListedBuildingData=false] - If true, Forces use of the local test Listed Building dataset instead of downloading from the Gov URL
  */
-export async function seedStaticData(databaseConnector) {
+export async function seedStaticData(databaseConnector, forceLocalListedBuildingData = false) {
 	await importListedBuildingsDataset(
-		'https://files.planning.data.gov.uk/dataset/listed-building.json'
+		databaseConnector,
+		'https://files.planning.data.gov.uk/dataset/listed-building.json',
+		forceLocalListedBuildingData
 	);
 
 	const systemUserId = '00000000-0000-0000-0000-000000000000';

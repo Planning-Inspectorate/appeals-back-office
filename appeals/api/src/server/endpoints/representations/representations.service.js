@@ -44,7 +44,6 @@ import { EventType } from '@pins/event-client';
 import {
 	APPEAL_CASE_PROCEDURE,
 	APPEAL_CASE_STATUS,
-	APPEAL_CASE_TYPE,
 	APPEAL_REDACTED_STATUS
 } from '@planning-inspectorate/data-model';
 
@@ -290,7 +289,8 @@ export const createRepresentation = async (
 		details: stringTokenReplacement(auditTrailType, [
 			getRepresentationLabel(input.representationType),
 			formattedAppealStatus
-		])
+		]),
+		representationId: representation.id
 	});
 
 	return representation;
@@ -735,12 +735,12 @@ const sendPublishedStatementNotifiesForWrittenReps = async (
 		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
 	);
 
-	const isEnforcement = appeal.appealType?.key === APPEAL_CASE_TYPE.C; //Update here for LDC and ELB appeals
+	const isEnforcementOrLdc = isLdcOrEnforcementCaseType(appeal.appealType?.key);
 
-	let lpaTemplate = isEnforcement
+	let lpaTemplate = isEnforcementOrLdc
 		? 'publish-statements-enforcement-written-reps'
 		: 'publish-statements-written-reps-lpa';
-	let appellantTemplate = isEnforcement
+	let appellantTemplate = isEnforcementOrLdc
 		? 'publish-statements-enforcement-written-reps'
 		: 'publish-statements-written-reps-appellant';
 
@@ -781,10 +781,10 @@ const sendPublishedStatementNotifiesForWrittenReps = async (
 				site_address: siteAddress,
 				...(enforcementReference && { enforcement_reference: enforcementReference }),
 				lpa_reference: lpaReference || '',
-				...(isEnforcement && { fo_dashboard_stub: contact.dashboardStub }),
+				...(isEnforcementOrLdc && { fo_dashboard_stub: contact.dashboardStub }),
 				final_comments_due_date: finalCommentsDueDate,
 				team_email_address,
-				...(isEnforcement && {
+				...(isEnforcementOrLdc && {
 					recipient_role: contact.recipientRole
 				})
 			}

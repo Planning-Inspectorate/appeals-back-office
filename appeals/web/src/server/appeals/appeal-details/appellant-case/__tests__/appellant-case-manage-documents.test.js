@@ -109,6 +109,31 @@ describe('appellant-case manage-documents', () => {
 			);
 		});
 
+		it('should render "Redaction review required" in the Redaction status column before validation if the document has no redaction status', async () => {
+			const folderInfoWithUnredactedDoc = {
+				...documentFolderInfo,
+				path: 'appellant-case/appellantStatement',
+				documents: [
+					{
+						...documentFolderInfo.documents[0],
+						latestDocumentVersion: {
+							...documentFolderInfo.documents[0].latestDocumentVersion,
+							redactionStatus: ''
+						}
+					}
+				]
+			};
+
+			nock('http://test/').get(getFolderApiUrl(1)).reply(200, folderInfoWithUnredactedDoc);
+
+			const response = await request.get(
+				`${baseUrl}/1${appellantCasePagePath}/manage-documents/1/`
+			);
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Redaction review required</td>');
+		});
+
 		it('should hide the add document button and actions column when the user cannot update the case', async () => {
 			const { app: readOnlyApp, teardown: readOnlyTeardown } = createTestEnvironment({
 				groups: []

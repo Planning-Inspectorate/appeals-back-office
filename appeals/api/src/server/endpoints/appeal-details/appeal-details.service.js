@@ -20,7 +20,8 @@ import * as SUPPORT_CONSTANTS from '@pins/appeals/constants/support.js';
 import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
 import { getCache, setCache } from '@pins/appeals/utils/cache-data.js';
 import { camelToScreamingSnake } from '@pins/appeals/utils/string-case.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { EventType } from '@pins/event-client';
+import { APPEAL_CASE_STATUS, SERVICE_USER_TYPE } from '@planning-inspectorate/data-model';
 
 const {
 	AUDIT_TRAIL_ASSIGNED_CASE_OFFICER,
@@ -239,24 +240,42 @@ const assignUserForLinkedAppeals = async (
 };
 
 /**
- *
- * @param {Pick<AppealDto, 'appealId' | 'startedAt' | 'validAt' | 'planningApplicationReference' | 'agent'>} param0
- * @param {string|undefined} azureAdUserId
+ * @param {Object} params
+ * @param {number} params.appealId
+ * @param {string | undefined} params.reference
+ * @param {string | null} params.startedAt
+ * @param {string | null} params.validAt
+ * @param {string} params.planningApplicationReference
+ * @param {AppealDto['agent']} params.agent
+ * @param {AppealDto['appellant']} params.appellant
+ * @param {string | undefined} azureAdUserId
  */
 const updateAppealDetails = async (
-	{ appealId, startedAt, validAt, planningApplicationReference, agent },
+	{ appealId, reference, startedAt, validAt, planningApplicationReference, agent, appellant },
 	azureAdUserId
 ) => {
 	let agentId = null;
 	if (agent) {
 		const { id } = await serviceUserRepository.createServiceUser(agent);
 		agentId = id;
+		await broadcasters.broadcastServiceUser(
+			agentId,
+			EventType.Create,
+			SERVICE_USER_TYPE.AGENT,
+			reference ?? ''
+		);
+	}
+	let appellantId = null;
+	if (appellant) {
+		const { id } = await serviceUserRepository.createServiceUser(appellant);
+		appellantId = id;
 	}
 	const body = {
 		...(startedAt && { caseStartedDate: startedAt }),
 		...(validAt && { caseValidDate: validAt }),
 		...(planningApplicationReference && { applicationReference: planningApplicationReference }),
-		...(agent && { agent: agentId })
+		...(agent && { agent: agentId }),
+		...(appellant && { appellant: appellantId })
 	};
 	await appealRepository.updateAppealById(appealId, body);
 
@@ -308,7 +327,6 @@ const loadLinkedAppeals = async (appeal) => {
 	const childAppeals = appeal?.childAppeals?.filter(
 		(childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED
 	);
-	// @ts-ignore
 	if (!isLinkedAppealsActive(appeal) || (!parentAppeals?.length && !childAppeals?.length)) {
 		return [];
 	}

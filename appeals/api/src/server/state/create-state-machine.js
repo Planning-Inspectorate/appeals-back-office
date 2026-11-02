@@ -1,4 +1,5 @@
 import {
+	ACTION_CHANGE_PROCEDURE_TYPE,
 	STATE_TYPE_FINAL,
 	VALIDATION_OUTCOME_CANCEL,
 	VALIDATION_OUTCOME_COMPLETE,
@@ -7,6 +8,7 @@ import {
 	VALIDATION_OUTCOME_VALID
 } from '@pins/appeals/constants/support.js';
 import {
+	targetStateOnChangeProcedure,
 	targetStateOnEventCancelled,
 	targetStateOnLpaqComplete,
 	targetStateOnStatementsComplete
@@ -32,13 +34,17 @@ import { createMachine } from 'xstate';
  * @param {string} currentState
  * @param {boolean} [eventElapsed]
  * @param {boolean} [isLdcOrDiscontinuanceOrEnforcementCaseType]
+ * @param {ProcedureType} [targetProcedureType]
+ * @param {string} [previousProcedureType]
  */
 const createStateMachine = (
 	appealTypeKey,
 	procedureType,
 	currentState,
 	eventElapsed = false,
-	isLdcOrDiscontinuanceOrEnforcementCaseType = false
+	isLdcOrDiscontinuanceOrEnforcementCaseType = false,
+	targetProcedureType = undefined,
+	previousProcedureType = undefined
 ) => {
 	const normalisedProcedureType = normaliseProcedureType(procedureType);
 
@@ -48,6 +54,8 @@ const createStateMachine = (
 		context: {
 			appealType: appealTypeKey,
 			procedureType,
+			previousProcedureType,
+			targetProcedureType,
 			eventElapsed
 		},
 		states: {
@@ -214,6 +222,14 @@ const createStateMachine = (
 						target: APPEAL_CASE_STATUS.AWAITING_EVENT
 					},
 					[VALIDATION_OUTCOME_INCOMPLETE]: { target: undefined },
+					[ACTION_CHANGE_PROCEDURE_TYPE]: {
+						target: targetStateOnChangeProcedure({
+							currentProcedure: previousProcedureType || procedureType,
+							targetProcedure: targetProcedureType,
+							currentStatus: APPEAL_CASE_STATUS.EVENT,
+							appealType: appealTypeKey
+						})
+					},
 					[APPEAL_CASE_STATUS.CLOSED]: { target: APPEAL_CASE_STATUS.CLOSED },
 					[APPEAL_CASE_STATUS.AWAITING_TRANSFER]: {
 						target: APPEAL_CASE_STATUS.AWAITING_TRANSFER
@@ -271,6 +287,14 @@ const createStateMachine = (
 					[VALIDATION_OUTCOME_INCOMPLETE]: { target: APPEAL_CASE_STATUS.EVENT },
 					//@ts-ignore
 					[VALIDATION_OUTCOME_CANCEL]: { target: targetStateOnEventCancelled[procedureType] },
+					[ACTION_CHANGE_PROCEDURE_TYPE]: {
+						target: targetStateOnChangeProcedure({
+							currentProcedure: previousProcedureType || procedureType,
+							targetProcedure: targetProcedureType,
+							currentStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
+							appealType: appealTypeKey
+						})
+					},
 					[APPEAL_CASE_STATUS.CLOSED]: { target: APPEAL_CASE_STATUS.CLOSED },
 					[APPEAL_CASE_STATUS.AWAITING_TRANSFER]: {
 						target: APPEAL_CASE_STATUS.AWAITING_TRANSFER
@@ -292,6 +316,14 @@ const createStateMachine = (
 			[APPEAL_CASE_STATUS.ISSUE_DETERMINATION]: {
 				on: {
 					[VALIDATION_OUTCOME_INCOMPLETE]: { target: APPEAL_CASE_STATUS.EVENT },
+					[ACTION_CHANGE_PROCEDURE_TYPE]: {
+						target: targetStateOnChangeProcedure({
+							currentProcedure: previousProcedureType || procedureType,
+							targetProcedure: targetProcedureType,
+							currentStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+							appealType: appealTypeKey
+						})
+					},
 					[APPEAL_CASE_STATUS.COMPLETE]: { target: APPEAL_CASE_STATUS.COMPLETE },
 					[APPEAL_CASE_STATUS.CLOSED]: { target: APPEAL_CASE_STATUS.CLOSED },
 					[APPEAL_CASE_STATUS.AWAITING_TRANSFER]: {
@@ -390,7 +422,7 @@ const createStateMachine = (
 };
 
 /**
- * @typedef {{ appealType: AppealTypeKey, procedureType: string, eventElapsed: boolean }} Ctx
+ * @typedef {{ appealType: AppealTypeKey, procedureType: string, previousProcedureType: string | undefined, targetProcedureType: string | undefined, eventElapsed: boolean }} Ctx
  * @typedef {{ state: { value: string, meta: Record<string, any> } }} State
  * @typedef {import('xstate').EventObject} _evt
  */

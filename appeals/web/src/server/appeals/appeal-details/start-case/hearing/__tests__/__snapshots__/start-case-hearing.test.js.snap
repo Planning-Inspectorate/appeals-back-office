@@ -13,7 +13,7 @@ exports[`start case hearing flow GET /start-case/hearing should render the date 
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                                     <h1 class="govuk-fieldset__heading"> Do you know the date and time of the hearing?</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
@@ -558,12 +558,6 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
                 <td class="govuk-table__cell govuk-!-text-align-right"><a href="/appeals-service/appeal-details/1/appellant-case?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
                     data-cy="review-appellant-case" class="govuk-link">Review<span class="govuk-visually-hidden"> appellant case</span></a>
                 </td>
-            </tr>
-            <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">Supporting documents</th>
-                <td class="govuk-table__cell">No documents</td>
-                <td class="govuk-table__cell">Not applicable</td>
-                <td class="govuk-table__cell govuk-!-text-align-right govuk-!-width-one-quarter"></td>
             </tr>
             <tr class="govuk-table__row">
                 <th scope="row" class="govuk-table__header">Hearing documents</th>

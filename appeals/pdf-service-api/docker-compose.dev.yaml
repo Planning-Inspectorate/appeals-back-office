@@ -1,0 +1,15 @@
+services:
+    pdf_gen:
+        container_name: pdf_gen
+        user: root
+        build:
+            context: ../../
+            dockerfile: appeals/pdf-service-api/Dockerfile
+        env_file:
+            - .env
+        command: ["node", "--watch", "./src/main.js"]
+        volumes:
+            - ./src:/opt/appeals/pdf-service-api/src
+            - ../../packages:/opt/packages
+        ports:
+            - "3010:3010"

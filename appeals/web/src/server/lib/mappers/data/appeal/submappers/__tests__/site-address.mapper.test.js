@@ -57,6 +57,26 @@ describe('site-address.mapper', () => {
 		});
 	});
 
+	describe('should display site address row with an Add link', () => {
+		it('when the appeal has no address yet', () => {
+			const mappedData = mapSiteAddress({
+				...data,
+				appealDetails: {
+					...data.appealDetails,
+					appealSite: {
+						addressId: 1,
+						addressLine1: '',
+						postCode: ''
+					}
+				}
+			});
+			expect(mappedData.display.summaryListItem.actions.items[0].text).toBe('Add');
+			expect(mappedData.display.summaryListItem.actions.items[0].href).toBe(
+				'/appeals-service/appeal-details/123/site-address/change/1?backUrl=test'
+			);
+		});
+	});
+
 	describe('should display site address row without a change link', () => {
 		let expectedMappedData;
 

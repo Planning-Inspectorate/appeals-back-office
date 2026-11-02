@@ -285,8 +285,11 @@ const mapStage = (doc) => {
 	}
 
 	// todo: add new stages to data model
-	if (doc.stage === 'general') {
-		return null;
+	switch (doc.stage) {
+		case 'general':
+		case 'inquiry':
+		case 'hearing':
+			return null;
 	}
 
 	//@ts-ignore

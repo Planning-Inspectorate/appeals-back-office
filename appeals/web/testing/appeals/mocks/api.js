@@ -39,6 +39,11 @@ export function installMockAppealsService() {
 		.reply(200, caseNotes)
 		.persist();
 
+	nock('http://test/')
+		.post('/appeals')
+		.reply(201, { appealId: appealData.appealId, reference: appealData.appealReference })
+		.persist();
+
 	return {
 		destroy: () => {
 			nock.cleanAll();

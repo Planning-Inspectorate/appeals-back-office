@@ -31,7 +31,7 @@ router.patch(
 	 */,
 	getAppealValidator,
 	getEiaScreeningRequirementValidator,
-	checkAppealExistsByIdAndAddPartialToRequest([]),
+	checkAppealExistsByIdAndAddPartialToRequest(['childAppeals', 'appealType']),
 	asyncHandler(patchEiaScreeningRequired)
 );
 

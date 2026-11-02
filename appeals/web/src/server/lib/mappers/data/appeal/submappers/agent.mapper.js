@@ -3,7 +3,8 @@ import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapAgent = ({ appealDetails, currentRoute, userHasUpdateCasePermission }) => {
-	const actionText = 'agent' in appealDetails ? 'Change' : 'Add';
+	const hasAgent = Boolean(appealDetails.agent);
+	const actionText = hasAgent ? 'Change' : 'Add';
 	return textSummaryListItem({
 		id: 'agent',
 		text: 'Agent',

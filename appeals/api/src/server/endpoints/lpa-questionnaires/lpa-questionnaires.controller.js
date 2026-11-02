@@ -3,13 +3,16 @@ import { appealDetailService } from '#endpoints/appeal-details/appeal-details.se
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { contextEnum } from '#mappers/context-enum.js';
+import { getAppealByContext } from '#repositories/appeal.repository.js';
 import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
+import { isAppealEnabled } from '#utils/feature-flags-appeal-types.js';
 import { allLpaQuestionnaireOutcomesAreComplete } from '#utils/is-awaiting-linked-appeal.js';
 import { isParentAppeal } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
+import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 import { camelToScreamingSnake, capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import {
 	updateLPAQuestionnaire,
@@ -26,7 +29,22 @@ import {
  * @returns {Promise<Response>}
  */
 const getLpaQuestionnaireById = async (req, res) => {
-	const { appeal } = req;
+	const appeal = await getAppealByContext(
+		Number(req.params.appealId),
+		contextEnum.lpaQuestionnaire
+	);
+
+	if (!appeal || !isAppealEnabled(appeal)) {
+		return res.status(404).send({ errors: { appealId: ERROR_NOT_FOUND } });
+	}
+	if (
+		!appeal.lpaQuestionnaire ||
+		(req.params.lpaQuestionnaireId &&
+			appeal.lpaQuestionnaire.id !== Number(req.params.lpaQuestionnaireId))
+	) {
+		return res.status(404).send({ errors: { lpaQuestionnaireId: ERROR_NOT_FOUND } });
+	}
+
 	const dto = await appealDetailService.loadAndFormatAppeal({
 		appeal,
 		context: contextEnum.lpaQuestionnaire

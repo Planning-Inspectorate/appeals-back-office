@@ -131,7 +131,8 @@ const rearrangeSiteVisit = async (req, res) => {
 			visitStartTime,
 			inspectorName = '',
 			previousVisitType,
-			siteVisitChangeType
+			siteVisitChangeType,
+			isCompletingSiteVisitSetup = false
 		},
 		params,
 		params: { siteVisitId },
@@ -183,7 +184,13 @@ const rearrangeSiteVisit = async (req, res) => {
 			});
 		}
 		// @ts-ignore
-		await updateSiteVisit(azureAdUserId, updateSiteVisitData, notifyClient, appealsToUpdate);
+		await updateSiteVisit(
+			azureAdUserId,
+			updateSiteVisitData,
+			notifyClient,
+			appealsToUpdate,
+			isCompletingSiteVisitSetup
+		);
 
 		if (visitDate && arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT)) {
 			if (isLinkedAppealsActive(appeal)) {

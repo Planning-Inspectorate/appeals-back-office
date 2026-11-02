@@ -17,8 +17,31 @@ import {
 const router = createRouter();
 
 router.get(
+	'/:appealId/lpa-questionnaire',
+	/*
+		#swagger.tags = ['LPA Questionnaires']
+		#swagger.path = '/appeals/{appealId}/lpa-questionnaire'
+		#swagger.description = Gets a single LPA questionnaire for an appeal by id
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[200] = {
+			description: 'Gets a single LPA questionnaire for an appeal by id',
+			schema: { $ref: '#/components/schemas/SingleLPAQuestionnaireResponse' }
+		}
+		#swagger.responses[400] = {}
+		#swagger.responses[404] = {}
+	 */
+	getLPAQuestionnaireValidator,
+	asyncHandler(getLpaQuestionnaireById)
+);
+
+router.get(
 	'/:appealId/lpa-questionnaires/:lpaQuestionnaireId',
 	/*
+		#swagger.deprecated = true
 		#swagger.tags = ['LPA Questionnaires']
 		#swagger.path = '/appeals/{appealId}/lpa-questionnaires/{lpaQuestionnaireId}'
 		#swagger.description = Gets a single LPA questionnaire for an appeal by id
@@ -35,19 +58,6 @@ router.get(
 		#swagger.responses[404] = {}
 	 */
 	getLPAQuestionnaireValidator,
-	asyncHandler(
-		checkAppealExistsByIdAndAddPartialToRequest([
-			'parentAppeals',
-			'childAppeals',
-			'appealStatus',
-			'lpaQuestionnaire',
-			'appealType',
-			'appellantCase',
-			'lpa',
-			'folders'
-		])
-	),
-	checkLPAQuestionnaireExists,
 	asyncHandler(getLpaQuestionnaireById)
 );
 

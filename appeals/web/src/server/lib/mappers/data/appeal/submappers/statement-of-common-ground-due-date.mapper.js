@@ -27,9 +27,9 @@ export const mapStatementOfCommonGroundDueDate = ({
 	return textSummaryListItem({
 		id,
 		text: 'Statement of common ground due',
-		value: dateISOStringToDisplayDate(
-			appealDetails.appealTimetable?.statementOfCommonGroundDueDate
-		),
+		value: appealDetails.appealTimetable?.statementOfCommonGroundDueDate
+			? dateISOStringToDisplayDate(appealDetails.appealTimetable?.statementOfCommonGroundDueDate)
+			: 'Not provided',
 		link: `${currentRoute}/timetable/edit`,
 		editable:
 			!isChildAppeal(appealDetails) &&

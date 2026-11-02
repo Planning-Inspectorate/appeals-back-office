@@ -13,6 +13,7 @@ export const VALIDATION_OUTCOME_INCOMPLETE = 'Incomplete';
 export const VALIDATION_OUTCOME_INVALID = 'Invalid';
 export const VALIDATION_OUTCOME_VALID = 'Valid';
 export const VALIDATION_OUTCOME_CANCEL = 'Cancel';
+export const ACTION_CHANGE_PROCEDURE_TYPE = 'CHANGE_PROCEDURE_TYPE';
 
 export const CHANGE_APPEAL_TYPE_INVALID_REASON = 'Wrong appeal type';
 export const INVALID_APPEAL_OTHER_REASON = 'Other reason';
@@ -75,6 +76,7 @@ export const AUDIT_TRAIL_RULE_6_PARTY_PROOFS_EVIDENCE_UPDATED =
 
 //Interested party comment rep logs
 export const AUDIT_TRAIL_REP_COMMENT_STATUS_VALID = 'Interested party comment accepted';
+// Note: If changing this constant, add the previous value to REJECTED_COMMENT_AUDIT_STRINGS in audit.controller.js to preserve historical audit trail matching.
 export const AUDIT_TRAIL_REP_COMMENT_STATUS_INVALID = 'Interested party comment rejected';
 export const AUDIT_TRAIL_REP_COMMENT_STATUS_REDACTED_AND_ACCEPTED =
 	'Interested party comment redacted and accepted';
@@ -264,8 +266,10 @@ export const AUDIT_TRAIL_HEARING_DATE_UPDATED = 'Hearing date updated to {replac
 export const AUDIT_TRAIL_HEARING_ADDRESS_ADDED = 'The hearing address has been added';
 export const AUDIT_TRAIL_HEARING_ADDRESS_UPDATED = 'Hearing address updated to {replacement0}';
 export const AUDIT_TRAIL_HEARING_CANCELLED = 'Hearing cancelled';
-export const AUDIT_TRAIL_HEARING_ESTIMATES_ADDED = 'Hearing estimates added';
-export const AUDIT_TRAIL_HEARING_ESTIMATES_UPDATED = 'Hearing estimates updated';
+export const AUDIT_TRAIL_HEARING_ESTIMATES_ADDED =
+	'We have added the number of days we expect the hearing to take';
+export const AUDIT_TRAIL_HEARING_ESTIMATES_UPDATED =
+	'We have updated the number of days we expect the hearing to take';
 export const AUDIT_TRAIL_HEARING_ESTIMATES_REMOVED = 'Hearing estimates removed';
 
 export const AUDIT_TRAIL_INQUIRY_SET_UP = 'Inquiry set up on {replacement0}';
@@ -563,6 +567,24 @@ const enforcementNoticeTimetable = {
 	}
 };
 
+const LDCTimetable = {
+	lpaQuestionnaireDueDate: {
+		daysFromStartDate: 10
+	},
+	ipCommentsDueDate: {
+		daysFromStartDate: 30
+	},
+	lpaStatementDueDate: {
+		daysFromStartDate: 30
+	},
+	finalCommentsDueDate: {
+		daysFromStartDate: 45
+	},
+	s106ObligationDueDate: {
+		daysFromStartDate: 30
+	}
+};
+
 const s78InquiryTimetable = {
 	lpaQuestionnaireDueDate: {
 		daysFromStartDate: 5
@@ -624,6 +646,16 @@ export const CONFIG_APPEAL_TIMETABLE = {
 		[APPEAL_CASE_PROCEDURE.WRITTEN]: { ...advertTimetable },
 		[APPEAL_CASE_PROCEDURE.HEARING]: {
 			...advertTimetable,
+			statementOfCommonGroundDueDate: {
+				daysFromStartDate: 25
+			}
+		},
+		[APPEAL_CASE_PROCEDURE.INQUIRY]: { ...enforcementInquiryTimetable }
+	},
+	[APPEAL_CASE_TYPE.X]: {
+		[APPEAL_CASE_PROCEDURE.WRITTEN]: { ...LDCTimetable },
+		[APPEAL_CASE_PROCEDURE.HEARING]: {
+			...LDCTimetable,
 			statementOfCommonGroundDueDate: {
 				daysFromStartDate: 25
 			}

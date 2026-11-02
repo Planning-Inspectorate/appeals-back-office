@@ -841,7 +841,7 @@ export const postCostsCheckDecision = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderCostsCheckDecision = async (request, response) => {
-	const { errors, currentAppeal, session } = request;
+	const { errors, currentAppeal, session, specificDecisionType } = request;
 
 	if (!currentAppeal) {
 		return response.status(404).render('app/404.njk');
@@ -850,6 +850,7 @@ export const renderCostsCheckDecision = async (request, response) => {
 	const { previews } = await request.apiClient
 		.post(`appeals/${currentAppeal.appealId}/decision/preview`, {
 			json: {
+				decisionType: specificDecisionType,
 				outcome: session.inspectorDecision?.outcome,
 				invalidDecisionReason: session.inspectorDecision?.invalidReason
 			}

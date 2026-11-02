@@ -1,12 +1,10 @@
 We have received the appellant's final comments.
 
+You can [view this information in the appeals service]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}).
+
 {% include 'parts/appeal-details.md' %}
 
-# What happens next
+Find out about the [average handling times for appeals](https://www.gov.uk/guidance/appeals-how-long-they-take).
 
-You can [view the appellant's final comments]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}).
-
-The inspector will visit the site and we will contact you when we have made the decision.
-
-The Planning Inspectorate
+Planning Inspectorate
 {{team_email_address}}

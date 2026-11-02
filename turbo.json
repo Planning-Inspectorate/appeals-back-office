@@ -1,8 +1,7 @@
 {
-	"npmClient": "npm",
 	"globalEnv": ["NODE_ENV"],
 	"globalPassThroughEnv": ["TURBO_*"],
-	"pipeline": {
+	"tasks": {
 		"build": {
 			"outputs": ["src/server/static/scripts/**", "src/server/static/styles/**"],
 			"dependsOn": ["^build"],
@@ -41,15 +40,12 @@
 			"env": ["NODE_ENV", "DATABASE_URL"]
 		},
 		"lint:js": {
-			"inputs": ["*.ts", "*.js", ".eslintrc*", "package.json"],
 			"outputs": []
 		},
 		"lint:js:fix": {
-			"inputs": ["*.ts", "*.js", ".eslintrc*", "package.json"],
 			"outputs": []
 		},
 		"tscheck": {
-			"inputs": ["*.ts", "*.js", "jsconfig.json", "package.json"],
 			"outputs": []
 		},
 		"prisma-generate": {
@@ -58,7 +54,8 @@
 			"env": ["DATABASE_URL"]
 		},
 		"dev": {
-			"cache": false
+			"cache": false,
+			"persistent": true
 		},
 		"clean": {
 			"cache": false

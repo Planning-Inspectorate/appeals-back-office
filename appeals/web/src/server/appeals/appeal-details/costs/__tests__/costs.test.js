@@ -53,6 +53,7 @@ describe('costs', () => {
 
 	beforeEach(() => {
 		installMockApi();
+		costsFolderInfoApellantApplicationResponse = costsFolderInfoAppellantApplication;
 		nock('http://test/').get('/appeals/1?include=appellantCase').reply(200, appealData);
 		nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse).persist();
 
@@ -62,7 +63,7 @@ describe('costs', () => {
 			.persist();
 		nock('http://test/')
 			.get(getFolderApiUrl(1))
-			.reply(200, costsFolderInfoAppellantApplication)
+			.reply(200, () => costsFolderInfoApellantApplicationResponse)
 			.persist();
 		nock('http://test/')
 			.get(getFolderApiUrl(2))
@@ -1485,18 +1486,14 @@ describe('costs', () => {
 			}
 
 			it(`Should render 'Manage and share' CTA and NO tag if document is NOT shared`, async () => {
-				nock.cleanAll();
-				nock('http://test/')
-					.get('/appeals/1?include=appellantCase')
-					.reply(200, appealData)
-					.persist();
+				nock('http://test/').get('/appeals/1?include=appellantCase').reply(200, appealData);
 
 				const unsharedDocumentFolder = structuredClone(costsFolderInfoAppellantApplication);
 				unsharedDocumentFolder.documents.forEach((doc) => {
 					doc.latestDocumentVersion.published = false;
 				});
 
-				nock('http://test/').get(getFolderApiUrl(1)).reply(200, unsharedDocumentFolder);
+				costsFolderInfoApellantApplicationResponse = unsharedDocumentFolder;
 
 				const response = await request.get(
 					`${baseUrl}/1/costs/appellant/application/manage-documents/1`
@@ -1505,23 +1502,18 @@ describe('costs', () => {
 
 				expect(unprettifiedElement.innerHTML).toContain('Manage and share');
 				expect(unprettifiedElement.innerHTML).not.toContain(
-					'<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong>'
+					'<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1" aria-label="Shared document">Shared</strong>'
 				);
 			});
 
 			it(`Should render 'Manage' CTA and 'Shared' tag if document IS shared`, async () => {
-				nock.cleanAll();
-				nock('http://test/')
-					.get('/appeals/1?include=appellantCase')
-					.reply(200, appealData)
-					.persist();
+				nock('http://test/').get('/appeals/1?include=appellantCase').reply(200, appealData);
 
 				const sharedDocumentFolder = structuredClone(costsFolderInfoAppellantApplication);
 				sharedDocumentFolder.documents.forEach((doc) => {
 					doc.latestDocumentVersion.published = true;
 				});
-
-				nock('http://test/').get(getFolderApiUrl(1)).reply(200, sharedDocumentFolder);
+				costsFolderInfoApellantApplicationResponse = sharedDocumentFolder;
 
 				const response = await request.get(
 					`${baseUrl}/1/costs/appellant/application/manage-documents/1`
@@ -1533,7 +1525,7 @@ describe('costs', () => {
 					'Manage <span class="govuk-visually-hidden">'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong>'
+					'<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1" aria-label="Shared document">Shared</strong>'
 				);
 			});
 		});
@@ -1597,8 +1589,9 @@ describe('costs', () => {
 						expect(element.innerHTML).toMatchSnapshot();
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-						expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
+						expect(unprettifiedElement.innerHTML).toContain(
+							'test-pdf-documentFileVersionsInfo.pdf</h1>'
+						);
 						expect(unprettifiedElement.innerHTML).toContain(
 							'test-pdf-documentFileVersionsInfo.pdf'
 						);
@@ -1623,7 +1616,9 @@ describe('costs', () => {
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-						expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
+						expect(unprettifiedElement.innerHTML).toContain(
+							'test-pdf-documentFileVersionsInfo.pdf</h1>'
+						);
 						expect(unprettifiedElement.innerHTML).toContain(
 							'test-pdf-documentFileVersionsInfo.pdf'
 						);
@@ -1649,7 +1644,9 @@ describe('costs', () => {
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-						expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
+						expect(unprettifiedElement.innerHTML).toContain(
+							'test-pdf-documentFileVersionsInfo.pdf</h1>'
+						);
 						expect(unprettifiedElement.innerHTML).toContain(
 							'test-pdf-documentFileVersionsInfo.pdf'
 						);
@@ -1682,7 +1679,9 @@ describe('costs', () => {
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-						expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
+						expect(unprettifiedElement.innerHTML).toContain(
+							'test-pdf-documentFileVersionsInfo.pdf</h1>'
+						);
 						expect(unprettifiedElement.innerHTML).toContain(
 							'test-pdf-documentFileVersionsInfo.pdf'
 						);
@@ -1697,7 +1696,6 @@ describe('costs', () => {
 					});
 
 					it(`should render 'Shared' tags under the Version Summary and in Version History if document IS shared`, async () => {
-						nock.cleanAll();
 						nock('http://test/')
 							.get('/appeals/1?include=appellantCase')
 							.reply(200, appealData)
@@ -1725,16 +1723,18 @@ describe('costs', () => {
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
+						// Current version tag
 						expect(unprettifiedElement.innerHTML).toContain(
-							'<br><strong class="govuk-tag govuk-tag--blue govuk-!-margin-top-1">Shared</strong>'
+							'<strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-4" aria-label="Shared document">Shared</strong>'
 						);
+
+						// Version history tag
 						expect(unprettifiedElement.innerHTML).toContain(
-							'<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong><a class="govuk-link"'
+							`<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1" aria-label="Shared document">Shared</strong>`
 						);
 					});
 
 					it(`should render 'Document details' and 'Share document' button with correct link if document is NOT shared`, async () => {
-						nock.cleanAll();
 						nock('http://test/')
 							.get('/appeals/1?include=appellantCase')
 							.reply(200, appealData)
@@ -1761,9 +1761,11 @@ describe('costs', () => {
 
 						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-						expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
+						expect(unprettifiedElement.innerHTML).toContain(
+							'test-pdf-documentFileVersionsInfo.pdf</h1>'
+						);
 						expect(unprettifiedElement.innerHTML).toContain('Current version</h2>');
-						expect(unprettifiedElement.innerHTML).toContain('This document is not shared</p>');
+						expect(unprettifiedElement.innerHTML).toContain('This document is not shared.</p>');
 
 						const expectedHref =
 							costsDocumentType === 'withdrawal'
@@ -2017,7 +2019,6 @@ describe('costs', () => {
 
 				describe(`Testing ${costsCategory} ${costsDocumentType}`, () => {
 					beforeEach(() => {
-						nock.cleanAll();
 						nock('http://test/')
 							.get('/appeals/1?include=appellantCase')
 							.reply(200, appealData)
@@ -2112,7 +2113,6 @@ describe('costs', () => {
 									? 'shared-cost-application.content.md'
 									: 'shared-cost-application-comment.content.md';
 
-						nock.cleanAll();
 						nock('http://test/')
 							.get('/appeals/1?include=appellantCase')
 							.reply(200, appealData)
@@ -3305,7 +3305,6 @@ describe('costs', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
@@ -3328,7 +3327,6 @@ describe('costs', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
@@ -3352,7 +3350,6 @@ describe('costs', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<strong class="govuk-tag govuk-tag--red">Virus detected</strong>'
@@ -3383,7 +3380,9 @@ describe('costs', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
+				expect(unprettifiedElement.innerHTML).toContain(
+					'test-pdf-documentFileVersionsInfo.pdf</h1>'
+				);
 				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
 				expect(unprettifiedElement.innerHTML).not.toContain(
 					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'

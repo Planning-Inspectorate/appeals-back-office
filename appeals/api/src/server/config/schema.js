@@ -23,6 +23,7 @@ export default joi
 			topicAppealEvent: joi.string().optional(),
 			topicAppealEventEstimate: joi.string().optional(),
 			topicDocumentMove: joi.string().optional(),
+			topicCaseFilePackage: joi.string().optional(),
 			topicAppealRepresentation: joi.string().optional()
 		}),
 		msal: joi.object({

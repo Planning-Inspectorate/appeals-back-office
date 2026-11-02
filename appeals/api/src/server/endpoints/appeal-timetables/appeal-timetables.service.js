@@ -9,13 +9,14 @@ import appealTimetableRepository from '#repositories/appeal-timetable.repository
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
 import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
-import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
+import { isEnforcementChildAppeal, isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import { getChildEnforcementsWithGrounds } from '#utils/link-appeals.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { trimAppealType } from '#utils/string-utils.js';
-import { updatePersonalList } from '#utils/update-personal-list.js';
+import { setPersonalList } from '#utils/update-personal-list.js';
 import {
+	EVENT_TYPE,
 	PROCEDURE_TYPE_ID_MAP,
 	PROCEDURE_TYPE_KEY,
 	PROCEDURE_TYPE_MAP
@@ -32,6 +33,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import {
 	isEnforcementCaseType,
+	isGenericAppealType,
 	isS78ExpeditedAppealType
 } from '@pins/appeals/utils/appeal-type-checks.js';
 import {
@@ -44,8 +46,8 @@ import formatDate, {
 	dateISOStringToDisplayDate,
 	formatTime12h
 } from '@pins/appeals/utils/date-formatter.js';
-
 import { getEffectiveProcedureType } from '@pins/appeals/utils/procedure-type.js';
+import { EventType } from '@pins/event-client';
 import { loadEnvironment } from '@pins/platform';
 import {
 	APPEAL_CASE_PROCEDURE,
@@ -401,13 +403,15 @@ const generateStartCaseNotifyPreviews = async (
  * @param {number} params.appealId
  * @param {string | undefined} params.azureAdUserId
  * @param {string | undefined} params.procedureType
+ * @param {boolean} params.isEnforcementChild
  * @param {string} [params.hearingStartTime]
  */
 const createStartCaseAuditTrails = async ({
 	appealId,
 	azureAdUserId,
 	procedureType,
-	hearingStartTime
+	hearingStartTime,
+	isEnforcementChild
 }) => {
 	await createAuditTrail({
 		appealId,
@@ -423,14 +427,16 @@ const createStartCaseAuditTrails = async ({
 		])
 	});
 
-	if (hearingStartTime) {
-		await createAuditTrail({
-			appealId,
-			azureAdUserId,
-			details: stringTokenReplacement(AUDIT_TRAIL_HEARING_SET_UP, [
-				dateISOStringToDisplayDate(hearingStartTime)
-			])
-		});
+	if (!isEnforcementChild) {
+		if (hearingStartTime) {
+			await createAuditTrail({
+				appealId,
+				azureAdUserId,
+				details: stringTokenReplacement(AUDIT_TRAIL_HEARING_SET_UP, [
+					dateISOStringToDisplayDate(hearingStartTime)
+				])
+			});
+		}
 	}
 };
 
@@ -469,6 +475,7 @@ const startCase = async (
 					(parentAppeal) => parentAppeal.type === CASE_RELATIONSHIP_LINKED
 				).length
 			);
+		const isEnforcementChild = isEnforcementChildAppeal(appeal, isChildAppeal);
 
 		const startedAt = await recalculateDateIfNotBusinessDay(startDate);
 		const isS78Expedited = isS78ExpeditedAppealType(
@@ -495,7 +502,8 @@ const startCase = async (
 		const startDateWithTimeCorrection = setTimeInTimeZone(startedAt, 0, 0);
 		const procedureTypeId = effectiveProcedureType && PROCEDURE_TYPE_ID_MAP[effectiveProcedureType];
 
-		await Promise.all([
+		// eslint-disable-next-line no-unused-vars
+		const [_, updatedAppeal] = await Promise.all([
 			// @ts-ignore
 			appealTimetableRepository.upsertAppealTimetableById(appeal.id, timetable),
 			appealRepository.updateAppealById(appeal.id, {
@@ -516,10 +524,13 @@ const startCase = async (
 			appealId: appeal.id,
 			azureAdUserId,
 			procedureType: effectiveProcedureType,
-			hearingStartTime
+			hearingStartTime,
+			isEnforcementChild
 		});
 
-		if (!isChildAppeal) {
+		const isGeneric = isGenericAppealType(appeal.appealType?.type);
+
+		if (!isChildAppeal && !isGeneric) {
 			const siteAddress = appeal.address
 				? formatAddressSingleLine(appeal.address)
 				: 'Address not available';
@@ -539,6 +550,16 @@ const startCase = async (
 		}
 
 		await broadcasters.broadcastAppeal(appeal.id);
+
+		//broadcast hearing event if hearing created on start case or amended on restart
+		if ((hearingStartTime || hearingEstimatedDays) && updatedAppeal.hearing?.id) {
+			await broadcasters.broadcastEvent(
+				updatedAppeal.hearing.id,
+				EVENT_TYPE.HEARING,
+				appeal.hearing?.id ? EventType.Update : EventType.Create
+			);
+		}
+
 		return { success: true, timetable };
 	} catch (error) {
 		logger.error(`Error starting case for appeal ID ${appeal.id}: ${error}`);
@@ -655,7 +676,7 @@ const updateAppealTimetable = async (
 	);
 
 	if (result) {
-		await updatePersonalList(appeal.id);
+		await setPersonalList({ appealId: appeal.id });
 
 		if (!isChildAppeal) {
 			let details = 'Timetable updated:';
@@ -857,6 +878,9 @@ const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient, az
  * @returns {boolean}
  */
 const shouldSendNotify = (appealTypeShorthand, procedureType) => {
+	if (isGenericAppealType(appealTypeShorthand)) {
+		return false;
+	}
 	return (
 		appealTypeShorthand === APPEAL_CASE_TYPE.D ||
 		appealTypeShorthand === APPEAL_CASE_TYPE.ZP ||
@@ -895,20 +919,37 @@ const getTimetableUpdatedTemplateName = (appealTypeKey, procedureType) => {
 		case APPEAL_CASE_TYPE.H:
 		case APPEAL_CASE_TYPE.X:
 			return 'advertisement-appeal-timetable-updated';
-
 		case APPEAL_CASE_TYPE.D:
 		case APPEAL_CASE_TYPE.ZP:
 		case APPEAL_CASE_TYPE.ZA:
 			return 'has-appeal-timetable-updated';
 		case APPEAL_CASE_TYPE.C:
+			if (procedureType === APPEAL_CASE_PROCEDURE.WRITTEN) {
+				return 'appeal-timetable-updated-enforcement';
+			}
 			if (procedureType === APPEAL_CASE_PROCEDURE.INQUIRY) {
 				return 'appeal-timetable-updated-inquiry';
 			}
 			if (procedureType === APPEAL_CASE_PROCEDURE.HEARING) {
-				return 'appeal-timetable-updated-enforcement-hearing';
+				return 'appeal-timetable-updated-enforcement';
 			}
 			return 'appeal-timetable-updated';
-
+		case APPEAL_CASE_TYPE.F:
+			if (procedureType === APPEAL_CASE_PROCEDURE.WRITTEN) {
+				return 'appeal-timetable-updated-enforcement';
+			}
+			return 'appeal-timetable-updated';
+		case APPEAL_CASE_TYPE.W:
+			if (procedureType === APPEAL_CASE_PROCEDURE.INQUIRY) {
+				return 'appeal-timetable-updated-inquiry';
+			}
+			if (procedureType === APPEAL_CASE_PROCEDURE.HEARING) {
+				return 'appeal-timetable-updated-hearing';
+			}
+			if (procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1) {
+				return 'has-appeal-timetable-updated';
+			}
+			return 'appeal-timetable-updated';
 		default:
 			if (procedureType === APPEAL_CASE_PROCEDURE.INQUIRY) {
 				return 'appeal-timetable-updated-inquiry';
@@ -923,6 +964,7 @@ const getTimetableUpdatedTemplateName = (appealTypeKey, procedureType) => {
 export {
 	calculateAppealTimetable,
 	checkAppealTimetableExists,
+	createStartCaseAuditTrails,
 	getStartCaseNotifyParams,
 	getStartCaseNotifyPreviews,
 	startCase,

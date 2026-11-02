@@ -12,6 +12,7 @@ sb_topic_names = {
     appeal_has            = "appeal-has"
     appeal_s78            = "appeal-s78"
     document              = "appeal-document"
+    case_file_package     = "appeal-case-file-package"
     document_to_move      = "appeal-document-to-move"
     event                 = "appeal-event"
     listed_building       = "listed-building"

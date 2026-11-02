@@ -3,7 +3,7 @@ import {
 	APPEAL_CASE_TYPE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from '@planning-inspectorate/data-model';
-import { APPEAL_TYPE } from '../constants/common.js';
+import { APPEAL_TYPE, GENERIC_APPEAL_TYPES } from '../constants/common.js';
 import { EXPEDITED_ORIGINAL_APPLICATION_CUTOFF } from '../constants/dates.js';
 
 import { appealTypeToAppealCaseTypeMapper } from './appeal-type-case.mapper.js';
@@ -46,6 +46,10 @@ const baseCaseType = {
  */
 export const isExpeditedAppealType = (appealType) => {
 	if (appealType === '') return false;
+	// TODO: update once case type letters and schema are provided by ODW
+	if (appealType && isGenericAppealType(appealType)) {
+		return false;
+	}
 
 	if (!appealType || !baseCaseType[appealType]) {
 		throw new Error(
@@ -164,3 +168,15 @@ export const isLdcOrEnforcementAppealType = (appealType) =>
  */
 export const isNetResidencesAppealType = (appealType) =>
 	appealType === APPEAL_TYPE.S78 || appealType === APPEAL_TYPE.PLANNED_LISTED_BUILDING;
+
+// TODO: update once case type letters and schema are provided by ODW
+/**
+ * @param {string | null | undefined} appealType
+ * @returns {boolean}
+ */
+export const isGenericAppealType = (appealType) =>
+	Boolean(
+		appealType &&
+		(Object.values(GENERIC_APPEAL_TYPES).includes(/** @type {any} */ (appealType)) ||
+			Object.keys(GENERIC_APPEAL_TYPES).includes(/** @type {any} */ (appealType)))
+	);

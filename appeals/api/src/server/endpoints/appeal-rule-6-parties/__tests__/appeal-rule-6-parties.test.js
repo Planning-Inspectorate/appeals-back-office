@@ -268,6 +268,78 @@ describe('appeal rule 6 parties routes', () => {
 					errors: { 'serviceUser.email': 'must be a valid email' }
 				});
 			});
+
+			test('creates a rule 6 party on generic appeal without email and does not broadcast or send emails', async () => {
+				const genericAppeal = {
+					...fullPlanningAppeal,
+					appealType: { type: 'Tree preservation order' }
+				};
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(genericAppeal);
+				databaseConnector.appealRule6Party.create.mockResolvedValue({
+					appealId: genericAppeal.id,
+					id: 11,
+					serviceUserId: 21
+				});
+
+				const response = await request
+					.post(`/appeals/${appealId}/rule-6-parties`)
+					.send({
+						serviceUser: {
+							organisationName: 'Tree Preservation Group'
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appealRule6Party.create).toHaveBeenCalledWith({
+					data: {
+						appeal: {
+							connect: {
+								id: appealId
+							}
+						},
+						serviceUser: {
+							create: {
+								organisationName: 'Tree Preservation Group'
+							}
+						}
+					}
+				});
+
+				expect(mockBroadcasters.broadcastServiceUser).not.toHaveBeenCalled();
+				expect(mockNotifySend).not.toHaveBeenCalled();
+				expect(response.status).toEqual(201);
+				expect(response.body).toEqual({
+					appealId,
+					serviceUser: {
+						organisationName: 'Tree Preservation Group'
+					}
+				});
+			});
+
+			test('returns an error on generic appeal if email format is invalid', async () => {
+				const genericAppeal = {
+					...fullPlanningAppeal,
+					appealType: { type: 'Tree preservation order' }
+				};
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(genericAppeal);
+
+				const response = await request
+					.post(`/appeals/${appealId}/rule-6-parties`)
+					.send({
+						serviceUser: {
+							organisationName: 'Tree Preservation Group',
+							email: 'invalid-email'
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: { 'serviceUser.email': 'must be a valid email' }
+				});
+			});
 		});
 	});
 
@@ -463,6 +535,33 @@ describe('appeal rule 6 parties routes', () => {
 					errors: { 'serviceUser.email': 'must be a valid email' }
 				});
 			});
+
+			test('updates a rule 6 party on generic appeal without email and does not broadcast or send emails', async () => {
+				const genericAppeal = {
+					...fullPlanningAppeal,
+					appealType: { type: 'Tree preservation order' },
+					appealRule6Parties: [rule6Party]
+				};
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(genericAppeal);
+				databaseConnector.appealRule6Party.update.mockResolvedValue({
+					...rule6Party,
+					serviceUser: { organisationName: 'Tree Preservation Group Updated' }
+				});
+
+				const response = await request
+					.patch(`/appeals/${appealId}/rule-6-parties/${rule6Party.id}`)
+					.send({
+						serviceUser: {
+							organisationName: 'Tree Preservation Group Updated'
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(mockBroadcasters.broadcastServiceUser).not.toHaveBeenCalled();
+				expect(mockNotifySend).not.toHaveBeenCalled();
+				expect(response.status).toEqual(200);
+			});
 		});
 
 		describe('DELETE', () => {
@@ -529,6 +628,34 @@ describe('appeal rule 6 parties routes', () => {
 					appealId: appealId,
 					serviceUserId: rule6Party.serviceUserId
 				});
+			});
+
+			test('deletes a rule 6 party on generic appeal and does not broadcast', async () => {
+				const genericAppeal = {
+					...fullPlanningAppeal,
+					appealType: { type: 'Tree preservation order' },
+					appealRule6Parties: [rule6Party]
+				};
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(genericAppeal);
+				// @ts-ignore
+				databaseConnector.appealRule6Party.findUnique.mockResolvedValue(rule6Party);
+				// @ts-ignore
+				databaseConnector.appealRule6Party.delete.mockResolvedValue({
+					appealId,
+					serviceUserId: Number(rule6Party.serviceUserId)
+				});
+
+				const response = await request
+					.delete(`/appeals/${appealId}/rule-6-parties/${rule6Party.id}`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appealRule6Party.delete).toHaveBeenCalledWith({
+					where: { id: Number(rule6Party.id) }
+				});
+
+				expect(mockBroadcasters.broadcastServiceUser).not.toHaveBeenCalled();
+				expect(response.status).toEqual(200);
 			});
 
 			test('returns an error if appealId is not a number', async () => {

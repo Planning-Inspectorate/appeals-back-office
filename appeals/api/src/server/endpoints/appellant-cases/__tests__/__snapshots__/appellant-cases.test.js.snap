@@ -25,6 +25,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
+  "appealStatus": "assign_case_officer",
   "appealType": "CAS advert",
   "appellant": {
     "email": "test@1367.com",
@@ -43,10 +44,28 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDate": "2022-03-18T00:00:00.000Z",
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "awaitingLinkedAppeal": false,
+  "caseOfficer": "a8973f33-4d2e-486b-87b0-d068343ad9eb",
+  "completedStateList": [],
+  "costs": {},
+  "costsDecision": {
+    "awaitingAppellantCostsDecision": false,
+    "awaitingLpaCostsDecision": false,
+  },
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
     "isChanged": false,
+  },
+  "documentationSummary": {
+    "appellantCase": {
+      "receivedAt": "2024-03-25T23:59:59.999Z",
+      "status": "Valid",
+    },
+    "lpaQuestionnaire": {
+      "receivedAt": "2024-06-24T00:00:00.000Z",
+      "status": "received",
+    },
   },
   "documents": {},
   "floorSpaceSquareMetres": null,
@@ -55,11 +74,46 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "details": "Small dog big character",
     "hasIssues": true,
   },
+  "hearing": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 1,
+    "hearingEndTime": "2022-03-31T03:00:00.000Z",
+    "hearingId": 1,
+    "hearingStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inquiry": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 6,
+    "inquiryEndTime": "2022-03-31T03:00:00.000Z",
+    "inquiryId": 1,
+    "inquiryStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inspector": "e8f89175-d02c-4a60-870e-dc954d5b530a",
   "isAppellantNamedOnApplication": false,
+  "isChildAppeal": false,
+  "isParentAppeal": false,
   "isS78Expedited": false,
+  "linkedAppeals": [],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "neighbouringSites": [],
   "numberOfResidencesNetChange": 5,
+  "otherAppeals": [],
   "ownershipCertificate": null,
+  "padsInspector": null,
   "planningApplicationReference": "48269/APP/2021/1482",
   "procedureType": "Written",
   "reasonForAppealAppellant": null,
@@ -76,6 +130,67 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "siteVisit": {
+    "siteVisitId": 1,
+    "visitDate": "2022-03-31T01:00:00.000Z",
+    "visitEndTime": "2022-03-31T03:00:00.000Z",
+    "visitStartTime": "2022-03-31T01:00:00.000Z",
+    "visitType": "Access required",
+  },
+  "stateList": [
+    {
+      "completed": false,
+      "key": "assign_case_officer",
+    },
+    {
+      "completed": false,
+      "key": "validation",
+    },
+    {
+      "completed": false,
+      "key": "ready_to_start",
+    },
+    {
+      "completed": false,
+      "key": "lpa_questionnaire",
+    },
+    {
+      "completed": false,
+      "key": "event",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_event",
+    },
+    {
+      "completed": false,
+      "key": "issue_determination",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_transfer",
+    },
+    {
+      "completed": false,
+      "key": "invalid",
+    },
+    {
+      "completed": false,
+      "key": "transferred",
+    },
+    {
+      "completed": false,
+      "key": "closed",
+    },
+    {
+      "completed": false,
+      "key": "withdrawn",
+    },
+    {
+      "completed": false,
+      "key": "complete",
+    },
+  ],
   "typeOfPlanningApplication": "householder-planning",
   "validation": {
     "outcome": "Valid",
@@ -108,6 +223,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
+  "appealStatus": "assign_case_officer",
   "appealType": "CAS advert",
   "appellant": {
     "email": "test@1367.com",
@@ -126,10 +242,28 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDate": "2022-03-18T00:00:00.000Z",
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "awaitingLinkedAppeal": false,
+  "caseOfficer": "a8973f33-4d2e-486b-87b0-d068343ad9eb",
+  "completedStateList": [],
+  "costs": {},
+  "costsDecision": {
+    "awaitingAppellantCostsDecision": false,
+    "awaitingLpaCostsDecision": false,
+  },
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
     "isChanged": false,
+  },
+  "documentationSummary": {
+    "appellantCase": {
+      "receivedAt": "2024-03-25T23:59:59.999Z",
+      "status": "received",
+    },
+    "lpaQuestionnaire": {
+      "receivedAt": "2024-06-24T00:00:00.000Z",
+      "status": "received",
+    },
   },
   "documents": {},
   "floorSpaceSquareMetres": null,
@@ -138,11 +272,46 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "details": "Small dog big character",
     "hasIssues": true,
   },
+  "hearing": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 1,
+    "hearingEndTime": "2022-03-31T03:00:00.000Z",
+    "hearingId": 1,
+    "hearingStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inquiry": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 6,
+    "inquiryEndTime": "2022-03-31T03:00:00.000Z",
+    "inquiryId": 1,
+    "inquiryStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inspector": "e8f89175-d02c-4a60-870e-dc954d5b530a",
   "isAppellantNamedOnApplication": false,
+  "isChildAppeal": false,
+  "isParentAppeal": false,
   "isS78Expedited": false,
+  "linkedAppeals": [],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "neighbouringSites": [],
   "numberOfResidencesNetChange": 5,
+  "otherAppeals": [],
   "ownershipCertificate": null,
+  "padsInspector": null,
   "planningApplicationReference": "48269/APP/2021/1482",
   "procedureType": "Written",
   "reasonForAppealAppellant": null,
@@ -159,6 +328,67 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "siteVisit": {
+    "siteVisitId": 1,
+    "visitDate": "2022-03-31T01:00:00.000Z",
+    "visitEndTime": "2022-03-31T03:00:00.000Z",
+    "visitStartTime": "2022-03-31T01:00:00.000Z",
+    "visitType": "Access required",
+  },
+  "stateList": [
+    {
+      "completed": false,
+      "key": "assign_case_officer",
+    },
+    {
+      "completed": false,
+      "key": "validation",
+    },
+    {
+      "completed": false,
+      "key": "ready_to_start",
+    },
+    {
+      "completed": false,
+      "key": "lpa_questionnaire",
+    },
+    {
+      "completed": false,
+      "key": "event",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_event",
+    },
+    {
+      "completed": false,
+      "key": "issue_determination",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_transfer",
+    },
+    {
+      "completed": false,
+      "key": "invalid",
+    },
+    {
+      "completed": false,
+      "key": "transferred",
+    },
+    {
+      "completed": false,
+      "key": "closed",
+    },
+    {
+      "completed": false,
+      "key": "withdrawn",
+    },
+    {
+      "completed": false,
+      "key": "complete",
+    },
+  ],
   "typeOfPlanningApplication": "householder-planning",
 }
 `;
@@ -188,6 +418,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
+  "appealStatus": "assign_case_officer",
   "appealType": "CAS advert",
   "appellant": {
     "email": "test@1367.com",
@@ -206,10 +437,29 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDate": "2022-03-18T00:00:00.000Z",
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "awaitingLinkedAppeal": false,
+  "caseOfficer": "a8973f33-4d2e-486b-87b0-d068343ad9eb",
+  "completedStateList": [],
+  "costs": {},
+  "costsDecision": {
+    "awaitingAppellantCostsDecision": false,
+    "awaitingLpaCostsDecision": false,
+  },
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
     "isChanged": false,
+  },
+  "documentationSummary": {
+    "appellantCase": {
+      "dueDate": "2099-07-14T00:00:00.000Z",
+      "receivedAt": "2024-03-25T23:59:59.999Z",
+      "status": "Incomplete",
+    },
+    "lpaQuestionnaire": {
+      "receivedAt": "2024-06-24T00:00:00.000Z",
+      "status": "received",
+    },
   },
   "documents": {},
   "floorSpaceSquareMetres": null,
@@ -218,11 +468,46 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "details": "Small dog big character",
     "hasIssues": true,
   },
+  "hearing": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 1,
+    "hearingEndTime": "2022-03-31T03:00:00.000Z",
+    "hearingId": 1,
+    "hearingStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inquiry": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 6,
+    "inquiryEndTime": "2022-03-31T03:00:00.000Z",
+    "inquiryId": 1,
+    "inquiryStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inspector": "e8f89175-d02c-4a60-870e-dc954d5b530a",
   "isAppellantNamedOnApplication": false,
+  "isChildAppeal": false,
+  "isParentAppeal": false,
   "isS78Expedited": false,
+  "linkedAppeals": [],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "neighbouringSites": [],
   "numberOfResidencesNetChange": 5,
+  "otherAppeals": [],
   "ownershipCertificate": null,
+  "padsInspector": null,
   "planningApplicationReference": "48269/APP/2021/1482",
   "procedureType": "Written",
   "reasonForAppealAppellant": null,
@@ -239,6 +524,67 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "siteVisit": {
+    "siteVisitId": 1,
+    "visitDate": "2022-03-31T01:00:00.000Z",
+    "visitEndTime": "2022-03-31T03:00:00.000Z",
+    "visitStartTime": "2022-03-31T01:00:00.000Z",
+    "visitType": "Access required",
+  },
+  "stateList": [
+    {
+      "completed": false,
+      "key": "assign_case_officer",
+    },
+    {
+      "completed": false,
+      "key": "validation",
+    },
+    {
+      "completed": false,
+      "key": "ready_to_start",
+    },
+    {
+      "completed": false,
+      "key": "lpa_questionnaire",
+    },
+    {
+      "completed": false,
+      "key": "event",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_event",
+    },
+    {
+      "completed": false,
+      "key": "issue_determination",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_transfer",
+    },
+    {
+      "completed": false,
+      "key": "invalid",
+    },
+    {
+      "completed": false,
+      "key": "transferred",
+    },
+    {
+      "completed": false,
+      "key": "closed",
+    },
+    {
+      "completed": false,
+      "key": "withdrawn",
+    },
+    {
+      "completed": false,
+      "key": "complete",
+    },
+  ],
   "typeOfPlanningApplication": "householder-planning",
   "validation": {
     "incompleteReasons": [
@@ -287,6 +633,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
+  "appealStatus": "assign_case_officer",
   "appealType": "CAS advert",
   "appellant": {
     "email": "test@1367.com",
@@ -305,10 +652,28 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDate": "2022-03-18T00:00:00.000Z",
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "awaitingLinkedAppeal": false,
+  "caseOfficer": "a8973f33-4d2e-486b-87b0-d068343ad9eb",
+  "completedStateList": [],
+  "costs": {},
+  "costsDecision": {
+    "awaitingAppellantCostsDecision": false,
+    "awaitingLpaCostsDecision": false,
+  },
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
     "isChanged": false,
+  },
+  "documentationSummary": {
+    "appellantCase": {
+      "receivedAt": "2024-03-25T23:59:59.999Z",
+      "status": "Invalid",
+    },
+    "lpaQuestionnaire": {
+      "receivedAt": "2024-06-24T00:00:00.000Z",
+      "status": "received",
+    },
   },
   "documents": {},
   "floorSpaceSquareMetres": null,
@@ -317,11 +682,46 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "details": "Small dog big character",
     "hasIssues": true,
   },
+  "hearing": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 1,
+    "hearingEndTime": "2022-03-31T03:00:00.000Z",
+    "hearingId": 1,
+    "hearingStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inquiry": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 6,
+    "inquiryEndTime": "2022-03-31T03:00:00.000Z",
+    "inquiryId": 1,
+    "inquiryStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inspector": "e8f89175-d02c-4a60-870e-dc954d5b530a",
   "isAppellantNamedOnApplication": false,
+  "isChildAppeal": false,
+  "isParentAppeal": false,
   "isS78Expedited": false,
+  "linkedAppeals": [],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "neighbouringSites": [],
   "numberOfResidencesNetChange": 5,
+  "otherAppeals": [],
   "ownershipCertificate": null,
+  "padsInspector": null,
   "planningApplicationReference": "48269/APP/2021/1482",
   "procedureType": "Written",
   "reasonForAppealAppellant": null,
@@ -338,6 +738,67 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "siteVisit": {
+    "siteVisitId": 1,
+    "visitDate": "2022-03-31T01:00:00.000Z",
+    "visitEndTime": "2022-03-31T03:00:00.000Z",
+    "visitStartTime": "2022-03-31T01:00:00.000Z",
+    "visitType": "Access required",
+  },
+  "stateList": [
+    {
+      "completed": false,
+      "key": "assign_case_officer",
+    },
+    {
+      "completed": false,
+      "key": "validation",
+    },
+    {
+      "completed": false,
+      "key": "ready_to_start",
+    },
+    {
+      "completed": false,
+      "key": "lpa_questionnaire",
+    },
+    {
+      "completed": false,
+      "key": "event",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_event",
+    },
+    {
+      "completed": false,
+      "key": "issue_determination",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_transfer",
+    },
+    {
+      "completed": false,
+      "key": "invalid",
+    },
+    {
+      "completed": false,
+      "key": "transferred",
+    },
+    {
+      "completed": false,
+      "key": "closed",
+    },
+    {
+      "completed": false,
+      "key": "withdrawn",
+    },
+    {
+      "completed": false,
+      "key": "complete",
+    },
+  ],
   "typeOfPlanningApplication": "householder-planning",
   "validation": {
     "invalidReasons": [
@@ -386,6 +847,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
+  "appealStatus": "assign_case_officer",
   "appealType": "CAS planning",
   "appellant": {
     "email": "test@1367.com",
@@ -404,10 +866,28 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDate": "2022-03-18T00:00:00.000Z",
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "awaitingLinkedAppeal": false,
+  "caseOfficer": "a8973f33-4d2e-486b-87b0-d068343ad9eb",
+  "completedStateList": [],
+  "costs": {},
+  "costsDecision": {
+    "awaitingAppellantCostsDecision": false,
+    "awaitingLpaCostsDecision": false,
+  },
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
     "isChanged": false,
+  },
+  "documentationSummary": {
+    "appellantCase": {
+      "receivedAt": "2024-03-25T23:59:59.999Z",
+      "status": "Valid",
+    },
+    "lpaQuestionnaire": {
+      "receivedAt": "2024-06-24T00:00:00.000Z",
+      "status": "received",
+    },
   },
   "documents": {},
   "floorSpaceSquareMetres": null,
@@ -416,11 +896,46 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "details": "Small dog big character",
     "hasIssues": true,
   },
+  "hearing": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 1,
+    "hearingEndTime": "2022-03-31T03:00:00.000Z",
+    "hearingId": 1,
+    "hearingStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inquiry": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 6,
+    "inquiryEndTime": "2022-03-31T03:00:00.000Z",
+    "inquiryId": 1,
+    "inquiryStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inspector": "e8f89175-d02c-4a60-870e-dc954d5b530a",
   "isAppellantNamedOnApplication": false,
+  "isChildAppeal": false,
+  "isParentAppeal": false,
   "isS78Expedited": false,
+  "linkedAppeals": [],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "neighbouringSites": [],
   "numberOfResidencesNetChange": 5,
+  "otherAppeals": [],
   "ownershipCertificate": null,
+  "padsInspector": null,
   "planningApplicationReference": "48269/APP/2021/1482",
   "procedureType": "Written",
   "reasonForAppealAppellant": null,
@@ -437,6 +952,67 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "siteVisit": {
+    "siteVisitId": 1,
+    "visitDate": "2022-03-31T01:00:00.000Z",
+    "visitEndTime": "2022-03-31T03:00:00.000Z",
+    "visitStartTime": "2022-03-31T01:00:00.000Z",
+    "visitType": "Access required",
+  },
+  "stateList": [
+    {
+      "completed": false,
+      "key": "assign_case_officer",
+    },
+    {
+      "completed": false,
+      "key": "validation",
+    },
+    {
+      "completed": false,
+      "key": "ready_to_start",
+    },
+    {
+      "completed": false,
+      "key": "lpa_questionnaire",
+    },
+    {
+      "completed": false,
+      "key": "event",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_event",
+    },
+    {
+      "completed": false,
+      "key": "issue_determination",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_transfer",
+    },
+    {
+      "completed": false,
+      "key": "invalid",
+    },
+    {
+      "completed": false,
+      "key": "transferred",
+    },
+    {
+      "completed": false,
+      "key": "closed",
+    },
+    {
+      "completed": false,
+      "key": "withdrawn",
+    },
+    {
+      "completed": false,
+      "key": "complete",
+    },
+  ],
   "typeOfPlanningApplication": "householder-planning",
   "validation": {
     "outcome": "Valid",
@@ -469,6 +1045,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
+  "appealStatus": "assign_case_officer",
   "appealType": "CAS planning",
   "appellant": {
     "email": "test@1367.com",
@@ -487,10 +1064,28 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDate": "2022-03-18T00:00:00.000Z",
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "awaitingLinkedAppeal": false,
+  "caseOfficer": "a8973f33-4d2e-486b-87b0-d068343ad9eb",
+  "completedStateList": [],
+  "costs": {},
+  "costsDecision": {
+    "awaitingAppellantCostsDecision": false,
+    "awaitingLpaCostsDecision": false,
+  },
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
     "isChanged": false,
+  },
+  "documentationSummary": {
+    "appellantCase": {
+      "receivedAt": "2024-03-25T23:59:59.999Z",
+      "status": "received",
+    },
+    "lpaQuestionnaire": {
+      "receivedAt": "2024-06-24T00:00:00.000Z",
+      "status": "received",
+    },
   },
   "documents": {},
   "floorSpaceSquareMetres": null,
@@ -499,11 +1094,46 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "details": "Small dog big character",
     "hasIssues": true,
   },
+  "hearing": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 1,
+    "hearingEndTime": "2022-03-31T03:00:00.000Z",
+    "hearingId": 1,
+    "hearingStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inquiry": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 6,
+    "inquiryEndTime": "2022-03-31T03:00:00.000Z",
+    "inquiryId": 1,
+    "inquiryStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inspector": "e8f89175-d02c-4a60-870e-dc954d5b530a",
   "isAppellantNamedOnApplication": false,
+  "isChildAppeal": false,
+  "isParentAppeal": false,
   "isS78Expedited": false,
+  "linkedAppeals": [],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "neighbouringSites": [],
   "numberOfResidencesNetChange": 5,
+  "otherAppeals": [],
   "ownershipCertificate": null,
+  "padsInspector": null,
   "planningApplicationReference": "48269/APP/2021/1482",
   "procedureType": "Written",
   "reasonForAppealAppellant": null,
@@ -520,6 +1150,67 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "siteVisit": {
+    "siteVisitId": 1,
+    "visitDate": "2022-03-31T01:00:00.000Z",
+    "visitEndTime": "2022-03-31T03:00:00.000Z",
+    "visitStartTime": "2022-03-31T01:00:00.000Z",
+    "visitType": "Access required",
+  },
+  "stateList": [
+    {
+      "completed": false,
+      "key": "assign_case_officer",
+    },
+    {
+      "completed": false,
+      "key": "validation",
+    },
+    {
+      "completed": false,
+      "key": "ready_to_start",
+    },
+    {
+      "completed": false,
+      "key": "lpa_questionnaire",
+    },
+    {
+      "completed": false,
+      "key": "event",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_event",
+    },
+    {
+      "completed": false,
+      "key": "issue_determination",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_transfer",
+    },
+    {
+      "completed": false,
+      "key": "invalid",
+    },
+    {
+      "completed": false,
+      "key": "transferred",
+    },
+    {
+      "completed": false,
+      "key": "closed",
+    },
+    {
+      "completed": false,
+      "key": "withdrawn",
+    },
+    {
+      "completed": false,
+      "key": "complete",
+    },
+  ],
   "typeOfPlanningApplication": "householder-planning",
 }
 `;
@@ -549,6 +1240,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
+  "appealStatus": "assign_case_officer",
   "appealType": "CAS planning",
   "appellant": {
     "email": "test@1367.com",
@@ -567,10 +1259,29 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDate": "2022-03-18T00:00:00.000Z",
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "awaitingLinkedAppeal": false,
+  "caseOfficer": "a8973f33-4d2e-486b-87b0-d068343ad9eb",
+  "completedStateList": [],
+  "costs": {},
+  "costsDecision": {
+    "awaitingAppellantCostsDecision": false,
+    "awaitingLpaCostsDecision": false,
+  },
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
     "isChanged": false,
+  },
+  "documentationSummary": {
+    "appellantCase": {
+      "dueDate": "2099-07-14T00:00:00.000Z",
+      "receivedAt": "2024-03-25T23:59:59.999Z",
+      "status": "Incomplete",
+    },
+    "lpaQuestionnaire": {
+      "receivedAt": "2024-06-24T00:00:00.000Z",
+      "status": "received",
+    },
   },
   "documents": {},
   "floorSpaceSquareMetres": null,
@@ -579,11 +1290,46 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "details": "Small dog big character",
     "hasIssues": true,
   },
+  "hearing": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 1,
+    "hearingEndTime": "2022-03-31T03:00:00.000Z",
+    "hearingId": 1,
+    "hearingStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inquiry": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 6,
+    "inquiryEndTime": "2022-03-31T03:00:00.000Z",
+    "inquiryId": 1,
+    "inquiryStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inspector": "e8f89175-d02c-4a60-870e-dc954d5b530a",
   "isAppellantNamedOnApplication": false,
+  "isChildAppeal": false,
+  "isParentAppeal": false,
   "isS78Expedited": false,
+  "linkedAppeals": [],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "neighbouringSites": [],
   "numberOfResidencesNetChange": 5,
+  "otherAppeals": [],
   "ownershipCertificate": null,
+  "padsInspector": null,
   "planningApplicationReference": "48269/APP/2021/1482",
   "procedureType": "Written",
   "reasonForAppealAppellant": null,
@@ -600,6 +1346,67 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "siteVisit": {
+    "siteVisitId": 1,
+    "visitDate": "2022-03-31T01:00:00.000Z",
+    "visitEndTime": "2022-03-31T03:00:00.000Z",
+    "visitStartTime": "2022-03-31T01:00:00.000Z",
+    "visitType": "Access required",
+  },
+  "stateList": [
+    {
+      "completed": false,
+      "key": "assign_case_officer",
+    },
+    {
+      "completed": false,
+      "key": "validation",
+    },
+    {
+      "completed": false,
+      "key": "ready_to_start",
+    },
+    {
+      "completed": false,
+      "key": "lpa_questionnaire",
+    },
+    {
+      "completed": false,
+      "key": "event",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_event",
+    },
+    {
+      "completed": false,
+      "key": "issue_determination",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_transfer",
+    },
+    {
+      "completed": false,
+      "key": "invalid",
+    },
+    {
+      "completed": false,
+      "key": "transferred",
+    },
+    {
+      "completed": false,
+      "key": "closed",
+    },
+    {
+      "completed": false,
+      "key": "withdrawn",
+    },
+    {
+      "completed": false,
+      "key": "complete",
+    },
+  ],
   "typeOfPlanningApplication": "householder-planning",
   "validation": {
     "incompleteReasons": [
@@ -648,6 +1455,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
+  "appealStatus": "assign_case_officer",
   "appealType": "CAS planning",
   "appellant": {
     "email": "test@1367.com",
@@ -666,10 +1474,28 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDate": "2022-03-18T00:00:00.000Z",
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "awaitingLinkedAppeal": false,
+  "caseOfficer": "a8973f33-4d2e-486b-87b0-d068343ad9eb",
+  "completedStateList": [],
+  "costs": {},
+  "costsDecision": {
+    "awaitingAppellantCostsDecision": false,
+    "awaitingLpaCostsDecision": false,
+  },
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
     "isChanged": false,
+  },
+  "documentationSummary": {
+    "appellantCase": {
+      "receivedAt": "2024-03-25T23:59:59.999Z",
+      "status": "Invalid",
+    },
+    "lpaQuestionnaire": {
+      "receivedAt": "2024-06-24T00:00:00.000Z",
+      "status": "received",
+    },
   },
   "documents": {},
   "floorSpaceSquareMetres": null,
@@ -678,11 +1504,46 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "details": "Small dog big character",
     "hasIssues": true,
   },
+  "hearing": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 1,
+    "hearingEndTime": "2022-03-31T03:00:00.000Z",
+    "hearingId": 1,
+    "hearingStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inquiry": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 6,
+    "inquiryEndTime": "2022-03-31T03:00:00.000Z",
+    "inquiryId": 1,
+    "inquiryStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inspector": "e8f89175-d02c-4a60-870e-dc954d5b530a",
   "isAppellantNamedOnApplication": false,
+  "isChildAppeal": false,
+  "isParentAppeal": false,
   "isS78Expedited": false,
+  "linkedAppeals": [],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "neighbouringSites": [],
   "numberOfResidencesNetChange": 5,
+  "otherAppeals": [],
   "ownershipCertificate": null,
+  "padsInspector": null,
   "planningApplicationReference": "48269/APP/2021/1482",
   "procedureType": "Written",
   "reasonForAppealAppellant": null,
@@ -699,6 +1560,67 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "siteVisit": {
+    "siteVisitId": 1,
+    "visitDate": "2022-03-31T01:00:00.000Z",
+    "visitEndTime": "2022-03-31T03:00:00.000Z",
+    "visitStartTime": "2022-03-31T01:00:00.000Z",
+    "visitType": "Access required",
+  },
+  "stateList": [
+    {
+      "completed": false,
+      "key": "assign_case_officer",
+    },
+    {
+      "completed": false,
+      "key": "validation",
+    },
+    {
+      "completed": false,
+      "key": "ready_to_start",
+    },
+    {
+      "completed": false,
+      "key": "lpa_questionnaire",
+    },
+    {
+      "completed": false,
+      "key": "event",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_event",
+    },
+    {
+      "completed": false,
+      "key": "issue_determination",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_transfer",
+    },
+    {
+      "completed": false,
+      "key": "invalid",
+    },
+    {
+      "completed": false,
+      "key": "transferred",
+    },
+    {
+      "completed": false,
+      "key": "closed",
+    },
+    {
+      "completed": false,
+      "key": "withdrawn",
+    },
+    {
+      "completed": false,
+      "key": "complete",
+    },
+  ],
   "typeOfPlanningApplication": "householder-planning",
   "validation": {
     "invalidReasons": [
@@ -748,6 +1670,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
+  "appealStatus": "assign_case_officer",
   "appealType": "Planning appeal",
   "appellant": {
     "email": "test@1367.com",
@@ -770,12 +1693,69 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDate": "2022-03-18T00:00:00.000Z",
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "awaitingLinkedAppeal": false,
+  "caseOfficer": "a8973f33-4d2e-486b-87b0-d068343ad9eb",
+  "completedStateList": [],
+  "costs": {},
+  "costsDecision": {
+    "awaitingAppellantCostsDecision": false,
+    "awaitingLpaCostsDecision": false,
+  },
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
     "isChanged": false,
   },
   "developmentType": null,
+  "documentationSummary": {
+    "appellantCase": {
+      "receivedAt": "2024-03-25T23:59:59.999Z",
+      "status": "Valid",
+    },
+    "appellantFinalComments": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "appellantProofOfEvidence": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "appellantStatement": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "ipComments": {
+      "counts": {},
+      "isRedacted": false,
+      "receivedAt": null,
+      "status": "not_received",
+    },
+    "lpaFinalComments": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "lpaProofOfEvidence": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "lpaQuestionnaire": {
+      "receivedAt": "2024-06-24T00:00:00.000Z",
+      "status": "received",
+    },
+    "lpaStatement": {
+      "isRedacted": false,
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "rule6PartyProofs": {},
+    "rule6PartyStatements": {},
+  },
   "documents": {},
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
@@ -783,11 +1763,46 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "details": "Small dog big character",
     "hasIssues": true,
   },
+  "hearing": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 1,
+    "hearingEndTime": "2022-03-31T03:00:00.000Z",
+    "hearingId": 1,
+    "hearingStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inquiry": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 6,
+    "inquiryEndTime": "2022-03-31T03:00:00.000Z",
+    "inquiryId": 1,
+    "inquiryStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inspector": "e8f89175-d02c-4a60-870e-dc954d5b530a",
   "isAppellantNamedOnApplication": false,
+  "isChildAppeal": false,
+  "isParentAppeal": false,
   "isS78Expedited": false,
+  "linkedAppeals": [],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "neighbouringSites": [],
   "numberOfResidencesNetChange": 5,
+  "otherAppeals": [],
   "ownershipCertificate": null,
+  "padsInspector": null,
   "planningApplicationReference": "48269/APP/2021/1482",
   "planningObligation": {},
   "procedureType": "Written",
@@ -805,6 +1820,75 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "siteVisit": {
+    "siteVisitId": 1,
+    "visitDate": "2022-03-31T01:00:00.000Z",
+    "visitEndTime": "2022-03-31T03:00:00.000Z",
+    "visitStartTime": "2022-03-31T01:00:00.000Z",
+    "visitType": "Access required",
+  },
+  "stateList": [
+    {
+      "completed": false,
+      "key": "assign_case_officer",
+    },
+    {
+      "completed": false,
+      "key": "validation",
+    },
+    {
+      "completed": false,
+      "key": "ready_to_start",
+    },
+    {
+      "completed": false,
+      "key": "lpa_questionnaire",
+    },
+    {
+      "completed": false,
+      "key": "statements",
+    },
+    {
+      "completed": false,
+      "key": "final_comments",
+    },
+    {
+      "completed": false,
+      "key": "event",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_event",
+    },
+    {
+      "completed": false,
+      "key": "issue_determination",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_transfer",
+    },
+    {
+      "completed": false,
+      "key": "invalid",
+    },
+    {
+      "completed": false,
+      "key": "transferred",
+    },
+    {
+      "completed": false,
+      "key": "closed",
+    },
+    {
+      "completed": false,
+      "key": "withdrawn",
+    },
+    {
+      "completed": false,
+      "key": "complete",
+    },
+  ],
   "typeOfPlanningApplication": "full-appeal",
   "validation": {
     "outcome": "Valid",
@@ -830,6 +1914,14 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "anySignificantChanges_otherSignificantChanges": null,
   "appealId": 2,
   "appealReference": "1345264",
+  "appealRule6Parties": [
+    {
+      "appealId": 2,
+      "id": 1,
+      "proofEvidenceReceived": true,
+      "serviceUserId": 1,
+    },
+  ],
   "appealSite": {
     "addressId": 1,
     "addressLine1": "96 The Avenue",
@@ -838,6 +1930,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
+  "appealStatus": "assign_case_officer",
   "appealType": "Planning appeal",
   "appellant": {
     "email": "test@1367.com",
@@ -860,12 +1953,85 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDate": "2022-03-18T00:00:00.000Z",
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "awaitingLinkedAppeal": false,
+  "caseOfficer": "a8973f33-4d2e-486b-87b0-d068343ad9eb",
+  "completedStateList": [],
+  "costs": {},
+  "costsDecision": {
+    "awaitingAppellantCostsDecision": false,
+    "awaitingLpaCostsDecision": false,
+  },
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
     "isChanged": false,
   },
   "developmentType": null,
+  "documentationSummary": {
+    "appellantCase": {
+      "receivedAt": "2024-03-25T23:59:59.999Z",
+      "status": "received",
+    },
+    "appellantFinalComments": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "appellantProofOfEvidence": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "appellantStatement": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "ipComments": {
+      "counts": {},
+      "isRedacted": false,
+      "receivedAt": null,
+      "status": "not_received",
+    },
+    "lpaFinalComments": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "lpaProofOfEvidence": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "lpaQuestionnaire": {
+      "receivedAt": "2024-06-24T00:00:00.000Z",
+      "status": "received",
+    },
+    "lpaStatement": {
+      "isRedacted": false,
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "rule6PartyProofs": {
+      "1": {
+        "isRedacted": false,
+        "receivedAt": "2024-03-25T23:59:59.999Z",
+        "representationStatus": "valid",
+        "rule6PartyId": 1,
+        "status": "received",
+      },
+    },
+    "rule6PartyStatements": {
+      "1": {
+        "isRedacted": false,
+        "receivedAt": null,
+        "representationStatus": null,
+        "rule6PartyId": 1,
+        "status": "not_received",
+      },
+    },
+  },
   "documents": {},
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
@@ -873,11 +2039,46 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "details": "Small dog big character",
     "hasIssues": true,
   },
+  "hearing": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 1,
+    "hearingEndTime": "2022-03-31T03:00:00.000Z",
+    "hearingId": 1,
+    "hearingStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inquiry": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 6,
+    "inquiryEndTime": "2022-03-31T03:00:00.000Z",
+    "inquiryId": 1,
+    "inquiryStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inspector": "e8f89175-d02c-4a60-870e-dc954d5b530a",
   "isAppellantNamedOnApplication": false,
+  "isChildAppeal": false,
+  "isParentAppeal": false,
   "isS78Expedited": false,
+  "linkedAppeals": [],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "neighbouringSites": [],
   "numberOfResidencesNetChange": 5,
+  "otherAppeals": [],
   "ownershipCertificate": null,
+  "padsInspector": null,
   "planningApplicationReference": "48269/APP/2021/1482",
   "planningObligation": {},
   "procedureType": "Written",
@@ -895,6 +2096,75 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "siteVisit": {
+    "siteVisitId": 1,
+    "visitDate": "2022-03-31T01:00:00.000Z",
+    "visitEndTime": "2022-03-31T03:00:00.000Z",
+    "visitStartTime": "2022-03-31T01:00:00.000Z",
+    "visitType": "Access required",
+  },
+  "stateList": [
+    {
+      "completed": false,
+      "key": "assign_case_officer",
+    },
+    {
+      "completed": false,
+      "key": "validation",
+    },
+    {
+      "completed": false,
+      "key": "ready_to_start",
+    },
+    {
+      "completed": false,
+      "key": "lpa_questionnaire",
+    },
+    {
+      "completed": false,
+      "key": "statements",
+    },
+    {
+      "completed": false,
+      "key": "final_comments",
+    },
+    {
+      "completed": false,
+      "key": "event",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_event",
+    },
+    {
+      "completed": false,
+      "key": "issue_determination",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_transfer",
+    },
+    {
+      "completed": false,
+      "key": "invalid",
+    },
+    {
+      "completed": false,
+      "key": "transferred",
+    },
+    {
+      "completed": false,
+      "key": "closed",
+    },
+    {
+      "completed": false,
+      "key": "withdrawn",
+    },
+    {
+      "completed": false,
+      "key": "complete",
+    },
+  ],
   "typeOfPlanningApplication": "full-appeal",
 }
 `;
@@ -917,6 +2187,14 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "anySignificantChanges_otherSignificantChanges": null,
   "appealId": 5,
   "appealReference": "1345264",
+  "appealRule6Parties": [
+    {
+      "appealId": 2,
+      "id": 1,
+      "proofEvidenceReceived": true,
+      "serviceUserId": 1,
+    },
+  ],
   "appealSite": {
     "addressId": 1,
     "addressLine1": "96 The Avenue",
@@ -925,6 +2203,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
+  "appealStatus": "assign_case_officer",
   "appealType": "Planning appeal",
   "appellant": {
     "email": "test@1367.com",
@@ -947,12 +2226,86 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDate": "2022-03-18T00:00:00.000Z",
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "awaitingLinkedAppeal": false,
+  "caseOfficer": "a8973f33-4d2e-486b-87b0-d068343ad9eb",
+  "completedStateList": [],
+  "costs": {},
+  "costsDecision": {
+    "awaitingAppellantCostsDecision": false,
+    "awaitingLpaCostsDecision": false,
+  },
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
     "isChanged": false,
   },
   "developmentType": null,
+  "documentationSummary": {
+    "appellantCase": {
+      "dueDate": "2099-07-14T00:00:00.000Z",
+      "receivedAt": "2024-03-25T23:59:59.999Z",
+      "status": "Incomplete",
+    },
+    "appellantFinalComments": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "appellantProofOfEvidence": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "appellantStatement": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "ipComments": {
+      "counts": {},
+      "isRedacted": false,
+      "receivedAt": null,
+      "status": "not_received",
+    },
+    "lpaFinalComments": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "lpaProofOfEvidence": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "lpaQuestionnaire": {
+      "receivedAt": "2024-06-24T00:00:00.000Z",
+      "status": "received",
+    },
+    "lpaStatement": {
+      "isRedacted": false,
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "rule6PartyProofs": {
+      "1": {
+        "isRedacted": false,
+        "receivedAt": "2024-03-25T23:59:59.999Z",
+        "representationStatus": "valid",
+        "rule6PartyId": 1,
+        "status": "received",
+      },
+    },
+    "rule6PartyStatements": {
+      "1": {
+        "isRedacted": false,
+        "receivedAt": null,
+        "representationStatus": null,
+        "rule6PartyId": 1,
+        "status": "not_received",
+      },
+    },
+  },
   "documents": {},
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
@@ -960,11 +2313,46 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "details": "Small dog big character",
     "hasIssues": true,
   },
+  "hearing": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 1,
+    "hearingEndTime": "2022-03-31T03:00:00.000Z",
+    "hearingId": 1,
+    "hearingStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inquiry": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 6,
+    "inquiryEndTime": "2022-03-31T03:00:00.000Z",
+    "inquiryId": 1,
+    "inquiryStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inspector": "e8f89175-d02c-4a60-870e-dc954d5b530a",
   "isAppellantNamedOnApplication": false,
+  "isChildAppeal": false,
+  "isParentAppeal": false,
   "isS78Expedited": false,
+  "linkedAppeals": [],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "neighbouringSites": [],
   "numberOfResidencesNetChange": 5,
+  "otherAppeals": [],
   "ownershipCertificate": null,
+  "padsInspector": null,
   "planningApplicationReference": "48269/APP/2021/1482",
   "planningObligation": {},
   "procedureType": "Written",
@@ -982,6 +2370,75 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "siteVisit": {
+    "siteVisitId": 1,
+    "visitDate": "2022-03-31T01:00:00.000Z",
+    "visitEndTime": "2022-03-31T03:00:00.000Z",
+    "visitStartTime": "2022-03-31T01:00:00.000Z",
+    "visitType": "Access required",
+  },
+  "stateList": [
+    {
+      "completed": false,
+      "key": "assign_case_officer",
+    },
+    {
+      "completed": false,
+      "key": "validation",
+    },
+    {
+      "completed": false,
+      "key": "ready_to_start",
+    },
+    {
+      "completed": false,
+      "key": "lpa_questionnaire",
+    },
+    {
+      "completed": false,
+      "key": "statements",
+    },
+    {
+      "completed": false,
+      "key": "final_comments",
+    },
+    {
+      "completed": false,
+      "key": "event",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_event",
+    },
+    {
+      "completed": false,
+      "key": "issue_determination",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_transfer",
+    },
+    {
+      "completed": false,
+      "key": "invalid",
+    },
+    {
+      "completed": false,
+      "key": "transferred",
+    },
+    {
+      "completed": false,
+      "key": "closed",
+    },
+    {
+      "completed": false,
+      "key": "withdrawn",
+    },
+    {
+      "completed": false,
+      "key": "complete",
+    },
+  ],
   "typeOfPlanningApplication": "full-appeal",
   "validation": {
     "incompleteReasons": [
@@ -1023,6 +2480,14 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "anySignificantChanges_otherSignificantChanges": null,
   "appealId": 6,
   "appealReference": "1345264",
+  "appealRule6Parties": [
+    {
+      "appealId": 2,
+      "id": 1,
+      "proofEvidenceReceived": true,
+      "serviceUserId": 1,
+    },
+  ],
   "appealSite": {
     "addressId": 1,
     "addressLine1": "96 The Avenue",
@@ -1031,6 +2496,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
+  "appealStatus": "assign_case_officer",
   "appealType": "Planning appeal",
   "appellant": {
     "email": "test@1367.com",
@@ -1053,12 +2519,85 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDate": "2022-03-18T00:00:00.000Z",
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "awaitingLinkedAppeal": false,
+  "caseOfficer": "a8973f33-4d2e-486b-87b0-d068343ad9eb",
+  "completedStateList": [],
+  "costs": {},
+  "costsDecision": {
+    "awaitingAppellantCostsDecision": false,
+    "awaitingLpaCostsDecision": false,
+  },
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
     "isChanged": false,
   },
   "developmentType": null,
+  "documentationSummary": {
+    "appellantCase": {
+      "receivedAt": "2024-03-25T23:59:59.999Z",
+      "status": "Invalid",
+    },
+    "appellantFinalComments": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "appellantProofOfEvidence": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "appellantStatement": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "ipComments": {
+      "counts": {},
+      "isRedacted": false,
+      "receivedAt": null,
+      "status": "not_received",
+    },
+    "lpaFinalComments": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "lpaProofOfEvidence": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "lpaQuestionnaire": {
+      "receivedAt": "2024-06-24T00:00:00.000Z",
+      "status": "received",
+    },
+    "lpaStatement": {
+      "isRedacted": false,
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "rule6PartyProofs": {
+      "1": {
+        "isRedacted": false,
+        "receivedAt": "2024-03-25T23:59:59.999Z",
+        "representationStatus": "valid",
+        "rule6PartyId": 1,
+        "status": "received",
+      },
+    },
+    "rule6PartyStatements": {
+      "1": {
+        "isRedacted": false,
+        "receivedAt": null,
+        "representationStatus": null,
+        "rule6PartyId": 1,
+        "status": "not_received",
+      },
+    },
+  },
   "documents": {},
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
@@ -1066,11 +2605,46 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "details": "Small dog big character",
     "hasIssues": true,
   },
+  "hearing": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 1,
+    "hearingEndTime": "2022-03-31T03:00:00.000Z",
+    "hearingId": 1,
+    "hearingStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inquiry": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 6,
+    "inquiryEndTime": "2022-03-31T03:00:00.000Z",
+    "inquiryId": 1,
+    "inquiryStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inspector": "e8f89175-d02c-4a60-870e-dc954d5b530a",
   "isAppellantNamedOnApplication": false,
+  "isChildAppeal": false,
+  "isParentAppeal": false,
   "isS78Expedited": false,
+  "linkedAppeals": [],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "neighbouringSites": [],
   "numberOfResidencesNetChange": 5,
+  "otherAppeals": [],
   "ownershipCertificate": null,
+  "padsInspector": null,
   "planningApplicationReference": "48269/APP/2021/1482",
   "planningObligation": {},
   "procedureType": "Written",
@@ -1088,6 +2662,75 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "siteVisit": {
+    "siteVisitId": 1,
+    "visitDate": "2022-03-31T01:00:00.000Z",
+    "visitEndTime": "2022-03-31T03:00:00.000Z",
+    "visitStartTime": "2022-03-31T01:00:00.000Z",
+    "visitType": "Access required",
+  },
+  "stateList": [
+    {
+      "completed": false,
+      "key": "assign_case_officer",
+    },
+    {
+      "completed": false,
+      "key": "validation",
+    },
+    {
+      "completed": false,
+      "key": "ready_to_start",
+    },
+    {
+      "completed": false,
+      "key": "lpa_questionnaire",
+    },
+    {
+      "completed": false,
+      "key": "statements",
+    },
+    {
+      "completed": false,
+      "key": "final_comments",
+    },
+    {
+      "completed": false,
+      "key": "event",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_event",
+    },
+    {
+      "completed": false,
+      "key": "issue_determination",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_transfer",
+    },
+    {
+      "completed": false,
+      "key": "invalid",
+    },
+    {
+      "completed": false,
+      "key": "transferred",
+    },
+    {
+      "completed": false,
+      "key": "closed",
+    },
+    {
+      "completed": false,
+      "key": "withdrawn",
+    },
+    {
+      "completed": false,
+      "key": "complete",
+    },
+  ],
   "typeOfPlanningApplication": "full-appeal",
   "validation": {
     "invalidReasons": [
@@ -1136,6 +2779,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
+  "appealStatus": "assign_case_officer",
   "appealType": "Householder",
   "appellant": {
     "email": "test@1367.com",
@@ -1154,10 +2798,28 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDate": "2022-03-18T00:00:00.000Z",
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "awaitingLinkedAppeal": false,
+  "caseOfficer": "a8973f33-4d2e-486b-87b0-d068343ad9eb",
+  "completedStateList": [],
+  "costs": {},
+  "costsDecision": {
+    "awaitingAppellantCostsDecision": false,
+    "awaitingLpaCostsDecision": false,
+  },
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
     "isChanged": false,
+  },
+  "documentationSummary": {
+    "appellantCase": {
+      "receivedAt": "2024-03-25T23:59:59.999Z",
+      "status": "Valid",
+    },
+    "lpaQuestionnaire": {
+      "receivedAt": "2024-06-24T00:00:00.000Z",
+      "status": "received",
+    },
   },
   "documents": {},
   "floorSpaceSquareMetres": null,
@@ -1166,11 +2828,46 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "details": "Small dog big character",
     "hasIssues": true,
   },
+  "hearing": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 1,
+    "hearingEndTime": "2022-03-31T03:00:00.000Z",
+    "hearingId": 1,
+    "hearingStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inquiry": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 6,
+    "inquiryEndTime": "2022-03-31T03:00:00.000Z",
+    "inquiryId": 1,
+    "inquiryStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inspector": "e8f89175-d02c-4a60-870e-dc954d5b530a",
   "isAppellantNamedOnApplication": false,
+  "isChildAppeal": false,
+  "isParentAppeal": false,
   "isS78Expedited": false,
+  "linkedAppeals": [],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "neighbouringSites": [],
   "numberOfResidencesNetChange": 5,
+  "otherAppeals": [],
   "ownershipCertificate": null,
+  "padsInspector": null,
   "planningApplicationReference": "48269/APP/2021/1482",
   "procedureType": "Written",
   "reasonForAppealAppellant": null,
@@ -1187,6 +2884,67 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "siteVisit": {
+    "siteVisitId": 1,
+    "visitDate": "2022-03-31T01:00:00.000Z",
+    "visitEndTime": "2022-03-31T03:00:00.000Z",
+    "visitStartTime": "2022-03-31T01:00:00.000Z",
+    "visitType": "Access required",
+  },
+  "stateList": [
+    {
+      "completed": false,
+      "key": "assign_case_officer",
+    },
+    {
+      "completed": false,
+      "key": "validation",
+    },
+    {
+      "completed": false,
+      "key": "ready_to_start",
+    },
+    {
+      "completed": false,
+      "key": "lpa_questionnaire",
+    },
+    {
+      "completed": false,
+      "key": "event",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_event",
+    },
+    {
+      "completed": false,
+      "key": "issue_determination",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_transfer",
+    },
+    {
+      "completed": false,
+      "key": "invalid",
+    },
+    {
+      "completed": false,
+      "key": "transferred",
+    },
+    {
+      "completed": false,
+      "key": "closed",
+    },
+    {
+      "completed": false,
+      "key": "withdrawn",
+    },
+    {
+      "completed": false,
+      "key": "complete",
+    },
+  ],
   "typeOfPlanningApplication": "householder-planning",
   "validation": {
     "outcome": "Valid",
@@ -1211,6 +2969,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "anySignificantChanges_otherSignificantChanges": null,
   "appealId": 1,
   "appealReference": "1345264",
+  "appealRule6Parties": {},
   "appealSite": {
     "addressId": 1,
     "addressLine1": "96 The Avenue",
@@ -1219,6 +2978,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
+  "appealStatus": "assign_case_officer",
   "appealType": "Householder",
   "appellant": {
     "email": "test@1367.com",
@@ -1237,10 +2997,28 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDate": "2022-03-18T00:00:00.000Z",
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "awaitingLinkedAppeal": false,
+  "caseOfficer": "a8973f33-4d2e-486b-87b0-d068343ad9eb",
+  "completedStateList": [],
+  "costs": {},
+  "costsDecision": {
+    "awaitingAppellantCostsDecision": false,
+    "awaitingLpaCostsDecision": false,
+  },
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
     "isChanged": false,
+  },
+  "documentationSummary": {
+    "appellantCase": {
+      "receivedAt": "2024-03-25T23:59:59.999Z",
+      "status": "received",
+    },
+    "lpaQuestionnaire": {
+      "receivedAt": "2024-06-24T00:00:00.000Z",
+      "status": "received",
+    },
   },
   "documents": {},
   "floorSpaceSquareMetres": null,
@@ -1249,11 +3027,46 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "details": "Small dog big character",
     "hasIssues": true,
   },
+  "hearing": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 1,
+    "hearingEndTime": "2022-03-31T03:00:00.000Z",
+    "hearingId": 1,
+    "hearingStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inquiry": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 6,
+    "inquiryEndTime": "2022-03-31T03:00:00.000Z",
+    "inquiryId": 1,
+    "inquiryStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inspector": "e8f89175-d02c-4a60-870e-dc954d5b530a",
   "isAppellantNamedOnApplication": false,
+  "isChildAppeal": false,
+  "isParentAppeal": false,
   "isS78Expedited": false,
+  "linkedAppeals": [],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "neighbouringSites": [],
   "numberOfResidencesNetChange": 5,
+  "otherAppeals": [],
   "ownershipCertificate": null,
+  "padsInspector": null,
   "planningApplicationReference": "48269/APP/2021/1482",
   "procedureType": "Written",
   "reasonForAppealAppellant": null,
@@ -1270,6 +3083,67 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "siteVisit": {
+    "siteVisitId": 1,
+    "visitDate": "2022-03-31T01:00:00.000Z",
+    "visitEndTime": "2022-03-31T03:00:00.000Z",
+    "visitStartTime": "2022-03-31T01:00:00.000Z",
+    "visitType": "Access required",
+  },
+  "stateList": [
+    {
+      "completed": false,
+      "key": "assign_case_officer",
+    },
+    {
+      "completed": false,
+      "key": "validation",
+    },
+    {
+      "completed": false,
+      "key": "ready_to_start",
+    },
+    {
+      "completed": false,
+      "key": "lpa_questionnaire",
+    },
+    {
+      "completed": false,
+      "key": "event",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_event",
+    },
+    {
+      "completed": false,
+      "key": "issue_determination",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_transfer",
+    },
+    {
+      "completed": false,
+      "key": "invalid",
+    },
+    {
+      "completed": false,
+      "key": "transferred",
+    },
+    {
+      "completed": false,
+      "key": "closed",
+    },
+    {
+      "completed": false,
+      "key": "withdrawn",
+    },
+    {
+      "completed": false,
+      "key": "complete",
+    },
+  ],
   "typeOfPlanningApplication": "householder-planning",
 }
 `;
@@ -1299,6 +3173,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
+  "appealStatus": "assign_case_officer",
   "appealType": "Householder",
   "appellant": {
     "email": "test@1367.com",
@@ -1317,10 +3192,29 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDate": "2022-03-18T00:00:00.000Z",
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "awaitingLinkedAppeal": false,
+  "caseOfficer": "a8973f33-4d2e-486b-87b0-d068343ad9eb",
+  "completedStateList": [],
+  "costs": {},
+  "costsDecision": {
+    "awaitingAppellantCostsDecision": false,
+    "awaitingLpaCostsDecision": false,
+  },
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
     "isChanged": false,
+  },
+  "documentationSummary": {
+    "appellantCase": {
+      "dueDate": "2099-07-14T00:00:00.000Z",
+      "receivedAt": "2024-03-25T23:59:59.999Z",
+      "status": "Incomplete",
+    },
+    "lpaQuestionnaire": {
+      "receivedAt": "2024-06-24T00:00:00.000Z",
+      "status": "received",
+    },
   },
   "documents": {},
   "floorSpaceSquareMetres": null,
@@ -1329,11 +3223,46 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "details": "Small dog big character",
     "hasIssues": true,
   },
+  "hearing": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 1,
+    "hearingEndTime": "2022-03-31T03:00:00.000Z",
+    "hearingId": 1,
+    "hearingStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inquiry": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 6,
+    "inquiryEndTime": "2022-03-31T03:00:00.000Z",
+    "inquiryId": 1,
+    "inquiryStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inspector": "e8f89175-d02c-4a60-870e-dc954d5b530a",
   "isAppellantNamedOnApplication": false,
+  "isChildAppeal": false,
+  "isParentAppeal": false,
   "isS78Expedited": false,
+  "linkedAppeals": [],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "neighbouringSites": [],
   "numberOfResidencesNetChange": 5,
+  "otherAppeals": [],
   "ownershipCertificate": null,
+  "padsInspector": null,
   "planningApplicationReference": "48269/APP/2021/1482",
   "procedureType": "Written",
   "reasonForAppealAppellant": null,
@@ -1350,6 +3279,67 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "siteVisit": {
+    "siteVisitId": 1,
+    "visitDate": "2022-03-31T01:00:00.000Z",
+    "visitEndTime": "2022-03-31T03:00:00.000Z",
+    "visitStartTime": "2022-03-31T01:00:00.000Z",
+    "visitType": "Access required",
+  },
+  "stateList": [
+    {
+      "completed": false,
+      "key": "assign_case_officer",
+    },
+    {
+      "completed": false,
+      "key": "validation",
+    },
+    {
+      "completed": false,
+      "key": "ready_to_start",
+    },
+    {
+      "completed": false,
+      "key": "lpa_questionnaire",
+    },
+    {
+      "completed": false,
+      "key": "event",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_event",
+    },
+    {
+      "completed": false,
+      "key": "issue_determination",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_transfer",
+    },
+    {
+      "completed": false,
+      "key": "invalid",
+    },
+    {
+      "completed": false,
+      "key": "transferred",
+    },
+    {
+      "completed": false,
+      "key": "closed",
+    },
+    {
+      "completed": false,
+      "key": "withdrawn",
+    },
+    {
+      "completed": false,
+      "key": "complete",
+    },
+  ],
   "typeOfPlanningApplication": "householder-planning",
   "validation": {
     "incompleteReasons": [
@@ -1398,6 +3388,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
+  "appealStatus": "assign_case_officer",
   "appealType": "Householder",
   "appellant": {
     "email": "test@1367.com",
@@ -1416,10 +3407,28 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDate": "2022-03-18T00:00:00.000Z",
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "awaitingLinkedAppeal": false,
+  "caseOfficer": "a8973f33-4d2e-486b-87b0-d068343ad9eb",
+  "completedStateList": [],
+  "costs": {},
+  "costsDecision": {
+    "awaitingAppellantCostsDecision": false,
+    "awaitingLpaCostsDecision": false,
+  },
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
     "isChanged": false,
+  },
+  "documentationSummary": {
+    "appellantCase": {
+      "receivedAt": "2024-03-25T23:59:59.999Z",
+      "status": "Invalid",
+    },
+    "lpaQuestionnaire": {
+      "receivedAt": "2024-06-24T00:00:00.000Z",
+      "status": "received",
+    },
   },
   "documents": {},
   "floorSpaceSquareMetres": null,
@@ -1428,11 +3437,46 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "details": "Small dog big character",
     "hasIssues": true,
   },
+  "hearing": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 1,
+    "hearingEndTime": "2022-03-31T03:00:00.000Z",
+    "hearingId": 1,
+    "hearingStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inquiry": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 6,
+    "inquiryEndTime": "2022-03-31T03:00:00.000Z",
+    "inquiryId": 1,
+    "inquiryStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inspector": "e8f89175-d02c-4a60-870e-dc954d5b530a",
   "isAppellantNamedOnApplication": false,
+  "isChildAppeal": false,
+  "isParentAppeal": false,
   "isS78Expedited": false,
+  "linkedAppeals": [],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "neighbouringSites": [],
   "numberOfResidencesNetChange": 5,
+  "otherAppeals": [],
   "ownershipCertificate": null,
+  "padsInspector": null,
   "planningApplicationReference": "48269/APP/2021/1482",
   "procedureType": "Written",
   "reasonForAppealAppellant": null,
@@ -1449,6 +3493,67 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "siteVisit": {
+    "siteVisitId": 1,
+    "visitDate": "2022-03-31T01:00:00.000Z",
+    "visitEndTime": "2022-03-31T03:00:00.000Z",
+    "visitStartTime": "2022-03-31T01:00:00.000Z",
+    "visitType": "Access required",
+  },
+  "stateList": [
+    {
+      "completed": false,
+      "key": "assign_case_officer",
+    },
+    {
+      "completed": false,
+      "key": "validation",
+    },
+    {
+      "completed": false,
+      "key": "ready_to_start",
+    },
+    {
+      "completed": false,
+      "key": "lpa_questionnaire",
+    },
+    {
+      "completed": false,
+      "key": "event",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_event",
+    },
+    {
+      "completed": false,
+      "key": "issue_determination",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_transfer",
+    },
+    {
+      "completed": false,
+      "key": "invalid",
+    },
+    {
+      "completed": false,
+      "key": "transferred",
+    },
+    {
+      "completed": false,
+      "key": "closed",
+    },
+    {
+      "completed": false,
+      "key": "withdrawn",
+    },
+    {
+      "completed": false,
+      "key": "complete",
+    },
+  ],
   "typeOfPlanningApplication": "householder-planning",
   "validation": {
     "invalidReasons": [
@@ -1489,6 +3594,14 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "anySignificantChanges_otherSignificantChanges": null,
   "appealId": 4,
   "appealReference": "1345264",
+  "appealRule6Parties": [
+    {
+      "appealId": 2,
+      "id": 1,
+      "proofEvidenceReceived": true,
+      "serviceUserId": 1,
+    },
+  ],
   "appealSite": {
     "addressId": 1,
     "addressLine1": "96 The Avenue",
@@ -1497,6 +3610,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
+  "appealStatus": "assign_case_officer",
   "appealType": "Lawful development certificate appeal",
   "appellant": {
     "email": "test@1367.com",
@@ -1520,10 +3634,83 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
   "applicationMadeUnderActSection": "existing-development",
+  "awaitingLinkedAppeal": false,
+  "caseOfficer": "a8973f33-4d2e-486b-87b0-d068343ad9eb",
+  "completedStateList": [],
+  "costs": {},
+  "costsDecision": {
+    "awaitingAppellantCostsDecision": false,
+    "awaitingLpaCostsDecision": false,
+  },
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
     "isChanged": false,
+  },
+  "documentationSummary": {
+    "appellantCase": {
+      "receivedAt": "2024-03-25T23:59:59.999Z",
+      "status": "Valid",
+    },
+    "appellantFinalComments": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "appellantProofOfEvidence": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "appellantStatement": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "ipComments": {
+      "counts": {},
+      "isRedacted": false,
+      "receivedAt": null,
+      "status": "not_received",
+    },
+    "lpaFinalComments": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "lpaProofOfEvidence": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "lpaQuestionnaire": {
+      "receivedAt": "2024-06-24T00:00:00.000Z",
+      "status": "received",
+    },
+    "lpaStatement": {
+      "isRedacted": false,
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "rule6PartyProofs": {
+      "1": {
+        "isRedacted": false,
+        "receivedAt": null,
+        "representationStatus": null,
+        "rule6PartyId": 1,
+        "status": "not_received",
+      },
+    },
+    "rule6PartyStatements": {
+      "1": {
+        "isRedacted": false,
+        "receivedAt": null,
+        "representationStatus": null,
+        "rule6PartyId": 1,
+        "status": "not_received",
+      },
+    },
   },
   "documents": {},
   "floorSpaceSquareMetres": null,
@@ -1532,11 +3719,46 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "details": "Small dog big character",
     "hasIssues": true,
   },
+  "hearing": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 1,
+    "hearingEndTime": "2022-03-31T03:00:00.000Z",
+    "hearingId": 1,
+    "hearingStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inquiry": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 6,
+    "inquiryEndTime": "2022-03-31T03:00:00.000Z",
+    "inquiryId": 1,
+    "inquiryStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inspector": "e8f89175-d02c-4a60-870e-dc954d5b530a",
   "isAppellantNamedOnApplication": false,
+  "isChildAppeal": false,
+  "isParentAppeal": false,
   "isS78Expedited": false,
+  "linkedAppeals": [],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "neighbouringSites": [],
   "numberOfResidencesNetChange": 5,
+  "otherAppeals": [],
   "ownershipCertificate": null,
+  "padsInspector": null,
   "planningApplicationReference": "48269/APP/2021/1482",
   "planningObligation": {},
   "procedureType": "Written",
@@ -1554,6 +3776,75 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "siteVisit": {
+    "siteVisitId": 1,
+    "visitDate": "2022-03-31T01:00:00.000Z",
+    "visitEndTime": "2022-03-31T03:00:00.000Z",
+    "visitStartTime": "2022-03-31T01:00:00.000Z",
+    "visitType": "Access required",
+  },
+  "stateList": [
+    {
+      "completed": false,
+      "key": "assign_case_officer",
+    },
+    {
+      "completed": false,
+      "key": "validation",
+    },
+    {
+      "completed": false,
+      "key": "ready_to_start",
+    },
+    {
+      "completed": false,
+      "key": "lpa_questionnaire",
+    },
+    {
+      "completed": false,
+      "key": "statements",
+    },
+    {
+      "completed": false,
+      "key": "final_comments",
+    },
+    {
+      "completed": false,
+      "key": "event",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_event",
+    },
+    {
+      "completed": false,
+      "key": "issue_determination",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_transfer",
+    },
+    {
+      "completed": false,
+      "key": "invalid",
+    },
+    {
+      "completed": false,
+      "key": "transferred",
+    },
+    {
+      "completed": false,
+      "key": "closed",
+    },
+    {
+      "completed": false,
+      "key": "withdrawn",
+    },
+    {
+      "completed": false,
+      "key": "complete",
+    },
+  ],
   "typeOfPlanningApplication": "lawful-development-certificate",
   "validation": {
     "outcome": "Valid",
@@ -1578,6 +3869,14 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "anySignificantChanges_otherSignificantChanges": null,
   "appealId": 3,
   "appealReference": "1345264",
+  "appealRule6Parties": [
+    {
+      "appealId": 2,
+      "id": 1,
+      "proofEvidenceReceived": true,
+      "serviceUserId": 1,
+    },
+  ],
   "appealSite": {
     "addressId": 1,
     "addressLine1": "96 The Avenue",
@@ -1586,6 +3885,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
+  "appealStatus": "assign_case_officer",
   "appealType": "Lawful development certificate appeal",
   "appellant": {
     "email": "test@1367.com",
@@ -1609,10 +3909,83 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
   "applicationMadeUnderActSection": "existing-development",
+  "awaitingLinkedAppeal": false,
+  "caseOfficer": "a8973f33-4d2e-486b-87b0-d068343ad9eb",
+  "completedStateList": [],
+  "costs": {},
+  "costsDecision": {
+    "awaitingAppellantCostsDecision": false,
+    "awaitingLpaCostsDecision": false,
+  },
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
     "isChanged": false,
+  },
+  "documentationSummary": {
+    "appellantCase": {
+      "receivedAt": "2024-03-25T23:59:59.999Z",
+      "status": "received",
+    },
+    "appellantFinalComments": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "appellantProofOfEvidence": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "appellantStatement": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "ipComments": {
+      "counts": {},
+      "isRedacted": false,
+      "receivedAt": null,
+      "status": "not_received",
+    },
+    "lpaFinalComments": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "lpaProofOfEvidence": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "lpaQuestionnaire": {
+      "receivedAt": "2024-06-24T00:00:00.000Z",
+      "status": "received",
+    },
+    "lpaStatement": {
+      "isRedacted": false,
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "rule6PartyProofs": {
+      "1": {
+        "isRedacted": false,
+        "receivedAt": null,
+        "representationStatus": null,
+        "rule6PartyId": 1,
+        "status": "not_received",
+      },
+    },
+    "rule6PartyStatements": {
+      "1": {
+        "isRedacted": false,
+        "receivedAt": null,
+        "representationStatus": null,
+        "rule6PartyId": 1,
+        "status": "not_received",
+      },
+    },
   },
   "documents": {},
   "floorSpaceSquareMetres": null,
@@ -1621,11 +3994,46 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "details": "Small dog big character",
     "hasIssues": true,
   },
+  "hearing": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 1,
+    "hearingEndTime": "2022-03-31T03:00:00.000Z",
+    "hearingId": 1,
+    "hearingStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inquiry": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 6,
+    "inquiryEndTime": "2022-03-31T03:00:00.000Z",
+    "inquiryId": 1,
+    "inquiryStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inspector": "e8f89175-d02c-4a60-870e-dc954d5b530a",
   "isAppellantNamedOnApplication": false,
+  "isChildAppeal": false,
+  "isParentAppeal": false,
   "isS78Expedited": false,
+  "linkedAppeals": [],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "neighbouringSites": [],
   "numberOfResidencesNetChange": 5,
+  "otherAppeals": [],
   "ownershipCertificate": null,
+  "padsInspector": null,
   "planningApplicationReference": "48269/APP/2021/1482",
   "planningObligation": {},
   "procedureType": "Written",
@@ -1643,6 +4051,75 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "siteVisit": {
+    "siteVisitId": 1,
+    "visitDate": "2022-03-31T01:00:00.000Z",
+    "visitEndTime": "2022-03-31T03:00:00.000Z",
+    "visitStartTime": "2022-03-31T01:00:00.000Z",
+    "visitType": "Access required",
+  },
+  "stateList": [
+    {
+      "completed": false,
+      "key": "assign_case_officer",
+    },
+    {
+      "completed": false,
+      "key": "validation",
+    },
+    {
+      "completed": false,
+      "key": "ready_to_start",
+    },
+    {
+      "completed": false,
+      "key": "lpa_questionnaire",
+    },
+    {
+      "completed": false,
+      "key": "statements",
+    },
+    {
+      "completed": false,
+      "key": "final_comments",
+    },
+    {
+      "completed": false,
+      "key": "event",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_event",
+    },
+    {
+      "completed": false,
+      "key": "issue_determination",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_transfer",
+    },
+    {
+      "completed": false,
+      "key": "invalid",
+    },
+    {
+      "completed": false,
+      "key": "transferred",
+    },
+    {
+      "completed": false,
+      "key": "closed",
+    },
+    {
+      "completed": false,
+      "key": "withdrawn",
+    },
+    {
+      "completed": false,
+      "key": "complete",
+    },
+  ],
   "typeOfPlanningApplication": "lawful-development-certificate",
 }
 `;
@@ -1664,6 +4141,14 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "anySignificantChanges_otherSignificantChanges": null,
   "appealId": 5,
   "appealReference": "1345264",
+  "appealRule6Parties": [
+    {
+      "appealId": 2,
+      "id": 1,
+      "proofEvidenceReceived": true,
+      "serviceUserId": 1,
+    },
+  ],
   "appealSite": {
     "addressId": 1,
     "addressLine1": "96 The Avenue",
@@ -1672,6 +4157,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
+  "appealStatus": "assign_case_officer",
   "appealType": "Lawful development certificate appeal",
   "appellant": {
     "email": "test@1367.com",
@@ -1695,10 +4181,84 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
   "applicationMadeUnderActSection": "existing-development",
+  "awaitingLinkedAppeal": false,
+  "caseOfficer": "a8973f33-4d2e-486b-87b0-d068343ad9eb",
+  "completedStateList": [],
+  "costs": {},
+  "costsDecision": {
+    "awaitingAppellantCostsDecision": false,
+    "awaitingLpaCostsDecision": false,
+  },
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
     "isChanged": false,
+  },
+  "documentationSummary": {
+    "appellantCase": {
+      "dueDate": "2099-07-14T00:00:00.000Z",
+      "receivedAt": "2024-03-25T23:59:59.999Z",
+      "status": "Incomplete",
+    },
+    "appellantFinalComments": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "appellantProofOfEvidence": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "appellantStatement": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "ipComments": {
+      "counts": {},
+      "isRedacted": false,
+      "receivedAt": null,
+      "status": "not_received",
+    },
+    "lpaFinalComments": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "lpaProofOfEvidence": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "lpaQuestionnaire": {
+      "receivedAt": "2024-06-24T00:00:00.000Z",
+      "status": "received",
+    },
+    "lpaStatement": {
+      "isRedacted": false,
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "rule6PartyProofs": {
+      "1": {
+        "isRedacted": false,
+        "receivedAt": null,
+        "representationStatus": null,
+        "rule6PartyId": 1,
+        "status": "not_received",
+      },
+    },
+    "rule6PartyStatements": {
+      "1": {
+        "isRedacted": false,
+        "receivedAt": null,
+        "representationStatus": null,
+        "rule6PartyId": 1,
+        "status": "not_received",
+      },
+    },
   },
   "documents": {},
   "floorSpaceSquareMetres": null,
@@ -1707,11 +4267,46 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "details": "Small dog big character",
     "hasIssues": true,
   },
+  "hearing": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 1,
+    "hearingEndTime": "2022-03-31T03:00:00.000Z",
+    "hearingId": 1,
+    "hearingStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inquiry": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 6,
+    "inquiryEndTime": "2022-03-31T03:00:00.000Z",
+    "inquiryId": 1,
+    "inquiryStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inspector": "e8f89175-d02c-4a60-870e-dc954d5b530a",
   "isAppellantNamedOnApplication": false,
+  "isChildAppeal": false,
+  "isParentAppeal": false,
   "isS78Expedited": false,
+  "linkedAppeals": [],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "neighbouringSites": [],
   "numberOfResidencesNetChange": 5,
+  "otherAppeals": [],
   "ownershipCertificate": null,
+  "padsInspector": null,
   "planningApplicationReference": "48269/APP/2021/1482",
   "planningObligation": {},
   "procedureType": "Written",
@@ -1729,6 +4324,75 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "siteVisit": {
+    "siteVisitId": 1,
+    "visitDate": "2022-03-31T01:00:00.000Z",
+    "visitEndTime": "2022-03-31T03:00:00.000Z",
+    "visitStartTime": "2022-03-31T01:00:00.000Z",
+    "visitType": "Access required",
+  },
+  "stateList": [
+    {
+      "completed": false,
+      "key": "assign_case_officer",
+    },
+    {
+      "completed": false,
+      "key": "validation",
+    },
+    {
+      "completed": false,
+      "key": "ready_to_start",
+    },
+    {
+      "completed": false,
+      "key": "lpa_questionnaire",
+    },
+    {
+      "completed": false,
+      "key": "statements",
+    },
+    {
+      "completed": false,
+      "key": "final_comments",
+    },
+    {
+      "completed": false,
+      "key": "event",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_event",
+    },
+    {
+      "completed": false,
+      "key": "issue_determination",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_transfer",
+    },
+    {
+      "completed": false,
+      "key": "invalid",
+    },
+    {
+      "completed": false,
+      "key": "transferred",
+    },
+    {
+      "completed": false,
+      "key": "closed",
+    },
+    {
+      "completed": false,
+      "key": "withdrawn",
+    },
+    {
+      "completed": false,
+      "key": "complete",
+    },
+  ],
   "typeOfPlanningApplication": "lawful-development-certificate",
   "validation": {
     "incompleteReasons": [
@@ -1769,6 +4433,14 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "anySignificantChanges_otherSignificantChanges": null,
   "appealId": 6,
   "appealReference": "1345264",
+  "appealRule6Parties": [
+    {
+      "appealId": 2,
+      "id": 1,
+      "proofEvidenceReceived": true,
+      "serviceUserId": 1,
+    },
+  ],
   "appealSite": {
     "addressId": 1,
     "addressLine1": "96 The Avenue",
@@ -1777,6 +4449,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
+  "appealStatus": "assign_case_officer",
   "appealType": "Lawful development certificate appeal",
   "appellant": {
     "email": "test@1367.com",
@@ -1800,10 +4473,83 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
   "applicationMadeUnderActSection": "existing-development",
+  "awaitingLinkedAppeal": false,
+  "caseOfficer": "a8973f33-4d2e-486b-87b0-d068343ad9eb",
+  "completedStateList": [],
+  "costs": {},
+  "costsDecision": {
+    "awaitingAppellantCostsDecision": false,
+    "awaitingLpaCostsDecision": false,
+  },
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
     "isChanged": false,
+  },
+  "documentationSummary": {
+    "appellantCase": {
+      "receivedAt": "2024-03-25T23:59:59.999Z",
+      "status": "Invalid",
+    },
+    "appellantFinalComments": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "appellantProofOfEvidence": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "appellantStatement": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "ipComments": {
+      "counts": {},
+      "isRedacted": false,
+      "receivedAt": null,
+      "status": "not_received",
+    },
+    "lpaFinalComments": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "lpaProofOfEvidence": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "lpaQuestionnaire": {
+      "receivedAt": "2024-06-24T00:00:00.000Z",
+      "status": "received",
+    },
+    "lpaStatement": {
+      "isRedacted": false,
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "rule6PartyProofs": {
+      "1": {
+        "isRedacted": false,
+        "receivedAt": null,
+        "representationStatus": null,
+        "rule6PartyId": 1,
+        "status": "not_received",
+      },
+    },
+    "rule6PartyStatements": {
+      "1": {
+        "isRedacted": false,
+        "receivedAt": null,
+        "representationStatus": null,
+        "rule6PartyId": 1,
+        "status": "not_received",
+      },
+    },
   },
   "documents": {},
   "floorSpaceSquareMetres": null,
@@ -1812,11 +4558,46 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "details": "Small dog big character",
     "hasIssues": true,
   },
+  "hearing": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 1,
+    "hearingEndTime": "2022-03-31T03:00:00.000Z",
+    "hearingId": 1,
+    "hearingStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inquiry": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 6,
+    "inquiryEndTime": "2022-03-31T03:00:00.000Z",
+    "inquiryId": 1,
+    "inquiryStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inspector": "e8f89175-d02c-4a60-870e-dc954d5b530a",
   "isAppellantNamedOnApplication": false,
+  "isChildAppeal": false,
+  "isParentAppeal": false,
   "isS78Expedited": false,
+  "linkedAppeals": [],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "neighbouringSites": [],
   "numberOfResidencesNetChange": 5,
+  "otherAppeals": [],
   "ownershipCertificate": null,
+  "padsInspector": null,
   "planningApplicationReference": "48269/APP/2021/1482",
   "planningObligation": {},
   "procedureType": "Written",
@@ -1834,6 +4615,75 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "siteVisit": {
+    "siteVisitId": 1,
+    "visitDate": "2022-03-31T01:00:00.000Z",
+    "visitEndTime": "2022-03-31T03:00:00.000Z",
+    "visitStartTime": "2022-03-31T01:00:00.000Z",
+    "visitType": "Access required",
+  },
+  "stateList": [
+    {
+      "completed": false,
+      "key": "assign_case_officer",
+    },
+    {
+      "completed": false,
+      "key": "validation",
+    },
+    {
+      "completed": false,
+      "key": "ready_to_start",
+    },
+    {
+      "completed": false,
+      "key": "lpa_questionnaire",
+    },
+    {
+      "completed": false,
+      "key": "statements",
+    },
+    {
+      "completed": false,
+      "key": "final_comments",
+    },
+    {
+      "completed": false,
+      "key": "event",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_event",
+    },
+    {
+      "completed": false,
+      "key": "issue_determination",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_transfer",
+    },
+    {
+      "completed": false,
+      "key": "invalid",
+    },
+    {
+      "completed": false,
+      "key": "transferred",
+    },
+    {
+      "completed": false,
+      "key": "closed",
+    },
+    {
+      "completed": false,
+      "key": "withdrawn",
+    },
+    {
+      "completed": false,
+      "key": "complete",
+    },
+  ],
   "typeOfPlanningApplication": "lawful-development-certificate",
   "validation": {
     "invalidReasons": [
@@ -1874,6 +4724,14 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "anySignificantChanges_otherSignificantChanges": null,
   "appealId": 4,
   "appealReference": "1345264",
+  "appealRule6Parties": [
+    {
+      "appealId": 2,
+      "id": 1,
+      "proofEvidenceReceived": true,
+      "serviceUserId": 1,
+    },
+  ],
   "appealSite": {
     "addressId": 1,
     "addressLine1": "96 The Avenue",
@@ -1882,6 +4740,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
+  "appealStatus": "assign_case_officer",
   "appealType": "Planning listed building and conservation area appeal",
   "appellant": {
     "email": "test@1367.com",
@@ -1904,12 +4763,85 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDate": "2022-03-18T00:00:00.000Z",
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "awaitingLinkedAppeal": false,
+  "caseOfficer": "a8973f33-4d2e-486b-87b0-d068343ad9eb",
+  "completedStateList": [],
+  "costs": {},
+  "costsDecision": {
+    "awaitingAppellantCostsDecision": false,
+    "awaitingLpaCostsDecision": false,
+  },
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
     "isChanged": false,
   },
   "developmentType": null,
+  "documentationSummary": {
+    "appellantCase": {
+      "receivedAt": "2024-03-25T23:59:59.999Z",
+      "status": "received",
+    },
+    "appellantFinalComments": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "appellantProofOfEvidence": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "appellantStatement": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "ipComments": {
+      "counts": {},
+      "isRedacted": false,
+      "receivedAt": null,
+      "status": "not_received",
+    },
+    "lpaFinalComments": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "lpaProofOfEvidence": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "lpaQuestionnaire": {
+      "receivedAt": "2024-06-24T00:00:00.000Z",
+      "status": "received",
+    },
+    "lpaStatement": {
+      "isRedacted": false,
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "rule6PartyProofs": {
+      "1": {
+        "isRedacted": false,
+        "receivedAt": null,
+        "representationStatus": null,
+        "rule6PartyId": 1,
+        "status": "not_received",
+      },
+    },
+    "rule6PartyStatements": {
+      "1": {
+        "isRedacted": false,
+        "receivedAt": null,
+        "representationStatus": null,
+        "rule6PartyId": 1,
+        "status": "not_received",
+      },
+    },
+  },
   "documents": {},
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
@@ -1917,11 +4849,46 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "details": "Small dog big character",
     "hasIssues": true,
   },
+  "hearing": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 1,
+    "hearingEndTime": "2022-03-31T03:00:00.000Z",
+    "hearingId": 1,
+    "hearingStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inquiry": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 6,
+    "inquiryEndTime": "2022-03-31T03:00:00.000Z",
+    "inquiryId": 1,
+    "inquiryStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inspector": "e8f89175-d02c-4a60-870e-dc954d5b530a",
   "isAppellantNamedOnApplication": false,
+  "isChildAppeal": false,
+  "isParentAppeal": false,
   "isS78Expedited": false,
+  "linkedAppeals": [],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "neighbouringSites": [],
   "numberOfResidencesNetChange": 5,
+  "otherAppeals": [],
   "ownershipCertificate": null,
+  "padsInspector": null,
   "planningApplicationReference": "48269/APP/2021/1482",
   "planningObligation": {},
   "procedureType": "Written",
@@ -1939,6 +4906,75 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "siteVisit": {
+    "siteVisitId": 1,
+    "visitDate": "2022-03-31T01:00:00.000Z",
+    "visitEndTime": "2022-03-31T03:00:00.000Z",
+    "visitStartTime": "2022-03-31T01:00:00.000Z",
+    "visitType": "Access required",
+  },
+  "stateList": [
+    {
+      "completed": false,
+      "key": "assign_case_officer",
+    },
+    {
+      "completed": false,
+      "key": "validation",
+    },
+    {
+      "completed": false,
+      "key": "ready_to_start",
+    },
+    {
+      "completed": false,
+      "key": "lpa_questionnaire",
+    },
+    {
+      "completed": false,
+      "key": "statements",
+    },
+    {
+      "completed": false,
+      "key": "final_comments",
+    },
+    {
+      "completed": false,
+      "key": "event",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_event",
+    },
+    {
+      "completed": false,
+      "key": "issue_determination",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_transfer",
+    },
+    {
+      "completed": false,
+      "key": "invalid",
+    },
+    {
+      "completed": false,
+      "key": "transferred",
+    },
+    {
+      "completed": false,
+      "key": "closed",
+    },
+    {
+      "completed": false,
+      "key": "withdrawn",
+    },
+    {
+      "completed": false,
+      "key": "complete",
+    },
+  ],
   "typeOfPlanningApplication": "full-appeal",
 }
 `;
@@ -1960,6 +4996,14 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "anySignificantChanges_otherSignificantChanges": null,
   "appealId": 3,
   "appealReference": "1345264",
+  "appealRule6Parties": [
+    {
+      "appealId": 2,
+      "id": 1,
+      "proofEvidenceReceived": true,
+      "serviceUserId": 1,
+    },
+  ],
   "appealSite": {
     "addressId": 1,
     "addressLine1": "96 The Avenue",
@@ -1968,6 +5012,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
+  "appealStatus": "assign_case_officer",
   "appealType": "Planning listed building and conservation area appeal",
   "appellant": {
     "email": "test@1367.com",
@@ -1990,12 +5035,85 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDate": "2022-03-18T00:00:00.000Z",
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "awaitingLinkedAppeal": false,
+  "caseOfficer": "a8973f33-4d2e-486b-87b0-d068343ad9eb",
+  "completedStateList": [],
+  "costs": {},
+  "costsDecision": {
+    "awaitingAppellantCostsDecision": false,
+    "awaitingLpaCostsDecision": false,
+  },
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
     "isChanged": false,
   },
   "developmentType": null,
+  "documentationSummary": {
+    "appellantCase": {
+      "receivedAt": "2024-03-25T23:59:59.999Z",
+      "status": "received",
+    },
+    "appellantFinalComments": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "appellantProofOfEvidence": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "appellantStatement": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "ipComments": {
+      "counts": {},
+      "isRedacted": false,
+      "receivedAt": null,
+      "status": "not_received",
+    },
+    "lpaFinalComments": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "lpaProofOfEvidence": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "lpaQuestionnaire": {
+      "receivedAt": "2024-06-24T00:00:00.000Z",
+      "status": "received",
+    },
+    "lpaStatement": {
+      "isRedacted": false,
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "rule6PartyProofs": {
+      "1": {
+        "isRedacted": false,
+        "receivedAt": null,
+        "representationStatus": null,
+        "rule6PartyId": 1,
+        "status": "not_received",
+      },
+    },
+    "rule6PartyStatements": {
+      "1": {
+        "isRedacted": false,
+        "receivedAt": null,
+        "representationStatus": null,
+        "rule6PartyId": 1,
+        "status": "not_received",
+      },
+    },
+  },
   "documents": {},
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
@@ -2003,11 +5121,46 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "details": "Small dog big character",
     "hasIssues": true,
   },
+  "hearing": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 1,
+    "hearingEndTime": "2022-03-31T03:00:00.000Z",
+    "hearingId": 1,
+    "hearingStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inquiry": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 6,
+    "inquiryEndTime": "2022-03-31T03:00:00.000Z",
+    "inquiryId": 1,
+    "inquiryStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inspector": "e8f89175-d02c-4a60-870e-dc954d5b530a",
   "isAppellantNamedOnApplication": false,
+  "isChildAppeal": false,
+  "isParentAppeal": false,
   "isS78Expedited": false,
+  "linkedAppeals": [],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "neighbouringSites": [],
   "numberOfResidencesNetChange": 5,
+  "otherAppeals": [],
   "ownershipCertificate": null,
+  "padsInspector": null,
   "planningApplicationReference": "48269/APP/2021/1482",
   "planningObligation": {},
   "procedureType": "Written",
@@ -2025,6 +5178,75 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "siteVisit": {
+    "siteVisitId": 1,
+    "visitDate": "2022-03-31T01:00:00.000Z",
+    "visitEndTime": "2022-03-31T03:00:00.000Z",
+    "visitStartTime": "2022-03-31T01:00:00.000Z",
+    "visitType": "Access required",
+  },
+  "stateList": [
+    {
+      "completed": false,
+      "key": "assign_case_officer",
+    },
+    {
+      "completed": false,
+      "key": "validation",
+    },
+    {
+      "completed": false,
+      "key": "ready_to_start",
+    },
+    {
+      "completed": false,
+      "key": "lpa_questionnaire",
+    },
+    {
+      "completed": false,
+      "key": "statements",
+    },
+    {
+      "completed": false,
+      "key": "final_comments",
+    },
+    {
+      "completed": false,
+      "key": "event",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_event",
+    },
+    {
+      "completed": false,
+      "key": "issue_determination",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_transfer",
+    },
+    {
+      "completed": false,
+      "key": "invalid",
+    },
+    {
+      "completed": false,
+      "key": "transferred",
+    },
+    {
+      "completed": false,
+      "key": "closed",
+    },
+    {
+      "completed": false,
+      "key": "withdrawn",
+    },
+    {
+      "completed": false,
+      "key": "complete",
+    },
+  ],
   "typeOfPlanningApplication": "full-appeal",
 }
 `;
@@ -2046,6 +5268,14 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "anySignificantChanges_otherSignificantChanges": null,
   "appealId": 5,
   "appealReference": "1345264",
+  "appealRule6Parties": [
+    {
+      "appealId": 2,
+      "id": 1,
+      "proofEvidenceReceived": true,
+      "serviceUserId": 1,
+    },
+  ],
   "appealSite": {
     "addressId": 1,
     "addressLine1": "96 The Avenue",
@@ -2054,6 +5284,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
+  "appealStatus": "assign_case_officer",
   "appealType": "Planning listed building and conservation area appeal",
   "appellant": {
     "email": "test@1367.com",
@@ -2076,12 +5307,86 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDate": "2022-03-18T00:00:00.000Z",
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "awaitingLinkedAppeal": false,
+  "caseOfficer": "a8973f33-4d2e-486b-87b0-d068343ad9eb",
+  "completedStateList": [],
+  "costs": {},
+  "costsDecision": {
+    "awaitingAppellantCostsDecision": false,
+    "awaitingLpaCostsDecision": false,
+  },
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
     "isChanged": false,
   },
   "developmentType": null,
+  "documentationSummary": {
+    "appellantCase": {
+      "dueDate": "2099-07-14T00:00:00.000Z",
+      "receivedAt": "2024-03-25T23:59:59.999Z",
+      "status": "Incomplete",
+    },
+    "appellantFinalComments": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "appellantProofOfEvidence": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "appellantStatement": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "ipComments": {
+      "counts": {},
+      "isRedacted": false,
+      "receivedAt": null,
+      "status": "not_received",
+    },
+    "lpaFinalComments": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "lpaProofOfEvidence": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "lpaQuestionnaire": {
+      "receivedAt": "2024-06-24T00:00:00.000Z",
+      "status": "received",
+    },
+    "lpaStatement": {
+      "isRedacted": false,
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "rule6PartyProofs": {
+      "1": {
+        "isRedacted": false,
+        "receivedAt": null,
+        "representationStatus": null,
+        "rule6PartyId": 1,
+        "status": "not_received",
+      },
+    },
+    "rule6PartyStatements": {
+      "1": {
+        "isRedacted": false,
+        "receivedAt": null,
+        "representationStatus": null,
+        "rule6PartyId": 1,
+        "status": "not_received",
+      },
+    },
+  },
   "documents": {},
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
@@ -2089,11 +5394,46 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "details": "Small dog big character",
     "hasIssues": true,
   },
+  "hearing": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 1,
+    "hearingEndTime": "2022-03-31T03:00:00.000Z",
+    "hearingId": 1,
+    "hearingStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inquiry": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 6,
+    "inquiryEndTime": "2022-03-31T03:00:00.000Z",
+    "inquiryId": 1,
+    "inquiryStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inspector": "e8f89175-d02c-4a60-870e-dc954d5b530a",
   "isAppellantNamedOnApplication": false,
+  "isChildAppeal": false,
+  "isParentAppeal": false,
   "isS78Expedited": false,
+  "linkedAppeals": [],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "neighbouringSites": [],
   "numberOfResidencesNetChange": 5,
+  "otherAppeals": [],
   "ownershipCertificate": null,
+  "padsInspector": null,
   "planningApplicationReference": "48269/APP/2021/1482",
   "planningObligation": {},
   "procedureType": "Written",
@@ -2111,6 +5451,75 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "siteVisit": {
+    "siteVisitId": 1,
+    "visitDate": "2022-03-31T01:00:00.000Z",
+    "visitEndTime": "2022-03-31T03:00:00.000Z",
+    "visitStartTime": "2022-03-31T01:00:00.000Z",
+    "visitType": "Access required",
+  },
+  "stateList": [
+    {
+      "completed": false,
+      "key": "assign_case_officer",
+    },
+    {
+      "completed": false,
+      "key": "validation",
+    },
+    {
+      "completed": false,
+      "key": "ready_to_start",
+    },
+    {
+      "completed": false,
+      "key": "lpa_questionnaire",
+    },
+    {
+      "completed": false,
+      "key": "statements",
+    },
+    {
+      "completed": false,
+      "key": "final_comments",
+    },
+    {
+      "completed": false,
+      "key": "event",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_event",
+    },
+    {
+      "completed": false,
+      "key": "issue_determination",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_transfer",
+    },
+    {
+      "completed": false,
+      "key": "invalid",
+    },
+    {
+      "completed": false,
+      "key": "transferred",
+    },
+    {
+      "completed": false,
+      "key": "closed",
+    },
+    {
+      "completed": false,
+      "key": "withdrawn",
+    },
+    {
+      "completed": false,
+      "key": "complete",
+    },
+  ],
   "typeOfPlanningApplication": "full-appeal",
   "validation": {
     "incompleteReasons": [
@@ -2151,6 +5560,14 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "anySignificantChanges_otherSignificantChanges": null,
   "appealId": 6,
   "appealReference": "1345264",
+  "appealRule6Parties": [
+    {
+      "appealId": 2,
+      "id": 1,
+      "proofEvidenceReceived": true,
+      "serviceUserId": 1,
+    },
+  ],
   "appealSite": {
     "addressId": 1,
     "addressLine1": "96 The Avenue",
@@ -2159,6 +5576,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "postCode": "MD21 5XY",
     "town": "Maidstone",
   },
+  "appealStatus": "assign_case_officer",
   "appealType": "Planning listed building and conservation area appeal",
   "appellant": {
     "email": "test@1367.com",
@@ -2181,12 +5599,85 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
   "applicationDate": "2022-03-18T00:00:00.000Z",
   "applicationDecision": "refused",
   "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "awaitingLinkedAppeal": false,
+  "caseOfficer": "a8973f33-4d2e-486b-87b0-d068343ad9eb",
+  "completedStateList": [],
+  "costs": {},
+  "costsDecision": {
+    "awaitingAppellantCostsDecision": false,
+    "awaitingLpaCostsDecision": false,
+  },
   "createdAt": "2024-03-25T23:59:59.999Z",
   "developmentDescription": {
     "details": "A test description",
     "isChanged": false,
   },
   "developmentType": null,
+  "documentationSummary": {
+    "appellantCase": {
+      "receivedAt": "2024-03-25T23:59:59.999Z",
+      "status": "Invalid",
+    },
+    "appellantFinalComments": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "appellantProofOfEvidence": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "appellantStatement": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "ipComments": {
+      "counts": {},
+      "isRedacted": false,
+      "receivedAt": null,
+      "status": "not_received",
+    },
+    "lpaFinalComments": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "lpaProofOfEvidence": {
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "lpaQuestionnaire": {
+      "receivedAt": "2024-06-24T00:00:00.000Z",
+      "status": "received",
+    },
+    "lpaStatement": {
+      "isRedacted": false,
+      "receivedAt": null,
+      "representationStatus": null,
+      "status": "not_received",
+    },
+    "rule6PartyProofs": {
+      "1": {
+        "isRedacted": false,
+        "receivedAt": null,
+        "representationStatus": null,
+        "rule6PartyId": 1,
+        "status": "not_received",
+      },
+    },
+    "rule6PartyStatements": {
+      "1": {
+        "isRedacted": false,
+        "receivedAt": null,
+        "representationStatus": null,
+        "rule6PartyId": 1,
+        "status": "not_received",
+      },
+    },
+  },
   "documents": {},
   "floorSpaceSquareMetres": null,
   "hasAdvertisedAppeal": true,
@@ -2194,11 +5685,46 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "details": "Small dog big character",
     "hasIssues": true,
   },
+  "hearing": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 1,
+    "hearingEndTime": "2022-03-31T03:00:00.000Z",
+    "hearingId": 1,
+    "hearingStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inquiry": {
+    "address": {
+      "addressLine1": "96 The Avenue",
+      "addressLine2": "Leftfield",
+      "county": "Kent",
+      "postcode": "MD21 5XY",
+      "town": "Maidstone",
+    },
+    "addressId": 1,
+    "estimatedDays": 6,
+    "inquiryEndTime": "2022-03-31T03:00:00.000Z",
+    "inquiryId": 1,
+    "inquiryStartTime": "2022-03-31T01:00:00.000Z",
+  },
+  "inspector": "e8f89175-d02c-4a60-870e-dc954d5b530a",
   "isAppellantNamedOnApplication": false,
+  "isChildAppeal": false,
+  "isParentAppeal": false,
   "isS78Expedited": false,
+  "linkedAppeals": [],
   "localPlanningDepartment": "Maidstone Borough Council",
+  "neighbouringSites": [],
   "numberOfResidencesNetChange": 5,
+  "otherAppeals": [],
   "ownershipCertificate": null,
+  "padsInspector": null,
   "planningApplicationReference": "48269/APP/2021/1482",
   "planningObligation": {},
   "procedureType": "Written",
@@ -2216,6 +5742,75 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "siteVisit": {
+    "siteVisitId": 1,
+    "visitDate": "2022-03-31T01:00:00.000Z",
+    "visitEndTime": "2022-03-31T03:00:00.000Z",
+    "visitStartTime": "2022-03-31T01:00:00.000Z",
+    "visitType": "Access required",
+  },
+  "stateList": [
+    {
+      "completed": false,
+      "key": "assign_case_officer",
+    },
+    {
+      "completed": false,
+      "key": "validation",
+    },
+    {
+      "completed": false,
+      "key": "ready_to_start",
+    },
+    {
+      "completed": false,
+      "key": "lpa_questionnaire",
+    },
+    {
+      "completed": false,
+      "key": "statements",
+    },
+    {
+      "completed": false,
+      "key": "final_comments",
+    },
+    {
+      "completed": false,
+      "key": "event",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_event",
+    },
+    {
+      "completed": false,
+      "key": "issue_determination",
+    },
+    {
+      "completed": false,
+      "key": "awaiting_transfer",
+    },
+    {
+      "completed": false,
+      "key": "invalid",
+    },
+    {
+      "completed": false,
+      "key": "transferred",
+    },
+    {
+      "completed": false,
+      "key": "closed",
+    },
+    {
+      "completed": false,
+      "key": "withdrawn",
+    },
+    {
+      "completed": false,
+      "key": "complete",
+    },
+  ],
   "typeOfPlanningApplication": "full-appeal",
   "validation": {
     "invalidReasons": [

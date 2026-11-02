@@ -16,7 +16,7 @@ const formatHearing = (appeal) => {
 			estimatedDays: hearing.estimatedDays ? Number(hearing.estimatedDays) : null,
 			hearingId: hearing.id,
 			addressId: hearing.addressId,
-			address: hearing.address
+			address: hearing.address || null
 		};
 	}
 };

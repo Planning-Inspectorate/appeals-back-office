@@ -44,12 +44,12 @@ We will contact you if we make any changes to the hearing.
 
 {% if appeal_procedure == 'written' -%}
 {% if lpa_statement_exists and is_lpa -%}
-You need to [submit a new statement]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}).
+You need to [submit a new statement]({{front_office_url}}/{{fo_dashboard_stub}}/{{appeal_reference_number}}).
 
 {% endif -%}
 
 We will send you another email when:
-• you can [submit your final comments]({{front_office_url}}/manage-appeals/{{appeal_reference_number}})
+• you can [submit your final comments]({{front_office_url}}/{{fo_dashboard_stub}}/{{appeal_reference_number}})
 • we set up the site visit
 
 {% endif -%}
@@ -58,19 +58,19 @@ We will send you another email when:
 You need to:
 
 {% if lpa_statement_exists and is_lpa -%}
-• You need to [submit a new statement]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}).
+• You need to [submit a new statement]({{front_office_url}}/{{fo_dashboard_stub}}/{{appeal_reference_number}}).
 {% endif -%}
 • send the contact details of your spokesperson and any other participants to {{team_email_address}} by {{week_before_conference_date}}
-• [submit proof of evidence and witnesses]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}) by {{proof_of_evidence_due_date}}
+• [submit proof of evidence and witnesses]({{front_office_url}}/{{fo_dashboard_stub}}/{{appeal_reference_number}}) by {{proof_of_evidence_due_date}}
 • attend the inquiry on {{inquiry_date}}
 
 {% endif -%}
 {% if appeal_procedure == 'inquiry' and existing_appeal_procedure == 'hearing'-%}
 {% if lpa_statement_exists and is_lpa -%}
-You need to [submit a new statement]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}).
+You need to [submit a new statement]({{front_office_url}}/{{fo_dashboard_stub}}/{{appeal_reference_number}}).
 
 {% endif -%}
-We will send you another email when you can [submit your proof of evidence and witnesses]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}).
+We will send you another email when you can [submit your proof of evidence and witnesses]({{front_office_url}}/{{fo_dashboard_stub}}/{{appeal_reference_number}}).
 
 {% endif -%}
 {% endif -%}
@@ -78,7 +78,7 @@ We will send you another email when you can [submit your proof of evidence and w
 {% if appeal_procedure == 'hearing' and is_lpa and lpa_statement_exists -%}
 # What happens next
 
-You need to [submit a new statement]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}).
+You need to [submit a new statement]({{front_office_url}}/{{fo_dashboard_stub}}/{{appeal_reference_number}}).
 
 {% endif -%}
 

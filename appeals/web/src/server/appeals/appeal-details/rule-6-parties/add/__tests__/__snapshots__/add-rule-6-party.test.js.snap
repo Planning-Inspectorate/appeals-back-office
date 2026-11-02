@@ -21,6 +21,8 @@ exports[`add rule 6 party GET /rule-6-parties/add/check-details should match the
                             </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
                             </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/create-a-case">Create a case</a>
+                            </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
                             </li>
                         </ul>
@@ -107,6 +109,8 @@ exports[`add rule 6 party GET /rule-6-parties/add/email should match the snapsho
                             </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
                             </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/create-a-case">Create a case</a>
+                            </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
                             </li>
                         </ul>
@@ -184,6 +188,8 @@ exports[`add rule 6 party GET /rule-6-parties/add/name should match the snapshot
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                             </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/create-a-case">Create a case</a>
                             </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
                             </li>

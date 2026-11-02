@@ -203,7 +203,7 @@ router.patch(
 		#swagger.responses[404] = {}
 	 */
 	patchDocumentsValidator,
-	checkAppealExistsById,
+	checkAppealExistsByIdAndAddPartialToRequest(['address', 'agent', 'appellant', 'lpa']),
 	asyncHandler(controller.updateDocuments)
 );
 

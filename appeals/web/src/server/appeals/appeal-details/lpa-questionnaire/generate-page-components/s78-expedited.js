@@ -2,11 +2,12 @@ import { isDefined } from '#lib/ts-utilities.js';
 
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} Appeal
+ * @typedef {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} LPAQuestionnaireResponse
  */
 
 /**
  *
- * @param {Appeal} appealDetails
+ * @param {Appeal|LPAQuestionnaireResponse} appealDetails
  * @param {{lpaq: MappedInstructions}} mappedLPAQData
  * @returns {PageComponent[]}
  */

@@ -1,18 +1,14 @@
 import appealRepository from '#repositories/appeal.repository.js';
 
 /**
- *
- * @param {Number} appealId
  * @param {Boolean} eiaScreeningRequired
+ * @param {Number[]} appealIds
  *
- * @returns {Promise<Boolean | null>}
  */
-
-export const updateEiaScreeningRequirement = async (appealId, eiaScreeningRequired) => {
-	const result = await appealRepository.setAppealEiaScreeningRequired(
-		appealId,
+export const updateEiaScreeningRequirement = async (eiaScreeningRequired, appealIds) => {
+	const result = await appealRepository.setMultiAppealEiaScreeningRequired(
+		appealIds,
 		eiaScreeningRequired
 	);
-
-	return result?.eiaScreeningRequired || null;
+	return result;
 };

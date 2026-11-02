@@ -59,7 +59,7 @@ export function changeEiaRequiresEnvironmentalStatementPage(appealData, existing
 
 /**
  * @param {Appeal} appealData
- * @param {string|null} existingValue
+ * @param {string|null|undefined} existingValue
  * @param {string|undefined} [sessionRadioValue]
  * @param {string|undefined} [sessionDetailsValue]
  * @returns {PageContent}
@@ -97,7 +97,7 @@ export function changeEiaSensitiveAreaDetailsPage(
 
 /**
  * @param {Appeal} appealData
- * @param {string|null} existingValue
+ * @param {string|null|undefined} existingValue
  * @param {string|undefined} [sessionRadioValue]
  * @param {string|undefined} [sessionDetailsValue]
  * @returns {PageContent}

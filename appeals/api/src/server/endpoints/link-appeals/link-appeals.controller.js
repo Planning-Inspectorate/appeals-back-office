@@ -15,7 +15,7 @@ import { isChildAppeal, isLinkedAppeal, isParentAppeal } from '#utils/is-linked-
 import { getChildAppeals, getLeadAppeal } from '#utils/link-appeals.js';
 import { formatHorizonGetCaseData } from '#utils/mapping/map-horizon.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { updatePersonalList } from '#utils/update-personal-list.js';
+import { setPersonalList } from '#utils/update-personal-list.js';
 import { logger } from '@azure/identity';
 import {
 	AUDIT_TRAIL_APPEAL_LINK_ADDED,
@@ -112,6 +112,7 @@ export const linkAppeal = async (req, res) => {
 	const result = await appealRepository.linkAppeal(relationship);
 
 	if (result) {
+		// TODO: consider duplicating events which have been set up as current logic for events copies updates onto child appeals
 		await duplicateFiles(childAppeal, parentAppeal, APPEAL_CASE_STAGE.COSTS);
 		const azureAdUserId = req.get('azureAdUserId') || '';
 		await setAssignedTeamId(childAppeal.id, parentAppeal.assignedTeamId || null, azureAdUserId);
@@ -162,9 +163,9 @@ export const linkAppeal = async (req, res) => {
 	const lpaEmail = currentAppeal.lpa?.email || '';
 
 	await Promise.all([
-		await updatePersonalList(parentAppeal.id),
+		await setPersonalList({ appealId: parentAppeal.id }),
 
-		await updatePersonalList(childAppeal.id),
+		await setPersonalList({ appealId: childAppeal.id }),
 
 		notifySend({
 			templateName: 'link-appeal',
@@ -513,12 +514,13 @@ export const updateLinkedAppeals = async (req, res) => {
 					// @ts-ignore
 					representationsToBroadcast = results[0].value;
 				}
-				await Promise.allSettled([
-					// @ts-ignore
-					unlinkChildAppeal(appealToUnlink),
-					// @ts-ignore
-					updatePersonalList(appealToUnlink.id)
-				]);
+
+				// unlinkChildAppeal needs to happen before setPersonalList
+				// so the appeal relationship is removed before the personal list is updated
+				// the personal list logic checks for linked appeals and has different logic for them
+				// (including controlling the tags)
+				await unlinkChildAppeal(appealToUnlink.id);
+				await setPersonalList({ appealId: appealToUnlink.id });
 
 				if (currentLead?.id && appealToUnlink?.reference) {
 					const unlinkDetails = stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_UNLINKED, [
@@ -541,7 +543,7 @@ export const updateLinkedAppeals = async (req, res) => {
 		}
 
 		// Refresh the personal list for the lead
-		await updatePersonalList(appealToReplaceLead?.id || currentLead?.id);
+		await setPersonalList({ appealId: appealToReplaceLead?.id || currentLead?.id });
 
 		if (currentLead?.id && appealToReplaceLead?.reference) {
 			await Promise.allSettled(

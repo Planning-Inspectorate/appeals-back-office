@@ -24,13 +24,14 @@
 		"lint:js": "npx eslint .",
 		"lint:js:fix": "npx eslint . --fix",
 		"prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\"",
-		"tscheck": "turbo run prisma-generate --concurrency=1 && turbo run tscheck --parallel",
-		"dev": "turbo run dev --filter=./appeals/* --no-cache --parallel --continue",
+		"tscheck": "turbo run prisma-generate --concurrency=1 && turbo run tscheck",
+		"dev": "turbo run dev --filter=./appeals/* --continue",
 		"test": "dotenv turbo run test -- --concurrency=2",
 		"test:cov": "dotenv turbo run test:cov -- --concurrency=2",
 		"web": "npm run dev --workspace=@pins/appeals.web",
 		"api": "npm run dev --workspace=@pins/appeals.api",
 		"pdf-service": "npm run start:dev --workspace=@pins/pdf-service-api",
+		"pdf-service:dev": "docker compose -f appeals/pdf-service-api/docker-compose.dev.yaml up --build",
 		"c4": "docker pull structurizr/lite && docker run -it --rm -p 8082:8080 -v $PWD:/usr/local/structurizr structurizr/lite"
 	},
 	"dependencies": {
@@ -38,10 +39,10 @@
 		"@planning-inspectorate/data-model": "^2.49.0",
 		"cypress": "15.3.0",
 		"got": "^12.5.2",
-		"joi": "^17.7.0",
+		"joi": "^17.13.8",
 		"node-cache": "^5.1.2",
 		"nodemon": "3.0.3",
-		"turbo": "1.2.14"
+		"turbo": "2.9.14"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "20.4.2",
@@ -50,7 +51,7 @@
 		"@types/escape-html": "^1.0.4",
 		"@types/prettier": "^3.0.0",
 		"@types/stream-json": "^1.7.8",
-		"commitizen": "^4.3.1",
+		"commitizen": "^4.3.2",
 		"cz-conventional-changelog": "^3.3.0",
 		"dotenv-cli": "^8.0.0",
 		"eslint": "^10.9.1",
@@ -59,7 +60,7 @@
 		"globals": "^17.12.0",
 		"husky": "^8.0.0",
 		"lint-staged": "^12.4.1",
-		"lodash": "^4.17.23",
+		"lodash": "^4.18.1",
 		"prettier": "^3.8.1",
 		"prettier-plugin-organize-imports": "^4.3.0",
 		"prettier-plugin-prisma": "^5.0.0",

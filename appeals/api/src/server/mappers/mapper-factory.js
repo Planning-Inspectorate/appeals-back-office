@@ -236,18 +236,28 @@ function createDataLayout(caseMap, mappingRequest) {
 	switch (context) {
 		case contextEnum.appellantCase:
 			return {
+				...appealSummary,
+				...team,
+				...appealDetails,
 				appellantCaseId: appeal.appellantCase?.id,
+				...appellantCase,
+				...appealRelationships,
 				...otherAppellants,
 				...appealGrounds,
-				...appealSummary,
-				...appellantCase,
 				transferStatus: appealTransferStatus,
 				...createFoldersLayout(folders, contextEnum.appellantCase)
 			};
 		case contextEnum.lpaQuestionnaire:
 			return {
-				lpaQuestionnaireId: appeal.lpaQuestionnaire?.id,
 				...appealSummary,
+				...team,
+				...appealDetails,
+				appellantCaseId: appeal.appellantCase?.id,
+				...appellantCase,
+				...appealRelationships,
+				...otherAppellants,
+				...appealGrounds,
+				lpaQuestionnaireId: appeal.lpaQuestionnaire?.id,
 				...lpaQuestionnaire,
 				transferStatus: appealTransferStatus,
 				...createFoldersLayout(folders, contextEnum.lpaQuestionnaire)
@@ -349,9 +359,15 @@ function createFoldersLayout(folders, context) {
 			const appellantCaseFolders = folders.filter((f) =>
 				f.path.startsWith(APPEAL_CASE_STAGE.APPELLANT_CASE)
 			);
-
 			return {
-				documents: processFolders(appellantCaseFolders)
+				documents: processFolders(appellantCaseFolders),
+				costs: {
+					appellantApplicationFolder: folders.find(
+						(f) =>
+							f.path ===
+							`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION}`
+					)
+				}
 			};
 		}
 		case contextEnum.lpaQuestionnaire: {

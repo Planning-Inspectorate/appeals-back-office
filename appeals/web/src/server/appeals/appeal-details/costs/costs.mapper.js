@@ -105,13 +105,13 @@ export function inviteResponsesPage(backLinkUrl, selectedInviteResponses) {
  * @param {string} backLinkUrl
  * @param {import('@pins/appeals.api').Appeals.DocumentVersionInfo} documentVersion
  * @param {string} [inviteResponses]
- * @param {{renderedHtml: string}} notifyPreview
+ * @param { {appellant: string, lpa: string} } emailPreviews
  * * @returns {PageContent}
  */
 export function shareDocumentCheckAndConfirmPage(
 	backLinkUrl,
 	documentVersion,
-	notifyPreview,
+	emailPreviews,
 	inviteResponses
 ) {
 	/** @type {PageContent} */
@@ -155,13 +155,24 @@ export function shareDocumentCheckAndConfirmPage(
 		});
 	}
 
-	pageContent.pageComponents?.push({
-		type: 'details',
-		parameters: {
-			summaryText: 'Preview email to LPA and appellant',
-			html: notifyPreview.renderedHtml
-		}
-	});
+	if (emailPreviews) {
+		pageContent.pageComponents?.push(
+			{
+				type: 'details',
+				parameters: {
+					summaryText: 'Preview email to appellant',
+					html: emailPreviews.appellant
+				}
+			},
+			{
+				type: 'details',
+				parameters: {
+					summaryText: 'Preview email to LPA',
+					html: emailPreviews.lpa
+				}
+			}
+		);
+	}
 
 	return pageContent;
 }

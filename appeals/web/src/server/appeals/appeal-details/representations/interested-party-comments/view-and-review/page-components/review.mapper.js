@@ -1,6 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { getErrorByFieldname } from '#lib/error-handlers/change-screen-error-handlers.js';
 import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
+import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { generateCommentSummaryList } from './common.js';
 
@@ -92,6 +93,6 @@ export function reviewInterestedPartyCommentPage(appealDetails, comment, session
 			commentValidityRadioButtons
 		]
 	};
-
+	preRenderPageComponents(pageContent.pageComponents);
 	return pageContent;
 }

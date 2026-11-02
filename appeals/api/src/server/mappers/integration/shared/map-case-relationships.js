@@ -4,21 +4,30 @@
 
 /**
  * @param {MappingRequest} data
- * @returns
  */
 export const mapCaseRelationships = (data) => {
 	const { appeal } = data;
+
+	if (
+		!('linkedAppeals' in appeal) ||
+		!('relatedAppeals' in appeal) ||
+		!appeal.linkedAppeals ||
+		!appeal.relatedAppeals
+	) {
+		return {};
+	}
+
 	const { linkedAppeals, relatedAppeals } = appeal;
 
 	let linkedCaseStatus = null;
 	let leadCaseReference = null;
-	if (linkedAppeals && linkedAppeals.length) {
-		const lead = linkedAppeals.find((_) => _.parentId === appeal.id);
+	if (linkedAppeals.length) {
+		const lead = linkedAppeals.find((relation) => relation.parentId === appeal.id);
 		if (lead) {
 			linkedCaseStatus = 'lead';
 			leadCaseReference = appeal.reference;
 		} else {
-			const child = linkedAppeals.find((_) => _.childId === appeal.id);
+			const child = linkedAppeals.find((relation) => relation.childId === appeal.id);
 			if (child) {
 				linkedCaseStatus = 'child';
 				leadCaseReference = child.parentRef;

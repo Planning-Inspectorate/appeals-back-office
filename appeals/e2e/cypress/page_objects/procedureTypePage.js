@@ -129,4 +129,25 @@ export class ProcedureTypePage extends CaseDetailsPage {
 			this.procedureTypeMappings.inquiry.element().should('not.be.checked');
 		}
 	}
+
+	/**
+	 * Verifies that a specific procedure type option is visible on page without checking total count
+	 * @param {string} procedureType - Name of procedure type (written, hearing, inquiry, etc.)
+	 * @param {boolean} [visible=true]
+	 */
+	verifyProcedureTypeOptionVisible(procedureType, visible = true) {
+		const normalizedType = procedureType.toLowerCase().trim();
+		const availableOptions = this.getAvailableProcedureTypes().join(', ');
+
+		if (!this.hasProcedureType(normalizedType)) {
+			throw new Error(
+				`Procedure type "${procedureType}" not found. Available options: ${availableOptions}`
+			);
+		}
+
+		const visibleAssertion = visible ? 'be.visible' : 'not.exist';
+		cy.contains('label', this.procedureTypeMappings[normalizedType].displayName).should(
+			visibleAssertion
+		);
+	}
 }

@@ -65,12 +65,12 @@ export const createAppeal = async (
 			const caseType = appealType?.key;
 			if (isLdcOrDiscontinuanceOrEnforcementCaseType(caseType)) {
 				teamId =
-					(await getEnforcementTeamIdFromLpaCode(data.lpa.connect?.lpaCode || '')) ||
-					(await getTeamIdFromLpaCode(data.lpa.connect?.lpaCode || ''));
+					(await getEnforcementTeamIdFromLpaCode(data.lpa?.connect?.lpaCode || '')) ||
+					(await getTeamIdFromLpaCode(data.lpa?.connect?.lpaCode || ''));
 			} else if (appellantSelectedProcedureType === inquiryProcedureTypeId) {
 				teamId = await getTeamIdFromName(TEAM_NAME_MAP.MAJOR_CASEWORK);
 			} else {
-				teamId = await getTeamIdFromLpaCode(data.lpa.connect?.lpaCode || '');
+				teamId = await getTeamIdFromLpaCode(data.lpa?.connect?.lpaCode || '');
 			}
 
 			appeal = await tx.appeal.update({

@@ -38,6 +38,8 @@ exports[`add-ip-comment GET /add/check-address should match the snapshot 1`] = `
                             </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
                             </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/create-a-case">Create a case</a>
+                            </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
                             </li>
                         </ul>
@@ -130,6 +132,8 @@ exports[`add-ip-comment GET /add/ip-address should match the snapshot 1`] = `
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                             </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/create-a-case">Create a case</a>
                             </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
                             </li>
@@ -236,6 +240,8 @@ exports[`add-ip-comment GET /add/ip-details should match the snapshot 1`] = `
                             </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
                             </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/create-a-case">Create a case</a>
+                            </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
                             </li>
                         </ul>
@@ -328,6 +334,8 @@ exports[`add-ip-comment GET /add/upload should match the snapshot 1`] = `
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
                             </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/create-a-case">Create a case</a>
                             </li>
                             <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
                             </li>

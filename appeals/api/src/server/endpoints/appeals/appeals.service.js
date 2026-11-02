@@ -6,7 +6,10 @@ import lpaRepository from '#repositories/lpa.repository.js';
 import padsUserRepository from '#repositories/pads-user.repository.js';
 import userRepository from '#repositories/user.repository.js';
 import transitionState, { transitionLinkedChildAppealsState } from '#state/transition-state.js';
+import { createAppealReference } from '#utils/appeal-reference.js';
+import { databaseConnector } from '#utils/database-connector.js';
 import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
+import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import { VALIDATION_OUTCOME_COMPLETE } from '@pins/appeals/constants/support.js';
 import {
 	fetchBankHolidaysForDivision,
@@ -15,6 +18,7 @@ import {
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { addBusinessDays } from 'date-fns';
 import { compact, uniq, uniqBy } from 'lodash-es';
+import { randomUUID } from 'node:crypto';
 
 /** @typedef {import('@pins/appeals.api').Appeals.AssignedUser} AssignedUser */
 /** @typedef {import('@pins/appeals.api').Appeals.UsersToAssign} UsersToAssign */
@@ -70,11 +74,11 @@ async function calculateIssueDecisionDeadline(eventDate, businessDays) {
 
 /**
  *
- * @param {{ lpaId: number }[]} appeals
+ * @param {{ lpaId: number | null }[]} appeals
  * @returns {Promise<{ name:string, lpaCode:string }[]>}
  */
 const mapAppealLPAs = async (appeals) => {
-	const lpaIds = uniqBy(appeals, 'lpaId').map(({ lpaId }) => lpaId);
+	const lpaIds = compact(uniqBy(appeals, 'lpaId').map(({ lpaId }) => lpaId));
 	return lpaRepository.getLpasByIds(lpaIds);
 };
 
@@ -207,4 +211,72 @@ async function updateCompletedEvents(azureAdUserId) {
 	);
 }
 
-export { calculateIssueDecisionDeadline, retrieveAppealListData, updateCompletedEvents };
+// TODO: update once case type letters and schema are provided by ODW
+/**
+ * @param {{ caseType: string, submissionDate: string }} data
+ * @returns {Promise<{ appealId: number, reference: string }>}
+ */
+const createGenericAppeal = async ({ caseType, submissionDate }) => {
+	const parsedSubmissionDate = new Date(submissionDate);
+
+	const result = await databaseConnector.$transaction(async (tx) => {
+		const tempReference = randomUUID();
+
+		const appealType = await tx.appealType.findFirst({
+			where: { type: caseType }
+		});
+
+		if (!appealType) {
+			throw new Error(`Appeal type not found for case type: ${caseType}`);
+		}
+
+		const appeal = await tx.appeal.create({
+			data: {
+				reference: tempReference,
+				appealType: {
+					connect: { id: appealType.id }
+				},
+				caseCreatedDate: parsedSubmissionDate,
+				currentStatus: APPEAL_CASE_STATUS.READY_TO_START,
+				appealStatus: {
+					create: {
+						status: APPEAL_CASE_STATUS.READY_TO_START,
+						createdAt: new Date()
+					}
+				},
+				appellantCase: {
+					create: {
+						caseSubmittedDate: parsedSubmissionDate
+					}
+				},
+				address: {
+					create: {}
+				},
+				folders: {
+					create: FOLDERS.map((/** @type {string} */ path) => ({ path }))
+				}
+			}
+		});
+
+		const reference = createAppealReference(appeal.id).toString();
+
+		const updatedAppeal = await tx.appeal.update({
+			where: { id: appeal.id },
+			data: { reference }
+		});
+
+		return updatedAppeal;
+	});
+
+	return {
+		appealId: result.id,
+		reference: result.reference
+	};
+};
+
+export {
+	calculateIssueDecisionDeadline,
+	createGenericAppeal,
+	retrieveAppealListData,
+	updateCompletedEvents
+};

@@ -144,6 +144,7 @@ describe('internal correspondence', () => {
 		beforeEach(() => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
@@ -267,6 +268,7 @@ describe('internal correspondence', () => {
 		beforeEach(() => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses);
@@ -1335,6 +1337,7 @@ describe('internal correspondence', () => {
 		beforeEach(async () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse).persist();
 			nock('http://test/')
 				.get(getFolderApiUrl(10))
 				.reply(200, folderInfoCrossTeamCorrespondence)
@@ -1507,6 +1510,7 @@ describe('internal correspondence', () => {
 		beforeEach(async () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1?include=all').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1/exists').reply(200, existsResponse).persist();
 			nock('http://test/')
 				.get(getFolderApiUrl(10))
 				.reply(200, folderInfoCrossTeamCorrespondence)

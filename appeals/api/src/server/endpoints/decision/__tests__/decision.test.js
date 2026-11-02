@@ -552,13 +552,14 @@ describe('decision routes', () => {
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.any(Object),
-					templateName: 'appellant-costs-decision-appellant',
+					templateName: 'costs-decision-all-parties',
 					personalisation: {
 						appeal_reference_number: appeal.reference,
 						lpa_reference: appeal.applicationReference,
 						site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 						front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/1345264`,
-						feedback_link: expectedFeedbackLink,
+						case_team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
 						...(appeal.appellantCase.enforcementReference && {
 							enforcement_reference: appeal.appellantCase.enforcementReference
 						})
@@ -574,12 +575,13 @@ describe('decision routes', () => {
 						lpa_reference: appeal.applicationReference,
 						site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 						front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/1345264`,
-						feedback_link: FEEDBACK_FORM_LINKS.LPA,
+						case_team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA,
 						...(appeal.appellantCase.enforcementReference && {
 							enforcement_reference: appeal.appellantCase.enforcementReference
 						})
 					},
-					templateName: 'appellant-costs-decision-lpa',
+					templateName: 'costs-decision-all-parties',
 					recipientEmail: appeal.lpa.email
 				});
 
@@ -639,13 +641,14 @@ describe('decision routes', () => {
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 				notifyClient: expect.any(Object),
-				templateName: 'lpa-costs-decision-appellant',
+				templateName: 'costs-decision-all-parties',
 				personalisation: {
 					appeal_reference_number: appeal.reference,
 					lpa_reference: appeal.applicationReference,
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`,
-					feedback_link: FEEDBACK_FORM_LINKS.HAS
+					case_team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT
 				},
 				recipientEmail: appeal.agent.email
 			});
@@ -658,9 +661,10 @@ describe('decision routes', () => {
 					lpa_reference: appeal.applicationReference,
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`,
-					feedback_link: FEEDBACK_FORM_LINKS.LPA
+					case_team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA
 				},
-				templateName: 'lpa-costs-decision-lpa',
+				templateName: 'costs-decision-all-parties',
 				recipientEmail: appeal.lpa.email
 			});
 
@@ -993,7 +997,8 @@ describe('decision routes', () => {
 				appeal_reference_number: appeal.reference,
 				lpa_reference: appeal.applicationReference,
 				site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
-				front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
+				front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`,
+				case_team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			};
 
 			expect(mockNotifySend).toHaveBeenCalledWith({
@@ -1001,9 +1006,9 @@ describe('decision routes', () => {
 				notifyClient: expect.any(Object),
 				personalisation: {
 					...personalisation,
-					feedback_link: FEEDBACK_FORM_LINKS.S78
+					fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT
 				},
-				templateName: 'appellant-costs-decision-appellant',
+				templateName: 'costs-decision-all-parties',
 				recipientEmail: appeal.agent.email
 			});
 
@@ -1012,9 +1017,9 @@ describe('decision routes', () => {
 				notifyClient: expect.any(Object),
 				personalisation: {
 					...personalisation,
-					feedback_link: FEEDBACK_FORM_LINKS.LPA
+					fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA
 				},
-				templateName: 'appellant-costs-decision-lpa',
+				templateName: 'costs-decision-all-parties',
 				recipientEmail: appeal.lpa.email
 			});
 
@@ -1023,9 +1028,9 @@ describe('decision routes', () => {
 				notifyClient: expect.any(Object),
 				personalisation: {
 					...personalisation,
-					feedback_link: FEEDBACK_FORM_LINKS.S78
+					fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.RULE_6_PARTY
 				},
-				templateName: 'appellant-costs-decision-appellant',
+				templateName: 'costs-decision-all-parties',
 				recipientEmail: 'rule6@example.com'
 			});
 
@@ -1082,16 +1087,17 @@ describe('decision routes', () => {
 				appeal_reference_number: appeal.reference,
 				lpa_reference: appeal.applicationReference,
 				site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
-				front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
+				front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`,
+				case_team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			};
 
 			expect(mockNotifySend).toHaveBeenCalledWith({
 				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 				notifyClient: expect.any(Object),
-				templateName: 'lpa-costs-decision-appellant',
+				templateName: 'costs-decision-all-parties',
 				personalisation: {
 					...personalisation,
-					feedback_link: FEEDBACK_FORM_LINKS.S78
+					fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT
 				},
 				recipientEmail: appeal.agent.email
 			});
@@ -1101,27 +1107,95 @@ describe('decision routes', () => {
 				notifyClient: expect.any(Object),
 				personalisation: {
 					...personalisation,
-					feedback_link: FEEDBACK_FORM_LINKS.LPA
+					fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA
 				},
-				templateName: 'lpa-costs-decision-lpa',
+				templateName: 'costs-decision-all-parties',
 				recipientEmail: appeal.lpa.email
 			});
 
 			expect(mockNotifySend).toHaveBeenCalledWith({
 				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 				notifyClient: expect.any(Object),
-				templateName: 'lpa-costs-decision-appellant',
 				personalisation: {
 					...personalisation,
-					feedback_link: FEEDBACK_FORM_LINKS.S78
+					fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.RULE_6_PARTY
 				},
+				templateName: 'costs-decision-all-parties',
 				recipientEmail: 'rule6@example.com'
 			});
 
 			expect(response.status).toEqual(201);
 		});
 
-		//TODO: Add test for rule 6 party cost comms when the comms are added
+		test('returns 201 and sends emails to interested parties when appellant costs decision is published', async () => {
+			const appeal = {
+				...fullPlanningAppeal,
+				currentStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						valid: true
+					}
+				]
+			};
+
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			databaseConnector.inspectorDecision.create.mockResolvedValue({});
+
+			databaseConnector.representation.count.mockResolvedValue(2);
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{ represented: { email: 'interested-party1@example.com' } },
+				{ represented: { email: 'interested-party2@example.com' } }
+			]);
+
+			const tenDaysAgo = sub(new Date(), { days: 10 });
+			const withoutWeekends = await recalculateDateIfNotBusinessDay(tenDaysAgo.toISOString());
+			const utcDate = setTimeInTimeZone(withoutWeekends, 0, 0);
+
+			const response = await request
+				.post(`/appeals/${appeal.id}/decision`)
+				.send({
+					decisions: [
+						{
+							decisionType: DECISION_TYPE_APPELLANT_COSTS,
+							documentDate: utcDate.toISOString(),
+							documentGuid: documentCreated.guid
+						}
+					]
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(4);
+
+			const frontOfficeUrl = 'https://appeal-planning-decision.service.gov.uk/appeals/1345264';
+			const expectedIpPersonalisation = {
+				appeal_reference_number: appeal.reference,
+				lpa_reference: appeal.applicationReference,
+				site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+				front_office_url: frontOfficeUrl,
+				case_team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+				fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.INTERESTED_PARTY
+			};
+
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				azureAdUserId,
+				notifyClient: expect.any(Object),
+				templateName: 'costs-decision-all-parties',
+				recipientEmail: 'interested-party1@example.com',
+				personalisation: expectedIpPersonalisation
+			});
+
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				azureAdUserId,
+				notifyClient: expect.any(Object),
+				templateName: 'costs-decision-all-parties',
+				recipientEmail: 'interested-party2@example.com',
+				personalisation: expectedIpPersonalisation
+			});
+
+			expect(response.status).toEqual(201);
+		});
 
 		test('returns 200 and sends emails to interested parties when decision is published', async () => {
 			const appeal = {
@@ -1370,6 +1444,44 @@ describe('decision routes', () => {
 					caseDecisionOutcomeDate: ERROR_MUST_NOT_BE_IN_FUTURE
 				}
 			});
+		});
+	});
+
+	describe('postDecisionPreview', () => {
+		test('returns rendered previews for appeal determination', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+			const response = await request
+				.post(`/appeals/${householdAppeal.id}/decision/preview`)
+				.send({ outcome: 'allowed' })
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toBe(200);
+			expect(response.body).toHaveProperty('previews');
+			expect(response.body.previews).toHaveProperty('appellant');
+			expect(response.body.previews).toHaveProperty('lpa');
+			expect(response.body.previews).toHaveProperty('interestedParty');
+		});
+
+		test('returns rendered previews for costs decision', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+			const response = await request
+				.post(`/appeals/${householdAppeal.id}/decision/preview`)
+				.send({ decisionType: DECISION_TYPE_APPELLANT_COSTS })
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toBe(200);
+			expect(response.body).toHaveProperty('previews');
+			expect(response.body.previews).toHaveProperty('appellant');
+			expect(response.body.previews).toHaveProperty('lpa');
+			expect(response.body.previews).toHaveProperty('interestedParty');
+			expect(response.body.previews.appellant).toContain(
+				'application for an award of appeal costs'
+			);
+			expect(response.body.previews.interestedParty).toContain('comment-planning-appeal');
 		});
 	});
 

@@ -190,12 +190,12 @@ describe('case-procedure.mapper', () => {
 		expect(result?.display?.summaryListItem?.actions?.items).toEqual([]);
 	});
 
-	it('Should not display change link for expedited Part 1 appeal when appeal is not in an allowed stage (e.g. event)', () => {
+	it('Should not display change link for expedited Part 1 appeal when appeal is not in an allowed stage (e.g. statements)', () => {
 		Object.assign(config.featureFlags, {
 			featureFlagExpeditedAppealsChangeProcedure: true
 		});
 		params.appealDetails.procedureType = PROCEDURE_TYPE_NAME.WRITTEN_PART_1;
-		params.appealDetails.appealStatus = 'event';
+		params.appealDetails.appealStatus = 'statements';
 		params.appellantCase = {
 			applicationDate: '2026-05-01',
 			applicationDecision: 'refused',

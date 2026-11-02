@@ -1,6 +1,6 @@
 module "function_doc_processing" {
   #checkov:skip=CKV_TF_1: Use of commit hash are not required for our Terraform modules
-  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-function-app?ref=1.54"
+  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-function-app?ref=1.57"
 
   resource_group_name = azurerm_resource_group.primary.name
   location            = module.primary_region.location
@@ -83,7 +83,7 @@ resource "azurerm_role_assignment" "document_to_move_sub_reciever" {
 # RBAC for storage
 
 resource "azurerm_role_assignment" "function_doc_processing_writer" {
-  scope                = azurerm_storage_container.appeal_documents.resource_manager_id
+  scope                = azurerm_storage_container.appeal_documents.id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = module.function_doc_processing.principal_id
 }
@@ -92,7 +92,7 @@ resource "azurerm_role_assignment" "function_doc_processing_front_office_reader"
   # only include if configured to connect to front office
   count = var.front_office_infra_config.deploy_connections ? 1 : 0
 
-  scope                = data.azurerm_storage_container.front_office_documents[0].resource_manager_id
+  scope                = data.azurerm_storage_container.front_office_documents[0].id
   role_definition_name = "Storage Blob Data Reader"
   principal_id         = module.function_doc_processing.principal_id
 }

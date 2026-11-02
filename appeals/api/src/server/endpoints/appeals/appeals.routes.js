@@ -1,6 +1,7 @@
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import {
+	createAppeal,
 	getAppeals,
 	getPersonalList,
 	updateCompletedEventsController
@@ -10,7 +11,7 @@ import {
 	validateHasInspector,
 	validateProcedurePreference
 } from './appeals.middleware.js';
-import { getAppealsValidator } from './appeals.validators.js';
+import { createAppealValidator, getAppealsValidator } from './appeals.validators.js';
 
 const router = createRouter();
 
@@ -140,6 +141,28 @@ router.post(
 		#swagger.responses[400] = {}
 	 */
 	asyncHandler(updateCompletedEventsController)
+);
+
+router.post(
+	'/',
+	/*
+		#swagger.tags = ['Appeals']
+		#swagger.path = '/appeals'
+		#swagger.description = 'Creates a generic appeal'
+		#swagger.parameters['body'] = {
+			in: 'body',
+			description: 'Appeal case type and submission date',
+			schema: { $ref: '#/components/schemas/CreateAppealRequest' },
+			required: true
+		}
+		#swagger.responses[201] = {
+			description: 'Created appeal',
+			schema: { $ref: '#/components/schemas/CreateAppealResponse' }
+		}
+		#swagger.responses[400] = {}
+	*/
+	createAppealValidator,
+	asyncHandler(createAppeal)
 );
 
 export { router as appealsRoutes };

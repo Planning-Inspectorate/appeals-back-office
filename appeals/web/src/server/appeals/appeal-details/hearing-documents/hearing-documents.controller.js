@@ -13,14 +13,32 @@ import {
 	renderDocumentUpload,
 	renderManageDocument,
 	renderManageFolder,
+	renderShareAllDocuments,
 	renderUploadDocumentsCheckAndConfirm
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
-import { getDocumentFileType } from '#appeals/appeal-documents/appeal.documents.service.js';
+import {
+	getDocumentFileType,
+	getDocumentRedactionStatuses,
+	getFileVersionsInfo,
+	updateDocument,
+	updateDocuments
+} from '#appeals/appeal-documents/appeal.documents.service.js';
+import { appealSiteToAddressString } from '#lib/address-formatter.js';
+import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
+import { getShareableDocuments, isUnpublishedDocument } from '#lib/documents.js';
 import logger from '#lib/logger.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
+import { redactionStatusNameToId } from '#lib/redaction-statuses.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { FRONT_OFFICE_DASHBOARD_PATH_STUBS } from '@pins/appeals/constants/common.js';
 import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
+import { addWeeks, format } from 'date-fns';
+import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
+import {
+	inviteMainPartyCommentsPage,
+	shareDocumentCheckAndConfirmPage
+} from './hearing-documents.mapper.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getDocumentUpload = async (request, response) => {
@@ -270,15 +288,24 @@ export const getManageFolder = async (request, response) => {
 
 	const categoryLabel = `Hearing documents`;
 
+	const baseUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/hearing-documents`;
+
+	const numUnpublishedDocuments = currentFolder.documents.filter(isUnpublishedDocument).length;
+
+	const shareAllLink =
+		numUnpublishedDocuments > 0
+			? `${baseUrl}/manage-documents/${currentFolder.folderId}/share-all`
+			: undefined;
+
 	await renderManageFolder({
 		request,
 		response,
 		backLinkUrl: `/appeals-service/appeal-details/${request.params.appealId}`,
-		viewAndEditUrl: `/appeals-service/appeal-details/${request.params.appealId}/hearing-documents/manage-documents/${currentFolder.folderId}/{{documentId}}`,
-		addButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/hearing-documents/upload-documents/${currentFolder.folderId}`,
+		viewAndEditUrl: `${baseUrl}/manage-documents/${currentFolder.folderId}/{{documentId}}`,
+		addButtonUrl: `${baseUrl}/upload-documents/${currentFolder.folderId}`,
 		pageHeadingTextOverride: categoryLabel,
 		canShare: true,
-		shareAllLinkUrl: `/appeals-service/appeal-details/${request.params.appealId}/hearing-documents/manage-documents/${currentFolder.folderId}/share-all`
+		shareAllLinkUrl: shareAllLink
 	});
 };
 
@@ -295,7 +322,8 @@ export const getManageDocument = async (request, response) => {
 		response,
 		backLinkUrl: `/appeals-service/appeal-details/${request.params.appealId}/hearing-documents/manage-documents/${currentFolder.folderId}`,
 		uploadUpdatedDocumentUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/hearing-documents/upload-documents/${currentFolder?.folderId}/{{documentId}}`,
-		removeDocumentUrl: `/appeals-service/appeal-details/${request.params.appealId}/hearing-documents/manage-documents/${currentFolder.folderId}/{{documentId}}/{{versionId}}/delete`
+		removeDocumentUrl: `/appeals-service/appeal-details/${request.params.appealId}/hearing-documents/manage-documents/${currentFolder.folderId}/{{documentId}}/{{versionId}}/delete`,
+		canShare: true
 	});
 };
 
@@ -367,4 +395,204 @@ export const postChangeDocumentVersionDetails = async (request, response) => {
 		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/hearing-documents/manage-documents/${request.params.folderId}/${request.params.documentId}`,
 		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/hearing-documents/manage-documents/${request.params.folderId}/${request.params.documentId}`
 	});
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getInviteMainPartyComments = async (request, response) => {
+	const { appealId, folderId, documentId } = request.params;
+	const backLinkUrl = `/appeals-service/appeal-details/${appealId}/hearing-documents/manage-documents/${folderId}/${documentId}`;
+
+	if (request.session.appealId && request.session.appealId !== appealId) {
+		delete request.session.appealId;
+		delete request.session.inviteMainPartyComments;
+	}
+
+	const inviteMainPartyComments =
+		appealId === request.session.appealId ? request.session.inviteMainPartyComments : undefined;
+	const pageContent = inviteMainPartyCommentsPage(backLinkUrl, inviteMainPartyComments);
+
+	return response.render('patterns/change-page.pattern.njk', {
+		pageContent,
+		errors: request.errors
+	});
+};
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postInviteMainPartyComments = async (request, response) => {
+	const { errors, body } = request;
+	const { appealId, folderId, documentId } = request.params;
+
+	if (errors) {
+		return getInviteMainPartyComments(request, response);
+	}
+
+	request.session.inviteMainPartyComments = body['invite-main-party-comments'];
+	request.session.appealId = appealId;
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${appealId}/hearing-documents/manage-documents/${folderId}/${documentId}/check-your-answers`
+	);
+};
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getShareDocumentCheckAndConfirm = async (request, response) => {
+	const { appealId, folderId, documentId } = request.params;
+	const session = request.session;
+	const { currentAppeal } = request;
+	const documentInfo = await getFileVersionsInfo(request.apiClient, documentId);
+	if (!documentInfo || !documentInfo.latestDocumentVersion) {
+		return response.status(404).render('app/404.njk');
+	}
+
+	const backLinkUrl = `/appeals-service/appeal-details/${appealId}/hearing-documents/manage-documents/${folderId}/${documentId}/invite-main-party-comments`;
+
+	const { email } = await getTeamFromAppealId(request.apiClient, appealId);
+	const address = appealSiteToAddressString(currentAppeal?.appealSite);
+	const deadline = format(addWeeks(new Date(), 1), 'd MMMM yyyy');
+	const notifyTemplateName = 'document-received.content.md';
+
+	const inviteResponses = session?.inviteMainPartyComments?.toLowerCase() === 'yes';
+
+	const notifyPreview = await generateNotifyPreview(request.apiClient, notifyTemplateName, {
+		appeal_reference_number: currentAppeal?.appealReference,
+		site_address: address || '',
+		contact_email: email || '',
+		deadline: deadline,
+		responses_invited: inviteResponses,
+		dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
+		document_name: documentInfo.name || '',
+		document_type: 'hearing-documents',
+		document_folder_name: 'hearing documents'
+	});
+
+	const pageContent = shareDocumentCheckAndConfirmPage(
+		backLinkUrl,
+		documentInfo.latestDocumentVersion,
+		notifyPreview,
+		session.inviteMainPartyComments
+	);
+
+	return response.render('patterns/change-page.pattern.njk', {
+		pageContent,
+		errors: request.errors
+	});
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postShareDocumentCheckAndConfirm = async (request, response) => {
+	const { appealId, documentId } = request.params;
+	try {
+		const apiRequest = {
+			document: {
+				id: documentId,
+				isShared: true
+			},
+			inviteResponses: request.session?.inviteMainPartyComments === 'yes',
+			sharingDocumentType: `hearing-document`
+		};
+
+		await updateDocument(request.apiClient, appealId, apiRequest);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when marking document as shared'
+		);
+	}
+
+	delete request.session.inviteMainPartyComments;
+
+	addNotificationBannerToSession({
+		session: request.session,
+		bannerDefinitionKey: 'documentAdded',
+		appealId: appealId,
+		text: 'Document shared'
+	});
+
+	return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+};
+
+/**
+  @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getShareAllDocuments = async (request, response) => {
+	const { currentAppeal, currentFolder } = request;
+
+	if (!currentAppeal || !currentFolder) {
+		return response.status(404).render('app/404.njk');
+	}
+	const numShareableDocuments = getShareableDocuments(currentFolder).length;
+
+	await renderShareAllDocuments({
+		request,
+		response,
+		numShareableDocuments,
+		showNotifyPreviews: true,
+		totalFolderSize: currentFolder.totalFolderSize,
+		documentType: 'hearing-documents',
+		backLinkUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/hearing-documents/manage-documents/${currentFolder.folderId}`
+	});
+};
+
+/** @typedef {import('@pins/appeals.api').Appeals.DocumentInfo} DocumentInfo */
+/** @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} DocumentRedactionStatus */
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postShareAllDocuments = async (request, response) => {
+	const { appealId } = request.params;
+	const { currentFolder } = request;
+
+	const shareableDocuments = getShareableDocuments(currentFolder);
+
+	try {
+		const redactionStatuses = await getDocumentRedactionStatuses(request.apiClient);
+
+		const formattedDocuments = shareableDocuments.map((/** @type {DocumentInfo} */ document) => ({
+			id: document.id,
+			latestDocumentVersionId: document.latestDocumentVersion.version,
+			isShared: true,
+			receivedDate: document.latestDocumentVersion.dateReceived,
+			redactionStatus: redactionStatusNameToId(
+				// @ts-ignore
+				redactionStatuses,
+				document.latestDocumentVersion.redactionStatus
+			)
+		}));
+		await updateDocuments(request.apiClient, appealId, {
+			documents: formattedDocuments,
+			sharingDocumentType: 'hearing-document',
+			shareMultipleDocuments: shareableDocuments.length > 1
+		});
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error ? error.message : 'Something went wrong when sharing hearing documents'
+		);
+		return response.status(500).render('app/500.njk');
+	}
+
+	addNotificationBannerToSession({
+		session: request.session,
+		bannerDefinitionKey: 'documentAdded',
+		appealId: appealId,
+		text: 'Documents shared'
+	});
+
+	return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 };

@@ -473,7 +473,7 @@ function mapRequiredActionToPersonalListActionHtml(
 				`/appeals-service/appeal-details/${appealId}/share`
 			)}">Share final comments</a>`;
 		}
-		case 'shareIpCommentsAndLpaStatement': {
+		case 'shareCommentsAndStatements': {
 			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 				request,
 				`/appeals-service/appeal-details/${appealId}/share`

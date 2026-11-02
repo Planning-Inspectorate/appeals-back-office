@@ -6,7 +6,7 @@ import { mapActionComponent } from '#lib/mappers/index.js';
 export const mapOtherAppeals = ({ appealDetails, currentRoute, session }) => {
 	const otherAppealsItems = [];
 
-	if (appealDetails.otherAppeals.length) {
+	if (appealDetails.otherAppeals?.length) {
 		otherAppealsItems.push(
 			mapActionComponent(permissionNames.updateCase, session, {
 				text: 'Manage',

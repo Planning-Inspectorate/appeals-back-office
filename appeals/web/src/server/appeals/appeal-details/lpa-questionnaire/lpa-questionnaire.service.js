@@ -5,15 +5,20 @@ import { assertValidNumericIds } from '#lib/validators/api-parameters.validator.
 
 /**
  * @param {string|number} appealId
- * @param {string} lpaQuestionnaireId
+ * @param {string} [lpaQuestionnaireId]
  * @param {import('got').Got} apiClient
  * @returns {Promise<LpaQuestionnaire>}
  */
-export function getLpaQuestionnaireFromId(apiClient, appealId, lpaQuestionnaireId) {
-	const ids = assertValidNumericIds({ appealId, lpaQuestionnaireId });
-	return apiClient
-		.get(`appeals/${ids.appealId}/lpa-questionnaires/${ids.lpaQuestionnaireId}`)
-		.json();
+export function getLpaQuestionnaireFromId(apiClient, appealId, lpaQuestionnaireId = undefined) {
+	const ids = assertValidNumericIds({ appealId, lpaQuestionnaireId: lpaQuestionnaireId ?? 0 });
+
+	if (lpaQuestionnaireId !== undefined) {
+		return apiClient
+			.get(`appeals/${ids.appealId}/lpa-questionnaires/${ids.lpaQuestionnaireId}`)
+			.json();
+	}
+
+	return apiClient.get(`appeals/${ids.appealId}/lpa-questionnaire`).json();
 }
 
 /**

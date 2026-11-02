@@ -28,6 +28,8 @@ export class ContactsSectionPage extends CaseDetailsPage {
 	verifyContactsSectionRule6PartiesIsDisplayed(partyName, partEmailAddress) {
 		this.elements.contactSection().should('contain.text', 'Rule 6 parties');
 		this.verifyExpectedField(partyName);
-		this.verifyExpectedField(partEmailAddress);
+		if (partEmailAddress) {
+			this.verifyExpectedField(partEmailAddress);
+		}
 	}
 }

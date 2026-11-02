@@ -35,52 +35,54 @@ describe('service-user', () => {
 				);
 			});
 
-			if (action === 'change') {
-				it(`should render the ${action} service user page for an appellant when agent is present`, async () => {
-					const appealId = appealData.appealId;
-					const response = await request.get(
-						`${baseUrl}/${appealId}/service-user/${action}/appellant`
-					);
-					const element = parseHtml(response.text);
+			it(`should render the ${action} service user page for an appellant when agent is present`, async () => {
+				const appealId = appealData.appealId;
+				const response = await request.get(
+					`${baseUrl}/${appealId}/service-user/${action}/appellant`
+				);
+				const element = parseHtml(response.text);
 
-					expect(element.innerHTML).toMatchSnapshot();
-					expect(element.innerHTML).toContain('Appellant details</h1>');
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Appellant details</h1>');
 
-					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-					expect(unprettifiedElement.innerHTML).toContain('name="firstName" type="text"');
-					expect(unprettifiedElement.innerHTML).toContain('name="lastName" type="text"');
-					expect(unprettifiedElement.innerHTML).toContain('name="organisationName" type="text"');
-					expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
-					expect(unprettifiedElement.innerHTML).not.toContain('Remove appellant</a>');
-				});
-				it(`should render the appellant details page with email and phone number if the appeal has no agent and action is`, async () => {
-					nock.cleanAll();
-					const appealId = appealData.appealId;
+				expect(unprettifiedElement.innerHTML).toContain('name="firstName" type="text"');
+				expect(unprettifiedElement.innerHTML).toContain('name="lastName" type="text"');
+				expect(unprettifiedElement.innerHTML).toContain('name="organisationName" type="text"');
+				expect(unprettifiedElement.innerHTML).not.toContain('name="emailAddress" type="text"');
+				expect(unprettifiedElement.innerHTML).not.toContain('name="phoneNumber" type="text"');
+				expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+				expect(unprettifiedElement.innerHTML).not.toContain('Remove appellant</a>');
+			});
+			it(`should render the appellant details page with email and phone number if the appeal has no agent and action is ${action}`, async () => {
+				nock.cleanAll();
+				const appealId = appealData.appealId;
 
-					const appealWithNoAgent = {
-						...appealData,
-						agent: undefined
-					};
+				const appealWithNoAgent = {
+					...appealData,
+					agent: undefined
+				};
 
-					nock('http://test/')
-						.get(`/appeals/${appealId}?include=all`)
-						.reply(200, appealWithNoAgent);
+				nock('http://test/').get(`/appeals/${appealId}?include=all`).reply(200, appealWithNoAgent);
 
-					const response = await request.get(
-						`${baseUrl}/${appealId}/service-user/change/appellant`
-					);
-					const element = parseHtml(response.text);
-					expect(element.innerHTML).toMatchSnapshot();
+				const response = await request.get(
+					`${baseUrl}/${appealId}/service-user/${action}/appellant`
+				);
+				const element = parseHtml(response.text);
+				expect(element.innerHTML).toMatchSnapshot();
 
-					expect(element.innerHTML).toContain('Appellant details</h1>');
+				expect(element.innerHTML).toContain('Appellant details</h1>');
 
-					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-					expect(unprettifiedElement.innerHTML).not.toContain('Remove appellant</a>');
-					expect(unprettifiedElement.innerHTML).not.toContain('Phone number</a>');
-					expect(unprettifiedElement.innerHTML).not.toContain('Email</a>');
-				});
-			}
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				expect(unprettifiedElement.innerHTML).toContain('name="firstName" type="text"');
+				expect(unprettifiedElement.innerHTML).toContain('name="lastName" type="text"');
+				expect(unprettifiedElement.innerHTML).toContain('name="organisationName" type="text"');
+				expect(unprettifiedElement.innerHTML).toContain('name="emailAddress" type="text"');
+				expect(unprettifiedElement.innerHTML).toContain('name="phoneNumber" type="text"');
+				expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+				expect(unprettifiedElement.innerHTML).not.toContain('Remove appellant</a>');
+			});
 
 			it('should render the 500 error page when the service user type is not a valid string', async () => {
 				const appealId = appealData.appealId;
@@ -323,17 +325,17 @@ describe('service-user', () => {
 					nock('http://test/').patch(`/appeals/${appealId}/service-user`).reply(200, {
 						serviceUserId: 1
 					});
-					const invalidData = {
+					const validData = {
 						firstName: 'Jessica',
 						lastName: 'Jones',
 						emailAddress: 'jessica.jones@email.com'
 					};
 					nock('http://test/').patch(`/appeals/${appealId}?include=childAppeals`).reply(200, {
-						agent: invalidData
+						agent: validData
 					});
 					const response = await request
 						.post(`${baseUrl}/${appealId}/service-user/${action}/agent`)
-						.send(invalidData);
+						.send(validData);
 
 					expect(response.statusCode).toBe(302);
 					expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
@@ -426,134 +428,135 @@ describe('service-user', () => {
 					);
 				});
 			});
-			if (action === 'change') {
-				describe('appellant', () => {
-					const appealId = appealData.appealId;
-					const testCases = [
-						{
-							name: 'firstName is null',
-							data: {
-								firstName: null,
-								lastName: 'Jones',
-								emailAddress: 'null.jones@email.com',
-								phoneNumber: '+44 7782446782'
-							},
-							expectedErrors: ['Enter the appellant&#39;s first name</a>']
+			describe('appellant', () => {
+				const appealId = appealData.appealId;
+				const testCases = [
+					{
+						name: 'firstName is null',
+						data: {
+							firstName: null,
+							lastName: 'Jones',
+							emailAddress: 'null.jones@email.com',
+							phoneNumber: '+44 7782446782'
 						},
-						{
-							name: 'firstName is empty',
-							data: {
-								firstName: '',
-								lastName: 'Jones',
-								emailAddress: 'null.jones@email.com',
-								phoneNumber: '07906954865'
-							},
-							expectedErrors: ['Enter the appellant&#39;s first name</a>']
+						expectedErrors: ['Enter the appellant&#39;s first name</a>']
+					},
+					{
+						name: 'firstName is empty',
+						data: {
+							firstName: '',
+							lastName: 'Jones',
+							emailAddress: 'null.jones@email.com',
+							phoneNumber: '07906954865'
 						},
-						{
-							name: 'firstName is undefined',
-							data: {
-								lastName: 'Jones',
-								emailAddress: 'null.jones@email.com'
-							},
-							expectedErrors: ['Enter the appellant&#39;s first name</a>']
+						expectedErrors: ['Enter the appellant&#39;s first name</a>']
+					},
+					{
+						name: 'firstName is undefined',
+						data: {
+							lastName: 'Jones',
+							emailAddress: 'null.jones@email.com'
 						},
-						{
-							name: 'lastName is null',
-							data: {
-								firstName: 'Jessica',
-								lastName: null,
-								emailAddress: 'jessica.null@email.com'
-							},
-							expectedErrors: ['Enter the appellant&#39;s last name</a>']
+						expectedErrors: ['Enter the appellant&#39;s first name</a>']
+					},
+					{
+						name: 'lastName is null',
+						data: {
+							firstName: 'Jessica',
+							lastName: null,
+							emailAddress: 'jessica.null@email.com'
 						},
-						{
-							name: 'lastName is empty',
-							data: {
-								firstName: 'Jessica',
-								lastName: '',
-								emailAddress: 'jessica.null@email.com'
-							},
-							expectedErrors: ['Enter the appellant&#39;s last name</a>']
+						expectedErrors: ['Enter the appellant&#39;s last name</a>']
+					},
+					{
+						name: 'lastName is empty',
+						data: {
+							firstName: 'Jessica',
+							lastName: '',
+							emailAddress: 'jessica.null@email.com'
 						},
-						{
-							name: 'lastName is undefined',
-							data: {
-								firstName: 'Jessica',
-								emailAddress: 'jessica.null@email.com'
-							},
-							expectedErrors: ['Enter the appellant&#39;s last name</a>']
+						expectedErrors: ['Enter the appellant&#39;s last name</a>']
+					},
+					{
+						name: 'lastName is undefined',
+						data: {
+							firstName: 'Jessica',
+							emailAddress: 'jessica.null@email.com'
 						},
-						{
-							name: 'email is not an email',
-							data: {
-								firstName: 'Jessica',
-								lastName: 'Jones',
-								emailAddress: 'jessica.jones'
-							},
-							expectedErrors: [
-								'Enter an email address in the correct format, like name@example.com</a>'
-							]
-						},
-						{
-							name: 'phone number is provided but invalid',
-							data: {
-								firstName: 'Jessica',
-								lastName: 'Jones',
-								emailAddress: 'jessica.jones@email.com',
-								phoneNumber: '00000'
-							},
-							expectedErrors: [
-								'Enter a valid UK phone number, like 01632 960 001, 07700 900 982 or +44 808 157 0192</a>'
-							]
-						}
-					];
-
-					testCases.forEach(({ name, data, expectedErrors }) => {
-						it(`should show error(s) when ${name}`, async () => {
-							const response = await request
-								.post(`${baseUrl}/${appealId}/service-user/${action}/appellant`)
-								.send(data);
-
-							expect(response.statusCode).toBe(200);
-
-							const element = parseHtml(response.text);
-							expect(element.innerHTML).toMatchSnapshot();
-							expect(element.innerHTML).toContain('Appellant details</h1>');
-
-							const errorSummaryHtml = parseHtml(response.text, {
-								rootElement: '.govuk-error-summary',
-								skipPrettyPrint: true
-							}).innerHTML;
-
-							expect(errorSummaryHtml).toContain('There is a problem</h2>');
-							expectedErrors.forEach((error) => {
-								expect(errorSummaryHtml).toContain(error);
-							});
-						});
-					});
-					it('should re-direct to appeals details if firstName, lastName, and email are valid', async () => {
-						const appealId = appealData.appealId;
-						nock('http://test/').patch(`/appeals/${appealId}/service-user`).reply(200, {
-							serviceUserId: 1
-						});
-						const invalidData = {
+						expectedErrors: ['Enter the appellant&#39;s last name</a>']
+					},
+					{
+						name: 'email is not an email',
+						data: {
 							firstName: 'Jessica',
 							lastName: 'Jones',
-							emailAddress: 'jessica.jones@email.com'
-						};
-						nock('http://test/').patch(`/appeals/${appealId}`).reply(200, {
-							appellant: invalidData
-						});
+							emailAddress: 'jessica.jones'
+						},
+						expectedErrors: [
+							'Enter an email address in the correct format, like name@example.com</a>'
+						]
+					},
+					{
+						name: 'phone number is provided but invalid',
+						data: {
+							firstName: 'Jessica',
+							lastName: 'Jones',
+							emailAddress: 'jessica.jones@email.com',
+							phoneNumber: '00000'
+						},
+						expectedErrors: [
+							'Enter a valid UK phone number, like 01632 960 001, 07700 900 982 or +44 808 157 0192</a>'
+						]
+					}
+				];
+
+				testCases.forEach(({ name, data, expectedErrors }) => {
+					it(`should show error(s) when ${name}`, async () => {
 						const response = await request
 							.post(`${baseUrl}/${appealId}/service-user/${action}/appellant`)
-							.send(invalidData);
+							.send(data);
 
-						expect(response.statusCode).toBe(302);
-						expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
+						expect(response.statusCode).toBe(200);
+
+						const element = parseHtml(response.text);
+						expect(element.innerHTML).toMatchSnapshot();
+						expect(element.innerHTML).toContain('Appellant details</h1>');
+
+						const errorSummaryHtml = parseHtml(response.text, {
+							rootElement: '.govuk-error-summary',
+							skipPrettyPrint: true
+						}).innerHTML;
+
+						expect(errorSummaryHtml).toContain('There is a problem</h2>');
+						expectedErrors.forEach((error) => {
+							expect(errorSummaryHtml).toContain(error);
+						});
 					});
 				});
-			}
+				it('should re-direct to appeals details if firstName, lastName, and email are valid', async () => {
+					const appealId = appealData.appealId;
+					nock('http://test/').patch(`/appeals/${appealId}/service-user`).reply(200, {
+						serviceUserId: 1
+					});
+					const validData = {
+						firstName: 'Jessica',
+						lastName: 'Jones',
+						emailAddress: 'jessica.jones@email.com'
+					};
+					nock('http://test/').patch(`/appeals/${appealId}`).reply(200, {
+						appellant: validData
+					});
+					nock('http://test/').patch(`/appeals/${appealId}?include=childAppeals`).reply(200, {
+						appellant: validData
+					});
+					const response = await request
+						.post(`${baseUrl}/${appealId}/service-user/${action}/appellant`)
+						.send(validData);
+
+					expect(response.statusCode).toBe(302);
+					expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
+				});
+			});
 		});
 	});
 	describe('POST /change/appellant (appeal with no agent)', () => {

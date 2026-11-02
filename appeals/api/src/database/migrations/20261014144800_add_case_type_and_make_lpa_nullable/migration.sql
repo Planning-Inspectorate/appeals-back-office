@@ -1,0 +1,7 @@
+BEGIN TRAN;
+
+-- AlterTable
+ALTER TABLE [dbo].[Appeal] ALTER COLUMN [lpaId] INT NULL;
+
+COMMIT TRAN;
+

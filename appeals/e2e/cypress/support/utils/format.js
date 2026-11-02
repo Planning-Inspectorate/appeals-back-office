@@ -100,6 +100,15 @@ export function formatDateAndTime(date, isOrdinal = false) {
 }
 
 /**
+ * Returns a string with the first letter capitalized and the rest of the string in lowercase
+ * @param {*} str string to capitalize
+ * @returns string with first letter capitalized and the rest of the string in lowercase
+ */
+export function capitalize(str) {
+	return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+/**
  * Gets date and time vales from a Date object
  * @param {*} date a Date to get date and time values from
  */

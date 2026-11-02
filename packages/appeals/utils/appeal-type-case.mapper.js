@@ -36,6 +36,7 @@ export const appealTypeToAppealCaseTypeMapper = (appealType) => {
 			return APPEAL_CASE_TYPE.ZA;
 		case APPEAL_TYPE.CAS_PLANNING:
 			return APPEAL_CASE_TYPE.ZP;
+		// TODO: update once case type letters and schema are provided by ODW
 		default:
 			return '';
 	}

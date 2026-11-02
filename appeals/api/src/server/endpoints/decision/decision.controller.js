@@ -10,7 +10,12 @@ import {
 	ERROR_INVALID_APPEAL_STATE
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { publishChildDecision, publishCostsDecision, publishDecision } from './decision.service.js';
+import {
+	getCostsDecisionPreview,
+	publishChildDecision,
+	publishCostsDecision,
+	publishDecision
+} from './decision.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -23,13 +28,19 @@ import { publishChildDecision, publishCostsDecision, publishDecision } from './d
  */
 export const postDecisionPreview = async (req, res) => {
 	const { appeal } = req;
-	const { outcome, invalidDecisionReason } = req.body;
+	const { outcome, invalidDecisionReason, decisionType } = req.body;
 
 	const siteAddress = appeal.address
 		? formatAddressSingleLine(appeal.address)
 		: 'Address not available';
 
 	const azureAdUserId = req.get('azureAdUserId') || '';
+
+	if (decisionType === DECISION_TYPE_APPELLANT_COSTS || decisionType === DECISION_TYPE_LPA_COSTS) {
+		const previews = await getCostsDecisionPreview(appeal, decisionType, siteAddress);
+
+		return res.json(previews);
+	}
 
 	const previews = await publishDecision(
 		appeal,

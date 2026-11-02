@@ -232,7 +232,7 @@ const shouldInitialiseComponentInstance = (
 			return false;
 		}
 	} else if (
-		componentInstance.elements.root.innerText.length <=
+		componentInstance.elements.root.textContent.length <=
 		componentInstance.options.maximumCharactersBeforeHiding
 	) {
 		return false;
@@ -302,7 +302,7 @@ const createEllipsisSpan = () => {
 	const ellipsisSpan = document.createElement('span');
 	ellipsisSpan.className = CLASSES.ellipsis;
 	ellipsisSpan.setAttribute('aria-hidden', 'true');
-	ellipsisSpan.textContent = '…';
+	ellipsisSpan.textContent = '… ';
 
 	return ellipsisSpan;
 };

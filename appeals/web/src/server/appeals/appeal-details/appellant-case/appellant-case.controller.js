@@ -68,23 +68,19 @@ const allowedFileTypes = (folderPath) => {
 const renderAppellantCase = async (request, response) => {
 	const { errors, currentAppeal } = request;
 
-	if (
-		currentAppeal &&
-		currentAppeal.appellantCaseId !== null &&
-		currentAppeal.appellantCaseId !== undefined
-	) {
-		const appellantCaseResponse = await appellantCaseService
-			.getAppellantCaseFromAppealId(
-				request.apiClient,
-				currentAppeal.appealId,
-				currentAppeal.appellantCaseId
-			)
-			.catch((error) => {
-				return logger.error(error);
-			});
+	if (!currentAppeal) {
+		return response.status(404).render('app/404.njk');
+	}
+
+	try {
+		const appellantCaseResponse = await appellantCaseService.getAppellantCaseFromAppealId(
+			request.apiClient,
+			currentAppeal.appealId
+		);
+
 		const mappedPageContent = await appellantCasePage(
 			appellantCaseResponse,
-			currentAppeal,
+			appellantCaseResponse,
 			stripQueryString(request.originalUrl),
 			getBackLinkUrlFromQuery(request),
 			request.session,
@@ -96,9 +92,10 @@ const renderAppellantCase = async (request, response) => {
 			pageContent: mappedPageContent,
 			errors
 		});
+	} catch (error) {
+		logger.error(error);
+		return response.status(404).render('app/404.njk');
 	}
-
-	return response.status(404).render('app/404.njk');
 };
 
 /**

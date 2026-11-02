@@ -1,9 +1,13 @@
 // @ts-nocheck
 import { request } from '#server/app-test.js';
-import { householdAppeal } from '#tests/appeals/mocks.js';
+import {
+	childAppealsEnforcementBase,
+	enforcementNoticeAppeal,
+	householdAppeal
+} from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { jest } from '@jest/globals';
-
+import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 const validHearingEstimate = {
@@ -28,7 +32,16 @@ const appealWithHearingEstimate = {
 		reportingTime: 1
 	}
 };
-
+const enforcementAppealwithHearingEstimate = {
+	...enforcementNoticeAppeal,
+	hearingEstimate: {
+		id: 1,
+		appealId: 1,
+		preparationTime: 2,
+		sittingTime: 3,
+		reportingTime: 1
+	}
+};
 describe('appeal hearing estimates routes', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
@@ -228,22 +241,32 @@ describe('appeal hearing estimates routes', () => {
 	describe('valid requests', () => {
 		test('returns 201 when creating a hearing estimate with valid values', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-			databaseConnector.hearingEstimate.create.mockResolvedValue({ id: 1 });
-
+			databaseConnector.hearingEstimate.createMany.mockResolvedValue({ count: 1 });
+			databaseConnector.hearingEstimate.findMany.mockResolvedValue([
+				{
+					id: 1,
+					appealId: householdAppeal.id,
+					preparationTime: validHearingEstimate.preparationTime,
+					sittingTime: validHearingEstimate.sittingTime,
+					reportingTime: validHearingEstimate.reportingTime
+				}
+			]);
 			const response = await request
 				.post(`/appeals/${householdAppeal.id}/hearing-estimates`)
 				.send(validHearingEstimate)
 				.set('azureAdUserId', azureAdUserId);
 
 			expect(response.status).toEqual(201);
-			expect(databaseConnector.hearingEstimate.create).toHaveBeenCalledTimes(1);
-			expect(databaseConnector.hearingEstimate.create).toHaveBeenCalledWith({
-				data: {
-					appealId: householdAppeal.id,
-					preparationTime: validHearingEstimate.preparationTime,
-					sittingTime: validHearingEstimate.sittingTime,
-					reportingTime: validHearingEstimate.reportingTime
-				}
+			expect(databaseConnector.hearingEstimate.createMany).toHaveBeenCalledTimes(1);
+			expect(databaseConnector.hearingEstimate.createMany).toHaveBeenCalledWith({
+				data: [
+					{
+						appealId: householdAppeal.id,
+						preparationTime: validHearingEstimate.preparationTime,
+						sittingTime: validHearingEstimate.sittingTime,
+						reportingTime: validHearingEstimate.reportingTime
+					}
+				]
 			});
 		});
 
@@ -252,7 +275,9 @@ describe('appeal hearing estimates routes', () => {
 			databaseConnector.hearingEstimate.findUnique.mockResolvedValue(
 				appealWithHearingEstimate.hearingEstimate
 			);
-			databaseConnector.hearingEstimate.update.mockResolvedValue({ id: 1 });
+			databaseConnector.hearingEstimate.findMany.mockResolvedValue([
+				appealWithHearingEstimate.hearingEstimate
+			]);
 
 			const response = await request
 				.patch(`/appeals/${householdAppeal.id}/hearing-estimates`)
@@ -260,9 +285,9 @@ describe('appeal hearing estimates routes', () => {
 				.set('azureAdUserId', azureAdUserId);
 
 			expect(response.status).toEqual(200);
-			expect(databaseConnector.hearingEstimate.update).toHaveBeenCalledTimes(1);
-			expect(databaseConnector.hearingEstimate.update).toHaveBeenCalledWith({
-				where: { appealId: householdAppeal.id },
+			expect(databaseConnector.hearingEstimate.updateMany).toHaveBeenCalledTimes(1);
+			expect(databaseConnector.hearingEstimate.updateMany).toHaveBeenCalledWith({
+				where: { appealId: { in: [householdAppeal.id] } },
 				data: {
 					preparationTime: validHearingEstimate.preparationTime,
 					sittingTime: validHearingEstimate.sittingTime,
@@ -273,19 +298,144 @@ describe('appeal hearing estimates routes', () => {
 
 		test('returns 200 when deleting a hearing estimate', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue(appealWithHearingEstimate);
+			databaseConnector.hearingEstimate.findMany.mockResolvedValue([
+				appealWithHearingEstimate.hearingEstimate
+			]);
 			databaseConnector.hearingEstimate.findUnique.mockResolvedValue(
 				appealWithHearingEstimate.hearingEstimate
 			);
-			databaseConnector.hearingEstimate.delete.mockResolvedValue({ id: 1 });
+			databaseConnector.hearingEstimate.deleteMany.mockResolvedValue({ count: 1 });
 
 			const response = await request
 				.delete(`/appeals/${householdAppeal.id}/hearing-estimates`)
 				.set('azureAdUserId', azureAdUserId);
 
 			expect(response.status).toEqual(200);
-			expect(databaseConnector.hearingEstimate.delete).toHaveBeenCalledTimes(1);
-			expect(databaseConnector.hearingEstimate.delete).toHaveBeenCalledWith({
-				where: { appealId: householdAppeal.id }
+			expect(databaseConnector.hearingEstimate.deleteMany).toHaveBeenCalledTimes(1);
+			expect(databaseConnector.hearingEstimate.deleteMany).toHaveBeenCalledWith({
+				where: { appealId: { in: [householdAppeal.id] } }
+			});
+		});
+	});
+	describe('valid requests with enforcement linked appeals', () => {
+		const filteredLinkedChildAppeals = childAppealsEnforcementBase.filter(
+			(childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED
+		);
+		const expectedDataWithLinkedChildAppealsIds = [
+			enforcementNoticeAppeal.id,
+			...filteredLinkedChildAppeals.map((childAppeal) => childAppeal.childId)
+		];
+		test('returns 201 when creating a hearing estimate with valid values and with linked child appeals', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...enforcementNoticeAppeal,
+				childAppeals: childAppealsEnforcementBase
+			});
+
+			databaseConnector.hearingEstimate.createMany.mockResolvedValue({ count: 4 });
+
+			const response = await request
+				.post(`/appeals/${enforcementNoticeAppeal.id}/hearing-estimates`)
+				.send(validHearingEstimate)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(201);
+			expect(databaseConnector.hearingEstimate.createMany).toHaveBeenCalledTimes(1);
+			const expectedChildDate = filteredLinkedChildAppeals.map((childAppeal) => ({
+				appealId: childAppeal.childId,
+				preparationTime: validHearingEstimate.preparationTime,
+				sittingTime: validHearingEstimate.sittingTime,
+				reportingTime: validHearingEstimate.reportingTime
+			}));
+			const expectedData = [
+				{
+					appealId: enforcementNoticeAppeal.id,
+					preparationTime: validHearingEstimate.preparationTime,
+					sittingTime: validHearingEstimate.sittingTime,
+					reportingTime: validHearingEstimate.reportingTime
+				},
+				...expectedChildDate
+			];
+			expect(databaseConnector.hearingEstimate.createMany).toHaveBeenCalledWith({
+				data: expectedData
+			});
+		});
+
+		test('returns 200 when updating a hearing estimate with valid values and with linked child appeals', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...enforcementAppealwithHearingEstimate,
+				childAppeals: childAppealsEnforcementBase
+			});
+			databaseConnector.hearingEstimate.findMany.mockResolvedValue([
+				enforcementAppealwithHearingEstimate.hearingEstimate,
+				...filteredLinkedChildAppeals.map((childAppeal) => ({
+					id: childAppeal.childId,
+					appealId: childAppeal.childId,
+					preparationTime: validHearingEstimate.preparationTime,
+					sittingTime: validHearingEstimate.sittingTime,
+					reportingTime: validHearingEstimate.reportingTime
+				}))
+			]);
+			databaseConnector.hearingEstimate.updateMany.mockResolvedValue({ id: 1 });
+
+			const response = await request
+				.patch(`/appeals/${enforcementAppealwithHearingEstimate.id}/hearing-estimates`)
+				.send(validHearingEstimate)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+			expect(databaseConnector.hearingEstimate.findMany).toHaveBeenCalledTimes(1);
+			expect(databaseConnector.hearingEstimate.findMany).toHaveBeenCalledWith({
+				where: {
+					appealId: {
+						in: expectedDataWithLinkedChildAppealsIds
+					}
+				}
+			});
+			expect(databaseConnector.hearingEstimate.updateMany).toHaveBeenCalledTimes(1);
+			expect(databaseConnector.hearingEstimate.updateMany).toHaveBeenCalledWith({
+				where: {
+					appealId: {
+						in: expectedDataWithLinkedChildAppealsIds
+					}
+				},
+				data: {
+					preparationTime: validHearingEstimate.preparationTime,
+					sittingTime: validHearingEstimate.sittingTime,
+					reportingTime: validHearingEstimate.reportingTime
+				}
+			});
+		});
+
+		test('returns 200 when deleting a hearing estimate and with linked child appeals', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...enforcementAppealwithHearingEstimate,
+				childAppeals: childAppealsEnforcementBase
+			});
+
+			databaseConnector.hearingEstimate.findMany.mockResolvedValue([
+				enforcementAppealwithHearingEstimate.hearingEstimate,
+				...filteredLinkedChildAppeals.map((childAppeal) => ({
+					id: childAppeal.childId,
+					appealId: childAppeal.childId,
+					preparationTime: validHearingEstimate.preparationTime,
+					sittingTime: validHearingEstimate.sittingTime,
+					reportingTime: validHearingEstimate.reportingTime
+				}))
+			]);
+			databaseConnector.hearingEstimate.deleteMany.mockResolvedValue({ count: 4 });
+
+			const response = await request
+				.delete(`/appeals/${enforcementAppealwithHearingEstimate.id}/hearing-estimates`)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+			expect(databaseConnector.hearingEstimate.deleteMany).toHaveBeenCalledTimes(1);
+			expect(databaseConnector.hearingEstimate.deleteMany).toHaveBeenCalledWith({
+				where: {
+					appealId: {
+						in: expectedDataWithLinkedChildAppealsIds
+					}
+				}
 			});
 		});
 	});

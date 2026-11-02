@@ -32,10 +32,10 @@ export const requestChangeOfProcedureType = async (req, res) => {
 	try {
 		switch (data.appealProcedure) {
 			case 'written':
-				await changeProcedureToWritten(data, appealId);
+				await changeProcedureToWritten(data, appealId, azureAdUserId);
 				break;
 			case 'hearing':
-				await changeProcedureToHearing(data, appealId);
+				await changeProcedureToHearing(data, appealId, azureAdUserId);
 				break;
 			case 'inquiry':
 				await changeProcedureToInquiry(data, appealId);
@@ -58,7 +58,8 @@ export const requestChangeOfProcedureType = async (req, res) => {
 				data.caseManagementConferenceDueDate,
 				// @ts-ignore
 				data.address,
-				data.eventDate
+				data.eventDate,
+				azureAdUserId
 			);
 
 			await createAuditTrail({

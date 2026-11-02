@@ -4,9 +4,14 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate, dateISOStringToDisplayTime12hr } from '#lib/dates.js';
 import { appealProcedureNameToLabelText } from '#lib/procedure-type-display-name-formatter.js';
 import { APPEAL_TYPE, PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common.js';
+import { AUDIT_TRAIL_REP_COMMENT_STATUS_INVALID } from '@pins/appeals/constants/support.js';
 import { utcToZonedTime } from 'date-fns-tz';
 import * as interestedPartyCommentsService from '../representations/interested-party-comments/interested-party-comments.service.js';
-import { mapMessageContent, tryMapUsers } from './audit.mapper.js';
+import {
+	mapMessageContent,
+	renderRejectedIpCommentComponent,
+	tryMapUsers
+} from './audit.mapper.js';
 import { getAppealAudit, getAppealAuditNotifications } from './audit.service.js';
 /**
  * @typedef {import('@pins/appeals.api/src/server/openapi-types.js').AuditNotifications} AuditNotifications
@@ -45,6 +50,10 @@ export const renderAudit = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
+	const REJECTED_COMMENT_AUDIT_STRINGS = Array.from(
+		new Set([AUDIT_TRAIL_REP_COMMENT_STATUS_INVALID, 'Interested party comment rejected'])
+	);
+
 	const auditTrails = await Promise.all(
 		auditInfo.map(async (audit) => {
 			const details = await mapMessageContent(
@@ -56,7 +65,15 @@ export const renderAudit = async (request, response) => {
 			);
 			let detailsHtml = details || '';
 
-			if (
+			const matchedPrefix = REJECTED_COMMENT_AUDIT_STRINGS.find((str) =>
+				audit.details.startsWith(str)
+			);
+			if (matchedPrefix && audit.representation) {
+				detailsHtml = await renderRejectedIpCommentComponent(
+					audit.representation,
+					nunjucksEnvironments
+				);
+			} else if (
 				appeal.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE &&
 				detailsHtml.startsWith('Appeal reviewed as valid on')
 			) {

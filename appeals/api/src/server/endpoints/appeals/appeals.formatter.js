@@ -14,6 +14,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import {
 	isExpeditedAppealType,
+	isGenericAppealType,
 	isS78ExpeditedAppealType
 } from '@pins/appeals/utils/appeal-type-checks.js';
 import { getSingularRepresentation } from '@pins/appeals/utils/representations.js';
@@ -48,10 +49,9 @@ const formatAppeal = (appeal) => {
 		procedureType: appeal.procedureType?.name,
 		createdAt: appeal.caseCreatedDate,
 		localPlanningDepartment: appeal.lpa?.name || '',
-		documentationSummary: formatDocumentationSummary(appeal),
 		appealTimetable: formatAppealTimetable(appeal),
 		planningApplicationReference: appeal.applicationReference,
-		isHearingSetup: !!appeal.hearing && !!appeal.hearing?.addressId,
+		isHearingSetup: !!appeal.hearing,
 		hasHearingAddress: !!appeal.hearing?.addressId,
 		numberOfResidencesNetChange: appeal.appellantCase?.numberOfResidencesNetChange || null,
 		isInquirySetup: !!appeal.inquiry,
@@ -104,7 +104,7 @@ const formatPersonalListItem = async ({
 		appealTimetable: formatAppealTimetable(appeal),
 		isParentAppeal: linkType === 'parent',
 		isChildAppeal: linkType === 'child',
-		isHearingSetup: !!hearing && !!hearing?.addressId,
+		isHearingSetup: !!hearing,
 		hasHearingAddress: !!hearing?.addressId,
 		awaitingLinkedAppeal,
 		costsDecision: appealIsCompleteOrWithdrawn ? await formatCostsDecision(appeal) : null,
@@ -123,7 +123,7 @@ const formatPersonalListItem = async ({
 };
 
 /**
- * @param {AppealListSelected|PersonalListAppeal} appeal
+ * @param {PersonalListAppeal} appeal
  * @returns {DocumentationSummary}
  * */
 const formatDocumentationSummary = (appeal) => {
@@ -162,7 +162,11 @@ const formatDocumentationSummary = (appeal) => {
 		appellantCase: {
 			status: formatAppellantCaseDocumentationStatus(appeal),
 			dueDate: appeal.caseExtensionDate && appeal.caseExtensionDate?.toISOString(),
-			receivedAt: appeal.caseCreatedDate?.toISOString()
+			receivedAt: (
+				(isGenericAppealType(appeal.appealType?.type)
+					? /** @type {any} */ (appeal.appellantCase)?.caseSubmittedDate
+					: appeal.caseCreatedDate) || appeal.caseCreatedDate
+			)?.toISOString()
 		},
 		lpaQuestionnaire: {
 			status: formatLpaQuestionnaireDocumentationStatus(appeal),

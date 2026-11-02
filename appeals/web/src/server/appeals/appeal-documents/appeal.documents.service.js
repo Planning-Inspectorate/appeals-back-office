@@ -136,6 +136,8 @@ export const getDocumentRedactionStatuses = async (apiClient) => {
  * @property {DocumentDetailAPIDocument} document
  * @property {string} [sharingDocumentType]
  * @property {boolean} [inviteResponses]
+ * @property {boolean} [shareMultipleDocuments]
+ * @property {string?} [costsCategory]
  * */
 
 /**
@@ -159,7 +161,9 @@ export const updateDocument = async (apiClient, appealId, documentDetail) => {
 				json: {
 					document: documentDetail.document,
 					sharingDocumentType: documentDetail.sharingDocumentType,
-					inviteResponses: documentDetail.inviteResponses
+					inviteResponses: documentDetail.inviteResponses,
+					costsCategory: documentDetail.costsCategory,
+					shareMultipleDocuments: documentDetail.shareMultipleDocuments
 				}
 			})
 			.json();
@@ -183,6 +187,8 @@ export const updateDocument = async (apiClient, appealId, documentDetail) => {
 /**
  * @typedef {Object} DocumentDetailsAPIPatchRequest
  * @property {DocumentDetailsAPIDocument[]} documents
+ * @property {string} [sharingDocumentType]
+ * @property {boolean} [shareMultipleDocuments] *
  */
 
 /**
@@ -211,6 +217,7 @@ export const updateDocuments = async (apiClient, appealId, documentDetails) => {
 				? error.message
 				: 'An error occurred while attempting to patch the documents API endpoint'
 		);
+		throw error;
 	}
 };
 

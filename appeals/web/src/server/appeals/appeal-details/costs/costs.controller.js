@@ -28,6 +28,7 @@ import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import logger from '#lib/logger.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { FRONT_OFFICE_DASHBOARD_PATH_STUBS } from '@pins/appeals/constants/common.js';
 import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { addWeeks, format } from 'date-fns';
 import { capitalize, upperCase } from 'lodash-es';
@@ -722,22 +723,41 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
 	}
 
 	const inviteResponses = session?.inviteResponses?.toLowerCase() === 'yes';
-
-	const notifyPreview = await generateNotifyPreview(request.apiClient, notifyTemplateName, {
+	const commonPersonalisation = {
 		appeal_reference_number: currentAppeal?.appealReference,
 		site_address: address || '',
 		lpa_reference: currentAppeal?.planningApplicationReference || '',
 		enforcement_reference: currentAppeal.enforcementNotice?.appellantCase?.reference || '',
 		contact_email: email || '',
-		deadline: deadline,
-		responses_invited: inviteResponses,
-		dashboard_link: 'appeals'
-	});
+		deadline: deadline
+	};
+	const inviteCommentsApellant = inviteResponses && costsCategory === 'lpa';
+	const inviteCommentsLpa = inviteResponses && costsCategory === 'appellant';
 
-	const pageContent = shareDocumentCheckAndConfirmPage(
+	const appellantNotifyPreview = await generateNotifyPreview(
+		request.apiClient,
+		notifyTemplateName,
+		{
+			...commonPersonalisation,
+			responses_invited: !!inviteCommentsApellant,
+			dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT
+		}
+	);
+
+	const lpaNotifyPreview = await generateNotifyPreview(request.apiClient, notifyTemplateName, {
+		...commonPersonalisation,
+		responses_invited: !!inviteCommentsLpa,
+		dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA
+	});
+	const emailPreviews = {
+		appellant: appellantNotifyPreview.renderedHtml,
+		lpa: lpaNotifyPreview.renderedHtml
+	};
+
+	const pageContent = await shareDocumentCheckAndConfirmPage(
 		backLinkUrl,
 		documentInfo.latestDocumentVersion,
-		notifyPreview,
+		emailPreviews,
 		session.inviteResponses
 	);
 
@@ -752,7 +772,7 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postShareDocumentCheckAndConfirm = async (request, response) => {
-	const { appealId, documentId, costsDocumentType } = request.params;
+	const { appealId, documentId, costsDocumentType, costsCategory } = request.params;
 	try {
 		/** @type {import('#appeals/appeal-documents/appeal.documents.service.js').DocumentDetailAPIPatchRequest} */
 		const apiRequest = {
@@ -761,6 +781,7 @@ export const postShareDocumentCheckAndConfirm = async (request, response) => {
 				isShared: true
 			},
 			inviteResponses: request.session?.inviteResponses === 'yes',
+			costsCategory: costsCategory,
 			sharingDocumentType: `costs-${costsDocumentType}`
 		};
 
@@ -775,7 +796,7 @@ export const postShareDocumentCheckAndConfirm = async (request, response) => {
 	}
 
 	delete request.session.inviteResponses;
-	delete request.session.costsDocumentTypes;
+	delete request.session.costsDocumentType;
 
 	addNotificationBannerToSession({
 		session: request.session,

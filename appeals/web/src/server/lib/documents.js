@@ -1,4 +1,4 @@
-import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
+import { APPEAL_DOCUMENT_TYPE, REDACTION_STATUS } from '@planning-inspectorate/data-model';
 
 /**
  * @param {string} folderPath
@@ -11,3 +11,48 @@ export function folderIsAdditionalDocuments(folderPath) {
 		documentType === APPEAL_DOCUMENT_TYPE.LPA_CASE_CORRESPONDENCE
 	);
 }
+
+/** @type {string[]} */
+const supportingHearingInquiryInquiryEventDocType = [
+	APPEAL_DOCUMENT_TYPE.GENERAL_SUPPORTING,
+	APPEAL_DOCUMENT_TYPE.HEARING_PROCESS,
+	APPEAL_DOCUMENT_TYPE.INQUIRY_CORE,
+	APPEAL_DOCUMENT_TYPE.INQUIRY_POST_EVENT
+];
+/**
+ *
+ * @param {Object} params
+ * @param {string} params.costsDocumentType
+ * @param {string | undefined} params.latestVersionDocumentType
+ * @returns {string}
+ */
+export function getUrlSuffix({ costsDocumentType, latestVersionDocumentType }) {
+	// costsDocumentType is for costs and latestVersionDocument is for checking if
+	// the document type is supporting, inquiry, inquiry event or hearing
+	if (costsDocumentType === 'withdrawal') return '/check-your-answers';
+	if (
+		latestVersionDocumentType &&
+		supportingHearingInquiryInquiryEventDocType.includes(latestVersionDocumentType)
+	)
+		return '/invite-main-party-comments';
+	return '/invite-responses';
+}
+
+/**
+ * @param {any} document * @returns {boolean}
+ * */
+export const isUnpublishedDocument = (document) =>
+	document.latestDocumentVersion?.published === false;
+
+/**
+ * @param {any} document * @returns {boolean}
+ * */
+const isShareableDocument = (document) =>
+	document.latestDocumentVersion?.redactionStatus?.toLowerCase() !== REDACTION_STATUS.UNREDACTED &&
+	document.latestDocumentVersion?.published === false;
+
+/** *
+ * @param {{ documents: any[] }} folder
+ * @returns {any[]}
+ * */
+export const getShareableDocuments = (folder) => folder.documents.filter(isShareableDocument);

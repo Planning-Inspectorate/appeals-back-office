@@ -154,6 +154,7 @@ export function addressKnownPage(appealData, backLinkUrl, values) {
 		id: 'address-known',
 		legendText: 'Do you know the address of where the inquiry will take place?',
 		legendIsPageHeading: true,
+		legendTextSize: 'l',
 		value: values?.addressKnown ?? ''
 	});
 

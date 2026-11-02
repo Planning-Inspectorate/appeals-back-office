@@ -1,5 +1,6 @@
 import usersService from '#appeals/appeal-users/users-service.js';
 import { gigabyte, kilobyte, megabyte } from '#appeals/appeal.constants.js';
+import { isFeatureActive } from '#common/feature-flags.js';
 import { permissionNames } from '#environment/permissions.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import {
@@ -8,7 +9,7 @@ import {
 	dateISOStringToDisplayTime24hr,
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
-import { folderIsAdditionalDocuments } from '#lib/documents.js';
+import { folderIsAdditionalDocuments, getUrlSuffix } from '#lib/documents.js';
 import {
 	createNotificationBanner,
 	documentDateInput,
@@ -17,13 +18,21 @@ import {
 } from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
-import { redactionStatusIdToName } from '#lib/redaction-statuses.js';
+import {
+	getDocumentDisplayRedactionStatus,
+	redactionStatusIdToName
+} from '#lib/redaction-statuses.js';
 import config from '@pins/appeals.web/environment/config.js';
-import { APPEAL_TYPE, DOCUMENTS_PAGE_SIZE } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_TYPE,
+	DOCUMENTS_PAGE_SIZE,
+	FEATURE_FLAG_NAMES
+} from '@pins/appeals/constants/common.js';
 import {
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_REDACTED_STATUS,
-	APPEAL_VIRUS_CHECK_STATUS
+	APPEAL_VIRUS_CHECK_STATUS,
+	REDACTION_STATUS
 } from '@planning-inspectorate/data-model';
 import { capitalize } from 'lodash-es';
 
@@ -797,7 +806,7 @@ export function mapFolderDocumentInformationHtmlProperty(
 	const isShared = document?.latestDocumentVersion?.published;
 	const sharedTagHtml =
 		canShare && isShared
-			? `<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong>`
+			? `<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1" aria-label="Shared document">Shared</strong>`
 			: '';
 
 	if (document?.id) {
@@ -1025,7 +1034,9 @@ export function manageFolderPage({
 			...errorSummaryPageComponents,
 			...(hasMultipleButtons ? [buttonWrapperOpen] : []),
 			...(editable ? [buttonComponent] : []),
-			...(editable && shareAllLinkUrl ? [shareAllButtonComponent] : []),
+			...(isFeatureActive(FEATURE_FLAG_NAMES.SHARE_MULTIPLE_DOCS) && editable && shareAllLinkUrl
+				? [shareAllButtonComponent]
+				: []),
 			...(hasMultipleButtons ? [buttonWrapperClose] : []),
 			{
 				type: 'table',
@@ -1078,7 +1089,7 @@ export function manageFolderPage({
 									text: dateISOStringToDisplayDate(document?.latestDocumentVersion?.dateReceived)
 								},
 						...(canViewRedactionColumn
-							? [{ text: document?.latestDocumentVersion?.redactionStatus }]
+							? [{ text: getDocumentDisplayRedactionStatus(document, folder?.path) }]
 							: []),
 						...(editable
 							? [mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEditUrl, canShare)]
@@ -1094,6 +1105,94 @@ export function manageFolderPage({
 	}
 
 	return pageContent;
+}
+
+/**
+ * @param {Object} params
+ * @param {import('@pins/express/types/express.js').Request} params.request
+ * @param {number} params.numShareableDocuments
+ * @param {number} params.totalFolderSize
+ * @param {string} params.backLinkUrl
+ * @param {{ renderedHtml: string }[]} [params.notifyPreviews]
+ * @returns {PageContent}
+ */
+export function shareAllDocumentsPage({
+	request,
+	numShareableDocuments,
+	totalFolderSize,
+	backLinkUrl,
+	notifyPreviews = []
+}) {
+	if (numShareableDocuments < 1) {
+		/** @type {PageContent} */
+		const noShareableDocumentsPageContent = {
+			title: 'Check your answers',
+			backLinkText: 'Back',
+			backLinkUrl: backLinkUrl,
+			heading: `You cannot share any documents`,
+			pageComponents: []
+		};
+		noShareableDocumentsPageContent.pageComponents?.push(
+			{
+				type: 'html',
+				parameters: {
+					html: '<p class="govuk-body">You can only share documents that are set to redacted or redaction not needed.</p>'
+				}
+			},
+			{
+				type: 'html',
+				parameters: {
+					html: `<a href="${backLinkUrl}">Review redaction statuses</a>`
+				}
+			}
+		);
+		return noShareableDocumentsPageContent;
+	} else {
+		/** @type {PageContent} */
+		const pageContent = {
+			title: 'Check your answers',
+			backLinkText: 'Back',
+			backLinkUrl: backLinkUrl,
+			heading: `Confirm you want to share ${numShareableDocuments} of ${totalFolderSize} documents`,
+			pageComponents: [],
+			submitButtonText: 'Share documents',
+			submitButtonProperties: {
+				wrapperHtml: {
+					opening: `<form method="POST" action="${request.originalUrl}">`,
+					closing: '</form>'
+				},
+				text: 'Share documents',
+				type: 'submit'
+			}
+		};
+
+		pageContent.pageComponents?.push({
+			type: 'html',
+			parameters: {
+				html: '<p class="govuk-body">You can only share documents that are set to redacted or redaction not needed.</p>'
+			}
+		});
+
+		if (notifyPreviews?.length > 1) {
+			pageContent.pageComponents?.push(
+				{
+					type: 'details',
+					parameters: {
+						summaryText: 'Preview email to appellant',
+						html: notifyPreviews[0]?.renderedHtml
+					}
+				},
+				{
+					type: 'details',
+					parameters: {
+						summaryText: 'Preview email to LPA',
+						html: notifyPreviews[1]?.renderedHtml
+					}
+				}
+			);
+		}
+		return pageContent;
+	}
 }
 
 /**
@@ -1184,7 +1283,7 @@ function mapDocumentNameHtmlProperty(document, documentVersion, canShare = false
 	const isShared = documentVersion.published;
 	const sharedTagHtml =
 		canShare && isShared
-			? `<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1">Shared</strong>`
+			? `<strong class="govuk-tag govuk-tag--blue govuk-!-margin-right-1" aria-label="Shared document">Shared</strong>`
 			: '';
 
 	if (virusCheckStatus.checked && virusCheckStatus.safe) {
@@ -1298,7 +1397,7 @@ export async function manageDocumentPage({
 		`${baseUrl}change-document-name`
 	);
 
-	const headingText = canShare ? 'Document details' : document?.name || '';
+	const headingText = document?.name || 'Document details';
 
 	const session = request.session;
 	const latestVersion = getDocumentLatestVersion(document);
@@ -1343,14 +1442,56 @@ export async function manageDocumentPage({
 	}
 
 	const isShared = latestVersion?.published;
+	const isUnredacted =
+		REDACTION_STATUS.UNREDACTED === latestVersion?.redactionStatus.toLowerCase() ||
+		latestVersion?.redactionStatus === null;
 
 	if (canShare && !isShared) {
 		const { costsDocumentType } = request.params;
-		const shareUrl =
-			costsDocumentType === 'withdrawal'
-				? request.originalUrl + '/check-your-answers'
-				: request.originalUrl + '/invite-responses';
+		const { documentType: latestVersionDocumentType } = latestVersion ?? {};
 
+		const shareUrl =
+			request.originalUrl + getUrlSuffix({ costsDocumentType, latestVersionDocumentType });
+
+		/** @type {PageComponent} */
+		const shareDocumentButton = {
+			type: 'button',
+			parameters: {
+				text: 'Share document',
+				href: shareUrl,
+				classes: 'govuk-button--secondary'
+			}
+		};
+
+		/** @type {PageComponent} */
+		const redactDocumentButton = {
+			type: 'button',
+			parameters: {
+				text: 'Redact document',
+				href: changeDetailsUrl,
+				classes: 'govuk-button--secondary'
+			}
+		};
+
+		pageComponents.push(
+			{
+				type: 'html',
+				parameters: { html: '<h2 class="govuk-heading-m">Current version</h2>' }
+			},
+			isUnredacted
+				? {
+						type: 'html',
+						parameters: {
+							html: '<p class="govuk-body">This document is unredacted and cannot be shared.</p>'
+						}
+					}
+				: {
+						type: 'html',
+						parameters: { html: '<p class="govuk-body">This document is not shared.</p>' }
+					},
+			isUnredacted ? redactDocumentButton : shareDocumentButton
+		);
+	} else if (canShare && isShared) {
 		pageComponents.push(
 			{
 				type: 'html',
@@ -1358,14 +1499,8 @@ export async function manageDocumentPage({
 			},
 			{
 				type: 'html',
-				parameters: { html: '<p class="govuk-body">This document is not shared</p>' }
-			},
-			{
-				type: 'button',
 				parameters: {
-					text: 'Share document',
-					href: shareUrl,
-					classes: 'govuk-!-margin-bottom-7'
+					html: '<strong class="govuk-tag govuk-tag--blue govuk-!-margin-bottom-4" aria-label="Shared document">Shared</strong>'
 				}
 			}
 		);
@@ -1400,7 +1535,7 @@ export async function manageDocumentPage({
 				{
 					key: { text: 'Version' },
 					value: {
-						html: `${versionId} ${canShare && isShared ? '<br><strong class="govuk-tag govuk-tag--blue govuk-!-margin-top-1">Shared</strong>' : ''}`
+						html: `${versionId}`
 					}
 				}
 			]
@@ -1465,7 +1600,7 @@ export async function manageDocumentPage({
 		documentSummary.parameters.rows.push({
 			key: { text: 'Redaction status' },
 			value: {
-				text: getDocumentLatestVersion(document)?.redactionStatus
+				text: getDocumentDisplayRedactionStatus(document, folder?.path)
 			},
 			actions: {
 				items: [
@@ -1496,7 +1631,7 @@ export async function manageDocumentPage({
 			parameters: {
 				id: 'upload-updated-document',
 				href: uploadNewVersionUrl,
-				classes: 'govuk-!-margin-right-2',
+				classes: `govuk-!-margin-right-2${canShare ? ' govuk-button--secondary' : ''}`,
 				html: `Upload a new version<span class="govuk-visually-hidden"> of ${document.name}</span>`
 			}
 		};

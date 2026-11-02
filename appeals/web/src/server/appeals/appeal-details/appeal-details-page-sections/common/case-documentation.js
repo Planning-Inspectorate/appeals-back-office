@@ -1,6 +1,6 @@
 import { APPEAL_CASE_PRE_STATEMENTS_STATUS } from '#appeals/appeal.constants.js';
 import { isFeatureActive } from '#common/feature-flags.js';
-import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import { isChildAppeal, isEnforcementChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { isDefined } from '#lib/ts-utilities.js';
 import { FEATURE_FLAG_NAMES, PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common.js';
 
@@ -18,7 +18,8 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 	const statementsCompleted = !APPEAL_CASE_PRE_STATEMENTS_STATUS.includes(
 		appealDetails?.appealStatus
 	);
-
+	const isEnforcementChild = isEnforcementChildAppeal(appealDetails);
+	const isChild = isChildAppeal(appealDetails);
 	return {
 		type: 'table',
 		parameters: {
@@ -31,10 +32,14 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 			rows: [
 				mappedData.appeal.appellantCase.display.tableItem,
 				caseStarted ? mappedData.appeal.lpaQuestionnaire.display.tableItem : undefined,
-				...(isFeatureActive(FEATURE_FLAG_NAMES.SHARING_SUPPORTING_DOCUMENTS)
+				...(isFeatureActive(FEATURE_FLAG_NAMES.SHARING_SUPPORTING_DOCUMENTS) &&
+				!isEnforcementChild &&
+				caseStarted
 					? [mappedData.appeal.supportingDocuments.display.tableItem]
 					: []),
-				...(isFeatureActive(FEATURE_FLAG_NAMES.SHARING_HEARING_DOCUMENTS) && isHearingProcedureType
+				...(isFeatureActive(FEATURE_FLAG_NAMES.SHARING_HEARING_DOCUMENTS) &&
+				isHearingProcedureType &&
+				!isEnforcementChild
 					? [mappedData.appeal.hearingDocuments.display.tableItem]
 					: []),
 				...(isFeatureActive(FEATURE_FLAG_NAMES.FEATURE_FLAG_SHARING_INQUIRY_DOCUMENTS) &&
@@ -46,7 +51,7 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 				isFeatureActive(FEATURE_FLAG_NAMES.SHARING_INQUIRY_EVENT_DOCUMENTS)
 					? [mappedData.appeal.inquiryEventDocuments.display.tableItem]
 					: []),
-				...(!isChildAppeal(appealDetails) && !isExpeditedAppealType
+				...(!isChild && !isExpeditedAppealType
 					? [
 							caseStarted ? mappedData.appeal.appellantStatement.display.tableItem : undefined,
 							caseStarted ? mappedData.appeal.lpaStatement.display.tableItem : undefined,
@@ -67,7 +72,7 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 								: [])
 						]
 					: []),
-				mappedData.appeal.environmentalAssessment.display.tableItem
+				...(!isChild ? [mappedData.appeal.environmentalAssessment.display.tableItem] : [])
 			].filter(isDefined),
 			firstCellIsHeader: true,
 			attributes: {

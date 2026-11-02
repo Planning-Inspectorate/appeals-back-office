@@ -14,7 +14,6 @@ import allocationDetailsRouter from './allocation-details/allocation-details.rou
 import * as controller from './appeal-details.controller.js';
 import {
 	validateAppeal,
-	validateAppealExists,
 	validateAppealForAppealDetailsPage,
 	validateAppealWithInclude
 } from './appeal-details.middleware.js';
@@ -124,7 +123,7 @@ router.use(
 );
 router.use(
 	'/:appealId/costs',
-	validateAppealWithInclude(['appellantCase']),
+	validateAppealWithInclude(['appellantCase', 'address']),
 	assertUserHasPermission(permissionNames.viewCaseDetails, permissionNames.viewAssignedCaseDetails),
 	costsRouter
 );
@@ -132,7 +131,7 @@ router.use(
 if (isFeatureActive(FEATURE_FLAG_NAMES.SHARING_SUPPORTING_DOCUMENTS)) {
 	router.use(
 		'/:appealId/supporting-documents',
-		validateAppealExists,
+		validateAppealWithInclude(['appellantCase']),
 		assertUserHasPermission(
 			permissionNames.viewCaseDetails,
 			permissionNames.viewAssignedCaseDetails
@@ -143,7 +142,7 @@ if (isFeatureActive(FEATURE_FLAG_NAMES.SHARING_SUPPORTING_DOCUMENTS)) {
 if (isFeatureActive(FEATURE_FLAG_NAMES.SHARING_INQUIRY_EVENT_DOCUMENTS)) {
 	router.use(
 		'/:appealId/inquiry-event-documents',
-		validateAppealExists,
+		validateAppealWithInclude(['appellantCase']),
 		assertUserHasPermission(
 			permissionNames.viewCaseDetails,
 			permissionNames.viewAssignedCaseDetails
@@ -154,7 +153,7 @@ if (isFeatureActive(FEATURE_FLAG_NAMES.SHARING_INQUIRY_EVENT_DOCUMENTS)) {
 if (isFeatureActive(FEATURE_FLAG_NAMES.SHARING_HEARING_DOCUMENTS)) {
 	router.use(
 		'/:appealId/hearing-documents',
-		validateAppealExists,
+		validateAppealWithInclude(['appellantCase']),
 		assertUserHasPermission(
 			permissionNames.viewCaseDetails,
 			permissionNames.viewAssignedCaseDetails
@@ -196,7 +195,6 @@ router.use(
 );
 router.use(
 	'/:appealId/internal-correspondence',
-	validateAppeal,
 	assertUserHasPermission(permissionNames.viewCaseList),
 	internalCorrespondenceRouter
 );
@@ -288,7 +286,7 @@ router.use(
 
 router.use(
 	'/:appealId/rule-6-parties',
-	validateAppealWithInclude(['appealRule6Parties']),
+	validateAppealWithInclude(['appealRule6Parties', 'appealType']),
 	assertUserHasPermission(permissionNames.updateCase),
 	rule6PartiesRouter
 );

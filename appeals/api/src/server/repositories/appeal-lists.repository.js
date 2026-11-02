@@ -106,26 +106,6 @@ const appealListSelect = {
 			proofOfEvidenceAndWitnessesDueDate: true,
 			caseManagementConferenceDueDate: true
 		}
-	},
-	representations: {
-		select: {
-			representationType: true,
-			representedId: true,
-			status: true,
-			dateCreated: true,
-			isRedacted: true
-		}
-	},
-	appealRule6Parties: {
-		select: {
-			id: true,
-			serviceUserId: true,
-			serviceUser: {
-				select: {
-					organisationName: true
-				}
-			}
-		}
 	}
 };
 

@@ -13,10 +13,11 @@ import { isCurrentStatus } from '#utils/current-status.js';
 import { getFormattedReasons } from '#utils/email-formatter.js';
 import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import { allLpaQuestionnaireOutcomesAreComplete } from '#utils/is-awaiting-linked-appeal.js';
-import { isLinkedAppeal, isParentAppeal } from '#utils/is-linked-appeal.js';
+import { isChildAppeal, isLinkedAppeal, isParentAppeal } from '#utils/is-linked-appeal.js';
 import { getChildAppeals } from '#utils/link-appeals.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { setPersonalList } from '#utils/update-personal-list.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { DAYTIME_HOUR, DAYTIME_MINUTE } from '@pins/appeals/constants/dates.js';
 import {
@@ -149,6 +150,11 @@ const updateLPAQuestionnaireValidationOutcome = async (
 			azureAdUserId,
 			details: stringTokenReplacement(AUDIT_TRAIL_LPAQ_INCOMPLETE, ['LPA questionnaire'])
 		});
+
+		// no transitionState call for incomplete lpaq so we need to reset the personal list if there is an updated lpaq due date
+		if (lpaQuestionnaireDueDate && !isChildAppeal(appeal)) {
+			await setPersonalList({ appealId });
+		}
 	}
 
 	if (isOutcomeComplete(validationOutcome.name)) {

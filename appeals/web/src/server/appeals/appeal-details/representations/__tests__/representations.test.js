@@ -796,113 +796,115 @@ describe('representations', () => {
 					}
 				);
 			});
+			it.each([
+				[
+					'commentsAndStatementsShared',
+					'Comments and statements shared',
+					[
+						{ appealId, representationType: 'appellant_statement' },
+						{ appealId, representationType: 'lpa_statement' },
+						{ appealId, representationType: 'comment' }
+					]
+				],
+				[
+					'statementsShared',
+					'Statements shared',
+					[
+						{ appealId, representationType: 'appellant_statement' },
+						{ appealId, representationType: 'lpa_statement' }
+					]
+				],
+				['commentsShared', 'Comments shared', [{ appealId, representationType: 'comment' }]],
+				[
+					'caseProgressed',
+					'Case progressed',
+					[{ appealId, representationType: 'lpa_final_comment' }]
+				]
+			])(
+				'should show the "%s" (%s) banner at STATEMENTS status based on the published representations',
+				async (_bannerKey, expectedBannerText, publishedReps) => {
+					const appealAtStatements = {
+						...appealData,
+						appealId,
+						appealType: APPEAL_TYPE.S78,
+						procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+						appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+						hearing: {},
+						documentationSummary: {}
+					};
+					nock('http://test/')
+						.get(`/appeals/${appealId}?include=all`)
+						.reply(200, appealAtStatements)
+						.persist();
+					nock('http://test/')
+						.get(`/appeals/${appealId}/page-details`)
+						.reply(200, appealAtStatements)
+						.persist();
+					nock('http://test/').post(`/appeals/${appealId}/reps/publish`).reply(200, publishedReps);
 
-			it('should show "Comments and statements shared" banner when at STATEMENTS status with published statements and IP comments', async () => {
-				const numIpComments = 1;
-				const appealAtStatements = {
-					...appealData,
-					appealId,
-					appealType: APPEAL_TYPE.S78,
-					procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
-					appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
-					hearing: {},
-					documentationSummary: {
-						lpaStatement: {
-							representationStatus: 'valid'
-						},
-						appellantStatement: {
-							representationStatus: 'valid'
-						},
-						ipComments: {
-							representationStatus: 'valid',
-							counts: {
-								valid: numIpComments
-							}
-						}
-					}
-				};
+					const sharePostResponse = await request.post(`${baseUrl}/${appealId}/share`).send({});
+
+					expect(sharePostResponse.statusCode).toBe(302);
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+					const notificationBannerHtml = parseHtml(response.text, {
+						rootElement: '.govuk-notification-banner--success',
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(notificationBannerHtml).toContain('Success</h3>');
+					expect(notificationBannerHtml).toContain(expectedBannerText);
+				}
+			);
+		});
+
+		describe('evidence status', () => {
+			beforeEach(() => {
+				nock.cleanAll();
+				// @ts-ignore
+				usersService.getUsersByRole = jest.fn().mockResolvedValue(activeDirectoryUsersData);
+				// @ts-ignore
+				usersService.getUserById = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
+				// @ts-ignore
+				usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
 				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
-					.reply(200, appealAtStatements)
+					.get('/appeals/1/reps?type=appellant_final_comment,lpa_final_comment')
+					.reply(200, { itemCount: 0, items: [] })
 					.persist();
 				nock('http://test/')
-					.get(`/appeals/${appealId}/page-details`)
-					.reply(200, appealAtStatements)
+					.get(
+						'/appeals/1/reps?type=appellant_final_comment,lpa_final_comment,appellant_proofs_evidence,lpa_proofs_evidence'
+					)
+					.reply(200, { itemCount: 0, items: [] })
 					.persist();
 				nock('http://test/')
-					.post(`/appeals/${appealId}/reps/publish`)
-					.reply(200, [
-						{
-							appealId: appealId,
-							representationType: 'appellant_statement'
-						},
-						{
-							appealId: appealId,
-							representationType: 'lpa_statement'
-						},
-						{
-							appealId: appealId,
-							representationType: 'comment'
-						}
-					]);
-
-				const sharePostResponse = await request.post(`${baseUrl}/${appealId}/share`).send({});
-
-				expect(sharePostResponse.statusCode).toBe(302);
-
-				const response = await request.get(`${baseUrl}/${appealId}`);
-				const notificationBannerHtml = parseHtml(response.text, {
-					rootElement: '.govuk-notification-banner--success',
-					skipPrettyPrint: true
-				}).innerHTML;
-
-				expect(notificationBannerHtml).toContain('Success</h3>');
-				expect(notificationBannerHtml).toContain('Comments and statements shared');
+					.get('/appeals/1/appellant-cases/0')
+					.reply(200, { planningObligation: { hasObligation: false } })
+					.persist();
+				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 			});
-			it('should show "Statements shared" banner when at STATEMENTS status with published statements and no IP comments', async () => {
-				const numIpComments = 0;
-				const appealAtStatements = {
+
+			it('should show "Progressed to inquiry" banner when at EVIDENCE status', async () => {
+				const appealAtEvidence = {
 					...appealData,
 					appealId,
 					appealType: APPEAL_TYPE.S78,
-					procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
-					appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
-					hearing: {},
-					documentationSummary: {
-						lpaStatement: {
-							representationStatus: 'valid'
-						},
-						appellantStatement: {
-							representationStatus: 'valid'
-						},
-						ipComments: {
-							representationStatus: 'valid',
-							counts: {
-								valid: numIpComments
-							}
-						}
+					procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+					appealStatus: APPEAL_CASE_STATUS.EVIDENCE,
+					documentationSummary: {},
+					appealTimetable: {
+						proofOfEvidenceAndWitnessesDueDate: '2024-12-04'
 					}
 				};
 				nock('http://test/')
 					.get(`/appeals/${appealId}?include=all`)
-					.reply(200, appealAtStatements)
+					.reply(200, appealAtEvidence)
 					.persist();
 				nock('http://test/')
 					.get(`/appeals/${appealId}/page-details`)
-					.reply(200, appealAtStatements)
+					.reply(200, appealAtEvidence)
 					.persist();
-				nock('http://test/')
-					.post(`/appeals/${appealId}/reps/publish`)
-					.reply(200, [
-						{
-							appealId: appealId,
-							representationType: 'appellant_statement'
-						},
-						{
-							appealId: appealId,
-							representationType: 'lpa_statement'
-						}
-					]);
+				nock('http://test/').post(`/appeals/${appealId}/reps/publish`).reply(200, []);
 
 				const sharePostResponse = await request.post(`${baseUrl}/${appealId}/share`).send({});
 
@@ -915,62 +917,7 @@ describe('representations', () => {
 				}).innerHTML;
 
 				expect(notificationBannerHtml).toContain('Success</h3>');
-				expect(notificationBannerHtml).toContain('Statements shared');
-			});
-			it('should show "Comments shared" banner when at STATEMENTS status with published IP comments and no statements', async () => {
-				const numIpComments = 1;
-				const appealAtStatements = {
-					...appealData,
-					appealId,
-					appealType: APPEAL_TYPE.S78,
-					procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
-					appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
-					hearing: {},
-					documentationSummary: {
-						appellantStatement: {
-							representationStatus: 'valid'
-						},
-						ipComments: {
-							representationStatus: 'valid',
-							counts: {
-								valid: numIpComments
-							}
-						}
-					}
-				};
-				nock('http://test/')
-					.get(`/appeals/${appealId}?include=all`)
-					.reply(200, appealAtStatements)
-					.persist();
-				nock('http://test/')
-					.get(`/appeals/${appealId}/page-details`)
-					.reply(200, appealAtStatements)
-					.persist();
-				nock('http://test/')
-					.post(`/appeals/${appealId}/reps/publish`)
-					.reply(200, [
-						{
-							appealId: appealId,
-							representationType: 'appellant_statement'
-						},
-						{
-							appealId: appealId,
-							representationType: 'comment'
-						}
-					]);
-
-				const sharePostResponse = await request.post(`${baseUrl}/${appealId}/share`).send({});
-
-				expect(sharePostResponse.statusCode).toBe(302);
-
-				const response = await request.get(`${baseUrl}/${appealId}`);
-				const notificationBannerHtml = parseHtml(response.text, {
-					rootElement: '.govuk-notification-banner--success',
-					skipPrettyPrint: true
-				}).innerHTML;
-
-				expect(notificationBannerHtml).toContain('Success</h3>');
-				expect(notificationBannerHtml).toContain('Comments shared');
+				expect(notificationBannerHtml).toContain('Progressed to inquiry');
 			});
 		});
 

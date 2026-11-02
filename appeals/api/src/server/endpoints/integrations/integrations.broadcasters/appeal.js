@@ -10,6 +10,7 @@ import {
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED
 } from '@pins/appeals/constants/support.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { EventType } from '@pins/event-client';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { schemas, validateFromSchema } from '../integrations.validators.js';
@@ -105,6 +106,12 @@ export const broadcastAppeal = async (appealId, updateType = EventType.Update) =
 	if (!appeal) {
 		pino.error(`Trying to broadcast info for appeal ${appealId} , but it was not found.`);
 		return false;
+	}
+
+	// TODO: update once case type letters and schema are provided by ODW
+	if (isGenericAppealType(appeal.appealType?.type)) {
+		pino.info(`Skipping broadcast for generic appeal ${appealId} pending ODW schema.`);
+		return true;
 	}
 
 	// get first rep by type for representation submission dates

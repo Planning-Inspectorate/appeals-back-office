@@ -1,3 +1,4 @@
+import { showMoreComment } from '#appeals/appeal-details/representations/common/components/show-more-comment.js';
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { addressToMultilineStringHtml, representationHasAddress } from '#lib/address-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
@@ -124,9 +125,9 @@ export function generateCommentSummaryList(
 			key: {
 				text: comment.redactedRepresentation && redactMatching ? 'Original comment' : 'Comment'
 			},
-			value: {
-				text: commentIsDocument ? REPRESENTATION_ADDED_AS_DOCUMENT : comment.originalRepresentation
-			},
+			value: commentIsDocument
+				? { text: REPRESENTATION_ADDED_AS_DOCUMENT }
+				: showMoreComment({ text: comment.originalRepresentation }),
 			actions: {
 				items:
 					commentIsDocument || isReviewPage || (redactMatching && comment.redactedRepresentation)
@@ -143,7 +144,7 @@ export function generateCommentSummaryList(
 			? [
 					{
 						key: { text: 'Redacted comment' },
-						value: { text: comment.redactedRepresentation },
+						value: showMoreComment({ text: comment.redactedRepresentation }),
 						actions: {
 							items: [
 								{

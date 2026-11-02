@@ -20,7 +20,13 @@ import {
 	ERROR_MUST_NOT_BE_IN_FUTURE,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
+import { EventType } from '@pins/event-client';
+import {
+	APPEAL_CASE_STAGE,
+	APPEAL_CASE_STATUS,
+	APPEAL_DOCUMENT_TYPE,
+	SERVICE_USER_TYPE
+} from '@planning-inspectorate/data-model';
 jest.mock('#notify/notify-send.js');
 
 const { databaseConnector } = await import('#utils/database-connector.js');
@@ -550,7 +556,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					},
 					where: {
 						id: householdAppeal.id
@@ -581,7 +592,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					},
 					where: {
 						id: householdAppeal.id
@@ -591,6 +607,85 @@ describe('Appeal detail routes', () => {
 				expect(response.body).toEqual({
 					planningApplicationReference: '1234/A/567890'
 				});
+			});
+
+			test('sends a broadcastServiceUser command when an agent is added to a case in validation status', async () => {
+				const agentServiceUserId = 999;
+				const agent = {
+					firstName: 'Jane',
+					lastName: 'Doe',
+					email: 'jane.doe@example.com',
+					phoneNumber: '01234 567 890',
+					organisationName: 'Doe Ltd'
+				};
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...householdAppeal,
+					currentStatus: APPEAL_CASE_STATUS.VALIDATION,
+					appealStatus: [{ status: APPEAL_CASE_STATUS.VALIDATION, valid: true }]
+				});
+				// @ts-ignore
+				databaseConnector.serviceUser.create.mockResolvedValue({ id: agentServiceUserId });
+
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({ agent })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				expect(databaseConnector.serviceUser.create).toHaveBeenCalledWith({ data: agent });
+				expect(mockBroadcasters.broadcastServiceUser).toHaveBeenCalledTimes(1);
+				expect(mockBroadcasters.broadcastServiceUser).toHaveBeenCalledWith(
+					agentServiceUserId,
+					EventType.Create,
+					SERVICE_USER_TYPE.AGENT,
+					householdAppeal.reference
+				);
+			});
+
+			test('updates the appellant', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				// @ts-ignore
+				databaseConnector.serviceUser.create.mockResolvedValue({ id: 101 });
+
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}`)
+					.send({
+						appellant: {
+							firstName: 'John',
+							lastName: 'Doe',
+							email: 'john.doe@example.com'
+						}
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.serviceUser.create).toHaveBeenCalledWith({
+					data: {
+						firstName: 'John',
+						lastName: 'Doe',
+						email: 'john.doe@example.com'
+					}
+				});
+				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+					data: {
+						appellantId: 101,
+						caseUpdatedDate: expect.any(Date)
+					},
+					include: {
+						appealStatus: true,
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
+					},
+					where: {
+						id: householdAppeal.id
+					}
+				});
+				expect(response.status).toEqual(200);
 			});
 
 			test('assigns a case officer to an appeal', async () => {
@@ -619,7 +714,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					},
 					where: {
 						id: householdAppeal.id
@@ -667,7 +767,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					},
 					where: {
 						id: householdAppeal.id
@@ -719,7 +824,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					}
 				});
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
@@ -774,7 +884,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					}
 				});
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
@@ -824,7 +939,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					}
 				});
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
@@ -878,7 +998,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					}
 				});
 
@@ -922,7 +1047,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					},
 					where: {
 						id: leadAppeal.id
@@ -935,7 +1065,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					},
 					where: {
 						id: leadAppeal.childAppeals[0].childId
@@ -948,7 +1083,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					},
 					where: {
 						id: leadAppeal.childAppeals[2].childId
@@ -1026,7 +1166,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					}
 				});
 				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(2, {
@@ -1039,7 +1184,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					}
 				});
 				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(3, {
@@ -1052,7 +1202,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					}
 				});
 
@@ -1128,7 +1283,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					}
 				});
 				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(2, {
@@ -1142,7 +1302,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					}
 				});
 				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(3, {
@@ -1156,7 +1321,12 @@ describe('Appeal detail routes', () => {
 					},
 					include: {
 						appealStatus: true,
-						appealType: true
+						appealType: true,
+						hearing: {
+							select: {
+								id: true
+							}
+						}
 					}
 				});
 
@@ -1519,6 +1689,7 @@ describe('appeals/case-reference/:caseReference', () => {
 			expect(response.status).toEqual(200);
 			expect(response.body).toEqual(s78AppealDto);
 		});
+
 		test('returns an error if a caseReference is not found', async () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(null);

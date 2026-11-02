@@ -1,4 +1,5 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} Appeal
@@ -53,6 +54,10 @@ export function namePage(appealData, action, backLinkUrl, values = {}, errors) {
  */
 export function emailPage(appealData, action, backLinkUrl, values = {}, errors) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
+	const isGeneric = isGenericAppealType(appealData.appealType);
+	const labelText = isGeneric
+		? 'Rule 6 party email address (optional)'
+		: 'Rule 6 party email address';
 
 	/** @type {PageComponent} */
 	const emailInput = {
@@ -61,7 +66,7 @@ export function emailPage(appealData, action, backLinkUrl, values = {}, errors) 
 			name: 'email',
 			id: 'email',
 			label: {
-				text: 'Rule 6 party email address',
+				text: labelText,
 				classes: 'govuk-label--l',
 				isPageHeading: true
 			},

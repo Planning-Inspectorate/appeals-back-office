@@ -1571,9 +1571,11 @@ export async function seedTestData(databaseConnector) {
 				await addProofsEvidence(databaseConnector, id, 'rule6', rule6PartyUser.id);
 			}
 
-			await addStatements(databaseConnector, id, lpaId, counters);
-			await addFinalComments(databaseConnector, id, appellantId || 0, lpaId, counters);
-			await addProofOfEvidence(databaseConnector, id, appellantId || 0, lpaId, counters);
+			if (lpaId) {
+				await addStatements(databaseConnector, id, lpaId, counters);
+				await addFinalComments(databaseConnector, id, appellantId || 0, lpaId, counters);
+				await addProofOfEvidence(databaseConnector, id, appellantId || 0, lpaId, counters);
+			}
 		}
 
 		const statusWithSiteVisitSet = appealStatus.find(

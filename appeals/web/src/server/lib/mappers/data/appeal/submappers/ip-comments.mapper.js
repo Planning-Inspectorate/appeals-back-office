@@ -1,3 +1,5 @@
+import { APPEAL_CASE_PRE_STATEMENTS_STATUS } from '#appeals/appeal.constants.js';
+import { isStatePassed } from '#lib/appeal-status.js';
 import {
 	dateISOStringToDayMonthYearHourMinute,
 	dateISOStringToDisplayDate,
@@ -6,13 +8,20 @@ import {
 import { documentationFolderTableItem } from '#lib/mappers/index.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapIpComments = ({ appealDetails, currentRoute, request }) => {
-	const actionText = (() => {
-		const { status, counts } = appealDetails?.documentationSummary?.ipComments ?? {};
+	const statementsCompleted =
+		!APPEAL_CASE_PRE_STATEMENTS_STATUS.includes(appealDetails?.appealStatus) ||
+		isStatePassed(appealDetails, APPEAL_CASE_STATUS.STATEMENTS);
 
-		if (status === 'not_received') {
+	const { status, counts, receivedAt } = appealDetails?.documentationSummary?.ipComments ?? {};
+	const publishedCount = counts?.[APPEAL_REPRESENTATION_STATUS.PUBLISHED] ?? 0;
+	const noPublishedCommentsAfterStatements =
+		status === 'received' && statementsCompleted && publishedCount === 0;
+	const actionText = (() => {
+		if (noPublishedCommentsAfterStatements || status === 'not_received') {
 			return 'Add';
 		}
 
@@ -22,8 +31,6 @@ export const mapIpComments = ({ appealDetails, currentRoute, request }) => {
 
 		return 'View';
 	})();
-
-	const { status, counts, receivedAt } = appealDetails.documentationSummary?.ipComments ?? {};
 
 	const statusText = (() => {
 		if (!appealDetails.startedAt) {
@@ -39,17 +46,19 @@ export const mapIpComments = ({ appealDetails, currentRoute, request }) => {
 				: 'Awaiting interested party comments';
 		}
 
-		const counts = appealDetails.documentationSummary?.ipComments?.counts ?? {};
+		if (noPublishedCommentsAfterStatements) {
+			return 'No interested party comments';
+		}
 
-		if (counts[APPEAL_REPRESENTATION_STATUS.PUBLISHED] > 0) {
+		if (counts?.[APPEAL_REPRESENTATION_STATUS.PUBLISHED] ?? 0 > 0) {
 			return 'Shared';
 		}
 
-		if (counts[APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW] > 0) {
+		if (counts?.[APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW] ?? 0 > 0) {
 			return 'Ready to review';
 		}
 
-		const numComments = counts[APPEAL_REPRESENTATION_STATUS.VALID] ?? 0;
+		const numComments = counts?.[APPEAL_REPRESENTATION_STATUS.VALID] ?? 0;
 
 		return `${numComments} interested party comment${numComments !== 1 ? 's' : ''}`;
 	})();
@@ -89,7 +98,7 @@ export const mapIpComments = ({ appealDetails, currentRoute, request }) => {
 		actionHtml: `<a href="${addBackLinkQueryToUrl(
 			request,
 			`${currentRoute}/interested-party-comments${
-				status === 'not_received' ? '/add/ip-details' : ''
+				noPublishedCommentsAfterStatements || status === 'not_received' ? '/add/ip-details' : ''
 			}`
 		)}" data-cy="review-ip-comments" class="govuk-link">${actionText}<span class="govuk-visually-hidden"> interested party comments</span></a>`
 	});

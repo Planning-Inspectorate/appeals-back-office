@@ -254,11 +254,52 @@ describe('/appeals/:appealId/documents/:documentId', () => {
 				type: 'costs-withdrawal',
 				expectedTemplate: 'shared-cost-application-withdrawal',
 				inviteResponses: false
+			},
+			{
+				type: 'supporting-document',
+				expectedTemplate: 'document-received',
+				inviteResponses: true
+			},
+			{
+				type: 'supporting-document',
+				expectedTemplate: 'document-received',
+				inviteResponses: false
+			},
+			{
+				type: 'hearing-document',
+				expectedTemplate: 'document-received',
+				inviteResponses: true
+			},
+			{
+				type: 'hearing-document',
+				expectedTemplate: 'document-received',
+				inviteResponses: false
+			},
+			{
+				type: 'inquiry-document',
+				expectedTemplate: 'document-received',
+				inviteResponses: true
+			},
+			{
+				type: 'inquiry-document',
+				expectedTemplate: 'document-received',
+				inviteResponses: false
+			},
+			{
+				type: 'inquiry-event-document',
+				expectedTemplate: 'document-received',
+				inviteResponses: true
+			},
+			{
+				type: 'inquiry-event-document',
+				expectedTemplate: 'document-received',
+				inviteResponses: false
 			}
 		];
 
 		sharingDocumentTypes.forEach(({ type, expectedTemplate, inviteResponses }) => {
 			test(`sharing a document sends notify for: ${type}`, async () => {
+				jest.clearAllMocks();
 				databaseConnector.document.findUnique.mockResolvedValue({
 					...documentCreated,
 					latestDocumentVersion: {
@@ -273,16 +314,83 @@ describe('/appeals/:appealId/documents/:documentId', () => {
 					.send({
 						document: { id: documentCreated.guid, isShared: true },
 						sharingDocumentType: type,
-						inviteResponses: inviteResponses ? true : undefined
+						inviteResponses: inviteResponses ? true : undefined,
+						costsCategory: 'lpa'
 					})
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(notifySend).toHaveBeenCalledTimes(2);
-				expect(notifySend).toHaveBeenCalledWith(
+
+				// Appellant receives inviteResponses when costsCategory is 'lpa'
+				expect(notifySend).toHaveBeenNthCalledWith(
+					1,
+					expect.objectContaining({
+						templateName: expectedTemplate,
+						azureAdUserId,
+						personalisation: expect.objectContaining({
+							responses_invited: inviteResponses,
+							dashboard_link: 'appeals'
+						})
+					})
+				);
+
+				// LPA receives NO inviteResponses when costsCategory is 'lpa' (not 'appellant')
+				expect(notifySend).toHaveBeenNthCalledWith(
+					2,
+					expect.objectContaining({
+						templateName: expectedTemplate,
+						azureAdUserId,
+						personalisation: expect.objectContaining({
+							responses_invited: false,
+							dashboard_link: 'manage-appeals'
+						})
+					})
+				);
+			});
+
+			test(`sharing a document sends notify for: ${type} with appellant costsCategory`, async () => {
+				jest.clearAllMocks();
+				databaseConnector.document.findUnique.mockResolvedValue({
+					...documentCreated,
+					latestDocumentVersion: {
+						...documentCreated.latestDocumentVersion,
+						published: false,
+						redactionStatusId: 1
+					}
+				});
+
+				await request
+					.patch(`/appeals/${householdAppeal.id}/documents/${documentCreated.guid}`)
+					.send({
+						document: { id: documentCreated.guid, isShared: true },
+						sharingDocumentType: type,
+						inviteResponses: inviteResponses ? true : undefined,
+						costsCategory: 'appellant'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				// Appellant receives NO inviteResponses when costsCategory is 'appellant' (not 'lpa')
+				expect(mockNotifySend).toHaveBeenNthCalledWith(
+					1,
 					expect.objectContaining({
 						templateName: expectedTemplate,
 						personalisation: expect.objectContaining({
-							responses_invited: inviteResponses
+							responses_invited: false,
+							dashboard_link: 'appeals'
+						})
+					})
+				);
+
+				// LPA receives inviteResponses when costsCategory is 'appellant'
+				expect(notifySend).toHaveBeenNthCalledWith(
+					2,
+					expect.objectContaining({
+						templateName: expectedTemplate,
+						personalisation: expect.objectContaining({
+							responses_invited: inviteResponses,
+							dashboard_link: 'manage-appeals'
 						})
 					})
 				);
@@ -424,6 +532,89 @@ describe('/appeals/:appealId/documents', () => {
 			expect(databaseConnector.documentVersion.update).toHaveBeenCalledTimes(2);
 			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
 			expect(response.status).toEqual(200);
+		});
+	});
+
+	describe('PATCH sharing multiple documents', () => {
+		beforeEach(() => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
+			databaseConnector.document.findUnique.mockResolvedValue({
+				...documentCreated,
+				latestDocumentVersion: {
+					...documentCreated.latestDocumentVersion,
+					published: false,
+					redactionStatusId: 1
+				}
+			});
+			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue(
+				documentRedactionStatuses
+			);
+		});
+
+		afterEach(() => {
+			jest.clearAllMocks();
+		});
+
+		const multipleDocumentSharingTypes = [
+			'supporting-document',
+			'hearing-document',
+			'inquiry-document',
+			'inquiry-event-document'
+		];
+
+		multipleDocumentSharingTypes.forEach((type) => {
+			test(`shares multiple documents and sends a single notify pair for: ${type}`, async () => {
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}/documents`)
+					.send({
+						documents: [
+							{
+								id: '987e66e0-1db4-404b-8213-8082919159e9',
+								isShared: true,
+								receivedDate: new Date().toISOString(),
+								redactionStatus: 1
+							},
+							{
+								id: '8b107895-b8c9-467f-aad0-c09daafeaaad',
+								isShared: true,
+								receivedDate: new Date().toISOString(),
+								redactionStatus: 1
+							}
+						],
+						sharingDocumentType: type,
+						shareMultipleDocuments: true,
+						costsCategory: 'lpa'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				// Only the first document triggers notify, once per recipient
+				expect(notifySend).toHaveBeenCalledTimes(2);
+				expect(notifySend).toHaveBeenNthCalledWith(
+					1,
+					expect.objectContaining({
+						templateName: 'document-received',
+						personalisation: expect.objectContaining({
+							sharing_multiple_documents: true,
+							document_type: type,
+							dashboard_link: 'appeals'
+						})
+					})
+				);
+				expect(notifySend).toHaveBeenNthCalledWith(
+					2,
+					expect.objectContaining({
+						templateName: 'document-received',
+						personalisation: expect.objectContaining({
+							sharing_multiple_documents: true,
+							document_type: type,
+							dashboard_link: 'manage-appeals'
+						})
+					})
+				);
+				expect(mockBroadcasters.broadcastDocument).toHaveBeenCalledTimes(2);
+			});
 		});
 	});
 });

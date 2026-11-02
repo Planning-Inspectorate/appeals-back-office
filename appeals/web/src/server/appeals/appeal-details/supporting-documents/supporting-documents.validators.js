@@ -10,8 +10,8 @@ export const validatePostDecisionConfirmation = createValidator(
 		.withMessage('Something went wrong')
 );
 
-export const validateInviteResponses = createValidator(
-	body('invite-responses')
+export const validateInviteMainPartyComments = createValidator(
+	body('invite-main-party-comments')
 		.notEmpty()
 		.withMessage('Select yes if you want to invite responses')
 		.bail()

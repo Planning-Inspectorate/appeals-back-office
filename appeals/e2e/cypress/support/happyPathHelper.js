@@ -278,8 +278,8 @@ export const happyPathHelper = {
 		// verify heading on cya page
 		cyaSection.checkHeading(cyaHeading);
 
-		/* verify the file name, date received and redaction status on the CYA page 
-		The file name field is passed in as a parameter to allow for different field names 
+		/* verify the file name, date received and redaction status on the CYA page
+		The file name field is passed in as a parameter to allow for different field names
 		depending on the type of representation being uploaded */
 		cyaSection.verifyAnswerUpdated({
 			field: cyaFileNameField,
@@ -707,6 +707,13 @@ export const happyPathHelper = {
 		caseDetailsPage.selectRadioButtonByValue(childAppeal);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Unlink lead appeal');
+		basePage.validateBannerMessage('Success', 'Appeal unlinked');
+	},
+
+	unlinkFirstChildEnforcementAppeal(childAppeal) {
+		caseDetailsPage.clickManageLinkedAppeal();
+		caseDetailsPage.clickUnlinkFirstChildAppeal(childAppeal);
+		caseDetailsPage.clickButtonByText('Confirm');
 		basePage.validateBannerMessage('Success', 'Appeal unlinked');
 	},
 

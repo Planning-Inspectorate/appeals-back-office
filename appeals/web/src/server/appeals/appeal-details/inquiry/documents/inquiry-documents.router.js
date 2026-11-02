@@ -6,6 +6,7 @@ import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as documentsValidators from '../../../appeal-documents/appeal-documents.validators.js';
 import * as controller from './inquiry-documents.controller.js';
+import { validateInviteMainPartyComments } from './inquiry-documents.validators.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -25,6 +26,17 @@ router
 	);
 
 router.route('/manage-documents/:folderId').get(asyncHandler(controller.getManageFolder));
+
+router
+	.route('/manage-documents/:folderId/share-all')
+	.get(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.getShareAllDocuments)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.postShareAllDocuments)
+	);
 
 router
 	.route('/manage-documents/:folderId/:documentId')
@@ -92,10 +104,7 @@ router
 	);
 
 router
-	.route([
-		'/change-document-details/:folderId/:documentId',
-		'/change-document-details/:folderId/:documentId'
-	])
+	.route('/change-document-details/:folderId/:documentId')
 	.get(
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getChangeInquiryDocumentVersionDetails)
@@ -109,6 +118,39 @@ router
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
 		extractAndProcessDocumentDateErrors(),
 		asyncHandler(controller.postChangeInquiryDocumentVersionDetails)
+	);
+router
+	.route(['/manage-documents/:folderId/:documentId/invite-main-party-comments'])
+	.get(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.getInviteMainPartyComments)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.updateCase),
+		validateInviteMainPartyComments,
+		asyncHandler(controller.postInviteMainPartyComments)
+	);
+
+router
+	.route(['/manage-documents/:folderId/:documentId/check-your-answers'])
+	.get(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.getShareDocumentCheckAndConfirm)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.postShareDocumentCheckAndConfirm)
+	);
+
+router
+	.route('/manage-documents/:folderId/:documentId/:versionId/delete')
+	.get(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.getDeleteInquiryDocument)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.postDeleteInquiryDocument)
 	);
 
 export default router;

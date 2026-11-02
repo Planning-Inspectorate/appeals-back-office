@@ -29,5 +29,20 @@ export const teamsToCreate = [
 		email: 'ECAT@planninginspectorate.gov.uk'
 	},
 	{ id: 8, name: 'PADS team', email: 'PADSplanning@planninginspectorate.gov.uk' },
-	{ id: 9, name: 'DevTeam2', email: 'devteam2@planninginspectorate.gov.uk' }
+	{ id: 9, name: 'DevTeam2', email: 'devteam2@planninginspectorate.gov.uk' },
+	{
+		id: 10,
+		name: 'Green team',
+		email: 'Treeandhedgeappeals@planninginspectorate.gov.uk'
+	},
+	{
+		id: 11,
+		name: 'Major Casework and Environmental appeals',
+		email: 'ETC@planninginspectorate.gov.uk'
+	},
+	{
+		id: 12,
+		name: 'Community Infrastructure Levy appeals team',
+		email: 'CILAppeals@planninginspectorate.gov.uk'
+	}
 ];

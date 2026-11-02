@@ -3,6 +3,9 @@ import sql from 'mssql';
 const BANK_HOLIDAYS_URL = 'https://www.gov.uk/bank-holidays.json';
 
 /**
+ * This function fetches the bank holidays from the GOV UK API and updates the database with the future bank holidays.
+ * It also populates the calendarDate table, and adds a set of records for date + x business days in the Next business date table in the database.
+ * Used for various things inc calculating deadlines and business days for the Personal List.
  *
  * @type {import('@azure/functions').TimerHandler}
  */
@@ -75,9 +78,14 @@ export function updateBankHolidays(service) {
 			await request.query(`EXEC dbo.spPopulateCalendarDates;`);
 
 			context.log('Populating the next business dates');
+			// Added 10, 25, 35, and 45 business day rows as new PersonalList due dates include these (2, 5, 7, and 9 weeks )
 			await request.query(`EXEC dbo.spPopulateNextBusinessDates @BusinessDays = 5;`);
+			await request.query(`EXEC dbo.spPopulateNextBusinessDates @BusinessDays = 10;`);
+			await request.query(`EXEC dbo.spPopulateNextBusinessDates @BusinessDays = 25;`);
 			await request.query(`EXEC dbo.spPopulateNextBusinessDates @BusinessDays = 30;`);
+			await request.query(`EXEC dbo.spPopulateNextBusinessDates @BusinessDays = 35;`);
 			await request.query(`EXEC dbo.spPopulateNextBusinessDates @BusinessDays = 40;`);
+			await request.query(`EXEC dbo.spPopulateNextBusinessDates @BusinessDays = 45;`);
 
 			await transaction.commit();
 			context.log('Bank holidays updated successfully');

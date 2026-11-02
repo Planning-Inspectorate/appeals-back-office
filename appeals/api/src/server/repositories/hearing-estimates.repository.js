@@ -1,8 +1,22 @@
 import { databaseConnector } from '#utils/database-connector.js';
 
 /**
+/** @typedef {import('@pins/appeals.api').Schema.HearingEstimate} HearingEstimate */
+
+/**
+ * @param {number} appealId
+ * @returns {Promise<HearingEstimate | null>} */
+export const getHearingEstimateByAppealId = async (appealId) => {
+	return databaseConnector.hearingEstimate.findUnique({
+		where: {
+			appealId
+		}
+	});
+};
+
+/**
  * @param {{appealId: number, preparationTime: number, sittingTime: number, reportingTime: number}} params
- * @returns {Promise<any>}
+ * @returns {Promise<HearingEstimate>}
  */
 export const addHearingEstimate = async ({
 	appealId,
@@ -22,7 +36,7 @@ export const addHearingEstimate = async ({
 
 /**
  * @param {{appealId: number, preparationTime: number, sittingTime: number, reportingTime: number}} params
- * @returns {Promise<any>}
+ * @returns {Promise<HearingEstimate>}
  */
 export const updateHearingEstimate = async ({
 	appealId,
@@ -44,7 +58,7 @@ export const updateHearingEstimate = async ({
 
 /**
  * @param {number} appealId
- * @returns {Promise<any>}
+ * @returns {Promise<HearingEstimate>}
  */
 export const deleteHearingEstimate = async (appealId) => {
 	return databaseConnector.hearingEstimate.delete({
@@ -55,13 +69,70 @@ export const deleteHearingEstimate = async (appealId) => {
 };
 
 /**
- * @param {number} appealId
- * @returns {Promise<any>}
- */
-export const getHearingEstimateByAppealId = async (appealId) => {
-	return databaseConnector.hearingEstimate.findUnique({
+ * @param {number[]} appealIds
+ * @returns {Promise<import('#db-client/internal/prismaNamespace.js').BatchPayload>} */
+export const deleteManyHearingEstimate = async (appealIds) => {
+	return databaseConnector.hearingEstimate.deleteMany({
 		where: {
-			appealId
+			appealId: {
+				in: appealIds
+			}
+		}
+	});
+};
+
+/**
+ * @param {{appealIds: number[], preparationTime: number, sittingTime: number, reportingTime: number}} params
+ * @returns {Promise<import('#db-client/internal/prismaNamespace.js').BatchPayload>} */
+
+export const addManyHearingEstimate = async ({
+	appealIds,
+	preparationTime,
+	sittingTime,
+	reportingTime
+}) => {
+	return databaseConnector.hearingEstimate.createMany({
+		data: appealIds.map((/** @type {Number} */ appealId) => ({
+			appealId,
+			preparationTime,
+			sittingTime,
+			reportingTime
+		}))
+	});
+};
+
+/**
+ * @param {{appealIds: number[], preparationTime: number, sittingTime: number, reportingTime: number}} params
+ * @returns {Promise<import('#db-client/internal/prismaNamespace.js').BatchPayload>} */
+export const updateManyHearingEstimate = async ({
+	appealIds,
+	preparationTime,
+	sittingTime,
+	reportingTime
+}) => {
+	return databaseConnector.hearingEstimate.updateMany({
+		where: {
+			appealId: {
+				in: appealIds
+			}
+		},
+		data: {
+			preparationTime,
+			sittingTime,
+			reportingTime
+		}
+	});
+};
+
+/**
+ * @param {number[]} appealIds
+ * @returns {Promise<HearingEstimate[]>} */
+export const getManyHearingEstimateByAppealId = async (appealIds) => {
+	return databaseConnector.hearingEstimate.findMany({
+		where: {
+			appealId: {
+				in: appealIds
+			}
 		}
 	});
 };

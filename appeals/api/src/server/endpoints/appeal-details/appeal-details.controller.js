@@ -4,7 +4,7 @@ import { contextEnum } from '#mappers/context-enum.js';
 import { isParentAppeal } from '#utils/is-linked-appeal.js';
 import { getChildAppeals } from '#utils/link-appeals.js';
 import logger from '#utils/logger.js';
-import { updatePersonalList } from '#utils/update-personal-list.js';
+import { setPersonalList } from '#utils/update-personal-list.js';
 import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
 import { SERVICE_USER_TYPE } from '@planning-inspectorate/data-model';
 import { appealDetailService } from './appeal-details.service.js';
@@ -49,11 +49,13 @@ const updateAppealById = async (req, res) => {
 			validAt,
 			planningApplicationReference,
 			agent,
+			appellant,
 			padsInspectorId
 		},
 		params
 	} = req;
 	const appealId = Number(params.appealId);
+	const { reference } = appeal;
 	const azureAdUserId = req.get('azureAdUserId');
 
 	const notifyClient = req.notifyClient;
@@ -88,17 +90,19 @@ const updateAppealById = async (req, res) => {
 			await appealDetailService.updateAppealDetails(
 				{
 					appealId,
+					reference,
 					startedAt,
 					validAt,
 					planningApplicationReference,
-					agent
+					agent,
+					appellant
 				},
 				azureAdUserId
 			);
 		}
-		await updatePersonalList(appealId);
+		await setPersonalList({ appealId });
 		// broadcast any changes
-		await broadcasters.broadcastAppeal(appeal.id);
+		await broadcasters.broadcastAppeal(appealId);
 
 		// if an assignment change, also assign to linked/child appeals
 		if (isAssignmentChange && isParentAppeal(appeal)) {
@@ -134,10 +138,12 @@ const updateAppealById = async (req, res) => {
 							await appealDetailService.updateAppealDetails(
 								{
 									appealId: childAppeal.id,
+									reference: childAppeal.reference,
 									startedAt,
 									validAt,
 									planningApplicationReference,
-									agent
+									agent,
+									appellant
 								},
 								azureAdUserId
 							);
