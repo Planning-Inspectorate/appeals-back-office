@@ -94,6 +94,9 @@ describe('redetermination service', () => {
 						valid: true
 					})
 				},
+				appealTimetable: {
+					updateMany: jest.fn().mockResolvedValue({ count: 1 })
+				},
 				appeal: {
 					update: jest.fn().mockResolvedValue({
 						...completedAppeal,
@@ -132,12 +135,30 @@ describe('redetermination service', () => {
 						in: [
 							APPEAL_CASE_STATUS_REDETERMINATION_STAGE_1,
 							APPEAL_CASE_STATUS_REDETERMINATION_STAGE_2,
+							APPEAL_CASE_STATUS.STATEMENTS,
+							APPEAL_CASE_STATUS.FINAL_COMMENTS,
+							APPEAL_CASE_STATUS.EVIDENCE,
 							APPEAL_CASE_STATUS.EVENT,
 							APPEAL_CASE_STATUS.AWAITING_EVENT,
 							APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
 							APPEAL_CASE_STATUS.COMPLETE
 						]
 					}
+				}
+			});
+			expect(mockTx.appealTimetable.updateMany).toHaveBeenCalledWith({
+				where: { appealId: 1 },
+				data: {
+					ipCommentsDueDate: null,
+					appellantStatementDueDate: null,
+					lpaStatementDueDate: null,
+					finalCommentsDueDate: null,
+					s106ObligationDueDate: null,
+					statementOfCommonGroundDueDate: null,
+					planningObligationDueDate: null,
+					proofOfEvidenceAndWitnessesDueDate: null,
+					caseManagementConferenceDueDate: null,
+					issueDeterminationDate: null
 				}
 			});
 			expect(mockTx.appealStatus.updateMany).toHaveBeenCalledWith({

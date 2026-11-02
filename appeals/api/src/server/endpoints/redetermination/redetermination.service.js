@@ -66,7 +66,7 @@ export const redetermineAppeal = async (appealId, azureAdUserId) => {
 			});
 		}
 
-		// 4. Reset post-event and redetermination statuses from AppealStatus
+		// 4. Reset post-LPAQ, post-event and redetermination statuses from AppealStatus
 		await tx.appealStatus.deleteMany({
 			where: {
 				appealId,
@@ -80,6 +80,23 @@ export const redetermineAppeal = async (appealId, azureAdUserId) => {
 						APPEAL_CASE_STATUS.COMPLETE
 					]
 				}
+			}
+		});
+
+		// 5. Reset timetable due dates beyond LPA questionnaire
+		await tx.appealTimetable.updateMany({
+			where: { appealId },
+			data: {
+				ipCommentsDueDate: null,
+				appellantStatementDueDate: null,
+				lpaStatementDueDate: null,
+				finalCommentsDueDate: null,
+				s106ObligationDueDate: null,
+				statementOfCommonGroundDueDate: null,
+				planningObligationDueDate: null,
+				proofOfEvidenceAndWitnessesDueDate: null,
+				caseManagementConferenceDueDate: null,
+				issueDeterminationDate: null
 			}
 		});
 

@@ -1,6 +1,10 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDayMonthYearHourMinute, getExampleDateHint } from '#lib/dates.js';
 import { dateInput } from '#lib/mappers/index.js';
+import {
+	APPEAL_CASE_STATUS_REDETERMINATION_STAGE_1,
+	APPEAL_CASE_STATUS_REDETERMINATION_STAGE_2
+} from '@pins/appeals/constants/support.js';
 import { appealTypeToAppealCaseTypeMapper } from '@pins/appeals/utils/appeal-type-case.mapper.js';
 import {
 	isEnforcementCaseType,
@@ -159,7 +163,9 @@ export const getAppealTimetableTypes = (appeal, appellantCase) => {
 		}
 		if (
 			appeal.appealStatus === APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE ||
-			appeal.appealStatus === APPEAL_CASE_STATUS.STATEMENTS
+			appeal.appealStatus === APPEAL_CASE_STATUS.STATEMENTS ||
+			appeal.appealStatus === APPEAL_CASE_STATUS_REDETERMINATION_STAGE_1 ||
+			appeal.appealStatus === APPEAL_CASE_STATUS_REDETERMINATION_STAGE_2
 		) {
 			validAppealTimetableType.push('lpaStatementDueDate', 'ipCommentsDueDate');
 		}
