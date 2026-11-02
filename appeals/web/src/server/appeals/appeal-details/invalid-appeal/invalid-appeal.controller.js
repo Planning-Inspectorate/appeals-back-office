@@ -17,7 +17,10 @@ import {
 	ENFORCEMENT_APPEAL_INVALID_LEGAL_INTEREST,
 	ENFORCEMENT_APPEAL_INVALID_LPA_WITHDREW_ENFORCEMENT_NOTICE
 } from '@pins/appeals/constants/support.js';
-import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import {
+	isAnyEnforcementAppealType,
+	isGenericAppealType
+} from '@pins/appeals/utils/appeal-type-checks.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { add } from 'date-fns';
 import { mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters } from '../appellant-case/appellant-case.mapper.js';
@@ -272,24 +275,55 @@ export const getCheckPage = async (request, response) => {
 			webAppellantCaseReviewOutcome.reasonsText
 		);
 
-		const { email: assignedTeamEmail } = await getTeamFromAppealId(
-			request.apiClient,
-			currentAppeal.appealId
-		);
+		const isGeneric = isGenericAppealType(currentAppeal.appealType);
 
-		const personalisation = {
-			appeal_reference_number: currentAppeal.appealReference,
-			lpa_reference: currentAppeal.planningApplicationReference || '',
-			site_address: appealSiteToAddressString(currentAppeal.appealSite),
-			reasons: invalidReasons,
-			team_email_address: assignedTeamEmail
-		};
+		/** @type {PageComponent[]} */
+		let emailPreviewComponents = [];
 
-		const { appellantTemplate, lpaTemplate } = await generateInvalidAppealNotifyPreviews(
-			request.apiClient,
-			personalisation,
-			currentAppeal.appealType
-		);
+		if (!isGeneric) {
+			const { email: assignedTeamEmail } = await getTeamFromAppealId(
+				request.apiClient,
+				currentAppeal.appealId
+			);
+
+			const personalisation = {
+				appeal_reference_number: currentAppeal.appealReference,
+				lpa_reference: currentAppeal.planningApplicationReference || '',
+				site_address: appealSiteToAddressString(currentAppeal.appealSite),
+				reasons: invalidReasons,
+				team_email_address: assignedTeamEmail
+			};
+
+			const { appellantTemplate, lpaTemplate } = await generateInvalidAppealNotifyPreviews(
+				request.apiClient,
+				personalisation,
+				currentAppeal.appealType
+			);
+			emailPreviewComponents = [
+				{
+					type: 'details',
+					wrapperHtml: {
+						opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+						closing: '</div></div>'
+					},
+					parameters: {
+						summaryText: `Preview email to appellant`,
+						html: appellantTemplate.renderedHtml
+					}
+				},
+				{
+					type: 'details',
+					wrapperHtml: {
+						opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+						closing: '</div></div>'
+					},
+					parameters: {
+						summaryText: `Preview email to LPA`,
+						html: lpaTemplate.renderedHtml
+					}
+				}
+			];
+		}
 
 		return renderCheckYourAnswersComponent(
 			{
@@ -319,34 +353,13 @@ export const getCheckPage = async (request, response) => {
 					}
 				},
 				after: [
-					{
-						type: 'details',
-						wrapperHtml: {
-							opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-							closing: '</div></div>'
-						},
-						parameters: {
-							summaryText: `Preview email to appellant`,
-							html: appellantTemplate.renderedHtml
-						}
-					},
-					{
-						type: 'details',
-						wrapperHtml: {
-							opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-							closing: '</div></div>'
-						},
-						parameters: {
-							summaryText: `Preview email to LPA`,
-							html: lpaTemplate.renderedHtml
-						}
-					},
+					...emailPreviewComponents,
 					{
 						type: 'hint',
 						parameters: {
 							html: `
 									<p class="govuk-body">
-										We will mark the appeal as invalid and send an email to the relevant parties.
+										${isGeneric ? 'We will mark the appeal as invalid.' : 'We will mark the appeal as invalid and send an email to the relevant parties.'}
 									</p>
 								`
 						}

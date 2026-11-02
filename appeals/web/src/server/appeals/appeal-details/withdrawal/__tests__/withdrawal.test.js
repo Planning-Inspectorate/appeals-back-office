@@ -189,6 +189,43 @@ describe('withdrawal', () => {
 				expect(unprettifiedElement.innerHTML).toContain('Withdraw appeal</button>');
 			});
 		});
+		describe('for generic appeal', () => {
+			beforeEach(async () => {
+				nock.cleanAll();
+				jest.clearAllMocks();
+				nock('http://test/')
+					.get(`/appeals/1?include=all`)
+					.reply(200, { ...appealData, appealType: 'Tree preservation order' })
+					.persist();
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses)
+					.persist();
+
+				await request
+					.post(`${baseUrl}/${mockAppealId}${withdrawalPath}${withdrawalRequestStartPath}`)
+					.send({ 'upload-info': fileUploadInfo });
+			});
+
+			afterEach(teardown);
+
+			it('should render the check your answers page without email previews', async () => {
+				const response = await request.get(
+					`${baseUrl}/${mockAppealId}${withdrawalPath}${checkYourAnswersPath}`
+				);
+				const element = parseHtml(response.text);
+
+				expect(response.statusCode).toBe(200);
+				expect(element.innerHTML).toContain('Check details and withdraw appeal</h1>');
+				expect(element.innerHTML).toContain('Request to withdraw appeal');
+				expect(element.innerHTML).not.toContain('Preview email to appellant');
+				expect(element.innerHTML).not.toContain('Preview email to LPA');
+				expect(generateNotifyPreview).not.toHaveBeenCalled();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				expect(unprettifiedElement.innerHTML).toContain('Withdraw appeal</button>');
+			});
+		});
 	});
 
 	describe('POST /withdrawal/check-details', () => {

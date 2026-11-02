@@ -161,8 +161,8 @@ export function manageWithdrawalRequestFolderPage(
 /**
  * @param {Appeal} appealData
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
- * @param {*} appealWithdrawnAppellantTemplate
- * @param {*} appealWithdrawnLPATemplate
+ * @param {*} [appealWithdrawnAppellantTemplate]
+ * @param {*} [appealWithdrawnLPATemplate]
  * @returns {PageContent}
  */
 export function checkAndConfirmPage(
@@ -212,7 +212,7 @@ export function checkAndConfirmPage(
 		},
 		parameters: {
 			summaryText: `Preview email to appellant`,
-			html: appealWithdrawnAppellantTemplate.renderedHtml
+			html: appealWithdrawnAppellantTemplate?.renderedHtml
 		}
 	};
 	/** @type {PageComponent} */
@@ -224,7 +224,7 @@ export function checkAndConfirmPage(
 		},
 		parameters: {
 			summaryText: `Preview email to LPA`,
-			html: appealWithdrawnLPATemplate.renderedHtml
+			html: appealWithdrawnLPATemplate?.renderedHtml
 		}
 	};
 	const title = 'Check details and withdraw appeal';
@@ -236,7 +236,10 @@ export function checkAndConfirmPage(
 		heading: title,
 		submitButtonText: 'Withdraw appeal',
 		prePageComponents: [summaryListComponent],
-		pageComponents: [appellantEmailComponent, lpaEmailComponent]
+		pageComponents:
+			appealWithdrawnAppellantTemplate && appealWithdrawnLPATemplate
+				? [appellantEmailComponent, lpaEmailComponent]
+				: []
 	};
 
 	if (pageContent.pageComponents) {

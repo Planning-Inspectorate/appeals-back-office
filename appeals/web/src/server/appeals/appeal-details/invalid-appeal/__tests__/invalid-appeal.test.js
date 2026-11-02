@@ -16,6 +16,7 @@ import {
 	appellantCaseInvalidReasons
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
 import { APPEAL_TYPE, FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
@@ -449,6 +450,27 @@ describe('invalid-appeal', () => {
 				);
 			}
 		);
+		it('should render the invalid appeal check page without email previews for a generic appeal', async () => {
+			jest.clearAllMocks();
+			nock('http://test/')
+				.get(`/appeals/1?include=all`)
+				.reply(200, { ...appealData, appealType: 'Tree preservation order' })
+				.persist();
+
+			await request.post(`${baseUrl}/invalid/new`).send({
+				invalidReason: invalidReasonsWithoutTextIds[0]
+			});
+			const response = await request.get(`${baseUrl}/invalid/check`);
+			const element = parseHtml(response.text);
+
+			expect(response.statusCode).toBe(200);
+			expect(element.innerHTML).toContain('Check details and mark appeal as invalid</h1>');
+			expect(element.innerHTML).not.toContain('Preview email to appellant');
+			expect(element.innerHTML).not.toContain('Preview email to LPA');
+			expect(element.innerHTML).toContain('We will mark the appeal as invalid.');
+			expect(element.innerHTML).not.toContain('send an email to the relevant parties');
+			expect(generateNotifyPreview).not.toHaveBeenCalled();
+		});
 	});
 
 	describe('GET /view', () => {
