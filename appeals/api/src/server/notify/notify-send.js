@@ -79,6 +79,8 @@ export const notifySend = async (options) => {
 
 	const prismaClient = (await import('#utils/database-connector.js')).databaseConnector;
 
+	let existingNotification;
+
 	if (process.env.NODE_ENV !== 'test' && prismaClient) {
 		const previousEmail = await prismaClient.appealNotification.findFirst({
 			where: {
@@ -92,7 +94,7 @@ export const notifySend = async (options) => {
 		if (previousEmail) {
 			const thirtySecondsAgo = new Date(Date.now() - 30 * 1000);
 
-			const existingNotification = await prismaClient.appealNotification.findFirst({
+			existingNotification = await prismaClient.appealNotification.findFirst({
 				where: {
 					caseReference: appealReference,
 					template: templateName,
@@ -100,14 +102,6 @@ export const notifySend = async (options) => {
 					dateCreated: { gte: thirtySecondsAgo }
 				}
 			});
-
-			if (existingNotification) {
-				logger.info(
-					{ appealReference, templateName },
-					'Blocked: Identical email found in 30s window.'
-				);
-				return;
-			}
 		}
 	}
 
@@ -116,6 +110,12 @@ export const notifySend = async (options) => {
 		'\r\n',
 		'\n'
 	);
+
+	if (content === existingNotification?.message) {
+		logger.info({ appealReference, templateName }, 'Blocked: Identical email found in 30s window.');
+		return;
+	}
+
 	const subject = renderTemplate(`${templateName}.subject.md`, personalisation);
 	const renderedMessage = generateNotifyPreview(content);
 	const renderedSubject = generateNotifyPreview(`Subject: ${subject}`, true);
