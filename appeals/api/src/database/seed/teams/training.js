@@ -41,5 +41,20 @@ export const teamsToCreate = [
 	{ id: 16, name: 'North2', email: 'north2@planninginspectorate.gov.uk' },
 	{ id: 17, name: 'North3', email: 'north3@planninginspectorate.gov.uk' },
 	{ id: 18, name: 'North4', email: 'north4@planninginspectorate.gov.uk' },
-	{ id: 19, name: 'PADS team', email: 'PADSplanning@planninginspectorate.gov.uk' }
+	{ id: 19, name: 'PADS team', email: 'PADSplanning@planninginspectorate.gov.uk' },
+	{
+		id: 20,
+		name: 'Green team',
+		email: 'Treeandhedgeappeals@planninginspectorate.gov.uk'
+	},
+	{
+		id: 21,
+		name: 'Major Casework and Environmental appeals',
+		email: 'ETC@planninginspectorate.gov.uk'
+	},
+	{
+		id: 22,
+		name: 'Community Infrastructure Levy appeals team',
+		email: 'CILAppeals@planninginspectorate.gov.uk'
+	}
 ];
