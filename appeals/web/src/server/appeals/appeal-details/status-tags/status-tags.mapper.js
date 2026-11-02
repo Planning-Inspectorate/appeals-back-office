@@ -27,6 +27,16 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 		});
 	}
 
+	if (appealDetails.isRedetermined) {
+		statusTags.push({
+			type: 'status-tag',
+			parameters: {
+				status: 'redetermined',
+				classes: 'govuk-!-margin-bottom-6'
+			}
+		});
+	}
+
 	if (isLinkedAppealsActive()) {
 		if (mappedData.appeal.leadOrChild.display?.statusTag) {
 			statusTags.push({

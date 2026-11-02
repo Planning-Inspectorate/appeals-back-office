@@ -40,6 +40,7 @@ model Appeal {
   caseResubmittedTypeId          Int?
   caseTransferredId              String?
   eiaScreeningRequired           Boolean?
+  isRedetermined                 Boolean                         @default(false)
   specialisms                    AppealSpecialism[]
   allocation                     AppealAllocation?
   allocationId                   Int?

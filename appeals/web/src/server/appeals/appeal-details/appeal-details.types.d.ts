@@ -434,6 +434,7 @@ export interface WebAppeal extends SingleAppealDetailsResponse {
 	inquiryDocuments?: FolderInfo | null;
 	hearingDocuments?: FolderIfo | null;
 	redeterminationEvidence?: FolderInfo | null;
+	isRedetermined?: boolean | null;
 }
 
 export interface WebServiceUser {

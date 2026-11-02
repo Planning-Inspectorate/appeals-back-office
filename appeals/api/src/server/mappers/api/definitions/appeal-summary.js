@@ -51,6 +51,9 @@ const appealSummary = {
 		},
 		isS78Expedited: {
 			type: 'boolean'
+		},
+		isRedetermined: {
+			type: 'boolean'
 		}
 	}
 };

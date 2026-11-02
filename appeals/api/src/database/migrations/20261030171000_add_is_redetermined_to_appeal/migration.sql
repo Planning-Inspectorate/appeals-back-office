@@ -1,0 +1,20 @@
+BEGIN TRY
+
+BEGIN TRANSACTION;
+
+-- AlterTable
+ALTER TABLE [dbo].[Appeal] ADD [isRedetermined] BIT NOT NULL CONSTRAINT [Appeal_isRedetermined_df] DEFAULT 0;
+
+COMMIT TRAN;
+
+END TRY
+BEGIN CATCH
+
+IF @@TRANCOUNT > 0
+BEGIN
+    ROLLBACK TRAN;
+END;
+THROW
+
+END CATCH
+

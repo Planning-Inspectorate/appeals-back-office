@@ -8956,7 +8956,7 @@
 		"/appeals/{appealId}/redetermine": {
 			"post": {
 				"tags": ["Redetermination"],
-				"description": "Reopens a completed appeal for redetermination and moves to event status",
+				"description": "Reopens a completed appeal for redetermination and moves to redetermination stage 1",
 				"parameters": [
 					{
 						"name": "appealId",
@@ -8978,7 +8978,55 @@
 				],
 				"responses": {
 					"200": {
-						"description": "Appeal reopened and moved to event status",
+						"description": "Appeal reopened and moved to redetermination stage 1",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Appeal"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Appeal"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/redetermine/progress": {
+			"post": {
+				"tags": ["Redetermination"],
+				"description": "Progresses a redetermined appeal through stage 1 -> stage 2 -> event",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Appeal progressed to next stage or event",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -16887,6 +16935,9 @@
 					},
 					"isS78Expedited": {
 						"type": "boolean"
+					},
+					"isRedetermined": {
+						"type": "boolean"
 					}
 				}
 			},
@@ -19763,6 +19814,9 @@
 						"nullable": true
 					},
 					"isS78Expedited": {
+						"type": "boolean"
+					},
+					"isRedetermined": {
 						"type": "boolean"
 					},
 					"applicationDate": {
@@ -26678,6 +26732,9 @@
 						"nullable": true
 					},
 					"isS78Expedited": {
+						"type": "boolean"
+					},
+					"isRedetermined": {
 						"type": "boolean"
 					},
 					"isCorrectAppealType": {
@@ -42439,6 +42496,9 @@
 						"nullable": true
 					},
 					"isS78Expedited": {
+						"type": "boolean"
+					},
+					"isRedetermined": {
 						"type": "boolean"
 					},
 					"caseOfficer": {

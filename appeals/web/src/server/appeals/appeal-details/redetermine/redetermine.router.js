@@ -9,4 +9,9 @@ router
 	.get(asyncHandler(controller.getRedetermineConfirmationPage))
 	.post(asyncHandler(controller.postRedetermine));
 
+router
+	.route('/progress')
+	.get(asyncHandler(controller.getProgressConfirmationPage))
+	.post(asyncHandler(controller.postProgress));
+
 export default router;

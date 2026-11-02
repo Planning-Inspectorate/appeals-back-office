@@ -122,6 +122,7 @@ interface SingleAppealDetailsResponse {
 	padsInspector?: string | null;
 	isParentAppeal?: boolean | null;
 	isChildAppeal?: boolean | null;
+	isRedetermined?: boolean | null;
 	awaitingLinkedAppeal?: boolean | null;
 	linkedAppeals: LinkedAppeal[];
 	otherAppeals: RelatedAppeal[];

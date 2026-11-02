@@ -1146,6 +1146,7 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 	caseResubmittedTypeId: true,
 	caseTransferredId: true,
 	eiaScreeningRequired: true,
+	isRedetermined: true,
 	padsInspectorUserId: true,
 	address: true,
 	procedureType: {

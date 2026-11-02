@@ -2,6 +2,10 @@
 /* eslint-disable jest/expect-expect */
 import { appealData, appealDataEnforcementNotice } from '#testing/app/fixtures/referencedata.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_CASE_STATUS_REDETERMINATION_STAGE_1,
+	APPEAL_CASE_STATUS_REDETERMINATION_STAGE_2
+} from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { addDays } from 'date-fns';
 import { canDisplayAction, getRequiredActionsForAppeal } from '../required-actions.js';
@@ -2144,6 +2148,30 @@ describe('required actions', () => {
 						'detail'
 					)
 				).toContain('reviewRule6PartyProofOfEvidence');
+			});
+		});
+
+		describe('when appeal status is redetermination', () => {
+			it('should return "progressRedeterminationStage1" if status is redetermination_stage_1', () => {
+				expect(
+					getRequiredActionsForAppeal(
+						{
+							appealStatus: APPEAL_CASE_STATUS_REDETERMINATION_STAGE_1
+						},
+						'detail'
+					)
+				).toContain('progressRedeterminationStage1');
+			});
+
+			it('should return "progressRedeterminationStage2" if status is redetermination_stage_2', () => {
+				expect(
+					getRequiredActionsForAppeal(
+						{
+							appealStatus: APPEAL_CASE_STATUS_REDETERMINATION_STAGE_2
+						},
+						'detail'
+					)
+				).toContain('progressRedeterminationStage2');
 			});
 		});
 	});

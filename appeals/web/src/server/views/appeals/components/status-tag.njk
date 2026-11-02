@@ -48,6 +48,12 @@
 			{%- set statusTagColor = 'green' -%}
 		{%- case 'transferred' -%}
 			{%- set statusTagColor = 'blue' -%}
+		{%- case 'redetermination_stage_1' -%}
+			{%- set statusTagColor = 'green' -%}
+		{%- case 'redetermination_stage_2' -%}
+			{%- set statusTagColor = 'green' -%}
+		{%- case 'redetermined' -%}
+			{%- set statusTagColor = 'purple' -%}
 		{# other use-cases #}
 		{%- case 'overdue' -%}
 			{%- set statusTagColor = 'red' -%}

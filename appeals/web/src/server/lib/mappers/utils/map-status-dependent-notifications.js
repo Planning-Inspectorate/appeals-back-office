@@ -53,6 +53,22 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 		appealDetails.hearing?.hearingStartTime && appealDetails.hearing?.address
 	);
 	switch (bannerDefinitionKey) {
+		case 'redeterminationStage1':
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<p class="govuk-notification-banner__heading">Redetermination - Stage 1</p><p><a class="govuk-notification-banner__link" data-cy="progress-redetermination-stage-1" href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/redetermine/progress`
+				)}">Progress to stage 2</a></p>`
+			});
+		case 'redeterminationStage2':
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<p class="govuk-notification-banner__heading">Redetermination - Stage 2</p><p><a class="govuk-notification-banner__link" data-cy="progress-redetermination-stage-2" href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/redetermine/progress`
+				)}">Progress to event</a></p>`
+			});
 		case 'awaitingLinkedAppeal':
 			return createNotificationBanner({
 				bannerDefinitionKey,

@@ -43,6 +43,7 @@ export const mapAppealSummary = (data) => {
 				appeal.appellantCase?.applicationDate,
 				appeal.appellantCase?.applicationDecision,
 				appeal.appellantCase?.typeOfPlanningApplication
-			) && isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS)
+			) && isFeatureActive(FEATURE_FLAG_NAMES.EXPEDITED_APPEALS),
+		isRedetermined: appeal.isRedetermined ?? false
 	};
 };
