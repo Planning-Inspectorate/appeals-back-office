@@ -191,5 +191,37 @@ describe('appeal withdrawal routes', () => {
 
 			expect(response.status).toEqual(200);
 		});
+		test('dont send notifies when withdrawing a generic appeal', async () => {
+			const genericAppeal = {
+				...householdAppeal,
+				appealType: {
+					key: 'TREE_PRESERVATION_ORDER',
+					type: 'Tree preservation order'
+				},
+				appealRule6Parties: [{ id: 1, serviceUser: { email: 'rule6@example.com' } }],
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.EVENT,
+						valid: true
+					}
+				],
+				hearing: null
+			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(genericAppeal);
+
+			const tenDaysAgo = sub(new Date(), { days: 10 });
+			const withoutWeekends = await recalculateDateIfNotBusinessDay(tenDaysAgo.toISOString());
+			const utcDate = setTimeInTimeZone(withoutWeekends, 10, 0);
+
+			const response = await request
+				.post(`/appeals/${genericAppeal.id}/withdrawal`)
+				.send({
+					withdrawalRequestDate: utcDate.toISOString()
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+			expect(mockNotifySend).not.toHaveBeenCalled();
+		});
 	});
 });

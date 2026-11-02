@@ -7,6 +7,7 @@ import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { stripQueryString } from '#lib/url-utilities.js';
 import { DOCUMENTS_PAGE_SIZE, FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { getEventType } from '@pins/appeals/utils/event-type.js';
 import {
@@ -214,6 +215,12 @@ export const renderCheckYourAnswers = async (request, response) => {
 	}
 	if (!objectContainsAllKeys(session, ['fileUploadInfo'])) {
 		return response.status(500).render('app/500.njk');
+	}
+	if (isGenericAppealType(currentAppeal.appealType)) {
+		return response.status(200).render('patterns/change-page.pattern.njk', {
+			pageContent: checkAndConfirmPage(currentAppeal, request.session),
+			errors
+		});
 	}
 	const { email: assignedTeamEmail } = await getTeamFromAppealId(
 		request.apiClient,
