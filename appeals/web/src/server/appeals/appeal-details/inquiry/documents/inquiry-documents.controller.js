@@ -30,6 +30,7 @@ import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-fo
 import { redactionStatusNameToId } from '#lib/redaction-statuses.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { FRONT_OFFICE_DASHBOARD_PATH_STUBS } from '@pins/appeals/constants/common.js';
+import { SHARING_DOCUMENT_TYPE } from '@pins/appeals/constants/documents.js';
 import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { addWeeks, format } from 'date-fns';
 import {
@@ -475,7 +476,7 @@ export const postShareDocumentCheckAndConfirm = async (request, response) => {
 				isShared: true
 			},
 			inviteResponses: request.session?.inviteMainPartyComments === 'yes',
-			sharingDocumentType: `inquiry-document`
+			sharingDocumentType: SHARING_DOCUMENT_TYPE.INQUIRY_DOCUMENT
 		};
 
 		await updateDocument(request.apiClient, appealId, apiRequest);
@@ -549,7 +550,7 @@ export const postShareAllDocuments = async (request, response) => {
 		}));
 		await updateDocuments(request.apiClient, appealId, {
 			documents: formattedDocuments,
-			sharingDocumentType: 'inquiry-document',
+			sharingDocumentType: SHARING_DOCUMENT_TYPE.INQUIRY_DOCUMENT,
 			shareMultipleDocuments: shareableDocuments.length > 1
 		});
 	} catch (error) {

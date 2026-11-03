@@ -25,6 +25,12 @@ const { databaseConnector } = await import('#utils/database-connector.js');
 const { default: got } = await import('got');
 
 const savedDocument = savedFolder.documents[0];
+const sharedDocumentPaths = {
+	'supporting-document': 'supporting-documents',
+	'hearing-document': 'hearing-documents',
+	'inquiry-document': 'inquiry-documents',
+	'inquiry-event-document': 'inquiry-event-documents'
+};
 
 describe('/appeals/:appealId/document-folders/:folderId', () => {
 	beforeEach(() => {
@@ -329,6 +335,7 @@ describe('/appeals/:appealId/documents/:documentId', () => {
 						azureAdUserId,
 						personalisation: expect.objectContaining({
 							responses_invited: inviteResponses,
+							document_type: sharedDocumentPaths[type] ?? type,
 							dashboard_link: 'appeals'
 						})
 					})
@@ -342,6 +349,7 @@ describe('/appeals/:appealId/documents/:documentId', () => {
 						azureAdUserId,
 						personalisation: expect.objectContaining({
 							responses_invited: false,
+							document_type: sharedDocumentPaths[type] ?? type,
 							dashboard_link: 'manage-appeals'
 						})
 					})
@@ -556,14 +564,7 @@ describe('/appeals/:appealId/documents', () => {
 			jest.clearAllMocks();
 		});
 
-		const multipleDocumentSharingTypes = [
-			'supporting-document',
-			'hearing-document',
-			'inquiry-document',
-			'inquiry-event-document'
-		];
-
-		multipleDocumentSharingTypes.forEach((type) => {
+		Object.entries(sharedDocumentPaths).forEach(([type, documentPath]) => {
 			test(`shares multiple documents and sends a single notify pair for: ${type}`, async () => {
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/documents`)
@@ -597,7 +598,7 @@ describe('/appeals/:appealId/documents', () => {
 						templateName: 'document-received',
 						personalisation: expect.objectContaining({
 							sharing_multiple_documents: true,
-							document_type: type,
+							document_type: documentPath,
 							dashboard_link: 'appeals'
 						})
 					})
@@ -608,7 +609,7 @@ describe('/appeals/:appealId/documents', () => {
 						templateName: 'document-received',
 						personalisation: expect.objectContaining({
 							sharing_multiple_documents: true,
-							document_type: type,
+							document_type: documentPath,
 							dashboard_link: 'manage-appeals'
 						})
 					})
