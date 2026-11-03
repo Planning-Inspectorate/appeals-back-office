@@ -2,6 +2,7 @@ import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapSiteAddress = ({ appealDetails, userHasUpdateCasePermission, request }) => {
@@ -10,6 +11,7 @@ export const mapSiteAddress = ({ appealDetails, userHasUpdateCasePermission, req
 		: '';
 	const hasAddress = Boolean(addressString);
 	const addressId = appealDetails.appealSite?.addressId;
+	const isGeneric = isGenericAppealType(appealDetails?.appealType);
 
 	return textSummaryListItem({
 		id: 'site-address',
@@ -21,7 +23,7 @@ export const mapSiteAddress = ({ appealDetails, userHasUpdateCasePermission, req
 				? `/appeals-service/appeal-details/${appealDetails.appealId}/site-address/change/${addressId}`
 				: `/appeals-service/appeal-details/${appealDetails.appealId}/site-address/change`
 		),
-		actionText: hasAddress ? 'Change' : 'Add',
+		actionText: isGeneric && !hasAddress ? 'Add' : 'Change',
 		editable: userHasUpdateCasePermission && !isChildAppeal(appealDetails),
 		classes: 'appeal-site-address'
 	});

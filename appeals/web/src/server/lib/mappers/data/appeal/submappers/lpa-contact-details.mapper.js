@@ -1,5 +1,6 @@
 import { textSummaryListItem } from '#lib/mappers/index.js';
 import { isLpaqReceived } from '#lib/mappers/utils/is-lpaq-received.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapLpaContactDetails = ({
@@ -8,6 +9,7 @@ export const mapLpaContactDetails = ({
 	userHasUpdateCasePermission
 }) => {
 	const hasLpa = Boolean(appealDetails.localPlanningDepartment);
+	const isGeneric = isGenericAppealType(appealDetails?.appealType);
 
 	return textSummaryListItem({
 		id: 'lpa-contact-details',
@@ -23,7 +25,7 @@ export const mapLpaContactDetails = ({
 		link: `${currentRoute}/change-appeal-details/local-planning-authority`,
 		editable:
 			userHasUpdateCasePermission && !appealDetails.isChildAppeal && !isLpaqReceived(appealDetails),
-		actionText: hasLpa ? 'Change' : 'Add',
+		actionText: isGeneric && !hasLpa ? 'Add' : 'Change',
 		classes: 'appeal-lpa-contact-details'
 	});
 };

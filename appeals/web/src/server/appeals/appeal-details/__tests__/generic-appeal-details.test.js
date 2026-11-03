@@ -439,4 +439,173 @@ describe('generic appeal details', () => {
 		expect(rule6Value).not.toContain('null');
 		expect(rule6Value).not.toContain('undefined');
 	});
+
+	describe('Scenario 1: Non create-a-case appeals should not display Add links on case details rows', () => {
+		const nonCreateACaseTypes = ['Planning appeal', 'Householder', 'Enforcement notice appeal'];
+
+		for (const appealType of nonCreateACaseTypes) {
+			it(`should not display Add link for: Case officer, Appeal site, Local planning authority, Application reference, Appeal procedure, Valid date, Start date, LPA questionnaire due, Appeal (documentation), LPA questionnaire, Appellant, or LPA for ${appealType}`, async () => {
+				const nonGenericAppealData = {
+					appealId: 888,
+					appealReference: 'APP/Q9999/W/21/0000001',
+					appealStatus: 'ready_to_start',
+					appealType,
+					createdAt: '2026-09-19T00:00:00.000Z',
+					localPlanningDepartment: '',
+					planningApplicationReference: null,
+					appealSite: {
+						addressId: 1,
+						addressLine1: '',
+						postCode: ''
+					},
+					appellant: null,
+					agent: null,
+					caseOfficer: null,
+					inspector: null,
+					assignedTeam: null,
+					documentationSummary: {
+						appellantCase: {
+							status: 'received',
+							receivedAt: '2026-09-19T00:00:00.000Z'
+						},
+						lpaQuestionnaire: {
+							status: 'received',
+							receivedAt: '2026-09-20T00:00:00.000Z'
+						}
+					}
+				};
+
+				nock.cleanAll();
+				installMockApi();
+
+				nock('http://test/')
+					.get('/appeals/888/page-details')
+					.reply(200, nonGenericAppealData)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/888')
+					.query(true)
+					.reply(200, nonGenericAppealData)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/888/exists')
+					.reply(200, {
+						id: 888,
+						appealId: 888,
+						appealReference: nonGenericAppealData.appealReference
+					})
+					.persist();
+				nock('http://test/').get('/appeals/888/case-notes').reply(200, []).persist();
+
+				const response = await request.get('/appeals-service/appeal-details/888');
+				expect(response.statusCode).toBe(200);
+
+				const html = parseHtml(response.text);
+
+				// Case officer
+				const caseOfficerAction = html.querySelector(
+					'.appeal-case-officer .govuk-summary-list__actions a'
+				);
+				if (caseOfficerAction) {
+					expect(caseOfficerAction.innerHTML.trim()).not.toMatch(/^Add(\s|<|$)/);
+				}
+
+				// Appeal site
+				const siteAddressAction = html.querySelector(
+					'.appeal-site-address .govuk-summary-list__actions a'
+				);
+				if (siteAddressAction) {
+					expect(siteAddressAction.innerHTML.trim()).not.toMatch(/^Add(\s|<|$)/);
+				}
+
+				// Local planning authority (LPA in summary)
+				const lpaAction = html.querySelector(
+					'.appeal-local-planning-authority .govuk-summary-list__actions a'
+				);
+				if (lpaAction) {
+					expect(lpaAction.innerHTML.trim()).not.toMatch(/^Add(\s|<|$)/);
+				}
+
+				// Application reference
+				const lpaRefAction = html.querySelector(
+					'.appeal-lpa-reference .govuk-summary-list__actions a'
+				);
+				if (lpaRefAction) {
+					expect(lpaRefAction.innerHTML.trim()).not.toMatch(/^Add(\s|<|$)/);
+				}
+
+				// Appeal procedure
+				const procedureAction = html.querySelector(
+					'.appeal-case-procedure .govuk-summary-list__actions a'
+				);
+				if (procedureAction) {
+					expect(procedureAction.innerHTML.trim()).not.toMatch(/^Add(\s|<|$)/);
+				}
+
+				// Valid date
+				const validDateAction = html.querySelector(
+					'.appeal-valid-date .govuk-summary-list__actions a'
+				);
+				if (validDateAction) {
+					expect(validDateAction.innerHTML.trim()).not.toMatch(/^Add(\s|<|$)/);
+				}
+
+				// Start date
+				const startDateAction = html.querySelector(
+					'.appeal-start-date .govuk-summary-list__actions a'
+				);
+				if (startDateAction) {
+					expect(startDateAction.innerHTML.trim()).not.toMatch(/^Add(\s|<|$)/);
+				}
+
+				// LPA questionnaire due
+				const lpaqDueDateAction = html.querySelector(
+					'.appeal-lpa-questionnaire-due-date .govuk-summary-list__actions a'
+				);
+				if (lpaqDueDateAction) {
+					expect(lpaqDueDateAction.innerHTML.trim()).not.toMatch(/^Add(\s|<|$)/);
+				}
+
+				// Appeal (within documentation section)
+				const docTable = html.querySelector('#case-documentation-table');
+				if (docTable) {
+					const rows = docTable.querySelectorAll('.govuk-table__body .govuk-table__row');
+					for (const row of rows) {
+						const headerText = row.querySelector('.govuk-table__header')?.innerHTML.trim();
+						if (headerText === 'Appeal') {
+							const actionCell = row.querySelectorAll('.govuk-table__cell')[2];
+							const actionLink = actionCell?.querySelector('a');
+							if (actionLink) {
+								expect(actionLink.innerHTML.trim()).not.toMatch(/^Add(\s|<|$)/);
+							}
+						}
+						// LPA questionnaire (within documentation section)
+						if (headerText === 'LPA questionnaire') {
+							const actionCell = row.querySelectorAll('.govuk-table__cell')[2];
+							const actionLink = actionCell?.querySelector('a');
+							if (actionLink) {
+								expect(actionLink.innerHTML.trim()).not.toMatch(/^Add(\s|<|$)/);
+							}
+						}
+					}
+				}
+
+				// Appellant
+				const appellantAction = html.querySelector(
+					'.appeal-appellant .govuk-summary-list__actions a'
+				);
+				if (appellantAction) {
+					expect(appellantAction.innerHTML.trim()).not.toMatch(/^Add(\s|<|$)/);
+				}
+
+				// LPA (contact details)
+				const lpaContactAction = html.querySelector(
+					'.appeal-lpa-contact-details .govuk-summary-list__actions a'
+				);
+				if (lpaContactAction) {
+					expect(lpaContactAction.innerHTML.trim()).not.toMatch(/^Add(\s|<|$)/);
+				}
+			});
+		}
+	});
 });

@@ -1,10 +1,12 @@
 import { textSummaryListItem } from '#lib/mappers/index.js';
 import { formatAppellantAsHtmlList } from '#lib/service-user-formatter.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapAppellant = ({ appealDetails, currentRoute, userHasUpdateCasePermission }) => {
 	const hasAppellant = Boolean(appealDetails.appellant);
-	const actionText = hasAppellant ? 'Change' : 'Add';
+	const isGeneric = isGenericAppealType(appealDetails?.appealType);
+	const actionText = isGeneric && !hasAppellant ? 'Add' : 'Change';
 
 	return textSummaryListItem({
 		id: 'appellant',
