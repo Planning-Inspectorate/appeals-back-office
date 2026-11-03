@@ -28,6 +28,7 @@ import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { setPersonalList } from '#utils/update-personal-list.js';
 import { FRONT_OFFICE_DASHBOARD_PATH_STUBS } from '@pins/appeals/constants/common.js';
+import { SHARING_DOCUMENT_TYPE } from '@pins/appeals/constants/documents.js';
 import { EventType } from '@pins/event-client';
 import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { addWeeks, format } from 'date-fns';
@@ -333,10 +334,10 @@ const getNotifyTemplateName = (sharingDocumentType) => {
 		case 'costs-withdrawal':
 			notifyTemplateName = 'shared-cost-application-withdrawal';
 			break;
-		case 'supporting-document':
-		case 'hearing-document':
-		case 'inquiry-document':
-		case 'inquiry-event-document':
+		case SHARING_DOCUMENT_TYPE.SUPPORTING_DOCUMENT:
+		case SHARING_DOCUMENT_TYPE.HEARING_DOCUMENT:
+		case SHARING_DOCUMENT_TYPE.INQUIRY_DOCUMENT:
+		case SHARING_DOCUMENT_TYPE.INQUIRY_EVENT_DOCUMENT:
 			notifyTemplateName = 'document-received';
 			break;
 	}
@@ -349,6 +350,22 @@ const getNotifyTemplateName = (sharingDocumentType) => {
  */
 const getDocumentFolderName = (sharingDocumentType) =>
 	(sharingDocumentType || '').replace(/-/g, ' ');
+
+/** @param {string} sharingDocumentType */
+const getDocumentFrontOfficePath = (sharingDocumentType) => {
+	switch (sharingDocumentType) {
+		case SHARING_DOCUMENT_TYPE.SUPPORTING_DOCUMENT:
+			return 'supporting-documents';
+		case SHARING_DOCUMENT_TYPE.HEARING_DOCUMENT:
+			return 'hearing-documents';
+		case SHARING_DOCUMENT_TYPE.INQUIRY_DOCUMENT:
+			return 'inquiry-documents';
+		case SHARING_DOCUMENT_TYPE.INQUIRY_EVENT_DOCUMENT:
+			return 'inquiry-event-documents';
+		default:
+			return sharingDocumentType;
+	}
+};
 
 /**
  * @param {Request} req
@@ -560,7 +577,7 @@ const sendShareDocumentEmails = async (
 		responses_invited: !!inviteResponses,
 		sharing_multiple_documents: !!shareMultipleDocuments,
 		document_name: documentName || '',
-		document_type: sharingDocumentType || '',
+		document_type: getDocumentFrontOfficePath(sharingDocumentType) || '',
 		document_folder_name: folderName
 	};
 
