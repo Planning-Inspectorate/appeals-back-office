@@ -148,4 +148,50 @@ describe('add supporting documents', () => {
 			caseDetailsPage.validateBannerMessage('Success', 'Supporting document removed');
 		});
 	});
+	it('update redaction status of Final Comments supporting documents', () => {
+		cy.createCase({ caseType: 'W' }).then((caseObj) => {
+			appeal = caseObj;
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'FINAL_COMMENTS', 'S78');
+			cy.addRepresentation(caseObj, 'lpaFinalComment', null);
+			cy.loadAppealDetails(caseObj).then((appealData) => {
+				const serviceUserId = ((appealData?.appellant?.serviceUserId ?? 0) + 200000000).toString();
+				cy.addRepresentation(caseObj, 'appellantFinalComment', serviceUserId);
+			});
+			cy.simulateDocumentsScanComplete(caseObj);
+
+			['lpa', 'appellant'].forEach((party) => {
+				const name = party === 'lpa' ? 'LPA' : 'appellant';
+				const title = Cypress._.upperFirst(name);
+
+				caseDetailsPage.validateBannerMessage(
+					'Important',
+					`${title} final comments awaiting review`
+				);
+				cy.getByData(`banner-review-${party}-final-comments`).click();
+				caseDetailsPage.validateSectionHeader(`Review ${name} final comments`);
+				caseDetailsPage.updateSupportingDocumentRedactionStatus('No redaction required');
+				caseDetailsPage.clickBackLink();
+				caseDetailsPage.validateSectionHeader('Supporting documents');
+				caseDetailsPage.clickBackLink();
+				caseDetailsPage.validateSectionHeader(`Review ${name} final comments`);
+				caseDetailsPage.selectRadioButtonByValue('Accept final comments');
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.validateSectionHeader(`Check details and accept ${name} final comments`);
+				caseDetailsPage.clickButtonByText(`Accept ${name} final comments`);
+				caseDetailsPage.validateBannerMessage('Success', `${title} final comments accepted`);
+
+				['Redacted', 'Unredacted'].forEach((redactionStatus) => {
+					const viewFinalComments =
+						party === 'lpa'
+							? caseDetailsPage.elements.viewLpaFinalComments()
+							: caseDetailsPage.elements.viewAppellantFinalComments();
+
+					viewFinalComments.click();
+					caseDetailsPage.validateSectionHeader(`${title} final comments`);
+					caseDetailsPage.updateSupportingDocumentRedactionStatus(redactionStatus);
+					happyPathHelper.viewCaseDetails(caseObj);
+				});
+			});
+		});
+	});
 });

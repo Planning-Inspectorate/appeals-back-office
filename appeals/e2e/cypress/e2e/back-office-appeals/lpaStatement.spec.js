@@ -88,5 +88,76 @@ const caseDetailsPage = new CaseDetailsPage();
 				});
 			});
 		});
+
+		it('should update redaction status of LPA statement supporting document', () => {
+			cy.createCase({ caseType }).then((caseObj) => {
+				appeal = caseObj;
+				setupCaseToStatementsStage(caseObj);
+				cy.addRepresentation(caseObj, 'lpaStatement', null, statementPrefix);
+				cy.simulateDocumentsScanComplete(caseObj);
+				caseDetailsPage.validateBannerMessage('Important', 'LPA statement awaiting review');
+				caseDetailsPage.elements.lpaStatementReviewLink().click();
+				caseDetailsPage.validateSectionHeader('Review LPA statement');
+				caseDetailsPage.verifyCheckYourAnswers('Supporting documents', 'lpaStatement-');
+
+				caseDetailsPage.updateSupportingDocumentRedactionStatus('No redaction required');
+				caseDetailsPage.clickBackLink();
+				caseDetailsPage.validateSectionHeader('Supporting documents');
+				caseDetailsPage.clickBackLink();
+				caseDetailsPage.validateSectionHeader('Review LPA statement');
+				caseDetailsPage.selectRadioButtonByValue('Accept statement');
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.selectRadioButtonByValue('Yes');
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.selectRadioButtonByValue('A');
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.selectCheckbox();
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.clickButtonByText('Confirm');
+				caseDetailsPage.validateConfirmationPanelMessage('Success', 'LPA statement accepted');
+
+				['Redacted', 'Unredacted'].forEach((redactionStatus) => {
+					caseDetailsPage.elements.viewLpaStatement().click();
+					caseDetailsPage.validateSectionHeader('LPA statement');
+					caseDetailsPage.updateSupportingDocumentRedactionStatus(redactionStatus);
+					happyPathHelper.viewCaseDetails(caseObj);
+				});
+			});
+		});
+
+		it('should update redaction status of IP comment supporting document', () => {
+			cy.createCase({ caseType }).then((caseObj) => {
+				appeal = caseObj;
+				setupCaseToStatementsStage(caseObj);
+				cy.addRepresentation(caseObj, 'interestedPartyComment', null);
+				cy.simulateDocumentsScanComplete(caseObj);
+				caseDetailsPage.validateBannerMessage(
+					'Important',
+					'Interested party comments awaiting review'
+				);
+				caseDetailsPage.elements.ipCommentsReviewLink().click();
+				caseDetailsPage.validateSectionHeader('Interested party comments');
+				caseDetailsPage.clickLinkByText('Review');
+				caseDetailsPage.validateSectionHeader('Review comment');
+				caseDetailsPage.verifyCheckYourAnswers('Supporting documents', 'interestedPartyComment-');
+				caseDetailsPage.updateSupportingDocumentRedactionStatus('No redaction required');
+				caseDetailsPage.clickBackLink();
+				caseDetailsPage.validateSectionHeader('Supporting documents');
+				caseDetailsPage.clickBackLink();
+				caseDetailsPage.validateSectionHeader('Review comment');
+				caseDetailsPage.selectRadioButtonByValue('Accept comment');
+				caseDetailsPage.clickButtonByText('Confirm');
+				caseDetailsPage.validateBannerMessage('Success', 'Comment accepted');
+
+				['Redacted', 'Unredacted'].forEach((redactionStatus) => {
+					happyPathHelper.viewCaseDetails(caseObj);
+					caseDetailsPage.elements.addIpComments().click();
+					caseDetailsPage.validateSectionHeader('Interested party comments');
+					caseDetailsPage.clickTabByText('Accepted');
+					caseDetailsPage.clickLinkByText('View');
+					caseDetailsPage.updateSupportingDocumentRedactionStatus(redactionStatus);
+				});
+			});
+		});
 	});
 });
