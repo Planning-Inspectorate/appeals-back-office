@@ -485,7 +485,8 @@ export const happyPathHelper = {
 			both: 'both costs',
 			appellantOnly: 'appellant only',
 			lpaOnly: 'lpa only',
-			noCosts: 'no costs'
+			noCosts: 'no costs',
+			noCostsNotWithdrawn: 'no costs not withdrawn'
 		};
 
 		if (costs === eligibleCosts.both || costs === eligibleCosts.appellantOnly) {
@@ -494,6 +495,17 @@ export const happyPathHelper = {
 
 		if (costs === eligibleCosts.both || costs === eligibleCosts.lpaOnly) {
 			issueCosts(lpaCostsBool);
+		}
+
+		// if are not any costs and are not withdrawn then proceed through default flow
+		if (costs === eligibleCosts.noCostsNotWithdrawn) {
+			caseDetailsPage.selectRadioButtonByValue('No');
+			caseDetailsPage.clickButtonByText('Continue');
+			cy.wait(1000); // Wait for 1 second to ensure the page is fully loaded before proceeding
+			caseDetailsPage.selectRadioButtonByValue('No');
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.selectRadioButtonByValue('No');
+			caseDetailsPage.clickButtonByText('Continue');
 		}
 
 		//CYA
