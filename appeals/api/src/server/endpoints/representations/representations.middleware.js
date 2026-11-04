@@ -27,9 +27,7 @@ const canPublishIpCommentsAndStatements = (currentAppeal) => {
 	if (isFeatureActive(FEATURE_FLAG_NAMES.APPELLANT_STATEMENT)) {
 		representationCheckList.push(APPELLANT_STATEMENT);
 	}
-	if (isFeatureActive(FEATURE_FLAG_NAMES.RULE_6_STATEMENT)) {
-		representationCheckList.push(RULE_6_PARTY_STATEMENT);
-	}
+	representationCheckList.push(RULE_6_PARTY_STATEMENT);
 
 	const hasRepresentationsAwaitingReview = representations?.some(
 		({ status, representationType }) =>

@@ -171,21 +171,18 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 	/**
 	 * @type {string[]}
 	 */
-	let rule6StatementTexts = [];
-	if (config.featureFlags.featureFlagRule6Statement) {
-		rule6StatementTexts = Object.values(appeal.documentationSummary?.rule6PartyStatements || {})
-			.filter(
-				(statement) =>
-					statement.representationStatus === APPEAL_REPRESENTATION_STATUS.VALID ||
-					statement.representationStatus === APPEAL_REPRESENTATION_STATUS.INCOMPLETE
-			)
-			.map((statement) => {
-				return `<a href="${addBackLinkQueryToUrl(
-					request,
-					`/appeals-service/appeal-details/${appeal.appealId}/rule-6-party-statement/${statement.rule6PartyId}`
-				)}" class="govuk-link">1 ${statement.organisationName} statement</a>`;
-			});
-	}
+	const rule6StatementTexts = Object.values(appeal.documentationSummary?.rule6PartyStatements || {})
+		.filter(
+			(statement) =>
+				statement.representationStatus === APPEAL_REPRESENTATION_STATUS.VALID ||
+				statement.representationStatus === APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+		)
+		.map((statement) => {
+			return `<a href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appeal.appealId}/rule-6-party-statement/${statement.rule6PartyId}`
+			)}" class="govuk-link">1 ${statement.organisationName} statement</a>`;
+		});
 
 	const valueTexts = /** @type {string[]} */ (
 		[ipCommentsText, lpaStatementText, appellantStatementText, ...rule6StatementTexts].filter(
