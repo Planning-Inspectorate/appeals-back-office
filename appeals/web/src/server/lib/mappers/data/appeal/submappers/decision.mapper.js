@@ -7,25 +7,27 @@ import { isStatePassed } from '#lib/appeal-status.js';
 import { textSummaryListItem, userHasPermission } from '#lib/mappers/index.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { decisionOutcomeToDisplayText } from '@pins/appeals/utils/decision-outcome-display-text.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapDecision = ({ appealDetails, session, request }) => {
 	const { appealId, appealStatus, decision } = appealDetails;
+	const isGeneric = isGenericAppealType(appealDetails.appealType);
 
 	if (
 		(isChildAppeal(appealDetails) && !decision?.outcome) ||
-		!isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT)
+		(!isGeneric && !isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT))
 	) {
 		return { id: 'decision', display: {} };
 	}
 
 	const canIssueDecision =
-		!decision?.outcome && appealStatus === APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
+		!decision?.outcome && (isGeneric || appealStatus === APPEAL_CASE_STATUS.ISSUE_DETERMINATION);
 
 	const editable =
-		isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) &&
+		(isGeneric || isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT)) &&
 		userHasPermission(permissionNames.setCaseOutcome, session);
 
 	const link = canIssueDecision

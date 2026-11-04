@@ -3156,6 +3156,76 @@ describe('appeal timetables routes', () => {
 						});
 					});
 
+					describe('for a generic appeal', () => {
+						const appeal = {
+							...householdAppeal,
+							appealType: {
+								id: 99,
+								type: 'Tree preservation order',
+								key: 'Tree preservation order'
+							},
+							caseStartedDate: undefined
+						};
+
+						test('start a generic appeal timetable with blank timetable when no dates provided and sends no notifies', async () => {
+							databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+							// @ts-ignore
+							databaseConnector.user.upsert.mockResolvedValue({
+								id: 1,
+								azureAdUserId
+							});
+
+							const { id } = appeal;
+							const response = await request
+								.post(`/appeals/${id}/appeal-timetables/`)
+								.send({ procedureType: 'written' })
+								.set('azureAdUserId', azureAdUserId);
+
+							expect(response.status).toEqual(201);
+							expect(response.body).toEqual({});
+
+							expect(databaseConnector.appealTimetable.upsert).toHaveBeenCalledWith({
+								create: { appealId: id },
+								update: {},
+								where: { appealId: id },
+								include: { appeal: true }
+							});
+
+							expect(mockNotifySend).not.toHaveBeenCalled();
+						});
+
+						test('start a generic appeal timetable with custom timetable dates when provided and sends no notifies', async () => {
+							databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+							// @ts-ignore
+							databaseConnector.user.upsert.mockResolvedValue({
+								id: 1,
+								azureAdUserId
+							});
+
+							const customTimetable = {
+								lpaQuestionnaireDueDate: '2026-03-27T00:00:00.000Z'
+							};
+
+							const { id } = appeal;
+							const response = await request
+								.post(`/appeals/${id}/appeal-timetables/`)
+								.send({ procedureType: 'written', timetable: customTimetable })
+								.set('azureAdUserId', azureAdUserId);
+
+							expect(response.status).toEqual(201);
+							expect(response.body).toEqual(customTimetable);
+
+							expect(databaseConnector.appealTimetable.upsert).toHaveBeenCalledWith({
+								create: { ...customTimetable, appealId: id },
+								update: { ...customTimetable },
+								where: { appealId: id },
+								include: { appeal: true }
+							});
+
+							expect(mockNotifySend).not.toHaveBeenCalled();
+						});
+					});
+
 					test('empty object', async () => {
 						// @ts-ignore
 						databaseConnector.appeal.findUnique.mockResolvedValue({});

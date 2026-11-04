@@ -1,7 +1,6 @@
-import { dateISOStringToDisplayDate } from '#lib/dates.js';
-import { textSummaryListItem } from '#lib/mappers/index.js';
-import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
+import { mapDueDateSummaryListItem } from './utils/due-date-mapper-helper.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapCaseManagementConferenceDueDate = ({
@@ -11,27 +10,22 @@ export const mapCaseManagementConferenceDueDate = ({
 }) => {
 	const id = 'case-management-conference-due-date';
 
+	const isGeneric = isGenericAppealType(appealDetails.appealType);
+
 	if (
 		!appealDetails.startedAt ||
-		appealDetails.procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.INQUIRY
+		(!isGeneric && appealDetails.procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.INQUIRY)
 	) {
 		return { id, display: {} };
 	}
 
-	const caseManagementConferenceDueDate =
-		appealDetails.appealTimetable?.caseManagementConferenceDueDate;
-
-	return textSummaryListItem({
+	return mapDueDateSummaryListItem({
 		id,
 		text: 'Case management conference due',
-		value: caseManagementConferenceDueDate
-			? dateISOStringToDisplayDate(caseManagementConferenceDueDate)
-			: 'Not provided',
-		link: `${currentRoute}/timetable/edit`,
-		editable:
-			!isChildAppeal(appealDetails) &&
-			userHasUpdateCasePermission &&
-			Boolean(appealDetails.startedAt),
+		dueDate: appealDetails.appealTimetable?.caseManagementConferenceDueDate,
+		appealDetails,
+		currentRoute,
+		userHasUpdateCasePermission,
 		classes: 'appeal-case-management-conference-due-date'
 	});
 };

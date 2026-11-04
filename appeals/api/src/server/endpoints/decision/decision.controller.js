@@ -9,6 +9,7 @@ import {
 	DECISION_TYPE_LPA_COSTS,
 	ERROR_INVALID_APPEAL_STATE
 } from '@pins/appeals/constants/support.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import {
 	getCostsDecisionPreview,
@@ -66,7 +67,10 @@ export const postInspectorDecision = async (req, res) => {
 	const { appeal } = req;
 	const { decisions } = req.body;
 
+	const isGeneric = isGenericAppealType(appeal.appealType?.type || appeal.appealType?.key);
+
 	if (
+		!isGeneric &&
 		decisions.some(
 			(/** @type {Decision} */ decision) => decision?.decisionType === DECISION_TYPE_INSPECTOR
 		) &&
@@ -125,10 +129,12 @@ export const postInspectorDecision = async (req, res) => {
 					case DECISION_TYPE_APPELLANT_COSTS:
 					case DECISION_TYPE_LPA_COSTS: {
 						// If the decisions are part of the full issue decision flow (including the inspector decision), we don't want to send the costs decision notifies.
-						const skipNotifies = decisions.some(
-							/** @param {Decision} decision **/
-							(decision) => decision.decisionType === DECISION_TYPE_INSPECTOR
-						);
+						const skipNotifies =
+							isGeneric ||
+							decisions.some(
+								/** @param {Decision} decision **/
+								(decision) => decision.decisionType === DECISION_TYPE_INSPECTOR
+							);
 						return publishCostsDecision(
 							appeal,
 							notifyClient,
