@@ -2,6 +2,13 @@ import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/
 
 export const REP_ATTACHMENT_DOCTYPE = 'representationAttachments';
 
+export const SHARING_DOCUMENT_TYPE = Object.freeze({
+	SUPPORTING_DOCUMENT: 'supporting-document',
+	HEARING_DOCUMENT: 'hearing-document',
+	INQUIRY_DOCUMENT: 'inquiry-document',
+	INQUIRY_EVENT_DOCUMENT: 'inquiry-event-document'
+});
+
 /** @type {string[]} */
 export const FOLDERS = [
 	`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPELLANT_STATEMENT}`,
