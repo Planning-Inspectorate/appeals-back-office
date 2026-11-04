@@ -24,7 +24,7 @@ export const mapAllocationDetails = ({
  */
 const mapDetailsHtml = (details) => {
 	if (!details) {
-		return 'No allocation level for this appeal';
+		return 'No allocation';
 	}
 	if (details.specialisms.length === 1) {
 		return `<div class="govuk-!-margin-0">Level: ${details.level}<br>${details.specialisms[0]}</div>`;

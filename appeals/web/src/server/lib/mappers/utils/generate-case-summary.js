@@ -46,7 +46,7 @@ export function generateCaseSummary(mappedAppealDetails) {
 								key: {
 									text: 'LPA'
 								},
-								value: hasLpa ? lpaItem.value : { text: 'No Local planning authority' }
+								value: hasLpa ? lpaItem.value : { text: 'No local planning authority' }
 							}
 						]
 					: [])

@@ -18,7 +18,7 @@ export const mapLpaContactDetails = ({
 					? `<ul class="govuk-list"><li>${appealDetails.localPlanningDepartment}</li><li>${appealDetails.lpaEmailAddress}</li></ul>`
 					: appealDetails.localPlanningDepartment
 						? `<ul class="govuk-list"><li>${appealDetails.localPlanningDepartment}</li></ul>`
-						: 'No Local planning authority'
+						: 'No local planning authority'
 		},
 		link: `${currentRoute}/change-appeal-details/local-planning-authority`,
 		editable:
