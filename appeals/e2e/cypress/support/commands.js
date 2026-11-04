@@ -140,6 +140,11 @@ Cypress.Commands.add('elementExists', (selector) => {
 	});
 });
 
+Cypress.Commands.add('waitForPage', (url, heading) => {
+	cy.url().should('include', url);
+	cy.contains('h1', heading).should('be.visible');
+});
+
 Cypress.Commands.add('writeLog', (message, logToConsole = true, logToBrowser = true) => {
 	if (logToConsole) {
 		cy.task('log', message);

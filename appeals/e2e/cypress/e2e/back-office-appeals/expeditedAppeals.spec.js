@@ -109,7 +109,6 @@ describe('Expedited (part1)) appeals', () => {
 			setupTestCase().then(() => {
 				// approve appellant case as valid and set a due date for the questionnaire response
 				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
-
 				// check for expected validation banners on the case details page
 				caseDetailsPage.validateBannerMessage(BANNER_TYPES.important, SUCCESS_MESSAGES.appealValid);
 				caseDetailsPage.validateBannerMessage(
@@ -140,12 +139,37 @@ describe('Expedited (part1)) appeals', () => {
 
 				// Verify Case History
 				caseDetailsPage.clickViewCaseHistory();
+				cy.waitForPage('/audit', 'Case history');
 				caseHistoryPage.verifyCaseHistoryValue(
 					'appeal startedappeal procedure: written representations (part 1)'
 				);
 
 				// check is set as expedited in appeal details
 				checkAppealDetails(caseObj, true, PLANNING_APPLICATION_TYPES.FULL);
+
+				// add lpaq to case
+				cy.addLpaqSubmissionToCase(caseObj);
+
+				//Progress case to decision
+				happyPathHelper.viewCaseDetails(caseObj);
+				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+
+				happyPathHelper.reviewLpaq(caseObj);
+				caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Yes'));
+				caseDetailsPage.clickButtonByText('Continue');
+
+				caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
+
+				happyPathHelper.setupSiteVisitFromBanner(caseObj);
+				cy.simulateSiteVisit(caseObj).then((caseObj) => {
+					cy.reload();
+				});
+
+				happyPathHelper.issueDecision('Allowed', 'no costs not withdrawn');
+
+				caseHistoryPage.verifyCaseHistory('completedState', caseObj.reference);
+				caseDetailsPage.checkDecisionOutcome('Allowed');
+				caseDetailsPage.viewDecisionLetter('View decision');
 			});
 		});
 
@@ -305,14 +329,38 @@ describe('Expedited (part1)) appeals', () => {
 				// check for expected validation banner on the case details page
 				caseDetailsPage.validateBannerMessage(BANNER_TYPES.success, SUCCESS_MESSAGES.appealStarted);
 
-				// Verify Case History
 				caseDetailsPage.clickViewCaseHistory();
+				cy.waitForPage('/audit', 'Case history');
 				caseHistoryPage.verifyCaseHistoryValue(
 					'appeal startedappeal procedure: written representations (part 1)'
 				);
 
 				// check is set as expedited in appeal details
 				checkAppealDetails(caseObj, true, PLANNING_APPLICATION_TYPES.FULL);
+
+				// add lpaq to case
+				cy.addLpaqSubmissionToCase(caseObj);
+
+				//Progress case to decision
+				happyPathHelper.viewCaseDetails(caseObj);
+				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+
+				happyPathHelper.reviewLpaq(caseObj);
+				caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Yes'));
+				caseDetailsPage.clickButtonByText('Continue');
+
+				caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
+
+				happyPathHelper.setupSiteVisitFromBanner(caseObj);
+				cy.simulateSiteVisit(caseObj).then((caseObj) => {
+					cy.reload();
+				});
+
+				happyPathHelper.issueDecision('Allowed', 'no costs not withdrawn');
+
+				caseHistoryPage.verifyCaseHistory('completedState', caseObj.reference);
+				caseDetailsPage.checkDecisionOutcome('Allowed');
+				caseDetailsPage.viewDecisionLetter('View decision');
 			});
 		});
 
@@ -477,14 +525,41 @@ describe('Expedited (part1)) appeals', () => {
 				// check for expected validation banner on the case details page
 				caseDetailsPage.validateBannerMessage(BANNER_TYPES.success, SUCCESS_MESSAGES.appealStarted);
 
-				// Verify Case History
+				// check for expected validation banner on the case details page
+				caseDetailsPage.validateBannerMessage(BANNER_TYPES.success, SUCCESS_MESSAGES.appealStarted);
+
 				caseDetailsPage.clickViewCaseHistory();
+				cy.waitForPage('/audit', 'Case history');
 				caseHistoryPage.verifyCaseHistoryValue(
 					'appeal startedappeal procedure: written representations (part 1)'
 				);
 
 				// check is set as expedited in appeal details
 				checkAppealDetails(caseObj, true, PLANNING_APPLICATION_TYPES.FULL);
+
+				// add lpaq to case
+				cy.addLpaqSubmissionToCase(caseObj);
+
+				//Progress case to decision
+				happyPathHelper.viewCaseDetails(caseObj);
+				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+
+				happyPathHelper.reviewLpaq(caseObj);
+				caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Yes'));
+				caseDetailsPage.clickButtonByText('Continue');
+
+				caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
+
+				happyPathHelper.setupSiteVisitFromBanner(caseObj);
+				cy.simulateSiteVisit(caseObj).then((caseObj) => {
+					cy.reload();
+				});
+
+				happyPathHelper.issueDecision('Allowed', 'no costs not withdrawn');
+
+				caseHistoryPage.verifyCaseHistory('completedState', caseObj.reference);
+				caseDetailsPage.checkDecisionOutcome('Allowed');
+				caseDetailsPage.viewDecisionLetter('View decision');
 			});
 		});
 
