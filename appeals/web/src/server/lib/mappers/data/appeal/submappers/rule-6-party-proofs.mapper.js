@@ -1,4 +1,3 @@
-import config from '#environment/config.js';
 import { documentationFolderTableItem } from '#lib/mappers/index.js';
 import {
 	mapAddRepresentationSummaryActionLink,
@@ -12,8 +11,6 @@ import { proofsReceivedText, proofsStatusText } from '../common.js';
 /** @type {import('../mapper.js').SubMapper} */
 export const mapRule6PartyProofs = ({ appealDetails, currentRoute, request }) => {
 	const shouldBeDisplayed =
-		config.featureFlags.featureFlagRule6Mvp &&
-		config.featureFlags.featureFlagRule6PoE &&
 		appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY.toLowerCase();
 
 	const rule6Parties = appealDetails.appealRule6Parties;

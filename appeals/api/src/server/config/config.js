@@ -68,13 +68,6 @@ const { value, error } = schema.validate({
 		featureFlagInvalidDecisionLetter:
 			environment.FEATURE_FLAG_INVALID_DECISION_LETTER &&
 			environment.FEATURE_FLAG_INVALID_DECISION_LETTER === 'true',
-		featureFlagRule6Mvp:
-			environment.FEATURE_FLAG_RULE_6_MVP && environment.FEATURE_FLAG_RULE_6_MVP === 'true',
-		featureFlagRule6PoE:
-			environment.FEATURE_FLAG_RULE_6_POE && environment.FEATURE_FLAG_RULE_6_POE === 'true',
-		featureFlagRule6Statement:
-			environment.FEATURE_FLAG_RULE_6_STATEMENT &&
-			environment.FEATURE_FLAG_RULE_6_STATEMENT === 'true',
 		featureFlagExpeditedAppeals:
 			environment.FEATURE_FLAG_EXPEDITED_APPEALS &&
 			environment.FEATURE_FLAG_EXPEDITED_APPEALS === 'true',
