@@ -167,7 +167,7 @@ describe('generic appeal details', () => {
 
 		const lpaRow = html.querySelector('.appeal-local-planning-authority');
 		expect(lpaRow?.querySelector('.govuk-summary-list__value')?.innerHTML.trim()).toBe(
-			'No Local planning authority'
+			'No local planning authority'
 		);
 		const lpaAction = lpaRow?.querySelector('.govuk-summary-list__actions a');
 		expect(lpaAction?.innerHTML.trim()).toContain('Add');

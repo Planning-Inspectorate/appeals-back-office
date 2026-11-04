@@ -8,8 +8,7 @@ export const mapLpaReference = ({ appealDetails, currentRoute, userHasUpdateCase
 	return textSummaryListItem({
 		id: 'lpa-reference',
 		text: 'Planning application reference',
-		value:
-			appealDetails.planningApplicationReference || 'No LPA application reference for this appeal',
+		value: appealDetails.planningApplicationReference || 'No application reference',
 		link: `${currentRoute}/lpa-reference/change`,
 		editable: userHasUpdateCasePermission,
 		actionText: isGeneric && !appealDetails.planningApplicationReference ? 'Add' : 'Change',
