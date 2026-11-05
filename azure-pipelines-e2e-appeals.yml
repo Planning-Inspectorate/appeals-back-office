@@ -125,7 +125,7 @@ jobs:
             HAPPY_PATH_EMAIL: $(HAPPY_PATH_EMAIL)
 
       - task: PublishTestResults@2
-        condition: succeededOrFailed()
+        condition: always()
         inputs:
           testResultsFormat: 'JUnit'
           testResultsFiles: '**/cypress/reports/junit/*.xml'
@@ -134,7 +134,7 @@ jobs:
         displayName: "Publish Test Results"
 
       - task: PublishBuildArtifacts@1
-        condition: succeededOrFailed()
+        condition: always()
         inputs:
           pathToPublish: 'appeals/e2e/cypress/reports/html'
           artifactName: 'TestReport'
