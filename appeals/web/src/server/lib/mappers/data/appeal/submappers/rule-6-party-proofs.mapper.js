@@ -31,7 +31,11 @@ export const mapRule6PartyProofs = ({ appealDetails, currentRoute, request }) =>
 						appealDetails.documentationSummary?.rule6PartyProofs?.[rule6Party.serviceUserId] ?? {};
 
 					const statusText = proofsStatusText(status, representationStatus);
-					const receivedText = proofsReceivedText(statusText, receivedAt);
+					const receivedText = proofsReceivedText(
+						statusText,
+						receivedAt,
+						appealDetails.appealTimetable?.proofOfEvidenceAndWitnessesDueDate
+					);
 
 					return documentationFolderTableItem({
 						id,
