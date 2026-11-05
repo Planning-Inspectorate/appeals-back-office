@@ -126,13 +126,13 @@ const expectedEmptyDecisionRow = {
 
 const setCaseOutcome = (params) => {
 	params.appealDetails.appealStatus = 'complete';
-	params.completedStateList = ['awaiting_event', 'issue_determination'];
+	params.appealDetails.completedStateList = ['awaiting_event', 'issue_determination'];
 	params.appealDetails.decision = { outcome: 'Split decision' };
 };
 
 const setElbCaseOutcome = (params) => {
 	params.appealDetails.appealStatus = 'complete';
-	params.completedStateList = ['awaiting_event', 'issue_determination'];
+	params.appealDetails.completedStateList = ['awaiting_event', 'issue_determination'];
 	params.appealDetails.appealType = APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING;
 	params.appealDetails.decision = {
 		outcome: APPEAL_CASE_DECISION_OUTCOME.PLANNING_PERMISSION_GRANTED
@@ -141,7 +141,7 @@ const setElbCaseOutcome = (params) => {
 
 const setEnforcementCaseOutcome = (params) => {
 	params.appealDetails.appealStatus = 'complete';
-	params.completedStateList = ['awaiting_event', 'issue_determination'];
+	params.appealDetails.completedStateList = ['awaiting_event', 'issue_determination'];
 	params.appealDetails.appealType = APPEAL_TYPE.ENFORCEMENT_NOTICE;
 	params.appealDetails.decision = {
 		outcome: APPEAL_CASE_DECISION_OUTCOME.PLANNING_PERMISSION_GRANTED
@@ -164,14 +164,29 @@ describe('decision-mapper', () => {
 	});
 
 	describe('for unlinked or lead linked appeal', () => {
-		it('Should display decision row with issue decision link', () => {
+		it('Should not display decision row if state has not passed "awaiting_event", is not "issue_determination" or is not "complete"', () => {
+			params.appealDetails.completedStateList = [];
+			params.appealDetails.appealStatus = 'awaiting_event';
+			expect(mapDecision(params)).toEqual(expectedEmptyDecisionRow);
+		});
+
+		it('Should display decision row with issue decision link if no decision previously issued and is in issue_determination state', () => {
 			expect(mapDecision(params)).toEqual(expectedIssueDecisionRow(params));
 		});
 
-		it('Should display decision row with view decision link', () => {
-			setCaseOutcome(params);
-			expect(mapDecision(params)).toEqual(expectedViewDecisionRow(params));
-		});
+		it.each([
+			['complete, no awaiting_event completed state', 'complete', []],
+			['issue decision, no awaiting_event completed state', 'issue_determination', []],
+			['awaiting_event completed state', 'default_status', ['awaiting_event']]
+		])(
+			'Should display decision row with view decision link if conditions met: %s',
+			(_, status, completedStates) => {
+				params.appealDetails.appealStatus = status;
+				params.appealDetails.completedStateList = completedStates;
+				params.appealDetails.decision = { outcome: 'Split decision' };
+				expect(mapDecision(params)).toEqual(expectedViewDecisionRow(params));
+			}
+		);
 
 		it('Should display enforcement decision row with "Planning permission granted" text', () => {
 			setEnforcementCaseOutcome(params);
@@ -189,7 +204,7 @@ describe('decision-mapper', () => {
 			params.appealDetails.isChildAppeal = true;
 		});
 
-		it('Should not display decision row with issue decision link', () => {
+		it('Should not display decision row with issue decision link if no decision previously issued', () => {
 			expect(mapDecision(params)).toEqual(expectedEmptyDecisionRow);
 		});
 
