@@ -191,9 +191,11 @@ describe('appeal status routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(400);
-				expect(response.text).toEqual(
-					'{"errors":{"status":"Must be one of the following values: assign_case_officer, awaiting_event, awaiting_transfer, closed, complete, event, evidence, final_comments, invalid, issue_determination, lpa_questionnaire, ready_to_start, statements, transferred, validation, withdrawn, witnesses"}}'
-				);
+				expect(response.body).toEqual({
+					errors: {
+						status: `Must be one of the following values: ${Object.values(APPEAL_CASE_STATUS).join(', ')}`
+					}
+				});
 			});
 
 			test('should return an empty object if no status found for that appealId', async () => {
