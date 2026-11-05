@@ -19,7 +19,11 @@ export const mapLPAProofOfEvidence = ({ appealDetails, currentRoute, request }) 
 
 	const statusText = proofsStatusText(status, representationStatus);
 
-	const receivedText = proofsReceivedText(statusText, receivedAt);
+	const receivedText = proofsReceivedText(
+		statusText,
+		receivedAt,
+		appealDetails.appealTimetable?.proofOfEvidenceAndWitnessesDueDate
+	);
 
 	return documentationFolderTableItem({
 		id,

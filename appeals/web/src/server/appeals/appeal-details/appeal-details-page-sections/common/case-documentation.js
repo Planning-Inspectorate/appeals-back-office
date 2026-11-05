@@ -11,7 +11,6 @@ import { FEATURE_FLAG_NAMES, PROCEDURE_TYPE_NAME } from '@pins/appeals/constants
  */
 export const getCaseDocumentation = (mappedData, appealDetails) => {
 	const caseStarted = appealDetails.startedAt;
-	const inquiryEventSetUp = appealDetails.inquiry;
 	const isInquiryProcedureType = appealDetails.procedureType === PROCEDURE_TYPE_NAME.INQUIRY;
 	const isHearingProcedureType = appealDetails.procedureType === PROCEDURE_TYPE_NAME.HEARING;
 	const isExpeditedAppealType = appealDetails.procedureType === PROCEDURE_TYPE_NAME.WRITTEN_PART_1;
@@ -63,7 +62,7 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 										mappedData.appeal.lpaFinalComments.display.tableItem
 									]
 								: []),
-							...(caseStarted && isInquiryProcedureType && inquiryEventSetUp
+							...(caseStarted && isInquiryProcedureType
 								? [
 										mappedData.appeal.appellantProofOfEvidence.display.tableItem || [],
 										mappedData.appeal.lpaProofOfEvidence.display.tableItem || [],
