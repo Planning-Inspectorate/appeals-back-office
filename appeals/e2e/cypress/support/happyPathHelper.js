@@ -9,6 +9,7 @@ import { FileDateAndRedactionStatusComponent } from '../page_objects/fileDateAnd
 import { ListCasesPage } from '../page_objects/listCasesPage';
 import { ProcedureTypePage } from '../page_objects/procedureTypePage';
 import { FileUploader } from '../page_objects/shared.js';
+import { HEADINGS } from './consts.js';
 import { FLOWS, STATUSES } from './flows';
 import { urlPaths } from './urlPaths.js';
 import { formatDateAndTime } from './utils/format.js';
@@ -501,7 +502,7 @@ export const happyPathHelper = {
 		if (costs === eligibleCosts.noCostsNotWithdrawn) {
 			caseDetailsPage.selectRadioButtonByValue('No');
 			caseDetailsPage.clickButtonByText('Continue');
-			cy.wait(1000); // Wait for 1 second to ensure the page is fully loaded before proceeding
+			cy.waitForPage(urlPaths.lpaCostDecision, HEADINGS.lpaCostDecision);
 			caseDetailsPage.selectRadioButtonByValue('No');
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectRadioButtonByValue('No');

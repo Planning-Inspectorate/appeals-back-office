@@ -1,4 +1,6 @@
 // @ts-nocheck
+import { HEADINGS } from '../../support/consts';
+import { urlPaths } from '../../support/urlPaths.js';
 import { Page } from '../basePage';
 import { CaseDetailsPage } from '../caseDetailsPage.js';
 import { CASE_HISTORY_STATES } from './caseHistoryStates';
@@ -21,7 +23,7 @@ export class CaseHistoryPage extends Page {
 
 	verifyCaseHistory(groupArray, caseRef) {
 		caseDetailsPage.clickViewCaseHistory();
-		cy.waitForPage('/audit', 'Case history');
+		cy.waitForPage(urlPaths.audit, HEADINGS.caseHistory);
 		const state = this.states[groupArray];
 
 		state.forEach((status, index) => {
@@ -55,6 +57,7 @@ export class CaseHistoryPage extends Page {
 	}
 
 	verifyCaseHistoryValue(value) {
+		cy.waitForPage(urlPaths.audit, HEADINGS.caseHistory);
 		const expectedText = value.toLocaleLowerCase();
 		cy.writeLog(`Verifying case history value: ${expectedText}`); // Log the expected text for debugging
 
@@ -80,6 +83,7 @@ export class CaseHistoryPage extends Page {
 	}
 
 	verifyNotCaseHistoryValue(value) {
+		cy.waitForPage(urlPaths.audit, HEADINGS.caseHistory);
 		const expectedText = value.toLocaleLowerCase();
 		cy.writeLog(`Verifying there is no case history value containing: ${expectedText}`); // Log the expected text for debugging
 

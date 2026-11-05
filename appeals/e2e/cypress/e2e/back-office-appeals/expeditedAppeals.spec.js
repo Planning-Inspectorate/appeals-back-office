@@ -139,7 +139,6 @@ describe('Expedited (part1)) appeals', () => {
 
 				// Verify Case History
 				caseDetailsPage.clickViewCaseHistory();
-				cy.waitForPage('/audit', 'Case history');
 				caseHistoryPage.verifyCaseHistoryValue(
 					'appeal startedappeal procedure: written representations (part 1)'
 				);
@@ -329,8 +328,8 @@ describe('Expedited (part1)) appeals', () => {
 				// check for expected validation banner on the case details page
 				caseDetailsPage.validateBannerMessage(BANNER_TYPES.success, SUCCESS_MESSAGES.appealStarted);
 
+				// verify case history
 				caseDetailsPage.clickViewCaseHistory();
-				cy.waitForPage('/audit', 'Case history');
 				caseHistoryPage.verifyCaseHistoryValue(
 					'appeal startedappeal procedure: written representations (part 1)'
 				);
@@ -525,11 +524,8 @@ describe('Expedited (part1)) appeals', () => {
 				// check for expected validation banner on the case details page
 				caseDetailsPage.validateBannerMessage(BANNER_TYPES.success, SUCCESS_MESSAGES.appealStarted);
 
-				// check for expected validation banner on the case details page
-				caseDetailsPage.validateBannerMessage(BANNER_TYPES.success, SUCCESS_MESSAGES.appealStarted);
-
+				// verify case history
 				caseDetailsPage.clickViewCaseHistory();
-				cy.waitForPage('/audit', 'Case history');
 				caseHistoryPage.verifyCaseHistoryValue(
 					'appeal startedappeal procedure: written representations (part 1)'
 				);
