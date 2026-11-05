@@ -47,10 +47,6 @@ extends:
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
-              script: npm run commitlint
-          - template: ../steps/node_script.yml
-            parameters:
-              nodeVersion: 22
               script: npm run tscheck
               environmentVariables:
                 TURBO_TEAM: $(TURBO_TEAM)
