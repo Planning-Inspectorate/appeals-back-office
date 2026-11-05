@@ -102,7 +102,7 @@ export const SAMPLE_FILES = {
 export const DEFAULT_OVERVIEW_DETAILS = {
 	appealType: 'Planning appeal',
 	applicationReference: '123',
-	allocationLevel: 'No allocation level for this appeal',
+	allocationLevel: 'No allocation',
 	linkedAppeals: 'No linked appeals',
 	relatedAppeals: '1000000',
 	netGainResidential: 'Not provided'

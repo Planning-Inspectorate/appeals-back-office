@@ -58,11 +58,12 @@ describe('site-address.mapper', () => {
 	});
 
 	describe('should display site address row with an Add link', () => {
-		it('when the appeal has no address yet', () => {
+		it('when the generic appeal has no address yet', () => {
 			const mappedData = mapSiteAddress({
 				...data,
 				appealDetails: {
 					...data.appealDetails,
+					appealType: 'Tree preservation order',
 					appealSite: {
 						addressId: 1,
 						addressLine1: '',
@@ -74,6 +75,24 @@ describe('site-address.mapper', () => {
 			expect(mappedData.display.summaryListItem.actions.items[0].href).toBe(
 				'/appeals-service/appeal-details/123/site-address/change/1?backUrl=test'
 			);
+		});
+	});
+
+	describe('should not display Add link on non-generic appeal', () => {
+		it('when a non-generic appeal has no address yet, displays Change instead of Add', () => {
+			const mappedData = mapSiteAddress({
+				...data,
+				appealDetails: {
+					...data.appealDetails,
+					appealType: 'Householder',
+					appealSite: {
+						addressId: 1,
+						addressLine1: '',
+						postCode: ''
+					}
+				}
+			});
+			expect(mappedData.display.summaryListItem.actions.items[0].text).toBe('Change');
 		});
 	});
 

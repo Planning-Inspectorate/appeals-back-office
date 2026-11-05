@@ -447,9 +447,7 @@ export async function publishStatements(appeal, azureAdUserId, notifyClient, ins
 	if (isFeatureActive(FEATURE_FLAG_NAMES.APPELLANT_STATEMENT)) {
 		statementsToPublish.push(APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT);
 	}
-	if (isFeatureActive(FEATURE_FLAG_NAMES.RULE_6_STATEMENT)) {
-		statementsToPublish.push(APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT);
-	}
+	statementsToPublish.push(APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT);
 
 	const representations = await representationRepository.updateRepresentations(
 		[appeal.id],
@@ -902,9 +900,7 @@ export async function publishProofOfEvidence(appeal, azureAdUserId, notifyClient
 		APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
 	];
 
-	if (isFeatureActive(FEATURE_FLAG_NAMES.RULE_6_PARTIES_POE)) {
-		representationTypes.push(APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE);
-	}
+	representationTypes.push(APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE);
 
 	const result = await representationRepository.updateRepresentations(
 		[appeal.id],

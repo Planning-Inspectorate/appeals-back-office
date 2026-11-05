@@ -6,7 +6,6 @@ import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 /** @type {import('../mapper.js').SubMapper} */
 export const mapCostsRule6Parties = ({ appealDetails, userHasUpdateCasePermission }) => {
 	const shouldBeDisplayed =
-		config.featureFlags.featureFlagRule6Mvp &&
 		config.featureFlags.featureFlagRule6Costs &&
 		appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY.toLowerCase();
 

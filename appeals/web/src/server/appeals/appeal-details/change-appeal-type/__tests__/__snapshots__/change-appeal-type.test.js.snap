@@ -211,6 +211,21 @@ exports[`change-appeal-type GET /change-appeal-type/appeal-type should render th
 </main>"
 `;
 
+exports[`change-appeal-type GET /change-appeal-type/appeal-type should render the you cannot update the appeal type page for appeals with status closed_opened_in_error 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">You cannot update the appeal type</h1>
+        </div>
+    </div>
+    <p class="govuk-body">This is because you can only update the appeal type when the status is:</p>
+    <ul     class="govuk-list govuk-list--bullet">
+        <li>assign case officer</li>
+        <li>validation</li>
+        </ul>
+</main>"
+`;
+
 exports[`change-appeal-type GET /change-appeal-type/appeal-type should render the you cannot update the appeal type page for appeals with status complete 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
@@ -302,6 +317,21 @@ exports[`change-appeal-type GET /change-appeal-type/appeal-type should render th
 `;
 
 exports[`change-appeal-type GET /change-appeal-type/appeal-type should render the you cannot update the appeal type page for appeals with status lpa_questionnaire 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">You cannot update the appeal type</h1>
+        </div>
+    </div>
+    <p class="govuk-body">This is because you can only update the appeal type when the status is:</p>
+    <ul     class="govuk-list govuk-list--bullet">
+        <li>assign case officer</li>
+        <li>validation</li>
+        </ul>
+</main>"
+`;
+
+exports[`change-appeal-type GET /change-appeal-type/appeal-type should render the you cannot update the appeal type page for appeals with status notice_withdrawn 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>

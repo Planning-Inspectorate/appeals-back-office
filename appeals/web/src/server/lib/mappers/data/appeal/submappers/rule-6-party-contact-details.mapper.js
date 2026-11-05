@@ -1,4 +1,3 @@
-import config from '#environment/config.js';
 import { listOrOnlyItem } from '#lib/mappers/components/page-components/list-or-only-item.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
@@ -16,9 +15,8 @@ export const mapRule6PartyContactDetails = ({
 
 	// TODO: update once case type letters and schema are provided by ODW
 	if (
-		!config.featureFlags.featureFlagRule6Mvp ||
-		(!isGenericAppealType(appealDetails.appealType) &&
-			appealDetails.procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.INQUIRY.toLowerCase())
+		!isGenericAppealType(appealDetails.appealType) &&
+		appealDetails.procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.INQUIRY.toLowerCase()
 	) {
 		return { id, display: {} };
 	}

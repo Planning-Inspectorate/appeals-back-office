@@ -19,7 +19,11 @@ export const mapAppellantProofOfEvidence = ({ appealDetails, currentRoute, reque
 
 	const statusText = proofsStatusText(status, representationStatus);
 
-	const receivedText = proofsReceivedText(statusText, receivedAt);
+	const receivedText = proofsReceivedText(
+		statusText,
+		receivedAt,
+		appealDetails.appealTimetable?.proofOfEvidenceAndWitnessesDueDate
+	);
 
 	return documentationFolderTableItem({
 		id,

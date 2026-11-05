@@ -275,8 +275,6 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			const appellantStatementEnabled =
 				config.featureFlags.featureFlagAppellantStatement &&
 				isAppellantStatementAppealType(appealDetails.appealType);
-			const rule6StatementEnabled = config.featureFlags.featureFlagRule6Statement;
-
 			const rule6PartyStatements = appealDetails.documentationSummary.rule6PartyStatements || {};
 			const rule6StatementRepresentationStatuses = Object.values(rule6PartyStatements).map(
 				(statement) => statement.representationStatus
@@ -292,7 +290,7 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				!ipCommentsAwaitingReview &&
 				!lpaStatementAwaitingReview &&
 				(!appellantStatementEnabled || !appellantStatementAwaitingReview) &&
-				(!rule6StatementEnabled || !rule6StatementAwaitingReview);
+				!rule6StatementAwaitingReview;
 			const hasIPComments = Boolean(ipCommentsCounts?.valid && ipCommentsCounts?.valid > 0);
 			const hasStatements =
 				lpaStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.VALID ||
@@ -300,12 +298,11 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				(appellantStatementEnabled &&
 					(appellantStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.VALID ||
 						appellantStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.INCOMPLETE)) ||
-				(rule6StatementEnabled &&
-					rule6StatementRepresentationStatuses.some(
-						(status) =>
-							status === APPEAL_REPRESENTATION_STATUS.VALID ||
-							status === APPEAL_REPRESENTATION_STATUS.INCOMPLETE
-					));
+				rule6StatementRepresentationStatuses.some(
+					(status) =>
+						status === APPEAL_REPRESENTATION_STATUS.VALID ||
+						status === APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+				);
 
 			if (ipCommentsDueDatePassed && statementsDueDatePassed && allReviewsCompleted) {
 				if (hasIPComments && hasStatements) {
@@ -346,10 +343,10 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 					}
 				}
 
-				if (rule6StatementEnabled && rule6StatementNotReceived) {
+				if (rule6StatementNotReceived) {
 					actions.push('awaitingRule6PartyStatement');
 				}
-				if (rule6StatementEnabled && rule6StatementAwaitingReview) {
+				if (rule6StatementAwaitingReview) {
 					actions.push('reviewRule6PartyStatement');
 				}
 			}
@@ -441,8 +438,6 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			const appellantProofOfEvidenceAwaitingReview =
 				appellantProofOfEvidenceReceived && !appellantProofOfEvidenceDone;
 
-			const rule6PoEEnabled = config.featureFlags.featureFlagRule6PoE;
-
 			const rule6PartyProofOfEvidence = appealDetails.documentationSummary.rule6PartyProofs || {};
 			const rule6ProofOfEvidenceRepresentationStatuses = Object.values(
 				rule6PartyProofOfEvidence
@@ -464,7 +459,7 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			const hasPendingProofReviews =
 				lpaProofOfEvidenceAwaitingReview ||
 				appellantProofOfEvidenceAwaitingReview ||
-				(rule6PoEEnabled && rule6ProofOfEvidenceAwaitingReview);
+				rule6ProofOfEvidenceAwaitingReview;
 
 			if (proofOfEvidenceDueDatePassed) {
 				if (!hasPendingProofReviews) {
@@ -478,10 +473,10 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				actions.push('awaitingAppellantProofOfEvidenceAndWitnesses');
 			}
 
-			if (rule6PoEEnabled && rule6ProofOfEvidenceNotReceived) {
+			if (rule6ProofOfEvidenceNotReceived) {
 				actions.push('awaitingRule6PartyProofOfEvidence');
 			}
-			if (rule6PoEEnabled && rule6ProofOfEvidenceAwaitingReview) {
+			if (rule6ProofOfEvidenceAwaitingReview) {
 				actions.push('reviewRule6PartyProofOfEvidence');
 			}
 

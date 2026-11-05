@@ -97,4 +97,41 @@ describe('mapLPAProofOfEvidence', () => {
 
 		expect(result).toEqual(expected);
 	});
+	it('should show the proof of evidence due date when status is not received', () => {
+		const result = mapLPAProofOfEvidence({
+			...data,
+			appealDetails: {
+				...data.appealDetails,
+				appealTimetable: { proofOfEvidenceAndWitnessesDueDate: '2025-10-13T10:27:06.626Z' },
+				documentationSummary: {
+					lpaProofOfEvidence: {
+						status: 'not_received',
+						receivedAt: null,
+						representationStatus: null
+					}
+				}
+			}
+		});
+
+		expect(result.display.tableItem[1].text).toBe('Awaiting proof of evidence and witness');
+		expect(result.display.tableItem[2].text).toBe('Due by 13 October 2025');
+	});
+	it('should show the received date when proof of evidence received', () => {
+		const result = mapLPAProofOfEvidence({
+			...data,
+			appealDetails: {
+				...data.appealDetails,
+				appealTimetable: { proofOfEvidenceAndWitnessesDueDate: '2025-10-12T10:27:06.626Z' },
+				documentationSummary: {
+					lpaProofOfEvidence: {
+						status: 'received',
+						receivedAt: '2025-08-02T10:27:06.626Z',
+						representationStatus: 'awaiting_review'
+					}
+				}
+			}
+		});
+
+		expect(result.display.tableItem[2].text).toBe('2 August 2025');
+	});
 });

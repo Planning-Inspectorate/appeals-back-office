@@ -67,7 +67,9 @@ export class CaseDetailsPage extends Page {
 		addLpaStatement: 'add-lpa-statement',
 		addIpComments: 'review-ip-comments',
 		addLpaFinalComments: 'add-lpa-final-comments',
+		viewLpaFinalComments: 'view-lpa-final-comments',
 		addAppellantComments: 'add-appellant-comments',
+		viewAppellantFinalComments: 'view-appellant-final-comments',
 		addLpaWithdrawal: 'add-costs-lpa-withdrawal',
 		addNetResidence: 'add-net-residence-change',
 		documentationTable: '#case-documentation-table',
@@ -256,7 +258,10 @@ export class CaseDetailsPage extends Page {
 		addLpaStatement: () => cy.getByData(this._cyDataSelectors.addLpaStatement),
 		addIpComments: () => cy.getByData(this._cyDataSelectors.addIpComments),
 		addLpaFinalComments: () => cy.getByData(this._cyDataSelectors.addLpaFinalComments),
+		viewLpaFinalComments: () => cy.getByData(this._cyDataSelectors.viewLpaFinalComments),
 		addAppellantComments: () => cy.getByData(this._cyDataSelectors.addAppellantComments),
+		viewAppellantFinalComments: () =>
+			cy.getByData(this._cyDataSelectors.viewAppellantFinalComments),
 		addLpaWithdrawal: () => cy.getByData(this._cyDataSelectors.addLpaWithdrawal),
 		addNetResidence: () => cy.getByData(this._cyDataSelectors.addNetResidence),
 		manageEnforcementLinkedAppeal: () =>
@@ -314,6 +319,19 @@ export class CaseDetailsPage extends Page {
 	checkRedactionStatus(status) {
 		let redactionStatus = this.elements.redactionStatus().invoke('prop', 'innerText');
 		redactionStatus.should('eq', status);
+	}
+
+	updateSupportingDocumentRedactionStatus(status) {
+		this.clickLinkByText('Manage');
+		this.clickLinkByText('View and edit');
+		this.clickChangeRedactionStatus();
+		this.selectRadioButtonByValue(status);
+		this.clickButtonByText('Confirm');
+		this.validateBannerMessage('Success', 'Document details updated');
+		this.checkRedactionStatus(status);
+		this.basePageElements.summaryDetails().click();
+		this.basePageElements.tableBody().should('be.visible');
+		this.verifyTableCellText({ rowIndex: 0, cellIndex: 3, textToMatch: status, strict: true });
 	}
 
 	searchForCaseOfficer(text) {

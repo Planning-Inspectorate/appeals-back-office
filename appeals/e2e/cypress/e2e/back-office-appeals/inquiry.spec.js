@@ -81,7 +81,7 @@ const overviewDetails = {
 	appealType: 'Planning appeal',
 	applicationReference: '123',
 	appealProcedure: 'Inquiry',
-	allocationLevel: 'No allocation level for this appeal',
+	allocationLevel: 'No allocation',
 	linkedAppeals: 'No linked appeals',
 	relatedAppeals: '1000000',
 	netGainResidential: 'Not provided'

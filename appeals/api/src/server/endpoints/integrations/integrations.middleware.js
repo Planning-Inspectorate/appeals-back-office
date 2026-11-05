@@ -1,10 +1,7 @@
-import { serviceUserIdStartRange } from '#mappers/integration/map-service-user-entity.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
-import { isFeatureActive } from '#utils/feature-flags.js';
 import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
-import { default as logger, default as pino } from '#utils/logger.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import pino from '#utils/logger.js';
 import {
 	CASE_RELATIONSHIP_LINKED,
 	ERROR_INVALID_APPEAL_TYPE_REP,
@@ -16,18 +13,6 @@ import {
 import { isExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@planning-inspectorate/data-model';
 import { schemas, validateFromSchema } from './integrations.validators.js';
-
-/** @type {Record<string, { flag: string, name: string }>} */
-const rule6Config = {
-	[APPEAL_REPRESENTATION_TYPE.PROOFS_EVIDENCE]: {
-		flag: FEATURE_FLAG_NAMES.RULE_6_PARTIES_POE,
-		name: 'Proof of Evidence'
-	},
-	[APPEAL_REPRESENTATION_TYPE.STATEMENT]: {
-		flag: FEATURE_FLAG_NAMES.RULE_6_STATEMENT,
-		name: 'Statement'
-	}
-};
 
 /**
  * @type {import("express").RequestHandler}
@@ -155,18 +140,6 @@ export const validateRepresentation = async (req, res, next) => {
 		});
 	}
 
-	const featureFlagResponse = validateRule6FeatureAndParty(
-		res,
-		body.representationType,
-		body.caseReference,
-		body.serviceUserId,
-		referenceData
-	);
-
-	if (featureFlagResponse) {
-		return featureFlagResponse;
-	}
-
 	if (isExpeditedAppealType(referenceData.appeal.appealType?.key)) {
 		pino.error(
 			`The reference appeal '${body?.caseReference}' does not accept representations (${referenceData.appeal.appealType?.key})`
@@ -243,46 +216,4 @@ const loadReferenceData = async (reference, useLeadAppealIfLinked = false) => {
 			};
 		}
 	});
-};
-
-/**
- * @param {import("express").Response} res
- * @param {string} representationType
- * @param {string} caseReference
- * @param {string} serviceUserId
- * @param {*} referenceData
- * @returns {object|undefined}
- */
-const validateRule6FeatureAndParty = (
-	res,
-	representationType,
-	caseReference,
-	serviceUserId,
-	referenceData
-) => {
-	const config = rule6Config[representationType];
-	if (!config) {
-		return;
-	}
-
-	const isFeatureEnabled = isFeatureActive(config.flag);
-	if (isFeatureEnabled) {
-		return;
-	}
-
-	const serviceUserIdBo = Number(serviceUserId) - serviceUserIdStartRange;
-	const isRule6Party = !!referenceData.appeal.appealRule6Parties?.some(
-		(/** @type {{ serviceUserId: number; }} */ party) => party.serviceUserId === serviceUserIdBo
-	);
-
-	if (isRule6Party) {
-		logger.info(
-			`Blocking Rule 6 ${config.name} submission for appeal '${caseReference}' as feature flag is disabled`
-		);
-		return res.status(403).send({
-			errors: {
-				integration: `Rule 6 ${config.name} ingestion is currently disabled`
-			}
-		});
-	}
 };
