@@ -146,11 +146,12 @@ export const proofsStatusText = (status, representationStatus) => {
 /**
  * @param {string} statusText
  * @param {string | Date | null | undefined} receivedAt
+ * @param {string | null | undefined} dueDate
  * @returns {string}
  */
-export const proofsReceivedText = (statusText, receivedAt) => {
+export const proofsReceivedText = (statusText, receivedAt, dueDate) => {
 	if (statusText === 'Awaiting proof of evidence and witness') {
-		return '';
+		return dueDate ? `Due by ${dateISOStringToDisplayDate(dueDate)}` : '';
 	}
 
 	return dateISOStringToDisplayDate(
