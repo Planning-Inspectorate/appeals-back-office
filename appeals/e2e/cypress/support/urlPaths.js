@@ -10,7 +10,9 @@ export const urlPaths = {
 	personalListFilteredEvidence:
 		'/appeals-service/personal-list?pageSize=1000&pageNumber=1&appealStatusFilter=evidence',
 	personalListFilteredStatement:
-		'/appeals-service/personal-list?pageSize=1000&pageNumber=1&appealStatusFilter=statements'
+		'/appeals-service/personal-list?pageSize=1000&pageNumber=1&appealStatusFilter=statements',
+	audit: '/audit',
+	lpaCostDecision: '/issue-decision/lpa-costs-decision'
 };
 
 /**

@@ -54,7 +54,9 @@ export const CTA_TEXT = {
 export const HEADINGS = {
 	cya: {
 		ipComment: 'Check details and add interested party comment'
-	}
+	},
+	lpaCostDecision: "Do you want to issue the LPA's costs decision?",
+	caseHistory: 'Case history'
 };
 
 export const PROCEDURE_TYPES = {
