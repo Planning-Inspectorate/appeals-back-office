@@ -16,9 +16,14 @@ export const mapDecision = ({ appealDetails, session, request }) => {
 	const { appealId, appealStatus, decision } = appealDetails;
 	const isGeneric = isGenericAppealType(appealDetails.appealType);
 
+	const isInDisplayDocumentRowState =
+		isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) ||
+		appealStatus === APPEAL_CASE_STATUS.ISSUE_DETERMINATION ||
+		appealStatus === APPEAL_CASE_STATUS.COMPLETE;
+
 	if (
 		(isChildAppeal(appealDetails) && !decision?.outcome) ||
-		(!isGeneric && !isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT))
+		(!isGeneric && !isInDisplayDocumentRowState)
 	) {
 		return { id: 'decision', display: {} };
 	}
@@ -27,7 +32,7 @@ export const mapDecision = ({ appealDetails, session, request }) => {
 		!decision?.outcome && (isGeneric || appealStatus === APPEAL_CASE_STATUS.ISSUE_DETERMINATION);
 
 	const editable =
-		(isGeneric || isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT)) &&
+		(isGeneric || isInDisplayDocumentRowState) &&
 		userHasPermission(permissionNames.setCaseOutcome, session);
 
 	const link = canIssueDecision

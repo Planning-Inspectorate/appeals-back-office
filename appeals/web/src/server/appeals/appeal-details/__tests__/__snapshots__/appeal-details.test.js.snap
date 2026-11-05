@@ -5987,6 +5987,12 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
                 data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Related appeals</span></a>
             </dd>
         </div>
+        <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
+            <dd class="govuk-summary-list__value">Not issued</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+                data-cy="issue-decision">Issue<span class="govuk-visually-hidden"> Decision</span></a>
+            </dd>
+        </div>
     </dl>
     <div id="site-visit-section">
         <h2 class="govuk-heading-l">Site</h2>
@@ -7350,6 +7356,12 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/other-appeals/add"
                 data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Related appeals</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
+            <dd class="govuk-summary-list__value">Dismissed</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+                data-cy="view-decision">View<span class="govuk-visually-hidden"> Decision</span></a>
             </dd>
         </div>
     </dl>
