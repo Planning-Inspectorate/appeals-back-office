@@ -1546,6 +1546,7 @@ describe('appeal-details', () => {
 						.get(`/appeals/${appealId}/page-details`)
 						.reply(200, {
 							...appealData,
+							decision: {},
 							appealStatus: 'issue_determination',
 							completedStateList: ['ready_to_start']
 						});

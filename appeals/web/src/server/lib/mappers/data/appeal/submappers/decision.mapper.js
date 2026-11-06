@@ -14,10 +14,12 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 export const mapDecision = ({ appealDetails, session, request }) => {
 	const { appealId, appealStatus, decision } = appealDetails;
 
-	if (
-		(isChildAppeal(appealDetails) && !decision?.outcome) ||
-		!isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT)
-	) {
+	const isInDisplayDocumentRowState =
+		isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) ||
+		appealStatus === APPEAL_CASE_STATUS.ISSUE_DETERMINATION ||
+		appealStatus === APPEAL_CASE_STATUS.COMPLETE;
+
+	if ((isChildAppeal(appealDetails) && !decision?.outcome) || !isInDisplayDocumentRowState) {
 		return { id: 'decision', display: {} };
 	}
 
@@ -25,8 +27,7 @@ export const mapDecision = ({ appealDetails, session, request }) => {
 		!decision?.outcome && appealStatus === APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
 
 	const editable =
-		isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) &&
-		userHasPermission(permissionNames.setCaseOutcome, session);
+		isInDisplayDocumentRowState && userHasPermission(permissionNames.setCaseOutcome, session);
 
 	const link = canIssueDecision
 		? addBackLinkQueryToUrl(request, generateIssueDecisionUrl(appealId))
