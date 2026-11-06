@@ -110,6 +110,12 @@ export const DEFAULT_OVERVIEW_DETAILS = {
 	netGainResidential: 'Not provided'
 };
 
+export const PROOF_OF_EVIDENCE_STATUSES = [
+	'Awaiting proof of evidence and witness',
+	'Received',
+	'Completed'
+];
+
 export const validFileNameVariants = [
 	{
 		name: 'newFile',
