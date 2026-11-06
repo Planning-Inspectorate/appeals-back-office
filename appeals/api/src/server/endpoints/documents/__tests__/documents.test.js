@@ -541,6 +541,28 @@ describe('/appeals/:appealId/documents', () => {
 			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
 			expect(response.status).toEqual(200);
 		});
+
+		test('links each per-document audit trail entry to its document version', async () => {
+			databaseConnector.auditTrail.create
+				.mockResolvedValueOnce({ id: 101 })
+				.mockResolvedValueOnce({ id: 102 });
+
+			const response = await request
+				.patch(`/appeals/${householdAppeal.id}/documents`)
+				.send(requestBody)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+			expect(databaseConnector.documentVersionAudit.create).toHaveBeenCalledTimes(2);
+			expect(databaseConnector.documentVersionAudit.create).toHaveBeenCalledWith({
+				data: {
+					documentGuid: documentCreated.guid,
+					version: documentCreated.latestDocumentVersion.version,
+					action: 'Update',
+					auditTrailId: 101
+				}
+			});
+		});
 	});
 
 	describe('PATCH sharing multiple documents', () => {
@@ -616,6 +638,100 @@ describe('/appeals/:appealId/documents', () => {
 				);
 				expect(mockBroadcasters.broadcastDocument).toHaveBeenCalledTimes(2);
 			});
+		});
+
+		const sharedDocumentsToSend = (redactionStatus = 1) => [
+			{
+				id: '987e66e0-1db4-404b-8213-8082919159e9',
+				isShared: true,
+				receivedDate: new Date().toISOString(),
+				redactionStatus
+			},
+			{
+				id: '8b107895-b8c9-467f-aad0-c09daafeaaad',
+				isShared: true,
+				receivedDate: new Date().toISOString(),
+				redactionStatus
+			}
+		];
+
+		const expectedAuditTrailDetails = {
+			'supporting-document': 'Supporting documents uploaded',
+			'hearing-document': 'Hearing documents uploaded',
+			'inquiry-document': 'Inquiry documents uploaded',
+			'inquiry-event-document': 'Inquiry event documents uploaded',
+			'costs-application': 'Costs application uploaded',
+			'costs-correspondence': 'Costs correspondence uploaded',
+			'costs-withdrawal': 'Costs withdrawal uploaded'
+		};
+
+		Object.entries(expectedAuditTrailDetails).forEach(([type, details]) => {
+			test(`logs a single case history entry of "${details}" for: ${type}`, async () => {
+				databaseConnector.auditTrail.create.mockResolvedValueOnce({ id: 1 });
+
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}/documents`)
+					.send({
+						documents: sharedDocumentsToSend(),
+						sharingDocumentType: type,
+						shareMultipleDocuments: true,
+						costsCategory: type.startsWith('costs-') ? 'lpa' : ''
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: expect.objectContaining({
+						appealId: householdAppeal.id,
+						details
+					})
+				});
+				expect(databaseConnector.documentVersionAudit.create).not.toHaveBeenCalled();
+			});
+		});
+
+		test('does not log per-document redaction audit trails when sharing multiple documents', async () => {
+			const response = await request
+				.patch(`/appeals/${householdAppeal.id}/documents`)
+				.send({
+					documents: sharedDocumentsToSend(2),
+					sharingDocumentType: 'hearing-document',
+					shareMultipleDocuments: true,
+					costsCategory: ''
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+				data: expect.objectContaining({ details: 'Hearing documents uploaded' })
+			});
+		});
+
+		test('does not log a case history entry or notify when documents are already published', async () => {
+			databaseConnector.document.findUnique.mockResolvedValue({
+				...documentCreated,
+				latestDocumentVersion: {
+					...documentCreated.latestDocumentVersion,
+					published: true,
+					redactionStatusId: 1
+				}
+			});
+
+			const response = await request
+				.patch(`/appeals/${householdAppeal.id}/documents`)
+				.send({
+					documents: sharedDocumentsToSend(),
+					sharingDocumentType: 'hearing-document',
+					shareMultipleDocuments: true,
+					costsCategory: ''
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+			expect(notifySend).not.toHaveBeenCalled();
+			expect(databaseConnector.auditTrail.create).not.toHaveBeenCalled();
 		});
 	});
 });
