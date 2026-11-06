@@ -8,6 +8,7 @@ import {
 	AUDIT_TRAIL_DOCUMENT_REDACTED,
 	AUDIT_TRAIL_DOCUMENT_UNREDACTED,
 	AUDIT_TRAIL_DOCUMENT_UPLOADED,
+	AUDIT_TRAIL_MULTIPLE_DOCUMENTS_UPLOADED,
 	ERROR_DOCUMENT_NAME_ALREADY_EXISTS,
 	ERROR_FAILED_TO_ADD_DOCUMENTS,
 	ERROR_FAILED_TO_SAVE_DATA,
@@ -367,6 +368,12 @@ const getDocumentFrontOfficePath = (sharingDocumentType) => {
 	}
 };
 
+/** @param {string} sharingDocumentType */
+const getAuditTrailDocumentTypeLabel = (sharingDocumentType) => {
+	const label = getDocumentFolderName(getDocumentFrontOfficePath(sharingDocumentType));
+	return label.charAt(0).toUpperCase() + label.slice(1);
+};
+
 /**
  * @param {Request} req
  * @param {Response} res
@@ -382,19 +389,23 @@ export const updateDocuments = async (req, res) => {
 			const latestDocument = await documentRepository.getDocumentById(document.id);
 			document.latestVersion = latestDocument?.latestDocumentVersion?.version;
 			document.latestDocumentVersion = latestDocument?.latestDocumentVersion;
+			document.isShared =
+				document.isShared && latestDocument && !latestDocument.latestDocumentVersion?.published;
+			document.currentRedactionStatusId =
+				latestDocument?.latestDocumentVersion?.redactionStatusId ?? null;
 
-			if (latestDocument && latestDocument.name) {
+			if (latestDocument && latestDocument.name && !shareMultipleDocuments) {
 				if (document.redactionStatus !== latestDocument?.latestDocumentVersion?.redactionStatusId) {
 					const auditTrailMessage = getAuditMessage(document.redactionStatus);
 					if (auditTrailMessage) {
-						await logAuditTrail(
-							latestDocument.name,
-							document.latestVersion,
-							auditTrailMessage,
+						await logAuditTrail({
+							messageKey: auditTrailMessage,
+							replacements: [latestDocument.name, document.latestVersion],
 							req,
-							appeal.id,
-							latestDocument.guid
-						);
+							appealId: appeal.id,
+							documentGuid: latestDocument.guid,
+							documentVersion: document.latestVersion
+						});
 					}
 				}
 
@@ -406,19 +417,15 @@ export const updateDocuments = async (req, res) => {
 					: null;
 
 				if (receivedDate && latestReceivedDate && receivedDate !== latestReceivedDate) {
-					await logAuditTrail(
-						latestDocument.name,
-						document.latestVersion,
-						AUDIT_TRAIL_DOCUMENT_DATE_CHANGED,
+					await logAuditTrail({
+						messageKey: AUDIT_TRAIL_DOCUMENT_DATE_CHANGED,
+						replacements: [latestDocument.name, document.latestVersion],
 						req,
-						appeal.id,
-						latestDocument.guid
-					);
+						appealId: appeal.id,
+						documentGuid: latestDocument.guid,
+						documentVersion: document.latestVersion
+					});
 				}
-				document.isShared =
-					document.isShared && latestDocument && !latestDocument.latestDocumentVersion?.published;
-				document.currentRedactionStatusId =
-					latestDocument?.latestDocumentVersion?.redactionStatusId ?? null;
 			}
 
 			responseDocuments.push({
@@ -448,6 +455,13 @@ export const updateDocuments = async (req, res) => {
 				sharingDocumentType,
 				req.get('azureAdUserId')
 			);
+			await logAuditTrail({
+				messageKey: AUDIT_TRAIL_MULTIPLE_DOCUMENTS_UPLOADED,
+				replacements: [getAuditTrailDocumentTypeLabel(sharingDocumentType)],
+				req,
+				appealId: appeal.id,
+				updatingMultipleDocuments: true
+			});
 		}
 		await documentRepository.updateDocuments(documents);
 		for (const document of documents) {
@@ -493,14 +507,14 @@ export const updateDocument = async (req, res) => {
 					document.fileName
 				]);
 
-				await logAuditTrail(
-					latestDocument.name,
-					latestDocument.latestDocumentVersion.version,
-					nameChangedMessage,
+				await logAuditTrail({
+					messageKey: nameChangedMessage,
+					replacements: [latestDocument.name, latestDocument.latestDocumentVersion.version],
 					req,
-					appeal.id,
-					latestDocument.guid
-				);
+					appealId: appeal.id,
+					documentGuid: latestDocument.guid,
+					documentVersion: latestDocument.latestDocumentVersion.version
+				});
 			}
 
 			if (isSharingDocument && sharingDocumentType) {
@@ -654,25 +668,27 @@ function getAuditMessage(redactionStatus) {
 }
 
 /**
- *
- * @param {string} documentName
- * @param {number} documentVersion
- * @param {string} messageKey
- * @param {Request} req
- * @param {number} appealId
- * @param {string} documentGuid
- * @param {string} action
+ * @param {object} options
+ * @param {string} options.messageKey
+ * @param {(string|number)[]} options.replacements
+ * @param {Request} options.req
+ * @param {number} options.appealId
+ * @param {string} [options.documentGuid]
+ * @param {number} [options.documentVersion]
+ * @param {string} [options.action]
+ * @param {boolean} [options.updatingMultipleDocuments]
  */
-async function logAuditTrail(
-	documentName,
-	documentVersion,
+async function logAuditTrail({
 	messageKey,
+	replacements,
 	req,
 	appealId,
 	documentGuid,
-	action = 'Update'
-) {
-	const details = stringTokenReplacement(messageKey, [documentName, documentVersion]);
+	documentVersion,
+	action = 'Update',
+	updatingMultipleDocuments = false
+}) {
+	const details = stringTokenReplacement(messageKey, replacements);
 
 	const auditTrail = await createAuditTrail({
 		appealId: appealId,
@@ -680,7 +696,7 @@ async function logAuditTrail(
 		details: details
 	});
 
-	if (auditTrail) {
+	if (auditTrail && documentGuid && documentVersion && !updatingMultipleDocuments) {
 		await service.addDocumentAudit(documentGuid, documentVersion, auditTrail, action);
 	}
 }

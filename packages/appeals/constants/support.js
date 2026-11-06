@@ -113,6 +113,7 @@ export const AUDIT_TRAIL_TIMETABLE_DUE_DATE_CHANGED =
 	'{replacement0} due date changed to {replacement1}';
 export const AUDIT_TRAIL_DOCUMENT_UPLOADED =
 	'Document {replacement0} uploaded (version {replacement1}, {replacement2})';
+export const AUDIT_TRAIL_MULTIPLE_DOCUMENTS_UPLOADED = '{replacement0} uploaded';
 export const AUDIT_TRAIL_DOCUMENT_IMPORTED = 'The document {replacement0} was received';
 export const AUDIT_TRAIL_DOCUMENT_DELETED =
 	'Version {replacement1} of document {replacement0} was removed';
