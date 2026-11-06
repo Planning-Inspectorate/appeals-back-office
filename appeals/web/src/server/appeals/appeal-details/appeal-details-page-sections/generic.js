@@ -9,6 +9,8 @@ import { getCaseManagement } from './common/case-management.js';
 import { getCaseOverview } from './common/case-overview.js';
 import { getCaseTeam } from './common/case-team.js';
 import { getSiteDetails } from './common/site-details.js';
+import { getCaseHearing } from './s78/case-hearing.js';
+import { getCaseInquiry } from './s78/case-inquiry.js';
 import { removeAppealDetailsSectionComponentsActions } from './utils/index.js';
 
 /**
@@ -36,7 +38,21 @@ export function generateAppealDetailsPageComponents(appealDetails, mappedData, s
 				rows: [
 					mappedData.appeal.appealSubmittedDate?.display?.summaryListItem,
 					mappedData.appeal.validAt?.display?.summaryListItem,
-					mappedData.appeal.startedAt?.display?.summaryListItem
+					mappedData.appeal.startedAt?.display?.summaryListItem,
+					...(appealDetails.startedAt
+						? [
+								mappedData.appeal.lpaQuestionnaireDueDate?.display?.summaryListItem,
+								mappedData.appeal.lpaStatementDueDate?.display?.summaryListItem,
+								mappedData.appeal.ipCommentsDueDate?.display?.summaryListItem,
+								mappedData.appeal.finalCommentDueDate?.display?.summaryListItem,
+								mappedData.appeal.statementOfCommonGroundDueDate?.display?.summaryListItem,
+								mappedData.appeal.planningObligationDueDate?.display?.summaryListItem,
+								mappedData.appeal.proofOfEvidenceAndWitnessesDueDate?.display?.summaryListItem,
+								mappedData.appeal.caseManagementConferenceDueDate?.display?.summaryListItem,
+								mappedData.appeal.hearingDate?.display?.summaryListItem,
+								mappedData.appeal.inquiryDate?.display?.summaryListItem
+							]
+						: [])
 				].filter(isDefined)
 			},
 			wrapperHtml: {
@@ -75,10 +91,18 @@ export function generateAppealDetailsPageComponents(appealDetails, mappedData, s
 
 	const caseManagement = getCaseManagement(mappedData);
 
+	const caseHearing =
+		!isChildAppeal(appealDetails) && getCaseHearing(mappedData, appealDetails, session);
+
+	const caseInquiry =
+		!isChildAppeal(appealDetails) && getCaseInquiry(mappedData, appealDetails, session);
+
 	const pageComponents = [
 		caseOverview,
 		...(siteDetails ?? []),
 		caseTimetable[0],
+		...(caseHearing ? [caseHearing] : []),
+		...(caseInquiry ? [caseInquiry] : []),
 		caseDocumentation,
 		caseContacts,
 		...(caseTeam ? [caseTeam] : []),

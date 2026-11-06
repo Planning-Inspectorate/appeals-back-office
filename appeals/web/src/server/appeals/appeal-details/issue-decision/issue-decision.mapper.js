@@ -26,6 +26,7 @@ import {
 	DECISION_TYPE_LPA_COSTS,
 	LENGTH_300
 } from '@pins/appeals/constants/support.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { decisionOutcomeToDisplayText } from '@pins/appeals/utils/decision-outcome-display-text.js';
 import { APPEAL_CASE_DECISION_OUTCOME } from '@planning-inspectorate/data-model';
 
@@ -128,9 +129,21 @@ export function issueDecisionPage(
 		INVALID
 	} = APPEAL_CASE_DECISION_OUTCOME;
 
-	const decisionTypes =
-		currentPageAppealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ||
-		currentPageAppealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
+	const isGeneric = isGenericAppealType(currentPageAppealDetails.appealType);
+
+	const decisionTypes = isGeneric
+		? [
+				ALLOWED,
+				DISMISSED,
+				SPLIT_DECISION,
+				PLANNING_PERMISSION_GRANTED,
+				NOTICE_UPHELD,
+				NOTICE_VARIED_AND_UPHELD,
+				QUASHED_ON_LEGAL_GROUNDS,
+				INVALID
+			]
+		: currentPageAppealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ||
+			  currentPageAppealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
 			? [
 					NOTICE_UPHELD,
 					NOTICE_VARIED_AND_UPHELD,

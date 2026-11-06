@@ -12,6 +12,7 @@ import { resolveAppealId } from '#lib/resolveAppealId.js';
 import { getInspectorFormattedEmailName } from '#lib/service-user-formatter.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { isEmpty, isEqual, pick } from 'lodash-es';
 import {
@@ -380,6 +381,14 @@ export const postInquiryAddress = async (request, response) => {
 	}
 
 	if (isStartCase) {
+		if (isGenericAppealType(request.currentAppeal.appealType)) {
+			return response.redirect(
+				preserveQueryString(
+					request,
+					`/appeals-service/appeal-details/${appealId}/start-case/timetable`
+				)
+			);
+		}
 		return response.redirect(
 			preserveQueryString(
 				request,
@@ -445,6 +454,15 @@ export const postInquiryAddressDetails = async (request, response) => {
 
 	if (request.currentAppeal.procedureType.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY) {
 		applyEditsForAppeal(request, 'setUpInquiry', appealId);
+	}
+
+	if (isGenericAppealType(request.currentAppeal.appealType)) {
+		return response.redirect(
+			preserveQueryString(
+				request,
+				`/appeals-service/appeal-details/${appealId}/start-case/timetable`
+			)
+		);
 	}
 
 	return response.redirect(

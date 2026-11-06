@@ -6,6 +6,7 @@ import {
 	createDateInputFieldsValidator,
 	extractAndProcessDateErrors
 } from '#lib/validators/date-input.validator.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { getIdText } from './timetable.mapper.js';
 
 /**
@@ -54,17 +55,27 @@ export const selectTimetableValidators = (req, timetableTypes, session) => {
 
 		if (shouldValidate) {
 			const validatorConfig = validatorsMap[timetableType];
-			const idToCompare = 'idToCompare' in validatorConfig ? validatorConfig.idToCompare : '';
-			const labelToCompare =
-				'labelToCompare' in validatorConfig ? validatorConfig.labelToCompare : '';
-			validatorsList.push(
-				...createTimetableValidators(
-					validatorConfig.id,
-					validatorConfig.label,
-					idToCompare,
-					labelToCompare
-				)
-			);
+			if (isGenericAppealType(currentAppeal?.appealType)) {
+				if (hasDateInput) {
+					validatorsList.push(
+						createDateInputFieldsValidator(validatorConfig.id, validatorConfig.label),
+						createDateInputDateValidityValidator(validatorConfig.id, validatorConfig.label),
+						createDateInputDateBusinessDayValidator(validatorConfig.id, validatorConfig.label)
+					);
+				}
+			} else {
+				const idToCompare = 'idToCompare' in validatorConfig ? validatorConfig.idToCompare : '';
+				const labelToCompare =
+					'labelToCompare' in validatorConfig ? validatorConfig.labelToCompare : '';
+				validatorsList.push(
+					...createTimetableValidators(
+						validatorConfig.id,
+						validatorConfig.label,
+						idToCompare,
+						labelToCompare
+					)
+				);
+			}
 		}
 
 		session.appealTimetable[timetableType] = sessionDate;
