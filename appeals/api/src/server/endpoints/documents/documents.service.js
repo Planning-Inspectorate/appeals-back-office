@@ -292,6 +292,7 @@ export const addDocumentsToAppeal = async (upload, appeal, skipBlobValidation = 
 	const { blobStorageHost, blobStorageContainer, documents } = upload;
 	const documentsToSendToDatabase = mapDocumentsForDatabase(
 		appeal.id,
+		appeal.reference,
 		blobStorageHost ?? config.BO_BLOB_STORAGE_ACCOUNT,
 		blobStorageContainer ?? config.BO_BLOB_CONTAINER,
 		documents
@@ -337,7 +338,7 @@ const addDocumentAndVersion = async (appeal, documents, allowErrors = false) => 
 	const bulkDocuments = documents.map((document) => ({
 		guid: document.GUID,
 		originalFilename: document.name,
-		fileName: document.name,
+		fileName: document.fileName,
 		caseId: appeal.id,
 		folderId: Number(document.folderId),
 		mime: document.mime,
@@ -392,11 +393,14 @@ export const addVersionToDocument = async (upload, appeal, document) => {
 	}
 
 	const { blobStorageHost, blobStorageContainer, document: uploadedDocument } = upload;
+	const nextVersion = (document.latestDocumentVersion?.version ?? 0) + 1;
 	const documentToSendToDatabase = mapDocumentsForDatabase(
 		appeal.id,
+		appeal.reference,
 		blobStorageHost,
 		blobStorageContainer,
-		[uploadedDocument]
+		[uploadedDocument],
+		nextVersion
 	)[0];
 
 	const blobValidation = await validateBlobContents(appeal.reference, [
@@ -409,7 +413,7 @@ export const addVersionToDocument = async (upload, appeal, document) => {
 
 	const documentVersionCreated = await addDocumentVersion({
 		documentGuid: document.guid,
-		fileName: document.name,
+		fileName: documentToSendToDatabase.fileName,
 		originalFilename: documentToSendToDatabase.name,
 		mime: documentToSendToDatabase.mime,
 		size: documentToSendToDatabase.documentSize,

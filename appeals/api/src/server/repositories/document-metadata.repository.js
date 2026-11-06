@@ -53,7 +53,7 @@ export const addDocument = async (metadata, context) => {
 
 		metadata.documentGuid = guid;
 		metadata.version = 1;
-		metadata.fileName = name || metadata.originalFilename;
+		metadata.fileName = metadata.fileName || name || metadata.originalFilename;
 		if (!metadata.virusCheckStatus) {
 			const scanStatus = await tx.documentVersionAvScan.findUnique({
 				where: {
@@ -231,7 +231,7 @@ export const addDocumentVersion = async (params) => {
 
 		metadata.documentGuid = documentGuid;
 		metadata.version = newVersionId;
-		metadata.fileName = name;
+		metadata.fileName = metadata.fileName || name;
 
 		const scanStatus = await tx.documentVersionAvScan.findUnique({
 			where: {

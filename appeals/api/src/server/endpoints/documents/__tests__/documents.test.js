@@ -14,6 +14,7 @@ import {
 } from '#tests/documents/mocks.js';
 import { azureAdUserId, documentRedactionStatuses } from '#tests/shared/mocks.js';
 import { jest } from '@jest/globals';
+import { mapBlobPath } from '@pins/appeals/utils/document-blob-path.js';
 import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { request } from '../../../app-test.js';
 import * as controller from '../documents.controller.js';
@@ -637,14 +638,8 @@ describe('appeals documents', () => {
 	});
 
 	describe('mappers', () => {
-		test('appeal reference is safely escaped for blob URLs', async () => {
-			const mappedRef = mappers.mapCaseReferenceForStorageUrl(householdAppeal.reference);
-			expect(mappedRef).not.toContain('/');
-			expect(blobInfo.blobStoreUrl).toContain(mappedRef);
-		});
-
 		test('blob URL includes GUID and version', async () => {
-			const mappedPath = mappers.mapBlobPath(
+			const mappedPath = mapBlobPath(
 				blobInfo.GUID,
 				blobInfo.caseReference,
 				blobInfo.documentName || 'test',
@@ -681,6 +676,7 @@ describe('appeals documents', () => {
 
 			const mappedReq = mappers.mapDocumentsForDatabase(
 				householdAppeal.id,
+				householdAppeal.reference,
 				addDocumentsRequestWithGuid.blobStorageHost,
 				addDocumentsRequestWithGuid.blobStorageContainer,
 				addDocumentsRequestWithGuid.documents
@@ -688,6 +684,11 @@ describe('appeals documents', () => {
 			mappedReq.forEach((m) => {
 				expect(m.blobStorageHost).toEqual(addDocumentsRequestWithGuid.blobStorageHost);
 				expect(m.blobStorageContainer).toEqual(addDocumentsRequestWithGuid.blobStorageContainer);
+				expect(m.name).toEqual('mydoc.pdf');
+				expect(m.fileName).toEqual(`${blobInfo.GUID}.pdf`);
+				expect(m.blobStoragePath).toEqual(
+					`appeal/${householdAppeal.reference}/${blobInfo.GUID}/v1/${blobInfo.GUID}.pdf`
+				);
 			});
 
 			const prismaMock = {
@@ -787,25 +788,35 @@ describe('appeals documents', () => {
 		});
 
 		test('post new document version', async () => {
+			const documentWithVersion = {
+				...documentCreated,
+				versions: [{ version: 1, isDeleted: false }]
+			};
 			const mappedReq = mappers.mapDocumentsForDatabase(
 				householdAppeal.id,
+				householdAppeal.reference,
 				addDocumentVersionRequest.blobStorageHost,
 				addDocumentVersionRequest.blobStorageContainer,
-				[addDocumentVersionRequest.document]
+				[{ ...addDocumentVersionRequest.document, GUID: documentCreated.guid }],
+				2
 			);
 			mappedReq.forEach((m) => {
 				expect(m.blobStorageHost).toEqual(addDocumentVersionRequest.blobStorageHost);
 				expect(m.blobStorageContainer).toEqual(addDocumentVersionRequest.blobStorageContainer);
+				expect(m.fileName).toEqual(`${documentCreated.guid}.pdf`);
+				expect(m.blobStoragePath).toEqual(
+					`appeal/${householdAppeal.reference}/${documentCreated.guid}/v2/${documentCreated.guid}.pdf`
+				);
 			});
 
 			const prismaMock = {
 				document: {
-					findFirst: jest.fn().mockResolvedValue(documentCreated),
+					findFirst: jest.fn().mockResolvedValue(documentWithVersion),
 					update: jest.fn().mockResolvedValue(documentUpdated)
 				},
 				documentVersion: {
-					create: jest.fn().mockResolvedValue(documentVersionCreated),
-					findFirst: jest.fn().mockResolvedValue(documentVersionRetrieved)
+					create: jest.fn().mockResolvedValue({ ...documentVersionCreated, version: 2 }),
+					findFirst: jest.fn().mockResolvedValue({ ...documentVersionRetrieved, version: 2 })
 				},
 				documentVersionAvScan: {
 					findUnique: jest.fn().mockResolvedValue({})
@@ -819,7 +830,10 @@ describe('appeals documents', () => {
 			const response = await service.addVersionToDocument(
 				addDocumentVersionRequest,
 				householdAppeal,
-				documentCreated.guid
+				documentWithVersion
+			);
+			expect(prismaMock.documentVersion.create).toHaveBeenCalledWith(
+				expect.objectContaining({ data: expect.objectContaining({ version: 2 }) })
 			);
 			expect(response).toEqual({
 				documents: [
@@ -827,7 +841,7 @@ describe('appeals documents', () => {
 						GUID: '27d0fda4-8a9a-4f5a-a158-68eaea676158',
 						documentName: 'mydoc.pdf',
 						redactionStatus: undefined,
-						versionId: 1
+						versionId: 2
 					}
 				]
 			});

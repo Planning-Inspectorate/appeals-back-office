@@ -23,6 +23,8 @@ import {
 	CASE_RELATIONSHIP_LINKED,
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
+import { mapBlobPath } from '@pins/appeals/utils/document-blob-path.js';
+import { createDocumentStorageFilename } from '@pins/appeals/utils/document-storage-filename.js';
 import { EventType } from '@pins/event-client';
 import {
 	APPEAL_CASE_STATUS,
@@ -394,7 +396,6 @@ export const duplicateAllFiles = async (sourceAppeal, destinationAppeal, options
  * @param {Appeal | {id: number, reference: string}} destinationAppeal
  * @param {number} destinationFolderId
  * @param {Appeal | {id: number, reference: string}} sourceAppeal
- * @param {string[]} [existingDocuments]
  * @param {string | null} [stage]
  * @returns {{sourceBlobName: string, destinationBlobName: string, destinationDocument: MappedDocument, sourceGuid: string, destinationGuid: string, version: number} | undefined}
  */
@@ -403,25 +404,24 @@ export const buildFileCopyDetails = (
 	destinationAppeal,
 	destinationFolderId,
 	sourceAppeal,
-	existingDocuments = [],
 	stage = null
 ) => {
 	if (!sourceDocument) return;
 	const destinationGuid = generate_uuid();
-	const fileExtension = '.' + sourceDocument.name?.split('.').pop();
 	const sourceBlobName = sourceDocument.latestDocumentVersion?.blobStoragePath ?? '';
-	const documentName = sourceBlobName.split('/').pop() ?? '';
-	const destinationFileName = existingDocuments.includes(documentName)
-		? documentName.replace(fileExtension, `-${sourceAppeal.reference}${fileExtension}`)
-		: documentName;
-
-	const destinationBlobName = `appeal/${destinationAppeal.reference}/${destinationGuid}/v1/${destinationFileName}`;
+	const destinationFileName = createDocumentStorageFilename(destinationGuid, sourceDocument.name);
+	const destinationBlobName = mapBlobPath(
+		destinationGuid,
+		destinationAppeal.reference,
+		destinationFileName
+	);
 
 	/** @type {MappedDocument} */
 	const destinationDocument = {
 		GUID: destinationGuid,
 		caseId: destinationAppeal.id,
-		documentName: destinationFileName,
+		documentName: sourceDocument.name,
+		fileName: destinationFileName,
 		folderId: destinationFolderId,
 		mimeType: sourceDocument.latestDocumentVersion?.mime ?? '',
 		documentType: sourceDocument.latestDocumentVersion?.documentType ?? '',
@@ -459,11 +459,10 @@ export const duplicateFiles = async (sourceAppeal, destinationAppeal, stage, opt
 	const copyList = sourceFolders
 		.filter((sourceFolder) => !omitFolders.includes(sourceFolder.path))
 		.map((sourceFolder) => {
-			const { id: destinationFolderId = null, documents: destinationDocuments = [] } =
+			const { id: destinationFolderId = null } =
 				destinationFolders.find(
 					(destinationFolder) => destinationFolder.path === sourceFolder.path
 				) || {};
-			const existingDocuments = destinationDocuments.map((documents) => documents.name);
 
 			return sourceFolder.documents
 				.filter((document) => {
@@ -475,7 +474,6 @@ export const duplicateFiles = async (sourceAppeal, destinationAppeal, stage, opt
 						destinationAppeal,
 						Number(destinationFolderId),
 						sourceAppeal,
-						existingDocuments,
 						stage
 					);
 				})

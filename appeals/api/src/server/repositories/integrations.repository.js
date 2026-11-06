@@ -1,5 +1,4 @@
 import config from '#config/config.js';
-import { mapBlobPath } from '#endpoints/documents/documents.mapper.js';
 import { getFolderIdFromDocumentType } from '#endpoints/integrations/integrations.utils.js';
 import { createAppealReference } from '#utils/appeal-reference.js';
 import { databaseConnector } from '#utils/database-connector.js';
@@ -7,6 +6,7 @@ import { PROCEDURE_TYPE_ID_MAP, TEAM_NAME_MAP } from '@pins/appeals/constants/co
 import { CASE_RELATIONSHIP_RELATED } from '@pins/appeals/constants/support.js';
 import { appealCaseTypeToAppealTypeMapper } from '@pins/appeals/utils/appeal-type-case.mapper.js';
 import { isLdcOrDiscontinuanceOrEnforcementCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
+import { mapBlobPath } from '@pins/appeals/utils/document-blob-path.js';
 import { APPEAL_CASE_STATUS, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { getAppealTypeByTypeId } from './appeal-type.repository.js';
 import {
@@ -290,7 +290,7 @@ const setDocumentVersions = async (tx, appealId, caseReference, documents) => {
 		for (const batch of documentBatches) {
 			const documentData = batch.map((document) => {
 				// @ts-ignore
-				const { documentGuid, documentType, stage, fileName } = document;
+				const { documentGuid, documentType, stage, fileName, originalFilename } = document;
 
 				const folderId = getFolderIdFromDocumentType(
 					caseFolders,
@@ -303,7 +303,7 @@ const setDocumentVersions = async (tx, appealId, caseReference, documents) => {
 				return {
 					caseId: appealId,
 					folderId,
-					name: fileName,
+					name: originalFilename || fileName,
 					guid: documentGuid
 				};
 			});
