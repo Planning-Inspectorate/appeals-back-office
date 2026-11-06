@@ -12,7 +12,7 @@ import { ContactDetailsPage } from '../../page_objects/contactDetailsPage.js';
 import { CYASection } from '../../page_objects/cyaSection.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
-import { CTA_TEXT } from '../../support/consts.js';
+import { CTA_TEXT, PROOF_OF_EVIDENCE_STATUSES } from '../../support/consts.js';
 import { happyPathHelper } from '../../support/happyPathHelper';
 import { inquiryTimetableItems, replaceTimetableItem } from '../../support/timetables.js';
 import { urlPaths } from '../../support/urlPaths';
@@ -710,7 +710,6 @@ it.skip('should progress to evidence stage after sharing statements and IP comme
 });
 
 it('should complete LPA/Appellant POE and progress to awaiting inquiry', () => {
-	const status = ['Awaiting proof of evidence and witness', 'Received', 'Completed'];
 	inquirySectionPage.setupTimetableDates().then(({ currentDate, ...timeTable }) => {
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseObj);
@@ -731,35 +730,45 @@ it('should complete LPA/Appellant POE and progress to awaiting inquiry', () => {
 
 		caseDetailsPage.checkStatusOfCase('Evidence', 0);
 
-		// Verify POE status (Awaiting proof of evidence and witness) - Documentation section
-		caseDetailsPage.verifyDocumentationValue(
-			'documentation',
-			'Status',
-			'Appellant proof of evidence and witness',
-			status[0]
-		);
+		// verify initial status of LPA and Appellant POE (Awaiting) in Documentation section
+		// the due dates should be prepopulated in the documentation section for both LPA and Appellant POE
+		cy.loadAppealDetails(caseObj).then((appealDetails) => {
+			caseDetailsPage.verifyDocumentationValue(
+				'documentation',
+				'Status',
+				'Appellant proof of evidence and witness',
+				PROOF_OF_EVIDENCE_STATUSES[0]
+			);
 
-		caseDetailsPage.verifyDocumentationValue(
-			'documentation',
-			'Status',
-			'LPA proof of evidence and witness',
-			status[0]
-		);
+			caseDetailsPage.verifyDocumentationValue(
+				'documentation',
+				'Status',
+				'LPA proof of evidence and witness',
+				PROOF_OF_EVIDENCE_STATUSES[0]
+			);
 
-		// check date value is blank
-		caseDetailsPage.verifyDocumentationValue(
-			'documentation',
-			'Date',
-			'Appellant proof of evidence and witness',
-			''
-		);
+			// find the proof of evidence due date in the appeal details and format it for display
+			const proofOfEvidenceDueDate = formatDateAndTime(
+				new Date(appealDetails?.appealTimetable?.proofOfEvidenceAndWitnessesDueDate)
+			);
+			const { date } = proofOfEvidenceDueDate;
+			const proofOfEvidenceDueDateString = `Due by ${date}`;
 
-		caseDetailsPage.verifyDocumentationValue(
-			'documentation',
-			'Date',
-			'LPA proof of evidence and witness',
-			''
-		);
+			// check that date values are prepopulated in the documentation section for both LPA and Appellant POE
+			caseDetailsPage.verifyDocumentationValue(
+				'documentation',
+				'Date',
+				'Appellant proof of evidence and witness',
+				proofOfEvidenceDueDateString
+			);
+
+			caseDetailsPage.verifyDocumentationValue(
+				'documentation',
+				'Date',
+				'LPA proof of evidence and witness',
+				proofOfEvidenceDueDateString
+			);
+		});
 
 		// Process LPA proof of evidence submission (FO) via Api
 		inquirySectionPage.addProofOfEvidenceViaApi(caseObj, 'lpaProofOfEvidence');
@@ -769,7 +778,7 @@ it('should complete LPA/Appellant POE and progress to awaiting inquiry', () => {
 			'documentation',
 			'Status',
 			'LPA proof of evidence and witness',
-			status[1]
+			PROOF_OF_EVIDENCE_STATUSES[1]
 		);
 
 		// Complete the evidence review workflow for LPA POE
@@ -789,7 +798,7 @@ it('should complete LPA/Appellant POE and progress to awaiting inquiry', () => {
 			'documentation',
 			'Status',
 			'LPA proof of evidence and witness',
-			status[2]
+			PROOF_OF_EVIDENCE_STATUSES[2]
 		);
 
 		// Process Appellant proof of evidence submission (FO) via Api
@@ -800,7 +809,7 @@ it('should complete LPA/Appellant POE and progress to awaiting inquiry', () => {
 			'documentation',
 			'Status',
 			'Appellant proof of evidence and witness',
-			status[1]
+			PROOF_OF_EVIDENCE_STATUSES[1]
 		);
 
 		// Complete the evidence review workflow for Appellant POE
@@ -820,7 +829,7 @@ it('should complete LPA/Appellant POE and progress to awaiting inquiry', () => {
 			'documentation',
 			'Status',
 			'Appellant proof of evidence and witness',
-			status[2]
+			PROOF_OF_EVIDENCE_STATUSES[2]
 		);
 
 		// Elapse POE
