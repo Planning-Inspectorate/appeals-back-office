@@ -1306,4 +1306,77 @@ describe('appeals documents', () => {
 			expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(appealId);
 		});
 	});
+
+	describe('updates costs applied for variables', () => {
+		const moreApplicationsCheckCostsAppliedForDBReturn = [
+			{ path: 'costs/appellantCostsApplication', _count: { documents: 2 } },
+			{ path: 'costs/appellantCostsDecisionLetter', _count: { documents: 0 } },
+			{ path: 'costs/appellantCostsWithdrawal', _count: { documents: 1 } },
+			{ path: 'costs/lpaCostsApplication', _count: { documents: 1 } },
+			{ path: 'costs/lpaCostsDecisionLetter', _count: { documents: 0 } },
+			{ path: 'costs/lpaCostsWithdrawal', _count: { documents: 0 } }
+		];
+
+		beforeEach(() => {
+			jest.clearAllMocks();
+			jest.resetAllMocks();
+			databaseConnector.appellantCase.update = jest.fn().mockResolvedValue({});
+			databaseConnector.lPAQuestionnaire.updateMany.mockResolvedValue({ count: 1 });
+			databaseConnector.folder.findMany.mockResolvedValue(
+				moreApplicationsCheckCostsAppliedForDBReturn
+			);
+		});
+
+		test.each([
+			[APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION],
+			[APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_WITHDRAWAL]
+		])('updates appellant costs booleans correctly for %s', async (documentType) => {
+			const documentTypes = [documentType];
+			const appealId = 1;
+			const appellantCaseId = 1;
+
+			await controller.updateCostsAppliedForBooleans(documentTypes, appealId, appellantCaseId);
+
+			expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+				data: {
+					appellantCostsAppliedFor: true
+				},
+				where: { id: appellantCaseId }
+			});
+
+			expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(appealId);
+		});
+
+		test.each([
+			[APPEAL_DOCUMENT_TYPE.LPA_COSTS_APPLICATION],
+			[APPEAL_DOCUMENT_TYPE.LPA_COSTS_WITHDRAWAL]
+		])('updates appellant costs booleans for %s', async (documentType) => {
+			const documentTypes = [documentType];
+			const appealId = 1;
+			const appellantCaseId = 1;
+
+			await controller.updateCostsAppliedForBooleans(documentTypes, appealId, appellantCaseId);
+
+			expect(databaseConnector.lPAQuestionnaire.updateMany).toHaveBeenCalledWith({
+				data: {
+					lpaCostsAppliedFor: true
+				},
+				where: { appealId }
+			});
+
+			expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(appealId);
+		});
+
+		test('does not update costs booleans if no costs documents uploaded', async () => {
+			const documentTypes = [APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_CORRESPONDENCE];
+			const appealId = 1;
+			const appellantCaseId = 1;
+
+			await controller.updateCostsAppliedForBooleans(documentTypes, appealId, appellantCaseId);
+
+			expect(databaseConnector.lPAQuestionnaire.updateMany).not.toHaveBeenCalled();
+
+			expect(databaseConnector.appellantCase.update).not.toHaveBeenCalled();
+		});
+	});
 });
