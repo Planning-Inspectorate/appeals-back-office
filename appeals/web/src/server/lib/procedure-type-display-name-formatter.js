@@ -4,15 +4,16 @@ import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /**
  * @param {string} procedureTypeName
- * @param {Boolean} showPart2
  * @returns string | null
  */
-export function appealProcedureNameToLabelText(procedureTypeName, showPart2 = false) {
+export function appealProcedureNameToLabelText(procedureTypeName) {
 	switch (procedureTypeName) {
 		case PROCEDURE_TYPE_NAME.WRITTEN_PART_2:
-			return showPart2 ? 'Written representations (Part 2)' : 'Written representations';
+			return 'Written representations (Part 2)';
 		case PROCEDURE_TYPE_NAME.WRITTEN_PART_1:
 			return 'Written representations (Part 1)';
+		case PROCEDURE_TYPE_NAME.WRITTEN:
+			return 'Written representations';
 		case PROCEDURE_TYPE_NAME.HEARING:
 		case PROCEDURE_TYPE_NAME.INQUIRY:
 			return procedureTypeName;
@@ -24,13 +25,15 @@ export function appealProcedureNameToLabelText(procedureTypeName, showPart2 = fa
 /**
  * @param {string} procedureTypeKey
  * @param {string} appealType
- * @param {Boolean} showPart1
+ * @param {Boolean} showPart2
  * @returns string
  */
-export function appealProcedureKeyToLabelText(procedureTypeKey, appealType, showPart1) {
+export function appealProcedureKeyToLabelText(procedureTypeKey, appealType, showPart2) {
 	switch (procedureTypeKey) {
 		case APPEAL_CASE_PROCEDURE.WRITTEN:
-			return showPart1 ? 'Written representations (Part 2)' : 'Written representations';
+			return showPart2 ? 'Written representations (Part 2)' : 'Written representations';
+		case APPEAL_CASE_PROCEDURE.WRITTEN_PART_2:
+			return 'Written representations (Part 2)';
 		case APPEAL_CASE_PROCEDURE.WRITTEN_PART_1:
 			return 'Written representations (Part 1)';
 		case APPEAL_CASE_PROCEDURE.HEARING:

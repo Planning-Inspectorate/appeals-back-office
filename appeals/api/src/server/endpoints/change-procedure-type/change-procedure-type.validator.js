@@ -7,6 +7,7 @@ import {
 	validateStringParameterAllowingEmpty
 } from '#common/validators/string-parameter.js';
 import { validationErrorHandler } from '#middleware/error-handler.js';
+import { PROCEDURE_TYPE_KEY, PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common.js';
 import {
 	ERROR_INVALID_POSTCODE,
 	ERROR_MUST_BE_NUMBER,
@@ -16,21 +17,26 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { composeMiddleware } from '@pins/express';
 import { body } from 'express-validator';
-
+const existingAppealProcedureValues = Object.values(PROCEDURE_TYPE_NAME).map((name) =>
+	name.toLowerCase()
+);
+const appealProcedureValues = Object.values(PROCEDURE_TYPE_KEY);
 export const postChangeProcedureTypeValidator = composeMiddleware(
 	validateIdParameter('appealId'),
 
 	body('appealProcedure')
 		.notEmpty()
 		.withMessage('appealProcedure is required')
-		.isIn(['hearing', 'inquiry', 'written'])
-		.withMessage('appealProcedure must be one of hearing, inquiry, or written'),
+		.isIn(appealProcedureValues)
+		.withMessage(`appealProcedure must be one of: ${appealProcedureValues.join(', ')}`),
 
 	body('existingAppealProcedure')
 		.notEmpty()
 		.withMessage('existingAppealProcedure is required')
-		.isIn(['hearing', 'inquiry', 'written', 'part 1'])
-		.withMessage('existingAppealProcedure must be one of hearing, inquiry, written, or part 1'),
+		.isIn(existingAppealProcedureValues)
+		.withMessage(
+			`existingAppealProcedure must be one of: ${existingAppealProcedureValues.join(', ')}`
+		),
 
 	body('eventDate')
 		.if((_, { req }) => req.body.appealProcedure === 'inquiry')
@@ -41,7 +47,7 @@ export const postChangeProcedureTypeValidator = composeMiddleware(
 		.withMessage('eventDate must be a valid date'),
 
 	body('eventDate')
-		.if((_, { req }) => ['hearing', 'written'].includes(req.body.appealProcedure))
+		.if((_, { req }) => ['hearing', 'written', 'writtenPart2'].includes(req.body.appealProcedure))
 		.optional({ checkFalsy: true })
 		.isISO8601()
 		.withMessage('eventDate must be a valid date'),
@@ -63,7 +69,10 @@ export const postChangeProcedureTypeValidator = composeMiddleware(
 		.withMessage('planningObligationDueDate must be a valid date'),
 
 	body('finalCommentsDueDate')
-		.if((_, { req }) => req.body.appealProcedure === 'written')
+		.if(
+			(_, { req }) =>
+				req.body.appealProcedure === 'written' || req.body.appealProcedure === 'writtenPart2'
+		)
 		.isISO8601()
 		.withMessage('finalCommentsDueDate must be a valid date'),
 	body('statementOfCommonGroundDueDate')

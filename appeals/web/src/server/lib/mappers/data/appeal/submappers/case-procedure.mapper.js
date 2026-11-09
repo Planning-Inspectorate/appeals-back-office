@@ -64,9 +64,7 @@ export const mapCaseProcedure = ({
 	return textSummaryListItem({
 		id: 'case-procedure',
 		text: 'Appeal procedure',
-		value:
-			appealProcedureNameToLabelText(appealDetails.procedureType || '', isS78Expedited) ||
-			'No data',
+		value: appealProcedureNameToLabelText(appealDetails.procedureType || '') || 'No data',
 		link: `${currentRoute}/change-appeal-procedure-type/change-selected-procedure-type`,
 		editable:
 			userHasUpdateCasePermission &&

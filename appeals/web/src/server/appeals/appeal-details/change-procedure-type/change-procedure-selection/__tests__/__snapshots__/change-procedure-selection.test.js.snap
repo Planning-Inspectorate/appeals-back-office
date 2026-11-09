@@ -64,8 +64,8 @@ exports[`Change procedure type GET /change-appeal-procedure-type/change-selected
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure" name="appealProcedure"
-                                        type="radio" value="written" checked>
-                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure">Written representations</label>
+                                        type="radio" value="writtenPart2">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure">Written representations (Part 2)</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure-2" name="appealProcedure"
@@ -109,8 +109,8 @@ exports[`Change procedure type GET /change-appeal-procedure-type/change-selected
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure" name="appealProcedure"
-                                        type="radio" value="written" checked>
-                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure">Written representations</label>
+                                        type="radio" value="writtenPart2">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure">Written representations (Part 2)</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure-2" name="appealProcedure"
@@ -231,8 +231,8 @@ exports[`Change procedure type POST /change-appeal-procedure-type/change-selecte
                                 <div                                 class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure" name="appealProcedure"
-                                        type="radio" value="written" checked>
-                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure">Written representations</label>
+                                        type="radio" value="writtenPart2">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure">Written representations (Part 2)</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure-2" name="appealProcedure"
@@ -292,8 +292,8 @@ exports[`Change procedure type POST /change-appeal-procedure-type/change-selecte
                                 <div                                 class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure" name="appealProcedure"
-                                        type="radio" value="written" checked>
-                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure">Written representations</label>
+                                        type="radio" value="writtenPart2">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure">Written representations (Part 2)</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure-2" name="appealProcedure"
@@ -414,8 +414,8 @@ exports[`Change procedure type POST /change-appeal-procedure-type/change-selecte
                                 <div                                 class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure" name="appealProcedure"
-                                        type="radio" value="written" checked>
-                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure">Written representations</label>
+                                        type="radio" value="writtenPart2">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure">Written representations (Part 2)</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure-2" name="appealProcedure"
@@ -475,8 +475,8 @@ exports[`Change procedure type POST /change-appeal-procedure-type/change-selecte
                                 <div                                 class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure" name="appealProcedure"
-                                        type="radio" value="written" checked>
-                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure">Written representations</label>
+                                        type="radio" value="writtenPart2">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure">Written representations (Part 2)</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure-2" name="appealProcedure"

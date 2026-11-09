@@ -3,7 +3,10 @@ import featureFlags from '#common/feature-flags.js';
 import { getEnabledHearingAppealTypes } from '#common/hearing-appeal-types.js';
 import { getEnabledInquiryAppealTypes } from '#common/inquiry-appeal-types.js';
 import { FEATURE_FLAG_NAMES, PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common.js';
-import { isS78ExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import {
+	isPart2EligibleAppealType,
+	isS78ExpeditedAppealType
+} from '@pins/appeals/utils/appeal-type-checks.js';
 import { canChangeS78ExpeditedToTargetProcedure } from '@pins/appeals/utils/business-rules.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
@@ -33,7 +36,8 @@ export const getAvailableProcedureTypes = ({
 	}
 
 	const isPart1 = procedureType?.toLowerCase() === PROCEDURE_TYPE_NAME.WRITTEN_PART_1.toLowerCase();
-
+	const isPart2 = procedureType?.toLowerCase() === PROCEDURE_TYPE_NAME.WRITTEN_PART_2.toLowerCase();
+	const isPart2Eligible = isPart2EligibleAppealType(appealType);
 	const resolvedIsS78Expedited =
 		isPart1 &&
 		(isS78Expedited ||
@@ -43,7 +47,6 @@ export const getAvailableProcedureTypes = ({
 				appellantCase?.applicationDecision,
 				appellantCase?.typeOfPlanningApplication
 			));
-
 	const isExpeditedCopFeatureActive = featureFlags.isFeatureActive(
 		FEATURE_FLAG_NAMES.EXPEDITED_APPEALS_CHANGE_PROCEDURE
 	);
@@ -52,7 +55,8 @@ export const getAvailableProcedureTypes = ({
 	const availableProcedureTypes = [];
 
 	if (
-		resolvedIsS78Expedited
+		!isPart2 &&
+		(resolvedIsS78Expedited
 			? canChangeS78ExpeditedToTargetProcedure({
 					targetProcedure: APPEAL_CASE_PROCEDURE.WRITTEN,
 					appealType,
@@ -60,9 +64,11 @@ export const getAvailableProcedureTypes = ({
 					currentStage,
 					isExpeditedCopFeatureActive
 				})
-			: getEnabledAppealTypes().includes(appealType)
+			: getEnabledAppealTypes().includes(appealType))
 	) {
-		availableProcedureTypes.push(APPEAL_CASE_PROCEDURE.WRITTEN);
+		availableProcedureTypes.push(
+			isPart2Eligible ? APPEAL_CASE_PROCEDURE.WRITTEN_PART_2 : APPEAL_CASE_PROCEDURE.WRITTEN
+		);
 	}
 
 	if (

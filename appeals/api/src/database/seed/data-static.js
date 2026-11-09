@@ -183,6 +183,10 @@ export const procedureTypes = [
 	{
 		key: APPEAL_CASE_PROCEDURE.WRITTEN_PART_1,
 		name: 'Part 1'
+	},
+	{
+		key: APPEAL_CASE_PROCEDURE.WRITTEN_PART_2,
+		name: 'Written Part 2'
 	}
 ];
 

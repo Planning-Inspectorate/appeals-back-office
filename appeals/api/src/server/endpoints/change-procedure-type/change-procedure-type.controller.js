@@ -31,6 +31,8 @@ export const requestChangeOfProcedureType = async (req, res) => {
 	const azureAdUserId = String(req.get('azureAdUserId'));
 	try {
 		switch (data.appealProcedure) {
+			case 'writtenPart2':
+			case 'part2':
 			case 'written':
 				await changeProcedureToWritten(data, appealId, azureAdUserId);
 				break;

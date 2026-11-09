@@ -11,6 +11,7 @@ import { appealProcedureKeyToLabelText } from '#lib/procedure-type-display-name-
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
 	isGenericAppealType,
+	isPart2EligibleAppealType,
 	isS78ExpeditedAppealType
 } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
@@ -124,6 +125,14 @@ export function selectProcedurePage(
 			appellantCase.typeOfPlanningApplication
 		);
 	const isGeneric = isGenericAppealType(appealType);
+	const part2AppealTypes = [
+		APPEAL_TYPE.HOUSEHOLDER,
+		APPEAL_TYPE.CAS_PLANNING,
+		APPEAL_TYPE.CAS_ADVERTISEMENT,
+		APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+		APPEAL_TYPE.S78
+	];
+	const showPart2 = isPart2EligibleAppealType(appealType);
 	const dataMappers = [
 		...(showPart1
 			? [
@@ -134,9 +143,19 @@ export function selectProcedurePage(
 					}
 				]
 			: []),
+		...(showPart2
+			? [
+					{
+						case: APPEAL_CASE_PROCEDURE.WRITTEN_PART_2,
+						appeals: part2AppealTypes
+					}
+				]
+			: []),
 		{
 			case: APPEAL_CASE_PROCEDURE.WRITTEN,
-			appeals: getEnabledAppealTypes()
+			appeals: getEnabledAppealTypes().filter(
+				(/** @type {string} */ appealType) => !part2AppealTypes.includes(appealType)
+			)
 		},
 		{
 			case: APPEAL_CASE_PROCEDURE.HEARING,

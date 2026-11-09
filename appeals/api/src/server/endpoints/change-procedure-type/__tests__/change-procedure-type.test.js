@@ -8,6 +8,7 @@ import {
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { jest } from '@jest/globals';
+import { PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common.js';
 import {
 	AUDIT_TRAIL_CHANGE_PROCEDURE_TYPE,
 	AUDIT_TRAIL_SYSTEM_UUID
@@ -140,7 +141,7 @@ describe('Change appeal procedure type route', () => {
 
 				expect(response.status).toEqual(400);
 				expect(response.text).toContain(
-					'existingAppealProcedure must be one of hearing, inquiry, written, or part 1'
+					'existingAppealProcedure must be one of: written part 2, part 1, written, hearing, inquiry'
 				);
 			});
 
@@ -245,7 +246,7 @@ describe('Change appeal procedure type route', () => {
 					.post(`/appeals/${fullPlanningAppeal.id}/procedure-type-change-request`)
 					.send({
 						existingAppealProcedure: 'inquiry',
-						appealProcedure: 'written',
+						appealProcedure: 'writtenPart2',
 						lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',
 						ipCommentsDueDate: '2025-12-01T00:00:00.000Z',
 						lpaStatementDueDate: '2025-12-01T00:00:00.000Z',
@@ -289,7 +290,7 @@ describe('Change appeal procedure type route', () => {
 					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 					lpa_reference: '48269/APP/2021/1482',
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-					appeal_procedure: 'written',
+					appeal_procedure: 'writtenPart2',
 					change_message:
 						'We have changed your appeal procedure to written representations and cancelled your inquiry.',
 					lpa_statement_exists: true,
@@ -1075,12 +1076,12 @@ describe('Change appeal procedure type route', () => {
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledTimes(1);
 			});
 
-			test('returns 201 and calls delete siteVisit if changing from written to inquiry', async () => {
+			test('returns 201 and calls delete siteVisit if changing from written part 2 to inquiry', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/procedure-type-change-request`)
 					.send({
-						existingAppealProcedure: 'written',
+						existingAppealProcedure: PROCEDURE_TYPE_NAME.WRITTEN_PART_2.toLowerCase(),
 						appealProcedure: 'inquiry',
 						eventDate: '2025-12-20T00:00:00.000Z',
 						lpaQuestionnaireDueDate: '2025-11-03T00:00:00.000Z',
@@ -1142,7 +1143,7 @@ describe('Change appeal procedure type route', () => {
 					change_message:
 						'We have changed your appeal procedure to inquiry and cancelled your site visit.',
 					lpa_statement_exists: true,
-					existing_appeal_procedure: 'written',
+					existing_appeal_procedure: PROCEDURE_TYPE_NAME.WRITTEN_PART_2.toLowerCase(),
 					proof_of_evidence_due_date: '15 December 2025',
 					case_management_conference_due_date: '15 December 2025',
 					hearing_date: '20 December 2025',
@@ -1159,7 +1160,7 @@ describe('Change appeal procedure type route', () => {
 						is_lpa: false,
 						fo_dashboard_stub: 'appeals',
 						subject: 'We have changed your appeal procedure: 1345264',
-						existing_appeal_procedure: 'written',
+						existing_appeal_procedure: PROCEDURE_TYPE_NAME.WRITTEN_PART_2.toLowerCase(),
 						week_before_conference_date: '25 December 2998',
 						proof_of_evidence_due_date: '15 December 2025'
 					},

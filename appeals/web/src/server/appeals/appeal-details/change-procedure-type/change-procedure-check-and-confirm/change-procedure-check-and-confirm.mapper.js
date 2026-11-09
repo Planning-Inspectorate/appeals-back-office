@@ -68,6 +68,8 @@ export const selectProcedurePage = (
  */
 export const appealProcedureToLabelText = (procedureType) => {
 	switch (procedureType) {
+		case APPEAL_CASE_PROCEDURE.WRITTEN_PART_2:
+			return 'Written representations (Part 2)';
 		case APPEAL_CASE_PROCEDURE.WRITTEN:
 			return 'Written representations';
 		case APPEAL_CASE_PROCEDURE.HEARING:

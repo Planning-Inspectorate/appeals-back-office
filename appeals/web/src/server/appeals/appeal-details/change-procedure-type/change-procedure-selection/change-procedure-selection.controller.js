@@ -83,6 +83,7 @@ export const postChangeSelectProcedure = async (request, response) => {
 		sessionValues.selectedProcedureType = newProcedureType;
 
 		switch (newProcedureType) {
+			case APPEAL_CASE_PROCEDURE.WRITTEN_PART_2:
 			case APPEAL_CASE_PROCEDURE.WRITTEN: {
 				return response.redirect(
 					preserveQueryString(

@@ -180,3 +180,22 @@ export const isGenericAppealType = (appealType) =>
 		(Object.values(GENERIC_APPEAL_TYPES).includes(/** @type {any} */ (appealType)) ||
 			Object.keys(GENERIC_APPEAL_TYPES).includes(/** @type {any} */ (appealType)))
 	);
+
+/**
+ * @param {string | null | undefined} appealType
+ * @returns {boolean}
+ */
+export const isPart2EligibleAppealType = (appealType) => {
+	if (!appealType) {
+		return false;
+	}
+
+	const isHasOrCasOrS78 =
+		appealType === APPEAL_TYPE.HOUSEHOLDER ||
+		appealType === APPEAL_TYPE.CAS_PLANNING ||
+		appealType === APPEAL_TYPE.CAS_ADVERTISEMENT ||
+		appealType === APPEAL_TYPE.PLANNED_LISTED_BUILDING ||
+		appealType === APPEAL_TYPE.S78;
+
+	return isHasOrCasOrS78;
+};
