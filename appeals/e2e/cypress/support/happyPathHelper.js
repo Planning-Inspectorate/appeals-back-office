@@ -500,11 +500,13 @@ export const happyPathHelper = {
 
 		// if are not any costs and are not withdrawn then proceed through default flow
 		if (costs === eligibleCosts.noCostsNotWithdrawn) {
+			// appellant costs decision
+			cy.waitForPage(urlPaths.appellantCostDecision, HEADINGS.appellantCostDecision);
 			caseDetailsPage.selectRadioButtonByValue('No');
 			caseDetailsPage.clickButtonByText('Continue');
+
+			// lpa costs decision
 			cy.waitForPage(urlPaths.lpaCostDecision, HEADINGS.lpaCostDecision);
-			caseDetailsPage.selectRadioButtonByValue('No');
-			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectRadioButtonByValue('No');
 			caseDetailsPage.clickButtonByText('Continue');
 		}

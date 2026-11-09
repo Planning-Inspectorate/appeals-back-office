@@ -56,6 +56,7 @@ export const HEADINGS = {
 		ipComment: 'Check details and add interested party comment'
 	},
 	lpaCostDecision: "Do you want to issue the LPA's costs decision?",
+	appellantCostDecision: "Do you want to issue the appellant's costs decision?",
 	caseHistory: 'Case history'
 };
 
