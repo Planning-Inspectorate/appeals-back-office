@@ -12,7 +12,8 @@ export const urlPaths = {
 	personalListFilteredStatement:
 		'/appeals-service/personal-list?pageSize=1000&pageNumber=1&appealStatusFilter=statements',
 	audit: '/audit',
-	lpaCostDecision: '/issue-decision/lpa-costs-decision'
+	lpaCostDecision: '/issue-decision/lpa-costs-decision',
+	appellantCostDecision: '/issue-decision/appellant-costs-decision'
 };
 
 /**
