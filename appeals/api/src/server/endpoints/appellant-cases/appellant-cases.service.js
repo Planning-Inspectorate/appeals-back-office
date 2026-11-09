@@ -261,7 +261,7 @@ export const updateAppellantCaseValidationOutcome = async (
 		omitRepresentations: true
 	});
 
-	const isGeneric = isGenericAppealType(appeal.appealType?.type);
+	const isGeneric = isGenericAppealType(appeal.appealType?.key);
 
 	if (isOutcomeValid(validationOutcome.name)) {
 		const noRedactionRequiredStatus = await commonRepository.getLookupListValueByKey(

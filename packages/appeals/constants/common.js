@@ -55,7 +55,12 @@ export const APPEAL_TYPE = Object.freeze({
 	PLANNED_LISTED_BUILDING: 'Planning listed building and conservation area appeal',
 	CAS_PLANNING: 'CAS planning',
 	CAS_ADVERTISEMENT: 'CAS advert',
-	S78_EXPEDITED: 'S78 expedited'
+	S78_EXPEDITED: 'S78 expedited',
+	TREE_PRESERVATION_ORDER: 'Tree preservation order',
+	TREE_REPLACEMENT_NOTICE: 'Tree replacement notice',
+	HIGH_HEDGES: 'High hedges appeal',
+	HEDGEROWS: 'Hedgerows appeal',
+	ENVIRONMENTAL: 'Environmental appeal'
 });
 
 export const APPEAL_TYPE_CHANGE_APPEALS = Object.freeze({
@@ -72,7 +77,12 @@ export const APPEAL_TYPE_CHANGE_APPEALS = Object.freeze({
 	LAWFUL_DEVELOPMENT_CERTIFICATE: 'Lawful development certificate',
 	PLANNED_LISTED_BUILDING: 'Planning listed building and conservation area',
 	CAS_PLANNING: 'Commercial planning (CAS)',
-	CAS_ADVERTISEMENT: 'Commercial advertisement (CAS)'
+	CAS_ADVERTISEMENT: 'Commercial advertisement (CAS)',
+	TREE_PRESERVATION_ORDER: 'Tree preservation order',
+	TREE_REPLACEMENT_NOTICE: 'Tree replacement notice',
+	HIGH_HEDGES: 'High hedges',
+	HEDGEROWS: 'Hedgerows',
+	ENVIRONMENTAL: 'Environmental'
 });
 
 export const GENERIC_APPEAL_TYPES = Object.freeze({

@@ -189,46 +189,78 @@ describe('issue-decision', () => {
 		});
 
 		describe('Generic appeals', () => {
-			beforeEach(() => {
-				nock('http://test/')
-					.get('/appeals/1234?include=all')
-					.reply(200, {
-						...appealData,
-						appealId: 1234,
-						appealType: 'Tree preservation order'
-					})
-					.persist();
-			});
+			const genericTestCases = [
+				{
+					appealType: 'Tree preservation order',
+					expectedOutcomes: ['allowed', 'split_decision', 'dismissed'],
+					expectedLabels: ['Allowed', 'Split decision', 'Dismissed']
+				},
+				{
+					appealType: 'Tree replacement notice',
+					expectedOutcomes: ['allowed', 'split_decision', 'dismissed'],
+					expectedLabels: ['Allowed', 'Split decision', 'Dismissed']
+				},
+				{
+					appealType: 'High Hedges',
+					expectedOutcomes: ['allowed', 'split_decision', 'dismissed'],
+					expectedLabels: ['Allowed', 'Split decision', 'Dismissed']
+				},
+				{
+					appealType: 'Hedgerows',
+					expectedOutcomes: ['allowed', 'split_decision', 'dismissed'],
+					expectedLabels: ['Allowed', 'Split decision', 'Dismissed']
+				},
+				{
+					appealType: 'Discontinuance notice',
+					expectedOutcomes: ['invalid', 'notice_quashed', 'notice_upheld'],
+					expectedLabels: ['Invalid', 'Notice quashed', 'Notice upheld']
+				},
+				{
+					appealType: 'Community infrastructure levy',
+					expectedOutcomes: ['invalid', 'allowed', 'dismissed', 'split_decision'],
+					expectedLabels: ['Invalid', 'Allowed', 'Dismissed', 'Split decision']
+				},
+				{
+					appealType: 'Section 106 agreement',
+					expectedOutcomes: ['dismissed', 'allowed', 'split_decision'],
+					expectedLabels: ['Dismissed', 'Allowed', 'Split decision']
+				},
+				{
+					appealType: 'Environmental appeal',
+					expectedOutcomes: ['dismissed', 'allowed', 'split_decision'],
+					expectedLabels: ['Dismissed', 'Allowed', 'Split decision']
+				}
+			];
 
-			it(`should render the generic appeal 'decision' page with all 8 outcomes`, async () => {
-				const response = await request.get(`${baseUrl}/1234${issueDecisionPath}${decisionPath}`);
-				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			it.each(genericTestCases)(
+				'should render the expected decision outcomes for $appealType',
+				async ({ appealType, expectedOutcomes, expectedLabels }) => {
+					nock('http://test/')
+						.get('/appeals/1234?include=all')
+						.reply(200, {
+							...appealData,
+							appealId: 1234,
+							appealType
+						});
 
-				expect(unprettifiedElement.innerHTML).toContain(
-					'<input class="govuk-radios__input" id="decision" name="decision" type="radio" value="allowed">'
-				);
-				expect(unprettifiedElement.innerHTML).toContain(
-					'<input class="govuk-radios__input" id="decision-2" name="decision" type="radio" value="dismissed">'
-				);
-				expect(unprettifiedElement.innerHTML).toContain(
-					'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="split_decision">'
-				);
-				expect(unprettifiedElement.innerHTML).toContain(
-					'<input class="govuk-radios__input" id="decision-4" name="decision" type="radio" value="planning_permission_granted">'
-				);
-				expect(unprettifiedElement.innerHTML).toContain(
-					'<input class="govuk-radios__input" id="decision-5" name="decision" type="radio" value="notice_upheld">'
-				);
-				expect(unprettifiedElement.innerHTML).toContain(
-					'<input class="govuk-radios__input" id="decision-6" name="decision" type="radio" value="notice_varied_and_upheld">'
-				);
-				expect(unprettifiedElement.innerHTML).toContain(
-					'<input class="govuk-radios__input" id="decision-7" name="decision" type="radio" value="quashed_on_legal_grounds">'
-				);
-				expect(unprettifiedElement.innerHTML).toContain(
-					'<input class="govuk-radios__input" id="decision-8" name="decision" type="radio" value="invalid">'
-				);
-			});
+					const response = await request.get(`${baseUrl}/1234${issueDecisionPath}${decisionPath}`);
+					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+					expectedOutcomes.forEach((outcome) => {
+						expect(unprettifiedElement.innerHTML).toContain(`value="${outcome}"`);
+					});
+
+					expectedLabels.forEach((label) => {
+						expect(unprettifiedElement.innerHTML).toContain(label);
+					});
+
+					const inputs = unprettifiedElement.querySelectorAll('input[name="decision"]');
+					expect(inputs.length).toBe(expectedOutcomes.length);
+					expectedOutcomes.forEach((outcome, index) => {
+						expect(inputs[index].getAttribute('value')).toBe(outcome);
+					});
+				}
+			);
 		});
 
 		describe('Linked appeals', () => {

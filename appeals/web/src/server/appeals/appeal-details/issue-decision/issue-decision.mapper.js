@@ -20,14 +20,14 @@ import {
 	renderPageComponentsToHtml
 } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
-import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
 	DECISION_TYPE_APPELLANT_COSTS,
 	DECISION_TYPE_LPA_COSTS,
 	LENGTH_300
 } from '@pins/appeals/constants/support.js';
-import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { decisionOutcomeToDisplayText } from '@pins/appeals/utils/decision-outcome-display-text.js';
+import { getDecisionOutcomesForAppealType } from '@pins/appeals/utils/decision-outcomes.js';
 import { APPEAL_CASE_DECISION_OUTCOME } from '@planning-inspectorate/data-model';
 
 /**
@@ -118,41 +118,9 @@ export function issueDecisionPage(
 
 	const heading = linkType ? `Decision for ${linkType} appeal ${decisionAppealReference}` : '';
 
-	const {
-		ALLOWED,
-		DISMISSED,
-		NOTICE_UPHELD,
-		NOTICE_VARIED_AND_UPHELD,
-		PLANNING_PERMISSION_GRANTED,
-		QUASHED_ON_LEGAL_GROUNDS,
-		SPLIT_DECISION,
-		INVALID
-	} = APPEAL_CASE_DECISION_OUTCOME;
+	const { INVALID } = APPEAL_CASE_DECISION_OUTCOME;
 
-	const isGeneric = isGenericAppealType(currentPageAppealDetails.appealType);
-
-	const decisionTypes = isGeneric
-		? [
-				ALLOWED,
-				DISMISSED,
-				SPLIT_DECISION,
-				PLANNING_PERMISSION_GRANTED,
-				NOTICE_UPHELD,
-				NOTICE_VARIED_AND_UPHELD,
-				QUASHED_ON_LEGAL_GROUNDS,
-				INVALID
-			]
-		: currentPageAppealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_NOTICE ||
-			  currentPageAppealDetails.appealType === APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING
-			? [
-					NOTICE_UPHELD,
-					NOTICE_VARIED_AND_UPHELD,
-					PLANNING_PERMISSION_GRANTED,
-					QUASHED_ON_LEGAL_GROUNDS,
-					SPLIT_DECISION,
-					INVALID
-				]
-			: [ALLOWED, DISMISSED, SPLIT_DECISION, INVALID];
+	const decisionTypes = getDecisionOutcomesForAppealType(currentPageAppealDetails.appealType);
 
 	// filter out INVALID as an option for linked appeals before mapping
 	const items = decisionTypes

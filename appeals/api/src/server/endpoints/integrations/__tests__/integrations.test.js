@@ -104,7 +104,7 @@ describe('/appeals/case-submission', () => {
 			const payload = {
 				casedata: {
 					...validPayload,
-					caseType: APPEAL_CASE_TYPE.Q
+					caseType: APPEAL_CASE_TYPE.S
 				},
 				users: validAppellantCase.users,
 				documents: []

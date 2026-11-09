@@ -7,84 +7,79 @@ import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 /**
- *
- * @param {string} appealCaseType
- * @returns boolean
+ * @param {string} [appealCaseType]
+ * @returns {boolean}
  */
 export const isAppealCaseTypeEnabled = (appealCaseType) => {
+	if (!appealCaseType) {
+		return false;
+	}
+
 	switch (appealCaseType) {
-		case APPEAL_CASE_TYPE.D: {
+		case APPEAL_CASE_TYPE.D:
+		case APPEAL_CASE_TYPE.W:
+		case APPEAL_CASE_TYPE.Y:
+		case APPEAL_CASE_TYPE.ZP:
+		case APPEAL_CASE_TYPE.ZA:
+		case APPEAL_CASE_TYPE.H:
+		case APPEAL_CASE_TYPE.F:
+		case APPEAL_CASE_TYPE.C:
+		case APPEAL_CASE_TYPE.X:
 			return true;
-		}
-		case APPEAL_CASE_TYPE.W: {
-			return true;
-		}
-		case APPEAL_CASE_TYPE.Y: {
-			return true;
-		}
-		case APPEAL_CASE_TYPE.ZP: {
-			return true;
-		}
-		case APPEAL_CASE_TYPE.ZA: {
-			return true;
-		}
-		case APPEAL_CASE_TYPE.H: {
-			return true;
-		}
-		case APPEAL_CASE_TYPE.F: {
-			return true;
-		}
-		case APPEAL_CASE_TYPE.C: {
-			return true;
-		}
-		case APPEAL_CASE_TYPE.X: {
-			return true;
-		}
+		case APPEAL_CASE_TYPE.G:
+		case APPEAL_CASE_TYPE.L:
+		case APPEAL_CASE_TYPE.Q:
+		case APPEAL_CASE_TYPE.TPO:
+		case APPEAL_CASE_TYPE.TRN:
+		case APPEAL_CASE_TYPE.HH:
+		case APPEAL_CASE_TYPE.HR:
+		case APPEAL_CASE_TYPE.ENV:
+			return Boolean(config.featureFlags.featureFlagGenericCase);
 	}
 
 	return false;
 };
 
 /**
- *
  * @param {string|undefined} appealType
- * @returns boolean
+ * @returns {boolean}
  */
-// TODO: update once case type letters and schema are provided by ODW
 export const isAppealTypeEnabled = (appealType) => {
+	if (!appealType) {
+		return false;
+	}
+
 	if (isGenericAppealType(appealType)) {
 		return Boolean(config.featureFlags.featureFlagGenericCase);
 	}
-	return isAppealCaseTypeEnabled(appealTypeToAppealCaseTypeMapper(appealType));
+
+	return isAppealCaseTypeEnabled(appealTypeToAppealCaseTypeMapper(appealType) || appealType);
 };
+
+const ALL_APPEAL_CASE_TYPES = [
+	APPEAL_CASE_TYPE.D,
+	APPEAL_CASE_TYPE.Y,
+	APPEAL_CASE_TYPE.ZP,
+	APPEAL_CASE_TYPE.ZA,
+	APPEAL_CASE_TYPE.H,
+	APPEAL_CASE_TYPE.F,
+	APPEAL_CASE_TYPE.W,
+	APPEAL_CASE_TYPE.C,
+	APPEAL_CASE_TYPE.X,
+	APPEAL_CASE_TYPE.G,
+	APPEAL_CASE_TYPE.L,
+	APPEAL_CASE_TYPE.Q,
+	APPEAL_CASE_TYPE.TPO,
+	APPEAL_CASE_TYPE.TRN,
+	APPEAL_CASE_TYPE.HH,
+	APPEAL_CASE_TYPE.HR,
+	APPEAL_CASE_TYPE.ENV
+];
+
+export const getEnabledAppealCaseTypes = () =>
+	ALL_APPEAL_CASE_TYPES.filter(isAppealCaseTypeEnabled);
 
 export const getEnabledAppealTypes = () => {
 	const enabledAppealCaseTypes = getEnabledAppealCaseTypes();
 	return enabledAppealCaseTypes.map(appealCaseTypeToAppealTypeMapper);
-};
-
-export const getEnabledAppealCaseTypes = () => {
-	const enabledAppeals = [
-		APPEAL_CASE_TYPE.D,
-		APPEAL_CASE_TYPE.Y,
-		APPEAL_CASE_TYPE.ZP,
-		APPEAL_CASE_TYPE.ZA,
-		APPEAL_CASE_TYPE.H,
-		APPEAL_CASE_TYPE.F
-	];
-
-	if (isAppealCaseTypeEnabled(APPEAL_CASE_TYPE.W)) {
-		// @ts-ignore
-		enabledAppeals.push(APPEAL_CASE_TYPE.W);
-	}
-	if (isAppealCaseTypeEnabled(APPEAL_CASE_TYPE.C)) {
-		// @ts-ignore
-		enabledAppeals.push(APPEAL_CASE_TYPE.C);
-	}
-	if (isAppealCaseTypeEnabled(APPEAL_CASE_TYPE.X)) {
-		// @ts-ignore
-		enabledAppeals.push(APPEAL_CASE_TYPE.X);
-	}
-
-	return enabledAppeals;
 };

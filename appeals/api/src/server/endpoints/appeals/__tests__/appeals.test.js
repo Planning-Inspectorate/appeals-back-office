@@ -1392,7 +1392,7 @@ describe('POST /appeals', () => {
 					findFirst: jest.fn().mockResolvedValue({
 						id: 1,
 						type: 'Tree preservation order',
-						key: 'TREE_PRESERVATION_ORDER'
+						key: APPEAL_CASE_TYPE.TPO
 					})
 				},
 				appeal: {

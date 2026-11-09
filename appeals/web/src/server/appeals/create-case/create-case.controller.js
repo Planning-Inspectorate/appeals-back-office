@@ -190,7 +190,6 @@ export const postCheckDetails = async (request, response) => {
 		Date.UTC(Number(year), Number(month) - 1, Number(day))
 	).toISOString();
 
-	// TODO: update once case type letters and schema are provided by ODW
 	const result = await createCase(request.apiClient, {
 		caseType,
 		submissionDate

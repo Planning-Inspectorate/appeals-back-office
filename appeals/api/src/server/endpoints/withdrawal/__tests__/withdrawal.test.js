@@ -20,7 +20,7 @@ import {
 	setTimeInTimeZone
 } from '@pins/appeals/utils/business-days.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { add, sub } from 'date-fns';
 import { request } from '../../../app-test.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
@@ -195,7 +195,7 @@ describe('appeal withdrawal routes', () => {
 			const genericAppeal = {
 				...householdAppeal,
 				appealType: {
-					key: 'TREE_PRESERVATION_ORDER',
+					key: APPEAL_CASE_TYPE.TPO,
 					type: 'Tree preservation order'
 				},
 				appealRule6Parties: [{ id: 1, serviceUser: { email: 'rule6@example.com' } }],

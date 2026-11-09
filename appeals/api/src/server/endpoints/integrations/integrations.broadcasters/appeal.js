@@ -108,9 +108,11 @@ export const broadcastAppeal = async (appealId, updateType = EventType.Update) =
 		return false;
 	}
 
-	// TODO: update once case type letters and schema are provided by ODW
-	if (isGenericAppealType(appeal.appealType?.type)) {
-		pino.info(`Skipping broadcast for generic appeal ${appealId} pending ODW schema.`);
+	// ODW Group C schema broadcast pending group-c integration mapper
+	if (isGenericAppealType(appeal.appealType?.key)) {
+		pino.info(
+			`Skipping broadcast for generic appeal ${appealId} pending Group C integration mapper.`
+		);
 		return true;
 	}
 

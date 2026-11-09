@@ -1,10 +1,44 @@
 import config from '#config/config.js';
+import { appealTypeToAppealCaseTypeMapper } from '@pins/appeals/utils/appeal-type-case.mapper.js';
 import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
-// TODO: update once case type letters and schema are provided by ODW
 /**
- * @param {string} [type]
+ * @param {string | null | undefined} [appealCaseType]
+ * @returns {boolean}
+ */
+export const isAppealCaseTypeEnabled = (appealCaseType) => {
+	if (!appealCaseType) {
+		return false;
+	}
+
+	switch (appealCaseType) {
+		case APPEAL_CASE_TYPE.D:
+		case APPEAL_CASE_TYPE.W:
+		case APPEAL_CASE_TYPE.Y:
+		case APPEAL_CASE_TYPE.ZP:
+		case APPEAL_CASE_TYPE.ZA:
+		case APPEAL_CASE_TYPE.H:
+		case APPEAL_CASE_TYPE.C:
+		case APPEAL_CASE_TYPE.X:
+		case APPEAL_CASE_TYPE.F:
+			return true;
+		case APPEAL_CASE_TYPE.G:
+		case APPEAL_CASE_TYPE.L:
+		case APPEAL_CASE_TYPE.Q:
+		case APPEAL_CASE_TYPE.TPO:
+		case APPEAL_CASE_TYPE.TRN:
+		case APPEAL_CASE_TYPE.HH:
+		case APPEAL_CASE_TYPE.HR:
+		case APPEAL_CASE_TYPE.ENV:
+			return Boolean(config.featureFlags.featureFlagGenericCase);
+	}
+
+	return false;
+};
+
+/**
+ * @param {string | null | undefined} [type]
  * @returns {boolean}
  */
 export const isAppealTypeEnabled = (type) => {
@@ -16,77 +50,32 @@ export const isAppealTypeEnabled = (type) => {
 		return Boolean(config.featureFlags.featureFlagGenericCase);
 	}
 
-	switch (type) {
-		case APPEAL_CASE_TYPE.D: {
-			return true;
-		}
-		case APPEAL_CASE_TYPE.W: {
-			return true;
-		}
-		case APPEAL_CASE_TYPE.Y: {
-			return true;
-		}
-		case APPEAL_CASE_TYPE.ZP: {
-			return true;
-		}
-		case APPEAL_CASE_TYPE.ZA: {
-			return true;
-		}
-		case APPEAL_CASE_TYPE.H: {
-			return true;
-		}
-		case APPEAL_CASE_TYPE.C: {
-			return true;
-		}
-		case APPEAL_CASE_TYPE.X: {
-			return true;
-		}
-		case APPEAL_CASE_TYPE.F: {
-			return true;
-		}
-	}
-
-	return false;
+	return isAppealCaseTypeEnabled(appealTypeToAppealCaseTypeMapper(type) || type);
 };
 
-export const getEnabledAppealTypes = () => {
-	const enabledAppeals = [APPEAL_CASE_TYPE.D];
+const ALL_APPEAL_CASE_TYPES = [
+	APPEAL_CASE_TYPE.D,
+	APPEAL_CASE_TYPE.W,
+	APPEAL_CASE_TYPE.Y,
+	APPEAL_CASE_TYPE.ZP,
+	APPEAL_CASE_TYPE.ZA,
+	APPEAL_CASE_TYPE.H,
+	APPEAL_CASE_TYPE.C,
+	APPEAL_CASE_TYPE.X,
+	APPEAL_CASE_TYPE.F,
+	APPEAL_CASE_TYPE.G,
+	APPEAL_CASE_TYPE.L,
+	APPEAL_CASE_TYPE.Q,
+	APPEAL_CASE_TYPE.TPO,
+	APPEAL_CASE_TYPE.TRN,
+	APPEAL_CASE_TYPE.HH,
+	APPEAL_CASE_TYPE.HR,
+	APPEAL_CASE_TYPE.ENV
+];
 
-	if (isAppealTypeEnabled(APPEAL_CASE_TYPE.W)) {
-		//@ts-ignore
-		enabledAppeals.push(APPEAL_CASE_TYPE.W);
-	}
-	if (isAppealTypeEnabled(APPEAL_CASE_TYPE.Y)) {
-		//@ts-ignore
-		enabledAppeals.push(APPEAL_CASE_TYPE.Y);
-	}
-	if (isAppealTypeEnabled(APPEAL_CASE_TYPE.ZP)) {
-		//@ts-ignore
-		enabledAppeals.push(APPEAL_CASE_TYPE.ZP);
-	}
-	if (isAppealTypeEnabled(APPEAL_CASE_TYPE.ZA)) {
-		//@ts-ignore
-		enabledAppeals.push(APPEAL_CASE_TYPE.ZA);
-	}
-	if (isAppealTypeEnabled(APPEAL_CASE_TYPE.H)) {
-		//@ts-ignore
-		enabledAppeals.push(APPEAL_CASE_TYPE.H);
-	}
-	if (isAppealTypeEnabled(APPEAL_CASE_TYPE.C)) {
-		//@ts-ignore
-		enabledAppeals.push(APPEAL_CASE_TYPE.C);
-	}
-	if (isAppealTypeEnabled(APPEAL_CASE_TYPE.X)) {
-		//@ts-ignore
-		enabledAppeals.push(APPEAL_CASE_TYPE.X);
-	}
-	if (isAppealTypeEnabled(APPEAL_CASE_TYPE.F)) {
-		//@ts-ignore
-		enabledAppeals.push(APPEAL_CASE_TYPE.F);
-	}
+export const getEnabledAppealTypes = () => ALL_APPEAL_CASE_TYPES.filter(isAppealCaseTypeEnabled);
 
-	return enabledAppeals;
-};
+export const getEnabledAppealCaseTypes = getEnabledAppealTypes;
 
 /**
  * @param {import('@pins/appeals.api').Schema.AppealType[]} appealTypes
@@ -97,22 +86,13 @@ export const filterEnabledAppealTypes = (appealTypes) => {
 	return appealTypes.filter((appealType) => {
 		//@ts-ignore
 		return enabledAppealTypes.includes(appealType.key);
-	}, []);
+	});
 };
 
-// TODO: update once case type letters and schema are provided by ODW
 /**
  * @param {any} appeal
  * @returns {boolean}
  */
 export const isAppealEnabled = (appeal) => {
-	const isGeneric = Boolean(
-		appeal?.appealType?.type && isGenericAppealType(appeal.appealType.type)
-	);
-
-	if (isGeneric) {
-		return Boolean(config.featureFlags.featureFlagGenericCase);
-	}
-
-	return isAppealTypeEnabled(appeal?.appealType?.key || '');
+	return isAppealTypeEnabled(appeal?.appealType?.key || appeal?.appealType?.type || '');
 };

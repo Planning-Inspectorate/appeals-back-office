@@ -1,8 +1,4 @@
-import {
-	APPEAL_TYPE,
-	APPEAL_TYPE_CHANGE_APPEALS,
-	GENERIC_APPEAL_TYPES
-} from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, APPEAL_TYPE_CHANGE_APPEALS } from '@pins/appeals/constants/common.js';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import {
 	APPEAL_CASE_PROCEDURE,
@@ -63,7 +59,7 @@ export const appealTypes = [
 		key: APPEAL_CASE_TYPE.G,
 		type: APPEAL_TYPE.DISCONTINUANCE_NOTICE,
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.DISCONTINUANCE_NOTICE,
-		enabled: false
+		enabled: true
 	},
 	{
 		key: APPEAL_CASE_TYPE.H,
@@ -75,13 +71,13 @@ export const appealTypes = [
 		key: APPEAL_CASE_TYPE.L,
 		type: APPEAL_TYPE.COMMUNITY_INFRASTRUCTURE_LEVY,
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.COMMUNITY_INFRASTRUCTURE_LEVY,
-		enabled: false
+		enabled: true
 	},
 	{
 		key: APPEAL_CASE_TYPE.Q,
 		type: APPEAL_TYPE.PLANNING_OBLIGATION,
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.PLANNING_OBLIGATION,
-		enabled: false
+		enabled: true
 	},
 	{
 		key: APPEAL_CASE_TYPE.S,
@@ -125,40 +121,34 @@ export const appealTypes = [
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.CAS_PLANNING,
 		enabled: false
 	},
-	// TODO: update once case type letters and schema are provided by ODW
 	{
-		key: 'TREE_PRESERVATION_ORDER',
-		type: GENERIC_APPEAL_TYPES.TREE_PRESERVATION_ORDER,
+		key: APPEAL_CASE_TYPE.TPO,
+		type: APPEAL_TYPE.TREE_PRESERVATION_ORDER,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.TREE_PRESERVATION_ORDER,
 		enabled: true
 	},
 	{
-		key: 'TREE_REPLACEMENT_NOTICE',
-		type: GENERIC_APPEAL_TYPES.TREE_REPLACEMENT_NOTICE,
+		key: APPEAL_CASE_TYPE.TRN,
+		type: APPEAL_TYPE.TREE_REPLACEMENT_NOTICE,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.TREE_REPLACEMENT_NOTICE,
 		enabled: true
 	},
 	{
-		key: 'HIGH_HEDGES',
-		type: GENERIC_APPEAL_TYPES.HIGH_HEDGES,
+		key: APPEAL_CASE_TYPE.HH,
+		type: APPEAL_TYPE.HIGH_HEDGES,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.HIGH_HEDGES,
 		enabled: true
 	},
 	{
-		key: 'HEDGEROWS',
-		type: GENERIC_APPEAL_TYPES.HEDGEROWS,
+		key: APPEAL_CASE_TYPE.HR,
+		type: APPEAL_TYPE.HEDGEROWS,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.HEDGEROWS,
 		enabled: true
 	},
 	{
-		key: 'DISCONTINUANCE_NOTICE',
-		type: GENERIC_APPEAL_TYPES.DISCONTINUANCE_NOTICE,
-		enabled: true
-	},
-	{
-		key: 'SECTION_106_AGREEMENT',
-		type: GENERIC_APPEAL_TYPES.SECTION_106_AGREEMENT,
-		enabled: true
-	},
-	{
-		key: 'ENVIRONMENTAL',
-		type: GENERIC_APPEAL_TYPES.ENVIRONMENTAL,
+		key: APPEAL_CASE_TYPE.ENV,
+		type: APPEAL_TYPE.ENVIRONMENTAL,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.ENVIRONMENTAL,
 		enabled: true
 	}
 ];

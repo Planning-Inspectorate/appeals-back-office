@@ -12,7 +12,7 @@ import {
 	addStatusesToLinkedAppeals,
 	getIdsOfLinkedGroup
 } from '#tests/shared/site-visits-test-helpers.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -1589,7 +1589,7 @@ describe('hearing routes', () => {
 							id: 99,
 							shorthand: 'GEN',
 							type: 'Tree preservation order',
-							key: 'TREE_PRESERVATION_ORDER'
+							key: APPEAL_CASE_TYPE.TPO
 						}
 					});
 

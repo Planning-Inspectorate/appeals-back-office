@@ -5,7 +5,9 @@ import {
 } from '@planning-inspectorate/data-model';
 import { APPEAL_TYPE } from '../../constants/common';
 import {
+	GENERIC_APPEAL_CASE_TYPES,
 	isAnyEnforcementAppealType,
+	isGenericAppealType,
 	isLdcOrDiscontinuanceOrEnforcementAppealType,
 	isLdcOrEnforcementCaseType,
 	isNetResidencesAppealType,
@@ -183,5 +185,31 @@ describe('isNetResidencesAppealType', () => {
 		''
 	])('returns false for %s', (appealType) => {
 		expect(isNetResidencesAppealType(appealType)).toBe(false);
+	});
+});
+
+describe('isGenericAppealType', () => {
+	it.each(GENERIC_APPEAL_CASE_TYPES)('returns true for letter code %s', (caseType) => {
+		expect(isGenericAppealType(caseType)).toBe(true);
+	});
+
+	it.each([
+		APPEAL_CASE_TYPE.D,
+		APPEAL_CASE_TYPE.W,
+		APPEAL_CASE_TYPE.Y,
+		APPEAL_CASE_TYPE.ZP,
+		APPEAL_CASE_TYPE.ZA,
+		APPEAL_CASE_TYPE.H,
+		APPEAL_CASE_TYPE.C,
+		APPEAL_CASE_TYPE.X,
+		APPEAL_CASE_TYPE.F
+	])('returns false for non-generic letter code %s', (caseType) => {
+		expect(isGenericAppealType(caseType)).toBe(false);
+	});
+
+	it('returns false for empty/null/undefined', () => {
+		expect(isGenericAppealType('')).toBe(false);
+		expect(isGenericAppealType(null)).toBe(false);
+		expect(isGenericAppealType(undefined)).toBe(false);
 	});
 });

@@ -13,7 +13,6 @@ export const mapRule6PartyContactDetails = ({
 	const id = 'rule-6-party-contact-details';
 	const { appealId } = appealDetails;
 
-	// TODO: update once case type letters and schema are provided by ODW
 	if (
 		!isGenericAppealType(appealDetails.appealType) &&
 		appealDetails.procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.INQUIRY.toLowerCase()

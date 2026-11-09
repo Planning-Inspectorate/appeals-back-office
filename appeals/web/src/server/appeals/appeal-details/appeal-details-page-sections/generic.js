@@ -14,7 +14,6 @@ import { getCaseInquiry } from './s78/case-inquiry.js';
 import { removeAppealDetailsSectionComponentsActions } from './utils/index.js';
 
 /**
- * // TODO: update once case type letters and schema are provided by ODW
  * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
  * @param {{appeal: MappedInstructions}} mappedData
  * @param {import('express-session').Session & Partial<import('express-session').SessionData>} session

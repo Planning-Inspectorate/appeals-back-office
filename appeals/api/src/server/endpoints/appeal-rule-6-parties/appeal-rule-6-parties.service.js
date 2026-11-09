@@ -35,7 +35,7 @@ const addRule6Party = async (appeal, serviceUser, azureAdUserId, notifyClient) =
 			serviceUser
 		});
 
-		const isGeneric = isGenericAppealType(appeal.appealType?.type);
+		const isGeneric = isGenericAppealType(appeal.appealType?.key);
 
 		if (!isGeneric) {
 			await broadcasters.broadcastServiceUser(
@@ -133,7 +133,7 @@ const updateRule6Party = async (appeal, rule6PartyId, serviceUser, azureAdUserId
 	try {
 		const result = await appealRule6PartyRepository.updateRule6Party({ rule6PartyId, serviceUser });
 
-		const isGeneric = isGenericAppealType(appeal.appealType?.type);
+		const isGeneric = isGenericAppealType(appeal.appealType?.key);
 
 		if (!isGeneric) {
 			await broadcasters.broadcastServiceUser(
@@ -191,7 +191,7 @@ const updateRule6Party = async (appeal, rule6PartyId, serviceUser, azureAdUserId
  */
 const deleteRule6Party = async (appeal, rule6PartyId, azureAdUserId) => {
 	try {
-		const isGeneric = isGenericAppealType(appeal.appealType?.type);
+		const isGeneric = isGenericAppealType(appeal.appealType?.key);
 
 		const rule6Party = await appealRule6PartyRepository.getRule6PartyById(rule6PartyId);
 

@@ -194,7 +194,7 @@ export const addressListForTrainers = addressesList.map((address) => ({
  * @param {string} appealTypeShorthand
  * @returns {import('#db-client/models.ts').LPAQuestionnaireCreateWithoutAppealInput | undefined}
  */
-/* eslint-disable no-fallthrough */
+
 export function createLPAQuestionnaireForAppealType(appealTypeShorthand) {
 	switch (appealTypeShorthand) {
 		case APPEAL_CASE_TYPE.D:
@@ -361,7 +361,6 @@ export function createLPAQuestionnaireForAppealType(appealTypeShorthand) {
 			return;
 	}
 }
-/* eslint-disable no-fallthrough */
 
 /**
  * Sample incomplete review questionnaire data.
@@ -588,6 +587,30 @@ export const appellantCaseList = {
 		enforcementReference: 'enf/Ref',
 		interestInLand: 'owner',
 		descriptionOfAllegedBreach: 'Breach description'
+	},
+	[APPEAL_CASE_TYPE.G]: {
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.DISCONTINUANCE_NOTICE
+	},
+	[APPEAL_CASE_TYPE.L]: {
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.COMMUNITY_INFRASTRUCTURE_LEVY
+	},
+	[APPEAL_CASE_TYPE.Q]: {
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.PLANNING_OBLIGATION
+	},
+	[APPEAL_CASE_TYPE.TPO]: {
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.TREE_PRESERVATION_ORDER
+	},
+	[APPEAL_CASE_TYPE.TRN]: {
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.TREE_REPLACEMENT_NOTICE
+	},
+	[APPEAL_CASE_TYPE.HH]: {
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.HIGH_HEDGE_APPEAL
+	},
+	[APPEAL_CASE_TYPE.HR]: {
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.HEDGEROWS_APPEAL
+	},
+	[APPEAL_CASE_TYPE.ENV]: {
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.ENVIRONMENTAL
 	}
 };
 

@@ -230,5 +230,13 @@ describe('decision-mapper', () => {
 			setCaseOutcome(params);
 			expect(mapDecision(params)).toEqual(expectedViewDecisionRow(params));
 		});
+
+		it('Should display Notice quashed when outcome is notice_quashed', () => {
+			params.appealDetails.appealStatus = 'complete';
+			params.appealDetails.appealType = 'Discontinuance notice';
+			params.appealDetails.decision = { outcome: 'notice_quashed' };
+			const result = mapDecision(params);
+			expect(result.display.summaryListItem.value.text).toBe('Notice quashed');
+		});
 	});
 });

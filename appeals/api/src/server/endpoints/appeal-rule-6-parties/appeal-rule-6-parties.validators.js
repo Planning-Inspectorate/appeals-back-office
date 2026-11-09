@@ -20,7 +20,7 @@ export const validateRule6PartyParams = composeMiddleware(
  * @type {import('express').RequestHandler}
  */
 export const validateRule6PartyEmail = (req, res, next) => {
-	const isGeneric = isGenericAppealType(req.appeal?.appealType?.type);
+	const isGeneric = isGenericAppealType(req.appeal?.appealType?.key);
 	return validateEmailParameter('serviceUser.email', isGeneric)(req, res, next);
 };
 

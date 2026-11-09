@@ -57,6 +57,7 @@ import { EventType } from '@pins/event-client';
 import {
 	APPEAL_CASE_STAGE,
 	APPEAL_CASE_STATUS,
+	APPEAL_CASE_TYPE,
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_VIRUS_CHECK_STATUS
 } from '@planning-inspectorate/data-model';
@@ -777,7 +778,7 @@ describe('appellant cases routes', () => {
 					id: 160,
 					reference: '6000123',
 					appealType: {
-						key: 'TREE_PRESERVATION_ORDER',
+						key: APPEAL_CASE_TYPE.TPO,
 						type: 'Tree preservation order'
 					},
 					appellant: null,
@@ -1119,7 +1120,7 @@ describe('appellant cases routes', () => {
 					id: 160,
 					reference: '6000123',
 					appealType: {
-						key: 'TREE_PRESERVATION_ORDER',
+						key: APPEAL_CASE_TYPE.TPO,
 						type: 'Tree preservation order'
 					},
 					appellant: null,
@@ -1303,7 +1304,7 @@ describe('appellant cases routes', () => {
 					id: 160,
 					reference: '6000123',
 					appealType: {
-						key: 'TREE_PRESERVATION_ORDER',
+						key: APPEAL_CASE_TYPE.TPO,
 						type: 'Tree preservation order'
 					},
 					appellant: null,
