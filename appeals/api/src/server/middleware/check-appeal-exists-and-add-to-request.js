@@ -42,6 +42,8 @@ export const checkAppealExistsByIdAndAddPartialToRequest =
 			params: { appealId }
 		} = req;
 
+		console.log('############ checkAppealExistsByIdAndAddPartialToRequest', appealId, selectedKeys);
+
 		let getAppealKeys = selectedKeys;
 		let includeDetails = false;
 		let selectAppealTypeKey = true;
@@ -66,8 +68,10 @@ export const checkAppealExistsByIdAndAddPartialToRequest =
 		let appeal;
 
 		if (includeDetails && !selectAppealTypeKey) {
+			console.log('############ checkAppealExistsByIdAndAddPartialToRequest - deprecatedGetAppealById', appealId);
 			appeal = await appealRepository.deprecatedGetAppealById(Number(appealId));
 		} else {
+			console.log('############ checkAppealExistsByIdAndAddPartialToRequest - getAppealById', appealId);
 			appeal = await appealRepository.getAppealById(
 				Number(appealId),
 				includeDetails,

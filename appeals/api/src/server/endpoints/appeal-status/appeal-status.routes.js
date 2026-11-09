@@ -55,7 +55,7 @@ router.post(
         }
         #swagger.responses[400] = {}
 	*/
-	checkAppealExistsById,
+	checkAppealExistsByIdAndAddPartialToRequest(['appealTimetable']),
 	validateAppealStatusRollBackRequest,
 	asyncHandler(controller.redeterminationRollBackAppealStatus)
 )
