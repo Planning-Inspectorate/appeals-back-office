@@ -34,7 +34,7 @@ export const publishWithdrawal = async (
 		new Date(withdrawalRequestDate)
 	);
 
-	const isGeneric = isGenericAppealType(appeal.appealType?.type);
+	const isGeneric = isGenericAppealType(appeal.appealType?.key);
 	if (!isGeneric) {
 		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 		const lpaEmail = appeal.lpa?.email || '';

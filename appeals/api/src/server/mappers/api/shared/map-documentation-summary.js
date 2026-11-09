@@ -77,7 +77,7 @@ export const mapDocumentationSummary = (data) => {
 			status: formatAppellantCaseDocumentationStatus(appeal),
 			dueDate: appeal.caseExtensionDate && appeal.caseExtensionDate?.toISOString(),
 			receivedAt: (
-				(isGenericAppealType(appeal.appealType?.type)
+				(isGenericAppealType(appeal.appealType?.key)
 					? appeal.appellantCase?.caseSubmittedDate
 					: appeal.caseCreatedDate) || appeal.caseCreatedDate
 			)?.toISOString()

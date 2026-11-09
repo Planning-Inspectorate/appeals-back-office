@@ -211,7 +211,6 @@ async function updateCompletedEvents(azureAdUserId) {
 	);
 }
 
-// TODO: update once case type letters and schema are provided by ODW
 /**
  * @param {{ caseType: string, submissionDate: string }} data
  * @returns {Promise<{ appealId: number, reference: string }>}
@@ -223,7 +222,9 @@ const createGenericAppeal = async ({ caseType, submissionDate }) => {
 		const tempReference = randomUUID();
 
 		const appealType = await tx.appealType.findFirst({
-			where: { type: caseType }
+			where: {
+				OR: [{ key: caseType }, { type: caseType }]
+			}
 		});
 
 		if (!appealType) {

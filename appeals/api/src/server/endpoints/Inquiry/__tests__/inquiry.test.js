@@ -8,7 +8,7 @@ import {
 } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { trimAppealType } from '#utils/string-utils.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -945,7 +945,7 @@ describe('inquiry routes', () => {
 						id: 99,
 						shorthand: 'GEN',
 						type: 'Tree preservation order',
-						key: 'TREE_PRESERVATION_ORDER'
+						key: APPEAL_CASE_TYPE.TPO
 					}
 				});
 

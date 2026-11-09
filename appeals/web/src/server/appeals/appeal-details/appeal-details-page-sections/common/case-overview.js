@@ -33,7 +33,6 @@ export const getCaseOverview = (mappedData, appealDetails) => ({
 				? mappedData.appeal?.caseProcedure?.display.summaryListItem
 				: removeSummaryListActions(mappedData.appeal?.caseProcedure?.display.summaryListItem),
 			mappedData.appeal?.allocationDetails?.display.summaryListItem,
-			// TODO: update once case type letters and schema are provided by ODW
 			!isGenericAppealType(appealDetails.appealType)
 				? mappedData.appeal?.linkedAppeals?.display.summaryListItem
 				: undefined,

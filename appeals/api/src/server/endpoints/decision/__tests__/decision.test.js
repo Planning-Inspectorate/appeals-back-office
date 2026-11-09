@@ -15,9 +15,9 @@ import { azureAdUserId } from '#tests/shared/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { jest } from '@jest/globals';
 import {
+	APPEAL_TYPE,
 	FEEDBACK_FORM_LINKS,
-	FRONT_OFFICE_DASHBOARD_PATH_STUBS,
-	GENERIC_APPEAL_TYPES
+	FRONT_OFFICE_DASHBOARD_PATH_STUBS
 } from '@pins/appeals/constants/common.js';
 import {
 	AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
@@ -1409,7 +1409,7 @@ describe('decision routes', () => {
 				],
 				appealType: {
 					key: 'TPO',
-					type: GENERIC_APPEAL_TYPES.TREE_PRESERVATION_ORDER
+					type: APPEAL_TYPE.TREE_PRESERVATION_ORDER
 				},
 				agent: null,
 				appellant: null,
@@ -1534,7 +1534,7 @@ describe('decision routes', () => {
 				id: 999,
 				appealType: {
 					key: 'TPO',
-					type: GENERIC_APPEAL_TYPES.TREE_PRESERVATION_ORDER
+					type: APPEAL_TYPE.TREE_PRESERVATION_ORDER
 				}
 			};
 			// @ts-ignore

@@ -6,6 +6,7 @@ import { fullPlanningAppeal as fullPlanningAppealData } from '#tests/appeals/moc
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import * as SUPPORT_CONSTANTS from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -272,7 +273,7 @@ describe('appeal rule 6 parties routes', () => {
 			test('creates a rule 6 party on generic appeal without email and does not broadcast or send emails', async () => {
 				const genericAppeal = {
 					...fullPlanningAppeal,
-					appealType: { type: 'Tree preservation order' }
+					appealType: { key: APPEAL_CASE_TYPE.TPO }
 				};
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(genericAppeal);
@@ -320,7 +321,7 @@ describe('appeal rule 6 parties routes', () => {
 			test('returns an error on generic appeal if email format is invalid', async () => {
 				const genericAppeal = {
 					...fullPlanningAppeal,
-					appealType: { type: 'Tree preservation order' }
+					appealType: { key: APPEAL_CASE_TYPE.TPO }
 				};
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(genericAppeal);
@@ -539,7 +540,7 @@ describe('appeal rule 6 parties routes', () => {
 			test('updates a rule 6 party on generic appeal without email and does not broadcast or send emails', async () => {
 				const genericAppeal = {
 					...fullPlanningAppeal,
-					appealType: { type: 'Tree preservation order' },
+					appealType: { key: APPEAL_CASE_TYPE.TPO },
 					appealRule6Parties: [rule6Party]
 				};
 				// @ts-ignore
@@ -633,7 +634,7 @@ describe('appeal rule 6 parties routes', () => {
 			test('deletes a rule 6 party on generic appeal and does not broadcast', async () => {
 				const genericAppeal = {
 					...fullPlanningAppeal,
-					appealType: { type: 'Tree preservation order' },
+					appealType: { key: APPEAL_CASE_TYPE.TPO },
 					appealRule6Parties: [rule6Party]
 				};
 				// @ts-ignore

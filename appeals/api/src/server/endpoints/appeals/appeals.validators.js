@@ -9,6 +9,7 @@ import {
 	ERROR_PAGENUMBER_AND_PAGESIZE_ARE_REQUIRED
 } from '@pins/appeals/constants/support.js';
 import { composeMiddleware } from '@pins/express';
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { body, query } from 'express-validator';
 
 /** @typedef {import('express-validator').ValidationChain} ValidationChain */
@@ -60,11 +61,23 @@ const getAppealsValidator = composeMiddleware(
 	validationErrorHandler
 );
 
+const validCaseTypes = [
+	...Object.values(GENERIC_APPEAL_TYPES),
+	APPEAL_CASE_TYPE.G,
+	APPEAL_CASE_TYPE.L,
+	APPEAL_CASE_TYPE.Q,
+	APPEAL_CASE_TYPE.TPO,
+	APPEAL_CASE_TYPE.TRN,
+	APPEAL_CASE_TYPE.HH,
+	APPEAL_CASE_TYPE.HR,
+	APPEAL_CASE_TYPE.ENV
+];
+
 const createAppealValidator = composeMiddleware(
 	body('caseType')
 		.isString()
 		.withMessage(ERROR_MUST_BE_STRING)
-		.isIn(Object.values(GENERIC_APPEAL_TYPES))
+		.isIn(validCaseTypes)
 		.withMessage('Must be a valid generic appeal type'),
 	body('submissionDate').isISO8601().withMessage(ERROR_MUST_BE_CORRECT_DATE_FORMAT),
 	validationErrorHandler

@@ -5,7 +5,7 @@ import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { appealData } from '#testing/appeals/appeals.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
-import { APPEAL_TYPE, GENERIC_APPEAL_TYPES } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
 import { APPEAL_TYPE_OF_PLANNING_APPLICATION } from '@planning-inspectorate/data-model';
 import nock from 'nock';
@@ -184,7 +184,7 @@ describe('start-case', () => {
 				],
 				[
 					'for generic appeals regardless of enabled types (empty arrays)',
-					GENERIC_APPEAL_TYPES.TREE_PRESERVATION_ORDER,
+					APPEAL_TYPE.TREE_PRESERVATION_ORDER,
 					[],
 					[]
 				]
@@ -877,7 +877,7 @@ describe('start-case', () => {
 					.get('/appeals/1?include=all')
 					.reply(200, {
 						...appealDataWithoutStartDate,
-						appealType: GENERIC_APPEAL_TYPES.TREE_PRESERVATION_ORDER
+						appealType: APPEAL_TYPE.TREE_PRESERVATION_ORDER
 					});
 
 				const response = await request.get(

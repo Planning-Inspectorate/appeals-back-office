@@ -163,7 +163,7 @@ const formatDocumentationSummary = (appeal) => {
 			status: formatAppellantCaseDocumentationStatus(appeal),
 			dueDate: appeal.caseExtensionDate && appeal.caseExtensionDate?.toISOString(),
 			receivedAt: (
-				(isGenericAppealType(appeal.appealType?.type)
+				(isGenericAppealType(appeal.appealType?.key)
 					? /** @type {any} */ (appeal.appellantCase)?.caseSubmittedDate
 					: appeal.caseCreatedDate) || appeal.caseCreatedDate
 			)?.toISOString()

@@ -3,7 +3,7 @@ import {
 	APPEAL_CASE_TYPE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from '@planning-inspectorate/data-model';
-import { APPEAL_TYPE, GENERIC_APPEAL_TYPES } from '../constants/common.js';
+import { APPEAL_TYPE } from '../constants/common.js';
 import { EXPEDITED_ORIGINAL_APPLICATION_CUTOFF } from '../constants/dates.js';
 
 import { appealTypeToAppealCaseTypeMapper } from './appeal-type-case.mapper.js';
@@ -37,7 +37,15 @@ const baseCaseType = {
 	[APPEAL_CASE_TYPE.Y]: APPEAL_CASE_TYPE.W,
 	[APPEAL_CASE_TYPE.C]: APPEAL_CASE_TYPE.W,
 	[APPEAL_CASE_TYPE.X]: APPEAL_CASE_TYPE.W,
-	[APPEAL_CASE_TYPE.F]: APPEAL_CASE_TYPE.W
+	[APPEAL_CASE_TYPE.F]: APPEAL_CASE_TYPE.W,
+	[APPEAL_CASE_TYPE.G]: APPEAL_CASE_TYPE.W,
+	[APPEAL_CASE_TYPE.L]: APPEAL_CASE_TYPE.W,
+	[APPEAL_CASE_TYPE.Q]: APPEAL_CASE_TYPE.W,
+	[APPEAL_CASE_TYPE.TPO]: APPEAL_CASE_TYPE.W,
+	[APPEAL_CASE_TYPE.TRN]: APPEAL_CASE_TYPE.W,
+	[APPEAL_CASE_TYPE.HH]: APPEAL_CASE_TYPE.W,
+	[APPEAL_CASE_TYPE.HR]: APPEAL_CASE_TYPE.W,
+	[APPEAL_CASE_TYPE.ENV]: APPEAL_CASE_TYPE.W
 };
 
 /**
@@ -46,7 +54,6 @@ const baseCaseType = {
  */
 export const isExpeditedAppealType = (appealType) => {
 	if (appealType === '') return false;
-	// TODO: update once case type letters and schema are provided by ODW
 	if (appealType && isGenericAppealType(appealType)) {
 		return false;
 	}
@@ -169,7 +176,17 @@ export const isLdcOrEnforcementAppealType = (appealType) =>
 export const isNetResidencesAppealType = (appealType) =>
 	appealType === APPEAL_TYPE.S78 || appealType === APPEAL_TYPE.PLANNED_LISTED_BUILDING;
 
-// TODO: update once case type letters and schema are provided by ODW
+export const GENERIC_APPEAL_CASE_TYPES = Object.freeze([
+	APPEAL_CASE_TYPE.G,
+	APPEAL_CASE_TYPE.L,
+	APPEAL_CASE_TYPE.Q,
+	APPEAL_CASE_TYPE.TPO,
+	APPEAL_CASE_TYPE.TRN,
+	APPEAL_CASE_TYPE.HH,
+	APPEAL_CASE_TYPE.HR,
+	APPEAL_CASE_TYPE.ENV
+]);
+
 /**
  * @param {string | null | undefined} appealType
  * @returns {boolean}
@@ -177,8 +194,10 @@ export const isNetResidencesAppealType = (appealType) =>
 export const isGenericAppealType = (appealType) =>
 	Boolean(
 		appealType &&
-		(Object.values(GENERIC_APPEAL_TYPES).includes(/** @type {any} */ (appealType)) ||
-			Object.keys(GENERIC_APPEAL_TYPES).includes(/** @type {any} */ (appealType)))
+		(GENERIC_APPEAL_CASE_TYPES.includes(/** @type {any} */ (appealType)) ||
+			GENERIC_APPEAL_CASE_TYPES.includes(
+				/** @type {any} */ (appealTypeToAppealCaseTypeMapper(appealType))
+			))
 	);
 
 /**
