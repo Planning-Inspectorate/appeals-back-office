@@ -50,7 +50,10 @@ const linkedAppealsInclude = isLinkedAppealsActive()
  * @deprecated too inefficient, use specific selects only
  * @param {number} appealId
  * @param {number} appealVersion
- * @returns {Partial<import('#db-client/models.ts').AppealInclude> | null}
+ * @returns {{
+ *   include: Partial<import('#db-client/models.ts').AppealInclude> | null,
+ *   versionedIncludes: (keyof typeof appealDetailsIncludeMap)[]}
+ * }
  * legacy all data include
  **/
 export const appealDetailsInclude = (appealId, appealVersion) =>
@@ -281,7 +284,10 @@ export const appealDetailsIncludeMap = /** @type {Object} */ {
  * @param {boolean} selectAppealTypeKey
  * @param {number} appealId
  * @param {number} appealVersion
- * @returns {Partial<import('#db-client/models.ts').AppealInclude> | null}
+ * @returns { {
+ *   include: Partial<import('#db-client/models.ts').AppealInclude> | null,
+ *   versionedIncludes: K[]
+ * }
  */
 const buildAppealInclude = (
 	selectedKeys = [],
@@ -309,10 +315,16 @@ const buildAppealInclude = (
 		throw new Error('Must provide at least one: selectedKeys or selectAppealTypeKey');
 	}
 
+	/** @type {K[]} */
+	const versionedIncludes = [];
+
 	/** @type {Partial<import('#db-client/models.ts').AppealInclude>} */
 	let include = {};
 	for (const key of selectedKeys) {
 		const config = appealDetailsIncludeMap[key];
+		if (typeof config === 'function') {
+			versionedIncludes.push(key);
+		}
 		include[key] = typeof config === 'function' ? config(context) : config;
 	}
 
@@ -324,7 +336,7 @@ const buildAppealInclude = (
 		};
 	}
 
-	return include;
+	return { include, versionedIncludes };
 };
 
 /**
@@ -348,13 +360,17 @@ const getAppealById = async (id, includeDetails = true, selectedKeys = [], selec
 		}
 	});
 
-	const include = buildAppealInclude(
+	const { include, versionedIncludes } = buildAppealInclude(
 		selectedKeys,
 		includeDetails,
 		selectAppealTypeKey,
 		id,
 		appealVersion?.currentAppealVersion ?? 1
 	);
+
+	console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+	console.log(include);
+	console.log(versionedIncludes);
 
 	const includeFolders = include && include.folders;
 	if (include && 'folders' in include) {
@@ -367,20 +383,25 @@ const getAppealById = async (id, includeDetails = true, selectedKeys = [], selec
 		},
 		include
 	});
+
 	if (appeal) {
+		// remove the array around the things we select with versionedIncludes, we know these are unique per appeal
+		const updatedAppeal = { ...appeal,
+			...Object.fromEntries(versionedIncludes.map(key => [key, appeal[key]?.[0] ?? undefined])) };
+
 		//@ts-ignore
-		if (includeFolders && !appeal.folders) {
+		if (includeFolders && !updatedAppeal.folders) {
 			if (process.env.NODE_ENV === 'test') {
 				// @ts-ignore
-				appeal.folders = [];
+				updatedAppeal.folders = [];
 			} else {
 				const folders = await getFoldersWithDocumentsAndVersions(id);
 				// @ts-ignore
-				appeal.folders = folders;
+				updatedAppeal.folders = folders;
 			}
 		}
 		// @ts-ignore
-		return appeal;
+		return updatedAppeal;
 	}
 };
 
@@ -416,8 +437,10 @@ const deprecatedGetAppealById = async (id, options) => {
 		return;
 	}
 
+	const { include, versionedIncludes } = appealDetailsInclude(id, appealVersion.currentAppealVersion);
+
 	const massInclude = {
-		...appealDetailsInclude(id, appealVersion.currentAppealVersion),
+		...include,
 		...(options?.omitRepresentations && { representations: false })
 	};
 	const appeal = await databaseConnector.appeal.findUnique({
@@ -426,20 +449,26 @@ const deprecatedGetAppealById = async (id, options) => {
 		},
 		include: massInclude
 	});
+
 	if (appeal) {
+
+		// remove the array around the things we select with versionedIncludes, we know these are unique per appeal
+		const updatedAppeal = { ...appeal,
+		...Object.fromEntries(versionedIncludes.map(key => [key, appeal[key]?.[0] ?? undefined])) };
+
 		// @ts-ignore
-		if (!appeal.folders) {
+		if (!updatedAppeal.folders) {
 			if (process.env.NODE_ENV === 'test' || options?.omitDocuments) {
 				// @ts-ignore
-				appeal.folders = [];
+				updatedAppeal.folders = [];
 			} else {
 				const folders = await getFoldersWithDocumentsAndVersions(id);
 				// @ts-ignore
-				appeal.folders = folders;
+				updatedAppeal.folders = folders;
 			}
 		}
 		// @ts-ignore
-		return appeal;
+		return updatedAppeal;
 	}
 };
 
