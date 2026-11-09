@@ -62,6 +62,50 @@ router.get(
 );
 
 router.patch(
+	'/:appealId/lpa-questionnaires/lpa-costs-application',
+	/*
+		#swagger.tags = ['LPA Questionnaires']
+		#swagger.path = '/appeals/{appealId}/lpa-questionnaires/lpa-costs-application'
+		#swagger.description = Updates the lpaCostsAppliedFor field for the LPA questionnaire for an appeal by id
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[200] = {
+			description: 'Updates a single LPA questionnaire by id',
+			schema: { $ref: '#/components/schemas/UpdateLPAQuestionnaireResponse' }
+		}
+		#swagger.responses[400] = {}
+		#swagger.responses[404] = {}
+	 */
+	patchLPAQuestionnaireValidator,
+	asyncHandler(
+		checkAppealExistsByIdAndAddPartialToRequest([
+			'lpaQuestionnaire',
+			'parentAppeals',
+			'childAppeals',
+			'appealStatus',
+			'appealType',
+			'appellantCase',
+			'lpa',
+			'appellant',
+			'agent',
+			'address',
+			'appealRule6Parties'
+		])
+	),
+	checkLPAQuestionnaireExists,
+	checkLookupValueIsValidAndAddToRequest(
+		'validationOutcome',
+		'lPAQuestionnaireValidationOutcome',
+		ERROR_INVALID_LPA_QUESTIONNAIRE_VALIDATION_OUTCOME
+	),
+	checkLookupValuesAreValid('incompleteReasons', 'lPAQuestionnaireIncompleteReason'),
+	asyncHandler(updateLPAQuestionnaireById)
+);
+
+router.patch(
 	'/:appealId/lpa-questionnaires/:lpaQuestionnaireId',
 	/*
 		#swagger.tags = ['LPA Questionnaires']

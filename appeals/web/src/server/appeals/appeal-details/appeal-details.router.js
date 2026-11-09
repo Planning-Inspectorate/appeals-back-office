@@ -123,7 +123,7 @@ router.use(
 );
 router.use(
 	'/:appealId/costs',
-	validateAppealWithInclude(['appellantCase', 'address']),
+	validateAppealWithInclude(['appellantCase', 'address', 'lpaQuestionnaire']),
 	assertUserHasPermission(permissionNames.viewCaseDetails, permissionNames.viewAssignedCaseDetails),
 	costsRouter
 );

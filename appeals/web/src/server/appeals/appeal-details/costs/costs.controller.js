@@ -289,17 +289,24 @@ export const getAddDocumentsCheckAndConfirm = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postAddDocumentsCheckAndConfirm = async (request, response) => {
-	const { currentAppeal, currentFolder, session } = request;
+	const {
+		// apiClient,
+		currentAppeal,
+		currentFolder,
+		session
+		// params: { appealId, costsCategory, costsDocumentType }
+	} = request;
 
 	if (!currentAppeal) {
 		return response.status(404).render('app/404');
 	}
 
+	const nextPageUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}`;
+
 	try {
 		await postUploadDocumentsCheckAndConfirm({
 			request,
 			response,
-			nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}`,
 			successCallback: (
 				/** @type {import('@pins/express/types/express.js').Request} */ request
 			) => {
@@ -315,6 +322,14 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 				});
 			}
 		});
+
+		// if (costsCategory === 'lpa' &&
+		// 	( costsDocumentType === 'application' || costsDocumentType === 'withdrawal' )
+		// ) {
+		// 	await updateLPACostsAppliedFor(apiClient, appealId);
+		// };
+
+		return response.redirect(nextPageUrl);
 	} catch (error) {
 		logger.error(
 			error,

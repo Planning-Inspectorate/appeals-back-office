@@ -1,4 +1,3 @@
-import config from '#config/config.js';
 import { eventClient } from '#infrastructure/event-client.js';
 import { producers } from '#infrastructure/topics.js';
 import { contextEnum } from '#mappers/context-enum.js';
@@ -21,9 +20,9 @@ import { schemas, validateFromSchema } from '../integrations.validators.js';
  * @param {string} [updateType]
  */
 export const broadcastAppeal = async (appealId, updateType = EventType.Update) => {
-	if (!config.serviceBusEnabled && config.NODE_ENV !== 'development') {
-		return false;
-	}
+	// if (!config.serviceBusEnabled && config.NODE_ENV !== 'development') {
+	// 	return false;
+	// }
 
 	pino.info({ appealId, updateType });
 
