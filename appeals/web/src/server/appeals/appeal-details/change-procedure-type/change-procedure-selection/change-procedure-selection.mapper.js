@@ -26,6 +26,7 @@ export const selectProcedurePage = (
 ) => {
 	const availableProcedureTypes = getAvailableProcedureTypesForAppealType(appealOrAppealType);
 	const sortedAvailableProcedureTypes = [
+		APPEAL_CASE_PROCEDURE.WRITTEN_PART_2,
 		APPEAL_CASE_PROCEDURE.WRITTEN,
 		APPEAL_CASE_PROCEDURE.HEARING,
 		APPEAL_CASE_PROCEDURE.INQUIRY
@@ -64,6 +65,8 @@ export const selectProcedurePage = (
  */
 function appealProcedureToLabelText(procedureType) {
 	switch (procedureType) {
+		case APPEAL_CASE_PROCEDURE.WRITTEN_PART_2:
+			return 'Written representations (Part 2)';
 		case APPEAL_CASE_PROCEDURE.WRITTEN:
 			return 'Written representations';
 		case APPEAL_CASE_PROCEDURE.HEARING:

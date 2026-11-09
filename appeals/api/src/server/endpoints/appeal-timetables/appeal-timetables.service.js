@@ -497,7 +497,9 @@ const startCase = async (
 			: await calculateTimetable(
 					appealType.key,
 					startedAt,
-					effectiveProcedureType,
+					effectiveProcedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_2
+						? APPEAL_CASE_PROCEDURE.WRITTEN
+						: effectiveProcedureType,
 					null,
 					isS78Expedited
 				);

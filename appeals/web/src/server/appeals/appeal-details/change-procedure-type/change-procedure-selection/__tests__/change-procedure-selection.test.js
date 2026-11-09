@@ -2,6 +2,7 @@ import { appealData } from '#testing/appeals/appeals.js';
 import { createTestEnvironment } from '#testing/index.js';
 import config from '@pins/appeals.web/environment/config.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { isPart2EligibleAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -66,8 +67,11 @@ describe('Change procedure type', () => {
 					'<span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Appeal procedure</h1>');
+				const writtenRepresentationsLabel = isPart2EligibleAppealType(appealType)
+					? 'Written representations (Part 2)'
+					: 'Written representations';
 				expect(unprettifiedElement.innerHTML).toContain(
-					`<label class="govuk-label govuk-radios__label" for="appeal-procedure"> Written representations</label>`
+					`<label class="govuk-label govuk-radios__label" for="appeal-procedure"> ${writtenRepresentationsLabel}</label>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'name="appealProcedure" type="radio" value="hearing">'
@@ -104,8 +108,11 @@ describe('Change procedure type', () => {
 					'<span class="govuk-caption-l">Appeal 351062 - update appeal procedure</span>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Appeal procedure</h1>');
+				const writtenRepresentationsLabel = isPart2EligibleAppealType(appealType)
+					? 'Written representations (Part 2)'
+					: 'Written representations';
 				expect(unprettifiedElement.innerHTML).toContain(
-					'for="appeal-procedure"> Written representations</label>'
+					`<label class="govuk-label govuk-radios__label" for="appeal-procedure"> ${writtenRepresentationsLabel}</label>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
 					'name="appealProcedure" type="radio" value="hearing">'
@@ -154,12 +161,18 @@ describe('Change procedure type', () => {
 				const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
 				expect(unprettifiedHtml).toContain('Appeal procedure</h1>');
+				const isPart2Eligible = isPart2EligibleAppealType(appealType);
+				const writtenRepresentationsLabel = isPart2Eligible
+					? 'Written representations (Part 2)'
+					: 'Written representations';
 				expect(unprettifiedHtml).toContain(
-					`<label class="govuk-label govuk-radios__label" for="appeal-procedure"> Written representations</label>`
+					`<label class="govuk-label govuk-radios__label" for="appeal-procedure"> ${writtenRepresentationsLabel}</label>`
 				);
-				expect(unprettifiedHtml).toContain(
-					'name="appealProcedure" type="radio" value="written" checked>'
-				);
+
+				const writtenRepresentationsOptions = isPart2Eligible
+					? 'name="appealProcedure" type="radio" value="writtenPart2">'
+					: 'name="appealProcedure" type="radio" value="written" checked>';
+				expect(unprettifiedHtml).toContain(writtenRepresentationsOptions);
 				expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="inquiry">');
 			});
 		}

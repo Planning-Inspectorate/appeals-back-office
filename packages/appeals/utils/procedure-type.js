@@ -16,8 +16,10 @@ export const normaliseProcedureType = (procedureType) => {
 	if (
 		procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_1 ||
 		procedureType === APPEAL_CASE_PROCEDURE.WRITTEN_PART_2 ||
+		procedureType === APPEAL_CASE_PROCEDURE.WRITTEN ||
 		procedureType === PROCEDURE_TYPE_NAME.WRITTEN_PART_1 ||
-		procedureType === PROCEDURE_TYPE_NAME.WRITTEN_PART_2
+		procedureType === PROCEDURE_TYPE_NAME.WRITTEN_PART_2 ||
+		procedureType === PROCEDURE_TYPE_NAME.WRITTEN
 	) {
 		return APPEAL_CASE_PROCEDURE.WRITTEN;
 	}

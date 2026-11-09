@@ -410,7 +410,7 @@ describe('start-case', () => {
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Appeal procedure</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="appealProcedure" type="radio" value="written">'
+				'name="appealProcedure" type="radio" value="writtenPart2">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="appealProcedure" type="radio" value="hearing">'
@@ -456,7 +456,7 @@ describe('start-case', () => {
 			});
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="appealProcedure" type="radio" value="written">'
+				'name="appealProcedure" type="radio" value="writtenPart2">'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain(
 				'name="appealProcedure" type="radio" value="writtenPart1">'
@@ -528,7 +528,7 @@ describe('start-case', () => {
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Appeal procedure</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="appealProcedure" type="radio" value="written">'
+				'name="appealProcedure" type="radio" value="writtenPart2">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'name="appealProcedure" type="radio" value="hearing">'
@@ -586,7 +586,7 @@ describe('start-case', () => {
 
 					expect(unprettifiedHtml).toContain('Appeal procedure</h1>');
 					expect(unprettifiedHtml).toContain(
-						'name="appealProcedure" type="radio" value="written">'
+						'name="appealProcedure" type="radio" value="writtenPart2">'
 					);
 					expect(unprettifiedHtml).toContain(
 						'name="appealProcedure" type="radio" value="hearing" checked>'
@@ -651,7 +651,9 @@ describe('start-case', () => {
 			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
 			expect(unprettifiedHtml).toContain('Appeal procedure</h1>');
-			expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="written">');
+			expect(unprettifiedHtml).toContain(
+				'name="appealProcedure" type="radio" value="writtenPart2">'
+			);
 			expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="hearing">');
 			expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="inquiry">');
 			expect(unprettifiedHtml).not.toContain('checked');
@@ -857,7 +859,9 @@ describe('start-case', () => {
 
 				expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="hearing"');
 				expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="inquiry"');
-				expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="written"');
+				expect(unprettifiedHtml).toContain(
+					'name="appealProcedure" type="radio" value="writtenPart2"'
+				);
 				expect(unprettifiedHtml).toContain(
 					'name="appealProcedure" type="radio" value="writtenPart1"'
 				);

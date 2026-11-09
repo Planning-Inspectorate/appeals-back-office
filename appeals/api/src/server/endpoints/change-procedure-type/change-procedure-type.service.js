@@ -15,6 +15,7 @@ import {
 	APPEAL_REPRESENTATION_TYPE,
 	EVENT_TYPE,
 	FRONT_OFFICE_DASHBOARD_PATH_STUBS,
+	PROCEDURE_TYPE_KEY,
 	PROCEDURE_TYPE_NAME
 } from '@pins/appeals/constants/common.js';
 import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
@@ -173,7 +174,8 @@ export const changeProcedureToHearing = async (data, appealId, azureAdUserId = '
 			let existingInquiry;
 			if (
 				data.existingAppealProcedure === PROCEDURE_TYPE_NAME.WRITTEN_PART_2.toLowerCase() ||
-				data.existingAppealProcedure === PROCEDURE_TYPE_NAME.WRITTEN_PART_1.toLowerCase()
+				data.existingAppealProcedure === PROCEDURE_TYPE_NAME.WRITTEN_PART_1.toLowerCase() ||
+				data.existingAppealProcedure === PROCEDURE_TYPE_NAME.WRITTEN.toLowerCase()
 			) {
 				existingSiteVisit = await deleteSiteVisit(tx, appealId);
 			} else if (data.existingAppealProcedure === PROCEDURE_TYPE_NAME.INQUIRY.toLowerCase()) {
@@ -316,7 +318,8 @@ export const changeProcedureToInquiry = async (data, appealId, azureAdUserId = '
 				existingHearing = await deleteHearing(tx, appealId);
 			} else if (
 				data.existingAppealProcedure === PROCEDURE_TYPE_NAME.WRITTEN_PART_2.toLowerCase() ||
-				data.existingAppealProcedure === PROCEDURE_TYPE_NAME.WRITTEN_PART_1.toLowerCase()
+				data.existingAppealProcedure === PROCEDURE_TYPE_NAME.WRITTEN_PART_1.toLowerCase() ||
+				data.existingAppealProcedure === PROCEDURE_TYPE_NAME.WRITTEN.toLowerCase()
 			) {
 				existingSiteVisit = await deleteSiteVisit(tx, appealId);
 			}
@@ -372,17 +375,22 @@ export const buildChangeProcedureTypeMessage = (
 	appealProcedure,
 	existingAppealProcedure
 ) => {
-	const newProcedureLabel =
-		appealProcedure === 'written' ? 'written representations' : appealProcedure;
+	const newProcedureLabel = [
+		PROCEDURE_TYPE_KEY.WRITTEN,
+		PROCEDURE_TYPE_KEY.WRITTEN_PART_2
+	].includes(appealProcedure)
+		? 'written representations'
+		: appealProcedure;
 	let cancellationMessage;
 	switch (existingAppealProcedure) {
-		case 'hearing':
+		case PROCEDURE_TYPE_NAME.HEARING.toLowerCase():
 			cancellationMessage = appeal.hearing ? ' and cancelled your hearing' : '';
 			break;
-		case 'inquiry':
+		case PROCEDURE_TYPE_NAME.INQUIRY.toLowerCase():
 			cancellationMessage = appeal.inquiry ? ' and cancelled your inquiry' : '';
 			break;
-		case 'written':
+		case PROCEDURE_TYPE_NAME.WRITTEN.toLowerCase():
+		case PROCEDURE_TYPE_NAME.WRITTEN_PART_2.toLowerCase():
 			cancellationMessage = appeal.siteVisit ? ' and cancelled your site visit' : '';
 			break;
 		default:

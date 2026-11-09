@@ -90,20 +90,23 @@ export const GENERIC_APPEAL_TYPES = Object.freeze({
 export const PROCEDURE_TYPE_MAP = Object.freeze({
 	written: 'written representations',
 	writtenPart1: 'written representations (Part 1)',
+	writtenPart2: 'written representations (Part 2)',
 	hearing: 'a hearing',
 	inquiry: 'an inquiry'
 });
 
 export const PROCEDURE_TYPE_KEY = Object.freeze({
-	WRITTEN_PART_2: 'written',
+	WRITTEN_PART_2: 'writtenPart2',
 	WRITTEN_PART_1: 'writtenPart1',
+	WRITTEN: 'written',
 	HEARING: 'hearing',
 	INQUIRY: 'inquiry'
 });
 
 export const PROCEDURE_TYPE_NAME = Object.freeze({
-	WRITTEN_PART_2: 'Written',
+	WRITTEN_PART_2: 'Written Part 2',
 	WRITTEN_PART_1: 'Part 1',
+	WRITTEN: 'Written',
 	HEARING: 'Hearing',
 	INQUIRY: 'Inquiry'
 });
@@ -112,7 +115,8 @@ export const PROCEDURE_TYPE_ID_MAP = Object.freeze({
 	hearing: 1,
 	inquiry: 2,
 	written: 3,
-	writtenPart1: 4
+	writtenPart1: 4,
+	writtenPart2: 5
 });
 
 export const APPEAL_REPRESENTATION_TYPE = Object.freeze({
