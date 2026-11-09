@@ -418,7 +418,6 @@ export async function publish(req, res) {
 		appeal,
 		body: { inspectorName }
 	} = req;
-	console.log('###### IN HERE!!!');
 	/** @type {Record<string, import('./representations.service.js').PublishFunction>} */
 	const handlers = {
 		[APPEAL_CASE_STATUS.STATEMENTS]: representationService.publishStatements,
@@ -435,7 +434,6 @@ export async function publish(req, res) {
 	if (!currentAppealStatus) {
 		throw new BackOfficeAppError(`no status found for appeal ${appeal.id}`, 500);
 	}
-	console.log('###### 2 IN HERE!!!');
 
 	const publish = handlers[currentAppealStatus];
 	if (!publish) {
@@ -444,10 +442,8 @@ export async function publish(req, res) {
 			409
 		);
 	}
-	console.log('###### IN HERE 4!!!');
 	const updatedReps = await publish(appeal, azureAdUserId, req.notifyClient, inspectorName);
 
-	console.log('###### IN HERE 3!!!');
 	if (updatedReps.length > 0) {
 		/** @type {Record<string, string>} */
 		const replacements = {

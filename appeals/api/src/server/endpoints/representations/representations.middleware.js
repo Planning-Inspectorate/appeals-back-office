@@ -18,7 +18,6 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
  * @returns {boolean}
  */
 const canPublishIpCommentsAndStatements = (currentAppeal) => {
-	console.log('########### canPublishIpCommentsAndStatements');
 	const { representations = [], appealTimetable } = currentAppeal || {};
 	const { AWAITING_REVIEW } = APPEAL_REPRESENTATION_STATUS;
 	const { COMMENT, LPA_STATEMENT, RULE_6_PARTY_STATEMENT, APPELLANT_STATEMENT } =
