@@ -2,7 +2,7 @@
 import { appealData, appellantCaseDataNotValidated } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
-import { parseHtml } from '@pins/platform';
+import { parseHtml } from '@pins/platform/testing/html-parser.js';
 import nock from 'nock';
 import supertest from 'supertest';
 

@@ -2,7 +2,6 @@ import { validateAppeal } from '#appeals/appeal-details/appeal-details.middlewar
 import { deleteUncommittedDocumentFromSession } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import config from '#environment/config.js';
 import logger from '#lib/logger.js';
-import { installAuthMock } from '#testing/app/mocks/auth.js';
 import { APPEAL_START_RANGE } from '@pins/appeals/constants/common.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
@@ -30,6 +29,7 @@ const router = createRouter();
 // In development only, integrate with locally defined user groups
 
 if (config.authDisabled) {
+	const { installAuthMock } = await import('#testing/app/mocks/auth.js');
 	router.use(installAuthMock({ groups: config.authDisabledGroupIds }));
 }
 
