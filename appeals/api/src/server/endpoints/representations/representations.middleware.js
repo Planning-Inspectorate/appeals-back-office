@@ -1,3 +1,5 @@
+import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import representationRepository from '#repositories/representation.repository.js';
 import { currentStatus } from '#utils/current-status.js';
 import { dateIsPast } from '#utils/date-comparison.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
@@ -10,6 +12,74 @@ import { ERROR_REP_PUBLISH_BLOCKED } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {import('express').Request} Request */
+/** @typedef {import('express').Response} Response */
+/** @typedef {import('express').NextFunction} NextFunction */
+
+/**
+ * @param {string} status
+ * @returns {string[] | undefined}
+ */
+export const getRepresentationTypesToPublish = (status) => {
+	switch (status) {
+		case APPEAL_CASE_STATUS.STATEMENTS:
+			return [
+				APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
+				APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT,
+				APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_STATEMENT
+			];
+		case APPEAL_CASE_STATUS.FINAL_COMMENTS:
+			return [
+				APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT,
+				APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
+			];
+		case APPEAL_CASE_STATUS.EVIDENCE:
+			return [
+				APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
+				APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
+				APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
+			];
+		default:
+			return undefined;
+	}
+};
+
+/**
+ * Load appeal details after the initial partial lookup has identified current status.
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ * @returns {Promise<Response | void>}
+ */
+export const loadAppealForPublishing = async (req, res, next) => {
+	const representationTypes = getRepresentationTypesToPublish(currentStatus(req.appeal));
+
+	if (!representationTypes) {
+		return next();
+	}
+
+	return checkAppealExistsByIdAndAddPartialToRequest(
+		[
+			'appealStatus',
+			'appealType',
+			'representations',
+			'appealTimetable',
+			'childAppeals',
+			'procedureType',
+			'hearing',
+			'appellant',
+			'agent',
+			'lpa',
+			'address',
+			'inquiry',
+			'appealRule6Parties',
+			'appellantCase'
+		],
+		undefined,
+		representationTypes
+	)(req, res, next);
+};
 
 /**
  * Based on the required actions "shareIpCommentsAndLpaStatement" and "progressFromStatements" in the front end
@@ -17,22 +87,26 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
  * @param {Appeal} currentAppeal
  * @returns {boolean}
  */
-const canPublishIpCommentsAndStatements = (currentAppeal) => {
+const canPublishIpCommentsAndStatements = (
+	currentAppeal,
+	/** @type {boolean} */ hasIpCommentsAwaitingReview
+) => {
 	const { representations = [], appealTimetable } = currentAppeal || {};
 	const { AWAITING_REVIEW } = APPEAL_REPRESENTATION_STATUS;
-	const { COMMENT, LPA_STATEMENT, RULE_6_PARTY_STATEMENT, APPELLANT_STATEMENT } =
-		APPEAL_REPRESENTATION_TYPE;
+	const { LPA_STATEMENT, RULE_6_PARTY_STATEMENT, APPELLANT_STATEMENT } = APPEAL_REPRESENTATION_TYPE;
 
-	const representationCheckList = [COMMENT, LPA_STATEMENT];
+	const representationCheckList = [LPA_STATEMENT];
 	if (isFeatureActive(FEATURE_FLAG_NAMES.APPELLANT_STATEMENT)) {
 		representationCheckList.push(APPELLANT_STATEMENT);
 	}
 	representationCheckList.push(RULE_6_PARTY_STATEMENT);
 
-	const hasRepresentationsAwaitingReview = representations?.some(
-		({ status, representationType }) =>
-			representationCheckList.includes(representationType) && status === AWAITING_REVIEW
-	);
+	const hasRepresentationsAwaitingReview =
+		hasIpCommentsAwaitingReview ||
+		representations?.some(
+			({ status, representationType }) =>
+				representationCheckList.includes(representationType) && status === AWAITING_REVIEW
+		);
 
 	const today = new Date();
 
@@ -108,11 +182,20 @@ const canPublishProofOfEvidence = (currentAppeal) => {
 export const validateRepresentationsToPublish = async (req, res, next) => {
 	const status = currentStatus(req.appeal);
 	const { STATEMENTS, FINAL_COMMENTS, EVIDENCE } = APPEAL_CASE_STATUS;
+	const hasIpCommentsAwaitingReview = Boolean(
+		status === STATEMENTS &&
+		(await representationRepository.hasRepresentationsWithStatus(
+			Number(req.appeal.id),
+			[APPEAL_REPRESENTATION_TYPE.COMMENT],
+			APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+		))
+	);
 
 	if (
 		//@ts-ignore
 		![STATEMENTS, FINAL_COMMENTS, EVIDENCE].includes(status) ||
-		(status === STATEMENTS && canPublishIpCommentsAndStatements(req.appeal)) ||
+		(status === STATEMENTS &&
+			canPublishIpCommentsAndStatements(req.appeal, hasIpCommentsAwaitingReview)) ||
 		(status === FINAL_COMMENTS && canPublishFinalComments(req.appeal)) ||
 		(status === EVIDENCE && canPublishProofOfEvidence(req.appeal))
 	) {

@@ -51,6 +51,29 @@ router.get(
 		#swagger.tags = ['Appeal Details']
 		#swagger.path = '/appeals/{appealId}'
 		#swagger.description = Gets a single appeal by ID
+		#swagger.parameters['include'] = {
+			in: 'query',
+			type: 'string',
+			description: 'Comma-separated relations to include. Folders require folderStage or folderPaths; representations require representationTypes.'
+		}
+		#swagger.parameters['folderStage'] = {
+			in: 'query',
+			type: 'string',
+			description: 'Folder path prefix. Combined with folderPaths using OR.',
+			example: 'costs'
+		}
+		#swagger.parameters['representationTypes'] = {
+			in: 'query',
+			type: 'string',
+			description: 'Comma-separated representation types. Required when including representations.',
+			example: 'lpa_statement,comment'
+		}
+		#swagger.parameters['folderPaths'] = {
+			in: 'query',
+			type: 'string',
+			description: 'Comma-separated folder path prefixes. Combined with folderStage using OR.',
+			example: 'appeal-decision/caseDecision'
+		}
 		#swagger.parameters['azureAdUserId'] = {
 			in: 'header',
 			required: true,

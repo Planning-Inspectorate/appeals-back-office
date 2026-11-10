@@ -39,7 +39,11 @@ import {
 	setTimeInTimeZone
 } from '@pins/appeals/utils/business-days.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_CASE_STAGE,
+	APPEAL_CASE_STATUS,
+	APPEAL_DOCUMENT_TYPE
+} from '@planning-inspectorate/data-model';
 import { add, sub } from 'date-fns';
 import { capitalize } from 'lodash-es';
 import { request } from '../../../app-test.js';
@@ -64,6 +68,45 @@ describe('decision routes', () => {
 		jest.clearAllMocks();
 	});
 	describe('POST', () => {
+		test.each([
+			[
+				'/decision',
+				{ decisions: [{ decisionType: DECISION_TYPE_INSPECTOR, outcome: 'unexpected' }] },
+				400
+			],
+			['/decision/preview', { outcome: 'allowed' }, 200]
+		])('loads costs decision folders by path prefix for %s', async (path, body, status) => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				folders: undefined
+			});
+			databaseConnector.folder.findMany.mockResolvedValueOnce([]);
+
+			const response = await request
+				.post(`/appeals/${householdAppeal.id}${path}`)
+				.send(body)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toBe(status);
+			expect(databaseConnector.folder.findMany).toHaveBeenCalledWith({
+				where: {
+					caseId: householdAppeal.id,
+					OR: [
+						{
+							path: {
+								startsWith: `${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER}`
+							}
+						},
+						{
+							path: {
+								startsWith: `${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER}`
+							}
+						}
+					]
+				}
+			});
+		});
+
 		test('returns 400 when outcome is not expected', async () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);

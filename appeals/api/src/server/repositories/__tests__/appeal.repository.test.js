@@ -9,6 +9,84 @@ import appealRepository, {
 } from '../appeal.repository.js';
 
 describe('buildAppealInclude', () => {
+	it.each([undefined, [], [''], ['unknown'], ['comment', 'unknown'], 'comment', [1]])(
+		'rejects representations without valid types: %j',
+		(types) => {
+			expect(() => buildAppealInclude(['representations'], true, false, undefined, types)).toThrow(
+				'Including representations requires a non-empty list of valid representation types'
+			);
+		}
+	);
+
+	it('filters representations by type without changing the shared include map', () => {
+		expect(
+			buildAppealInclude(['representations', 'address'], true, false, undefined, [
+				'comment',
+				'lpa_statement'
+			])
+		).toEqual({
+			representations: { where: { representationType: { in: ['comment', 'lpa_statement'] } } },
+			address: true
+		});
+		expect(appealDetailsIncludeMap.representations).toBe(true);
+	});
+
+	it.each([undefined, {}, { stage: '' }, { paths: [] }, { paths: [''] }, { stage: 1 }])(
+		'rejects folders without a valid selector: %j',
+		(folderSelector) => {
+			expect(() => buildAppealInclude(['folders'], true, false, folderSelector)).toThrow(
+				'Including folders requires a folder selector'
+			);
+		}
+	);
+
+	it('accepts folders with a stage or path prefix', () => {
+		expect(buildAppealInclude(['folders'], true, false, { stage: 'costs' })).toEqual({
+			folders: true
+		});
+		expect(
+			buildAppealInclude(['folders'], true, false, {
+				paths: ['costs/appellantCosts']
+			})
+		).toEqual({ folders: true });
+	});
+
+	describe('getAppealById representation selection', () => {
+		beforeEach(() => {
+			jest.clearAllMocks();
+		});
+
+		it('rejects missing types before querying', async () => {
+			await expect(appealRepository.getAppealById(2, true, ['representations'])).rejects.toThrow(
+				'Including representations requires a non-empty list of valid representation types'
+			);
+			expect(databaseConnector.appeal.findUnique).not.toHaveBeenCalled();
+		});
+
+		it('passes type filtering to the database', async () => {
+			const appeal = { id: 2, representations: [{ id: 3, representationType: 'comment' }] };
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+
+			const result = await appealRepository.getAppealById(
+				2,
+				true,
+				['representations'],
+				true,
+				undefined,
+				['comment']
+			);
+
+			expect(databaseConnector.appeal.findUnique).toHaveBeenCalledWith({
+				where: { id: 2 },
+				include: {
+					appealType: { select: { key: true } },
+					representations: { where: { representationType: { in: ['comment'] } } }
+				}
+			});
+			expect(result).toBe(appeal);
+		});
+	});
+
 	it('throws error when selectedKeys is empty and selectAppealTypeKey is not provided', () => {
 		expect(() => buildAppealInclude([], true)).toThrow(
 			'Must provide at least one: selectedKeys or selectAppealTypeKey'
@@ -53,9 +131,74 @@ describe('buildAppealInclude', () => {
 	});
 });
 
+describe('getAppealById folder selection', () => {
+	beforeEach(() => {
+		jest.clearAllMocks();
+		databaseConnector.appeal.findUnique.mockResolvedValue({ id: 2 });
+		databaseConnector.folder.findMany.mockResolvedValue([]);
+	});
+
+	it('rejects unfiltered folder includes before querying', async () => {
+		await expect(appealRepository.getAppealById(2, true, ['folders'])).rejects.toThrow(
+			'Including folders requires a folder selector'
+		);
+		expect(databaseConnector.appeal.findUnique).not.toHaveBeenCalled();
+		expect(databaseConnector.folder.findMany).not.toHaveBeenCalled();
+	});
+
+	it('loads folders matching selected stage and path prefixes', async () => {
+		const folder = {
+			id: 1,
+			caseId: 2,
+			path: 'costs/appellantCostsApplication/extra-document'
+		};
+		databaseConnector.folder.findMany.mockResolvedValue([folder]);
+		databaseConnector.document.findMany.mockResolvedValue([]);
+
+		const appeal = await appealRepository.getAppealById(2, true, ['folders'], true, {
+			stage: 'costs',
+			paths: ['appeal-decision/caseDecision']
+		});
+
+		expect(databaseConnector.appeal.findUnique).toHaveBeenCalledWith({
+			where: { id: 2 },
+			include: { appealType: { select: { key: true } } }
+		});
+		expect(databaseConnector.folder.findMany).toHaveBeenCalledWith({
+			where: {
+				caseId: 2,
+				OR: [
+					{ path: { startsWith: 'costs' } },
+					{ path: { startsWith: 'appeal-decision/caseDecision' } }
+				]
+			}
+		});
+		expect(appeal.folders).toEqual([{ ...folder, documents: [] }]);
+	});
+});
+
 describe('getFoldersWithDocumentsAndVersions', () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
+	});
+
+	it.each([
+		['costs', [], [{ path: { startsWith: 'costs' } }]],
+		[
+			null,
+			['appeal-decision/caseDecision'],
+			[{ path: { startsWith: 'appeal-decision/caseDecision' } }]
+		]
+	])('filters folders in the database: %j, %j', async (stage, paths, filters) => {
+		databaseConnector.folder.findMany.mockResolvedValue([]);
+
+		await appealRepository.getFoldersWithDocumentsAndVersions(2, false, stage, paths);
+
+		expect(databaseConnector.folder.findMany).toHaveBeenCalledWith({
+			where: { caseId: 2, OR: filters }
+		});
+		expect(databaseConnector.document.findMany).not.toHaveBeenCalled();
+		expect(databaseConnector.documentVersion.findMany).not.toHaveBeenCalled();
 	});
 
 	it('limits version fetching to 5 visible documents when loadAllVersions = false', async () => {

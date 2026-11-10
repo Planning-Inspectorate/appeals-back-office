@@ -351,6 +351,82 @@ describe('Appeal detail routes', () => {
 	});
 	describe('/appeals/:appealId', () => {
 		describe('GET', () => {
+			test('requires types when representations are explicitly included', async () => {
+				const response = await request
+					.get(`/appeals/${householdAppeal.id}?include=representations`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toBe(400);
+				expect(response.body).toEqual({
+					errors: {
+						representationTypes:
+							'Including representations requires a non-empty list of valid representation types'
+					}
+				});
+				expect(databaseConnector.appeal.findUnique).not.toHaveBeenCalled();
+			});
+
+			test('passes representation types through API to the database', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...householdAppeal,
+					folders
+				});
+
+				const response = await request
+					.get(`/appeals/${householdAppeal.id}`)
+					.query({ include: 'representations', representationTypes: 'comment,lpa_statement' })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toBe(200);
+				expect(databaseConnector.appeal.findUnique).toHaveBeenCalledWith({
+					where: { id: householdAppeal.id },
+					include: {
+						appealType: { select: { key: true } },
+						representations: {
+							where: { representationType: { in: ['comment', 'lpa_statement'] } }
+						}
+					}
+				});
+			});
+
+			test('requires a folder selector when folders are explicitly included', async () => {
+				const response = await request
+					.get(`/appeals/${householdAppeal.id}?include=folders`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toBe(400);
+				expect(response.body).toEqual({
+					errors: {
+						folderSelector:
+							'Including folders requires a folder selector with a non-empty stage or path selector'
+					}
+				});
+				expect(databaseConnector.appeal.findUnique).not.toHaveBeenCalled();
+			});
+
+			test('passes folder path prefixes through API to the database', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...householdAppeal,
+					folders: undefined
+				});
+				databaseConnector.folder.findMany.mockResolvedValueOnce(folders);
+				databaseConnector.document.findMany.mockResolvedValueOnce([]);
+
+				const response = await request
+					.get(`/appeals/${householdAppeal.id}`)
+					.query({ include: 'folders', folderPaths: folders[0].path })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toBe(200);
+				expect(databaseConnector.folder.findMany).toHaveBeenCalledWith({
+					where: {
+						caseId: householdAppeal.id,
+						OR: [{ path: { startsWith: folders[0].path } }]
+					}
+				});
+				expect(response.body.decision).toEqual(householdAppealDto.decision);
+			});
+
 			test('gets a single household appeal', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue({

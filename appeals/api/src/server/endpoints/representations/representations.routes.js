@@ -1,4 +1,7 @@
-import { validateRepresentationsToPublish } from '#endpoints/representations/representations.middleware.js';
+import {
+	loadAppealForPublishing,
+	validateRepresentationsToPublish
+} from '#endpoints/representations/representations.middleware.js';
 import { checkAppealExistsByIdAndAddPartialToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { checkRepresentationExistsById } from '#middleware/check-representation-exists.js';
 import { asyncHandler } from '@pins/express';
@@ -251,22 +254,9 @@ router.post(
 		schema: { $ref: '#/components/schemas/RepResponse' }
 	}
 	*/
-	checkAppealExistsByIdAndAddPartialToRequest([
-		'appealStatus',
-		'appealType',
-		'representations',
-		'appealTimetable',
-		'childAppeals',
-		'procedureType',
-		'hearing',
-		'appellant',
-		'agent',
-		'lpa',
-		'address',
-		'inquiry',
-		'appealRule6Parties',
-		'appellantCase'
-	]),
+	// load appeal uses case status to vary representation lookup
+	checkAppealExistsByIdAndAddPartialToRequest([]),
+	loadAppealForPublishing,
 	validateRepresentationsToPublish,
 	asyncHandler(controller.publish)
 );
