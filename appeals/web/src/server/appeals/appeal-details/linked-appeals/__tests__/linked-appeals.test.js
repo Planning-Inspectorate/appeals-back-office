@@ -9,7 +9,7 @@ import {
 	LINK_APPEALS_CHANGE_LEAD_OPERATION,
 	LINK_APPEALS_UNLINK_OPERATION
 } from '@pins/appeals/constants/support.js';
-import { parseHtml } from '@pins/platform';
+import { parseHtml } from '@pins/platform/testing/html-parser.js';
 import nock from 'nock';
 import supertest from 'supertest';
 

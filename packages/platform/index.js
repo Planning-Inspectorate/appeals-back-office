@@ -1,9 +1,5 @@
 export * from './http/hooks.js';
 export * from './http/retry.js';
-// here
-export * from './testing/assets/assets.js';
-export * from './testing/fake.js';
-export * from './testing/html-parser.js';
 export * from './utils/date.js';
 export * from './utils/dotenv.js';
 export * from './utils/filter.js';

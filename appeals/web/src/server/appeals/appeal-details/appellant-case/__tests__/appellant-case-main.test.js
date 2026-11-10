@@ -22,7 +22,7 @@ import {
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
-import { parseHtml, parseHtmlSelectAll } from '@pins/platform';
+import { parseHtml, parseHtmlSelectAll } from '@pins/platform/testing/html-parser.js';
 import {
 	APPEAL_CASE_STAGE,
 	APPEAL_CASE_STATUS,

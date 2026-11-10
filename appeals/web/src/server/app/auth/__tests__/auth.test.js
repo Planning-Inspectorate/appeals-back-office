@@ -1,4 +1,4 @@
-import { parseHtml } from '@pins/platform';
+import { parseHtml } from '@pins/platform/testing/html-parser.js';
 import supertest from 'supertest';
 import {
 	ConfidentialClientApplication,

@@ -14,7 +14,7 @@ import {
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
-import { parseHtml } from '@pins/platform';
+import { parseHtml } from '@pins/platform/testing/html-parser.js';
 
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import nock from 'nock';

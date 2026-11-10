@@ -1,7 +1,7 @@
 import { appealData } from '#testing/appeals/appeals.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { parseHtml } from '@pins/platform';
+import { parseHtml } from '@pins/platform/testing/html-parser.js';
 import nock from 'nock';
 import supertest from 'supertest';
 

@@ -21,7 +21,7 @@ import {
 	AUDIT_TRAIL_LPAQ_IMPORT_MSG,
 	AUDIT_TRIAL_RULE_6_PARTY_ID
 } from '@pins/appeals/constants/support.js';
-import { parseHtml } from '@pins/platform';
+import { parseHtml } from '@pins/platform/testing/html-parser.js';
 import { APPEAL_DOCUMENT_TYPE, APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
 import nock from 'nock';
 import supertest from 'supertest';

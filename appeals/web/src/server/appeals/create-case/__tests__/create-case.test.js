@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { createTestEnvironment } from '#testing/index.js';
 import { GENERIC_APPEAL_TYPES } from '@pins/appeals/constants/common.js';
-import { parseHtml } from '@pins/platform';
+import { parseHtml } from '@pins/platform/testing/html-parser.js';
 import supertest from 'supertest';
 
 const { app, installMockApi, teardown } = createTestEnvironment();

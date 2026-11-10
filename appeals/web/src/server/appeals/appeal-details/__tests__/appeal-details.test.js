@@ -37,7 +37,7 @@ import {
 	APPEAL_TYPE,
 	PROCEDURE_TYPE_NAME
 } from '@pins/appeals/constants/common.js';
-import { parseHtml } from '@pins/platform';
+import { parseHtml } from '@pins/platform/testing/html-parser.js';
 import {
 	APPEAL_CASE_DECISION_OUTCOME,
 	APPEAL_CASE_PROCEDURE,

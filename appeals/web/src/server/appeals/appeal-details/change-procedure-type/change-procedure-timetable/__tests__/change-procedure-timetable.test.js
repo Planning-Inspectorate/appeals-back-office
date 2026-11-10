@@ -2,7 +2,7 @@ import { appealData as baseAppealData } from '#testing/app/fixtures/referencedat
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
 import { APPEAL_TYPE, PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common';
-import { parseHtml } from '@pins/platform';
+import { parseHtml } from '@pins/platform/testing/html-parser.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import nock from 'nock';
 import supertest from 'supertest';
