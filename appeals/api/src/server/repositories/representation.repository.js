@@ -30,6 +30,25 @@ const checkRepresentationExistsById = (id) => {
 };
 
 /**
+ * @param {number} appealId
+ * @param {RepresentationModel['representationType'][]} representationTypes
+ * @param {RepresentationModel['status']} status
+ * @returns {Promise<boolean>}
+ */
+const hasRepresentationsWithStatus = async (appealId, representationTypes, status) => {
+	const representation = await databaseConnector.representation.findFirst({
+		where: {
+			appealId,
+			representationType: { in: representationTypes },
+			status
+		},
+		select: { id: true }
+	});
+
+	return Boolean(representation?.id);
+};
+
+/**
  * @param {number} id
  */
 const getById = (id) => {
@@ -501,5 +520,6 @@ export default {
 	addAttachments,
 	moveRepresentationAttachmentDocuments,
 	updateRejectionReasons,
-	getRepresentationForDocument
+	getRepresentationForDocument,
+	hasRepresentationsWithStatus
 };

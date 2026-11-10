@@ -204,6 +204,41 @@
 						}
 					},
 					{
+						"name": "include",
+						"in": "query",
+						"description": "Comma-separated relations to include. Folders require folderStage or folderPaths; representations require representationTypes.",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "folderStage",
+						"in": "query",
+						"description": "Folder path prefix. Combined with folderPaths using OR.",
+						"example": "costs",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "representationTypes",
+						"in": "query",
+						"description": "Comma-separated representation types. Required when including representations.",
+						"example": "lpa_statement,comment",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "folderPaths",
+						"in": "query",
+						"description": "Comma-separated folder path prefixes. Combined with folderStage using OR.",
+						"example": "appeal-decision/caseDecision",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
 						"name": "azureAdUserId",
 						"in": "header",
 						"required": true,

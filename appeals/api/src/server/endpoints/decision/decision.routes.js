@@ -3,6 +3,7 @@ import {
 	checkAppealExistsByIdAndAddPartialToRequest
 } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
+import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { Router as createRouter } from 'express';
 import {
 	patchCaseDecisionOutcomeDate,
@@ -47,17 +48,25 @@ router.post(
 			#swagger.responses[400] = {}
 			#swagger.responses[404] = {}
 	 */
-	checkAppealExistsByIdAndAddPartialToRequest([
-		'appealStatus',
-		'address',
-		'appellant',
-		'agent',
-		'lpa',
-		'folders',
-		'appealType',
-		'childAppeals',
-		'appealRule6Parties'
-	]),
+	checkAppealExistsByIdAndAddPartialToRequest(
+		[
+			'appealStatus',
+			'address',
+			'appellant',
+			'agent',
+			'lpa',
+			'folders',
+			'appealType',
+			'childAppeals',
+			'appealRule6Parties'
+		],
+		{
+			paths: [
+				`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER}`,
+				`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER}`
+			]
+		}
+	),
 	asyncHandler(postDecisionPreview)
 );
 
@@ -85,17 +94,25 @@ router.post(
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
 	 */
-	checkAppealExistsByIdAndAddPartialToRequest([
-		'appealStatus',
-		'address',
-		'appellant',
-		'agent',
-		'lpa',
-		'folders',
-		'appealType',
-		'childAppeals',
-		'appealRule6Parties'
-	]),
+	checkAppealExistsByIdAndAddPartialToRequest(
+		[
+			'appealStatus',
+			'address',
+			'appellant',
+			'agent',
+			'lpa',
+			'folders',
+			'appealType',
+			'childAppeals',
+			'appealRule6Parties'
+		],
+		{
+			paths: [
+				`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER}`,
+				`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER}`
+			]
+		}
+	),
 	getDecisionsValidator,
 	getDecisionTypeValidator,
 	getOutcomeValidator,

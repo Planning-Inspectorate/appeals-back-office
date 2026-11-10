@@ -1,6 +1,14 @@
 import appealRepository from '#repositories/appeal.repository.js';
 import { isAppealEnabled } from '#utils/feature-flags-appeal-types.js';
 import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
+import {
+	FOLDER_SELECTOR_ERROR,
+	isValidFolderSelector
+} from '@pins/appeals/utils/folder-selector.js';
+import {
+	REPRESENTATION_SELECTOR_ERROR,
+	isValidRepresentationTypes
+} from '@pins/appeals/utils/representation-selector.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -33,10 +41,12 @@ export const checkAppealExistsByCaseReferenceAndAddToRequest = async (req, res, 
  * @typedef {import('#repositories/appeal.repository.js').appealDetailsInclude} AppealDetailsInclude
  *
  * @param {Array<keyof typeof import('#repositories/appeal.repository.js').appealDetailsIncludeMap>} [selectedKeys=[]]
+ * @param {import('@pins/appeals/utils/folder-selector.js').FolderSelector} [folderSelector]
+ * @param {string[]} [representationTypes]
  * @returns {(req: Request, res: Response, next: NextFunction) => Promise<Response | void>}
  */
 export const checkAppealExistsByIdAndAddPartialToRequest =
-	(selectedKeys = []) =>
+	(selectedKeys = [], folderSelector, representationTypes) =>
 	async (req, res, next) => {
 		const {
 			params: { appealId }
@@ -63,6 +73,28 @@ export const checkAppealExistsByIdAndAddPartialToRequest =
 			includeDetails = true;
 		}
 
+		const selector = folderSelector ?? {
+			stage: req.query.folderStage,
+			paths:
+				typeof req.query.folderPaths === 'string'
+					? req.query.folderPaths.split(',')
+					: req.query.folderPaths
+		};
+		if (getAppealKeys.includes('folders') && !isValidFolderSelector(selector)) {
+			return res.status(400).send({ errors: { folderSelector: FOLDER_SELECTOR_ERROR } });
+		}
+
+		const types =
+			representationTypes ??
+			(typeof req.query.representationTypes === 'string'
+				? req.query.representationTypes.split(',')
+				: req.query.representationTypes);
+		if (getAppealKeys.includes('representations') && !isValidRepresentationTypes(types)) {
+			return res.status(400).send({
+				errors: { representationTypes: REPRESENTATION_SELECTOR_ERROR }
+			});
+		}
+
 		let appeal;
 
 		if (includeDetails && !selectAppealTypeKey) {
@@ -72,7 +104,9 @@ export const checkAppealExistsByIdAndAddPartialToRequest =
 				Number(appealId),
 				includeDetails,
 				getAppealKeys,
-				selectAppealTypeKey
+				selectAppealTypeKey,
+				isValidFolderSelector(selector) ? selector : undefined,
+				isValidRepresentationTypes(types) ? types : undefined
 			);
 		}
 

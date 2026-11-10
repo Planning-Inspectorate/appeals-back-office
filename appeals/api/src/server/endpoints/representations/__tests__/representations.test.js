@@ -2381,6 +2381,7 @@ describe('/appeals/:id/reps', () => {
 
 			test('400 if any ip comments or any lpa statements are awaiting review', async () => {
 				mockS78Appeal.representations = appealS78.representations;
+				databaseConnector.representation.findFirst.mockResolvedValueOnce({ id: 1 });
 				databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
 
 				const response = await request

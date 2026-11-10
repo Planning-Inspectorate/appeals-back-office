@@ -1,5 +1,13 @@
 import { areIdParamsValid } from '#lib/validators/id-param.validator.js';
 import {
+	FOLDER_SELECTOR_ERROR,
+	isValidFolderSelector
+} from '@pins/appeals/utils/folder-selector.js';
+import {
+	REPRESENTATION_SELECTOR_ERROR,
+	isValidRepresentationTypes
+} from '@pins/appeals/utils/representation-selector.js';
+import {
 	checkAppealExists,
 	deprecatedGetAppealDetailsFromId,
 	getAppealDetailsFromId,
@@ -45,11 +53,26 @@ export const validateAppeal = async (req, res, next) => {
 /**
  *
  * @param {Array<string>} [keysToInclude=[]]
+ * @param {import('@pins/appeals/utils/folder-selector.js').FolderSelector} [folderSelector]
+ * @param {string[]} [representationTypes]
  * @returns {import("express").RequestHandler}
  */
-export const validateAppealWithInclude =
-	(keysToInclude = []) =>
-	async (req, res, next) => {
+export const validateAppealWithInclude = (
+	keysToInclude = [],
+	folderSelector,
+	representationTypes
+) => {
+	if (keysToInclude.includes('folders') && !isValidFolderSelector(folderSelector)) {
+		throw new Error(FOLDER_SELECTOR_ERROR);
+	}
+	if (
+		keysToInclude.includes('representations') &&
+		!isValidRepresentationTypes(representationTypes)
+	) {
+		throw new Error(REPRESENTATION_SELECTOR_ERROR);
+	}
+
+	return async (req, res, next) => {
 		const { appealId, caseId } = req.params;
 
 		if (!areIdParamsValid(appealId || caseId)) {
@@ -63,7 +86,13 @@ export const validateAppealWithInclude =
 		const include = keysToInclude.join(',');
 
 		try {
-			const appeal = await getAppealDetailsFromId(req.apiClient, appealId || caseId, include);
+			const appeal = await getAppealDetailsFromId(
+				req.apiClient,
+				appealId || caseId,
+				include,
+				folderSelector,
+				representationTypes
+			);
 			if (!appeal) {
 				return res.status(404).render('app/404.njk');
 			}
@@ -78,6 +107,7 @@ export const validateAppealWithInclude =
 			}
 		}
 	};
+};
 
 /**
  * @type {import("express").RequestHandler}

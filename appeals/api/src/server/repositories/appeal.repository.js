@@ -4,6 +4,14 @@ import { isLinkedAppealsActive } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
 import { MAX_VISIBLE_DOCUMENTS_IN_SUMMARY } from '@pins/appeals/constants/common.js';
 import {
+	FOLDER_SELECTOR_ERROR,
+	isValidFolderSelector
+} from '@pins/appeals/utils/folder-selector.js';
+import {
+	REPRESENTATION_SELECTOR_ERROR,
+	isValidRepresentationTypes
+} from '@pins/appeals/utils/representation-selector.js';
+import {
 	APPEAL_CASE_STAGE,
 	APPEAL_CASE_STATUS,
 	APPEAL_DOCUMENT_TYPE
@@ -338,12 +346,16 @@ export const appealDetailsIncludeMap = /** @type {Object} */ {
  * @param {K[]} selectedKeys
  * @param {boolean} includeDetails
  * @param {boolean} selectAppealTypeKey
+ * @param {import('@pins/appeals/utils/folder-selector.js').FolderSelector} [folderSelector]
+ * @param {string[]} [representationTypes]
  * @returns {Partial<import('#db-client/models.ts').AppealInclude> | null}
  */
 export const buildAppealInclude = (
 	selectedKeys = [],
 	includeDetails = true,
-	selectAppealTypeKey = false
+	selectAppealTypeKey = false,
+	folderSelector,
+	representationTypes
 ) => {
 	if (!includeDetails) {
 		if (selectAppealTypeKey) {
@@ -362,7 +374,19 @@ export const buildAppealInclude = (
 	/** @type {Partial<import('#db-client/models.ts').AppealInclude>} */
 	let include = {};
 	for (const key of selectedKeys) {
-		include[key] = appealDetailsIncludeMap[key];
+		if (key === 'folders' && !isValidFolderSelector(folderSelector)) {
+			throw new Error(FOLDER_SELECTOR_ERROR);
+		}
+		if (key === 'representations') {
+			if (!isValidRepresentationTypes(representationTypes)) {
+				throw new Error(REPRESENTATION_SELECTOR_ERROR);
+			}
+			include.representations = {
+				where: { representationType: { in: representationTypes } }
+			};
+		} else {
+			include[key] = appealDetailsIncludeMap[key];
+		}
 	}
 
 	if (selectAppealTypeKey && !selectedKeys.some((key) => key === 'appealType')) {
@@ -385,10 +409,25 @@ export const buildAppealInclude = (
  * @param {boolean} [includeDetails]
  * @param {K[]} selectedKeys
  * @param {boolean} [selectAppealTypeKey]
+ * @param {import('@pins/appeals/utils/folder-selector.js').FolderSelector} [folderSelector]
+ * @param {string[]} [representationTypes]
  * @returns {Promise<Appeal|undefined>}
  */
-const getAppealById = async (id, includeDetails = true, selectedKeys = [], selectAppealTypeKey) => {
-	const include = buildAppealInclude(selectedKeys, includeDetails, selectAppealTypeKey);
+const getAppealById = async (
+	id,
+	includeDetails = true,
+	selectedKeys = [],
+	selectAppealTypeKey,
+	folderSelector,
+	representationTypes
+) => {
+	const include = buildAppealInclude(
+		selectedKeys,
+		includeDetails,
+		selectAppealTypeKey,
+		folderSelector,
+		representationTypes
+	);
 
 	const includeFolders = include && include.folders;
 	if (include && 'folders' in include) {
@@ -404,14 +443,14 @@ const getAppealById = async (id, includeDetails = true, selectedKeys = [], selec
 	if (appeal) {
 		//@ts-ignore
 		if (includeFolders && !appeal.folders) {
-			if (process.env.NODE_ENV === 'test') {
-				// @ts-ignore
-				appeal.folders = [];
-			} else {
-				const folders = await getFoldersWithDocumentsAndVersions(id);
-				// @ts-ignore
-				appeal.folders = folders;
-			}
+			const folders = await getFoldersWithDocumentsAndVersions(
+				id,
+				false,
+				folderSelector?.stage,
+				folderSelector?.paths
+			);
+			// @ts-ignore
+			appeal.folders = folders;
 		}
 		// @ts-ignore
 		return appeal;
@@ -1017,28 +1056,24 @@ const getFoldersWithDocumentsAndVersions = async (
 	if (!databaseConnector.folder) {
 		return [];
 	}
-	const folders = await databaseConnector.folder.findMany({
-		where: { caseId }
+	/** @type {import('#db-client/models.ts').FolderWhereInput[]} */
+	const pathFilters = [];
+	if (includeStage) {
+		pathFilters.push({ path: { startsWith: includeStage } });
+	}
+	for (const path of includePaths) {
+		pathFilters.push({ path: { startsWith: path } });
+	}
+	const filteredFolders = await databaseConnector.folder.findMany({
+		where: {
+			caseId,
+			...(pathFilters.length ? { OR: pathFilters } : {})
+		}
 	});
 
-	if (!folders || folders.length === 0) {
+	if (!filteredFolders || filteredFolders.length === 0) {
 		return [];
 	}
-
-	const filteredFolders = folders.filter((folder) => {
-		const hasStage = !!includeStage;
-		const hasPaths = includePaths?.length > 0;
-
-		if (!hasStage && !hasPaths) {
-			return true;
-		}
-
-		const matchesStage = hasStage && folder.path.startsWith(includeStage);
-
-		const matchesPath = hasPaths && includePaths.some((path) => folder.path.startsWith(path));
-
-		return matchesStage || matchesPath;
-	});
 
 	if (!databaseConnector.document) {
 		return filteredFolders.map((f) => ({ ...f, documents: [] }));
