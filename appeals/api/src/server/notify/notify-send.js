@@ -35,15 +35,66 @@ export const nunjucksEnv = nunjucks.configure(templatesDir, {
  * @property {string | null | undefined} recipientEmail
  * @property {Personalisation} personalisation
  * @property {string|undefined} [azureAdUserId]
-
+ * @property {any} [appeal]
  */
 
 /**
+ * @param {Appeal | null} [appeal]
+ * @returns {boolean | null}
+ */
+const resolveSuppression = (appeal) => {
+	if (appeal?.suppressNotifications === true) return true;
+	if (appeal?.suppressNotifications === false) return false;
+	if (appeal?.appealType?.suppressNotifications === true) return true;
+	if (appeal?.appealType?.suppressNotifications === false) return false;
+	return null;
+};
+
+/**
+ * @param {Appeal | null} [appeal]
+ * @param {string | null} [appealReference]
+ * @param {import('#db-client/client.ts').PrismaClient | any} [prismaClient]
+ * @returns {Promise<boolean>}
+ */
+export const isNotificationSuppressed = async (appeal, appealReference, prismaClient) => {
+	const memoryCheck = resolveSuppression(appeal);
+	if (memoryCheck !== null) return memoryCheck;
+
+	if (prismaClient && appealReference) {
+		try {
+			const appealRecord = await prismaClient.appeal.findUnique({
+				where: { reference: appealReference },
+				select: {
+					suppressNotifications: true,
+					appealType: {
+						select: {
+							suppressNotifications: true
+						}
+					}
+				}
+			});
+
+			const dbCheck = resolveSuppression(appealRecord);
+			if (dbCheck !== null) return dbCheck;
+		} catch (error) {
+			logger.error(
+				error,
+				`Failed to resolve notification suppression for appeal ${appealReference}`
+			);
+			throw error;
+		}
+	}
+
+	return false;
+};
+
+/**
  * @param {NotifySend} options
- * @returns {Promise<void>}
+ * @returns {Promise<boolean>}
  */
 export const notifySend = async (options) => {
-	const { templateName, notifyClient, recipientEmail, personalisation, azureAdUserId } = options;
+	const { templateName, notifyClient, recipientEmail, personalisation, azureAdUserId, appeal } =
+		options;
 	if (!templateName) {
 		throw new Error(
 			stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
@@ -51,33 +102,39 @@ export const notifySend = async (options) => {
 			])
 		);
 	}
+	if (!personalisation || !personalisation.appeal_reference_number) {
+		throw new Error(ERROR_NOTIFICATION_PERSONALISATION);
+	}
+
+	const appealReference = String(personalisation.appeal_reference_number);
+	const prismaClient = (await import('#utils/database-connector.js')).databaseConnector;
+
+	const suppressed = await isNotificationSuppressed(appeal, appealReference, prismaClient);
+	if (suppressed) {
+		logger.info(
+			{ appealReference, templateName },
+			'Notification suppressed by appeal/appealType configuration.'
+		);
+		return false;
+	}
+
 	if (!recipientEmail) {
 		throw new Error(ERROR_NO_RECIPIENT_EMAIL);
-	}
-	if (!personalisation.appeal_reference_number) {
-		throw new Error(ERROR_NOTIFICATION_PERSONALISATION);
 	}
 	if (!personalisation.front_office_url) {
 		personalisation.front_office_url = config.frontOffice.url;
 	}
 
-	const appealReference = String(personalisation.appeal_reference_number);
 	const fingerprint = `${appealReference}-${templateName}-${recipientEmail}`;
 
 	if (process.env.NODE_ENV !== 'test') {
 		if (emailRequestCache.has(fingerprint)) {
 			logger.info('Blocking duplicate.');
-			return;
+			return false;
 		}
 		emailRequestCache.add(fingerprint);
 		setTimeout(() => emailRequestCache.delete(fingerprint), 2000);
 	}
-
-	if (!personalisation.front_office_url) {
-		personalisation.front_office_url = config.frontOffice.url;
-	}
-
-	const prismaClient = (await import('#utils/database-connector.js')).databaseConnector;
 
 	let existingNotification;
 
@@ -113,7 +170,7 @@ export const notifySend = async (options) => {
 
 	if (content === existingNotification?.message) {
 		logger.info({ appealReference, templateName }, 'Blocked: Identical email found in 30s window.');
-		return;
+		return false;
 	}
 
 	const subject = renderTemplate(`${templateName}.subject.md`, personalisation);
@@ -148,6 +205,7 @@ export const notifySend = async (options) => {
 				]
 			});
 		}
+		return true;
 	} catch (error) {
 		logger.error(error);
 		throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL, { cause: error });

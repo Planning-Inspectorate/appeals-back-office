@@ -5,6 +5,27 @@ import {
 	getAppealAuditNotifications,
 	getAppealNotifications
 } from '#repositories/appeal-notification.repository.js';
+import appealRepository from '#repositories/appeal.repository.js';
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export const patchNotifySuppression = async (req, res) => {
+	const appealId = Number(req.params.appealId);
+	const { suppressNotifications } = req.body;
+
+	const updated = await appealRepository.setAppealNotifySuppression(
+		appealId,
+		suppressNotifications
+	);
+
+	return res.status(200).send({
+		id: updated.id,
+		suppressNotifications: updated.suppressNotifications
+	});
+};
 
 /**
  * @param {Request} req

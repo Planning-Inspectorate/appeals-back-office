@@ -3167,8 +3167,16 @@ describe('appeal timetables routes', () => {
 							caseStartedDate: undefined
 						};
 
-						test('start a generic appeal timetable with blank timetable when no dates provided and sends no notifies', async () => {
-							databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+						test('start a generic appeal timetable with blank timetable when no dates provided, delegating to notifySend and suppressing email dispatch', async () => {
+							mockNotifySend.useRealNotifySend = true;
+							databaseConnector.appeal.findUnique.mockResolvedValue({
+								...appeal,
+								suppressNotifications: null,
+								appealType: {
+									...appeal.appealType,
+									suppressNotifications: true
+								}
+							});
 							// @ts-ignore
 							databaseConnector.user.upsert.mockResolvedValue({
 								id: 1,
@@ -3191,11 +3199,22 @@ describe('appeal timetables routes', () => {
 								include: { appeal: true }
 							});
 
-							expect(mockNotifySend).not.toHaveBeenCalled();
+							// Timetable workflow dispatches notifications to notifySend; suppression is handled downstream by notifySend
+							expect(mockNotifySend).toHaveBeenCalledTimes(2);
+							expect(global.mockSendEmail).not.toHaveBeenCalled();
+							expect(databaseConnector.appealNotification.createMany).not.toHaveBeenCalled();
 						});
 
-						test('start a generic appeal timetable with custom timetable dates when provided and sends no notifies', async () => {
-							databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+						test('start a generic appeal timetable with custom timetable dates when provided, delegating to notifySend and suppressing email dispatch', async () => {
+							mockNotifySend.useRealNotifySend = true;
+							databaseConnector.appeal.findUnique.mockResolvedValue({
+								...appeal,
+								suppressNotifications: null,
+								appealType: {
+									...appeal.appealType,
+									suppressNotifications: true
+								}
+							});
 							// @ts-ignore
 							databaseConnector.user.upsert.mockResolvedValue({
 								id: 1,
@@ -3222,7 +3241,10 @@ describe('appeal timetables routes', () => {
 								include: { appeal: true }
 							});
 
-							expect(mockNotifySend).not.toHaveBeenCalled();
+							// Timetable workflow dispatches notifications to notifySend; suppression is handled downstream by notifySend
+							expect(mockNotifySend).toHaveBeenCalledTimes(2);
+							expect(global.mockSendEmail).not.toHaveBeenCalled();
+							expect(databaseConnector.appealNotification.createMany).not.toHaveBeenCalled();
 						});
 					});
 

@@ -772,14 +772,18 @@ describe('appellant cases routes', () => {
 				}
 			);
 
-			test('updates appellant case without sending notify emails or requiring recipient email when validation outcome is Incomplete for generic appeal', async () => {
+			test('updates appellant case for generic appeal when validation outcome is Incomplete without requiring recipient email, delegating notifications to notifySend and suppressing email dispatch', async () => {
+				mockNotifySend.useRealNotifySend = true;
+
 				const genericAppeal = {
 					...householdAppealAppellantCaseIncomplete,
 					id: 160,
 					reference: '6000123',
+					suppressNotifications: null,
 					appealType: {
 						key: APPEAL_CASE_TYPE.TPO,
-						type: 'Tree preservation order'
+						type: 'Tree preservation order',
+						suppressNotifications: true
 					},
 					appellant: null,
 					agent: null,
@@ -808,7 +812,10 @@ describe('appellant cases routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
-				expect(mockNotifySend).not.toHaveBeenCalled();
+				// Validation workflow dispatches notifications to notifySend; suppression is handled downstream by notifySend
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+				expect(global.mockSendEmail).not.toHaveBeenCalled();
+				expect(databaseConnector.appealNotification.createMany).not.toHaveBeenCalled();
 			});
 
 			test('updates appellant case when the validation outcome is Invalid with reason text', async () => {
@@ -1114,14 +1121,18 @@ describe('appellant cases routes', () => {
 				}
 			);
 
-			test('updates appellant case without sending notify emails or requiring recipient email when validation outcome is Invalid for generic appeal', async () => {
+			test('updates appellant case for generic appeal when validation outcome is Invalid without requiring recipient email, delegating notifications to notifySend and suppressing email dispatch', async () => {
+				mockNotifySend.useRealNotifySend = true;
+
 				const genericAppeal = {
 					...householdAppealAppellantCaseInvalid,
 					id: 160,
 					reference: '6000123',
+					suppressNotifications: null,
 					appealType: {
 						key: APPEAL_CASE_TYPE.TPO,
-						type: 'Tree preservation order'
+						type: 'Tree preservation order',
+						suppressNotifications: true
 					},
 					appellant: null,
 					agent: null,
@@ -1149,7 +1160,10 @@ describe('appellant cases routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
-				expect(mockNotifySend).not.toHaveBeenCalled();
+				// Validation workflow dispatches notifications to notifySend; suppression is handled downstream by notifySend
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				expect(global.mockSendEmail).not.toHaveBeenCalled();
+				expect(databaseConnector.appealNotification.createMany).not.toHaveBeenCalled();
 			});
 
 			test.each([
@@ -1298,14 +1312,18 @@ describe('appellant cases routes', () => {
 				}
 			);
 
-			test('updates appellant case without sending notify emails or requiring recipient email when validation outcome is Valid for generic appeal', async () => {
+			test('updates appellant case for generic appeal when validation outcome is Valid without requiring recipient email, delegating notifications to notifySend and suppressing email dispatch', async () => {
+				mockNotifySend.useRealNotifySend = true;
+
 				const genericAppeal = {
 					...householdAppeal,
 					id: 160,
 					reference: '6000123',
+					suppressNotifications: null,
 					appealType: {
 						key: APPEAL_CASE_TYPE.TPO,
-						type: 'Tree preservation order'
+						type: 'Tree preservation order',
+						suppressNotifications: true
 					},
 					appellant: null,
 					agent: null,
@@ -1352,7 +1370,10 @@ describe('appellant cases routes', () => {
 						valid: true
 					}
 				});
-				expect(mockNotifySend).not.toHaveBeenCalled();
+				// Validation workflow dispatches notifications to notifySend; suppression is handled downstream by notifySend
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+				expect(global.mockSendEmail).not.toHaveBeenCalled();
+				expect(databaseConnector.appealNotification.createMany).not.toHaveBeenCalled();
 			});
 
 			test('updates appellant case and sends notify emails for valid enforcement notice appeal', async () => {
