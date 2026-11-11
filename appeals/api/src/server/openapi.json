@@ -6891,6 +6891,110 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/notify-suppression": {
+			"patch": {
+				"tags": ["Notifications"],
+				"description": "Sets or overrides notification suppression on an individual appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Returns updated appeal notification suppression status",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "number",
+											"example": 1
+										},
+										"suppressNotifications": {
+											"type": "boolean",
+											"example": true
+										}
+									},
+									"xml": {
+										"name": "main"
+									}
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "number",
+											"example": 1
+										},
+										"suppressNotifications": {
+											"type": "boolean",
+											"example": true
+										}
+									},
+									"xml": {
+										"name": "main"
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Notification suppression override (true to suppress, false to force send, null to inherit)",
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"suppressNotifications": {
+										"type": "boolean",
+										"nullable": true
+									}
+								},
+								"required": ["suppressNotifications"]
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"suppressNotifications": {
+										"type": "boolean",
+										"nullable": true
+									}
+								},
+								"required": ["suppressNotifications"]
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/hearing/{hearingId}": {
 			"get": {
 				"tags": ["Hearing Details"],
@@ -11477,6 +11581,10 @@
 						"id": {
 							"type": "number",
 							"example": 1
+						},
+						"suppressNotifications": {
+							"type": "boolean",
+							"example": false
 						}
 					}
 				},

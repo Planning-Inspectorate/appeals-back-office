@@ -404,6 +404,7 @@ export const ERROR_MAX_LENGTH_CHARACTERS = 'must be {replacement0} characters or
 export const ERROR_MUST_BE_ARRAY_OF_NUMBERS = 'must be an array of numbers';
 export const ERROR_MUST_BE_ARRAY_OF_STRINGS = 'must be an array of strings';
 export const ERROR_MUST_BE_BOOLEAN = 'must be a boolean';
+export const ERROR_MUST_BE_BOOLEAN_OR_NULL = 'must be a boolean or null';
 export const ERROR_MUST_BE_BUSINESS_DAY = 'must be a business day';
 export const ERROR_MUST_BE_CORRECT_DATE_FORMAT = `must be a real date and in the format ${DEFAULT_DATE_FORMAT_DATABASE}`;
 export const ERROR_MUST_BE_CORRECT_TIME_FORMAT = 'must be a valid time and in the format hh:mm';

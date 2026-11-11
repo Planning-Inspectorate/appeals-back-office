@@ -57,6 +57,7 @@ describe('decision routes', () => {
 	beforeEach(() => {
 		// @ts-ignore
 		databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+		databaseConnector.representation.findMany.mockResolvedValue([]);
 		databaseConnector.user.upsert.mockResolvedValue({
 			id: 1,
 			azureAdUserId
@@ -1485,6 +1486,7 @@ describe('decision routes', () => {
 				.set('azureAdUserId', azureAdUserId);
 
 			expect(response.status).toEqual(201);
+			// Generic appeal fixture has no appellant, agent, or LPA email, so notifySend is not invoked
 			expect(mockNotifySend).not.toHaveBeenCalled();
 			expect(databaseConnector.appealStatus.create).toHaveBeenCalledWith({
 				data: expect.objectContaining({

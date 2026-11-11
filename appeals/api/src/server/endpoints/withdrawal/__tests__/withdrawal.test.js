@@ -191,12 +191,16 @@ describe('appeal withdrawal routes', () => {
 
 			expect(response.status).toEqual(200);
 		});
-		test('dont send notifies when withdrawing a generic appeal', async () => {
+		test('dispatches notification requests to notifySend when withdrawing a generic appeal and suppresses email sending', async () => {
+			mockNotifySend.useRealNotifySend = true;
+
 			const genericAppeal = {
 				...householdAppeal,
+				suppressNotifications: null,
 				appealType: {
 					key: APPEAL_CASE_TYPE.TPO,
-					type: 'Tree preservation order'
+					type: 'Tree preservation order',
+					suppressNotifications: true
 				},
 				appealRule6Parties: [{ id: 1, serviceUser: { email: 'rule6@example.com' } }],
 				appealStatus: [
@@ -221,7 +225,18 @@ describe('appeal withdrawal routes', () => {
 				.set('azureAdUserId', azureAdUserId);
 
 			expect(response.status).toEqual(200);
-			expect(mockNotifySend).not.toHaveBeenCalled();
+			// Service invokes notifySend as part of workflow:
+			expect(mockNotifySend).toHaveBeenCalledWith(
+				expect.objectContaining({
+					templateName: 'appeal-withdrawn-appellant',
+					personalisation: expect.objectContaining({
+						appeal_reference_number: genericAppeal.reference
+					})
+				})
+			);
+			// notifySend suppresses email dispatch and DB persistence downstream:
+			expect(global.mockSendEmail).not.toHaveBeenCalled();
+			expect(databaseConnector.appealNotification.createMany).not.toHaveBeenCalled();
 		});
 	});
 });

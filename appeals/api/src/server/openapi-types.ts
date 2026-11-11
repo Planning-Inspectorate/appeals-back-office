@@ -947,6 +947,8 @@ export type AppealTypes = {
 	shorthand?: string;
 	/** @example 1 */
 	id?: number;
+	/** @example false */
+	suppressNotifications?: boolean;
 }[];
 
 export interface CaseTeam {

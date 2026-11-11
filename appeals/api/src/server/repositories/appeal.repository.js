@@ -595,7 +595,8 @@ const updateAppealById = (
 		applicationReference,
 		procedureTypeId,
 		hearingStartTime,
-		hearingEstimatedDays
+		hearingEstimatedDays,
+		suppressNotifications
 	}
 ) =>
 	databaseConnector.appeal.update({
@@ -611,6 +612,7 @@ const updateAppealById = (
 			...(hasValueOrIsNull(agent) && { agentId: agent }),
 			...(hasValueOrIsNull(appellant) && { appellantId: appellant }),
 			...(hasValueOrIsNull(procedureTypeId) && { procedureTypeId }),
+			...(suppressNotifications !== undefined && { suppressNotifications }),
 			caseUpdatedDate: new Date(),
 			...((hearingStartTime || hearingEstimatedDays) && {
 				hearing: {
@@ -710,6 +712,23 @@ const setAppealEiaScreeningRequired = (id, eiaScreeningRequired) => {
 	return databaseConnector.appeal.update({
 		data: {
 			eiaScreeningRequired
+		},
+		where: {
+			id
+		}
+	});
+};
+
+/**
+ * @param {number} id
+ * @param {boolean | null} suppressNotifications
+ * @returns {PrismaPromise<import('#db-client/client.ts').Appeal>}
+ */
+const setAppealNotifySuppression = (id, suppressNotifications) => {
+	return databaseConnector.appeal.update({
+		data: {
+			suppressNotifications,
+			caseUpdatedDate: new Date()
 		},
 		where: {
 			id
@@ -1963,6 +1982,7 @@ export default {
 	setAppealWithdrawal,
 	setInvalidAppealDecision,
 	setAppealEiaScreeningRequired,
+	setAppealNotifySuppression,
 	removeAppealServiceUser,
 	linkAppeal,
 	unlinkAppeal,
