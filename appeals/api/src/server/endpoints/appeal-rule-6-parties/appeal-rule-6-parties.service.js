@@ -54,23 +54,18 @@ const addRule6Party = async (appeal, serviceUser, azureAdUserId, notifyClient) =
 			])
 		});
 
-		if (!isGeneric) {
-			await createAuditTrail({
-				appealId,
-				azureAdUserId,
-				details: SUPPORT_CONSTANTS.AUDIT_TRAIL_RULE_6_ADDED_EMAILS_SENT
-			});
+		const siteAddress = appeal.address
+			? formatAddressSingleLine(appeal.address)
+			: 'Address not available';
+		const teamEmail = await getTeamEmailFromAppealId(appealId);
+		const enforcementReference = await getEnforcementReference(appeal);
 
-			const siteAddress = appeal.address
-				? formatAddressSingleLine(appeal.address)
-				: 'Address not available';
-			const teamEmail = await getTeamEmailFromAppealId(appealId);
-			const enforcementReference = await getEnforcementReference(appeal);
+		let anyEmailSent = false;
+		if (serviceUser.email) {
+			const statementsDueDate = appeal.appealTimetable?.lpaStatementDueDate;
+			const proofsDueDate = appeal.appealTimetable?.proofOfEvidenceAndWitnessesDueDate;
 
-			if (serviceUser.email) {
-				const statementsDueDate = appeal.appealTimetable?.lpaStatementDueDate;
-				const proofsDueDate = appeal.appealTimetable?.proofOfEvidenceAndWitnessesDueDate;
-
+			if (
 				await notifySend({
 					azureAdUserId,
 					templateName: 'rule-6-status-accepted-rule-6-party',
@@ -88,15 +83,19 @@ const addRule6Party = async (appeal, serviceUser, azureAdUserId, notifyClient) =
 						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.RULE_6_PARTY,
 						team_email_address: teamEmail
 					}
-				});
+				})
+			) {
+				anyEmailSent = true;
 			}
+		}
 
-			const mainPartiesRecipients = [
-				appeal.agent?.email || appeal.appellant?.email,
-				appeal.lpa?.email
-			].filter(Boolean);
+		const mainPartiesRecipients = [
+			appeal.agent?.email || appeal.appellant?.email,
+			appeal.lpa?.email
+		].filter(Boolean);
 
-			for (const recipientEmail of mainPartiesRecipients) {
+		for (const recipientEmail of mainPartiesRecipients) {
+			if (
 				await notifySend({
 					azureAdUserId,
 					templateName: 'rule-6-status-accepted-main-parties',
@@ -110,8 +109,18 @@ const addRule6Party = async (appeal, serviceUser, azureAdUserId, notifyClient) =
 						rule_6_organisation: serviceUser.organisationName || '',
 						team_email_address: teamEmail
 					}
-				});
+				})
+			) {
+				anyEmailSent = true;
 			}
+		}
+
+		if (anyEmailSent) {
+			await createAuditTrail({
+				appealId,
+				azureAdUserId,
+				details: SUPPORT_CONSTANTS.AUDIT_TRAIL_RULE_6_ADDED_EMAILS_SENT
+			});
 		}
 
 		return result;
@@ -153,7 +162,7 @@ const updateRule6Party = async (appeal, rule6PartyId, serviceUser, azureAdUserId
 		});
 
 		const recipientEmail = serviceUser.email;
-		if (!isGeneric && recipientEmail) {
+		if (recipientEmail) {
 			const siteAddress = appeal.address
 				? formatAddressSingleLine(appeal.address)
 				: 'Address not available';

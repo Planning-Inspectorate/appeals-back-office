@@ -104,4 +104,99 @@ describe('notify-send', () => {
 			{ content: 'Content for Joe Bloggs', subject: 'Subject for Joe Bloggs' }
 		);
 	});
+
+	describe('suppressNotifications', () => {
+		test('should suppress notification and return false when appeal.suppressNotifications is true and not call sendEmail or createMany', async () => {
+			notifySendData.appeal = { suppressNotifications: true };
+			const result = await notifySend(notifySendData);
+
+			expect(result).toBe(false);
+			expect(notifySendData.notifyClient.sendEmail).not.toHaveBeenCalled();
+			expect(databaseConnector.appealNotification.createMany).not.toHaveBeenCalled();
+		});
+
+		test('should suppress notification even if recipientEmail is missing when appeal is suppressed', async () => {
+			delete notifySendData.recipientEmail;
+			notifySendData.appeal = { suppressNotifications: true };
+			const result = await notifySend(notifySendData);
+
+			expect(result).toBe(false);
+			expect(notifySendData.notifyClient.sendEmail).not.toHaveBeenCalled();
+			expect(databaseConnector.appealNotification.createMany).not.toHaveBeenCalled();
+		});
+
+		test('should send notification and return true when appeal.suppressNotifications is false even if appealType is suppressed', async () => {
+			databaseConnector.appealNotification.createMany.mockResolvedValue([]);
+			notifySendData.appeal = {
+				suppressNotifications: false,
+				appealType: { suppressNotifications: true }
+			};
+			const result = await notifySend(notifySendData);
+
+			expect(result).toBe(true);
+			expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalled();
+			expect(databaseConnector.appealNotification.createMany).toHaveBeenCalled();
+		});
+
+		test('should suppress notification and return false when appeal.suppressNotifications is null but appealType.suppressNotifications is true', async () => {
+			notifySendData.appeal = {
+				suppressNotifications: null,
+				appealType: { suppressNotifications: true }
+			};
+			const result = await notifySend(notifySendData);
+
+			expect(result).toBe(false);
+			expect(notifySendData.notifyClient.sendEmail).not.toHaveBeenCalled();
+			expect(databaseConnector.appealNotification.createMany).not.toHaveBeenCalled();
+		});
+
+		test('should send notification and return true when appeal.suppressNotifications is null and appealType.suppressNotifications is false', async () => {
+			databaseConnector.appealNotification.createMany.mockResolvedValue([]);
+			notifySendData.appeal = {
+				suppressNotifications: null,
+				appealType: { suppressNotifications: false }
+			};
+			const result = await notifySend(notifySendData);
+
+			expect(result).toBe(true);
+			expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalled();
+			expect(databaseConnector.appealNotification.createMany).toHaveBeenCalled();
+		});
+
+		test('should query DB, return false, and suppress when DB record has appealType.suppressNotifications = true', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				suppressNotifications: null,
+				appealType: { suppressNotifications: true }
+			});
+
+			const result = await notifySend(notifySendData);
+
+			expect(result).toBe(false);
+			expect(notifySendData.notifyClient.sendEmail).not.toHaveBeenCalled();
+			expect(databaseConnector.appealNotification.createMany).not.toHaveBeenCalled();
+		});
+
+		test('should query DB, return true, and send when DB record has appeal.suppressNotifications = false overriding appealType', async () => {
+			databaseConnector.appealNotification.createMany.mockResolvedValue([]);
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				suppressNotifications: false,
+				appealType: { suppressNotifications: true }
+			});
+
+			const result = await notifySend(notifySendData);
+
+			expect(result).toBe(true);
+			expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalled();
+			expect(databaseConnector.appealNotification.createMany).toHaveBeenCalled();
+		});
+
+		test('should throw and fail closed without sending when DB query throws error', async () => {
+			databaseConnector.appeal.findUnique.mockRejectedValue(new Error('DB failure'));
+
+			await expect(notifySend(notifySendData)).rejects.toThrow('DB failure');
+
+			expect(notifySendData.notifyClient.sendEmail).not.toHaveBeenCalled();
+			expect(databaseConnector.appealNotification.createMany).not.toHaveBeenCalled();
+		});
+	});
 });

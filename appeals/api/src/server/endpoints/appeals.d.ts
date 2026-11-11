@@ -175,6 +175,7 @@ interface UpdateAppealRequest {
 	procedureTypeId?: number | null;
 	hearingStartTime?: string;
 	hearingEstimatedDays?: number;
+	suppressNotifications?: boolean | null;
 }
 
 interface SingleAppellantCaseResponse {

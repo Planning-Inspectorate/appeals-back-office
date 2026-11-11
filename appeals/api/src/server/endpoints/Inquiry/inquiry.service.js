@@ -12,10 +12,8 @@ import { EVENT_TYPE, PROCEDURE_TYPE_ID_MAP } from '@pins/appeals/constants/commo
 import {
 	AUDIT_TRAIL_SYSTEM_UUID,
 	ERROR_FAILED_TO_SAVE_DATA,
-	ERROR_NO_RECIPIENT_EMAIL,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import {
 	recalculateDateIfNotBusinessDay,
 	setTimeInTimeZone
@@ -162,22 +160,16 @@ const sendInquiryNotifications = async (
 	appeal,
 	personalisation = {}
 ) => {
-	const isGeneric =
-		isGenericAppealType(appeal.appealType?.type) || isGenericAppealType(appeal.appealType?.key);
-	if (isGeneric) {
-		return;
-	}
-
 	const appellantEmail = appeal.agent?.email ?? appeal.appellant?.email;
 	const lpaEmail = appeal.lpa?.email;
-	if (!appellantEmail || !lpaEmail) {
-		throw new Error(ERROR_NO_RECIPIENT_EMAIL);
-	}
 
-	const recipients = [
-		{ email: appellantEmail, isLpa: false },
-		{ email: lpaEmail, isLpa: true }
-	];
+	const recipients = [];
+	if (appellantEmail) {
+		recipients.push({ email: appellantEmail, isLpa: false });
+	}
+	if (lpaEmail) {
+		recipients.push({ email: lpaEmail, isLpa: true });
+	}
 
 	if (appeal.appealRule6Parties && appeal.appealRule6Parties.length > 0) {
 		appeal.appealRule6Parties.forEach((party) => {
@@ -185,6 +177,10 @@ const sendInquiryNotifications = async (
 				recipients.push({ email: party.serviceUser.email, isLpa: false });
 			}
 		});
+	}
+
+	if (recipients.length === 0) {
+		return;
 	}
 
 	const enforcementReference = await getEnforcementReference(appeal);

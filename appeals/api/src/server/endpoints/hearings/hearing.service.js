@@ -7,12 +7,7 @@ import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import logger from '#utils/logger.js';
 import { toTime } from '#utils/to-time.js';
 import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
-import {
-	ERROR_FAILED_TO_SAVE_DATA,
-	ERROR_NO_RECIPIENT_EMAIL,
-	ERROR_NOT_FOUND
-} from '@pins/appeals/constants/support.js';
-import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import { ERROR_FAILED_TO_SAVE_DATA, ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 import { dateISOStringToDisplayDate, formatTime12h } from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
 
@@ -143,24 +138,21 @@ const sendHearingNotifications = async (
 	personalisation = {},
 	includeRecipientRole = false
 ) => {
-	const isGeneric =
-		isGenericAppealType(appeal.appealType?.type) || isGenericAppealType(appeal.appealType?.key);
-	if (isGeneric) {
-		return;
-	}
-
 	const appellantEmail = appeal.agent?.email ?? appeal.appellant?.email;
 	const lpaEmail = appeal.lpa?.email;
-	if (!appellantEmail || !lpaEmail) {
-		throw new Error(ERROR_NO_RECIPIENT_EMAIL);
+	if (!appellantEmail && !lpaEmail) {
+		return;
 	}
 
 	const teamEmailAddress = await getTeamEmailFromAppealId(appeal.id);
 	const enforcementReference = await getEnforcementReference(appeal);
-	const recipients = [
-		{ email: appellantEmail, isLpa: false },
-		{ email: lpaEmail, isLpa: true }
-	];
+	const recipients = [];
+	if (appellantEmail) {
+		recipients.push({ email: appellantEmail, isLpa: false });
+	}
+	if (lpaEmail) {
+		recipients.push({ email: lpaEmail, isLpa: true });
+	}
 
 	await Promise.all(
 		recipients.map(({ email, isLpa }) =>
