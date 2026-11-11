@@ -54,50 +54,45 @@ const addRule6Party = async (appeal, serviceUser, azureAdUserId, notifyClient) =
 			])
 		});
 
-		if (!isGeneric) {
-			await createAuditTrail({
-				appealId,
+		const siteAddress = appeal.address
+			? formatAddressSingleLine(appeal.address)
+			: 'Address not available';
+		const teamEmail = await getTeamEmailFromAppealId(appealId);
+		const enforcementReference = await getEnforcementReference(appeal);
+
+		let anyEmailSent = false;
+		if (serviceUser.email) {
+			const statementsDueDate = appeal.appealTimetable?.lpaStatementDueDate;
+			const proofsDueDate = appeal.appealTimetable?.proofOfEvidenceAndWitnessesDueDate;
+
+			anyEmailSent = await notifySend({
 				azureAdUserId,
-				details: SUPPORT_CONSTANTS.AUDIT_TRAIL_RULE_6_ADDED_EMAILS_SENT
+				templateName: 'rule-6-status-accepted-rule-6-party',
+				notifyClient,
+				recipientEmail: serviceUser.email,
+				personalisation: {
+					appeal_reference_number: appealReference,
+					lpa_reference: appeal.applicationReference || '',
+					...(enforcementReference && { enforcement_reference: enforcementReference }),
+					site_address: siteAddress,
+					statements_due_date: statementsDueDate
+						? formatDate(new Date(statementsDueDate), false)
+						: '',
+					proofs_due_date: proofsDueDate ? formatDate(new Date(proofsDueDate), false) : '',
+					fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.RULE_6_PARTY,
+					team_email_address: teamEmail
+				}
 			});
+		}
 
-			const siteAddress = appeal.address
-				? formatAddressSingleLine(appeal.address)
-				: 'Address not available';
-			const teamEmail = await getTeamEmailFromAppealId(appealId);
-			const enforcementReference = await getEnforcementReference(appeal);
+		const mainPartiesRecipients = [
+			appeal.agent?.email || appeal.appellant?.email,
+			appeal.lpa?.email
+		].filter(Boolean);
 
-			if (serviceUser.email) {
-				const statementsDueDate = appeal.appealTimetable?.lpaStatementDueDate;
-				const proofsDueDate = appeal.appealTimetable?.proofOfEvidenceAndWitnessesDueDate;
-
-				await notifySend({
-					azureAdUserId,
-					templateName: 'rule-6-status-accepted-rule-6-party',
-					notifyClient,
-					recipientEmail: serviceUser.email,
-					personalisation: {
-						appeal_reference_number: appealReference,
-						lpa_reference: appeal.applicationReference || '',
-						...(enforcementReference && { enforcement_reference: enforcementReference }),
-						site_address: siteAddress,
-						statements_due_date: statementsDueDate
-							? formatDate(new Date(statementsDueDate), false)
-							: '',
-						proofs_due_date: proofsDueDate ? formatDate(new Date(proofsDueDate), false) : '',
-						fo_dashboard_stub: FRONT_OFFICE_DASHBOARD_PATH_STUBS.RULE_6_PARTY,
-						team_email_address: teamEmail
-					}
-				});
-			}
-
-			const mainPartiesRecipients = [
-				appeal.agent?.email || appeal.appellant?.email,
-				appeal.lpa?.email
-			].filter(Boolean);
-
-			for (const recipientEmail of mainPartiesRecipients) {
-				await notifySend({
+		for (const recipientEmail of mainPartiesRecipients) {
+			anyEmailSent =
+				(await notifySend({
 					azureAdUserId,
 					templateName: 'rule-6-status-accepted-main-parties',
 					notifyClient,
@@ -110,8 +105,15 @@ const addRule6Party = async (appeal, serviceUser, azureAdUserId, notifyClient) =
 						rule_6_organisation: serviceUser.organisationName || '',
 						team_email_address: teamEmail
 					}
-				});
-			}
+				})) || anyEmailSent;
+		}
+
+		if (anyEmailSent) {
+			await createAuditTrail({
+				appealId,
+				azureAdUserId,
+				details: SUPPORT_CONSTANTS.AUDIT_TRAIL_RULE_6_ADDED_EMAILS_SENT
+			});
 		}
 
 		return result;
@@ -153,7 +155,7 @@ const updateRule6Party = async (appeal, rule6PartyId, serviceUser, azureAdUserId
 		});
 
 		const recipientEmail = serviceUser.email;
-		if (!isGeneric && recipientEmail) {
+		if (recipientEmail) {
 			const siteAddress = appeal.address
 				? formatAddressSingleLine(appeal.address)
 				: 'Address not available';

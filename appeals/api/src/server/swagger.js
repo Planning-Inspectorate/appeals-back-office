@@ -177,7 +177,8 @@ export const spec = {
 				code: 'A',
 				enabled: false,
 				shorthand: 'HAS',
-				id: 1
+				id: 1,
+				suppressNotifications: false
 			}
 		],
 		CaseTeam: {

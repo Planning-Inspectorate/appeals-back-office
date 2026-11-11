@@ -1582,14 +1582,18 @@ describe('hearing routes', () => {
 					expect(response.status).toEqual(201);
 				});
 
-				test('does not send notifications when appeal type is generic', async () => {
+				test('dispatches notification requests to notifySend for generic appeal hearing setup and suppresses email sending', async () => {
+					mockNotifySend.useRealNotifySend = true;
+
 					databaseConnector.appeal.findUnique.mockResolvedValue({
 						...appeal,
+						suppressNotifications: null,
 						appealType: {
 							id: 99,
 							shorthand: 'GEN',
 							type: 'Tree preservation order',
-							key: APPEAL_CASE_TYPE.TPO
+							key: APPEAL_CASE_TYPE.TPO,
+							suppressNotifications: true
 						}
 					});
 
@@ -1599,7 +1603,17 @@ describe('hearing routes', () => {
 						.set('azureAdUserId', azureAdUserId);
 
 					expect(response.status).toEqual(201);
-					expect(mockNotifySend).not.toHaveBeenCalled();
+					// Service invokes notifySend for hearing setup; notification suppression is evaluated centrally within notifySend
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
+					expect(mockNotifySend).toHaveBeenCalledWith(
+						expect.objectContaining({
+							personalisation: expect.objectContaining({
+								appeal_reference_number: appeal.reference
+							})
+						})
+					);
+					expect(global.mockSendEmail).not.toHaveBeenCalled();
+					expect(databaseConnector.appealNotification.createMany).not.toHaveBeenCalled();
 				});
 
 				test('creates a hearing when in hearing ready to set up and transitions to awaiting hearing', async () => {

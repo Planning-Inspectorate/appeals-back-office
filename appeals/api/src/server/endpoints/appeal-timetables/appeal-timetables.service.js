@@ -537,7 +537,7 @@ const startCase = async (
 			isEnforcementChild
 		});
 
-		if (!isChildAppeal && !isGeneric) {
+		if (!isChildAppeal) {
 			const siteAddress = appeal.address
 				? formatAddressSingleLine(appeal.address)
 				: 'Address not available';
