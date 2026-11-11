@@ -19,4 +19,4 @@ RUN npm run prisma-generate
 
 EXPOSE 3000
 
-ENTRYPOINT npm run start
+CMD ["node","./src/server.js"]
