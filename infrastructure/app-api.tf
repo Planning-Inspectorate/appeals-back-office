@@ -103,6 +103,7 @@ module "app_api" {
     # service bus topics
     SB_TOPIC_NAME_APPEAL_HAS            = var.sb_topic_names.events.appeal_has
     SB_TOPIC_NAME_APPEAL_S78            = var.sb_topic_names.events.appeal_s78
+    SB_TOPIC_NAME_APPEAL_GROUP_C        = var.sb_topic_names.events.appeal_group_c
     SB_TOPIC_NAME_APPEAL_DOCUMENT       = var.sb_topic_names.events.document
     SB_TOPIC_NAME_APPEAL_SERVICE_USER   = var.sb_topic_names.events.service_user
     SB_TOPIC_NAME_APPEAL_EVENT          = var.sb_topic_names.events.event

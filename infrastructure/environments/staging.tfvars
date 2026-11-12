@@ -176,6 +176,7 @@ sb_topic_names = {
   events = {
     appeal_has            = "appeal-has-staging"
     appeal_s78            = "appeal-s78-staging"
+    appeal_group_c        = "appeal-group-c-staging"
     document              = "appeal-document-staging"
     case_file_package     = "appeal-case-file-package-staging"
     document_to_move      = "appeal-document-to-move-staging"

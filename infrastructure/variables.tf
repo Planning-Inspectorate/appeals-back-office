@@ -251,6 +251,7 @@ variable "sb_topic_names" {
     events = object({
       appeal_has            = string
       appeal_s78            = string
+      appeal_group_c        = string
       document              = string
       case_file_package     = string
       document_to_move      = string
