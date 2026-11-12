@@ -438,12 +438,16 @@ export const updateDocuments = async (req, res) => {
 		}
 
 		const notifyTemplateName = getNotifyTemplateName(body.sharingDocumentType);
-		if (
-			documents[0].isShared &&
-			sharingDocumentType &&
-			shareMultipleDocuments &&
-			notifyTemplateName
-		) {
+		if (documents[0].isShared && sharingDocumentType && notifyTemplateName) {
+			if (shareMultipleDocuments) {
+				await logAuditTrail({
+					messageKey: AUDIT_TRAIL_MULTIPLE_DOCUMENTS_UPLOADED,
+					replacements: [getAuditTrailDocumentTypeLabel(sharingDocumentType)],
+					req,
+					appealId: appeal.id,
+					updatingMultipleDocuments: true
+				});
+			}
 			await sendShareDocumentEmails(
 				req.notifyClient,
 				appeal,
@@ -451,17 +455,10 @@ export const updateDocuments = async (req, res) => {
 				inviteResponses,
 				costsCategory,
 				shareMultipleDocuments,
-				documents[0].name,
+				documents[0]?.latestDocumentVersion?.originalFilename,
 				sharingDocumentType,
 				req.get('azureAdUserId')
 			);
-			await logAuditTrail({
-				messageKey: AUDIT_TRAIL_MULTIPLE_DOCUMENTS_UPLOADED,
-				replacements: [getAuditTrailDocumentTypeLabel(sharingDocumentType)],
-				req,
-				appealId: appeal.id,
-				updatingMultipleDocuments: true
-			});
 		}
 		await documentRepository.updateDocuments(documents);
 		for (const document of documents) {

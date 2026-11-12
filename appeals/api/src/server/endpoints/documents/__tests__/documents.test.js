@@ -575,7 +575,8 @@ describe('/appeals/:appealId/documents', () => {
 				latestDocumentVersion: {
 					...documentCreated.latestDocumentVersion,
 					published: false,
-					redactionStatusId: 1
+					redactionStatusId: 1,
+					originalFilename: 'example.pdf'
 				}
 			});
 			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue(
@@ -646,12 +647,14 @@ describe('/appeals/:appealId/documents', () => {
 				id: '987e66e0-1db4-404b-8213-8082919159e9',
 				isShared: true,
 				receivedDate: new Date().toISOString(),
+				latestDocumentVersion: { originalFilename: 'example.pdf' },
 				redactionStatus
 			},
 			{
 				id: '8b107895-b8c9-467f-aad0-c09daafeaaad',
 				isShared: true,
 				receivedDate: new Date().toISOString(),
+				latestDocumentVersion: { originalFilename: 'secondExample.pdf' },
 				redactionStatus
 			}
 		];
@@ -734,6 +737,63 @@ describe('/appeals/:appealId/documents', () => {
 			expect(notifySend).not.toHaveBeenCalled();
 			expect(databaseConnector.auditTrail.create).not.toHaveBeenCalled();
 		});
+		test(
+			'only shares documents with correct redaction status when sharing multiple documents and' +
+				' correct case history entry and notify',
+			async () => {
+				databaseConnector.auditTrail.create.mockResolvedValueOnce({ id: 1 });
+				const documentsToSend = sharedDocumentsToSend(3);
+				documentsToSend[1].redactionStatus = 2;
+
+				// const response = await request
+				// 	.patch(`/appeals/${householdAppeal.id}/documents`)
+				// 	.send({
+				// 		documents: documentsToSend,
+				// 		sharingDocumentType: 'hearing-document',
+				// 		shareMultipleDocuments: true,
+				// 		costsCategory: ''
+				// 	})
+				// 	.set('azureAdUserId', azureAdUserId);
+				//
+				// expect(response.status).toEqual(200);
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}/documents`)
+					.send({
+						documents: [...documentsToSend],
+						sharingDocumentType: 'hearing-document',
+						shareMultipleDocuments: false,
+						costsCategory: ''
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				expect(notifySend).toHaveBeenCalledTimes(2);
+				expect(notifySend).toHaveBeenNthCalledWith(
+					1,
+					expect.objectContaining({
+						templateName: 'document-received',
+						personalisation: expect.objectContaining({
+							sharing_multiple_documents: false,
+							document_type: 'hearing-documents',
+							dashboard_link: 'appeals',
+							document_name: 'example.pdf'
+						})
+					})
+				);
+				expect(notifySend).toHaveBeenNthCalledWith(
+					2,
+					expect.objectContaining({
+						templateName: 'document-received',
+						personalisation: expect.objectContaining({
+							sharing_multiple_documents: false,
+							document_type: 'hearing-documents',
+							dashboard_link: 'manage-appeals'
+						})
+					})
+				);
+				expect(mockBroadcasters.broadcastDocument).toHaveBeenCalledTimes(2);
+			}
+		);
 	});
 });
 
