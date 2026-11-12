@@ -61,8 +61,8 @@ exports[`national-list GET / should render national list - 10 pages - all page i
                                 <option value="1">Written representations</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
-                                <option value="4">Written representations part 1</option>
-                                <option value="5">Written representations part 2</option>
+                                <option value="4">Written representations (part 1)</option>
+                                <option value="5">Written representations (part 2)</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -295,8 +295,8 @@ exports[`national-list GET / should render national list - 15 pages - pagination
                                 <option value="1">Written representations</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
-                                <option value="4">Written representations part 1</option>
-                                <option value="5">Written representations part 2</option>
+                                <option value="4">Written representations (part 1)</option>
+                                <option value="5">Written representations (part 2)</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -512,8 +512,8 @@ exports[`national-list GET / should render national list - appeal procedure type
                                 <option value="1" selected>Written representations</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
-                                <option value="4">Written representations part 1</option>
-                                <option value="5">Written representations part 2</option>
+                                <option value="4">Written representations (part 1)</option>
+                                <option value="5">Written representations (part 2)</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -690,8 +690,8 @@ exports[`national-list GET / should render national list - appeal type filter ap
                                 <option value="1">Written representations</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
-                                <option value="4">Written representations part 1</option>
-                                <option value="5">Written representations part 2</option>
+                                <option value="4">Written representations (part 1)</option>
+                                <option value="5">Written representations (part 2)</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -868,8 +868,8 @@ exports[`national-list GET / should render national list - case team filter appl
                                 <option value="1">Written representations</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
-                                <option value="4">Written representations part 1</option>
-                                <option value="5">Written representations part 2</option>
+                                <option value="4">Written representations (part 1)</option>
+                                <option value="5">Written representations (part 2)</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -1043,8 +1043,8 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
                                 <option value="1">Written representations</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
-                                <option value="4">Written representations part 1</option>
-                                <option value="5">Written representations part 2</option>
+                                <option value="4">Written representations (part 1)</option>
+                                <option value="5">Written representations (part 2)</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -1239,8 +1239,8 @@ exports[`national-list GET / should render national list - no search term - filt
                                 <option value="1">Written representations</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
-                                <option value="4">Written representations part 1</option>
-                                <option value="5">Written representations part 2</option>
+                                <option value="4">Written representations (part 1)</option>
+                                <option value="5">Written representations (part 2)</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -1429,8 +1429,8 @@ exports[`national-list GET / should render national list - search term - filter 
                                 <option value="1">Written representations</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
-                                <option value="4">Written representations part 1</option>
-                                <option value="5">Written representations part 2</option>
+                                <option value="4">Written representations (part 1)</option>
+                                <option value="5">Written representations (part 2)</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -1619,8 +1619,8 @@ exports[`national-list GET / should render national list - search term - no resu
                                 <option value="1">Written representations</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
-                                <option value="4">Written representations part 1</option>
-                                <option value="5">Written representations part 2</option>
+                                <option value="4">Written representations (part 1)</option>
+                                <option value="5">Written representations (part 2)</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -1766,8 +1766,8 @@ exports[`national-list GET / should render national list - search term 1`] = `
                                 <option value="1">Written representations</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
-                                <option value="4">Written representations part 1</option>
-                                <option value="5">Written representations part 2</option>
+                                <option value="4">Written representations (part 1)</option>
+                                <option value="5">Written representations (part 2)</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -1959,8 +1959,8 @@ exports[`national-list GET / should render the header with navigation containing
                                 <option value="1">Written representations</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
-                                <option value="4">Written representations part 1</option>
-                                <option value="5">Written representations part 2</option>
+                                <option value="4">Written representations (part 1)</option>
+                                <option value="5">Written representations (part 2)</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -2152,8 +2152,8 @@ exports[`national-list GET / should show enforcement reference instead of planni
                                 <option value="1">Written representations</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
-                                <option value="4">Written representations part 1</option>
-                                <option value="5">Written representations part 2</option>
+                                <option value="4">Written representations (part 1)</option>
+                                <option value="5">Written representations (part 2)</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -2327,8 +2327,8 @@ exports[`national-list GET / should show enforcement reference instead of planni
                                 <option value="1">Written representations</option>
                                 <option value="2">Hearing</option>
                                 <option value="3">Inquiry</option>
-                                <option value="4">Written representations part 1</option>
-                                <option value="5">Written representations part 2</option>
+                                <option value="4">Written representations (part 1)</option>
+                                <option value="5">Written representations (part 2)</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
