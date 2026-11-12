@@ -28,7 +28,8 @@ module.exports = defineConfig({
 			charts: true,
 			reportPageTitle: 'Appeals Back Office E2E',
 			embeddedScreenshots: true,
-			inlineAssets: true
+			inlineAssets: true,
+			configOutput: true
 		}
 	},
 	e2e: {
