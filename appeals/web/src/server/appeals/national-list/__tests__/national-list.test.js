@@ -160,8 +160,8 @@ describe('national-list', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Hearing</option>');
 			expect(unprettifiedElement.innerHTML).toContain('Inquiry</option>');
 			expect(unprettifiedElement.innerHTML).toContain('Written representations</option>');
-			expect(unprettifiedElement.innerHTML).toContain('Written representations part 1</option>');
-			expect(unprettifiedElement.innerHTML).toContain('Written representations part 2</option>');
+			expect(unprettifiedElement.innerHTML).toContain('Written representations (part 1)</option>');
+			expect(unprettifiedElement.innerHTML).toContain('Written representations (part 2)</option>');
 		});
 
 		it('should render national list - search term', async () => {
