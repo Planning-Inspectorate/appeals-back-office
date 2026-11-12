@@ -22,7 +22,8 @@
 		"cy:ci:local": "npx cypress run --env isCI=true --config-file cypress.config.local.env.js",
 		"cy:ci:dev": "npx cypress run --env isCI=true --config-file cypress.config.dev.env.js",
 		"cy:ci:test": "npx cypress run --env isCI=true --config-file cypress.config.test.env.js",
-		"cy:ci:staging": "npx cypress run --env isCI=true --config-file cypress.config.staging.env.js"
+		"cy:ci:staging": "npx cypress run --env isCI=true --config-file cypress.config.staging.env.js",
+		"cy:report:generate": "generate-mochawesome-report || true"
 	},
 	"author": "",
 	"license": "ISC",
