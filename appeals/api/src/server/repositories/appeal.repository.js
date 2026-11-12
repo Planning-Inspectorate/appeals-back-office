@@ -48,146 +48,53 @@ const linkedAppealsInclude = isLinkedAppealsActive()
 
 /**
  * @deprecated too inefficient, use specific selects only
- * @type {Omit<typeof appealDetailsIncludeMap, 'caseNotes' | 'folders'>}
+ * @param {number} appealId
+ * @param {number} appealVersion
+ * @returns {{
+ *   include: Partial<import('#db-client/models.ts').AppealInclude> | null,
+ *   versionedIncludes: (keyof typeof appealDetailsIncludeMap)[]}
+ * }
  * legacy all data include
  **/
-export const appealDetailsInclude = /** @type {Object} */ {
-	address: true,
-	procedureType: true,
-	parentAppeals: {
-		include: {
-			parent: {
-				include: linkedAppealsInclude
-			}
-		}
-	},
-	childAppeals: {
-		include: {
-			child: {
-				include: linkedAppealsInclude
-			}
-		}
-	},
-	neighbouringSites: {
-		include: { address: true }
-	},
-	allocation: true,
-	specialisms: {
-		include: {
-			specialism: true
-		}
-	},
-	appellantCase: {
-		include: {
-			appellantCaseIncompleteReasonsSelected: {
-				include: {
-					appellantCaseIncompleteReason: true,
-					appellantCaseIncompleteReasonText: true
-				}
-			},
-			appellantCaseInvalidReasonsSelected: {
-				include: {
-					appellantCaseInvalidReason: true,
-					appellantCaseInvalidReasonText: true
-				}
-			},
-			appellantCaseEnforcementInvalidReasonsSelected: {
-				include: {
-					appellantCaseEnforcementInvalidReason: true,
-					appellantCaseEnforcementInvalidReasonText: true
-				}
-			},
-			appellantCaseEnforcementMissingDocumentsSelected: {
-				include: {
-					appellantCaseEnforcementMissingDocument: true,
-					appellantCaseEnforcementMissingDocumentText: true
-				}
-			},
-			appellantCaseEnforcementGroundsMismatchFactsSelected: {
-				include: {
-					appellantCaseEnforcementGroundsMismatchFacts: true,
-					appellantCaseEnforcementGroundsMismatchFactsText: true
-				}
-			},
-			appellantCaseValidationOutcome: true,
-			knowsOtherOwners: true,
-			knowsAllOwners: true,
-			appellantCaseAdvertDetails: true,
-			contactAddress: true
-		}
-	},
-	appellant: true,
-	agent: true,
-	lpa: true,
-	appealStatus: true,
-	appealTimetable: true,
-	appealType: true,
-	assignedTeam: true,
-	caseOfficer: true,
-	inspector: true,
-	inspectorDecision: true,
-	lpaQuestionnaire: {
-		include: {
-			listedBuildingDetails: {
-				include: {
-					listedBuilding: true
-				}
-			},
-			designatedSiteNames: {
-				include: {
-					designatedSite: true
-				}
-			},
-			lpaNotificationMethods: {
-				include: {
-					lpaNotificationMethod: true
-				}
-			},
-			lpaQuestionnaireIncompleteReasonsSelected: {
-				include: {
-					lpaQuestionnaireIncompleteReason: true,
-					lpaQuestionnaireIncompleteReasonText: true
-				}
-			},
-			lpaQuestionnaireValidationOutcome: true
-		}
-	},
-	siteVisit: {
-		where: {
-			whoMissedSiteVisit: null
-		},
-		include: {
-			siteVisitType: true
-		}
-	},
-	hearing: {
-		include: {
-			address: true
-		}
-	},
-	inquiry: {
-		include: {
-			address: true
-		}
-	},
-	representations: true,
-	hearingEstimate: true,
-	inquiryEstimate: true,
-	appealGrounds: {
-		where: {
-			isDeleted: false
-		},
-		include: {
-			ground: true
-		}
-	},
-	appealRule6Parties: {
-		include: {
-			serviceUser: true
-		}
-	},
-	enforcementNoticeAppealOutcome: true
-};
+export const appealDetailsInclude = (appealId, appealVersion) =>
+	buildAppealInclude(
+		[
+			'address',
+			'procedureType',
+			'parentAppeals',
+			'childAppeals',
+			'neighbouringSites',
+			'allocation',
+			'specialisms',
+			'appellantCase',
+			'appellant',
+			'agent',
+			'lpa',
+			'appealStatus',
+			'appealTimetable',
+			'appealType',
+			'assignedTeam',
+			'caseOfficer',
+			'inspector',
+			'inspectorDecision',
+			'lpaQuestionnaire',
+			'siteVisit',
+			'hearing',
+			'inquiry',
+			'representations',
+			'hearingEstimate',
+			'inquiryEstimate',
+			'appealGrounds',
+			'appealRule6Parties',
+			'enforcementNoticeAppealOutcome'
+		],
+		true,
+		false,
+		appealId,
+		appealVersion
+	);
+
+/** @typedef {{ appealId: number, currentAppealVersion: number }} AppealIncludeContext */
 
 /** all includes, can be selected from, don't include this, just select from it */
 export const appealDetailsIncludeMap = /** @type {Object} */ {
@@ -259,12 +166,24 @@ export const appealDetailsIncludeMap = /** @type {Object} */ {
 	agent: true,
 	lpa: true,
 	appealStatus: true,
-	appealTimetable: true,
+	/** @param {AppealIncludeContext} context */
+	appealTimetable: ({ appealId, currentAppealVersion }) => ({
+		where: {
+			appealId,
+			associatedAppealVersion: currentAppealVersion
+		}
+	}),
 	appealType: true,
 	assignedTeam: true,
 	caseOfficer: true,
 	inspector: true,
-	inspectorDecision: true,
+	/** @param {AppealIncludeContext} context */
+	inspectorDecision: ({ appealId, currentAppealVersion }) => ({
+		where: {
+			appealId,
+			associatedAppealVersion: currentAppealVersion
+		}
+	}),
 	lpaQuestionnaire: {
 		include: {
 			listedBuildingDetails: {
@@ -291,29 +210,54 @@ export const appealDetailsIncludeMap = /** @type {Object} */ {
 			lpaQuestionnaireValidationOutcome: true
 		}
 	},
-	siteVisit: {
+	/** @param {AppealIncludeContext} context */
+	siteVisit: ({ appealId, currentAppealVersion }) => ({
 		where: {
+			appealId,
+			associatedAppealVersion: currentAppealVersion,
 			whoMissedSiteVisit: null
 		},
 		include: {
 			siteVisitType: true
 		}
-	},
-	hearing: {
+	}),
+	/** @param {AppealIncludeContext} context */
+	hearing: ({ appealId, currentAppealVersion }) => ({
+		where: {
+			appealId,
+			associatedAppealVersion: currentAppealVersion
+		},
 		include: {
 			address: true
 		}
-	},
-	inquiry: {
+	}),
+	/** @param {AppealIncludeContext} context */
+	inquiry: ({ appealId, currentAppealVersion }) => ({
+		where: {
+			appealId,
+			associatedAppealVersion: currentAppealVersion
+		},
 		include: {
 			address: true
 		}
-	},
+	}),
 	caseNotes: true,
 	folders: true,
 	representations: true,
-	hearingEstimate: true,
-	inquiryEstimate: true,
+	/** @param {AppealIncludeContext} context */
+	hearingEstimate: ({ appealId, currentAppealVersion }) => ({
+		where: {
+			appealId,
+			associatedAppealVersion: currentAppealVersion
+		}
+	}),
+	/** @param {AppealIncludeContext} context */
+	inquiryEstimate: ({ appealId, currentAppealVersion }) => ({
+		where: {
+			appealId,
+			associatedAppealVersion: currentAppealVersion
+		}
+	}),
 	appealGrounds: {
 		where: {
 			isDeleted: false
@@ -338,13 +282,25 @@ export const appealDetailsIncludeMap = /** @type {Object} */ {
  * @param {K[]} selectedKeys
  * @param {boolean} includeDetails
  * @param {boolean} selectAppealTypeKey
- * @returns {Partial<import('#db-client/models.ts').AppealInclude> | null}
+ * @param {number} appealId
+ * @param {number} appealVersion
+ * @returns { {
+ *   include: Partial<import('#db-client/models.ts').AppealInclude> | null,
+ *   versionedIncludes: K[]
+ * }
  */
 export const buildAppealInclude = (
 	selectedKeys = [],
 	includeDetails = true,
-	selectAppealTypeKey = false
+	selectAppealTypeKey = false,
+	appealId,
+	appealVersion
 ) => {
+	const context = {
+		appealId,
+		currentAppealVersion: appealVersion
+	};
+
 	if (!includeDetails) {
 		if (selectAppealTypeKey) {
 			return {
@@ -359,10 +315,17 @@ export const buildAppealInclude = (
 		throw new Error('Must provide at least one: selectedKeys or selectAppealTypeKey');
 	}
 
+	/** @type {K[]} */
+	const versionedIncludes = [];
+
 	/** @type {Partial<import('#db-client/models.ts').AppealInclude>} */
 	let include = {};
 	for (const key of selectedKeys) {
-		include[key] = appealDetailsIncludeMap[key];
+		const config = appealDetailsIncludeMap[key];
+		if (typeof config === 'function') {
+			versionedIncludes.push(key);
+		}
+		include[key] = typeof config === 'function' ? config(context) : config;
 	}
 
 	if (selectAppealTypeKey && !selectedKeys.some((key) => key === 'appealType')) {
@@ -373,7 +336,7 @@ export const buildAppealInclude = (
 		};
 	}
 
-	return include;
+	return { include, versionedIncludes };
 };
 
 /**
@@ -388,7 +351,22 @@ export const buildAppealInclude = (
  * @returns {Promise<Appeal|undefined>}
  */
 const getAppealById = async (id, includeDetails = true, selectedKeys = [], selectAppealTypeKey) => {
-	const include = buildAppealInclude(selectedKeys, includeDetails, selectAppealTypeKey);
+	const appealVersion = await databaseConnector.appeal.findUnique({
+		where: {
+			id
+		},
+		select: {
+			currentAppealVersion: true
+		}
+	});
+
+	const { include, versionedIncludes } = buildAppealInclude(
+		selectedKeys,
+		includeDetails,
+		selectAppealTypeKey,
+		id,
+		appealVersion?.currentAppealVersion ?? 1
+	);
 
 	const includeFolders = include && include.folders;
 	if (include && 'folders' in include) {
@@ -401,20 +379,25 @@ const getAppealById = async (id, includeDetails = true, selectedKeys = [], selec
 		},
 		include
 	});
+
 	if (appeal) {
+		// remove the array around the things we select with versionedIncludes, we know these are unique per appeal
+		const updatedAppeal = { ...appeal,
+			...Object.fromEntries(versionedIncludes.filter(key => Array.isArray(appeal[key])).map(key => [key, appeal[key]?.[0] ?? undefined])) };
+
 		//@ts-ignore
-		if (includeFolders && !appeal.folders) {
+		if (includeFolders && !updatedAppeal.folders) {
 			if (process.env.NODE_ENV === 'test') {
 				// @ts-ignore
-				appeal.folders = [];
+				updatedAppeal.folders = [];
 			} else {
 				const folders = await getFoldersWithDocumentsAndVersions(id);
 				// @ts-ignore
-				appeal.folders = folders;
+				updatedAppeal.folders = folders;
 			}
 		}
 		// @ts-ignore
-		return appeal;
+		return updatedAppeal;
 	}
 };
 
@@ -442,50 +425,47 @@ const checkAppealExistsById = async (id) => {
  * @returns {Promise<Appeal|undefined>}
  */
 const deprecatedGetAppealById = async (id, options) => {
+	const appealVersion = await databaseConnector.appeal.findUnique({
+		where: { id },
+		select: { currentAppealVersion: true }
+	});
+	if (!appealVersion) {
+		return;
+	}
+
+	const { include, versionedIncludes } = appealDetailsInclude(id, appealVersion.currentAppealVersion);
+
 	const massInclude = {
-		...appealDetailsInclude,
-		representations: options?.omitRepresentations
-			? false
-			: {
-					select: {
-						id: true,
-						representationType: true,
-						representedId: true,
-						status: true,
-						dateCreated: true,
-						isRedacted: true
-					}
-				}
+		...include,
+		...(options?.omitRepresentations && { representations: false })
 	};
+
 	const appeal = await databaseConnector.appeal.findUnique({
 		where: {
 			id
 		},
 		include: massInclude
 	});
+
 	if (appeal) {
+
+		// remove the array around the things we select with versionedIncludes, we know these are unique per appeal
+		const updatedAppeal = { ...appeal,
+			...Object.fromEntries(versionedIncludes.filter(key => Array.isArray(appeal[key])).map(key => [key, appeal[key]?.[0] ?? undefined])) };
+
 		// @ts-ignore
-		if (!appeal.folders) {
+		if (!updatedAppeal.folders) {
 			if (process.env.NODE_ENV === 'test' || options?.omitDocuments) {
 				// @ts-ignore
-				appeal.folders = [];
+				updatedAppeal.folders = [];
 			} else {
-				const folders = await getFoldersWithDocumentsAndVersions(
-					id,
-					false,
-					APPEAL_CASE_STAGE.COSTS,
-					[
-						`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPELLANT_CASE_WITHDRAWAL_LETTER}`,
-						`${APPEAL_CASE_STAGE.APPEAL_DECISION}`,
-						`${APPEAL_CASE_STAGE.CANCELLATION}`
-					]
-				);
+				const folders = await getFoldersWithDocumentsAndVersions(id);
 				// @ts-ignore
-				appeal.folders = folders;
+				updatedAppeal.folders = folders;
 			}
 		}
 		// @ts-ignore
-		return appeal;
+		return updatedAppeal;
 	}
 };
 
@@ -513,27 +493,41 @@ const getAppealTypeById = async (id) => {
  * @returns {Promise<Appeal|undefined|null>}
  */
 const deprecatedGetAppealByAppealReference = async (appealReference) => {
+	const appealVersion = await databaseConnector.appeal.findUnique({
+		where: { reference: appealReference },
+		select: { id: true, currentAppealVersion: true }
+	});
+	if (!appealVersion) {
+		return null;
+	}
+
+	const { include, versionedIncludes } = appealDetailsInclude(appealVersion.id, appealVersion.currentAppealVersion)
+
 	const appeal = await databaseConnector.appeal.findUnique({
 		where: {
 			reference: appealReference
 		},
-		include: appealDetailsInclude
+		include: include
 	});
 
 	if (appeal) {
+		// remove the array around the things we select with versionedIncludes, we know these are unique per appeal
+		const updatedAppeal = { ...appeal,
+			...Object.fromEntries(versionedIncludes.filter(key => Array.isArray(appeal[key])).map(key => [key, appeal[key]?.[0] ?? undefined])) };
+
 		// @ts-ignore
-		if (!appeal.folders) {
+		if (!updatedAppeal.folders) {
 			if (process.env.NODE_ENV === 'test') {
 				// @ts-ignore
-				appeal.folders = [];
+				updatedAppeal.folders = [];
 			} else {
-				const folders = await getFoldersWithDocumentsAndVersions(appeal.id);
+				const folders = await getFoldersWithDocumentsAndVersions(updatedAppeal.id);
 				// @ts-ignore
-				appeal.folders = folders;
+				updatedAppeal.folders = folders;
 			}
 		}
 		// @ts-ignore
-		return appeal;
+		return updatedAppeal;
 	}
 };
 
@@ -655,6 +649,21 @@ const setAppealWithdrawal = (id, withdrawalRequestDate) => {
 	return databaseConnector.appeal.update({
 		data: {
 			withdrawalRequestDate
+		},
+		where: {
+			id
+		}
+	});
+};
+
+/**
+ * @param {number} id
+ * @returns {PrismaPromise<import('#db-client/client.ts').Appeal>}
+ */
+const incrementAppealVersion = (id) => {
+	return databaseConnector.appeal.update({
+		data: {
+			currentAppealVersion: { increment: 1 }
 		},
 		where: {
 			id
@@ -1151,12 +1160,15 @@ const getAppealReference = async (appealId) => {
 };
 
 /**
- * @type {import('#db-client/models.ts').AppealSelect}
+ * @param {number} appealId
+ * @param {number} appealVersion
+ * @returns {import('#db-client/models.ts').AppealSelect}
  **/
-export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
+export const appealDetailsPageDisplaySelect = (appealId, appealVersion) => { return {
 	id: true,
 	reference: true,
 	currentStatus: true,
+	currentAppealVersion: true,
 	applicationReference: true,
 	caseCreatedDate: true,
 	caseValidDate: true,
@@ -1297,6 +1309,10 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 		}
 	},
 	appealTimetable: {
+		where: {
+			appealId: appealId,
+			associatedAppealVersion: appealVersion
+		},
 		select: {
 			id: true,
 			lpaQuestionnaireDueDate: true,
@@ -1337,6 +1353,10 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 		}
 	},
 	inspectorDecision: {
+		where: {
+			appealId: appealId,
+			associatedAppealVersion: appealVersion
+		},
 		select: {
 			outcome: true,
 			decisionLetterGuid: true,
@@ -1358,6 +1378,8 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 	},
 	siteVisit: {
 		where: {
+			appealId: appealId,
+			associatedAppealVersion: appealVersion,
 			whoMissedSiteVisit: null
 		},
 		select: {
@@ -1373,6 +1395,10 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 		}
 	},
 	hearing: {
+		where: {
+			appealId: appealId,
+			associatedAppealVersion: appealVersion
+		},
 		select: {
 			id: true,
 			hearingStartTime: true,
@@ -1391,6 +1417,10 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 		}
 	},
 	inquiry: {
+		where: {
+			appealId: appealId,
+			associatedAppealVersion: appealVersion
+		},
 		select: {
 			id: true,
 			inquiryStartTime: true,
@@ -1419,6 +1449,10 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 		}
 	},
 	hearingEstimate: {
+		where: {
+			appealId: appealId,
+			associatedAppealVersion: appealVersion
+		},
 		select: {
 			id: true,
 			preparationTime: true,
@@ -1427,6 +1461,10 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 		}
 	},
 	inquiryEstimate: {
+		where: {
+			appealId: appealId,
+			associatedAppealVersion: appealVersion
+		},
 		select: {
 			id: true,
 			preparationTime: true,
@@ -1521,23 +1559,58 @@ export const appealDetailsPageDisplaySelect = /** @type {Object} */ {
 			createdAt: 'desc'
 		}
 	}
-};
+}};
+
 
 /**
  * @param {number} id
  * @returns {Promise<Appeal|undefined>}
  */
-const getAppealByIdForPageDisplay = async (id) => {
+const getAppealVersionById = async (id) => {
+	const appealVersion = await databaseConnector.appeal.findUnique({
+		where: {
+			id
+		},
+		select: { currentAppealVersion: true }
+	});
+
+	if (appealVersion) {
+		// @ts-ignore
+		return appealVersion.currentAppealVersion;
+	}
+};
+
+/**
+ * @param {number} id
+ * @param {number} appealVersion
+ * @returns {Promise<Appeal|undefined>}
+ */
+const getAppealByIdForPageDisplay = async (id, appealVersion) => {
+
 	const appeal = await databaseConnector.appeal.findUnique({
 		where: {
 			id
 		},
-		select: appealDetailsPageDisplaySelect
+		select: appealDetailsPageDisplaySelect(id, appealVersion)
 	});
 
+	const versionedIncludes = [
+		'appealTimetable',
+		'inspectorDecision',
+		'siteVisit',
+		'hearing',
+		'inquiry',
+		'hearingEstimate',
+		'inquiryEstimate'
+	]
+
+
 	if (appeal) {
+		const updatedAppeal = { ...appeal,
+			...Object.fromEntries(versionedIncludes.filter(key => Array.isArray(appeal[key])).map(key => [key, appeal[key]?.[0] ?? undefined])) };
+
 		// @ts-ignore
-		return appeal;
+		return updatedAppeal;
 	}
 };
 
@@ -1549,6 +1622,7 @@ const appellantCaseSelect = {
 	reference: true,
 	applicationReference: true,
 	currentStatus: true,
+	currentAppealVersion: true,
 	caseCreatedDate: true,
 	appellantCase: {
 		include: {
@@ -1701,7 +1775,7 @@ const appellantCaseSelect = {
 /**
  * @satisfies {import('#db-client/models.ts').AppealSelect}
  */
-const lpaQuestionnaireCaseSelect = {
+const lpaQuestionnaireCaseSelect = { //need to add appeal version in here
 	id: true,
 	reference: true,
 	applicationReference: true,
@@ -1938,5 +2012,7 @@ export default {
 	checkIfAppealHasAgent,
 	getAppealReference,
 	getFoldersWithDocumentsAndVersions,
-	setMultiAppealEiaScreeningRequired
+	setMultiAppealEiaScreeningRequired,
+	incrementAppealVersion,
+	getAppealVersionById
 };
