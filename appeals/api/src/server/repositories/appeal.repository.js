@@ -882,7 +882,8 @@ const getAppealsWithCompletedEvents = () =>
 							{
 								visitEndTime: {
 									lte: new Date()
-								}
+								},
+								associatedAppealVersion: //
 							},
 							{
 								visitEndTime: null,
