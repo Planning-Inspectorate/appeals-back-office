@@ -64,9 +64,10 @@ The Appeals Back-Office will ingest data regarding the following entities, as so
 
 The Appeals Back-Office will broadcast messages regarding the following entities, as soon as their data is saved in the system.
 
-| Topic Name      | Payload Schema                                                                                                 | Producer(s) | Known Consumers |
-| --------------- | -------------------------------------------------------------------------------------------------------------- | ----------- | --------------- |
-| appeal-has      | [Appeal HAS](https://github.com/Planning-Inspectorate/data-model/blob/main/schemas/appeal-has.schema.json)     | BO          | FO, ODW         |
-| appeal-document | [Document](https://github.com/Planning-Inspectorate/data-model/blob/main/schemas/appeal-document.schema.json)  | BO          | FO, ODW         |
-| service-user    | [Service User](https://github.com/Planning-Inspectorate/data-model/blob/main/schemas/service-user.schema.json) | BO          | FO, ODW         |
-| event           | [Event](https://github.com/Planning-Inspectorate/data-model/blob/main/schemas/appeal-event.schema.json)        | BO          | FO, ODW         |
+| Topic Name      | Payload Schema                                                                                                     | Producer(s) | Known Consumers |
+| --------------- | ------------------------------------------------------------------------------------------------------------------ | ----------- | --------------- |
+| appeal-has      | [Appeal HAS](https://github.com/Planning-Inspectorate/data-model/blob/main/schemas/appeal-has.schema.json)         | BO          | FO, ODW         |
+| appeal-group-c  | [Appeal Group C](https://github.com/Planning-Inspectorate/data-model/blob/main/schemas/appeal-group-c.schema.json) | BO          | FO, ODW         |
+| appeal-document | [Document](https://github.com/Planning-Inspectorate/data-model/blob/main/schemas/appeal-document.schema.json)      | BO          | FO, ODW         |
+| service-user    | [Service User](https://github.com/Planning-Inspectorate/data-model/blob/main/schemas/service-user.schema.json)     | BO          | FO, ODW         |
+| event           | [Event](https://github.com/Planning-Inspectorate/data-model/blob/main/schemas/appeal-event.schema.json)            | BO          | FO, ODW         |

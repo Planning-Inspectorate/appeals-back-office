@@ -2,6 +2,7 @@
 import { producers } from '#infrastructure/topics.js';
 import { fullPlanningAppeal, householdAppeal } from '#tests/appeals/mocks.js';
 import { jest } from '@jest/globals';
+import { GENERIC_APPEAL_CASE_TYPES } from '@pins/appeals/utils/appeal-type-checks.js';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { broadcastAppeal } from '../../integrations.broadcasters/appeal.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
@@ -150,6 +151,82 @@ describe('broadcastAppeal', () => {
 			expect(sentEvent).not.toHaveProperty('ownershipCertificate');
 		}
 	);
+
+	it.each(GENERIC_APPEAL_CASE_TYPES)(
+		'broadcasts correct schema and topic for generic appeal type %s',
+		async (type) => {
+			const testCase = structuredClone(householdAppeal);
+			testCase.reference = '6000001';
+			testCase.appealType = { key: type };
+			testCase.inspectorDecision = {
+				outcome: 'allowed',
+				caseDecisionOutcomeDate: new Date('2026-06-01T00:00:00.000Z')
+			};
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(testCase);
+
+			await broadcastAppeal(123);
+
+			// @ts-ignore
+			expect(global.mockSendEvents).toHaveBeenCalledWith(
+				producers.boCaseDataGroupC,
+				expect.arrayContaining([
+					expect.objectContaining({
+						caseReference: '6000001',
+						caseType: type
+					})
+				]),
+				expect.any(String),
+				expect.any(Object)
+			);
+		}
+	);
+
+	it('skips broadcast for generic appeal when no inspector decision or costs decision exists', async () => {
+		const testCase = structuredClone(householdAppeal);
+		testCase.reference = '6000001';
+		testCase.appealType = { key: APPEAL_CASE_TYPE.TPO };
+		testCase.inspectorDecision = null;
+
+		// @ts-ignore
+		databaseConnector.appeal.findUnique.mockResolvedValue(testCase);
+		// @ts-ignore
+		databaseConnector.document.findFirst.mockResolvedValue(null);
+
+		const result = await broadcastAppeal(123);
+
+		expect(result).toBe(true);
+		// @ts-ignore
+		expect(global.mockSendEvents).not.toHaveBeenCalled();
+	});
+
+	it('broadcasts generic appeal when inspector decision is null but costs decision exists', async () => {
+		const testCase = structuredClone(householdAppeal);
+		testCase.reference = '6000001';
+		testCase.appealType = { key: APPEAL_CASE_TYPE.TPO };
+		testCase.inspectorDecision = null;
+
+		// @ts-ignore
+		databaseConnector.appeal.findUnique.mockResolvedValue(testCase);
+		// @ts-ignore
+		databaseConnector.document.findFirst.mockResolvedValue({ id: 1, guid: 'abc-123' });
+
+		await broadcastAppeal(123);
+
+		// @ts-ignore
+		expect(global.mockSendEvents).toHaveBeenCalledWith(
+			producers.boCaseDataGroupC,
+			expect.arrayContaining([
+				expect.objectContaining({
+					caseReference: '6000001',
+					caseType: APPEAL_CASE_TYPE.TPO
+				})
+			]),
+			expect.any(String),
+			expect.any(Object)
+		);
+	});
 
 	it('does not broadcast significant changes details if anySignificantChanges is No', async () => {
 		const testCase = structuredClone(fullPlanningAppeal);
