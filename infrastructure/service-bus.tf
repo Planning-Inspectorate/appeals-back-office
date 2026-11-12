@@ -97,6 +97,12 @@ resource "azurerm_servicebus_topic" "appeal_s78" {
   default_message_ttl = var.sb_ttl.default
 }
 
+resource "azurerm_servicebus_topic" "appeal_group_c" {
+  name                = var.sb_topic_names.events.appeal_group_c
+  namespace_id        = local.service_bus.id
+  default_message_ttl = var.sb_ttl.default
+}
+
 resource "azurerm_servicebus_topic" "appeal_document" {
   name                = var.sb_topic_names.events.document
   namespace_id        = local.service_bus.id
