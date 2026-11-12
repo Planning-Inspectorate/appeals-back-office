@@ -3,6 +3,7 @@ import mergeMaps from '#utils/merge-maps.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
 	beforeExpeditedOriginalApplicationCutOff,
+	isGenericAppealType,
 	isS78ExpeditedAppealType
 } from '@pins/appeals/utils/appeal-type-checks.js';
 import {
@@ -129,6 +130,11 @@ function createIntegrationMap(mappingRequest) {
 	const { appeal } = mappingRequest;
 
 	const caseData = createMap(integrationMappers.integrationSharedMappers, mappingRequest);
+
+	if (isGenericAppealType(appeal.appealType?.key)) {
+		const groupC = createMap(integrationMappers.integrationGroupCMappers, mappingRequest);
+		return mergeMaps(caseData, groupC);
+	}
 
 	switch (appeal.appealType?.key) {
 		//TODO: validate with Data Model

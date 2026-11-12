@@ -529,6 +529,8 @@ export const publishCostsDecision = async (
 		azureAdUserId,
 		details: auditTrailDetails
 	});
+
+	await broadcasters.broadcastAppeal(appeal.id);
 };
 
 /**

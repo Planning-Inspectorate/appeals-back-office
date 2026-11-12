@@ -1502,6 +1502,7 @@ describe('decision routes', () => {
 				}
 			});
 			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
+			expect(global.mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(genericAppeal.id);
 		});
 	});
 

@@ -12,7 +12,11 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { EventType } from '@pins/event-client';
-import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_CASE_STAGE,
+	APPEAL_CASE_TYPE,
+	APPEAL_DOCUMENT_TYPE
+} from '@planning-inspectorate/data-model';
 import { schemas, validateFromSchema } from '../integrations.validators.js';
 
 /**
@@ -108,12 +112,14 @@ export const broadcastAppeal = async (appealId, updateType = EventType.Update) =
 		return false;
 	}
 
-	// ODW Group C schema broadcast pending group-c integration mapper
-	if (isGenericAppealType(appeal.appealType?.key)) {
-		pino.info(
-			`Skipping broadcast for generic appeal ${appealId} pending Group C integration mapper.`
-		);
-		return true;
+	if (isGenericAppealType(appeal.appealType?.key) && !appeal.inspectorDecision) {
+		const costsDecisionExists = await hasCostsDecision(appealId);
+		if (!costsDecisionExists) {
+			pino.info(
+				`Skipping broadcast for generic appeal ${appealId} as no appeal or costs decision has been issued.`
+			);
+			return true;
+		}
 	}
 
 	// get first rep by type for representation submission dates
@@ -176,6 +182,10 @@ export const broadcastAppeal = async (appealId, updateType = EventType.Update) =
  * @returns {string}
  */
 function getSchemaForCaseType(caseType) {
+	if (isGenericAppealType(caseType)) {
+		return schemas.events.appealGroupC;
+	}
+
 	switch (caseType) {
 		case APPEAL_CASE_TYPE.D:
 		case APPEAL_CASE_TYPE.ZP:
@@ -192,6 +202,10 @@ function getSchemaForCaseType(caseType) {
  * @returns {string}
  */
 function getTopicForCaseType(caseType) {
+	if (isGenericAppealType(caseType)) {
+		return producers.boCaseDataGroupC;
+	}
+
 	switch (caseType) {
 		case APPEAL_CASE_TYPE.D:
 		case APPEAL_CASE_TYPE.ZP:
@@ -201,3 +215,26 @@ function getTopicForCaseType(caseType) {
 			return producers.boCaseDataS78;
 	}
 }
+
+/**
+ * @param {number} appealId
+ * @returns {Promise<boolean>}
+ */
+const hasCostsDecision = async (appealId) => {
+	const costsDocument = await databaseConnector.document.findFirst({
+		where: {
+			caseId: appealId,
+			isDeleted: false,
+			folder: {
+				path: {
+					in: [
+						`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER}`,
+						`${APPEAL_CASE_STAGE.COSTS}/${APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER}`
+					]
+				}
+			}
+		}
+	});
+
+	return Boolean(costsDocument);
+};

@@ -32,6 +32,7 @@ const { value, error } = schema.validate({
 		hostname: environment.SERVICE_BUS_HOSTNAME,
 		topicAppealHas: environment.SB_TOPIC_NAME_APPEAL_HAS || 'appeal-has',
 		topicAppealS78: environment.SB_TOPIC_NAME_APPEAL_S78 || 'appeal-s78',
+		topicAppealGroupC: environment.SB_TOPIC_NAME_APPEAL_GROUP_C || 'appeal-group-c',
 		topicAppealDocument: environment.SB_TOPIC_NAME_APPEAL_DOCUMENT || 'appeal-document',
 		topicAppealServiceUser: environment.SB_TOPIC_NAME_APPEAL_SERVICE_USER || 'appeal-service-user',
 		topicAppealEvent: environment.SB_TOPIC_NAME_APPEAL_EVENT || 'appeal-event',
