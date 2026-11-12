@@ -2187,6 +2187,16 @@ export const procedureTypesData = [
 		id: 3,
 		name: 'Inquiry',
 		key: 'inquiry'
+	},
+	{
+		id: 4,
+		name: 'Part 1',
+		key: 'writtenPart1'
+	},
+	{
+		id: 5,
+		name: 'Written Part 2',
+		key: 'writtenPart2'
 	}
 ];
 
