@@ -9,9 +9,9 @@ import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 export function appealProcedureNameToLabelText(procedureTypeName) {
 	switch (procedureTypeName) {
 		case PROCEDURE_TYPE_NAME.WRITTEN_PART_2:
-			return 'Written representations (Part 2)';
+			return 'Written representations part 2';
 		case PROCEDURE_TYPE_NAME.WRITTEN_PART_1:
-			return 'Written representations (Part 1)';
+			return 'Written representations part 1';
 		case PROCEDURE_TYPE_NAME.WRITTEN:
 			return 'Written representations';
 		case PROCEDURE_TYPE_NAME.HEARING:

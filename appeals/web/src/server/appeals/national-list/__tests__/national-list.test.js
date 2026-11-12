@@ -151,7 +151,7 @@ describe('national-list', () => {
 			expect(unprettifiedElement.innerHTML).toContain('temp3</option>');
 		});
 
-		it('should render correct appeal procedure dropdown in filters', async () => {
+		it('should render correct appeal procedure types dropdown in filters', async () => {
 			nock('http://test/').get('/appeals?pageNumber=1&pageSize=30').reply(200, appealsNationalList);
 
 			const response = await request.get(baseUrl);
@@ -159,7 +159,9 @@ describe('national-list', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('Hearing</option>');
 			expect(unprettifiedElement.innerHTML).toContain('Inquiry</option>');
-			expect(unprettifiedElement.innerHTML).toContain('Written representations');
+			expect(unprettifiedElement.innerHTML).toContain('Written representations</option>');
+			expect(unprettifiedElement.innerHTML).toContain('Written representations part 1</option>');
+			expect(unprettifiedElement.innerHTML).toContain('Written representations part 2</option>');
 		});
 
 		it('should render national list - search term', async () => {
