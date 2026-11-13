@@ -1416,6 +1416,7 @@ type CreateInquiry = {
 	proofOfEvidenceAndWitnessesDueDate: Date | string;
 	caseManagementConferenceDueDate: Date | string;
 	planningObligationDueDate: Date | string | undefined;
+	finalCommentsDueDate: Date | string | undefined;
 	isStartCase: boolean;
 };
 
