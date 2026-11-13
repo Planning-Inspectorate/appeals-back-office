@@ -53,6 +53,7 @@ export const postInquiry = async (req, res) => {
 			'lpaQuestionnaireDueDate',
 			'statementDueDate',
 			'ipCommentsDueDate',
+			'finalCommentsDueDate',
 			'statementOfCommonGroundDueDate',
 			'proofOfEvidenceAndWitnessesDueDate',
 			'caseManagementConferenceDueDate',

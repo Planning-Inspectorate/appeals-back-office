@@ -1009,7 +1009,7 @@ const buildInquiryRequest = (inquiry, hasObligation) => {
 	};
 
 	/**
-	 * @type {{inquiryStartTime: string, lpaQuestionnaireDueDate: string, statementDueDate: string, ipCommentsDueDate: string, statementOfCommonGroundDueDate: string, proofOfEvidenceAndWitnessesDueDate: string, caseManagementConferenceDueDate: string, planningObligationDueDate?: string, estimatedDays?: string, address?: {addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string}}}
+	 * @type {{inquiryStartTime: string, lpaQuestionnaireDueDate: string, statementDueDate: string, ipCommentsDueDate: string, finalCommentsDueDate?: string, statementOfCommonGroundDueDate: string, proofOfEvidenceAndWitnessesDueDate: string, caseManagementConferenceDueDate: string, planningObligationDueDate?: string, estimatedDays?: string, address?: {addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string}}}
 	 */
 	const confirmDetails = {
 		inquiryStartTime: dayMonthYearHourMinuteToISOString({
@@ -1037,6 +1037,13 @@ const buildInquiryRequest = (inquiry, hasObligation) => {
 			day: inquiry['ip-comments-due-date-day'],
 			month: inquiry['ip-comments-due-date-month'],
 			year: inquiry['ip-comments-due-date-year']
+		}),
+		...(inquiry['final-comments-due-date-day'] && {
+			finalCommentsDueDate: dayMonthYearHourMinuteToISOString({
+				day: inquiry['final-comments-due-date-day'],
+				month: inquiry['final-comments-due-date-month'],
+				year: inquiry['final-comments-due-date-year']
+			})
 		}),
 		statementOfCommonGroundDueDate: dayMonthYearHourMinuteToISOString({
 			day: inquiry['statement-of-common-ground-due-date-day'],

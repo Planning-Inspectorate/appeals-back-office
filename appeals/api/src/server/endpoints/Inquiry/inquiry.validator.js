@@ -57,6 +57,15 @@ export const postInquiryValidator = composeMiddleware(
 		.if((_, { req }) => req.body.isStartCase)
 		.isISO8601()
 		.withMessage('caseManagementConferenceDueDate must be a valid date'),
+	body('finalCommentsDueDate')
+		.optional({ checkFalsy: true })
+		.custom(() =>
+			validateDateParameter({
+				parameterName: 'finalCommentsDueDate',
+				isRequired: false
+			})
+		)
+		.withMessage('finalCommentsDueDate must be a valid date'),
 	body('planningObligationDueDate')
 		.optional({ checkFalsy: true })
 		.custom(() =>
