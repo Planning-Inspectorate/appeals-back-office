@@ -24,6 +24,7 @@ import { notifySend } from '#notify/notify-send.js';
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
+import { checkCostsAppliedFor } from '#utils/check-costs-applied-for.js';
 import { getPageCount } from '#utils/database-pagination.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
@@ -35,6 +36,10 @@ import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { addWeeks, format } from 'date-fns';
 import { formatDocument } from './documents.formatter.js';
 import * as service from './documents.service.js';
+import {
+	documentTypesIncludeAppellantCostsApplicationOrWithdrawal,
+	documentTypesIncludeLPACostsApplicationOrWithdrawal
+} from './documents.service.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Folder} Folder */
 /** @typedef {import('@pins/appeals.api').Schema.AuditTrail} AuditTrail */
@@ -134,12 +139,26 @@ export const addDocuments = async (req, res) => {
 
 		const documentTypes = documentInfo.documents.map((doc) => doc?.documentType);
 
-		if (initialDocumentsInFolder.length === 0) {
-			await updateDocumentVisibilityBooleans(
-				documentTypes,
+		if (
+			initialDocumentsInFolder.length === 0 &&
+			documentTypes.includes(APPEAL_DOCUMENT_TYPE.CHANGED_DESCRIPTION)
+		) {
+			await setDocumentVisibilityBoolean(
 				appeal.id,
 				Number(req.body.appellantCaseId),
+				'changedDevelopmentDescription',
 				true
+			);
+		}
+
+		if (
+			documentTypesIncludeAppellantCostsApplicationOrWithdrawal(documentTypes) ||
+			documentTypesIncludeLPACostsApplicationOrWithdrawal(documentTypes)
+		) {
+			await updateCostsAppliedForBooleans(
+				documentTypes,
+				appeal.id,
+				Number(req.body.appellantCaseId)
 			);
 		}
 
@@ -829,6 +848,48 @@ export const updateDocumentVisibilityBooleans = async (
 		const { count } = await lpaQuestionnaireRepository.updateLpaCostsAppliedFor(appealId, visible);
 		if (count) {
 			logger.info(`LPAQ for ${appealId} updated, with lpaCostsAppliedFor=${visible}`);
+			await broadcasters.broadcastAppeal(appealId);
+		} else {
+			// don't error if there isn't an LPAQ
+			logger.warn(`no LPAQ for ${appealId}, lpaCostsAppliedFor not updated`);
+		}
+	}
+};
+
+/**
+ * @param {string[]} documentTypes
+ * @param {number} appealId
+ * @param {number} appellantCaseId
+ */
+export const updateCostsAppliedForBooleans = async (documentTypes, appealId, appellantCaseId) => {
+	const appellantCostsDocument =
+		documentTypesIncludeAppellantCostsApplicationOrWithdrawal(documentTypes);
+
+	const lpaCostsDocument = documentTypesIncludeLPACostsApplicationOrWithdrawal(documentTypes);
+
+	if (!(appellantCostsDocument || lpaCostsDocument)) {
+		return;
+	}
+
+	const { appellantCostsAppliedFor, lpaCostsAppliedFor } = await checkCostsAppliedFor(appealId);
+
+	if (appellantCostsDocument) {
+		await setDocumentVisibilityBoolean(
+			appealId,
+			appellantCaseId,
+			'appellantCostsAppliedFor',
+			appellantCostsAppliedFor
+		);
+	}
+
+	if (lpaCostsDocument && appealId) {
+		// if adding or removing an LPA cost document, then set lpaCostsAppliedFor accordingly
+		const { count } = await lpaQuestionnaireRepository.updateLpaCostsAppliedFor(
+			appealId,
+			lpaCostsAppliedFor
+		);
+		if (count) {
+			logger.info(`LPAQ for ${appealId} updated, with lpaCostsAppliedFor=${lpaCostsAppliedFor}`);
 			await broadcasters.broadcastAppeal(appealId);
 		} else {
 			// don't error if there isn't an LPAQ

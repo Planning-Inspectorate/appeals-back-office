@@ -140,6 +140,38 @@ export const getCostDocumentCounts = async (appealId) => {
 };
 
 /**
+ * @param {string[]} documentTypes
+ * @return {boolean}
+ */
+export function documentTypesIncludeAppellantCostsApplicationOrWithdrawal(documentTypes) {
+	const appellantApplicationAndWithdrawalDocumentTypes = [
+		APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION,
+		APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_WITHDRAWAL
+	];
+
+	// @ts-ignore
+	return documentTypes.some((documentType) =>
+		appellantApplicationAndWithdrawalDocumentTypes.includes(documentType)
+	);
+}
+
+/**
+ * @param {string[]} documentTypes
+ * @return {boolean}
+ */
+export function documentTypesIncludeLPACostsApplicationOrWithdrawal(documentTypes) {
+	const lpaApplicationAndWithdrawalDocumentTypes = [
+		APPEAL_DOCUMENT_TYPE.LPA_COSTS_APPLICATION,
+		APPEAL_DOCUMENT_TYPE.LPA_COSTS_WITHDRAWAL
+	];
+
+	// @ts-ignore
+	return documentTypes.some((documentType) =>
+		lpaApplicationAndWithdrawalDocumentTypes.includes(documentType)
+	);
+}
+
+/**
  * @param {number} appealId
  * @returns {Promise<Folder[]>}
  */

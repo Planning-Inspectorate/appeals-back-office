@@ -1,3 +1,8 @@
+export interface CostsAppliedFor {
+	appellantCostsAppliedFor: boolean;
+	lpaCostsAppliedFor: boolean;
+}
+
 export interface CostsDecision {
 	awaitingAppellantCostsDecision: boolean;
 	awaitingLpaCostsDecision: boolean;
