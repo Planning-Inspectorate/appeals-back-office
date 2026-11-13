@@ -133,10 +133,13 @@ jobs:
           testRunTitle: 'Appeals E2E - ${{ parameters.Environment }}'
         displayName: "Publish Test Results"
 
-      - script: npm run cy:report:generate
-        workingDirectory: $(System.DefaultWorkingDirectory)/appeals/e2e
-        condition: always()
-        displayName: "Generate HTML Report"
+      - template: steps/node_script.yml@templates
+        parameters:
+          displayName: "Generate HTML Report"
+          nodeVersion: 22
+          script: npm run cy:report:generate
+          workingDirectory: $(System.DefaultWorkingDirectory)/appeals/e2e
+          condition: always()
 
       - task: PublishBuildArtifacts@1
         condition: always()
