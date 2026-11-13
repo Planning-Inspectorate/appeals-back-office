@@ -171,13 +171,22 @@ export const spec = {
 		AppealTypeUpdateRequest: {
 			newAppealTypeId: 32
 		},
+		AppealType: {
+			id: 1,
+			type: 'Appeal type name',
+			code: 'A',
+			enabled: false,
+			shorthand: 'HAS',
+			suppressNotifications: false
+		},
 		AppealTypes: [
 			{
 				type: 'Appeal type name',
 				code: 'A',
 				enabled: false,
 				shorthand: 'HAS',
-				id: 1
+				id: 1,
+				suppressNotifications: false
 			}
 		],
 		CaseTeam: {

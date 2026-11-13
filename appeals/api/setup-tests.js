@@ -1,7 +1,7 @@
 // @ts-nocheck
 import config from '#config/config.js';
 import notify from '#notify/notify-send.js';
-import { jest } from '@jest/globals';
+import { beforeEach, jest } from '@jest/globals';
 import { NODE_ENV_PRODUCTION } from '@pins/appeals/constants/support.js';
 
 const mockValidateBlob = jest.fn().mockResolvedValue(true);
@@ -191,6 +191,7 @@ const mockDocumentVersionAuditCreate = jest.fn().mockResolvedValue({});
 const mockDocumentVersionAuditDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppealTypes = jest.fn().mockResolvedValue({});
 const mockAppealTypesFindFirst = jest.fn().mockResolvedValue({});
+const mockAppealTypeUpdate = jest.fn().mockResolvedValue({});
 const mockNeighbouringSites = jest.fn().mockResolvedValue({});
 const mockNeighbouringSitesDeleteMany = jest.fn().mockResolvedValue({});
 const mockListedBuildingSelected = jest.fn().mockResolvedValue({});
@@ -245,11 +246,16 @@ const mockEnforcementNoticeAppealOutcomeUpsert = jest.fn().mockResolvedValue({})
 
 const mockNotifySend = jest.fn().mockImplementation(async (params) => {
 	const { doNotMockNotifySend = false, ...options } = params || {};
-	if (doNotMockNotifySend) {
+	if (doNotMockNotifySend || mockNotifySend.useRealNotifySend) {
 		return notify.notifySend(options);
 	} else {
-		return Promise.resolve();
+		return Promise.resolve(true);
 	}
+});
+mockNotifySend.useRealNotifySend = false;
+
+beforeEach(() => {
+	mockNotifySend.useRealNotifySend = false;
 });
 
 class MockPrismaClient {
@@ -328,7 +334,8 @@ class MockPrismaClient {
 	get appealType() {
 		return {
 			findMany: mockAppealTypes,
-			findFirst: mockAppealTypesFindFirst
+			findFirst: mockAppealTypesFindFirst,
+			update: mockAppealTypeUpdate
 		};
 	}
 

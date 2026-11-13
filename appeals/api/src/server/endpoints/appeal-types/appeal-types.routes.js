@@ -1,6 +1,7 @@
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
-import { getAppealTypes } from './appeal-types.controller.js';
+import { getAppealTypes, patchAppealTypeNotifySuppression } from './appeal-types.controller.js';
+import { patchAppealTypeNotifySuppressionValidator } from './appeal-types.validators.js';
 
 const router = createRouter();
 
@@ -27,6 +28,39 @@ router.get(
 		#swagger.responses[400] = {}
 	 */
 	asyncHandler(getAppealTypes)
+);
+
+router.patch(
+	'/appeal-types/:id/notify-suppression',
+	/*
+		#swagger.tags = ['Appeal Types']
+		#swagger.path = '/appeals/appeal-types/{id}/notify-suppression'
+		#swagger.description = 'Updates notification suppression flag for an appeal type'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: false,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.requestBody = {
+			in: 'body',
+			description: 'Appeal type notification suppression details',
+			schema: {
+				type: 'object',
+				properties: {
+					suppressNotifications: { type: 'boolean' }
+				},
+				required: ['suppressNotifications']
+			}
+		}
+		#swagger.responses[200] = {
+			description: 'Updated appeal type',
+			schema: { $ref: '#/components/schemas/AppealType' }
+		}
+		#swagger.responses[400] = {}
+		#swagger.responses[500] = {}
+	 */
+	patchAppealTypeNotifySuppressionValidator,
+	asyncHandler(patchAppealTypeNotifySuppression)
 );
 
 export { router as appealTypeRoutes };

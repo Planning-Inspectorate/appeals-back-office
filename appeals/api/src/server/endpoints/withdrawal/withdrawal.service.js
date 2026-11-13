@@ -6,7 +6,6 @@ import transitionState from '#state/transition-state.js';
 import { getFeedbackLinkFromAppealTypeKey } from '#utils/feedback-form-link.js';
 import { getEnforcementReference } from '#utils/get-enforcement-reference.js';
 import { FEEDBACK_FORM_LINKS } from '@pins/appeals/constants/common.js';
-import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { getEventType } from '@pins/appeals/utils/event-type.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
@@ -34,64 +33,63 @@ export const publishWithdrawal = async (
 		new Date(withdrawalRequestDate)
 	);
 
-	const isGeneric = isGenericAppealType(appeal.appealType?.key);
-	if (!isGeneric) {
-		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
-		const lpaEmail = appeal.lpa?.email || '';
+	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+	const lpaEmail = appeal.lpa?.email || '';
 
-		const eventType = getEventType(appeal);
-		const enforcementReference = await getEnforcementReference(appeal);
-		const personalisation = {
-			appeal_reference_number: appeal.reference,
-			lpa_reference: appeal.applicationReference || '',
-			...(enforcementReference && { enforcement_reference: enforcementReference }),
-			site_address: siteAddress,
-			withdrawal_date: formatDate(new Date(withdrawalRequestDate || ''), false),
-			event_type: eventType,
-			event_set: !!eventType,
-			team_email_address: await getTeamEmailFromAppealId(appeal.id)
-		};
+	const eventType = getEventType(appeal);
+	const enforcementReference = await getEnforcementReference(appeal);
+	const personalisation = {
+		appeal_reference_number: appeal.reference,
+		lpa_reference: appeal.applicationReference || '',
+		...(enforcementReference && { enforcement_reference: enforcementReference }),
+		site_address: siteAddress,
+		withdrawal_date: formatDate(new Date(withdrawalRequestDate || ''), false),
+		event_type: eventType,
+		event_set: !!eventType,
+		team_email_address: await getTeamEmailFromAppealId(appeal.id)
+	};
 
-		if (recipientEmail) {
-			await notifySend({
-				azureAdUserId,
-				templateName: 'appeal-withdrawn-appellant',
-				notifyClient,
-				recipientEmail,
-				personalisation: {
-					...personalisation,
-					feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType?.key)
-				}
-			});
+	if (recipientEmail) {
+		await notifySend({
+			azureAdUserId,
+			templateName: 'appeal-withdrawn-appellant',
+			notifyClient,
+			recipientEmail,
+			personalisation: {
+				...personalisation,
+				feedback_link: getFeedbackLinkFromAppealTypeKey(appeal.appealType?.key)
+			}
+		});
+	}
 
-			await notifySend({
-				azureAdUserId,
-				templateName: 'appeal-withdrawn-lpa',
-				notifyClient,
-				recipientEmail: lpaEmail,
-				personalisation: {
-					...personalisation,
-					feedback_link: FEEDBACK_FORM_LINKS.LPA
-				}
-			});
-		}
+	if (lpaEmail) {
+		await notifySend({
+			azureAdUserId,
+			templateName: 'appeal-withdrawn-lpa',
+			notifyClient,
+			recipientEmail: lpaEmail,
+			personalisation: {
+				...personalisation,
+				feedback_link: FEEDBACK_FORM_LINKS.LPA
+			}
+		});
+	}
 
-		if (appeal.appealRule6Parties && appeal.appealRule6Parties.length > 0) {
-			appeal.appealRule6Parties.forEach(async (party) => {
-				if (party.serviceUser?.email) {
-					await notifySend({
-						azureAdUserId,
-						templateName: 'appeal-withdrawn-lpa',
-						notifyClient,
-						recipientEmail: party.serviceUser.email,
-						personalisation: {
-							...personalisation,
-							feedback_link: FEEDBACK_FORM_LINKS.LPA
-						}
-					});
-				}
-			});
-		}
+	if (appeal.appealRule6Parties && appeal.appealRule6Parties.length > 0) {
+		appeal.appealRule6Parties.forEach(async (party) => {
+			if (party.serviceUser?.email) {
+				await notifySend({
+					azureAdUserId,
+					templateName: 'appeal-withdrawn-lpa',
+					notifyClient,
+					recipientEmail: party.serviceUser.email,
+					personalisation: {
+						...personalisation,
+						feedback_link: FEEDBACK_FORM_LINKS.LPA
+					}
+				});
+			}
+		});
 	}
 
 	if (result) {

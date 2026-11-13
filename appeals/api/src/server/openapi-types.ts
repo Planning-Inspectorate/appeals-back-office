@@ -936,6 +936,21 @@ export interface AppealTypeUpdateRequest {
 	newAppealTypeId?: number;
 }
 
+export interface AppealType {
+	/** @example 1 */
+	id?: number;
+	/** @example "Appeal type name" */
+	type?: string;
+	/** @example "A" */
+	code?: string;
+	/** @example false */
+	enabled?: boolean;
+	/** @example "HAS" */
+	shorthand?: string;
+	/** @example false */
+	suppressNotifications?: boolean;
+}
+
 export type AppealTypes = {
 	/** @example "Appeal type name" */
 	type?: string;
@@ -947,6 +962,8 @@ export type AppealTypes = {
 	shorthand?: string;
 	/** @example 1 */
 	id?: number;
+	/** @example false */
+	suppressNotifications?: boolean;
 }[];
 
 export interface CaseTeam {

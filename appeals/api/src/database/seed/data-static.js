@@ -41,115 +41,134 @@ export const appealTypes = [
 		type: APPEAL_TYPE.HOUSEHOLDER,
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.HOUSEHOLDER,
 		processCode: 'HAS',
-		enabled: true
+		enabled: true,
+		suppressNotifications: false
 	},
 	{
 		key: APPEAL_CASE_TYPE.C,
 		type: APPEAL_TYPE.ENFORCEMENT_NOTICE,
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.ENFORCEMENT_NOTICE,
-		enabled: false
+		enabled: false,
+		suppressNotifications: false
 	},
 	{
 		key: APPEAL_CASE_TYPE.F,
 		type: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.ENFORCEMENT_LISTED_BUILDING,
-		enabled: false
+		enabled: false,
+		suppressNotifications: false
 	},
 	{
 		key: APPEAL_CASE_TYPE.G,
 		type: APPEAL_TYPE.DISCONTINUANCE_NOTICE,
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.DISCONTINUANCE_NOTICE,
-		enabled: true
+		enabled: true,
+		suppressNotifications: true
 	},
 	{
 		key: APPEAL_CASE_TYPE.H,
 		type: APPEAL_TYPE.ADVERTISEMENT,
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.ADVERTISEMENT,
-		enabled: false
+		enabled: false,
+		suppressNotifications: false
 	},
 	{
 		key: APPEAL_CASE_TYPE.L,
 		type: APPEAL_TYPE.COMMUNITY_INFRASTRUCTURE_LEVY,
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.COMMUNITY_INFRASTRUCTURE_LEVY,
-		enabled: true
+		enabled: true,
+		suppressNotifications: true
 	},
 	{
 		key: APPEAL_CASE_TYPE.Q,
 		type: APPEAL_TYPE.PLANNING_OBLIGATION,
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.PLANNING_OBLIGATION,
-		enabled: true
+		enabled: true,
+		suppressNotifications: true
 	},
 	{
 		key: APPEAL_CASE_TYPE.S,
 		type: APPEAL_TYPE.AFFORDABLE_HOUSING_OBLIGATION,
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.AFFORDABLE_HOUSING_OBLIGATION,
-		enabled: false
+		enabled: false,
+		suppressNotifications: false
 	},
 	{
 		key: APPEAL_CASE_TYPE.V,
 		type: APPEAL_TYPE.CALL_IN_APPLICATION,
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.CALL_IN_APPLICATION,
-		enabled: false
+		enabled: false,
+		suppressNotifications: false
 	},
 	{
 		key: APPEAL_CASE_TYPE.W,
 		type: APPEAL_TYPE.S78,
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.S78,
-		enabled: false
+		enabled: false,
+		suppressNotifications: false
 	},
 	{
 		key: APPEAL_CASE_TYPE.X,
 		type: APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE,
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.LAWFUL_DEVELOPMENT_CERTIFICATE,
-		enabled: false
+		enabled: false,
+		suppressNotifications: false
 	},
 	{
 		key: APPEAL_CASE_TYPE.Y,
 		type: APPEAL_TYPE.PLANNED_LISTED_BUILDING,
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.PLANNED_LISTED_BUILDING,
-		enabled: false
+		enabled: false,
+		suppressNotifications: false
 	},
 	{
 		key: APPEAL_CASE_TYPE.ZA,
 		type: APPEAL_TYPE.CAS_ADVERTISEMENT,
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.CAS_ADVERTISEMENT,
-		enabled: false
+		enabled: false,
+		suppressNotifications: false
 	},
 	{
 		key: APPEAL_CASE_TYPE.ZP,
 		type: APPEAL_TYPE.CAS_PLANNING,
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.CAS_PLANNING,
-		enabled: false
+		enabled: false,
+		suppressNotifications: false
 	},
 	{
 		key: APPEAL_CASE_TYPE.TPO,
 		type: APPEAL_TYPE.TREE_PRESERVATION_ORDER,
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.TREE_PRESERVATION_ORDER,
-		enabled: true
+		enabled: true,
+		suppressNotifications: true
 	},
 	{
 		key: APPEAL_CASE_TYPE.TRN,
 		type: APPEAL_TYPE.TREE_REPLACEMENT_NOTICE,
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.TREE_REPLACEMENT_NOTICE,
-		enabled: true
+		enabled: true,
+		suppressNotifications: true
 	},
 	{
 		key: APPEAL_CASE_TYPE.HH,
 		type: APPEAL_TYPE.HIGH_HEDGES,
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.HIGH_HEDGES,
-		enabled: true
+		enabled: true,
+		suppressNotifications: true
 	},
 	{
 		key: APPEAL_CASE_TYPE.HR,
 		type: APPEAL_TYPE.HEDGEROWS,
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.HEDGEROWS,
-		enabled: true
+		enabled: true,
+		suppressNotifications: true
 	},
 	{
 		key: APPEAL_CASE_TYPE.ENV,
 		type: APPEAL_TYPE.ENVIRONMENTAL,
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.ENVIRONMENTAL,
-		enabled: true
+		enabled: true,
+		suppressNotifications: true
 	}
 ];
 
@@ -1007,10 +1026,16 @@ export async function seedStaticData(databaseConnector, forceLocalListedBuilding
 	});
 
 	for (const appealType of appealTypes) {
+		const updateData = {
+			type: appealType.type,
+			changeAppealType: appealType.changeAppealType,
+			processCode: appealType.processCode,
+			enabled: appealType.enabled
+		};
 		await databaseConnector.appealType.upsert({
 			create: appealType,
 			where: { key: appealType.key },
-			update: appealType
+			update: updateData
 		});
 	}
 	for (const procedureType of procedureTypes) {
