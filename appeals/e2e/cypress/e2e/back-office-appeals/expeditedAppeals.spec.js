@@ -43,6 +43,24 @@ describe('Expedited (part1)) appeals', () => {
 		{ name: 'writtenPart2', visible: false }
 	];
 
+	const timeTableRows = [
+		'Valid date',
+		'Start date',
+		'LPA questionnaire due',
+		'LPA statement due',
+		'Interested party comments due',
+		'Statement of common ground due',
+		'Planning obligation due'
+	];
+
+	const hiddenRows = [
+		'Final comments due',
+		'Interested party comments due',
+		'Statement of common ground due',
+		'Planning obligation due',
+		'LPA statement due'
+	];
+
 	afterEach(() => {
 		cy.deleteAppeals(appeal);
 	});
@@ -261,6 +279,41 @@ describe('Expedited (part1)) appeals', () => {
 
 				// check is set as expedited in appeal details
 				checkAppealDetails(caseObj, true, PLANNING_APPLICATION_TYPES.PERMISSION_IN_PRINCIPLE);
+			});
+		});
+
+		it('S78 full planning appeal submitted on 01-04-2026 should be set as expedited - no Final/IP/Statements comments in timetable', () => {
+			setupTestCase().then(() => {
+				// approve appellant case as valid and set a due date for the questionnaire response
+				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
+				// check for expected validation banners on the case details page
+				caseDetailsPage.validateBannerMessage(BANNER_TYPES.important, SUCCESS_MESSAGES.appealValid);
+				caseDetailsPage.validateBannerMessage(
+					BANNER_TYPES.success,
+					SUCCESS_MESSAGES.appealValidated
+				);
+
+				// check that part 1 is available as a procedure type option when starting case
+				caseDetailsPage.clickReadyToStartCase();
+				procedureTypePage.verifyDisplayedProcedureTypes(expectedProcedureTypesExpedited);
+
+				// start case and check that the procedure type and questionnaire response due date is set correctly
+				procedureTypePage.selectProcedureType('Written representations (Part 1)');
+				procedureTypePage.clickButtonByText('Start case');
+
+				// check that the case overview details are set correctly, including appeal procedure
+				overviewSectionPage.verifyCaseOverviewDetails(
+					{
+						...DEFAULT_OVERVIEW_DETAILS,
+						relatedAppeals: 'No',
+						appealProcedure: 'Written representations (Part 1)'
+					},
+					false
+				);
+
+				const visibleTimeTableRows = timeTableRows.filter((item) => !hiddenRows.includes(item));
+
+				caseDetailsPage.verifyTimeTableRows(visibleTimeTableRows);
 			});
 		});
 
