@@ -282,7 +282,7 @@ describe('Expedited (part1)) appeals', () => {
 			});
 		});
 
-		it('S78 full planning appeal submitted on 01-04-2026 should be set as expedited - no Final/IP/Statements comments in timetable', () => {
+		it.only('S78 full planning appeal submitted on 01-04-2026 should be set as expedited - no Final/IP/Statements comments in timetable', () => {
 			setupTestCase().then(() => {
 				// approve appellant case as valid and set a due date for the questionnaire response
 				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
@@ -306,7 +306,7 @@ describe('Expedited (part1)) appeals', () => {
 					{
 						...DEFAULT_OVERVIEW_DETAILS,
 						relatedAppeals: 'No',
-						appealProcedure: 'Written representations (Part 1)'
+						appealProcedure: 'Written representations (part 1)'
 					},
 					false
 				);
