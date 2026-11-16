@@ -34,11 +34,11 @@ export function appealProcedureNameToLabelText(procedureTypeName) {
 export function appealProcedureKeyToLabelText(procedureTypeKey, showPart2) {
 	switch (procedureTypeKey) {
 		case APPEAL_CASE_PROCEDURE.WRITTEN:
-			return showPart2 ? 'Written representations (Part 2)' : 'Written representations';
+			return showPart2 ? 'Written representations (part 2)' : 'Written representations';
 		case APPEAL_CASE_PROCEDURE.WRITTEN_PART_2:
-			return 'Written representations (Part 2)';
+			return 'Written representations (part 2)';
 		case APPEAL_CASE_PROCEDURE.WRITTEN_PART_1:
-			return 'Written representations (Part 1)';
+			return 'Written representations (part 1)';
 		case APPEAL_CASE_PROCEDURE.HEARING:
 		case APPEAL_CASE_PROCEDURE.INQUIRY:
 			return capitalizeFirstLetter(procedureTypeKey);
