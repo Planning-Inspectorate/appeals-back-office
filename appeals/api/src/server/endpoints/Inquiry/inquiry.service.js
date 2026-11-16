@@ -34,7 +34,7 @@ import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from '@planning-inspectorate/dat
 /** @typedef {import('express').NextFunction} NextFunction */
 
 /**
- * @typedef {{appealId: number,lpaQuestionnaireDueDate: string | Date,lpaStatementDueDate: string | Date,planningObligationDueDate: string | Date | undefined,statementOfCommonGroundDueDate: string | Date,ipCommentsDueDate: string | Date,proofOfEvidenceAndWitnessesDueDate: string | Date, caseManagementConferenceDueDate: string | Date}} TimetableData
+ * @typedef {{appealId: number,lpaQuestionnaireDueDate: string | Date,lpaStatementDueDate: string | Date,planningObligationDueDate: string | Date | undefined,finalCommentsDueDate: string | Date | undefined,statementOfCommonGroundDueDate: string | Date,ipCommentsDueDate: string | Date,proofOfEvidenceAndWitnessesDueDate: string | Date, caseManagementConferenceDueDate: string | Date}} TimetableData
  */
 
 /**
@@ -283,6 +283,7 @@ const createInquiry = async (
 					lpaQuestionnaireDueDate: createInquiryData.lpaQuestionnaireDueDate,
 					lpaStatementDueDate: createInquiryData.statementDueDate,
 					planningObligationDueDate: createInquiryData.planningObligationDueDate,
+					finalCommentsDueDate: createInquiryData.finalCommentsDueDate,
 					statementOfCommonGroundDueDate: createInquiryData.statementOfCommonGroundDueDate,
 					ipCommentsDueDate: createInquiryData.ipCommentsDueDate,
 					proofOfEvidenceAndWitnessesDueDate: createInquiryData.proofOfEvidenceAndWitnessesDueDate,
