@@ -121,6 +121,14 @@ export const PROCEDURE_TYPE_NAME = Object.freeze({
 	INQUIRY: 'Inquiry'
 });
 
+export const PROCEDURE_TYPE_LABEL = Object.freeze({
+	WRITTEN_PART_2: 'Written representations (part 2)',
+	WRITTEN_PART_1: 'Written representations (part 1)',
+	WRITTEN: 'Written representations',
+	HEARING: 'Hearing',
+	INQUIRY: 'Inquiry'
+});
+
 export const PROCEDURE_TYPE_ID_MAP = Object.freeze({
 	hearing: 1,
 	inquiry: 2,

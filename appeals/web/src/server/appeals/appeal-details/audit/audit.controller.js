@@ -2,9 +2,10 @@ import nunjucksEnvironments from '#app/config/nunjucks.js';
 import { getAppealCaseNotes } from '#appeals/appeal-details/case-notes/case-notes.service.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate, dateISOStringToDisplayTime12hr } from '#lib/dates.js';
-import { appealProcedureNameToLabelText } from '#lib/procedure-type-display-name-formatter.js';
-import { APPEAL_TYPE, PROCEDURE_TYPE_NAME } from '@pins/appeals/constants/common.js';
+import { replaceProcedureTypeWithLabelInAuditText } from '#lib/procedure-type-display-name-formatter.js';
+import { APPEAL_TYPE, PROCEDURE_TYPE_KEY } from '@pins/appeals/constants/common.js';
 import { AUDIT_TRAIL_REP_COMMENT_STATUS_INVALID } from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { utcToZonedTime } from 'date-fns-tz';
 import * as interestedPartyCommentsService from '../representations/interested-party-comments/interested-party-comments.service.js';
 import {
@@ -64,6 +65,7 @@ export const renderAudit = async (request, response) => {
 				request.apiClient
 			);
 			let detailsHtml = details || '';
+			let updatedDetailsHtml = detailsHtml;
 
 			const matchedPrefix = REJECTED_COMMENT_AUDIT_STRINGS.find((str) =>
 				audit.details.startsWith(str)
@@ -106,16 +108,13 @@ export const renderAudit = async (request, response) => {
 				});
 			}
 
-			if (detailsHtml.includes(PROCEDURE_TYPE_NAME.WRITTEN_PART_1)) {
-				const displayName =
-					appealProcedureNameToLabelText(PROCEDURE_TYPE_NAME.WRITTEN_PART_1) ||
-					PROCEDURE_TYPE_NAME.WRITTEN_PART_1;
-				detailsHtml = detailsHtml.replace(PROCEDURE_TYPE_NAME.WRITTEN_PART_1, displayName);
-			} else if (detailsHtml.includes(PROCEDURE_TYPE_NAME.WRITTEN_PART_2)) {
-				const displayName =
-					appealProcedureNameToLabelText(PROCEDURE_TYPE_NAME.WRITTEN_PART_2) ||
-					PROCEDURE_TYPE_NAME.WRITTEN_PART_2;
-				detailsHtml = detailsHtml.replace(PROCEDURE_TYPE_NAME.WRITTEN_PART_2, displayName);
+			if (
+				!detailsHtml.includes(APPEAL_CASE_PROCEDURE.HEARING) ||
+				!detailsHtml.includes(APPEAL_CASE_PROCEDURE.INQUIRY) ||
+				!detailsHtml.includes(PROCEDURE_TYPE_KEY.HEARING) ||
+				!detailsHtml.includes(PROCEDURE_TYPE_KEY.INQUIRY)
+			) {
+				updatedDetailsHtml = replaceProcedureTypeWithLabelInAuditText(detailsHtml);
 			}
 
 			const loggedDate = utcToZonedTime(audit.loggedDate, 'Europe/London');
@@ -123,7 +122,7 @@ export const renderAudit = async (request, response) => {
 				dateTime: loggedDate.getTime(),
 				date: dateISOStringToDisplayDate(audit.loggedDate),
 				time: dateISOStringToDisplayTime12hr(audit.loggedDate),
-				details: detailsHtml,
+				details: updatedDetailsHtml,
 				user: await tryMapUsers(audit.azureAdUserId, request.session, request.apiClient)
 			};
 		})
