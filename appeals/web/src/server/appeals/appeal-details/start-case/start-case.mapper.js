@@ -177,7 +177,7 @@ export function selectProcedurePage(
 		) {
 			radioItems.push({
 				value: item.case,
-				text: appealProcedureKeyToLabelText(item.case, appealType, showPart1),
+				text: appealProcedureKeyToLabelText(item.case, showPart1),
 				checked:
 					storedSessionData?.appealProcedure && storedSessionData?.appealProcedure === item.case
 			});
@@ -257,8 +257,7 @@ export function confirmProcedurePage(
 						textSummaryListItem({
 							id: 'appeal-procedure',
 							text: 'Appeal procedure',
-							value:
-								appealProcedureKeyToLabelText(procedureType, appealType, showPart1) || 'No data',
+							value: appealProcedureKeyToLabelText(procedureType, showPart1) || 'No data',
 							link: editLink(
 								`/appeals-service/appeal-details/${appealId}/start-case/select-procedure`
 							),
