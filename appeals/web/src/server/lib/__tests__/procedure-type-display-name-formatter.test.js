@@ -15,13 +15,13 @@ describe('appealProcedureKeyToLabelText', () => {
 
 		test('returns Part 2 label for written procedure radio button', () => {
 			expect(appealProcedureKeyToLabelText(APPEAL_CASE_PROCEDURE.WRITTEN, showPart1)).toBe(
-				'Written representations (Part 2)'
+				'Written representations (part 2)'
 			);
 		});
 
 		test('returns Part 1 label for written expedited procedure radio button', () => {
 			expect(appealProcedureKeyToLabelText(APPEAL_CASE_PROCEDURE.WRITTEN_PART_1, showPart1)).toBe(
-				'Written representations (Part 1)'
+				'Written representations (part 1)'
 			);
 		});
 
