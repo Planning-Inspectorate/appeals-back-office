@@ -37,7 +37,8 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	SHARING_INQUIRY_EVENT_DOCUMENTS: 'featureFlagSharingInquiryEventDocuments',
 	SHARING_HEARING_DOCUMENTS: 'featureFlagSharingHearingDocuments',
 	SHARE_MULTIPLE_DOCS: 'featureFlagShareMultipleDocs',
-	GENERIC_CASE: 'featureFlagGenericCase'
+	GENERIC_CASE: 'featureFlagGenericCase',
+	CHANGE_OF_PROCEDURE_PART2: 'featureFlagChangeOfProcedurePart2'
 });
 
 export const APPEAL_TYPE = Object.freeze({

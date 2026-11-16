@@ -96,6 +96,7 @@ variable "apps_config" {
       featureFlagSharingSupportingDocuments       = bool
       featureFlagShareMultipleDocs                = bool
       featureFlagGenericCase                      = bool
+      featureFlagChangeOfProcedurePart2           = bool
     })
 
     analytics = object({

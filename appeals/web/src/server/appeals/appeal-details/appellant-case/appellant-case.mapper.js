@@ -1,4 +1,4 @@
-import { isFeatureActive } from '#common/feature-flags.js';
+import featureFlags, { isFeatureActive } from '#common/feature-flags.js';
 import config from '#environment/config.js';
 import { permissionNames } from '#environment/permissions.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
@@ -140,7 +140,6 @@ export async function appellantCasePage(
 						: 'Do not select an outcome until you have reviewed all of the supporting documents and redacted any sensitive information.'
 				}
 			};
-
 	if (
 		reviewOutcomeRadiosInputInstruction &&
 		appealDetails.appealStatus === APPEAL_CASE_STATUS.VALIDATION &&
@@ -224,6 +223,15 @@ export async function appellantCasePage(
 				title.text = `${index}. ${title.text}`;
 		}
 	});
+	const showContinuePart2 =
+		featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.CHANGE_OF_PROCEDURE_PART2) &&
+		appellantCaseData &&
+		isS78ExpeditedAppealType(
+			appealDetails.appealType,
+			appellantCaseData.applicationDate,
+			appellantCaseData.applicationDecision,
+			appellantCaseData.typeOfPlanningApplication
+		);
 
 	/** @type {PageContent} */
 	const pageContent = {
@@ -233,6 +241,8 @@ export async function appellantCasePage(
 		heading: 'Appellant case',
 		headingClasses: 'govuk-heading-l govuk-!-margin-bottom-3',
 		submitButtonText: appellantCaseData.isEnforcementChild ? 'Confirm' : 'Continue',
+		secondaryButtonText: showContinuePart2 ? 'Change to part 2' : undefined,
+		secondaryButtonUrl: showContinuePart2 ? `` : undefined,
 		pageComponents: [
 			...errorSummaryPageComponents,
 			...notificationBanners,

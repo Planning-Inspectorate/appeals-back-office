@@ -98,7 +98,7 @@ module "app_api" {
     FEATURE_FLAG_SHARING_INQUIRY_DOCUMENTS           = var.apps_config.featureFlags.featureFlagSharingInquiryDocuments
     FEATURE_FLAG_SHARING_SUPPORTING_DOCUMENTS        = var.apps_config.featureFlags.featureFlagSharingSupportingDocuments
     FEATURE_FLAG_GENERIC_CASE                        = var.apps_config.featureFlags.featureFlagGenericCase
-
+    FEATURE_FLAG_CHANGE_OF_PROCEDURE_PART2           = var.apps_config.featureFlags.featureFlagChangeOfProcedurePart2
 
     # service bus topics
     SB_TOPIC_NAME_APPEAL_HAS            = var.sb_topic_names.events.appeal_has

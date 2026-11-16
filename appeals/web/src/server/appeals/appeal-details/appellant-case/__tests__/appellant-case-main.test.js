@@ -24,6 +24,7 @@ import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
 import { parseHtml, parseHtmlSelectAll } from '@pins/platform/testing/html-parser.js';
 import {
+	APPEAL_APPLICATION_DECISION,
 	APPEAL_CASE_STAGE,
 	APPEAL_CASE_STATUS,
 	APPEAL_DOCUMENT_TYPE,
@@ -1156,6 +1157,93 @@ describe('appellant-case-main', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Application for an award of appeal costs');
 			expect(unprettifiedElement.innerHTML).toContain('Plans, drawings and list of plans');
 			expect(unprettifiedElement.innerHTML).not.toContain('Additional documents</h2>');
+		});
+
+		it('should render the appellant case page withoutadditional change part 2 button when the appeal is an enforcement appeal', async () => {
+			const appeal = {
+				...appealDataEnforcementNotice,
+				appealId: 2,
+				appealStatus: APPEAL_CASE_STATUS.VALIDATION
+			};
+
+			nock('http://test/').get('/appeals/2/exists').reply(200, mapExistsFromAppeal(appeal));
+			const mappedAppealData = mapAppellantCaseFromAppeal(appeal);
+			nock('http://test/')
+				.get('/appeals/2/appellant-case')
+				.reply(200, {
+					...appellantCaseDataNotValidatedNoEnforcementNotice,
+					...mappedAppealData,
+					enforcementNotice: {
+						isReceived: true,
+						isListedBuilding: true,
+						issueDate: '2021-01-01',
+						effectiveDate: '2021-01-02',
+						contactPlanningInspectorateDate: '2021-01-03',
+						reference: '123456789'
+					},
+					otherAppellants: [
+						{
+							firstName: 'John',
+							lastName: 'Smith',
+							email: 'john.test@example.pins.test'
+						},
+						{
+							firstName: 'Malcolm',
+							lastName: 'Jones',
+							email: 'malcolm.test@example.pins.test'
+						}
+					],
+					typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+				});
+
+			const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'data-module=\"govuk-button\"> Continue</button>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'data-module=\"govuk-button\"> Change to part 2</button>'
+			);
+		});
+
+		it('should render the appellant case page with the additional change part 2 button when the appeal is an expedited appeal', async () => {
+			const appeal = {
+				...appealDataFullPlanning,
+				appealId: 2,
+				isExpeditedAppeal: true,
+				appealStatus: APPEAL_CASE_STATUS.VALIDATION
+			};
+			nock('http://test/').get('/appeals/2/exists').reply(200, mapExistsFromAppeal(appeal));
+			const mappedAppealData = mapAppellantCaseFromAppeal(appeal);
+			nock('http://test/')
+				.get('/appeals/2/appellant-case')
+				.reply(200, {
+					...appellantCaseDataNotValidatedNoEnforcementNotice,
+					...mappedAppealData,
+					typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL,
+					applicationDate: '2026-04-02',
+					applicationDecision: APPEAL_APPLICATION_DECISION.GRANTED
+				});
+
+			const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'data-module=\"govuk-button\"> Continue</button>'
+			);
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'data-module=\"govuk-button\"> Change to part 2</button>'
+			);
 		});
 
 		describe('notification banners', () => {

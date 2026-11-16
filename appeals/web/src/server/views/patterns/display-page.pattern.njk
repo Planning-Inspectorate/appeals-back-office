@@ -60,6 +60,14 @@
 					{{ govukButton({
 						text: pageContent.submitButtonText if pageContent.submitButtonText else "Continue"
 					}) }}
+					{%- if pageContent.secondaryButtonText -%}
+						{{ govukButton({
+							text: pageContent.secondaryButtonText,
+							href: pageContent.secondaryButtonUrl,
+							type: "button",
+							classes: "govuk-button--secondary govuk-!-margin-left-3"
+						}) }}
+					{%- endif -%}
 				</form>
 			</div>
 		</div>

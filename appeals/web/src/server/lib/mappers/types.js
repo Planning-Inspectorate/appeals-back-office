@@ -348,6 +348,8 @@
  * @property {string} [heading]
  * @property {string} [headingClasses]
  * @property {string} [submitButtonText]
+ * @property {string} [secondaryButtonText]
+ * @property {string} [secondaryButtonUrl]
  * @property {ButtonProperties} [submitButtonProperties]
  * @property {string} [skipButtonUrl]
  * @property {PageComponent[]} [pageComponents]

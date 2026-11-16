@@ -87,6 +87,7 @@ apps_config = {
     featureFlagSharingSupportingDocuments       = true
     featureFlagShareMultipleDocs                = true
     featureFlagGenericCase                      = true
+    featureFlagChangeOfProcedurePart2           = false
   }
 
   use_system_test_bc_for_change_lpa = true
