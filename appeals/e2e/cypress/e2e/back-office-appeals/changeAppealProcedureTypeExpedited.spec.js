@@ -110,21 +110,21 @@ describe('Change appeal procedure type - Expedited', () => {
 					{
 						...DEFAULT_OVERVIEW_DETAILS,
 						relatedAppeals: 'No',
-						appealProcedure: 'Written representations (Part 1)'
+						appealProcedure: 'Written representations (part 1)'
 					},
 					false
 				);
 
 				overviewSectionPage.clickRowChangeLink('case-procedure');
 				procedureTypePage.verifyHeader(procedureTypeCaption(caseObj.reference));
-				procedureTypePage.verifyProcedureTypeOptionVisible('written');
+				procedureTypePage.verifyProcedureTypeOptionVisible('writtenPart2');
 				procedureTypePage.verifyDisplayedProcedureTypes([
-					{ name: 'written', visible: true },
+					{ name: 'writtenPart2', visible: true },
 					{ name: 'hearing', visible: true },
 					{ name: 'inquiry', visible: true }
 				]);
 
-				procedureTypePage.selectProcedureType('Written representations');
+				procedureTypePage.selectProcedureType('Written representations (Part 2)');
 
 				cy.get('#lpa-questionnaire-due-date-day').should('not.exist');
 
@@ -132,10 +132,18 @@ describe('Change appeal procedure type - Expedited', () => {
 					const startDate = new Date(appealDetails.startedAt);
 
 					cy.getBusinessActualDate(startDate, 25).then((statementsAndIpDate) => {
-						cy.getBusinessActualDate(startDate, 35).then((finalCommentsDate) => {
 							const lpaStatementDueDate = statementsAndIpDate;
 							const ipCommentsDueDate = statementsAndIpDate;
-							const finalCommentsDueDate = finalCommentsDate;
+							
+							dateTimeSection.enterTimeTableDueDate(
+								'lpa-statement-due-date', 
+								lpaStatementDueDate
+							)
+
+							dateTimeSection.enterTimeTableDueDate(
+								'ip-comments-due-date',
+								ipCommentsDueDate
+							)
 
 							dateTimeSection.verifyPrepopulatedTimeTableDueDates(
 								'lpaStatementDueDate',
@@ -145,11 +153,7 @@ describe('Change appeal procedure type - Expedited', () => {
 								'ipCommentsDueDate',
 								getDateAndTimeValues(ipCommentsDueDate)
 							);
-							dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-								'finalCommentsDueDate',
-								getDateAndTimeValues(finalCommentsDueDate)
-							);
-
+							
 							dateTimeSection.clickButtonByText('Continue');
 
 							cyaSection.verifyCheckYourAnswers('Appeal procedure', 'Written representations');
@@ -163,10 +167,6 @@ describe('Change appeal procedure type - Expedited', () => {
 							cyaSection.verifyCheckYourAnswers(
 								'Interested party comments due',
 								formatDateAndTime(ipCommentsDueDate).date
-							);
-							cyaSection.verifyCheckYourAnswers(
-								'Final comments due',
-								formatDateAndTime(finalCommentsDueDate).date
 							);
 
 							cy.contains(
@@ -199,7 +199,6 @@ describe('Change appeal procedure type - Expedited', () => {
 					});
 				});
 			});
-		});
 
 		it('should change appeal procedure type from Part 1 to Written representations in Event stage', () => {
 			const procedureTypeCaption = (ref) => `Appeal ${ref} - update appeal procedure`;
@@ -219,16 +218,16 @@ describe('Change appeal procedure type - Expedited', () => {
 				overviewSectionPage.verifyCaseOverviewDetails(
 					{
 						...DEFAULT_OVERVIEW_DETAILS,
-						appealProcedure: 'Written representations (Part 1)'
+						appealProcedure: 'Written representations (part 1)'
 					},
 					false
 				);
 
 				overviewSectionPage.clickRowChangeLink('case-procedure');
 				procedureTypePage.verifyHeader(procedureTypeCaption(caseObj.reference));
-				procedureTypePage.verifyProcedureTypeOptionVisible('written');
+				procedureTypePage.verifyProcedureTypeOptionVisible('writtenPart2');
 
-				procedureTypePage.selectProcedureType('Written representations');
+				procedureTypePage.selectProcedureType('Written representations (Part 2)');
 
 				cy.get('#lpa-questionnaire-due-date-day').should('not.exist');
 
@@ -236,10 +235,18 @@ describe('Change appeal procedure type - Expedited', () => {
 					const startDate = new Date(appealDetails.startedAt);
 
 					cy.getBusinessActualDate(startDate, 25).then((statementsAndIpDate) => {
-						cy.getBusinessActualDate(startDate, 35).then((finalCommentsDate) => {
 							const lpaStatementDueDate = statementsAndIpDate;
 							const ipCommentsDueDate = statementsAndIpDate;
-							const finalCommentsDueDate = finalCommentsDate;
+							
+							dateTimeSection.enterTimeTableDueDate(
+								'lpa-statement-due-date', 
+								lpaStatementDueDate
+							)
+
+							dateTimeSection.enterTimeTableDueDate(
+								'ip-comments-due-date',
+								ipCommentsDueDate
+							)
 
 							dateTimeSection.verifyPrepopulatedTimeTableDueDates(
 								'lpaStatementDueDate',
@@ -248,10 +255,6 @@ describe('Change appeal procedure type - Expedited', () => {
 							dateTimeSection.verifyPrepopulatedTimeTableDueDates(
 								'ipCommentsDueDate',
 								getDateAndTimeValues(ipCommentsDueDate)
-							);
-							dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-								'finalCommentsDueDate',
-								getDateAndTimeValues(finalCommentsDueDate)
 							);
 
 							dateTimeSection.clickButtonByText('Continue');
@@ -267,10 +270,6 @@ describe('Change appeal procedure type - Expedited', () => {
 							cyaSection.verifyCheckYourAnswers(
 								'Interested party comments due',
 								formatDateAndTime(ipCommentsDueDate).date
-							);
-							cyaSection.verifyCheckYourAnswers(
-								'Final comments due',
-								formatDateAndTime(finalCommentsDueDate).date
 							);
 
 							caseDetailsPage.clickButtonByText('Update appeal procedure');
@@ -297,7 +296,6 @@ describe('Change appeal procedure type - Expedited', () => {
 					});
 				});
 			});
-		});
 
 		it('should change appeal procedure type from Part 1 to Written representations in Awaiting Event stage (deleting site visit)', () => {
 			const procedureTypeCaption = (ref) => `Appeal ${ref} - update appeal procedure`;
@@ -320,16 +318,16 @@ describe('Change appeal procedure type - Expedited', () => {
 				overviewSectionPage.verifyCaseOverviewDetails(
 					{
 						...DEFAULT_OVERVIEW_DETAILS,
-						appealProcedure: 'Written representations (Part 1)'
+						appealProcedure: 'Written representations (part 1)'
 					},
 					false
 				);
 
 				overviewSectionPage.clickRowChangeLink('case-procedure');
 				procedureTypePage.verifyHeader(procedureTypeCaption(caseObj.reference));
-				procedureTypePage.verifyProcedureTypeOptionVisible('written');
+				procedureTypePage.verifyProcedureTypeOptionVisible('writtenPart2');
 
-				procedureTypePage.selectProcedureType('Written representations');
+				procedureTypePage.selectProcedureType('Written representations (Part 2)');
 
 				cy.get('#lpa-questionnaire-due-date-day').should('not.exist');
 
@@ -337,10 +335,18 @@ describe('Change appeal procedure type - Expedited', () => {
 					const startDate = new Date(appealDetails.startedAt);
 
 					cy.getBusinessActualDate(startDate, 25).then((statementsAndIpDate) => {
-						cy.getBusinessActualDate(startDate, 35).then((finalCommentsDate) => {
 							const lpaStatementDueDate = statementsAndIpDate;
 							const ipCommentsDueDate = statementsAndIpDate;
-							const finalCommentsDueDate = finalCommentsDate;
+							
+							dateTimeSection.enterTimeTableDueDate(
+								'lpa-statement-due-date', 
+								lpaStatementDueDate
+							)
+
+							dateTimeSection.enterTimeTableDueDate(
+								'ip-comments-due-date',
+								ipCommentsDueDate
+							)
 
 							dateTimeSection.verifyPrepopulatedTimeTableDueDates(
 								'lpaStatementDueDate',
@@ -349,10 +355,6 @@ describe('Change appeal procedure type - Expedited', () => {
 							dateTimeSection.verifyPrepopulatedTimeTableDueDates(
 								'ipCommentsDueDate',
 								getDateAndTimeValues(ipCommentsDueDate)
-							);
-							dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-								'finalCommentsDueDate',
-								getDateAndTimeValues(finalCommentsDueDate)
 							);
 
 							dateTimeSection.clickButtonByText('Continue');
@@ -369,11 +371,7 @@ describe('Change appeal procedure type - Expedited', () => {
 								'Interested party comments due',
 								formatDateAndTime(ipCommentsDueDate).date
 							);
-							cyaSection.verifyCheckYourAnswers(
-								'Final comments due',
-								formatDateAndTime(finalCommentsDueDate).date
-							);
-
+						
 							caseDetailsPage.clickButtonByText('Update appeal procedure');
 							caseDetailsPage.validateBannerMessage(
 								BANNER_TYPES.success,
@@ -399,7 +397,6 @@ describe('Change appeal procedure type - Expedited', () => {
 					});
 				});
 			});
-		});
 
 		it('should change appeal procedure type from Part 1 to Written representations in Issue Determination stage', () => {
 			const procedureTypeCaption = (ref) => `Appeal ${ref} - update appeal procedure`;
@@ -425,16 +422,16 @@ describe('Change appeal procedure type - Expedited', () => {
 				overviewSectionPage.verifyCaseOverviewDetails(
 					{
 						...DEFAULT_OVERVIEW_DETAILS,
-						appealProcedure: 'Written representations (Part 1)'
+						appealProcedure: 'Written representations (part 1)'
 					},
 					false
 				);
 
 				overviewSectionPage.clickRowChangeLink('case-procedure');
 				procedureTypePage.verifyHeader(procedureTypeCaption(caseObj.reference));
-				procedureTypePage.verifyProcedureTypeOptionVisible('written');
+				procedureTypePage.verifyProcedureTypeOptionVisible('writtenPart2');
 
-				procedureTypePage.selectProcedureType('Written representations');
+				procedureTypePage.selectProcedureType('Written representations (Part 2)');
 
 				cy.get('#lpa-questionnaire-due-date-day').should('not.exist');
 
@@ -442,10 +439,18 @@ describe('Change appeal procedure type - Expedited', () => {
 					const startDate = new Date(appealDetails.startedAt);
 
 					cy.getBusinessActualDate(startDate, 25).then((statementsAndIpDate) => {
-						cy.getBusinessActualDate(startDate, 35).then((finalCommentsDate) => {
 							const lpaStatementDueDate = statementsAndIpDate;
 							const ipCommentsDueDate = statementsAndIpDate;
-							const finalCommentsDueDate = finalCommentsDate;
+							
+							dateTimeSection.enterTimeTableDueDate(
+								'lpa-statement-due-date', 
+								lpaStatementDueDate
+							)
+
+							dateTimeSection.enterTimeTableDueDate(
+								'ip-comments-due-date',
+								ipCommentsDueDate
+							)
 
 							dateTimeSection.verifyPrepopulatedTimeTableDueDates(
 								'lpaStatementDueDate',
@@ -454,10 +459,6 @@ describe('Change appeal procedure type - Expedited', () => {
 							dateTimeSection.verifyPrepopulatedTimeTableDueDates(
 								'ipCommentsDueDate',
 								getDateAndTimeValues(ipCommentsDueDate)
-							);
-							dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-								'finalCommentsDueDate',
-								getDateAndTimeValues(finalCommentsDueDate)
 							);
 
 							dateTimeSection.clickButtonByText('Continue');
@@ -474,10 +475,7 @@ describe('Change appeal procedure type - Expedited', () => {
 								'Interested party comments due',
 								formatDateAndTime(ipCommentsDueDate).date
 							);
-							cyaSection.verifyCheckYourAnswers(
-								'Final comments due',
-								formatDateAndTime(finalCommentsDueDate).date
-							);
+							
 
 							caseDetailsPage.clickButtonByText('Update appeal procedure');
 							caseDetailsPage.validateBannerMessage(
@@ -505,7 +503,6 @@ describe('Change appeal procedure type - Expedited', () => {
 				});
 			});
 		});
-	});
 
 	describe('Target procedure type: Hearing', () => {
 		it('should change appeal procedure type from Part 1 to Hearing representations in LPAQ stage', () => {
@@ -523,7 +520,7 @@ describe('Change appeal procedure type - Expedited', () => {
 					{
 						...DEFAULT_OVERVIEW_DETAILS,
 						relatedAppeals: 'No',
-						appealProcedure: 'Written representations (Part 1)'
+						appealProcedure: 'Written representations (part 1)'
 					},
 					false
 				);
@@ -624,7 +621,7 @@ describe('Change appeal procedure type - Expedited', () => {
 				overviewSectionPage.verifyCaseOverviewDetails(
 					{
 						...DEFAULT_OVERVIEW_DETAILS,
-						appealProcedure: 'Written representations (Part 1)'
+						appealProcedure: 'Written representations (part 1)'
 					},
 					false
 				);
@@ -729,7 +726,7 @@ describe('Change appeal procedure type - Expedited', () => {
 				overviewSectionPage.verifyCaseOverviewDetails(
 					{
 						...DEFAULT_OVERVIEW_DETAILS,
-						appealProcedure: 'Written representations (Part 1)'
+						appealProcedure: 'Written representations (part 1)'
 					},
 					false
 				);
@@ -838,7 +835,7 @@ describe('Change appeal procedure type - Expedited', () => {
 				overviewSectionPage.verifyCaseOverviewDetails(
 					{
 						...DEFAULT_OVERVIEW_DETAILS,
-						appealProcedure: 'Written representations (Part 1)'
+						appealProcedure: 'Written representations (part 1)'
 					},
 					false
 				);
@@ -940,7 +937,7 @@ describe('Change appeal procedure type - Expedited', () => {
 					{
 						...DEFAULT_OVERVIEW_DETAILS,
 						relatedAppeals: 'No',
-						appealProcedure: 'Written representations (Part 1)'
+						appealProcedure: 'Written representations (part 1)'
 					},
 					false
 				);
@@ -1060,7 +1057,7 @@ describe('Change appeal procedure type - Expedited', () => {
 						{
 							...DEFAULT_OVERVIEW_DETAILS,
 
-							appealProcedure: 'Written representations (Part 1)'
+							appealProcedure: 'Written representations (part 1)'
 						},
 						false
 					);
@@ -1177,7 +1174,7 @@ describe('Change appeal procedure type - Expedited', () => {
 					overviewSectionPage.verifyCaseOverviewDetails(
 						{
 							...DEFAULT_OVERVIEW_DETAILS,
-							appealProcedure: 'Written representations (Part 1)'
+							appealProcedure: 'Written representations (part 1)'
 						},
 						false
 					);
@@ -1298,7 +1295,7 @@ describe('Change appeal procedure type - Expedited', () => {
 					overviewSectionPage.verifyCaseOverviewDetails(
 						{
 							...DEFAULT_OVERVIEW_DETAILS,
-							appealProcedure: 'Written representations (Part 1)'
+							appealProcedure: 'Written representations (part 1)'
 						},
 						false
 					);
@@ -1397,3 +1394,4 @@ describe('Change appeal procedure type - Expedited', () => {
 		});
 	});
 });
+
