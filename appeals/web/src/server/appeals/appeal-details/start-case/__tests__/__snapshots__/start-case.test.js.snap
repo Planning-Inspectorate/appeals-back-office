@@ -20,12 +20,12 @@ exports[`start-case GET /start-case/select-procedure should render the select pr
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure" name="appealProcedure"
                                         type="radio" value="writtenPart1">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure">Written representations (Part 1)</label>
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure">Written representations (part 1)</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure-2" name="appealProcedure"
                                         type="radio" value="writtenPart2">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure-2">Written representations (Part 2)</label>
+                                        <label class="govuk-label govuk-radios__label" for="appeal-procedure-2">Written representations (part 2)</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-procedure-3" name="appealProcedure"
