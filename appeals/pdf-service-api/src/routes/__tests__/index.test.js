@@ -17,9 +17,7 @@ describe('routes/index', () => {
 		}));
 
 		// Mock other dependencies
-		jest.mock('../../config.js', () => ({
-			/* mock config object */
-		}));
+		jest.mock('../../config.js', () => ({/* mock config object */}));
 		jest.mock('../../lib/logger.js', () => ({ info: jest.fn(), error: jest.fn() }));
 
 		routerIndex = await import('../index.js');
