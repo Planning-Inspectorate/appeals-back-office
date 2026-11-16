@@ -130,6 +130,7 @@ module "app_web" {
     FEATURE_FLAG_SHARING_SUPPORTING_DOCUMENTS        = var.apps_config.featureFlags.featureFlagSharingSupportingDocuments
     FEATURE_FLAG_SHARE_MULTIPLE_DOCS                 = var.apps_config.featureFlags.featureFlagShareMultipleDocs
     FEATURE_FLAG_GENERIC_CASE                        = var.apps_config.featureFlags.featureFlagGenericCase
+    FEATURE_FLAG_CHANGE_OF_PROCEDURE_PART2           = var.apps_config.featureFlags.featureFlagChangeOfProcedurePart2
 
     #change LPA
     USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA = var.apps_config.use_system_test_bc_for_change_lpa
