@@ -110,7 +110,9 @@ export class ProcedureTypePage extends CaseDetailsPage {
 
 				cy.log(`Verifying "${displayName}" (${visibleAssertion})`);
 				cy.get('label')
-					.filter((_, el) => Cypress._.trim(el.innerText).toLowerCase() === displayName.toLowerCase())
+					.filter(
+						(_, el) => Cypress._.trim(el.innerText).toLowerCase() === displayName.toLowerCase()
+					)
 					.should(visibleAssertion);
 			} else {
 				throw new Error(
