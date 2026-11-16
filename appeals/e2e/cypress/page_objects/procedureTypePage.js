@@ -10,7 +10,7 @@ export class ProcedureTypePage extends CaseDetailsPage {
 		hearing: () => cy.get('#appeal-procedure-2'),
 		inquiry: () => cy.get('#appeal-procedure-3'),
 		part1: () => cy.get('#appeal-procedure'),
-		part2: () => cy.get('#appeal-procedure-2')
+		part2: () => cy.get('#appeal-procedure')
 	};
 
 	procedureTypeMappings = {
@@ -32,7 +32,7 @@ export class ProcedureTypePage extends CaseDetailsPage {
 		writtenpart2: {
 			element: this.procedureTypeElements.part2,
 			displayName: 'Written representations (Part 2)',
-			value: 'written'
+			value: 'writtenPart2'
 		},
 		writtenpart1: {
 			element: this.procedureTypeElements.part1,
@@ -106,9 +106,12 @@ export class ProcedureTypePage extends CaseDetailsPage {
 			const normalizedType = procedureType.name.toLowerCase().trim();
 			if (this.hasProcedureType(normalizedType)) {
 				const visibleAssertion = procedureType.visible ? 'be.visible' : 'not.exist';
-				cy.contains('label', this.procedureTypeMappings[normalizedType].displayName).should(
-					visibleAssertion
-				);
+				const displayName = this.procedureTypeMappings[normalizedType].displayName;
+
+				cy.log(`Verifying "${displayName}" (${visibleAssertion})`);
+				cy.get('label')
+					.filter((_, el) => Cypress._.trim(el.innerText).toLowerCase() === displayName.toLowerCase())
+					.should(visibleAssertion);
 			} else {
 				throw new Error(
 					`Procedure type "${procedureType.name}" not found. Available options: ${availableOptions}`
