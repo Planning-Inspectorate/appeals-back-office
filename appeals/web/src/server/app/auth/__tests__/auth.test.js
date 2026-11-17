@@ -50,9 +50,27 @@ describe('auth', () => {
 			expect(tokenOptions.redirectUri).toEqual(expect.stringMatching('^https?://.*/auth/redirect'));
 			expect(tokenOptions.scopes).toEqual(['user.read']);
 			expect(tokenOptions.code).toEqual('msal_code');
+			expect(tokenOptions.nonce).toEqual(authOptions.nonce);
 
 			expect(redirect.get('Location')).toEqual('/appeals-service/validation');
 		});
+
+		it.each([undefined, '*'])(
+			'should reject token redemption when the expected nonce is %s',
+			async (nonce) => {
+				await request.get('/auth/signin');
+				const client = getConfidentialClientApplication();
+
+				await expect(
+					client.acquireTokenByCode({
+						code: 'msal_code',
+						redirectUri: 'http://localhost/auth/redirect',
+						scopes: ['user.read'],
+						nonce
+					})
+				).rejects.toMatchObject({ errorCode: 'nonce_mismatch' });
+			}
+		);
 
 		it('should redirect to an error page when the redirect from MSAL is incomplete', async () => {
 			const response = await request.get('/auth/redirect').redirects(1);

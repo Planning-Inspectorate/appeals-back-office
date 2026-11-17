@@ -99,7 +99,8 @@ export async function completeMsalAuthentication(request, response) {
 	if (request.query.code) {
 		const authenticationResult = await authService.acquireTokenByCode(
 			request.query.code,
-			request.session.id
+			request.session.id,
+			nonce
 		);
 
 		// After acquiring an authentication result from MSAL, verify that the
