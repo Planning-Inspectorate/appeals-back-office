@@ -66,6 +66,10 @@ import siteUseAtTimeOfApplicationRouter from './site-use-at-time-of-application/
 import writtenOrVerbalPermissionRouter from './written-or-verbal-permission/written-or-verbal-permission.router.js';
 
 const router = createRouter({ mergeParams: true });
+const changeToPart2Router = createRouter({ mergeParams: true });
+
+changeToPart2Router.use('/incomplete', outcomeIncompleteRouter);
+changeToPart2Router.use(changeProcedureTypeRouter);
 
 router.use(
 	'/valid',
@@ -556,6 +560,13 @@ router.use(
 	'/contact-address',
 	assertUserHasPermission(permissionNames.updateCase),
 	contactAddressRouter
+);
+
+router.use(
+	'/change-to-part-2',
+	validateAppealWithInclude(['appealType', 'appellantCase']),
+	assertUserHasPermission(permissionNames.updateCase),
+	changeToPart2Router
 );
 
 export default router;

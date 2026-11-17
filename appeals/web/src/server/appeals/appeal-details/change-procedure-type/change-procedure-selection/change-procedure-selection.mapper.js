@@ -15,6 +15,7 @@ import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
  * @param {string} backLinkUrl
  * @param {string} appealProcedure
  * @param {string|undefined} errorMessage
+ * @param {boolean} changeToPart2
  * @returns {PageContent}
  */
 export const selectProcedurePage = (
@@ -22,7 +23,8 @@ export const selectProcedurePage = (
 	appealOrAppealType,
 	backLinkUrl,
 	appealProcedure,
-	errorMessage = undefined
+	errorMessage = undefined,
+	changeToPart2 = false
 ) => {
 	const availableProcedureTypes = getAvailableProcedureTypesForAppealType(appealOrAppealType);
 	const sortedAvailableProcedureTypes = [
@@ -41,9 +43,11 @@ export const selectProcedurePage = (
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Appeal procedure',
+		title: changeToPart2 ? 'What procedure do you want this case to follow' : 'Appeal procedure',
 		backLinkUrl,
-		preHeading: `Appeal ${appealShortReference(appealReference)} - update appeal procedure`,
+		preHeading: changeToPart2
+			? `Appeal ${appealShortReference(appealReference)} - change to part 2`
+			: `Appeal ${appealShortReference(appealReference)} - update appeal procedure`,
 		pageComponents: [
 			radiosInput({
 				name: 'appealProcedure',
