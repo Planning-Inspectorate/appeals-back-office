@@ -14,9 +14,10 @@ const scopes = ['user.read'];
  *
  * @param {string} code
  * @param {string} sessionId
+ * @param {string} nonce The nonce saved in the session when sign-in started.
  * @returns {Promise<AuthenticationResult | null>}
  */
-export const acquireTokenByCode = async (code, sessionId) => {
+export const acquireTokenByCode = async (code, sessionId, nonce) => {
 	const msalClient = getMsalClient(sessionId);
 	await msalClient.getTokenCache().getAllAccounts(); // required to trigger beforeCacheAccess
 
@@ -24,6 +25,7 @@ export const acquireTokenByCode = async (code, sessionId) => {
 		await msalClient.acquireTokenByCode({
 			authority: config.msal.authority,
 			code,
+			nonce,
 			redirectUri: config.msal.redirectUri,
 			scopes
 		})

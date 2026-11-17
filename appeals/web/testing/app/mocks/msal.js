@@ -21,15 +21,20 @@ export class ConfidentialClientApplication extends msal.ConfidentialClientApplic
 		confidentialClientApplications.push(this);
 	}
 
-	acquireTokenByCode = jest.fn(() =>
-		Promise.resolve(
-			/** @type {import('@azure/msal-node').AuthenticationResult} */ ({
+	acquireTokenByCode = jest.fn(
+		/** @param {import('@azure/msal-node').AuthorizationCodeRequest} request */
+		async ({ nonce }) => {
+			if (typeof nonce !== 'string' || typeof this.nonce !== 'string' || nonce !== this.nonce) {
+				throw new msal.ClientAuthError('nonce_mismatch');
+			}
+
+			return /** @type {import('@azure/msal-node').AuthenticationResult} */ ({
 				account: this.account,
 				idTokenClaims: {
 					nonce: this.nonce
 				}
-			})
-		)
+			});
+		}
 	);
 
 	acquireTokenSilent = jest.fn(() =>
