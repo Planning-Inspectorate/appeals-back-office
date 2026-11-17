@@ -183,7 +183,7 @@ describe('Hidden elements', () => {
 				caseDetailsPage.verifyLinkExists('Cancel appeal', true);
 				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
 				happyPathHelper.reviewAppellantCase(leadCaseObj);
-				happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written', true);
+				happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'part 2', true);
 				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 				caseDetailsPage.verifyLinkExists('Cancel appeal', false);
 
@@ -212,7 +212,7 @@ describe('Hidden elements', () => {
 					happyPathHelper.viewCaseDetails(leadCaseObj);
 					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
 					happyPathHelper.reviewAppellantCase(leadCaseObj);
-					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written', true);
+					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'part 2', true);
 					caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 					caseDetailsPage.verifyActionExists('Appeal procedure', false);
 
@@ -463,7 +463,7 @@ describe('Site visit', () => {
 				caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 				happyPathHelper.reviewAppellantCase(leadCaseObj);
-				happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written', true);
+				happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'part 2', true);
 				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
 				//review child LPAQs
@@ -1005,7 +1005,7 @@ describe('Unhappy path', () => {
 				cy.assignCaseOfficerViaApi(leadCaseObj);
 				happyPathHelper.viewCaseDetails(leadCaseObj);
 				happyPathHelper.reviewAppellantCase(leadCaseObj);
-				happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
+				happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'part 2');
 				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 				happyPathHelper.reviewS78Lpaq(leadCaseObj);
 				caseDetailsPage.checkStatusOfCase('Statements', 0);
@@ -1025,7 +1025,7 @@ describe('Unhappy path', () => {
 				cy.assignCaseOfficerViaApi(childCaseObj);
 				happyPathHelper.viewCaseDetails(childCaseObj);
 				happyPathHelper.reviewAppellantCase(childCaseObj);
-				happyPathHelper.startCaseWithProcedureType(childCaseObj, 'written');
+				happyPathHelper.startCaseWithProcedureType(childCaseObj, 'part 2');
 				caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 				happyPathHelper.reviewS78Lpaq(childCaseObj);
 				caseDetailsPage.checkStatusOfCase('Statements', 0);

@@ -64,7 +64,7 @@ export const PROCEDURE_TYPES = {
 	hearing: 'Hearing',
 	inquiry: 'Inquiry',
 	written: 'Written representations',
-	writtenPart2: 'Written representations (Part 2)'
+	writtenPart2: 'Written representations (part 2)'
 };
 
 export const REDACTION_STATUSES = {

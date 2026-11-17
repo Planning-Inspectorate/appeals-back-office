@@ -6,11 +6,11 @@ import { CaseDetailsPage } from './caseDetailsPage.js';
 export class ProcedureTypePage extends CaseDetailsPage {
 	procedureTypeElements = {
 		...this.elements, // Inherit parent elements
-		written: () => cy.get('#appeal-procedure'),
-		hearing: () => cy.get('#appeal-procedure-2'),
-		inquiry: () => cy.get('#appeal-procedure-3'),
-		part1: () => cy.get('#appeal-procedure'),
-		part2: () => cy.get('#appeal-procedure')
+		written: () => cy.get("[value='written']"),
+		hearing: () => cy.get("[value='hearing']"),
+		inquiry: () => cy.get("[value='inquiry']"),
+		part1: () => cy.get("[value='writtenPart2']"),
+		part2: () => cy.get("[value='writtenPart2']")
 	};
 
 	procedureTypeMappings = {
@@ -127,7 +127,7 @@ export class ProcedureTypePage extends CaseDetailsPage {
 			this.procedureTypeMappings.part1.element().should('not.be.checked');
 		}
 
-		this.procedureTypeMappings.written.element().should('not.be.checked');
+		this.procedureTypeMappings.writtenpart2.element().should('not.be.checked');
 
 		if (!linkedCase) {
 			this.procedureTypeMappings.hearing.element().should('not.be.checked');
