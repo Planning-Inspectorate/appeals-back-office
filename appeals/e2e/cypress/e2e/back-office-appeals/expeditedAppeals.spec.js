@@ -127,7 +127,7 @@ describe('Expedited (part1)) appeals', () => {
 	};
 
 	describe('Appeals valid for expedited process - appeals submitted on 01-04-2026', () => {
-		it.only('S78 full planning appeal submitted on 01-04-2026 should be set as expedited', () => {
+		it('S78 full planning appeal submitted on 01-04-2026 should be set as expedited', () => {
 			setupTestCase().then(() => {
 				// approve appellant case as valid and set a due date for the questionnaire response
 				happyPathHelper.reviewAppellantCase(caseObj, { loadCaseDetailsPage: false });
@@ -352,6 +352,7 @@ describe('Expedited (part1)) appeals', () => {
 
 				// check for expected validation banner on the case details page
 				caseDetailsPage.validateBannerMessage(BANNER_TYPES.success, SUCCESS_MESSAGES.appealStarted);
+				caseDetailsPage.verifyTimeTableRows(visibleTimeTableRowsExpedited);
 
 				// verify case history
 				caseDetailsPage.clickViewCaseHistory();
@@ -548,6 +549,7 @@ describe('Expedited (part1)) appeals', () => {
 
 				// check for expected validation banner on the case details page
 				caseDetailsPage.validateBannerMessage(BANNER_TYPES.success, SUCCESS_MESSAGES.appealStarted);
+				caseDetailsPage.verifyTimeTableRows(visibleTimeTableRowsExpedited);
 
 				// verify case history
 				caseDetailsPage.clickViewCaseHistory();
