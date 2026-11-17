@@ -182,8 +182,19 @@ describe('incomplete-appeal', () => {
 					`Found. Redirecting to ${baseUrl}/appellant-case/incomplete/date`
 				);
 			});
-		});
+			it('should render the appeal due date page when changing to part 2', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}?include=appealType,appellantCase`)
+					.reply(200, appealDataEnforcementNotice);
 
+				const response = await request.get(
+					`${baseUrl}/appellant-case/change-to-part-2/incomplete/date`
+				);
+
+				expect(response.statusCode).toBe(200);
+				expect(parseHtml(response.text).innerHTML).toContain('Update appeal due date');
+			});
+		});
 		describe('GET /enforcement-notice-reason', () => {
 			beforeEach(async () => {
 				installMockApi();

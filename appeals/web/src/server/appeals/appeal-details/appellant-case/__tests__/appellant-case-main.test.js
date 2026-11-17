@@ -1242,8 +1242,54 @@ describe('appellant-case-main', () => {
 			);
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'data-module=\"govuk-button\"> Change to part 2</button>'
+				'data-module=\"govuk-button\"> Change to part 2</a>'
 			);
+		});
+
+		it('should go to the change to part 2 page when change to part 2 is clicked', async () => {
+			const appeal = {
+				...appealDataFullPlanning,
+				appealId: 2,
+				isExpeditedAppeal: true,
+				appealStatus: APPEAL_CASE_STATUS.VALIDATION
+			};
+			nock('http://test/').get('/appeals/2/exists').reply(200, mapExistsFromAppeal(appeal));
+			const mappedAppealData = mapAppellantCaseFromAppeal(appeal);
+			nock('http://test/')
+				.get('/appeals/2/appellant-case')
+				.reply(200, {
+					...appellantCaseDataNotValidatedNoEnforcementNotice,
+					...mappedAppealData,
+					typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL,
+					applicationDate: '2026-04-02',
+					applicationDecision: APPEAL_APPLICATION_DECISION.GRANTED
+				});
+			nock('http://test/')
+				.get('/appeals/2?include=appealType,appellantCase')
+				.reply(200, { ...appealDataFullPlanning, appealId: 2 });
+			await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+
+			const response = await request.get(
+				`${baseUrl}/2${appellantCasePagePath}/change-to-part-2/change-selected-procedure-type`
+			);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<span class="govuk-caption-l">Appeal 351062 - change to part 2</span>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Appeal procedure</h1>');
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<label class="govuk-label govuk-radios__label" for="appeal-procedure"> Written representations (Part 2)</label>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="appealProcedure" type="radio" value="hearing">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'name="appealProcedure" type="radio" value="inquiry">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 
 		describe('notification banners', () => {

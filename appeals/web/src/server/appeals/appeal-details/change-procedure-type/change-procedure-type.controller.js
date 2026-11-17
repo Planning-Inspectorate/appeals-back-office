@@ -186,6 +186,9 @@ export const updateChangeProcedureTypeSession = (request, response, next) => {
 			break;
 		}
 	}
+	if (request.baseUrl.includes('/change-to-part-2')) {
+		return next();
+	}
 
 	sessionValues.appealTimetable = sessionValues.appealTimetable || {};
 

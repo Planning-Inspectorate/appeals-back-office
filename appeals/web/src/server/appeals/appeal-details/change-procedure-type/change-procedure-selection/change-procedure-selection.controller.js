@@ -3,6 +3,7 @@ import logger from '#lib/logger.js';
 import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
+import { isChangeToPart2Flow } from '../change-procedure-type.utils.js';
 import { selectProcedurePage } from './change-procedure-selection.mapper.js';
 
 const getBackLinkUrl = backLinkGenerator('changeProcedureType');
@@ -34,7 +35,8 @@ const renderSelectProcedure = async (request, response) => {
 		currentAppeal,
 		backUrl,
 		sessionValues.appealProcedure,
-		errors ? errors['appealProcedure']?.msg : undefined
+		errors ? errors['appealProcedure']?.msg : undefined,
+		isChangeToPart2Flow(request)
 	);
 
 	return response.render('patterns/change-page.pattern.njk', {
@@ -61,7 +63,7 @@ export const postChangeSelectProcedure = async (request, response) => {
 
 		const sessionValues = getSessionValuesForAppeal(request, 'changeProcedureType', appealId);
 		const newProcedureType = sessionValues.appealProcedure;
-
+		const isChangeToPart2 = isChangeToPart2Flow(request);
 		if (newProcedureType !== sessionValues.selectedProcedureType) {
 			// Delete all dependent session values for the existing procedure type
 			delete sessionValues['dateKnown'];
@@ -88,7 +90,9 @@ export const postChangeSelectProcedure = async (request, response) => {
 				return response.redirect(
 					preserveQueryString(
 						request,
-						`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/change-timetable`
+						isChangeToPart2
+							? `/appeals-service/appeal-details/${appealId}/appellant-case/change-to-part-2/incomplete/date`
+							: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/change-timetable`
 					)
 				);
 			}
@@ -96,7 +100,9 @@ export const postChangeSelectProcedure = async (request, response) => {
 				return response.redirect(
 					preserveQueryString(
 						request,
-						`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/change-event-date-known`
+						isChangeToPart2
+							? `/appeals-service/appeal-details/${appealId}/appellant-case/change-to-part-2/incomplete/date`
+							: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/change-event-date-known`
 					)
 				);
 			}
@@ -104,7 +110,9 @@ export const postChangeSelectProcedure = async (request, response) => {
 				return response.redirect(
 					preserveQueryString(
 						request,
-						`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/date`
+						isChangeToPart2
+							? `/appeals-service/appeal-details/${appealId}/appellant-case/change-to-part-2/incomplete/date`
+							: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/date`
 					)
 				);
 			}

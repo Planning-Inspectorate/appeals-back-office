@@ -438,4 +438,25 @@ describe('Change procedure type', () => {
 			});
 		}
 	);
+
+	it('should redirect to the Part 2 due date page when Part 2 is selected from the Part 2 entry point', async () => {
+		nock('http://test/')
+			.get('/appeals/1?include=appealType,appellantCase')
+			.reply(200, {
+				...appealDataWithoutStartDate,
+				appealType: APPEAL_TYPE.S78,
+				procedureType: 'written'
+			});
+
+		const response = await request
+			.post(
+				'/appeals-service/appeal-details/1/appellant-case/change-to-part-2/change-selected-procedure-type'
+			)
+			.send({ appealProcedure: 'writtenPart2' });
+
+		expect(response.statusCode).toBe(302);
+		expect(response.text).toBe(
+			'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/change-to-part-2/incomplete/date'
+		);
+	});
 });
