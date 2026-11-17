@@ -38,6 +38,7 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	SHARING_HEARING_DOCUMENTS: 'featureFlagSharingHearingDocuments',
 	SHARE_MULTIPLE_DOCS: 'featureFlagShareMultipleDocs',
 	GENERIC_CASE: 'featureFlagGenericCase',
+	SHARE_MULTIPLE_COST_DOCS: 'featureFlagShareMultipleCostDocs',
 	CHANGE_OF_PROCEDURE_PART2: 'featureFlagChangeOfProcedurePart2'
 });
 

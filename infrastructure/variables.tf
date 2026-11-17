@@ -96,6 +96,7 @@ variable "apps_config" {
       featureFlagSharingSupportingDocuments       = bool
       featureFlagShareMultipleDocs                = bool
       featureFlagGenericCase                      = bool
+      featureFlagShareMultipleCostDocs            = bool
       featureFlagChangeOfProcedurePart2           = bool
     })
 

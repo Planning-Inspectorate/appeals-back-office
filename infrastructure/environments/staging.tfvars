@@ -86,6 +86,7 @@ apps_config = {
     featureFlagSharingSupportingDocuments       = true
     featureFlagShareMultipleDocs                = true
     featureFlagGenericCase                      = true
+    featureFlagShareMultipleCostDocs            = true
     featureFlagChangeOfProcedurePart2           = false
   }
 
