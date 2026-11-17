@@ -71,20 +71,18 @@ export const initRedactButtons = () => {
 	const savedTextarea = document.querySelector(SELECTORS.SAVED_TEXTAREA);
 	const savedRedaction = savedTextarea?.textContent?.trim() || '';
 
-	if (
-		!(
-			originalCommentText &&
-			redactButton &&
-			textarea &&
-			undoButton &&
-			revertButton &&
-			isHTMLDivElement(originalCommentText) &&
-			isHTMLButtonElement(redactButton) &&
-			isHTMLButtonElement(revertButton) &&
-			isHTMLButtonElement(undoButton) &&
-			isHTMLTextAreaElement(textarea)
-		)
-	) {
+	if (!(
+		originalCommentText &&
+		redactButton &&
+		textarea &&
+		undoButton &&
+		revertButton &&
+		isHTMLDivElement(originalCommentText) &&
+		isHTMLButtonElement(redactButton) &&
+		isHTMLButtonElement(revertButton) &&
+		isHTMLButtonElement(undoButton) &&
+		isHTMLTextAreaElement(textarea)
+	)) {
 		return;
 	}
 
