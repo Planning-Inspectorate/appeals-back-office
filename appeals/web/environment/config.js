@@ -190,6 +190,8 @@ export function loadConfig() {
 			featureFlagSharingSupportingDocuments:
 				environment.FEATURE_FLAG_SHARING_SUPPORTING_DOCUMENTS === 'true',
 			featureFlagShareMultipleDocs: environment.FEATURE_FLAG_SHARE_MULTIPLE_DOCS === 'true',
+			featureFlagShareMultipleCostDocs:
+				environment.FEATURE_FLAG_SHARE_MULTIPLE_COST_DOCS === 'true',
 			featureFlagGenericCase: environment.FEATURE_FLAG_GENERIC_CASE === 'true',
 			featureFlagChangeOfProcedurePart2:
 				environment.FEATURE_FLAG_CHANGE_OF_PROCEDURE_PART2 === 'true'
