@@ -35,7 +35,7 @@
 	},
 	"devDependencies": {
 		"@types/express": "^5.0.5",
-		"jest": "*",
+		"jest": "^30.5.2",
 		"jest-junit": "*",
 		"nodemon": "*"
 	}

@@ -6218,6 +6218,78 @@ describe('appeal-details', () => {
 						}
 					]);
 				});
+
+				it('should render the "Final comments due" row with a date value when the case is started in the inquiry procedure', async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}/page-details`)
+						.reply(200, {
+							...appealDataEnforcementNotice,
+							appealId,
+							validAt: '2025-01-01T00:00:00.000Z',
+							startedAt: '2025-01-01T00:00:00.000Z',
+							procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+							inquiry: {
+								inquiryStartTime: '2025-02-01T10:00:00.000Z'
+							},
+							hearing: null,
+							appealTimetable: {
+								validAt: '2025-01-01T00:00:00.000Z',
+								startedAt: '2025-01-01T00:00:00.000Z',
+								lpaQuestionnaireDueDate: '2025-01-02T00:00:00.000Z',
+								lpaStatementDueDate: '2025-01-03T00:00:00.000Z',
+								ipCommentsDueDate: '2025-01-04T00:00:00.000Z',
+								finalCommentsDueDate: '2025-01-05T00:00:00.000Z',
+								statementOfCommonGroundDueDate: '2025-01-06T00:00:00.000Z',
+								proofOfEvidenceAndWitnessesDueDate: '2025-01-07T00:00:00.000Z',
+								caseManagementConferenceDueDate: '2025-01-08T00:00:00.000Z'
+							}
+						});
+					nock('http://test/')
+						.get(
+							`/appeals/${appealId}/appellant-cases/${appealDataEnforcementNotice.appellantCaseId}`
+						)
+						.reply(200, { planningObligation: { hasObligation: false } });
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+					expect(response.statusCode).toBe(200);
+
+					itShouldHaveTheseTimetableRows(response, [
+						{ key: 'Valid date', value: '1 January 2025' },
+						{ key: 'Start date', value: '1 January 2025' },
+						{ key: 'LPA questionnaire due', value: '2 January 2025' },
+						{
+							key: 'Statements due',
+							value: '3 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Interested party comments due',
+							value: '4 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Statement of common ground due',
+							value: '6 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Proof of evidence and witness due',
+							value: '7 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Case management conference due',
+							value: '8 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
+							key: 'Final comments due',
+							value: '5 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{ key: 'Inquiry', value: '10:00am on 1 February 2025' }
+					]);
+				});
 			});
 
 			describe('for a child appeal', () => {

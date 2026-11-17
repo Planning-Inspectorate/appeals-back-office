@@ -153,6 +153,7 @@ export function nationalListPage(
 					selected: appealTypeFilter === `${id}`
 				};
 			})
+			.sort((a, b) => String(a.text).localeCompare(String(b.text), 'en', { sensitivity: 'base' }))
 	];
 
 	const caseTeamFilterItemsArray = [

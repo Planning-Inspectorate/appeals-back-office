@@ -38,9 +38,9 @@ describe('Expedited (part1)) appeals', () => {
 
 	const expectedProcedureTypesNonExpedited = [
 		...baseProcedureTypesItems,
-		{ name: 'written', visible: true },
+		{ name: 'written', visible: false },
 		{ name: 'writtenPart1', visible: false },
-		{ name: 'writtenPart2', visible: false }
+		{ name: 'writtenPart2', visible: true }
 	];
 
 	const timeTableRows = [
@@ -151,7 +151,7 @@ describe('Expedited (part1)) appeals', () => {
 					{
 						...DEFAULT_OVERVIEW_DETAILS,
 						relatedAppeals: 'No',
-						appealProcedure: 'Written representations (Part 1)'
+						appealProcedure: 'Written representations (part 1)'
 					},
 					false
 				);
@@ -345,7 +345,7 @@ describe('Expedited (part1)) appeals', () => {
 					{
 						...DEFAULT_OVERVIEW_DETAILS,
 						relatedAppeals: 'No',
-						appealProcedure: 'Written representations (Part 1)'
+						appealProcedure: 'Written representations (part 1)'
 					},
 					false
 				);
@@ -541,7 +541,7 @@ describe('Expedited (part1)) appeals', () => {
 					{
 						...DEFAULT_OVERVIEW_DETAILS,
 						relatedAppeals: 'No',
-						appealProcedure: 'Written representations (Part 1)'
+						appealProcedure: 'Written representations (part 1)'
 					},
 					false
 				);
