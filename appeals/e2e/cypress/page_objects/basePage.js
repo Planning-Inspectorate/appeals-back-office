@@ -237,7 +237,7 @@ export class Page {
 		this.basePageElements.radioButton().find('input').eq(indexNumber).check();
 	}
 
-	chooseRadioBtnByValue(value){
+	chooseRadioBtnByValue(value) {
 		this.basePageElements.radioButton().contains(value, { matchCass: false }).click();
 	}
 

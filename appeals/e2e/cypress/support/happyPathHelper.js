@@ -691,7 +691,7 @@ export const happyPathHelper = {
 		caseDetailsPage.clickChangeAppealType();
 		basePage.chooseRadioBtnByValue(basePage.exactMatch(appealType));
 		basePage.clickButtonByText('Continue');
-		cy.waitForPage('/resubmit', 'Does the appellant need to resubmit the appeal?')
+		cy.waitForPage('/resubmit', 'Does the appellant need to resubmit the appeal?');
 		basePage.selectRadioButtonByValue('No');
 		basePage.clickButtonByText('Continue');
 		basePage.clickButtonByText('Update appeal type');
@@ -702,7 +702,7 @@ export const happyPathHelper = {
 		caseDetailsPage.clickChangeAppealType();
 		basePage.chooseRadioBtnByValue(basePage.exactMatch(appealType));
 		basePage.clickButtonByText('Continue');
-		cy.waitForPage('/resubmit', 'Does the appellant need to resubmit the appeal?')
+		cy.waitForPage('/resubmit', 'Does the appellant need to resubmit the appeal?');
 		basePage.selectRadioButtonByValue('Yes');
 		basePage.clickButtonByText('Continue');
 		basePage.clickButtonByText('Continue');
