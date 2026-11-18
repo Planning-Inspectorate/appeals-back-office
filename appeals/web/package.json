@@ -104,7 +104,7 @@
     "@types/express-session": "^1.18.2",
     "@types/humps": "^2.0.6",
     "@types/jest": "^30.0.0",
-    "@types/morgan": "^1.9.9",
+    "@types/morgan": "^1.9.10",
     "@types/node-schedule": "^2.1.0",
     "@types/nunjucks": "^3.2.6",
     "@types/pluralize": "^0.0.33",
