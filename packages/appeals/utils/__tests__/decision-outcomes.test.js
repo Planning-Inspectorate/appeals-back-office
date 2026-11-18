@@ -140,14 +140,14 @@ describe('getDecisionOutcomesForAppealType', () => {
 			SPLIT_DECISION
 		]);
 		expect(getDecisionOutcomesForAppealType(APPEAL_CASE_TYPE.Q)).toEqual([
-			DISMISSED,
 			ALLOWED,
-			SPLIT_DECISION
+			SPLIT_DECISION,
+			DISMISSED
 		]);
 		expect(getDecisionOutcomesForAppealType(APPEAL_CASE_TYPE.ENV)).toEqual([
-			DISMISSED,
 			ALLOWED,
-			SPLIT_DECISION
+			SPLIT_DECISION,
+			DISMISSED
 		]);
 		expect(getDecisionOutcomesForAppealType(APPEAL_CASE_TYPE.C)).toEqual([
 			NOTICE_UPHELD,
@@ -190,25 +190,12 @@ describe('getDecisionOutcomesForAppealType', () => {
 			SPLIT_DECISION,
 			DISMISSED
 		]);
-		expect(getDecisionOutcomesForAppealType('High hedges')).toEqual([
+		expect(getDecisionOutcomesForAppealType(APPEAL_TYPE.PLANNING_OBLIGATION)).toEqual([
 			ALLOWED,
 			SPLIT_DECISION,
 			DISMISSED
 		]);
-		expect(getDecisionOutcomesForAppealType('Section 106 agreement')).toEqual([
-			DISMISSED,
-			ALLOWED,
-			SPLIT_DECISION
-		]);
 		expect(getDecisionOutcomesForAppealType(APPEAL_TYPE.ENFORCEMENT_NOTICE)).toEqual([
-			NOTICE_UPHELD,
-			NOTICE_VARIED_AND_UPHELD,
-			PLANNING_PERMISSION_GRANTED,
-			QUASHED_ON_LEGAL_GROUNDS,
-			SPLIT_DECISION,
-			INVALID
-		]);
-		expect(getDecisionOutcomesForAppealType('Enforcement notice')).toEqual([
 			NOTICE_UPHELD,
 			NOTICE_VARIED_AND_UPHELD,
 			PLANNING_PERMISSION_GRANTED,

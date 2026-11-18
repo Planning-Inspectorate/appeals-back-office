@@ -1,6 +1,6 @@
 // @ts-nocheck
 import config from '#config/config.js';
-import { APPEAL_TYPE, GENERIC_APPEAL_TYPES } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import {
 	filterEnabledAppealTypes,
@@ -38,16 +38,14 @@ describe('Feature flags appeal types (API)', () => {
 
 		test('Returns flag status for generic appeal type display names', () => {
 			const expected = Boolean(config.featureFlags.featureFlagGenericCase);
-			expect(isAppealTypeEnabled(GENERIC_APPEAL_TYPES.HIGH_HEDGES)).toBe(expected);
-			expect(isAppealTypeEnabled(GENERIC_APPEAL_TYPES.HEDGEROWS)).toBe(expected);
-			expect(isAppealTypeEnabled(GENERIC_APPEAL_TYPES.TREE_PRESERVATION_ORDER)).toBe(expected);
-			expect(isAppealTypeEnabled(GENERIC_APPEAL_TYPES.TREE_REPLACEMENT_NOTICE)).toBe(expected);
-			expect(isAppealTypeEnabled(GENERIC_APPEAL_TYPES.ENVIRONMENTAL)).toBe(expected);
-			expect(isAppealTypeEnabled(GENERIC_APPEAL_TYPES.DISCONTINUANCE_NOTICE)).toBe(expected);
-			expect(isAppealTypeEnabled(GENERIC_APPEAL_TYPES.COMMUNITY_INFRASTRUCTURE_LEVY)).toBe(
-				expected
-			);
-			expect(isAppealTypeEnabled(GENERIC_APPEAL_TYPES.SECTION_106_AGREEMENT)).toBe(expected);
+			expect(isAppealTypeEnabled(APPEAL_TYPE.HIGH_HEDGES)).toBe(expected);
+			expect(isAppealTypeEnabled(APPEAL_TYPE.HEDGEROWS)).toBe(expected);
+			expect(isAppealTypeEnabled(APPEAL_TYPE.TREE_PRESERVATION_ORDER)).toBe(expected);
+			expect(isAppealTypeEnabled(APPEAL_TYPE.TREE_REPLACEMENT_NOTICE)).toBe(expected);
+			expect(isAppealTypeEnabled(APPEAL_TYPE.ENVIRONMENTAL)).toBe(expected);
+			expect(isAppealTypeEnabled(APPEAL_TYPE.DISCONTINUANCE_NOTICE)).toBe(expected);
+			expect(isAppealTypeEnabled(APPEAL_TYPE.COMMUNITY_INFRASTRUCTURE_LEVY)).toBe(expected);
+			expect(isAppealTypeEnabled(APPEAL_TYPE.PLANNING_OBLIGATION)).toBe(expected);
 		});
 
 		test('Returns false for unknown or falsy type', () => {

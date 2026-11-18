@@ -1,3 +1,5 @@
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+
 export const ODW_SYSTEM_ID = 'back-office-appeals';
 export const APPEAL_START_RANGE = 6000000;
 
@@ -88,14 +90,14 @@ export const APPEAL_TYPE_CHANGE_APPEALS = Object.freeze({
 });
 
 export const GENERIC_APPEAL_TYPES = Object.freeze({
-	TREE_PRESERVATION_ORDER: 'Tree preservation order',
-	TREE_REPLACEMENT_NOTICE: 'Tree replacement notice',
-	HIGH_HEDGES: 'High hedges appeal',
-	HEDGEROWS: 'Hedgerows appeal',
-	DISCONTINUANCE_NOTICE: 'Discontinuance notice',
-	COMMUNITY_INFRASTRUCTURE_LEVY: 'Community infrastructure levy',
-	SECTION_106_AGREEMENT: 'Section 106 agreement',
-	ENVIRONMENTAL: 'Environmental appeal'
+	[APPEAL_CASE_TYPE.TPO]: 'Tree preservation order',
+	[APPEAL_CASE_TYPE.TRN]: 'Tree replacement notice',
+	[APPEAL_CASE_TYPE.HH]: 'High hedges appeal',
+	[APPEAL_CASE_TYPE.HR]: 'Hedgerows appeal',
+	[APPEAL_CASE_TYPE.G]: 'Discontinuance notice',
+	[APPEAL_CASE_TYPE.L]: 'Community infrastructure levy',
+	[APPEAL_CASE_TYPE.Q]: 'Section 106 agreement',
+	[APPEAL_CASE_TYPE.ENV]: 'Environmental appeal'
 });
 
 /** @type {Object<string, string>} */

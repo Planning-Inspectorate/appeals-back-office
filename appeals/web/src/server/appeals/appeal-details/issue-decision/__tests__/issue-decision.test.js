@@ -191,44 +191,77 @@ describe('issue-decision', () => {
 		describe('Generic appeals', () => {
 			const genericTestCases = [
 				{
-					appealType: 'Tree preservation order',
-					expectedOutcomes: ['allowed', 'split_decision', 'dismissed'],
+					appealType: APPEAL_TYPE.TREE_PRESERVATION_ORDER,
+					expectedOutcomes: [
+						APPEAL_CASE_DECISION_OUTCOME.ALLOWED,
+						APPEAL_CASE_DECISION_OUTCOME.SPLIT_DECISION,
+						APPEAL_CASE_DECISION_OUTCOME.DISMISSED
+					],
 					expectedLabels: ['Allowed', 'Split decision', 'Dismissed']
 				},
 				{
-					appealType: 'Tree replacement notice',
-					expectedOutcomes: ['allowed', 'split_decision', 'dismissed'],
+					appealType: APPEAL_TYPE.TREE_REPLACEMENT_NOTICE,
+					expectedOutcomes: [
+						APPEAL_CASE_DECISION_OUTCOME.ALLOWED,
+						APPEAL_CASE_DECISION_OUTCOME.SPLIT_DECISION,
+						APPEAL_CASE_DECISION_OUTCOME.DISMISSED
+					],
 					expectedLabels: ['Allowed', 'Split decision', 'Dismissed']
 				},
 				{
-					appealType: 'High Hedges',
-					expectedOutcomes: ['allowed', 'split_decision', 'dismissed'],
+					appealType: APPEAL_TYPE.HIGH_HEDGES,
+					expectedOutcomes: [
+						APPEAL_CASE_DECISION_OUTCOME.ALLOWED,
+						APPEAL_CASE_DECISION_OUTCOME.SPLIT_DECISION,
+						APPEAL_CASE_DECISION_OUTCOME.DISMISSED
+					],
 					expectedLabels: ['Allowed', 'Split decision', 'Dismissed']
 				},
 				{
-					appealType: 'Hedgerows',
-					expectedOutcomes: ['allowed', 'split_decision', 'dismissed'],
+					appealType: APPEAL_TYPE.HEDGEROWS,
+					expectedOutcomes: [
+						APPEAL_CASE_DECISION_OUTCOME.ALLOWED,
+						APPEAL_CASE_DECISION_OUTCOME.SPLIT_DECISION,
+						APPEAL_CASE_DECISION_OUTCOME.DISMISSED
+					],
 					expectedLabels: ['Allowed', 'Split decision', 'Dismissed']
 				},
 				{
-					appealType: 'Discontinuance notice',
-					expectedOutcomes: ['invalid', 'notice_quashed', 'notice_upheld'],
+					appealType: APPEAL_TYPE.DISCONTINUANCE_NOTICE,
+					expectedOutcomes: [
+						APPEAL_CASE_DECISION_OUTCOME.INVALID,
+						APPEAL_CASE_DECISION_OUTCOME.NOTICE_QUASHED,
+						APPEAL_CASE_DECISION_OUTCOME.NOTICE_UPHELD
+					],
 					expectedLabels: ['Invalid', 'Notice quashed', 'Notice upheld']
 				},
 				{
-					appealType: 'Community infrastructure levy',
-					expectedOutcomes: ['invalid', 'allowed', 'dismissed', 'split_decision'],
+					appealType: APPEAL_TYPE.COMMUNITY_INFRASTRUCTURE_LEVY,
+					expectedOutcomes: [
+						APPEAL_CASE_DECISION_OUTCOME.INVALID,
+						APPEAL_CASE_DECISION_OUTCOME.ALLOWED,
+						APPEAL_CASE_DECISION_OUTCOME.DISMISSED,
+						APPEAL_CASE_DECISION_OUTCOME.SPLIT_DECISION
+					],
 					expectedLabels: ['Invalid', 'Allowed', 'Dismissed', 'Split decision']
 				},
 				{
-					appealType: 'Section 106 agreement',
-					expectedOutcomes: ['dismissed', 'allowed', 'split_decision'],
-					expectedLabels: ['Dismissed', 'Allowed', 'Split decision']
+					appealType: APPEAL_TYPE.PLANNING_OBLIGATION,
+					expectedOutcomes: [
+						APPEAL_CASE_DECISION_OUTCOME.ALLOWED,
+						APPEAL_CASE_DECISION_OUTCOME.SPLIT_DECISION,
+						APPEAL_CASE_DECISION_OUTCOME.DISMISSED
+					],
+					expectedLabels: ['Allowed', 'Split decision', 'Dismissed']
 				},
 				{
-					appealType: 'Environmental appeal',
-					expectedOutcomes: ['dismissed', 'allowed', 'split_decision'],
-					expectedLabels: ['Dismissed', 'Allowed', 'Split decision']
+					appealType: APPEAL_TYPE.ENVIRONMENTAL,
+					expectedOutcomes: [
+						APPEAL_CASE_DECISION_OUTCOME.ALLOWED,
+						APPEAL_CASE_DECISION_OUTCOME.SPLIT_DECISION,
+						APPEAL_CASE_DECISION_OUTCOME.DISMISSED
+					],
+					expectedLabels: ['Allowed', 'Split decision', 'Dismissed']
 				}
 			];
 
