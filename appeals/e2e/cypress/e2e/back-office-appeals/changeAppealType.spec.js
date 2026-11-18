@@ -63,7 +63,7 @@ describe('From S78', () => {
 			basePage.clickBackLink();
 
 			//change appeal type
-			happyPathHelper.changeAppealType(1);
+			happyPathHelper.changeAppealType('Householder');
 			caseDetailsPage.checkStatusOfCase('Validation', 0);
 			caseDetailsPage.verifyAppealType('Householder');
 
@@ -87,7 +87,7 @@ describe('From S78', () => {
 			});
 			basePage.clickBackLink();
 
-			happyPathHelper.changeAppealType(11);
+			happyPathHelper.changeAppealType('Planning listed building and conservation area');
 			caseDetailsPage.checkStatusOfCase('Validation', 0);
 			caseDetailsPage.verifyAppealType('Planning listed building and conservation area appeal');
 
@@ -115,7 +115,7 @@ describe('From HAS', () => {
 			});
 			basePage.clickBackLink();
 
-			happyPathHelper.changeAppealType(9);
+			happyPathHelper.changeAppealType('Planning');
 			caseDetailsPage.checkStatusOfCase('Validation', 0);
 			caseDetailsPage.verifyAppealType('Planning appeal');
 
@@ -139,7 +139,7 @@ describe('From HAS', () => {
 			});
 			basePage.clickBackLink();
 
-			happyPathHelper.changeAppealType(11);
+			happyPathHelper.changeAppealType('Planning listed building and conservation area');
 			caseDetailsPage.checkStatusOfCase('Validation', 0);
 			caseDetailsPage.verifyAppealType('Planning listed building and conservation area appeal');
 
@@ -159,7 +159,7 @@ describe('Case history', () => {
 			cy.assignCaseOfficerViaApi(caseObj);
 			happyPathHelper.viewCaseDetails(caseObj);
 			//change appeal type
-			happyPathHelper.changeAppealType(1);
+			happyPathHelper.changeAppealType('Householder');
 			caseDetailsPage.checkStatusOfCase('Validation', 0);
 			caseDetailsPage.verifyAppealType('Householder');
 
@@ -175,7 +175,7 @@ describe('Case history', () => {
 			cy.assignCaseOfficerViaApi(caseObj);
 			happyPathHelper.viewCaseDetails(caseObj);
 			//change appeal type
-			happyPathHelper.changeAppealTypeResubmit(1);
+			happyPathHelper.changeAppealTypeResubmit('Householder');
 			caseDetailsPage.verifyAppealType('Planning appeal');
 
 			//case history
@@ -192,7 +192,7 @@ describe('Notify', () => {
 			cy.assignCaseOfficerViaApi(caseObj);
 			happyPathHelper.viewCaseDetails(caseObj);
 			//change appeal type
-			happyPathHelper.changeAppealType(1);
+			happyPathHelper.changeAppealType('Householder');
 			caseDetailsPage.checkStatusOfCase('Validation', 0);
 			caseDetailsPage.verifyAppealType('Householder');
 
@@ -216,7 +216,7 @@ describe('Notify', () => {
 			appeal = caseObj;
 			cy.assignCaseOfficerViaApi(caseObj);
 			happyPathHelper.viewCaseDetails(caseObj);
-			happyPathHelper.changeAppealTypeResubmit(9);
+			happyPathHelper.changeAppealTypeResubmit('Planning');
 
 			const expectedNotifies = [
 				{
@@ -240,7 +240,7 @@ describe('Other', () => {
 
 			cy.assignCaseOfficerViaApi(caseObj);
 			happyPathHelper.viewCaseDetails(caseObj);
-			happyPathHelper.changeAppealType(1);
+			happyPathHelper.changeAppealType('Householder');
 			caseDetailsPage.verifyAppealType('Householder');
 
 			//all cases
@@ -254,7 +254,7 @@ describe('Other', () => {
 			appeal = caseObj;
 			cy.assignCaseOfficerViaApi(caseObj);
 			happyPathHelper.viewCaseDetails(caseObj);
-			happyPathHelper.changeAppealTypeResubmit(9);
+			happyPathHelper.changeAppealTypeResubmit('Planning');
 			caseDetailsPage.checkStatusOfCase('Invalid', 0);
 			caseDetailsPage.verifyAppealType('Householder');
 		});

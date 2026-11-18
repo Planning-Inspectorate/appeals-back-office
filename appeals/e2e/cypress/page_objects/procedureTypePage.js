@@ -9,7 +9,7 @@ export class ProcedureTypePage extends CaseDetailsPage {
 		written: () => cy.get("[value='written']"),
 		hearing: () => cy.get("[value='hearing']"),
 		inquiry: () => cy.get("[value='inquiry']"),
-		part1: () => cy.get("[value='writtenPart2']"),
+		part1: () => cy.get("[value='writtenPart1']"),
 		part2: () => cy.get("[value='writtenPart2']")
 	};
 
@@ -122,12 +122,24 @@ export class ProcedureTypePage extends CaseDetailsPage {
 		});
 	}
 
-	verifyNoProcedureTypeSelected(part1 = true, linkedCase = false) {
-		if (part1) {
-			this.procedureTypeMappings.part1.element().should('not.be.checked');
-		}
+	/**
+	 * Verifies correct written options present and none slected
+	 * @param {boolean} [isPart2=true] - Certain appeals of Written reps part 2 (HAS/CAS/S20/S78) other appeals offer written reps (enforcement)
+	 * @param {boolean} [isExpedited=false] - S78 expedited appeals also offer written reps (part 1)
+	 * @param {boolean} [linkedCase=false] - certain flows do not offer hearing/inquiry
+	 */
+	verifyNoProcedureTypeSelected(isPart2 = true, isExpedited = false, linkedCase = false) {
+		const [procedureOffered, procedureNotOffered] = isPart2
+			? ['writtenPart2', 'written']
+			: ['written', 'writtenPart2'];
+		this.procedureTypeMappings[procedureOffered].element().should('not.be.checked');
+		this.procedureTypeMappings[procedureNotOffered].element().should('not.exist');
 
-		this.procedureTypeMappings.writtenpart2.element().should('not.be.checked');
+		if (isExpedited) {
+			this.procedureTypeMappings.writtenpart1.element().should('not.be.checked');
+		} else {
+			this.procedureTypeMappings.writtenpart1.element().should('not.exist');
+		}
 
 		if (!linkedCase) {
 			this.procedureTypeMappings.hearing.element().should('not.be.checked');

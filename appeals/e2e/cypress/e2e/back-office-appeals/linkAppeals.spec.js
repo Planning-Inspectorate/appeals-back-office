@@ -246,7 +246,7 @@ describe.skip('Net residences', () => {
 				happyPathHelper.viewCaseDetails(leadCaseObj);
 				happyPathHelper.reviewAppellantCase(leadCaseObj);
 				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
-				happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
+				happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'part 2');
 
 				//child appeal
 				happyPathHelper.viewCaseDetails(childCaseObj);
@@ -282,7 +282,7 @@ describe.skip('Net residences', () => {
 				happyPathHelper.viewCaseDetails(leadCaseObj);
 				happyPathHelper.reviewAppellantCase(leadCaseObj);
 				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
-				happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
+				happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'part 2');
 				happyPathHelper.reviewS78Lpaq(leadCaseObj);
 
 				//child appeal
@@ -324,7 +324,7 @@ describe.skip('Net residences', () => {
 				happyPathHelper.viewCaseDetails(leadCaseObj);
 				happyPathHelper.reviewAppellantCase(leadCaseObj);
 				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
-				happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
+				happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'part 2');
 				happyPathHelper.reviewS78Lpaq(leadCaseObj);
 
 				//child appeal
@@ -370,7 +370,7 @@ describe('Timetable', () => {
 					happyPathHelper.viewCaseDetails(leadCaseObj);
 					happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
 					happyPathHelper.reviewAppellantCase(leadCaseObj);
-					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written', true);
+					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'part 2', true);
 
 					//update statements due date
 					caseDetailsPage.appeal;
@@ -410,7 +410,7 @@ describe('Timetable', () => {
 				happyPathHelper.viewCaseDetails(leadCaseObj);
 				happyPathHelper.addLinkedAppeal(leadCaseObj, childCaseObj);
 				happyPathHelper.reviewAppellantCase(leadCaseObj);
-				happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
+				happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'part 2');
 
 				//update statements due date
 				caseDetailsPage.appeal;
@@ -596,7 +596,7 @@ describe('Issue Decision', () => {
 					caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 					happyPathHelper.reviewAppellantCase(leadCaseObj);
-					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written', true);
+					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'part 2', true);
 					caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
 					//review child LPAQs
@@ -704,7 +704,7 @@ describe('Issue Decision', () => {
 					caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 					happyPathHelper.reviewAppellantCase(leadCaseObj);
-					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
+					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'part 2');
 					caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
 					//review child LPAQs
@@ -818,7 +818,7 @@ describe('Issue Decision', () => {
 					caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 					happyPathHelper.reviewAppellantCase(leadCaseObj);
-					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'written');
+					happyPathHelper.startCaseWithProcedureType(leadCaseObj, 'part 2');
 					caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
 					//review child LPAQs
