@@ -108,7 +108,7 @@ describe('Start case', () => {
 			// Validate Appeal Via API
 			cy.validateAppeal(caseObj);
 
-			happyPathHelper.startCaseWithProcedureType(caseObj, 'part2');
+			happyPathHelper.startCaseWithProcedureType(caseObj, 'part 2');
 			caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
 			cy.loadAppealDetails(caseObj).then((appealDetails) => {
 				const startedAt = appealDetails?.startedAt;
