@@ -6311,6 +6311,11 @@ describe('appeal-details', () => {
 							actionLink: `${baseUrl}/${appealId}/timetable/edit`
 						},
 						{
+							key: 'Final comments due',
+							value: '5 January 2025',
+							actionLink: `${baseUrl}/${appealId}/timetable/edit`
+						},
+						{
 							key: 'Proof of evidence and witness due',
 							value: '7 January 2025',
 							actionLink: `${baseUrl}/${appealId}/timetable/edit`
@@ -6318,11 +6323,6 @@ describe('appeal-details', () => {
 						{
 							key: 'Case management conference due',
 							value: '8 January 2025',
-							actionLink: `${baseUrl}/${appealId}/timetable/edit`
-						},
-						{
-							key: 'Final comments due',
-							value: '5 January 2025',
 							actionLink: `${baseUrl}/${appealId}/timetable/edit`
 						},
 						{ key: 'Inquiry', value: '10:00am on 1 February 2025' }
