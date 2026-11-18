@@ -4637,6 +4637,44 @@ describe('appeal-details', () => {
 						expect(unprettifiedHTML).not.toContain(`${testCase.rowLabel}</th>`);
 					});
 
+					it(`should not render an "${testCase.rowLabel}" row, if the appeal is an S78 inquiry appeal`, async () => {
+						nock('http://test/')
+							.get(`/appeals/${appealId}/page-details`)
+							.reply(200, {
+								...appealDataFullPlanning,
+								procedureType: PROCEDURE_TYPE_NAME.INQUIRY,
+								appealId
+							});
+
+						const response = await request.get(`${baseUrl}/${appealId}`);
+
+						expect(response.statusCode).toBe(200);
+
+						const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+						expect(unprettifiedHTML).toContain('Documentation</th>');
+						expect(unprettifiedHTML).not.toContain(`${testCase.rowLabel}</th>`);
+					});
+
+					it(`should render an "${testCase.rowLabel}" row, if the appeal is an enforcement inquiry appeal`, async () => {
+						nock('http://test/')
+							.get(`/appeals/${appealId}/page-details`)
+							.reply(200, {
+								...appealDataEnforcementNotice,
+								procedureType: PROCEDURE_TYPE_NAME.INQUIRY,
+								appealId
+							});
+
+						const response = await request.get(`${baseUrl}/${appealId}`);
+
+						expect(response.statusCode).toBe(200);
+
+						const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+						expect(unprettifiedHTML).toContain('Documentation</th>');
+						expect(unprettifiedHTML).toContain(`${testCase.rowLabel}</th>`);
+					});
+
 					it(`should not render an "${testCase.rowLabel}" row, if the appeal is a child linked appeal`, async () => {
 						nock('http://test/')
 							.get(`/appeals/${appealId}/page-details`)
