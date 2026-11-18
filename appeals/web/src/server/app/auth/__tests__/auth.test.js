@@ -157,6 +157,21 @@ describe('auth', () => {
 			);
 		});
 
+		it('should redirect to the login error page when MSAL rejects the token nonce', async () => {
+			await request.get('/auth/signin');
+
+			getConfidentialClientApplication().acquireTokenByCode.mockImplementationOnce(() =>
+				Promise.reject(Object.assign(new Error('nonce_mismatch'), { errorCode: 'nonce_mismatch' }))
+			);
+
+			const response = await request.get('/auth/redirect?code=msal_code').redirects(1);
+			const element = parseHtml(response.text);
+
+			expect(element.querySelector('h1')?.innerHTML).toEqual(
+				'Sorry, there is a problem with your login'
+			);
+		});
+
 		it('should silently reacquire a token on each route navigation', async () => {
 			await request.get('/auth/signin');
 			await signinWithGroups(['appeals_case_officer']);

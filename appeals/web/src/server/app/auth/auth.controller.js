@@ -97,11 +97,26 @@ export async function completeMsalAuthentication(request, response) {
 		return;
 	}
 	if (request.query.code) {
-		const authenticationResult = await authService.acquireTokenByCode(
-			request.query.code,
-			request.session.id,
-			nonce
-		);
+		let authenticationResult;
+		try {
+			authenticationResult = await authService.acquireTokenByCode(
+				request.query.code,
+				request.session.id,
+				nonce
+			);
+		} catch (error) {
+			if (
+				typeof error === 'object' &&
+				error !== null &&
+				'errorCode' in error &&
+				error.errorCode === 'nonce_mismatch'
+			) {
+				pino.error(error, 'Authentication failed. Nonce did not match.');
+				response.redirect('/unauthenticated');
+				return;
+			}
+			throw error;
+		}
 
 		// After acquiring an authentication result from MSAL, verify that the
 		// result is signed by the nonce for this authentication attempt. This check
