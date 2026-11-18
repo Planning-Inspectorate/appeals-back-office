@@ -22,7 +22,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.30.0
+      ref: refs/tags/release/3.30.2
 
 schedules:
   - cron: "0 2 * * 1-5"
