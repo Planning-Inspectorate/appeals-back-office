@@ -13,10 +13,10 @@ import { fieldNameCaseType, fieldNameSubmissionDate } from './create-case.consta
  * @returns {PageContent}
  */
 export function selectCaseTypePage(backLinkUrl, selectedCaseType, errors) {
-	const items = Object.values(GENERIC_APPEAL_TYPES).map((type) => ({
-		value: type,
+	const items = Object.entries(GENERIC_APPEAL_TYPES).map(([key, type]) => ({
+		value: key,
 		text: type,
-		checked: selectedCaseType === type
+		checked: selectedCaseType === key
 	}));
 
 	/** @type {PageContent} */
@@ -87,7 +87,7 @@ export function checkDetailsPage(baseUrl, sessionValues) {
 
 	const responses = {
 		'Case type': {
-			value: caseType,
+			value: GENERIC_APPEAL_TYPES[caseType] || caseType,
 			actions: {
 				Change: {
 					href: editLink(baseUrl, 'select-case-type'),

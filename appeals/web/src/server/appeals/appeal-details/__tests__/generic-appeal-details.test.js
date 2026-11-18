@@ -1,6 +1,8 @@
 // @ts-nocheck
 import { createTestEnvironment } from '#testing/index.js';
+import { APPEAL_TYPE, PROCEDURE_TYPE_KEY } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform/testing/html-parser.js';
+import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import nock from 'nock';
 import supertest from 'supertest';
 
@@ -10,8 +12,8 @@ const request = supertest(app);
 const genericAppealData = {
 	appealId: 999,
 	appealReference: 'APP/Q9999/W/generic/0000001',
-	appealStatus: 'ready_to_start',
-	appealType: 'Tree preservation order',
+	appealStatus: APPEAL_CASE_STATUS.READY_TO_START,
+	appealType: APPEAL_TYPE.TREE_PRESERVATION_ORDER,
 	createdAt: '2026-09-19T00:00:00.000Z',
 	localPlanningDepartment: '',
 	planningApplicationReference: null,
@@ -75,7 +77,7 @@ describe('generic appeal details', () => {
 		nock('http://test/').post('/appeals').reply(200, {
 			appealId: 999,
 			reference: genericAppealData.appealReference,
-			status: 'ready_to_start'
+			status: APPEAL_CASE_STATUS.READY_TO_START
 		});
 
 		nock('http://test/').get('/appeals/999/page-details').reply(200, genericAppealData).persist();
@@ -94,7 +96,7 @@ describe('generic appeal details', () => {
 		nock('http://test/').get('/appeals/999/case-notes').reply(200, []).persist();
 
 		await request.post('/appeals-service/create-a-case/select-case-type').send({
-			caseType: 'Tree preservation order'
+			caseType: APPEAL_CASE_TYPE.TPO
 		});
 		await request.post('/appeals-service/create-a-case/submission-date').send({
 			'submission-date-day': '19',
@@ -455,14 +457,18 @@ describe('generic appeal details', () => {
 	});
 
 	describe('Scenario 1: Non create-a-case appeals should not display Add links on case details rows', () => {
-		const nonCreateACaseTypes = ['Planning appeal', 'Householder', 'Enforcement notice appeal'];
+		const nonCreateACaseTypes = [
+			APPEAL_TYPE.S78,
+			APPEAL_TYPE.HOUSEHOLDER,
+			APPEAL_TYPE.ENFORCEMENT_NOTICE
+		];
 
 		for (const appealType of nonCreateACaseTypes) {
 			it(`should not display Add link for: Case officer, Appeal site, Local planning authority, Application reference, Appeal procedure, Valid date, Start date, LPA questionnaire due, Appeal (documentation), LPA questionnaire, Appellant, or LPA for ${appealType}`, async () => {
 				const nonGenericAppealData = {
 					appealId: 888,
 					appealReference: 'APP/Q9999/W/21/0000001',
-					appealStatus: 'ready_to_start',
+					appealStatus: APPEAL_CASE_STATUS.READY_TO_START,
 					appealType,
 					createdAt: '2026-09-19T00:00:00.000Z',
 					localPlanningDepartment: '',
@@ -624,9 +630,9 @@ describe('generic appeal details', () => {
 		it('should display all 8 timetable rows with Not provided dates and Add links when case is started without dates (Scenario 7)', async () => {
 			const startedBlankData = {
 				...genericAppealData,
-				appealStatus: 'lpa_questionnaire',
+				appealStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 				startedAt: '2026-10-05T00:00:00.000Z',
-				procedureType: 'written',
+				procedureType: PROCEDURE_TYPE_KEY.WRITTEN,
 				appealTimetable: {}
 			};
 
@@ -679,9 +685,9 @@ describe('generic appeal details', () => {
 		it('should display all 8 timetable rows with formatted dates and Change links when dates are populated (Scenario 7)', async () => {
 			const startedPopulatedData = {
 				...genericAppealData,
-				appealStatus: 'lpa_questionnaire',
+				appealStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 				startedAt: '2026-10-05T00:00:00.000Z',
-				procedureType: 'inquiry',
+				procedureType: PROCEDURE_TYPE_KEY.INQUIRY,
 				appealTimetable: {
 					lpaQuestionnaireDueDate: '2026-10-12T23:00:00.000Z',
 					lpaStatementDueDate: '2026-10-19T23:00:00.000Z',
@@ -746,9 +752,9 @@ describe('generic appeal details', () => {
 		it('should display event setup component when procedure is hearing or inquiry', async () => {
 			const hearingData = {
 				...genericAppealData,
-				appealStatus: 'lpa_questionnaire',
+				appealStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 				startedAt: '2026-10-05T00:00:00.000Z',
-				procedureType: 'hearing',
+				procedureType: PROCEDURE_TYPE_KEY.HEARING,
 				hearing: null,
 				hearingEstimate: null,
 				appealTimetable: {}

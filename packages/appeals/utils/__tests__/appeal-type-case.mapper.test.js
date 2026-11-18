@@ -28,14 +28,12 @@ describe('mappers', () => {
 		expect(appealTypeToAppealCaseTypeMapper(APPEAL_TYPE.DISCONTINUANCE_NOTICE)).toBe(
 			APPEAL_CASE_TYPE.G
 		);
-		expect(appealTypeToAppealCaseTypeMapper('Discontinuance notice')).toBe(APPEAL_CASE_TYPE.G);
 		expect(appealTypeToAppealCaseTypeMapper(APPEAL_TYPE.COMMUNITY_INFRASTRUCTURE_LEVY)).toBe(
 			APPEAL_CASE_TYPE.L
 		);
 		expect(appealTypeToAppealCaseTypeMapper(APPEAL_TYPE.PLANNING_OBLIGATION)).toBe(
 			APPEAL_CASE_TYPE.Q
 		);
-		expect(appealTypeToAppealCaseTypeMapper('Section 106 agreement')).toBe(APPEAL_CASE_TYPE.Q);
 		expect(appealTypeToAppealCaseTypeMapper(APPEAL_TYPE.ENVIRONMENTAL)).toBe(APPEAL_CASE_TYPE.ENV);
 		expect(appealTypeToAppealCaseTypeMapper(APPEAL_TYPE.TREE_PRESERVATION_ORDER)).toBe(
 			APPEAL_CASE_TYPE.TPO

@@ -2,6 +2,7 @@
 import { createTestEnvironment } from '#testing/index.js';
 import { GENERIC_APPEAL_TYPES } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform/testing/html-parser.js';
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import supertest from 'supertest';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
@@ -40,13 +41,12 @@ describe('create a case', () => {
 			const radioInputs = pageHtml.querySelectorAll('input[type="radio"][name="caseType"]');
 			expect(radioInputs.length).toBe(8);
 
-			const expectedTypes = Object.values(GENERIC_APPEAL_TYPES);
-			expectedTypes.forEach((type) => {
-				const radioInput = pageHtml.querySelector(`input[type="radio"][value="${type}"]`);
+			Object.entries(GENERIC_APPEAL_TYPES).forEach(([caseTypeKey, labelText]) => {
+				const radioInput = pageHtml.querySelector(`input[type="radio"][value="${caseTypeKey}"]`);
 				expect(radioInput).not.toBeNull();
 
 				const label = pageHtml.querySelector(`label[for="${radioInput.getAttribute('id')}"]`);
-				expect(label?.innerHTML.trim()).toBe(type);
+				expect(label?.innerHTML.trim()).toBe(labelText);
 			});
 		});
 
@@ -81,13 +81,13 @@ describe('create a case', () => {
 
 		it('should render any saved session response', async () => {
 			await request.post(`${baseUrl}/select-case-type`).send({
-				caseType: 'High hedges appeal'
+				caseType: APPEAL_CASE_TYPE.HH
 			});
 
 			const response = await request.get(`${baseUrl}/select-case-type`);
 			pageHtml = parseHtml(response.text);
 
-			const highHedgesRadio = pageHtml.querySelector('input[value="High hedges appeal"]');
+			const highHedgesRadio = pageHtml.querySelector(`input[value="${APPEAL_CASE_TYPE.HH}"]`);
 			expect(highHedgesRadio.hasAttribute('checked')).toBe(true);
 		});
 	});
@@ -95,7 +95,7 @@ describe('create a case', () => {
 	describe('POST /select-case-type', () => {
 		it('should redirect to next page (/submission-date) when valid case type is selected', async () => {
 			const response = await request.post(`${baseUrl}/select-case-type`).send({
-				caseType: 'Tree preservation order'
+				caseType: APPEAL_CASE_TYPE.TPO
 			});
 
 			expect(response.statusCode).toBe(302);
@@ -318,7 +318,7 @@ describe('create a case', () => {
 	describe('GET /check-details', () => {
 		beforeEach(async () => {
 			await request.post(`${baseUrl}/select-case-type`).send({
-				caseType: 'Tree preservation order'
+				caseType: APPEAL_CASE_TYPE.TPO
 			});
 			await request.post(`${baseUrl}/submission-date`).send({
 				'submission-date-day': '19',
@@ -362,7 +362,7 @@ describe('create a case', () => {
 				.querySelector('.govuk-summary-list__value')
 				?.innerHTML.trim();
 			expect(caseTypeKey).toBe('Case type');
-			expect(caseTypeValue).toBe('Tree preservation order');
+			expect(caseTypeValue).toBe(GENERIC_APPEAL_TYPES[APPEAL_CASE_TYPE.TPO]);
 
 			const dateKey = summaryRows[1].querySelector('.govuk-summary-list__key')?.innerHTML.trim();
 			const dateValue = summaryRows[1]
@@ -427,7 +427,7 @@ describe('create a case', () => {
 	describe('editing answers via change links', () => {
 		beforeEach(async () => {
 			await request.post(`${baseUrl}/select-case-type`).send({
-				caseType: 'Tree preservation order'
+				caseType: APPEAL_CASE_TYPE.TPO
 			});
 			await request.post(`${baseUrl}/submission-date`).send({
 				'submission-date-day': '19',
@@ -447,11 +447,11 @@ describe('create a case', () => {
 			expect(editPageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
 				`${baseUrl}/check-details`
 			);
-			const tpoRadio = editPageHtml.querySelector('input[value="Tree preservation order"]');
+			const tpoRadio = editPageHtml.querySelector(`input[value="${APPEAL_CASE_TYPE.TPO}"]`);
 			expect(tpoRadio.hasAttribute('checked')).toBe(true);
 
 			const postEditRes = await request.post(editUrl).send({
-				caseType: 'High hedges appeal'
+				caseType: APPEAL_CASE_TYPE.HH
 			});
 			expect(postEditRes.statusCode).toBe(302);
 			expect(postEditRes.headers.location).toBe(`${baseUrl}/check-details`);
@@ -460,7 +460,7 @@ describe('create a case', () => {
 			const checkDetailsHtml = parseHtml(checkDetailsRes.text, { rootElement: 'body' });
 			const rows = checkDetailsHtml.querySelectorAll('.govuk-summary-list__row');
 			expect(rows[0].querySelector('.govuk-summary-list__value')?.innerHTML.trim()).toBe(
-				'High hedges appeal'
+				GENERIC_APPEAL_TYPES[APPEAL_CASE_TYPE.HH]
 			);
 		});
 
@@ -499,7 +499,7 @@ describe('create a case', () => {
 	describe('POST /check-details', () => {
 		beforeEach(async () => {
 			await request.post(`${baseUrl}/select-case-type`).send({
-				caseType: 'Tree preservation order'
+				caseType: APPEAL_CASE_TYPE.TPO
 			});
 			await request.post(`${baseUrl}/submission-date`).send({
 				'submission-date-day': '19',

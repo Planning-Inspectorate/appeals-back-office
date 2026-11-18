@@ -19,7 +19,7 @@ export const validateCaseType = createValidator(
 		.notEmpty()
 		.withMessage(errorMessageSelectCaseType)
 		.bail()
-		.isIn(Object.values(GENERIC_APPEAL_TYPES))
+		.isIn(Object.keys(GENERIC_APPEAL_TYPES))
 		.withMessage(errorMessageSelectCaseType)
 );
 
