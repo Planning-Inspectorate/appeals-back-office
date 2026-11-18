@@ -904,6 +904,77 @@ describe('inquiry documents', () => {
 		});
 	});
 
+	describe('GET /inquiry/documents/change-document-name/:folderId/:documentId', () => {
+		it('should render the change document name page with the current file name', async () => {
+			const response = await request.get(
+				`${baseUrl}/1/inquiry/documents/change-document-name/${inquiryDocsFolderId}/1`
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
+			expect(unprettifiedElement.innerHTML).toContain('File name');
+			expect(unprettifiedElement.innerHTML).toContain('value="ph0-documentFileInfo">');
+			expect(unprettifiedElement.innerHTML).toContain(`Confirm</button>`);
+		});
+
+		it('should render a 404 error page if the folderId is not valid', async () => {
+			const response = await request.get(
+				`${baseUrl}/1/inquiry/documents/change-document-name/99/1`
+			);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Page not found');
+		});
+	});
+
+	describe('POST /inquiry/documents/change-document-name/:folderId/:documentId', () => {
+		it('should patch the document and redirect to the manage document page if a valid name is provided', async () => {
+			const patchMock = nock('http://test/').patch('/appeals/1/documents/1').reply(200, {});
+
+			const response = await request
+				.post(`${baseUrl}/1/inquiry/documents/change-document-name/${inquiryDocsFolderId}/1`)
+				.send({ fileName: 'new-name', documentId: '1' });
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				`Found. Redirecting to ${baseUrl}/1/inquiry/documents/manage-documents/${inquiryDocsFolderId}/1`
+			);
+			expect(patchMock.isDone()).toBe(true);
+		});
+
+		it('should re-render the page with an error if the file name is empty', async () => {
+			const response = await request
+				.post(`${baseUrl}/1/inquiry/documents/change-document-name/${inquiryDocsFolderId}/1`)
+				.send({ fileName: '', documentId: '1' });
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('File name must be entered');
+		});
+
+		it('should re-render the page with an error if the file name contains invalid characters', async () => {
+			const response = await request
+				.post(`${baseUrl}/1/inquiry/documents/change-document-name/${inquiryDocsFolderId}/1`)
+				.send({ fileName: 'bad/name*', documentId: '1' });
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'File name must only include letters a to z, numbers 0 to 9'
+			);
+		});
+	});
+
 	describe('GET and POST /inquiry/documents/manage-documents/:folderId/:documentId/invite-main-party-comments', () => {
 		beforeEach(() => {
 			nock.cleanAll();

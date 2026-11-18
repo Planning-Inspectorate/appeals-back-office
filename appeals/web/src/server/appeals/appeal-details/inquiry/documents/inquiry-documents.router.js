@@ -43,6 +43,19 @@ router
 	.get(asyncHandler(controller.getManageDocument));
 
 router
+	.route('/change-document-name/:folderId/:documentId')
+	.get(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.getChangeDocumentFileNameDetails)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.updateCase),
+		documentsValidators.validateDocumentNameBodyFormat,
+		documentsValidators.validateDocumentName,
+		asyncHandler(controller.postChangeDocumentFileNameDetails)
+	);
+
+router
 	.route('/add-document-details/:folderId')
 	.get(
 		assertUserHasPermission(permissionNames.updateCase),
