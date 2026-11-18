@@ -237,6 +237,10 @@ export class Page {
 		this.basePageElements.radioButton().find('input').eq(indexNumber).check();
 	}
 
+	chooseRadioBtnByValue(value){
+		this.basePageElements.radioButton().contains(value, { matchCass: false }).click();
+	}
+
 	checkStatusOfCase(text, index = 0) {
 		this.basePageElements.status().eq(index).contains(text);
 	}

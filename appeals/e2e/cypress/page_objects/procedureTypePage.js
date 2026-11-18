@@ -130,8 +130,8 @@ export class ProcedureTypePage extends CaseDetailsPage {
 	 */
 	verifyNoProcedureTypeSelected(isPart2 = true, isExpedited = false, linkedCase = false) {
 		const [procedureOffered, procedureNotOffered] = isPart2
-			? ['writtenPart2', 'written']
-			: ['written', 'writtenPart2'];
+			? ['writtenpart2', 'written']
+			: ['written', 'writtenpart2'];
 		this.procedureTypeMappings[procedureOffered].element().should('not.be.checked');
 		this.procedureTypeMappings[procedureNotOffered].element().should('not.exist');
 
