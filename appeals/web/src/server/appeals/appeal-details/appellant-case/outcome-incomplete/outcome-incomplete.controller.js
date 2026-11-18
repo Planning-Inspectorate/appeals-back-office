@@ -1,3 +1,4 @@
+import { isChangeToPart2Flow } from '#appeals/appeal-details/change-procedure-type/change-procedure-type.utils.js';
 import { getTeamFromAppealId } from '#appeals/appeal-details/update-case-team/update-case-team.service.js';
 import { addressToString } from '#lib/address-formatter.js';
 import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
@@ -310,7 +311,10 @@ export const getUpdateDueDate = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postUpdateDueDate = async (request, response) => {
-	if (!objectContainsAllKeys(request.session, 'webAppellantCaseReviewOutcome')) {
+	if (
+		!objectContainsAllKeys(request.session, 'webAppellantCaseReviewOutcome') &&
+		!isChangeToPart2Flow(request)
+	) {
 		return response.status(500).render('app/500.njk');
 	}
 

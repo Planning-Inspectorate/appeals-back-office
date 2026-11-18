@@ -136,3 +136,12 @@ export const getAvailableProcedureTypesForAppealType = (appealOrAppealType) => {
 
 	return getAvailableProcedureTypes({ appealType: appealOrAppealType });
 };
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @returns {boolean}
+ */
+export const isChangeToPart2Flow = (request) => {
+	const baseUrl = request.baseUrl ?? '';
+	return /^\/.*\/appellant-case\/change-to-part-2(?:\/|$)/.test(baseUrl);
+};

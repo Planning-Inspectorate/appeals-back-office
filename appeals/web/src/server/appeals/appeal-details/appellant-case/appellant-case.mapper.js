@@ -242,7 +242,9 @@ export async function appellantCasePage(
 		headingClasses: 'govuk-heading-l govuk-!-margin-bottom-3',
 		submitButtonText: appellantCaseData.isEnforcementChild ? 'Confirm' : 'Continue',
 		secondaryButtonText: showContinuePart2 ? 'Change to part 2' : undefined,
-		secondaryButtonUrl: showContinuePart2 ? `` : undefined,
+		secondaryButtonUrl: showContinuePart2
+			? `/appeals-service/appeal-details/${appealDetails.appealId}/appellant-case/change-to-part-2/change-selected-procedure-type`
+			: undefined,
 		pageComponents: [
 			...errorSummaryPageComponents,
 			...notificationBanners,
