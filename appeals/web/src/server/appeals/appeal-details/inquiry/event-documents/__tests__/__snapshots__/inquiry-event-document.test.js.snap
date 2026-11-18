@@ -222,13 +222,13 @@ exports[`inquiry event documents inquiry event documents GET /inquiry-event-docu
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
-            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062 - manage documents</span>
+            <h1             class="govuk-heading-l">Document details</h1>
         </div>
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/inquiry-event-documents/manage-documents/1/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -329,13 +329,13 @@ exports[`inquiry event documents inquiry event documents GET /inquiry-event-docu
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
-            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062 - manage documents</span>
+            <h1             class="govuk-heading-l">Document details</h1>
         </div>
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/inquiry-event-documents/manage-documents/1/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -412,13 +412,13 @@ exports[`inquiry event documents inquiry event documents GET /inquiry-event-docu
 exports[`inquiry event documents inquiry event documents GET /inquiry-event-documents/manage-documents/:folderId/:documentId should render the manage individual document page with the expected content if the folderId and documentId are both valid and the document virus check status is "scanned" 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
-            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062 - manage documents</span>
+            <h1             class="govuk-heading-l">Document details</h1>
         </div>
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/inquiry-event-documents/manage-documents/1/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -517,13 +517,13 @@ exports[`inquiry event documents inquiry event documents GET /inquiry-event-docu
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage document</span>
-            <h1 class="govuk-heading-l">test-pdf-documentFileVersionsInfo.pdf</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062 - manage documents</span>
+            <h1             class="govuk-heading-l">Document details</h1>
         </div>
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/inquiry-event-documents/manage-documents/1/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">

@@ -1276,9 +1276,7 @@ describe('hearing documents', () => {
 				expect(element.innerHTML).toMatchSnapshot();
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-				expect(unprettifiedElement.innerHTML).toContain(
-					'test-pdf-documentFileVersionsInfo.pdf</h1>'
-				);
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
@@ -1300,9 +1298,7 @@ describe('hearing documents', () => {
 				expect(element.innerHTML).toMatchSnapshot();
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-				expect(unprettifiedElement.innerHTML).toContain(
-					'test-pdf-documentFileVersionsInfo.pdf</h1>'
-				);
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
@@ -1325,9 +1321,7 @@ describe('hearing documents', () => {
 				expect(element.innerHTML).toMatchSnapshot();
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-				expect(unprettifiedElement.innerHTML).toContain(
-					'test-pdf-documentFileVersionsInfo.pdf</h1>'
-				);
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<strong class="govuk-tag govuk-tag--red">Virus detected</strong>'
@@ -1357,9 +1351,7 @@ describe('hearing documents', () => {
 				expect(element.innerHTML).toMatchSnapshot();
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-				expect(unprettifiedElement.innerHTML).toContain(
-					'test-pdf-documentFileVersionsInfo.pdf</h1>'
-				);
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
 				expect(unprettifiedElement.innerHTML).not.toContain(
 					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
@@ -1437,9 +1429,7 @@ describe('hearing documents', () => {
 					`${baseUrl}/1/hearing-documents/manage-documents/${hearingDocsFolderId}/1`
 				);
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-				expect(unprettifiedElement.innerHTML).toContain(
-					'test-pdf-documentFileVersionsInfo.pdf</h1>'
-				);
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 				expect(unprettifiedElement.innerHTML).toContain('Current version</h2>');
 				expect(unprettifiedElement.innerHTML).toContain('This document is not shared.</p>');
 
@@ -1476,9 +1466,7 @@ describe('hearing documents', () => {
 					`${baseUrl}/1/hearing-documents/manage-documents/${hearingDocsFolderId}/1`
 				);
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-				expect(unprettifiedElement.innerHTML).toContain(
-					'test-pdf-documentFileVersionsInfo.pdf</h1>'
-				);
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 				expect(unprettifiedElement.innerHTML).toContain('Current version</h2>');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'This document is unredacted and cannot be shared.</p>'
@@ -1814,6 +1802,20 @@ describe('hearing documents', () => {
 				const expectedHref = `/appeals-service/appeal-details/1/hearing-documents/manage-documents/${hearingDocsFolderId}/1/invite-main-party-comments`;
 
 				expect(backLinkElement.innerHTML).toContain(`href="${expectedHref}"`);
+			});
+
+			it(`should render the cancel link with the correct href`, async () => {
+				const response = await request.get(
+					`${baseUrl}/1/hearing-documents/manage-documents/${hearingDocsFolderId}/1/check-your-answers`
+				);
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(response.statusCode).toBe(200);
+				expect(unprettifiedElement.innerHTML).toContain(
+					`href="/appeals-service/appeal-details/1/hearing-documents/manage-documents/${hearingDocsFolderId}/1"`
+				);
+				expect(unprettifiedElement.innerHTML).toContain('>Cancel</a>');
 			});
 
 			it(`should redirect to the case details page on successful share`, async () => {

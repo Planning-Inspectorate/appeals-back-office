@@ -344,7 +344,7 @@
  * @property {string} [title] Title of the page
  * @property {string} [backLinkUrl] Url of back button
  * @property {string} [backLinkText] Back button text
- * @property {string} [preHeading] Preheading (Usually 'Appeal ${shortAppealReference}')
+ * @property {string} [preHeading]
  * @property {string} [heading]
  * @property {string} [headingClasses]
  * @property {string} [submitButtonText]
@@ -358,6 +358,7 @@
  * @property {string} [formWrapperColumnClass]
  * @property {string} [prePageWrapperColumnClass]
  * @property {string} [postPageWrapperColumnClass]
+ * @property {string} [cancelLink]
  */
 
 /**

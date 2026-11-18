@@ -1370,6 +1370,7 @@ function mapDocumentNameHtmlProperty(document, documentVersion, canShare = false
  * @param {boolean} [params.skipChangeDocumentDetails]
  * @param {string} [params.baseUrl]
  * @param {boolean} [params.canShare]
+ * @param {string} [params.preHeadingText]
  * @returns {Promise<PageContent>}
  */
 export async function manageDocumentPage({
@@ -1385,7 +1386,8 @@ export async function manageDocumentPage({
 	editable,
 	skipChangeDocumentDetails,
 	baseUrl = '',
-	canShare = false
+	canShare = false,
+	preHeadingText
 }) {
 	const changeDetailsUrl =
 		!skipChangeDocumentDetails &&
@@ -1395,7 +1397,7 @@ export async function manageDocumentPage({
 		`${baseUrl}change-document-name`
 	);
 
-	const headingText = document?.name || 'Document details';
+	const headingText = preHeadingText ? 'Document details' : document?.name || 'Document details';
 
 	const session = request.session;
 	const latestVersion = getDocumentLatestVersion(document);
@@ -1457,7 +1459,7 @@ export async function manageDocumentPage({
 			parameters: {
 				text: 'Share document',
 				href: shareUrl,
-				classes: 'govuk-button--secondary'
+				classes: 'govuk-button--primary'
 			}
 		};
 
@@ -1467,7 +1469,7 @@ export async function manageDocumentPage({
 			parameters: {
 				text: 'Redact document',
 				href: changeDetailsUrl,
-				classes: 'govuk-button--secondary'
+				classes: 'govuk-button--primary'
 			}
 		};
 
@@ -1747,7 +1749,7 @@ export async function manageDocumentPage({
 		backLinkUrl: backLinkUrl
 			?.replace('{{folderId}}', folder.folderId.toString())
 			.replace('{{documentId}}', document.id || ''),
-		preHeading: pageTitleTextOverride || 'Manage document',
+		preHeading: preHeadingText || pageTitleTextOverride || 'Manage document',
 		heading: headingText,
 		pageComponents
 	};

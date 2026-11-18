@@ -456,6 +456,8 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
 	}
 
 	const backLinkUrl = `/appeals-service/appeal-details/${appealId}/inquiry-event-documents/manage-documents/${folderId}/${documentId}/invite-main-party-comments`;
+	const cancelLinkUrl = `/appeals-service/appeal-details/${appealId}/inquiry-event-documents/manage-documents/${folderId}/${documentId}`;
+
 	const { email } = await getTeamFromAppealId(request.apiClient, appealId);
 	const address = appealSiteToAddressString(currentAppeal?.appealSite);
 	const deadline = format(addWeeks(new Date(), 1), 'd MMMM yyyy');
@@ -479,7 +481,8 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
 		backLinkUrl,
 		documentInfo.latestDocumentVersion,
 		notifyPreview,
-		session.inviteMainPartyComments
+		session.inviteMainPartyComments,
+		cancelLinkUrl
 	);
 
 	return response.render('patterns/change-page.pattern.njk', {

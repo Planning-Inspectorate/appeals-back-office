@@ -321,6 +321,7 @@ export const getManageDocument = async (request, response) => {
 	await renderManageDocument({
 		request,
 		response,
+		pageTitleTextOverride: 'Document details',
 		backLinkUrl: `/appeals-service/appeal-details/${request.params.appealId}/hearing-documents/manage-documents/${currentFolder.folderId}`,
 		uploadUpdatedDocumentUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/hearing-documents/upload-documents/${currentFolder?.folderId}/{{documentId}}`,
 		removeDocumentUrl: `/appeals-service/appeal-details/${request.params.appealId}/hearing-documents/manage-documents/${currentFolder.folderId}/{{documentId}}/{{versionId}}/delete`,
@@ -455,6 +456,7 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
 	}
 
 	const backLinkUrl = `/appeals-service/appeal-details/${appealId}/hearing-documents/manage-documents/${folderId}/${documentId}/invite-main-party-comments`;
+	const cancelLinkUrl = `/appeals-service/appeal-details/${appealId}/hearing-documents/manage-documents/${folderId}/${documentId}`;
 
 	const { email } = await getTeamFromAppealId(request.apiClient, appealId);
 	const address = appealSiteToAddressString(currentAppeal?.appealSite);
@@ -479,7 +481,8 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
 		backLinkUrl,
 		documentInfo.latestDocumentVersion,
 		notifyPreview,
-		session.inviteMainPartyComments
+		session.inviteMainPartyComments,
+		cancelLinkUrl
 	);
 
 	return response.render('patterns/change-page.pattern.njk', {
