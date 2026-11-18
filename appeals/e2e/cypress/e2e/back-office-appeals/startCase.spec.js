@@ -108,7 +108,7 @@ describe('Start case', () => {
 			// Validate Appeal Via API
 			cy.validateAppeal(caseObj);
 
-			happyPathHelper.startCaseWithProcedureType(caseObj, 'written');
+			happyPathHelper.startCaseWithProcedureType(caseObj, 'part2');
 			caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
 			cy.loadAppealDetails(caseObj).then((appealDetails) => {
 				const startedAt = appealDetails?.startedAt;
@@ -131,7 +131,7 @@ describe('Start case', () => {
 			// Validate Appeal Via API
 			cy.validateAppeal(caseObj);
 
-			happyPathHelper.startCaseWithProcedureType(caseObj, 'written');
+			happyPathHelper.startCaseWithProcedureType(caseObj, 'part 2');
 			caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
 			caseDetailsPage.verifyAppealType('Planning listed building and conservation area appeal');
 			cy.loadAppealDetails(caseObj).then((appealDetails) => {

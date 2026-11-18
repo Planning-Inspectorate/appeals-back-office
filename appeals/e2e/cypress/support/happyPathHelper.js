@@ -110,7 +110,11 @@ export const happyPathHelper = {
 		happyPathHelper.viewCaseDetails(caseObj);
 		cy.visit(`${urlPaths.caseDetails}/${caseObj.id}`);
 		caseDetailsPage.clickReadyToStartCase();
-		procedureTypePage.verifyNoProcedureTypeSelected(false, true);
+		procedureTypePage.verifyNoProcedureTypeSelected(
+			procedureType !== 'written',
+			procedureType.toLowerCase() === 'part 1',
+			true
+		);
 		caseDetailsPage.selectRadioButtonByValue(procedureType);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Start case');
@@ -683,9 +687,9 @@ export const happyPathHelper = {
 		caseDetailsPage.validateBannerMessage('Success', 'Linked appeal added');
 	},
 
-	changeAppealType(index) {
+	changeAppealType(appealType) {
 		caseDetailsPage.clickChangeAppealType();
-		basePage.chooseRadioBtnByIndex(index);
+		basePage.chooseRadioBtnByIndex(basePage.exactMatch(appealType));
 		basePage.clickButtonByText('Continue');
 		basePage.selectRadioButtonByValue('No');
 		basePage.clickButtonByText('Continue');
@@ -693,9 +697,9 @@ export const happyPathHelper = {
 		caseDetailsPage.validateBannerMessage('Success', 'Appeal type updated');
 	},
 
-	changeAppealTypeResubmit(index) {
+	changeAppealTypeResubmit(appealType) {
 		caseDetailsPage.clickChangeAppealType();
-		basePage.chooseRadioBtnByIndex(index);
+		basePage.chooseRadioBtnByIndex(basePage.exactMatch(appealType));
 		basePage.clickButtonByText('Continue');
 		basePage.selectRadioButtonByValue('Yes');
 		basePage.clickButtonByText('Continue');
