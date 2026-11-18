@@ -392,8 +392,9 @@ const getNotifyTemplateName = (sharingDocumentType) => {
  * @param {string | undefined} sharingDocumentType
  * @returns {string}
  */
-const getDocumentFolderName = (sharingDocumentType) =>
-	(sharingDocumentType || '').replace(/-/g, ' ');
+const getDocumentFolderName = (sharingDocumentType) => {
+	return (sharingDocumentType || '').replace(/-/g, ' ') + 's';
+};
 
 /** @param {string} sharingDocumentType */
 const getDocumentFrontOfficePath = (sharingDocumentType) => {
