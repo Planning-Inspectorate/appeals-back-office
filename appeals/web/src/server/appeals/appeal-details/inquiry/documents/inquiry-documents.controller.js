@@ -1,12 +1,14 @@
 import { getTeamFromAppealId } from '#appeals/appeal-details/update-case-team/update-case-team.service.js';
 import {
 	postChangeDocumentDetails,
+	postChangeDocumentFileName,
 	postDeleteDocument,
 	postDocumentDetails,
 	postDocumentUpload,
 	postUploadDocumentsCheckAndConfirm,
 	postUploadDocumentVersionCheckAndConfirm,
 	renderChangeDocumentDetails,
+	renderChangeDocumentFileName,
 	renderDeleteDocument,
 	renderDocumentDetails,
 	renderDocumentUpload,
@@ -373,6 +375,26 @@ export const postChangeInquiryDocumentVersionDetails = async (request, response)
 		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/inquiry/documents/manage-documents/${request.params.folderId}/${request.params.documentId}`
 	});
 };
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const getChangeDocumentFileNameDetails = async (request, response) => {
+	await renderChangeDocumentFileName({
+		request,
+		response,
+		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/inquiry/documents/manage-documents/${request.params.folderId}/${request.params.documentId}`
+	});
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postChangeDocumentFileNameDetails = async (request, response) => {
+	await postChangeDocumentFileName({
+		request,
+		response,
+		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/inquiry/documents/manage-documents/${request.params.folderId}/${request.params.documentId}`,
+		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/inquiry/documents/manage-documents/${request.params.folderId}/${request.params.documentId}`
+	});
+};
+
 /**
  *
  * @param {import('@pins/express/types/express.js').Request} request
