@@ -56,7 +56,7 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 							caseStarted ? mappedData.appeal.lpaStatement.display.tableItem : undefined,
 							...(mappedData.appeal.rule6PartyStatements?.display?.tableItems || []),
 							caseStarted ? mappedData.appeal.ipComments.display.tableItem : undefined,
-							...(caseStarted && !isInquiryProcedureType && statementsCompleted
+							...(caseStarted && statementsCompleted
 								? [
 										mappedData.appeal.appellantFinalComments.display.tableItem,
 										mappedData.appeal.lpaFinalComments.display.tableItem
