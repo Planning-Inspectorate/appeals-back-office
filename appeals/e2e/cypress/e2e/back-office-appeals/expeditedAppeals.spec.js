@@ -43,6 +43,28 @@ describe('Expedited (part1)) appeals', () => {
 		{ name: 'writtenPart2', visible: true }
 	];
 
+	const timeTableRows = [
+		'Valid date',
+		'Start date',
+		'LPA questionnaire due',
+		'LPA statement due',
+		'Interested party comments due',
+		'Statement of common ground due',
+		'Planning obligation due'
+	];
+
+	const expiditedHiddenRows = [
+		'Final comments due',
+		'Interested party comments due',
+		'Statement of common ground due',
+		'Planning obligation due',
+		'LPA statement due'
+	];
+
+	const visibleTimeTableRowsExpedited = timeTableRows.filter(
+		(item) => !expiditedHiddenRows.includes(item)
+	);
+
 	afterEach(() => {
 		cy.deleteAppeals(appeal);
 	});
@@ -136,6 +158,9 @@ describe('Expedited (part1)) appeals', () => {
 
 				// check for expected validation banner on the case details page
 				caseDetailsPage.validateBannerMessage(BANNER_TYPES.success, SUCCESS_MESSAGES.appealStarted);
+
+				//check that the timetable is displayed correctly, with the expected rows visible and hidden
+				caseDetailsPage.verifyTimeTableRows(visibleTimeTableRowsExpedited);
 
 				// Verify Case History
 				caseDetailsPage.clickViewCaseHistory();
@@ -327,6 +352,7 @@ describe('Expedited (part1)) appeals', () => {
 
 				// check for expected validation banner on the case details page
 				caseDetailsPage.validateBannerMessage(BANNER_TYPES.success, SUCCESS_MESSAGES.appealStarted);
+				caseDetailsPage.verifyTimeTableRows(visibleTimeTableRowsExpedited);
 
 				// verify case history
 				caseDetailsPage.clickViewCaseHistory();
@@ -523,6 +549,7 @@ describe('Expedited (part1)) appeals', () => {
 
 				// check for expected validation banner on the case details page
 				caseDetailsPage.validateBannerMessage(BANNER_TYPES.success, SUCCESS_MESSAGES.appealStarted);
+				caseDetailsPage.verifyTimeTableRows(visibleTimeTableRowsExpedited);
 
 				// verify case history
 				caseDetailsPage.clickViewCaseHistory();
