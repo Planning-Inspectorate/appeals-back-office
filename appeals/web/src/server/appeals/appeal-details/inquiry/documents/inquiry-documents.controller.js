@@ -36,7 +36,7 @@ import { addWeeks, format } from 'date-fns';
 import {
 	inviteMainPartyCommentsPage,
 	shareDocumentCheckAndConfirmPage
-} from './inquiry-documents.mapper.js';
+} from '../../../appeal-documents/appeal-documents.mapper.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -389,7 +389,14 @@ export const getInviteMainPartyComments = async (request, response) => {
 
 	const inviteMainPartyComments =
 		appealId === request.session.appealId ? request.session.inviteMainPartyComments : undefined;
-	const pageContent = inviteMainPartyCommentsPage(backLinkUrl, inviteMainPartyComments);
+	const cancelLinkUrl = backLinkUrl;
+
+	const pageContent = inviteMainPartyCommentsPage(
+		backLinkUrl,
+		request.currentAppeal.appealReference,
+		inviteMainPartyComments,
+		cancelLinkUrl
+	);
 
 	return response.render('patterns/change-page.pattern.njk', {
 		pageContent,
@@ -424,12 +431,14 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
 	const { appealId, folderId, documentId } = request.params;
 	const session = request.session;
 	const { currentAppeal } = request;
+	const appealReference = currentAppeal.appealReference;
 	const documentInfo = await getFileVersionsInfo(request.apiClient, documentId);
 	if (!documentInfo || !documentInfo.latestDocumentVersion) {
 		return response.status(404).render('app/404.njk');
 	}
 
 	const backLinkUrl = `/appeals-service/appeal-details/${appealId}/inquiry/documents/manage-documents/${folderId}/${documentId}/invite-main-party-comments`;
+	const cancelLinkUrl = `/appeals-service/appeal-details/${appealId}/inquiry/documents/manage-documents/${folderId}/${documentId}`;
 
 	const { email } = await getTeamFromAppealId(request.apiClient, appealId);
 	const address = appealSiteToAddressString(currentAppeal?.appealSite);
@@ -438,23 +447,45 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
 
 	const inviteResponses = session?.inviteMainPartyComments?.toLowerCase() === 'yes';
 
-	const notifyPreview = await generateNotifyPreview(request.apiClient, notifyTemplateName, {
+	const notifyPreviews = {};
+	const appellantNotifyPreview = await generateNotifyPreview(
+		request.apiClient,
+		notifyTemplateName,
+		{
+			appeal_reference_number: currentAppeal?.appealReference,
+			site_address: address || '',
+			contact_email: email || '',
+			deadline: deadline,
+			responses_invited: inviteResponses,
+			dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
+			document_name: documentInfo.name || '',
+			document_type: 'inquiry-documents',
+			document_folder_name: 'inquiry documents'
+		}
+	);
+	notifyPreviews.appellant = appellantNotifyPreview.renderedHtml;
+
+	const lpaNotifyPreview = await generateNotifyPreview(request.apiClient, notifyTemplateName, {
 		appeal_reference_number: currentAppeal?.appealReference,
 		site_address: address || '',
 		contact_email: email || '',
 		deadline: deadline,
 		responses_invited: inviteResponses,
-		dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
+		dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA,
 		document_name: documentInfo.name || '',
 		document_type: 'inquiry-documents',
 		document_folder_name: 'inquiry documents'
 	});
 
+	notifyPreviews.lpa = lpaNotifyPreview.renderedHtml;
+
 	const pageContent = shareDocumentCheckAndConfirmPage(
 		backLinkUrl,
 		documentInfo.latestDocumentVersion,
-		notifyPreview,
-		session.inviteMainPartyComments
+		appealReference,
+		notifyPreviews,
+		session.inviteMainPartyComments,
+		cancelLinkUrl
 	);
 
 	return response.render('patterns/change-page.pattern.njk', {

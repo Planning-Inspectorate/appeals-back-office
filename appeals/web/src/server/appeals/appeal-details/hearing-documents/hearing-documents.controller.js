@@ -35,11 +35,11 @@ import { SHARING_DOCUMENT_TYPE } from '@pins/appeals/constants/documents.js';
 import { capitalizeFirstLetter } from '@pins/appeals/utils/string-case.js';
 import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { addWeeks, format } from 'date-fns';
-import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
 import {
 	inviteMainPartyCommentsPage,
 	shareDocumentCheckAndConfirmPage
-} from './hearing-documents.mapper.js';
+} from '../../appeal-documents/appeal-documents.mapper.js';
+import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getDocumentUpload = async (request, response) => {
@@ -321,6 +321,7 @@ export const getManageDocument = async (request, response) => {
 	await renderManageDocument({
 		request,
 		response,
+		pageTitleTextOverride: 'Document details',
 		backLinkUrl: `/appeals-service/appeal-details/${request.params.appealId}/hearing-documents/manage-documents/${currentFolder.folderId}`,
 		uploadUpdatedDocumentUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/hearing-documents/upload-documents/${currentFolder?.folderId}/{{documentId}}`,
 		removeDocumentUrl: `/appeals-service/appeal-details/${request.params.appealId}/hearing-documents/manage-documents/${currentFolder.folderId}/{{documentId}}/{{versionId}}/delete`,
@@ -414,7 +415,13 @@ export const getInviteMainPartyComments = async (request, response) => {
 
 	const inviteMainPartyComments =
 		appealId === request.session.appealId ? request.session.inviteMainPartyComments : undefined;
-	const pageContent = inviteMainPartyCommentsPage(backLinkUrl, inviteMainPartyComments);
+	const cancelLinkUrl = backLinkUrl;
+	const pageContent = inviteMainPartyCommentsPage(
+		backLinkUrl,
+		request.currentAppeal.appealReference,
+		inviteMainPartyComments,
+		cancelLinkUrl
+	);
 
 	return response.render('patterns/change-page.pattern.njk', {
 		pageContent,
@@ -449,12 +456,14 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
 	const { appealId, folderId, documentId } = request.params;
 	const session = request.session;
 	const { currentAppeal } = request;
+	const appealReference = currentAppeal.appealReference;
 	const documentInfo = await getFileVersionsInfo(request.apiClient, documentId);
 	if (!documentInfo || !documentInfo.latestDocumentVersion) {
 		return response.status(404).render('app/404.njk');
 	}
 
 	const backLinkUrl = `/appeals-service/appeal-details/${appealId}/hearing-documents/manage-documents/${folderId}/${documentId}/invite-main-party-comments`;
+	const cancelLinkUrl = `/appeals-service/appeal-details/${appealId}/hearing-documents/manage-documents/${folderId}/${documentId}`;
 
 	const { email } = await getTeamFromAppealId(request.apiClient, appealId);
 	const address = appealSiteToAddressString(currentAppeal?.appealSite);
@@ -463,23 +472,45 @@ export const getShareDocumentCheckAndConfirm = async (request, response) => {
 
 	const inviteResponses = session?.inviteMainPartyComments?.toLowerCase() === 'yes';
 
-	const notifyPreview = await generateNotifyPreview(request.apiClient, notifyTemplateName, {
+	const notifyPreviews = {};
+	const appellantNotifyPreview = await generateNotifyPreview(
+		request.apiClient,
+		notifyTemplateName,
+		{
+			appeal_reference_number: currentAppeal?.appealReference,
+			site_address: address || '',
+			contact_email: email || '',
+			deadline: deadline,
+			responses_invited: inviteResponses,
+			dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
+			document_name: documentInfo.name || '',
+			document_type: 'hearing-documents',
+			document_folder_name: 'hearing documents'
+		}
+	);
+	notifyPreviews.appellant = appellantNotifyPreview.renderedHtml;
+
+	const lpaNotifyPreview = await generateNotifyPreview(request.apiClient, notifyTemplateName, {
 		appeal_reference_number: currentAppeal?.appealReference,
 		site_address: address || '',
 		contact_email: email || '',
 		deadline: deadline,
 		responses_invited: inviteResponses,
-		dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.APPELLANT,
+		dashboard_link: FRONT_OFFICE_DASHBOARD_PATH_STUBS.LPA,
 		document_name: documentInfo.name || '',
 		document_type: 'hearing-documents',
 		document_folder_name: 'hearing documents'
 	});
 
+	notifyPreviews.lpa = lpaNotifyPreview.renderedHtml;
+
 	const pageContent = shareDocumentCheckAndConfirmPage(
 		backLinkUrl,
 		documentInfo.latestDocumentVersion,
-		notifyPreview,
-		session.inviteMainPartyComments
+		appealReference,
+		notifyPreviews,
+		session.inviteMainPartyComments,
+		cancelLinkUrl
 	);
 
 	return response.render('patterns/change-page.pattern.njk', {

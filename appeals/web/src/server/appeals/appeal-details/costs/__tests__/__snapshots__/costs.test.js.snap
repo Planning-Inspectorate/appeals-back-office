@@ -1224,7 +1224,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/appellant/application/manage-documents/1/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -1333,7 +1333,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/appellant/correspondence/manage-documents/3/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -1442,7 +1442,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/manage-documents/2/1/check-your-answers"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -1551,7 +1551,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/lpa/application/manage-documents/4/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -1660,7 +1660,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/lpa/correspondence/manage-documents/6/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -1769,7 +1769,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/manage-documents/5/1/check-your-answers"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -1876,7 +1876,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/appellant/application/manage-documents/1/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -1972,7 +1972,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/appellant/correspondence/manage-documents/3/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -2068,7 +2068,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/manage-documents/2/1/check-your-answers"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -2164,7 +2164,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/lpa/application/manage-documents/4/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -2260,7 +2260,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/lpa/correspondence/manage-documents/6/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -2356,7 +2356,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/manage-documents/5/1/check-your-answers"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -2439,7 +2439,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/appellant/application/manage-documents/1/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -2531,7 +2531,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/appellant/correspondence/manage-documents/3/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -2623,7 +2623,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/manage-documents/2/1/check-your-answers"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -2715,7 +2715,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/lpa/application/manage-documents/4/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -2807,7 +2807,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/lpa/correspondence/manage-documents/6/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -2899,7 +2899,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/manage-documents/5/1/check-your-answers"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -3004,7 +3004,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/appellant/application/manage-documents/1/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -3100,7 +3100,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/appellant/correspondence/manage-documents/3/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -3196,7 +3196,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/manage-documents/2/1/check-your-answers"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -3292,7 +3292,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/lpa/application/manage-documents/4/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -3388,7 +3388,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/lpa/correspondence/manage-documents/6/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -3484,7 +3484,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/manage-documents/5/1/check-your-answers"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -5888,7 +5888,7 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/decision/manage-documents/7/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -5995,7 +5995,7 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/decision/manage-documents/7/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -6078,7 +6078,7 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/decision/manage-documents/7/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -6183,7 +6183,7 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId/:document
     </div>
     <h2 class="govuk-heading-m">Current version</h2>
     <p class="govuk-body">This document is not shared.</p><a href="/appeals-service/appeal-details/1/costs/decision/manage-documents/7/1/invite-responses"
-    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    role="button" draggable="false" class="govuk-button govuk-button--primary"
     data-module="govuk-button"> Share document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">

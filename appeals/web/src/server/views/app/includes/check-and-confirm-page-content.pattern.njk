@@ -26,7 +26,10 @@
 				preventDoubleClick: true
 			} -%}
 			{{ govukButton(pageContent.submitButtonProperties if pageContent.submitButtonProperties else defaultButtonProperties) }}
-		</form>
+			</form>
+        	{%- if pageContent.cancelLink -%}
+        		<a href="{{ pageContent.cancelLink }}" class="govuk-link govuk-link--no-visited-state govuk-body-m">Cancel</a>
+        	{%- endif -%}
 	</div>
 </div>
 {%- if pageContent.postPageComponents and pageContent.postPageComponents | length -%}

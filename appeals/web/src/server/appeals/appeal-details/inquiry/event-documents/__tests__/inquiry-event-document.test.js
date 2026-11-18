@@ -33,10 +33,10 @@ describe('inquiry event documents', () => {
 	afterAll(() => {
 		nock.cleanAll();
 		nock.restore();
-		jest.resetAllMocks();
+		jest.clearAllMocks();
 	});
 	beforeAll(() => {
-		jest.resetAllMocks();
+		jest.clearAllMocks();
 	});
 
 	beforeEach(() => {
@@ -1218,6 +1218,7 @@ describe('inquiry event documents', () => {
 					.reply(200, { email: 'test@example.com' });
 				nock('http://test/')
 					.post('/appeals/notify-preview/document-received.content.md')
+					.times(2)
 					.reply(200, { renderedHtml: '<p>Test notification</p>' });
 
 				const response = await request.get(
@@ -1334,9 +1335,7 @@ describe('inquiry event documents', () => {
 				expect(element.innerHTML).toMatchSnapshot();
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-				expect(unprettifiedElement.innerHTML).toContain(
-					'test-pdf-documentFileVersionsInfo.pdf</h1>'
-				);
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
@@ -1358,9 +1357,7 @@ describe('inquiry event documents', () => {
 				expect(element.innerHTML).toMatchSnapshot();
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-				expect(unprettifiedElement.innerHTML).toContain(
-					'test-pdf-documentFileVersionsInfo.pdf</h1>'
-				);
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
@@ -1383,9 +1380,7 @@ describe('inquiry event documents', () => {
 				expect(element.innerHTML).toMatchSnapshot();
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-				expect(unprettifiedElement.innerHTML).toContain(
-					'test-pdf-documentFileVersionsInfo.pdf</h1>'
-				);
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<strong class="govuk-tag govuk-tag--red">Virus detected</strong>'
@@ -1415,9 +1410,8 @@ describe('inquiry event documents', () => {
 				expect(element.innerHTML).toMatchSnapshot();
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-				expect(unprettifiedElement.innerHTML).toContain(
-					'test-pdf-documentFileVersionsInfo.pdf</h1>'
-				);
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
+
 				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
 				expect(unprettifiedElement.innerHTML).not.toContain(
 					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
@@ -1493,9 +1487,8 @@ describe('inquiry event documents', () => {
 					`${baseUrl}/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1`
 				);
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-				expect(unprettifiedElement.innerHTML).toContain(
-					'test-pdf-documentFileVersionsInfo.pdf</h1>'
-				);
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
+
 				expect(unprettifiedElement.innerHTML).toContain('Current version</h2>');
 				expect(unprettifiedElement.innerHTML).toContain('This document is not shared.</p>');
 
@@ -1532,9 +1525,7 @@ describe('inquiry event documents', () => {
 					`${baseUrl}/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1`
 				);
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-				expect(unprettifiedElement.innerHTML).toContain(
-					'test-pdf-documentFileVersionsInfo.pdf</h1>'
-				);
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 				expect(unprettifiedElement.innerHTML).toContain('Current version</h2>');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'This document is unredacted and cannot be shared.</p>'
@@ -1877,6 +1868,20 @@ describe('inquiry event documents', () => {
 				const expectedHref = `/appeals-service/appeal-details/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1/invite-main-party-comments`;
 
 				expect(backLinkElement.innerHTML).toContain(`href="${expectedHref}"`);
+			});
+
+			it(`should render the cancel link with the correct href`, async () => {
+				const response = await request.get(
+					`${baseUrl}/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1/check-your-answers`
+				);
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(response.statusCode).toBe(200);
+				expect(unprettifiedElement.innerHTML).toContain(
+					`href="/appeals-service/appeal-details/1/inquiry-event-documents/manage-documents/${inquiryEventDocsFolderId}/1"`
+				);
+				expect(unprettifiedElement.innerHTML).toContain('>Cancel</a>');
 			});
 
 			it(`should redirect to the case details page on successful share`, async () => {

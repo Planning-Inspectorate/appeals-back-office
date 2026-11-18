@@ -33,10 +33,10 @@ describe('supporting documents', () => {
 	afterAll(() => {
 		nock.cleanAll();
 		nock.restore();
-		jest.resetAllMocks();
+		jest.clearAllMocks();
 	});
 	beforeAll(() => {
-		jest.resetAllMocks();
+		jest.clearAllMocks();
 	});
 
 	beforeEach(() => {
@@ -1222,9 +1222,7 @@ describe('supporting documents', () => {
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-				expect(unprettifiedElement.innerHTML).toContain(
-					'test-pdf-documentFileVersionsInfo.pdf</h1>'
-				);
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
@@ -1269,9 +1267,7 @@ describe('supporting documents', () => {
 				expect(element.innerHTML).toMatchSnapshot();
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-				expect(unprettifiedElement.innerHTML).toContain(
-					'test-pdf-documentFileVersionsInfo.pdf</h1>'
-				);
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<strong class="govuk-tag govuk-tag--red">Virus detected</strong>'
@@ -1301,9 +1297,7 @@ describe('supporting documents', () => {
 				expect(element.innerHTML).toMatchSnapshot();
 
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-				expect(unprettifiedElement.innerHTML).toContain(
-					'test-pdf-documentFileVersionsInfo.pdf</h1>'
-				);
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 				expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf');
 				expect(unprettifiedElement.innerHTML).not.toContain(
 					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
@@ -1381,9 +1375,7 @@ describe('supporting documents', () => {
 					`${baseUrl}/1/supporting-documents/manage-documents/${supportingDocsFolderId}/1`
 				);
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-				expect(unprettifiedElement.innerHTML).toContain(
-					'test-pdf-documentFileVersionsInfo.pdf</h1>'
-				);
+				expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 				expect(unprettifiedElement.innerHTML).toContain('Current version</h2>');
 				expect(unprettifiedElement.innerHTML).toContain('This document is not shared.</p>');
 
@@ -1731,6 +1723,7 @@ describe('supporting documents', () => {
 					.persist();
 				nock('http://test/')
 					.post(`/appeals/notify-preview/${templateName}`)
+					.times(2)
 					.reply(200, { renderedHtml: '<p>Test notification</p>' })
 					.persist();
 			});
@@ -1747,6 +1740,20 @@ describe('supporting documents', () => {
 					'Confirm you want to share test-pdf-documentFileVersionsInfo.pdf with the main parties</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Confirm and share document</button>');
+			});
+
+			it(`should render the cancel link with the correct href`, async () => {
+				const response = await request.get(
+					`${baseUrl}/1/supporting-documents/manage-documents/${supportingDocsFolderId}/1/check-your-answers`
+				);
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(response.statusCode).toBe(200);
+				expect(unprettifiedElement.innerHTML).toContain(
+					`href="/appeals-service/appeal-details/1/supporting-documents/manage-documents/${supportingDocsFolderId}/1"`
+				);
+				expect(unprettifiedElement.innerHTML).toContain('>Cancel</a>');
 			});
 
 			describe('GET /supporting-documents/manage-documents/:folderId/share-all', () => {
@@ -1815,6 +1822,7 @@ describe('supporting documents', () => {
 						.reply(200, { email: 'test@example.com' });
 					nock('http://test/')
 						.post('/appeals/notify-preview/document-received.content.md')
+						.times(2)
 						.reply(200, { renderedHtml: '<p>Test notification</p>' });
 
 					const response = await request.get(

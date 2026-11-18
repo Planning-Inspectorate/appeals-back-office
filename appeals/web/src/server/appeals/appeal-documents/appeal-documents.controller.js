@@ -408,6 +408,21 @@ export const renderManageDocument = async ({
 		return response.status(500).render('app/500.njk');
 	}
 
+	const hearingInquirySupportingDocumentTypes = [
+		'hearing-documents',
+		'supporting-documents',
+		'inquiry/documents',
+		'inquiry-event-documents'
+	];
+	const isHearingInquirySupportingDocumentType = hearingInquirySupportingDocumentTypes.some(
+		(docType) => request.originalUrl.includes(docType)
+	);
+
+	let preHeadingText;
+	if (isHearingInquirySupportingDocumentType && request.currentAppeal?.appealReference) {
+		preHeadingText = `Appeal ${request.currentAppeal.appealReference} - manage documents`;
+	}
+
 	const mappedPageContent = await manageDocumentPage({
 		appealId,
 		backLinkUrl,
@@ -421,7 +436,8 @@ export const renderManageDocument = async ({
 		editable: userHasPermission(permissionNames.updateCase, request.session),
 		skipChangeDocumentDetails,
 		baseUrl: manageDocumentPageBaseUrl,
-		canShare
+		canShare,
+		preHeadingText
 	});
 
 	return response.status(200).render('appeals/documents/manage-document.njk', {
