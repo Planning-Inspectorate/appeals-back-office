@@ -139,7 +139,10 @@ export const getTimetableTypes = (
 					(type) => type !== 'lpaQuestionnaireDueDate'
 				);
 			}
-			if (newProcedureType.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN) {
+			if (
+				newProcedureType.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN ||
+				newProcedureType.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN_PART_2.toLowerCase()
+			) {
 				validAppealTimetableType.push('finalCommentsDueDate');
 			}
 			if (
