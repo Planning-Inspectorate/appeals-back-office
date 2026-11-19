@@ -457,53 +457,86 @@ describe('/appeals/:appealId/documents', () => {
 		jest.clearAllMocks();
 	});
 
+	const documentGuids = [
+		'987e66e0-1db4-404b-8213-8082919159e9',
+		'8b107895-b8c9-467f-aad0-c09daafeaaad'
+	];
+
+	const postDocuments = async (versionOverrides = [{}, {}]) => {
+		databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+		databaseConnector.documentRedactionStatus.findMany.mockResolvedValue(documentRedactionStatuses);
+		databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
+		databaseConnector.$transaction = jest.fn().mockImplementation((callback) =>
+			callback({
+				document: {
+					createMany: jest.fn().mockResolvedValue({ count: 2 }),
+					updateMany: jest.fn().mockResolvedValue({ count: 2 })
+				},
+				documentVersion: {
+					createMany: jest.fn().mockResolvedValue({ count: 2 }),
+					findMany: jest.fn().mockResolvedValue(
+						versionOverrides.map((overrides, index) => ({
+							...documentVersionRetrieved,
+							documentGuid: documentGuids[index],
+							...overrides
+						}))
+					)
+				},
+				documentVersionAvScan: { findMany: jest.fn().mockResolvedValue([]) }
+			})
+		);
+
+		return request
+			.post(`/appeals/${householdAppeal.id}/documents`)
+			.send({
+				...requestBody,
+				blobStorageHost: 'blobStorageHost',
+				blobStorageContainer: 'blobStorageContainer'
+			})
+			.set('azureAdUserId', azureAdUserId);
+	};
+
 	describe('POST', () => {
 		test('creates multiple documents', async () => {
-			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue(
-				documentRedactionStatuses
-			);
-			databaseConnector.user.upsert.mockResolvedValue({
-				id: 1,
-				azureAdUserId
-			});
-			databaseConnector.$transaction = jest.fn().mockImplementation((callback) =>
-				callback({
-					document: {
-						createMany: jest.fn().mockResolvedValue({ count: 2 }),
-						updateMany: jest.fn().mockResolvedValue({ count: 2 })
-					},
-					documentVersion: {
-						createMany: jest.fn().mockResolvedValue({ count: 2 }),
-						findMany: jest.fn().mockResolvedValue([
-							{
-								...documentVersionRetrieved,
-								documentGuid: '987e66e0-1db4-404b-8213-8082919159e9'
-							},
-							{
-								...documentVersionRetrieved,
-								documentGuid: '8b107895-b8c9-467f-aad0-c09daafeaaad'
-							}
-						])
-					},
-					documentVersionAvScan: {
-						findMany: jest.fn().mockResolvedValue([])
-					}
-				})
-			);
-
-			const response = await request
-				.post(`/appeals/${householdAppeal.id}/documents`)
-				.send({
-					...requestBody,
-					blobStorageHost: 'blobStorageHost',
-					blobStorageContainer: 'blobStorageContainer'
-				})
-				.set('azureAdUserId', azureAdUserId);
+			const response = await postDocuments();
 
 			expect(databaseConnector.$transaction).toHaveBeenCalledTimes(1);
 			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
 			expect(response.status).toEqual(201);
+		});
+
+		const expectedAuditTrailDetails = {
+			[APPEAL_DOCUMENT_TYPE.HEARING_PROCESS]: 'Hearing documents uploaded',
+			[APPEAL_DOCUMENT_TYPE.GENERAL_SUPPORTING]: 'Supporting documents uploaded',
+			[APPEAL_DOCUMENT_TYPE.INQUIRY_CORE]: 'Inquiry documents uploaded',
+			[APPEAL_DOCUMENT_TYPE.INQUIRY_POST_EVENT]: 'Inquiry event documents uploaded'
+		};
+
+		Object.entries(expectedAuditTrailDetails).forEach(([documentType, details]) => {
+			test(`logs a single case history entry of "${details}" for: ${documentType}`, async () => {
+				const response = await postDocuments([{ documentType }, { documentType }]);
+
+				expect(response.status).toEqual(201);
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: expect.objectContaining({ appealId: householdAppeal.id, details })
+				});
+			});
+		});
+
+		test('does not log per-document audit trails when uploading multiple documents', async () => {
+			const documentType = APPEAL_DOCUMENT_TYPE.HEARING_PROCESS;
+			const response = await postDocuments([
+				{ documentType, redactionStatus: { key: 'no redaction required' } },
+				{ documentType, redactionStatus: { key: 'redacted' } }
+			]);
+
+			expect(response.status).toEqual(201);
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+				data: expect.objectContaining({ details: 'Hearing documents uploaded' })
+			});
+			expect(databaseConnector.documentVersionAudit.create).not.toHaveBeenCalled();
 		});
 	});
 
@@ -659,20 +692,18 @@ describe('/appeals/:appealId/documents', () => {
 			}
 		];
 
-		const expectedAuditTrailDetails = {
-			'supporting-document': 'Supporting documents uploaded',
-			'hearing-document': 'Hearing documents uploaded',
-			'inquiry-document': 'Inquiry documents uploaded',
-			'inquiry-event-document': 'Inquiry event documents uploaded',
-			'costs-application': 'Costs application uploaded',
-			'costs-correspondence': 'Costs correspondence uploaded',
-			'costs-withdrawal': 'Costs withdrawal uploaded'
-		};
+		const sharingDocumentTypes = [
+			'supporting-document',
+			'hearing-document',
+			'inquiry-document',
+			'inquiry-event-document',
+			'costs-application',
+			'costs-correspondence',
+			'costs-withdrawal'
+		];
 
-		Object.entries(expectedAuditTrailDetails).forEach(([type, details]) => {
-			test(`logs a single case history entry of "${details}" for: ${type}`, async () => {
-				databaseConnector.auditTrail.create.mockResolvedValueOnce({ id: 1 });
-
+		sharingDocumentTypes.forEach((type) => {
+			test(`does not log a case history entry when sharing multiple documents for: ${type}`, async () => {
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/documents`)
 					.send({
@@ -684,32 +715,8 @@ describe('/appeals/:appealId/documents', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: expect.objectContaining({
-						appealId: householdAppeal.id,
-						details
-					})
-				});
-				expect(databaseConnector.documentVersionAudit.create).not.toHaveBeenCalled();
-			});
-		});
-
-		test('does not log per-document redaction audit trails when sharing multiple documents', async () => {
-			const response = await request
-				.patch(`/appeals/${householdAppeal.id}/documents`)
-				.send({
-					documents: sharedDocumentsToSend(2),
-					sharingDocumentType: 'hearing-document',
-					shareMultipleDocuments: true,
-					costsCategory: ''
-				})
-				.set('azureAdUserId', azureAdUserId);
-
-			expect(response.status).toEqual(200);
-			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
-			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-				data: expect.objectContaining({ details: 'Hearing documents uploaded' })
+				expect(notifySend).toHaveBeenCalled();
+				expect(databaseConnector.auditTrail.create).not.toHaveBeenCalled();
 			});
 		});
 
