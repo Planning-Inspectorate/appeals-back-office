@@ -171,7 +171,10 @@ export interface Pagination {
 }
 
 export type BankHolidayFeedDivisions =
-	'england-and-wales' | 'northern-ireland' | 'scotland' | 'united-kingdom';
+	| 'england-and-wales'
+	| 'northern-ireland'
+	| 'scotland'
+	| 'united-kingdom';
 
 interface BankHolidayFeedEvent {
 	title: string;
