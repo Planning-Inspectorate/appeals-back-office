@@ -229,7 +229,7 @@ describe('Change procedure timetable', () => {
 			});
 		});
 
-		it('should prepopulate statement, IP comments and final comments due dates when transitioning from Part 1 to written', async () => {
+		it('should prepopulate statement, IP comments and final comments due dates when transitioning from Part 1 to written Part 2', async () => {
 			const appealData = {
 				...baseAppealData,
 				appealType: APPEAL_TYPE.S78,
@@ -253,10 +253,10 @@ describe('Change procedure timetable', () => {
 
 			await session
 				.post(`${baseUrl}/change-selected-procedure-type`)
-				.send({ appealProcedure: APPEAL_CASE_PROCEDURE.WRITTEN });
+				.send({ appealProcedure: APPEAL_CASE_PROCEDURE.WRITTEN_PART_2 });
 
 			const response = await session.get(
-				`${baseUrl}/${APPEAL_CASE_PROCEDURE.WRITTEN}/change-timetable`
+				`${baseUrl}/${APPEAL_CASE_PROCEDURE.WRITTEN_PART_2}/change-timetable`
 			);
 			const element = parseHtml(response.text);
 
