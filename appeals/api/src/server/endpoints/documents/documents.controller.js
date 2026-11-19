@@ -30,7 +30,10 @@ import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { setPersonalList } from '#utils/update-personal-list.js';
 import { FRONT_OFFICE_DASHBOARD_PATH_STUBS } from '@pins/appeals/constants/common.js';
-import { SHARING_DOCUMENT_TYPE } from '@pins/appeals/constants/documents.js';
+import {
+	DOCUMENT_FOLDER_DISPLAY_LABELS,
+	SHARING_DOCUMENT_TYPE
+} from '@pins/appeals/constants/documents.js';
 import { EventType } from '@pins/event-client';
 import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { addWeeks, format } from 'date-fns';
@@ -122,6 +125,13 @@ export const getDocumentAndVersions = async (req, res) => {
 	return res.send(formatDocument(document));
 };
 
+const MULTI_DOC_UPLOAD_SINGLE_AUDIT_LOG_TYPES = new Set([
+	APPEAL_DOCUMENT_TYPE.HEARING_PROCESS,
+	APPEAL_DOCUMENT_TYPE.INQUIRY_CORE,
+	APPEAL_DOCUMENT_TYPE.INQUIRY_POST_EVENT,
+	APPEAL_DOCUMENT_TYPE.GENERAL_SUPPORTING
+]);
+
 /**
  * @param {Request} req
  * @param {Response} res
@@ -136,8 +146,12 @@ export const addDocuments = async (req, res) => {
 		const initialDocumentsInFolder = await documentRepository.getDocumentsInFolder({ folderId });
 
 		const documentInfo = await service.addDocumentsToAppeal(req.body, appeal);
-
 		const documentTypes = documentInfo.documents.map((doc) => doc?.documentType);
+
+		const hearingInquirySupportingDocType = documentTypes.find((type) =>
+			MULTI_DOC_UPLOAD_SINGLE_AUDIT_LOG_TYPES.has(type)
+		);
+		const isHearingInquiryOrSupportingDocument = Boolean(hearingInquirySupportingDocType);
 
 		if (
 			initialDocumentsInFolder.length === 0 &&
@@ -182,7 +196,7 @@ export const addDocuments = async (req, res) => {
 							decisionLetterHtmlLink
 						])
 					});
-				} else {
+				} else if (!isHearingInquiryOrSupportingDocument) {
 					auditTrail = await createAuditTrail({
 						appealId: appeal.id,
 						azureAdUserId: req.get('azureAdUserId'),
@@ -209,6 +223,16 @@ export const addDocuments = async (req, res) => {
 
 			await service.addDocumentAudit(auditTrail.guid, 1, auditTrail.audit, 'Create');
 		}
+		if (isHearingInquiryOrSupportingDocument) {
+			await createAuditTrail({
+				appealId: appeal.id,
+				azureAdUserId: req.get('azureAdUserId'),
+				details: stringTokenReplacement(AUDIT_TRAIL_MULTIPLE_DOCUMENTS_UPLOADED, [
+					`${DOCUMENT_FOLDER_DISPLAY_LABELS[hearingInquirySupportingDocType]}s`
+				])
+			});
+		}
+
 		return res.status(201).send(documentInfo.documents);
 	} catch (/** @type {Object<any, any>} */ error) {
 		if (error.code === 'P2002') {
@@ -387,12 +411,6 @@ const getDocumentFrontOfficePath = (sharingDocumentType) => {
 	}
 };
 
-/** @param {string} sharingDocumentType */
-const getAuditTrailDocumentTypeLabel = (sharingDocumentType) => {
-	const label = getDocumentFolderName(getDocumentFrontOfficePath(sharingDocumentType));
-	return label.charAt(0).toUpperCase() + label.slice(1);
-};
-
 /**
  * @param {Request} req
  * @param {Response} res
@@ -423,7 +441,8 @@ export const updateDocuments = async (req, res) => {
 							req,
 							appealId: appeal.id,
 							documentGuid: latestDocument.guid,
-							documentVersion: document.latestVersion
+							documentVersion: document.latestVersion,
+							updatingMultipleDocuments: shareMultipleDocuments
 						});
 					}
 				}
@@ -458,15 +477,6 @@ export const updateDocuments = async (req, res) => {
 
 		const notifyTemplateName = getNotifyTemplateName(body.sharingDocumentType);
 		if (documents[0].isShared && sharingDocumentType && notifyTemplateName) {
-			if (shareMultipleDocuments) {
-				await logAuditTrail({
-					messageKey: AUDIT_TRAIL_MULTIPLE_DOCUMENTS_UPLOADED,
-					replacements: [getAuditTrailDocumentTypeLabel(sharingDocumentType)],
-					req,
-					appealId: appeal.id,
-					updatingMultipleDocuments: true
-				});
-			}
 			await sendShareDocumentEmails(
 				req.notifyClient,
 				appeal,
