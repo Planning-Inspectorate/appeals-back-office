@@ -18,6 +18,7 @@ export default joi
 			hostname: joi.string().optional(),
 			topicAppealHas: joi.string().optional(),
 			topicAppealS78: joi.string().optional(),
+			topicAppealGroupC: joi.string().optional(),
 			topicAppealDocument: joi.string().optional(),
 			topicAppealServiceUser: joi.string().optional(),
 			topicAppealEvent: joi.string().optional(),

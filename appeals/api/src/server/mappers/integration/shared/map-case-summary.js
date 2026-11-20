@@ -19,6 +19,6 @@ export const mapCaseSummary = (data) => {
 		// @ts-ignore
 		applicationReference: appeal.applicationReference ?? null,
 		// @ts-ignore
-		lpaCode: appeal.lpa?.lpaCode
+		lpaCode: appeal.lpa?.lpaCode ?? null
 	};
 };

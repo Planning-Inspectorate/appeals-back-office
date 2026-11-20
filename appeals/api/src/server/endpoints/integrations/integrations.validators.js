@@ -15,6 +15,7 @@ export const schemas = {
 		document: 'appeal-document',
 		appealHas: 'appeal-has',
 		appealS78: 'appeal-s78',
+		appealGroupC: 'appeal-group-c',
 		appealEvent: 'appeal-event',
 		appealAdvert: 'appeal-advert',
 		appealRepresentation: 'appeal-representation',

@@ -606,4 +606,66 @@ describe('appeals integration mappers', () => {
 			{ value: 'adopted-a-new-local-plan', comment: 'plan change' }
 		]);
 	});
+
+	test('should map Group C timetable dates in broadcast context for generic appeals', async () => {
+		const genericAppeal = {
+			...mocks.householdAppeal,
+			reference: '6000001',
+			appealType: { key: APPEAL_CASE_TYPE.TPO, type: 'Tree preservation order' },
+			appealTimetable: {
+				lpaStatementDueDate: new Date('2026-06-01T00:00:00.000Z'),
+				finalCommentsDueDate: new Date('2026-07-01T00:00:00.000Z'),
+				proofOfEvidenceAndWitnessesDueDate: new Date('2026-08-01T00:00:00.000Z'),
+				ipCommentsDueDate: new Date('2026-06-15T00:00:00.000Z'),
+				statementOfCommonGroundDueDate: new Date('2026-06-20T00:00:00.000Z'),
+				planningObligationDueDate: new Date('2026-06-25T00:00:00.000Z'),
+				caseManagementConferenceDueDate: new Date('2026-05-15T00:00:00.000Z')
+			},
+			folders: []
+		};
+
+		const broadcastOutput = mapCase({
+			// @ts-ignore
+			appeal: genericAppeal,
+			context: contextEnum.broadcast
+		});
+
+		expect(broadcastOutput).toHaveProperty('caseReference', '6000001');
+		expect(broadcastOutput).toHaveProperty('caseType', APPEAL_CASE_TYPE.TPO);
+		expect(broadcastOutput).toHaveProperty('lpaCode', 'Q9999');
+		expect(broadcastOutput).toHaveProperty('statementDueDate', '2026-06-01T00:00:00.000Z');
+		expect(broadcastOutput).toHaveProperty('finalCommentsDueDate', '2026-07-01T00:00:00.000Z');
+		expect(broadcastOutput).toHaveProperty('proofsOfEvidenceDueDate', '2026-08-01T00:00:00.000Z');
+		expect(broadcastOutput).toHaveProperty(
+			'interestedPartyRepsDueDate',
+			'2026-06-15T00:00:00.000Z'
+		);
+		expect(broadcastOutput).toHaveProperty(
+			'statementOfCommonGroundDueDate',
+			'2026-06-20T00:00:00.000Z'
+		);
+		expect(broadcastOutput).toHaveProperty('planningObligationDueDate', '2026-06-25T00:00:00.000Z');
+		expect(broadcastOutput).toHaveProperty(
+			'caseManagementConferenceDate',
+			'2026-05-15T00:00:00.000Z'
+		);
+	});
+
+	test('should map lpaCode to null when appeal has no LPA in broadcast context', async () => {
+		const genericAppealWithoutLpa = {
+			...mocks.householdAppeal,
+			reference: '6000001',
+			appealType: { key: APPEAL_CASE_TYPE.TPO, type: 'Tree preservation order' },
+			lpa: null,
+			folders: []
+		};
+
+		const broadcastOutput = mapCase({
+			// @ts-ignore
+			appeal: genericAppealWithoutLpa,
+			context: contextEnum.broadcast
+		});
+
+		expect(broadcastOutput).toHaveProperty('lpaCode', null);
+	});
 });
