@@ -27,6 +27,10 @@ export function getPageHeadingTextOverrideForAddDocuments(folder, appealType = '
 	switch (folder.path.split('/')[1]) {
 		case APPEAL_DOCUMENT_TYPE.ADDITIONAL_DOCUMENTS_LPA:
 			return 'Upload any other documents submitted with the application';
+		case APPEAL_DOCUMENT_TYPE.APPELLANT_CASE:
+			return 'Upload appeal form and appeal documents';
+		case APPEAL_DOCUMENT_TYPE.LPA_QUESTIONNAIRE:
+			return 'Upload questionnaire and questionnaire documents';
 		case APPEAL_DOCUMENT_TYPE.APPEAL_NOTIFICATION:
 			return 'Upload the appeal notification letter and the list of people that you notified';
 		case APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION:
@@ -153,6 +157,10 @@ export function getPageHeadingTextOverrideForFolder(folder) {
 	switch (folder.path.split('/')[1]) {
 		case APPEAL_DOCUMENT_TYPE.APPLICATION_DECISION_LETTER:
 			return 'Decision letter from the local planning authority';
+		case APPEAL_DOCUMENT_TYPE.APPELLANT_CASE:
+			return 'Appeal and appeal documents';
+		case APPEAL_DOCUMENT_TYPE.LPA_QUESTIONNAIRE:
+			return 'Questionnaire and questionnaire documents';
 		case APPEAL_DOCUMENT_TYPE.DESIGN_ACCESS_STATEMENT:
 			return 'design and access statement';
 		case APPEAL_DOCUMENT_TYPE.EIA_ENVIRONMENTAL_STATEMENT:

@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { fileUploadInfo } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
@@ -30,6 +31,16 @@ const genericAppealData = {
 			status: 'received',
 			receivedAt: '2026-09-19T00:00:00.000Z'
 		}
+	},
+	appellantCaseFolder: {
+		folderId: 101,
+		path: 'appellant-case/appellantCase',
+		documentCount: 0
+	},
+	lpaQuestionnaireFolder: {
+		folderId: 102,
+		path: 'lpa-questionnaire/lpaQuestionnaire',
+		documentCount: 0
 	},
 	decision: {
 		folderId: 1,
@@ -150,19 +161,109 @@ describe('generic appeal details', () => {
 		expect(issueDecisionLink?.innerHTML.trim()).toBe('Issue decision');
 	});
 
-	it('should display only the Appeal row in the Documentation table with CaseSubmittedDate (Scenario 6)', async () => {
+	it('should display Appeal and LPA questionnaire rows in Documentation table without date column (Scenarios 1 and 2)', async () => {
 		const response = await request.get('/appeals-service/appeal-details/999');
 		const html = parseHtml(response.text);
 
 		const docTable = html.querySelector('#case-documentation-table');
 		expect(docTable).not.toBeNull();
 
-		const rows = docTable.querySelectorAll('.govuk-table__body .govuk-table__row');
-		expect(rows.length).toBe(1);
+		// Header should not contain Date column
+		const headers = Array.from(
+			docTable.querySelectorAll('.govuk-table__head .govuk-table__header')
+		).map((th) => th.textContent.trim());
+		expect(headers).toEqual(['Documentation', 'Status', 'Action']);
 
+		const rows = docTable.querySelectorAll('.govuk-table__body .govuk-table__row');
+		expect(rows.length).toBe(2);
+
+		// Appeal row
 		const appealRow = rows[0];
-		expect(appealRow.querySelector('.govuk-table__header')?.innerHTML.trim()).toBe('Appeal');
-		expect(appealRow.innerHTML).toContain('19 September 2026');
+		expect(
+			appealRow.querySelector('.appeal-appellant-case-documentation')?.textContent.trim()
+		).toBe('Appeal');
+		expect(appealRow.querySelector('.appeal-appellant-case-status')?.textContent.trim()).toBe(
+			'No documents'
+		);
+		const appealAddLink = appealRow.querySelector('.appeal-appellant-case-actions a');
+		expect(appealAddLink?.textContent.trim()).toContain('Add');
+		expect(appealAddLink?.getAttribute('href')).toBe(
+			'/appeals-service/appeal-details/999/appellant-case/add-documents/101'
+		);
+
+		// LPA questionnaire row
+		const lpaqRow = rows[1];
+		expect(
+			lpaqRow.querySelector('.appeal-lpa-questionnaire-documentation')?.textContent.trim()
+		).toBe('LPA questionnaire');
+		expect(lpaqRow.querySelector('.appeal-lpa-questionnaire-status')?.textContent.trim()).toBe(
+			'No documents'
+		);
+		const lpaqAddLink = lpaqRow.querySelector('.appeal-lpa-questionnaire-actions a');
+		expect(lpaqAddLink?.textContent.trim()).toContain('Add');
+		expect(lpaqAddLink?.getAttribute('href')).toBe(
+			'/appeals-service/appeal-details/999/lpa-questionnaire/add-documents/102'
+		);
+	});
+
+	it('should display document count and Manage/Add links when documents are added (Scenario 2)', async () => {
+		const appealWithDocs = {
+			...genericAppealData,
+			appellantCaseFolder: {
+				folderId: 101,
+				path: 'appellant-case/appellantCase',
+				documentCount: 2
+			},
+			lpaQuestionnaireFolder: {
+				folderId: 102,
+				path: 'lpa-questionnaire/lpaQuestionnaire',
+				documentCount: 1
+			}
+		};
+
+		nock.cleanAll();
+		installMockApi();
+		nock('http://test/').get('/appeals/999/page-details').reply(200, appealWithDocs).persist();
+		nock('http://test/').get('/appeals/999').query(true).reply(200, appealWithDocs).persist();
+		nock('http://test/')
+			.get('/appeals/999/exists')
+			.reply(200, { id: 999, appealId: 999, appealReference: appealWithDocs.appealReference })
+			.persist();
+		nock('http://test/').get('/appeals/999/case-notes').reply(200, []).persist();
+
+		const response = await request.get('/appeals-service/appeal-details/999');
+		const html = parseHtml(response.text);
+
+		const docTable = html.querySelector('#case-documentation-table');
+		const rows = docTable.querySelectorAll('.govuk-table__body .govuk-table__row');
+
+		// Appeal row with 2 documents
+		const appealRow = rows[0];
+		expect(appealRow.querySelector('.appeal-appellant-case-status')?.textContent.trim()).toBe(
+			'2 documents'
+		);
+		const appealActions = Array.from(
+			appealRow.querySelectorAll('.appeal-appellant-case-actions a')
+		).map((a) => a.textContent.trim());
+		expect(appealActions.some((t) => t.includes('Manage'))).toBe(true);
+		expect(appealActions.some((t) => t.includes('Add'))).toBe(true);
+		expect(appealRow.querySelector('.appeal-appellant-case-actions a')?.getAttribute('href')).toBe(
+			'/appeals-service/appeal-details/999/appellant-case/manage-documents/101'
+		);
+
+		// LPA questionnaire row with 1 document
+		const lpaqRow = rows[1];
+		expect(lpaqRow.querySelector('.appeal-lpa-questionnaire-status')?.textContent.trim()).toBe(
+			'1 document'
+		);
+		const lpaqActions = Array.from(
+			lpaqRow.querySelectorAll('.appeal-lpa-questionnaire-actions a')
+		).map((a) => a.textContent.trim());
+		expect(lpaqActions.some((t) => t.includes('Manage'))).toBe(true);
+		expect(lpaqActions.some((t) => t.includes('Add'))).toBe(true);
+		expect(lpaqRow.querySelector('.appeal-lpa-questionnaire-actions a')?.getAttribute('href')).toBe(
+			'/appeals-service/appeal-details/999/lpa-questionnaire/manage-documents/102'
+		);
 	});
 
 	it('should display Add links on all empty rows and Assign links on Team rows (Scenario 4)', async () => {
@@ -773,6 +874,266 @@ describe('generic appeal details', () => {
 			const setUpEventButton = html.querySelector('a.govuk-button[href*="/hearing/setup"]');
 			expect(setUpEventButton).not.toBeNull();
 			expect(setUpEventButton?.innerHTML.trim()).toBe('Set up hearing');
+		});
+	});
+
+	describe('Document upload, manage and delete flows (Scenarios 3, 4, 6, 7, 8)', () => {
+		const docAppellantId = '15d19184-155b-4b6c-bba6-2bd2a61ca9a3';
+		const docLpaqId = '47d8f073-c837-4f07-9161-c1a5626eba56';
+
+		const appellantFolderInfo = {
+			caseId: 999,
+			folderId: 101,
+			path: 'appellant-case/appellantCase',
+			documents: [
+				{
+					id: docAppellantId,
+					name: 'appeal-form.pdf',
+					latestDocumentVersion: {
+						documentId: docAppellantId,
+						version: 1,
+						fileName: 'appeal-form.pdf',
+						redactionStatus: 'no_redaction_required',
+						virusCheckStatus: 'scanned',
+						safe: true,
+						published: false
+					}
+				}
+			]
+		};
+
+		const lpaqFolderInfo = {
+			caseId: 999,
+			folderId: 102,
+			path: 'lpa-questionnaire/lpaQuestionnaire',
+			documents: [
+				{
+					id: docLpaqId,
+					name: 'questionnaire.pdf',
+					latestDocumentVersion: {
+						documentId: docLpaqId,
+						version: 1,
+						fileName: 'questionnaire.pdf',
+						redactionStatus: 'no_redaction_required',
+						virusCheckStatus: 'scanned',
+						safe: true,
+						published: false
+					}
+				}
+			]
+		};
+
+		beforeEach(() => {
+			nock('http://test/')
+				.get('/appeals/999/document-folders/101?pageNumber=1&pageSize=100')
+				.reply(200, appellantFolderInfo)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/999/document-folders/102?pageNumber=1&pageSize=100')
+				.reply(200, lpaqFolderInfo)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, [{ key: 'no_redaction_required', name: 'no_redaction_required', id: 10 }])
+				.persist();
+			nock('http://test/').post('/appeals/999/documents').reply(200).persist();
+			nock('http://test/')
+				.get(`/appeals/documents/${docAppellantId}`)
+				.reply(200, appellantFolderInfo.documents[0])
+				.persist();
+			nock('http://test/')
+				.get(`/appeals/documents/${docLpaqId}`)
+				.reply(200, lpaqFolderInfo.documents[0])
+				.persist();
+		});
+
+		it('Scenario 3 & 6: Appeal upload flow displays correct headings and success banner on completion', async () => {
+			const session = supertest.agent(app);
+
+			// 1. GET upload page
+			const uploadGet = await session.get(
+				'/appeals-service/appeal-details/999/appellant-case/add-documents/101'
+			);
+			expect(uploadGet.statusCode).toBe(200);
+			expect(uploadGet.text).toContain('Upload appeal form and appeal documents');
+
+			// 2. POST upload
+			const uploadPost = await session
+				.post('/appeals-service/appeal-details/999/appellant-case/add-documents/101')
+				.send({ 'upload-info': fileUploadInfo });
+			expect(uploadPost.statusCode).toBe(302);
+			expect(uploadPost.headers.location).toContain(
+				'/appeals-service/appeal-details/999/appellant-case/add-document-details/101'
+			);
+
+			// 3. GET add document details page
+			const detailsGet = await session.get(
+				'/appeals-service/appeal-details/999/appellant-case/add-document-details/101'
+			);
+			expect(detailsGet.statusCode).toBe(200);
+			expect(detailsGet.text).toContain('Appeal form and appeal documents');
+
+			// 4. POST add document details
+			const detailsPost = await session
+				.post('/appeals-service/appeal-details/999/appellant-case/add-document-details/101')
+				.send({
+					items: [
+						{
+							documentId: '1',
+							receivedDate: {
+								day: '1',
+								month: '2',
+								year: '2024'
+							},
+							redactionStatus: 'no_redaction_required'
+						}
+					]
+				});
+			expect(detailsPost.statusCode).toBe(302);
+			expect(detailsPost.headers.location).toContain(
+				'/appeals-service/appeal-details/999/appellant-case/add-documents/101/check-your-answers'
+			);
+
+			// 5. GET check your answers
+			const cyaGet = await session.get(
+				'/appeals-service/appeal-details/999/appellant-case/add-documents/101/check-your-answers'
+			);
+			expect(cyaGet.statusCode).toBe(200);
+			expect(cyaGet.text).toContain('Check your answers');
+
+			// 6. POST check your answers
+			const cyaPost = await session
+				.post(
+					'/appeals-service/appeal-details/999/appellant-case/add-documents/101/check-your-answers'
+				)
+				.send({});
+			expect(cyaPost.statusCode).toBe(302);
+			expect(cyaPost.headers.location).toBe('/appeals-service/appeal-details/999');
+
+			// 7. Verify success banner on case details page
+			const caseDetailsResponse = await session.get('/appeals-service/appeal-details/999');
+			expect(caseDetailsResponse.statusCode).toBe(200);
+			expect(caseDetailsResponse.text).toContain('Appeal form and appeal documents added');
+		});
+
+		it('Scenario 4 & 6: LPA questionnaire upload flow displays correct headings and success banner on completion', async () => {
+			const session = supertest.agent(app);
+
+			// 1. GET upload page
+			const uploadGet = await session.get(
+				'/appeals-service/appeal-details/999/lpa-questionnaire/add-documents/102'
+			);
+			expect(uploadGet.statusCode).toBe(200);
+			expect(uploadGet.text).toContain('Upload questionnaire and questionnaire documents');
+
+			// 2. POST upload
+			const uploadPost = await session
+				.post('/appeals-service/appeal-details/999/lpa-questionnaire/add-documents/102')
+				.send({ 'upload-info': fileUploadInfo });
+			expect(uploadPost.statusCode).toBe(302);
+			expect(uploadPost.headers.location).toContain(
+				'/appeals-service/appeal-details/999/lpa-questionnaire/add-document-details/102'
+			);
+
+			// 3. GET add document details page
+			const detailsGet = await session.get(
+				'/appeals-service/appeal-details/999/lpa-questionnaire/add-document-details/102'
+			);
+			expect(detailsGet.statusCode).toBe(200);
+			expect(detailsGet.text).toContain('Questionnaire and questionnaire documents');
+
+			// 4. POST add document details
+			const detailsPost = await session
+				.post('/appeals-service/appeal-details/999/lpa-questionnaire/add-document-details/102')
+				.send({
+					items: [
+						{
+							documentId: '1',
+							receivedDate: {
+								day: '1',
+								month: '2',
+								year: '2024'
+							},
+							redactionStatus: 'no_redaction_required'
+						}
+					]
+				});
+			expect(detailsPost.statusCode).toBe(302);
+			expect(detailsPost.headers.location).toContain(
+				'/appeals-service/appeal-details/999/lpa-questionnaire/add-documents/102/check-your-answers'
+			);
+
+			// 5. GET check your answers
+			const cyaGet = await session.get(
+				'/appeals-service/appeal-details/999/lpa-questionnaire/add-documents/102/check-your-answers'
+			);
+			expect(cyaGet.statusCode).toBe(200);
+			expect(cyaGet.text).toContain('Check your answers');
+
+			// 6. POST check your answers
+			const cyaPost = await session
+				.post(
+					'/appeals-service/appeal-details/999/lpa-questionnaire/add-documents/102/check-your-answers'
+				)
+				.send({});
+			expect(cyaPost.statusCode).toBe(302);
+			expect(cyaPost.headers.location).toBe('/appeals-service/appeal-details/999');
+
+			// 7. Verify success banner on case details page
+			const caseDetailsResponse = await session.get('/appeals-service/appeal-details/999');
+			expect(caseDetailsResponse.statusCode).toBe(200);
+			expect(caseDetailsResponse.text).toContain('Questionnaire and questionnaire documents added');
+		});
+
+		it('Scenario 7: Manage folder pages display correct headings and View and edit links', async () => {
+			// Appeal manage folder
+			const appealManageRes = await request.get(
+				'/appeals-service/appeal-details/999/appellant-case/manage-documents/101'
+			);
+			expect(appealManageRes.statusCode).toBe(200);
+			expect(appealManageRes.text).toContain('Appeal and appeal documents');
+			expect(appealManageRes.text).toContain('View and edit');
+			expect(appealManageRes.text).not.toContain('Manage and share');
+
+			// LPA questionnaire manage folder
+			const lpaqManageRes = await request.get(
+				'/appeals-service/appeal-details/999/lpa-questionnaire/manage-documents/102'
+			);
+			expect(lpaqManageRes.statusCode).toBe(200);
+			expect(lpaqManageRes.text).toContain('Questionnaire and questionnaire documents');
+			expect(lpaqManageRes.text).toContain('View and edit');
+			expect(lpaqManageRes.text).not.toContain('Manage and share');
+		});
+
+		it('Scenario 8: Removing document version displays correct success banners', async () => {
+			nock('http://test/').delete(`/appeals/documents/${docAppellantId}/1`).reply(200);
+			nock('http://test/').delete(`/appeals/documents/${docLpaqId}/1`).reply(200);
+
+			// Delete version on appeal
+			const appealDeleteRes = await request
+				.post(
+					`/appeals-service/appeal-details/999/appellant-case/manage-documents/101/${docAppellantId}/1/delete`
+				)
+				.send({ 'delete-file-answer': 'yes' });
+			expect(appealDeleteRes.statusCode).toBe(302);
+			expect(appealDeleteRes.headers.location).toBe('/appeals-service/appeal-details/999');
+
+			const appealBannerCheck = await request.get('/appeals-service/appeal-details/999');
+			expect(appealBannerCheck.statusCode).toBe(200);
+			expect(appealBannerCheck.text).toContain('Appeal form and appeal documents removed');
+
+			// Delete version on LPA questionnaire
+			const lpaqDeleteRes = await request
+				.post(
+					`/appeals-service/appeal-details/999/lpa-questionnaire/manage-documents/102/${docLpaqId}/1/delete`
+				)
+				.send({ 'delete-file-answer': 'yes' });
+			expect(lpaqDeleteRes.statusCode).toBe(302);
+			expect(lpaqDeleteRes.headers.location).toBe('/appeals-service/appeal-details/999');
+
+			const lpaqBannerCheck = await request.get('/appeals-service/appeal-details/999');
+			expect(lpaqBannerCheck.statusCode).toBe(200);
+			expect(lpaqBannerCheck.text).toContain('Questionnaire and questionnaire documents removed');
 		});
 	});
 });

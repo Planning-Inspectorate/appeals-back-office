@@ -68,10 +68,12 @@ export function generateAppealDetailsPageComponents(appealDetails, mappedData, s
 			head: [
 				{ text: 'Documentation' },
 				{ text: 'Status' },
-				{ text: 'Date' },
 				{ text: 'Action', classes: 'govuk-!-text-align-right' }
 			],
-			rows: [mappedData.appeal.appellantCase?.display?.tableItem].filter(isDefined),
+			rows: [
+				mappedData.appeal.appellantCase?.display?.tableItem,
+				mappedData.appeal.lpaQuestionnaire?.display?.tableItem
+			].filter(isDefined),
 			firstCellIsHeader: true,
 			attributes: {
 				id: 'case-documentation-table'
