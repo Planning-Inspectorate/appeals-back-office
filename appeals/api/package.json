@@ -38,8 +38,8 @@
 		"tscheck": "npx tsc -p jsconfig.json --maxNodeModuleJsDepth 0"
 	},
 	"dependencies": {
-		"@azure/identity": "4.13.1",
-		"@azure/service-bus": "^7.9.5",
+		"@azure/identity": "4.14.1",
+		"@azure/service-bus": "^7.10.0",
 		"@azure/storage-blob": "^12.34.0",
 		"@pins/event-client": "^0.0.0",
 		"@pins/express": "^0.0.0",
