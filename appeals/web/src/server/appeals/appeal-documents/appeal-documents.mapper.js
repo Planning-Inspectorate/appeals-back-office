@@ -266,6 +266,17 @@ export function mapDocumentVersionDetailsVirusCheckStatus(document) {
 function mapAddDocumentsPageHeading(folderPath, documentId) {
 	const isExistingDocument = !!documentId;
 
+	if (folderPath.endsWith(APPEAL_DOCUMENT_TYPE.APPELLANT_CASE)) {
+		return isExistingDocument
+			? 'Upload an updated document'
+			: 'Upload appeal form and appeal documents';
+	}
+	if (folderPath.endsWith(APPEAL_DOCUMENT_TYPE.LPA_QUESTIONNAIRE)) {
+		return isExistingDocument
+			? 'Upload an updated document'
+			: 'Upload questionnaire and questionnaire documents';
+	}
+
 	if (folderIsAdditionalDocuments(folderPath)) {
 		return isExistingDocument ? 'Update additional document' : 'Upload additional documents';
 	} else if (isExistingDocument) {
@@ -287,6 +298,13 @@ function mapAddDocumentDetailsPageHeading(folderPath, documentId, appealType = '
 	const isAdverts =
 		appealType === APPEAL_TYPE.ADVERTISEMENT || appealType === APPEAL_TYPE.CAS_ADVERTISEMENT;
 	const isLpaEnforcementNotice = folderPath.endsWith(APPEAL_DOCUMENT_TYPE.LPA_ENFORCEMENT_NOTICE);
+
+	if (folderPath.endsWith(APPEAL_DOCUMENT_TYPE.APPELLANT_CASE)) {
+		return 'Appeal form and appeal documents';
+	}
+	if (folderPath.endsWith(APPEAL_DOCUMENT_TYPE.LPA_QUESTIONNAIRE)) {
+		return 'Questionnaire and questionnaire documents';
+	}
 
 	if (appealType === APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE && isLpaEnforcementNotice)
 		return 'Enforcement notice document';
@@ -316,6 +334,13 @@ function mapManageFolderPageHeading(folderPath, appealType = '') {
 	const isAdverts =
 		appealType === APPEAL_TYPE.ADVERTISEMENT || appealType === APPEAL_TYPE.CAS_ADVERTISEMENT;
 	const isLpaEnforcementNotice = folderPath.endsWith(APPEAL_DOCUMENT_TYPE.LPA_ENFORCEMENT_NOTICE);
+
+	if (folderPath.endsWith(APPEAL_DOCUMENT_TYPE.APPELLANT_CASE)) {
+		return 'Appeal and appeal documents';
+	}
+	if (folderPath.endsWith(APPEAL_DOCUMENT_TYPE.LPA_QUESTIONNAIRE)) {
+		return 'Questionnaire and questionnaire documents';
+	}
 
 	if (folderIsAdditionalDocuments(folderPath)) {
 		return 'Additional documents';

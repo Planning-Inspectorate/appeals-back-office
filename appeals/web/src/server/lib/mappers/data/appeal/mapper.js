@@ -5,6 +5,7 @@ import { userHasPermission } from '#lib/mappers/index.js';
 import { stripQueryString } from '#lib/url-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import { submaps as genericSubmaps } from './generic.js';
 import { submaps as hasSubmaps } from './has.js';
 import { submaps as s78Submaps } from './s78.js';
 import { mapCaseOfficer } from './submappers/case-officer.mapper.js';
@@ -119,7 +120,7 @@ export async function initialiseAndMapAppealData(
 
 	/** @type {Record<string, SubMapper>} */
 	const submappers = isGenericAppealType(appealDetails.appealType)
-		? s78Submaps
+		? genericSubmaps
 		: submaps[appealDetails.appealType];
 
 	/** @type {{appeal: MappedInstructions}} */
