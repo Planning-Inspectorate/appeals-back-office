@@ -1,0 +1,1 @@
+We are reviewing the procedure type for appeal {{appeal_reference_number}}

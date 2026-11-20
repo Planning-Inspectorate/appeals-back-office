@@ -177,6 +177,22 @@ these [Notify Templates](../appeals/api/src/server/notify/templates):
 - **Notify Content Template:** [enforcement-notice-invalid-lpa](../appeals/api/src/server/notify/templates/enforcement-notice-invalid-lpa.content.md)
 - **Trigger:**
 
+### Expedited - change procedure to type 2 - appellant
+
+- **Appeal type:** expedited - changing from expedited to any non-expedited procedure during validation
+- **Notify Subject Template:** [change-procedure-type](../appeals/api/src/server/notify/templates/expedited-validation-change-procedure-to-type-2-appellant.subject.md)
+- **Notify Content Template:** [change-procedure-type](../appeals/api/src/server/notify/templates/expedited-validation-change-procedure-to-type-2-appellant.content.md)
+- **GOV notify template:** [Prep to change to p2 (appellant) wr h and i - GOV.UK notify](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/3359e43e-a88e-479f-ab4f-999ce81556b6)
+- **Trigger:** Click "Change to part 2" in the Appellant Case screen during validation, select the new procedure, and confirm.
+
+### Expedited - change procedure to type 2 - lpa
+
+- **Appeal type:** expedited - changing from expedited to any non-expedited procedure during validation
+- **Notify Subject Template:** [change-procedure-type](../appeals/api/src/server/notify/templates/expedited-validation-change-procedure-to-type-2-lpa.subject.md)
+- **Notify Content Template:** [change-procedure-type](../appeals/api/src/server/notify/templates/expedited-validation-change-procedure-to-type-2-lpa.content.md)
+- **GOV notify template:** [ Prep to change to p2 (LPA) - GOV.UK notify](https://www.notifications.service.gov.uk/services/c46d894e-d10e-4c46-a467-019576cd906a/templates/97ed60aa-d75b-49f7-86c9-a674c0bef957)
+- **Trigger:** Click "Change to part 2" in the Appellant Case screen during validation, select the new procedure, and confirm.
+
 ### Appeal confirmed - appellant
 
 - **Appeal type:** all
