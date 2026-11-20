@@ -30,3 +30,26 @@ export const getAppealTypeByTypeId = (typeId) => {
 		where: { id: typeId }
 	});
 };
+
+/**
+ * @param { number | string } idOrKey
+ * @param { boolean } suppressNotifications
+ * @returns {Promise<AppealType>}
+ */
+export const updateAppealTypeNotifySuppression = async (idOrKey, suppressNotifications) => {
+	const where =
+		typeof idOrKey === 'number' || !isNaN(Number(idOrKey))
+			? { id: Number(idOrKey) }
+			: { key: String(idOrKey) };
+
+	const result = await databaseConnector.appealType.update({
+		where,
+		data: { suppressNotifications }
+	});
+
+	if (redisClient) {
+		await redisClient.invalidate(`lookup-appealType`);
+	}
+
+	return result;
+};

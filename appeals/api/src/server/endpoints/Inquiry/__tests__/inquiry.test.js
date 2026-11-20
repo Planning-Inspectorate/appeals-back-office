@@ -938,14 +938,18 @@ describe('inquiry routes', () => {
 				expect(response.status).toEqual(201);
 			});
 
-			test('does not send notification when appeal type is generic', async () => {
+			test('dispatches notification requests to notifySend for generic appeal inquiry setup and suppresses email sending', async () => {
+				mockNotifySend.useRealNotifySend = true;
+
 				databaseConnector.appeal.findUnique.mockResolvedValue({
 					...fullPlanningAppeal,
+					suppressNotifications: null,
 					appealType: {
 						id: 99,
 						shorthand: 'GEN',
 						type: 'Tree preservation order',
-						key: APPEAL_CASE_TYPE.TPO
+						key: APPEAL_CASE_TYPE.TPO,
+						suppressNotifications: true
 					}
 				});
 
@@ -955,7 +959,17 @@ describe('inquiry routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(201);
-				expect(mockNotifySend).not.toHaveBeenCalled();
+				// Service invokes notifySend for inquiry setup; notification suppression is evaluated centrally within notifySend
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				expect(mockNotifySend).toHaveBeenCalledWith(
+					expect.objectContaining({
+						personalisation: expect.objectContaining({
+							appeal_reference_number: fullPlanningAppeal.reference
+						})
+					})
+				);
+				expect(global.mockSendEmail).not.toHaveBeenCalled();
+				expect(databaseConnector.appealNotification.createMany).not.toHaveBeenCalled();
 			});
 
 			test('creates a single inquiry with no address or inquiryEndTime', async () => {

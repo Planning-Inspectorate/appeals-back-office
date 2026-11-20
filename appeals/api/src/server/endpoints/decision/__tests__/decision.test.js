@@ -662,6 +662,8 @@ describe('decision routes', () => {
 			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
 			// @ts-ignore
 			databaseConnector.inspectorDecision.create.mockResolvedValue({});
+			// @ts-ignore
+			databaseConnector.representation.findMany.mockResolvedValue([]);
 
 			const tenDaysAgo = sub(new Date(), { days: 10 });
 			const withoutWeekends = await recalculateDateIfNotBusinessDay(tenDaysAgo.toISOString());
@@ -768,6 +770,8 @@ describe('decision routes', () => {
 			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
 			// @ts-ignore
 			databaseConnector.inspectorDecision.create.mockResolvedValue({});
+			// @ts-ignore
+			databaseConnector.representation.findMany.mockResolvedValue([]);
 
 			// @ts-ignore
 			databaseConnector.folder.findMany.mockResolvedValue([savedFolder]);
@@ -1465,6 +1469,8 @@ describe('decision routes', () => {
 			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
 			// @ts-ignore
 			databaseConnector.inspectorDecision.create.mockResolvedValue({});
+			// @ts-ignore
+			databaseConnector.representation.findMany.mockResolvedValue([]);
 
 			const tenDaysAgo = sub(new Date(), { days: 10 });
 			const withoutWeekends = await recalculateDateIfNotBusinessDay(tenDaysAgo.toISOString());
@@ -1485,6 +1491,7 @@ describe('decision routes', () => {
 				.set('azureAdUserId', azureAdUserId);
 
 			expect(response.status).toEqual(201);
+			// Generic appeal fixture has no appellant, agent, or LPA email, so notifySend is not invoked
 			expect(mockNotifySend).not.toHaveBeenCalled();
 			expect(databaseConnector.appealStatus.create).toHaveBeenCalledWith({
 				data: expect.objectContaining({

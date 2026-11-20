@@ -270,10 +270,16 @@ describe('appeal rule 6 parties routes', () => {
 				});
 			});
 
-			test('creates a rule 6 party on generic appeal without email and does not broadcast or send emails', async () => {
+			test('creates a rule 6 party on generic appeal without party email, dispatches main parties notifications to notifySend, and suppresses email dispatch', async () => {
+				mockNotifySend.useRealNotifySend = true;
+
 				const genericAppeal = {
 					...fullPlanningAppeal,
-					appealType: { key: APPEAL_CASE_TYPE.TPO }
+					suppressNotifications: null,
+					appealType: {
+						key: APPEAL_CASE_TYPE.TPO,
+						suppressNotifications: true
+					}
 				};
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(genericAppeal);
@@ -308,7 +314,10 @@ describe('appeal rule 6 parties routes', () => {
 				});
 
 				expect(mockBroadcasters.broadcastServiceUser).not.toHaveBeenCalled();
-				expect(mockNotifySend).not.toHaveBeenCalled();
+				// Dispatches to main parties (appellant and LPA); suppression is evaluated downstream in notifySend
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				expect(global.mockSendEmail).not.toHaveBeenCalled();
+				expect(databaseConnector.appealNotification.createMany).not.toHaveBeenCalled();
 				expect(response.status).toEqual(201);
 				expect(response.body).toEqual({
 					appealId,
