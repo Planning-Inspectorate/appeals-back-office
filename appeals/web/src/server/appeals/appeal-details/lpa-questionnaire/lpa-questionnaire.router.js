@@ -8,6 +8,8 @@ import {
 	validateAppealExists,
 	validateAppealWithInclude
 } from '../appeal-details.middleware.js';
+import * as genericDocsController from '../generic-documents/generic-documents.controller.js';
+import { routeByAppealType } from '../generic-documents/generic-documents.controller.js';
 import * as controller from './lpa-questionnaire.controller.js';
 import * as validators from './lpa-questionnaire.validators.js';
 import outcomeIncompleteRouter from './outcome-incomplete/outcome-incomplete.router.js';
@@ -310,68 +312,120 @@ router
 	);
 
 router
-	.route('/:lpaQuestionnaireId/add-documents/:folderId')
+	.route(['/:lpaQuestionnaireId/add-documents/:folderId', '/add-documents/:folderId'])
 	.get(
 		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		validateCaseDocumentId,
-		asyncHandler(controller.getAddDocuments)
+		asyncHandler(
+			routeByAppealType(genericDocsController.getAddDocuments, controller.getAddDocuments)
+		)
 	)
-	.post(validateAppealExists, validateCaseFolderId, asyncHandler(controller.postAddDocuments));
+	.post(
+		validateAppealExists,
+		validateCaseFolderId,
+		asyncHandler(
+			routeByAppealType(genericDocsController.postAddDocuments, controller.postAddDocuments)
+		)
+	);
 
 router
-	.route('/:lpaQuestionnaireId/add-documents/:folderId/check-your-answers')
+	.route([
+		'/:lpaQuestionnaireId/add-documents/:folderId/check-your-answers',
+		'/add-documents/:folderId/check-your-answers'
+	])
 	.get(
 		validateAppealExists,
 		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
-		asyncHandler(controller.getAddDocumentsCheckAndConfirm)
+		asyncHandler(
+			routeByAppealType(
+				genericDocsController.getAddDocumentsCheckAndConfirm,
+				controller.getAddDocumentsCheckAndConfirm
+			)
+		)
 	)
 	.post(
 		validateAppealExists,
 		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
-		asyncHandler(controller.postAddDocumentsCheckAndConfirm)
+		asyncHandler(
+			routeByAppealType(
+				genericDocsController.postAddDocumentsCheckAndConfirm,
+				controller.postAddDocumentsCheckAndConfirm
+			)
+		)
 	);
 
 router
-	.route('/:lpaQuestionnaireId/add-documents/:folderId/:documentId')
+	.route([
+		'/:lpaQuestionnaireId/add-documents/:folderId/:documentId',
+		'/add-documents/:folderId/:documentId'
+	])
 	.get(
 		validateAppealExists,
 		validateCaseFolderId,
 		validateCaseDocumentId,
-		asyncHandler(controller.getAddDocumentVersion)
+		asyncHandler(
+			routeByAppealType(
+				genericDocsController.getAddDocumentVersion,
+				controller.getAddDocumentVersion
+			)
+		)
 	)
 	.post(
 		validateAppealExists,
 		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
-		asyncHandler(controller.postAddDocumentVersion)
+		asyncHandler(
+			routeByAppealType(
+				genericDocsController.postAddDocumentVersion,
+				controller.postAddDocumentVersion
+			)
+		)
 	);
 
 router
-	.route('/:lpaQuestionnaireId/add-documents/:folderId/:documentId/check-your-answers')
+	.route([
+		'/:lpaQuestionnaireId/add-documents/:folderId/:documentId/check-your-answers',
+		'/add-documents/:folderId/:documentId/check-your-answers'
+	])
 	.get(
 		validateAppealExists,
 		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
-		asyncHandler(controller.getAddDocumentsCheckAndConfirm)
+		asyncHandler(
+			routeByAppealType(
+				genericDocsController.getAddDocumentsCheckAndConfirm,
+				controller.getAddDocumentsCheckAndConfirm
+			)
+		)
 	)
 	.post(
 		validateAppealExists,
 		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
-		asyncHandler(controller.postAddDocumentVersionCheckAndConfirm)
+		asyncHandler(
+			routeByAppealType(
+				genericDocsController.postAddDocumentVersionCheckAndConfirm,
+				controller.postAddDocumentVersionCheckAndConfirm
+			)
+		)
 	);
 
 router
-	.route('/:lpaQuestionnaireId/add-document-details/:folderId')
+	.route(['/:lpaQuestionnaireId/add-document-details/:folderId', '/add-document-details/:folderId'])
 	.get(
 		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
-		asyncHandler(controller.getAddDocumentDetails)
+		asyncHandler(
+			routeByAppealType(
+				genericDocsController.getAddDocumentDetails,
+				controller.getAddDocumentDetails
+			)
+		)
 	)
 	.post(
 		validateAppealExists,
@@ -383,16 +437,29 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
 		extractAndProcessDocumentDateErrors(),
-		asyncHandler(controller.postAddDocumentDetails)
+		asyncHandler(
+			routeByAppealType(
+				genericDocsController.postAddDocumentDetails,
+				controller.postAddDocumentDetails
+			)
+		)
 	);
 
 router
-	.route('/:lpaQuestionnaireId/add-document-details/:folderId/:documentId')
+	.route([
+		'/:lpaQuestionnaireId/add-document-details/:folderId/:documentId',
+		'/add-document-details/:folderId/:documentId'
+	])
 	.get(
 		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
-		asyncHandler(controller.getAddDocumentVersionDetails)
+		asyncHandler(
+			routeByAppealType(
+				genericDocsController.getAddDocumentVersionDetails,
+				controller.getAddDocumentVersionDetails
+			)
+		)
 	)
 	.post(
 		validateAppealExists,
@@ -404,26 +471,43 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
 		extractAndProcessDocumentDateErrors(),
-		asyncHandler(controller.postDocumentVersionDetails)
+		asyncHandler(
+			routeByAppealType(
+				genericDocsController.postDocumentVersionDetails,
+				controller.postDocumentVersionDetails
+			)
+		)
 	);
 
 router
-	.route('/:lpaQuestionnaireId/manage-documents/:folderId/')
+	.route([
+		'/:lpaQuestionnaireId/manage-documents/:folderId/',
+		'/:lpaQuestionnaireId/manage-documents/:folderId',
+		'/manage-documents/:folderId/',
+		'/manage-documents/:folderId'
+	])
 	.get(
 		validateAppealWithInclude(['appealType']),
 		assertUserHasPermission(permissionNames.viewCaseDetails),
 		validateCaseFolderId,
-		asyncHandler(controller.getManageFolder)
+		asyncHandler(
+			routeByAppealType(genericDocsController.getManageFolder, controller.getManageFolder)
+		)
 	);
 
 router
-	.route('/:lpaQuestionnaireId/manage-documents/:folderId/:documentId')
+	.route([
+		'/:lpaQuestionnaireId/manage-documents/:folderId/:documentId',
+		'/manage-documents/:folderId/:documentId'
+	])
 	.get(
 		validateAppealExists,
 		assertUserHasPermission(permissionNames.viewCaseDetails),
 		validateCaseFolderId,
 		validateCaseDocumentId,
-		asyncHandler(controller.getManageDocument)
+		asyncHandler(
+			routeByAppealType(genericDocsController.getManageDocument, controller.getManageDocument)
+		)
 	)
 	.post(
 		validateAppealExists,
@@ -431,16 +515,29 @@ router
 		validateCaseFolderId,
 		validateCaseDocumentId,
 		extractAndProcessDocumentDateErrors(),
-		asyncHandler(controller.postAddDocumentDetails)
+		asyncHandler(
+			routeByAppealType(
+				genericDocsController.postAddDocumentDetails,
+				controller.postAddDocumentDetails
+			)
+		)
 	);
 
 router
-	.route('/:lpaQuestionnaireId/change-document-name/:folderId/:documentId')
+	.route([
+		'/:lpaQuestionnaireId/change-document-name/:folderId/:documentId',
+		'/change-document-name/:folderId/:documentId'
+	])
 	.get(
 		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
-		asyncHandler(controller.getChangeDocumentFileNameDetails)
+		asyncHandler(
+			routeByAppealType(
+				genericDocsController.getChangeDocumentFileNameDetails,
+				controller.getChangeDocumentFileNameDetails
+			)
+		)
 	)
 	.post(
 		validateAppealExists,
@@ -448,16 +545,29 @@ router
 		validateCaseFolderId,
 		documentsValidators.validateDocumentNameBodyFormat,
 		documentsValidators.validateDocumentName,
-		asyncHandler(controller.postChangeDocumentFileNameDetails)
+		asyncHandler(
+			routeByAppealType(
+				genericDocsController.postChangeDocumentFileNameDetails,
+				controller.postChangeDocumentFileNameDetails
+			)
+		)
 	);
 
 router
-	.route('/:lpaQuestionnaireId/change-document-details/:folderId/:documentId')
+	.route([
+		'/:lpaQuestionnaireId/change-document-details/:folderId/:documentId',
+		'/change-document-details/:folderId/:documentId'
+	])
 	.get(
 		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
-		asyncHandler(controller.getChangeDocumentVersionDetails)
+		asyncHandler(
+			routeByAppealType(
+				genericDocsController.getChangeDocumentVersionDetails,
+				controller.getChangeDocumentVersionDetails
+			)
+		)
 	)
 	.post(
 		validateAppealExists,
@@ -469,17 +579,27 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
 		extractAndProcessDocumentDateErrors(),
-		asyncHandler(controller.postChangeDocumentVersionDetails)
+		asyncHandler(
+			routeByAppealType(
+				genericDocsController.postChangeDocumentVersionDetails,
+				controller.postChangeDocumentVersionDetails
+			)
+		)
 	);
 
 router
-	.route('/:lpaQuestionnaireId/manage-documents/:folderId/:documentId/:versionId/delete')
+	.route([
+		'/:lpaQuestionnaireId/manage-documents/:folderId/:documentId/:versionId/delete',
+		'/manage-documents/:folderId/:documentId/:versionId/delete'
+	])
 	.get(
 		validateAppealExists,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		validateCaseDocumentId,
-		asyncHandler(controller.getDeleteDocument)
+		asyncHandler(
+			routeByAppealType(genericDocsController.getDeleteDocument, controller.getDeleteDocument)
+		)
 	)
 	.post(
 		validateAppealExists,
@@ -487,7 +607,12 @@ router
 		validateCaseFolderId,
 		validateCaseDocumentId,
 		documentsValidators.validateDocumentDeleteAnswer,
-		asyncHandler(controller.postDeleteDocumentPage)
+		asyncHandler(
+			routeByAppealType(
+				genericDocsController.postDeleteDocumentPage,
+				controller.postDeleteDocumentPage
+			)
+		)
 	);
 
 router.use(

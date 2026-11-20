@@ -481,6 +481,8 @@ export interface WebAppeal extends SingleAppealDetailsResponse {
 	isS78Expedited?: boolean;
 	inquiryDocuments?: FolderInfo | null;
 	hearingDocuments?: FolderIfo | null;
+	appellantCaseFolder?: FolderInfo | null;
+	lpaQuestionnaireFolder?: FolderInfo | null;
 }
 
 export interface WebServiceUser {

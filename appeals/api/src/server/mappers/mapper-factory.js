@@ -408,6 +408,15 @@ function createFoldersLayout(folders, context) {
 		}
 		default: {
 			const appealFolders = {
+				appellantCaseFolder: folders.find(
+					(f) =>
+						f.path === `${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPELLANT_CASE}`
+				),
+				lpaQuestionnaireFolder: folders.find(
+					(f) =>
+						f.path ===
+						`${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.LPA_QUESTIONNAIRE}`
+				),
 				environmentalAssessment: folders.find(
 					(f) =>
 						f.path ===
