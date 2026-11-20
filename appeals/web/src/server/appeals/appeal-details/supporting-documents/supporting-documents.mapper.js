@@ -37,13 +37,15 @@ export function inviteMainPartyCommentsPage(backLinkUrl, inviteMainPartyComments
  * @param {import('@pins/appeals.api').Appeals.DocumentVersionInfo} documentVersion
  * @param {string} [inviteResponses]
  * @param {{renderedHtml: string}|null} notifyPreview
+ * @param {string} [cancelLinkUrl]
  * * @returns {PageContent}
  */
 export function shareDocumentCheckAndConfirmPage(
 	backLinkUrl,
 	documentVersion,
 	notifyPreview,
-	inviteResponses
+	inviteResponses,
+	cancelLinkUrl
 ) {
 	/** @type {PageContent} */
 	const pageContent = {
@@ -56,7 +58,8 @@ export function shareDocumentCheckAndConfirmPage(
 		submitButtonProperties: {
 			text: 'Confirm and share document',
 			type: 'submit'
-		}
+		},
+		cancelLink: cancelLinkUrl
 	};
 
 	if (inviteResponses) {
