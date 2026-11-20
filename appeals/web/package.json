@@ -47,7 +47,7 @@
     "compression": "1.8.2",
     "connect-redis": "^9.0.0",
     "cookie-parser": "1.4.7",
-    "cors": "2.8.5",
+    "cors": "2.8.6",
     "date-fns": "2.28.0",
     "date-fns-tz": "^2.0.0",
     "dotenv": "16.0.3",
