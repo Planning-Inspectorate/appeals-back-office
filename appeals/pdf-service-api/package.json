@@ -22,7 +22,7 @@
 		"@pins/platform": "^0.0.0",
 		"applicationinsights": "*",
 		"body-parser": "^1.20.9",
-		"cors": "*",
+		"cors": "^2.8.6",
 		"date-fns": "^2.30.0",
 		"date-fns-tz": "^2.0.0",
 		"dotenv": "16.0.3",
