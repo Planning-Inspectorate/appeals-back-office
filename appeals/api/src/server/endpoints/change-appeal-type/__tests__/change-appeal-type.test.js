@@ -47,7 +47,7 @@ const appealTypes = [
 	},
 	{
 		id: 4,
-		type: 'Discontinuance notice appeal',
+		type: 'Discontinuance notice',
 		key: APPEAL_CASE_TYPE.G,
 		processCode: null,
 		enabled: false
@@ -68,7 +68,7 @@ const appealTypes = [
 	},
 	{
 		id: 7,
-		type: 'Planning obligation appeal',
+		type: 'Section 106 agreement',
 		key: APPEAL_CASE_TYPE.Q,
 		processCode: null,
 		enabled: false
