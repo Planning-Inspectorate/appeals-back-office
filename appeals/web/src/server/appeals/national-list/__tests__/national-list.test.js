@@ -10,6 +10,7 @@ import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform/testing/html-parser.js';
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import nock from 'nock';
 import supertest from 'supertest';
 
@@ -136,6 +137,40 @@ describe('national-list', () => {
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Enforcement listed building and conservation area appeal</option>'
+			);
+		});
+
+		it('should render generic appeal types including Section 106 agreement and Discontinuance notice in filters', async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/appeal-types')
+				.reply(200, [
+					...appealTypesData,
+					{
+						id: 83,
+						type: APPEAL_TYPE.DISCONTINUANCE_NOTICE,
+						key: APPEAL_CASE_TYPE.G,
+						enabled: true
+					},
+					{
+						id: 84,
+						type: APPEAL_TYPE.PLANNING_OBLIGATION,
+						key: APPEAL_CASE_TYPE.Q,
+						enabled: true
+					}
+				]);
+			nock('http://test/').get('/appeals/case-teams').reply(200, caseTeams);
+			nock('http://test/').get('/appeals/procedure-types').reply(200, procedureTypesData);
+			nock('http://test/').get('/appeals?pageNumber=1&pageSize=30').reply(200, appealsNationalList);
+
+			const response = await request.get(baseUrl);
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<option value="83">Discontinuance notice</option>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<option value="84">Section 106 agreement</option>'
 			);
 		});
 

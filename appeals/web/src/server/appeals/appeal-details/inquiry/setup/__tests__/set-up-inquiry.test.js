@@ -1802,7 +1802,7 @@ describe('set up inquiry', () => {
 			},
 			{
 				name: 'Adverts (Discontinuance Notice)',
-				appealType: 'Discontinuance notice appeal',
+				appealType: 'Discontinuance notice',
 				expectedFields: [
 					'lpa-questionnaire-due-date',
 					'statement-due-date',
