@@ -1,4 +1,6 @@
-import { validateEnumParameterPath } from '#common/validators/enum-parameter.js';
+import validateEnumParameter, {
+	validateEnumParameterPath
+} from '#common/validators/enum-parameter.js';
 import validateIdParameter from '#common/validators/id-parameter.js';
 import { validateRequiredStringParameter } from '#common/validators/string-parameter.js';
 import { validationErrorHandler } from '#middleware/error-handler.js';
@@ -14,5 +16,12 @@ export const validateAppealStatusRollBackRequest = composeMiddleware(
 export const getAppealStatusDateValidator = composeMiddleware(
 	validateIdParameter('appealId'),
 	validateEnumParameterPath('status', Object.values(APPEAL_CASE_STATUS), false),
+	validationErrorHandler
+);
+
+export const validateUpdateAppealStatusRequest = composeMiddleware(
+	validateIdParameter('appealId'),
+	validateRequiredStringParameter('status'),
+	validateEnumParameter('status', Object.values(APPEAL_CASE_STATUS)),
 	validationErrorHandler
 );

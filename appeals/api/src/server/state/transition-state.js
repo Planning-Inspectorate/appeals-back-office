@@ -72,14 +72,7 @@ const transitionState = async (appealId, azureAdUserId, trigger, options = {}) =
 	const isGeneric = isGenericAppealType(appealType?.type || appealType?.key);
 
 	if (isGeneric) {
-		if (
-			[
-				APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
-				APPEAL_CASE_STATUS.COMPLETE,
-				APPEAL_CASE_STATUS.INVALID,
-				APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
-			].includes(/** @type {any} */ (trigger))
-		) {
+		if (Object.values(APPEAL_CASE_STATUS).includes(/** @type {any} */ (trigger))) {
 			const newState = trigger;
 			if (newState !== currentState) {
 				await appealStatusRepository.updateAppealStatusByAppealId(appealId, newState);
@@ -98,6 +91,7 @@ const transitionState = async (appealId, azureAdUserId, trigger, options = {}) =
 			}
 			return false;
 		}
+		return false;
 	}
 
 	if (!procedureType) {

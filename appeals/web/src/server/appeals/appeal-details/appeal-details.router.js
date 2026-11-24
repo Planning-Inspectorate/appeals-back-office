@@ -24,6 +24,7 @@ import { auditRouter } from './audit/audit.router.js';
 import cancelAppealRouter from './cancel/cancel.router.js';
 import changeAppealDetailsRouter from './change-appeal-details/change-appeal-details.router.js';
 import appealTypeChangeRouter from './change-appeal-type/change-appeal-type.router.js';
+import changeStatusRouter from './change-status/change-status.router.js';
 import costsRouter from './costs/costs.router.js';
 import environmentalAssessmentRouter from './environmental-assessment/environmental-assessment.router.js';
 import hearingDocumentsRouter from './hearing-documents/hearing-documents.router.js';
@@ -210,6 +211,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	changeAppealDetailsRouter
+);
+
+router.use(
+	'/:appealId/change-status',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	changeStatusRouter
 );
 
 router.use(

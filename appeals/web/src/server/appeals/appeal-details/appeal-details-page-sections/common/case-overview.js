@@ -29,6 +29,10 @@ export const getCaseOverview = (mappedData, appealDetails) => ({
 			appealDetails.appealType === APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE &&
 				mappedData.appeal?.applicationMadeUnderActSection?.display.summaryListItem,
 
+			isGenericAppealType(appealDetails.appealType)
+				? mappedData.appeal?.appealStatus?.display?.summaryListItem
+				: undefined,
+
 			displayProcedureChangeLink(appealDetails)
 				? mappedData.appeal?.caseProcedure?.display.summaryListItem
 				: removeSummaryListActions(mappedData.appeal?.caseProcedure?.display.summaryListItem),

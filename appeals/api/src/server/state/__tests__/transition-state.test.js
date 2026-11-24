@@ -542,7 +542,7 @@ describe('transitionState', () => {
 	});
 
 	describe('Generic appeal transitions', () => {
-		test('transitions generic appeal directly to lpa questionnaire, issue determination, complete or invalid', async () => {
+		test('transitions generic appeal directly to any appeal case status', async () => {
 			const genericAppeal = {
 				id: 88,
 				currentStatus: APPEAL_CASE_STATUS.READY_TO_START,
@@ -564,6 +564,14 @@ describe('transitionState', () => {
 			expect(resultLpaQuestionnaire).toBe(true);
 			expect(updateStatusSpy).toHaveBeenCalledWith(88, APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE);
 
+			const resultStatements = await transitionState(88, 'user-123', APPEAL_CASE_STATUS.STATEMENTS);
+			expect(resultStatements).toBe(true);
+			expect(updateStatusSpy).toHaveBeenCalledWith(88, APPEAL_CASE_STATUS.STATEMENTS);
+
+			const resultEvent = await transitionState(88, 'user-123', APPEAL_CASE_STATUS.EVENT);
+			expect(resultEvent).toBe(true);
+			expect(updateStatusSpy).toHaveBeenCalledWith(88, APPEAL_CASE_STATUS.EVENT);
+
 			const resultIssueDetermination = await transitionState(
 				88,
 				'user-123',
@@ -579,6 +587,10 @@ describe('transitionState', () => {
 			const resultInvalid = await transitionState(88, 'user-123', APPEAL_CASE_STATUS.INVALID);
 			expect(resultInvalid).toBe(true);
 			expect(updateStatusSpy).toHaveBeenCalledWith(88, APPEAL_CASE_STATUS.INVALID);
+
+			// Non-status trigger returns false
+			const resultWorkflowTrigger = await transitionState(88, 'user-123', 'UNKNOWN_TRIGGER');
+			expect(resultWorkflowTrigger).toBe(false);
 		});
 	});
 

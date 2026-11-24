@@ -4,6 +4,7 @@ import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { isLinkedAppealsActive } from '#lib/mappers/utils/is-linked-appeal.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { decisionOutcomeToDisplayText } from '@pins/appeals/utils/decision-outcome-display-text.js';
 import { APPEAL_CASE_STATUS, APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
 
@@ -22,9 +23,18 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 			type: 'status-tag',
 			parameters: {
 				...mappedData.appeal.appealStatus.display.statusTag,
-				classes: 'pins-status-tag--full-width govuk-!-margin-bottom-6'
+				classes: 'pins-status-tag--full-width govuk-!-margin-bottom-2'
 			}
 		});
+
+		if (isGenericAppealType(appealDetails.appealType)) {
+			statusTags.push({
+				type: 'html',
+				parameters: {
+					html: `<p class="govuk-body govuk-!-margin-bottom-6"><a href="/appeals-service/appeal-details/${appealDetails.appealId}/change-status" class="govuk-link">Change appeal status</a></p>`
+				}
+			});
+		}
 	}
 
 	if (isLinkedAppealsActive()) {
