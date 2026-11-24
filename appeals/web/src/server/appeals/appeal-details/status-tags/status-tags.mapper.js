@@ -31,7 +31,7 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 			statusTags.push({
 				type: 'html',
 				parameters: {
-					html: `<p class="govuk-body govuk-!-margin-bottom-6"><a href="/appeals-service/appeal-details/${appealDetails.appealId}/change-status" class="govuk-link">Change appeal status</a></p>`
+					html: `<p class="govuk-body govuk-!-margin-bottom-6"><a href="/appeals-service/appeal-details/${appealDetails.appealId}/change-status" class="govuk-link">Change</a></p>`
 				}
 			});
 		}

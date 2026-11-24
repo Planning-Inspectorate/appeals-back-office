@@ -53,7 +53,7 @@ export const changeStatusPage = (appealDetails, backLinkUrl, selectedStatus, err
 			radiosInput({
 				name: 'status',
 				idPrefix: 'status',
-				legendText: 'Change appeal status',
+				legendText: 'Change',
 				legendIsPageHeading: true,
 				items: radioItems,
 				errorMessage

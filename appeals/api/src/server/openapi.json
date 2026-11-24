@@ -808,6 +808,109 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/appeal-status": {
+			"patch": {
+				"tags": ["Appeal Status"],
+				"description": "Manually update appeal status for generic appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Updated appeal status",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"success": {
+											"type": "boolean",
+											"example": true
+										},
+										"status": {
+											"type": "string",
+											"example": "statements"
+										}
+									},
+									"xml": {
+										"name": "main"
+									}
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"success": {
+											"type": "boolean",
+											"example": true
+										},
+										"status": {
+											"type": "string",
+											"example": "statements"
+										}
+									},
+									"xml": {
+										"name": "main"
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Appeal status",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"status": {
+										"type": "string"
+									}
+								},
+								"required": ["status"]
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"status": {
+										"type": "string"
+									}
+								},
+								"required": ["status"]
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/appeal-status/roll-back": {
 			"post": {
 				"tags": ["Appeal Status"],

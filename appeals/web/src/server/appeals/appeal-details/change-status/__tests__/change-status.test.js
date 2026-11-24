@@ -31,7 +31,7 @@ describe('change-status', () => {
 		test('generates expected radio items for written procedure', () => {
 			const page = changeStatusPage(mockGenericAppeal, '/back-url', undefined, undefined);
 
-			expect(page.title).toBe('Change appeal status');
+			expect(page.title).toBe('Change');
 			expect(page.backLinkUrl).toBe('/back-url');
 
 			const radiosComponent = page.pageComponents[0];
@@ -145,7 +145,7 @@ describe('change-status', () => {
 				'patterns/change-page.pattern.njk',
 				expect.objectContaining({
 					pageContent: expect.objectContaining({
-						title: 'Change appeal status'
+						title: 'Change'
 					})
 				})
 			);
