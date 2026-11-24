@@ -19,10 +19,7 @@ export const getEnabledHearingAppealTypes = (linked = false) => {
 		enabledHearingAppealTypes.push(APPEAL_TYPE.PLANNED_LISTED_BUILDING);
 	}
 
-	if (
-		isAppealTypeEnabled(APPEAL_TYPE.ENFORCEMENT_NOTICE) &&
-		isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_HEARING)
-	) {
+	if (isAppealTypeEnabled(APPEAL_TYPE.ENFORCEMENT_NOTICE)) {
 		enabledHearingAppealTypes.push(APPEAL_TYPE.ENFORCEMENT_NOTICE);
 		if (isFeatureActive(FEATURE_FLAG_NAMES.ENFORCEMENT_HEARING_LINKED)) {
 			enabledLinkedHearingAppealTypes.push(APPEAL_TYPE.ENFORCEMENT_NOTICE);
