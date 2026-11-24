@@ -955,5 +955,9 @@ export const renderViewDecision = async (request, response) => {
  * @param {Appeal} currentAppeal
  */
 const shouldFollowReIssueDecisionFlow = (currentAppeal) => {
-	return isStatePassed(currentAppeal, APPEAL_CASE_STATUS.ISSUE_DETERMINATION);
+	return (
+		isStatePassed(currentAppeal, APPEAL_CASE_STATUS.ISSUE_DETERMINATION) ||
+		currentAppeal.appealStatus === APPEAL_CASE_STATUS.COMPLETE ||
+		currentAppeal.appealStatus === APPEAL_CASE_STATUS.INVALID
+	);
 };

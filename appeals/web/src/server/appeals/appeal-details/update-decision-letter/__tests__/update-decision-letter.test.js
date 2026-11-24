@@ -191,6 +191,33 @@ describe('update-decision-letter', () => {
 				'Found. Redirecting to /appeals-service/appeal-details/1/update-decision-letter/correction-notice'
 			);
 		});
+
+		it('should redirect to the correction notice page for a completed generic appeal that skipped issue_determination', async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, {
+					...issueDecisionAppealData,
+					appealType: 'Tree replacement notice',
+					appealStatus: 'complete',
+					completedStateList: ['ready_to_start']
+				})
+				.persist();
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses);
+
+			const response = await request
+				.post(`${baseUrl}/1/update-decision-letter/upload-decision-letter`)
+				.send({
+					'upload-info': fileUploadInfo
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/update-decision-letter/correction-notice'
+			);
+		});
 	});
 
 	describe('GET /issue-decision/check-your-decision', () => {
@@ -399,6 +426,46 @@ describe('update-decision-letter', () => {
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
 				'Found. Redirecting to /appeals-service/appeal-details/1/issue-decision/view-decision'
+			);
+		});
+
+		it('should render the check details page without email previews or notification copy for a generic appeal', async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1?include=all')
+				.reply(200, {
+					...issueDecisionAppealData,
+					appealType: 'Tree replacement notice',
+					appealStatus: 'complete',
+					completedStateList: ['ready_to_start'],
+					planningApplicationReference: null
+				})
+				.persist();
+			nock('http://test/')
+				.get('/appeals/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b')
+				.reply(200, {
+					id: 'e1e90a49-fab3-44b8-a21a-bb73af089f6b',
+					name: 'test-document2.pdf',
+					latestDocumentVersion: {
+						documentId: '3861dfbd-4886-4c43-9e23-18c8134f9ba1',
+						version: 1,
+						fileName: 'test-document2.pdf'
+					}
+				})
+				.persist();
+
+			const response = await request.get(`${baseUrl}/1/update-decision-letter/check-details`);
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain('Check details and update decision letter');
+			expect(unprettifiedElement.innerHTML).toContain('Decision letter');
+			expect(unprettifiedElement.innerHTML).toContain('Correction notice');
+			expect(unprettifiedElement.innerHTML).not.toContain('Preview LPA email');
+			expect(unprettifiedElement.innerHTML).not.toContain('Preview appellant email');
+			expect(unprettifiedElement.innerHTML).not.toContain('Preview interested party email');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'We will send the updated decision letter to the relevant parties.'
 			);
 		});
 	});
