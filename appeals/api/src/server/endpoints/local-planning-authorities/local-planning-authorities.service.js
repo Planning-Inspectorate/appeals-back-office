@@ -6,10 +6,7 @@ import { notifySend } from '#notify/notify-send.js';
 import lpaRepository from '#repositories/lpa.repository.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import {
-	AUDIT_TRAIL_LPA_UPDATED,
-	ERROR_NO_RECIPIENT_EMAIL
-} from '@pins/appeals/constants/support.js';
+import { AUDIT_TRAIL_LPA_UPDATED } from '@pins/appeals/constants/support.js';
 import {
 	isEnforcementCaseType,
 	isLdcOrDiscontinuanceOrEnforcementCaseType
@@ -85,9 +82,6 @@ const sendLpaChangeNotifications = async (appeal, newLpaDetails, azureAdUserId, 
 	const teamEmail = await getTeamEmailFromAppealId(appealId);
 	const isEnforcement = isEnforcementCaseType(appeal.appealType?.key || '');
 	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
-	if (!recipientEmail) {
-		throw new Error(ERROR_NO_RECIPIENT_EMAIL);
-	}
 	const appellantPersonalisation = {
 		appeal_reference_number: appeal.reference || '',
 		site_address: siteAddress,
