@@ -2153,32 +2153,63 @@ describe('required actions', () => {
 			...appealData,
 			appealType: 'Tree preservation order',
 			appealStatus: APPEAL_CASE_STATUS.READY_TO_START,
+			startedAt: null,
 			decision: {
 				folderId: 1,
 				path: 'appeal-decision/case-decision-letter'
 			}
 		};
 
-		it('should return ["startAppeal", "issueDecision"] when status is READY_TO_START and decision has no outcome', () => {
+		it('should return ["startAppeal", "issueDecision"] when case is not started and decision has no outcome', () => {
 			expect(getRequiredActionsForAppeal(genericAppeal, 'detail')).toEqual([
 				'startAppeal',
 				'issueDecision'
 			]);
 		});
 
-		it('should return ["issueDecision"] when status is LPA_QUESTIONNAIRE and decision has no outcome', () => {
+		it('should return ["startAppeal", "issueDecision"] when case is not started even if status is not READY_TO_START', () => {
 			expect(
 				getRequiredActionsForAppeal(
 					{ ...genericAppeal, appealStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE },
 					'detail'
 				)
+			).toEqual(['startAppeal', 'issueDecision']);
+		});
+
+		it('should return ["issueDecision"] when case is started and status is LPA_QUESTIONNAIRE and decision has no outcome', () => {
+			expect(
+				getRequiredActionsForAppeal(
+					{
+						...genericAppeal,
+						startedAt: '2026-10-05T00:00:00.000Z',
+						appealStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
+					},
+					'detail'
+				)
 			).toEqual(['issueDecision']);
 		});
 
-		it('should return ["issueDecision"] when status is ISSUE_DETERMINATION and decision has no outcome', () => {
+		it('should return ["issueDecision"] when case is started even if status is READY_TO_START', () => {
 			expect(
 				getRequiredActionsForAppeal(
-					{ ...genericAppeal, appealStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION },
+					{
+						...genericAppeal,
+						startedAt: '2026-10-05T00:00:00.000Z',
+						appealStatus: APPEAL_CASE_STATUS.READY_TO_START
+					},
+					'detail'
+				)
+			).toEqual(['issueDecision']);
+		});
+
+		it('should return ["issueDecision"] when case is started and status is ISSUE_DETERMINATION and decision has no outcome', () => {
+			expect(
+				getRequiredActionsForAppeal(
+					{
+						...genericAppeal,
+						startedAt: '2026-10-05T00:00:00.000Z',
+						appealStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION
+					},
 					'detail'
 				)
 			).toEqual(['issueDecision']);

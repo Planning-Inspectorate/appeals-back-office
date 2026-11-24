@@ -74,7 +74,11 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 		]).includes(appealDetails.appealStatus);
 
 		if (!isTerminalStatus && !hasDecision) {
-			if (appealDetails.appealStatus === APPEAL_CASE_STATUS.READY_TO_START) {
+			const isCaseStarted =
+				view === 'detail'
+					? 'startedAt' in appealDetails && Boolean(appealDetails.startedAt)
+					: appealDetails.appealStatus !== APPEAL_CASE_STATUS.READY_TO_START;
+			if (!isCaseStarted) {
 				actions.push('startAppeal');
 			}
 			actions.push('issueDecision');

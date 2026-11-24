@@ -19,8 +19,9 @@ describe('change-status', () => {
 		appealId: 10,
 		appealReference: 'APP/2026/10001',
 		appealType: APPEAL_CASE_TYPE.TPO,
-		appealStatus: APPEAL_CASE_STATUS.READY_TO_START,
-		procedureType: APPEAL_CASE_PROCEDURE.WRITTEN
+		appealStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+		procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+		startedAt: '2026-10-05T00:00:00.000Z'
 	};
 
 	beforeEach(() => {
@@ -126,6 +127,41 @@ describe('change-status', () => {
 
 			await getChangeStatus(req, res);
 
+			expect(res.status).toHaveBeenCalledWith(404);
+			expect(res.render).toHaveBeenCalledWith('app/404.njk');
+		});
+
+		test('getChangeStatus returns 404 for unstarted generic appeal', async () => {
+			const req = {
+				currentAppeal: { ...mockGenericAppeal, startedAt: null }
+			};
+			const res = {
+				status: jest.fn().mockReturnThis(),
+				render: jest.fn()
+			};
+
+			await getChangeStatus(req, res);
+
+			expect(res.status).toHaveBeenCalledWith(404);
+			expect(res.render).toHaveBeenCalledWith('app/404.njk');
+		});
+
+		test('postChangeStatus returns 404 for unstarted generic appeal', async () => {
+			const req = {
+				currentAppeal: { ...mockGenericAppeal, startedAt: null },
+				body: { status: APPEAL_CASE_STATUS.STATEMENTS },
+				errors: undefined,
+				apiClient: {},
+				session: {}
+			};
+			const res = {
+				status: jest.fn().mockReturnThis(),
+				render: jest.fn()
+			};
+
+			await postChangeStatus(req, res);
+
+			expect(mockUpdateAppealStatus).not.toHaveBeenCalled();
 			expect(res.status).toHaveBeenCalledWith(404);
 			expect(res.render).toHaveBeenCalledWith('app/404.njk');
 		});

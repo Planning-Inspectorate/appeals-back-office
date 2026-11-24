@@ -29,17 +29,18 @@ export const mapAppealStatus = ({ appealDetails }) => {
 					text: isGeneric ? mapStatusFilterLabel(formattedStatus) : appealDetails.appealStatus
 				},
 				classes: 'appeal-appeal-status',
-				...(isGeneric && {
-					actions: {
-						items: [
-							{
-								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealDetails.appealId}/change-status`,
-								visuallyHiddenText: 'appeal status'
-							}
-						]
-					}
-				})
+				...(isGeneric &&
+					appealDetails.startedAt && {
+						actions: {
+							items: [
+								{
+									text: 'Change',
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/change-status`,
+									visuallyHiddenText: 'appeal status'
+								}
+							]
+						}
+					})
 			},
 			statusTag: {
 				status: formattedStatus,

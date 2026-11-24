@@ -19,15 +19,20 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 	const statusTags = [];
 
 	if (mappedData.appeal.appealStatus.display?.statusTag) {
+		const canChangeStatus =
+			isGenericAppealType(appealDetails.appealType) && Boolean(appealDetails.startedAt);
+
 		statusTags.push({
 			type: 'status-tag',
 			parameters: {
 				...mappedData.appeal.appealStatus.display.statusTag,
-				classes: 'pins-status-tag--full-width govuk-!-margin-bottom-2'
+				classes: canChangeStatus
+					? 'pins-status-tag--full-width govuk-!-margin-bottom-2'
+					: 'pins-status-tag--full-width govuk-!-margin-bottom-6'
 			}
 		});
 
-		if (isGenericAppealType(appealDetails.appealType)) {
+		if (canChangeStatus) {
 			statusTags.push({
 				type: 'html',
 				parameters: {

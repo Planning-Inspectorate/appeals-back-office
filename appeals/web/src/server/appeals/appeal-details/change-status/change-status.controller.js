@@ -8,7 +8,11 @@ import { updateAppealStatus } from './change-status.service.js';
 export const getChangeStatus = async (request, response) => {
 	const { currentAppeal } = request;
 
-	if (!currentAppeal || !isGenericAppealType(currentAppeal.appealType)) {
+	if (
+		!currentAppeal ||
+		!isGenericAppealType(currentAppeal.appealType) ||
+		!currentAppeal.startedAt
+	) {
 		return response.status(404).render('app/404.njk');
 	}
 
@@ -36,7 +40,11 @@ export const postChangeStatus = async (request, response) => {
 		session
 	} = request;
 
-	if (!currentAppeal || !isGenericAppealType(currentAppeal.appealType)) {
+	if (
+		!currentAppeal ||
+		!isGenericAppealType(currentAppeal.appealType) ||
+		!currentAppeal.startedAt
+	) {
 		return response.status(404).render('app/404.njk');
 	}
 
