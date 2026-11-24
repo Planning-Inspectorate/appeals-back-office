@@ -311,6 +311,55 @@ describe('local-planning-authorities', () => {
 			expect(response.status).toEqual(200);
 		});
 
+		test('returns 200 and suppresses notifications for generic appeal without appellant or agent email', async () => {
+			mockNotifySend.useRealNotifySend = true;
+			const genericAppeal = {
+				...householdAppeal,
+				appellant: null,
+				agent: null,
+				lpa: null,
+				suppressNotifications: null,
+				appealType: { key: 'TPO', suppressNotifications: true }
+			};
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(genericAppeal);
+			// @ts-ignore
+			databaseConnector.lPA.findMany.mockResolvedValue([validLPA, newLPA]);
+			// @ts-ignore
+			databaseConnector.lPA.findUnique.mockResolvedValue(newLPA);
+			// @ts-ignore
+			databaseConnector.user.upsert.mockResolvedValue({
+				id: 1,
+				azureAdUserId
+			});
+
+			const response = await request
+				.post(`/appeals/${genericAppeal.id}/lpa`)
+				.send({
+					newLpaId: 48
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+			expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+				data: {
+					lpaId: 48,
+					caseUpdatedDate: expect.any(Date)
+				},
+				where: {
+					id: genericAppeal.id
+				}
+			});
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+				data: {
+					appealId: genericAppeal.id,
+					details: stringTokenReplacement(AUDIT_TRAIL_LPA_UPDATED, [newLPA.name]),
+					loggedAt: expect.any(Date),
+					userId: 1
+				}
+			});
+		});
+
 		test('returns 400 if invalid request', async () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);

@@ -1,5 +1,6 @@
-import { appellantCaseDataNotValidated } from '#testing/app/fixtures/referencedata.js';
+import { appealData, appellantCaseDataNotValidated } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform/testing/html-parser.js';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -145,6 +146,32 @@ describe('change-appeal-details/local-planning-authority', () => {
 			expect(element.innerHTML).toContain('Check details and update local planning authority');
 			expect(element.innerHTML).toContain('Preview email to appellant');
 			expect(element.innerHTML).toContain('Preview email to lpa');
+		});
+
+		it('should render the check details page without email previews for generic appeal types', async () => {
+			nock('http://test/')
+				.get('/appeals/2?include=all')
+				.times(2)
+				.reply(200, {
+					...appealData,
+					appealId: 2,
+					appealType: APPEAL_TYPE.TREE_PRESERVATION_ORDER
+				});
+
+			await request
+				.post(`${baseUrl}/2/change-appeal-details/local-planning-authority`)
+				.send({ localPlanningAuthority: 2 });
+
+			const response = await request.get(
+				`${baseUrl}/2/change-appeal-details/local-planning-authority/check-details`
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toContain('Check details and update local planning authority');
+			expect(element.innerHTML).not.toContain('Preview email to appellant');
+			expect(element.innerHTML).not.toContain('Preview email to lpa');
 		});
 	});
 });

@@ -113,7 +113,7 @@ export function mapLpasToSelectItemParameters(lpaList) {
  * @param {Appeal} currentAppeal
  * @param {LPA} lpa
  * @param {string} backlinkUrl
- * @param { {appellant: string, lpa: string} }emailPreviews
+ * @param { {appellant: string, lpa: string} | undefined } [emailPreviews]
  * @returns {Promise<PageContent>}
  */
 export async function checkAndConfirmPage(currentAppeal, lpa, backlinkUrl, emailPreviews) {

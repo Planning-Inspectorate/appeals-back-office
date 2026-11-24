@@ -5,6 +5,7 @@ import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { isGenericAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
 import { changeLpaListPage, checkAndConfirmPage } from './local-planning-authority.mapper.js';
 import { getLpaList, postChangeLpaRequest } from './local-planning-authority.service.js';
 
@@ -139,40 +140,48 @@ const renderCheckDetails = async (request, response) => {
 			return response.status(404).render('app/404.njk');
 		}
 
-		const { email: assignedTeamEmail } = await getTeamFromAppealId(
-			apiClient,
-			currentAppeal.appealId
-		);
+		const isGeneric = isGenericAppealType(currentAppeal.appealType);
 
-		const appellantPreviewPersonalisation = {
-			appeal_reference_number: currentAppeal.appealReference,
-			site_address: addressToString(currentAppeal.appealSite),
-			lpa_reference: currentAppeal.planningApplicationReference,
-			team_email_address: assignedTeamEmail,
-			local_planning_authority: lpa?.name
-		};
-		const lpaPreviewPersonalisation = {
-			appeal_reference_number: currentAppeal.appealReference,
-			site_address: addressToString(currentAppeal.appealSite),
-			lpa_reference: currentAppeal.planningApplicationReference,
-			team_email_address: assignedTeamEmail,
-			local_planning_authority: lpa?.name
-		};
+		/** @type {{ appellant: string, lpa: string } | undefined} */
+		let emailPreviews;
 
-		const appellantPreview = await generateNotifyPreview(
-			request.apiClient,
-			'lpa-changed-appellant.content.md',
-			appellantPreviewPersonalisation
-		);
-		const lpaPreview = await generateNotifyPreview(
-			request.apiClient,
-			'lpa-removed.content.md',
-			lpaPreviewPersonalisation
-		);
-		const emailPreviews = {
-			appellant: appellantPreview.renderedHtml,
-			lpa: lpaPreview.renderedHtml
-		};
+		if (!isGeneric) {
+			const { email: assignedTeamEmail } = await getTeamFromAppealId(
+				apiClient,
+				currentAppeal.appealId
+			);
+
+			const appellantPreviewPersonalisation = {
+				appeal_reference_number: currentAppeal.appealReference,
+				site_address: addressToString(currentAppeal.appealSite),
+				lpa_reference: currentAppeal.planningApplicationReference,
+				team_email_address: assignedTeamEmail,
+				local_planning_authority: lpa?.name
+			};
+			const lpaPreviewPersonalisation = {
+				appeal_reference_number: currentAppeal.appealReference,
+				site_address: addressToString(currentAppeal.appealSite),
+				lpa_reference: currentAppeal.planningApplicationReference,
+				team_email_address: assignedTeamEmail,
+				local_planning_authority: lpa?.name
+			};
+
+			const appellantPreview = await generateNotifyPreview(
+				request.apiClient,
+				'lpa-changed-appellant.content.md',
+				appellantPreviewPersonalisation
+			);
+			const lpaPreview = await generateNotifyPreview(
+				request.apiClient,
+				'lpa-removed.content.md',
+				lpaPreviewPersonalisation
+			);
+			emailPreviews = {
+				appellant: appellantPreview.renderedHtml,
+				lpa: lpaPreview.renderedHtml
+			};
+		}
+
 		const mappedPageContent = await checkAndConfirmPage(
 			currentAppeal,
 			lpa,
