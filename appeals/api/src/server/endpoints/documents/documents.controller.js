@@ -823,11 +823,13 @@ export const updateDocumentVisibilityBooleans = async (
 		APPEAL_DOCUMENT_TYPE.LPA_COSTS_APPLICATION
 	);
 
-	if (!(
-		changedDevelopmentDescriptionDocument ||
-		appellantCostApplicationDocument ||
-		lpaCostApplicationDocument
-	)) {
+	if (
+		!(
+			changedDevelopmentDescriptionDocument ||
+			appellantCostApplicationDocument ||
+			lpaCostApplicationDocument
+		)
+	) {
 		return;
 	}
 

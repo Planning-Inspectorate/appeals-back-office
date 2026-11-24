@@ -1497,7 +1497,10 @@ type ServiceUserResponse = {
 type AssignedUser = 'caseOfficer' | 'inspector';
 
 type BankHolidayFeedDivisions =
-	'england-and-wales' | 'northern-ireland' | 'scotland' | 'united-kingdom';
+	| 'england-and-wales'
+	| 'northern-ireland'
+	| 'scotland'
+	| 'united-kingdom';
 
 export {
 	AppealRelationshipRequest,

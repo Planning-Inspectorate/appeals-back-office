@@ -121,7 +121,8 @@ export type LpaQuestionnaireFullAppealEnvironmentalImpact = {
 	scheduleType: ScheduleTypeOption;
 	// ScheduleType 1 or environmentStatementNeeded: Yes
 	environmentalStatementComplete?:
-		'Yes, we did the environmental statement' | 'No, we have a negative screening direction';
+		| 'Yes, we did the environmental statement'
+		| 'No, we have a negative screening direction';
 	// Yes
 	environmentStatementDocument?: AppealDocument;
 	// No
@@ -210,7 +211,9 @@ export type LpaQuestionnaireFullAppealProcess = {
 export type ProcedureType = 'Written representations' | 'Hearing' | 'Inquiry';
 
 export type NotificationMethodOptions =
-	'A site notice' | 'Letter/email to interested parties' | 'A press advert';
+	| 'A site notice'
+	| 'Letter/email to interested parties'
+	| 'A press advert';
 
 export type DevelopmentDescription =
 	| 'Agriculture and aquaculture'
