@@ -8,6 +8,7 @@ import {
 } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { trimAppealType } from '#utils/string-utils.js';
+import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
@@ -3105,11 +3106,11 @@ describe('inquiry routes', () => {
 			}
 		);
 
-		test('returns an error when the appeal type is unavailable for inquiry notifications', async () => {
+		test('returns an error for inquiry notifications when no appeal type can be resolved', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...fullPlanningAppeal,
 				appealTypeId: null,
-				appealType: null,
+				appealType: { ...fullPlanningAppeal.appealType, id: undefined },
 				inquiry
 			});
 
@@ -3118,6 +3119,7 @@ describe('inquiry routes', () => {
 				.set('azureAdUserId', azureAdUserId);
 
 			expect(response.status).toEqual(500);
+			expect(response.body).toEqual({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
 			expect(databaseConnector.appealType.findFirst).not.toHaveBeenCalled();
 			expect(mockNotifySend).not.toHaveBeenCalled();
 		});
