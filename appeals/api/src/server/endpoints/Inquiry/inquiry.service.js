@@ -48,7 +48,6 @@ import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from '@planning-inspectorate/dat
  * @param {TimetableData | undefined} timetableData
  * @param {Omit<import('@pins/appeals.api').Schema.Address, 'id'> | null | undefined} address
  * @param {string | Date} startDate
- * @param {boolean} isStartCase
  * @returns {Promise<void>}
  */
 const sendInquiryDetailsNotifications = async (
@@ -60,8 +59,7 @@ const sendInquiryDetailsNotifications = async (
 	estimatedDays,
 	timetableData,
 	address,
-	startDate,
-	isStartCase
+	startDate
 ) => {
 	const personalisation = {
 		appeal_type: trimAppealType(appeal.appealType?.type ?? ''),
@@ -135,7 +133,7 @@ const sendInquiryDetailsNotifications = async (
 		team_email_address: await getTeamEmailFromAppealId(appeal.id),
 		inspector_name: inspectorName ? inspectorName : null
 	};
-	await sendInquiryNotifications(notifyClient, templateName, appeal, personalisation, isStartCase);
+	await sendInquiryNotifications(notifyClient, templateName, appeal, personalisation);
 };
 
 /**
@@ -164,15 +162,13 @@ const checkInquiryExists = async (req, res, next) => {
  * @param {string} templateName
  * @param {Appeal} appeal
  * @param {Record<string, string | null>} [personalisation]
- * @param {boolean} isStartCase
  * @returns {Promise<void>}
  */
 const sendInquiryNotifications = async (
 	notifyClient,
 	templateName,
 	appeal,
-	personalisation = {},
-	isStartCase = false
+	personalisation = {}
 ) => {
 	const appealTypeId = appeal.appealTypeId ?? appeal.appealType?.id;
 	if (appealTypeId == null) {
@@ -203,7 +199,7 @@ const sendInquiryNotifications = async (
 
 	recipients.forEach(async (item) => {
 		let individualTemplateName;
-		if (isEnforcement && isStartCase) {
+		if (isEnforcement) {
 			individualTemplateName = templateName + (item.isLpa ? '-lpa' : '-appellant');
 		} else {
 			individualTemplateName = templateName;
@@ -347,8 +343,7 @@ const createInquiry = async (
 				estimatedDays,
 				timetableData,
 				address,
-				startDateWithTimeCorrection,
-				isStartCase
+				startDateWithTimeCorrection
 			);
 		} else {
 			await sendInquiryDetailsNotifications(
@@ -360,8 +355,7 @@ const createInquiry = async (
 				estimatedDays,
 				timetableData,
 				address,
-				startDateWithTimeCorrection,
-				isStartCase
+				startDateWithTimeCorrection
 			);
 		}
 		await broadcasters.broadcastAppeal(appeal.id);
@@ -424,8 +418,7 @@ const updateInquiry = async (
 				result?.estimatedDays ? result?.estimatedDays.toString() : '',
 				undefined,
 				address,
-				'',
-				false
+				''
 			);
 		}
 	} catch (error) {

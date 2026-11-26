@@ -113,7 +113,7 @@ const getNotifyTemplateNames = (procedureType, appealTypeKey, hearingStartTime, 
 		switch (procedureType) {
 			case APPEAL_CASE_PROCEDURE.INQUIRY: {
 				const inquiryTemplate = APPEAL_CASE_PROCEDURE.INQUIRY;
-				const hasRecipientSuffix = isEnforcementCaseType(appealTypeKey) && caseIsStarted;
+				const hasRecipientSuffix = isEnforcementCaseType(appealTypeKey);
 				return {
 					lpa: hasRecipientSuffix ? `${inquiryTemplate}-lpa` : inquiryTemplate,
 					appellant: hasRecipientSuffix ? `${inquiryTemplate}-appellant` : inquiryTemplate
