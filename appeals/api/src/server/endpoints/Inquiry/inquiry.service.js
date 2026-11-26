@@ -201,9 +201,6 @@ const sendInquiryNotifications = async (
 		});
 	}
 
-	console.log('isEnforcement: ', isEnforcement);
-	console.log('isStartCase: ', isStartCase);
-
 	recipients.forEach(async (item) => {
 		let individualTemplateName;
 		if (isEnforcement && isStartCase) {
