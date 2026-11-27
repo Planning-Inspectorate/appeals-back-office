@@ -151,6 +151,7 @@ export function sharedIpCommentsPage(
 	firstCommentNumber = 1
 ) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
+	const pageNumber = (firstCommentNumber - 1) / 10 + 1;
 
 	const notificationBanners = mapNotificationBannersFromSession(
 		session,
@@ -167,6 +168,12 @@ export function sharedIpCommentsPage(
 
 	const commentsComponents = comments.flatMap((comment, index) => {
 		const commentNumber = firstCommentNumber + index;
+		const attachments = comment.attachments ?? [];
+		const hasHiddenAttachments = attachments.length > SHARED_COMMENT_DOCUMENTS_SHOWN;
+		const shownAttachments = attachments.slice(0, SHARED_COMMENT_DOCUMENTS_SHOWN);
+		const viewAllDocumentsUrl = `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/supporting-documents?backUrl=${encodeURIComponent(
+			`/interested-party-comments?pageNumber=${pageNumber}`
+		)}`;
 
 		/** @type {PageComponent} */
 		const ipSummaryList = {
@@ -219,22 +226,39 @@ export function sharedIpCommentsPage(
 					{
 						key: { text: 'Supporting documents' },
 						value: {
-							html: buildHtmlList({
-								items: comment.attachments?.length
-									? comment.attachments.map(
-											(a) =>
-												`<a class="govuk-link" href="${mapDocumentDownloadUrl(
-													a.documentVersion.document.caseId,
-													a.documentVersion.document.guid,
-													a.documentVersion.document.name
-												)}" target="_blank">${a.documentVersion.document.name}</a>`
-										)
-									: ['No documents'],
-								isOrderedList: true,
-								isNumberedList: (comment.attachments?.length ?? 0) > 1,
-								listClasses: 'govuk-list govuk-!-margin-top-0'
-							})
-						}
+							html:
+								(hasHiddenAttachments
+									? `<p class="govuk-!-margin-bottom-2">Showing ${shownAttachments.length} of ${attachments.length}</p>`
+									: '') +
+								buildHtmlList({
+									items: shownAttachments.length
+										? shownAttachments.map(
+												(a) =>
+													`<a class="govuk-link" href="${mapDocumentDownloadUrl(
+														a.documentVersion.document.caseId,
+														a.documentVersion.document.guid,
+														a.documentVersion.document.name
+													)}" target="_blank">${a.documentVersion.document.name}</a>`
+											)
+										: ['No documents'],
+									isOrderedList: true,
+									isNumberedList: shownAttachments.length > 1,
+									listClasses: 'govuk-list govuk-!-margin-top-0'
+								})
+						},
+						...(hasHiddenAttachments
+							? {
+									actions: {
+										items: [
+											{
+												text: 'View all',
+												href: viewAllDocumentsUrl,
+												visuallyHiddenText: `supporting documents for interested party ${commentNumber}`
+											}
+										]
+									}
+								}
+							: {})
 					}
 				]
 			}

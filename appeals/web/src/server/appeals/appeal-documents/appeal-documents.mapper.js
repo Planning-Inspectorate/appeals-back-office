@@ -183,7 +183,7 @@ export const mapUncommittedDocumentDownloadUrl = (
  * @param {number|null|undefined} fileSize
  * @returns {string}
  */
-const mapDocumentSizeToFileSizeString = (fileSize) => {
+export const mapDocumentSizeToFileSizeString = (fileSize) => {
 	if (!fileSize) {
 		return '';
 	}
