@@ -10,7 +10,7 @@ Planning application reference: {{lpa_reference}}
 
 {{correction_notice_reason}}
 
-[Sign in to our service]({{front_office_url}}/appeals/new-saved-appeal) to view the decision letter dated {{decision_date}}.
+[Sign in to our service]({{front_office_url}}/appeals/{{appeal_reference_number}}) to view the decision letter dated {{decision_date}}.
 
 # The Planning Inspectorate's role
 
