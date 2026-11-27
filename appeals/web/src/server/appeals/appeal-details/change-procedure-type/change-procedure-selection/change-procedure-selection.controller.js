@@ -83,7 +83,7 @@ export const postChangeSelectProcedure = async (request, response) => {
 		}
 
 		sessionValues.selectedProcedureType = newProcedureType;
-
+		console.log(sessionValues);
 		switch (newProcedureType) {
 			case APPEAL_CASE_PROCEDURE.WRITTEN_PART_2:
 			case APPEAL_CASE_PROCEDURE.WRITTEN: {

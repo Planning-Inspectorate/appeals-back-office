@@ -49,6 +49,7 @@ import { generateS78ExpeditedComponents } from './page-components/s78-expedited.
 import { generateS78Components } from './page-components/s78.mapper.js';
 
 import { isS78ExpeditedAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
+import { appealProcedureToLabelText } from '../change-procedure-type/change-procedure-check-and-confirm/change-procedure-check-and-confirm.mapper.js';
 
 /**
  * @typedef {import('../../appeals.types.js').DayMonthYearHourMinute} DayMonthYearHourMinute
@@ -567,6 +568,128 @@ export function checkAndConfirmPage({
 		});
 	}
 
+	return pageContent;
+}
+
+/**
+ * @typedef {Object} CheckAndConfirmChangeToPart2Options
+ * @property {number} appealId
+ * @property {string} appealReference
+ * @property {Object} changeProcedureType
+ * @property {DayMonthYearHourMinute} updatedDueDate
+ * @property {{appellant: string, lpa: string}} [emailPreviews]
+ */
+
+/**
+ * @param {CheckAndConfirmChangeToPart2Options} options
+ * @returns {PageContent}
+ */
+export function checkAndConfirmChangePart2Page({
+	appealId,
+	appealReference,
+	changeProcedureType,
+	updatedDueDate,
+	emailPreviews
+}) {
+	const backLinkUrl = `?backUrl=/appeals-service/appeal-details/${appealId}/appellant-case/change-to-part-2/check-your-answers`;
+	/** @type {PageComponent} */
+	const summaryListComponent = {
+		type: 'summary-list',
+		parameters: {
+			rows: [
+				{
+					key: { text: 'Review outcome' },
+					value: { text: capitalize('Change to part 2') },
+					actions: {
+						items: [
+							{
+								text: 'Change',
+								href: `/appeals-service/appeal-details/${appealId}/appellant-case` + backLinkUrl,
+								visuallyHiddenText: 'Change review outcome'
+							}
+						]
+					}
+				},
+				{
+					key: {
+						text: 'Suggested procedure'
+					},
+					value: {
+						// @ts-ignore
+						text: appealProcedureToLabelText(changeProcedureType.selectedProcedureType)
+					},
+					actions: {
+						items: [
+							{
+								text: 'Change',
+								href:
+									`/appeals-service/appeal-details/${appealId}/appellant-case/change-to-part-2/change-selected-procedure-type` +
+									backLinkUrl,
+								visuallyHiddenText: 'Change procedure type'
+							}
+						]
+					}
+				},
+				{
+					key: {
+						text: 'Updated due date'
+					},
+					value: {
+						text: dayMonthYearHourMinuteToDisplayDate(updatedDueDate)
+					},
+					actions: {
+						items: [
+							{
+								text: 'Change',
+								href:
+									`/appeals-service/appeal-details/${appealId}/appellant-case/change-to-part-2/incomplete/date` +
+									backLinkUrl,
+								visuallyHiddenText: 'updated due date'
+							}
+						]
+					}
+				}
+			].filter(Boolean)
+		}
+	};
+
+	/** @type {PageComponent} */
+	const insetTextComponent = {
+		type: 'inset-text',
+		parameters: {
+			text: 'Confirming this will ask the appellant for the additional documents we need to follow to a part 2 procedure. It will also notify the local planning authority.'
+		}
+	};
+
+	const emailPreviewComponents = emailPreviews
+		? [
+				detailsComponent({
+					summaryText: `Preview email to appellant`,
+					html: emailPreviews.appellant
+				}),
+				detailsComponent({
+					summaryText: `Preview email to LPA`,
+					html: emailPreviews.lpa
+				})
+			]
+		: [];
+
+	/** @type {PageComponent[]} */
+	const pageComponents = [summaryListComponent, insetTextComponent, ...emailPreviewComponents];
+
+	preRenderPageComponents(pageComponents);
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title: 'Check answers',
+		backLinkUrl: `/appeals-service/appeal-details/${appealId}/appellant-case/change-to-part-2/incomplete/date`,
+		preHeading: `Appeal ${appealShortReference(appealReference)}`,
+		heading: 'Check your answers before confirming your review',
+		pageComponents,
+		submitButtonProperties: {
+			text: 'Confirm'
+		}
+	};
 	return pageContent;
 }
 

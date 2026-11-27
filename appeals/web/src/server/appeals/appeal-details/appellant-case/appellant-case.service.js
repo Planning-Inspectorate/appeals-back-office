@@ -83,3 +83,41 @@ export async function getAppellantCaseNotValidReasonOptionsForOutcome(
 export async function getAppellantCaseEnforcementInvalidReasonOptions(apiClient) {
 	return apiClient.get(`appeals/appellant-case-enforcement-invalid-reasons`).json();
 }
+
+/**
+ * @param {any} apiClient
+ * @param {string} appealId
+ * @param {import('../change-procedure-type/change-procedure-type.controller.js').ChangeProcedureTypeRequest} data
+ * @returns {Promise<*>}
+ */
+export const setAppealProcedureWithDueDate = async (apiClient, appealId, data) => {
+	const ids = assertValidNumericIds({ appealId });
+	return await apiClient.post(`appeals/${ids.appealId}/change-to-part-2`, {
+		json: data
+	});
+};
+
+/**
+ *
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @param {string} [dueDate]
+ * @param {string | null} [procedureType]
+ * @returns {Promise<{appellant?: string, lpa?: string}>}
+ */
+export async function getChangeToPart2NotifyPreviews(apiClient, appealId, dueDate, procedureType) {
+	const result = await apiClient
+		.post(`appeals/${appealId}/change-to-part-2/notify-preview`, {
+			json: {
+				...(dueDate && { dueDate }),
+				...(procedureType && { procedureType })
+			}
+		})
+		.json();
+
+	if (result.error) {
+		throw new Error(result.error);
+	}
+
+	return result;
+}

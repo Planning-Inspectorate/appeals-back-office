@@ -38,6 +38,7 @@ import { isEmpty, pick } from 'lodash-es';
  * @property {string|undefined} [planningObligationDueDate]
  * @property {string|undefined} [proofOfEvidenceAndWitnessesDueDate]
  * @property {string|undefined} [caseManagementConferenceDueDate]
+ * @property {boolean} [isChangeToPart2]
  */
 
 /**

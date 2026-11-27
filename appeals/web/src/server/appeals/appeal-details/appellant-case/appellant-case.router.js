@@ -69,6 +69,10 @@ const router = createRouter({ mergeParams: true });
 const changeToPart2Router = createRouter({ mergeParams: true });
 
 changeToPart2Router.use('/incomplete', outcomeIncompleteRouter);
+changeToPart2Router
+	.route('/check-your-answers')
+	.get(asyncHandler(controller.getChangeToPart2CheckAndConfirm))
+	.post(asyncHandler(controller.postChangeToPart2CheckAndConfirm));
 changeToPart2Router.use(changeProcedureTypeRouter);
 
 router.use(

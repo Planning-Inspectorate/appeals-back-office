@@ -1,6 +1,8 @@
 import { getDocumentFileType } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { addressToString } from '#lib/address-formatter.js';
 import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
+import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
+import { getSessionValuesForAppeal } from '#lib/edit-utilities.js';
 import { getFeedbackLinkFromAppealTypeName } from '#lib/feedback-form-link.js';
 import logger from '#lib/logger.js';
 import {
@@ -38,13 +40,17 @@ import { buildRejectionReasons } from '../representations/common/components/reje
 import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
 import {
 	appellantCasePage,
+	checkAndConfirmChangePart2Page,
 	checkAndConfirmPage,
 	getDocumentNameFromFolder,
 	getValidationOutcomeFromAppellantCase,
 	mapWebReviewOutcomeToApiReviewOutcome
 } from './appellant-case.mapper.js';
 import * as appellantCaseService from './appellant-case.service.js';
-import { setReviewOutcomeForAppellantCase } from './appellant-case.service.js';
+import {
+	getChangeToPart2NotifyPreviews,
+	setReviewOutcomeForAppellantCase
+} from './appellant-case.service.js';
 
 /**
  *
@@ -740,3 +746,106 @@ async function getAppellantCaseDetails(request, response, appealDetails) {
 		)
 		.catch((error) => logger.error(error));
 }
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const getChangeToPart2CheckAndConfirm = async (request, response) => {
+	renderChangeToPart2CheckAndConfirm(request, response);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>} */
+export const postChangeToPart2CheckAndConfirm = async (request, response) => {
+	try {
+		const {
+			params: { appealId },
+			session: { updatedDueDate }
+		} = request;
+
+		const sessionValues =
+			/** @type {import('../change-procedure-type/change-procedure-timetable/change-procedure-timetable.mapper.js').ChangeProcedureTypeSession} */ (
+				/** @type {unknown} */ (getSessionValuesForAppeal(request, 'changeProcedureType', appealId))
+			);
+		const newProcedureType = sessionValues.appealProcedure;
+
+		console.log(sessionValues);
+		if (!newProcedureType) {
+			return response.status(500).render('app/500.njk');
+		}
+
+		const updatedDueDateFormatted = dayMonthYearHourMinuteToISOString({
+			day: updatedDueDate['day'] || '',
+			month: updatedDueDate['month'] || '',
+			year: updatedDueDate['year'] || ''
+		});
+
+		await appellantCaseService.setAppealProcedureWithDueDate(request.apiClient, appealId, {
+			// @ts-ignore
+			appealDueDate: updatedDueDateFormatted,
+			...sessionValues
+		});
+
+		delete request.session['changeProcedureType']?.[request.currentAppeal.appealId];
+
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when completing appellant case review'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+const renderChangeToPart2CheckAndConfirm = async (request, response) => {
+	try {
+		const {
+			currentAppeal,
+			session: { updatedDueDate, changeProcedureType }
+		} = request;
+
+		/** @type {{appellant: string, lpa: string} | undefined} */
+		let emailPreviews;
+		const errorMessage = 'Failed to generate email preview';
+		try {
+			const result = await getChangeToPart2NotifyPreviews(
+				request.apiClient,
+				currentAppeal.appealId,
+				updatedDueDate,
+				changeProcedureType
+			);
+			emailPreviews = {
+				appellant: result.appellant || errorMessage,
+				lpa: result.lpa || errorMessage
+			};
+		} catch (error) {
+			logger.error(error);
+		}
+		const checkAndConfirmOptions = {
+			appealId: currentAppeal.appealId,
+			appealReference: currentAppeal.appealReference,
+			changeProcedureType: changeProcedureType[currentAppeal.appealId],
+			updatedDueDate: updatedDueDate,
+			emailPreviews: emailPreviews
+		};
+		const mappedPageContent = checkAndConfirmChangePart2Page(checkAndConfirmOptions);
+
+		return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
+			pageContent: mappedPageContent
+		});
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when completing appellant case review'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
+};

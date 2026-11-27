@@ -1971,6 +1971,11 @@ export const spec = {
 					description: 'Appeal procedure type',
 					example: 'hearing'
 				},
+				isChangeToPart2: {
+					type: 'boolean',
+					description: 'Indicates whether this is a change to Part 2',
+					example: true
+				},
 				existingAppealProcedure: {
 					type: 'string',
 					description: 'Existing appeal procedure type',

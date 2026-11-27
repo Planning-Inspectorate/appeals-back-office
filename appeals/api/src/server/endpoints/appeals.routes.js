@@ -28,6 +28,7 @@ import { caseNotesRoutes } from './case-notes/case-notes.routes.js';
 import { caseTeamRouter } from './case-team/case-team.routes.js';
 import { changeAppealTypeRoutes } from './change-appeal-type/change-appeal-type.routes.js';
 import { changeProcedureTypeRoutes } from './change-procedure-type/change-procedure-type.routes.js';
+import { changeToPart2Routes } from './change-to-part-2/change-to-part-2.routes.js';
 import { decisionRoutes } from './decision/decision.routes.js';
 import { documentRedactionStatusesRoutes } from './document-redaction-statuses/document-redaction-statuses.routes.js';
 import { documentsRoutes } from './documents/documents.routes.js';
@@ -139,6 +140,8 @@ router.use(changeProcedureTypeRoutes);
 router.use(appealRule6PartiesRoutes);
 
 router.use(cancelRoutes);
+
+router.use(changeToPart2Routes);
 
 if (config.featureFlags.featureFlagBackgroundCaseDownload) {
 	router.use(caseFilePackagesRoutes);

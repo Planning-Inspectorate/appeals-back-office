@@ -3568,6 +3568,11 @@ export interface ChangeProcedureTypeRequest {
 	 */
 	appealProcedure?: string;
 	/**
+	 * Indicates whether this is a change to Part 2
+	 * @example true
+	 */
+	isChangeToPart2?: boolean;
+	/**
 	 * Existing appeal procedure type
 	 * @example "hearing"
 	 */

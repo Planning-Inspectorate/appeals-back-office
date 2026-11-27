@@ -12,6 +12,7 @@ import {
 import logger from '#lib/logger.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { getNotValidReasonsTextFromRequestBody } from '#lib/validation-outcome-reasons-formatter.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { isAnyEnforcementAppealType } from '@pins/appeals/utils/appeal-type-checks.js';
@@ -115,6 +116,7 @@ const renderIncompleteReason = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 const renderUpdateDueDate = async (request, response) => {
+	console.log(request.session, 'renderDueDate');
 	const { body, currentAppeal, errors } = request;
 	let dueDateDay, dueDateMonth, dueDateYear;
 
@@ -163,8 +165,11 @@ const renderUpdateDueDate = async (request, response) => {
 		dueDateMonth = request.body['due-date-month'];
 		dueDateYear = request.body['due-date-year'];
 	}
+	const queryBackLink = getBackLinkUrlFromQuery(request);
+	let backLinkUrl =
+		queryBackLink ??
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/incomplete/`;
 
-	let backLinkUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/appellant-case/incomplete/`;
 	if (isAnyEnforcementAppealType(currentAppeal.appealType)) {
 		if (
 			request.session.webAppellantCaseReviewOutcome?.missingDocuments &&
@@ -317,7 +322,7 @@ export const postUpdateDueDate = async (request, response) => {
 	) {
 		return response.status(500).render('app/500.njk');
 	}
-
+	console.log(request);
 	const {
 		body,
 		currentAppeal: { appealId, appealType }
@@ -343,12 +348,20 @@ export const postUpdateDueDate = async (request, response) => {
 		) {
 			return response.status(500).render('app/500.njk');
 		}
-
-		request.session.webAppellantCaseReviewOutcome.updatedDueDate = {
-			day: updatedDueDateDay,
-			month: updatedDueDateMonth,
-			year: updatedDueDateYear
-		};
+		console.log(request.session, 'SESSION');
+		if (isChangeToPart2Flow(request)) {
+			request.session.updatedDueDate = {
+				day: updatedDueDateDay,
+				month: updatedDueDateMonth,
+				year: updatedDueDateYear
+			};
+		} else {
+			request.session.webAppellantCaseReviewOutcome.updatedDueDate = {
+				day: updatedDueDateDay,
+				month: updatedDueDateMonth,
+				year: updatedDueDateYear
+			};
+		}
 
 		if (isAnyEnforcementAppealType(appealType)) {
 			return response.redirect(
@@ -356,6 +369,11 @@ export const postUpdateDueDate = async (request, response) => {
 			);
 		}
 
+		if (isChangeToPart2Flow(request)) {
+			return response.redirect(
+				`/appeals-service/appeal-details/${appealId}/appellant-case/change-to-part-2/check-your-answers`
+			);
+		}
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/appellant-case/check-your-answers`
 		);
