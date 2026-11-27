@@ -111,21 +111,24 @@ const getNotifyTemplateNames = (procedureType, appealTypeKey, hearingStartTime, 
 
 	const getSuffixes = () => {
 		switch (procedureType) {
-			case APPEAL_CASE_PROCEDURE.INQUIRY:
-				return { lpa: APPEAL_CASE_PROCEDURE.INQUIRY, appellant: APPEAL_CASE_PROCEDURE.INQUIRY };
-
+			case APPEAL_CASE_PROCEDURE.INQUIRY: {
+				const inquiryTemplate = APPEAL_CASE_PROCEDURE.INQUIRY;
+				const hasRecipientSuffix = isEnforcementCaseType(appealTypeKey);
+				return {
+					lpa: hasRecipientSuffix ? `${inquiryTemplate}-lpa` : inquiryTemplate,
+					appellant: hasRecipientSuffix ? `${inquiryTemplate}-appellant` : inquiryTemplate
+				};
+			}
 			case APPEAL_CASE_PROCEDURE.HEARING: {
 				const hearingPrefix = !caseIsStarted && hearingStartTime ? 'hearing-' : '';
 				return { lpa: `${hearingPrefix}lpa`, appellant: `${hearingPrefix}appellant` };
 			}
-
 			case APPEAL_CASE_PROCEDURE.WRITTEN_PART_1:
 			case PROCEDURE_TYPE_KEY.WRITTEN_PART_1:
 				if (appealTypeNotifyTemplate) {
 					return { lpa: 'expedited-lpa', appellant: 'expedited-appellant' };
 				}
 				return { lpa: 'lpa', appellant: 'appellant' };
-
 			case APPEAL_CASE_PROCEDURE.WRITTEN_PART_2:
 			case PROCEDURE_TYPE_KEY.WRITTEN_PART_2:
 			default:

@@ -367,6 +367,22 @@ these [Notify Templates](../appeals/api/src/server/notify/templates):
 - **Notify Content Template:** [appeal-valid-start-case-enforcement-hearing-lpa](../appeals/api/src/server/notify/templates/appeal-valid-start-case-enforcement-hearing-lpa.content.md)
 - **Trigger:** Start an enforcement case, select hearing procedure, set up a date and time for the hearing, and confirm.
 
+### Start case - enforcement inquiry appellant
+
+- **Appeal type:** enforcement and ELB
+- **Procedure:** Inquiry (with inquiry date and time set up)
+- **Notify Subject Template:** [appeal-valid-start-case-enforcement-inquiry-appellant](../appeals/api/src/server/notify/templates/appeal-valid-start-case-enforcement-inquiry-appellant.subject.md)
+- **Notify Content Template:** [appeal-valid-start-case-enforcement-inquiry-appellant](../appeals/api/src/server/notify/templates/appeal-valid-start-case-enforcement-inquiry-appellant.content.md)
+- **Trigger:** Start an enforcement case, select inquiry procedure, set up a date and time for the inquiry, and confirm.
+
+### Start case - enforcement inquiry lpa
+
+- **Appeal type:** enforcement and ELB
+- **Procedure:** Inquiry (with inquiry date and time set up)
+- **Notify Subject Template:** [appeal-valid-start-case-enforcement-inquiry-lpa](../appeals/api/src/server/notify/templates/appeal-valid-start-case-enforcement-inquiry-lpa.subject.md)
+- **Notify Content Template:** [appeal-valid-start-case-enforcement-inquiry-lpa](../appeals/api/src/server/notify/templates/appeal-valid-start-case-enforcement-inquiry-lpa.content.md)
+- **Trigger:** Start an enforcement case, select inquiry procedure, set up a date and time for the inquiry, and confirm.
+
 ## Timetable updated
 
 ### Timetable updated - s78/s20 written procedure

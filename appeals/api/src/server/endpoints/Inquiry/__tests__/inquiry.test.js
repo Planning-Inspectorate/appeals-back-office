@@ -8,6 +8,7 @@ import {
 } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { trimAppealType } from '#utils/string-utils.js';
+import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
@@ -61,6 +62,7 @@ describe('inquiry routes', () => {
 				lpaQuestionnaireDueDate: '2025-01-20',
 				lpaStatementDueDate: '2025-01-21',
 				planningObligationDueDate: '2025-01-23',
+				finalCommentsDueDate: '2025-01-22',
 				statementOfCommonGroundDueDate: '2025-01-24',
 				ipCommentsDueDate: '2025-01-25',
 				proofOfEvidenceAndWitnessesDueDate: '2025-01-26',
@@ -143,6 +145,7 @@ describe('inquiry routes', () => {
 					statement_of_common_ground_deadline: '24 January 2025',
 					lpa_statement_deadline: '21 January 2025',
 					planning_obligation_deadline: '23 January 2025',
+					final_comments_deadline: '22 January 2025',
 					proof_of_evidence_and_witnesses_deadline: '26 January 2025',
 					case_management_conference_deadline: '27 January 2025',
 					questionnaire_due_date: '20 January 2025',
@@ -172,6 +175,32 @@ describe('inquiry routes', () => {
 				expect(mockBroadcasters.broadcastEvent).toHaveBeenCalledWith(2, 'inquiry', 'Create');
 
 				expect(response.status).toEqual(201);
+			});
+
+			test.each([
+				['a string', '2025-01-22', '22 January 2025'],
+				['a Date', new Date('2025-01-22T00:00:00.000Z'), '22 January 2025'],
+				['missing', undefined, '']
+			])('formats the final comments deadline when %s', async (_, deadline, expected) => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				databaseConnector.$transaction.mockResolvedValue({
+					inquiry: { id: 2 },
+					timetableData: { finalCommentsDueDate: deadline }
+				});
+
+				const response = await request
+					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
+					.send(requestData)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+				expect(mockNotifySend).toHaveBeenCalledWith(
+					expect.objectContaining({
+						personalisation: expect.objectContaining({
+							final_comments_deadline: expected
+						})
+					})
+				);
 			});
 
 			test('creates a single inquiry and notifies Rule 6 party', async () => {
@@ -907,6 +936,7 @@ describe('inquiry routes', () => {
 					statement_of_common_ground_deadline: '24 January 2025',
 					lpa_statement_deadline: '21 January 2025',
 					planning_obligation_deadline: '23 January 2025',
+					final_comments_deadline: '22 January 2025',
 					proof_of_evidence_and_witnesses_deadline: '26 January 2025',
 					case_management_conference_deadline: '27 January 2025',
 					questionnaire_due_date: '20 January 2025',
@@ -1729,6 +1759,7 @@ describe('inquiry routes', () => {
 					statement_of_common_ground_deadline: '',
 					lpa_statement_deadline: '',
 					planning_obligation_deadline: '',
+					final_comments_deadline: '',
 					proof_of_evidence_and_witnesses_deadline: '',
 					case_management_conference_deadline: '',
 					questionnaire_due_date: ''
@@ -2246,6 +2277,7 @@ describe('inquiry routes', () => {
 					statement_of_common_ground_deadline: '',
 					lpa_statement_deadline: '',
 					planning_obligation_deadline: '',
+					final_comments_deadline: '',
 					proof_of_evidence_and_witnesses_deadline: '',
 					case_management_conference_deadline: '',
 					questionnaire_due_date: ''
@@ -3051,6 +3083,47 @@ describe('inquiry routes', () => {
 	});
 
 	describe('DELETE', () => {
+		test.each([
+			['appeal type ID', 123, 123],
+			['loaded appeal type', null, fullPlanningAppealData.appealType.id]
+		])(
+			'looks up the %s for inquiry notifications',
+			async (_description, appealTypeId, expectedId) => {
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...fullPlanningAppeal,
+					appealTypeId,
+					inquiry
+				});
+
+				const response = await request
+					.delete(`/appeals/${fullPlanningAppeal.id}/inquiry/${inquiry.id}`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				expect(databaseConnector.appealType.findFirst).toHaveBeenCalledWith({
+					where: { id: expectedId }
+				});
+			}
+		);
+
+		test('returns an error for inquiry notifications when no appeal type can be resolved', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...fullPlanningAppeal,
+				appealTypeId: null,
+				appealType: { ...fullPlanningAppeal.appealType, id: undefined },
+				inquiry
+			});
+
+			const response = await request
+				.delete(`/appeals/${fullPlanningAppeal.id}/inquiry/${inquiry.id}`)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(500);
+			expect(response.body).toEqual({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
+			expect(databaseConnector.appealType.findFirst).not.toHaveBeenCalled();
+			expect(mockNotifySend).not.toHaveBeenCalled();
+		});
+
 		test('deletes a single inquiry', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValue({ ...fullPlanningAppeal, inquiry });
 

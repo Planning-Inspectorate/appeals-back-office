@@ -1,0 +1,130 @@
+{% from 'macros/create-grounds-list.md' import create_grounds_list %}
+
+We have reviewed your appeal and supporting documents.
+
+Your appeal started on {{start_date}}. The timetable for the appeal begins from this date.
+
+Your appeal procedure is an inquiry.
+
+{% include 'parts/appeal-details.md' %}
+
+{% if inspector_name -%}
+Inspector: {{inspector_name}}
+{% endif %}
+{% if other_appeals_grounds_group.length -%}
+# Grounds of appeal
+
+{{ appeal_reference_number }} will continue on the following grounds:
+{%- elseif appeal_grounds.length -%}
+# Grounds of appeal
+
+The appeal will continue on the following grounds:
+{%- endif %}
+
+{{ create_grounds_list(appeal_grounds) }}
+{% if other_appeals_grounds_group.length -%}
+{% for appeal_with_grounds in other_appeals_grounds_group -%}
+{% if appeal_with_grounds.grounds.length -%}
+{{ appeal_with_grounds.reference }} will continue on the following grounds:
+
+{{ create_grounds_list(appeal_with_grounds.grounds) }}
+{% endif -%}
+{% endfor -%}
+{% endif -%}
+
+# Timetable
+
+Enforcement appeals are currently taking longer than usual. Find out about the [average handling times for appeals](https://www.gov.uk/guidance/appeals-how-long-they-take).
+
+{%- if child_appeals.length === 1 %}
+
+The timetable is the same for the linked appeal {{child_appeals[0]}}.
+{%- elseif child_appeals.length > 1 %}
+
+The timetable is the same for the following linked appeals:
+{%- for child_appeal in child_appeals %}
+- {{ child_appeal }}
+{%- endfor %}
+{%- endif %}
+
+## Local planning authority questionnaire
+
+Due by {{questionnaire_due_date}}.
+
+## Statements
+
+Due by {{lpa_statement_deadline}}.
+
+## Interested party comments
+
+Due by {{ip_comments_deadline}}.
+
+## Statement of common ground
+
+{% if statement_of_common_ground_deadline -%}
+Send to {{team_email_address}} by {{statement_of_common_ground_deadline}}.
+{% else -%}
+We will let you know when you can submit your statement of common ground.
+{% endif %}
+{% if planning_obligation_deadline -%}
+## Planning obligation
+
+Send to {{team_email_address}} by {{planning_obligation_deadline}}.
+
+[Find out more about planning obligations](https://www.gov.uk/government/publications/planning-appeals-procedural-guide/procedural-guide-planning-appeals-england#planning-obligations).
+
+{% endif -%}
+
+## Final comments
+
+Due by {{final_comments_deadline}}.
+
+## Proof of evidence and witnesses
+
+Due by {{proof_of_evidence_and_witnesses_deadline}}.
+
+## Case management conference
+
+{% if case_management_conference_deadline -%}
+Date: {{case_management_conference_deadline}}.
+{% else -%}
+We will contact you when we set up your case management conference.
+{% endif %}
+
+# Inquiry details
+
+^Date: {{inquiry_date}}
+Time: {{inquiry_time}}
+{% if inquiry_expected_days -%}
+Expected days: {{inquiry_expected_days}}
+{% endif -%}
+{% if inquiry_address -%}
+Venue address: {{inquiry_address}}
+{% endif -%}
+{% if inspector_name -%}
+Inspector: {{inspector_name}}
+{% endif %}
+The details of the inquiry are subject to change. We will contact you if we make any changes to the inquiry.
+
+Your witnesses should be available for the duration of the inquiry.
+
+# What happens next
+
+You need to [submit your statement]({{front_office_url}}) by {{lpa_statement_deadline}}. If you have one.
+
+We will send you an email when you can view information from other parties in the appeals service.
+
+[Find out more about the enforcement appeal process](https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide).
+
+# Appeal costs
+
+You may have to pay costs if you:
+
+- behave unreasonably during the appeal
+- withdraw your enforcement notice without good reason
+- submit late evidence
+
+[Find out more about appeal costs](https://www.gov.uk/claim-planning-appeal-costs).
+
+Planning Inspectorate
+{{team_email_address}}

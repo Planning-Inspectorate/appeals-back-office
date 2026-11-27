@@ -2,6 +2,7 @@ import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatte
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
+import { getAppealTypeByTypeId } from '#repositories/appeal-type.repository.js';
 import inquiryRepository from '#repositories/inquiry.repository.js';
 import transitionState from '#state/transition-state.js';
 import { databaseConnector } from '#utils/database-connector.js';
@@ -15,6 +16,7 @@ import {
 	ERROR_NO_RECIPIENT_EMAIL,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
+import { isEnforcementCaseType } from '@pins/appeals/utils/appeal-type-checks.js';
 import {
 	recalculateDateIfNotBusinessDay,
 	setTimeInTimeZone
@@ -93,6 +95,13 @@ const sendInquiryDetailsNotifications = async (
 					: timetableData?.ipCommentsDueDate.toISOString()
 				: ''
 		),
+		final_comments_deadline: dateISOStringToDisplayDate(
+			timetableData?.finalCommentsDueDate
+				? typeof timetableData.finalCommentsDueDate === 'string'
+					? timetableData.finalCommentsDueDate
+					: timetableData.finalCommentsDueDate.toISOString()
+				: ''
+		),
 		statement_of_common_ground_deadline: dateISOStringToDisplayDate(
 			timetableData?.statementOfCommonGroundDueDate
 				? typeof timetableData?.statementOfCommonGroundDueDate === 'string'
@@ -161,8 +170,16 @@ const sendInquiryNotifications = async (
 	appeal,
 	personalisation = {}
 ) => {
+	const appealTypeId = appeal.appealTypeId ?? appeal.appealType?.id;
+	if (appealTypeId == null) {
+		throw new Error('Appeal type is required to send inquiry notifications.');
+	}
+	const appealType = await getAppealTypeByTypeId(appealTypeId);
+	const isEnforcement = isEnforcementCaseType(appealType?.key);
+	const enforcementReference = await getEnforcementReference(appeal);
 	const appellantEmail = appeal.agent?.email ?? appeal.appellant?.email;
 	const lpaEmail = appeal.lpa?.email;
+
 	if (!appellantEmail || !lpaEmail) {
 		throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 	}
@@ -180,11 +197,16 @@ const sendInquiryNotifications = async (
 		});
 	}
 
-	const enforcementReference = await getEnforcementReference(appeal);
 	recipients.forEach(async (item) => {
+		let individualTemplateName;
+		if (isEnforcement) {
+			individualTemplateName = templateName + (item.isLpa ? '-lpa' : '-appellant');
+		} else {
+			individualTemplateName = templateName;
+		}
 		await notifySend({
 			notifyClient,
-			templateName,
+			templateName: individualTemplateName,
 			personalisation: {
 				appeal_reference_number: appeal.reference,
 				site_address: appeal.address ? formatAddressSingleLine(appeal.address) : '',
@@ -303,7 +325,7 @@ const createInquiry = async (
 		const timetableData = result.timetableData;
 
 		const { key: appealTypeKey = APPEAL_CASE_TYPE.D } = appeal.appealType || {};
-		const appellantTemplate = `appeal-valid-start-case${[appealTypeMap(appealTypeKey)]}inquiry`;
+		const notifyTemplate = `appeal-valid-start-case${[appealTypeMap(appealTypeKey)]}inquiry`;
 
 		if (isStartCase) {
 			await transitionState(
@@ -314,7 +336,7 @@ const createInquiry = async (
 
 			await sendInquiryDetailsNotifications(
 				notifyClient,
-				appellantTemplate,
+				notifyTemplate,
 				appeal,
 				inspectorName,
 				inquiryStartTime,
@@ -442,6 +464,9 @@ const appealTypeMap = (appealType) => {
 	switch (appealType) {
 		case APPEAL_CASE_TYPE.H:
 			return '-advertisement-';
+		case APPEAL_CASE_TYPE.F:
+		case APPEAL_CASE_TYPE.C:
+			return '-enforcement-';
 		default:
 			return '-s78-';
 	}
