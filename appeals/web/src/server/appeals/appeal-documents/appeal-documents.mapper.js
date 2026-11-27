@@ -1161,7 +1161,8 @@ export function shareAllDocumentsPage({
 				},
 				text: 'Share documents',
 				type: 'submit'
-			}
+			},
+			cancelLink: backLinkUrl
 		};
 
 		pageContent.pageComponents?.push({
@@ -1370,6 +1371,7 @@ function mapDocumentNameHtmlProperty(document, documentVersion, canShare = false
  * @param {boolean} [params.skipChangeDocumentDetails]
  * @param {string} [params.baseUrl]
  * @param {boolean} [params.canShare]
+ * @param {string} [params.preHeadingText]
  * @returns {Promise<PageContent>}
  */
 export async function manageDocumentPage({
@@ -1385,7 +1387,8 @@ export async function manageDocumentPage({
 	editable,
 	skipChangeDocumentDetails,
 	baseUrl = '',
-	canShare = false
+	canShare = false,
+	preHeadingText
 }) {
 	const changeDetailsUrl =
 		!skipChangeDocumentDetails &&
@@ -1395,7 +1398,7 @@ export async function manageDocumentPage({
 		`${baseUrl}change-document-name`
 	);
 
-	const headingText = document?.name || 'Document details';
+	const headingText = preHeadingText ? 'Document details' : document?.name || 'Document details';
 
 	const session = request.session;
 	const latestVersion = getDocumentLatestVersion(document);
@@ -1457,7 +1460,7 @@ export async function manageDocumentPage({
 			parameters: {
 				text: 'Share document',
 				href: shareUrl,
-				classes: 'govuk-button--secondary'
+				classes: 'govuk-button--primary'
 			}
 		};
 
@@ -1467,7 +1470,7 @@ export async function manageDocumentPage({
 			parameters: {
 				text: 'Redact document',
 				href: changeDetailsUrl,
-				classes: 'govuk-button--secondary'
+				classes: 'govuk-button--primary'
 			}
 		};
 
@@ -1747,7 +1750,7 @@ export async function manageDocumentPage({
 		backLinkUrl: backLinkUrl
 			?.replace('{{folderId}}', folder.folderId.toString())
 			.replace('{{documentId}}', document.id || ''),
-		preHeading: pageTitleTextOverride || 'Manage document',
+		preHeading: preHeadingText || pageTitleTextOverride || 'Manage document',
 		heading: headingText,
 		pageComponents
 	};
@@ -2178,4 +2181,109 @@ export function getDocumentsForVirusStatus(folder, virusStatus) {
 		}
 	}
 	return matchingDocuments;
+}
+
+/**
+ * @param {string} backLinkUrl
+ * @param {string} appealReference
+ * @param {string} [inviteMainPartyComments]
+ * @param {string} [cancelLinkUrl]
+ * @returns {PageContent}
+ */
+export function inviteMainPartyCommentsPage(
+	backLinkUrl,
+	appealReference,
+	inviteMainPartyComments,
+	cancelLinkUrl
+) {
+	/** @type {PageContent} */
+	return {
+		title: 'Do you want to invite comments from main parties on this document?',
+		backLinkText: 'Back',
+		backLinkUrl,
+		preHeading: `Appeal ${appealReference} - manage documents`,
+		heading: 'Do you want to invite comments from main parties on this document?',
+		pageComponents: [
+			{
+				type: 'radios',
+				parameters: {
+					name: 'invite-main-party-comments',
+					idPrefix: 'invite-main-party-comments',
+					value: inviteMainPartyComments || null,
+					items: [
+						{ text: 'Yes', value: 'yes' },
+						{ text: 'No', value: 'no' }
+					]
+				}
+			}
+		],
+		submitButtonText: 'Continue',
+		submitButtonProperties: { text: 'Continue', type: 'submit' },
+		cancelLink: cancelLinkUrl
+	};
+}
+
+/**
+ * @param {string} backLinkUrl
+ * @param {import('@pins/appeals.api').Appeals.DocumentVersionInfo} documentVersion
+ * @param {string} [appealReference]
+ * @param {{appellant: string, lpa: string}|null} [notifyPreviews]
+ * @param {string} [inviteResponses]
+ * @param {string} [cancelLinkUrl]
+ * @returns {PageContent}
+ */
+export function shareDocumentCheckAndConfirmPage(
+	backLinkUrl,
+	documentVersion,
+	appealReference,
+	notifyPreviews,
+	inviteResponses,
+	cancelLinkUrl
+) {
+	/** @type {PageContent} */
+	const pageContent = {
+		title: 'Check your answers',
+		backLinkText: 'Back',
+		backLinkUrl,
+		...(appealReference && { preHeading: `Appeal ${appealReference} - manage documents` }),
+		heading: `Confirm you want to share ${documentVersion.originalFilename} with the main parties`,
+		pageComponents: [],
+		submitButtonText: 'Confirm and share document',
+		submitButtonProperties: { text: 'Confirm and share document', type: 'submit' },
+		...(cancelLinkUrl && { cancelLink: cancelLinkUrl })
+	};
+
+	if (inviteResponses) {
+		pageContent.pageComponents?.push({
+			type: 'summary-list',
+			parameters: {
+				rows: [
+					{
+						key: { text: 'Do you want to invite responses?' },
+						value: { text: inviteResponses === 'yes' ? 'Yes' : 'No' },
+						actions: {
+							items: [
+								{ text: 'Change', href: backLinkUrl, visuallyHiddenText: 'invite responses answer' }
+							]
+						}
+					}
+				]
+			}
+		});
+	}
+
+	if (notifyPreviews) {
+		pageContent.pageComponents?.push(
+			{
+				type: 'details',
+				parameters: { summaryText: 'Preview email to appellant', html: notifyPreviews.appellant }
+			},
+			{
+				type: 'details',
+				parameters: { summaryText: 'Preview email to LPA', html: notifyPreviews.lpa }
+			}
+		);
+	}
+
+	return pageContent;
 }

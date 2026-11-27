@@ -316,7 +316,6 @@ describe('inquiry documents', () => {
 					'received-date-year': '2026',
 					'redaction-status': 'not_redacted'
 				});
-
 			expect(response.statusCode).toBe(200);
 		});
 	});
@@ -500,6 +499,17 @@ describe('inquiry documents', () => {
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toContain(`/appeals-service/appeal-details/1`);
 		});
+		it(`should render a 500 error page if fileUploadInfo is not present in the session`, async () => {
+			const response = await request
+				.post(`${baseUrl}/1/inquiry/documents/check-your-answers/${inquiryDocsFolderId}`)
+				.send({});
+
+			expect(response.statusCode).toBe(500);
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
+		});
 	});
 
 	describe('GET /inquiry/documents/check-your-answers/:folderId/:documentId', () => {
@@ -562,6 +572,37 @@ describe('inquiry documents', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('Check your answers</h1');
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt');
+		});
+	});
+
+	describe('POST /inquiry/documents/check-your-answers/:folderId/:documentId', () => {
+		it(`should render a 500 error page if fileUploadInfo is not present in the session`, async () => {
+			const response = await request
+				.post(`${baseUrl}/1/inquiry/documents/check-your-answers/${inquiryDocsFolderId}/1`)
+				.send({});
+
+			expect(response.statusCode).toBe(500);
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Sorry, there is a problem with the service</h1>'
+			);
+		});
+
+		it(`should send an API request to create a new document version and redirect to the appeal details page`, async () => {
+			const mockDocumentsEndpoint = nock('http://test/').post('/appeals/1/documents/1').reply(200);
+			const uploadResponse = await request
+				.post(`${baseUrl}/1/inquiry/documents/upload-documents/${inquiryDocsFolderId}/1`)
+				.send({ 'upload-info': fileUploadInfo });
+
+			expect(uploadResponse.statusCode).toBe(302);
+
+			const response = await request
+				.post(`${baseUrl}/1/inquiry/documents/check-your-answers/${inquiryDocsFolderId}/1`)
+				.send({});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
+			expect(mockDocumentsEndpoint.isDone()).toBe(true);
 		});
 	});
 
@@ -691,6 +732,7 @@ describe('inquiry documents', () => {
 			expect(response.text).toContain(
 				`href="/appeals-service/appeal-details/1/inquiry/documents/manage-documents/${inquiryDocsFolderId}"`
 			);
+			expect(response.text).toContain('Cancel</a>');
 		});
 	});
 
@@ -852,7 +894,7 @@ describe('inquiry documents', () => {
 				`${baseUrl}/1/inquiry/documents/manage-documents/${inquiryDocsFolderId}/1`
 			);
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-			expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('Current version</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('This document is not shared.</p>');
 
@@ -891,7 +933,7 @@ describe('inquiry documents', () => {
 				`${baseUrl}/1/inquiry/documents/manage-documents/${inquiryDocsFolderId}/1`
 			);
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-			expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFileVersionsInfo.pdf</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Document details</h1>');
 			expect(unprettifiedElement.innerHTML).toContain('Current version</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'This document is unredacted and cannot be shared.</p>'
@@ -1004,6 +1046,7 @@ describe('inquiry documents', () => {
 				'name="invite-main-party-comments" type="radio" value="no"'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Cancel</a>');
 		});
 
 		it(`should render the invite main party comments page with pre-selected option`, async () => {
@@ -1102,6 +1145,20 @@ describe('inquiry documents', () => {
 				const expectedHref = `/appeals-service/appeal-details/1/inquiry/documents/manage-documents/${inquiryDocsFolderId}/1/invite-main-party-comments`;
 
 				expect(backLinkElement.innerHTML).toContain(`href="${expectedHref}"`);
+			});
+
+			it(`should render the cancel link with the correct href`, async () => {
+				const response = await request.get(
+					`${baseUrl}/1/inquiry/documents/manage-documents/${inquiryDocsFolderId}/1/check-your-answers`
+				);
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(response.statusCode).toBe(200);
+				expect(unprettifiedElement.innerHTML).toContain(
+					`href="/appeals-service/appeal-details/1/inquiry/documents/manage-documents/${inquiryDocsFolderId}/1"`
+				);
+				expect(unprettifiedElement.innerHTML).toContain('>Cancel</a>');
 			});
 
 			it(`should redirect to the case details page on successful share`, async () => {
