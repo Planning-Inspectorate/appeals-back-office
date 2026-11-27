@@ -1,7 +1,8 @@
 import { APPEAL_CASE_PRE_STATEMENTS_STATUS } from '#appeals/appeal.constants.js';
 import { isStatePassed } from '#lib/appeal-status.js';
+import { mapPagination } from '#lib/mappers/index.js';
 import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
-import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { addBackLinkQueryToUrl, addQueryParamsToUrl } from '#lib/url-utilities.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import {
 	interestedPartyCommentsPage,
@@ -17,6 +18,17 @@ import * as interestedPartyCommentsService from './interested-party-comments.ser
 const paginationParameters = {
 	pageNumber: 1,
 	pageSize: 1000
+};
+
+export const SHARED_IP_COMMENTS_PAGE_SIZE = 10;
+
+/**
+ * @param {any} pageNumberQuery
+ * @returns {number} the requested page number, or 1
+ */
+const parsePageNumber = (pageNumberQuery) => {
+	const pageNumber = Number(pageNumberQuery);
+	return Number.isInteger(pageNumber) && pageNumber > 0 ? pageNumber : 1;
 };
 
 /**
@@ -96,14 +108,22 @@ export async function renderInterestedPartyComments(request, response) {
  */
 export async function renderSharedInterestedPartyComments(request, response) {
 	const { errors, currentAppeal } = request;
+	const pageNumber = parsePageNumber(request.query.pageNumber);
 
 	const comments = await interestedPartyCommentsService.getInterestedPartyComments(
 		request.apiClient,
 		currentAppeal.appealId,
 		'published',
-		paginationParameters.pageNumber,
-		paginationParameters.pageSize
+		pageNumber,
+		SHARED_IP_COMMENTS_PAGE_SIZE
 	);
+	const pageCount = comments.pageCount ?? 1;
+
+	if (pageCount > 0 && pageNumber > pageCount) {
+		return response.redirect(
+			addQueryParamsToUrl(request.originalUrl, { pageNumber: String(pageCount) })
+		);
+	}
 
 	const addInterestedPartCommentsLink = addBackLinkQueryToUrl(
 		request,
@@ -114,11 +134,22 @@ export async function renderSharedInterestedPartyComments(request, response) {
 		comments.items,
 		addInterestedPartCommentsLink,
 		request.session,
-		getSavedBackUrl(request, 'manageIpComments')
+		getSavedBackUrl(request, 'manageIpComments'),
+		(pageNumber - 1) * SHARED_IP_COMMENTS_PAGE_SIZE + 1 // first comment number
+	);
+
+	const pagination = mapPagination(
+		pageNumber,
+		pageCount,
+		SHARED_IP_COMMENTS_PAGE_SIZE,
+		request.originalUrl.split('?')[0],
+		request.query,
+		false
 	);
 
 	return response.status(200).render('patterns/display-page.pattern.njk', {
 		errors,
-		pageContent
+		pageContent,
+		pagination
 	});
 }
