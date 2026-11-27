@@ -299,6 +299,7 @@ export const createRepresentation = async (
 /**
  * @param {Appeal} appeal
  * @param {string} proofOfEvidenceType
+ * @param {boolean} shouldAutoPublish
  * @param {string[]} attachments
  * @param {number} [representedId]
  * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
@@ -306,9 +307,14 @@ export const createRepresentation = async (
 export const createRepresentationProofOfEvidence = async (
 	appeal,
 	proofOfEvidenceType,
+	shouldAutoPublish,
 	attachments,
 	representedId
 ) => {
+	const status = shouldAutoPublish
+		? APPEAL_REPRESENTATION_STATUS.PUBLISHED
+		: APPEAL_REPRESENTATION_STATUS.VALID;
+
 	/** @type {RepresentationCreateInput} */
 	const representationData = {
 		appealId: appeal.id,
@@ -319,7 +325,8 @@ export const createRepresentationProofOfEvidence = async (
 					? APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
 					: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
 		source: proofOfEvidenceType === 'lpa' ? 'lpa' : 'citizen',
-		dateCreated: new Date()
+		dateCreated: new Date(),
+		status
 	};
 
 	if (proofOfEvidenceType === 'rule-6-party') {
