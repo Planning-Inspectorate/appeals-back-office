@@ -1,11 +1,12 @@
 {% from 'macros/create-grounds-list.md' import create_grounds_list %}
 
-You have a new {{appeal_type | lower}} appeal against {{enforcement_reference}}.
+We have reviewed your appeal and supporting documents.
 
-We will decide the appeal by inquiry. You can tell us if you think a different procedure is more appropriate in the questionnaire.
+Your appeal started on {{start_date}}. The timetable for the appeal begins from this date.
+
+Your appeal procedure is an inquiry.
 
 {% include 'parts/appeal-details.md' %}
-Start date: {{start_date}}
 
 {% if inspector_name -%}
 Inspector: {{inspector_name}}
@@ -65,6 +66,14 @@ Send to {{team_email_address}} by {{statement_of_common_ground_deadline}}.
 {% else -%}
 We will let you know when you can submit your statement of common ground.
 {% endif %}
+{% if planning_obligation_deadline -%}
+## Planning obligation
+
+Send to {{team_email_address}} by {{planning_obligation_deadline}}.
+
+[Find out more about planning obligations](https://www.gov.uk/government/publications/planning-appeals-procedural-guide/procedural-guide-planning-appeals-england#planning-obligations).
+
+{% endif -%}
 
 ## Final comments
 
@@ -91,6 +100,9 @@ Expected days: {{inquiry_expected_days}}
 {% endif -%}
 {% if inquiry_address -%}
 Venue address: {{inquiry_address}}
+{% endif -%}
+{% if inspector_name -%}
+Inspector: {{inspector_name}}
 {% endif %}
 The details of the inquiry are subject to change. We will contact you if we make any changes to the inquiry.
 
@@ -98,19 +110,11 @@ Your witnesses should be available for the duration of the inquiry.
 
 # What happens next
 
-{% if not inquiry_address -%}
-1. [Submit your questionnaire and other documents]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}), including your appeal notification letter and a list of those notified by {{questionnaire_due_date}}.
+You need to [submit your statement]({{front_office_url}}) by {{lpa_statement_deadline}}. If you have one.
 
-2. Email {{team_email_address}} to confirm the venue address for the inquiry.
-{% else -%}
-[Submit your questionnaire and other documents]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}), including your appeal notification letter and a list of those notified by {{questionnaire_due_date}}.
-{% endif %}
+We will send you an email when you can view information from other parties in the appeals service.
 
-[Find out more about your responsibilities in the appeal process](https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide).
-
-# Notifications
-
-You must [notify anyone you served the enforcement notice to](https://www.gov.uk/government/publications/model-notification-letter-for-enforcement-appeals) about the appeal.
+[Find out more about the enforcement appeal process](https://www.gov.uk/government/publications/enforcement-appeals-procedural-guide).
 
 # Appeal costs
 
