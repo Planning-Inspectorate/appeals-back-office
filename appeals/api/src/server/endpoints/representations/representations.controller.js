@@ -325,9 +325,20 @@ export async function createRepresentationProofOfEvidence(req, res) {
 		params: { proofOfEvidenceType },
 		body: { attachments, representedId }
 	} = req;
+
+	const representationType =
+		proofOfEvidenceType === 'lpa'
+			? APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE
+			: proofOfEvidenceType === 'rule-6-party'
+				? APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE
+				: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE;
+
+	const shouldAutoPublish = shouldAutoPublishRep(req.appeal, representationType);
+
 	const rep = await representationService.createRepresentationProofOfEvidence(
 		appeal,
 		proofOfEvidenceType,
+		shouldAutoPublish,
 		attachments,
 		representedId
 	);
@@ -494,6 +505,8 @@ const shouldAutoPublishRep = (appeal, representationType) => {
 		case APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT:
 		case APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT:
 			return isStatePassed(appeal, APPEAL_CASE_STATUS.FINAL_COMMENTS);
+		case APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE:
+		case APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE:
 		case APPEAL_REPRESENTATION_TYPE.RULE_6_PARTY_PROOFS_EVIDENCE:
 			return isStatePassed(appeal, APPEAL_CASE_STATUS.EVIDENCE);
 		default:

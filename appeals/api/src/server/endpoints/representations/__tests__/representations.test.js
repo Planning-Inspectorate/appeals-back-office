@@ -1941,7 +1941,10 @@ describe('/appeals/:id/reps', () => {
 
 	describe('POST representation/:proofOfEvidenceType/proof-of-evidence', () => {
 		beforeEach(() => {
-			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				appealStatus: [{ valid: true, status: 'evidence' }]
+			});
 		});
 
 		test('400 when attachment guids is empty', async () => {
@@ -1990,7 +1993,7 @@ describe('/appeals/:id/reps', () => {
 			});
 		});
 
-		test('200 when representation is successfully created for LPA', async () => {
+		test('201 when representation is successfully created for LPA - not auto-published if EVIDENCE status not passed', async () => {
 			const response = await request
 				.post('/appeals/1/reps/lpa/proof-of-evidence')
 				.send({
@@ -1998,16 +2001,78 @@ describe('/appeals/:id/reps', () => {
 				})
 				.set('azureAdUserId', '732652365');
 
+			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({ status: 'valid' })
+				})
+			);
+
 			expect(response.status).toEqual(201);
 		});
 
-		test('200 when representation is successfully created for appellant', async () => {
+		test('201 when representation is successfully created for appellant - not auto-published if EVIDENCE status not passed', async () => {
 			const response = await request
 				.post('/appeals/1/reps/appellant/proof-of-evidence')
 				.send({
 					attachments: ['12345-6789-12345']
 				})
 				.set('azureAdUserId', '732652365');
+
+			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({ status: 'valid' })
+				})
+			);
+
+			expect(response.status).toEqual(201);
+		});
+
+		test('201 and auto-publish when representation is successfully created for LPA and EVIDENCE status already passed', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				appealStatus: [
+					{ valid: true, status: 'awaiting_event' },
+					{ valid: false, status: 'evidence' }
+				]
+			});
+
+			const response = await request
+				.post('/appeals/1/reps/lpa/proof-of-evidence')
+				.send({
+					attachments: ['12345-6789-12345']
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({ status: 'published' })
+				})
+			);
+
+			expect(response.status).toEqual(201);
+		});
+
+		test('201 and auto-publish when representation is successfully created for appellant and EVIDENCE Status already passed', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				appealStatus: [
+					{ valid: true, status: 'awaiting_event' },
+					{ valid: false, status: 'evidence' }
+				]
+			});
+
+			const response = await request
+				.post('/appeals/1/reps/appellant/proof-of-evidence')
+				.send({
+					attachments: ['12345-6789-12345']
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(databaseConnector.representation.create).toHaveBeenCalledWith(
+				expect.objectContaining({
+					data: expect.objectContaining({ status: 'published' })
+				})
+			);
 
 			expect(response.status).toEqual(201);
 		});
