@@ -4,14 +4,13 @@ exports[`GET /interested-party-comments without add IP comment link when appeal 
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal SHAREDTEST</span>
-            <h1 class="govuk-heading-l">Interested party comments</h1>
+            <h1 class="govuk-heading-l">Shared interested party comments</h1>
         </div>
     </div>
-    <p class="govuk-body"><a href="/documents/2/bulk-download/ip-comments/case-SHAREDTEST-ip-comments.zip"
-        class="govuk-link">Download all documents</a>
+    <p class="govuk-body govuk-!-margin-bottom-8"><a href="/documents/2/bulk-download/ip-comments/case-SHAREDTEST-ip-comments.zip"
+        class="govuk-link">Download shared comments and documents</a>
     </p>
-    <h2>Shared IP comments</h2>
-    <h3>Interested party 1</h3>
+    <h2>Interested party 1</h2>
     <dl class="govuk-summary-list govuk-summary-list--no-border">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party</dt>
             <dd class="govuk-summary-list__value">Lee Thornton</dd>
@@ -35,7 +34,7 @@ exports[`GET /interested-party-comments without add IP comment link when appeal 
         </div>
     </dl>
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
-    <h3>Interested party 2</h3>
+    <h2>Interested party 2</h2>
     <dl class="govuk-summary-list govuk-summary-list--no-border">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party</dt>
             <dd class="govuk-summary-list__value">Lee Thornton</dd>
@@ -65,14 +64,13 @@ exports[`GET /interested-party-comments without add IP comment link when appeal 
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal SHAREDTEST</span>
-            <h1 class="govuk-heading-l">Interested party comments</h1>
+            <h1 class="govuk-heading-l">Shared interested party comments</h1>
         </div>
     </div>
-    <p class="govuk-body"><a href="/documents/2/bulk-download/ip-comments/case-SHAREDTEST-ip-comments.zip"
-        class="govuk-link">Download all documents</a>
+    <p class="govuk-body govuk-!-margin-bottom-8"><a href="/documents/2/bulk-download/ip-comments/case-SHAREDTEST-ip-comments.zip"
+        class="govuk-link">Download shared comments and documents</a>
     </p>
-    <h2>Shared IP comments</h2>
-    <h3>Interested party 1</h3>
+    <h2>Interested party 1</h2>
     <dl class="govuk-summary-list govuk-summary-list--no-border">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party</dt>
             <dd class="govuk-summary-list__value">Lee Thornton</dd>
@@ -96,7 +94,7 @@ exports[`GET /interested-party-comments without add IP comment link when appeal 
         </div>
     </dl>
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
-    <h3>Interested party 2</h3>
+    <h2>Interested party 2</h2>
     <dl class="govuk-summary-list govuk-summary-list--no-border">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party</dt>
             <dd class="govuk-summary-list__value">Lee Thornton</dd>
@@ -126,14 +124,13 @@ exports[`GET /interested-party-comments without add IP comment link when appeal 
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal SHAREDTEST</span>
-            <h1 class="govuk-heading-l">Interested party comments</h1>
+            <h1 class="govuk-heading-l">Shared interested party comments</h1>
         </div>
     </div>
-    <p class="govuk-body"><a href="/documents/2/bulk-download/ip-comments/case-SHAREDTEST-ip-comments.zip"
-        class="govuk-link">Download all documents</a>
+    <p class="govuk-body govuk-!-margin-bottom-8"><a href="/documents/2/bulk-download/ip-comments/case-SHAREDTEST-ip-comments.zip"
+        class="govuk-link">Download shared comments and documents</a>
     </p>
-    <h2>Shared IP comments</h2>
-    <h3>Interested party 1</h3>
+    <h2>Interested party 1</h2>
     <dl class="govuk-summary-list govuk-summary-list--no-border">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party</dt>
             <dd class="govuk-summary-list__value">Lee Thornton</dd>
@@ -157,7 +154,7 @@ exports[`GET /interested-party-comments without add IP comment link when appeal 
         </div>
     </dl>
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
-    <h3>Interested party 2</h3>
+    <h2>Interested party 2</h2>
     <dl class="govuk-summary-list govuk-summary-list--no-border">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party</dt>
             <dd class="govuk-summary-list__value">Lee Thornton</dd>
@@ -187,14 +184,13 @@ exports[`GET /interested-party-comments without add IP comment link when appeal 
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal SHAREDTEST</span>
-            <h1 class="govuk-heading-l">Interested party comments</h1>
+            <h1 class="govuk-heading-l">Shared interested party comments</h1>
         </div>
     </div>
-    <p class="govuk-body"><a href="/documents/2/bulk-download/ip-comments/case-SHAREDTEST-ip-comments.zip"
-        class="govuk-link">Download all documents</a>
+    <p class="govuk-body govuk-!-margin-bottom-8"><a href="/documents/2/bulk-download/ip-comments/case-SHAREDTEST-ip-comments.zip"
+        class="govuk-link">Download shared comments and documents</a>
     </p>
-    <h2>Shared IP comments</h2>
-    <h3>Interested party 1</h3>
+    <h2>Interested party 1</h2>
     <dl class="govuk-summary-list govuk-summary-list--no-border">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party</dt>
             <dd class="govuk-summary-list__value">Lee Thornton</dd>
@@ -218,7 +214,7 @@ exports[`GET /interested-party-comments without add IP comment link when appeal 
         </div>
     </dl>
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
-    <h3>Interested party 2</h3>
+    <h2>Interested party 2</h2>
     <dl class="govuk-summary-list govuk-summary-list--no-border">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party</dt>
             <dd class="govuk-summary-list__value">Lee Thornton</dd>
@@ -248,16 +244,14 @@ exports[`Interested Party Comments (Shared/Published View) GET /interested-party
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal SHAREDTEST</span>
-            <h1 class="govuk-heading-l">Interested party comments</h1>
+            <h1 class="govuk-heading-l">Shared interested party comments</h1>
         </div>
-    </div>
-    <p class="govuk-body"><a href="/documents/2/bulk-download/ip-comments/case-SHAREDTEST-ip-comments.zip"
-        class="govuk-link">Download all documents</a>
+    </div><a href="/appeals-service/appeal-details/2/interested-party-comments/add?backUrl=%2Fappeals-service%2Fappeal-details%2F2%2Finterested-party-comments"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    data-module="govuk-button"> Add interested party comment</a>
+    <p class="govuk-body govuk-!-margin-bottom-8"><a href="/documents/2/bulk-download/ip-comments/case-SHAREDTEST-ip-comments.zip"
+        class="govuk-link">Download shared comments and documents</a>
     </p>
-    <p class="govuk-body"><a href="/appeals-service/appeal-details/2/interested-party-comments/add?backUrl=%2Fappeals-service%2Fappeal-details%2F2%2Finterested-party-comments"
-        class="govuk-link">Add interested party comment</a>
-    </p>
-    <h2>Shared IP comments</h2>
 </main>"
 `;
 
@@ -265,17 +259,15 @@ exports[`Interested Party Comments (Shared/Published View) GET /interested-party
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal SHAREDTEST</span>
-            <h1 class="govuk-heading-l">Interested party comments</h1>
+            <h1 class="govuk-heading-l">Shared interested party comments</h1>
         </div>
-    </div>
-    <p class="govuk-body"><a href="/documents/2/bulk-download/ip-comments/case-SHAREDTEST-ip-comments.zip"
-        class="govuk-link">Download all documents</a>
+    </div><a href="/appeals-service/appeal-details/2/interested-party-comments/add?backUrl=%2Fappeals-service%2Fappeal-details%2F2%2Finterested-party-comments"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    data-module="govuk-button"> Add interested party comment</a>
+    <p class="govuk-body govuk-!-margin-bottom-8"><a href="/documents/2/bulk-download/ip-comments/case-SHAREDTEST-ip-comments.zip"
+        class="govuk-link">Download shared comments and documents</a>
     </p>
-    <p class="govuk-body"><a href="/appeals-service/appeal-details/2/interested-party-comments/add?backUrl=%2Fappeals-service%2Fappeal-details%2F2%2Finterested-party-comments"
-        class="govuk-link">Add interested party comment</a>
-    </p>
-    <h2>Shared IP comments</h2>
-    <h3>Interested party 1</h3>
+    <h2>Interested party 1</h2>
     <dl class="govuk-summary-list govuk-summary-list--no-border">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party</dt>
             <dd class="govuk-summary-list__value">Lee Thornton</dd>
@@ -299,7 +291,7 @@ exports[`Interested Party Comments (Shared/Published View) GET /interested-party
         </div>
     </dl>
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
-    <h3>Interested party 2</h3>
+    <h2>Interested party 2</h2>
     <dl class="govuk-summary-list govuk-summary-list--no-border">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party</dt>
             <dd class="govuk-summary-list__value">Lee Thornton</dd>

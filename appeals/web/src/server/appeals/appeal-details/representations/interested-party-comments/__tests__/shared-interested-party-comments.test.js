@@ -12,14 +12,10 @@ const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 
-/**
- * Pagination parameters for fetching interested party comments - note no pagination UI is implemented yet,
- * so we fetch a large number of comments to display all at once in 1 page
- * @type {{pageNumber: number, pageSize: number}}
- */
+/** @type {{pageNumber: number, pageSize: number}} */
 const paginationParameters = {
 	pageNumber: 1,
-	pageSize: 1000
+	pageSize: 10
 };
 
 describe('Interested Party Comments (Shared/Published View)', () => {
@@ -47,11 +43,9 @@ describe('Interested Party Comments (Shared/Published View)', () => {
 			expect(response.statusCode).toEqual(200);
 
 			const dom = parseHtml(response.text);
-			//check title
-			expect(dom.querySelector('h2')?.textContent?.trim()).toBe('Shared IP comments');
 
 			//check link contents
-			expect(response.text).toContain('Download all documents');
+			expect(response.text).toContain('Download shared comments and documents');
 			const downloadLinkInnerHtml = parseHtml(response.text, {
 				rootElement: '.govuk-body'
 			}).innerHTML;
@@ -60,7 +54,7 @@ describe('Interested Party Comments (Shared/Published View)', () => {
 				'/documents/2/bulk-download/ip-comments/case-SHAREDTEST-ip-comments.zip';
 			expect(downloadLinkInnerHtml).toContain(`href="${downloadLinkUrl}`);
 
-			const headings = dom.querySelectorAll('h3');
+			const headings = dom.querySelectorAll('h2');
 			expect(headings).toHaveLength(interestedPartyCommentsPublished.itemCount);
 			expect(headings[0].textContent?.trim()).toBe('Interested party 1');
 			expect(headings[1].textContent?.trim()).toBe('Interested party 2');
@@ -274,11 +268,9 @@ describe('Interested Party Comments (Shared/Published View)', () => {
 			expect(response.statusCode).toEqual(200);
 
 			const dom = parseHtml(response.text);
-			//check title
-			expect(dom.querySelector('h2')?.textContent?.trim()).toBe('Shared IP comments');
 
 			//check link contents
-			expect(response.text).toContain('Download all documents');
+			expect(response.text).toContain('Download shared comments and documents');
 			const downloadLinkInnerHtml = parseHtml(response.text, {
 				rootElement: '.govuk-body'
 			}).innerHTML;
@@ -330,7 +322,6 @@ describe('Interested Party Comments (Shared/Published View)', () => {
 			expect(response.statusCode).toEqual(200);
 
 			const page = parseHtml(response.text);
-			expect(page.querySelector('h2')?.textContent?.trim()).toBe('Shared IP comments');
 			expect(page.querySelector('.govuk-tabs')).toBeNull();
 		});
 	});
@@ -363,9 +354,8 @@ describe.each([
 			expect(response.statusCode).toEqual(200);
 
 			const dom = parseHtml(response.text);
-			expect(dom.querySelector('h2')?.textContent?.trim()).toBe('Shared IP comments');
 
-			expect(response.text).toContain('Download all documents');
+			expect(response.text).toContain('Download shared comments and documents');
 			const downloadLinkInnerHtml = parseHtml(response.text, {
 				rootElement: '.govuk-body'
 			}).innerHTML;
@@ -378,7 +368,7 @@ describe.each([
 			const summaryLists = dom.querySelectorAll('.govuk-summary-list');
 			expect(summaryLists).toHaveLength(interestedPartyCommentsPublished.itemCount);
 
-			const headings = dom.querySelectorAll('h3');
+			const headings = dom.querySelectorAll('h2');
 			expect(headings).toHaveLength(interestedPartyCommentsPublished.itemCount);
 			expect(headings[0].textContent?.trim()).toBe('Interested party 1');
 			expect(headings[1].textContent?.trim()).toBe('Interested party 2');
@@ -387,3 +377,83 @@ describe.each([
 		});
 	}
 );
+
+describe('Interested Party Comments (Shared/Published View) pagination', () => {
+	/**
+	 * @param {number} page
+	 * @param {number} count number of comments on this page
+	 * @param {number} pageCount
+	 */
+	const mockPublishedCommentsPage = (page, count, pageCount) =>
+		nock('http://test/')
+			.get('/appeals/2/reps')
+			.query({ type: 'comment', status: 'published', pageNumber: page, pageSize: 10 })
+			.reply(200, {
+				itemCount: 25,
+				items: Array.from({ length: count }, (_, i) => ({
+					...interestedPartyCommentsPublished.items[0],
+					id: 6000 + i
+				})),
+				page,
+				pageCount,
+				pageSize: 10
+			});
+
+	beforeEach(() => {
+		installMockApi();
+		nock('http://test/').get('/appeals/2?include=all').reply(200, publishedAppealData);
+	});
+
+	afterEach(teardown);
+
+	it('should continue numbering and render pagination links without pageSize on a later page', async () => {
+		mockPublishedCommentsPage(2, 10, 3);
+
+		const response = await request.get(
+			`${baseUrl}/2/interested-party-comments?pageNumber=2&backUrl=%2Fsome-page`
+		);
+		expect(response.statusCode).toEqual(200);
+
+		const dom = parseHtml(response.text);
+		const headings = dom.querySelectorAll('h2');
+		expect(headings).toHaveLength(10);
+		expect(headings[0].textContent?.trim()).toBe('Interested party 11');
+		expect(headings[9].textContent?.trim()).toBe('Interested party 20');
+
+		const paginationLinks = [...dom.querySelectorAll('.govuk-pagination a')].map((a) =>
+			a.getAttribute('href')
+		);
+		expect(paginationLinks).toEqual(
+			expect.arrayContaining([
+				`${baseUrl}/2/interested-party-comments?pageNumber=1&backUrl=%2Fsome-page`,
+				`${baseUrl}/2/interested-party-comments?pageNumber=3&backUrl=%2Fsome-page`
+			])
+		);
+		expect(paginationLinks.some((href) => href?.includes('pageSize'))).toBe(false);
+		expect(dom.querySelector('.govuk-pagination__item--current')?.textContent?.trim()).toBe('2');
+	});
+
+	it('should not render pagination when there is only one page', async () => {
+		mockPublishedCommentsPage(1, 3, 1);
+
+		const response = await request.get(`${baseUrl}/2/interested-party-comments`);
+		expect(response.statusCode).toEqual(200);
+		expect(parseHtml(response.text).querySelector('.govuk-pagination')).toBeNull();
+	});
+
+	it.each(['0', '-3', 'abc', '1.5'])(
+		'should fall back to page 1 when pageNumber is %s',
+		async (pageNumber) => {
+			const scope = mockPublishedCommentsPage(1, 10, 3);
+
+			const response = await request.get(
+				`${baseUrl}/2/interested-party-comments?pageNumber=${pageNumber}`
+			);
+			expect(response.statusCode).toEqual(200);
+			expect(scope.isDone()).toBe(true);
+			expect(parseHtml(response.text).querySelectorAll('h2')[0].textContent?.trim()).toBe(
+				'Interested party 1'
+			);
+		}
+	);
+});

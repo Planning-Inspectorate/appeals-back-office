@@ -4,6 +4,7 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate, dateISOStringToDisplayTime24hr } from '#lib/dates.js';
 import {
 	addressInputs,
+	buttonComponent,
 	mapNotificationBannersFromSession,
 	simpleHtmlComponent,
 	wrapComponents
@@ -130,12 +131,15 @@ const createZipFileName = (reference) => {
 	return zipFileName;
 };
 
+export const SHARED_COMMENT_DOCUMENTS_SHOWN = 5;
+
 /**
  * @param {Appeal} appealDetails
  * @param {Representation[]} comments
  * @param {string} addInterestedPartCommentsLink
  * @param {import('@pins/express').Session} session
  * @param {string} [backUrl]
+ * @param {number} [firstCommentNumber] so ip comment numbering continues across pages
  * @returns {PageContent}
  * */
 export function sharedIpCommentsPage(
@@ -143,9 +147,11 @@ export function sharedIpCommentsPage(
 	comments,
 	addInterestedPartCommentsLink,
 	session,
-	backUrl
+	backUrl,
+	firstCommentNumber = 1
 ) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
+	const pageNumber = (firstCommentNumber - 1) / 10 + 1;
 
 	const notificationBanners = mapNotificationBannersFromSession(
 		session,
@@ -161,6 +167,14 @@ export function sharedIpCommentsPage(
 	].includes(appealDetails.appealStatus);
 
 	const commentsComponents = comments.flatMap((comment, index) => {
+		const commentNumber = firstCommentNumber + index;
+		const attachments = comment.attachments ?? [];
+		const hasHiddenAttachments = attachments.length > SHARED_COMMENT_DOCUMENTS_SHOWN;
+		const shownAttachments = attachments.slice(0, SHARED_COMMENT_DOCUMENTS_SHOWN);
+		const viewAllDocumentsUrl = `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/supporting-documents?backUrl=${encodeURIComponent(
+			`/interested-party-comments?pageNumber=${pageNumber}`
+		)}`;
+
 		/** @type {PageComponent} */
 		const ipSummaryList = {
 			type: 'summary-list',
@@ -212,22 +226,39 @@ export function sharedIpCommentsPage(
 					{
 						key: { text: 'Supporting documents' },
 						value: {
-							html: buildHtmlList({
-								items: comment.attachments?.length
-									? comment.attachments.map(
-											(a) =>
-												`<a class="govuk-link" href="${mapDocumentDownloadUrl(
-													a.documentVersion.document.caseId,
-													a.documentVersion.document.guid,
-													a.documentVersion.document.name
-												)}" target="_blank">${a.documentVersion.document.name}</a>`
-										)
-									: ['No documents'],
-								isOrderedList: true,
-								isNumberedList: (comment.attachments?.length ?? 0) > 1,
-								listClasses: 'govuk-list govuk-!-margin-top-0'
-							})
-						}
+							html:
+								(hasHiddenAttachments
+									? `<p class="govuk-!-margin-bottom-2">Showing ${shownAttachments.length} of ${attachments.length}</p>`
+									: '') +
+								buildHtmlList({
+									items: shownAttachments.length
+										? shownAttachments.map(
+												(a) =>
+													`<a class="govuk-link" href="${mapDocumentDownloadUrl(
+														a.documentVersion.document.caseId,
+														a.documentVersion.document.guid,
+														a.documentVersion.document.name
+													)}" target="_blank">${a.documentVersion.document.name}</a>`
+											)
+										: ['No documents'],
+									isOrderedList: true,
+									isNumberedList: shownAttachments.length > 1,
+									listClasses: 'govuk-list govuk-!-margin-top-0'
+								})
+						},
+						...(hasHiddenAttachments
+							? {
+									actions: {
+										items: [
+											{
+												text: 'View all',
+												href: viewAllDocumentsUrl,
+												visuallyHiddenText: `supporting documents for interested party ${commentNumber}`
+											}
+										]
+									}
+								}
+							: {})
 					}
 				]
 			}
@@ -243,7 +274,7 @@ export function sharedIpCommentsPage(
 		};
 
 		return [
-			simpleHtmlComponent('h3', {}, `Interested party ${index + 1}`),
+			simpleHtmlComponent('h2', {}, `Interested party ${commentNumber}`),
 			...(comment.siteVisitRequested ? [siteVisitTag] : []),
 			ipSummaryList,
 			...(index < comments.length - 1
@@ -257,6 +288,15 @@ export function sharedIpCommentsPage(
 	});
 
 	const pageComponents = [
+		...notificationBanners,
+		...(!disableAddIPComment
+			? [
+					buttonComponent('Add interested party comment', {
+						href: addInterestedPartCommentsLink,
+						classes: 'govuk-button--secondary'
+					})
+				]
+			: []),
 		wrapComponents(
 			[
 				simpleHtmlComponent(
@@ -265,36 +305,14 @@ export function sharedIpCommentsPage(
 						href: `/documents/${appealDetails.appealId}/bulk-download/ip-comments/${createZipFileName(appealDetails.appealReference)}`,
 						class: 'govuk-link'
 					},
-					'Download all documents'
+					'Download shared comments and documents'
 				)
 			],
 			{
-				opening: '<p class="govuk-body">',
+				opening: '<p class="govuk-body govuk-!-margin-bottom-8">',
 				closing: '</p>'
 			}
 		),
-		...notificationBanners,
-		...(!disableAddIPComment
-			? [
-					wrapComponents(
-						[
-							simpleHtmlComponent(
-								'a',
-								{
-									href: addInterestedPartCommentsLink,
-									class: 'govuk-link'
-								},
-								'Add interested party comment'
-							)
-						],
-						{
-							opening: '<p class="govuk-body">',
-							closing: '</p>'
-						}
-					)
-				]
-			: []),
-		simpleHtmlComponent('h2', {}, 'Shared IP comments'),
 		...commentsComponents
 	];
 
@@ -304,7 +322,7 @@ export function sharedIpCommentsPage(
 		title: 'Interested party comments',
 		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortReference}`,
-		heading: 'Interested party comments',
+		heading: 'Shared interested party comments',
 		pageComponents: pageComponents
 	};
 }

@@ -3,10 +3,11 @@ import {
 	validateStatus
 } from '#appeals/appeal-details/representations/common/validators.js';
 import addDocumentRouter from '#appeals/appeal-details/representations/document-attachments/add-document.router.js';
-import manageDocumentsRouter from '#appeals/appeal-details/representations/document-attachments/manage-documents.router.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import { setDocumentTitle } from '../../../../../lib/middleware/set-document-title.js';
+import manageDocumentsRouter from '../../document-attachments/manage-documents.router.js';
+import { renderSupportingDocuments } from '../supporting-documents/supporting-documents.controller.js';
 import rejectRouter from './reject/reject.router.js';
 import * as controller from './view-and-review.controller.js';
 import {
@@ -40,6 +41,8 @@ router
 		validateStatus,
 		asyncHandler(controller.postReviewInterestedPartyComment)
 	);
+
+router.get('/supporting-documents', renderSupportingDocuments);
 
 router.use('/manage-documents', manageDocumentsRouter);
 
