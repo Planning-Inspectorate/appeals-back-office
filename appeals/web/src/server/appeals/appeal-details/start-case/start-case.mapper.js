@@ -130,7 +130,8 @@ export function selectProcedurePage(
 		APPEAL_TYPE.CAS_PLANNING,
 		APPEAL_TYPE.CAS_ADVERTISEMENT,
 		APPEAL_TYPE.PLANNED_LISTED_BUILDING,
-		APPEAL_TYPE.S78
+		APPEAL_TYPE.S78,
+		APPEAL_TYPE.ADVERTISEMENT
 	];
 	const showPart2 = isPart2EligibleAppealType(appealType);
 	const dataMappers = [
