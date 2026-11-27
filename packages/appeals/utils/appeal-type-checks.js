@@ -214,7 +214,8 @@ export const isPart2EligibleAppealType = (appealType) => {
 		appealType === APPEAL_TYPE.CAS_PLANNING ||
 		appealType === APPEAL_TYPE.CAS_ADVERTISEMENT ||
 		appealType === APPEAL_TYPE.PLANNED_LISTED_BUILDING ||
-		appealType === APPEAL_TYPE.S78;
+		appealType === APPEAL_TYPE.S78 ||
+		appealType === APPEAL_TYPE.ADVERTISEMENT;
 
 	return isHasOrCasOrS78;
 };

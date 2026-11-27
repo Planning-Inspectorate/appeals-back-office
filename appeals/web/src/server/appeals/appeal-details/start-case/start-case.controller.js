@@ -21,10 +21,15 @@ import {
 	getBackLinkUrlFromQuery,
 	preserveQueryString
 } from '#lib/url-utilities.js';
-import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_TYPE,
+	FEATURE_FLAG_NAMES,
+	PROCEDURE_TYPE_KEY
+} from '@pins/appeals/constants/common.js';
 import {
 	isAnyEnforcementAppealType,
-	isGenericAppealType
+	isGenericAppealType,
+	isPart2EligibleAppealType
 } from '@pins/appeals/utils/appeal-type-checks.js';
 import { recalculateDateIfNotBusinessDay } from '@pins/appeals/utils/business-days.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
@@ -104,9 +109,15 @@ const renderStartDatePage = async (request, response) => {
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postStartDate = async (request, response) => {
 	try {
-		const { appealId } = request.currentAppeal;
+		const { appealId, appealType, procedureType } = request.currentAppeal;
+		const showPart2 = isPart2EligibleAppealType(appealType);
 
-		await startCaseService.setStartDate(request.apiClient, appealId, getTodaysISOString());
+		await startCaseService.setStartDate(
+			request.apiClient,
+			appealId,
+			getTodaysISOString(),
+			showPart2 ? PROCEDURE_TYPE_KEY.WRITTEN_PART_2 : procedureType
+		);
 
 		addNotificationBannerToSession({
 			session: request.session,
